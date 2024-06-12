@@ -9,7 +9,7 @@ import 'color_directives.dart';
 import 'color_dto.dart';
 
 @immutable
-abstract class BaseColorUtility<T extends Attribute>
+abstract base class BaseColorUtility<T extends Attribute>
     extends MixUtility<T, ColorDto> {
   const BaseColorUtility(super.builder);
 
@@ -17,7 +17,7 @@ abstract class BaseColorUtility<T extends Attribute>
 }
 
 @immutable
-class FoundationColorUtility<T extends Attribute, C extends Color>
+final class FoundationColorUtility<T extends Attribute, C extends Color>
     extends BaseColorUtility<T> with ColorDirectiveMixin<T> {
   final C color;
   const FoundationColorUtility(super.builder, this.color);
@@ -34,7 +34,7 @@ typedef SimpleColorUtility<T extends Attribute>
 typedef MaterialSingleColorUtility<T extends Attribute>
     = FoundationColorUtility<T, MaterialColor>;
 
-mixin ColorDirectiveMixin<T extends Attribute> on BaseColorUtility<T> {
+base mixin ColorDirectiveMixin<T extends Attribute> on BaseColorUtility<T> {
   T directive(ColorDirective directive) =>
       builder(ColorDto.directive(directive));
   T withOpacity(double opacity) => directive(OpacityColorDirective(opacity));
@@ -49,8 +49,25 @@ mixin ColorDirectiveMixin<T extends Attribute> on BaseColorUtility<T> {
   T brighten(int percentage) => directive(BrightenColorDirective(percentage));
 }
 
+/// A utility class for building [Attribute] instances from a list of [ColorDto] objects.
+///
+/// This class extends [MixUtility] and provides a convenient way to create [Attribute]
+/// instances by transforming a list of [Color] objects into a list of [ColorDto] objects.
+final class ColorListUtility<T extends Attribute>
+    extends MixUtility<T, List<ColorDto>> {
+  const ColorListUtility(super.builder);
+
+  /// Creates an [Attribute] instance from a list of [Color] objects.
+  ///
+  /// This method maps each [Color] object to a [ColorDto] object and passes the
+  /// resulting list to the [builder] function to create the [Attribute] instance.
+  T call(List<Color> colors) {
+    return builder(colors.map((e) => e.toDto()).toList());
+  }
+}
+
 @immutable
-class ColorUtility<T extends Attribute> extends BaseColorUtility<T>
+final class ColorUtility<T extends Attribute> extends BaseColorUtility<T>
     with ColorDirectiveMixin<T> {
   const ColorUtility(super.builder);
 
@@ -179,7 +196,7 @@ class ColorUtility<T extends Attribute> extends BaseColorUtility<T>
 }
 
 @immutable
-class MaterialColorUtility<T extends Attribute>
+final class MaterialColorUtility<T extends Attribute>
     extends FoundationColorUtility<T, MaterialColor> {
   const MaterialColorUtility(super.builder, super.color);
 
@@ -215,7 +232,7 @@ class MaterialColorUtility<T extends Attribute>
 }
 
 @immutable
-class MaterialAccentColorUtility<T extends Attribute>
+final class MaterialAccentColorUtility<T extends Attribute>
     extends FoundationColorUtility<T, MaterialAccentColor> {
   const MaterialAccentColorUtility(super.builder, super.color);
 

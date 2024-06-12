@@ -43,7 +43,7 @@ class SpecDefinitionBuilder extends GeneratorForAnnotation<MixableSpec> {
       ..body.addAll([
         MixinSpecBuilder(context),
         ClassSpecAttributeBuilder(context),
-        UtilityClassBuilder(context),
+        _UtilityClassBuilder(context),
         ClassSpecTweenBuilder(context),
         ...MethodPrivateHelpers(context),
       ]));
@@ -62,6 +62,7 @@ Mixin MixinSpecBuilder(SpecAnnotationContext context) {
 
   return Mixin((b) {
     b.name = specClassMixinName;
+    b.base = true;
     b.on = refer('$specRef<$specClassName>');
 
     b.methods.addAll([
@@ -95,6 +96,7 @@ Class ClassSpecAttributeBuilder(SpecAnnotationContext context) {
 
   return Class((b) {
     b.name = specAttributeClassName;
+    b.modifier = ClassModifier.final$;
     b.extend = refer(extendsType);
     b.docs.addAll([
       '/// Represents the attributes of a [$specClassName].',
@@ -176,7 +178,7 @@ Class ClassSpecTweenBuilder(SpecAnnotationContext context) {
   });
 }
 
-Class UtilityClassBuilder(SpecAnnotationContext context) {
+Class _UtilityClassBuilder(SpecAnnotationContext context) {
   final specClassName = context.specClassName;
   final specAttributeClassName = context.specAttributeClassName;
   final fields = context.fields;
@@ -191,6 +193,7 @@ Class UtilityClassBuilder(SpecAnnotationContext context) {
   return Class((b) {
     b.name = utilityClassName;
     b.extend = extendsType;
+    b.modifier = ClassModifier.final$;
     b.docs.addAll([
       '/// Utility class for configuring [$specAttributeClassName] properties.',
       '///',
@@ -207,7 +210,7 @@ Class UtilityClassBuilder(SpecAnnotationContext context) {
       Constructor((builder) {
         builder.requiredParameters.add(
           Parameter((b) {
-            b.name = 'super.builder';
+            b.name = '[super.builder]';
           }),
         );
         ;

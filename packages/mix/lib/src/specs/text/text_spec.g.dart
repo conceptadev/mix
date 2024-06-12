@@ -6,7 +6,7 @@ part of 'text_spec.dart';
 // Generator: SpecDefinitionBuilder
 // **************************************************************************
 
-mixin TextSpecMixable on Spec<TextSpec> {
+base mixin TextSpecMixable on Spec<TextSpec> {
   /// Retrieves the [TextSpec] from a MixData.
   static TextSpec from(MixData mix) {
     return mix.attributeOf<TextSpecAttribute>()?.resolve(mix) ??
@@ -123,7 +123,7 @@ mixin TextSpecMixable on Spec<TextSpec> {
 ///
 /// Use this class to configure the attributes of a [TextSpec] and pass it to
 /// the [TextSpec] constructor.
-class TextSpecAttribute extends SpecAttribute<TextSpec> {
+final class TextSpecAttribute extends SpecAttribute<TextSpec> {
   const TextSpecAttribute({
     this.overflow,
     this.strutStyle,
@@ -227,9 +227,9 @@ class TextSpecAttribute extends SpecAttribute<TextSpec> {
 /// This class provides methods to set individual properties of a [TextSpecAttribute].
 ///
 /// Use the methods of this class to configure specific properties of a [TextSpecAttribute].
-class TextSpecUtility<T extends Attribute>
+final class TextSpecUtility<T extends Attribute>
     extends SpecUtility<T, TextSpecAttribute> {
-  TextSpecUtility(super.builder);
+  TextSpecUtility([super.builder]);
 
   /// Utility for defining [TextSpecAttribute.overflow]
   late final overflow = TextOverflowUtility((v) => only(overflow: v));

@@ -6,7 +6,7 @@ part of 'icon_spec.dart';
 // Generator: SpecDefinitionBuilder
 // **************************************************************************
 
-mixin IconSpecMixable on Spec<IconSpec> {
+base mixin IconSpecMixable on Spec<IconSpec> {
   /// Retrieves the [IconSpec] from a MixData.
   static IconSpec from(MixData mix) {
     return mix.attributeOf<IconSpecAttribute>()?.resolve(mix) ??
@@ -126,7 +126,7 @@ mixin IconSpecMixable on Spec<IconSpec> {
 ///
 /// Use this class to configure the attributes of a [IconSpec] and pass it to
 /// the [IconSpec] constructor.
-class IconSpecAttribute extends SpecAttribute<IconSpec> {
+final class IconSpecAttribute extends SpecAttribute<IconSpec> {
   const IconSpecAttribute({
     this.color,
     this.size,
@@ -218,9 +218,9 @@ class IconSpecAttribute extends SpecAttribute<IconSpec> {
 /// This class provides methods to set individual properties of a [IconSpecAttribute].
 ///
 /// Use the methods of this class to configure specific properties of a [IconSpecAttribute].
-class IconSpecUtility<T extends Attribute>
+final class IconSpecUtility<T extends Attribute>
     extends SpecUtility<T, IconSpecAttribute> {
-  IconSpecUtility(super.builder);
+  IconSpecUtility([super.builder]);
 
   /// Utility for defining [IconSpecAttribute.color]
   late final color = ColorUtility((v) => only(color: v));

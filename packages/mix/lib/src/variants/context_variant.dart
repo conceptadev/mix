@@ -79,7 +79,7 @@ abstract class MediaQueryContextVariant extends ContextVariant {
 }
 
 @immutable
-class ContextVariantBuilder extends VariantAttribute<ContextVariant> {
+final class ContextVariantBuilder extends VariantAttribute<ContextVariant> {
   final Style Function(BuildContext context) fn;
 
   const ContextVariantBuilder(this.fn, ContextVariant variant)

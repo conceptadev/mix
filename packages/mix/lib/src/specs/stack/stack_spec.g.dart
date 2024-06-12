@@ -6,7 +6,7 @@ part of 'stack_spec.dart';
 // Generator: SpecDefinitionBuilder
 // **************************************************************************
 
-mixin StackSpecMixable on Spec<StackSpec> {
+base mixin StackSpecMixable on Spec<StackSpec> {
   /// Retrieves the [StackSpec] from a MixData.
   static StackSpec from(MixData mix) {
     return mix.attributeOf<StackSpecAttribute>()?.resolve(mix) ??
@@ -85,7 +85,7 @@ mixin StackSpecMixable on Spec<StackSpec> {
 ///
 /// Use this class to configure the attributes of a [StackSpec] and pass it to
 /// the [StackSpec] constructor.
-class StackSpecAttribute extends SpecAttribute<StackSpec> {
+final class StackSpecAttribute extends SpecAttribute<StackSpec> {
   const StackSpecAttribute({
     this.alignment,
     this.fit,
@@ -147,9 +147,9 @@ class StackSpecAttribute extends SpecAttribute<StackSpec> {
 /// This class provides methods to set individual properties of a [StackSpecAttribute].
 ///
 /// Use the methods of this class to configure specific properties of a [StackSpecAttribute].
-class StackSpecUtility<T extends Attribute>
+final class StackSpecUtility<T extends Attribute>
     extends SpecUtility<T, StackSpecAttribute> {
-  StackSpecUtility(super.builder);
+  StackSpecUtility([super.builder]);
 
   /// Utility for defining [StackSpecAttribute.alignment]
   late final alignment = AlignmentUtility((v) => only(alignment: v));

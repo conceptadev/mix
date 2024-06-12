@@ -9,7 +9,7 @@ import '../core/attribute.dart';
 import '../core/models/mix_data.dart';
 import '../core/modifier.dart';
 
-class FractionallySizedBoxModifierSpec
+final class FractionallySizedBoxModifierSpec
     extends WidgetModifierSpec<FractionallySizedBoxModifierSpec> {
   final double? widthFactor;
   final double? heightFactor;
@@ -60,8 +60,9 @@ class FractionallySizedBoxModifierSpec
   }
 }
 
-class FractionallySizedBoxModifierAttribute extends WidgetModifierAttribute<
-    FractionallySizedBoxModifierAttribute, FractionallySizedBoxModifierSpec> {
+final class FractionallySizedBoxModifierAttribute
+    extends WidgetModifierAttribute<FractionallySizedBoxModifierAttribute,
+        FractionallySizedBoxModifierSpec> {
   final double? widthFactor;
   final double? heightFactor;
   final AlignmentGeometry? alignment;
@@ -96,7 +97,7 @@ class FractionallySizedBoxModifierAttribute extends WidgetModifierAttribute<
   get props => [widthFactor, heightFactor, alignment];
 }
 
-class FractionallySizedBoxModifierUtility<T extends Attribute>
+final class FractionallySizedBoxModifierUtility<T extends Attribute>
     extends MixUtility<T, FractionallySizedBoxModifierAttribute> {
   const FractionallySizedBoxModifierUtility(super.builder);
 

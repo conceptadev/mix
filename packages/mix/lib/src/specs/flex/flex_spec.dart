@@ -7,7 +7,7 @@ import '../../../mix.dart';
 part 'flex_spec.g.dart';
 
 @MixableSpec()
-class FlexSpec extends Spec<FlexSpec> with FlexSpecMixable {
+final class FlexSpec extends Spec<FlexSpec> with FlexSpecMixable {
   @MixableField(
     utility: MixableFieldUtility(
       properties: [

@@ -5,7 +5,9 @@ import 'package:build/build.dart';
 import 'package:code_builder/code_builder.dart';
 import 'package:dart_style/dart_style.dart';
 import 'package:mix_annotations/mix_annotations.dart';
+import 'package:mix_builder/src/helpers/field_info.dart';
 import 'package:mix_builder/src/helpers/helpers.dart';
+import 'package:mix_builder/src/helpers/mix_property.dart';
 import 'package:mix_builder/src/helpers/settings.dart';
 import 'package:source_gen/source_gen.dart';
 
@@ -38,14 +40,140 @@ class DtoDefinitionBuilder extends GeneratorForAnnotation<MixableDto> {
         ),
         DartFormatter());
 
-    final dtoLibrary =
-        Library((b) => b..body.addAll([MixinDtoBuilder(context)]));
+    final dtoLibrary = Library((b) => b
+      ..body.addAll([
+        _MixinDtoBuilder(context),
+        _ValueExtensionBuilder(context),
+        _UtilityDtoClassBuilder(context)
+      ]));
 
     return context.generate(dtoLibrary);
   }
 }
 
-Mixin MixinDtoBuilder(DtoAnnotationContext context) {
+Extension _ValueExtensionBuilder(DtoAnnotationContext context) {
+  final resolvedType = context.resolvedType;
+
+  final dtoClassName = context.dtoClassName;
+
+  final fieldStatements = context.fields.map((field) {
+    final fieldName = field.name;
+    final fieldNameRef = field.asNameRef;
+
+    if (field.hasDto) {
+      if (field.isListType) {
+        return Code('''
+          $fieldName: $fieldNameRef.map((e) => e.toDto()).toList()
+        ''');
+      }
+      return Code('$fieldName: $fieldNameRef.toDto()');
+    }
+
+    return Code('$fieldName: $fieldName');
+  });
+
+  return Extension((b) {
+    b.name = '${resolvedType}Ext';
+    b.on = refer(resolvedType!);
+
+    b.methods.add(Method((b) {
+      b.name = 'toDto';
+      b.returns = refer(dtoClassName);
+      b.body = Code('''
+        return $dtoClassName(
+          ${fieldStatements.join(',')},
+        );
+      ''');
+    }));
+  });
+}
+
+Class _UtilityDtoClassBuilder(DtoAnnotationContext context) {
+  final className = context.dtoClassName;
+  final resolvedType = context.resolvedType;
+
+  final fields = context.fields;
+  final utilityClassName = '${resolvedType}Utility';
+
+  final specUtilityRef = MixTypes.foundation.dtoUtility;
+  final extendsType = TypeReference((b) => b
+    ..symbol = specUtilityRef.symbol
+    ..types.add(refer('T'))
+    ..types.add(refer(className))
+    ..types.add(refer(resolvedType!)));
+
+  return Class((b) {
+    b.name = utilityClassName;
+    b.extend = extendsType;
+    b.modifier = ClassModifier.final$;
+    b.docs.addAll([
+      '/// Utility class for configuring [$className] properties.',
+      '///',
+      '/// This class provides methods to set individual properties of a [$className].',
+      '///',
+      '/// Use the methods of this class to configure specific properties of a [$className].',
+    ]);
+
+    b.types.add(refer('T extends Attribute'));
+
+    b.fields.addAll(fields.getUtilityFields(className));
+
+    b.constructors.add(
+      Constructor((b) {
+        b.requiredParameters.add(
+          Parameter((b) {
+            b.name = 'super.builder';
+          }),
+        );
+        b.initializers.add(Code('super(valueToDto: (value) => value.toDto())'));
+      }),
+    );
+
+    b.methods.addAll([
+      MethodOnlyBuilder(
+        className: className,
+        fields: fields,
+      ),
+      _MethodCallBuilder(fields),
+    ]);
+  });
+}
+
+Method _MethodCallBuilder(List<ParameterInfo> fields) {
+  return Method((b) {
+    b.name = 'call';
+    b.returns = refer('T');
+    b.optionalParameters.addAll(fields.map((field) {
+      return Parameter((b) {
+        b.name = field.name;
+        b.named = true;
+        b.type = refer(field.asResolvedType).nullable;
+      });
+    }));
+
+    final fieldStatements = fields.map((field) {
+      final fieldName = field.name;
+
+      if (field.hasDto) {
+        if (field.isListType) {
+          return Code('''
+            $fieldName: $fieldName?.map((e) => e.toDto()).toList()
+          ''');
+        }
+        return Code('$fieldName: $fieldName?.toDto()');
+      }
+      return Code('$fieldName: $fieldName');
+    });
+
+    b.body = Code('''
+      return only(
+        ${fieldStatements.join(',')},
+      );
+    ''');
+  });
+}
+
+Mixin _MixinDtoBuilder(DtoAnnotationContext context) {
   final className = context.dtoClassName;
   final mixinName = context.dtoClassMixinName;
 

@@ -8,7 +8,7 @@ import '../../../mix.dart';
 part 'image_spec.g.dart';
 
 @MixableSpec()
-class ImageSpec extends Spec<ImageSpec> with ImageSpecMixable {
+final class ImageSpec extends Spec<ImageSpec> with ImageSpecMixable {
   final double? width, height;
   final Color? color;
   final ImageRepeat? repeat;

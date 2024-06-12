@@ -10,7 +10,7 @@ import 'shadow_dto.dart';
 ///
 /// This class provides methods to create and modify [BoxShadow] instances
 /// using a fluent API.
-class BoxShadowUtility<T extends Attribute>
+final class BoxShadowUtility<T extends Attribute>
     extends DtoUtility<T, BoxShadowDto, BoxShadow> {
   /// A utility for setting the [BoxShadow.color] property.
   late final color = ColorUtility<T>((v) => only(color: v));
@@ -71,7 +71,7 @@ class BoxShadowUtility<T extends Attribute>
 ///
 /// This class provides methods to create and modify [Shadow] instances
 /// using a fluent API.
-class ShadowUtility<T extends Attribute>
+final class ShadowUtility<T extends Attribute>
     extends DtoUtility<T, ShadowDto, Shadow> {
   /// A utility for setting the [Shadow.color] property.
   late final color = ColorUtility<T>((v) => only(color: v));
@@ -115,7 +115,7 @@ class ShadowUtility<T extends Attribute>
 ///
 /// This class extends [MixUtility] and provides a convenient way to create [Attribute]
 /// instances by transforming a list of [BoxShadow] objects into a list of [ShadowDto] objects.
-class ShadowListUtility<T extends Attribute>
+final class ShadowListUtility<T extends Attribute>
     extends MixUtility<T, List<ShadowDto>> {
   const ShadowListUtility(super.builder);
 
@@ -132,7 +132,7 @@ class ShadowListUtility<T extends Attribute>
 ///
 /// This class extends [MixUtility] and provides a convenient way to create [Attribute]
 /// instances by transforming a list of [BoxShadow] objects into a list of [BoxShadowDto] objects.
-class BoxShadowListUtility<T extends Attribute>
+final class BoxShadowListUtility<T extends Attribute>
     extends MixUtility<T, List<BoxShadowDto>> {
   const BoxShadowListUtility(super.builder);
 
@@ -150,7 +150,7 @@ class BoxShadowListUtility<T extends Attribute>
 /// This class extends [MixUtility] and provides methods to create [Attribute] instances
 /// based on predefined elevation values, which are mapped to corresponding lists of
 /// [BoxShadowDto] objects using the [kElevationToShadow] map.
-class ElevationUtility<T extends Attribute>
+final class ElevationUtility<T extends Attribute>
     extends MixUtility<T, List<BoxShadowDto>> {
   const ElevationUtility(super.builder);
 

@@ -6,7 +6,7 @@ part of 'image_spec.dart';
 // Generator: SpecDefinitionBuilder
 // **************************************************************************
 
-mixin ImageSpecMixable on Spec<ImageSpec> {
+base mixin ImageSpecMixable on Spec<ImageSpec> {
   /// Retrieves the [ImageSpec] from a MixData.
   static ImageSpec from(MixData mix) {
     return mix.attributeOf<ImageSpecAttribute>()?.resolve(mix) ??
@@ -118,7 +118,7 @@ mixin ImageSpecMixable on Spec<ImageSpec> {
 ///
 /// Use this class to configure the attributes of a [ImageSpec] and pass it to
 /// the [ImageSpec] constructor.
-class ImageSpecAttribute extends SpecAttribute<ImageSpec> {
+final class ImageSpecAttribute extends SpecAttribute<ImageSpec> {
   const ImageSpecAttribute({
     this.width,
     this.height,
@@ -210,9 +210,9 @@ class ImageSpecAttribute extends SpecAttribute<ImageSpec> {
 /// This class provides methods to set individual properties of a [ImageSpecAttribute].
 ///
 /// Use the methods of this class to configure specific properties of a [ImageSpecAttribute].
-class ImageSpecUtility<T extends Attribute>
+final class ImageSpecUtility<T extends Attribute>
     extends SpecUtility<T, ImageSpecAttribute> {
-  ImageSpecUtility(super.builder);
+  ImageSpecUtility([super.builder]);
 
   /// Utility for defining [ImageSpecAttribute.width]
   late final width = DoubleUtility((v) => only(width: v));

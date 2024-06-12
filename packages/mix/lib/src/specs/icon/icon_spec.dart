@@ -7,7 +7,7 @@ import '../../../mix.dart';
 part 'icon_spec.g.dart';
 
 @MixableSpec()
-class IconSpec extends Spec<IconSpec> with IconSpecMixable {
+final class IconSpec extends Spec<IconSpec> with IconSpecMixable {
   final Color? color;
   final double? size;
   final double? weight;

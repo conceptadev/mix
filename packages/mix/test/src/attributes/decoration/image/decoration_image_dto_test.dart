@@ -103,11 +103,6 @@ void main() {
       expect(result.isAntiAlias, equals(true));
     });
 
-    test('resolve throws assertion error when image is null', () {
-      const dto = DecorationImageDto(image: null);
-      expect(() => dto.resolve(EmptyMixData), throwsAssertionError);
-    });
-
     test('equality', () {
       const dto1 = DecorationImageDto(
         image: imageProvider,

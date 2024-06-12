@@ -7,7 +7,7 @@ import '../../../mix.dart';
 part 'text_spec.g.dart';
 
 @MixableSpec()
-class TextSpec extends Spec<TextSpec> with TextSpecMixable {
+final class TextSpec extends Spec<TextSpec> with TextSpecMixable {
   final TextOverflow? overflow;
   final StrutStyle? strutStyle;
   final TextAlign? textAlign;

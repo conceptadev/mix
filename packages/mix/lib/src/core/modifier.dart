@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'models/mix_data.dart';
 import 'spec.dart';
 
-abstract class WidgetModifierSpec<Self extends WidgetModifierSpec<Self>>
+abstract base class WidgetModifierSpec<Self extends WidgetModifierSpec<Self>>
     extends Spec<Self> {
   @override
   const WidgetModifierSpec({super.animated});
@@ -28,7 +28,7 @@ abstract class WidgetModifierSpec<Self extends WidgetModifierSpec<Self>>
   Widget build(Widget child);
 }
 
-abstract class WidgetModifierAttribute<
+abstract base class WidgetModifierAttribute<
     Self extends WidgetModifierAttribute<Self, Value>,
     Value extends WidgetModifierSpec<Value>> extends SpecAttribute<Value> {
   const WidgetModifierAttribute();

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:mix_annotations/mix_annotations.dart';
 
-import '../../core/dto.dart';
-import '../../core/models/mix_data.dart';
-import '../color/color_dto.dart';
+// ignore: avoid-importing-entrypoint-exports
+import '../../../mix.dart';
+
+part 'border_dto.g.dart';
 
 @immutable
 class BoxBorderDto extends Dto<BoxBorder> {
@@ -132,10 +134,14 @@ class BoxBorderDto extends Dto<BoxBorder> {
   get props => [top, bottom, left, right, start, end];
 }
 
-@immutable
-class BorderSideDto extends Dto<BorderSide> {
+@MixableDto()
+class BorderSideDto extends Dto<BorderSide> with BorderSideDtoMixable {
   final ColorDto? color;
   final double? width;
+
+  @MixableField(
+    utility: MixableFieldUtility(properties: [MixableFieldProperty('none')]),
+  )
   final BorderStyle? style;
   final double? strokeAlign;
 
@@ -147,47 +153,6 @@ class BorderSideDto extends Dto<BorderSide> {
   });
 
   const BorderSideDto.none() : this();
-
-  BorderSideDto copyWith({
-    ColorDto? color,
-    double? width,
-    BorderStyle? style,
-    double? strokeAlign,
-  }) {
-    return BorderSideDto(
-      color: color ?? this.color,
-      strokeAlign: strokeAlign ?? this.strokeAlign,
-      style: style ?? this.style,
-      width: width ?? this.width,
-    );
-  }
-
-  @override
-  BorderSideDto merge(BorderSideDto? other) {
-    if (other == null) return this;
-
-    return BorderSideDto(
-      color: color?.merge(other.color) ?? other.color,
-      strokeAlign: other.strokeAlign ?? strokeAlign,
-      style: other.style ?? style,
-      width: other.width ?? width,
-    );
-  }
-
-  @override
-  BorderSide resolve(MixData mix) {
-    const defaultValue = BorderSide();
-
-    return BorderSide(
-      color: color?.resolve(mix) ?? defaultValue.color,
-      width: width ?? defaultValue.width,
-      style: style ?? defaultValue.style,
-      strokeAlign: strokeAlign ?? defaultValue.strokeAlign,
-    );
-  }
-
-  @override
-  get props => [color, width, style, strokeAlign];
 }
 
 extension BoxBorderExt on BoxBorder {
@@ -225,17 +190,6 @@ extension BorderExt on Border {
       bottom: bottom.toDto(),
       left: left.toDto(),
       right: right.toDto(),
-    );
-  }
-}
-
-extension BorderSideExt on BorderSide {
-  BorderSideDto toDto() {
-    return BorderSideDto(
-      color: color.toDto(),
-      strokeAlign: strokeAlign,
-      style: style,
-      width: width,
     );
   }
 }

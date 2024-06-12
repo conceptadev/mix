@@ -7,7 +7,7 @@ import '../../../mix.dart';
 part 'stack_spec.g.dart';
 
 @MixableSpec()
-class StackSpec extends Spec<StackSpec> with StackSpecMixable {
+final class StackSpec extends Spec<StackSpec> with StackSpecMixable {
   final AlignmentGeometry? alignment;
   final StackFit? fit;
   final TextDirection? textDirection;

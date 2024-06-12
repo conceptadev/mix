@@ -145,10 +145,10 @@ void main() {
         width: 1.0,
       );
 
-      final copied = borderSideDto.copyWith(
-        color: const ColorDto(Colors.blue),
+      final copied = borderSideDto.merge(const BorderSideDto(
+        color: ColorDto(Colors.blue),
         width: 2.0,
-      );
+      ));
 
       expect(copied.width, 2.0);
       expect(copied.color, const ColorDto(Colors.blue));
