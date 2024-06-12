@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:mix_annotations/mix_annotations.dart';
 
-import '../../../mix.dart';
+import '../../core/attribute.dart';
+import '../../core/directive.dart';
+import '../../core/models/animated_data.dart';
+import '../../core/models/mix_data.dart';
+import '../../core/spec.dart';
+import '../../exports/dtos.dart';
+import '../../exports/utilities.dart';
+import '../../factory/mix_provider.dart';
 
 part 'text_spec.g.dart';
 

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mix_annotations/mix_annotations.dart';
 
-import '../../../mix.dart';
+import '../../core/spec.dart';
+import '../../exports/utilities.dart';
 
 part 'box_spec.g.dart';
 
