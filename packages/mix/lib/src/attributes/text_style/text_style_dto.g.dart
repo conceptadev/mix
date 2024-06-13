@@ -6,21 +6,6 @@ part of 'text_style_dto.dart';
 // Generator: DtoDefinitionBuilder
 // **************************************************************************
 
-mixin _$TextStyleDataRef on Dto<TextStyle> {
-  /// The list of properties that constitute the state of this [TextStyleDataRef].
-  ///
-  /// This property is used by the [==] operator and the [hashCode] getter to
-  /// compare two [TextStyleDataRef] instances for equality.
-  @override
-  List<Object?> get props {
-    return [
-      _$this.ref,
-    ];
-  }
-
-  TextStyleDataRef get _$this => this as TextStyleDataRef;
-}
-
 mixin _$TextStyleData on Dto<TextStyle> {
   @override
   TextStyle resolve(MixData mix) {
