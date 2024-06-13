@@ -1,5 +1,6 @@
 name: mix_lint_test
 description: A sample command-line application.
+publish_to: "none"
 
 environment:
   sdk: ">=2.19.2 <4.0.0"
@@ -8,6 +9,16 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  mix: 
+    path: ../mix
+  mix_annotations: 
+    path: ../mix_annotations
+  mix_lint:
+    path: ../mix_lint
+
+dependency_overrides: 
+  mix_annotations:
+    path: ../mix_annotations
 
 dev_dependencies:
   flutter_test:
@@ -15,8 +26,4 @@ dev_dependencies:
   custom_lint: ^0.6.0
   analyzer: ^6.0.0
   analyzer_plugin: ^0.11.2
-  mix: 
-    path: ../mix
-  mix_lint:
-    path: ../mix_lint
 
