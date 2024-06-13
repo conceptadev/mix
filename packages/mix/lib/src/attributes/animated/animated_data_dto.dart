@@ -1,9 +1,9 @@
 import 'package:flutter/animation.dart';
 
-import '../../core/models/animated_data.dart';
 import '../../core/dto.dart';
-import '../../core/models/mix_data.dart';
+import '../../core/mix_data.dart';
 import '../../internal/constants.dart';
+import 'animated_data.dart';
 
 class AnimatedDataDto extends Dto<AnimatedData> {
   final Duration? duration;

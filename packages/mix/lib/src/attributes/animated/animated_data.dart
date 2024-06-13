@@ -1,7 +1,7 @@
 import 'package:flutter/animation.dart';
 
-import '../../attributes/animated/animated_data_dto.dart';
 import '../../internal/constants.dart';
+import 'animated_data_dto.dart';
 
 class AnimatedData {
   final Curve? _curve;

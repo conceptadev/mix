@@ -31,7 +31,7 @@ mixin LinearGradientDtoMixable on Dto<LinearGradient> {
       end: other.end ?? _$this.end,
       tileMode: other.tileMode ?? _$this.tileMode,
       transform: other.transform ?? _$this.transform,
-      colors: Dto.mergeList(_$this.colors, other._$this.colors),
+      colors: Dto.mergeList(_$this.colors, other.colors),
       stops: _mergeListT(
         _$this.stops,
         other.stops,
@@ -83,7 +83,7 @@ extension LinearGradientExt on LinearGradient {
       end: end,
       tileMode: tileMode,
       transform: transform,
-      colors: colors.map((e) => e.toDto()).toList(),
+      colors: colors?.map((e) => e.toDto()).toList(),
       stops: stops,
     );
   }
@@ -187,7 +187,7 @@ mixin RadialGradientDtoMixable on Dto<RadialGradient> {
       focal: other.focal ?? _$this.focal,
       focalRadius: other.focalRadius ?? _$this.focalRadius,
       transform: other.transform ?? _$this.transform,
-      colors: Dto.mergeList(_$this.colors, other._$this.colors),
+      colors: Dto.mergeList(_$this.colors, other.colors),
       stops: _mergeListT(
         _$this.stops,
         other.stops,
@@ -243,7 +243,7 @@ extension RadialGradientExt on RadialGradient {
       focal: focal,
       focalRadius: focalRadius,
       transform: transform,
-      colors: colors.map((e) => e.toDto()).toList(),
+      colors: colors?.map((e) => e.toDto()).toList(),
       stops: stops,
     );
   }
@@ -359,7 +359,7 @@ mixin SweepGradientDtoMixable on Dto<SweepGradient> {
       endAngle: other.endAngle ?? _$this.endAngle,
       tileMode: other.tileMode ?? _$this.tileMode,
       transform: other.transform ?? _$this.transform,
-      colors: Dto.mergeList(_$this.colors, other._$this.colors),
+      colors: Dto.mergeList(_$this.colors, other.colors),
       stops: _mergeListT(
         _$this.stops,
         other.stops,
@@ -413,7 +413,7 @@ extension SweepGradientExt on SweepGradient {
       endAngle: endAngle,
       tileMode: tileMode,
       transform: transform,
-      colors: colors.map((e) => e.toDto()).toList(),
+      colors: colors?.map((e) => e.toDto()).toList(),
       stops: stops,
     );
   }

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../internal/compare_mixin.dart';
 import 'attribute.dart';
-import 'models/mix_data.dart';
+import 'mix_data.dart';
 
 @immutable
 abstract class Dto<Value> with EqualityMixin, MergeableMixin {

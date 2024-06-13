@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../core/dto.dart';
-import '../../core/models/mix_data.dart';
+import '../../core/mix_data.dart';
 
 @immutable
 class SpacingDto extends Dto<EdgeInsetsGeometry> {

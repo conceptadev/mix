@@ -1,8 +1,8 @@
 import 'package:flutter/widgets.dart';
 
 import '../../core/attribute.dart';
-import '../../core/models/animated_data.dart';
 import '../scalars/scalar_util.dart';
+import 'animated_data.dart';
 import 'animated_data_dto.dart';
 
 final class AnimatedUtility<T extends Attribute>

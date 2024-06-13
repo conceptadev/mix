@@ -51,7 +51,7 @@ mixin BorderSideDtoMixable on Dto<BorderSide> {
 extension BorderSideExt on BorderSide {
   BorderSideDto toDto() {
     return BorderSideDto(
-      color: color.toDto(),
+      color: color?.toDto(),
       strokeAlign: strokeAlign,
       style: style,
       width: width,

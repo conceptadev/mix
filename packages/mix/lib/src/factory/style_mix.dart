@@ -2,15 +2,17 @@
 
 import 'package:flutter/material.dart';
 
+import '../attributes/animated/animated_data.dart';
 import '../attributes/nested_style/nested_style_attribute.dart';
-import '../core/models/animated_data.dart';
 import '../core/attribute.dart';
 import '../core/attributes_map.dart';
+import '../core/mix_data.dart';
+import '../exports/specs.dart';
+import '../exports/utilities.dart';
 import '../internal/compare_mixin.dart';
 import '../internal/helper_util.dart';
 import '../variants/variant.dart';
 import '../variants/variant_attribute.dart';
-import '../core/models/mix_data.dart';
 
 /// A utility class for managing a collection of styling attributes and variants.
 ///
@@ -155,13 +157,6 @@ class Style with EqualityMixin {
   int get length => values.length;
 
   /// Allows to create a new `Style` by using this mix as a base and adding additional attributes.
-  ///
-  /// Example:
-  ///
-  /// ```dart
-  /// final style = Style(attr1, attr2);
-  /// final updatedStyle = style.add(attr3, attr4);
-  /// ```
   SpreadFunctionParams<Attribute, Style> get add =>
       SpreadFunctionParams(addAll);
 
@@ -169,30 +164,6 @@ class Style with EqualityMixin {
   ///
   /// If the [applyVariant] is not initially part of the `Style`, this method returns this mix without any changes.
   /// Otherwise, the method merges the attributes of the selected [applyVariant] into a new `Style` instance.
-  ///
-  /// Example:
-  /// ```dart
-  /// final outlined = Variant('outlined');
-  /// final style = Style(
-  ///   attr1,
-  ///   attr2,
-  ///   outlined(
-  ///     attr4,
-  ///     attr5,
-  ///   ),
-  /// );
-  /// final updatedStyle = style.applyVariant(outlined);
-  /// ```
-  ///
-  /// In this example:
-  /// - An `outlined` instance `outlined` is created to represent an outlined button styling.
-  /// - An initial `Style` instance `style` is created with `attr1` and `attr2`, along with the `outlined`.
-  /// - The `variant` method is called on the `Style` instance with `outlined` as the argument.
-  /// - The `variant` method returns a new `Style` instance `updatedStyle` with the attributes of the selected variant merged.
-  /// - The resulting `updatedStyle` is equivalent to `Style(attr1, attr2, attr4, attr5)`.
-  ///
-  /// Note:
-  /// The attributes from the selected variant (`attr4` and `attr5`) are not applied to the `Style` instance until the `applyVariant` method is called.
   SpreadFunctionParams<Variant, Style> get applyVariant =>
       SpreadFunctionParams(applyVariants);
 
@@ -238,6 +209,9 @@ class Style with EqualityMixin {
 
     return copyWith(styles: mergedStyles, variants: mergedVariants);
   }
+
+  /// Returns all utilities, allowing you to use your own namespace
+  static MixUtilities utilities() => MixUtilities();
 
   /// Selects multiple [Variant] instances and returns a new `Style` with the selected variants.
   ///
@@ -413,4 +387,16 @@ class AnimatedStyle extends Style {
       animated: animated,
     );
   }
+}
+
+class MixUtilities {
+  final box = BoxSpecUtility();
+  final flex = FlexSpecUtility();
+  final image = ImageSpecUtility();
+  final icon = IconSpecUtility();
+  final text = TextSpecUtility();
+  final stack = StackSpecUtility();
+  final on = OnContextVariantUtility();
+  final mod = WithModifierUtility();
+  MixUtilities();
 }

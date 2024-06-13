@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'dto.dart';
-import 'models/mix_data.dart';
+import 'mix_data.dart';
 
 typedef Modifier<T> = T Function(T value);
 

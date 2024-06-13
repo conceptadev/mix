@@ -38,7 +38,7 @@ class DtoDefinitionBuilder extends GeneratorForAnnotation<MixableDto> {
           orderDirectives: true,
           useNullSafetySyntax: true,
         ),
-        DartFormatter());
+        DartFormatter(fixes: StyleFix.all));
 
     final dtoLibrary = Library((b) => b
       ..body.addAll([
@@ -58,7 +58,7 @@ Extension _ValueExtensionBuilder(DtoAnnotationContext context) {
 
   final fieldStatements = context.fields.map((field) {
     final fieldName = field.name;
-    final fieldNameRef = field.asNameRef;
+    final fieldNameRef = field.nullable ? '$fieldName?' : fieldName;
 
     if (field.hasDto) {
       if (field.isListType) {

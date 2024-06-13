@@ -4,7 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../../core/dto.dart';
-import '../../core/models/mix_data.dart';
+import '../../core/mix_data.dart';
 import '../../internal/iterable_ext.dart';
 import '../border/border_dto.dart';
 import '../border/border_radius_dto.dart';

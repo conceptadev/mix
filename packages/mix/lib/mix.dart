@@ -4,6 +4,7 @@
 library mix;
 
 // Automated file exports
+export 'src/attributes/animated/animated_data.dart';
 export 'src/attributes/color/color_directives.dart';
 export 'src/exports/attributes.dart';
 export 'src/exports/dtos.dart';

@@ -62,6 +62,10 @@ final _utilityMap = {
   'FontFamily': 'FontFamilyUtility',
   'String': 'StringUtility',
   'List<String>': 'StringListUtility',
+  'Paint': 'PaintUtility',
+  'Locale': 'LocaleUtility',
+  'TextDecorationStyle': 'TextDecorationStyleUtility',
+  'List<FontFeature>': 'FontFeatureListUtility',
 };
 
 final _dtoMap = {
@@ -109,8 +113,6 @@ class FieldInfo {
 
   /// Type name with nullability flag.
   final String type;
-
-  String get asNameRef => nullable ? name : name + '?';
 
   String get asRequiredType => nullable ? type.replaceFirst('?', '') : type;
 

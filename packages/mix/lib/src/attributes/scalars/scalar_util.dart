@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'dart:typed_data';
+import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
@@ -39,24 +40,6 @@ abstract base class ScalarUtility<Return extends Attribute, Param>
   const ScalarUtility(super.builder);
 
   Return call(Param value) => builder(value);
-}
-
-class ListDtoUtility<T extends Attribute, D extends Dto<Value>, Value> {
-  final T Function(List<D>) builder;
-  final D Function(Value) valueToDto;
-  const ListDtoUtility(this.builder, this.valueToDto);
-
-  /// Creates an [Attribute] instance from a list of [BoxShadow] objects.
-  ///
-  /// This method maps each [BoxShadow] object to a [ShadowDto] object and passes the
-  /// resulting list to the [builder] function to create the [Attribute] instance.
-// ListDtoUtility<T, ColorDto, Color>(
-//     (v) => only(colors: v),
-//     (v) => v.toDto(),
-//   );
-  T call(List<Value> values) {
-    return builder(values.map(valueToDto).toList());
-  }
 }
 
 final class ListUtility<T extends Attribute, V> extends MixUtility<T, List<V>> {
@@ -143,6 +126,16 @@ final class DoubleUtility<T extends Attribute>
 final class DoubleListUtility<T extends Attribute>
     extends ListUtility<T, double> {
   const DoubleListUtility(super.builder);
+}
+
+final class FontFeatureUtility<T extends Attribute>
+    extends ScalarUtility<T, FontFeature> {
+  const FontFeatureUtility(super.builder);
+}
+
+final class FontFeatureListUtility<T extends Attribute>
+    extends ListUtility<T, FontFeature> {
+  const FontFeatureListUtility(super.builder);
 }
 
 /// A utilyt class for creating [Attribute] instances from [Duration] values.
@@ -258,6 +251,15 @@ final class VerticalDirectionUtility<T extends Attribute>
 
   /// Creates an [Attribute] instance with [VerticalDirection.down].
   T down() => builder(VerticalDirection.down);
+}
+
+final class PaintUtility<T extends Attribute> extends ScalarUtility<T, Paint> {
+  const PaintUtility(super.builder);
+}
+
+final class LocaleUtility<T extends Attribute>
+    extends ScalarUtility<T, Locale> {
+  const LocaleUtility(super.builder);
 }
 
 /// A utility class for creating [Attribute] instances from [BorderStyle] values.
@@ -516,6 +518,8 @@ final class OffsetUtility<T extends Attribute> extends MixUtility<T, Offset> {
   T infinite() => builder(Offset.infinite);
 
   T call(double dx, double dy) => builder(Offset(dx, dy));
+
+  T as(Offset offset) => builder(offset);
 
   T zero() => builder(Offset.zero);
 }

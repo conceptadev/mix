@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../attributes/scalars/scalar_util.dart';
 import '../core/attribute.dart';
-import '../core/models/mix_data.dart';
+import '../core/mix_data.dart';
 import '../core/modifier.dart';
 
 final class IntrinsicHeightModifierSpec

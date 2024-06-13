@@ -99,7 +99,7 @@ Method MethodMergeBuilder({
     final thisName = isInternalRef ? field.asInternalRef : field.name;
     if (field.hasDto) {
       if (field.isListType) {
-        return Code('$propName: Dto.mergeList($thisName, other.$thisName)');
+        return Code('$propName: Dto.mergeList($thisName, other.$propName)');
       } else {
         return Code(
             '$propName: $thisName?.merge(other.$propName) ?? other.$propName');

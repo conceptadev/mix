@@ -1,11 +1,11 @@
 import 'package:flutter/foundation.dart';
 
+import '../attributes/animated/animated_data.dart';
 import '../attributes/animated/animated_data_dto.dart';
 import '../attributes/scalars/scalar_util.dart';
 import '../internal/compare_mixin.dart';
 import 'attribute.dart';
-import 'models/animated_data.dart';
-import 'models/mix_data.dart';
+import 'mix_data.dart';
 
 @immutable
 abstract base class Spec<T extends Spec<T>> with EqualityMixin {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../core/mix_data.dart';
 import '../factory/mix_provider.dart';
-import '../core/models/mix_data.dart';
 import '../theme/mix_theme.dart';
 
 extension BuildContextExt on BuildContext {

@@ -16,13 +16,3 @@ final $text = TextSpecUtility(MixUtility.selfBuilder);
 final $stack = StackSpecUtility(MixUtility.selfBuilder);
 final $with = WithModifierUtility();
 final $on = OnContextVariantUtility();
-
-class AllMixUtilities {
-  final BoxSpecUtility box = $box;
-  final FlexSpecUtility flex = $flex;
-  final ImageSpecUtility image = $image;
-  final IconSpecUtility icon = $icon;
-  final TextSpecUtility text = $text;
-  final StackSpecUtility stack = $stack;
-  AllMixUtilities();
-}
