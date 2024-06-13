@@ -7,7 +7,7 @@ import '../../../mix.dart';
 part 'icon_spec.g.dart';
 
 @MixableSpec()
-final class IconSpec extends Spec<IconSpec> with IconSpecMixable {
+final class IconSpec extends Spec<IconSpec> with _$IconSpec {
   final Color? color;
   final double? size;
   final double? weight;
@@ -21,9 +21,9 @@ final class IconSpec extends Spec<IconSpec> with IconSpecMixable {
   final List<Shadow>? shadows;
   final double? fill;
 
-  static const of = IconSpecMixable.of;
+  static const of = _$IconSpec.of;
 
-  static const from = IconSpecMixable.from;
+  static const from = _$IconSpec.from;
 
   const IconSpec({
     this.color,

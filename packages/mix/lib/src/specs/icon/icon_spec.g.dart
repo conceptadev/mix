@@ -6,7 +6,7 @@ part of 'icon_spec.dart';
 // Generator: SpecDefinitionBuilder
 // **************************************************************************
 
-base mixin IconSpecMixable on Spec<IconSpec> {
+base mixin _$IconSpec on Spec<IconSpec> {
   /// Retrieves the [IconSpec] from a MixData.
   static IconSpec from(MixData mix) {
     return mix.attributeOf<IconSpecAttribute>()?.resolve(mix) ??
@@ -17,7 +17,7 @@ base mixin IconSpecMixable on Spec<IconSpec> {
   ///
   /// If no ancestor is found, returns [IconSpec].
   static IconSpec of(BuildContext context) {
-    return IconSpecMixable.from(Mix.of(context));
+    return _$IconSpec.from(Mix.of(context));
   }
 
   /// Creates a copy of this [IconSpec] but with the given fields
@@ -62,22 +62,22 @@ base mixin IconSpecMixable on Spec<IconSpec> {
         other._$this.color,
         t,
       ),
-      size: _lerpDouble(
+      size: _$lerpDouble(
         _$this.size,
         other._$this.size,
         t,
       ),
-      weight: _lerpDouble(
+      weight: _$lerpDouble(
         _$this.weight,
         other._$this.weight,
         t,
       ),
-      grade: _lerpDouble(
+      grade: _$lerpDouble(
         _$this.grade,
         other._$this.grade,
         t,
       ),
-      opticalSize: _lerpDouble(
+      opticalSize: _$lerpDouble(
         _$this.opticalSize,
         other._$this.opticalSize,
         t,
@@ -87,7 +87,7 @@ base mixin IconSpecMixable on Spec<IconSpec> {
           t < 0.5 ? _$this.textDirection : other._$this.textDirection,
       applyTextScaling:
           t < 0.5 ? _$this.applyTextScaling : other._$this.applyTextScaling,
-      fill: _lerpDouble(
+      fill: _$lerpDouble(
         _$this.fill,
         other._$this.fill,
         t,
@@ -303,7 +303,7 @@ class IconSpecTween extends Tween<IconSpec?> {
   }
 }
 
-double? _lerpDouble(
+double? _$lerpDouble(
   num? a,
   num? b,
   double t,

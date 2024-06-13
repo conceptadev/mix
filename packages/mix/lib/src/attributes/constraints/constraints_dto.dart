@@ -15,8 +15,8 @@ sealed class ConstraintsDto<T extends Constraints> extends Dto<T> {
 /// This is used to allow for resolvable value tokens, and also the correct
 /// merge and combining behavior. It allows to be merged, and resolved to a `[BoxConstraints]
 @MixableDto()
-class BoxConstraintsDto extends ConstraintsDto<BoxConstraints>
-    with BoxConstraintsDtoMixable {
+final class BoxConstraintsDto extends ConstraintsDto<BoxConstraints>
+    with _$BoxConstraintsDto {
   final double? minWidth;
   final double? maxWidth;
   final double? minHeight;

@@ -6,7 +6,7 @@ part of 'flex_spec.dart';
 // Generator: SpecDefinitionBuilder
 // **************************************************************************
 
-base mixin FlexSpecMixable on Spec<FlexSpec> {
+base mixin _$FlexSpec on Spec<FlexSpec> {
   /// Retrieves the [FlexSpec] from a MixData.
   static FlexSpec from(MixData mix) {
     return mix.attributeOf<FlexSpecAttribute>()?.resolve(mix) ??
@@ -17,7 +17,7 @@ base mixin FlexSpecMixable on Spec<FlexSpec> {
   ///
   /// If no ancestor is found, returns [FlexSpec].
   static FlexSpec of(BuildContext context) {
-    return FlexSpecMixable.from(Mix.of(context));
+    return _$FlexSpec.from(Mix.of(context));
   }
 
   /// Creates a copy of this [FlexSpec] but with the given fields
@@ -69,7 +69,7 @@ base mixin FlexSpecMixable on Spec<FlexSpec> {
           t < 0.5 ? _$this.textDirection : other._$this.textDirection,
       textBaseline: t < 0.5 ? _$this.textBaseline : other._$this.textBaseline,
       clipBehavior: t < 0.5 ? _$this.clipBehavior : other._$this.clipBehavior,
-      gap: _lerpDouble(
+      gap: _$lerpDouble(
         _$this.gap,
         other._$this.gap,
         t,
@@ -294,7 +294,7 @@ class FlexSpecTween extends Tween<FlexSpec?> {
   }
 }
 
-double? _lerpDouble(
+double? _$lerpDouble(
   num? a,
   num? b,
   double t,

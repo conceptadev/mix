@@ -32,20 +32,29 @@ class DtoDefinitionBuilder extends GeneratorForAnnotation<MixableDto> {
     }
 
     final context = await _loadContext(
-        element,
-        DartEmitter(
-          allocator: ReferenceTrackingAllocator(),
-          orderDirectives: true,
-          useNullSafetySyntax: true,
-        ),
-        DartFormatter(fixes: StyleFix.all));
+      element,
+      DartEmitter(
+        allocator: ReferenceTrackingAllocator(),
+        orderDirectives: true,
+        useNullSafetySyntax: true,
+      ),
+      DartFormatter(),
+    );
 
-    final dtoLibrary = Library((b) => b
-      ..body.addAll([
-        _MixinDtoBuilder(context),
-        _ValueExtensionBuilder(context),
-        _UtilityDtoClassBuilder(context)
-      ]));
+    final skipUtility = context.annotation.skipUtility;
+    final skipValueExtension = context.annotation.skipValueExtension;
+
+    final dtoLibrary = Library((b) {
+      b..body.add(_MixinDtoBuilder(context));
+
+      if (!skipUtility) {
+        b..body.add(_UtilityDtoClassBuilder(context));
+      }
+
+      if (!skipValueExtension) {
+        b..body.add(_ValueExtensionBuilder(context));
+      }
+    });
 
     return context.generate(dtoLibrary);
   }
@@ -193,6 +202,11 @@ Mixin _MixinDtoBuilder(DtoAnnotationContext context) {
     ),
   );
 
+  // check if ClassElement has a method getter called props
+  final hasEquality = element.methods.any((method) => method.name == 'props');
+  final hasResolve = element.methods.any((method) => method.name == 'resolve');
+  final hasMerge = element.methods.any((method) => method.name == 'merge');
+
   // Get the generic type argument of Dto
   final valueType = dtoSupertype.typeArguments.first;
 
@@ -205,24 +219,39 @@ Mixin _MixinDtoBuilder(DtoAnnotationContext context) {
     b.name = mixinName;
     b.on = refer('$dtoRef<$valueType>');
 
+    if (!hasResolve) {
+      b.methods.add(
+        MethodResolveBuilder(
+          resolveToType: valueTypeName,
+          fields: fields,
+          isInternalRef: true,
+          requiredParamsOfResolver: requiredParamOfResolver,
+        ),
+      );
+    }
+
+    if (!hasMerge) {
+      b.methods.add(
+        MethodMergeBuilder(
+          className: className,
+          context: context,
+          isInternalRef: true,
+          shouldMergeLists: context.annotation.mergeLists,
+        ),
+      );
+    }
+
+    if (!hasEquality) {
+      b.methods.add(
+        GetterPropsBuilder(
+          className: className,
+          fields: fields,
+          isInternalRef: true,
+        ),
+      );
+    }
+
     b.methods.addAll([
-      MethodResolveBuilder(
-        resolveToType: valueTypeName,
-        fields: fields,
-        isInternalRef: true,
-        requiredParamsOfResolver: requiredParamOfResolver,
-      ),
-      MethodMergeBuilder(
-        className: className,
-        context: context,
-        isInternalRef: true,
-        shouldMergeLists: context.annotation.mergeLists,
-      ),
-      GetterPropsBuilder(
-        className: className,
-        fields: fields,
-        isInternalRef: true,
-      ),
       GetterSelfBuilder(className: className),
       ...MethodPrivateHelpers(context)
     ]);
@@ -236,7 +265,7 @@ Future<DtoAnnotationContext> _loadContext(
 ) async {
   final annotation = _typeChecker.firstAnnotationOfExact(classElement)!;
 
-  final fields = sortedConstructorFields(classElement, null);
+  final fields = sortedConstructorFields(classElement);
   final context = DtoAnnotationContext(
     element: classElement,
     emitter: emitter,
@@ -256,8 +285,13 @@ MixableDto _readDtoAnnotation(
 ) {
   final shouldMergeLists = reader.read('mergeLists').boolValue;
 
+  final skipValueExtension = reader.read('skipValueExtension').boolValue;
+  final skipUtility = reader.read('skipUtility').boolValue;
+
   return MixableDto(
     mergeLists: shouldMergeLists,
+    skipValueExtension: skipValueExtension,
+    skipUtility: skipUtility,
   );
 }
 

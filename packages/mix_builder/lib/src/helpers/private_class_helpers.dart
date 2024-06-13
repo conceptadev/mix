@@ -4,12 +4,12 @@ import 'package:mix_builder/src/helpers/builder_utils.dart';
 class PrivateMethodHelper {
   const PrivateMethodHelper._();
 
-  static final lerpDoubleRef = refer('_lerpDouble');
+  static final lerpDoubleRef = refer('_\$lerpDouble');
 
-  static final lerpTextStyleRef = refer('_lerpTextStyle');
-  static final lerpStrutStyleRef = refer('_lerpStrutStyle');
+  static final lerpTextStyleRef = refer('_\$lerpTextStyle');
+  static final lerpStrutStyleRef = refer('_\$lerpStrutStyle');
 
-  static final mergeListTRef = refer('_mergeListT');
+  static final mergeListTRef = refer('_\$mergeListT');
 
   static final mergeListT = Method((b) {
     b.name = mergeListTRef.symbol;
@@ -89,9 +89,9 @@ class PrivateMethodHelper {
       return StrutStyle(
         fontFamily: t < 0.5 ? a.fontFamily : b.fontFamily,
         fontFamilyFallback: t < 0.5 ? a.fontFamilyFallback : b.fontFamilyFallback,
-        fontSize: _lerpDouble(a.fontSize, b.fontSize, t),
-        height: _lerpDouble(a.height, b.height, t),
-        leading: _lerpDouble(a.leading, b.leading, t),
+        fontSize: ${PrivateMethodHelper.lerpDoubleRef.symbol}(a.fontSize, b.fontSize, t),
+        height: ${PrivateMethodHelper.lerpDoubleRef.symbol}(a.height, b.height, t),
+        leading: ${PrivateMethodHelper.lerpDoubleRef.symbol}(a.leading, b.leading, t),
         fontWeight: FontWeight.lerp(a.fontWeight, b.fontWeight, t),
         fontStyle: t < 0.5 ? a.fontStyle : b.fontStyle,
         forceStrutHeight: t < 0.5 ? a.forceStrutHeight : b.forceStrutHeight,

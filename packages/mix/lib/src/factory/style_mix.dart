@@ -134,6 +134,9 @@ class Style with EqualityMixin {
         : mixes.reduce((combinedStyle, mix) => combinedStyle.merge(mix));
   }
 
+  /// Returns all utilities, allowing you to use your own namespace
+  static MixUtilities utilities() => MixUtilities();
+
   static get asAttribute => const SpreadFunctionParams<Attribute, Attribute>(
         NestedStyleAttribute.fromList,
       );
@@ -209,9 +212,6 @@ class Style with EqualityMixin {
 
     return copyWith(styles: mergedStyles, variants: mergedVariants);
   }
-
-  /// Returns all utilities, allowing you to use your own namespace
-  static MixUtilities utilities() => MixUtilities();
 
   /// Selects multiple [Variant] instances and returns a new `Style` with the selected variants.
   ///

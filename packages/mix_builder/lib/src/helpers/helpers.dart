@@ -7,11 +7,10 @@ import 'package:source_gen/source_gen.dart' show InvalidGenerationSourceError;
 /// The resulting array is sorted by the field name. `Throws` on error.
 List<ParameterInfo> sortedConstructorFields(
   ClassElement element,
-  String? constructor,
 ) {
-  final targetConstructor = constructor != null
-      ? element.getNamedConstructor(constructor)
-      : element.unnamedConstructor;
+  final constructor = element.getNamedConstructor('_');
+  final targetConstructor =
+      constructor != null ? constructor : element.unnamedConstructor;
 
   if (targetConstructor is! ConstructorElement) {
     if (constructor != null) {

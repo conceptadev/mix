@@ -6,7 +6,7 @@ part of 'image_spec.dart';
 // Generator: SpecDefinitionBuilder
 // **************************************************************************
 
-base mixin ImageSpecMixable on Spec<ImageSpec> {
+base mixin _$ImageSpec on Spec<ImageSpec> {
   /// Retrieves the [ImageSpec] from a MixData.
   static ImageSpec from(MixData mix) {
     return mix.attributeOf<ImageSpecAttribute>()?.resolve(mix) ??
@@ -17,7 +17,7 @@ base mixin ImageSpecMixable on Spec<ImageSpec> {
   ///
   /// If no ancestor is found, returns [ImageSpec].
   static ImageSpec of(BuildContext context) {
-    return ImageSpecMixable.from(Mix.of(context));
+    return _$ImageSpec.from(Mix.of(context));
   }
 
   /// Creates a copy of this [ImageSpec] but with the given fields
@@ -57,12 +57,12 @@ base mixin ImageSpecMixable on Spec<ImageSpec> {
     if (other == null) return _$this;
 
     return ImageSpec(
-      width: _lerpDouble(
+      width: _$lerpDouble(
         _$this.width,
         other._$this.width,
         t,
       ),
-      height: _lerpDouble(
+      height: _$lerpDouble(
         _$this.height,
         other._$this.height,
         t,
@@ -295,7 +295,7 @@ class ImageSpecTween extends Tween<ImageSpec?> {
   }
 }
 
-double? _lerpDouble(
+double? _$lerpDouble(
   num? a,
   num? b,
   double t,

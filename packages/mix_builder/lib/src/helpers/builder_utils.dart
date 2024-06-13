@@ -83,7 +83,7 @@ class SpecAnnotationContext extends AnnotationContext<MixableSpec> {
 
   String get specClassName => name;
 
-  String get specClassMixinName => '${specClassName}Mixable';
+  String get specClassMixinName => '_\$${specClassName}';
 
   String get specAttributeClassName => '${specClassName}Attribute';
 
@@ -105,7 +105,7 @@ class DtoAnnotationContext extends AnnotationContext<MixableDto> {
 
   String get dtoClassName => name;
 
-  String get dtoClassMixinName => '${dtoClassName}Mixable';
+  String get dtoClassMixinName => '_\$${dtoClassName}';
 }
 
 Expression getLerpExpression(String name, String type) {

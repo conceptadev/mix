@@ -6,7 +6,7 @@ part of 'strut_style_dto.dart';
 // Generator: DtoDefinitionBuilder
 // **************************************************************************
 
-mixin StrutStyleDtoMixable on Dto<StrutStyle> {
+mixin _$StrutStyleDto on Dto<StrutStyle> {
   @override
   StrutStyle resolve(MixData mix) {
     return StrutStyle(
@@ -27,7 +27,7 @@ mixin StrutStyleDtoMixable on Dto<StrutStyle> {
 
     return StrutStyleDto(
       fontFamily: other.fontFamily ?? _$this.fontFamily,
-      fontFamilyFallback: _mergeListT(
+      fontFamilyFallback: _$mergeListT(
         _$this.fontFamilyFallback,
         other.fontFamilyFallback,
       ),
@@ -59,7 +59,7 @@ mixin StrutStyleDtoMixable on Dto<StrutStyle> {
   }
 
   StrutStyleDto get _$this => this as StrutStyleDto;
-  List<T>? _mergeListT<T>(
+  List<T>? _$mergeListT<T>(
     List<T>? a,
     List<T>? b,
   ) {
@@ -76,21 +76,6 @@ mixin StrutStyleDtoMixable on Dto<StrutStyle> {
     }
 
     return mergedList;
-  }
-}
-
-extension StrutStyleExt on StrutStyle {
-  StrutStyleDto toDto() {
-    return StrutStyleDto(
-      fontFamily: fontFamily,
-      fontFamilyFallback: fontFamilyFallback,
-      fontSize: fontSize,
-      fontWeight: fontWeight,
-      fontStyle: fontStyle,
-      height: height,
-      leading: leading,
-      forceStrutHeight: forceStrutHeight,
-    );
   }
 }
 
@@ -166,6 +151,21 @@ final class StrutStyleUtility<T extends Attribute>
     bool? forceStrutHeight,
   }) {
     return only(
+      fontFamily: fontFamily,
+      fontFamilyFallback: fontFamilyFallback,
+      fontSize: fontSize,
+      fontWeight: fontWeight,
+      fontStyle: fontStyle,
+      height: height,
+      leading: leading,
+      forceStrutHeight: forceStrutHeight,
+    );
+  }
+}
+
+extension StrutStyleExt on StrutStyle {
+  StrutStyleDto toDto() {
+    return StrutStyleDto(
       fontFamily: fontFamily,
       fontFamilyFallback: fontFamilyFallback,
       fontSize: fontSize,

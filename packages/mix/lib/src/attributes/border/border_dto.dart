@@ -135,7 +135,7 @@ class BoxBorderDto extends Dto<BoxBorder> {
 }
 
 @MixableDto()
-class BorderSideDto extends Dto<BorderSide> with BorderSideDtoMixable {
+final class BorderSideDto extends Dto<BorderSide> with _$BorderSideDto {
   final ColorDto? color;
   final double? width;
 

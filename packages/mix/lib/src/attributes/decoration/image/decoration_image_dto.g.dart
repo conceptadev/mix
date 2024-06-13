@@ -6,7 +6,7 @@ part of 'decoration_image_dto.dart';
 // Generator: DtoDefinitionBuilder
 // **************************************************************************
 
-mixin DecorationImageDtoMixable on Dto<DecorationImage> {
+mixin _$DecorationImageDto on Dto<DecorationImage> {
   @override
   DecorationImage resolve(MixData mix) {
     final defaultValue = DecorationImage(image: AssetImage(''));
@@ -24,7 +24,7 @@ mixin DecorationImageDtoMixable on Dto<DecorationImage> {
   }
 
   @override
-  DecorationImageDto merge(DecorationImageDto? other) {
+  DecorationImageDto merge(covariant DecorationImageDto? other) {
     if (other == null) return _$this;
 
     return DecorationImageDto(
@@ -58,21 +58,6 @@ mixin DecorationImageDtoMixable on Dto<DecorationImage> {
   }
 
   DecorationImageDto get _$this => this as DecorationImageDto;
-}
-
-extension DecorationImageExt on DecorationImage {
-  DecorationImageDto toDto() {
-    return DecorationImageDto(
-      image: image,
-      fit: fit,
-      alignment: alignment,
-      centerSlice: centerSlice,
-      repeat: repeat,
-      filterQuality: filterQuality,
-      invertColors: invertColors,
-      isAntiAlias: isAntiAlias,
-    );
-  }
 }
 
 /// Utility class for configuring [DecorationImageDto] properties.
@@ -147,6 +132,21 @@ final class DecorationImageUtility<T extends Attribute>
     bool? isAntiAlias,
   }) {
     return only(
+      image: image,
+      fit: fit,
+      alignment: alignment,
+      centerSlice: centerSlice,
+      repeat: repeat,
+      filterQuality: filterQuality,
+      invertColors: invertColors,
+      isAntiAlias: isAntiAlias,
+    );
+  }
+}
+
+extension DecorationImageExt on DecorationImage {
+  DecorationImageDto toDto() {
+    return DecorationImageDto(
       image: image,
       fit: fit,
       alignment: alignment,

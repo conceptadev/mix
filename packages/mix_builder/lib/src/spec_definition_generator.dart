@@ -234,7 +234,7 @@ Future<SpecAnnotationContext> _loadContext(
   final annotation =
       _specDefinitionTypeChecker.firstAnnotationOfExact(classElement)!;
 
-  final fields = sortedConstructorFields(classElement, null);
+  final fields = sortedConstructorFields(classElement);
   final specDefinition = SpecAnnotationContext(
     element: classElement,
     emitter: emitter,

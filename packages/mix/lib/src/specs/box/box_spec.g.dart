@@ -6,7 +6,7 @@ part of 'box_spec.dart';
 // Generator: SpecDefinitionBuilder
 // **************************************************************************
 
-base mixin BoxSpecMixable on Spec<BoxSpec> {
+base mixin _$BoxSpec on Spec<BoxSpec> {
   /// Retrieves the [BoxSpec] from a MixData.
   static BoxSpec from(MixData mix) {
     return mix.attributeOf<BoxSpecAttribute>()?.resolve(mix) ?? const BoxSpec();
@@ -16,7 +16,7 @@ base mixin BoxSpecMixable on Spec<BoxSpec> {
   ///
   /// If no ancestor is found, returns [BoxSpec].
   static BoxSpec of(BuildContext context) {
-    return BoxSpecMixable.from(Mix.of(context));
+    return _$BoxSpec.from(Mix.of(context));
   }
 
   /// Creates a copy of this [BoxSpec] but with the given fields
@@ -100,12 +100,12 @@ base mixin BoxSpecMixable on Spec<BoxSpec> {
         t,
       ),
       clipBehavior: t < 0.5 ? _$this.clipBehavior : other._$this.clipBehavior,
-      width: _lerpDouble(
+      width: _$lerpDouble(
         _$this.width,
         other._$this.width,
         t,
       ),
-      height: _lerpDouble(
+      height: _$lerpDouble(
         _$this.height,
         other._$this.height,
         t,
@@ -397,7 +397,7 @@ class BoxSpecTween extends Tween<BoxSpec?> {
   }
 }
 
-double? _lerpDouble(
+double? _$lerpDouble(
   num? a,
   num? b,
   double t,

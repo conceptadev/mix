@@ -7,7 +7,7 @@ import '../../../mix.dart';
 part 'text_spec.g.dart';
 
 @MixableSpec()
-final class TextSpec extends Spec<TextSpec> with TextSpecMixable {
+final class TextSpec extends Spec<TextSpec> with _$TextSpec {
   final TextOverflow? overflow;
   final StrutStyle? strutStyle;
   final TextAlign? textAlign;
@@ -30,9 +30,9 @@ final class TextSpec extends Spec<TextSpec> with TextSpecMixable {
   )
   final TextDirective? directive;
 
-  static const of = TextSpecMixable.of;
+  static const of = _$TextSpec.of;
 
-  static const from = TextSpecMixable.from;
+  static const from = _$TextSpec.from;
 
   const TextSpec({
     this.overflow,

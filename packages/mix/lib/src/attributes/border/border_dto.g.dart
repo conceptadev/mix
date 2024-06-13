@@ -6,7 +6,7 @@ part of 'border_dto.dart';
 // Generator: DtoDefinitionBuilder
 // **************************************************************************
 
-mixin BorderSideDtoMixable on Dto<BorderSide> {
+mixin _$BorderSideDto on Dto<BorderSide> {
   @override
   BorderSide resolve(MixData mix) {
     final defaultValue = BorderSide();
@@ -46,17 +46,6 @@ mixin BorderSideDtoMixable on Dto<BorderSide> {
   }
 
   BorderSideDto get _$this => this as BorderSideDto;
-}
-
-extension BorderSideExt on BorderSide {
-  BorderSideDto toDto() {
-    return BorderSideDto(
-      color: color?.toDto(),
-      strokeAlign: strokeAlign,
-      style: style,
-      width: width,
-    );
-  }
 }
 
 /// Utility class for configuring [BorderSideDto] properties.
@@ -109,6 +98,17 @@ final class BorderSideUtility<T extends Attribute>
     double? width,
   }) {
     return only(
+      color: color?.toDto(),
+      strokeAlign: strokeAlign,
+      style: style,
+      width: width,
+    );
+  }
+}
+
+extension BorderSideExt on BorderSide {
+  BorderSideDto toDto() {
+    return BorderSideDto(
       color: color?.toDto(),
       strokeAlign: strokeAlign,
       style: style,

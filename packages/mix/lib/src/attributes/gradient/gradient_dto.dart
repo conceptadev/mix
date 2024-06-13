@@ -67,7 +67,7 @@ sealed class GradientDto<T extends Gradient> extends Dto<T> {
 
 @MixableDto()
 final class LinearGradientDto extends GradientDto<LinearGradient>
-    with LinearGradientDtoMixable {
+    with _$LinearGradientDto {
   final AlignmentGeometry? begin;
   final AlignmentGeometry? end;
   final TileMode? tileMode;
@@ -88,7 +88,7 @@ final class LinearGradientDto extends GradientDto<LinearGradient>
 /// merge and combining behavior. It allows to be merged, and resolved to a `[RadialGradient]
 @MixableDto()
 final class RadialGradientDto extends GradientDto<RadialGradient>
-    with RadialGradientDtoMixable {
+    with _$RadialGradientDto {
   final AlignmentGeometry? center;
   final double? radius;
 
@@ -117,7 +117,7 @@ final class RadialGradientDto extends GradientDto<RadialGradient>
 
 @MixableDto()
 final class SweepGradientDto extends GradientDto<SweepGradient>
-    with SweepGradientDtoMixable {
+    with _$SweepGradientDto {
   final AlignmentGeometry? center;
   final double? startAngle;
   final double? endAngle;

@@ -6,7 +6,7 @@ part of 'text_spec.dart';
 // Generator: SpecDefinitionBuilder
 // **************************************************************************
 
-base mixin TextSpecMixable on Spec<TextSpec> {
+base mixin _$TextSpec on Spec<TextSpec> {
   /// Retrieves the [TextSpec] from a MixData.
   static TextSpec from(MixData mix) {
     return mix.attributeOf<TextSpecAttribute>()?.resolve(mix) ??
@@ -17,7 +17,7 @@ base mixin TextSpecMixable on Spec<TextSpec> {
   ///
   /// If no ancestor is found, returns [TextSpec].
   static TextSpec of(BuildContext context) {
-    return TextSpecMixable.from(Mix.of(context));
+    return _$TextSpec.from(Mix.of(context));
   }
 
   /// Creates a copy of this [TextSpec] but with the given fields
@@ -62,19 +62,19 @@ base mixin TextSpecMixable on Spec<TextSpec> {
 
     return TextSpec(
       overflow: t < 0.5 ? _$this.overflow : other._$this.overflow,
-      strutStyle: _lerpStrutStyle(
+      strutStyle: _$lerpStrutStyle(
         _$this.strutStyle,
         other._$this.strutStyle,
         t,
       ),
       textAlign: t < 0.5 ? _$this.textAlign : other._$this.textAlign,
-      textScaleFactor: _lerpDouble(
+      textScaleFactor: _$lerpDouble(
         _$this.textScaleFactor,
         other._$this.textScaleFactor,
         t,
       ),
       maxLines: t < 0.5 ? _$this.maxLines : other._$this.maxLines,
-      style: _lerpTextStyle(
+      style: _$lerpTextStyle(
         _$this.style,
         other._$this.style,
         t,
@@ -339,7 +339,7 @@ class TextSpecTween extends Tween<TextSpec?> {
   }
 }
 
-double? _lerpDouble(
+double? _$lerpDouble(
   num? a,
   num? b,
   double t,
@@ -352,7 +352,7 @@ double? _lerpDouble(
   return a * (1.0 - t) + b * t;
 }
 
-StrutStyle? _lerpStrutStyle(
+StrutStyle? _$lerpStrutStyle(
   StrutStyle? a,
   StrutStyle? b,
   double t,
@@ -364,9 +364,9 @@ StrutStyle? _lerpStrutStyle(
   return StrutStyle(
     fontFamily: t < 0.5 ? a.fontFamily : b.fontFamily,
     fontFamilyFallback: t < 0.5 ? a.fontFamilyFallback : b.fontFamilyFallback,
-    fontSize: _lerpDouble(a.fontSize, b.fontSize, t),
-    height: _lerpDouble(a.height, b.height, t),
-    leading: _lerpDouble(a.leading, b.leading, t),
+    fontSize: _$lerpDouble(a.fontSize, b.fontSize, t),
+    height: _$lerpDouble(a.height, b.height, t),
+    leading: _$lerpDouble(a.leading, b.leading, t),
     fontWeight: FontWeight.lerp(a.fontWeight, b.fontWeight, t),
     fontStyle: t < 0.5 ? a.fontStyle : b.fontStyle,
     forceStrutHeight: t < 0.5 ? a.forceStrutHeight : b.forceStrutHeight,
@@ -376,7 +376,7 @@ StrutStyle? _lerpStrutStyle(
   );
 }
 
-TextStyle? _lerpTextStyle(
+TextStyle? _$lerpTextStyle(
   TextStyle? a,
   TextStyle? b,
   double t,

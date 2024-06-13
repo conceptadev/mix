@@ -46,10 +46,10 @@ const _boxDecorationUtil = _utility(
 );
 
 @MixableSpec()
-final class BoxSpec extends Spec<BoxSpec> with BoxSpecMixable {
-  static const of = BoxSpecMixable.of;
+final class BoxSpec extends Spec<BoxSpec> with _$BoxSpec {
+  static const of = _$BoxSpec.of;
 
-  static const from = BoxSpecMixable.from;
+  static const from = _$BoxSpec.from;
 
   /// Aligns the child within the box.
   final AlignmentGeometry? alignment;

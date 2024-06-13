@@ -6,7 +6,7 @@ part of 'gradient_dto.dart';
 // Generator: DtoDefinitionBuilder
 // **************************************************************************
 
-mixin LinearGradientDtoMixable on Dto<LinearGradient> {
+mixin _$LinearGradientDto on Dto<LinearGradient> {
   @override
   LinearGradient resolve(MixData mix) {
     final defaultValue = LinearGradient(colors: []);
@@ -32,7 +32,7 @@ mixin LinearGradientDtoMixable on Dto<LinearGradient> {
       tileMode: other.tileMode ?? _$this.tileMode,
       transform: other.transform ?? _$this.transform,
       colors: Dto.mergeList(_$this.colors, other.colors),
-      stops: _mergeListT(
+      stops: _$mergeListT(
         _$this.stops,
         other.stops,
       ),
@@ -56,7 +56,7 @@ mixin LinearGradientDtoMixable on Dto<LinearGradient> {
   }
 
   LinearGradientDto get _$this => this as LinearGradientDto;
-  List<T>? _mergeListT<T>(
+  List<T>? _$mergeListT<T>(
     List<T>? a,
     List<T>? b,
   ) {
@@ -73,19 +73,6 @@ mixin LinearGradientDtoMixable on Dto<LinearGradient> {
     }
 
     return mergedList;
-  }
-}
-
-extension LinearGradientExt on LinearGradient {
-  LinearGradientDto toDto() {
-    return LinearGradientDto(
-      begin: begin,
-      end: end,
-      tileMode: tileMode,
-      transform: transform,
-      colors: colors?.map((e) => e.toDto()).toList(),
-      stops: stops,
-    );
   }
 }
 
@@ -158,7 +145,20 @@ final class LinearGradientUtility<T extends Attribute>
   }
 }
 
-mixin RadialGradientDtoMixable on Dto<RadialGradient> {
+extension LinearGradientExt on LinearGradient {
+  LinearGradientDto toDto() {
+    return LinearGradientDto(
+      begin: begin,
+      end: end,
+      tileMode: tileMode,
+      transform: transform,
+      colors: colors?.map((e) => e.toDto()).toList(),
+      stops: stops,
+    );
+  }
+}
+
+mixin _$RadialGradientDto on Dto<RadialGradient> {
   @override
   RadialGradient resolve(MixData mix) {
     final defaultValue = RadialGradient(colors: []);
@@ -188,7 +188,7 @@ mixin RadialGradientDtoMixable on Dto<RadialGradient> {
       focalRadius: other.focalRadius ?? _$this.focalRadius,
       transform: other.transform ?? _$this.transform,
       colors: Dto.mergeList(_$this.colors, other.colors),
-      stops: _mergeListT(
+      stops: _$mergeListT(
         _$this.stops,
         other.stops,
       ),
@@ -214,7 +214,7 @@ mixin RadialGradientDtoMixable on Dto<RadialGradient> {
   }
 
   RadialGradientDto get _$this => this as RadialGradientDto;
-  List<T>? _mergeListT<T>(
+  List<T>? _$mergeListT<T>(
     List<T>? a,
     List<T>? b,
   ) {
@@ -231,21 +231,6 @@ mixin RadialGradientDtoMixable on Dto<RadialGradient> {
     }
 
     return mergedList;
-  }
-}
-
-extension RadialGradientExt on RadialGradient {
-  RadialGradientDto toDto() {
-    return RadialGradientDto(
-      center: center,
-      radius: radius,
-      tileMode: tileMode,
-      focal: focal,
-      focalRadius: focalRadius,
-      transform: transform,
-      colors: colors?.map((e) => e.toDto()).toList(),
-      stops: stops,
-    );
   }
 }
 
@@ -332,7 +317,22 @@ final class RadialGradientUtility<T extends Attribute>
   }
 }
 
-mixin SweepGradientDtoMixable on Dto<SweepGradient> {
+extension RadialGradientExt on RadialGradient {
+  RadialGradientDto toDto() {
+    return RadialGradientDto(
+      center: center,
+      radius: radius,
+      tileMode: tileMode,
+      focal: focal,
+      focalRadius: focalRadius,
+      transform: transform,
+      colors: colors?.map((e) => e.toDto()).toList(),
+      stops: stops,
+    );
+  }
+}
+
+mixin _$SweepGradientDto on Dto<SweepGradient> {
   @override
   SweepGradient resolve(MixData mix) {
     final defaultValue = SweepGradient(colors: []);
@@ -360,7 +360,7 @@ mixin SweepGradientDtoMixable on Dto<SweepGradient> {
       tileMode: other.tileMode ?? _$this.tileMode,
       transform: other.transform ?? _$this.transform,
       colors: Dto.mergeList(_$this.colors, other.colors),
-      stops: _mergeListT(
+      stops: _$mergeListT(
         _$this.stops,
         other.stops,
       ),
@@ -385,7 +385,7 @@ mixin SweepGradientDtoMixable on Dto<SweepGradient> {
   }
 
   SweepGradientDto get _$this => this as SweepGradientDto;
-  List<T>? _mergeListT<T>(
+  List<T>? _$mergeListT<T>(
     List<T>? a,
     List<T>? b,
   ) {
@@ -402,20 +402,6 @@ mixin SweepGradientDtoMixable on Dto<SweepGradient> {
     }
 
     return mergedList;
-  }
-}
-
-extension SweepGradientExt on SweepGradient {
-  SweepGradientDto toDto() {
-    return SweepGradientDto(
-      center: center,
-      startAngle: startAngle,
-      endAngle: endAngle,
-      tileMode: tileMode,
-      transform: transform,
-      colors: colors?.map((e) => e.toDto()).toList(),
-      stops: stops,
-    );
   }
 }
 
@@ -484,6 +470,20 @@ final class SweepGradientUtility<T extends Attribute>
     List<double>? stops,
   }) {
     return only(
+      center: center,
+      startAngle: startAngle,
+      endAngle: endAngle,
+      tileMode: tileMode,
+      transform: transform,
+      colors: colors?.map((e) => e.toDto()).toList(),
+      stops: stops,
+    );
+  }
+}
+
+extension SweepGradientExt on SweepGradient {
+  SweepGradientDto toDto() {
+    return SweepGradientDto(
       center: center,
       startAngle: startAngle,
       endAngle: endAngle,

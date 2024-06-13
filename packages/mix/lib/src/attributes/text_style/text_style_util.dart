@@ -36,7 +36,7 @@ final class TextStyleUtility<T extends Attribute>
 
   late final fontFamily = FontFamilyUtility((v) => call(fontFamily: v));
 
-  TextStyleUtility(super.builder) : super(valueToDto: (value) => value.toDto());
+  TextStyleUtility(super.builder) : super(valueToDto: (v) => v.toDto());
 
   T height(double v) => only(height: v);
 
@@ -139,27 +139,27 @@ final class TextStyleUtility<T extends Attribute>
     String? fontFamily,
   }) {
     final textStyle = TextStyleDto(
-      background: background,
-      backgroundColor: backgroundColor,
       color: color,
+      backgroundColor: backgroundColor,
+      fontSize: fontSize,
+      fontWeight: fontWeight,
+      fontStyle: fontStyle,
+      letterSpacing: letterSpacing,
       debugLabel: debugLabel,
+      wordSpacing: wordSpacing,
+      textBaseline: textBaseline,
+      shadows: shadows,
+      fontFeatures: fontFeatures,
       decoration: decoration,
       decorationColor: decorationColor,
       decorationStyle: decorationStyle,
+      locale: locale,
+      height: height,
+      foreground: foreground,
+      background: background,
       decorationThickness: decorationThickness,
       fontFamily: fontFamily,
       fontFamilyFallback: fontFamilyFallback,
-      fontFeatures: fontFeatures,
-      fontSize: fontSize,
-      fontStyle: fontStyle,
-      fontWeight: fontWeight,
-      foreground: foreground,
-      height: height,
-      letterSpacing: letterSpacing,
-      locale: locale,
-      shadows: shadows,
-      textBaseline: textBaseline,
-      wordSpacing: wordSpacing,
     );
 
     return builder(textStyle);

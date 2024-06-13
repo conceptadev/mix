@@ -94,28 +94,45 @@ Method MethodMergeBuilder({
   final fields = context.fields;
   final emitter = context.emitter;
 
+  final namedConstructor = context.element.getNamedConstructor('_');
+  final constructor =
+      namedConstructor != null ? '.${namedConstructor.name}' : '';
+
   final fieldStatements = fields.map((field) {
     final propName = field.name;
     final thisName = isInternalRef ? field.asInternalRef : field.name;
+    final nullable = field.nullable ? '?' : '';
+
+    var propAssignment = '$propName:';
+    if (field.isPositioned) {
+      propAssignment = '';
+    }
     if (field.hasDto) {
       if (field.isListType) {
-        return Code('$propName: Dto.mergeList($thisName, other.$propName)');
+        return Code(
+            '$propAssignment Dto.mergeList($thisName, other.$propName)');
       } else {
         return Code(
-            '$propName: $thisName?.merge(other.$propName) ?? other.$propName');
+            '$propAssignment $thisName$nullable.merge(other.$propName) ?? other.$propName');
       }
     } else {
       if (field.isListType) {
         if (shouldMergeLists) {
-          return Code('$propName: ${PrivateMethodHelper.mergeListTRef.call([
+          return Code(
+              '$propAssignment ${PrivateMethodHelper.mergeListTRef.call([
                 refer(thisName),
                 refer('other.$propName')
               ]).accept(emitter)}');
         } else {
-          return Code('$propName: [...?$thisName,...?other.$propName]');
+          return Code(
+              '$propAssignment [...$nullable$thisName,...${nullable}other.$propName]');
         }
       } else {
-        return Code('$propName: other.$propName ?? $thisName');
+        if (field.nullable) {
+          return Code('$propAssignment other.$propName ?? $thisName');
+        } else {
+          return Code('$propAssignment other.$propName');
+        }
       }
     }
   });
@@ -124,15 +141,18 @@ Method MethodMergeBuilder({
     b.annotations.add(refer('override'));
     b.name = 'merge';
     b.returns = refer(className);
+
     b.requiredParameters.add(Parameter((b) {
       b.name = 'other';
+      // Do not use covariant if it can be extended
+      b.covariant = !context.element.isFinal;
       b.type = refer('$className?');
     }));
     b.body = Block.of([
       Code('''
         if (other == null) return $thisRef;
 
-        return $className(
+        return $className$constructor(
           ${fieldStatements.join(',')},
         );
       ''')

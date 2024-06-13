@@ -6,7 +6,7 @@ part of 'stack_spec.dart';
 // Generator: SpecDefinitionBuilder
 // **************************************************************************
 
-base mixin StackSpecMixable on Spec<StackSpec> {
+base mixin _$StackSpec on Spec<StackSpec> {
   /// Retrieves the [StackSpec] from a MixData.
   static StackSpec from(MixData mix) {
     return mix.attributeOf<StackSpecAttribute>()?.resolve(mix) ??
@@ -17,7 +17,7 @@ base mixin StackSpecMixable on Spec<StackSpec> {
   ///
   /// If no ancestor is found, returns [StackSpec].
   static StackSpec of(BuildContext context) {
-    return StackSpecMixable.from(Mix.of(context));
+    return _$StackSpec.from(Mix.of(context));
   }
 
   /// Creates a copy of this [StackSpec] but with the given fields

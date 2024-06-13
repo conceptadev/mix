@@ -6,7 +6,7 @@ part of 'constraints_dto.dart';
 // Generator: DtoDefinitionBuilder
 // **************************************************************************
 
-mixin BoxConstraintsDtoMixable on Dto<BoxConstraints> {
+mixin _$BoxConstraintsDto on Dto<BoxConstraints> {
   @override
   BoxConstraints resolve(MixData mix) {
     final defaultValue = BoxConstraints();
@@ -46,17 +46,6 @@ mixin BoxConstraintsDtoMixable on Dto<BoxConstraints> {
   }
 
   BoxConstraintsDto get _$this => this as BoxConstraintsDto;
-}
-
-extension BoxConstraintsExt on BoxConstraints {
-  BoxConstraintsDto toDto() {
-    return BoxConstraintsDto(
-      minWidth: minWidth,
-      maxWidth: maxWidth,
-      minHeight: minHeight,
-      maxHeight: maxHeight,
-    );
-  }
 }
 
 /// Utility class for configuring [BoxConstraintsDto] properties.
@@ -106,6 +95,17 @@ final class BoxConstraintsUtility<T extends Attribute>
     double? maxHeight,
   }) {
     return only(
+      minWidth: minWidth,
+      maxWidth: maxWidth,
+      minHeight: minHeight,
+      maxHeight: maxHeight,
+    );
+  }
+}
+
+extension BoxConstraintsExt on BoxConstraints {
+  BoxConstraintsDto toDto() {
+    return BoxConstraintsDto(
       minWidth: minWidth,
       maxWidth: maxWidth,
       minHeight: minHeight,

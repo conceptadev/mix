@@ -8,7 +8,7 @@ import '../../../mix.dart';
 part 'image_spec.g.dart';
 
 @MixableSpec()
-final class ImageSpec extends Spec<ImageSpec> with ImageSpecMixable {
+final class ImageSpec extends Spec<ImageSpec> with _$ImageSpec {
   final double? width, height;
   final Color? color;
   final ImageRepeat? repeat;
@@ -18,9 +18,9 @@ final class ImageSpec extends Spec<ImageSpec> with ImageSpecMixable {
   final FilterQuality? filterQuality;
   final BlendMode? colorBlendMode;
 
-  static const of = ImageSpecMixable.of;
+  static const of = _$ImageSpec.of;
 
-  static const from = ImageSpecMixable.from;
+  static const from = _$ImageSpec.from;
 
   const ImageSpec({
     this.width,

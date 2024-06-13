@@ -7,7 +7,7 @@ import '../../../mix.dart';
 part 'flex_spec.g.dart';
 
 @MixableSpec()
-final class FlexSpec extends Spec<FlexSpec> with FlexSpecMixable {
+final class FlexSpec extends Spec<FlexSpec> with _$FlexSpec {
   @MixableField(
     utility: MixableFieldUtility(
       properties: [
@@ -27,9 +27,9 @@ final class FlexSpec extends Spec<FlexSpec> with FlexSpecMixable {
   @MixableField(utility: MixableFieldUtility(type: SpacingSideUtility))
   final double? gap;
 
-  static const of = FlexSpecMixable.of;
+  static const of = _$FlexSpec.of;
 
-  static const from = FlexSpecMixable.from;
+  static const from = _$FlexSpec.from;
 
   const FlexSpec({
     this.crossAxisAlignment,

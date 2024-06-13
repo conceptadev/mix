@@ -18,7 +18,15 @@ class MixableDto {
   /// If true it will merge the items in the list in its position
   /// if false list items will just be added to the list
   final bool mergeLists;
-  const MixableDto({this.mergeLists = true});
+  final bool skipValueExtension;
+
+  final bool skipUtility;
+
+  const MixableDto({
+    this.mergeLists = true,
+    this.skipValueExtension = false,
+    this.skipUtility = false,
+  });
 }
 
 class MixableField {
