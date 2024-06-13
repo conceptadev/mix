@@ -11,14 +11,9 @@ dependencies:
     sdk: flutter
   mix: 
     path: ../mix
-  mix_annotations: 
-    path: ../mix_annotations
   mix_lint:
     path: ../mix_lint
 
-dependency_overrides: 
-  mix_annotations:
-    path: ../mix_annotations
 
 dev_dependencies:
   flutter_test:

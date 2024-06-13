@@ -19,7 +19,6 @@ abstract base class ShadowDtoImpl<T extends Shadow> extends Dto<T> {
 ///
 /// This is used to allow for resolvable value tokens, and also the correct
 /// merge and combining behavior. It allows to be merged, and resolved to a [Shadow]
-
 @MixableDto()
 final class ShadowDto extends ShadowDtoImpl<Shadow> with _$ShadowDto {
   const ShadowDto({super.blurRadius, super.color, super.offset});
