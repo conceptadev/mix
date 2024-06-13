@@ -1,6 +1,6 @@
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/leoafarias/mix/main/assets/dark.svg">
-  <img alt="Mix logo" src="https://raw.githubusercontent.com/leoafarias/mix/main/packages/mix/assets/light.svg">
+  <img alt="Mix logo" src="https://raw.githubusercontent.com/leoafarias/mix/main/assets/light.svg">
 </picture>
 
 ![GitHub stars](https://img.shields.io/github/stars/conceptadev/mix?style=for-the-badge&logo=GitHub&logoColor=black&labelColor=white&color=dddddd)
