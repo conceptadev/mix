@@ -1,5 +1,5 @@
 import 'package:code_builder/code_builder.dart';
-import 'package:mix_annotations/mix_annotations.dart';
+import 'package:mix/annotations.dart';
 import 'package:mix_builder/src/helpers/builder_utils.dart';
 import 'package:mix_builder/src/helpers/field_info.dart';
 import 'package:source_gen/source_gen.dart';

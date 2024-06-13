@@ -4,7 +4,7 @@ import 'package:analyzer/dart/element/element.dart';
 import 'package:build/build.dart';
 import 'package:code_builder/code_builder.dart';
 import 'package:dart_style/dart_style.dart';
-import 'package:mix_annotations/mix_annotations.dart';
+import 'package:mix/annotations.dart';
 import 'package:mix_builder/src/helpers/helpers.dart';
 import 'package:mix_builder/src/helpers/settings.dart';
 import 'package:source_gen/source_gen.dart';

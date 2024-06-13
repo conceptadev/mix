@@ -1,8 +1,8 @@
 // ignore_for_file: camel_case_types
 
 import 'package:flutter/material.dart';
-import 'package:mix_annotations/mix_annotations.dart';
 
+import '../../../annotations.dart';
 // ignore: avoid-importing-entrypoint-exports
 import '../../../mix.dart';
 

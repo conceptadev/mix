@@ -1,5 +1,5 @@
 import 'package:flutter/rendering.dart';
-import 'package:mix_annotations/mix_annotations.dart';
+import 'package:mix/annotations.dart';
 
 // ignore: avoid-importing-entrypoint-exports
 import '../../../mix.dart';

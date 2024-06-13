@@ -332,7 +332,7 @@ packages:
     source: hosted
     version: "1.0.4"
   mix_annotations:
-    dependency: "direct main"
+    dependency: "direct overridden"
     description:
       path: "../mix_annotations"
       relative: true

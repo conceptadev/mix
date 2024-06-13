@@ -9,7 +9,7 @@ part of 'constraints_dto.dart';
 mixin _$BoxConstraintsDto on Dto<BoxConstraints> {
   @override
   BoxConstraints resolve(MixData mix) {
-    const defaultValue = BoxConstraints();
+    final defaultValue = BoxConstraints();
 
     return BoxConstraints(
       minWidth: _$this.minWidth ?? defaultValue.minWidth,

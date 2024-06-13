@@ -1,7 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:mix_annotations/mix_annotations.dart';
+import 'package:mix/annotations.dart';
 
 import '../../../mix.dart';
 
@@ -19,10 +19,9 @@ final class TextStyleDataRef extends TextStyleData {
   }
 
   @override
-  get props => [ref];
-
-  @override
   TextStyle resolve(MixData mix) => mix.tokens.textStyleRef(ref);
+  @override
+  get props => [ref];
 }
 
 @MixableDto(skipUtility: true, skipValueExtension: true)
@@ -125,7 +124,7 @@ final class TextStyleDto extends Dto<TextStyle> with _$TextStyleDto {
         shadows: shadows,
         textBaseline: textBaseline,
         wordSpacing: wordSpacing,
-      )
+      ),
     ]);
   }
 
@@ -145,6 +144,7 @@ final class TextStyleDto extends Dto<TextStyle> with _$TextStyleDto {
         .map((e) => e is TextStyleDataRef ? e.resolve(mix)._toData() : e)
         .reduce((value, element) {
       final singleresult = value.merge(element);
+
       return singleresult;
     }).resolve(mix);
 
@@ -155,26 +155,26 @@ final class TextStyleDto extends Dto<TextStyle> with _$TextStyleDto {
 extension TextStyleExt on TextStyle {
   TextStyleDto toDto() => TextStyleDto._([_toData()]);
   TextStyleData _toData() => TextStyleData(
-        color: color?.toDto(),
-        backgroundColor: backgroundColor?.toDto(),
-        fontSize: fontSize,
-        fontWeight: fontWeight,
-        fontStyle: fontStyle,
-        letterSpacing: letterSpacing,
-        wordSpacing: wordSpacing,
-        textBaseline: textBaseline,
-        height: height,
-        locale: locale,
-        foreground: foreground,
         background: background,
-        shadows: shadows?.map((e) => e.toDto()).toList(),
-        fontFeatures: fontFeatures,
+        backgroundColor: backgroundColor?.toDto(),
+        color: color?.toDto(),
+        debugLabel: debugLabel,
         decoration: decoration,
         decorationColor: decorationColor?.toDto(),
         decorationStyle: decorationStyle,
         decorationThickness: decorationThickness,
-        debugLabel: debugLabel,
         fontFamily: fontFamily,
         fontFamilyFallback: fontFamilyFallback,
+        fontFeatures: fontFeatures,
+        fontSize: fontSize,
+        fontStyle: fontStyle,
+        fontWeight: fontWeight,
+        foreground: foreground,
+        height: height,
+        letterSpacing: letterSpacing,
+        locale: locale,
+        shadows: shadows?.map((e) => e.toDto()).toList(),
+        textBaseline: textBaseline,
+        wordSpacing: wordSpacing,
       );
 }
