@@ -14,6 +14,7 @@ final class TextStyleDataRef extends TextStyleData {
 
   @override
   TextStyleDataRef merge(covariant TextStyleDataRef? other) {
+    if (other == null) return this;
     throw UnsupportedError(
       'Cannot merge $this with $other, most likely there is an error on Mix',
     );
