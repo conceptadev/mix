@@ -17,29 +17,41 @@ We'll compare a common scenario: styling a custom widget, to illustrate the adva
 
 #### With Mix
 
-```dart
+```dart filename="widget.style.dart"
+Style get customStyle {
+  final style = Style(
+      $box.height(100),
+      $box.margin.vertical(10),
+      $box.elevation(10),
+      $box.borderRadius(10),
+      $box.color($material.colorScheme.primary()),
+      $text.style.as($material.textTheme.button()),
+      $text.style.color($material.colorScheme.onPrimary()),
+      $on.hover(
+        $box.elevation(2),
+        $box.padding(20),
+        $box.color($material.colorScheme.secondary()),
+        $text.style(color: $material.colorScheme.onSecondary()),
+      ),
+    );
+
+    return style.animate(
+      curve: Curves.linear,
+      duration: const Duration(milliseconds: 100),
+    );
+ }
+```
+
+```dart filename="widget.dart"
+import 'widget.style.dart';
+
 class CustomMixWidget extends StatelessWidget {
   const CustomMixWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final style = Style(
-      $box.height(100),
-      $box.margin.vertical(10),
-      $box.elevation(10),
-      $box.borderRadius(10),
-      $box.color($md.colorScheme.primary()),
-      $text.style.as($button()),
-      $text.style.color($md.colorScheme.onPrimary()),
-      $on.hover(
-        $box.elevation(2),
-        $box.padding(20),
-        $box.color($md.colorScheme.secondary()),
-        $text.style(color: $md.colorScheme.onSecondary()),
-      ),
-    );
     return PressableBox(
-      style: style,
+      style: customStyle,
       child: const StyledText('Custom Widget'),
     );
   }
@@ -104,7 +116,6 @@ class _CustomWidgetState extends State<CustomWidget> {
     );
   }
 }
-
 ```
 
 Without Mix, the code is more verbose, especially in managing the hover state and styling. The separation between logic and presentation is less clear.
