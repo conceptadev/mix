@@ -86,7 +86,7 @@ class BoxDecorationDto extends DecorationDto<BoxDecoration> {
       border: border?.merge(other?.border) ?? other?.border,
       borderRadius:
           borderRadius?.merge(other?.borderRadius) ?? other?.borderRadius,
-      gradient: gradient?.merge(other?.gradient) ?? other?.gradient,
+      gradient: gradient?.tryToMerge(other?.gradient) ?? other?.gradient,
       boxShadow: boxShadow?.merge(other?.boxShadow) ?? other?.boxShadow,
       shape: other?.shape ?? shape,
       backgroundBlendMode: other?.backgroundBlendMode ?? backgroundBlendMode,
@@ -139,7 +139,7 @@ class ShapeDecorationDto extends DecorationDto<ShapeDecoration> {
     return ShapeDecorationDto(
       color: color?.merge(other?.color) ?? other?.color,
       shape: shape?.merge(other?.shape) ?? other?.shape,
-      gradient: gradient?.merge(other?.gradient) ?? other?.gradient,
+      gradient: gradient?.tryToMerge(other?.gradient) ?? other?.gradient,
       shadows: boxShadow?.merge(other?.boxShadow) ?? other?.boxShadow,
     );
   }

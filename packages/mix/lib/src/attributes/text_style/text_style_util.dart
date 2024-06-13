@@ -8,7 +8,6 @@ import '../color/color_dto.dart';
 import '../color/color_util.dart';
 import '../scalars/scalar_util.dart';
 import '../shadow/shadow_dto.dart';
-import '../shadow/shadow_util.dart';
 import 'text_style_dto.dart';
 
 final class TextStyleUtility<T extends Attribute>

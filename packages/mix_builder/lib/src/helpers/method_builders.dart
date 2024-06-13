@@ -28,7 +28,9 @@ final _defaultValues = {
   'SweepGradient': 'SweepGradient(colors:[])',
   'BorderSide': 'BorderSide()',
   'BoxConstraints': 'BoxConstraints()',
-  'DecorationImage': "DecorationImage(image: AssetImage(''))"
+  'DecorationImage': "DecorationImage(image: AssetImage(''))",
+  'Shadow': 'Shadow()',
+  'BoxShadow': 'BoxShadow()',
 };
 Method MethodResolveBuilder({
   required String resolveToType,

@@ -66,6 +66,7 @@ final _utilityMap = {
   'Locale': 'LocaleUtility',
   'TextDecorationStyle': 'TextDecorationStyleUtility',
   'List<FontFeature>': 'FontFeatureListUtility',
+  'Offset': 'OffsetUtility',
 };
 
 final _dtoMap = {
