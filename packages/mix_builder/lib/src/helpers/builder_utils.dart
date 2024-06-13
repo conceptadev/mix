@@ -136,13 +136,11 @@ Expression getLerpExpression(String name, String type) {
       return FlutterTypes.widgets.alignmentGeometry
           .property('lerp')(expression);
     case 'Matrix4':
-      return FlutterTypes.widgets.matrix4Tween
-          .newInstance(
-            [],
-            {'begin': refer(name), 'end': refer('other.$name')},
-          )
-          .property('lerp')
-          .call([refer('t')]);
+      return CodeExpression(Code('''
+$name != null && other.$name != null
+      ? Matrix4Tween(begin: $name , end: other.$name).lerp(t)
+      : t < 0.5 ? $name : other.$name
+'''));
 
     default:
       return CodeExpression(Code('t < 0.5 ? $name : other.$name'));

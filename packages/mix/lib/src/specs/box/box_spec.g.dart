@@ -90,10 +90,12 @@ base mixin _$BoxSpec on Spec<BoxSpec> {
         other._$this.foregroundDecoration,
         t,
       ),
-      transform: Matrix4Tween(
-        begin: _$this.transform,
-        end: other._$this.transform,
-      ).lerp(t),
+      transform: _$this.transform != null && other._$this.transform != null
+          ? Matrix4Tween(begin: _$this.transform, end: other._$this.transform)
+              .lerp(t)
+          : t < 0.5
+              ? _$this.transform
+              : other._$this.transform,
       transformAlignment: AlignmentGeometry.lerp(
         _$this.transformAlignment,
         other._$this.transformAlignment,
