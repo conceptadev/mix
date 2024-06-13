@@ -331,13 +331,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.4"
-  mix_annotations:
-    dependency: "direct overridden"
-    description:
-      path: "../mix_annotations"
-      relative: true
-    source: path
-    version: "0.0.1"
   mix_builder:
     dependency: "direct dev"
     description:

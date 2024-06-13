@@ -1,3 +1,4 @@
+// ignore_for_file: prefer_relative_imports,avoid-importing-entrypoint-exports
 import 'dart:ui';
 
 import 'package:flutter/material.dart';

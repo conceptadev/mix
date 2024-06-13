@@ -4,6 +4,7 @@ import 'package:analyzer/dart/element/element.dart'
 import 'package:analyzer/dart/element/nullability_suffix.dart';
 import 'package:code_builder/code_builder.dart';
 import 'package:mix/annotations.dart';
+// ignore_for_file: prefer_relative_imports
 import 'package:source_gen/source_gen.dart' show ConstantReader, TypeChecker;
 
 final _utilityMap = {

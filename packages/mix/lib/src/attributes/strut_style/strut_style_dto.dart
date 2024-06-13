@@ -1,7 +1,8 @@
+// ignore_for_file: avoid-importing-entrypoint-exports, avoid-unused-ignores, prefer_relative_imports
+
 import 'package:flutter/material.dart';
 import 'package:mix/annotations.dart';
 
-// ignore: avoid-importing-entrypoint-exports
 import '../../../mix.dart';
 
 part 'strut_style_dto.g.dart';

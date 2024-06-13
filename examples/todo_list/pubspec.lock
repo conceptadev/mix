@@ -306,13 +306,6 @@ packages:
       relative: true
     source: path
     version: "1.0.0-beta.15"
-  mix_annotations:
-    dependency: "direct overridden"
-    description:
-      path: "../../packages/mix_annotations"
-      relative: true
-    source: path
-    version: "0.0.1"
   mix_lint:
     dependency: "direct dev"
     description:

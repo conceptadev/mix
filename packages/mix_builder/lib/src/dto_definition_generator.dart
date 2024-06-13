@@ -5,6 +5,7 @@ import 'package:build/build.dart';
 import 'package:code_builder/code_builder.dart';
 import 'package:dart_style/dart_style.dart';
 import 'package:mix/annotations.dart';
+// ignore_for_file: prefer_relative_imports
 import 'package:mix_builder/src/helpers/field_info.dart';
 import 'package:mix_builder/src/helpers/helpers.dart';
 import 'package:mix_builder/src/helpers/mix_property.dart';

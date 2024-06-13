@@ -1,10 +1,7 @@
-// ignore_for_file: camel_case_types
-
+// ignore_for_file: prefer_relative_imports,avoid-importing-entrypoint-exports, camel_case_types
 import 'package:flutter/material.dart';
-
-import '../../../annotations.dart';
-// ignore: avoid-importing-entrypoint-exports
-import '../../../mix.dart';
+import 'package:mix/annotations.dart';
+import 'package:mix/mix.dart';
 
 part 'box_spec.g.dart';
 

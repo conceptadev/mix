@@ -9,7 +9,7 @@ part of 'decoration_image_dto.dart';
 mixin _$DecorationImageDto on Dto<DecorationImage> {
   @override
   DecorationImage resolve(MixData mix) {
-    final defaultValue = DecorationImage(image: AssetImage(''));
+    const defaultValue = DecorationImage(image: AssetImage(''));
 
     return DecorationImage(
       image: _$this.image ?? defaultValue.image,
