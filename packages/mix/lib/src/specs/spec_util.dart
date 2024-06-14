@@ -8,7 +8,7 @@ import 'image/image_spec.dart';
 import 'stack/stack_spec.dart';
 import 'text/text_spec.dart';
 
-final $box = BoxSpecUtility();
+final $box = BoxSpecUtility(MixUtility.selfBuilder);
 final $flex = FlexSpecUtility(MixUtility.selfBuilder);
 final $image = ImageSpecUtility(MixUtility.selfBuilder);
 final $icon = IconSpecUtility(MixUtility.selfBuilder);

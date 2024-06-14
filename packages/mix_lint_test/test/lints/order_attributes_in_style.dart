@@ -68,3 +68,37 @@ final outOrder_5 = Style(
     ),
   ),
 ).applyVariant(a, b);
+
+final inOrder_1 = Style(
+  $box.height(20),
+  $flex.column(),
+  $image.alignment.bottomCenter(),
+  $icon.color.amber(),
+  $text.capitalize(),
+  $stack.fit.expand(),
+  $on.dark(),
+  $with.clipOval(),
+  _style(),
+  test(),
+);
+
+final inOrder_2 = Style(
+  $flex.column(),
+  $on.dark(),
+  $text.capitalize(),
+  $with.clipOval(),
+  _style(),
+  $box.height(20),
+  $stack.fit.expand(),
+  test(),
+  $icon.color.amber(),
+  $image.alignment.bottomCenter(),
+);
+
+Style _style = Style(
+  $box.border.width(2),
+);
+
+Attribute test() => Style.asAttribute(
+      $with.scale(1),
+    );
