@@ -7,10 +7,9 @@ import '../attributes/nested_style/nested_style_attribute.dart';
 import '../core/attribute.dart';
 import '../core/attributes_map.dart';
 import '../core/mix_data.dart';
-import '../exports/specs.dart';
-import '../exports/utilities.dart';
 import '../internal/compare_mixin.dart';
 import '../internal/helper_util.dart';
+import '../specs/spec_util.dart';
 import '../variants/variant.dart';
 import '../variants/variant_attribute.dart';
 
@@ -387,16 +386,4 @@ class AnimatedStyle extends Style {
       animated: animated,
     );
   }
-}
-
-class MixUtilities {
-  final box = BoxSpecUtility();
-  final flex = FlexSpecUtility();
-  final image = ImageSpecUtility();
-  final icon = IconSpecUtility();
-  final text = TextSpecUtility();
-  final stack = StackSpecUtility();
-  final on = OnContextVariantUtility();
-  final mod = WithModifierUtility();
-  MixUtilities();
 }

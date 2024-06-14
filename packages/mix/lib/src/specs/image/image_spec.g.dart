@@ -212,7 +212,7 @@ final class ImageSpecAttribute extends SpecAttribute<ImageSpec> {
 /// Use the methods of this class to configure specific properties of a [ImageSpecAttribute].
 final class ImageSpecUtility<T extends Attribute>
     extends SpecUtility<T, ImageSpecAttribute> {
-  ImageSpecUtility([super.builder]);
+  ImageSpecUtility(super.builder);
 
   /// Utility for defining [ImageSpecAttribute.width]
   late final width = DoubleUtility((v) => only(width: v));
@@ -244,6 +244,8 @@ final class ImageSpecUtility<T extends Attribute>
 
   /// Utility for defining [ImageSpecAttribute.animated]
   late final animated = AnimatedUtility((v) => only(animated: v));
+
+  static final self = ImageSpecUtility((v) => v);
 
   /// Returns a new [ImageSpecAttribute] with the specified properties.
   @override

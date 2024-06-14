@@ -211,11 +211,19 @@ Class _UtilityClassBuilder(SpecAnnotationContext context) {
       Constructor((builder) {
         builder.requiredParameters.add(
           Parameter((b) {
-            b.name = '[super.builder]';
+            b.name = 'super.builder';
           }),
         );
         ;
       }),
+    );
+
+    b.fields.add(
+      Field((b) => b
+        ..static = true
+        ..modifier = FieldModifier.final$
+        ..name = 'self'
+        ..assignment = Code('$utilityClassName((v)=> v)')),
     );
 
     b.methods.add(

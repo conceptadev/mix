@@ -220,7 +220,7 @@ final class IconSpecAttribute extends SpecAttribute<IconSpec> {
 /// Use the methods of this class to configure specific properties of a [IconSpecAttribute].
 final class IconSpecUtility<T extends Attribute>
     extends SpecUtility<T, IconSpecAttribute> {
-  IconSpecUtility([super.builder]);
+  IconSpecUtility(super.builder);
 
   /// Utility for defining [IconSpecAttribute.color]
   late final color = ColorUtility((v) => only(color: v));
@@ -252,6 +252,8 @@ final class IconSpecUtility<T extends Attribute>
 
   /// Utility for defining [IconSpecAttribute.animated]
   late final animated = AnimatedUtility((v) => only(animated: v));
+
+  static final self = IconSpecUtility((v) => v);
 
   /// Returns a new [IconSpecAttribute] with the specified properties.
   @override

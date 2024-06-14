@@ -202,7 +202,7 @@ final class FlexSpecAttribute extends SpecAttribute<FlexSpec> {
 /// Use the methods of this class to configure specific properties of a [FlexSpecAttribute].
 final class FlexSpecUtility<T extends Attribute>
     extends SpecUtility<T, FlexSpecAttribute> {
-  FlexSpecUtility([super.builder]);
+  FlexSpecUtility(super.builder);
 
   /// Utility for defining [FlexSpecAttribute.crossAxisAlignment]
   late final crossAxisAlignment =
@@ -243,6 +243,8 @@ final class FlexSpecUtility<T extends Attribute>
 
   /// Utility for defining [FlexSpecAttribute.animated]
   late final animated = AnimatedUtility((v) => only(animated: v));
+
+  static final self = FlexSpecUtility((v) => v);
 
   /// Returns a new [FlexSpecAttribute] with the specified properties.
   @override
