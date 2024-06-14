@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-import 'tokens/breakpoints_token.dart';
-import 'tokens/color_token.dart';
-import 'tokens/radius_token.dart';
-import 'tokens/space_token.dart';
-import 'tokens/text_style_token.dart';
+import 'breakpoints_token.dart';
+import 'color_token.dart';
+import 'radius_token.dart';
+import 'space_token.dart';
+import 'text_style_token.dart';
 
 class MixTokenResolver {
   final BuildContext _context;

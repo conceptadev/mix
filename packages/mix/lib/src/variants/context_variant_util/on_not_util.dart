@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../core/variant.dart';
 import '../context_variant.dart';
-import '../variant.dart';
 
 /// A variant of [ContextVariant] that negates the result of another [ContextVariant].
 ///

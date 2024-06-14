@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../mix_theme.dart';
+import '../mix/mix_theme.dart';
 import 'mix_token.dart';
 
 const _breakpointXsmall = BreakpointToken('mix.breakpoint.xsmall');

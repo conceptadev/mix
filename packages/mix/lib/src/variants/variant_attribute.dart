@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 
 import '../core/attribute.dart';
 import '../core/factory/style_mix.dart';
-import 'variant.dart';
+import '../core/variant.dart';
 
 @immutable
 base class VariantAttribute<V extends IVariant> extends Attribute {

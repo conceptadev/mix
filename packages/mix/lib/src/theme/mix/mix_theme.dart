@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-import '../internal/compare_mixin.dart';
-import 'material/material_theme.dart';
-import 'tokens/breakpoints_token.dart';
-import 'tokens/color_token.dart';
-import 'tokens/mix_token.dart';
-import 'tokens/radius_token.dart';
-import 'tokens/space_token.dart';
-import 'tokens/text_style_token.dart';
+import '../../internal/compare_mixin.dart';
+import '../material/material_theme.dart';
+import '../tokens/breakpoints_token.dart';
+import '../tokens/color_token.dart';
+import '../tokens/mix_token.dart';
+import '../tokens/radius_token.dart';
+import '../tokens/space_token.dart';
+import '../tokens/text_style_token.dart';
 
 class MixTheme extends InheritedWidget {
   const MixTheme({required super.child, required this.data, super.key});
