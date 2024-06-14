@@ -1,0 +1,10 @@
+{
+  "-- Lints": {
+    "type": "separator",
+    "title": "Lints"
+  },
+  "lints": {
+    "title": "Lints",
+    "display": "children"
+  }
+}
