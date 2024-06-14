@@ -1,5 +1,8 @@
+#### Related issue
+Is it related to any opened issue?
+
 ### Description
-Please summarize the changes. Is it related to any opened issue?
+Please summarize the changes.
 
 ### Changes
 List specific changes made in this PR.
