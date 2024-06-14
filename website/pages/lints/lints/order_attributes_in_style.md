@@ -12,9 +12,9 @@ Ensure that the attributes are ordered in groups of the same category in the Sty
 
 It makes it easier to read and understand the Style.
 
-### Don't
+### ❌ Don't
 
-```dart
+```dart {3,4}
 Style (
     $box.color.red(),
     $text.color.blue(),
@@ -23,9 +23,9 @@ Style (
 )
 ```
 
-### Do
+### ✅ Do
 
-```dart
+```dart {3,4}
 Style (
     $box.color.red(),
     $box.height(200),

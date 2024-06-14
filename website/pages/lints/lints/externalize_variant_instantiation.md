@@ -12,9 +12,9 @@ Ensure that `Variant` instances are not created directly inside `Style` construc
 
 `Variant`s should be shared across the application. If they are created inside a `Style`, it means that they are local to the `Style`, and it will be harder to reuse them.
 
-### Don't
+### ❌ Don't
 
-```dart
+```dart {2}
 Style(
     const Variant('example')(
         $text.textAlign.center(),
@@ -24,9 +24,9 @@ Style(
 )
 ```
 
-### Do
+### ✅ Do
 
-```dart
+```dart {1,4}
 final example = Variant('example');
 
 Style(
