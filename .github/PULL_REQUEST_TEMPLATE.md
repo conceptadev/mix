@@ -20,6 +20,7 @@ Please indicate which packages in our project are affected by these changes:
 - [ ] mix
 - [ ] mix_lint
 - [ ] mix_builder
+- [ ] Documentation
 
 ### Additional Information (optional)
 
