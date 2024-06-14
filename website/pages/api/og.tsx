@@ -1,5 +1,6 @@
 /* eslint-env node */
 import { ImageResponse } from "@vercel/og";
+import { CSSProperties } from "react";
 
 export const config = {
   runtime: "edge",
@@ -9,7 +10,7 @@ const font = fetch(new URL("./Inter-SemiBold.otf", import.meta.url)).then(
   (res) => res.arrayBuffer()
 );
 
-export default async function (req) {
+export default async function ogFunction(req: Request) {
   const inter = await font;
 
   const { searchParams } = new URL(req.url);
@@ -106,7 +107,7 @@ export default async function (req) {
               backgroundClip: "text",
               "-webkit-background-clip": "text",
               color: "transparent",
-            } as any
+            } as CSSProperties
           }
         >
           {title}
