@@ -1,18 +1,21 @@
-##### Issue ticket number
+### Description
+Please summarize the changes you're proposing. What problem are you trying to solve? Is it related to any opened issue?
 
-## Describe your changes
+### Changes
+List specific changes made in this PR.
 
-## Type of change
+**Review Checklist**
 
-- **Bug fix** (non-breaking change which fixes an issue)
-- **New feature** (non-breaking change which adds functionality)
-- **Chore** (updating CI, tooling; no production code change)
-- **Docs** (changes to the documentation)
-- **Test** (adding missing tests, refactoring tests; no production code change)
+- [ ] **Testing**: Have you tested your changes, including unit tests and integration tests for affected code?
+- [ ] **Breaking Changes**: Does this change introduce breaking changes affecting existing code or users?
 
-## Checklist before requesting a review
+### Impacted Packages
+Please indicate which packages in our project are affected by these changes:
 
-- [ ] I have performed a self-review of my code
-- [ ] I have made corresponding changes to the documentation
-- [ ] My changes generate no new warnings
-- [ ] I have added tests that prove my fix is effective or that my feature works
+- [ ] mix
+- [ ] mix_lint
+- [ ] mix_builder
+
+### Additional Information (optional)
+
+Is there any additional context or documentation that might be helpful for reviewers?
