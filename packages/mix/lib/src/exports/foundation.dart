@@ -4,9 +4,13 @@
 // Automated file exports
 export '../core/attribute.dart';
 export '../core/attributes_map.dart';
+export '../core/deprecation_notices.dart';
 export '../core/directive.dart';
 export '../core/dto.dart';
-export '../core/mix_data.dart';
+export '../core/factory/mix_data.dart';
+export '../core/factory/mix_provider.dart';
+export '../core/factory/style_mix.dart';
+export '../core/factory/style_widgets_ext.dart';
 export '../core/modifier.dart';
 export '../core/spec.dart';
 export '../core/styled_widget.dart';

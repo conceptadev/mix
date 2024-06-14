@@ -90,7 +90,7 @@ void _libraryExport() {
 
     final relativePath = _getRelativePath(entity.path, _libDirectory.path);
 
-    if (entity.path == _mixFile.path) {
+    if (entity.parent.path == _libDirectory.path) {
       continue;
     }
 

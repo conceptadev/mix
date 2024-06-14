@@ -15,6 +15,7 @@ final class ImageSpec extends Spec<ImageSpec> with _$ImageSpec {
   final AlignmentGeometry? alignment;
   final Rect? centerSlice;
   final FilterQuality? filterQuality;
+
   final BlendMode? colorBlendMode;
 
   static const of = _$ImageSpec.of;

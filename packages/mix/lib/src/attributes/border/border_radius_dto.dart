@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../core/dto.dart';
-import '../../core/mix_data.dart';
+import '../../core/factory/mix_data.dart';
 import '../../theme/tokens/radius_token.dart';
 
 /// Represents a [Dto] Data transfer object of [BorderRadiusGeometry]

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../../core/styled_widget.dart';
-import '../../factory/mix_provider.dart';
 import '../../internal/constants.dart';
+import '../../core/factory/mix_provider.dart';
 import 'image_spec.dart';
 
 class StyledImage extends StyledWidget {

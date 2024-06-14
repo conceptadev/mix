@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 
-import '../attributes/animated/animated_data.dart';
-import '../factory/style_mix.dart';
-import '../internal/iterable_ext.dart';
-import '../theme/token_resolver.dart';
-import '../variants/context_variant.dart';
-import '../variants/variant_attribute.dart';
-import 'attribute.dart';
-import 'attributes_map.dart';
-import 'modifier.dart';
-import 'spec.dart';
+import '../../attributes/animated/animated_data.dart';
+import '../../internal/iterable_ext.dart';
+import '../../theme/token_resolver.dart';
+import '../../variants/context_variant.dart';
+import '../../variants/variant_attribute.dart';
+import '../attribute.dart';
+import '../attributes_map.dart';
+import '../modifier.dart';
+import '../spec.dart';
+import 'style_mix.dart';
 
 /// This class is used for encapsulating all [MixData] related operations.
 /// It contains a mixture of properties and methods useful for handling different attributes,

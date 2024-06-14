@@ -9,7 +9,7 @@ part of 'gradient_dto.dart';
 mixin _$LinearGradientDto on Dto<LinearGradient> {
   @override
   LinearGradient resolve(MixData mix) {
-    const defaultValue = LinearGradient(colors: []);
+    final defaultValue = LinearGradient(colors: []);
 
     return LinearGradient(
       begin: _$this.begin ?? defaultValue.begin,
@@ -152,7 +152,7 @@ extension LinearGradientExt on LinearGradient {
       end: end,
       tileMode: tileMode,
       transform: transform,
-      colors: colors.map((e) => e.toDto()).toList(),
+      colors: colors?.map((e) => e.toDto()).toList(),
       stops: stops,
     );
   }
@@ -161,7 +161,7 @@ extension LinearGradientExt on LinearGradient {
 mixin _$RadialGradientDto on Dto<RadialGradient> {
   @override
   RadialGradient resolve(MixData mix) {
-    const defaultValue = RadialGradient(colors: []);
+    final defaultValue = RadialGradient(colors: []);
 
     return RadialGradient(
       center: _$this.center ?? defaultValue.center,
@@ -326,7 +326,7 @@ extension RadialGradientExt on RadialGradient {
       focal: focal,
       focalRadius: focalRadius,
       transform: transform,
-      colors: colors.map((e) => e.toDto()).toList(),
+      colors: colors?.map((e) => e.toDto()).toList(),
       stops: stops,
     );
   }
@@ -335,7 +335,7 @@ extension RadialGradientExt on RadialGradient {
 mixin _$SweepGradientDto on Dto<SweepGradient> {
   @override
   SweepGradient resolve(MixData mix) {
-    const defaultValue = SweepGradient(colors: []);
+    final defaultValue = SweepGradient(colors: []);
 
     return SweepGradient(
       center: _$this.center ?? defaultValue.center,
@@ -489,7 +489,7 @@ extension SweepGradientExt on SweepGradient {
       endAngle: endAngle,
       tileMode: tileMode,
       transform: transform,
-      colors: colors.map((e) => e.toDto()).toList(),
+      colors: colors?.map((e) => e.toDto()).toList(),
       stops: stops,
     );
   }

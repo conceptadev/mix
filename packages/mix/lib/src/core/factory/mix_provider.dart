@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../core/mix_data.dart';
+import 'mix_data.dart';
 import 'style_mix.dart';
 
 /// Provides [MixData] to the widget tree.

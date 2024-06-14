@@ -1,7 +1,7 @@
 import 'package:flutter/animation.dart';
 
 import '../../core/dto.dart';
-import '../../core/mix_data.dart';
+import '../../core/factory/mix_data.dart';
 import '../../internal/constants.dart';
 import 'animated_data.dart';
 

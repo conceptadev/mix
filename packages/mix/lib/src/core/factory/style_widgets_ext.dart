@@ -1,10 +1,10 @@
 // ignore_for_file: long-parameter-list
 import 'package:flutter/material.dart';
 
-import '../specs/box/box_widget.dart';
-import '../specs/flex/flex_widget.dart';
-import '../specs/icon/icon_widget.dart';
-import '../specs/text/text_widget.dart';
+import '../../specs/box/box_widget.dart';
+import '../../specs/flex/flex_widget.dart';
+import '../../specs/icon/icon_widget.dart';
+import '../../specs/text/text_widget.dart';
 import 'style_mix.dart';
 
 extension StyleExt on Style {

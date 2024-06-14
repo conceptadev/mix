@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../core/dto.dart';
-import '../../core/mix_data.dart';
+import '../../core/factory/mix_data.dart';
 import '../../theme/tokens/color_token.dart';
 import 'color_directives.dart';
 

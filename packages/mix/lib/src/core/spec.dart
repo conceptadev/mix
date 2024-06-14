@@ -5,7 +5,7 @@ import '../attributes/animated/animated_data_dto.dart';
 import '../attributes/scalars/scalar_util.dart';
 import '../internal/compare_mixin.dart';
 import 'attribute.dart';
-import 'mix_data.dart';
+import 'factory/mix_data.dart';
 
 @immutable
 abstract base class Spec<T extends Spec<T>> with EqualityMixin {
