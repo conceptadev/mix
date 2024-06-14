@@ -1,7 +1,7 @@
 # mix_externalize_token_instantiation
 
 | Severity | Quick Fix | Options |
-|:--------:|:---------:|:-------:|
+|--------|---------|-------|
 |   Info   |    ❌     |   ❌    |
 
 ## Details
