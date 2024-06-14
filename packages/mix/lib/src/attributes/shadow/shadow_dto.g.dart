@@ -9,7 +9,7 @@ part of 'shadow_dto.dart';
 mixin _$ShadowDto on Dto<Shadow> {
   @override
   Shadow resolve(MixData mix) {
-    final defaultValue = Shadow();
+    const defaultValue = Shadow();
 
     return Shadow(
       blurRadius: _$this.blurRadius ?? defaultValue.blurRadius,
@@ -96,7 +96,7 @@ extension ShadowExt on Shadow {
   ShadowDto toDto() {
     return ShadowDto(
       blurRadius: blurRadius,
-      color: color?.toDto(),
+      color: color.toDto(),
       offset: offset,
     );
   }
@@ -105,7 +105,7 @@ extension ShadowExt on Shadow {
 mixin _$BoxShadowDto on Dto<BoxShadow> {
   @override
   BoxShadow resolve(MixData mix) {
-    final defaultValue = BoxShadow();
+    const defaultValue = BoxShadow();
 
     return BoxShadow(
       color: _$this.color?.resolve(mix) ?? defaultValue.color,
@@ -201,7 +201,7 @@ final class BoxShadowUtility<T extends Attribute>
 extension BoxShadowExt on BoxShadow {
   BoxShadowDto toDto() {
     return BoxShadowDto(
-      color: color?.toDto(),
+      color: color.toDto(),
       offset: offset,
       blurRadius: blurRadius,
       spreadRadius: spreadRadius,

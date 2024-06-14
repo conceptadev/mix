@@ -9,7 +9,7 @@ part of 'border_dto.dart';
 mixin _$BorderSideDto on Dto<BorderSide> {
   @override
   BorderSide resolve(MixData mix) {
-    final defaultValue = BorderSide();
+    const defaultValue = BorderSide();
 
     return BorderSide(
       color: _$this.color?.resolve(mix) ?? defaultValue.color,
@@ -109,7 +109,7 @@ final class BorderSideUtility<T extends Attribute>
 extension BorderSideExt on BorderSide {
   BorderSideDto toDto() {
     return BorderSideDto(
-      color: color?.toDto(),
+      color: color.toDto(),
       strokeAlign: strokeAlign,
       style: style,
       width: width,
