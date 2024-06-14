@@ -28,8 +28,8 @@ class TodoCheckbox extends StatelessWidget {
         $box.width(20),
         $box.color.ref($token.color.surface),
         $box.borderRadius(3),
-        outlinePattern(),
         scaleEffect(),
+        outlinePattern(),
         _CheckboxVariant.checked(
           $box.color.ref($token.color.primary),
           $box.border.color.ref($token.color.primary),
