@@ -1,4 +1,5 @@
 {
+  "avoid_empty_style": "avoid_empty_style",
   "avoid_variant_inside_context_variant": "avoid_variant_inside_context_variant",
   "externalize_token_instantiation": "externalize_token_instantiation",
   "externalize_variant_instantiation": "externalize_variant_instantiation",
