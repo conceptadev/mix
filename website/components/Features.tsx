@@ -10,19 +10,20 @@ import Link from "next/link";
 
 import {
   HandMetalIcon,
+  LucideIcon,
   PaintBucketIcon,
   VenetianMaskIcon,
   WrenchIcon,
 } from "lucide-react";
 
-interface Feature {
+interface IFeature {
   href: string;
   name: string;
   description: string;
-  icon: React.ComponentType<{ className?: string }>;
+  icon: LucideIcon;
 }
 
-const features: Array<Feature> = [
+const features: Array<IFeature> = [
   {
     href: "/docs/overview/utility-first",
     name: "Intuitive Style Semantics",
@@ -53,7 +54,7 @@ const features: Array<Feature> = [
   },
 ];
 
-function FeatureIcon({ icon: Icon }: { icon: Feature["icon"] }) {
+function FeatureIcon({ icon: Icon }: { icon: IFeature["icon"] }) {
   return (
     <div className="flex h-7 w-7 items-center justify-center rounded-full bg-zinc-900/5 ring-1 ring-zinc-900/25 backdrop-blur-[2px] transition duration-300 group-hover:bg-white/50 group-hover:ring-zinc-900/25 dark:bg-white/7.5 dark:ring-white/15 dark:group-hover:bg-purple-300/10 dark:group-hover:ring-purple-400">
       <Icon className="h-5 w-5 fill-zinc-700/10 stroke-zinc-700 transition-colors duration-300 group-hover:stroke-zinc-900 dark:fill-white/10 dark:stroke-zinc-400 dark:group-hover:fill-purple-300/10 dark:group-hover:stroke-purple-400" />
@@ -64,13 +65,12 @@ function FeatureIcon({ icon: Icon }: { icon: Feature["icon"] }) {
 function FeaturePattern({
   mouseX,
   mouseY,
-  ...gridProps
 }: {
   mouseX: MotionValue<number>;
   mouseY: MotionValue<number>;
 }) {
-  let maskImage = useMotionTemplate`radial-gradient(180px at ${mouseX}px ${mouseY}px, white, transparent)`;
-  let style = { maskImage, WebkitMaskImage: maskImage };
+  const maskImage = useMotionTemplate`radial-gradient(180px at ${mouseX}px ${mouseY}px, white, transparent)`;
+  const style = { maskImage, WebkitMaskImage: maskImage };
 
   return (
     <div className="pointer-events-none">
@@ -87,16 +87,16 @@ function FeaturePattern({
   );
 }
 
-function Feature({ feature }: { feature: Feature }) {
-  let mouseX = useMotionValue(0);
-  let mouseY = useMotionValue(0);
+function Feature({ feature }: { feature: IFeature }) {
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
 
   function onMouseMove({
     currentTarget,
     clientX,
     clientY,
   }: React.MouseEvent<HTMLDivElement>) {
-    let { left, top } = currentTarget.getBoundingClientRect();
+    const { left, top } = currentTarget.getBoundingClientRect();
     mouseX.set(clientX - left);
     mouseY.set(clientY - top);
   }
