@@ -1,3 +1,4 @@
+import 'package:analyzer/dart/element/element.dart';
 import 'package:mix_builder/src/helpers/builder_utils.dart';
 import 'package:mix_builder/src/helpers/field_info.dart';
 
@@ -30,6 +31,10 @@ String mergeMethodBuilder({
       if (field.isListType) {
         return '$propAssignment Dto.mergeList($thisName, other.$propName)';
       } else {
+        final hasTryToMerge = _checkIfHasTryToMerge(field.element!);
+        if (hasTryToMerge) {
+          return '$propAssignment ${field.baseType}.tryToMerge($thisName, other.$propName)';
+        }
         return '$propAssignment $thisName$nullable.merge(other.$propName) ?? other.$propName';
       }
     } else {
@@ -61,4 +66,28 @@ String mergeMethodBuilder({
     );
   }
 ''';
+}
+
+bool _checkIfHasTryToMerge(Element element) {
+  if (element is! ClassElement) {
+    return false;
+  }
+
+  for (final type in [
+    element,
+    ...element.allSupertypes
+        .where((e) => !e.isDartCoreObject)
+        .map((e) => e.element),
+  ]) {
+    for (final method in type.methods) {
+      if (method.name == 'tryToMerge' &&
+          method.isStatic &&
+          method.isPublic &&
+          method.parameters.length == 2) {
+        return true;
+      }
+    }
+  }
+
+  return false;
 }

@@ -44,7 +44,7 @@ sealed class ShapeBorderDto<T extends ShapeBorder> extends Dto<T> {
   T resolve(MixData mix);
 }
 
-mixin _WithBorderRadius<T extends OutlinedBorder> on OutlinedBorderDto<T> {
+base mixin _WithBorderRadius {
   BorderRadiusGeometryDto? get borderRadius;
 }
 

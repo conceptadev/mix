@@ -4,6 +4,56 @@ import '../../core/attribute.dart';
 import '../scalars/scalar_util.dart';
 import 'border_dto.dart';
 
+final class BoxBorderUtility<T extends Attribute>
+    extends DtoUtility<T, BoxBorderDto, BoxBorder> {
+  BoxBorderUtility(super.builder) : super(valueToDto: (value) => value.toDto());
+
+  late final directional = BorderDirectionalUtility(builder);
+  late final _border = BorderUtility(builder);
+
+  late final start = directional.start;
+  late final end = directional.end;
+  late final all = _border.all;
+  late final bottom = _border.bottom;
+  late final top = _border.top;
+  late final left = _border.left;
+  late final right = _border.right;
+  late final horizontal = _border.horizontal;
+  late final vertical = _border.vertical;
+  late final color = all.color;
+  late final width = all.width;
+  late final style = all.style;
+
+  T call({
+    Color? color,
+    double? width,
+    BorderStyle? style,
+    double? strokeAlign,
+  }) {
+    return _border(
+      color: color,
+      strokeAlign: strokeAlign,
+      style: style,
+      width: width,
+    );
+  }
+
+  @override
+  T only({
+    BorderSideDto? top,
+    BorderSideDto? bottom,
+    BorderSideDto? left,
+    BorderSideDto? right,
+  }) {
+    return _border.only(
+      top: top,
+      bottom: bottom,
+      left: left,
+      right: right,
+    );
+  }
+}
+
 final class BorderUtility<T extends Attribute>
     extends DtoUtility<T, BoxBorderDto, BoxBorder> {
   late final start = _directional.start;
@@ -51,11 +101,11 @@ final class BorderUtility<T extends Attribute>
     return BoxBorderDto(top: side, bottom: side, left: side, right: side);
   }
 
-  T width(double width) => all.width(width);
+  late final width = all.width;
 
-  T strokeAlign(double strokeAlign) => all.strokeAlign(strokeAlign);
+  late final strokeAlign = all.strokeAlign;
 
-  T none() => all.none();
+  late final none = all.none;
 
   T call({
     Color? color,

@@ -81,10 +81,10 @@ class FieldInfo {
   bool get hasDto => dtoType != null;
 
   // type without generics
-  String get _baseType => type.split('<').first;
+  String get baseType => type.split('<').first;
 
   bool get isDto {
-    final isDtoType = _invertedDtoMap[_baseType] != null;
+    final isDtoType = _invertedDtoMap[baseType] != null;
 
     final listType = type.split('<').last.split('>').first;
 
@@ -115,7 +115,7 @@ class FieldInfo {
         return type;
       }
     }
-    return isDto ? type : _dtoMap[_baseType];
+    return isDto ? type : _dtoMap[baseType];
   }
 
   /// True if the type is `dynamic`.
@@ -166,7 +166,7 @@ class ParameterInfo extends FieldInfo {
       if (isListType) {
         return 'List<${_invertedDtoMap[_typeFromList]!}>';
       }
-      final value = _invertedDtoMap[_baseType];
+      final value = _invertedDtoMap[baseType];
       if (value == null) {
         throw Exception('No resolved type found for $type');
       }
@@ -180,13 +180,14 @@ class ParameterInfo extends FieldInfo {
     String? utilityType = annotation.utility?.typeAsString;
 
     if (utilityType != null) {
+      print(utilityType);
       return utilityType;
     }
 
     if (isDto) {
       utilityType ??= asResolvedType;
     } else {
-      utilityType ??= _baseType;
+      utilityType ??= baseType;
     }
 
     utilityType = utilityType.capitalize();

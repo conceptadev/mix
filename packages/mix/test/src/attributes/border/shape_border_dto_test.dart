@@ -206,7 +206,7 @@ void main() {
           ),
         );
 
-        final borderRadius = merged.borderRadius as BorderRadius;
+        final borderRadius = merged.borderRadius as BorderRadiusDto;
 
         expect(borderRadius.topLeft, const Radius.circular(25));
         expect(borderRadius.topRight, const Radius.circular(20));

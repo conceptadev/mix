@@ -12,7 +12,8 @@ abstract class Dto<Value> with EqualityMixin, MergeableMixin {
   Value get defaultValue;
 
   // /// Merges this object with [other], returning a new object of type [T].
-  // Dto merge(covariant Dto? other);
+  @override
+  Dto merge(covariant Dto? other);
 
   static List<T>? mergeList<T extends Dto>(List<T>? list, List<T>? other) {
     if (other == null) return list;
