@@ -364,7 +364,7 @@ void main() {
   });
 }
 
-class _OtherDecorationDto extends DecorationDto {
+final class _OtherDecorationDto extends DecorationDto<BoxDecoration> {
   const _OtherDecorationDto()
       : super(color: null, gradient: null, boxShadow: null);
 
@@ -374,9 +374,12 @@ class _OtherDecorationDto extends DecorationDto {
   }
 
   @override
+  BoxDecoration get defaultValue => const BoxDecoration();
+
   @override
-  Decoration resolve(MixData mix) {
-    throw UnimplementedError();
+  @override
+  BoxDecoration resolve(MixData mix) {
+    return defaultValue;
   }
 
   @override

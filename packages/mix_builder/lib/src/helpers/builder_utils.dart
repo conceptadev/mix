@@ -1,14 +1,14 @@
 // ignore_for_file: unnecessary-trailing-comma
 
 import 'package:analyzer/dart/element/element.dart';
+import 'package:analyzer/dart/element/type.dart';
 import 'package:build/build.dart';
 import 'package:code_builder/code_builder.dart';
 import 'package:dart_style/dart_style.dart';
 import 'package:mix/annotations.dart';
+import 'package:mix_builder/src/helpers/declaration_provider.dart';
 // ignore_for_file: prefer_relative_imports
 import 'package:mix_builder/src/helpers/field_info.dart';
-import 'package:mix_builder/src/helpers/private_class_helpers.dart';
-import 'package:mix_builder/src/helpers/types.dart';
 import 'package:source_gen/source_gen.dart';
 
 Future<List<ClassElement>> getAnnotatedClasses(
@@ -46,27 +46,37 @@ abstract class AnnotationContext<T> {
   final ClassElement element;
 
   final List<ParameterInfo> fields;
-  final DartFormatter formatter;
-  final DartEmitter emitter;
+
   final T annotation;
 
-  const AnnotationContext({
+  AnnotationContext({
     required this.element,
     required this.fields,
-    required this.formatter,
-    required this.emitter,
     required this.annotation,
+    required this.declarationProvider,
   });
+
+  final DeclarationProvider declarationProvider;
+  late final formatter = DartFormatter();
+
+  late final emitter = DartEmitter(
+    orderDirectives: true,
+    useNullSafetySyntax: true,
+  );
 
   String get name => element.name;
 
-  bool hasReference(Reference reference) {
-    return (emitter.allocator as ReferenceTrackingAllocator)
-        .hasReference(reference);
-  }
+  String get mixinExtensionName => '_\$${name}';
 
-  String generate(Library library) {
-    final output = formatter.format('${library.accept(emitter)}');
+  String generate(String contents) {
+    final methodHelpers = declarationProvider.applyMethods();
+
+    final code = Code('''
+$contents
+$methodHelpers
+''');
+
+    final output = formatter.format('${code.accept(emitter)}');
 
     // Analyze output
     return output;
@@ -74,77 +84,27 @@ abstract class AnnotationContext<T> {
 }
 
 class SpecAnnotationContext extends AnnotationContext<MixableSpec> {
-  const SpecAnnotationContext({
+  SpecAnnotationContext({
     required super.element,
     required super.fields,
-    required super.formatter,
-    required super.emitter,
     required super.annotation,
+    required super.declarationProvider,
   });
 
-  String get specClassName => name;
-
-  String get specClassMixinName => '_\$${specClassName}';
-
-  String get specAttributeClassName => '${specClassName}Attribute';
-
-  String get specUtilClassName => '${specClassName}Utility';
+  String get attributeClassName => '${name}Attribute';
 }
 
 class DtoAnnotationContext extends AnnotationContext<MixableDto> {
-  const DtoAnnotationContext({
+  DtoAnnotationContext({
     required super.element,
     required super.fields,
-    required super.formatter,
-    required super.emitter,
     required super.annotation,
+    required super.declarationProvider,
   });
 
   String? get resolvedType =>
       element.allSupertypes.firstOrNull?.typeArguments.first
           .getDisplayString(withNullability: false);
-
-  String get dtoClassName => name;
-
-  String get dtoClassMixinName => '_\$${dtoClassName}';
-}
-
-Expression getLerpExpression(String name, String type) {
-  final expression = [refer(name), refer('other.$name'), refer('t')];
-
-  final isNullable = type.contains('?');
-
-  final typeRef = isNullable ? type.replaceFirst('?', '') : type;
-
-  switch (typeRef) {
-    case 'double':
-      return PrivateMethodHelper.lerpDoubleRef(expression);
-    case 'StrutStyle':
-      return PrivateMethodHelper.lerpStrutStyleRef(expression);
-    case 'TextStyle':
-      return PrivateMethodHelper.lerpTextStyleRef(expression);
-    case 'Color':
-      return DartTypes.ui.color.property('lerp')(expression);
-    case 'EdgeInsetsGeometry':
-      return FlutterTypes.widgets.edgeInsetsGeometry
-          .property('lerp')(expression);
-    case 'BoxConstraints':
-      return FlutterTypes.widgets.boxConstraints.property('lerp')(expression);
-    case 'Decoration':
-      return FlutterTypes.widgets.decoration.property('lerp')(expression);
-    case 'AlignmentGeometry':
-      return FlutterTypes.widgets.alignmentGeometry
-          .property('lerp')(expression);
-    case 'Matrix4':
-      return CodeExpression(Code('''
-$name != null && other.$name != null
-      ? Matrix4Tween(begin: $name , end: other.$name).lerp(t)
-      : t < 0.5 ? $name : other.$name
-'''));
-
-    default:
-      return CodeExpression(Code('t < 0.5 ? $name : other.$name'));
-  }
 }
 
 extension ReferenceExt on Reference {
@@ -154,4 +114,34 @@ extension ReferenceExt on Reference {
       ..url = url
       ..isNullable = true);
   }
+}
+
+String getTypeNameFromDartType(DartType type) {
+  final element = type.element;
+  if (element is ClassElement) {
+    return element.name;
+  }
+  return type.getDisplayString(withNullability: false);
+}
+
+bool _checkIfTypeStartsWith(InterfaceType type, String typeName) {
+  return type.getDisplayString(withNullability: false).startsWith(typeName);
+}
+
+String kDefaultValueRef = 'defaultValue';
+
+bool checkIfElementIsDto(InterfaceType type) {
+  if (_checkIfTypeStartsWith(type, 'Dto')) {
+    return true;
+  }
+
+  for (final supertype in type.allSupertypes) {
+    final superTypeIsDto = checkIfElementIsDto(supertype);
+
+    if (superTypeIsDto) {
+      return true;
+    }
+  }
+
+  return false;
 }

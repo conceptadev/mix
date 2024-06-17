@@ -6,11 +6,9 @@ part of 'border_dto.dart';
 // Generator: DtoDefinitionBuilder
 // **************************************************************************
 
-mixin _$BorderSideDto on Dto<BorderSide> {
+base mixin _$BorderSideDto on Dto<BorderSide> {
   @override
   BorderSide resolve(MixData mix) {
-    const defaultValue = BorderSide();
-
     return BorderSide(
       color: _$this.color?.resolve(mix) ?? defaultValue.color,
       strokeAlign: _$this.strokeAlign ?? defaultValue.strokeAlign,
@@ -36,14 +34,12 @@ mixin _$BorderSideDto on Dto<BorderSide> {
   /// This property is used by the [==] operator and the [hashCode] getter to
   /// compare two [BorderSideDto] instances for equality.
   @override
-  List<Object?> get props {
-    return [
-      _$this.color,
-      _$this.strokeAlign,
-      _$this.style,
-      _$this.width,
-    ];
-  }
+  List<Object?> get props => [
+        _$this.color,
+        _$this.strokeAlign,
+        _$this.style,
+        _$this.width,
+      ];
 
   BorderSideDto get _$this => this as BorderSideDto;
 }
@@ -55,9 +51,6 @@ mixin _$BorderSideDto on Dto<BorderSide> {
 /// Use the methods of this class to configure specific properties of a [BorderSideDto].
 final class BorderSideUtility<T extends Attribute>
     extends DtoUtility<T, BorderSideDto, BorderSide> {
-  BorderSideUtility(super.builder)
-      : super(valueToDto: (value) => value.toDto());
-
   /// Utility for defining [BorderSideDto.color]
   late final color = ColorUtility((v) => only(color: v));
 
@@ -73,6 +66,8 @@ final class BorderSideUtility<T extends Attribute>
   /// Utility for defining [BorderSideDto.width]
   late final width = DoubleUtility((v) => only(width: v));
 
+  BorderSideUtility(super.builder) : super(valueToDto: (v) => v.toDto());
+
   /// Returns a new [BorderSideDto] with the specified properties.
   @override
   T only({
@@ -81,14 +76,12 @@ final class BorderSideUtility<T extends Attribute>
     BorderStyle? style,
     double? width,
   }) {
-    return builder(
-      BorderSideDto(
-        color: color,
-        strokeAlign: strokeAlign,
-        style: style,
-        width: width,
-      ),
-    );
+    return builder(BorderSideDto(
+      color: color,
+      strokeAlign: strokeAlign,
+      style: style,
+      width: width,
+    ));
   }
 
   T call({
@@ -106,7 +99,7 @@ final class BorderSideUtility<T extends Attribute>
   }
 }
 
-extension BorderSideExt on BorderSide {
+extension BorderSideMixExt on BorderSide {
   BorderSideDto toDto() {
     return BorderSideDto(
       color: color.toDto(),

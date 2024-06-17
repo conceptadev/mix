@@ -31,4 +31,7 @@ final class StrutStyleDto extends Dto<StrutStyle> with _$StrutStyleDto {
     this.leading,
     this.forceStrutHeight,
   });
+
+  @override
+  StrutStyle get defaultValue => const StrutStyle();
 }

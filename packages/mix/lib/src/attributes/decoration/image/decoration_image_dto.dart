@@ -7,7 +7,7 @@ import '../../../../mix.dart';
 part 'decoration_image_dto.g.dart';
 
 @MixableDto()
-class DecorationImageDto extends Dto<DecorationImage>
+final class DecorationImageDto extends Dto<DecorationImage>
     with _$DecorationImageDto {
   @MixableField(utility: MixableFieldUtility(alias: 'provider'))
   final ImageProvider? image;
@@ -18,6 +18,10 @@ class DecorationImageDto extends Dto<DecorationImage>
   final FilterQuality? filterQuality;
   final bool? invertColors;
   final bool? isAntiAlias;
+
+  @override
+  DecorationImage get defaultValue =>
+      const DecorationImage(image: AssetImage('NONE'));
 
   const DecorationImageDto({
     this.image,

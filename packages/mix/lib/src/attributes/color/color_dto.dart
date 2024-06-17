@@ -19,6 +19,9 @@ class ColorDto extends Dto<Color> {
   final Color? value;
   final List<ColorDirective> directives;
 
+  @override
+  Color get defaultValue => Colors.transparent;
+
   const ColorDto.raw({this.value, this.directives = const []});
 
   const ColorDto(Color value) : this.raw(value: value);

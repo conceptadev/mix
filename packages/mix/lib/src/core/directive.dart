@@ -14,6 +14,9 @@ class TextDirectiveDto extends Dto<TextDirective> {
   int get length => _modifiers.length;
 
   @override
+  TextDirective get defaultValue => TextDirective((String content) => content);
+
+  @override
   TextDirective resolve(MixData mix) {
     return TextDirective((String content) {
       return _modifiers.fold(

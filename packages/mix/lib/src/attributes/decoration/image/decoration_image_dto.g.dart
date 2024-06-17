@@ -6,11 +6,9 @@ part of 'decoration_image_dto.dart';
 // Generator: DtoDefinitionBuilder
 // **************************************************************************
 
-mixin _$DecorationImageDto on Dto<DecorationImage> {
+base mixin _$DecorationImageDto on Dto<DecorationImage> {
   @override
   DecorationImage resolve(MixData mix) {
-    const defaultValue = DecorationImage(image: AssetImage(''));
-
     return DecorationImage(
       image: _$this.image ?? defaultValue.image,
       fit: _$this.fit ?? defaultValue.fit,
@@ -24,7 +22,7 @@ mixin _$DecorationImageDto on Dto<DecorationImage> {
   }
 
   @override
-  DecorationImageDto merge(covariant DecorationImageDto? other) {
+  DecorationImageDto merge(DecorationImageDto? other) {
     if (other == null) return _$this;
 
     return DecorationImageDto(
@@ -44,18 +42,16 @@ mixin _$DecorationImageDto on Dto<DecorationImage> {
   /// This property is used by the [==] operator and the [hashCode] getter to
   /// compare two [DecorationImageDto] instances for equality.
   @override
-  List<Object?> get props {
-    return [
-      _$this.image,
-      _$this.fit,
-      _$this.alignment,
-      _$this.centerSlice,
-      _$this.repeat,
-      _$this.filterQuality,
-      _$this.invertColors,
-      _$this.isAntiAlias,
-    ];
-  }
+  List<Object?> get props => [
+        _$this.image,
+        _$this.fit,
+        _$this.alignment,
+        _$this.centerSlice,
+        _$this.repeat,
+        _$this.filterQuality,
+        _$this.invertColors,
+        _$this.isAntiAlias,
+      ];
 
   DecorationImageDto get _$this => this as DecorationImageDto;
 }
@@ -67,9 +63,6 @@ mixin _$DecorationImageDto on Dto<DecorationImage> {
 /// Use the methods of this class to configure specific properties of a [DecorationImageDto].
 final class DecorationImageUtility<T extends Attribute>
     extends DtoUtility<T, DecorationImageDto, DecorationImage> {
-  DecorationImageUtility(super.builder)
-      : super(valueToDto: (value) => value.toDto());
-
   /// Utility for defining [DecorationImageDto.image]
   late final provider = ImageProviderUtility((v) => only(image: v));
 
@@ -77,7 +70,7 @@ final class DecorationImageUtility<T extends Attribute>
   late final fit = BoxFitUtility((v) => only(fit: v));
 
   /// Utility for defining [DecorationImageDto.alignment]
-  late final alignment = AlignmentUtility((v) => only(alignment: v));
+  late final alignment = AlignmentGeometryUtility((v) => only(alignment: v));
 
   /// Utility for defining [DecorationImageDto.centerSlice]
   late final centerSlice = RectUtility((v) => only(centerSlice: v));
@@ -95,6 +88,8 @@ final class DecorationImageUtility<T extends Attribute>
   /// Utility for defining [DecorationImageDto.isAntiAlias]
   late final isAntiAlias = BoolUtility((v) => only(isAntiAlias: v));
 
+  DecorationImageUtility(super.builder) : super(valueToDto: (v) => v.toDto());
+
   /// Returns a new [DecorationImageDto] with the specified properties.
   @override
   T only({
@@ -107,18 +102,16 @@ final class DecorationImageUtility<T extends Attribute>
     bool? invertColors,
     bool? isAntiAlias,
   }) {
-    return builder(
-      DecorationImageDto(
-        image: image,
-        fit: fit,
-        alignment: alignment,
-        centerSlice: centerSlice,
-        repeat: repeat,
-        filterQuality: filterQuality,
-        invertColors: invertColors,
-        isAntiAlias: isAntiAlias,
-      ),
-    );
+    return builder(DecorationImageDto(
+      image: image,
+      fit: fit,
+      alignment: alignment,
+      centerSlice: centerSlice,
+      repeat: repeat,
+      filterQuality: filterQuality,
+      invertColors: invertColors,
+      isAntiAlias: isAntiAlias,
+    ));
   }
 
   T call({
@@ -144,7 +137,7 @@ final class DecorationImageUtility<T extends Attribute>
   }
 }
 
-extension DecorationImageExt on DecorationImage {
+extension DecorationImageMixExt on DecorationImage {
   DecorationImageDto toDto() {
     return DecorationImageDto(
       image: image,

@@ -10,6 +10,8 @@ import 'factory/mix_data.dart';
 abstract class Dto<Value> with EqualityMixin, MergeableMixin {
   const Dto();
 
+  Value get defaultValue;
+
   static List<T>? mergeList<T extends Dto>(List<T>? list, List<T>? other) {
     if (other == null) return list;
     if (list == null) return other;

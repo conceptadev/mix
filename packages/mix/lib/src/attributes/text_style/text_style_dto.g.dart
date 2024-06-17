@@ -6,31 +6,36 @@ part of 'text_style_dto.dart';
 // Generator: DtoDefinitionBuilder
 // **************************************************************************
 
-mixin _$TextStyleData on Dto<TextStyle> {
+base mixin _$TextStyleData on Dto<TextStyle> {
   @override
   TextStyle resolve(MixData mix) {
     return TextStyle(
-      background: _$this.background,
-      backgroundColor: _$this.backgroundColor?.resolve(mix),
-      color: _$this.color?.resolve(mix),
-      debugLabel: _$this.debugLabel,
-      decoration: _$this.decoration,
-      decorationColor: _$this.decorationColor?.resolve(mix),
-      decorationStyle: _$this.decorationStyle,
-      decorationThickness: _$this.decorationThickness,
-      fontFamily: _$this.fontFamily,
-      fontFamilyFallback: _$this.fontFamilyFallback,
-      fontFeatures: _$this.fontFeatures,
-      fontSize: _$this.fontSize,
-      fontStyle: _$this.fontStyle,
-      fontWeight: _$this.fontWeight,
-      foreground: _$this.foreground,
-      height: _$this.height,
-      letterSpacing: _$this.letterSpacing,
-      locale: _$this.locale,
-      shadows: _$this.shadows?.map((e) => e.resolve(mix)).toList(),
-      textBaseline: _$this.textBaseline,
-      wordSpacing: _$this.wordSpacing,
+      background: _$this.background ?? defaultValue.background,
+      backgroundColor:
+          _$this.backgroundColor?.resolve(mix) ?? defaultValue.backgroundColor,
+      color: _$this.color?.resolve(mix) ?? defaultValue.color,
+      debugLabel: _$this.debugLabel ?? defaultValue.debugLabel,
+      decoration: _$this.decoration ?? defaultValue.decoration,
+      decorationColor:
+          _$this.decorationColor?.resolve(mix) ?? defaultValue.decorationColor,
+      decorationStyle: _$this.decorationStyle ?? defaultValue.decorationStyle,
+      decorationThickness:
+          _$this.decorationThickness ?? defaultValue.decorationThickness,
+      fontFamily: _$this.fontFamily ?? defaultValue.fontFamily,
+      fontFamilyFallback:
+          _$this.fontFamilyFallback ?? defaultValue.fontFamilyFallback,
+      fontFeatures: _$this.fontFeatures ?? defaultValue.fontFeatures,
+      fontSize: _$this.fontSize ?? defaultValue.fontSize,
+      fontStyle: _$this.fontStyle ?? defaultValue.fontStyle,
+      fontWeight: _$this.fontWeight ?? defaultValue.fontWeight,
+      foreground: _$this.foreground ?? defaultValue.foreground,
+      height: _$this.height ?? defaultValue.height,
+      letterSpacing: _$this.letterSpacing ?? defaultValue.letterSpacing,
+      locale: _$this.locale ?? defaultValue.locale,
+      shadows: _$this.shadows?.map((e) => e.resolve(mix)).toList() ??
+          defaultValue.shadows,
+      textBaseline: _$this.textBaseline ?? defaultValue.textBaseline,
+      wordSpacing: _$this.wordSpacing ?? defaultValue.wordSpacing,
     );
   }
 
@@ -51,14 +56,9 @@ mixin _$TextStyleData on Dto<TextStyle> {
       decorationThickness:
           other.decorationThickness ?? _$this.decorationThickness,
       fontFamily: other.fontFamily ?? _$this.fontFamily,
-      fontFamilyFallback: _$mergeListT(
-        _$this.fontFamilyFallback,
-        other.fontFamilyFallback,
-      ),
-      fontFeatures: _$mergeListT(
-        _$this.fontFeatures,
-        other.fontFeatures,
-      ),
+      fontFamilyFallback:
+          _$merge(_$this.fontFamilyFallback, other.fontFamilyFallback),
+      fontFeatures: _$merge(_$this.fontFeatures, other.fontFeatures),
       fontSize: other.fontSize ?? _$this.fontSize,
       fontStyle: other.fontStyle ?? _$this.fontStyle,
       fontWeight: other.fontWeight ?? _$this.fontWeight,
@@ -77,54 +77,50 @@ mixin _$TextStyleData on Dto<TextStyle> {
   /// This property is used by the [==] operator and the [hashCode] getter to
   /// compare two [TextStyleData] instances for equality.
   @override
-  List<Object?> get props {
-    return [
-      _$this.background,
-      _$this.backgroundColor,
-      _$this.color,
-      _$this.debugLabel,
-      _$this.decoration,
-      _$this.decorationColor,
-      _$this.decorationStyle,
-      _$this.decorationThickness,
-      _$this.fontFamily,
-      _$this.fontFamilyFallback,
-      _$this.fontFeatures,
-      _$this.fontSize,
-      _$this.fontStyle,
-      _$this.fontWeight,
-      _$this.foreground,
-      _$this.height,
-      _$this.letterSpacing,
-      _$this.locale,
-      _$this.shadows,
-      _$this.textBaseline,
-      _$this.wordSpacing,
-    ];
-  }
+  List<Object?> get props => [
+        _$this.background,
+        _$this.backgroundColor,
+        _$this.color,
+        _$this.debugLabel,
+        _$this.decoration,
+        _$this.decorationColor,
+        _$this.decorationStyle,
+        _$this.decorationThickness,
+        _$this.fontFamily,
+        _$this.fontFamilyFallback,
+        _$this.fontFeatures,
+        _$this.fontSize,
+        _$this.fontStyle,
+        _$this.fontWeight,
+        _$this.foreground,
+        _$this.height,
+        _$this.letterSpacing,
+        _$this.locale,
+        _$this.shadows,
+        _$this.textBaseline,
+        _$this.wordSpacing,
+      ];
 
   TextStyleData get _$this => this as TextStyleData;
-  List<T>? _$mergeListT<T>(
-    List<T>? a,
-    List<T>? b,
-  ) {
-    if (b == null) return a;
-    if (a == null) return b;
-
-    final mergedList = [...a];
-    for (int i = 0; i < b.length; i++) {
-      if (i < mergedList.length) {
-        mergedList[i] = b[i] ?? mergedList[i];
-      } else {
-        mergedList.add(b[i]);
-      }
-    }
-
-    return mergedList;
-  }
 }
 
-mixin _$TextStyleDto on Dto<TextStyle> {
+List<T>? _$merge<T>(List<T>? a, List<T>? b) {
+  if (b == null) return a;
+  if (a == null) return b;
+
+  final mergedList = [...a];
+  for (int i = 0; i < b.length; i++) {
+    if (i < mergedList.length) {
+      mergedList[i] = b[i] ?? mergedList[i];
+    } else {
+      mergedList.add(b[i]);
+    }
+  }
+
+  return mergedList;
+}
+
+base mixin _$TextStyleDto on Dto<TextStyle> {
   @override
   TextStyleDto merge(TextStyleDto? other) {
     if (other == null) return _$this;
@@ -139,11 +135,9 @@ mixin _$TextStyleDto on Dto<TextStyle> {
   /// This property is used by the [==] operator and the [hashCode] getter to
   /// compare two [TextStyleDto] instances for equality.
   @override
-  List<Object?> get props {
-    return [
-      _$this.value,
-    ];
-  }
+  List<Object?> get props => [
+        _$this.value,
+      ];
 
   TextStyleDto get _$this => this as TextStyleDto;
 }

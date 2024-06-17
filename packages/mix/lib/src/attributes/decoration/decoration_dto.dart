@@ -69,6 +69,9 @@ class BoxDecorationDto extends DecorationDto<BoxDecoration> {
   final BlendMode? backgroundBlendMode;
   final DecorationImageDto? image;
 
+  @override
+  BoxDecoration get defaultValue => const BoxDecoration();
+
   const BoxDecorationDto({
     super.color,
     this.border,
@@ -125,6 +128,10 @@ class BoxDecorationDto extends DecorationDto<BoxDecoration> {
 @immutable
 class ShapeDecorationDto extends DecorationDto<ShapeDecoration> {
   final ShapeBorderDto? shape;
+
+  @override
+  ShapeDecoration get defaultValue =>
+      const ShapeDecoration(shape: RoundedRectangleBorder());
 
   const ShapeDecorationDto({
     super.color,

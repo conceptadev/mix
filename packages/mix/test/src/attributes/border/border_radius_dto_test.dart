@@ -5,16 +5,16 @@ import 'package:mix/mix.dart';
 import '../../../helpers/testing_utils.dart';
 
 void main() {
-  group('BorderRadiusGeometryDto', () {
+  group('BorderRadiusDto', () {
     test('merge returns merged object correctly', () {
-      const attr1 = BorderRadiusGeometryDto(
+      const attr1 = BorderRadiusDto(
         topLeft: Radius.circular(5.0),
         topRight: Radius.circular(10.0),
         bottomLeft: Radius.circular(15.0),
         bottomRight: Radius.circular(20.0),
       );
 
-      const attr2 = BorderRadiusGeometryDto(
+      const attr2 = BorderRadiusDto(
         topLeft: Radius.circular(5.0),
         topRight: Radius.circular(10.0),
         bottomLeft: Radius.circular(15.0),
@@ -29,14 +29,14 @@ void main() {
       expect(merged.bottomRight, attr2.bottomRight);
     });
 
-    test('merge should combine two BorderRadiusGeometryDtos correctly', () {
-      const borderRadius1 = BorderRadiusGeometryDto(
+    test('merge should combine two BorderRadiusDto correctly', () {
+      const borderRadius1 = BorderRadiusDto(
         topLeft: Radius.circular(30),
         topRight: Radius.circular(40),
         bottomLeft: Radius.circular(10),
         bottomRight: Radius.circular(20),
       );
-      const borderRadius2 = BorderRadiusGeometryDto(
+      const borderRadius2 = BorderRadiusDto(
         topLeft: Radius.circular(20),
       );
 
@@ -49,15 +49,14 @@ void main() {
     });
 
     test('resolve should create a BorderRadius with the correct values', () {
-      const borderRadius = BorderRadiusGeometryDto(
+      const borderRadius = BorderRadiusDto(
         topLeft: Radius.circular(10),
         topRight: Radius.circular(20),
         bottomLeft: Radius.circular(30),
         bottomRight: Radius.circular(40),
       );
 
-      final resolvedBorderRadius =
-          borderRadius.resolve(EmptyMixData) as BorderRadius;
+      final resolvedBorderRadius = borderRadius.resolve(EmptyMixData);
 
       expect(resolvedBorderRadius.topLeft, const Radius.circular(10));
       expect(resolvedBorderRadius.topRight, const Radius.circular(20));
@@ -66,13 +65,13 @@ void main() {
     });
 
     test('Equality holds when properties are the same', () {
-      const attr1 = BorderRadiusGeometryDto(
+      const attr1 = BorderRadiusDto(
         topLeft: Radius.circular(5.0),
         topRight: Radius.circular(10.0),
         bottomLeft: Radius.circular(15.0),
         bottomRight: Radius.circular(20.0),
       );
-      const attr2 = BorderRadiusGeometryDto(
+      const attr2 = BorderRadiusDto(
         topLeft: Radius.circular(5.0),
         topRight: Radius.circular(10.0),
         bottomLeft: Radius.circular(15.0),
@@ -82,14 +81,14 @@ void main() {
     });
 
     test('Equality fails when properties are different', () {
-      const attr1 = BorderRadiusGeometryDto(
+      const attr1 = BorderRadiusDto(
         topLeft: Radius.circular(5.0),
         topRight: Radius.circular(10.0),
         bottomLeft: Radius.circular(15.0),
         bottomRight: Radius.circular(20.0),
       );
 
-      const attr2 = BorderRadiusGeometryDto(
+      const attr2 = BorderRadiusDto(
         topLeft: Radius.circular(5.0),
         topRight: Radius.circular(10.0),
         bottomLeft: Radius.circular(15.0),
@@ -99,16 +98,16 @@ void main() {
     });
   });
 
-  group('BorderRadiusGeometryDto', () {
+  group('BorderRadiusDirectionalDto', () {
     test('merge returns merged object correctly', () {
-      const attr1 = BorderRadiusGeometryDto(
+      const attr1 = BorderRadiusDirectionalDto(
         topStart: Radius.circular(5.0),
         topEnd: Radius.circular(10.0),
         bottomStart: Radius.circular(15.0),
         bottomEnd: Radius.circular(20.0),
       );
 
-      const attr2 = BorderRadiusGeometryDto(
+      const attr2 = BorderRadiusDirectionalDto(
         topStart: Radius.circular(5.0),
         topEnd: Radius.circular(10.0),
         bottomStart: Radius.circular(15.0),
@@ -123,14 +122,14 @@ void main() {
       expect(merged.bottomEnd, attr2.bottomEnd);
     });
 
-    test('merge should combine two BorderRadiusGeometryDtos correctly', () {
-      const borderRadius1 = BorderRadiusGeometryDto(
+    test('merge should combine two BorderRadiusDirectionalDto correctly', () {
+      const borderRadius1 = BorderRadiusDirectionalDto(
         topStart: Radius.circular(10),
         topEnd: Radius.circular(10),
         bottomStart: Radius.circular(10),
         bottomEnd: Radius.circular(10),
       );
-      const borderRadius2 = BorderRadiusGeometryDto(
+      const borderRadius2 = BorderRadiusDirectionalDto(
         topStart: Radius.circular(20),
       );
 
@@ -143,15 +142,14 @@ void main() {
     });
 
     test('resolve should create a BorderRadius with the correct values', () {
-      const borderRadius = BorderRadiusGeometryDto(
+      const borderRadius = BorderRadiusDirectionalDto(
         topStart: Radius.circular(10),
         topEnd: Radius.circular(20),
         bottomStart: Radius.circular(30),
         bottomEnd: Radius.circular(40),
       );
 
-      final resolvedBorderRadius =
-          borderRadius.resolve(EmptyMixData) as BorderRadiusDirectional;
+      final resolvedBorderRadius = borderRadius.resolve(EmptyMixData);
 
       expect(resolvedBorderRadius.topStart, const Radius.circular(10));
       expect(resolvedBorderRadius.topEnd, const Radius.circular(20));
@@ -160,13 +158,13 @@ void main() {
     });
 
     test('Equality holds when properties are the same', () {
-      const attr1 = BorderRadiusGeometryDto(
+      const attr1 = BorderRadiusDirectionalDto(
         topStart: Radius.circular(5.0),
         topEnd: Radius.circular(10.0),
         bottomStart: Radius.circular(15.0),
         bottomEnd: Radius.circular(20.0),
       );
-      const attr2 = BorderRadiusGeometryDto(
+      const attr2 = BorderRadiusDirectionalDto(
         topStart: Radius.circular(5.0),
         topEnd: Radius.circular(10.0),
         bottomStart: Radius.circular(15.0),
@@ -176,14 +174,14 @@ void main() {
     });
 
     test('Equality fails when properties are different', () {
-      const attr1 = BorderRadiusGeometryDto(
+      const attr1 = BorderRadiusDirectionalDto(
         topStart: Radius.circular(5.0),
         topEnd: Radius.circular(10.0),
         bottomStart: Radius.circular(15.0),
         bottomEnd: Radius.circular(20.0),
       );
 
-      const attr2 = BorderRadiusGeometryDto(
+      const attr2 = BorderRadiusDirectionalDto(
         topStart: Radius.circular(5.0),
         topEnd: Radius.circular(10.0),
         bottomStart: Radius.circular(15.0),

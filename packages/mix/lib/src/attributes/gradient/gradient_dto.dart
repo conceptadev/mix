@@ -72,6 +72,9 @@ final class LinearGradientDto extends GradientDto<LinearGradient>
   final AlignmentGeometry? end;
   final TileMode? tileMode;
 
+  @override
+  LinearGradient get defaultValue => const LinearGradient(colors: []);
+
   const LinearGradientDto({
     this.begin,
     this.end,
@@ -98,6 +101,9 @@ final class RadialGradientDto extends GradientDto<RadialGradient>
 
   final double? focalRadius;
 
+  @override
+  RadialGradient get defaultValue => const RadialGradient(colors: []);
+
   const RadialGradientDto({
     this.center,
     this.radius,
@@ -123,6 +129,9 @@ final class SweepGradientDto extends GradientDto<SweepGradient>
   final double? endAngle;
 
   final TileMode? tileMode;
+
+  @override
+  SweepGradient get defaultValue => const SweepGradient(colors: []);
 
   const SweepGradientDto({
     this.center,

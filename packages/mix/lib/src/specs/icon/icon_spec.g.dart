@@ -7,15 +7,11 @@ part of 'icon_spec.dart';
 // **************************************************************************
 
 base mixin _$IconSpec on Spec<IconSpec> {
-  /// Retrieves the [IconSpec] from a MixData.
   static IconSpec from(MixData mix) {
     return mix.attributeOf<IconSpecAttribute>()?.resolve(mix) ??
         const IconSpec();
   }
 
-  /// Retrieves the [IconSpec] from the nearest [Mix] ancestor.
-  ///
-  /// If no ancestor is found, returns [IconSpec].
   static IconSpec of(BuildContext context) {
     return _$IconSpec.from(Mix.of(context));
   }
@@ -50,48 +46,22 @@ base mixin _$IconSpec on Spec<IconSpec> {
   }
 
   @override
-  IconSpec lerp(
-    IconSpec? other,
-    double t,
-  ) {
+  IconSpec lerp(IconSpec? other, double t) {
     if (other == null) return _$this;
 
     return IconSpec(
-      color: Color.lerp(
-        _$this.color,
-        other._$this.color,
-        t,
-      ),
-      size: _$lerpDouble(
-        _$this.size,
-        other._$this.size,
-        t,
-      ),
-      weight: _$lerpDouble(
-        _$this.weight,
-        other._$this.weight,
-        t,
-      ),
-      grade: _$lerpDouble(
-        _$this.grade,
-        other._$this.grade,
-        t,
-      ),
-      opticalSize: _$lerpDouble(
-        _$this.opticalSize,
-        other._$this.opticalSize,
-        t,
-      ),
+      color: Color.lerp(_$this.color, other._$this.color, t),
+      size: _$lerpDouble(_$this.size, other._$this.size, t),
+      weight: _$lerpDouble(_$this.weight, other._$this.weight, t),
+      grade: _$lerpDouble(_$this.grade, other._$this.grade, t),
+      opticalSize:
+          _$lerpDouble(_$this.opticalSize, other._$this.opticalSize, t),
       shadows: t < 0.5 ? _$this.shadows : other._$this.shadows,
       textDirection:
           t < 0.5 ? _$this.textDirection : other._$this.textDirection,
       applyTextScaling:
           t < 0.5 ? _$this.applyTextScaling : other._$this.applyTextScaling,
-      fill: _$lerpDouble(
-        _$this.fill,
-        other._$this.fill,
-        t,
-      ),
+      fill: _$lerpDouble(_$this.fill, other._$this.fill, t),
       animated: t < 0.5 ? _$this.animated : other._$this.animated,
     );
   }
@@ -101,20 +71,18 @@ base mixin _$IconSpec on Spec<IconSpec> {
   /// This property is used by the [==] operator and the [hashCode] getter to
   /// compare two [IconSpec] instances for equality.
   @override
-  List<Object?> get props {
-    return [
-      _$this.color,
-      _$this.size,
-      _$this.weight,
-      _$this.grade,
-      _$this.opticalSize,
-      _$this.shadows,
-      _$this.textDirection,
-      _$this.applyTextScaling,
-      _$this.fill,
-      _$this.animated,
-    ];
-  }
+  List<Object?> get props => [
+        _$this.color,
+        _$this.size,
+        _$this.weight,
+        _$this.grade,
+        _$this.opticalSize,
+        _$this.shadows,
+        _$this.textDirection,
+        _$this.applyTextScaling,
+        _$this.fill,
+        _$this.animated,
+      ];
 
   IconSpec get _$this => this as IconSpec;
 }
@@ -127,6 +95,16 @@ base mixin _$IconSpec on Spec<IconSpec> {
 /// Use this class to configure the attributes of a [IconSpec] and pass it to
 /// the [IconSpec] constructor.
 final class IconSpecAttribute extends SpecAttribute<IconSpec> {
+  final ColorDto? color;
+  final double? size;
+  final double? weight;
+  final double? grade;
+  final double? opticalSize;
+  final List<ShadowDto>? shadows;
+  final TextDirection? textDirection;
+  final bool? applyTextScaling;
+  final double? fill;
+
   const IconSpecAttribute({
     this.color,
     this.size,
@@ -139,24 +117,6 @@ final class IconSpecAttribute extends SpecAttribute<IconSpec> {
     this.fill,
     super.animated,
   });
-
-  final ColorDto? color;
-
-  final double? size;
-
-  final double? weight;
-
-  final double? grade;
-
-  final double? opticalSize;
-
-  final List<ShadowDto>? shadows;
-
-  final TextDirection? textDirection;
-
-  final bool? applyTextScaling;
-
-  final double? fill;
 
   @override
   IconSpec resolve(MixData mix) {
@@ -197,20 +157,18 @@ final class IconSpecAttribute extends SpecAttribute<IconSpec> {
   /// This property is used by the [==] operator and the [hashCode] getter to
   /// compare two [IconSpecAttribute] instances for equality.
   @override
-  List<Object?> get props {
-    return [
-      color,
-      size,
-      weight,
-      grade,
-      opticalSize,
-      shadows,
-      textDirection,
-      applyTextScaling,
-      fill,
-      animated,
-    ];
-  }
+  List<Object?> get props => [
+        color,
+        size,
+        weight,
+        grade,
+        opticalSize,
+        shadows,
+        textDirection,
+        applyTextScaling,
+        fill,
+        animated,
+      ];
 }
 
 /// Utility class for configuring [IconSpecAttribute] properties.
@@ -220,8 +178,6 @@ final class IconSpecAttribute extends SpecAttribute<IconSpec> {
 /// Use the methods of this class to configure specific properties of a [IconSpecAttribute].
 final class IconSpecUtility<T extends Attribute>
     extends SpecUtility<T, IconSpecAttribute> {
-  IconSpecUtility(super.builder);
-
   /// Utility for defining [IconSpecAttribute.color]
   late final color = ColorUtility((v) => only(color: v));
 
@@ -253,6 +209,8 @@ final class IconSpecUtility<T extends Attribute>
   /// Utility for defining [IconSpecAttribute.animated]
   late final animated = AnimatedUtility((v) => only(animated: v));
 
+  IconSpecUtility(super.builder);
+
   static final self = IconSpecUtility((v) => v);
 
   /// Returns a new [IconSpecAttribute] with the specified properties.
@@ -269,20 +227,18 @@ final class IconSpecUtility<T extends Attribute>
     double? fill,
     AnimatedDataDto? animated,
   }) {
-    return builder(
-      IconSpecAttribute(
-        color: color,
-        size: size,
-        weight: weight,
-        grade: grade,
-        opticalSize: opticalSize,
-        shadows: shadows,
-        textDirection: textDirection,
-        applyTextScaling: applyTextScaling,
-        fill: fill,
-        animated: animated,
-      ),
-    );
+    return builder(IconSpecAttribute(
+      color: color,
+      size: size,
+      weight: weight,
+      grade: grade,
+      opticalSize: opticalSize,
+      shadows: shadows,
+      textDirection: textDirection,
+      applyTextScaling: applyTextScaling,
+      fill: fill,
+      animated: animated,
+    ));
   }
 }
 
@@ -305,11 +261,7 @@ class IconSpecTween extends Tween<IconSpec?> {
   }
 }
 
-double? _$lerpDouble(
-  num? a,
-  num? b,
-  double t,
-) {
+double? _$lerpDouble(num? a, num? b, double t) {
   if (a == b || (a?.isNaN ?? false) && (b?.isNaN ?? false)) {
     return a?.toDouble();
   }

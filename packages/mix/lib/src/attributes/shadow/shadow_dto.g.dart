@@ -6,11 +6,9 @@ part of 'shadow_dto.dart';
 // Generator: DtoDefinitionBuilder
 // **************************************************************************
 
-mixin _$ShadowDto on Dto<Shadow> {
+base mixin _$ShadowDto on Dto<Shadow> {
   @override
   Shadow resolve(MixData mix) {
-    const defaultValue = Shadow();
-
     return Shadow(
       blurRadius: _$this.blurRadius ?? defaultValue.blurRadius,
       color: _$this.color?.resolve(mix) ?? defaultValue.color,
@@ -34,13 +32,11 @@ mixin _$ShadowDto on Dto<Shadow> {
   /// This property is used by the [==] operator and the [hashCode] getter to
   /// compare two [ShadowDto] instances for equality.
   @override
-  List<Object?> get props {
-    return [
-      _$this.blurRadius,
-      _$this.color,
-      _$this.offset,
-    ];
-  }
+  List<Object?> get props => [
+        _$this.blurRadius,
+        _$this.color,
+        _$this.offset,
+      ];
 
   ShadowDto get _$this => this as ShadowDto;
 }
@@ -52,8 +48,6 @@ mixin _$ShadowDto on Dto<Shadow> {
 /// Use the methods of this class to configure specific properties of a [ShadowDto].
 final class ShadowUtility<T extends Attribute>
     extends DtoUtility<T, ShadowDto, Shadow> {
-  ShadowUtility(super.builder) : super(valueToDto: (value) => value.toDto());
-
   /// Utility for defining [ShadowDto.blurRadius]
   late final blurRadius = DoubleUtility((v) => only(blurRadius: v));
 
@@ -63,6 +57,8 @@ final class ShadowUtility<T extends Attribute>
   /// Utility for defining [ShadowDto.offset]
   late final offset = OffsetUtility((v) => only(offset: v));
 
+  ShadowUtility(super.builder) : super(valueToDto: (v) => v.toDto());
+
   /// Returns a new [ShadowDto] with the specified properties.
   @override
   T only({
@@ -70,13 +66,11 @@ final class ShadowUtility<T extends Attribute>
     ColorDto? color,
     Offset? offset,
   }) {
-    return builder(
-      ShadowDto(
-        blurRadius: blurRadius,
-        color: color,
-        offset: offset,
-      ),
-    );
+    return builder(ShadowDto(
+      blurRadius: blurRadius,
+      color: color,
+      offset: offset,
+    ));
   }
 
   T call({
@@ -92,7 +86,7 @@ final class ShadowUtility<T extends Attribute>
   }
 }
 
-extension ShadowExt on Shadow {
+extension ShadowMixExt on Shadow {
   ShadowDto toDto() {
     return ShadowDto(
       blurRadius: blurRadius,
@@ -102,11 +96,9 @@ extension ShadowExt on Shadow {
   }
 }
 
-mixin _$BoxShadowDto on Dto<BoxShadow> {
+base mixin _$BoxShadowDto on Dto<BoxShadow> {
   @override
   BoxShadow resolve(MixData mix) {
-    const defaultValue = BoxShadow();
-
     return BoxShadow(
       color: _$this.color?.resolve(mix) ?? defaultValue.color,
       offset: _$this.offset ?? defaultValue.offset,
@@ -132,14 +124,12 @@ mixin _$BoxShadowDto on Dto<BoxShadow> {
   /// This property is used by the [==] operator and the [hashCode] getter to
   /// compare two [BoxShadowDto] instances for equality.
   @override
-  List<Object?> get props {
-    return [
-      _$this.color,
-      _$this.offset,
-      _$this.blurRadius,
-      _$this.spreadRadius,
-    ];
-  }
+  List<Object?> get props => [
+        _$this.color,
+        _$this.offset,
+        _$this.blurRadius,
+        _$this.spreadRadius,
+      ];
 
   BoxShadowDto get _$this => this as BoxShadowDto;
 }
@@ -151,8 +141,6 @@ mixin _$BoxShadowDto on Dto<BoxShadow> {
 /// Use the methods of this class to configure specific properties of a [BoxShadowDto].
 final class BoxShadowUtility<T extends Attribute>
     extends DtoUtility<T, BoxShadowDto, BoxShadow> {
-  BoxShadowUtility(super.builder) : super(valueToDto: (value) => value.toDto());
-
   /// Utility for defining [BoxShadowDto.color]
   late final color = ColorUtility((v) => only(color: v));
 
@@ -165,6 +153,8 @@ final class BoxShadowUtility<T extends Attribute>
   /// Utility for defining [BoxShadowDto.spreadRadius]
   late final spreadRadius = DoubleUtility((v) => only(spreadRadius: v));
 
+  BoxShadowUtility(super.builder) : super(valueToDto: (v) => v.toDto());
+
   /// Returns a new [BoxShadowDto] with the specified properties.
   @override
   T only({
@@ -173,14 +163,12 @@ final class BoxShadowUtility<T extends Attribute>
     double? blurRadius,
     double? spreadRadius,
   }) {
-    return builder(
-      BoxShadowDto(
-        color: color,
-        offset: offset,
-        blurRadius: blurRadius,
-        spreadRadius: spreadRadius,
-      ),
-    );
+    return builder(BoxShadowDto(
+      color: color,
+      offset: offset,
+      blurRadius: blurRadius,
+      spreadRadius: spreadRadius,
+    ));
   }
 
   T call({
@@ -198,7 +186,7 @@ final class BoxShadowUtility<T extends Attribute>
   }
 }
 
-extension BoxShadowExt on BoxShadow {
+extension BoxShadowMixExt on BoxShadow {
   BoxShadowDto toDto() {
     return BoxShadowDto(
       color: color.toDto(),

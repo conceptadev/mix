@@ -22,6 +22,9 @@ abstract base class ShadowDtoImpl<T extends Shadow> extends Dto<T> {
 @MixableDto()
 final class ShadowDto extends ShadowDtoImpl<Shadow> with _$ShadowDto {
   const ShadowDto({super.blurRadius, super.color, super.offset});
+
+  @override
+  Shadow get defaultValue => const Shadow();
 }
 
 /// Represents a [Dto] Data transfer object of [BoxShadow]
@@ -38,6 +41,9 @@ final class BoxShadowDto extends ShadowDtoImpl<BoxShadow> with _$BoxShadowDto {
     super.blurRadius,
     this.spreadRadius,
   });
+
+  @override
+  BoxShadow get defaultValue => const BoxShadow();
 }
 
 extension ListShadowExt on List<Shadow> {

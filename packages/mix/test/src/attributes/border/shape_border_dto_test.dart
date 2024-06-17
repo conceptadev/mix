@@ -8,7 +8,7 @@ void main() {
   group('RoundedRectangleBorderDto', () {
     test('merge should combine two RoundedRectangleBorderDtos correctly', () {
       const original = RoundedRectangleBorderDto(
-        borderRadius: BorderRadiusGeometryDto(
+        borderRadius: BorderRadiusDto(
           topLeft: Radius.circular(15),
           topRight: Radius.circular(20),
           bottomLeft: Radius.circular(5),
@@ -18,12 +18,12 @@ void main() {
       );
       final merged = original.merge(
         const RoundedRectangleBorderDto(
-          borderRadius: BorderRadiusGeometryDto(
+          borderRadius: BorderRadiusDto(
             topLeft: Radius.circular(25),
           ),
           side: BorderSideDto(color: ColorDto(Colors.blue), width: 2.0),
         ),
-      ) as RoundedRectangleBorderDto;
+      );
 
       expect(merged.borderRadius!.topLeft, const Radius.circular(25));
       expect(merged.borderRadius!.topRight, const Radius.circular(20));
@@ -38,7 +38,7 @@ void main() {
       'resolve should create a RoundedRectangleBorder with the correct values',
       () {
         const dto = RoundedRectangleBorderDto(
-          borderRadius: BorderRadiusGeometryDto(
+          borderRadius: BorderRadiusDto(
             topLeft: Radius.circular(15),
             topRight: Radius.circular(20),
             bottomLeft: Radius.circular(5),
@@ -75,7 +75,7 @@ void main() {
           side: BorderSideDto(color: ColorDto(Colors.blue), width: 2.0),
           eccentricity: 0.75,
         ),
-      ) as CircleBorderDto;
+      );
 
       expect(merged.eccentricity, 0.75);
       expect(merged.side!.color, const ColorDto(Colors.blue));
@@ -100,7 +100,7 @@ void main() {
   group('BeveledRectangleBorderDto', () {
     test('merge should combine two BeveledRectangleBorderDtos correctly', () {
       const original = BeveledRectangleBorderDto(
-        borderRadius: BorderRadiusGeometryDto(
+        borderRadius: BorderRadiusDto(
           topLeft: Radius.circular(15),
           topRight: Radius.circular(20),
           bottomLeft: Radius.circular(5),
@@ -110,12 +110,12 @@ void main() {
       );
       final merged = original.merge(
         const BeveledRectangleBorderDto(
-          borderRadius: BorderRadiusGeometryDto(
+          borderRadius: BorderRadiusDto(
             topLeft: Radius.circular(25),
           ),
           side: BorderSideDto(color: ColorDto(Colors.blue), width: 2.0),
         ),
-      ) as BeveledRectangleBorderDto;
+      );
 
       expect(merged.borderRadius!.topLeft, const Radius.circular(25));
       expect(merged.borderRadius!.topRight, const Radius.circular(20));
@@ -130,7 +130,7 @@ void main() {
       'resolve should create a BeveledRectangleBorder with the correct values',
       () {
         const dto = BeveledRectangleBorderDto(
-          borderRadius: BorderRadiusGeometryDto(
+          borderRadius: BorderRadiusDto(
             topLeft: Radius.circular(15),
             topRight: Radius.circular(20),
             bottomLeft: Radius.circular(5),
@@ -165,7 +165,7 @@ void main() {
         const StadiumBorderDto(
           side: BorderSideDto(color: ColorDto(Colors.blue), width: 2.0),
         ),
-      ) as StadiumBorderDto;
+      );
 
       expect(merged.side!.color, const ColorDto(Colors.blue));
       expect(merged.side!.width, 2.0);
@@ -189,7 +189,7 @@ void main() {
       'merge should combine two ContinuousRectangleBorderDtos correctly',
       () {
         const original = ContinuousRectangleBorderDto(
-          borderRadius: BorderRadiusGeometryDto(
+          borderRadius: BorderRadiusDto(
             topLeft: Radius.circular(15),
             topRight: Radius.circular(20),
             bottomLeft: Radius.circular(5),
@@ -199,17 +199,19 @@ void main() {
         );
         final merged = original.merge(
           const ContinuousRectangleBorderDto(
-            borderRadius: BorderRadiusGeometryDto(
+            borderRadius: BorderRadiusDto(
               topLeft: Radius.circular(25),
             ),
             side: BorderSideDto(color: ColorDto(Colors.blue), width: 2.0),
           ),
-        ) as ContinuousRectangleBorderDto;
+        );
 
-        expect(merged.borderRadius!.topLeft, const Radius.circular(25));
-        expect(merged.borderRadius!.topRight, const Radius.circular(20));
-        expect(merged.borderRadius!.bottomLeft, const Radius.circular(5));
-        expect(merged.borderRadius!.bottomRight, const Radius.circular(10));
+        final borderRadius = merged.borderRadius as BorderRadius;
+
+        expect(borderRadius.topLeft, const Radius.circular(25));
+        expect(borderRadius.topRight, const Radius.circular(20));
+        expect(borderRadius.bottomLeft, const Radius.circular(5));
+        expect(borderRadius.bottomRight, const Radius.circular(10));
 
         expect(merged.side!.color, const ColorDto(Colors.blue));
         expect(merged.side!.width, 2.0);
@@ -220,7 +222,7 @@ void main() {
       'resolve should create a ContinuousRectangleBorder with the correct values',
       () {
         const dto = ContinuousRectangleBorderDto(
-          borderRadius: BorderRadiusGeometryDto(
+          borderRadius: BorderRadiusDto(
             topLeft: Radius.circular(15),
             topRight: Radius.circular(20),
             bottomLeft: Radius.circular(5),

@@ -73,6 +73,9 @@ base class TextStyleData extends Dto<TextStyle> with _$TextStyleData {
     this.textBaseline,
     this.wordSpacing,
   });
+
+  @override
+  TextStyle get defaultValue => const TextStyle();
 }
 
 @MixableDto(skipUtility: true, skipValueExtension: true, mergeLists: false)
@@ -129,6 +132,9 @@ final class TextStyleDto extends Dto<TextStyle> with _$TextStyleDto {
       ),
     ]);
   }
+
+  @override
+  TextStyle get defaultValue => const TextStyle();
 
   factory TextStyleDto.ref(TextStyleToken token) {
     return TextStyleDto._([TextStyleDataRef(ref: token())]);

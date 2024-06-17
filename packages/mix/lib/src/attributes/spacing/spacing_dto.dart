@@ -44,6 +44,9 @@ class SpacingDto extends Dto<EdgeInsetsGeometry> {
   bool get isDirectional => start != null || end != null;
 
   @override
+  EdgeInsetsGeometry get defaultValue => EdgeInsets.zero;
+
+  @override
   SpacingDto merge(SpacingDto? other) {
     if (other == null) return this;
 

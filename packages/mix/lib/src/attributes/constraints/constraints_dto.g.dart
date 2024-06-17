@@ -6,11 +6,9 @@ part of 'constraints_dto.dart';
 // Generator: DtoDefinitionBuilder
 // **************************************************************************
 
-mixin _$BoxConstraintsDto on Dto<BoxConstraints> {
+base mixin _$BoxConstraintsDto on Dto<BoxConstraints> {
   @override
   BoxConstraints resolve(MixData mix) {
-    const defaultValue = BoxConstraints();
-
     return BoxConstraints(
       minWidth: _$this.minWidth ?? defaultValue.minWidth,
       maxWidth: _$this.maxWidth ?? defaultValue.maxWidth,
@@ -36,14 +34,12 @@ mixin _$BoxConstraintsDto on Dto<BoxConstraints> {
   /// This property is used by the [==] operator and the [hashCode] getter to
   /// compare two [BoxConstraintsDto] instances for equality.
   @override
-  List<Object?> get props {
-    return [
-      _$this.minWidth,
-      _$this.maxWidth,
-      _$this.minHeight,
-      _$this.maxHeight,
-    ];
-  }
+  List<Object?> get props => [
+        _$this.minWidth,
+        _$this.maxWidth,
+        _$this.minHeight,
+        _$this.maxHeight,
+      ];
 
   BoxConstraintsDto get _$this => this as BoxConstraintsDto;
 }
@@ -55,9 +51,6 @@ mixin _$BoxConstraintsDto on Dto<BoxConstraints> {
 /// Use the methods of this class to configure specific properties of a [BoxConstraintsDto].
 final class BoxConstraintsUtility<T extends Attribute>
     extends DtoUtility<T, BoxConstraintsDto, BoxConstraints> {
-  BoxConstraintsUtility(super.builder)
-      : super(valueToDto: (value) => value.toDto());
-
   /// Utility for defining [BoxConstraintsDto.minWidth]
   late final minWidth = DoubleUtility((v) => only(minWidth: v));
 
@@ -70,6 +63,8 @@ final class BoxConstraintsUtility<T extends Attribute>
   /// Utility for defining [BoxConstraintsDto.maxHeight]
   late final maxHeight = DoubleUtility((v) => only(maxHeight: v));
 
+  BoxConstraintsUtility(super.builder) : super(valueToDto: (v) => v.toDto());
+
   /// Returns a new [BoxConstraintsDto] with the specified properties.
   @override
   T only({
@@ -78,14 +73,12 @@ final class BoxConstraintsUtility<T extends Attribute>
     double? minHeight,
     double? maxHeight,
   }) {
-    return builder(
-      BoxConstraintsDto(
-        minWidth: minWidth,
-        maxWidth: maxWidth,
-        minHeight: minHeight,
-        maxHeight: maxHeight,
-      ),
-    );
+    return builder(BoxConstraintsDto(
+      minWidth: minWidth,
+      maxWidth: maxWidth,
+      minHeight: minHeight,
+      maxHeight: maxHeight,
+    ));
   }
 
   T call({
@@ -103,7 +96,7 @@ final class BoxConstraintsUtility<T extends Attribute>
   }
 }
 
-extension BoxConstraintsExt on BoxConstraints {
+extension BoxConstraintsMixExt on BoxConstraints {
   BoxConstraintsDto toDto() {
     return BoxConstraintsDto(
       minWidth: minWidth,
