@@ -1,7 +1,6 @@
 // ignore_for_file: no_leading_underscores_for_local_identifiers
 // ignore_for_file: prefer_relative_imports,avoid-importing-entrypoint-exports
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../../core/dto.dart';
@@ -22,7 +21,7 @@ import 'image/decoration_image_dto.dart';
 /// This class needs to have the different properties that are not found in the [Modifiers] class.
 /// In order to support merging of [Decoration] values, and reusable of common properties.
 @immutable
-abstract class DecorationDto<Value extends Decoration> extends Dto<Value> {
+sealed class DecorationDto<T extends Decoration> extends Dto<T> {
   final ColorDto? color;
   final GradientDto? gradient;
   final List<BoxShadowDto>? boxShadow;
@@ -33,27 +32,27 @@ abstract class DecorationDto<Value extends Decoration> extends Dto<Value> {
     required this.boxShadow,
   });
 
-  DecorationDto mergeDecoration(covariant DecorationDto? other);
-
   @override
-  @nonVirtual
-  DecorationDto merge(DecorationDto? other) {
-    if (other == null) return this;
+  DecorationDto<T> merge(covariant DecorationDto<T>? other);
 
-    if (runtimeType == other.runtimeType) {
-      return mergeDecoration(other);
+  static DecorationDto? tryToMerge(DecorationDto? a, DecorationDto? b) {
+    if (b == null) return a;
+    if (a == null) return b;
+
+    if (a.runtimeType == b.runtimeType) {
+      return a.merge(b);
     }
-    if (other is BoxDecorationDto) {
+    if (b is BoxDecorationDto) {
       // Recursive call
-      return _toBoxDecorationDto(this as ShapeDecorationDto).merge(other);
+      return _toBoxDecorationDto(a as ShapeDecorationDto).merge(b);
     }
 
-    if (other is ShapeDecorationDto) {
+    if (b is ShapeDecorationDto) {
       // Recursive call
-      return _toShapeDecorationDto(this as BoxDecorationDto).merge(other);
+      return _toShapeDecorationDto(a as BoxDecorationDto).merge(b);
     }
 
-    throw UnimplementedError('Merging of $this and $other is not supported.');
+    throw UnimplementedError('Merging of $a and $b is not supported.');
   }
 }
 
@@ -84,13 +83,13 @@ class BoxDecorationDto extends DecorationDto<BoxDecoration> {
   });
 
   @override
-  BoxDecorationDto mergeDecoration(BoxDecorationDto? other) {
+  BoxDecorationDto merge(BoxDecorationDto? other) {
     return BoxDecorationDto(
       color: color?.merge(other?.color) ?? other?.color,
       border: border?.merge(other?.border) ?? other?.border,
       borderRadius:
           borderRadius?.merge(other?.borderRadius) ?? other?.borderRadius,
-      gradient: gradient?.tryToMerge(other?.gradient) ?? other?.gradient,
+      gradient: GradientDto.tryToMerge(gradient, other?.gradient),
       boxShadow: boxShadow?.merge(other?.boxShadow) ?? other?.boxShadow,
       shape: other?.shape ?? shape,
       backgroundBlendMode: other?.backgroundBlendMode ?? backgroundBlendMode,
@@ -143,11 +142,11 @@ class ShapeDecorationDto extends DecorationDto<ShapeDecoration> {
   List<BoxShadowDto>? get shadows => boxShadow;
 
   @override
-  ShapeDecorationDto mergeDecoration(ShapeDecorationDto? other) {
+  ShapeDecorationDto merge(ShapeDecorationDto? other) {
     return ShapeDecorationDto(
       color: color?.merge(other?.color) ?? other?.color,
       shape: shape?.merge(other?.shape) ?? other?.shape,
-      gradient: gradient?.tryToMerge(other?.gradient) ?? other?.gradient,
+      gradient: GradientDto.tryToMerge(gradient, other?.gradient),
       shadows: boxShadow?.merge(other?.boxShadow) ?? other?.boxShadow,
     );
   }

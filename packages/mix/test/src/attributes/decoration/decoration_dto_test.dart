@@ -153,7 +153,7 @@ void main() {
         shadows: [otherBoxShadowDto],
       );
 
-      final merged = shapeDeco1.merge(shapeDeco2) as ShapeDecorationDto;
+      final merged = shapeDeco1.merge(shapeDeco2);
 
       expect(merged, isA<ShapeDecorationDto>());
       expect(merged.shape, isA<BeveledRectangleBorderDto>());
@@ -175,7 +175,8 @@ void main() {
         boxShadow: [otherBoxShadowDto],
       );
 
-      final merged = shapeDeco.merge(boxDeco) as BoxDecorationDto;
+      final merged =
+          DecorationDto.tryToMerge(shapeDeco, boxDeco) as BoxDecorationDto;
 
       expect(merged, isA<BoxDecorationDto>());
       expect(merged.shape, BoxShape.circle);
@@ -197,7 +198,8 @@ void main() {
         shadows: [otherBoxShadowDto],
       );
 
-      final merged = boxDeco.merge(shapeDeco) as ShapeDecorationDto;
+      final merged =
+          DecorationDto.tryToMerge(boxDeco, shapeDeco) as ShapeDecorationDto;
 
       expect(merged, isA<ShapeDecorationDto>());
       expect(merged.shape, isA<RoundedRectangleBorderDto>());
@@ -274,7 +276,7 @@ void main() {
         boxShadow: [otherBoxShadowDto],
       );
 
-      final merged = boxDeco1.merge(boxDeco2) as BoxDecorationDto;
+      final merged = boxDeco1.merge(boxDeco2);
 
       expect(merged, isA<BoxDecorationDto>());
       expect(merged.color, const ColorDto(Colors.blue));
@@ -296,7 +298,7 @@ void main() {
         shadows: [otherBoxShadowDto],
       );
 
-      final merged = shapeDeco1.merge(shapeDeco2) as ShapeDecorationDto;
+      final merged = shapeDeco1.merge(shapeDeco2);
 
       expect(merged, isA<ShapeDecorationDto>());
       expect(merged.shape, isA<BeveledRectangleBorderDto>());
@@ -318,7 +320,8 @@ void main() {
         boxShadow: [otherBoxShadowDto],
       );
 
-      final merged = shapeDeco.merge(boxDeco) as BoxDecorationDto;
+      final merged =
+          DecorationDto.tryToMerge(boxDeco, shapeDeco) as BoxDecorationDto;
 
       expect(merged, isA<BoxDecorationDto>());
       expect(merged.shape, BoxShape.circle);
@@ -342,7 +345,8 @@ void main() {
         shadows: [otherBoxShadowDto],
       );
 
-      final merged = boxDeco.merge(shapeDeco) as ShapeDecorationDto;
+      final merged =
+          DecorationDto.tryToMerge(boxDeco, shapeDeco) as ShapeDecorationDto;
 
       expect(merged, isA<ShapeDecorationDto>());
       expect(merged.shape, isA<RoundedRectangleBorderDto>());
@@ -351,37 +355,5 @@ void main() {
       expect(merged.gradient, otherLinearGradientDto);
       expect(merged.shadows, [otherBoxShadowDto]);
     });
-
-    test('throws MergeStrategyException for incompatible types', () {
-      const boxDeco = BoxDecorationDto();
-      const otherDto = _OtherDecorationDto();
-
-      expect(
-        () => boxDeco.merge(otherDto),
-        throwsA(isA<UnimplementedError>()),
-      );
-    });
   });
-}
-
-final class _OtherDecorationDto extends DecorationDto<BoxDecoration> {
-  const _OtherDecorationDto()
-      : super(color: null, gradient: null, boxShadow: null);
-
-  @override
-  _OtherDecorationDto mergeDecoration(DecorationDto other) {
-    return this;
-  }
-
-  @override
-  BoxDecoration get defaultValue => const BoxDecoration();
-
-  @override
-  @override
-  BoxDecoration resolve(MixData mix) {
-    return defaultValue;
-  }
-
-  @override
-  get props => [];
 }

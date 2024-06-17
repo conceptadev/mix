@@ -17,23 +17,26 @@ sealed class GradientDto<T extends Gradient> extends Dto<T> {
   final GradientTransform? transform;
   const GradientDto({this.stops, this.colors, this.transform});
 
-  S _exhaustiveMerge<F extends GradientDto, S extends GradientDto>(F a, S b) {
-    if (a.runtimeType == b.runtimeType) return a.merge(b);
+  static B _exhaustiveMerge<A extends GradientDto, B extends GradientDto>(
+      A a, B b) {
+    if (a.runtimeType == b.runtimeType) return a.merge(b) as B;
 
     return switch (b) {
-      (LinearGradientDto g) => asLinearGradient().merge(g) as S,
-      (RadialGradientDto g) => asRadialGradient().merge(g) as S,
-      (SweepGradientDto g) => asSweepGradient().merge(g) as S,
+      (LinearGradientDto g) => a.asLinearGradient().merge(g) as B,
+      (RadialGradientDto g) => a.asRadialGradient().merge(g) as B,
+      (SweepGradientDto g) => a.asSweepGradient().merge(g) as B,
     };
   }
 
-  GradientDto tryToMerge(GradientDto? other) {
-    if (other == null) return this;
+  static GradientDto? tryToMerge(GradientDto? a, GradientDto? b) {
+    if (b == null) return a;
+    if (a == null) return b;
 
-    return runtimeType == other.runtimeType
-        ? merge(other)
-        : _exhaustiveMerge(this, other);
+    return a.runtimeType == b.runtimeType ? a.merge(b) : _exhaustiveMerge(a, b);
   }
+
+  @override
+  GradientDto<T> merge(covariant GradientDto<T>? other);
 
   LinearGradientDto asLinearGradient() {
     return LinearGradientDto(
