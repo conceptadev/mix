@@ -85,7 +85,6 @@ coverage/
 !**/ios/**/default.perspectivev3
 demo/.fvm/flutter_sdk
 website/tsconfig.tsbuildinfo
-yarn.lock
 node_modules
 
 # FVM 

@@ -1,13 +1,12 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useConfig } from "nextra-theme-docs";
 import CustomSearch from "./components/Search";
 
-const packageName = "Mix";
-const siteUrl = "https://fluttermix.com";
 const description = "An expressive way to build design systems in Flutter.";
 
-const logo = (
+const Logo = (
   <>
     <Image height={32} width={32} alt="Mix Icon" src={"/assets/mix-icon.svg"} />
     <span className="mr-2 font-extrabold mx-2 md:inline">Mix</span>
@@ -23,7 +22,7 @@ const themeConfig = {
       };
     }
   },
-  logo: logo,
+  logo: Logo,
   project: {
     link: "https://github.com/conceptadev/mix",
   },
@@ -36,7 +35,7 @@ const themeConfig = {
   //     </a>
   //   ),
   // },
-  docsRepositoryBase: "https://github.com/conceptadev/mix/blob/main",
+  docsRepositoryBase: "https://github.com/conceptadev/mix/blob/main/website",
   search: {
     component: <CustomSearch />,
   },
@@ -120,6 +119,7 @@ const themeConfig = {
       </svg>
     ),
   },
+
   footer: {
     text: (
       <div className="flex w-full flex-col items-center sm:items-start">
