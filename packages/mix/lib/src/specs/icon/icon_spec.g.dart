@@ -176,7 +176,7 @@ final class IconSpecAttribute extends SpecAttribute<IconSpec> {
 /// This class provides methods to set individual properties of a [IconSpecAttribute].
 ///
 /// Use the methods of this class to configure specific properties of a [IconSpecAttribute].
-final class IconSpecUtility<T extends Attribute>
+base class IconSpecUtility<T extends Attribute>
     extends SpecUtility<T, IconSpecAttribute> {
   /// Utility for defining [IconSpecAttribute.color]
   late final color = ColorUtility((v) => only(color: v));

@@ -1,7 +1,7 @@
 import 'package:mix_builder/src/helpers/builder_utils.dart';
 
 String dtoValueExtension(DtoAnnotationContext context) {
-  final resolvedType = context.resolvedType;
+  final resolvedType = getGenericTypeOfSuperclass(context.element);
   final className = context.name;
 
   final fieldStatements = context.fields.map((field) {

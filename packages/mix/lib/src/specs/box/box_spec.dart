@@ -17,9 +17,9 @@ const _constraintsUtil = _utility(
   ],
 );
 
-const _foregroundUtil = _utility(type: BoxDecorationUtility);
+const _foregroundUtil = _utility(type: 'BoxDecorationUtility');
 const _boxDecorationUtil = _utility(
-  type: BoxDecorationUtility,
+  type: 'BoxDecorationUtility',
   properties: [
     _prop('color'),
     _prop('border'),
@@ -38,7 +38,7 @@ const _boxDecorationUtil = _utility(
     _prop('elevation'),
   ],
   extraUtilities: [
-    _utility(alias: 'shapeDecoration', type: ShapeDecorationUtility),
+    _utility(alias: 'shapeDecoration', type: 'ShapeDecorationUtility'),
   ],
 );
 

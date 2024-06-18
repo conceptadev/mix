@@ -321,7 +321,7 @@ void main() {
       );
 
       final merged =
-          DecorationDto.tryToMerge(boxDeco, shapeDeco) as BoxDecorationDto;
+          DecorationDto.tryToMerge(shapeDeco, boxDeco) as BoxDecorationDto;
 
       expect(merged, isA<BoxDecorationDto>());
       expect(merged.shape, BoxShape.circle);

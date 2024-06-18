@@ -158,10 +158,9 @@ final class BoxSpecAttribute extends SpecAttribute<BoxSpec> {
       padding: padding?.merge(other.padding) ?? other.padding,
       margin: margin?.merge(other.margin) ?? other.margin,
       constraints: constraints?.merge(other.constraints) ?? other.constraints,
-      decoration: decoration?.merge(other.decoration) ?? other.decoration,
-      foregroundDecoration:
-          foregroundDecoration?.merge(other.foregroundDecoration) ??
-              other.foregroundDecoration,
+      decoration: DecorationDto.tryToMerge(decoration, other.decoration),
+      foregroundDecoration: DecorationDto.tryToMerge(
+          foregroundDecoration, other.foregroundDecoration),
       transform: other.transform ?? transform,
       transformAlignment: other.transformAlignment ?? transformAlignment,
       clipBehavior: other.clipBehavior ?? clipBehavior,
@@ -197,7 +196,7 @@ final class BoxSpecAttribute extends SpecAttribute<BoxSpec> {
 /// This class provides methods to set individual properties of a [BoxSpecAttribute].
 ///
 /// Use the methods of this class to configure specific properties of a [BoxSpecAttribute].
-final class BoxSpecUtility<T extends Attribute>
+base class BoxSpecUtility<T extends Attribute>
     extends SpecUtility<T, BoxSpecAttribute> {
   /// Utility for defining [BoxSpecAttribute.alignment]
   late final alignment = AlignmentGeometryUtility((v) => only(alignment: v));

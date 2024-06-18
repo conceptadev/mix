@@ -67,14 +67,14 @@ base mixin _$StrutStyleDto on Dto<StrutStyle> {
 final class StrutStyleUtility<T extends Attribute>
     extends DtoUtility<T, StrutStyleDto, StrutStyle> {
   /// Utility for defining [StrutStyleDto.fontFamily]
-  late final fontFamily = FontFamilyUtility((v) => only(fontFamily: v));
+  late final fontFamily = StringUtility((v) => only(fontFamily: v));
 
   /// Utility for defining [StrutStyleDto.fontFamilyFallback]
   late final fontFamilyFallback =
       StringListUtility((v) => only(fontFamilyFallback: v));
 
   /// Utility for defining [StrutStyleDto.fontSize]
-  late final fontSize = FontSizeUtility((v) => only(fontSize: v));
+  late final fontSize = DoubleUtility((v) => only(fontSize: v));
 
   /// Utility for defining [StrutStyleDto.fontWeight]
   late final fontWeight = FontWeightUtility((v) => only(fontWeight: v));

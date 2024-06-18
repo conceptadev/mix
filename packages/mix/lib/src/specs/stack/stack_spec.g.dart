@@ -130,7 +130,7 @@ final class StackSpecAttribute extends SpecAttribute<StackSpec> {
 /// This class provides methods to set individual properties of a [StackSpecAttribute].
 ///
 /// Use the methods of this class to configure specific properties of a [StackSpecAttribute].
-final class StackSpecUtility<T extends Attribute>
+base class StackSpecUtility<T extends Attribute>
     extends SpecUtility<T, StackSpecAttribute> {
   /// Utility for defining [StackSpecAttribute.alignment]
   late final alignment = AlignmentGeometryUtility((v) => only(alignment: v));

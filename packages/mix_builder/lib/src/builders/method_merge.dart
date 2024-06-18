@@ -32,9 +32,17 @@ String mergeMethodBuilder({
         return '$propAssignment Dto.mergeList($thisName, other.$propName)';
       } else {
         final hasTryToMerge = _checkIfHasTryToMerge(field.element!);
+        final tryToMergeExpression =
+            '$propAssignment ${field.dtoType}.tryToMerge($thisName, other.$propName)';
         if (hasTryToMerge) {
-          return '$propAssignment ${field.baseType}.tryToMerge($thisName, other.$propName)';
+          return tryToMergeExpression;
         }
+
+        // TODO: Hard coded for now, will be removed soon
+        if (field.dtoType == 'DecorationDto') {
+          return tryToMergeExpression;
+        }
+
         return '$propAssignment $thisName$nullable.merge(other.$propName) ?? other.$propName';
       }
     } else {

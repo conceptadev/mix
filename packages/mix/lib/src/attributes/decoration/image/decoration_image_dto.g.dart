@@ -93,7 +93,7 @@ final class DecorationImageUtility<T extends Attribute>
   /// Returns a new [DecorationImageDto] with the specified properties.
   @override
   T only({
-    ImageProvider<Object>? image,
+    ImageProvider? image,
     BoxFit? fit,
     AlignmentGeometry? alignment,
     Rect? centerSlice,
@@ -115,7 +115,7 @@ final class DecorationImageUtility<T extends Attribute>
   }
 
   T call({
-    ImageProvider<Object>? image,
+    ImageProvider? image,
     BoxFit? fit,
     AlignmentGeometry? alignment,
     Rect? centerSlice,

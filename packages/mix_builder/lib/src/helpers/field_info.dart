@@ -9,6 +9,7 @@ import 'package:analyzer/dart/element/element.dart'
 import 'package:analyzer/dart/element/nullability_suffix.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:mix/annotations.dart';
+import 'package:mix_builder/src/helpers/builder_utils.dart';
 import 'package:mix_builder/src/helpers/helpers.dart';
 // ignore_for_file: prefer_relative_imports
 import 'package:source_gen/source_gen.dart' show ConstantReader, TypeChecker;
@@ -33,6 +34,7 @@ final _dtoMap = {
   'BoxShadow': 'BoxShadowDto',
   'Gradient': 'GradientDto',
   'List<Shadow>': 'List<ShadowDto>',
+  'List<BoxShadow>': 'List<BoxShadowDto>',
   'List<Color>': 'List<ColorDto>',
   'BoxBorder': 'BoxBorderDto',
   'BorderSide': 'BorderSideDto',
@@ -70,25 +72,32 @@ class FieldInfo {
   /// Dart type of the field
   final DartType _type;
 
-  String get type => _type.getDisplayString(withNullability: false);
+  String get type => getTypeNameFromDartType(_type);
 
-  String get typeWithNullability =>
-      _type.getDisplayString(withNullability: true);
+  String get typeWithNullability => type + (nullable ? '?' : '');
 
   bool get nullable => _type.nullabilitySuffix != NullabilitySuffix.none;
 
   /// Returns whether the field has a DTO type associated with it.
   bool get hasDto => dtoType != null;
 
-  // type without generics
-  String get baseType => type.split('<').first;
-
   bool get isDto {
-    final isDtoType = _invertedDtoMap[baseType] != null;
+    final isDtoType = _invertedDtoMap[type] != null;
 
-    final listType = type.split('<').last.split('>').first;
+    if (isDtoType) {
+      return true;
+    }
 
-    return isListType ? _invertedDtoMap[listType] != null : isDtoType;
+    if (isListType) {
+      final listType = getGenericsTypeNameFromDartType(_type);
+
+      if (_invertedDtoMap[listType] != null) {
+        return true;
+      }
+      return _invertedDtoMap[listType] != null;
+    }
+
+    return false;
   }
 
   bool get isListType => _type.isDartCoreList;
@@ -103,19 +112,10 @@ class FieldInfo {
 
   String? get dtoType {
     if (annotation.dto?.typeAsString != null) {
-      return annotation.dto?.typeAsString;
+      return annotation.dto!.typeAsString!;
     }
 
-    if (isListType) {
-      final listType = type.split('<').last.split('>').first;
-
-      if (!isDto) {
-        return _dtoMap[listType] != null ? 'List<${_dtoMap[listType]}>' : null;
-      } else {
-        return type;
-      }
-    }
-    return isDto ? type : _dtoMap[baseType];
+    return isDto ? type : _dtoMap[type];
   }
 
   /// True if the type is `dynamic`.
@@ -163,10 +163,7 @@ class ParameterInfo extends FieldInfo {
 
   String get asResolvedType {
     if (isDto) {
-      if (isListType) {
-        return 'List<${_invertedDtoMap[_typeFromList]!}>';
-      }
-      final value = _invertedDtoMap[baseType];
+      final value = _invertedDtoMap[type];
       if (value == null) {
         throw Exception('No resolved type found for $type');
       }
@@ -180,14 +177,13 @@ class ParameterInfo extends FieldInfo {
     String? utilityType = annotation.utility?.typeAsString;
 
     if (utilityType != null) {
-      print(utilityType);
       return utilityType;
     }
 
     if (isDto) {
       utilityType ??= asResolvedType;
     } else {
-      utilityType ??= baseType;
+      utilityType ??= type;
     }
 
     utilityType = utilityType.capitalize();
@@ -251,7 +247,7 @@ MixableFieldDto? _getMixableDto(ConstantReader? reader) {
 }
 
 MixableFieldUtility _getMixableFieldUtility(ConstantReader reader) {
-  final utilityType = reader.peek('type')?.typeValue.element?.name;
+  final utilityType = reader.peek('type')?.objectValue.toStringValue();
   final utilityAlias = reader.peek('alias')?.stringValue;
 
   final fields =

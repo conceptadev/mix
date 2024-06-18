@@ -101,10 +101,6 @@ class DtoAnnotationContext extends AnnotationContext<MixableDto> {
     required super.annotation,
     required super.declarationProvider,
   });
-
-  String? get resolvedType =>
-      element.allSupertypes.firstOrNull?.typeArguments.first
-          .getDisplayString(withNullability: false);
 }
 
 extension ReferenceExt on Reference {
@@ -118,10 +114,38 @@ extension ReferenceExt on Reference {
 
 String getTypeNameFromDartType(DartType type) {
   final element = type.element;
-  if (element is ClassElement) {
+  // Check if element is a list
+  if (element is ClassElement &&
+      !type.isDartCoreList &&
+      !type.isDartCoreMap &&
+      !type.isDartCoreSet &&
+      !type.isDartCoreObject) {
     return element.name;
   }
   return type.getDisplayString(withNullability: false);
+}
+
+String? getGenericsTypeNameFromDartType(DartType type) {
+  if (type is ParameterizedType) {
+    if (type.typeArguments.isEmpty) {
+      return null;
+    }
+    final genericType = type.typeArguments.first;
+    return getTypeNameFromDartType(genericType);
+  }
+  return null;
+}
+
+String? getGenericTypeOfSuperclass(ClassElement classElement) {
+  final supertype = classElement.supertype;
+  if (supertype != null) {
+    final typeArguments = supertype.typeArguments;
+    if (typeArguments.isNotEmpty) {
+      final genericType = typeArguments.first;
+      return genericType.getDisplayString(withNullability: false);
+    }
+  }
+  return null;
 }
 
 bool _checkIfTypeStartsWith(InterfaceType type, String typeName) {

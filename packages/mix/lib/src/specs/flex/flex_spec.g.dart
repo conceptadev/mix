@@ -177,7 +177,7 @@ final class FlexSpecAttribute extends SpecAttribute<FlexSpec> {
 /// This class provides methods to set individual properties of a [FlexSpecAttribute].
 ///
 /// Use the methods of this class to configure specific properties of a [FlexSpecAttribute].
-final class FlexSpecUtility<T extends Attribute>
+base class FlexSpecUtility<T extends Attribute>
     extends SpecUtility<T, FlexSpecAttribute> {
   /// Utility for defining [FlexSpecAttribute.crossAxisAlignment]
   late final crossAxisAlignment =
@@ -214,7 +214,7 @@ final class FlexSpecUtility<T extends Attribute>
   late final clipBehavior = ClipUtility((v) => only(clipBehavior: v));
 
   /// Utility for defining [FlexSpecAttribute.gap]
-  late final gap = SpacingSideUtility((v) => only(gap: v));
+  late final gap = DoubleUtility((v) => only(gap: v));
 
   /// Utility for defining [FlexSpecAttribute.animated]
   late final animated = AnimatedUtility((v) => only(animated: v));

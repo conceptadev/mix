@@ -143,7 +143,7 @@ final class BeveledRectangleBorderUtility<T extends Attribute>
   /// Returns a new [BeveledRectangleBorderDto] with the specified properties.
   @override
   T only({
-    BorderRadiusGeometryDto<BorderRadiusGeometry>? borderRadius,
+    BorderRadiusGeometryDto? borderRadius,
     BorderSideDto? side,
   }) {
     return builder(BeveledRectangleBorderDto(
@@ -228,7 +228,7 @@ final class ContinuousRectangleBorderUtility<T extends Attribute>
   /// Returns a new [ContinuousRectangleBorderDto] with the specified properties.
   @override
   T only({
-    BorderRadiusGeometryDto<BorderRadiusGeometry>? borderRadius,
+    BorderRadiusGeometryDto? borderRadius,
     BorderSideDto? side,
   }) {
     return builder(ContinuousRectangleBorderDto(

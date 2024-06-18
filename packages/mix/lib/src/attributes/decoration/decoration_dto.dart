@@ -2,17 +2,10 @@
 // ignore_for_file: prefer_relative_imports,avoid-importing-entrypoint-exports
 
 import 'package:flutter/material.dart';
+import 'package:mix/annotations.dart';
+import 'package:mix/mix.dart';
 
-import '../../core/dto.dart';
-import '../../core/factory/mix_data.dart';
-import '../../internal/iterable_ext.dart';
-import '../border/border_dto.dart';
-import '../border/border_radius_dto.dart';
-import '../border/shape_border_dto.dart';
-import '../color/color_dto.dart';
-import '../gradient/gradient_dto.dart';
-import '../shadow/shadow_dto.dart';
-import 'image/decoration_image_dto.dart';
+part 'decoration_dto.g.dart';
 
 /// A Data transfer object that represents a [Decoration] value.
 ///
@@ -24,6 +17,15 @@ import 'image/decoration_image_dto.dart';
 sealed class DecorationDto<T extends Decoration> extends Dto<T> {
   final ColorDto? color;
   final GradientDto? gradient;
+  @MixableField(
+    utility: MixableFieldUtility(
+      alias: 'boxShadows',
+      properties: [MixableFieldProperty('add', alias: 'boxShadow')],
+      extraUtilities: [
+        MixableFieldUtility(alias: 'elevation', type: 'ElevationUtility')
+      ],
+    ),
+  )
   final List<BoxShadowDto>? boxShadow;
 
   const DecorationDto({
@@ -60,9 +62,25 @@ sealed class DecorationDto<T extends Decoration> extends Dto<T> {
 ///
 /// This is used to allow for resolvable value tokens, and also the correct
 /// merge and combining behavior. It allows to be merged, and resolved to a `[BoxDecoration]
-@immutable
-class BoxDecorationDto extends DecorationDto<BoxDecoration> {
+@MixableDto()
+final class BoxDecorationDto extends DecorationDto<BoxDecoration>
+    with _$BoxDecorationDto {
+  @MixableField(
+    utility: MixableFieldUtility(
+      properties: [
+        MixableFieldProperty('directional', alias: 'borderDirectional')
+      ],
+    ),
+  )
   final BoxBorderDto? border;
+
+  @MixableField(
+    utility: MixableFieldUtility(
+      properties: [
+        MixableFieldProperty('directional', alias: 'borderRadiusDirectional')
+      ],
+    ),
+  )
   final BorderRadiusGeometryDto? borderRadius;
   final BoxShape? shape;
   final BlendMode? backgroundBlendMode;
@@ -81,51 +99,11 @@ class BoxDecorationDto extends DecorationDto<BoxDecoration> {
     this.backgroundBlendMode,
     this.image,
   });
-
-  @override
-  BoxDecorationDto merge(BoxDecorationDto? other) {
-    return BoxDecorationDto(
-      color: color?.merge(other?.color) ?? other?.color,
-      border: border?.merge(other?.border) ?? other?.border,
-      borderRadius:
-          borderRadius?.merge(other?.borderRadius) ?? other?.borderRadius,
-      gradient: GradientDto.tryToMerge(gradient, other?.gradient),
-      boxShadow: boxShadow?.merge(other?.boxShadow) ?? other?.boxShadow,
-      shape: other?.shape ?? shape,
-      backgroundBlendMode: other?.backgroundBlendMode ?? backgroundBlendMode,
-      image: image?.merge(other?.image) ?? other?.image,
-    );
-  }
-
-  /// Resolves this [BoxDecorationDto] with a given [MixData] to a [BoxDecoration]
-  @override
-  BoxDecoration resolve(MixData mix) {
-    return BoxDecoration(
-      color: color?.resolve(mix),
-      image: image?.resolve(mix),
-      border: border?.resolve(mix),
-      borderRadius: borderRadius?.resolve(mix),
-      boxShadow: boxShadow?.map((e) => e.resolve(mix)).toList(),
-      gradient: gradient?.resolve(mix),
-      backgroundBlendMode: backgroundBlendMode,
-      shape: shape ?? BoxShape.rectangle,
-    );
-  }
-
-  @override
-  List<Object?> get props => [
-        color,
-        border,
-        borderRadius,
-        gradient,
-        boxShadow,
-        shape,
-        backgroundBlendMode,
-      ];
 }
 
-@immutable
-class ShapeDecorationDto extends DecorationDto<ShapeDecoration> {
+@MixableDto()
+final class ShapeDecorationDto extends DecorationDto<ShapeDecoration>
+    with _$ShapeDecorationDto {
   final ShapeBorderDto? shape;
 
   @override
@@ -140,29 +118,6 @@ class ShapeDecorationDto extends DecorationDto<ShapeDecoration> {
   }) : super(boxShadow: shadows);
 
   List<BoxShadowDto>? get shadows => boxShadow;
-
-  @override
-  ShapeDecorationDto merge(ShapeDecorationDto? other) {
-    return ShapeDecorationDto(
-      color: color?.merge(other?.color) ?? other?.color,
-      shape: shape?.merge(other?.shape) ?? other?.shape,
-      gradient: GradientDto.tryToMerge(gradient, other?.gradient),
-      shadows: boxShadow?.merge(other?.boxShadow) ?? other?.boxShadow,
-    );
-  }
-
-  @override
-  ShapeDecoration resolve(MixData mix) {
-    return ShapeDecoration(
-      color: color?.resolve(mix),
-      gradient: gradient?.resolve(mix),
-      shadows: shadows?.map((e) => e.resolve(mix)).toList(),
-      shape: shape?.resolve(mix) ?? const RoundedRectangleBorder(),
-    );
-  }
-
-  @override
-  List<Object?> get props => [color, shape, gradient, shadows];
 }
 
 /// Converts a [ShapeDecorationDto] to a [BoxDecorationDto].
@@ -239,7 +194,7 @@ ShapeDecorationDto _toShapeDecorationDto(BoxDecorationDto dto) {
   );
 }
 
-extension DecorationExt on Decoration {
+extension DecorationMixExt on Decoration {
   DecorationDto toDto() {
     if (this is BoxDecoration) {
       return (this as BoxDecoration).toDto();
@@ -247,31 +202,5 @@ extension DecorationExt on Decoration {
       return (this as ShapeDecoration).toDto();
     }
     throw Exception('Unknown decoration type: $runtimeType');
-  }
-}
-
-extension BoxDecorationExt on BoxDecoration {
-  BoxDecorationDto toDto() {
-    return BoxDecorationDto(
-      color: color?.toDto(),
-      border: border?.toDto(),
-      borderRadius: borderRadius?.toDto(),
-      gradient: gradient?.toDto(),
-      boxShadow: boxShadow?.map((e) => e.toDto()).toList(),
-      shape: shape,
-      backgroundBlendMode: backgroundBlendMode,
-      image: image?.toDto(),
-    );
-  }
-}
-
-extension ShapeDecorationExt on ShapeDecoration {
-  ShapeDecorationDto toDto() {
-    return ShapeDecorationDto(
-      color: color?.toDto(),
-      shape: shape.toDto(),
-      gradient: gradient?.toDto(),
-      shadows: shadows?.map((e) => e.toDto()).toList(),
-    );
   }
 }

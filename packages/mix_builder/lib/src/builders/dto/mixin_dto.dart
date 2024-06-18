@@ -29,7 +29,7 @@ String dtoMixin(DtoAnnotationContext context) {
 
   // Get the generic type argument of Dto
   final valueType = dtoSupertype.typeArguments.first;
-  final valueTypeName = valueType.getDisplayString(withNullability: false);
+  final valueTypeName = getTypeNameFromDartType(valueType);
 
   final resolveMethod = !hasResolve
       ? resolveMethodBuilder(

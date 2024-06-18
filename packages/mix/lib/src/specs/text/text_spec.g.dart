@@ -196,7 +196,7 @@ final class TextSpecAttribute extends SpecAttribute<TextSpec> {
 /// This class provides methods to set individual properties of a [TextSpecAttribute].
 ///
 /// Use the methods of this class to configure specific properties of a [TextSpecAttribute].
-final class TextSpecUtility<T extends Attribute>
+base class TextSpecUtility<T extends Attribute>
     extends SpecUtility<T, TextSpecAttribute> {
   /// Utility for defining [TextSpecAttribute.overflow]
   late final overflow = TextOverflowUtility((v) => only(overflow: v));
