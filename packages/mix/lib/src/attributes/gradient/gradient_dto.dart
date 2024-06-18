@@ -18,7 +18,9 @@ sealed class GradientDto<T extends Gradient> extends Dto<T> {
   const GradientDto({this.stops, this.colors, this.transform});
 
   static B _exhaustiveMerge<A extends GradientDto, B extends GradientDto>(
-      A a, B b) {
+    A a,
+    B b,
+  ) {
     if (a.runtimeType == b.runtimeType) return a.merge(b) as B;
 
     return switch (b) {
@@ -34,9 +36,6 @@ sealed class GradientDto<T extends Gradient> extends Dto<T> {
 
     return a.runtimeType == b.runtimeType ? a.merge(b) : _exhaustiveMerge(a, b);
   }
-
-  @override
-  GradientDto<T> merge(covariant GradientDto<T>? other);
 
   LinearGradientDto asLinearGradient() {
     return LinearGradientDto(
@@ -61,6 +60,9 @@ sealed class GradientDto<T extends Gradient> extends Dto<T> {
       stops: stops,
     );
   }
+
+  @override
+  GradientDto<T> merge(covariant GradientDto<T>? other);
 }
 
 /// Represents a Data transfer object of [LinearGradient]
@@ -75,9 +77,6 @@ final class LinearGradientDto extends GradientDto<LinearGradient>
   final AlignmentGeometry? end;
   final TileMode? tileMode;
 
-  @override
-  LinearGradient get defaultValue => const LinearGradient(colors: []);
-
   const LinearGradientDto({
     this.begin,
     this.end,
@@ -86,6 +85,8 @@ final class LinearGradientDto extends GradientDto<LinearGradient>
     super.colors,
     super.stops,
   });
+  @override
+  LinearGradient get defaultValue => const LinearGradient(colors: []);
 }
 
 /// Represents a Data transfer object of [RadialGradient]
@@ -104,9 +105,6 @@ final class RadialGradientDto extends GradientDto<RadialGradient>
 
   final double? focalRadius;
 
-  @override
-  RadialGradient get defaultValue => const RadialGradient(colors: []);
-
   const RadialGradientDto({
     this.center,
     this.radius,
@@ -117,6 +115,8 @@ final class RadialGradientDto extends GradientDto<RadialGradient>
     super.colors,
     super.stops,
   });
+  @override
+  RadialGradient get defaultValue => const RadialGradient(colors: []);
 }
 
 /// Represents a Data transfer object of [SweepGradient]
@@ -133,9 +133,6 @@ final class SweepGradientDto extends GradientDto<SweepGradient>
 
   final TileMode? tileMode;
 
-  @override
-  SweepGradient get defaultValue => const SweepGradient(colors: []);
-
   const SweepGradientDto({
     this.center,
     this.startAngle,
@@ -145,6 +142,8 @@ final class SweepGradientDto extends GradientDto<SweepGradient>
     super.colors,
     super.stops,
   });
+  @override
+  SweepGradient get defaultValue => const SweepGradient(colors: []);
 }
 
 extension GradientExt on Gradient {

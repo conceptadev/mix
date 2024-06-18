@@ -27,9 +27,6 @@ class BoxBorderDto extends Dto<BoxBorder> {
     this.end,
   });
 
-  @override
-  BoxBorder get defaultValue => const Border();
-
   const BoxBorderDto.fromSide(BorderSideDto? side)
       : this(top: side, bottom: side, left: side, right: side);
 
@@ -134,6 +131,9 @@ class BoxBorderDto extends Dto<BoxBorder> {
   }
 
   @override
+  BoxBorder get defaultValue => const Border();
+
+  @override
   get props => [top, bottom, left, right, start, end];
 }
 
@@ -155,10 +155,9 @@ final class BorderSideDto extends Dto<BorderSide> with _$BorderSideDto {
     this.width,
   });
 
+  const BorderSideDto.none() : this();
   @override
   BorderSide get defaultValue => const BorderSide();
-
-  const BorderSideDto.none() : this();
 }
 
 extension BoxBorderExt on BoxBorder {

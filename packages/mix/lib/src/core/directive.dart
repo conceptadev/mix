@@ -14,9 +14,6 @@ class TextDirectiveDto extends Dto<TextDirective> {
   int get length => _modifiers.length;
 
   @override
-  TextDirective get defaultValue => TextDirective((String content) => content);
-
-  @override
   TextDirective resolve(MixData mix) {
     return TextDirective((String content) {
       return _modifiers.fold(
@@ -30,6 +27,9 @@ class TextDirectiveDto extends Dto<TextDirective> {
   TextDirectiveDto merge(TextDirectiveDto? other) {
     return TextDirectiveDto([..._modifiers, ...?other?._modifiers]);
   }
+
+  @override
+  TextDirective get defaultValue => TextDirective((String content) => content);
 
   @override
   get props => [_modifiers];

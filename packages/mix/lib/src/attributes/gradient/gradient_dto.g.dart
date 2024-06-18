@@ -124,7 +124,7 @@ extension LinearGradientMixExt on LinearGradient {
       end: end,
       tileMode: tileMode,
       transform: transform,
-      colors: colors?.map((e) => e.toDto()).toList(),
+      colors: colors.map((e) => e.toDto()).toList(),
       stops: stops,
     );
   }
@@ -286,7 +286,7 @@ extension RadialGradientMixExt on RadialGradient {
       focal: focal,
       focalRadius: focalRadius,
       transform: transform,
-      colors: colors?.map((e) => e.toDto()).toList(),
+      colors: colors.map((e) => e.toDto()).toList(),
       stops: stops,
     );
   }
@@ -421,7 +421,7 @@ extension SweepGradientMixExt on SweepGradient {
       endAngle: endAngle,
       tileMode: tileMode,
       transform: transform,
-      colors: colors?.map((e) => e.toDto()).toList(),
+      colors: colors.map((e) => e.toDto()).toList(),
       stops: stops,
     );
   }

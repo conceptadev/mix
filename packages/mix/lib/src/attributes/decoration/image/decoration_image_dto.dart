@@ -19,10 +19,6 @@ final class DecorationImageDto extends Dto<DecorationImage>
   final bool? invertColors;
   final bool? isAntiAlias;
 
-  @override
-  DecorationImage get defaultValue =>
-      const DecorationImage(image: AssetImage('NONE'));
-
   const DecorationImageDto({
     this.image,
     this.fit,
@@ -33,4 +29,7 @@ final class DecorationImageDto extends Dto<DecorationImage>
     this.invertColors,
     this.isAntiAlias,
   });
+  @override
+  DecorationImage get defaultValue =>
+      const DecorationImage(image: AssetImage('NONE'));
 }

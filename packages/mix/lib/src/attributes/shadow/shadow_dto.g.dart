@@ -90,7 +90,7 @@ extension ShadowMixExt on Shadow {
   ShadowDto toDto() {
     return ShadowDto(
       blurRadius: blurRadius,
-      color: color?.toDto(),
+      color: color.toDto(),
       offset: offset,
     );
   }
@@ -189,7 +189,7 @@ final class BoxShadowUtility<T extends Attribute>
 extension BoxShadowMixExt on BoxShadow {
   BoxShadowDto toDto() {
     return BoxShadowDto(
-      color: color?.toDto(),
+      color: color.toDto(),
       offset: offset,
       blurRadius: blurRadius,
       spreadRadius: spreadRadius,

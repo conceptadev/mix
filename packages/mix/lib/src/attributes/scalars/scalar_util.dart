@@ -88,11 +88,7 @@ final class AlignmentUtility<T extends Attribute>
   /// If [start] is provided, an [AlignmentDirectional] is created. Otherwise, an [Alignment] is created.
   ///
   /// Throws an [AssertionError] if both [x] and [start] are provided.
-  T only({
-    double? x,
-    double? y,
-    double? start,
-  }) {
+  T only({double? x, double? y, double? start}) {
     assert(x == null || start == null,
         'Cannot provide both an x and a start parameter.');
 
@@ -104,18 +100,14 @@ final class AlignmentUtility<T extends Attribute>
 
 final class AlignmentGeometryUtility<T extends Attribute>
     extends AlignmentUtility<T> {
-  AlignmentGeometryUtility(super.builder);
-
   late final directional = AlignmentDirectionalUtility(builder);
+  AlignmentGeometryUtility(super.builder);
 }
 
 final class AlignmentDirectionalUtility<T extends Attribute>
     extends ScalarUtility<T, AlignmentDirectional> {
   const AlignmentDirectionalUtility(super.builder);
-  T only({
-    double? y,
-    double? start,
-  }) {
+  T only({double? y, double? start}) {
     return builder(AlignmentDirectional(start ?? 0, y ?? 0));
   }
 }

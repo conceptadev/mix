@@ -133,9 +133,6 @@ final class TextStyleDto extends Dto<TextStyle> with _$TextStyleDto {
     ]);
   }
 
-  @override
-  TextStyle get defaultValue => const TextStyle();
-
   factory TextStyleDto.ref(TextStyleToken token) {
     return TextStyleDto._([TextStyleDataRef(ref: token())]);
   }
@@ -158,6 +155,9 @@ final class TextStyleDto extends Dto<TextStyle> with _$TextStyleDto {
 
     return result;
   }
+
+  @override
+  TextStyle get defaultValue => const TextStyle();
 }
 
 extension TextStyleExt on TextStyle {

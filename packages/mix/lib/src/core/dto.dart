@@ -9,12 +9,6 @@ import '../internal/compare_mixin.dart';
 abstract class Dto<Value> with EqualityMixin, MergeableMixin {
   const Dto();
 
-  Value get defaultValue;
-
-  // /// Merges this object with [other], returning a new object of type [T].
-  @override
-  Dto merge(covariant Dto? other);
-
   static List<T>? mergeList<T extends Dto>(List<T>? list, List<T>? other) {
     if (other == null) return list;
     if (list == null) return other;
@@ -39,5 +33,10 @@ abstract class Dto<Value> with EqualityMixin, MergeableMixin {
     });
   }
 
+  Value get defaultValue;
+
   Value resolve(MixData mix);
+  // /// Merges this object with [other], returning a new object of type [T].
+  @override
+  Dto merge(covariant Dto? other);
 }

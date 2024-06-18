@@ -11,9 +11,6 @@ class AnimatedDataDto extends Dto<AnimatedData> {
 
   const AnimatedDataDto({required this.duration, required this.curve});
 
-  @override
-  AnimatedData get defaultValue => const AnimatedData.withDefaults();
-
   const AnimatedDataDto.withDefaults()
       : duration = kDefaultAnimationDuration,
         curve = Curves.linear;
@@ -30,6 +27,9 @@ class AnimatedDataDto extends Dto<AnimatedData> {
       curve: other?.curve ?? curve,
     );
   }
+
+  @override
+  AnimatedData get defaultValue => const AnimatedData.withDefaults();
 
   @override
   get props => [duration, curve];

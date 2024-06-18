@@ -27,9 +27,9 @@ final class ShadowListUtility<T extends Attribute>
 /// instances by transforming a list of [BoxShadow] objects into a list of [BoxShadowDto] objects.
 final class BoxShadowListUtility<T extends Attribute>
     extends MixUtility<T, List<BoxShadowDto>> {
-  BoxShadowListUtility(super.builder);
-
   late final add = BoxShadowUtility((v) => builder([v]));
+
+  BoxShadowListUtility(super.builder);
 
   /// Creates an [Attribute] instance from a list of [BoxShadow] objects.
   ///

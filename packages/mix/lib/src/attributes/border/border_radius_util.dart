@@ -13,15 +13,6 @@ final class BorderRadiusGeometryUtility<T extends Attribute>
   /// Returns a directional utility for creating and manipulating attributes with [BorderRadiusDirectional]
   late final directional = BorderRadiusDirectionalUtility(builder);
 
-  late final _bordeRadius = BorderRadiusUtility(builder);
-
-  BorderRadiusGeometryUtility(super.builder)
-      : super(valueToDto: (v) => v.toDto());
-
-  T call(double p1, [double? p2, double? p3, double? p4]) {
-    return _bordeRadius(p1, p2, p3, p4);
-  }
-
   /// Returns a [RadiusUtility] to manipulate [Radius] for all corners.
   late final all = _bordeRadius.all;
 
@@ -58,6 +49,15 @@ final class BorderRadiusGeometryUtility<T extends Attribute>
   /// Sets a zero [Radius] for all corn
   late final zero = _bordeRadius.zero;
 
+  late final _bordeRadius = BorderRadiusUtility(builder);
+
+  BorderRadiusGeometryUtility(super.builder)
+      : super(valueToDto: (v) => v.toDto());
+
+  T call(double p1, [double? p2, double? p3, double? p4]) {
+    return _bordeRadius(p1, p2, p3, p4);
+  }
+
   // Only specific corners
   @override
   T only({
@@ -81,8 +81,6 @@ final class BorderRadiusGeometryUtility<T extends Attribute>
 /// Accepts a builder function that returns [T] and takes a [BorderRadiusDto] as a parameter.
 final class BorderRadiusUtility<T extends Attribute>
     extends DtoUtility<T, BorderRadiusDto, BorderRadius> {
-  BorderRadiusUtility(super.builder) : super(valueToDto: (v) => v.toDto());
-
   /// Returns a [RadiusUtility] to manipulate [Radius] for bottomLeft corner.
   late final bottomLeft = RadiusUtility((radius) => only(bottomLeft: radius));
 
@@ -131,6 +129,8 @@ final class BorderRadiusUtility<T extends Attribute>
 
   /// Sets a zero [Radius] for all corners.
   late final zero = all.zero;
+  BorderRadiusUtility(super.builder) : super(valueToDto: (v) => v.toDto());
+
   T call(double p1, [double? p2, double? p3, double? p4]) {
     double topLeft = p1;
     double topRight = p1;

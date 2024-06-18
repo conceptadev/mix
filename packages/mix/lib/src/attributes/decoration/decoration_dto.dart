@@ -22,7 +22,7 @@ sealed class DecorationDto<T extends Decoration> extends Dto<T> {
       alias: 'boxShadows',
       properties: [MixableFieldProperty('add', alias: 'boxShadow')],
       extraUtilities: [
-        MixableFieldUtility(alias: 'elevation', type: 'ElevationUtility')
+        MixableFieldUtility(alias: 'elevation', type: 'ElevationUtility'),
       ],
     ),
   )
@@ -33,9 +33,6 @@ sealed class DecorationDto<T extends Decoration> extends Dto<T> {
     required this.gradient,
     required this.boxShadow,
   });
-
-  @override
-  DecorationDto<T> merge(covariant DecorationDto<T>? other);
 
   static DecorationDto? tryToMerge(DecorationDto? a, DecorationDto? b) {
     if (b == null) return a;
@@ -56,6 +53,9 @@ sealed class DecorationDto<T extends Decoration> extends Dto<T> {
 
     throw UnimplementedError('Merging of $a and $b is not supported.');
   }
+
+  @override
+  DecorationDto<T> merge(covariant DecorationDto<T>? other);
 }
 
 /// Represents a Data transfer object of [BoxDecoration]
@@ -68,7 +68,7 @@ final class BoxDecorationDto extends DecorationDto<BoxDecoration>
   @MixableField(
     utility: MixableFieldUtility(
       properties: [
-        MixableFieldProperty('directional', alias: 'borderDirectional')
+        MixableFieldProperty('directional', alias: 'borderDirectional'),
       ],
     ),
   )
@@ -77,7 +77,7 @@ final class BoxDecorationDto extends DecorationDto<BoxDecoration>
   @MixableField(
     utility: MixableFieldUtility(
       properties: [
-        MixableFieldProperty('directional', alias: 'borderRadiusDirectional')
+        MixableFieldProperty('directional', alias: 'borderRadiusDirectional'),
       ],
     ),
   )
@@ -85,9 +85,6 @@ final class BoxDecorationDto extends DecorationDto<BoxDecoration>
   final BoxShape? shape;
   final BlendMode? backgroundBlendMode;
   final DecorationImageDto? image;
-
-  @override
-  BoxDecoration get defaultValue => const BoxDecoration();
 
   const BoxDecorationDto({
     super.color,
@@ -99,16 +96,14 @@ final class BoxDecorationDto extends DecorationDto<BoxDecoration>
     this.backgroundBlendMode,
     this.image,
   });
+  @override
+  BoxDecoration get defaultValue => const BoxDecoration();
 }
 
 @MixableDto()
 final class ShapeDecorationDto extends DecorationDto<ShapeDecoration>
     with _$ShapeDecorationDto {
   final ShapeBorderDto? shape;
-
-  @override
-  ShapeDecoration get defaultValue =>
-      const ShapeDecoration(shape: RoundedRectangleBorder());
 
   const ShapeDecorationDto({
     super.color,
@@ -118,6 +113,9 @@ final class ShapeDecorationDto extends DecorationDto<ShapeDecoration>
   }) : super(boxShadow: shadows);
 
   List<BoxShadowDto>? get shadows => boxShadow;
+  @override
+  ShapeDecoration get defaultValue =>
+      const ShapeDecoration(shape: RoundedRectangleBorder());
 }
 
 /// Converts a [ShapeDecorationDto] to a [BoxDecorationDto].
