@@ -3,11 +3,11 @@ import 'package:analyzer/error/listener.dart';
 import 'package:custom_lint_builder/custom_lint_builder.dart';
 import 'package:mix_lint/src/utils/type_checker.dart';
 
-class AttributesOrderInStyle extends DartLintRule {
-  AttributesOrderInStyle() : super(code: _code);
+class AttributesOrdering extends DartLintRule {
+  AttributesOrdering() : super(code: _code);
 
   static const _code = LintCode(
-    name: 'mix_order_attributes_in_style',
+    name: 'mix_attributes_ordering',
     problemMessage:
         'Ensure that the attributes are ordered on groups of the same category in the Style constructor',
   );

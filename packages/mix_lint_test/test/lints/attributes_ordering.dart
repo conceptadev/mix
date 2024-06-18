@@ -11,14 +11,14 @@ final ordered = Style(
   $text.style.fontSize(3),
 );
 
-// expect_lint: mix_order_attributes_in_style
+// expect_lint: mix_attributes_ordering
 final outOrder = Style(
   $box.color.red(),
   $flex.gap(3),
   $box.borderRadius(3),
 );
 
-// expect_lint: mix_order_attributes_in_style
+// expect_lint: mix_attributes_ordering
 final outOrder_2 = Style(
   $box.color.red(),
   $flex.gap(3),
@@ -30,7 +30,7 @@ final b = Variant('b');
 final c = Variant('c');
 
 final outOrder_3 = Style(
-// expect_lint: mix_order_attributes_in_style
+// expect_lint: mix_attributes_ordering
   a(
     $box.color.red(),
     $flex.gap(3),
@@ -40,7 +40,7 @@ final outOrder_3 = Style(
 
 final outOrder_4 = Style(
   a(
-// expect_lint: mix_order_attributes_in_style
+// expect_lint: mix_attributes_ordering
     b(
       $box.color.red(),
       $flex.gap(3),
@@ -50,17 +50,17 @@ final outOrder_4 = Style(
 );
 
 final outOrder_5 = Style(
-// expect_lint: mix_order_attributes_in_style
+// expect_lint: mix_attributes_ordering
   a(
     $box.color.red(),
-// expect_lint: mix_order_attributes_in_style
+// expect_lint: mix_attributes_ordering
     c(
       $box.color.red(),
       $flex.gap(3),
       $box.borderRadius(3),
     ),
     $box.borderRadius(3),
-// expect_lint: mix_order_attributes_in_style
+// expect_lint: mix_attributes_ordering
     b(
       $box.color.red(),
       $flex.gap(3),
