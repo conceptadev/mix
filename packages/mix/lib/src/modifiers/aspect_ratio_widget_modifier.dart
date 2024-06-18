@@ -6,13 +6,13 @@ import 'package:flutter/material.dart';
 
 import '../attributes/scalars/scalar_util.dart';
 import '../core/attribute.dart';
-import '../core/models/mix_data.dart';
+import '../core/factory/mix_data.dart';
 import '../core/modifier.dart';
 
 /// A modifier that wraps a widget with the [AspectRatio] widget.
 ///
 /// The [AspectRatio] widget sizes its child to match a given aspect ratio.
-class AspectRatioModifierAttribute extends WidgetModifierAttribute<
+final class AspectRatioModifierAttribute extends WidgetModifierAttribute<
     AspectRatioModifierAttribute, AspectRatioModifierSpec> {
   /// The aspect ratio to use when sizing the child.
   ///
@@ -34,7 +34,7 @@ class AspectRatioModifierAttribute extends WidgetModifierAttribute<
   get props => [aspectRatio];
 }
 
-class AspectRatioModifierSpec
+final class AspectRatioModifierSpec
     extends WidgetModifierSpec<AspectRatioModifierSpec> {
   final double aspectRatio;
   const AspectRatioModifierSpec(this.aspectRatio);
@@ -60,7 +60,7 @@ class AspectRatioModifierSpec
   }
 }
 
-class AspectRatioUtility<T extends Attribute>
+final class AspectRatioUtility<T extends Attribute>
     extends MixUtility<T, AspectRatioModifierAttribute> {
   const AspectRatioUtility(super.builder);
   T call(double value) {

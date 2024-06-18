@@ -42,5 +42,7 @@ class OnContextVariantUtility {
   /// For example, if the specified [variant] evaluates to `true`,
   /// the [OnNotVariant] with that variant will evaluate to `false`, and vice versa.
   late final not = OnNotVariant.new;
-  OnContextVariantUtility();
+  static final self = OnContextVariantUtility._();
+
+  OnContextVariantUtility._();
 }

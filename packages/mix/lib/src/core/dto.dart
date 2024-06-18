@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../internal/compare_mixin.dart';
 import 'attribute.dart';
-import 'models/mix_data.dart';
+import 'factory/mix_data.dart';
 
 @immutable
 abstract class Dto<Value> with EqualityMixin, MergeableMixin {
@@ -25,7 +25,7 @@ abstract class Dto<Value> with EqualityMixin, MergeableMixin {
         final currentValue = list[index];
         final otherValue = other[index];
 
-        return currentValue.merge(otherValue);
+        return currentValue.merge(otherValue) as T;
       } else if (index < listLength) {
         return list[index];
       }
@@ -34,5 +34,10 @@ abstract class Dto<Value> with EqualityMixin, MergeableMixin {
     });
   }
 
+  Value get defaultValue;
+
   Value resolve(MixData mix);
+  // /// Merges this object with [other], returning a new object of type [T].
+  @override
+  Dto merge(covariant Dto? other);
 }

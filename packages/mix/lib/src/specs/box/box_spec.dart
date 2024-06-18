@@ -1,16 +1,52 @@
+// ignore_for_file: prefer_relative_imports,avoid-importing-entrypoint-exports, camel_case_types
 import 'package:flutter/material.dart';
-import 'package:mix_annotations/mix_annotations.dart';
-
-// ignore: avoid-importing-entrypoint-exports
-import '../../../mix.dart';
+import 'package:mix/annotations.dart';
+import 'package:mix/mix.dart';
 
 part 'box_spec.g.dart';
 
-@MixableSpec()
-class BoxSpec extends Spec<BoxSpec> with BoxSpecMixable {
-  static const of = BoxSpecMixable.of;
+typedef _prop = MixableFieldProperty;
+typedef _utility = MixableFieldUtility;
 
-  static const from = BoxSpecMixable.from;
+const _constraintsUtil = _utility(
+  properties: [
+    _prop('maxWidth'),
+    _prop('minWidth'),
+    _prop('maxHeight'),
+    _prop('minHeight'),
+  ],
+);
+
+const _foregroundUtil = _utility(type: 'BoxDecorationUtility');
+const _boxDecorationUtil = _utility(
+  type: 'BoxDecorationUtility',
+  properties: [
+    _prop('color'),
+    _prop('border'),
+    _prop('borderDirectional'),
+    _prop('borderRadius'),
+    _prop('borderRadiusDirectional'),
+    _prop(
+      'gradient',
+      properties: [
+        _prop('radial', alias: 'radialGradient'),
+        _prop('linear', alias: 'linearGradient'),
+      ],
+    ),
+    _prop('boxShadows', alias: 'shadows'),
+    _prop('boxShadow', alias: 'shadow'),
+    _prop('elevation'),
+  ],
+  extraUtilities: [
+    _utility(alias: 'shapeDecoration', type: 'ShapeDecorationUtility'),
+  ],
+);
+
+@MixableSpec()
+final class BoxSpec extends Spec<BoxSpec> with _$BoxSpec {
+  static const of = _$BoxSpec.of;
+
+  static const from = _$BoxSpec.from;
 
   /// Aligns the child within the box.
   final AlignmentGeometry? alignment;
@@ -22,51 +58,15 @@ class BoxSpec extends Spec<BoxSpec> with BoxSpecMixable {
   final EdgeInsetsGeometry? margin;
 
   /// Applies additional constraints to the child.
-  @MixableField(
-    utility: MixableFieldUtility(
-      properties: [
-        MixableFieldProperty('maxWidth'),
-        MixableFieldProperty('minWidth'),
-        MixableFieldProperty('maxHeight'),
-        MixableFieldProperty('minHeight'),
-      ],
-    ),
-  )
+  @MixableField(utility: _constraintsUtil)
   final BoxConstraints? constraints;
 
   /// Paints a decoration behind the child.
-  @MixableField(
-    utility: MixableFieldUtility(
-      type: BoxDecorationUtility,
-      properties: [
-        MixableFieldProperty('color'),
-        MixableFieldProperty('border'),
-        MixableFieldProperty('borderDirectional'),
-        MixableFieldProperty('borderRadius'),
-        MixableFieldProperty('borderRadiusDirectional'),
-        MixableFieldProperty(
-          'gradient',
-          properties: [
-            MixableFieldProperty('radial', alias: 'radialGradient'),
-            MixableFieldProperty('linear', alias: 'linearGradient'),
-          ],
-        ),
-        MixableFieldProperty('boxShadows', alias: 'shadows'),
-        MixableFieldProperty('boxShadow', alias: 'shadow'),
-        MixableFieldProperty('elevation'),
-      ],
-      extraUtilities: [
-        MixableFieldUtility(
-          alias: 'shapeDecoration',
-          type: ShapeDecorationUtility,
-        ),
-      ],
-    ),
-  )
+  @MixableField(utility: _boxDecorationUtil)
   final Decoration? decoration;
 
   /// Paints a decoration in front of the child.
-  @MixableField(utility: MixableFieldUtility(type: BoxDecorationUtility))
+  @MixableField(utility: _foregroundUtil)
   final Decoration? foregroundDecoration;
 
   /// Applies a transformation matrix before painting the box.

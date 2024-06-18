@@ -1,13 +1,12 @@
+// ignore_for_file: prefer_relative_imports,avoid-importing-entrypoint-exports,
 import 'package:flutter/material.dart';
-import 'package:mix_annotations/mix_annotations.dart';
-
-// ignore: avoid-importing-entrypoint-exports
-import '../../../mix.dart';
+import 'package:mix/annotations.dart';
+import 'package:mix/mix.dart';
 
 part 'flex_spec.g.dart';
 
 @MixableSpec()
-class FlexSpec extends Spec<FlexSpec> with FlexSpecMixable {
+final class FlexSpec extends Spec<FlexSpec> with _$FlexSpec {
   @MixableField(
     utility: MixableFieldUtility(
       properties: [
@@ -27,9 +26,9 @@ class FlexSpec extends Spec<FlexSpec> with FlexSpecMixable {
   @MixableField(utility: MixableFieldUtility(type: SpacingSideUtility))
   final double? gap;
 
-  static const of = FlexSpecMixable.of;
+  static const of = _$FlexSpec.of;
 
-  static const from = FlexSpecMixable.from;
+  static const from = _$FlexSpec.from;
 
   const FlexSpec({
     this.crossAxisAlignment,

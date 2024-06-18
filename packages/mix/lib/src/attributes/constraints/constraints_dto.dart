@@ -1,10 +1,12 @@
+// ignore_for_file: prefer_relative_imports,avoid-importing-entrypoint-exports
 import 'package:flutter/rendering.dart';
+import 'package:mix/annotations.dart';
 
-import '../../core/dto.dart';
-import '../../core/models/mix_data.dart';
+import '../../../mix.dart';
 
-abstract class ConstraintsDto<Self extends ConstraintsDto<Self, Value>,
-    Value extends Constraints> extends Dto<Value> {
+part 'constraints_dto.g.dart';
+
+sealed class ConstraintsDto<T extends Constraints> extends Dto<T> {
   const ConstraintsDto();
 }
 
@@ -12,14 +14,9 @@ abstract class ConstraintsDto<Self extends ConstraintsDto<Self, Value>,
 ///
 /// This is used to allow for resolvable value tokens, and also the correct
 /// merge and combining behavior. It allows to be merged, and resolved to a `[BoxConstraints]
-///
-/// See also:
-/// - [BoxConstraints], which is the Flutter counterpart of this class.
-/// - [ConstraintsDto], which is the base class for this class.
-///
-/// {@category DTO}
-class BoxConstraintsDto
-    extends ConstraintsDto<BoxConstraintsDto, BoxConstraints> {
+@MixableDto()
+final class BoxConstraintsDto extends ConstraintsDto<BoxConstraints>
+    with _$BoxConstraintsDto {
   final double? minWidth;
   final double? maxWidth;
   final double? minHeight;
@@ -31,44 +28,6 @@ class BoxConstraintsDto
     this.minHeight,
     this.maxHeight,
   });
-
-  /// Resolves this [BoxConstraintsDto] with a given [MixData] to a [BoxConstraints]
   @override
-  BoxConstraints resolve(MixData mix) {
-    return BoxConstraints(
-      minWidth: minWidth ?? 0,
-      maxWidth: maxWidth ?? double.infinity,
-      minHeight: minHeight ?? 0,
-      maxHeight: maxHeight ?? double.infinity,
-    );
-  }
-
-  /// Merges this [BoxConstraintsDto] with `other` [BoxConstraintsDto]
-  @override
-  BoxConstraintsDto merge(BoxConstraintsDto? other) {
-    if (other == null) return this;
-
-    return BoxConstraintsDto(
-      minWidth: other.minWidth ?? minWidth,
-      maxWidth: other.maxWidth ?? maxWidth,
-      minHeight: other.minHeight ?? minHeight,
-      maxHeight: other.maxHeight ?? maxHeight,
-    );
-  }
-
-  @override
-  get props => [minWidth, maxWidth, minHeight, maxHeight];
-}
-
-// Imple,ent the from as a toDto extension
-extension BoxConstraintsExt on BoxConstraints {
-  // toDto
-  BoxConstraintsDto toDto() {
-    return BoxConstraintsDto(
-      minWidth: minWidth,
-      maxWidth: maxWidth,
-      minHeight: minHeight,
-      maxHeight: maxHeight,
-    );
-  }
+  BoxConstraints get defaultValue => const BoxConstraints();
 }

@@ -1,16 +1,33 @@
+// ignore_for_file: prefer_relative_imports,avoid-importing-entrypoint-exports
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:mix/annotations.dart';
 
-import '../../core/dto.dart';
-import '../../core/models/mix_data.dart';
-import '../../internal/iterable_ext.dart';
-import '../../theme/tokens/text_style_token.dart';
-import '../color/color_dto.dart';
-import '../shadow/shadow_dto.dart';
+import '../../../mix.dart';
 
-@immutable
-class TextStyleData extends Dto<TextStyle> {
+part 'text_style_dto.g.dart';
+
+final class TextStyleDataRef extends TextStyleData {
+  final TextStyleRef ref;
+  const TextStyleDataRef({required this.ref});
+
+  @override
+  TextStyleDataRef merge(covariant TextStyleDataRef? other) {
+    if (other == null) return this;
+    throw UnsupportedError(
+      'Cannot merge $this with $other, most likely there is an error on Mix',
+    );
+  }
+
+  @override
+  TextStyle resolve(MixData mix) => mix.tokens.textStyleRef(ref);
+  @override
+  get props => [ref];
+}
+
+@MixableDto(skipUtility: true, skipValueExtension: true)
+base class TextStyleData extends Dto<TextStyle> with _$TextStyleData {
   final String? fontFamily;
   final FontWeight? fontWeight;
   final FontStyle? fontStyle;
@@ -32,8 +49,6 @@ class TextStyleData extends Dto<TextStyle> {
   final Paint? background;
   final double? decorationThickness;
   final List<String>? fontFamilyFallback;
-
-  final TextStyleRef? ref;
 
   const TextStyleData({
     this.background,
@@ -57,160 +72,18 @@ class TextStyleData extends Dto<TextStyle> {
     this.shadows,
     this.textBaseline,
     this.wordSpacing,
-  }) : ref = null;
-
-  const TextStyleData.tokenRef(TextStyleRef tokenRef)
-      : ref = tokenRef,
-        background = null,
-        backgroundColor = null,
-        color = null,
-        debugLabel = null,
-        decoration = null,
-        decorationColor = null,
-        decorationStyle = null,
-        decorationThickness = null,
-        fontFamily = null,
-        fontFamilyFallback = null,
-        fontFeatures = null,
-        fontSize = null,
-        fontStyle = null,
-        fontWeight = null,
-        foreground = null,
-        height = null,
-        letterSpacing = null,
-        locale = null,
-        shadows = null,
-        textBaseline = null,
-        wordSpacing = null;
-
-  static TextStyleData from(TextStyle style) {
-    return style is TextStyleRef
-        ? TextStyleData.tokenRef(style)
-        : TextStyleData(
-            background: style.background,
-            backgroundColor: style.backgroundColor?.toDto(),
-            color: style.color?.toDto(),
-            debugLabel: style.debugLabel,
-            decoration: style.decoration,
-            decorationColor: style.decorationColor?.toDto(),
-            decorationStyle: style.decorationStyle,
-            decorationThickness: style.decorationThickness,
-            fontFamily: style.fontFamily,
-            fontFamilyFallback: style.fontFamilyFallback,
-            fontFeatures: style.fontFeatures,
-            fontSize: style.fontSize,
-            fontStyle: style.fontStyle,
-            fontWeight: style.fontWeight,
-            foreground: style.foreground,
-            height: style.height,
-            letterSpacing: style.letterSpacing,
-            locale: style.locale,
-            shadows: style.shadows?.map((e) => e.toDto()).toList(),
-            textBaseline: style.textBaseline,
-            wordSpacing: style.wordSpacing,
-          );
-  }
-
-  bool get isTokenRef => ref != null;
+  });
 
   @override
-  TextStyleData merge(TextStyleData? other) {
-    if (other == null) return this;
-    assert(
-      ref == null && other.ref == null,
-      'Cannot merge token refs',
-    );
-
-    return TextStyleData(
-      background: other.background ?? background,
-      backgroundColor: other.backgroundColor ?? backgroundColor,
-      color: other.color ?? color,
-      debugLabel: other.debugLabel ?? debugLabel,
-      decoration: other.decoration ?? decoration,
-      decorationColor: other.decorationColor ?? decorationColor,
-      decorationStyle: other.decorationStyle ?? decorationStyle,
-      decorationThickness: other.decorationThickness ?? decorationThickness,
-      fontFamily: other.fontFamily ?? fontFamily,
-      fontFamilyFallback: [
-        ...?fontFamilyFallback,
-        ...?other.fontFamilyFallback,
-      ],
-      fontFeatures: other.fontFeatures ?? fontFeatures,
-      fontSize: other.fontSize ?? fontSize,
-      fontStyle: other.fontStyle ?? fontStyle,
-      fontWeight: other.fontWeight ?? fontWeight,
-      foreground: other.foreground ?? foreground,
-      height: other.height ?? height,
-      letterSpacing: other.letterSpacing ?? letterSpacing,
-      locale: other.locale ?? locale,
-      shadows: shadows?.merge(other.shadows) ?? other.shadows,
-      textBaseline: other.textBaseline ?? textBaseline,
-      wordSpacing: other.wordSpacing ?? wordSpacing,
-    );
-  }
-
-  @override
-  TextStyle resolve(MixData mix) {
-    return ref == null
-        ? TextStyle(
-            color: color?.resolve(mix),
-            backgroundColor: backgroundColor?.resolve(mix),
-            fontSize: fontSize,
-            fontWeight: fontWeight,
-            fontStyle: fontStyle,
-            letterSpacing: letterSpacing,
-            wordSpacing: wordSpacing,
-            textBaseline: textBaseline,
-            height: height,
-            locale: locale,
-            foreground: foreground,
-            background: background,
-            shadows: shadows?.map((e) => e.resolve(mix)).toList(),
-            fontFeatures: fontFeatures,
-            decoration: decoration,
-            decorationColor: decorationColor?.resolve(mix),
-            decorationStyle: decorationStyle,
-            decorationThickness: decorationThickness,
-            debugLabel: debugLabel,
-            fontFamily: fontFamily,
-            fontFamilyFallback: fontFamilyFallback,
-          )
-        : mix.tokens.textStyleRef(ref!);
-  }
-
-  @override
-  get props => [
-        fontFamily,
-        fontWeight,
-        fontStyle,
-        fontSize,
-        letterSpacing,
-        wordSpacing,
-        textBaseline,
-        color,
-        backgroundColor,
-        shadows,
-        fontFeatures,
-        decoration,
-        decorationColor,
-        decorationStyle,
-        debugLabel,
-        locale,
-        height,
-        background,
-        foreground,
-        decorationThickness,
-        fontFamilyFallback,
-        ref,
-      ];
+  TextStyle get defaultValue => const TextStyle();
 }
 
-@immutable
-class TextStyleDto extends Dto<TextStyle> {
+@MixableDto(skipUtility: true, skipValueExtension: true, mergeLists: false)
+final class TextStyleDto extends Dto<TextStyle> with _$TextStyleDto {
   final List<TextStyleData> value;
   const TextStyleDto._(this.value);
 
-  factory TextStyleDto.only({
+  factory TextStyleDto({
     ColorDto? color,
     ColorDto? backgroundColor,
     double? fontSize,
@@ -233,68 +106,83 @@ class TextStyleDto extends Dto<TextStyle> {
     String? fontFamily,
     List<String>? fontFamilyFallback,
   }) {
-    return TextStyleDto(TextStyleData(
-      background: background,
-      backgroundColor: backgroundColor,
-      color: color,
-      debugLabel: debugLabel,
-      decoration: decoration,
-      decorationColor: decorationColor,
-      decorationStyle: decorationStyle,
-      decorationThickness: decorationThickness,
-      fontFamily: fontFamily,
-      fontFamilyFallback: fontFamilyFallback,
-      fontFeatures: fontFeatures,
-      fontSize: fontSize,
-      fontStyle: fontStyle,
-      fontWeight: fontWeight,
-      foreground: foreground,
-      height: height,
-      letterSpacing: letterSpacing,
-      locale: locale,
-      shadows: shadows,
-      textBaseline: textBaseline,
-      wordSpacing: wordSpacing,
-    ));
+    return TextStyleDto._([
+      TextStyleData(
+        background: background,
+        backgroundColor: backgroundColor,
+        color: color,
+        debugLabel: debugLabel,
+        decoration: decoration,
+        decorationColor: decorationColor,
+        decorationStyle: decorationStyle,
+        decorationThickness: decorationThickness,
+        fontFamily: fontFamily,
+        fontFamilyFallback: fontFamilyFallback,
+        fontFeatures: fontFeatures,
+        fontSize: fontSize,
+        fontStyle: fontStyle,
+        fontWeight: fontWeight,
+        foreground: foreground,
+        height: height,
+        letterSpacing: letterSpacing,
+        locale: locale,
+        shadows: shadows,
+        textBaseline: textBaseline,
+        wordSpacing: wordSpacing,
+      ),
+    ]);
   }
-
-  factory TextStyleDto(TextStyleData value) => TextStyleDto._([value]);
 
   factory TextStyleDto.ref(TextStyleToken token) {
-    return TextStyleDto(TextStyleData.tokenRef(token()));
+    return TextStyleDto._([TextStyleDataRef(ref: token())]);
   }
 
-  static TextStyleDto as(TextStyle style) {
-    return TextStyleDto(TextStyleData.from(style));
-  }
-
-  static TextStyleDto? maybeAs(TextStyle? style) {
-    return style == null ? null : TextStyleDto.as(style);
-  }
-
-  // This method resolves the TextStyleAttribute to a TextStyle.
-  // It maps over the values list and checks if each TextStyleDto is a token reference.
-  // If it is, it resolves the token reference and converts it to a TextStyleDto.
-  // If it's not a token reference, it leaves the TextStyleDto as is.
-  // Then it reduces the list of TextStyleDto objects to a single TextStyleDto by merging them.
-  // Finally, it resolves the resulting TextStyleDto to a TextStyle.
+  /// This method resolves the [TextStyleDto] to a TextStyle.
+  /// It maps over the values list and checks if each TextStyleDto is a token reference.
+  /// If it is, it resolves the token reference and converts it to a [TextStyleData].
+  /// If it's not a token reference, it leaves the [TextStyleData] as is.
+  /// Then it reduces the list of [TextStyleData] objects to a single [TextStyleData] by merging them.
+  /// Finally, it resolves the resulting [TextStyleData] to a TextStyle.
   @override
   TextStyle resolve(MixData mix) {
-    return value
-        .map((e) => e.isTokenRef ? TextStyleData.from(e.resolve(mix)) : e)
-        .reduce((value, element) => value.merge(element))
-        .resolve(mix);
+    final result = value
+        .map((e) => e is TextStyleDataRef ? e.resolve(mix)._toData() : e)
+        .reduce((value, element) {
+      final singleresult = value.merge(element);
+
+      return singleresult;
+    }).resolve(mix);
+
+    return result;
   }
 
   @override
-  TextStyleDto merge(TextStyleDto? other) {
-    return other == null ? this : TextStyleDto._([...value, ...other.value]);
-  }
-
-  @override
-  get props => [value];
+  TextStyle get defaultValue => const TextStyle();
 }
 
 extension TextStyleExt on TextStyle {
-  TextStyleDto toDto() => TextStyleDto.as(this);
+  TextStyleDto toDto() => TextStyleDto._([_toData()]);
+  TextStyleData _toData() => TextStyleData(
+        background: background,
+        backgroundColor: backgroundColor?.toDto(),
+        color: color?.toDto(),
+        debugLabel: debugLabel,
+        decoration: decoration,
+        decorationColor: decorationColor?.toDto(),
+        decorationStyle: decorationStyle,
+        decorationThickness: decorationThickness,
+        fontFamily: fontFamily,
+        fontFamilyFallback: fontFamilyFallback,
+        fontFeatures: fontFeatures,
+        fontSize: fontSize,
+        fontStyle: fontStyle,
+        fontWeight: fontWeight,
+        foreground: foreground,
+        height: height,
+        letterSpacing: letterSpacing,
+        locale: locale,
+        shadows: shadows?.map((e) => e.toDto()).toList(),
+        textBaseline: textBaseline,
+        wordSpacing: wordSpacing,
+      );
 }

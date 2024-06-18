@@ -4,11 +4,12 @@ import 'package:flutter/material.dart';
 
 import '../attributes/scalars/scalar_util.dart';
 import '../core/attribute.dart';
-import '../core/models/mix_data.dart';
 import '../core/modifier.dart';
 import '../internal/lerp_helpers.dart';
+import '../core/factory/mix_data.dart';
 
-class TransformModifierSpec extends WidgetModifierSpec<TransformModifierSpec> {
+final class TransformModifierSpec
+    extends WidgetModifierSpec<TransformModifierSpec> {
   final Matrix4? transform;
   final Alignment? alignment;
 
@@ -42,7 +43,7 @@ class TransformModifierSpec extends WidgetModifierSpec<TransformModifierSpec> {
   }
 }
 
-class TransformModifierAttribute extends WidgetModifierAttribute<
+final class TransformModifierAttribute extends WidgetModifierAttribute<
     TransformModifierAttribute, TransformModifierSpec> {
   final Matrix4? transform;
   final Alignment? alignment;
@@ -68,7 +69,7 @@ class TransformModifierAttribute extends WidgetModifierAttribute<
   List<Object?> get props => [transform, alignment];
 }
 
-class TransformUtility<T extends Attribute>
+final class TransformUtility<T extends Attribute>
     extends MixUtility<T, TransformModifierAttribute> {
   const TransformUtility(super.builder);
 

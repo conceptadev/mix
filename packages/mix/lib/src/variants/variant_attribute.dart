@@ -1,11 +1,11 @@
 import 'package:flutter/foundation.dart';
 
 import '../core/attribute.dart';
-import '../factory/style_mix.dart';
-import 'variant.dart';
+import '../core/factory/style_mix.dart';
+import '../core/variant.dart';
 
 @immutable
-class VariantAttribute<V extends IVariant> extends Attribute {
+base class VariantAttribute<V extends IVariant> extends Attribute {
   final V variant;
   final Style _style;
   const VariantAttribute(this.variant, Style style) : _style = style;

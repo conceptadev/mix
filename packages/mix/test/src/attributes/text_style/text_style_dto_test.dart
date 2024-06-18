@@ -7,12 +7,12 @@ import '../../../helpers/testing_utils.dart';
 void main() {
   group('TextStyleDto', () {
     test('from constructor sets all values correctly', () {
-      final attr = TextStyleDto.only(color: Colors.red.toDto());
+      final attr = TextStyleDto(color: Colors.red.toDto());
       final result = attr.resolve(EmptyMixData);
       expect(result.color, Colors.red);
     });
     test('merge returns merged object correctly', () {
-      final attr1 = TextStyleDto.only(
+      final attr1 = TextStyleDto(
         color: Colors.red.toDto(),
         fontSize: 24.0,
         fontWeight: FontWeight.bold,
@@ -27,7 +27,7 @@ void main() {
         height: 2.0,
       );
 
-      final attr2 = TextStyleDto.only(
+      final attr2 = TextStyleDto(
         color: Colors.blue.toDto(),
         fontSize: 30.0,
         fontWeight: FontWeight.w100,
@@ -58,7 +58,7 @@ void main() {
       expect(merged.textBaseline, TextBaseline.alphabetic);
     });
     test('resolve returns correct TextStyle with specific values', () {
-      final attr = TextStyleDto.only(
+      final attr = TextStyleDto(
         color: Colors.red.toDto(),
         fontSize: 24.0,
         fontWeight: FontWeight.bold,
@@ -89,13 +89,13 @@ void main() {
       return const Placeholder();
     });
     test('Equality holds when all attributes are the same', () {
-      final attr1 = TextStyleDto.only(color: Colors.red.toDto());
-      final attr2 = TextStyleDto.only(color: Colors.red.toDto());
+      final attr1 = TextStyleDto(color: Colors.red.toDto());
+      final attr2 = TextStyleDto(color: Colors.red.toDto());
       expect(attr1, attr2);
     });
     test('Equality fails when attributes are different', () {
-      final attr1 = TextStyleDto.only(color: Colors.red.toDto());
-      final attr2 = TextStyleDto.only(color: Colors.blue.toDto());
+      final attr1 = TextStyleDto(color: Colors.red.toDto());
+      final attr2 = TextStyleDto(color: Colors.blue.toDto());
       expect(attr1, isNot(attr2));
     });
   });

@@ -6,18 +6,14 @@ part of 'text_spec.dart';
 // Generator: SpecDefinitionBuilder
 // **************************************************************************
 
-mixin TextSpecMixable on Spec<TextSpec> {
-  /// Retrieves the [TextSpec] from a MixData.
+base mixin _$TextSpec on Spec<TextSpec> {
   static TextSpec from(MixData mix) {
     return mix.attributeOf<TextSpecAttribute>()?.resolve(mix) ??
         const TextSpec();
   }
 
-  /// Retrieves the [TextSpec] from the nearest [Mix] ancestor.
-  ///
-  /// If no ancestor is found, returns [TextSpec].
   static TextSpec of(BuildContext context) {
-    return TextSpecMixable.from(Mix.of(context));
+    return _$TextSpec.from(Mix.of(context));
   }
 
   /// Creates a copy of this [TextSpec] but with the given fields
@@ -54,31 +50,18 @@ mixin TextSpecMixable on Spec<TextSpec> {
   }
 
   @override
-  TextSpec lerp(
-    TextSpec? other,
-    double t,
-  ) {
+  TextSpec lerp(TextSpec? other, double t) {
     if (other == null) return _$this;
 
     return TextSpec(
       overflow: t < 0.5 ? _$this.overflow : other._$this.overflow,
-      strutStyle: _lerpStrutStyle(
-        _$this.strutStyle,
-        other._$this.strutStyle,
-        t,
-      ),
+      strutStyle:
+          _$lerpStrutStyle(_$this.strutStyle, other._$this.strutStyle, t),
       textAlign: t < 0.5 ? _$this.textAlign : other._$this.textAlign,
-      textScaleFactor: _lerpDouble(
-        _$this.textScaleFactor,
-        other._$this.textScaleFactor,
-        t,
-      ),
+      textScaleFactor:
+          _$lerpDouble(_$this.textScaleFactor, other._$this.textScaleFactor, t),
       maxLines: t < 0.5 ? _$this.maxLines : other._$this.maxLines,
-      style: _lerpTextStyle(
-        _$this.style,
-        other._$this.style,
-        t,
-      ),
+      style: _$lerpTextStyle(_$this.style, other._$this.style, t),
       textWidthBasis:
           t < 0.5 ? _$this.textWidthBasis : other._$this.textWidthBasis,
       textHeightBehavior:
@@ -96,22 +79,20 @@ mixin TextSpecMixable on Spec<TextSpec> {
   /// This property is used by the [==] operator and the [hashCode] getter to
   /// compare two [TextSpec] instances for equality.
   @override
-  List<Object?> get props {
-    return [
-      _$this.overflow,
-      _$this.strutStyle,
-      _$this.textAlign,
-      _$this.textScaleFactor,
-      _$this.maxLines,
-      _$this.style,
-      _$this.textWidthBasis,
-      _$this.textHeightBehavior,
-      _$this.textDirection,
-      _$this.softWrap,
-      _$this.directive,
-      _$this.animated,
-    ];
-  }
+  List<Object?> get props => [
+        _$this.overflow,
+        _$this.strutStyle,
+        _$this.textAlign,
+        _$this.textScaleFactor,
+        _$this.maxLines,
+        _$this.style,
+        _$this.textWidthBasis,
+        _$this.textHeightBehavior,
+        _$this.textDirection,
+        _$this.softWrap,
+        _$this.directive,
+        _$this.animated,
+      ];
 
   TextSpec get _$this => this as TextSpec;
 }
@@ -123,7 +104,19 @@ mixin TextSpecMixable on Spec<TextSpec> {
 ///
 /// Use this class to configure the attributes of a [TextSpec] and pass it to
 /// the [TextSpec] constructor.
-class TextSpecAttribute extends SpecAttribute<TextSpec> {
+final class TextSpecAttribute extends SpecAttribute<TextSpec> {
+  final TextOverflow? overflow;
+  final StrutStyleDto? strutStyle;
+  final TextAlign? textAlign;
+  final double? textScaleFactor;
+  final int? maxLines;
+  final TextStyleDto? style;
+  final TextWidthBasis? textWidthBasis;
+  final TextHeightBehavior? textHeightBehavior;
+  final TextDirection? textDirection;
+  final bool? softWrap;
+  final TextDirectiveDto? directive;
+
   const TextSpecAttribute({
     this.overflow,
     this.strutStyle,
@@ -138,28 +131,6 @@ class TextSpecAttribute extends SpecAttribute<TextSpec> {
     this.directive,
     super.animated,
   });
-
-  final TextOverflow? overflow;
-
-  final StrutStyleDto? strutStyle;
-
-  final TextAlign? textAlign;
-
-  final double? textScaleFactor;
-
-  final int? maxLines;
-
-  final TextStyleDto? style;
-
-  final TextWidthBasis? textWidthBasis;
-
-  final TextHeightBehavior? textHeightBehavior;
-
-  final TextDirection? textDirection;
-
-  final bool? softWrap;
-
-  final TextDirectiveDto? directive;
 
   @override
   TextSpec resolve(MixData mix) {
@@ -204,22 +175,20 @@ class TextSpecAttribute extends SpecAttribute<TextSpec> {
   /// This property is used by the [==] operator and the [hashCode] getter to
   /// compare two [TextSpecAttribute] instances for equality.
   @override
-  List<Object?> get props {
-    return [
-      overflow,
-      strutStyle,
-      textAlign,
-      textScaleFactor,
-      maxLines,
-      style,
-      textWidthBasis,
-      textHeightBehavior,
-      textDirection,
-      softWrap,
-      directive,
-      animated,
-    ];
-  }
+  List<Object?> get props => [
+        overflow,
+        strutStyle,
+        textAlign,
+        textScaleFactor,
+        maxLines,
+        style,
+        textWidthBasis,
+        textHeightBehavior,
+        textDirection,
+        softWrap,
+        directive,
+        animated,
+      ];
 }
 
 /// Utility class for configuring [TextSpecAttribute] properties.
@@ -227,10 +196,8 @@ class TextSpecAttribute extends SpecAttribute<TextSpec> {
 /// This class provides methods to set individual properties of a [TextSpecAttribute].
 ///
 /// Use the methods of this class to configure specific properties of a [TextSpecAttribute].
-class TextSpecUtility<T extends Attribute>
+base class TextSpecUtility<T extends Attribute>
     extends SpecUtility<T, TextSpecAttribute> {
-  TextSpecUtility(super.builder);
-
   /// Utility for defining [TextSpecAttribute.overflow]
   late final overflow = TextOverflowUtility((v) => only(overflow: v));
 
@@ -285,6 +252,10 @@ class TextSpecUtility<T extends Attribute>
   /// Utility for defining [TextSpecAttribute.animated]
   late final animated = AnimatedUtility((v) => only(animated: v));
 
+  TextSpecUtility(super.builder);
+
+  static final self = TextSpecUtility((v) => v);
+
   /// Returns a new [TextSpecAttribute] with the specified properties.
   @override
   T only({
@@ -301,22 +272,20 @@ class TextSpecUtility<T extends Attribute>
     TextDirectiveDto? directive,
     AnimatedDataDto? animated,
   }) {
-    return builder(
-      TextSpecAttribute(
-        overflow: overflow,
-        strutStyle: strutStyle,
-        textAlign: textAlign,
-        textScaleFactor: textScaleFactor,
-        maxLines: maxLines,
-        style: style,
-        textWidthBasis: textWidthBasis,
-        textHeightBehavior: textHeightBehavior,
-        textDirection: textDirection,
-        softWrap: softWrap,
-        directive: directive,
-        animated: animated,
-      ),
-    );
+    return builder(TextSpecAttribute(
+      overflow: overflow,
+      strutStyle: strutStyle,
+      textAlign: textAlign,
+      textScaleFactor: textScaleFactor,
+      maxLines: maxLines,
+      style: style,
+      textWidthBasis: textWidthBasis,
+      textHeightBehavior: textHeightBehavior,
+      textDirection: textDirection,
+      softWrap: softWrap,
+      directive: directive,
+      animated: animated,
+    ));
   }
 }
 
@@ -339,11 +308,7 @@ class TextSpecTween extends Tween<TextSpec?> {
   }
 }
 
-double? _lerpDouble(
-  num? a,
-  num? b,
-  double t,
-) {
+double? _$lerpDouble(num? a, num? b, double t) {
   if (a == b || (a?.isNaN ?? false) && (b?.isNaN ?? false)) {
     return a?.toDouble();
   }
@@ -352,11 +317,7 @@ double? _lerpDouble(
   return a * (1.0 - t) + b * t;
 }
 
-StrutStyle? _lerpStrutStyle(
-  StrutStyle? a,
-  StrutStyle? b,
-  double t,
-) {
+StrutStyle? _$lerpStrutStyle(StrutStyle? a, StrutStyle? b, double t) {
   if (a == null && b == null) return null;
   if (a == null) return b;
   if (b == null) return a;
@@ -364,9 +325,9 @@ StrutStyle? _lerpStrutStyle(
   return StrutStyle(
     fontFamily: t < 0.5 ? a.fontFamily : b.fontFamily,
     fontFamilyFallback: t < 0.5 ? a.fontFamilyFallback : b.fontFamilyFallback,
-    fontSize: _lerpDouble(a.fontSize, b.fontSize, t),
-    height: _lerpDouble(a.height, b.height, t),
-    leading: _lerpDouble(a.leading, b.leading, t),
+    fontSize: _$lerpDouble(a.fontSize, b.fontSize, t),
+    height: _$lerpDouble(a.height, b.height, t),
+    leading: _$lerpDouble(a.leading, b.leading, t),
     fontWeight: FontWeight.lerp(a.fontWeight, b.fontWeight, t),
     fontStyle: t < 0.5 ? a.fontStyle : b.fontStyle,
     forceStrutHeight: t < 0.5 ? a.forceStrutHeight : b.forceStrutHeight,
@@ -376,11 +337,7 @@ StrutStyle? _lerpStrutStyle(
   );
 }
 
-TextStyle? _lerpTextStyle(
-  TextStyle? a,
-  TextStyle? b,
-  double t,
-) {
+TextStyle? _$lerpTextStyle(TextStyle? a, TextStyle? b, double t) {
   return TextStyle.lerp(a, b, t)
       ?.copyWith(shadows: Shadow.lerpList(a?.shadows, b?.shadows, t));
 }

@@ -6,6 +6,7 @@ analyzer:
     # - "**/*.g.dart"
     # - "**/*.freezed.dart"
 linter:
+
   rules:
     # TODO: Turn this to true when all public apis are documented 
     public_member_api_docs: false

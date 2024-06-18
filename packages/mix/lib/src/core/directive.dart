@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'dto.dart';
-import 'models/mix_data.dart';
+import 'factory/mix_data.dart';
 
 typedef Modifier<T> = T Function(T value);
 
@@ -27,6 +27,9 @@ class TextDirectiveDto extends Dto<TextDirective> {
   TextDirectiveDto merge(TextDirectiveDto? other) {
     return TextDirectiveDto([..._modifiers, ...?other?._modifiers]);
   }
+
+  @override
+  TextDirective get defaultValue => TextDirective((String content) => content);
 
   @override
   get props => [_modifiers];

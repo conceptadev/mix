@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-import '../mix_theme.dart';
+import '../mix/mix_theme.dart';
 import 'mix_token.dart';
 
 class TextStyleToken extends MixToken<TextStyle> {

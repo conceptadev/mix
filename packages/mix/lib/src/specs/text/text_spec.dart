@@ -1,13 +1,12 @@
+// ignore_for_file: prefer_relative_imports,avoid-importing-entrypoint-exports,
 import 'package:flutter/material.dart';
-import 'package:mix_annotations/mix_annotations.dart';
-
-// ignore: avoid-importing-entrypoint-exports
-import '../../../mix.dart';
+import 'package:mix/annotations.dart';
+import 'package:mix/mix.dart';
 
 part 'text_spec.g.dart';
 
 @MixableSpec()
-class TextSpec extends Spec<TextSpec> with TextSpecMixable {
+final class TextSpec extends Spec<TextSpec> with _$TextSpec {
   final TextOverflow? overflow;
   final StrutStyle? strutStyle;
   final TextAlign? textAlign;
@@ -30,9 +29,9 @@ class TextSpec extends Spec<TextSpec> with TextSpecMixable {
   )
   final TextDirective? directive;
 
-  static const of = TextSpecMixable.of;
+  static const of = _$TextSpec.of;
 
-  static const from = TextSpecMixable.from;
+  static const from = _$TextSpec.from;
 
   const TextSpec({
     this.overflow,

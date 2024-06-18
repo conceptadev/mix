@@ -8,7 +8,6 @@ environment:
   flutter: ">=3.10.6"
   
 dependencies:
-  mix_annotations: ^0.0.1
   flutter:
     sdk: flutter
 

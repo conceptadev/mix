@@ -16,7 +16,7 @@ void main() {
       textAlign: TextAlign.center,
       textScaleFactor: 1.5,
       maxLines: 2,
-      style: TextStyleDto.only(
+      style: TextStyleDto(
         fontSize: 12,
         fontWeight: FontWeight.w500,
         fontFamily: 'Roboto',
@@ -56,7 +56,7 @@ void main() {
         textAlign: TextAlign.center,
         textScaleFactor: 1.5,
         maxLines: 2,
-        style: TextStyleDto.only(
+        style: TextStyleDto(
           fontSize: 16,
           fontWeight: FontWeight.w200,
           fontFamily: 'Helvetica',

@@ -1,13 +1,12 @@
+// ignore_for_file: prefer_relative_imports,avoid-importing-entrypoint-exports,
 import 'package:flutter/material.dart';
-import 'package:mix_annotations/mix_annotations.dart';
-
-// ignore: avoid-importing-entrypoint-exports
-import '../../../mix.dart';
+import 'package:mix/annotations.dart';
+import 'package:mix/mix.dart';
 
 part 'icon_spec.g.dart';
 
 @MixableSpec()
-class IconSpec extends Spec<IconSpec> with IconSpecMixable {
+final class IconSpec extends Spec<IconSpec> with _$IconSpec {
   final Color? color;
   final double? size;
   final double? weight;
@@ -21,9 +20,9 @@ class IconSpec extends Spec<IconSpec> with IconSpecMixable {
   final List<Shadow>? shadows;
   final double? fill;
 
-  static const of = IconSpecMixable.of;
+  static const of = _$IconSpec.of;
 
-  static const from = IconSpecMixable.from;
+  static const from = _$IconSpec.from;
 
   const IconSpec({
     this.color,

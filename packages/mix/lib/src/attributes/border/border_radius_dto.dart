@@ -1,8 +1,10 @@
-import 'package:flutter/material.dart';
+// ignore_for_file: prefer_relative_imports, avoid-importing-entrypoint-exports
 
-import '../../core/dto.dart';
-import '../../core/models/mix_data.dart';
-import '../../theme/tokens/radius_token.dart';
+import 'package:flutter/material.dart';
+import 'package:mix/annotations.dart';
+import 'package:mix/mix.dart';
+
+part 'border_radius_dto.g.dart';
 
 /// Represents a [Dto] Data transfer object of [BorderRadiusGeometry]
 ///
@@ -15,110 +17,118 @@ import '../../theme/tokens/radius_token.dart';
 /// See also:
 /// - [BorderRadiusGeometry], which is the Flutter counterpart of this class.
 @immutable
-class BorderRadiusGeometryDto extends Dto<BorderRadiusGeometry> {
+sealed class BorderRadiusGeometryDto<T extends BorderRadiusGeometry>
+    extends Dto<T> {
+  const BorderRadiusGeometryDto();
+
+  Radius _getRadiusValue(MixData mix, Radius? radius) {
+    if (radius == null) return Radius.zero;
+
+    return radius is RadiusRef ? mix.tokens.radiiRef(radius) : radius;
+  }
+
+  Radius? get topLeft;
+  Radius? get topRight;
+  Radius? get bottomLeft;
+  Radius? get bottomRight;
+  Radius? get topStart;
+  Radius? get topEnd;
+  Radius? get bottomStart;
+  Radius? get bottomEnd;
+
+  @override
+  BorderRadiusGeometryDto<T> merge(covariant BorderRadiusGeometryDto<T>? other);
+
+  @override
+  T resolve(MixData mix);
+}
+
+@MixableDto(skipUtility: true)
+final class BorderRadiusDto extends BorderRadiusGeometryDto<BorderRadius>
+    with _$BorderRadiusDto {
+  @override
   final Radius? topLeft;
+  @override
   final Radius? topRight;
+  @override
   final Radius? bottomLeft;
+  @override
   final Radius? bottomRight;
 
-  // Directional values
-  final Radius? topStart;
-  final Radius? topEnd;
-  final Radius? bottomStart;
-  final Radius? bottomEnd;
-
-  const BorderRadiusGeometryDto({
+  const BorderRadiusDto({
     this.topLeft,
     this.topRight,
     this.bottomLeft,
     this.bottomRight,
+  });
+
+  @override
+  BorderRadius resolve(MixData mix) {
+    return BorderRadius.only(
+      topLeft: _getRadiusValue(mix, topLeft),
+      topRight: _getRadiusValue(mix, topRight),
+      bottomLeft: _getRadiusValue(mix, bottomLeft),
+      bottomRight: _getRadiusValue(mix, bottomRight),
+    );
+  }
+
+  @override
+  Radius? get topStart => null;
+  @override
+  Radius? get topEnd => null;
+  @override
+  Radius? get bottomStart => null;
+  @override
+  Radius? get bottomEnd => null;
+
+  @override
+  BorderRadius get defaultValue => BorderRadius.zero;
+}
+
+@MixableDto(skipUtility: true)
+final class BorderRadiusDirectionalDto
+    extends BorderRadiusGeometryDto<BorderRadiusDirectional>
+    with _$BorderRadiusDirectionalDto {
+  @override
+  final Radius? topStart;
+  @override
+  final Radius? topEnd;
+  @override
+  final Radius? bottomStart;
+  @override
+  final Radius? bottomEnd;
+
+  const BorderRadiusDirectionalDto({
     this.topStart,
     this.topEnd,
     this.bottomStart,
     this.bottomEnd,
   });
 
-  bool get isDirectional =>
-      topStart != null ||
-      topEnd != null ||
-      bottomStart != null ||
-      bottomEnd != null;
-
   @override
-  BorderRadiusGeometryDto merge(BorderRadiusGeometryDto? other) {
-    if (other == null) return this;
-
-    return BorderRadiusGeometryDto(
-      topLeft: other.topLeft ?? topLeft,
-      topRight: other.topRight ?? topRight,
-      bottomLeft: other.bottomLeft ?? bottomLeft,
-      bottomRight: other.bottomRight ?? bottomRight,
-      topStart: other.topStart ?? topStart,
-      topEnd: other.topEnd ?? topEnd,
-      bottomStart: other.bottomStart ?? bottomStart,
-      bottomEnd: other.bottomEnd ?? bottomEnd,
+  BorderRadiusDirectional resolve(MixData mix) {
+    return BorderRadiusDirectional.only(
+      topStart: _getRadiusValue(mix, topStart),
+      topEnd: _getRadiusValue(mix, topEnd),
+      bottomStart: _getRadiusValue(mix, bottomStart),
+      bottomEnd: _getRadiusValue(mix, bottomEnd),
     );
   }
 
   @override
-  BorderRadiusGeometry resolve(MixData mix) {
-    Radius getRadiusValue(Radius? radius) {
-      if (radius == null) return Radius.zero;
-
-      return radius is RadiusRef ? mix.tokens.radiiRef(radius) : radius;
-    }
-
-    return isDirectional
-        ? BorderRadiusDirectional.only(
-            topStart: getRadiusValue(topStart),
-            topEnd: getRadiusValue(topEnd),
-            bottomStart: getRadiusValue(bottomStart),
-            bottomEnd: getRadiusValue(bottomEnd),
-          )
-        : BorderRadius.only(
-            topLeft: getRadiusValue(topLeft),
-            topRight: getRadiusValue(topRight),
-            bottomLeft: getRadiusValue(bottomLeft),
-            bottomRight: getRadiusValue(bottomRight),
-          );
-  }
+  Radius? get topLeft => null;
+  @override
+  Radius? get topRight => null;
+  @override
+  Radius? get bottomLeft => null;
+  @override
+  Radius? get bottomRight => null;
 
   @override
-  get props => [
-        topLeft,
-        topRight,
-        bottomLeft,
-        bottomRight,
-        topStart,
-        topEnd,
-        bottomStart,
-        bottomEnd,
-      ];
+  BorderRadiusDirectional get defaultValue => BorderRadiusDirectional.zero;
 }
 
-extension BorderRadiusExt on BorderRadius {
-  BorderRadiusGeometryDto toDto() {
-    return BorderRadiusGeometryDto(
-      topLeft: topLeft,
-      topRight: topRight,
-      bottomLeft: bottomLeft,
-      bottomRight: bottomRight,
-    );
-  }
-}
-
-extension BorderRadiusDirectionalExt on BorderRadiusDirectional {
-  BorderRadiusGeometryDto toDto() {
-    return BorderRadiusGeometryDto(
-      topStart: topStart,
-      topEnd: topEnd,
-      bottomStart: bottomStart,
-      bottomEnd: bottomEnd,
-    );
-  }
-}
-
-extension BorderRadiusGeometryExt on BorderRadiusGeometry {
+extension BorderRadiusGeometryMixExt on BorderRadiusGeometry {
   BorderRadiusGeometryDto toDto() {
     if (this is BorderRadius) {
       return (this as BorderRadius).toDto();

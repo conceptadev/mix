@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../core/factory/mix_provider.dart';
 import '../../core/styled_widget.dart';
-import '../../factory/mix_provider.dart';
 import 'text_spec.dart';
 
 /// [StyledText] - A styled widget for displaying text with a mix of styles.

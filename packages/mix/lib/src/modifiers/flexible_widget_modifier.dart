@@ -5,10 +5,11 @@ import 'package:flutter/material.dart';
 import '../attributes/scalars/scalar_util.dart';
 import '../core/attribute.dart';
 import '../core/modifier.dart';
-import '../core/models/mix_data.dart';
 import '../internal/lerp_helpers.dart';
+import '../core/factory/mix_data.dart';
 
-class FlexibleModifierSpec extends WidgetModifierSpec<FlexibleModifierSpec> {
+final class FlexibleModifierSpec
+    extends WidgetModifierSpec<FlexibleModifierSpec> {
   final int? flex;
   final FlexFit? fit;
   const FlexibleModifierSpec({this.flex, this.fit});
@@ -42,7 +43,7 @@ class FlexibleModifierSpec extends WidgetModifierSpec<FlexibleModifierSpec> {
 /// A modifier that wraps a widget with the [Flexible] widget.
 ///
 /// The [Flexible] widget is used to create a flexible space in a [Row], [Column], or [Flex] widget.
-class FlexibleModifierAttribute extends WidgetModifierAttribute<
+final class FlexibleModifierAttribute extends WidgetModifierAttribute<
     FlexibleModifierAttribute, FlexibleModifierSpec> {
   final int? flex;
   final FlexFit? fit;
@@ -65,7 +66,7 @@ class FlexibleModifierAttribute extends WidgetModifierAttribute<
   get props => [flex, fit];
 }
 
-class FlexibleModifierUtility<T extends Attribute>
+final class FlexibleModifierUtility<T extends Attribute>
     extends MixUtility<T, FlexibleModifierAttribute> {
   const FlexibleModifierUtility(super.builder);
   FlexFitUtility<T> get fit => FlexFitUtility((fit) => call(fit: fit));

@@ -24,10 +24,10 @@ class TodoIconButton extends StatelessWidget {
         $box.height(50),
         $box.width(50),
         $box.borderRadius(4),
+        scaleEffect(),
         $icon.color.ref($token.color.primary),
         $icon.weight(20),
         outlinePattern(),
-        scaleEffect(),
         $on.press(
           $box.color.ref($token.color.surfaceContainer),
         ),

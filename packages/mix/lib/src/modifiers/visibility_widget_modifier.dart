@@ -4,11 +4,11 @@ import 'package:flutter/material.dart';
 
 import '../attributes/scalars/scalar_util.dart';
 import '../core/attribute.dart';
-import '../core/models/mix_data.dart';
 import '../core/modifier.dart';
 import '../internal/lerp_helpers.dart';
+import '../core/factory/mix_data.dart';
 
-class VisibilityModifierSpec
+final class VisibilityModifierSpec
     extends WidgetModifierSpec<VisibilityModifierSpec> {
   final bool visible;
   const VisibilityModifierSpec(this.visible);
@@ -34,7 +34,7 @@ class VisibilityModifierSpec
   }
 }
 
-class VisibilityModifierAttribute extends WidgetModifierAttribute<
+final class VisibilityModifierAttribute extends WidgetModifierAttribute<
     VisibilityModifierAttribute, VisibilityModifierSpec> {
   final bool visible;
   const VisibilityModifierAttribute(this.visible);
@@ -53,7 +53,7 @@ class VisibilityModifierAttribute extends WidgetModifierAttribute<
   get props => [visible];
 }
 
-class VisibilityUtility<T extends Attribute>
+final class VisibilityUtility<T extends Attribute>
     extends MixUtility<T, VisibilityModifierAttribute> {
   const VisibilityUtility(super.builder);
   T on() => builder(const VisibilityModifierAttribute(true));

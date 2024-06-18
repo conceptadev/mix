@@ -2,8 +2,8 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mix/src/core/factory/mix_data.dart';
 import 'package:mix/src/core/modifier.dart';
-import 'package:mix/src/core/models/mix_data.dart';
 
 import '../../helpers/testing_utils.dart';
 
@@ -40,7 +40,7 @@ void main() {
   });
 }
 
-class _TestModifierSpec extends WidgetModifierSpec<_TestModifierSpec> {
+final class _TestModifierSpec extends WidgetModifierSpec<_TestModifierSpec> {
   final double value;
   const _TestModifierSpec(
     this.value, {
@@ -68,7 +68,7 @@ class _TestModifierSpec extends WidgetModifierSpec<_TestModifierSpec> {
   }
 }
 
-class _TestModifierAttribute
+final class _TestModifierAttribute
     extends WidgetModifierAttribute<_TestModifierAttribute, _TestModifierSpec> {
   final double value;
   const _TestModifierAttribute(this.value);

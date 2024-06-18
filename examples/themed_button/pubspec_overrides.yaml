@@ -1,8 +1,6 @@
-# melos_managed_dependency_overrides: mix,mix_lint,mix_annotations
+# melos_managed_dependency_overrides: mix,mix_lint
 dependency_overrides:
   mix:
     path: ../../packages/mix
-  mix_annotations:
-    path: ../../packages/mix_annotations
   mix_lint:
     path: ../../packages/mix_lint

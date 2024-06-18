@@ -6,18 +6,14 @@ part of 'flex_spec.dart';
 // Generator: SpecDefinitionBuilder
 // **************************************************************************
 
-mixin FlexSpecMixable on Spec<FlexSpec> {
-  /// Retrieves the [FlexSpec] from a MixData.
+base mixin _$FlexSpec on Spec<FlexSpec> {
   static FlexSpec from(MixData mix) {
     return mix.attributeOf<FlexSpecAttribute>()?.resolve(mix) ??
         const FlexSpec();
   }
 
-  /// Retrieves the [FlexSpec] from the nearest [Mix] ancestor.
-  ///
-  /// If no ancestor is found, returns [FlexSpec].
   static FlexSpec of(BuildContext context) {
-    return FlexSpecMixable.from(Mix.of(context));
+    return _$FlexSpec.from(Mix.of(context));
   }
 
   /// Creates a copy of this [FlexSpec] but with the given fields
@@ -50,10 +46,7 @@ mixin FlexSpecMixable on Spec<FlexSpec> {
   }
 
   @override
-  FlexSpec lerp(
-    FlexSpec? other,
-    double t,
-  ) {
+  FlexSpec lerp(FlexSpec? other, double t) {
     if (other == null) return _$this;
 
     return FlexSpec(
@@ -69,11 +62,7 @@ mixin FlexSpecMixable on Spec<FlexSpec> {
           t < 0.5 ? _$this.textDirection : other._$this.textDirection,
       textBaseline: t < 0.5 ? _$this.textBaseline : other._$this.textBaseline,
       clipBehavior: t < 0.5 ? _$this.clipBehavior : other._$this.clipBehavior,
-      gap: _lerpDouble(
-        _$this.gap,
-        other._$this.gap,
-        t,
-      ),
+      gap: _$lerpDouble(_$this.gap, other._$this.gap, t),
       animated: t < 0.5 ? _$this.animated : other._$this.animated,
     );
   }
@@ -83,20 +72,18 @@ mixin FlexSpecMixable on Spec<FlexSpec> {
   /// This property is used by the [==] operator and the [hashCode] getter to
   /// compare two [FlexSpec] instances for equality.
   @override
-  List<Object?> get props {
-    return [
-      _$this.crossAxisAlignment,
-      _$this.mainAxisAlignment,
-      _$this.mainAxisSize,
-      _$this.verticalDirection,
-      _$this.direction,
-      _$this.textDirection,
-      _$this.textBaseline,
-      _$this.clipBehavior,
-      _$this.gap,
-      _$this.animated,
-    ];
-  }
+  List<Object?> get props => [
+        _$this.crossAxisAlignment,
+        _$this.mainAxisAlignment,
+        _$this.mainAxisSize,
+        _$this.verticalDirection,
+        _$this.direction,
+        _$this.textDirection,
+        _$this.textBaseline,
+        _$this.clipBehavior,
+        _$this.gap,
+        _$this.animated,
+      ];
 
   FlexSpec get _$this => this as FlexSpec;
 }
@@ -108,7 +95,17 @@ mixin FlexSpecMixable on Spec<FlexSpec> {
 ///
 /// Use this class to configure the attributes of a [FlexSpec] and pass it to
 /// the [FlexSpec] constructor.
-class FlexSpecAttribute extends SpecAttribute<FlexSpec> {
+final class FlexSpecAttribute extends SpecAttribute<FlexSpec> {
+  final CrossAxisAlignment? crossAxisAlignment;
+  final MainAxisAlignment? mainAxisAlignment;
+  final MainAxisSize? mainAxisSize;
+  final VerticalDirection? verticalDirection;
+  final Axis? direction;
+  final TextDirection? textDirection;
+  final TextBaseline? textBaseline;
+  final Clip? clipBehavior;
+  final double? gap;
+
   const FlexSpecAttribute({
     this.crossAxisAlignment,
     this.mainAxisAlignment,
@@ -121,24 +118,6 @@ class FlexSpecAttribute extends SpecAttribute<FlexSpec> {
     this.gap,
     super.animated,
   });
-
-  final CrossAxisAlignment? crossAxisAlignment;
-
-  final MainAxisAlignment? mainAxisAlignment;
-
-  final MainAxisSize? mainAxisSize;
-
-  final VerticalDirection? verticalDirection;
-
-  final Axis? direction;
-
-  final TextDirection? textDirection;
-
-  final TextBaseline? textBaseline;
-
-  final Clip? clipBehavior;
-
-  final double? gap;
 
   @override
   FlexSpec resolve(MixData mix) {
@@ -179,20 +158,18 @@ class FlexSpecAttribute extends SpecAttribute<FlexSpec> {
   /// This property is used by the [==] operator and the [hashCode] getter to
   /// compare two [FlexSpecAttribute] instances for equality.
   @override
-  List<Object?> get props {
-    return [
-      crossAxisAlignment,
-      mainAxisAlignment,
-      mainAxisSize,
-      verticalDirection,
-      direction,
-      textDirection,
-      textBaseline,
-      clipBehavior,
-      gap,
-      animated,
-    ];
-  }
+  List<Object?> get props => [
+        crossAxisAlignment,
+        mainAxisAlignment,
+        mainAxisSize,
+        verticalDirection,
+        direction,
+        textDirection,
+        textBaseline,
+        clipBehavior,
+        gap,
+        animated,
+      ];
 }
 
 /// Utility class for configuring [FlexSpecAttribute] properties.
@@ -200,10 +177,8 @@ class FlexSpecAttribute extends SpecAttribute<FlexSpec> {
 /// This class provides methods to set individual properties of a [FlexSpecAttribute].
 ///
 /// Use the methods of this class to configure specific properties of a [FlexSpecAttribute].
-class FlexSpecUtility<T extends Attribute>
+base class FlexSpecUtility<T extends Attribute>
     extends SpecUtility<T, FlexSpecAttribute> {
-  FlexSpecUtility(super.builder);
-
   /// Utility for defining [FlexSpecAttribute.crossAxisAlignment]
   late final crossAxisAlignment =
       CrossAxisAlignmentUtility((v) => only(crossAxisAlignment: v));
@@ -239,10 +214,14 @@ class FlexSpecUtility<T extends Attribute>
   late final clipBehavior = ClipUtility((v) => only(clipBehavior: v));
 
   /// Utility for defining [FlexSpecAttribute.gap]
-  late final gap = SpacingSideUtility((v) => only(gap: v));
+  late final gap = DoubleUtility((v) => only(gap: v));
 
   /// Utility for defining [FlexSpecAttribute.animated]
   late final animated = AnimatedUtility((v) => only(animated: v));
+
+  FlexSpecUtility(super.builder);
+
+  static final self = FlexSpecUtility((v) => v);
 
   /// Returns a new [FlexSpecAttribute] with the specified properties.
   @override
@@ -258,20 +237,18 @@ class FlexSpecUtility<T extends Attribute>
     double? gap,
     AnimatedDataDto? animated,
   }) {
-    return builder(
-      FlexSpecAttribute(
-        crossAxisAlignment: crossAxisAlignment,
-        mainAxisAlignment: mainAxisAlignment,
-        mainAxisSize: mainAxisSize,
-        verticalDirection: verticalDirection,
-        direction: direction,
-        textDirection: textDirection,
-        textBaseline: textBaseline,
-        clipBehavior: clipBehavior,
-        gap: gap,
-        animated: animated,
-      ),
-    );
+    return builder(FlexSpecAttribute(
+      crossAxisAlignment: crossAxisAlignment,
+      mainAxisAlignment: mainAxisAlignment,
+      mainAxisSize: mainAxisSize,
+      verticalDirection: verticalDirection,
+      direction: direction,
+      textDirection: textDirection,
+      textBaseline: textBaseline,
+      clipBehavior: clipBehavior,
+      gap: gap,
+      animated: animated,
+    ));
   }
 }
 
@@ -294,11 +271,7 @@ class FlexSpecTween extends Tween<FlexSpec?> {
   }
 }
 
-double? _lerpDouble(
-  num? a,
-  num? b,
-  double t,
-) {
+double? _$lerpDouble(num? a, num? b, double t) {
   if (a == b || (a?.isNaN ?? false) && (b?.isNaN ?? false)) {
     return a?.toDouble();
   }

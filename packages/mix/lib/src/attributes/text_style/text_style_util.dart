@@ -8,10 +8,9 @@ import '../color/color_dto.dart';
 import '../color/color_util.dart';
 import '../scalars/scalar_util.dart';
 import '../shadow/shadow_dto.dart';
-import '../shadow/shadow_util.dart';
 import 'text_style_dto.dart';
 
-class TextStyleUtility<T extends Attribute>
+final class TextStyleUtility<T extends Attribute>
     extends DtoUtility<T, TextStyleDto, TextStyle> {
   late final color = ColorUtility((v) => only(color: v));
 
@@ -36,7 +35,7 @@ class TextStyleUtility<T extends Attribute>
 
   late final fontFamily = FontFamilyUtility((v) => call(fontFamily: v));
 
-  TextStyleUtility(super.builder) : super(valueToDto: TextStyleDto.as);
+  TextStyleUtility(super.builder) : super(valueToDto: (v) => v.toDto());
 
   T height(double v) => only(height: v);
 
@@ -139,29 +138,27 @@ class TextStyleUtility<T extends Attribute>
     String? fontFamily,
   }) {
     final textStyle = TextStyleDto(
-      TextStyleData(
-        background: background,
-        backgroundColor: backgroundColor,
-        color: color,
-        debugLabel: debugLabel,
-        decoration: decoration,
-        decorationColor: decorationColor,
-        decorationStyle: decorationStyle,
-        decorationThickness: decorationThickness,
-        fontFamily: fontFamily,
-        fontFamilyFallback: fontFamilyFallback,
-        fontFeatures: fontFeatures,
-        fontSize: fontSize,
-        fontStyle: fontStyle,
-        fontWeight: fontWeight,
-        foreground: foreground,
-        height: height,
-        letterSpacing: letterSpacing,
-        locale: locale,
-        shadows: shadows,
-        textBaseline: textBaseline,
-        wordSpacing: wordSpacing,
-      ),
+      color: color,
+      backgroundColor: backgroundColor,
+      fontSize: fontSize,
+      fontWeight: fontWeight,
+      fontStyle: fontStyle,
+      letterSpacing: letterSpacing,
+      debugLabel: debugLabel,
+      wordSpacing: wordSpacing,
+      textBaseline: textBaseline,
+      shadows: shadows,
+      fontFeatures: fontFeatures,
+      decoration: decoration,
+      decorationColor: decorationColor,
+      decorationStyle: decorationStyle,
+      locale: locale,
+      height: height,
+      foreground: foreground,
+      background: background,
+      decorationThickness: decorationThickness,
+      fontFamily: fontFamily,
+      fontFamilyFallback: fontFamilyFallback,
     );
 
     return builder(textStyle);

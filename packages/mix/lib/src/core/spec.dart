@@ -1,14 +1,14 @@
 import 'package:flutter/foundation.dart';
 
+import '../attributes/animated/animated_data.dart';
 import '../attributes/animated/animated_data_dto.dart';
 import '../attributes/scalars/scalar_util.dart';
 import '../internal/compare_mixin.dart';
 import 'attribute.dart';
-import 'models/animated_data.dart';
-import 'models/mix_data.dart';
+import 'factory/mix_data.dart';
 
 @immutable
-abstract class Spec<T extends Spec<T>> with EqualityMixin {
+abstract base class Spec<T extends Spec<T>> with EqualityMixin {
   final AnimatedData? animated;
 
   const Spec({this.animated});
@@ -29,7 +29,7 @@ abstract class Spec<T extends Spec<T>> with EqualityMixin {
 ///
 /// This class extends the [StyledAttribute] class and provides a generic type [Self] and [Value].
 /// The [Self] type represents the concrete implementation of the attribute, while the [Value] type represents the resolvable value.
-abstract class SpecAttribute<Value> extends StyledAttribute {
+abstract base class SpecAttribute<Value> extends StyledAttribute {
   final AnimatedDataDto? animated;
 
   const SpecAttribute({this.animated});
@@ -40,9 +40,11 @@ abstract class SpecAttribute<Value> extends StyledAttribute {
   SpecAttribute<Value> merge(covariant SpecAttribute<Value>? other);
 }
 
-abstract class SpecUtility<Attr extends Attribute, Value extends SpecAttribute>
-    extends MixUtility<Attr, Value> {
-  const SpecUtility(super.builder);
+abstract base class SpecUtility<Attr extends Attribute,
+    Value extends SpecAttribute> implements MixUtility<Attr, Value> {
+  @override
+  final Attr Function(Value) builder;
+  const SpecUtility(this.builder);
 
   Attr only({AnimatedDataDto? animated});
 }

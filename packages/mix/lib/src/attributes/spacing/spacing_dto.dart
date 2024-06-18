@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../core/dto.dart';
-import '../../core/models/mix_data.dart';
+import '../../core/factory/mix_data.dart';
 
 @immutable
 class SpacingDto extends Dto<EdgeInsetsGeometry> {
@@ -73,6 +73,9 @@ class SpacingDto extends Dto<EdgeInsetsGeometry> {
             bottom: mix.tokens.spaceTokenRef(bottom ?? 0),
           );
   }
+
+  @override
+  EdgeInsetsGeometry get defaultValue => EdgeInsets.zero;
 
   @override
   get props => [top, bottom, left, right, start, end];

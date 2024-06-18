@@ -6,18 +6,14 @@ part of 'stack_spec.dart';
 // Generator: SpecDefinitionBuilder
 // **************************************************************************
 
-mixin StackSpecMixable on Spec<StackSpec> {
-  /// Retrieves the [StackSpec] from a MixData.
+base mixin _$StackSpec on Spec<StackSpec> {
   static StackSpec from(MixData mix) {
     return mix.attributeOf<StackSpecAttribute>()?.resolve(mix) ??
         const StackSpec();
   }
 
-  /// Retrieves the [StackSpec] from the nearest [Mix] ancestor.
-  ///
-  /// If no ancestor is found, returns [StackSpec].
   static StackSpec of(BuildContext context) {
-    return StackSpecMixable.from(Mix.of(context));
+    return _$StackSpec.from(Mix.of(context));
   }
 
   /// Creates a copy of this [StackSpec] but with the given fields
@@ -40,18 +36,12 @@ mixin StackSpecMixable on Spec<StackSpec> {
   }
 
   @override
-  StackSpec lerp(
-    StackSpec? other,
-    double t,
-  ) {
+  StackSpec lerp(StackSpec? other, double t) {
     if (other == null) return _$this;
 
     return StackSpec(
-      alignment: AlignmentGeometry.lerp(
-        _$this.alignment,
-        other._$this.alignment,
-        t,
-      ),
+      alignment:
+          AlignmentGeometry.lerp(_$this.alignment, other._$this.alignment, t),
       fit: t < 0.5 ? _$this.fit : other._$this.fit,
       textDirection:
           t < 0.5 ? _$this.textDirection : other._$this.textDirection,
@@ -65,15 +55,13 @@ mixin StackSpecMixable on Spec<StackSpec> {
   /// This property is used by the [==] operator and the [hashCode] getter to
   /// compare two [StackSpec] instances for equality.
   @override
-  List<Object?> get props {
-    return [
-      _$this.alignment,
-      _$this.fit,
-      _$this.textDirection,
-      _$this.clipBehavior,
-      _$this.animated,
-    ];
-  }
+  List<Object?> get props => [
+        _$this.alignment,
+        _$this.fit,
+        _$this.textDirection,
+        _$this.clipBehavior,
+        _$this.animated,
+      ];
 
   StackSpec get _$this => this as StackSpec;
 }
@@ -85,7 +73,12 @@ mixin StackSpecMixable on Spec<StackSpec> {
 ///
 /// Use this class to configure the attributes of a [StackSpec] and pass it to
 /// the [StackSpec] constructor.
-class StackSpecAttribute extends SpecAttribute<StackSpec> {
+final class StackSpecAttribute extends SpecAttribute<StackSpec> {
+  final AlignmentGeometry? alignment;
+  final StackFit? fit;
+  final TextDirection? textDirection;
+  final Clip? clipBehavior;
+
   const StackSpecAttribute({
     this.alignment,
     this.fit,
@@ -93,14 +86,6 @@ class StackSpecAttribute extends SpecAttribute<StackSpec> {
     this.clipBehavior,
     super.animated,
   });
-
-  final AlignmentGeometry? alignment;
-
-  final StackFit? fit;
-
-  final TextDirection? textDirection;
-
-  final Clip? clipBehavior;
 
   @override
   StackSpec resolve(MixData mix) {
@@ -131,15 +116,13 @@ class StackSpecAttribute extends SpecAttribute<StackSpec> {
   /// This property is used by the [==] operator and the [hashCode] getter to
   /// compare two [StackSpecAttribute] instances for equality.
   @override
-  List<Object?> get props {
-    return [
-      alignment,
-      fit,
-      textDirection,
-      clipBehavior,
-      animated,
-    ];
-  }
+  List<Object?> get props => [
+        alignment,
+        fit,
+        textDirection,
+        clipBehavior,
+        animated,
+      ];
 }
 
 /// Utility class for configuring [StackSpecAttribute] properties.
@@ -147,12 +130,10 @@ class StackSpecAttribute extends SpecAttribute<StackSpec> {
 /// This class provides methods to set individual properties of a [StackSpecAttribute].
 ///
 /// Use the methods of this class to configure specific properties of a [StackSpecAttribute].
-class StackSpecUtility<T extends Attribute>
+base class StackSpecUtility<T extends Attribute>
     extends SpecUtility<T, StackSpecAttribute> {
-  StackSpecUtility(super.builder);
-
   /// Utility for defining [StackSpecAttribute.alignment]
-  late final alignment = AlignmentUtility((v) => only(alignment: v));
+  late final alignment = AlignmentGeometryUtility((v) => only(alignment: v));
 
   /// Utility for defining [StackSpecAttribute.fit]
   late final fit = StackFitUtility((v) => only(fit: v));
@@ -167,6 +148,10 @@ class StackSpecUtility<T extends Attribute>
   /// Utility for defining [StackSpecAttribute.animated]
   late final animated = AnimatedUtility((v) => only(animated: v));
 
+  StackSpecUtility(super.builder);
+
+  static final self = StackSpecUtility((v) => v);
+
   /// Returns a new [StackSpecAttribute] with the specified properties.
   @override
   T only({
@@ -176,15 +161,13 @@ class StackSpecUtility<T extends Attribute>
     Clip? clipBehavior,
     AnimatedDataDto? animated,
   }) {
-    return builder(
-      StackSpecAttribute(
-        alignment: alignment,
-        fit: fit,
-        textDirection: textDirection,
-        clipBehavior: clipBehavior,
-        animated: animated,
-      ),
-    );
+    return builder(StackSpecAttribute(
+      alignment: alignment,
+      fit: fit,
+      textDirection: textDirection,
+      clipBehavior: clipBehavior,
+      animated: animated,
+    ));
   }
 }
 

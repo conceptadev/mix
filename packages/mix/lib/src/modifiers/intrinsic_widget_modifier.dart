@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 
 import '../attributes/scalars/scalar_util.dart';
 import '../core/attribute.dart';
-import '../core/models/mix_data.dart';
 import '../core/modifier.dart';
+import '../core/factory/mix_data.dart';
 
-class IntrinsicHeightModifierSpec
+final class IntrinsicHeightModifierSpec
     extends WidgetModifierSpec<IntrinsicHeightModifierSpec> {
   const IntrinsicHeightModifierSpec();
 
@@ -35,7 +35,7 @@ class IntrinsicHeightModifierSpec
   }
 }
 
-class IntrinsicHeightModifierAttribute extends WidgetModifierAttribute<
+final class IntrinsicHeightModifierAttribute extends WidgetModifierAttribute<
     IntrinsicHeightModifierAttribute, IntrinsicHeightModifierSpec> {
   const IntrinsicHeightModifierAttribute();
 
@@ -57,7 +57,7 @@ class IntrinsicHeightModifierAttribute extends WidgetModifierAttribute<
   List<Object?> get props => []; // No properties to include in props
 }
 
-class IntrinsicWidthModifierSpec
+final class IntrinsicWidthModifierSpec
     extends WidgetModifierSpec<IntrinsicWidthModifierSpec> {
   const IntrinsicWidthModifierSpec();
 
@@ -85,7 +85,7 @@ class IntrinsicWidthModifierSpec
   }
 }
 
-class IntrinsicWidthModifierAttribute extends WidgetModifierAttribute<
+final class IntrinsicWidthModifierAttribute extends WidgetModifierAttribute<
     IntrinsicWidthModifierAttribute, IntrinsicWidthModifierSpec> {
   const IntrinsicWidthModifierAttribute();
 
@@ -107,13 +107,13 @@ class IntrinsicWidthModifierAttribute extends WidgetModifierAttribute<
   List<Object?> get props => []; // No properties to include in props
 }
 
-class IntrinsicHeightWidgetUtility<T extends Attribute>
+final class IntrinsicHeightWidgetUtility<T extends Attribute>
     extends MixUtility<T, IntrinsicHeightModifierAttribute> {
   const IntrinsicHeightWidgetUtility(super.builder);
   T call() => builder(const IntrinsicHeightModifierAttribute());
 }
 
-class IntrinsicWidthWidgetUtility<T extends Attribute>
+final class IntrinsicWidthWidgetUtility<T extends Attribute>
     extends MixUtility<T, IntrinsicWidthModifierAttribute> {
   const IntrinsicWidthWidgetUtility(super.builder);
   T call() => builder(const IntrinsicWidthModifierAttribute());

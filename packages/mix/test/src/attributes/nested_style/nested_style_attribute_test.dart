@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/src/attributes/nested_style/nested_style_attribute.dart';
-import 'package:mix/src/factory/style_mix.dart';
+import 'package:mix/src/core/factory/style_mix.dart';
 
 import '../../../helpers/testing_utils.dart';
 

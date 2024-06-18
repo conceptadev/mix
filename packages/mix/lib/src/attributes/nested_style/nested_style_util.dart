@@ -1,4 +1,4 @@
-import '../../factory/style_mix.dart';
+import '../../core/factory/style_mix.dart';
 import 'nested_style_attribute.dart';
 
 /// A utility class for creating and applying nested styles.

@@ -40,6 +40,8 @@ class WithModifierUtility {
   late final sizedBox = const SizedBoxModifierUtility(MixUtility.selfBuilder);
   late final padding = SpacingUtility(PaddingModifierAttribute.new);
 
+  static final self = WithModifierUtility._();
   late final _flexible = const FlexibleModifierUtility(MixUtility.selfBuilder);
-  WithModifierUtility();
+
+  WithModifierUtility._();
 }

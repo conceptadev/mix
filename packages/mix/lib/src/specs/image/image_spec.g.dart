@@ -6,18 +6,14 @@ part of 'image_spec.dart';
 // Generator: SpecDefinitionBuilder
 // **************************************************************************
 
-mixin ImageSpecMixable on Spec<ImageSpec> {
-  /// Retrieves the [ImageSpec] from a MixData.
+base mixin _$ImageSpec on Spec<ImageSpec> {
   static ImageSpec from(MixData mix) {
     return mix.attributeOf<ImageSpecAttribute>()?.resolve(mix) ??
         const ImageSpec();
   }
 
-  /// Retrieves the [ImageSpec] from the nearest [Mix] ancestor.
-  ///
-  /// If no ancestor is found, returns [ImageSpec].
   static ImageSpec of(BuildContext context) {
-    return ImageSpecMixable.from(Mix.of(context));
+    return _$ImageSpec.from(Mix.of(context));
   }
 
   /// Creates a copy of this [ImageSpec] but with the given fields
@@ -50,36 +46,18 @@ mixin ImageSpecMixable on Spec<ImageSpec> {
   }
 
   @override
-  ImageSpec lerp(
-    ImageSpec? other,
-    double t,
-  ) {
+  ImageSpec lerp(ImageSpec? other, double t) {
     if (other == null) return _$this;
 
     return ImageSpec(
-      width: _lerpDouble(
-        _$this.width,
-        other._$this.width,
-        t,
-      ),
-      height: _lerpDouble(
-        _$this.height,
-        other._$this.height,
-        t,
-      ),
-      color: Color.lerp(
-        _$this.color,
-        other._$this.color,
-        t,
-      ),
+      width: _$lerpDouble(_$this.width, other._$this.width, t),
+      height: _$lerpDouble(_$this.height, other._$this.height, t),
+      color: Color.lerp(_$this.color, other._$this.color, t),
       repeat: t < 0.5 ? _$this.repeat : other._$this.repeat,
       fit: t < 0.5 ? _$this.fit : other._$this.fit,
-      alignment: AlignmentGeometry.lerp(
-        _$this.alignment,
-        other._$this.alignment,
-        t,
-      ),
-      centerSlice: t < 0.5 ? _$this.centerSlice : other._$this.centerSlice,
+      alignment:
+          AlignmentGeometry.lerp(_$this.alignment, other._$this.alignment, t),
+      centerSlice: Rect.lerp(_$this.centerSlice, other._$this.centerSlice, t),
       filterQuality:
           t < 0.5 ? _$this.filterQuality : other._$this.filterQuality,
       colorBlendMode:
@@ -93,20 +71,18 @@ mixin ImageSpecMixable on Spec<ImageSpec> {
   /// This property is used by the [==] operator and the [hashCode] getter to
   /// compare two [ImageSpec] instances for equality.
   @override
-  List<Object?> get props {
-    return [
-      _$this.width,
-      _$this.height,
-      _$this.color,
-      _$this.repeat,
-      _$this.fit,
-      _$this.alignment,
-      _$this.centerSlice,
-      _$this.filterQuality,
-      _$this.colorBlendMode,
-      _$this.animated,
-    ];
-  }
+  List<Object?> get props => [
+        _$this.width,
+        _$this.height,
+        _$this.color,
+        _$this.repeat,
+        _$this.fit,
+        _$this.alignment,
+        _$this.centerSlice,
+        _$this.filterQuality,
+        _$this.colorBlendMode,
+        _$this.animated,
+      ];
 
   ImageSpec get _$this => this as ImageSpec;
 }
@@ -118,7 +94,17 @@ mixin ImageSpecMixable on Spec<ImageSpec> {
 ///
 /// Use this class to configure the attributes of a [ImageSpec] and pass it to
 /// the [ImageSpec] constructor.
-class ImageSpecAttribute extends SpecAttribute<ImageSpec> {
+final class ImageSpecAttribute extends SpecAttribute<ImageSpec> {
+  final double? width;
+  final double? height;
+  final ColorDto? color;
+  final ImageRepeat? repeat;
+  final BoxFit? fit;
+  final AlignmentGeometry? alignment;
+  final Rect? centerSlice;
+  final FilterQuality? filterQuality;
+  final BlendMode? colorBlendMode;
+
   const ImageSpecAttribute({
     this.width,
     this.height,
@@ -131,24 +117,6 @@ class ImageSpecAttribute extends SpecAttribute<ImageSpec> {
     this.colorBlendMode,
     super.animated,
   });
-
-  final double? width;
-
-  final double? height;
-
-  final ColorDto? color;
-
-  final ImageRepeat? repeat;
-
-  final BoxFit? fit;
-
-  final AlignmentGeometry? alignment;
-
-  final Rect? centerSlice;
-
-  final FilterQuality? filterQuality;
-
-  final BlendMode? colorBlendMode;
 
   @override
   ImageSpec resolve(MixData mix) {
@@ -189,20 +157,18 @@ class ImageSpecAttribute extends SpecAttribute<ImageSpec> {
   /// This property is used by the [==] operator and the [hashCode] getter to
   /// compare two [ImageSpecAttribute] instances for equality.
   @override
-  List<Object?> get props {
-    return [
-      width,
-      height,
-      color,
-      repeat,
-      fit,
-      alignment,
-      centerSlice,
-      filterQuality,
-      colorBlendMode,
-      animated,
-    ];
-  }
+  List<Object?> get props => [
+        width,
+        height,
+        color,
+        repeat,
+        fit,
+        alignment,
+        centerSlice,
+        filterQuality,
+        colorBlendMode,
+        animated,
+      ];
 }
 
 /// Utility class for configuring [ImageSpecAttribute] properties.
@@ -210,10 +176,8 @@ class ImageSpecAttribute extends SpecAttribute<ImageSpec> {
 /// This class provides methods to set individual properties of a [ImageSpecAttribute].
 ///
 /// Use the methods of this class to configure specific properties of a [ImageSpecAttribute].
-class ImageSpecUtility<T extends Attribute>
+base class ImageSpecUtility<T extends Attribute>
     extends SpecUtility<T, ImageSpecAttribute> {
-  ImageSpecUtility(super.builder);
-
   /// Utility for defining [ImageSpecAttribute.width]
   late final width = DoubleUtility((v) => only(width: v));
 
@@ -230,7 +194,7 @@ class ImageSpecUtility<T extends Attribute>
   late final fit = BoxFitUtility((v) => only(fit: v));
 
   /// Utility for defining [ImageSpecAttribute.alignment]
-  late final alignment = AlignmentUtility((v) => only(alignment: v));
+  late final alignment = AlignmentGeometryUtility((v) => only(alignment: v));
 
   /// Utility for defining [ImageSpecAttribute.centerSlice]
   late final centerSlice = RectUtility((v) => only(centerSlice: v));
@@ -244,6 +208,10 @@ class ImageSpecUtility<T extends Attribute>
 
   /// Utility for defining [ImageSpecAttribute.animated]
   late final animated = AnimatedUtility((v) => only(animated: v));
+
+  ImageSpecUtility(super.builder);
+
+  static final self = ImageSpecUtility((v) => v);
 
   /// Returns a new [ImageSpecAttribute] with the specified properties.
   @override
@@ -259,20 +227,18 @@ class ImageSpecUtility<T extends Attribute>
     BlendMode? colorBlendMode,
     AnimatedDataDto? animated,
   }) {
-    return builder(
-      ImageSpecAttribute(
-        width: width,
-        height: height,
-        color: color,
-        repeat: repeat,
-        fit: fit,
-        alignment: alignment,
-        centerSlice: centerSlice,
-        filterQuality: filterQuality,
-        colorBlendMode: colorBlendMode,
-        animated: animated,
-      ),
-    );
+    return builder(ImageSpecAttribute(
+      width: width,
+      height: height,
+      color: color,
+      repeat: repeat,
+      fit: fit,
+      alignment: alignment,
+      centerSlice: centerSlice,
+      filterQuality: filterQuality,
+      colorBlendMode: colorBlendMode,
+      animated: animated,
+    ));
   }
 }
 
@@ -295,11 +261,7 @@ class ImageSpecTween extends Tween<ImageSpec?> {
   }
 }
 
-double? _lerpDouble(
-  num? a,
-  num? b,
-  double t,
-) {
+double? _$lerpDouble(num? a, num? b, double t) {
   if (a == b || (a?.isNaN ?? false) && (b?.isNaN ?? false)) {
     return a?.toDouble();
   }

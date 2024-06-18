@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../core/dto.dart';
-import '../../core/models/mix_data.dart';
+import '../../core/factory/mix_data.dart';
 import '../../theme/tokens/color_token.dart';
 import 'color_directives.dart';
 
@@ -50,6 +50,9 @@ class ColorDto extends Dto<Color> {
             directives: [...directives, ...other.directives],
           );
   }
+
+  @override
+  Color get defaultValue => Colors.transparent;
 
   @override
   List<Object?> get props => [value, directives];

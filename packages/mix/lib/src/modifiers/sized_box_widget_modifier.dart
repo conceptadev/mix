@@ -6,10 +6,11 @@ import 'package:flutter/material.dart';
 
 import '../attributes/scalars/scalar_util.dart';
 import '../core/attribute.dart';
-import '../core/models/mix_data.dart';
+import '../core/factory/mix_data.dart';
 import '../core/modifier.dart';
 
-class SizedBoxModifierSpec extends WidgetModifierSpec<SizedBoxModifierSpec> {
+final class SizedBoxModifierSpec
+    extends WidgetModifierSpec<SizedBoxModifierSpec> {
   final double? width;
   final double? height;
 
@@ -40,7 +41,7 @@ class SizedBoxModifierSpec extends WidgetModifierSpec<SizedBoxModifierSpec> {
   }
 }
 
-class SizedBoxModifierAttribute extends WidgetModifierAttribute<
+final class SizedBoxModifierAttribute extends WidgetModifierAttribute<
     SizedBoxModifierAttribute, SizedBoxModifierSpec> {
   final double? width;
   final double? height;
@@ -64,7 +65,7 @@ class SizedBoxModifierAttribute extends WidgetModifierAttribute<
   get props => [width, height];
 }
 
-class SizedBoxModifierUtility<T extends Attribute>
+final class SizedBoxModifierUtility<T extends Attribute>
     extends MixUtility<T, SizedBoxModifierAttribute> {
   const SizedBoxModifierUtility(super.builder);
 

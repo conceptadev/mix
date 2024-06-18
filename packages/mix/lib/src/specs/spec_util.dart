@@ -1,4 +1,3 @@
-import '../attributes/scalars/scalar_util.dart';
 import '../modifiers/widget_modifiers_util.dart';
 import '../variants/context_variant_util/on_util.dart';
 import 'box/box_spec.dart';
@@ -8,21 +7,25 @@ import 'image/image_spec.dart';
 import 'stack/stack_spec.dart';
 import 'text/text_spec.dart';
 
-final $box = BoxSpecUtility(MixUtility.selfBuilder);
-final $flex = FlexSpecUtility(MixUtility.selfBuilder);
-final $image = ImageSpecUtility(MixUtility.selfBuilder);
-final $icon = IconSpecUtility(MixUtility.selfBuilder);
-final $text = TextSpecUtility(MixUtility.selfBuilder);
-final $stack = StackSpecUtility(MixUtility.selfBuilder);
-final $with = WithModifierUtility();
-final $on = OnContextVariantUtility();
+final _mixUtilities = MixUtilities();
 
-class AllMixUtilities {
-  final BoxSpecUtility box = $box;
-  final FlexSpecUtility flex = $flex;
-  final ImageSpecUtility image = $image;
-  final IconSpecUtility icon = $icon;
-  final TextSpecUtility text = $text;
-  final StackSpecUtility stack = $stack;
-  AllMixUtilities();
+final $box = _mixUtilities.box;
+final $flex = _mixUtilities.flex;
+final $image = _mixUtilities.image;
+final $icon = _mixUtilities.icon;
+final $text = _mixUtilities.text;
+final $stack = _mixUtilities.stack;
+final $with = _mixUtilities.mod;
+final $on = _mixUtilities.on;
+
+class MixUtilities {
+  final box = BoxSpecUtility.self;
+  final flex = FlexSpecUtility.self;
+  final image = ImageSpecUtility.self;
+  final icon = IconSpecUtility.self;
+  final text = TextSpecUtility.self;
+  final stack = StackSpecUtility.self;
+  final on = OnContextVariantUtility.self;
+  final mod = WithModifierUtility.self;
+  MixUtilities();
 }

@@ -1,3 +1,24 @@
+targets:
+  $default:
+    builders:
+      spec:
+        enabled: true 
+        generate_for:
+          exclude:
+            - test
+            - example
+          include:
+            - lib/**_spec.dart
+      dto:
+        enabled: true
+        generate_for:
+          exclude:
+            - test
+            - example
+          include:
+            - lib/**_dto.dart
+
+
 builders:
   spec:
     import: "package:mix_builder/builder.dart"
