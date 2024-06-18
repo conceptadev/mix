@@ -2,8 +2,9 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 
-import '../../mix.dart';
 import '../internal/compare_mixin.dart';
+import 'attribute.dart';
+import 'factory/mix_data.dart';
 
 @immutable
 abstract class Dto<Value> with EqualityMixin, MergeableMixin {

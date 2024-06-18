@@ -254,7 +254,7 @@ class ImageSpecTween extends Tween<ImageSpec?> {
 
   @override
   ImageSpec lerp(double t) {
-    if (begin == null && end == null) return const ImageSpec();
+    if (begin == null && end == null) return ImageSpec();
     if (begin == null) return end!;
 
     return begin!.lerp(end!, t);

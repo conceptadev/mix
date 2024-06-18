@@ -22,10 +22,7 @@ sealed class ShapeBorderDto<T extends ShapeBorder> extends Dto<T> {
     return OutlinedBorderDto.tryToMerge(a, b);
   }
 
-  BorderRadiusGeometryDto? get _borderRadius => this is _WithBorderRadius
-      ? (this as _WithBorderRadius).borderRadius
-      : null;
-
+  BorderRadiusGeometryDto? get _borderRadius;
   BorderSideDto? get _side =>
       this is OutlinedBorderDto ? (this as OutlinedBorderDto).side : null;
 
@@ -42,10 +39,6 @@ sealed class ShapeBorderDto<T extends ShapeBorder> extends Dto<T> {
 
   @override
   T resolve(MixData mix);
-}
-
-base mixin _WithBorderRadius {
-  BorderRadiusGeometryDto? get borderRadius;
 }
 
 @immutable
@@ -169,11 +162,12 @@ sealed class OutlinedBorderDto<T extends OutlinedBorder>
 @MixableDto()
 final class RoundedRectangleBorderDto
     extends OutlinedBorderDto<RoundedRectangleBorder>
-    with _$RoundedRectangleBorderDto, _WithBorderRadius {
+    with _$RoundedRectangleBorderDto {
   @MixableField(dto: MixableFieldDto(type: BorderRadiusGeometryDto))
-  @override
   final BorderRadiusGeometryDto? borderRadius;
   const RoundedRectangleBorderDto({this.borderRadius, super.side});
+  @override
+  BorderRadiusGeometryDto? get _borderRadius => borderRadius;
   @override
   RoundedRectangleBorder get defaultValue => const RoundedRectangleBorder();
 }
@@ -181,10 +175,11 @@ final class RoundedRectangleBorderDto
 @MixableDto()
 final class BeveledRectangleBorderDto
     extends OutlinedBorderDto<BeveledRectangleBorder>
-    with _$BeveledRectangleBorderDto, _WithBorderRadius {
-  @override
+    with _$BeveledRectangleBorderDto {
   final BorderRadiusGeometryDto? borderRadius;
   const BeveledRectangleBorderDto({this.borderRadius, super.side});
+  @override
+  BorderRadiusGeometryDto? get _borderRadius => borderRadius;
   @override
   BeveledRectangleBorder get defaultValue => const BeveledRectangleBorder();
 }
@@ -192,10 +187,13 @@ final class BeveledRectangleBorderDto
 @MixableDto()
 final class ContinuousRectangleBorderDto
     extends OutlinedBorderDto<ContinuousRectangleBorder>
-    with _$ContinuousRectangleBorderDto, _WithBorderRadius {
-  @override
+    with _$ContinuousRectangleBorderDto {
   final BorderRadiusGeometryDto? borderRadius;
   const ContinuousRectangleBorderDto({this.borderRadius, super.side});
+
+  @override
+  BorderRadiusGeometryDto? get _borderRadius => borderRadius;
+
   @override
   ContinuousRectangleBorder get defaultValue =>
       const ContinuousRectangleBorder();
@@ -207,6 +205,8 @@ final class CircleBorderDto extends OutlinedBorderDto<CircleBorder>
   final double? eccentricity;
 
   const CircleBorderDto({super.side, this.eccentricity});
+  @override
+  BorderRadiusGeometryDto? get _borderRadius => null;
   @override
   CircleBorder get defaultValue => const CircleBorder();
 }
@@ -231,6 +231,8 @@ final class StarBorderDto extends OutlinedBorderDto<StarBorder>
     this.squash,
   });
   @override
+  BorderRadiusGeometryDto? get _borderRadius => null;
+  @override
   StarBorder get defaultValue => const StarBorder();
 }
 
@@ -249,6 +251,8 @@ final class LinearBorderDto extends OutlinedBorderDto<LinearBorder>
     this.top,
     this.bottom,
   });
+  @override
+  BorderRadiusGeometryDto? get _borderRadius => null;
   @override
   LinearBorder get defaultValue => const LinearBorder();
 }
@@ -270,6 +274,8 @@ final class StadiumBorderDto extends OutlinedBorderDto<StadiumBorder>
     with _$StadiumBorderDto {
   const StadiumBorderDto({super.side});
 
+  @override
+  BorderRadiusGeometryDto? get _borderRadius => null;
   @override
   StadiumBorder get defaultValue => const StadiumBorder();
 }

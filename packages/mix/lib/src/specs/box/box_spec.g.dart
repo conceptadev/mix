@@ -334,7 +334,7 @@ class BoxSpecTween extends Tween<BoxSpec?> {
 
   @override
   BoxSpec lerp(double t) {
-    if (begin == null && end == null) return const BoxSpec();
+    if (begin == null && end == null) return BoxSpec();
     if (begin == null) return end!;
 
     return begin!.lerp(end!, t);

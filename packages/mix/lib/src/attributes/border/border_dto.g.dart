@@ -102,7 +102,7 @@ final class BorderSideUtility<T extends Attribute>
 extension BorderSideMixExt on BorderSide {
   BorderSideDto toDto() {
     return BorderSideDto(
-      color: color.toDto(),
+      color: color?.toDto(),
       strokeAlign: strokeAlign,
       style: style,
       width: width,

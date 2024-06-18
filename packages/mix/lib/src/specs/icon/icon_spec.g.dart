@@ -254,7 +254,7 @@ class IconSpecTween extends Tween<IconSpec?> {
 
   @override
   IconSpec lerp(double t) {
-    if (begin == null && end == null) return const IconSpec();
+    if (begin == null && end == null) return IconSpec();
     if (begin == null) return end!;
 
     return begin!.lerp(end!, t);
