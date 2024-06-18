@@ -55,13 +55,13 @@ base mixin _$TextSpec on Spec<TextSpec> {
 
     return TextSpec(
       overflow: t < 0.5 ? _$this.overflow : other._$this.overflow,
-      strutStyle:
-          _$lerpStrutStyle(_$this.strutStyle, other._$this.strutStyle, t),
+      strutStyle: MixHelpers.lerpStrutStyle(
+          _$this.strutStyle, other._$this.strutStyle, t),
       textAlign: t < 0.5 ? _$this.textAlign : other._$this.textAlign,
-      textScaleFactor:
-          _$lerpDouble(_$this.textScaleFactor, other._$this.textScaleFactor, t),
+      textScaleFactor: MixHelpers.lerpDouble(
+          _$this.textScaleFactor, other._$this.textScaleFactor, t),
       maxLines: t < 0.5 ? _$this.maxLines : other._$this.maxLines,
-      style: _$lerpTextStyle(_$this.style, other._$this.style, t),
+      style: MixHelpers.lerpTextStyle(_$this.style, other._$this.style, t),
       textWidthBasis:
           t < 0.5 ? _$this.textWidthBasis : other._$this.textWidthBasis,
       textHeightBehavior:
@@ -306,38 +306,4 @@ class TextSpecTween extends Tween<TextSpec?> {
 
     return begin!.lerp(end!, t);
   }
-}
-
-double? _$lerpDouble(num? a, num? b, double t) {
-  if (a == b || (a?.isNaN ?? false) && (b?.isNaN ?? false)) {
-    return a?.toDouble();
-  }
-  a ??= 0.0;
-  b ??= 0.0;
-  return a * (1.0 - t) + b * t;
-}
-
-StrutStyle? _$lerpStrutStyle(StrutStyle? a, StrutStyle? b, double t) {
-  if (a == null && b == null) return null;
-  if (a == null) return b;
-  if (b == null) return a;
-
-  return StrutStyle(
-    fontFamily: t < 0.5 ? a.fontFamily : b.fontFamily,
-    fontFamilyFallback: t < 0.5 ? a.fontFamilyFallback : b.fontFamilyFallback,
-    fontSize: _$lerpDouble(a.fontSize, b.fontSize, t),
-    height: _$lerpDouble(a.height, b.height, t),
-    leading: _$lerpDouble(a.leading, b.leading, t),
-    fontWeight: FontWeight.lerp(a.fontWeight, b.fontWeight, t),
-    fontStyle: t < 0.5 ? a.fontStyle : b.fontStyle,
-    forceStrutHeight: t < 0.5 ? a.forceStrutHeight : b.forceStrutHeight,
-    debugLabel: a.debugLabel ?? b.debugLabel,
-    leadingDistribution:
-        t < 0.5 ? a.leadingDistribution : b.leadingDistribution,
-  );
-}
-
-TextStyle? _$lerpTextStyle(TextStyle? a, TextStyle? b, double t) {
-  return TextStyle.lerp(a, b, t)
-      ?.copyWith(shadows: Shadow.lerpList(a?.shadows, b?.shadows, t));
 }

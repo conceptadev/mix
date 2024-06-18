@@ -142,9 +142,9 @@ final class BorderSideDto extends Dto<BorderSide> with _$BorderSideDto {
   final ColorDto? color;
   final double? width;
 
-  @MixableField(
-    utility: MixableFieldUtility(properties: [MixableFieldProperty('none')]),
-  )
+  @MixableProperty(utilities: [
+    MixableUtility(properties: [(path: 'none', alias: 'none')]),
+  ])
   final BorderStyle? style;
   final double? strokeAlign;
 

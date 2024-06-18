@@ -35,13 +35,13 @@ String _getLerpExpression(
 
   final defaultExpression = 't < 0.5 ? $fieldName : other.$fieldName';
 
-  if (field.element == null) {
+  if (field.dartType.element == null) {
     return defaultExpression;
   }
 
   final lerpParams = '$fieldName, other.$fieldName, t';
 
-  final hasLerp = _checkIfFieldHasLerp(field.element!);
+  final hasLerp = _checkIfFieldHasLerp(field.dartType.element!);
 
   // We need a custom TextStyle lerp for now
   // Due to the shadow list merge behavior
@@ -50,18 +50,16 @@ String _getLerpExpression(
     return '$typeName.lerp($lerpParams)';
   }
 
-  final helpers = context.declarationProvider;
-
   switch (typeName) {
     case 'double':
-      return '${helpers.lerpDouble}($lerpParams)';
+      return '${MixHelperRef.lerpDouble}($lerpParams)';
     case 'Matrix4':
-      return '${helpers.lerpMatrix4}($lerpParams)';
+      return '${MixHelperRef.lerpMatrix4}($lerpParams)';
     case 'StrutStyle':
-      return '${helpers.lerpStrutStyle}($lerpParams)';
+      return '${MixHelperRef.lerpStrutStyle}($lerpParams)';
 
     case 'TextStyle':
-      return '${helpers.lerpTextStyle}($lerpParams)';
+      return '${MixHelperRef.lerpTextStyle}($lerpParams)';
     default:
       return defaultExpression;
   }

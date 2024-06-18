@@ -5,7 +5,7 @@ String specUtilityClass(SpecAnnotationContext context) {
   final utilityType = context.attributeClassName;
   final utilityClassName = '${context.name}Utility';
 
-  final fields = utilityFields(utilityType, context.fields);
+  final fields = generateUtilityFields(utilityType, context.fields);
 
   final onlyMethod = utilityMethodOnlyBuilder(
     utilityType: utilityType,

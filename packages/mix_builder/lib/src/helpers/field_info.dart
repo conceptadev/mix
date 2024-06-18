@@ -1,16 +1,10 @@
 import 'package:analyzer/dart/constant/value.dart' show DartObject;
 import 'package:analyzer/dart/element/element.dart'
-    show
-        ClassElement,
-        FieldElement,
-        ParameterElement,
-        ConstructorElement,
-        Element;
+    show ClassElement, FieldElement, ParameterElement, ConstructorElement;
 import 'package:analyzer/dart/element/nullability_suffix.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:mix/annotations.dart';
 import 'package:mix_builder/src/helpers/builder_utils.dart';
-import 'package:mix_builder/src/helpers/helpers.dart';
 // ignore_for_file: prefer_relative_imports
 import 'package:source_gen/source_gen.dart' show ConstantReader, TypeChecker;
 
@@ -55,28 +49,28 @@ final _invertedDtoMap = {
 class FieldInfo {
   FieldInfo({
     required this.name,
-    required DartType type,
+    required this.type,
+    required this.dartType,
     required this.documentationComment,
     required this.annotation,
-  }) : _type = type;
+    required this.nullable,
+  });
 
   /// Parameter / field type.
   final String name;
 
-  final MixableField annotation;
+  final DartType dartType;
+
+  final MixableProperty annotation;
 
   final String? documentationComment;
 
-  Element? get element => _type.element;
-
   /// Dart type of the field
-  final DartType _type;
-
-  String get type => getTypeNameFromDartType(_type);
+  final String type;
 
   String get typeWithNullability => type + (nullable ? '?' : '');
 
-  bool get nullable => _type.nullabilitySuffix != NullabilitySuffix.none;
+  final bool nullable;
 
   /// Returns whether the field has a DTO type associated with it.
   bool get hasDto => dtoType != null;
@@ -89,7 +83,7 @@ class FieldInfo {
     }
 
     if (isListType) {
-      final listType = getGenericsTypeNameFromDartType(_type);
+      final listType = getGenericTypeFromTypeName(type);
 
       if (_invertedDtoMap[listType] != null) {
         return true;
@@ -100,11 +94,11 @@ class FieldInfo {
     return false;
   }
 
-  bool get isListType => _type.isDartCoreList;
+  bool get isListType => type.startsWith('List<');
 
-  bool get isMapType => _type.isDartCoreMap;
+  bool get isMapType => type.startsWith('Map<');
 
-  bool get isSetType => _type.isDartCoreSet;
+  bool get isSetType => type.startsWith('Set<');
 
   /// Returns the DTO type associated with the field, if any.
   /// If a DTO type is explicitly specified in the `MixProperty` annotation, that is returned.
@@ -119,21 +113,21 @@ class FieldInfo {
   }
 
   /// True if the type is `dynamic`.
-  bool get isDynamic => _type is DynamicType;
+  bool get isDynamic => type == 'dynamic';
 
-  String toString() => 'FieldInfo(name: $name, type: ${_type.toString()})';
+  String toString() => 'FieldInfo(name: $name, type: $type)';
 }
 
 class ParameterInfo extends FieldInfo {
   ParameterInfo({
     required super.name,
-    this.fieldInfo,
-    required this.isPositioned,
     required super.type,
+    required super.nullable,
     required this.isSuper,
+    required super.dartType,
     required super.annotation,
     required super.documentationComment,
-  }) {}
+  });
 
   static const internalRefPrefix = '_\$this';
 
@@ -145,20 +139,20 @@ class ParameterInfo extends FieldInfo {
 
   final bool isSuper;
 
-  /// Info relevant to the given field taken from the class itself, as contrary to the constructor parameter.
-  /// If `null`, the field with the given name wasn't found on the class.
-  final FieldInfo? fieldInfo;
-
-  /// True if the field is positioned in the constructor
-  final bool isPositioned;
-
-  bool get hasUtility => utilityType != null;
-
-  String get _typeFromList {
-    if (!isListType) {
-      throw Exception('Type is not a list type');
+  String get defaultUtilityName {
+    if (isListType) {
+      final utilityBaseType = getGenericTypeFromTypeName(type);
+      if (_utilityOverrides.containsKey(utilityBaseType)) {
+        return _utilityOverrides[utilityBaseType]!;
+      }
+      return getUtilityNameFromTypeName('${utilityBaseType}List');
     }
-    return type.split('<').last.split('>').first;
+
+    if (_utilityOverrides.containsKey(type)) {
+      return _utilityOverrides[type]!;
+    }
+
+    return getUtilityNameFromTypeName(type);
   }
 
   String get asResolvedType {
@@ -171,114 +165,76 @@ class ParameterInfo extends FieldInfo {
     }
     return type;
   }
-
-  String get utilityName => annotation.utility?.alias ?? name;
-  String? get utilityType {
-    String? utilityType = annotation.utility?.typeAsString;
-
-    if (utilityType != null) {
-      return utilityType;
-    }
-
-    if (isDto) {
-      utilityType ??= asResolvedType;
-    } else {
-      utilityType ??= type;
-    }
-
-    utilityType = utilityType.capitalize();
-
-    if (_utilityOverrides.containsKey(utilityType)) {
-      return _utilityOverrides[utilityType]!;
-    }
-
-    if (isListType) {
-      /// get type of list, if its List<double> I want ot get double
-
-      final resolvedType = _invertedDtoMap[_typeFromList] ?? _typeFromList;
-      utilityType = '${resolvedType}List';
-    }
-
-    return utilityType.capitalize() + 'Utility';
-  }
-
-  /// Returns the field info for the constructor parameter in the relevant class.
-
-  @override
-  String toString() {
-    return 'ParameterInfo(isSuper: $isSuper, fieldInfo: $fieldInfo, isPositioned: $isPositioned, propertyAnnotation: $annotation)';
-  }
 }
 
-MixableField readFieldAnnotation(
+MixableProperty readFieldAnnotation(
   FieldElement element,
 ) {
-  const defaults = MixableField();
+  const defaults = MixableProperty();
 
-  const checker = TypeChecker.fromRuntime(MixableField);
+  const checker = TypeChecker.fromRuntime(MixableProperty);
   final annotation = checker.firstAnnotationOf(element);
   if (annotation is! DartObject) {
     return defaults;
   }
 
-  final reader = ConstantReader(annotation);
-
-  return _getMixableField(reader);
+  return _getMixableProperty(ConstantReader(annotation));
 }
 
-MixableField _getMixableField(ConstantReader reader) {
+MixableProperty _getMixableProperty(ConstantReader reader) {
   final dto = reader.peek('dto');
-  final utility = reader.peek('utility');
-  return MixableField(
+  final utilities = reader
+      .peek('utilities')
+      ?.listValue
+      .map((e) => _getMixableFieldUtility(ConstantReader(e)))
+      .toList();
+
+  return MixableProperty(
     dto: dto == null ? null : _getMixableDto(dto),
-    utility: utility == null ? null : _getMixableFieldUtility(utility),
+    utilities: utilities,
   );
 }
 
 MixableFieldDto? _getMixableDto(ConstantReader? reader) {
   if (reader == null) return null;
   final dtoType = reader.peek('type')?.typeValue.element?.name;
-  final dtoName = reader.peek('alias')?.stringValue;
 
   return MixableFieldDto(
     type: dtoType,
-    alias: dtoName,
   );
 }
 
-MixableFieldUtility _getMixableFieldUtility(ConstantReader reader) {
-  final utilityType = reader.peek('type')?.objectValue.toStringValue();
+MixableUtility _getMixableFieldUtility(ConstantReader reader) {
+  final peakedType = reader.peek('type');
+
+  String? utilityName;
+
+  if (peakedType?.isString == true) {
+    utilityName = peakedType!.stringValue;
+  } else if (peakedType?.isType == true) {
+    utilityName = peakedType!.typeValue.element!.name!;
+  }
+
   final utilityAlias = reader.peek('alias')?.stringValue;
 
-  final fields =
-      reader.peek('properties')?.listValue.map(ConstantReader.new).toList();
+  final extraUtilities = reader
+      .read('properties')
+      .listValue
+      .map((e) => _getMixableUtilityAlias(ConstantReader(e)))
+      .toList();
 
-  final extraUtilities =
-      reader.peek('extraUtilities')?.listValue.map(ConstantReader.new).toList();
-
-  return MixableFieldUtility(
-    type: utilityType,
+  return MixableUtility(
+    type: utilityName,
     alias: utilityAlias,
-    extraUtilities: extraUtilities?.map(_getMixableFieldUtility).toList(),
-    properties: fields?.map(_getMixableFieldProperty).toList(),
+    properties: extraUtilities,
   );
 }
 
-MixableFieldProperty _getMixableFieldProperty(ConstantReader reader) {
-  final alias = reader.peek('alias')?.stringValue;
-  final property = reader.read('property').stringValue;
-  final properties = reader
-      .peek('properties')
-      ?.listValue
-      .map(ConstantReader.new)
-      .map(_getMixableFieldProperty)
-      .toList();
+MixableUtilityProps _getMixableUtilityAlias(ConstantReader reader) {
+  final path = reader.read('path').stringValue;
+  final alias = reader.read('alias').stringValue;
 
-  return MixableFieldProperty(
-    property,
-    alias: alias,
-    properties: properties,
-  );
+  return (path: path, alias: alias);
 }
 
 FieldInfo? getFieldInfoFromParameter(
@@ -317,7 +273,9 @@ FieldInfo? getFieldInfoFromParameter(
 
   return FieldInfo(
     name: field.name,
-    type: field.type,
+    type: field.type.getDisplayString(withNullability: false),
+    dartType: field.type,
+    nullable: field.type.nullabilitySuffix == NullabilitySuffix.question,
     annotation: annotation,
     documentationComment: field.documentationComment,
   );

@@ -15,7 +15,6 @@ final class IconSpec extends Spec<IconSpec> with _$IconSpec {
   final TextDirection? textDirection;
   final bool? applyTextScaling;
 
-  @MixableField()
   // TODO: add shadow utility
   final List<Shadow>? shadows;
   final double? fill;

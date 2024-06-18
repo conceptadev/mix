@@ -6,10 +6,28 @@ import 'package:build/build.dart';
 import 'package:code_builder/code_builder.dart';
 import 'package:dart_style/dart_style.dart';
 import 'package:mix/annotations.dart';
-import 'package:mix_builder/src/helpers/declaration_provider.dart';
 // ignore_for_file: prefer_relative_imports
 import 'package:mix_builder/src/helpers/field_info.dart';
+import 'package:mix_builder/src/helpers/helpers.dart';
 import 'package:source_gen/source_gen.dart';
+
+class MixHelperRef {
+  MixHelperRef._();
+
+  static String get _refName => 'MixHelpers';
+
+  static String get deepEquality => '$_refName.deepEquality';
+
+  static String get lerpDouble => '$_refName.lerpDouble';
+
+  static String get mergeList => '${_refName}.mergeList';
+
+  static String get lerpStrutStyle => '$_refName.lerpStrutStyle';
+
+  static String get lerpMatrix4 => '$_refName.lerpMatrix4';
+
+  static String get lerpTextStyle => '$_refName.lerpTextStyle';
+}
 
 Future<List<ClassElement>> getAnnotatedClasses(
   BuildStep buildStep,
@@ -53,10 +71,8 @@ abstract class AnnotationContext<T> {
     required this.element,
     required this.fields,
     required this.annotation,
-    required this.declarationProvider,
   });
 
-  final DeclarationProvider declarationProvider;
   late final formatter = DartFormatter();
 
   late final emitter = DartEmitter(
@@ -69,12 +85,7 @@ abstract class AnnotationContext<T> {
   String get mixinExtensionName => '_\$${name}';
 
   String generate(String contents) {
-    final methodHelpers = declarationProvider.applyMethods();
-
-    final code = Code('''
-$contents
-$methodHelpers
-''');
+    final code = Code(contents);
 
     final output = formatter.format('${code.accept(emitter)}');
 
@@ -88,7 +99,6 @@ class SpecAnnotationContext extends AnnotationContext<MixableSpec> {
     required super.element,
     required super.fields,
     required super.annotation,
-    required super.declarationProvider,
   });
 
   String get attributeClassName => '${name}Attribute';
@@ -99,7 +109,6 @@ class DtoAnnotationContext extends AnnotationContext<MixableDto> {
     required super.element,
     required super.fields,
     required super.annotation,
-    required super.declarationProvider,
   });
 }
 
@@ -134,6 +143,38 @@ String? getGenericsTypeNameFromDartType(DartType type) {
     return getTypeNameFromDartType(genericType);
   }
   return null;
+}
+
+String getGenericTypeFromTypeName(String typeName) {
+  return typeName.substring(
+      typeName.indexOf('<') + 1, typeName.lastIndexOf('>'));
+}
+
+String getUtilityNameFromTypeName(String typeName) {
+  // check if typeName ends with Utility
+  // If not then add utility to it
+  final utilityPostfix = 'Utility';
+  final dtoPostfix = 'Dto';
+  // TODO: improve this in the feature as
+  // it can cause conflict
+  final dtoList = 'DtoList';
+
+  // if typename ends with Dto, remove it
+  if (typeName.endsWith(dtoPostfix)) {
+    typeName = typeName.substring(0, typeName.length - dtoPostfix.length);
+  }
+
+  // if typename ends with DtoList, remove it
+  if (typeName.endsWith(dtoList)) {
+    typeName = typeName.substring(0, typeName.length - dtoList.length) + 'List';
+  }
+
+  typeName = typeName.capitalize();
+
+  if (!typeName.endsWith(utilityPostfix)) {
+    return '${typeName}${utilityPostfix}';
+  }
+  return typeName;
 }
 
 String? getGenericTypeOfSuperclass(ClassElement classElement) {

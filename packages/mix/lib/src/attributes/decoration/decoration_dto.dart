@@ -17,14 +17,14 @@ part 'decoration_dto.g.dart';
 sealed class DecorationDto<T extends Decoration> extends Dto<T> {
   final ColorDto? color;
   final GradientDto? gradient;
-  @MixableField(
-    utility: MixableFieldUtility(
-      alias: 'boxShadows',
-      properties: [MixableFieldProperty('add', alias: 'boxShadow')],
-      extraUtilities: [
-        MixableFieldUtility(alias: 'elevation', type: 'ElevationUtility'),
-      ],
-    ),
+  @MixableProperty(
+    utilities: [
+      MixableUtility(
+        alias: 'boxShadows',
+        properties: [(path: 'add', alias: 'boxShadow')],
+      ),
+      MixableUtility(alias: 'elevation', type: 'ElevationUtility'),
+    ],
   )
   final List<BoxShadowDto>? boxShadow;
 
@@ -65,21 +65,21 @@ sealed class DecorationDto<T extends Decoration> extends Dto<T> {
 @MixableDto()
 final class BoxDecorationDto extends DecorationDto<BoxDecoration>
     with _$BoxDecorationDto {
-  @MixableField(
-    utility: MixableFieldUtility(
-      properties: [
-        MixableFieldProperty('directional', alias: 'borderDirectional'),
-      ],
-    ),
+  @MixableProperty(
+    utilities: [
+      MixableUtility(
+        properties: [(path: 'directional', alias: 'borderDirectional')],
+      ),
+    ],
   )
   final BoxBorderDto? border;
 
-  @MixableField(
-    utility: MixableFieldUtility(
-      properties: [
-        MixableFieldProperty('directional', alias: 'borderRadiusDirectional'),
-      ],
-    ),
+  @MixableProperty(
+    utilities: [
+      MixableUtility(
+        properties: [(path: 'directional', alias: 'borderRadiusDirectional')],
+      ),
+    ],
   )
   final BorderRadiusGeometryDto? borderRadius;
   final BoxShape? shape;

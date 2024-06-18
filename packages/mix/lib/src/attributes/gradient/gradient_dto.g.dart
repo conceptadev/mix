@@ -29,8 +29,8 @@ base mixin _$LinearGradientDto on Dto<LinearGradient> {
       end: other.end ?? _$this.end,
       tileMode: other.tileMode ?? _$this.tileMode,
       transform: other.transform ?? _$this.transform,
-      colors: Dto.mergeList(_$this.colors, other.colors),
-      stops: _$merge(_$this.stops, other.stops),
+      colors: MixHelpers.mergeList(_$this.colors, other.colors),
+      stops: MixHelpers.mergeList(_$this.stops, other.stops),
     );
   }
 
@@ -130,22 +130,6 @@ extension LinearGradientMixExt on LinearGradient {
   }
 }
 
-List<T>? _$merge<T>(List<T>? a, List<T>? b) {
-  if (b == null) return a;
-  if (a == null) return b;
-
-  final mergedList = [...a];
-  for (int i = 0; i < b.length; i++) {
-    if (i < mergedList.length) {
-      mergedList[i] = b[i] ?? mergedList[i];
-    } else {
-      mergedList.add(b[i]);
-    }
-  }
-
-  return mergedList;
-}
-
 base mixin _$RadialGradientDto on Dto<RadialGradient> {
   @override
   RadialGradient resolve(MixData mix) {
@@ -173,8 +157,8 @@ base mixin _$RadialGradientDto on Dto<RadialGradient> {
       focal: other.focal ?? _$this.focal,
       focalRadius: other.focalRadius ?? _$this.focalRadius,
       transform: other.transform ?? _$this.transform,
-      colors: Dto.mergeList(_$this.colors, other.colors),
-      stops: _$merge(_$this.stops, other.stops),
+      colors: MixHelpers.mergeList(_$this.colors, other.colors),
+      stops: MixHelpers.mergeList(_$this.stops, other.stops),
     );
   }
 
@@ -317,8 +301,8 @@ base mixin _$SweepGradientDto on Dto<SweepGradient> {
       endAngle: other.endAngle ?? _$this.endAngle,
       tileMode: other.tileMode ?? _$this.tileMode,
       transform: other.transform ?? _$this.transform,
-      colors: Dto.mergeList(_$this.colors, other.colors),
-      stops: _$merge(_$this.stops, other.stops),
+      colors: MixHelpers.mergeList(_$this.colors, other.colors),
+      stops: MixHelpers.mergeList(_$this.stops, other.stops),
     );
   }
 

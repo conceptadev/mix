@@ -6,12 +6,10 @@ String mergeMethodBuilder({
   required String className,
   required AnnotationContext context,
   bool isInternalRef = false,
-  bool shouldMergeLists = false,
+  bool shouldMergeLists = true,
 }) {
   final fields = context.fields;
   final thisRef = isInternalRef ? ParameterInfo.internalRefPrefix : 'this';
-
-  final helpers = context.declarationProvider;
 
   final namedConstructor = context.element.getNamedConstructor('_');
   final constructor =
@@ -23,41 +21,33 @@ String mergeMethodBuilder({
     final nullable = field.nullable ? '?' : '';
 
     var propAssignment = '$propName:';
-    if (field.isPositioned) {
-      propAssignment = '';
-    }
 
-    if (field.hasDto) {
-      if (field.isListType) {
-        return '$propAssignment Dto.mergeList($thisName, other.$propName)';
+    if (field.isListType) {
+      if (shouldMergeLists) {
+        return '$propAssignment ${MixHelperRef.mergeList}($thisName, other.$propName)';
       } else {
-        final hasTryToMerge = _checkIfHasTryToMerge(field.element!);
-        final tryToMergeExpression =
-            '$propAssignment ${field.dtoType}.tryToMerge($thisName, other.$propName)';
-        if (hasTryToMerge) {
-          return tryToMergeExpression;
-        }
-
-        // TODO: Hard coded for now, will be removed soon
-        if (field.dtoType == 'DecorationDto') {
-          return tryToMergeExpression;
-        }
-
-        return '$propAssignment $thisName$nullable.merge(other.$propName) ?? other.$propName';
+        return '$propAssignment [...$nullable$thisName,...${nullable}other.$propName]';
       }
+    }
+    if (field.hasDto) {
+      final hasTryToMerge = _checkIfHasTryToMerge(field.dartType.element!);
+      final tryToMergeExpression =
+          '$propAssignment ${field.dtoType}.tryToMerge($thisName, other.$propName)';
+      if (hasTryToMerge) {
+        return tryToMergeExpression;
+      }
+
+      // TODO: Hard coded for now, will be removed soon
+      if (field.dtoType == 'DecorationDto') {
+        return tryToMergeExpression;
+      }
+
+      return '$propAssignment $thisName$nullable.merge(other.$propName) ?? other.$propName';
     } else {
-      if (field.isListType) {
-        if (shouldMergeLists) {
-          return '$propAssignment ${helpers.merge}($thisName, other.$propName)';
-        } else {
-          return '$propAssignment [...$nullable$thisName,...${nullable}other.$propName]';
-        }
+      if (field.nullable) {
+        return '$propAssignment other.$propName ?? $thisName';
       } else {
-        if (field.nullable) {
-          return '$propAssignment other.$propName ?? $thisName';
-        } else {
-          return '$propAssignment other.$propName';
-        }
+        return '$propAssignment other.$propName';
       }
     }
   }).join(',\n      ');

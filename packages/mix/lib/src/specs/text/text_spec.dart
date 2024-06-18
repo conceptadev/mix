@@ -18,14 +18,18 @@ final class TextSpec extends Spec<TextSpec> with _$TextSpec {
   final TextDirection? textDirection;
   final bool? softWrap;
 
-  @MixableField(
-    utility: MixableFieldUtility(properties: [
-      MixableFieldProperty('uppercase'),
-      MixableFieldProperty('lowercase'),
-      MixableFieldProperty('capitalize'),
-      MixableFieldProperty('titleCase'),
-      MixableFieldProperty('sentenceCase'),
-    ]),
+  @MixableProperty(
+    utilities: [
+      MixableUtility(
+        properties: [
+          (path: 'uppercase', alias: 'uppercase'),
+          (path: 'lowercase', alias: 'lowercase'),
+          (path: 'capitalize', alias: 'capitalize'),
+          (path: 'titleCase', alias: 'titleCase'),
+          (path: 'sentenceCase', alias: 'sentenceCase'),
+        ],
+      ),
+    ],
   )
   final TextDirective? directive;
 

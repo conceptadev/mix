@@ -63,12 +63,13 @@ base mixin _$BoxSpec on Spec<BoxSpec> {
           Decoration.lerp(_$this.decoration, other._$this.decoration, t),
       foregroundDecoration: Decoration.lerp(
           _$this.foregroundDecoration, other._$this.foregroundDecoration, t),
-      transform: _$lerpMatrix4(_$this.transform, other._$this.transform, t),
+      transform:
+          MixHelpers.lerpMatrix4(_$this.transform, other._$this.transform, t),
       transformAlignment: AlignmentGeometry.lerp(
           _$this.transformAlignment, other._$this.transformAlignment, t),
       clipBehavior: t < 0.5 ? _$this.clipBehavior : other._$this.clipBehavior,
-      width: _$lerpDouble(_$this.width, other._$this.width, t),
-      height: _$lerpDouble(_$this.height, other._$this.height, t),
+      width: MixHelpers.lerpDouble(_$this.width, other._$this.width, t),
+      height: MixHelpers.lerpDouble(_$this.height, other._$this.height, t),
       animated: t < 0.5 ? _$this.animated : other._$this.animated,
     );
   }
@@ -210,24 +211,20 @@ base class BoxSpecUtility<T extends Attribute>
   /// Utility for defining [BoxSpecAttribute.constraints]
   late final constraints = BoxConstraintsUtility((v) => only(constraints: v));
 
-  /// Utility for defining [BoxSpecAttribute.constraints.maxWidth]
-  late final maxWidth = constraints.maxWidth;
-
   /// Utility for defining [BoxSpecAttribute.constraints.minWidth]
   late final minWidth = constraints.minWidth;
 
-  /// Utility for defining [BoxSpecAttribute.constraints.maxHeight]
-  late final maxHeight = constraints.maxHeight;
+  /// Utility for defining [BoxSpecAttribute.constraints.maxWidth]
+  late final maxWidth = constraints.maxWidth;
 
   /// Utility for defining [BoxSpecAttribute.constraints.minHeight]
   late final minHeight = constraints.minHeight;
 
-  /// Utility for defining [BoxSpecAttribute.decoration]
-  late final decoration = BoxDecorationUtility((v) => only(decoration: v));
+  /// Utility for defining [BoxSpecAttribute.constraints.maxHeight]
+  late final maxHeight = constraints.maxHeight;
 
   /// Utility for defining [BoxSpecAttribute.decoration]
-  late final shapeDecoration =
-      ShapeDecorationUtility((v) => only(decoration: v));
+  late final decoration = BoxDecorationUtility((v) => only(decoration: v));
 
   /// Utility for defining [BoxSpecAttribute.decoration.color]
   late final color = decoration.color;
@@ -235,17 +232,20 @@ base class BoxSpecUtility<T extends Attribute>
   /// Utility for defining [BoxSpecAttribute.decoration.border]
   late final border = decoration.border;
 
-  /// Utility for defining [BoxSpecAttribute.decoration.borderDirectional]
-  late final borderDirectional = decoration.borderDirectional;
+  /// Utility for defining [BoxSpecAttribute.decoration.border.directional]
+  late final borderDirectional = decoration.border.directional;
 
   /// Utility for defining [BoxSpecAttribute.decoration.borderRadius]
   late final borderRadius = decoration.borderRadius;
 
-  /// Utility for defining [BoxSpecAttribute.decoration.borderRadiusDirectional]
-  late final borderRadiusDirectional = decoration.borderRadiusDirectional;
+  /// Utility for defining [BoxSpecAttribute.decoration.borderRadius.directional]
+  late final borderRadiusDirectional = decoration.borderRadius.directional;
 
   /// Utility for defining [BoxSpecAttribute.decoration.gradient]
   late final gradient = decoration.gradient;
+
+  /// Utility for defining [BoxSpecAttribute.decoration.gradient.sweep]
+  late final sweepGradient = decoration.gradient.sweep;
 
   /// Utility for defining [BoxSpecAttribute.decoration.gradient.radial]
   late final radialGradient = decoration.gradient.radial;
@@ -261,6 +261,10 @@ base class BoxSpecUtility<T extends Attribute>
 
   /// Utility for defining [BoxSpecAttribute.decoration.elevation]
   late final elevation = decoration.elevation;
+
+  /// Utility for defining [BoxSpecAttribute.decoration]
+  late final shapeDecoration =
+      ShapeDecorationUtility((v) => only(decoration: v));
 
   /// Utility for defining [BoxSpecAttribute.foregroundDecoration]
   late final foregroundDecoration =
@@ -339,21 +343,4 @@ class BoxSpecTween extends Tween<BoxSpec?> {
 
     return begin!.lerp(end!, t);
   }
-}
-
-double? _$lerpDouble(num? a, num? b, double t) {
-  if (a == b || (a?.isNaN ?? false) && (b?.isNaN ?? false)) {
-    return a?.toDouble();
-  }
-  a ??= 0.0;
-  b ??= 0.0;
-  return a * (1.0 - t) + b * t;
-}
-
-Matrix4? _$lerpMatrix4(Matrix4? a, Matrix4? b, double t) {
-  if (a == null && b == null) return null;
-  if (a == null) return b;
-  if (b == null) return a;
-
-  return Matrix4Tween(begin: a, end: b).lerp(t);
 }

@@ -26,7 +26,7 @@ final class TextStyleDataRef extends TextStyleData {
   get props => [ref];
 }
 
-@MixableDto(skipUtility: true, skipValueExtension: true)
+@MixableDto(generateUtility: false, generateValueExtension: false)
 base class TextStyleData extends Dto<TextStyle> with _$TextStyleData {
   final String? fontFamily;
   final FontWeight? fontWeight;
@@ -78,10 +78,14 @@ base class TextStyleData extends Dto<TextStyle> with _$TextStyleData {
   TextStyle get defaultValue => const TextStyle();
 }
 
-@MixableDto(skipUtility: true, skipValueExtension: true, mergeLists: false)
+@MixableDto(
+  generateUtility: false,
+  generateValueExtension: false,
+  mergeLists: false,
+)
 final class TextStyleDto extends Dto<TextStyle> with _$TextStyleDto {
   final List<TextStyleData> value;
-  const TextStyleDto._(this.value);
+  const TextStyleDto._({this.value = const []});
 
   factory TextStyleDto({
     ColorDto? color,
@@ -106,7 +110,7 @@ final class TextStyleDto extends Dto<TextStyle> with _$TextStyleDto {
     String? fontFamily,
     List<String>? fontFamilyFallback,
   }) {
-    return TextStyleDto._([
+    return TextStyleDto._(value: [
       TextStyleData(
         background: background,
         backgroundColor: backgroundColor,
@@ -134,7 +138,7 @@ final class TextStyleDto extends Dto<TextStyle> with _$TextStyleDto {
   }
 
   factory TextStyleDto.ref(TextStyleToken token) {
-    return TextStyleDto._([TextStyleDataRef(ref: token())]);
+    return TextStyleDto._(value: [TextStyleDataRef(ref: token())]);
   }
 
   /// This method resolves the [TextStyleDto] to a TextStyle.
@@ -161,7 +165,7 @@ final class TextStyleDto extends Dto<TextStyle> with _$TextStyleDto {
 }
 
 extension TextStyleExt on TextStyle {
-  TextStyleDto toDto() => TextStyleDto._([_toData()]);
+  TextStyleDto toDto() => TextStyleDto._(value: [_toData()]);
   TextStyleData _toData() => TextStyleData(
         background: background,
         backgroundColor: backgroundColor?.toDto(),

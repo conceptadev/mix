@@ -43,7 +43,7 @@ sealed class BorderRadiusGeometryDto<T extends BorderRadiusGeometry>
   T resolve(MixData mix);
 }
 
-@MixableDto(skipUtility: true)
+@MixableDto(generateUtility: false)
 final class BorderRadiusDto extends BorderRadiusGeometryDto<BorderRadius>
     with _$BorderRadiusDto {
   @override
@@ -85,7 +85,7 @@ final class BorderRadiusDto extends BorderRadiusGeometryDto<BorderRadius>
   BorderRadius get defaultValue => BorderRadius.zero;
 }
 
-@MixableDto(skipUtility: true)
+@MixableDto(generateUtility: false)
 final class BorderRadiusDirectionalDto
     extends BorderRadiusGeometryDto<BorderRadiusDirectional>
     with _$BorderRadiusDirectionalDto {

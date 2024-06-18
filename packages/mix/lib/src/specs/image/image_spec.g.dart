@@ -50,8 +50,8 @@ base mixin _$ImageSpec on Spec<ImageSpec> {
     if (other == null) return _$this;
 
     return ImageSpec(
-      width: _$lerpDouble(_$this.width, other._$this.width, t),
-      height: _$lerpDouble(_$this.height, other._$this.height, t),
+      width: MixHelpers.lerpDouble(_$this.width, other._$this.width, t),
+      height: MixHelpers.lerpDouble(_$this.height, other._$this.height, t),
       color: Color.lerp(_$this.color, other._$this.color, t),
       repeat: t < 0.5 ? _$this.repeat : other._$this.repeat,
       fit: t < 0.5 ? _$this.fit : other._$this.fit,
@@ -259,13 +259,4 @@ class ImageSpecTween extends Tween<ImageSpec?> {
 
     return begin!.lerp(end!, t);
   }
-}
-
-double? _$lerpDouble(num? a, num? b, double t) {
-  if (a == b || (a?.isNaN ?? false) && (b?.isNaN ?? false)) {
-    return a?.toDouble();
-  }
-  a ??= 0.0;
-  b ??= 0.0;
-  return a * (1.0 - t) + b * t;
 }

@@ -5,41 +5,38 @@ import 'package:mix/mix.dart';
 
 part 'box_spec.g.dart';
 
-typedef _prop = MixableFieldProperty;
-typedef _utility = MixableFieldUtility;
-
-const _constraintsUtil = _utility(
+const _constraints = MixableUtility(
+  type: BoxConstraints,
   properties: [
-    _prop('maxWidth'),
-    _prop('minWidth'),
-    _prop('maxHeight'),
-    _prop('minHeight'),
+    (path: 'minWidth', alias: 'minWidth'),
+    (path: 'maxWidth', alias: 'maxWidth'),
+    (path: 'minHeight', alias: 'minHeight'),
+    (path: 'maxHeight', alias: 'maxHeight'),
   ],
 );
 
-const _foregroundUtil = _utility(type: 'BoxDecorationUtility');
-const _boxDecorationUtil = _utility(
-  type: 'BoxDecorationUtility',
+const _foreground = MixableUtility(type: 'BoxDecorationUtility');
+const _boxDecor = MixableUtility(
+  type: BoxDecoration,
   properties: [
-    _prop('color'),
-    _prop('border'),
-    _prop('borderDirectional'),
-    _prop('borderRadius'),
-    _prop('borderRadiusDirectional'),
-    _prop(
-      'gradient',
-      properties: [
-        _prop('radial', alias: 'radialGradient'),
-        _prop('linear', alias: 'linearGradient'),
-      ],
-    ),
-    _prop('boxShadows', alias: 'shadows'),
-    _prop('boxShadow', alias: 'shadow'),
-    _prop('elevation'),
+    (path: 'color', alias: 'color'),
+    (path: 'border', alias: 'border'),
+    (path: 'border.directional', alias: 'borderDirectional'),
+    (path: 'borderRadius', alias: 'borderRadius'),
+    (path: 'borderRadius.directional', alias: 'borderRadiusDirectional'),
+    (path: 'gradient', alias: 'gradient'),
+    (path: 'gradient.sweep', alias: 'sweepGradient'),
+    (path: 'gradient.radial', alias: 'radialGradient'),
+    (path: 'gradient.linear', alias: 'linearGradient'),
+    (path: 'boxShadows', alias: 'shadows'),
+    (path: 'boxShadow', alias: 'shadow'),
+    (path: 'elevation', alias: 'elevation'),
   ],
-  extraUtilities: [
-    _utility(alias: 'shapeDecoration', type: 'ShapeDecorationUtility'),
-  ],
+);
+
+const _shapeDecor = MixableUtility(
+  alias: 'shapeDecoration',
+  type: ShapeDecoration,
 );
 
 @MixableSpec()
@@ -58,15 +55,15 @@ final class BoxSpec extends Spec<BoxSpec> with _$BoxSpec {
   final EdgeInsetsGeometry? margin;
 
   /// Applies additional constraints to the child.
-  @MixableField(utility: _constraintsUtil)
+  @MixableProperty(utilities: [_constraints])
   final BoxConstraints? constraints;
 
   /// Paints a decoration behind the child.
-  @MixableField(utility: _boxDecorationUtil)
+  @MixableProperty(utilities: [_boxDecor, _shapeDecor])
   final Decoration? decoration;
 
   /// Paints a decoration in front of the child.
-  @MixableField(utility: _foregroundUtil)
+  @MixableProperty(utilities: [_foreground])
   final Decoration? foregroundDecoration;
 
   /// Applies a transformation matrix before painting the box.

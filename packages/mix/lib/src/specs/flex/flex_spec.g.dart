@@ -62,7 +62,7 @@ base mixin _$FlexSpec on Spec<FlexSpec> {
           t < 0.5 ? _$this.textDirection : other._$this.textDirection,
       textBaseline: t < 0.5 ? _$this.textBaseline : other._$this.textBaseline,
       clipBehavior: t < 0.5 ? _$this.clipBehavior : other._$this.clipBehavior,
-      gap: _$lerpDouble(_$this.gap, other._$this.gap, t),
+      gap: MixHelpers.lerpDouble(_$this.gap, other._$this.gap, t),
       animated: t < 0.5 ? _$this.animated : other._$this.animated,
     );
   }
@@ -214,7 +214,7 @@ base class FlexSpecUtility<T extends Attribute>
   late final clipBehavior = ClipUtility((v) => only(clipBehavior: v));
 
   /// Utility for defining [FlexSpecAttribute.gap]
-  late final gap = DoubleUtility((v) => only(gap: v));
+  late final gap = SpacingSideUtility((v) => only(gap: v));
 
   /// Utility for defining [FlexSpecAttribute.animated]
   late final animated = AnimatedUtility((v) => only(animated: v));
@@ -269,13 +269,4 @@ class FlexSpecTween extends Tween<FlexSpec?> {
 
     return begin!.lerp(end!, t);
   }
-}
-
-double? _$lerpDouble(num? a, num? b, double t) {
-  if (a == b || (a?.isNaN ?? false) && (b?.isNaN ?? false)) {
-    return a?.toDouble();
-  }
-  a ??= 0.0;
-  b ??= 0.0;
-  return a * (1.0 - t) + b * t;
 }

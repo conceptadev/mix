@@ -51,17 +51,17 @@ base mixin _$IconSpec on Spec<IconSpec> {
 
     return IconSpec(
       color: Color.lerp(_$this.color, other._$this.color, t),
-      size: _$lerpDouble(_$this.size, other._$this.size, t),
-      weight: _$lerpDouble(_$this.weight, other._$this.weight, t),
-      grade: _$lerpDouble(_$this.grade, other._$this.grade, t),
-      opticalSize:
-          _$lerpDouble(_$this.opticalSize, other._$this.opticalSize, t),
+      size: MixHelpers.lerpDouble(_$this.size, other._$this.size, t),
+      weight: MixHelpers.lerpDouble(_$this.weight, other._$this.weight, t),
+      grade: MixHelpers.lerpDouble(_$this.grade, other._$this.grade, t),
+      opticalSize: MixHelpers.lerpDouble(
+          _$this.opticalSize, other._$this.opticalSize, t),
       shadows: t < 0.5 ? _$this.shadows : other._$this.shadows,
       textDirection:
           t < 0.5 ? _$this.textDirection : other._$this.textDirection,
       applyTextScaling:
           t < 0.5 ? _$this.applyTextScaling : other._$this.applyTextScaling,
-      fill: _$lerpDouble(_$this.fill, other._$this.fill, t),
+      fill: MixHelpers.lerpDouble(_$this.fill, other._$this.fill, t),
       animated: t < 0.5 ? _$this.animated : other._$this.animated,
     );
   }
@@ -144,7 +144,7 @@ final class IconSpecAttribute extends SpecAttribute<IconSpec> {
       weight: other.weight ?? weight,
       grade: other.grade ?? grade,
       opticalSize: other.opticalSize ?? opticalSize,
-      shadows: Dto.mergeList(shadows, other.shadows),
+      shadows: MixHelpers.mergeList(shadows, other.shadows),
       textDirection: other.textDirection ?? textDirection,
       applyTextScaling: other.applyTextScaling ?? applyTextScaling,
       fill: other.fill ?? fill,
@@ -259,13 +259,4 @@ class IconSpecTween extends Tween<IconSpec?> {
 
     return begin!.lerp(end!, t);
   }
-}
-
-double? _$lerpDouble(num? a, num? b, double t) {
-  if (a == b || (a?.isNaN ?? false) && (b?.isNaN ?? false)) {
-    return a?.toDouble();
-  }
-  a ??= 0.0;
-  b ??= 0.0;
-  return a * (1.0 - t) + b * t;
 }

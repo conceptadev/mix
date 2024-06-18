@@ -14,6 +14,7 @@ export 'factory/mix_data.dart';
 export 'factory/mix_provider.dart';
 export 'factory/style_mix.dart';
 export 'factory/style_widgets_ext.dart';
+export 'helpers.dart';
 export 'modifier.dart';
 export 'spec.dart';
 export 'styled_widget.dart';
