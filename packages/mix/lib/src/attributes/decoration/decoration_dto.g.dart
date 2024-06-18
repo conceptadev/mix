@@ -265,7 +265,7 @@ extension ShapeDecorationMixExt on ShapeDecoration {
   ShapeDecorationDto toDto() {
     return ShapeDecorationDto(
       color: color?.toDto(),
-      shape: shape?.toDto(),
+      shape: shape.toDto(),
       gradient: gradient?.toDto(),
       shadows: shadows?.map((e) => e.toDto()).toList(),
     );

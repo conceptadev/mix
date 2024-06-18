@@ -83,8 +83,8 @@ final class RoundedRectangleBorderUtility<T extends Attribute>
 extension RoundedRectangleBorderMixExt on RoundedRectangleBorder {
   RoundedRectangleBorderDto toDto() {
     return RoundedRectangleBorderDto(
-      borderRadius: borderRadius?.toDto(),
-      side: side?.toDto(),
+      borderRadius: borderRadius.toDto(),
+      side: side.toDto(),
     );
   }
 }
@@ -166,8 +166,8 @@ final class BeveledRectangleBorderUtility<T extends Attribute>
 extension BeveledRectangleBorderMixExt on BeveledRectangleBorder {
   BeveledRectangleBorderDto toDto() {
     return BeveledRectangleBorderDto(
-      borderRadius: borderRadius?.toDto(),
-      side: side?.toDto(),
+      borderRadius: borderRadius.toDto(),
+      side: side.toDto(),
     );
   }
 }
@@ -251,8 +251,8 @@ final class ContinuousRectangleBorderUtility<T extends Attribute>
 extension ContinuousRectangleBorderMixExt on ContinuousRectangleBorder {
   ContinuousRectangleBorderDto toDto() {
     return ContinuousRectangleBorderDto(
-      borderRadius: borderRadius?.toDto(),
-      side: side?.toDto(),
+      borderRadius: borderRadius.toDto(),
+      side: side.toDto(),
     );
   }
 }
@@ -330,7 +330,7 @@ final class CircleBorderUtility<T extends Attribute>
 extension CircleBorderMixExt on CircleBorder {
   CircleBorderDto toDto() {
     return CircleBorderDto(
-      side: side?.toDto(),
+      side: side.toDto(),
       eccentricity: eccentricity,
     );
   }
@@ -460,7 +460,7 @@ final class StarBorderUtility<T extends Attribute>
 extension StarBorderMixExt on StarBorder {
   StarBorderDto toDto() {
     return StarBorderDto(
-      side: side?.toDto(),
+      side: side.toDto(),
       points: points,
       innerRadiusRatio: innerRadiusRatio,
       pointRounding: pointRounding,
@@ -574,7 +574,7 @@ final class LinearBorderUtility<T extends Attribute>
 extension LinearBorderMixExt on LinearBorder {
   LinearBorderDto toDto() {
     return LinearBorderDto(
-      side: side?.toDto(),
+      side: side.toDto(),
       start: start?.toDto(),
       end: end?.toDto(),
       top: top?.toDto(),
@@ -725,7 +725,7 @@ final class StadiumBorderUtility<T extends Attribute>
 extension StadiumBorderMixExt on StadiumBorder {
   StadiumBorderDto toDto() {
     return StadiumBorderDto(
-      side: side?.toDto(),
+      side: side.toDto(),
     );
   }
 }
