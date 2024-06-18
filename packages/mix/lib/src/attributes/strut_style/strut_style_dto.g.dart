@@ -7,6 +7,14 @@ part of 'strut_style_dto.dart';
 // **************************************************************************
 
 base mixin _$StrutStyleDto on Dto<StrutStyle> {
+  /// Resolves to [StrutStyle] using the provided [MixData].
+  ///
+  /// If a property is null in the [MixData], it falls back to the
+  /// default value defined in the `defaultValue` for that property.
+  ///
+  /// ```dart
+  /// final strutStyle = StrutStyleDto(...).resolve(mix);
+  /// ```
   @override
   StrutStyle resolve(MixData mix) {
     return StrutStyle(
@@ -23,6 +31,14 @@ base mixin _$StrutStyleDto on Dto<StrutStyle> {
     );
   }
 
+  /// Merges the properties of this [StrutStyleDto] with the properties of [other].
+  ///
+  /// If [other] is null, returns this instance unchanged. Otherwise, returns a new
+  /// [StrutStyleDto] with the properties of [other] taking precedence over
+  /// the corresponding properties of this instance.
+  ///
+  /// Properties from [other] that are null will fall back
+  /// to the values from this instance.
   @override
   StrutStyleDto merge(StrutStyleDto? other) {
     if (other == null) return _$this;
@@ -62,7 +78,6 @@ base mixin _$StrutStyleDto on Dto<StrutStyle> {
 /// Utility class for configuring [StrutStyleDto] properties.
 ///
 /// This class provides methods to set individual properties of a [StrutStyleDto].
-///
 /// Use the methods of this class to configure specific properties of a [StrutStyleDto].
 final class StrutStyleUtility<T extends Attribute>
     extends DtoUtility<T, StrutStyleDto, StrutStyle> {

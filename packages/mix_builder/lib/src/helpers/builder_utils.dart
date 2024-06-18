@@ -73,7 +73,7 @@ abstract class AnnotationContext<T> {
     required this.annotation,
   });
 
-  late final formatter = DartFormatter();
+  late final formatter = DartFormatter(pageWidth: 80, fixes: StyleFix.all);
 
   late final emitter = DartEmitter(
     orderDirectives: true,
@@ -169,7 +169,7 @@ String getUtilityNameFromTypeName(String typeName) {
     typeName = typeName.substring(0, typeName.length - dtoList.length) + 'List';
   }
 
-  typeName = typeName.capitalize();
+  typeName = typeName.capitalize;
 
   if (!typeName.endsWith(utilityPostfix)) {
     return '${typeName}${utilityPostfix}';

@@ -7,6 +7,14 @@ part of 'decoration_dto.dart';
 // **************************************************************************
 
 base mixin _$BoxDecorationDto on Dto<BoxDecoration> {
+  /// Resolves to [BoxDecoration] using the provided [MixData].
+  ///
+  /// If a property is null in the [MixData], it falls back to the
+  /// default value defined in the `defaultValue` for that property.
+  ///
+  /// ```dart
+  /// final boxDecoration = BoxDecorationDto(...).resolve(mix);
+  /// ```
   @override
   BoxDecoration resolve(MixData mix) {
     return BoxDecoration(
@@ -24,6 +32,14 @@ base mixin _$BoxDecorationDto on Dto<BoxDecoration> {
     );
   }
 
+  /// Merges the properties of this [BoxDecorationDto] with the properties of [other].
+  ///
+  /// If [other] is null, returns this instance unchanged. Otherwise, returns a new
+  /// [BoxDecorationDto] with the properties of [other] taking precedence over
+  /// the corresponding properties of this instance.
+  ///
+  /// Properties from [other] that are null will fall back
+  /// to the values from this instance.
   @override
   BoxDecorationDto merge(BoxDecorationDto? other) {
     if (other == null) return _$this;
@@ -64,7 +80,6 @@ base mixin _$BoxDecorationDto on Dto<BoxDecoration> {
 /// Utility class for configuring [BoxDecorationDto] properties.
 ///
 /// This class provides methods to set individual properties of a [BoxDecorationDto].
-///
 /// Use the methods of this class to configure specific properties of a [BoxDecorationDto].
 final class BoxDecorationUtility<T extends Attribute>
     extends DtoUtility<T, BoxDecorationDto, BoxDecoration> {
@@ -171,6 +186,14 @@ extension BoxDecorationMixExt on BoxDecoration {
 }
 
 base mixin _$ShapeDecorationDto on Dto<ShapeDecoration> {
+  /// Resolves to [ShapeDecoration] using the provided [MixData].
+  ///
+  /// If a property is null in the [MixData], it falls back to the
+  /// default value defined in the `defaultValue` for that property.
+  ///
+  /// ```dart
+  /// final shapeDecoration = ShapeDecorationDto(...).resolve(mix);
+  /// ```
   @override
   ShapeDecoration resolve(MixData mix) {
     return ShapeDecoration(
@@ -182,6 +205,14 @@ base mixin _$ShapeDecorationDto on Dto<ShapeDecoration> {
     );
   }
 
+  /// Merges the properties of this [ShapeDecorationDto] with the properties of [other].
+  ///
+  /// If [other] is null, returns this instance unchanged. Otherwise, returns a new
+  /// [ShapeDecorationDto] with the properties of [other] taking precedence over
+  /// the corresponding properties of this instance.
+  ///
+  /// Properties from [other] that are null will fall back
+  /// to the values from this instance.
   @override
   ShapeDecorationDto merge(ShapeDecorationDto? other) {
     if (other == null) return _$this;
@@ -212,7 +243,6 @@ base mixin _$ShapeDecorationDto on Dto<ShapeDecoration> {
 /// Utility class for configuring [ShapeDecorationDto] properties.
 ///
 /// This class provides methods to set individual properties of a [ShapeDecorationDto].
-///
 /// Use the methods of this class to configure specific properties of a [ShapeDecorationDto].
 final class ShapeDecorationUtility<T extends Attribute>
     extends DtoUtility<T, ShapeDecorationDto, ShapeDecoration> {

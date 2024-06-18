@@ -7,6 +7,14 @@ part of 'border_dto.dart';
 // **************************************************************************
 
 base mixin _$BorderSideDto on Dto<BorderSide> {
+  /// Resolves to [BorderSide] using the provided [MixData].
+  ///
+  /// If a property is null in the [MixData], it falls back to the
+  /// default value defined in the `defaultValue` for that property.
+  ///
+  /// ```dart
+  /// final borderSide = BorderSideDto(...).resolve(mix);
+  /// ```
   @override
   BorderSide resolve(MixData mix) {
     return BorderSide(
@@ -17,6 +25,14 @@ base mixin _$BorderSideDto on Dto<BorderSide> {
     );
   }
 
+  /// Merges the properties of this [BorderSideDto] with the properties of [other].
+  ///
+  /// If [other] is null, returns this instance unchanged. Otherwise, returns a new
+  /// [BorderSideDto] with the properties of [other] taking precedence over
+  /// the corresponding properties of this instance.
+  ///
+  /// Properties from [other] that are null will fall back
+  /// to the values from this instance.
   @override
   BorderSideDto merge(BorderSideDto? other) {
     if (other == null) return _$this;
@@ -47,7 +63,6 @@ base mixin _$BorderSideDto on Dto<BorderSide> {
 /// Utility class for configuring [BorderSideDto] properties.
 ///
 /// This class provides methods to set individual properties of a [BorderSideDto].
-///
 /// Use the methods of this class to configure specific properties of a [BorderSideDto].
 final class BorderSideUtility<T extends Attribute>
     extends DtoUtility<T, BorderSideDto, BorderSide> {

@@ -12,6 +12,19 @@ base mixin _$ImageSpec on Spec<ImageSpec> {
         const ImageSpec();
   }
 
+  /// {@template image_spec_of}
+  /// Retrieves the [ImageSpec] from the nearest [Mix] ancestor in the widget tree.
+  ///
+  /// This method uses [Mix.of] to obtain the [Mix] instance associated with the
+  /// given [BuildContext], and then retrieves the [ImageSpec] from that [Mix].
+  /// If no ancestor [Mix] is found, this method returns an empty [ImageSpec].
+  ///
+  /// Example:
+  ///
+  /// ```dart
+  /// final imageSpec = ImageSpec.of(context);
+  /// ```
+  /// {@endtemplate}
   static ImageSpec of(BuildContext context) {
     return _$ImageSpec.from(Mix.of(context));
   }
@@ -45,6 +58,28 @@ base mixin _$ImageSpec on Spec<ImageSpec> {
     );
   }
 
+  /// Linearly interpolates between this [ImageSpec] and another [ImageSpec] based on the given parameter [t].
+  ///
+  /// The parameter [t] represents the interpolation factor, typically ranging from 0.0 to 1.0.
+  /// When [t] is 0.0, the current [ImageSpec] is returned. When [t] is 1.0, the [other] [ImageSpec] is returned.
+  /// For values of [t] between 0.0 and 1.0, an interpolated [ImageSpec] is returned.
+  ///
+  /// If [other] is null, this method returns the current [ImageSpec] instance.
+  ///
+  /// The interpolation is performed on each property of the [ImageSpec] using the appropriate
+  /// interpolation method:
+  ///
+  /// - [MixHelpers.lerpDouble] for [width] and [height].
+  /// - [Color.lerp] for [color].
+  /// - [AlignmentGeometry.lerp] for [alignment].
+  /// - [Rect.lerp] for [centerSlice].
+
+  /// For [repeat] and [fit] and [filterQuality] and [colorBlendMode] and [animated], the interpolation is performed using a step function.
+  /// If [t] is less than 0.5, the value from the current [ImageSpec] is used. Otherwise, the value
+  /// from the [other] [ImageSpec] is used.
+  ///
+  /// This method is typically used in animations to smoothly transition between
+  /// different [ImageSpec] configurations.
   @override
   ImageSpec lerp(ImageSpec? other, double t) {
     if (other == null) return _$this;
@@ -118,6 +153,14 @@ final class ImageSpecAttribute extends SpecAttribute<ImageSpec> {
     super.animated,
   });
 
+  /// Resolves to [ImageSpec] using the provided [MixData].
+  ///
+  /// If a property is null in the [MixData], it falls back to the
+  /// default value defined in the `defaultValue` for that property.
+  ///
+  /// ```dart
+  /// final imageSpec = ImageSpecAttribute(...).resolve(mix);
+  /// ```
   @override
   ImageSpec resolve(MixData mix) {
     return ImageSpec(
@@ -134,6 +177,14 @@ final class ImageSpecAttribute extends SpecAttribute<ImageSpec> {
     );
   }
 
+  /// Merges the properties of this [ImageSpecAttribute] with the properties of [other].
+  ///
+  /// If [other] is null, returns this instance unchanged. Otherwise, returns a new
+  /// [ImageSpecAttribute] with the properties of [other] taking precedence over
+  /// the corresponding properties of this instance.
+  ///
+  /// Properties from [other] that are null will fall back
+  /// to the values from this instance.
   @override
   ImageSpecAttribute merge(ImageSpecAttribute? other) {
     if (other == null) return this;
@@ -174,7 +225,6 @@ final class ImageSpecAttribute extends SpecAttribute<ImageSpec> {
 /// Utility class for configuring [ImageSpecAttribute] properties.
 ///
 /// This class provides methods to set individual properties of a [ImageSpecAttribute].
-///
 /// Use the methods of this class to configure specific properties of a [ImageSpecAttribute].
 base class ImageSpecUtility<T extends Attribute>
     extends SpecUtility<T, ImageSpecAttribute> {

@@ -55,6 +55,14 @@ String mergeMethodBuilder({
   final covariantKey = context.element.isFinal ? '' : 'covariant';
 
   return '''
+  /// Merges the properties of this [$className] with the properties of [other].
+  ///
+  /// If [other] is null, returns this instance unchanged. Otherwise, returns a new
+  /// [$className] with the properties of [other] taking precedence over 
+  /// the corresponding properties of this instance.
+  ///
+  /// Properties from [other] that are null will fall back
+  /// to the values from this instance.
   @override
   $className merge($covariantKey $className? other) {
     if (other == null) return $thisRef;

@@ -12,6 +12,19 @@ base mixin _$StackSpec on Spec<StackSpec> {
         const StackSpec();
   }
 
+  /// {@template stack_spec_of}
+  /// Retrieves the [StackSpec] from the nearest [Mix] ancestor in the widget tree.
+  ///
+  /// This method uses [Mix.of] to obtain the [Mix] instance associated with the
+  /// given [BuildContext], and then retrieves the [StackSpec] from that [Mix].
+  /// If no ancestor [Mix] is found, this method returns an empty [StackSpec].
+  ///
+  /// Example:
+  ///
+  /// ```dart
+  /// final stackSpec = StackSpec.of(context);
+  /// ```
+  /// {@endtemplate}
   static StackSpec of(BuildContext context) {
     return _$StackSpec.from(Mix.of(context));
   }
@@ -35,6 +48,25 @@ base mixin _$StackSpec on Spec<StackSpec> {
     );
   }
 
+  /// Linearly interpolates between this [StackSpec] and another [StackSpec] based on the given parameter [t].
+  ///
+  /// The parameter [t] represents the interpolation factor, typically ranging from 0.0 to 1.0.
+  /// When [t] is 0.0, the current [StackSpec] is returned. When [t] is 1.0, the [other] [StackSpec] is returned.
+  /// For values of [t] between 0.0 and 1.0, an interpolated [StackSpec] is returned.
+  ///
+  /// If [other] is null, this method returns the current [StackSpec] instance.
+  ///
+  /// The interpolation is performed on each property of the [StackSpec] using the appropriate
+  /// interpolation method:
+  ///
+  /// - [AlignmentGeometry.lerp] for [alignment].
+
+  /// For [fit] and [textDirection] and [clipBehavior] and [animated], the interpolation is performed using a step function.
+  /// If [t] is less than 0.5, the value from the current [StackSpec] is used. Otherwise, the value
+  /// from the [other] [StackSpec] is used.
+  ///
+  /// This method is typically used in animations to smoothly transition between
+  /// different [StackSpec] configurations.
   @override
   StackSpec lerp(StackSpec? other, double t) {
     if (other == null) return _$this;
@@ -87,6 +119,14 @@ final class StackSpecAttribute extends SpecAttribute<StackSpec> {
     super.animated,
   });
 
+  /// Resolves to [StackSpec] using the provided [MixData].
+  ///
+  /// If a property is null in the [MixData], it falls back to the
+  /// default value defined in the `defaultValue` for that property.
+  ///
+  /// ```dart
+  /// final stackSpec = StackSpecAttribute(...).resolve(mix);
+  /// ```
   @override
   StackSpec resolve(MixData mix) {
     return StackSpec(
@@ -98,6 +138,14 @@ final class StackSpecAttribute extends SpecAttribute<StackSpec> {
     );
   }
 
+  /// Merges the properties of this [StackSpecAttribute] with the properties of [other].
+  ///
+  /// If [other] is null, returns this instance unchanged. Otherwise, returns a new
+  /// [StackSpecAttribute] with the properties of [other] taking precedence over
+  /// the corresponding properties of this instance.
+  ///
+  /// Properties from [other] that are null will fall back
+  /// to the values from this instance.
   @override
   StackSpecAttribute merge(StackSpecAttribute? other) {
     if (other == null) return this;
@@ -128,7 +176,6 @@ final class StackSpecAttribute extends SpecAttribute<StackSpec> {
 /// Utility class for configuring [StackSpecAttribute] properties.
 ///
 /// This class provides methods to set individual properties of a [StackSpecAttribute].
-///
 /// Use the methods of this class to configure specific properties of a [StackSpecAttribute].
 base class StackSpecUtility<T extends Attribute>
     extends SpecUtility<T, StackSpecAttribute> {

@@ -1,7 +1,9 @@
 import 'package:mix_builder/src/helpers/builder_utils.dart';
 import 'package:mix_builder/src/helpers/field_info.dart';
+import 'package:mix_builder/src/helpers/helpers.dart';
 
 String resolveMethodBuilder({
+  required String className,
   required String resolvedType,
   required List<ParameterInfo> fields,
   bool withDefaults = false,
@@ -30,6 +32,14 @@ String resolveMethodBuilder({
   }).join(',\n');
 
   return '''
+  /// Resolves to [$resolvedType] using the provided [MixData].
+  /// 
+  /// If a property is null in the [MixData], it falls back to the
+  /// default value defined in the `$kDefaultValueRef` for that property.
+  ///
+  /// ```dart
+  /// final ${resolvedType.lowercaseFirst} = $className(...).resolve(mix);
+  /// ```
   @override
   $resolvedType resolve(MixData mix) {
 

@@ -7,6 +7,14 @@ part of 'text_style_dto.dart';
 // **************************************************************************
 
 base mixin _$TextStyleData on Dto<TextStyle> {
+  /// Resolves to [TextStyle] using the provided [MixData].
+  ///
+  /// If a property is null in the [MixData], it falls back to the
+  /// default value defined in the `defaultValue` for that property.
+  ///
+  /// ```dart
+  /// final textStyle = TextStyleData(...).resolve(mix);
+  /// ```
   @override
   TextStyle resolve(MixData mix) {
     return TextStyle(
@@ -39,6 +47,14 @@ base mixin _$TextStyleData on Dto<TextStyle> {
     );
   }
 
+  /// Merges the properties of this [TextStyleData] with the properties of [other].
+  ///
+  /// If [other] is null, returns this instance unchanged. Otherwise, returns a new
+  /// [TextStyleData] with the properties of [other] taking precedence over
+  /// the corresponding properties of this instance.
+  ///
+  /// Properties from [other] that are null will fall back
+  /// to the values from this instance.
   @override
   TextStyleData merge(covariant TextStyleData? other) {
     if (other == null) return _$this;
@@ -106,6 +122,14 @@ base mixin _$TextStyleData on Dto<TextStyle> {
 }
 
 base mixin _$TextStyleDto on Dto<TextStyle> {
+  /// Merges the properties of this [TextStyleDto] with the properties of [other].
+  ///
+  /// If [other] is null, returns this instance unchanged. Otherwise, returns a new
+  /// [TextStyleDto] with the properties of [other] taking precedence over
+  /// the corresponding properties of this instance.
+  ///
+  /// Properties from [other] that are null will fall back
+  /// to the values from this instance.
   @override
   TextStyleDto merge(TextStyleDto? other) {
     if (other == null) return _$this;

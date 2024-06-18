@@ -12,6 +12,19 @@ base mixin _$FlexSpec on Spec<FlexSpec> {
         const FlexSpec();
   }
 
+  /// {@template flex_spec_of}
+  /// Retrieves the [FlexSpec] from the nearest [Mix] ancestor in the widget tree.
+  ///
+  /// This method uses [Mix.of] to obtain the [Mix] instance associated with the
+  /// given [BuildContext], and then retrieves the [FlexSpec] from that [Mix].
+  /// If no ancestor [Mix] is found, this method returns an empty [FlexSpec].
+  ///
+  /// Example:
+  ///
+  /// ```dart
+  /// final flexSpec = FlexSpec.of(context);
+  /// ```
+  /// {@endtemplate}
   static FlexSpec of(BuildContext context) {
     return _$FlexSpec.from(Mix.of(context));
   }
@@ -45,6 +58,25 @@ base mixin _$FlexSpec on Spec<FlexSpec> {
     );
   }
 
+  /// Linearly interpolates between this [FlexSpec] and another [FlexSpec] based on the given parameter [t].
+  ///
+  /// The parameter [t] represents the interpolation factor, typically ranging from 0.0 to 1.0.
+  /// When [t] is 0.0, the current [FlexSpec] is returned. When [t] is 1.0, the [other] [FlexSpec] is returned.
+  /// For values of [t] between 0.0 and 1.0, an interpolated [FlexSpec] is returned.
+  ///
+  /// If [other] is null, this method returns the current [FlexSpec] instance.
+  ///
+  /// The interpolation is performed on each property of the [FlexSpec] using the appropriate
+  /// interpolation method:
+  ///
+  /// - [MixHelpers.lerpDouble] for [gap].
+
+  /// For [crossAxisAlignment] and [mainAxisAlignment] and [mainAxisSize] and [verticalDirection] and [direction] and [textDirection] and [textBaseline] and [clipBehavior] and [animated], the interpolation is performed using a step function.
+  /// If [t] is less than 0.5, the value from the current [FlexSpec] is used. Otherwise, the value
+  /// from the [other] [FlexSpec] is used.
+  ///
+  /// This method is typically used in animations to smoothly transition between
+  /// different [FlexSpec] configurations.
   @override
   FlexSpec lerp(FlexSpec? other, double t) {
     if (other == null) return _$this;
@@ -119,6 +151,14 @@ final class FlexSpecAttribute extends SpecAttribute<FlexSpec> {
     super.animated,
   });
 
+  /// Resolves to [FlexSpec] using the provided [MixData].
+  ///
+  /// If a property is null in the [MixData], it falls back to the
+  /// default value defined in the `defaultValue` for that property.
+  ///
+  /// ```dart
+  /// final flexSpec = FlexSpecAttribute(...).resolve(mix);
+  /// ```
   @override
   FlexSpec resolve(MixData mix) {
     return FlexSpec(
@@ -135,6 +175,14 @@ final class FlexSpecAttribute extends SpecAttribute<FlexSpec> {
     );
   }
 
+  /// Merges the properties of this [FlexSpecAttribute] with the properties of [other].
+  ///
+  /// If [other] is null, returns this instance unchanged. Otherwise, returns a new
+  /// [FlexSpecAttribute] with the properties of [other] taking precedence over
+  /// the corresponding properties of this instance.
+  ///
+  /// Properties from [other] that are null will fall back
+  /// to the values from this instance.
   @override
   FlexSpecAttribute merge(FlexSpecAttribute? other) {
     if (other == null) return this;
@@ -175,7 +223,6 @@ final class FlexSpecAttribute extends SpecAttribute<FlexSpec> {
 /// Utility class for configuring [FlexSpecAttribute] properties.
 ///
 /// This class provides methods to set individual properties of a [FlexSpecAttribute].
-///
 /// Use the methods of this class to configure specific properties of a [FlexSpecAttribute].
 base class FlexSpecUtility<T extends Attribute>
     extends SpecUtility<T, FlexSpecAttribute> {

@@ -23,7 +23,6 @@ String dtoUtilityClass(DtoAnnotationContext context) {
 /// Utility class for configuring [$utilityType] properties.
 ///
 /// This class provides methods to set individual properties of a [$utilityType].
-///
 /// Use the methods of this class to configure specific properties of a [$utilityType].
 final class $utilityClassName<T extends Attribute> extends DtoUtility<T, $utilityType, $resolvedType> {
   $fields
