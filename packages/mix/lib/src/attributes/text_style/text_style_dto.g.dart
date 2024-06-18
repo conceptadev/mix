@@ -56,9 +56,10 @@ base mixin _$TextStyleData on Dto<TextStyle> {
       decorationThickness:
           other.decorationThickness ?? _$this.decorationThickness,
       fontFamily: other.fontFamily ?? _$this.fontFamily,
-      fontFamilyFallback:
-          _$merge(_$this.fontFamilyFallback, other.fontFamilyFallback),
-      fontFeatures: _$merge(_$this.fontFeatures, other.fontFeatures),
+      fontFamilyFallback: MixHelpers.mergeList(
+          _$this.fontFamilyFallback, other.fontFamilyFallback),
+      fontFeatures:
+          MixHelpers.mergeList(_$this.fontFeatures, other.fontFeatures),
       fontSize: other.fontSize ?? _$this.fontSize,
       fontStyle: other.fontStyle ?? _$this.fontStyle,
       fontWeight: other.fontWeight ?? _$this.fontWeight,
@@ -66,7 +67,7 @@ base mixin _$TextStyleData on Dto<TextStyle> {
       height: other.height ?? _$this.height,
       letterSpacing: other.letterSpacing ?? _$this.letterSpacing,
       locale: other.locale ?? _$this.locale,
-      shadows: Dto.mergeList(_$this.shadows, other.shadows),
+      shadows: MixHelpers.mergeList(_$this.shadows, other.shadows),
       textBaseline: other.textBaseline ?? _$this.textBaseline,
       wordSpacing: other.wordSpacing ?? _$this.wordSpacing,
     );
@@ -104,29 +105,13 @@ base mixin _$TextStyleData on Dto<TextStyle> {
   TextStyleData get _$this => this as TextStyleData;
 }
 
-List<T>? _$merge<T>(List<T>? a, List<T>? b) {
-  if (b == null) return a;
-  if (a == null) return b;
-
-  final mergedList = [...a];
-  for (int i = 0; i < b.length; i++) {
-    if (i < mergedList.length) {
-      mergedList[i] = b[i] ?? mergedList[i];
-    } else {
-      mergedList.add(b[i]);
-    }
-  }
-
-  return mergedList;
-}
-
 base mixin _$TextStyleDto on Dto<TextStyle> {
   @override
   TextStyleDto merge(TextStyleDto? other) {
     if (other == null) return _$this;
 
     return TextStyleDto._(
-      [..._$this.value, ...other.value],
+      value: [..._$this.value, ...other.value],
     );
   }
 

@@ -34,7 +34,7 @@ base mixin _$BoxDecorationDto on Dto<BoxDecoration> {
       borderRadius:
           _$this.borderRadius?.merge(other.borderRadius) ?? other.borderRadius,
       gradient: GradientDto.tryToMerge(_$this.gradient, other.gradient),
-      boxShadow: Dto.mergeList(_$this.boxShadow, other.boxShadow),
+      boxShadow: MixHelpers.mergeList(_$this.boxShadow, other.boxShadow),
       shape: other.shape ?? _$this.shape,
       backgroundBlendMode:
           other.backgroundBlendMode ?? _$this.backgroundBlendMode,
@@ -90,11 +90,11 @@ final class BoxDecorationUtility<T extends Attribute>
   /// Utility for defining [BoxDecorationDto.boxShadow]
   late final boxShadows = BoxShadowListUtility((v) => only(boxShadow: v));
 
-  /// Utility for defining [BoxDecorationDto.boxShadow]
-  late final elevation = ElevationUtility((v) => only(boxShadow: v));
-
   /// Utility for defining [BoxDecorationDto.boxShadows.add]
   late final boxShadow = boxShadows.add;
+
+  /// Utility for defining [BoxDecorationDto.boxShadow]
+  late final elevation = ElevationUtility((v) => only(boxShadow: v));
 
   /// Utility for defining [BoxDecorationDto.shape]
   late final shape = BoxShapeUtility((v) => only(shape: v));
@@ -190,7 +190,7 @@ base mixin _$ShapeDecorationDto on Dto<ShapeDecoration> {
       color: _$this.color?.merge(other.color) ?? other.color,
       shape: ShapeBorderDto.tryToMerge(_$this.shape, other.shape),
       gradient: GradientDto.tryToMerge(_$this.gradient, other.gradient),
-      shadows: Dto.mergeList(_$this.shadows, other.shadows),
+      shadows: MixHelpers.mergeList(_$this.shadows, other.shadows),
     );
   }
 

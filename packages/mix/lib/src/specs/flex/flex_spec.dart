@@ -7,13 +7,15 @@ part 'flex_spec.g.dart';
 
 @MixableSpec()
 final class FlexSpec extends Spec<FlexSpec> with _$FlexSpec {
-  @MixableField(
-    utility: MixableFieldUtility(
-      properties: [
-        MixableFieldProperty('horizontal', alias: 'row'),
-        MixableFieldProperty('vertical', alias: 'column'),
-      ],
-    ),
+  @MixableProperty(
+    utilities: [
+      MixableUtility(
+        properties: [
+          (path: 'horizontal', alias: 'row'),
+          (path: 'vertical', alias: 'column'),
+        ],
+      ),
+    ],
   )
   final Axis? direction;
   final MainAxisAlignment? mainAxisAlignment;
@@ -23,7 +25,7 @@ final class FlexSpec extends Spec<FlexSpec> with _$FlexSpec {
   final TextDirection? textDirection;
   final TextBaseline? textBaseline;
   final Clip? clipBehavior;
-  @MixableField(utility: MixableFieldUtility(type: SpacingSideUtility))
+  @MixableProperty(utilities: [MixableUtility(type: SpacingSideUtility)])
   final double? gap;
 
   static const of = _$FlexSpec.of;

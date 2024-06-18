@@ -29,8 +29,8 @@ base mixin _$StrutStyleDto on Dto<StrutStyle> {
 
     return StrutStyleDto(
       fontFamily: other.fontFamily ?? _$this.fontFamily,
-      fontFamilyFallback:
-          _$merge(_$this.fontFamilyFallback, other.fontFamilyFallback),
+      fontFamilyFallback: MixHelpers.mergeList(
+          _$this.fontFamilyFallback, other.fontFamilyFallback),
       fontSize: other.fontSize ?? _$this.fontSize,
       fontWeight: other.fontWeight ?? _$this.fontWeight,
       fontStyle: other.fontStyle ?? _$this.fontStyle,
@@ -67,14 +67,14 @@ base mixin _$StrutStyleDto on Dto<StrutStyle> {
 final class StrutStyleUtility<T extends Attribute>
     extends DtoUtility<T, StrutStyleDto, StrutStyle> {
   /// Utility for defining [StrutStyleDto.fontFamily]
-  late final fontFamily = StringUtility((v) => only(fontFamily: v));
+  late final fontFamily = FontFamilyUtility((v) => only(fontFamily: v));
 
   /// Utility for defining [StrutStyleDto.fontFamilyFallback]
   late final fontFamilyFallback =
       StringListUtility((v) => only(fontFamilyFallback: v));
 
   /// Utility for defining [StrutStyleDto.fontSize]
-  late final fontSize = DoubleUtility((v) => only(fontSize: v));
+  late final fontSize = FontSizeUtility((v) => only(fontSize: v));
 
   /// Utility for defining [StrutStyleDto.fontWeight]
   late final fontWeight = FontWeightUtility((v) => only(fontWeight: v));
@@ -153,20 +153,4 @@ extension StrutStyleMixExt on StrutStyle {
       forceStrutHeight: forceStrutHeight,
     );
   }
-}
-
-List<T>? _$merge<T>(List<T>? a, List<T>? b) {
-  if (b == null) return a;
-  if (a == null) return b;
-
-  final mergedList = [...a];
-  for (int i = 0; i < b.length; i++) {
-    if (i < mergedList.length) {
-      mergedList[i] = b[i] ?? mergedList[i];
-    } else {
-      mergedList.add(b[i]);
-    }
-  }
-
-  return mergedList;
 }

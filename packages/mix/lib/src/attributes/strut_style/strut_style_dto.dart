@@ -9,11 +9,11 @@ part 'strut_style_dto.g.dart';
 
 @MixableDto()
 final class StrutStyleDto extends Dto<StrutStyle> with _$StrutStyleDto {
-  @MixableField(utility: MixableFieldUtility(type: FontFamilyUtility))
+  @MixableProperty(utilities: [MixableUtility(type: FontFamilyUtility)])
   final String? fontFamily;
   final List<String>? fontFamilyFallback;
 
-  @MixableField(utility: MixableFieldUtility(type: FontSizeUtility))
+  @MixableProperty(utilities: [MixableUtility(type: FontSizeUtility)])
   final double? fontSize;
   final FontWeight? fontWeight;
   final FontStyle? fontStyle;

@@ -163,7 +163,7 @@ sealed class OutlinedBorderDto<T extends OutlinedBorder>
 final class RoundedRectangleBorderDto
     extends OutlinedBorderDto<RoundedRectangleBorder>
     with _$RoundedRectangleBorderDto {
-  @MixableField(dto: MixableFieldDto(type: BorderRadiusGeometryDto))
+  @MixableProperty(dto: MixableFieldDto(type: BorderRadiusGeometryDto))
   final BorderRadiusGeometryDto? borderRadius;
   const RoundedRectangleBorderDto({this.borderRadius, super.side});
   @override

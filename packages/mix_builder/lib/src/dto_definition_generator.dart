@@ -6,7 +6,6 @@ import 'package:mix/annotations.dart';
 import 'package:mix_builder/src/builders/dto/class_utility_dto.dart';
 import 'package:mix_builder/src/builders/dto/extension_value.dart';
 import 'package:mix_builder/src/builders/dto/mixin_dto.dart';
-import 'package:mix_builder/src/helpers/declaration_provider.dart';
 // ignore_for_file: prefer_relative_imports
 import 'package:mix_builder/src/helpers/field_info.dart';
 import 'package:mix_builder/src/helpers/settings.dart';
@@ -40,18 +39,18 @@ class DtoDefinitionBuilder extends GeneratorForAnnotation<MixableDto> {
       buildStep,
     );
 
-    final skipUtility = context.annotation.skipUtility;
-    final skipValueExtension = context.annotation.skipValueExtension;
+    final generateUtility = context.annotation.generateUtility;
+    final generateValueExtension = context.annotation.generateValueExtension;
 
     final output = StringBuffer();
 
     output.writeln(dtoMixin(context));
 
-    if (!skipUtility) {
+    if (generateUtility) {
       output.writeln(dtoUtilityClass(context));
     }
 
-    if (!skipValueExtension) {
+    if (generateValueExtension) {
       output.writeln(dtoValueExtension(context));
     }
 
@@ -70,9 +69,6 @@ Future<DtoAnnotationContext> _loadContext(
 
   final context = DtoAnnotationContext(
     element: classElement,
-    declarationProvider: DeclarationProvider(
-      registry: GenerationRegistry.get(buildStep.inputId),
-    ),
     annotation: _readDtoAnnotation(Settings(), ConstantReader(annotation)),
     fields: params,
   );
@@ -88,12 +84,13 @@ MixableDto _readDtoAnnotation(
 ) {
   final shouldMergeLists = reader.read('mergeLists').boolValue;
 
-  final skipValueExtension = reader.read('skipValueExtension').boolValue;
-  final skipUtility = reader.read('skipUtility').boolValue;
+  final generateValueExtension =
+      reader.read('generateValueExtension').boolValue;
+  final generateUtility = reader.read('generateUtility').boolValue;
 
   return MixableDto(
     mergeLists: shouldMergeLists,
-    skipValueExtension: skipValueExtension,
-    skipUtility: skipUtility,
+    generateValueExtension: generateValueExtension,
+    generateUtility: generateUtility,
   );
 }

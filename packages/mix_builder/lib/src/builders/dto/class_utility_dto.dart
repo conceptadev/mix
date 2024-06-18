@@ -10,7 +10,7 @@ String dtoUtilityClass(DtoAnnotationContext context) {
 
   final utilityClassName = '${resolvedType}Utility';
 
-  final fields = utilityFields(utilityType, context.fields);
+  final fields = generateUtilityFields(utilityType, context.fields);
 
   final callMethod = utilityMethodCallBuilder(context.fields);
 

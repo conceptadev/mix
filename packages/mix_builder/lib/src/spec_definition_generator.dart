@@ -7,7 +7,6 @@ import 'package:mix_builder/src/builders/spec/class_attribute_spec.dart';
 import 'package:mix_builder/src/builders/spec/class_spec_utility.dart';
 import 'package:mix_builder/src/builders/spec/class_tween_spec.dart';
 import 'package:mix_builder/src/builders/spec/mixin_spec.dart';
-import 'package:mix_builder/src/helpers/declaration_provider.dart';
 import 'package:mix_builder/src/helpers/field_info.dart';
 // ignore_for_file: prefer_relative_imports
 import 'package:mix_builder/src/helpers/settings.dart';
@@ -66,9 +65,6 @@ Future<SpecAnnotationContext> _loadContext(
   final specDefinition = SpecAnnotationContext(
     element: classElement,
     annotation: _readSpecAnnotation(Settings(), ConstantReader(annotation)),
-    declarationProvider: DeclarationProvider(
-      registry: GenerationRegistry.get(buildStep.inputId),
-    ),
     fields: params,
   );
 

@@ -1,5 +1,7 @@
 import 'package:analyzer/dart/element/element.dart';
+import 'package:analyzer/dart/element/nullability_suffix.dart';
 import 'package:analyzer/dart/element/visitor.dart';
+import 'package:mix_builder/src/helpers/builder_utils.dart';
 import 'package:mix_builder/src/helpers/field_info.dart';
 
 class ClassVisitor extends SimpleElementVisitor<void> {
@@ -13,7 +15,9 @@ class ClassVisitor extends SimpleElementVisitor<void> {
     if (element.isFinal) {
       fields[element.name] = FieldInfo(
         name: element.name,
-        type: element.type,
+        dartType: element.type,
+        type: getTypeNameFromDartType(element.type),
+        nullable: element.type.nullabilitySuffix == NullabilitySuffix.question,
         documentationComment: element.documentationComment,
         annotation: readFieldAnnotation(element),
       );
@@ -32,16 +36,11 @@ class ClassVisitor extends SimpleElementVisitor<void> {
     for (final param in element.parameters) {
       final fieldInfo = getFieldInfoFromParameter(param);
 
-      if (fieldInfo?.annotation == null) {
-        print((element.enclosingElement as ClassElement).name);
-        print(param.name);
-      }
-
       parameters[param.name] = ParameterInfo(
         name: param.name,
-        isPositioned: param.isPositional,
-        type: param.type,
-        fieldInfo: fieldInfo,
+        dartType: param.type,
+        type: getTypeNameFromDartType(param.type),
+        nullable: param.type.nullabilitySuffix == NullabilitySuffix.question,
         isSuper: param.isSuperFormal,
         documentationComment: fieldInfo?.documentationComment,
         annotation: fieldInfo!.annotation,
