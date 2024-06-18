@@ -3,13 +3,15 @@ import 'package:custom_lint_builder/custom_lint_builder.dart';
 import 'package:mix_lint/src/utils/extensions/instance_creation_expression.dart';
 import 'package:mix_lint/src/utils/type_checker.dart';
 
-class ExternalizeVariantInstantiation extends DartLintRule {
-  ExternalizeVariantInstantiation() : super(code: _code);
+class AvoidDefiningTokensWithinThemeData extends DartLintRule {
+  AvoidDefiningTokensWithinThemeData() : super(code: _code);
 
   static const _code = LintCode(
-    name: 'mix_externalize_variant_instantiation',
+    name: 'mix_avoid_defining_tokens_within_theme_data',
     problemMessage:
-        'Ensure that Variant instances are not created directly inside Style constructors. Instead, instantiate Variant outside and pass it as a parameter',
+        'Ensure that Tokens instances are not created directly inside MixThemeData constructors.',
+    correctionMessage:
+        'Instantiate Tokens outside of MixThemeData constructors.',
   );
 
   @override
@@ -21,9 +23,9 @@ class ExternalizeVariantInstantiation extends DartLintRule {
     context.registry.addInstanceCreationExpression((node) {
       final type = node.staticType;
       if (type == null || //
-          !variantChecker.isAssignableFromType(type)) return;
+          !mixTokenChecker.isAssignableFromType(type)) return;
 
-      if (!node.isDecendentOf(styleChecker)) return;
+      if (!node.isDecendentOf(mixThemeDataChecker)) return;
 
       reporter.reportErrorForOffset(
         _code,

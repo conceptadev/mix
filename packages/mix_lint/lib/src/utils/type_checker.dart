@@ -5,12 +5,12 @@ const mixThemeDataChecker = TypeChecker.fromName(
   packageName: 'mix',
 );
 
-const mixToken = TypeChecker.fromName(
+const mixTokenChecker = TypeChecker.fromName(
   'MixToken',
   packageName: 'mix',
 );
 
-const radiusToken = TypeChecker.fromName(
+const radiusTokenChecker = TypeChecker.fromName(
   'RadiusToken',
   packageName: 'mix',
 );

@@ -5,13 +5,13 @@ import 'package:custom_lint_builder/custom_lint_builder.dart';
 import 'package:mix_lint/src/utils/type_checker.dart';
 import 'package:mix_lint/src/utils/visitors.dart';
 
-class AvoidVariantInsideContextvariant extends DartLintRule {
-  AvoidVariantInsideContextvariant() : super(code: _code);
+class AvoidVariantInsideContextVariant extends DartLintRule {
+  AvoidVariantInsideContextVariant() : super(code: _code);
 
   static const _code = LintCode(
     name: 'mix_avoid_variant_inside_context_variant',
     problemMessage:
-        'Ensure that variants are not applied inside the contextVariant scope but rather combined using the & operator.',
+        'Ensure that Variants are not applied inside the ContextVariant scope but rather combined using the & operator.',
     errorSeverity: ErrorSeverity.ERROR,
   );
 

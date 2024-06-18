@@ -1,3 +1,4 @@
+// ignore_for_file: mix_avoid_empty_variants
 import 'package:mix/mix.dart';
 
 final variantA = Variant('A');
