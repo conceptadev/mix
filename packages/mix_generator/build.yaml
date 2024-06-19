@@ -21,13 +21,13 @@ targets:
 
 builders:
   spec:
-    import: "package:mix_generator/builder.dart"
+    import: "package:mix_generator/mix_generator.dart"
     builder_factories: ["specDefinition"]
     build_extensions: {".dart": [".g.dart"]}
     auto_apply: dependents
     build_to: source
   dto:
-    import: "package:mix_generator/builder.dart"
+    import: "package:mix_generator/mix_generator.dart"
     builder_factories: ["dtoDefinition"]
     build_extensions: {".dart": [".g.dart"]}
     auto_apply: dependents
