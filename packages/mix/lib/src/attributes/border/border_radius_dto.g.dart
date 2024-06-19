@@ -3,7 +3,7 @@
 part of 'border_radius_dto.dart';
 
 // **************************************************************************
-// Generator: DtoDefinitionBuilder
+// MixableDtoGenerator
 // **************************************************************************
 
 base mixin _$BorderRadiusDto on Dto<BorderRadius> {

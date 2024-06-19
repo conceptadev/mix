@@ -3,7 +3,7 @@
 part of 'flex_spec.dart';
 
 // **************************************************************************
-// Generator: SpecDefinitionBuilder
+// MixableSpecGenerator
 // **************************************************************************
 
 base mixin _$FlexSpec on Spec<FlexSpec> {

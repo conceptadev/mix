@@ -3,7 +3,7 @@
 part of 'stack_spec.dart';
 
 // **************************************************************************
-// Generator: SpecDefinitionBuilder
+// MixableSpecGenerator
 // **************************************************************************
 
 base mixin _$StackSpec on Spec<StackSpec> {

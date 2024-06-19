@@ -3,7 +3,7 @@
 part of 'text_style_dto.dart';
 
 // **************************************************************************
-// Generator: DtoDefinitionBuilder
+// MixableDtoGenerator
 // **************************************************************************
 
 base mixin _$TextStyleData on Dto<TextStyle> {

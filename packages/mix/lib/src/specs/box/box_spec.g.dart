@@ -3,7 +3,7 @@
 part of 'box_spec.dart';
 
 // **************************************************************************
-// Generator: SpecDefinitionBuilder
+// MixableSpecGenerator
 // **************************************************************************
 
 base mixin _$BoxSpec on Spec<BoxSpec> {

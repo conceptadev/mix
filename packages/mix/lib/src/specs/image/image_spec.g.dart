@@ -3,7 +3,7 @@
 part of 'image_spec.dart';
 
 // **************************************************************************
-// Generator: SpecDefinitionBuilder
+// MixableSpecGenerator
 // **************************************************************************
 
 base mixin _$ImageSpec on Spec<ImageSpec> {

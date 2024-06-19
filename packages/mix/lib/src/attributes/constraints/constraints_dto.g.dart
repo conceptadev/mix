@@ -3,7 +3,7 @@
 part of 'constraints_dto.dart';
 
 // **************************************************************************
-// Generator: DtoDefinitionBuilder
+// MixableDtoGenerator
 // **************************************************************************
 
 base mixin _$BoxConstraintsDto on Dto<BoxConstraints> {
