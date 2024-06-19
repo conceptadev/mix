@@ -9,5 +9,9 @@
   "docs": {
     "title": "Docs",
     "type": "page"
+  },
+  "lints": {
+    "title": "Lints",
+    "type": "page"
   }
 }
