@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../core/factory/mix_provider.dart';
 import '../../core/styled_widget.dart';
 import 'text_spec.dart';
 
@@ -51,17 +50,16 @@ class StyledText extends StyledWidget {
   @override
   Widget build(BuildContext context) {
     return withMix(context, (context) {
-      final mix = Mix.of(context);
       final spec = TextSpec.of(context);
 
-      return mix.isAnimated
+      return spec.isAnimated
           ? AnimatedTextSpecWidget(
               text,
               spec: spec,
               semanticsLabel: semanticsLabel,
               locale: locale,
-              duration: mix.animation!.duration,
-              curve: mix.animation!.curve,
+              duration: spec.animated!.duration,
+              curve: spec.animated!.curve,
             )
           : TextSpecWidget(
               text,
@@ -85,25 +83,25 @@ class TextSpecWidget extends StatelessWidget {
   final String text;
   final String? semanticsLabel;
   final Locale? locale;
-  final TextSpec spec;
+  final TextSpec? spec;
 
   @override
   Widget build(BuildContext context) {
     // The Text widget is used here, applying the resolved styles and properties from TextSpec.
     return Text(
-      spec.directive?.apply(text) ?? text,
-      style: spec.style,
-      strutStyle: spec.strutStyle,
-      textAlign: spec.textAlign,
-      textDirection: spec.textDirection,
+      spec?.directive?.apply(text) ?? text,
+      style: spec?.style,
+      strutStyle: spec?.strutStyle,
+      textAlign: spec?.textAlign,
+      textDirection: spec?.textDirection,
       locale: locale,
-      softWrap: spec.softWrap,
-      overflow: spec.overflow,
-      textScaleFactor: spec.textScaleFactor,
-      maxLines: spec.maxLines,
+      softWrap: spec?.softWrap,
+      overflow: spec?.overflow,
+      textScaleFactor: spec?.textScaleFactor,
+      maxLines: spec?.maxLines,
       semanticsLabel: semanticsLabel,
-      textWidthBasis: spec.textWidthBasis,
-      textHeightBehavior: spec.textHeightBehavior,
+      textWidthBasis: spec?.textWidthBasis,
+      textHeightBehavior: spec?.textHeightBehavior,
     );
   }
 }

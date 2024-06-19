@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import '../../core/styled_widget.dart';
 import '../../internal/constants.dart';
-import '../../core/factory/mix_provider.dart';
 import 'image_spec.dart';
 
 class StyledImage extends StyledWidget {
@@ -37,10 +36,9 @@ class StyledImage extends StyledWidget {
   @override
   Widget build(BuildContext context) {
     return withMix(context, (context) {
-      final mix = Mix.of(context);
       final spec = ImageSpec.of(context);
 
-      return mix.isAnimated
+      return spec.isAnimated
           ? AnimatedImageSpecWidget(
               spec: spec,
               image: image,
@@ -49,8 +47,8 @@ class StyledImage extends StyledWidget {
               errorBuilder: errorBuilder,
               semanticLabel: semanticLabel,
               excludeFromSemantics: excludeFromSemantics,
-              duration: mix.animation!.duration,
-              curve: mix.animation!.curve,
+              duration: spec.animated!.duration,
+              curve: spec.animated!.curve,
               gaplessPlayback: gaplessPlayback,
               isAntiAlias: isAntiAlias,
               matchTextDirection: matchTextDirection,

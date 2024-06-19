@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../core/factory/mix_provider.dart';
 import '../../core/styled_widget.dart';
 import 'icon_spec.dart';
 
@@ -23,16 +22,15 @@ class StyledIcon extends StyledWidget {
   Widget build(BuildContext context) {
     return withMix(context, (context) {
       final spec = IconSpec.of(context);
-      final mix = Mix.of(context);
 
-      return mix.isAnimated
+      return spec.isAnimated
           ? AnimatedIconSpecWidget(
               icon,
               spec: spec,
               semanticLabel: semanticLabel,
               textDirection: textDirection,
-              curve: mix.animation!.curve,
-              duration: mix.animation!.duration,
+              curve: spec.animated!.curve,
+              duration: spec.animated!.duration,
             )
           : IconSpecWidget(
               icon,
