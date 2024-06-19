@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../core/factory/mix_provider.dart';
 import '../../core/styled_widget.dart';
 import 'text_spec.dart';
 
@@ -51,17 +50,16 @@ class StyledText extends StyledWidget {
   @override
   Widget build(BuildContext context) {
     return withMix(context, (context) {
-      final mix = Mix.of(context);
       final spec = TextSpec.of(context);
 
-      return mix.isAnimated
+      return spec.isAnimated
           ? AnimatedTextSpecWidget(
               text,
               spec: spec,
               semanticsLabel: semanticsLabel,
               locale: locale,
-              duration: mix.animation!.duration,
-              curve: mix.animation!.curve,
+              duration: spec.animated!.duration,
+              curve: spec.animated!.curve,
             )
           : TextSpecWidget(
               text,
