@@ -26,6 +26,10 @@ runs:
         channel: "stable"
         flutter-version: ${{ inputs.flutter-version }}
 
+    - name: Flutter version
+      shell: bash
+      run: flutter --version
+
     - name: Setup Melos
       uses: bluefireteam/melos-action@v3
 
