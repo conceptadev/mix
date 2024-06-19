@@ -32,14 +32,10 @@ runs:
     - uses: invertase/github-action-dart-analyzer@v1
       with:
         fatal-infos: false
-
-    - name: Clean build_runner
-      shell: bash
-      run: dart run build_runner clean
       
-    - name: Run build
+    - name: Run build runner
       shell: bash    
-      run: dart run build_runner build --delete-conflicting-outputs
+      run: melos run build_runner
 
     - name: Install DCM
       if: ${{ inputs.run-dcm }}
