@@ -17,6 +17,7 @@ pubspec.yaml
 ```yaml
 dependencies:
   mix: ^0.0.0
+  mix_annotations: ^0.0.0
 
 dev_dependencies:
   build_runner: ^0.0.0
@@ -50,9 +51,9 @@ The `@MixableDto()` annotation generates code for a mixable Dto. Here's an examp
 
 #### Options
 
--  `mergeLists` - Defaults to true, merges lists in place.
--  `generateUtility` - Defaults to true, generates a utility class.
--  `generateValueExtension` - Defaults to true, generates a value extension to convert `Value` to Dto with a `toDto()` extension.
+- `mergeLists` - Defaults to true, merges lists in place.
+- `generateUtility` - Defaults to true, generates a utility class.
+- `generateValueExtension` - Defaults to true, generates a value extension to convert `Value` to Dto with a `toDto()` extension.
 
 ```dart
 import 'package:mix/mix.dart';
