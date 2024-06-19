@@ -1,13 +1,13 @@
 name: mix_annotations
-description: A starting point for Dart libraries or applications.
-version: 1.0.0
-# repository: https://github.com/my_org/my_repo
+description: Annotations for mix and mix_generator
+version: 0.1.0
+repository: https://github.com/conceptadev/mix
 
 environment:
-  sdk: ^3.0.6
+  sdk: ">=3.0.6 <4.0.0"
 
-# Add regular dependencies here.
-dependencies:
+
+# dependencies:
   # path: ^1.8.0
 
 dev_dependencies:
