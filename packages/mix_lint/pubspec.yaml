@@ -1,7 +1,7 @@
 name: mix_lint
 description: A sample command-line application.
 version: 0.1.0
-homepage: https://github.com/leoafarias/mix
+repository: https://github.com/leoafarias/mix
 
 environment:
   sdk: ">=2.19.2 <4.0.0"
