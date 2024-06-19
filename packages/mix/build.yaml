@@ -1,9 +1,9 @@
 targets:
   $default:
     builders:
-      mix_builder|spec:
+      mix_generator|spec:
         generate_for:
           - lib/**/*_spec.dart
-      mix_builder|dto:
+      mix_generator|dto:
         generate_for:
           - lib/**/*_dto.dart

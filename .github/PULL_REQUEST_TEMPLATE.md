@@ -1,10 +1,13 @@
 #### Related issue
+
 Is it related to any opened issue?
 
 ### Description
+
 Please summarize the changes.
 
 ### Changes
+
 List specific changes made in this PR.
 
 **Review Checklist**
@@ -15,11 +18,12 @@ List specific changes made in this PR.
 - [ ] **Website Updates**: Is the website containing the updates you make on documentation?
 
 ### Impacted Packages
+
 Please indicate which packages in our project are affected by these changes:
 
 - [ ] mix
 - [ ] mix_lint
-- [ ] mix_builder
+- [ ] mix_generator
 - [ ] documentation
 
 ### Additional Information (optional)
