@@ -43,9 +43,6 @@ final class ImageSpec extends Spec<ImageSpec> with _$ImageSpec {
             duration: animated!.duration,
             curve: animated!.curve,
           )
-        : ImageSpecWidget(
-            spec: this,
-            image: image,
-          );
+        : ImageSpecWidget(spec: this, image: image);
   }
 }

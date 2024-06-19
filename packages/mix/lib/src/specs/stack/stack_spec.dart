@@ -25,9 +25,6 @@ final class StackSpec extends Spec<StackSpec> with _$StackSpec {
   });
 
   Widget call({List<Widget> children = const []}) {
-    return StackSpecWidget(
-      spec: this,
-      children: children,
-    );
+    return StackSpecWidget(spec: this, children: children);
   }
 }

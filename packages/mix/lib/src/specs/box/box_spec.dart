@@ -101,14 +101,11 @@ final class BoxSpec extends Spec<BoxSpec> with _$BoxSpec {
   Widget call({Widget? child}) {
     return isAnimated
         ? AnimatedBoxSpecWidget(
+            spec: this,
             duration: animated!.duration,
             curve: animated!.curve,
-            spec: this,
             child: child,
           )
-        : BoxSpecWidget(
-            spec: this,
-            child: child,
-          );
+        : BoxSpecWidget(spec: this, child: child);
   }
 }

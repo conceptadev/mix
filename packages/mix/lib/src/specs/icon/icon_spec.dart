@@ -45,11 +45,7 @@ final class IconSpec extends Spec<IconSpec> with _$IconSpec {
             curve: animated!.curve,
             duration: animated!.duration,
           )
-        : IconSpecWidget(
-            icon,
-            spec: this,
-            textDirection: textDirection,
-          );
+        : IconSpecWidget(icon, spec: this, textDirection: textDirection);
   }
 }
 
