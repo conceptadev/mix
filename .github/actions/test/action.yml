@@ -1,18 +1,18 @@
 name: "Run Tests"
+description: "Run tests for all packages"
 
-on:
-  workflow_call:
-    inputs:
-      token:
-        required: true
-        type: string
-      run-dcm:
-        required: false
-        type: boolean
-        default: true
-      flutter-version:
-        required: false
-        default: ""
+inputs:
+  token:
+    description: 'Github token'
+    required: true
+  flutter-version:
+    description: 'Flutter version'
+    required: false
+    default: ""
+  run-dcm:
+    description: 'Shoudl run DCM'
+    required: false
+    default: "true"
 
 runs:
   using: "composite"
