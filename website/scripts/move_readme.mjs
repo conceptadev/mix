@@ -15,13 +15,13 @@ const mixGeneratorDestination = path.join(
   "../pages/docs/tools/generator.md"
 );
 
-// const mixLintSource = path.join(__dirname, "../../packages/mix_lint/README.md");
+const mixLintSource = path.join(__dirname, "../../packages/mix_lint/README.md");
 
-// const mixLintDestination = path.join(__dirname, "../pages/docs/tools/lint.md");
+const mixLintDestination = path.join(__dirname, "../pages/docs/tools/lint.md");
 
 // Iterate over each file
 const generatorContents = fs.readFileSync(mixGeneratorSource);
-// const lintContents = fs.readFileSync(mixLintSource);
+const lintContents = fs.readFileSync(mixLintSource);
 
 fs.writeFileSync(mixGeneratorDestination, generatorContents);
-// fs.writeFileSync(mixLintDestination, lintContents);
+fs.writeFileSync(mixLintDestination, lintContents);
