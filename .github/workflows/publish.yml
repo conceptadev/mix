@@ -23,6 +23,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+
+      - name: Remove pubspec_overrides.yaml
+        run: find . -name "pubspec_overrides" -type f -delete
+
       - name: 'Publish Package'
         uses: k-paxian/dart-package-publisher@master
         with:
