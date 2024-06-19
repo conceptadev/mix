@@ -33,6 +33,14 @@ runs:
       with:
         fatal-infos: false
 
+    - name: Clean build_runner
+      shell: bash
+      run: dart run build_runner clean
+      
+    - name: Run build
+      shell: bash    
+      run: dart run build_runner build --delete-conflicting-outputs
+
     - name: Install DCM
       if: ${{ inputs.run-dcm }}
       uses: CQLabs/setup-dcm@v1
