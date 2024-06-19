@@ -37,6 +37,9 @@ jobs:
       - name: Checkout mix repo
         uses: actions/checkout@v2
 
+      - name: Remove pubspec_overrides.yaml
+        run: find . -name "pubspec_overrides" -type f -delete
+
       - name: Run Tests
         uses: ./.github/actions/test/
         with:
