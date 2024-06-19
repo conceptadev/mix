@@ -1,18 +1,8 @@
-# mix_avoid_variant_inside_context_variant
-
-| Severity | Quick Fix | Options |
-|:--------:|:---------:|:-------:|
-|   Error   |    ❌     |   ❌    |
-
-## Details
-
-Ensure that `Variant`s are not applied inside the `ContextVariant`s' scope but rather combined using the & operator.
-
-### Motivation
+### mix_avoid_variant_inside_context_variant
 
 `ContextVariant` and the standard `Variant` are applied at different moments during the `Style` lifecycle. Because of this, we strongly recommend that you don't create a `Variant` inside the `ContextVariant`'s scope. Instead, you can combine the `Variant`s using the `&` and `|` operators.
 
-### Don't
+#### Don't
 
 ```dart
 final variantTest = Variant('test');
@@ -28,7 +18,7 @@ Style (
 )
 ```
 
-### Do
+#### Do
 
 ```dart
 final variantTest = Variant('test');

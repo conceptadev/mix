@@ -17,8 +17,17 @@ final wrong_case = Style(
   attribute(),
   attribute(),
   attribute(),
+  attribute(),
+  attribute(),
+  attribute(),
+  attribute(),
   // expect_lint: mix_max_number_of_attributes_per_style
   a(
+    attribute(),
+    attribute(),
+    attribute(),
+    attribute(),
+    attribute(),
     attribute(),
     attribute(),
     attribute(),
