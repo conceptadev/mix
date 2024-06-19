@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_relative_imports,avoid-importing-entrypoint-exports,
 import 'package:flutter/material.dart';
-import 'package:mix_annotations/mix_annotations.dart';
 import 'package:mix/mix.dart';
+import 'package:mix_annotations/mix_annotations.dart';
 
 part 'text_spec.g.dart';
 
@@ -51,4 +51,15 @@ final class TextSpec extends Spec<TextSpec> with _$TextSpec {
     this.directive,
     super.animated,
   });
+
+  Widget call(String text) {
+    return isAnimated
+        ? AnimatedTextSpecWidget(
+            text,
+            spec: this,
+            duration: animated!.duration,
+            curve: animated!.curve,
+          )
+        : TextSpecWidget(text, spec: this);
+  }
 }

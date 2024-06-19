@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_relative_imports,avoid-importing-entrypoint-exports,
 import 'package:flutter/material.dart';
-import 'package:mix_annotations/mix_annotations.dart';
 import 'package:mix/mix.dart';
+import 'package:mix_annotations/mix_annotations.dart';
 
 part 'flex_spec.g.dart';
 
@@ -44,4 +44,12 @@ final class FlexSpec extends Spec<FlexSpec> with _$FlexSpec {
     this.gap,
     super.animated,
   });
+
+  Widget call({List<Widget> children = const [], required Axis direction}) {
+    return FlexSpecWidget(
+      spec: this,
+      direction: direction,
+      children: children,
+    );
+  }
 }
