@@ -90,24 +90,21 @@ base mixin _$BoxSpec on Spec<BoxSpec> {
     if (other == null) return _$this;
 
     return BoxSpec(
-      alignment:
-          AlignmentGeometry.lerp(_$this.alignment, other._$this.alignment, t),
-      padding: EdgeInsetsGeometry.lerp(_$this.padding, other._$this.padding, t),
-      margin: EdgeInsetsGeometry.lerp(_$this.margin, other._$this.margin, t),
+      alignment: AlignmentGeometry.lerp(_$this.alignment, other.alignment, t),
+      padding: EdgeInsetsGeometry.lerp(_$this.padding, other.padding, t),
+      margin: EdgeInsetsGeometry.lerp(_$this.margin, other.margin, t),
       constraints:
-          BoxConstraints.lerp(_$this.constraints, other._$this.constraints, t),
-      decoration:
-          Decoration.lerp(_$this.decoration, other._$this.decoration, t),
+          BoxConstraints.lerp(_$this.constraints, other.constraints, t),
+      decoration: Decoration.lerp(_$this.decoration, other.decoration, t),
       foregroundDecoration: Decoration.lerp(
-          _$this.foregroundDecoration, other._$this.foregroundDecoration, t),
-      transform:
-          MixHelpers.lerpMatrix4(_$this.transform, other._$this.transform, t),
+          _$this.foregroundDecoration, other.foregroundDecoration, t),
+      transform: MixHelpers.lerpMatrix4(_$this.transform, other.transform, t),
       transformAlignment: AlignmentGeometry.lerp(
-          _$this.transformAlignment, other._$this.transformAlignment, t),
-      clipBehavior: t < 0.5 ? _$this.clipBehavior : other._$this.clipBehavior,
-      width: MixHelpers.lerpDouble(_$this.width, other._$this.width, t),
-      height: MixHelpers.lerpDouble(_$this.height, other._$this.height, t),
-      animated: t < 0.5 ? _$this.animated : other._$this.animated,
+          _$this.transformAlignment, other.transformAlignment, t),
+      clipBehavior: t < 0.5 ? _$this.clipBehavior : other.clipBehavior,
+      width: MixHelpers.lerpDouble(_$this.width, other.width, t),
+      height: MixHelpers.lerpDouble(_$this.height, other.height, t),
+      animated: t < 0.5 ? _$this.animated : other.animated,
     );
   }
 

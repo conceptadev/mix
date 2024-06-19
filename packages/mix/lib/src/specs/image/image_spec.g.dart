@@ -85,19 +85,16 @@ base mixin _$ImageSpec on Spec<ImageSpec> {
     if (other == null) return _$this;
 
     return ImageSpec(
-      width: MixHelpers.lerpDouble(_$this.width, other._$this.width, t),
-      height: MixHelpers.lerpDouble(_$this.height, other._$this.height, t),
-      color: Color.lerp(_$this.color, other._$this.color, t),
-      repeat: t < 0.5 ? _$this.repeat : other._$this.repeat,
-      fit: t < 0.5 ? _$this.fit : other._$this.fit,
-      alignment:
-          AlignmentGeometry.lerp(_$this.alignment, other._$this.alignment, t),
-      centerSlice: Rect.lerp(_$this.centerSlice, other._$this.centerSlice, t),
-      filterQuality:
-          t < 0.5 ? _$this.filterQuality : other._$this.filterQuality,
-      colorBlendMode:
-          t < 0.5 ? _$this.colorBlendMode : other._$this.colorBlendMode,
-      animated: t < 0.5 ? _$this.animated : other._$this.animated,
+      width: MixHelpers.lerpDouble(_$this.width, other.width, t),
+      height: MixHelpers.lerpDouble(_$this.height, other.height, t),
+      color: Color.lerp(_$this.color, other.color, t),
+      repeat: t < 0.5 ? _$this.repeat : other.repeat,
+      fit: t < 0.5 ? _$this.fit : other.fit,
+      alignment: AlignmentGeometry.lerp(_$this.alignment, other.alignment, t),
+      centerSlice: Rect.lerp(_$this.centerSlice, other.centerSlice, t),
+      filterQuality: t < 0.5 ? _$this.filterQuality : other.filterQuality,
+      colorBlendMode: t < 0.5 ? _$this.colorBlendMode : other.colorBlendMode,
+      animated: t < 0.5 ? _$this.animated : other.animated,
     );
   }
 

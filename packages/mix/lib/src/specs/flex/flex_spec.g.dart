@@ -83,19 +83,18 @@ base mixin _$FlexSpec on Spec<FlexSpec> {
 
     return FlexSpec(
       crossAxisAlignment:
-          t < 0.5 ? _$this.crossAxisAlignment : other._$this.crossAxisAlignment,
+          t < 0.5 ? _$this.crossAxisAlignment : other.crossAxisAlignment,
       mainAxisAlignment:
-          t < 0.5 ? _$this.mainAxisAlignment : other._$this.mainAxisAlignment,
-      mainAxisSize: t < 0.5 ? _$this.mainAxisSize : other._$this.mainAxisSize,
+          t < 0.5 ? _$this.mainAxisAlignment : other.mainAxisAlignment,
+      mainAxisSize: t < 0.5 ? _$this.mainAxisSize : other.mainAxisSize,
       verticalDirection:
-          t < 0.5 ? _$this.verticalDirection : other._$this.verticalDirection,
-      direction: t < 0.5 ? _$this.direction : other._$this.direction,
-      textDirection:
-          t < 0.5 ? _$this.textDirection : other._$this.textDirection,
-      textBaseline: t < 0.5 ? _$this.textBaseline : other._$this.textBaseline,
-      clipBehavior: t < 0.5 ? _$this.clipBehavior : other._$this.clipBehavior,
-      gap: MixHelpers.lerpDouble(_$this.gap, other._$this.gap, t),
-      animated: t < 0.5 ? _$this.animated : other._$this.animated,
+          t < 0.5 ? _$this.verticalDirection : other.verticalDirection,
+      direction: t < 0.5 ? _$this.direction : other.direction,
+      textDirection: t < 0.5 ? _$this.textDirection : other.textDirection,
+      textBaseline: t < 0.5 ? _$this.textBaseline : other.textBaseline,
+      clipBehavior: t < 0.5 ? _$this.clipBehavior : other.clipBehavior,
+      gap: MixHelpers.lerpDouble(_$this.gap, other.gap, t),
+      animated: t < 0.5 ? _$this.animated : other.animated,
     );
   }
 

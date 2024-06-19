@@ -22,8 +22,7 @@ String lerpMethodBuilder({
     }
   }
   final lerpStatements = context.fields.map((field) {
-    final fieldName = isInternalRef ? field.asInternalRef : field.name;
-    final lerpExpression = _getLerpExpression(fieldName, field, context);
+    final lerpExpression = _getLerpExpression(field, context, isInternalRef);
     return '${field.name}: $lerpExpression,';
   }).join('\n');
 
@@ -88,30 +87,82 @@ String? _getLerpMethod(
 }
 
 String _getLerpExpression(
-  String fieldName,
   ParameterInfo field,
   AnnotationContext context,
+  bool isInternalRef,
 ) {
-  final defaultExpression = 't < 0.5 ? $fieldName : other.$fieldName';
+  final thisFieldName = isInternalRef ? field.asInternalRef : field.name;
+  final otherFieldName = 'other.${field.name}';
+
+  final defaultExpression = 't < 0.5 ? $thisFieldName : $otherFieldName';
+
+  final nullable = field.nullable ? '?' : '';
 
   if (field.dartType.element == null) {
     return defaultExpression;
   }
 
-  final lerpParams = '$fieldName, other.$fieldName, t';
+  final hasLerpMethod = _checkIfInstanceHasLerp(field.dartType.element!);
 
-  final lerpMethod = _getLerpMethod(field, context);
+  if (hasLerpMethod) {
+    return '$thisFieldName$nullable.lerp($otherFieldName, t) ${field.nullable ? '?? $otherFieldName' : ''}';
+  }
 
-  if (lerpMethod == null) {
+  final lerpParams = '$thisFieldName, $otherFieldName, t';
+
+  final hasLerpStatic = _getLerpMethod(field, context);
+
+  if (hasLerpStatic == null) {
     return defaultExpression;
   }
 
-  return '$lerpMethod($lerpParams)';
+  return '$hasLerpStatic($lerpParams)';
+}
+
+bool _checkIfInstanceHasLerp(Element element) {
+  if (element is! ClassElement) {
+    return false;
+  }
+
+  // Check if the class element or any of its mixins have a method called lerp
+  bool hasLerpMethod(InterfaceElement classElement) {
+    final methods = classElement.methods;
+    if (methods.isNotEmpty) {
+      for (final method in methods) {
+        if (method.name == 'lerp' &&
+            method.isPublic &&
+            method.parameters.length == 2 &&
+            method.parameters.last.type.isDartCoreDouble) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
+  if (hasLerpMethod(element)) {
+    return true;
+  }
+
+  // Check mixins for the lerp method
+  for (final mixin in element.mixins) {
+    if (hasLerpMethod(mixin.element)) {
+      return true;
+    }
+  }
+
+  return false;
 }
 
 bool _checkIfFieldHasLerp(Element element) {
   if (element is! ClassElement) {
     return false;
+  }
+
+  final hasLerp = _checkIfInstanceHasLerp(element);
+
+  if (hasLerp) {
+    return true;
   }
 
   for (final type in [
