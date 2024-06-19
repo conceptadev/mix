@@ -1,7 +1,3 @@
----
-title: "Lint"
----
-
 # Mix Lint
 
 Mix Lint is a powerful tool that helps you enforce coding standards and best practices in your Flutter apps using Mix.
