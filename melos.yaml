@@ -1,5 +1,19 @@
-name: my_project
+name: mix_workspace
 
 packages:
   - packages/**
   - examples/**
+
+categories:
+  mix_deps:
+    - packages/mix
+    - packages/mix_annotations
+    - packages/mix_generator
+
+scripts:
+  build_runner:
+    run: melos run build_runner_clean && melos exec --depends-on="build_runner" --category="mix_deps" dart run build_runner build --delete-conflicting-outputs
+    description: Run build_runner for projects that have it as a dependency
+  build_runner_clean: 
+    run: melos exec --depends-on="build_runner" dart run build_runner clean
+    description: Clean build_runner for projects that have it as a dependency

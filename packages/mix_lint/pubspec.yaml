@@ -1,10 +1,10 @@
 name: mix_lint
-description: A sample command-line application.
+description: A linter for the mix package
 version: 0.1.0
-repository: https://github.com/leoafarias/mix
+repository: https://github.com/conceptadev/mix
 
 environment:
-  sdk: ">=2.19.2 <4.0.0"
+  sdk: ">=3.0.6 <4.0.0"
 
 dependencies:
   analyzer: ^6.0.0

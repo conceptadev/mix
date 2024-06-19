@@ -8,7 +8,6 @@
 .buildlog/
 .history
 .svn/
-doc/
 
 # IntelliJ related
 *.iml
@@ -91,3 +90,9 @@ node_modules
 
 # FVM Version Cache
 .fvm/
+
+.packages
+.pub/
+.dart_tool/
+pubspec_overrides.yaml
+pubspec.lock
