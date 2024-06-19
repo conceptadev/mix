@@ -39,7 +39,7 @@ const features: Array<IFeature> = [
     icon: VenetianMaskIcon,
   },
   {
-    href: "/docs/guides/theming",
+    href: "/docs/guides/design-token",
     name: "Design Tokens & Theming",
     description:
       "Define consistent style properties across widgets inspired by modern design principles for a unified UI.",
