@@ -1,7 +1,7 @@
 class MaxNumberOfAttributesPerStyleParameters {
   final int maxNumber;
 
-  static const _defaultMaxNumber = 10;
+  static const _defaultMaxNumber = 15;
 
   const MaxNumberOfAttributesPerStyleParameters({
     required this.maxNumber,

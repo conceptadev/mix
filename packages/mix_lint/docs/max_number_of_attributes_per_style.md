@@ -1,18 +1,8 @@
-# mix_max_number_of_attributes_per_style
+### mix_max_number_of_attributes_per_style
 
-| Severity | Quick Fix | Options |
-|:--------:|:---------:|:-------:|
-|   Warning   |    ❌     |   ❌    |
+Limit the number of attributes per style. The default value is 10. This rule aims to encourage developers to keep their styles concise and focused on a few key aspects.
 
-## Details
-
-Limit the number of attributes per style. The default value is 10.
-
-### Motivation
-
-This rule aims to encourage developers to keep their styles concise and focused on a few key aspects.
-
-### Don't
+#### Don't
 
 ```dart
 final style = Style (
@@ -30,7 +20,7 @@ final style = Style (
 );
 ```
 
-### Do
+#### Do
 
 ```dart
 final auxStyle = Style(
@@ -52,17 +42,8 @@ final mainStyle = Style(
 );
 ```
 
-## Custom Parameters
-    
-```yaml filename="analysis_options.dart"
-custom_lint:
-  rules:
-    - mix_max_number_of_attributes_per_style:
-      max_number: 11
-```
+#### Parameters
 
-### Parameters
-
-#### max_number (int)
+##### max_number (int)
 
 The maximum number of attributes allowed per style. The default value is 10.

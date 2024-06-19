@@ -1,18 +1,8 @@
-# mix_attributes_ordering
+### mix_attributes_ordering 
 
-| Severity | Quick Fix | Options |
-|:--------:|:---------:|:-------:|
-|   Info   |    ❌     |   ❌    |
+Ensure that the attributes are ordered in groups of the same category in the Style constructor. It makes the code easier to read and understand the Style.
 
-## Details
-
-Ensure that the attributes are ordered in groups of the same category in the Style constructor.
-
-### Motivation
-
-It makes the code easier to read and understand the Style.
-
-### Don't
+#### Don't
 
 ```dart
 Style (
@@ -23,7 +13,7 @@ Style (
 )
 ```
 
-### Do
+#### Do
 
 ```dart
 Style (
