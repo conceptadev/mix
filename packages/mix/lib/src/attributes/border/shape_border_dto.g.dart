@@ -3,7 +3,7 @@
 part of 'shape_border_dto.dart';
 
 // **************************************************************************
-// Generator: DtoDefinitionBuilder
+// MixableDtoGenerator
 // **************************************************************************
 
 base mixin _$RoundedRectangleBorderDto on Dto<RoundedRectangleBorder> {

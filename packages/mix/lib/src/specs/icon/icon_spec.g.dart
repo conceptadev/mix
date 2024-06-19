@@ -3,7 +3,7 @@
 part of 'icon_spec.dart';
 
 // **************************************************************************
-// Generator: SpecDefinitionBuilder
+// MixableSpecGenerator
 // **************************************************************************
 
 base mixin _$IconSpec on Spec<IconSpec> {

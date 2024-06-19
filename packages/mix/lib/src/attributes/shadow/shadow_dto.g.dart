@@ -3,7 +3,7 @@
 part of 'shadow_dto.dart';
 
 // **************************************************************************
-// Generator: DtoDefinitionBuilder
+// MixableDtoGenerator
 // **************************************************************************
 
 base mixin _$ShadowDto on Dto<Shadow> {

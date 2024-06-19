@@ -31,6 +31,6 @@
     "pages/_app.ts",
     "next.config.js",
     ".next/types/**/*.ts"
-  ],
+, "scripts/move_readme.mjs"  ],
   "exclude": ["node_modules"]
 }

@@ -1,0 +1,34 @@
+targets:
+  $default:
+    builders:
+      spec:
+        enabled: true 
+        generate_for:
+          exclude:
+            - test
+            - example
+          include:
+            - lib/**_spec.dart
+      dto:
+        enabled: true
+        generate_for:
+          exclude:
+            - test
+            - example
+          include:
+            - lib/**_dto.dart
+
+
+builders:
+  spec:
+    import: "package:mix_generator/builder.dart"
+    builder_factories: ["specDefinition"]
+    build_extensions: {".dart": [".g.dart"]}
+    auto_apply: dependents
+    build_to: source
+  dto:
+    import: "package:mix_generator/builder.dart"
+    builder_factories: ["dtoDefinition"]
+    build_extensions: {".dart": [".g.dart"]}
+    auto_apply: dependents
+    build_to: source

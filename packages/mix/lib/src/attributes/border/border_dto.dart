@@ -1,6 +1,6 @@
 // ignore_for_file: prefer_relative_imports,avoid-importing-entrypoint-exports
 import 'package:flutter/material.dart';
-import 'package:mix/annotations.dart';
+import 'package:mix_annotations/mix_annotations.dart';
 
 import '../../../mix.dart';
 

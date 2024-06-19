@@ -3,7 +3,7 @@
 part of 'text_spec.dart';
 
 // **************************************************************************
-// Generator: SpecDefinitionBuilder
+// MixableSpecGenerator
 // **************************************************************************
 
 base mixin _$TextSpec on Spec<TextSpec> {

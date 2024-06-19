@@ -8,7 +8,8 @@
     "start": "next start",
     "build": "next build",
     "postbuild": "next-sitemap",
-    "lint": "next lint"
+    "lint": "next lint",
+    "move-readme": "node ./scripts/move_readme.mjs"
   },
   "dependencies": {
     "@docsearch/react": "^3.5.2",

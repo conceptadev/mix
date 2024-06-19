@@ -3,7 +3,7 @@
 part of 'gradient_dto.dart';
 
 // **************************************************************************
-// Generator: DtoDefinitionBuilder
+// MixableDtoGenerator
 // **************************************************************************
 
 base mixin _$LinearGradientDto on Dto<LinearGradient> {

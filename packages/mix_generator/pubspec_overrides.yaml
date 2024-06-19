@@ -1,0 +1,4 @@
+# melos_managed_dependency_overrides: mix
+dependency_overrides:
+  mix_annotations:
+    path: ../mix_annotations

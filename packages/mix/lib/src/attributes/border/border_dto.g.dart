@@ -3,7 +3,7 @@
 part of 'border_dto.dart';
 
 // **************************************************************************
-// Generator: DtoDefinitionBuilder
+// MixableDtoGenerator
 // **************************************************************************
 
 base mixin _$BorderSideDto on Dto<BorderSide> {

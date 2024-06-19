@@ -2,7 +2,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:mix/annotations.dart';
+import 'package:mix_annotations/mix_annotations.dart';
 
 import '../../../mix.dart';
 

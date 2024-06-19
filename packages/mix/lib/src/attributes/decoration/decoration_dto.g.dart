@@ -3,7 +3,7 @@
 part of 'decoration_dto.dart';
 
 // **************************************************************************
-// Generator: DtoDefinitionBuilder
+// MixableDtoGenerator
 // **************************************************************************
 
 base mixin _$BoxDecorationDto on Dto<BoxDecoration> {
