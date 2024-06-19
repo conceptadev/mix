@@ -31,7 +31,6 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
 
   test_min_sdk:
-    needs: test
     runs-on: ubuntu-latest
     name: Test Min SDK
     steps:
