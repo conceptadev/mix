@@ -6,7 +6,6 @@
   "scripts": {
     "dev": "next",
     "start": "next start",
-    "prebuild": "yarn move-readme",
     "build": "next build",
     "postbuild": "next-sitemap",
     "lint": "next lint",
