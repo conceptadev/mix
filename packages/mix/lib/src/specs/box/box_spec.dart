@@ -97,4 +97,15 @@ final class BoxSpec extends Spec<BoxSpec> with _$BoxSpec {
     this.height,
     super.animated,
   });
+
+  Widget call({Widget? child}) {
+    return isAnimated
+        ? AnimatedBoxSpecWidget(
+            spec: this,
+            duration: animated!.duration,
+            curve: animated!.curve,
+            child: child,
+          )
+        : BoxSpecWidget(spec: this, child: child);
+  }
 }
