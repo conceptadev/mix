@@ -83,19 +83,18 @@ base mixin _$IconSpec on Spec<IconSpec> {
     if (other == null) return _$this;
 
     return IconSpec(
-      color: Color.lerp(_$this.color, other._$this.color, t),
-      size: MixHelpers.lerpDouble(_$this.size, other._$this.size, t),
-      weight: MixHelpers.lerpDouble(_$this.weight, other._$this.weight, t),
-      grade: MixHelpers.lerpDouble(_$this.grade, other._$this.grade, t),
-      opticalSize: MixHelpers.lerpDouble(
-          _$this.opticalSize, other._$this.opticalSize, t),
-      shadows: t < 0.5 ? _$this.shadows : other._$this.shadows,
-      textDirection:
-          t < 0.5 ? _$this.textDirection : other._$this.textDirection,
+      color: Color.lerp(_$this.color, other.color, t),
+      size: MixHelpers.lerpDouble(_$this.size, other.size, t),
+      weight: MixHelpers.lerpDouble(_$this.weight, other.weight, t),
+      grade: MixHelpers.lerpDouble(_$this.grade, other.grade, t),
+      opticalSize:
+          MixHelpers.lerpDouble(_$this.opticalSize, other.opticalSize, t),
+      shadows: t < 0.5 ? _$this.shadows : other.shadows,
+      textDirection: t < 0.5 ? _$this.textDirection : other.textDirection,
       applyTextScaling:
-          t < 0.5 ? _$this.applyTextScaling : other._$this.applyTextScaling,
-      fill: MixHelpers.lerpDouble(_$this.fill, other._$this.fill, t),
-      animated: t < 0.5 ? _$this.animated : other._$this.animated,
+          t < 0.5 ? _$this.applyTextScaling : other.applyTextScaling,
+      fill: MixHelpers.lerpDouble(_$this.fill, other.fill, t),
+      animated: t < 0.5 ? _$this.animated : other.animated,
     );
   }
 

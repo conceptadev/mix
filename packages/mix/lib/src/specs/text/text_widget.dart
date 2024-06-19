@@ -85,25 +85,25 @@ class TextSpecWidget extends StatelessWidget {
   final String text;
   final String? semanticsLabel;
   final Locale? locale;
-  final TextSpec spec;
+  final TextSpec? spec;
 
   @override
   Widget build(BuildContext context) {
     // The Text widget is used here, applying the resolved styles and properties from TextSpec.
     return Text(
-      spec.directive?.apply(text) ?? text,
-      style: spec.style,
-      strutStyle: spec.strutStyle,
-      textAlign: spec.textAlign,
-      textDirection: spec.textDirection,
+      spec?.directive?.apply(text) ?? text,
+      style: spec?.style,
+      strutStyle: spec?.strutStyle,
+      textAlign: spec?.textAlign,
+      textDirection: spec?.textDirection,
       locale: locale,
-      softWrap: spec.softWrap,
-      overflow: spec.overflow,
-      textScaleFactor: spec.textScaleFactor,
-      maxLines: spec.maxLines,
+      softWrap: spec?.softWrap,
+      overflow: spec?.overflow,
+      textScaleFactor: spec?.textScaleFactor,
+      maxLines: spec?.maxLines,
       semanticsLabel: semanticsLabel,
-      textWidthBasis: spec.textWidthBasis,
-      textHeightBehavior: spec.textHeightBehavior,
+      textWidthBasis: spec?.textWidthBasis,
+      textHeightBehavior: spec?.textHeightBehavior,
     );
   }
 }

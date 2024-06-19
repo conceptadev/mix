@@ -88,23 +88,21 @@ base mixin _$TextSpec on Spec<TextSpec> {
     if (other == null) return _$this;
 
     return TextSpec(
-      overflow: t < 0.5 ? _$this.overflow : other._$this.overflow,
-      strutStyle: MixHelpers.lerpStrutStyle(
-          _$this.strutStyle, other._$this.strutStyle, t),
-      textAlign: t < 0.5 ? _$this.textAlign : other._$this.textAlign,
+      overflow: t < 0.5 ? _$this.overflow : other.overflow,
+      strutStyle:
+          MixHelpers.lerpStrutStyle(_$this.strutStyle, other.strutStyle, t),
+      textAlign: t < 0.5 ? _$this.textAlign : other.textAlign,
       textScaleFactor: MixHelpers.lerpDouble(
-          _$this.textScaleFactor, other._$this.textScaleFactor, t),
-      maxLines: t < 0.5 ? _$this.maxLines : other._$this.maxLines,
-      style: MixHelpers.lerpTextStyle(_$this.style, other._$this.style, t),
-      textWidthBasis:
-          t < 0.5 ? _$this.textWidthBasis : other._$this.textWidthBasis,
+          _$this.textScaleFactor, other.textScaleFactor, t),
+      maxLines: t < 0.5 ? _$this.maxLines : other.maxLines,
+      style: MixHelpers.lerpTextStyle(_$this.style, other.style, t),
+      textWidthBasis: t < 0.5 ? _$this.textWidthBasis : other.textWidthBasis,
       textHeightBehavior:
-          t < 0.5 ? _$this.textHeightBehavior : other._$this.textHeightBehavior,
-      textDirection:
-          t < 0.5 ? _$this.textDirection : other._$this.textDirection,
-      softWrap: t < 0.5 ? _$this.softWrap : other._$this.softWrap,
-      directive: t < 0.5 ? _$this.directive : other._$this.directive,
-      animated: t < 0.5 ? _$this.animated : other._$this.animated,
+          t < 0.5 ? _$this.textHeightBehavior : other.textHeightBehavior,
+      textDirection: t < 0.5 ? _$this.textDirection : other.textDirection,
+      softWrap: t < 0.5 ? _$this.softWrap : other.softWrap,
+      directive: t < 0.5 ? _$this.directive : other.directive,
+      animated: t < 0.5 ? _$this.animated : other.animated,
     );
   }
 

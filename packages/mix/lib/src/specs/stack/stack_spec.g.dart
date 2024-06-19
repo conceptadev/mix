@@ -72,13 +72,11 @@ base mixin _$StackSpec on Spec<StackSpec> {
     if (other == null) return _$this;
 
     return StackSpec(
-      alignment:
-          AlignmentGeometry.lerp(_$this.alignment, other._$this.alignment, t),
-      fit: t < 0.5 ? _$this.fit : other._$this.fit,
-      textDirection:
-          t < 0.5 ? _$this.textDirection : other._$this.textDirection,
-      clipBehavior: t < 0.5 ? _$this.clipBehavior : other._$this.clipBehavior,
-      animated: t < 0.5 ? _$this.animated : other._$this.animated,
+      alignment: AlignmentGeometry.lerp(_$this.alignment, other.alignment, t),
+      fit: t < 0.5 ? _$this.fit : other.fit,
+      textDirection: t < 0.5 ? _$this.textDirection : other.textDirection,
+      clipBehavior: t < 0.5 ? _$this.clipBehavior : other.clipBehavior,
+      animated: t < 0.5 ? _$this.animated : other.animated,
     );
   }
 

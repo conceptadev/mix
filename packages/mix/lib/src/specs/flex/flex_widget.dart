@@ -2,8 +2,8 @@
 
 import 'package:flutter/widgets.dart';
 
-import '../../core/styled_widget.dart';
 import '../../core/factory/style_mix.dart';
+import '../../core/styled_widget.dart';
 import '../box/box_spec.dart';
 import '../box/box_widget.dart';
 import 'flex_spec.dart';
@@ -56,14 +56,14 @@ class StyledFlex extends StyledWidget {
 class FlexSpecWidget extends StatelessWidget {
   const FlexSpecWidget({
     super.key,
-    required this.spec,
+    this.spec,
     required this.children,
     required this.direction,
   });
 
   final List<Widget> children;
   final Axis direction;
-  final FlexSpec spec;
+  final FlexSpec? spec;
 
   List<Widget> _buildChildren(double? gap) {
     if (gap == null) return children;
@@ -79,17 +79,17 @@ class FlexSpecWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final gap = spec.gap;
+    final gap = spec?.gap;
 
     return Flex(
       direction: direction,
       mainAxisAlignment:
-          spec.mainAxisAlignment ?? _defaultFlex.mainAxisAlignment,
-      mainAxisSize: spec.mainAxisSize ?? _defaultFlex.mainAxisSize,
+          spec?.mainAxisAlignment ?? _defaultFlex.mainAxisAlignment,
+      mainAxisSize: spec?.mainAxisSize ?? _defaultFlex.mainAxisSize,
       crossAxisAlignment:
-          spec.crossAxisAlignment ?? _defaultFlex.crossAxisAlignment,
+          spec?.crossAxisAlignment ?? _defaultFlex.crossAxisAlignment,
       verticalDirection:
-          spec.verticalDirection ?? _defaultFlex.verticalDirection,
+          spec?.verticalDirection ?? _defaultFlex.verticalDirection,
       children: _buildChildren(gap),
     );
   }

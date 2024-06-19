@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_relative_imports,avoid-importing-entrypoint-exports,
 import 'package:flutter/material.dart';
-import 'package:mix_annotations/mix_annotations.dart';
 import 'package:mix/mix.dart';
+import 'package:mix_annotations/mix_annotations.dart';
 
 part 'icon_spec.g.dart';
 
@@ -35,6 +35,22 @@ final class IconSpec extends Spec<IconSpec> with _$IconSpec {
     this.fill,
     super.animated,
   });
+
+  Widget call([IconData? icon]) {
+    return isAnimated
+        ? AnimatedIconSpecWidget(
+            icon,
+            spec: this,
+            textDirection: textDirection,
+            curve: animated!.curve,
+            duration: animated!.duration,
+          )
+        : IconSpecWidget(
+            icon,
+            spec: this,
+            textDirection: textDirection,
+          );
+  }
 }
 
 extension IconSpecUtilityExt<T extends Attribute> on IconSpecUtility<T> {
