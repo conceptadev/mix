@@ -7,6 +7,14 @@ part of 'shape_border_dto.dart';
 // **************************************************************************
 
 base mixin _$RoundedRectangleBorderDto on Dto<RoundedRectangleBorder> {
+  /// Resolves to [RoundedRectangleBorder] using the provided [MixData].
+  ///
+  /// If a property is null in the [MixData], it falls back to the
+  /// default value defined in the `defaultValue` for that property.
+  ///
+  /// ```dart
+  /// final roundedRectangleBorder = RoundedRectangleBorderDto(...).resolve(mix);
+  /// ```
   @override
   RoundedRectangleBorder resolve(MixData mix) {
     return RoundedRectangleBorder(
@@ -16,6 +24,14 @@ base mixin _$RoundedRectangleBorderDto on Dto<RoundedRectangleBorder> {
     );
   }
 
+  /// Merges the properties of this [RoundedRectangleBorderDto] with the properties of [other].
+  ///
+  /// If [other] is null, returns this instance unchanged. Otherwise, returns a new
+  /// [RoundedRectangleBorderDto] with the properties of [other] taking precedence over
+  /// the corresponding properties of this instance.
+  ///
+  /// Properties from [other] that are null will fall back
+  /// to the values from this instance.
   @override
   RoundedRectangleBorderDto merge(RoundedRectangleBorderDto? other) {
     if (other == null) return _$this;
@@ -43,7 +59,6 @@ base mixin _$RoundedRectangleBorderDto on Dto<RoundedRectangleBorder> {
 /// Utility class for configuring [RoundedRectangleBorderDto] properties.
 ///
 /// This class provides methods to set individual properties of a [RoundedRectangleBorderDto].
-///
 /// Use the methods of this class to configure specific properties of a [RoundedRectangleBorderDto].
 final class RoundedRectangleBorderUtility<T extends Attribute>
     extends DtoUtility<T, RoundedRectangleBorderDto, RoundedRectangleBorder> {
@@ -90,6 +105,14 @@ extension RoundedRectangleBorderMixExt on RoundedRectangleBorder {
 }
 
 base mixin _$BeveledRectangleBorderDto on Dto<BeveledRectangleBorder> {
+  /// Resolves to [BeveledRectangleBorder] using the provided [MixData].
+  ///
+  /// If a property is null in the [MixData], it falls back to the
+  /// default value defined in the `defaultValue` for that property.
+  ///
+  /// ```dart
+  /// final beveledRectangleBorder = BeveledRectangleBorderDto(...).resolve(mix);
+  /// ```
   @override
   BeveledRectangleBorder resolve(MixData mix) {
     return BeveledRectangleBorder(
@@ -99,6 +122,14 @@ base mixin _$BeveledRectangleBorderDto on Dto<BeveledRectangleBorder> {
     );
   }
 
+  /// Merges the properties of this [BeveledRectangleBorderDto] with the properties of [other].
+  ///
+  /// If [other] is null, returns this instance unchanged. Otherwise, returns a new
+  /// [BeveledRectangleBorderDto] with the properties of [other] taking precedence over
+  /// the corresponding properties of this instance.
+  ///
+  /// Properties from [other] that are null will fall back
+  /// to the values from this instance.
   @override
   BeveledRectangleBorderDto merge(BeveledRectangleBorderDto? other) {
     if (other == null) return _$this;
@@ -126,7 +157,6 @@ base mixin _$BeveledRectangleBorderDto on Dto<BeveledRectangleBorder> {
 /// Utility class for configuring [BeveledRectangleBorderDto] properties.
 ///
 /// This class provides methods to set individual properties of a [BeveledRectangleBorderDto].
-///
 /// Use the methods of this class to configure specific properties of a [BeveledRectangleBorderDto].
 final class BeveledRectangleBorderUtility<T extends Attribute>
     extends DtoUtility<T, BeveledRectangleBorderDto, BeveledRectangleBorder> {
@@ -173,6 +203,14 @@ extension BeveledRectangleBorderMixExt on BeveledRectangleBorder {
 }
 
 base mixin _$ContinuousRectangleBorderDto on Dto<ContinuousRectangleBorder> {
+  /// Resolves to [ContinuousRectangleBorder] using the provided [MixData].
+  ///
+  /// If a property is null in the [MixData], it falls back to the
+  /// default value defined in the `defaultValue` for that property.
+  ///
+  /// ```dart
+  /// final continuousRectangleBorder = ContinuousRectangleBorderDto(...).resolve(mix);
+  /// ```
   @override
   ContinuousRectangleBorder resolve(MixData mix) {
     return ContinuousRectangleBorder(
@@ -182,6 +220,14 @@ base mixin _$ContinuousRectangleBorderDto on Dto<ContinuousRectangleBorder> {
     );
   }
 
+  /// Merges the properties of this [ContinuousRectangleBorderDto] with the properties of [other].
+  ///
+  /// If [other] is null, returns this instance unchanged. Otherwise, returns a new
+  /// [ContinuousRectangleBorderDto] with the properties of [other] taking precedence over
+  /// the corresponding properties of this instance.
+  ///
+  /// Properties from [other] that are null will fall back
+  /// to the values from this instance.
   @override
   ContinuousRectangleBorderDto merge(ContinuousRectangleBorderDto? other) {
     if (other == null) return _$this;
@@ -210,7 +256,6 @@ base mixin _$ContinuousRectangleBorderDto on Dto<ContinuousRectangleBorder> {
 /// Utility class for configuring [ContinuousRectangleBorderDto] properties.
 ///
 /// This class provides methods to set individual properties of a [ContinuousRectangleBorderDto].
-///
 /// Use the methods of this class to configure specific properties of a [ContinuousRectangleBorderDto].
 final class ContinuousRectangleBorderUtility<T extends Attribute>
     extends DtoUtility<T, ContinuousRectangleBorderDto,
@@ -258,6 +303,14 @@ extension ContinuousRectangleBorderMixExt on ContinuousRectangleBorder {
 }
 
 base mixin _$CircleBorderDto on Dto<CircleBorder> {
+  /// Resolves to [CircleBorder] using the provided [MixData].
+  ///
+  /// If a property is null in the [MixData], it falls back to the
+  /// default value defined in the `defaultValue` for that property.
+  ///
+  /// ```dart
+  /// final circleBorder = CircleBorderDto(...).resolve(mix);
+  /// ```
   @override
   CircleBorder resolve(MixData mix) {
     return CircleBorder(
@@ -266,6 +319,14 @@ base mixin _$CircleBorderDto on Dto<CircleBorder> {
     );
   }
 
+  /// Merges the properties of this [CircleBorderDto] with the properties of [other].
+  ///
+  /// If [other] is null, returns this instance unchanged. Otherwise, returns a new
+  /// [CircleBorderDto] with the properties of [other] taking precedence over
+  /// the corresponding properties of this instance.
+  ///
+  /// Properties from [other] that are null will fall back
+  /// to the values from this instance.
   @override
   CircleBorderDto merge(CircleBorderDto? other) {
     if (other == null) return _$this;
@@ -292,7 +353,6 @@ base mixin _$CircleBorderDto on Dto<CircleBorder> {
 /// Utility class for configuring [CircleBorderDto] properties.
 ///
 /// This class provides methods to set individual properties of a [CircleBorderDto].
-///
 /// Use the methods of this class to configure specific properties of a [CircleBorderDto].
 final class CircleBorderUtility<T extends Attribute>
     extends DtoUtility<T, CircleBorderDto, CircleBorder> {
@@ -337,6 +397,14 @@ extension CircleBorderMixExt on CircleBorder {
 }
 
 base mixin _$StarBorderDto on Dto<StarBorder> {
+  /// Resolves to [StarBorder] using the provided [MixData].
+  ///
+  /// If a property is null in the [MixData], it falls back to the
+  /// default value defined in the `defaultValue` for that property.
+  ///
+  /// ```dart
+  /// final starBorder = StarBorderDto(...).resolve(mix);
+  /// ```
   @override
   StarBorder resolve(MixData mix) {
     return StarBorder(
@@ -351,6 +419,14 @@ base mixin _$StarBorderDto on Dto<StarBorder> {
     );
   }
 
+  /// Merges the properties of this [StarBorderDto] with the properties of [other].
+  ///
+  /// If [other] is null, returns this instance unchanged. Otherwise, returns a new
+  /// [StarBorderDto] with the properties of [other] taking precedence over
+  /// the corresponding properties of this instance.
+  ///
+  /// Properties from [other] that are null will fall back
+  /// to the values from this instance.
   @override
   StarBorderDto merge(StarBorderDto? other) {
     if (other == null) return _$this;
@@ -387,7 +463,6 @@ base mixin _$StarBorderDto on Dto<StarBorder> {
 /// Utility class for configuring [StarBorderDto] properties.
 ///
 /// This class provides methods to set individual properties of a [StarBorderDto].
-///
 /// Use the methods of this class to configure specific properties of a [StarBorderDto].
 final class StarBorderUtility<T extends Attribute>
     extends DtoUtility<T, StarBorderDto, StarBorder> {
@@ -472,6 +547,14 @@ extension StarBorderMixExt on StarBorder {
 }
 
 base mixin _$LinearBorderDto on Dto<LinearBorder> {
+  /// Resolves to [LinearBorder] using the provided [MixData].
+  ///
+  /// If a property is null in the [MixData], it falls back to the
+  /// default value defined in the `defaultValue` for that property.
+  ///
+  /// ```dart
+  /// final linearBorder = LinearBorderDto(...).resolve(mix);
+  /// ```
   @override
   LinearBorder resolve(MixData mix) {
     return LinearBorder(
@@ -483,6 +566,14 @@ base mixin _$LinearBorderDto on Dto<LinearBorder> {
     );
   }
 
+  /// Merges the properties of this [LinearBorderDto] with the properties of [other].
+  ///
+  /// If [other] is null, returns this instance unchanged. Otherwise, returns a new
+  /// [LinearBorderDto] with the properties of [other] taking precedence over
+  /// the corresponding properties of this instance.
+  ///
+  /// Properties from [other] that are null will fall back
+  /// to the values from this instance.
   @override
   LinearBorderDto merge(LinearBorderDto? other) {
     if (other == null) return _$this;
@@ -515,7 +606,6 @@ base mixin _$LinearBorderDto on Dto<LinearBorder> {
 /// Utility class for configuring [LinearBorderDto] properties.
 ///
 /// This class provides methods to set individual properties of a [LinearBorderDto].
-///
 /// Use the methods of this class to configure specific properties of a [LinearBorderDto].
 final class LinearBorderUtility<T extends Attribute>
     extends DtoUtility<T, LinearBorderDto, LinearBorder> {
@@ -584,6 +674,14 @@ extension LinearBorderMixExt on LinearBorder {
 }
 
 base mixin _$LinearBorderEdgeDto on Dto<LinearBorderEdge> {
+  /// Resolves to [LinearBorderEdge] using the provided [MixData].
+  ///
+  /// If a property is null in the [MixData], it falls back to the
+  /// default value defined in the `defaultValue` for that property.
+  ///
+  /// ```dart
+  /// final linearBorderEdge = LinearBorderEdgeDto(...).resolve(mix);
+  /// ```
   @override
   LinearBorderEdge resolve(MixData mix) {
     return LinearBorderEdge(
@@ -592,6 +690,14 @@ base mixin _$LinearBorderEdgeDto on Dto<LinearBorderEdge> {
     );
   }
 
+  /// Merges the properties of this [LinearBorderEdgeDto] with the properties of [other].
+  ///
+  /// If [other] is null, returns this instance unchanged. Otherwise, returns a new
+  /// [LinearBorderEdgeDto] with the properties of [other] taking precedence over
+  /// the corresponding properties of this instance.
+  ///
+  /// Properties from [other] that are null will fall back
+  /// to the values from this instance.
   @override
   LinearBorderEdgeDto merge(LinearBorderEdgeDto? other) {
     if (other == null) return _$this;
@@ -618,7 +724,6 @@ base mixin _$LinearBorderEdgeDto on Dto<LinearBorderEdge> {
 /// Utility class for configuring [LinearBorderEdgeDto] properties.
 ///
 /// This class provides methods to set individual properties of a [LinearBorderEdgeDto].
-///
 /// Use the methods of this class to configure specific properties of a [LinearBorderEdgeDto].
 final class LinearBorderEdgeUtility<T extends Attribute>
     extends DtoUtility<T, LinearBorderEdgeDto, LinearBorderEdge> {
@@ -663,6 +768,14 @@ extension LinearBorderEdgeMixExt on LinearBorderEdge {
 }
 
 base mixin _$StadiumBorderDto on Dto<StadiumBorder> {
+  /// Resolves to [StadiumBorder] using the provided [MixData].
+  ///
+  /// If a property is null in the [MixData], it falls back to the
+  /// default value defined in the `defaultValue` for that property.
+  ///
+  /// ```dart
+  /// final stadiumBorder = StadiumBorderDto(...).resolve(mix);
+  /// ```
   @override
   StadiumBorder resolve(MixData mix) {
     return StadiumBorder(
@@ -670,6 +783,14 @@ base mixin _$StadiumBorderDto on Dto<StadiumBorder> {
     );
   }
 
+  /// Merges the properties of this [StadiumBorderDto] with the properties of [other].
+  ///
+  /// If [other] is null, returns this instance unchanged. Otherwise, returns a new
+  /// [StadiumBorderDto] with the properties of [other] taking precedence over
+  /// the corresponding properties of this instance.
+  ///
+  /// Properties from [other] that are null will fall back
+  /// to the values from this instance.
   @override
   StadiumBorderDto merge(StadiumBorderDto? other) {
     if (other == null) return _$this;
@@ -694,7 +815,6 @@ base mixin _$StadiumBorderDto on Dto<StadiumBorder> {
 /// Utility class for configuring [StadiumBorderDto] properties.
 ///
 /// This class provides methods to set individual properties of a [StadiumBorderDto].
-///
 /// Use the methods of this class to configure specific properties of a [StadiumBorderDto].
 final class StadiumBorderUtility<T extends Attribute>
     extends DtoUtility<T, StadiumBorderDto, StadiumBorder> {

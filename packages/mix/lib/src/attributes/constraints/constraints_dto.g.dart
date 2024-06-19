@@ -7,6 +7,14 @@ part of 'constraints_dto.dart';
 // **************************************************************************
 
 base mixin _$BoxConstraintsDto on Dto<BoxConstraints> {
+  /// Resolves to [BoxConstraints] using the provided [MixData].
+  ///
+  /// If a property is null in the [MixData], it falls back to the
+  /// default value defined in the `defaultValue` for that property.
+  ///
+  /// ```dart
+  /// final boxConstraints = BoxConstraintsDto(...).resolve(mix);
+  /// ```
   @override
   BoxConstraints resolve(MixData mix) {
     return BoxConstraints(
@@ -17,6 +25,14 @@ base mixin _$BoxConstraintsDto on Dto<BoxConstraints> {
     );
   }
 
+  /// Merges the properties of this [BoxConstraintsDto] with the properties of [other].
+  ///
+  /// If [other] is null, returns this instance unchanged. Otherwise, returns a new
+  /// [BoxConstraintsDto] with the properties of [other] taking precedence over
+  /// the corresponding properties of this instance.
+  ///
+  /// Properties from [other] that are null will fall back
+  /// to the values from this instance.
   @override
   BoxConstraintsDto merge(BoxConstraintsDto? other) {
     if (other == null) return _$this;
@@ -47,7 +63,6 @@ base mixin _$BoxConstraintsDto on Dto<BoxConstraints> {
 /// Utility class for configuring [BoxConstraintsDto] properties.
 ///
 /// This class provides methods to set individual properties of a [BoxConstraintsDto].
-///
 /// Use the methods of this class to configure specific properties of a [BoxConstraintsDto].
 final class BoxConstraintsUtility<T extends Attribute>
     extends DtoUtility<T, BoxConstraintsDto, BoxConstraints> {

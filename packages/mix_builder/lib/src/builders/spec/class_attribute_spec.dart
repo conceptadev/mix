@@ -4,10 +4,10 @@ import 'package:mix_builder/src/builders/method_resolve.dart';
 import 'package:mix_builder/src/helpers/builder_utils.dart';
 
 String specAttributeClass(SpecAnnotationContext context) {
-  final className = context.name;
-  final attributeClassName = context.attributeClassName;
+  final specName = context.name;
+  final className = context.attributeClassName;
   final fields = context.fields;
-  final extendsType = 'SpecAttribute<$className>';
+  final extendsType = 'SpecAttribute<$specName>';
 
   final nonSuperFields = fields.where((field) => !field.isSuper).toList();
 
@@ -21,32 +21,33 @@ String specAttributeClass(SpecAnnotationContext context) {
   }).join(', ');
 
   final resolveMethod = resolveMethodBuilder(
-    resolvedType: className,
+    className: className,
+    resolvedType: specName,
     fields: fields,
   );
 
   final mergeMethod = mergeMethodBuilder(
-    className: attributeClassName,
+    className: className,
     context: context,
   );
 
   final propsGetter = getterPropsBuilder(
-    className: attributeClassName,
+    className: className,
     fields: fields,
   );
 
   return '''
-/// Represents the attributes of a [$className].
+/// Represents the attributes of a [$specName].
 ///
 /// This class encapsulates properties defining the layout and
-/// appearance of a [$className].
+/// appearance of a [$specName].
 ///
-/// Use this class to configure the attributes of a [$className] and pass it to
-/// the [$className] constructor.
-final class $attributeClassName extends $extendsType {
+/// Use this class to configure the attributes of a [$specName] and pass it to
+/// the [$specName] constructor.
+final class $className extends $extendsType {
   $fieldDeclarations
 
-  const $attributeClassName({
+  const $className({
     $constructorParameters,
   });
 

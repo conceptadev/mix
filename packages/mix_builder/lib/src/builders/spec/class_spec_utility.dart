@@ -16,7 +16,6 @@ String specUtilityClass(SpecAnnotationContext context) {
 /// Utility class for configuring [$utilityType] properties.
 ///
 /// This class provides methods to set individual properties of a [$utilityType].
-///
 /// Use the methods of this class to configure specific properties of a [$utilityType].
 base class $utilityClassName<T extends Attribute> extends SpecUtility<T, $utilityType> {
   $fields

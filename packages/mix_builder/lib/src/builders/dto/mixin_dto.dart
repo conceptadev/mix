@@ -33,6 +33,7 @@ String dtoMixin(DtoAnnotationContext context) {
 
   final resolveMethod = !hasResolve
       ? resolveMethodBuilder(
+          className: className,
           resolvedType: valueTypeName,
           fields: fields,
           isInternalRef: true,

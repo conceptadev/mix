@@ -15,7 +15,7 @@ const _constraints = MixableUtility(
   ],
 );
 
-const _foreground = MixableUtility(type: 'BoxDecorationUtility');
+const _foreground = MixableUtility(type: BoxDecoration);
 const _boxDecor = MixableUtility(
   type: BoxDecoration,
   properties: [
@@ -41,6 +41,7 @@ const _shapeDecor = MixableUtility(
 
 @MixableSpec()
 final class BoxSpec extends Spec<BoxSpec> with _$BoxSpec {
+  /// {@macro box_spec_of}
   static const of = _$BoxSpec.of;
 
   static const from = _$BoxSpec.from;

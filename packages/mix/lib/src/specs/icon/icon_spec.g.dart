@@ -12,6 +12,19 @@ base mixin _$IconSpec on Spec<IconSpec> {
         const IconSpec();
   }
 
+  /// {@template icon_spec_of}
+  /// Retrieves the [IconSpec] from the nearest [Mix] ancestor in the widget tree.
+  ///
+  /// This method uses [Mix.of] to obtain the [Mix] instance associated with the
+  /// given [BuildContext], and then retrieves the [IconSpec] from that [Mix].
+  /// If no ancestor [Mix] is found, this method returns an empty [IconSpec].
+  ///
+  /// Example:
+  ///
+  /// ```dart
+  /// final iconSpec = IconSpec.of(context);
+  /// ```
+  /// {@endtemplate}
   static IconSpec of(BuildContext context) {
     return _$IconSpec.from(Mix.of(context));
   }
@@ -45,6 +58,26 @@ base mixin _$IconSpec on Spec<IconSpec> {
     );
   }
 
+  /// Linearly interpolates between this [IconSpec] and another [IconSpec] based on the given parameter [t].
+  ///
+  /// The parameter [t] represents the interpolation factor, typically ranging from 0.0 to 1.0.
+  /// When [t] is 0.0, the current [IconSpec] is returned. When [t] is 1.0, the [other] [IconSpec] is returned.
+  /// For values of [t] between 0.0 and 1.0, an interpolated [IconSpec] is returned.
+  ///
+  /// If [other] is null, this method returns the current [IconSpec] instance.
+  ///
+  /// The interpolation is performed on each property of the [IconSpec] using the appropriate
+  /// interpolation method:
+  ///
+  /// - [Color.lerp] for [color].
+  /// - [MixHelpers.lerpDouble] for [size] and [weight] and [grade] and [opticalSize] and [fill].
+
+  /// For [shadows] and [textDirection] and [applyTextScaling] and [animated], the interpolation is performed using a step function.
+  /// If [t] is less than 0.5, the value from the current [IconSpec] is used. Otherwise, the value
+  /// from the [other] [IconSpec] is used.
+  ///
+  /// This method is typically used in animations to smoothly transition between
+  /// different [IconSpec] configurations.
   @override
   IconSpec lerp(IconSpec? other, double t) {
     if (other == null) return _$this;
@@ -118,6 +151,14 @@ final class IconSpecAttribute extends SpecAttribute<IconSpec> {
     super.animated,
   });
 
+  /// Resolves to [IconSpec] using the provided [MixData].
+  ///
+  /// If a property is null in the [MixData], it falls back to the
+  /// default value defined in the `defaultValue` for that property.
+  ///
+  /// ```dart
+  /// final iconSpec = IconSpecAttribute(...).resolve(mix);
+  /// ```
   @override
   IconSpec resolve(MixData mix) {
     return IconSpec(
@@ -134,6 +175,14 @@ final class IconSpecAttribute extends SpecAttribute<IconSpec> {
     );
   }
 
+  /// Merges the properties of this [IconSpecAttribute] with the properties of [other].
+  ///
+  /// If [other] is null, returns this instance unchanged. Otherwise, returns a new
+  /// [IconSpecAttribute] with the properties of [other] taking precedence over
+  /// the corresponding properties of this instance.
+  ///
+  /// Properties from [other] that are null will fall back
+  /// to the values from this instance.
   @override
   IconSpecAttribute merge(IconSpecAttribute? other) {
     if (other == null) return this;
@@ -174,7 +223,6 @@ final class IconSpecAttribute extends SpecAttribute<IconSpec> {
 /// Utility class for configuring [IconSpecAttribute] properties.
 ///
 /// This class provides methods to set individual properties of a [IconSpecAttribute].
-///
 /// Use the methods of this class to configure specific properties of a [IconSpecAttribute].
 base class IconSpecUtility<T extends Attribute>
     extends SpecUtility<T, IconSpecAttribute> {

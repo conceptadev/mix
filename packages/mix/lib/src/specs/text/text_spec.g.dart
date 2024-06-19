@@ -12,6 +12,19 @@ base mixin _$TextSpec on Spec<TextSpec> {
         const TextSpec();
   }
 
+  /// {@template text_spec_of}
+  /// Retrieves the [TextSpec] from the nearest [Mix] ancestor in the widget tree.
+  ///
+  /// This method uses [Mix.of] to obtain the [Mix] instance associated with the
+  /// given [BuildContext], and then retrieves the [TextSpec] from that [Mix].
+  /// If no ancestor [Mix] is found, this method returns an empty [TextSpec].
+  ///
+  /// Example:
+  ///
+  /// ```dart
+  /// final textSpec = TextSpec.of(context);
+  /// ```
+  /// {@endtemplate}
   static TextSpec of(BuildContext context) {
     return _$TextSpec.from(Mix.of(context));
   }
@@ -49,6 +62,27 @@ base mixin _$TextSpec on Spec<TextSpec> {
     );
   }
 
+  /// Linearly interpolates between this [TextSpec] and another [TextSpec] based on the given parameter [t].
+  ///
+  /// The parameter [t] represents the interpolation factor, typically ranging from 0.0 to 1.0.
+  /// When [t] is 0.0, the current [TextSpec] is returned. When [t] is 1.0, the [other] [TextSpec] is returned.
+  /// For values of [t] between 0.0 and 1.0, an interpolated [TextSpec] is returned.
+  ///
+  /// If [other] is null, this method returns the current [TextSpec] instance.
+  ///
+  /// The interpolation is performed on each property of the [TextSpec] using the appropriate
+  /// interpolation method:
+  ///
+  /// - [MixHelpers.lerpStrutStyle] for [strutStyle].
+  /// - [MixHelpers.lerpDouble] for [textScaleFactor].
+  /// - [MixHelpers.lerpTextStyle] for [style].
+
+  /// For [overflow] and [textAlign] and [maxLines] and [textWidthBasis] and [textHeightBehavior] and [textDirection] and [softWrap] and [directive] and [animated], the interpolation is performed using a step function.
+  /// If [t] is less than 0.5, the value from the current [TextSpec] is used. Otherwise, the value
+  /// from the [other] [TextSpec] is used.
+  ///
+  /// This method is typically used in animations to smoothly transition between
+  /// different [TextSpec] configurations.
   @override
   TextSpec lerp(TextSpec? other, double t) {
     if (other == null) return _$this;
@@ -132,6 +166,14 @@ final class TextSpecAttribute extends SpecAttribute<TextSpec> {
     super.animated,
   });
 
+  /// Resolves to [TextSpec] using the provided [MixData].
+  ///
+  /// If a property is null in the [MixData], it falls back to the
+  /// default value defined in the `defaultValue` for that property.
+  ///
+  /// ```dart
+  /// final textSpec = TextSpecAttribute(...).resolve(mix);
+  /// ```
   @override
   TextSpec resolve(MixData mix) {
     return TextSpec(
@@ -150,6 +192,14 @@ final class TextSpecAttribute extends SpecAttribute<TextSpec> {
     );
   }
 
+  /// Merges the properties of this [TextSpecAttribute] with the properties of [other].
+  ///
+  /// If [other] is null, returns this instance unchanged. Otherwise, returns a new
+  /// [TextSpecAttribute] with the properties of [other] taking precedence over
+  /// the corresponding properties of this instance.
+  ///
+  /// Properties from [other] that are null will fall back
+  /// to the values from this instance.
   @override
   TextSpecAttribute merge(TextSpecAttribute? other) {
     if (other == null) return this;
@@ -194,7 +244,6 @@ final class TextSpecAttribute extends SpecAttribute<TextSpec> {
 /// Utility class for configuring [TextSpecAttribute] properties.
 ///
 /// This class provides methods to set individual properties of a [TextSpecAttribute].
-///
 /// Use the methods of this class to configure specific properties of a [TextSpecAttribute].
 base class TextSpecUtility<T extends Attribute>
     extends SpecUtility<T, TextSpecAttribute> {

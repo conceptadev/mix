@@ -24,10 +24,21 @@ String constructorFor(String typeAnnotation, String? namedConstructor) =>
 
 extension StringX on String {
   /// Returns a new string with the first character in upper case.
-  String capitalize() {
+  String get capitalize {
     if (isEmpty) {
       return this;
     }
     return this[0].toUpperCase() + substring(1);
+  }
+
+  String get lowercaseFirst {
+    if (isEmpty) {
+      return this;
+    }
+    return this[0].toLowerCase() + substring(1);
+  }
+
+  String get snakecase {
+    return this.replaceAll(RegExp(r'(?<!^)(?=[A-Z])'), '_').toLowerCase();
   }
 }

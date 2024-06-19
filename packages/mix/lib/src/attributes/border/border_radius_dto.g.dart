@@ -7,6 +7,14 @@ part of 'border_radius_dto.dart';
 // **************************************************************************
 
 base mixin _$BorderRadiusDto on Dto<BorderRadius> {
+  /// Merges the properties of this [BorderRadiusDto] with the properties of [other].
+  ///
+  /// If [other] is null, returns this instance unchanged. Otherwise, returns a new
+  /// [BorderRadiusDto] with the properties of [other] taking precedence over
+  /// the corresponding properties of this instance.
+  ///
+  /// Properties from [other] that are null will fall back
+  /// to the values from this instance.
   @override
   BorderRadiusDto merge(BorderRadiusDto? other) {
     if (other == null) return _$this;
@@ -46,6 +54,14 @@ extension BorderRadiusMixExt on BorderRadius {
 }
 
 base mixin _$BorderRadiusDirectionalDto on Dto<BorderRadiusDirectional> {
+  /// Merges the properties of this [BorderRadiusDirectionalDto] with the properties of [other].
+  ///
+  /// If [other] is null, returns this instance unchanged. Otherwise, returns a new
+  /// [BorderRadiusDirectionalDto] with the properties of [other] taking precedence over
+  /// the corresponding properties of this instance.
+  ///
+  /// Properties from [other] that are null will fall back
+  /// to the values from this instance.
   @override
   BorderRadiusDirectionalDto merge(BorderRadiusDirectionalDto? other) {
     if (other == null) return _$this;

@@ -11,6 +11,19 @@ base mixin _$BoxSpec on Spec<BoxSpec> {
     return mix.attributeOf<BoxSpecAttribute>()?.resolve(mix) ?? const BoxSpec();
   }
 
+  /// {@template box_spec_of}
+  /// Retrieves the [BoxSpec] from the nearest [Mix] ancestor in the widget tree.
+  ///
+  /// This method uses [Mix.of] to obtain the [Mix] instance associated with the
+  /// given [BuildContext], and then retrieves the [BoxSpec] from that [Mix].
+  /// If no ancestor [Mix] is found, this method returns an empty [BoxSpec].
+  ///
+  /// Example:
+  ///
+  /// ```dart
+  /// final boxSpec = BoxSpec.of(context);
+  /// ```
+  /// {@endtemplate}
   static BoxSpec of(BuildContext context) {
     return _$BoxSpec.from(Mix.of(context));
   }
@@ -48,6 +61,30 @@ base mixin _$BoxSpec on Spec<BoxSpec> {
     );
   }
 
+  /// Linearly interpolates between this [BoxSpec] and another [BoxSpec] based on the given parameter [t].
+  ///
+  /// The parameter [t] represents the interpolation factor, typically ranging from 0.0 to 1.0.
+  /// When [t] is 0.0, the current [BoxSpec] is returned. When [t] is 1.0, the [other] [BoxSpec] is returned.
+  /// For values of [t] between 0.0 and 1.0, an interpolated [BoxSpec] is returned.
+  ///
+  /// If [other] is null, this method returns the current [BoxSpec] instance.
+  ///
+  /// The interpolation is performed on each property of the [BoxSpec] using the appropriate
+  /// interpolation method:
+  ///
+  /// - [AlignmentGeometry.lerp] for [alignment] and [transformAlignment].
+  /// - [EdgeInsetsGeometry.lerp] for [padding] and [margin].
+  /// - [BoxConstraints.lerp] for [constraints].
+  /// - [Decoration.lerp] for [decoration] and [foregroundDecoration].
+  /// - [MixHelpers.lerpMatrix4] for [transform].
+  /// - [MixHelpers.lerpDouble] for [width] and [height].
+
+  /// For [clipBehavior] and [animated], the interpolation is performed using a step function.
+  /// If [t] is less than 0.5, the value from the current [BoxSpec] is used. Otherwise, the value
+  /// from the [other] [BoxSpec] is used.
+  ///
+  /// This method is typically used in animations to smoothly transition between
+  /// different [BoxSpec] configurations.
   @override
   BoxSpec lerp(BoxSpec? other, double t) {
     if (other == null) return _$this;
@@ -132,6 +169,14 @@ final class BoxSpecAttribute extends SpecAttribute<BoxSpec> {
     super.animated,
   });
 
+  /// Resolves to [BoxSpec] using the provided [MixData].
+  ///
+  /// If a property is null in the [MixData], it falls back to the
+  /// default value defined in the `defaultValue` for that property.
+  ///
+  /// ```dart
+  /// final boxSpec = BoxSpecAttribute(...).resolve(mix);
+  /// ```
   @override
   BoxSpec resolve(MixData mix) {
     return BoxSpec(
@@ -150,6 +195,14 @@ final class BoxSpecAttribute extends SpecAttribute<BoxSpec> {
     );
   }
 
+  /// Merges the properties of this [BoxSpecAttribute] with the properties of [other].
+  ///
+  /// If [other] is null, returns this instance unchanged. Otherwise, returns a new
+  /// [BoxSpecAttribute] with the properties of [other] taking precedence over
+  /// the corresponding properties of this instance.
+  ///
+  /// Properties from [other] that are null will fall back
+  /// to the values from this instance.
   @override
   BoxSpecAttribute merge(BoxSpecAttribute? other) {
     if (other == null) return this;
@@ -195,7 +248,6 @@ final class BoxSpecAttribute extends SpecAttribute<BoxSpec> {
 /// Utility class for configuring [BoxSpecAttribute] properties.
 ///
 /// This class provides methods to set individual properties of a [BoxSpecAttribute].
-///
 /// Use the methods of this class to configure specific properties of a [BoxSpecAttribute].
 base class BoxSpecUtility<T extends Attribute>
     extends SpecUtility<T, BoxSpecAttribute> {

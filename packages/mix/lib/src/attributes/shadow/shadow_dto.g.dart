@@ -7,6 +7,14 @@ part of 'shadow_dto.dart';
 // **************************************************************************
 
 base mixin _$ShadowDto on Dto<Shadow> {
+  /// Resolves to [Shadow] using the provided [MixData].
+  ///
+  /// If a property is null in the [MixData], it falls back to the
+  /// default value defined in the `defaultValue` for that property.
+  ///
+  /// ```dart
+  /// final shadow = ShadowDto(...).resolve(mix);
+  /// ```
   @override
   Shadow resolve(MixData mix) {
     return Shadow(
@@ -16,6 +24,14 @@ base mixin _$ShadowDto on Dto<Shadow> {
     );
   }
 
+  /// Merges the properties of this [ShadowDto] with the properties of [other].
+  ///
+  /// If [other] is null, returns this instance unchanged. Otherwise, returns a new
+  /// [ShadowDto] with the properties of [other] taking precedence over
+  /// the corresponding properties of this instance.
+  ///
+  /// Properties from [other] that are null will fall back
+  /// to the values from this instance.
   @override
   ShadowDto merge(ShadowDto? other) {
     if (other == null) return _$this;
@@ -44,7 +60,6 @@ base mixin _$ShadowDto on Dto<Shadow> {
 /// Utility class for configuring [ShadowDto] properties.
 ///
 /// This class provides methods to set individual properties of a [ShadowDto].
-///
 /// Use the methods of this class to configure specific properties of a [ShadowDto].
 final class ShadowUtility<T extends Attribute>
     extends DtoUtility<T, ShadowDto, Shadow> {
@@ -97,6 +112,14 @@ extension ShadowMixExt on Shadow {
 }
 
 base mixin _$BoxShadowDto on Dto<BoxShadow> {
+  /// Resolves to [BoxShadow] using the provided [MixData].
+  ///
+  /// If a property is null in the [MixData], it falls back to the
+  /// default value defined in the `defaultValue` for that property.
+  ///
+  /// ```dart
+  /// final boxShadow = BoxShadowDto(...).resolve(mix);
+  /// ```
   @override
   BoxShadow resolve(MixData mix) {
     return BoxShadow(
@@ -107,6 +130,14 @@ base mixin _$BoxShadowDto on Dto<BoxShadow> {
     );
   }
 
+  /// Merges the properties of this [BoxShadowDto] with the properties of [other].
+  ///
+  /// If [other] is null, returns this instance unchanged. Otherwise, returns a new
+  /// [BoxShadowDto] with the properties of [other] taking precedence over
+  /// the corresponding properties of this instance.
+  ///
+  /// Properties from [other] that are null will fall back
+  /// to the values from this instance.
   @override
   BoxShadowDto merge(BoxShadowDto? other) {
     if (other == null) return _$this;
@@ -137,7 +168,6 @@ base mixin _$BoxShadowDto on Dto<BoxShadow> {
 /// Utility class for configuring [BoxShadowDto] properties.
 ///
 /// This class provides methods to set individual properties of a [BoxShadowDto].
-///
 /// Use the methods of this class to configure specific properties of a [BoxShadowDto].
 final class BoxShadowUtility<T extends Attribute>
     extends DtoUtility<T, BoxShadowDto, BoxShadow> {

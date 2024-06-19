@@ -7,6 +7,14 @@ part of 'decoration_image_dto.dart';
 // **************************************************************************
 
 base mixin _$DecorationImageDto on Dto<DecorationImage> {
+  /// Resolves to [DecorationImage] using the provided [MixData].
+  ///
+  /// If a property is null in the [MixData], it falls back to the
+  /// default value defined in the `defaultValue` for that property.
+  ///
+  /// ```dart
+  /// final decorationImage = DecorationImageDto(...).resolve(mix);
+  /// ```
   @override
   DecorationImage resolve(MixData mix) {
     return DecorationImage(
@@ -21,6 +29,14 @@ base mixin _$DecorationImageDto on Dto<DecorationImage> {
     );
   }
 
+  /// Merges the properties of this [DecorationImageDto] with the properties of [other].
+  ///
+  /// If [other] is null, returns this instance unchanged. Otherwise, returns a new
+  /// [DecorationImageDto] with the properties of [other] taking precedence over
+  /// the corresponding properties of this instance.
+  ///
+  /// Properties from [other] that are null will fall back
+  /// to the values from this instance.
   @override
   DecorationImageDto merge(DecorationImageDto? other) {
     if (other == null) return _$this;
@@ -59,7 +75,6 @@ base mixin _$DecorationImageDto on Dto<DecorationImage> {
 /// Utility class for configuring [DecorationImageDto] properties.
 ///
 /// This class provides methods to set individual properties of a [DecorationImageDto].
-///
 /// Use the methods of this class to configure specific properties of a [DecorationImageDto].
 final class DecorationImageUtility<T extends Attribute>
     extends DtoUtility<T, DecorationImageDto, DecorationImage> {

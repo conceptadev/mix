@@ -7,6 +7,14 @@ part of 'gradient_dto.dart';
 // **************************************************************************
 
 base mixin _$LinearGradientDto on Dto<LinearGradient> {
+  /// Resolves to [LinearGradient] using the provided [MixData].
+  ///
+  /// If a property is null in the [MixData], it falls back to the
+  /// default value defined in the `defaultValue` for that property.
+  ///
+  /// ```dart
+  /// final linearGradient = LinearGradientDto(...).resolve(mix);
+  /// ```
   @override
   LinearGradient resolve(MixData mix) {
     return LinearGradient(
@@ -20,6 +28,14 @@ base mixin _$LinearGradientDto on Dto<LinearGradient> {
     );
   }
 
+  /// Merges the properties of this [LinearGradientDto] with the properties of [other].
+  ///
+  /// If [other] is null, returns this instance unchanged. Otherwise, returns a new
+  /// [LinearGradientDto] with the properties of [other] taking precedence over
+  /// the corresponding properties of this instance.
+  ///
+  /// Properties from [other] that are null will fall back
+  /// to the values from this instance.
   @override
   LinearGradientDto merge(LinearGradientDto? other) {
     if (other == null) return _$this;
@@ -54,7 +70,6 @@ base mixin _$LinearGradientDto on Dto<LinearGradient> {
 /// Utility class for configuring [LinearGradientDto] properties.
 ///
 /// This class provides methods to set individual properties of a [LinearGradientDto].
-///
 /// Use the methods of this class to configure specific properties of a [LinearGradientDto].
 final class LinearGradientUtility<T extends Attribute>
     extends DtoUtility<T, LinearGradientDto, LinearGradient> {
@@ -131,6 +146,14 @@ extension LinearGradientMixExt on LinearGradient {
 }
 
 base mixin _$RadialGradientDto on Dto<RadialGradient> {
+  /// Resolves to [RadialGradient] using the provided [MixData].
+  ///
+  /// If a property is null in the [MixData], it falls back to the
+  /// default value defined in the `defaultValue` for that property.
+  ///
+  /// ```dart
+  /// final radialGradient = RadialGradientDto(...).resolve(mix);
+  /// ```
   @override
   RadialGradient resolve(MixData mix) {
     return RadialGradient(
@@ -146,6 +169,14 @@ base mixin _$RadialGradientDto on Dto<RadialGradient> {
     );
   }
 
+  /// Merges the properties of this [RadialGradientDto] with the properties of [other].
+  ///
+  /// If [other] is null, returns this instance unchanged. Otherwise, returns a new
+  /// [RadialGradientDto] with the properties of [other] taking precedence over
+  /// the corresponding properties of this instance.
+  ///
+  /// Properties from [other] that are null will fall back
+  /// to the values from this instance.
   @override
   RadialGradientDto merge(RadialGradientDto? other) {
     if (other == null) return _$this;
@@ -184,7 +215,6 @@ base mixin _$RadialGradientDto on Dto<RadialGradient> {
 /// Utility class for configuring [RadialGradientDto] properties.
 ///
 /// This class provides methods to set individual properties of a [RadialGradientDto].
-///
 /// Use the methods of this class to configure specific properties of a [RadialGradientDto].
 final class RadialGradientUtility<T extends Attribute>
     extends DtoUtility<T, RadialGradientDto, RadialGradient> {
@@ -277,6 +307,14 @@ extension RadialGradientMixExt on RadialGradient {
 }
 
 base mixin _$SweepGradientDto on Dto<SweepGradient> {
+  /// Resolves to [SweepGradient] using the provided [MixData].
+  ///
+  /// If a property is null in the [MixData], it falls back to the
+  /// default value defined in the `defaultValue` for that property.
+  ///
+  /// ```dart
+  /// final sweepGradient = SweepGradientDto(...).resolve(mix);
+  /// ```
   @override
   SweepGradient resolve(MixData mix) {
     return SweepGradient(
@@ -291,6 +329,14 @@ base mixin _$SweepGradientDto on Dto<SweepGradient> {
     );
   }
 
+  /// Merges the properties of this [SweepGradientDto] with the properties of [other].
+  ///
+  /// If [other] is null, returns this instance unchanged. Otherwise, returns a new
+  /// [SweepGradientDto] with the properties of [other] taking precedence over
+  /// the corresponding properties of this instance.
+  ///
+  /// Properties from [other] that are null will fall back
+  /// to the values from this instance.
   @override
   SweepGradientDto merge(SweepGradientDto? other) {
     if (other == null) return _$this;
@@ -327,7 +373,6 @@ base mixin _$SweepGradientDto on Dto<SweepGradient> {
 /// Utility class for configuring [SweepGradientDto] properties.
 ///
 /// This class provides methods to set individual properties of a [SweepGradientDto].
-///
 /// Use the methods of this class to configure specific properties of a [SweepGradientDto].
 final class SweepGradientUtility<T extends Attribute>
     extends DtoUtility<T, SweepGradientDto, SweepGradient> {

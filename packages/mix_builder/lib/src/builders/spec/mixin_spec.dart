@@ -3,6 +3,7 @@ import 'package:mix_builder/src/builders/method_copy_with.dart';
 import 'package:mix_builder/src/builders/method_equality.dart';
 import 'package:mix_builder/src/builders/method_lerp_builder.dart';
 import 'package:mix_builder/src/helpers/builder_utils.dart';
+import 'package:mix_builder/src/helpers/helpers.dart';
 import 'package:mix_builder/src/helpers/types.dart';
 
 String specMixin(SpecAnnotationContext context) {
@@ -75,6 +76,19 @@ String _staticMethodOfBuilder({
   required String mixinName,
 }) {
   return '''
+/// {@template ${specName.snakecase}_of}
+/// Retrieves the [$specName] from the nearest [Mix] ancestor in the widget tree.
+///
+/// This method uses [Mix.of] to obtain the [Mix] instance associated with the
+/// given [BuildContext], and then retrieves the [$specName] from that [Mix].
+/// If no ancestor [Mix] is found, this method returns an empty [$specName].
+///
+/// Example:
+///
+/// ```dart
+/// final ${specName.lowercaseFirst} = $specName.of(context);
+/// ```
+/// {@endtemplate}
 static $specName of(BuildContext context) {
   return $mixinName.from(Mix.of(context));
 }

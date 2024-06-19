@@ -73,7 +73,7 @@ abstract class AnnotationContext<T> {
     required this.annotation,
   });
 
-  late final formatter = DartFormatter();
+  late final formatter = DartFormatter(pageWidth: 80, fixes: StyleFix.all);
 
   late final emitter = DartEmitter(
     orderDirectives: true,
@@ -119,6 +119,10 @@ extension ReferenceExt on Reference {
       ..url = url
       ..isNullable = true);
   }
+}
+
+extension ClassElementX on ClassElement {
+  bool get isConst => unnamedConstructor?.isConst ?? false;
 }
 
 String getTypeNameFromDartType(DartType type) {
@@ -169,7 +173,7 @@ String getUtilityNameFromTypeName(String typeName) {
     typeName = typeName.substring(0, typeName.length - dtoList.length) + 'List';
   }
 
-  typeName = typeName.capitalize();
+  typeName = typeName.capitalize;
 
   if (!typeName.endsWith(utilityPostfix)) {
     return '${typeName}${utilityPostfix}';
@@ -177,16 +181,20 @@ String getUtilityNameFromTypeName(String typeName) {
   return typeName;
 }
 
-String? getGenericTypeOfSuperclass(ClassElement classElement) {
+DartType? getGenericTypeOfSuperclass(ClassElement classElement) {
   final supertype = classElement.supertype;
   if (supertype != null) {
     final typeArguments = supertype.typeArguments;
     if (typeArguments.isNotEmpty) {
-      final genericType = typeArguments.first;
-      return genericType.getDisplayString(withNullability: false);
+      return typeArguments.first;
     }
   }
   return null;
+}
+
+String? getGenericTypeOfSuperclassString(ClassElement classElement) {
+  return getGenericTypeOfSuperclass(classElement)
+      ?.getDisplayString(withNullability: false);
 }
 
 bool _checkIfTypeStartsWith(InterfaceType type, String typeName) {
