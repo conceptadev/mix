@@ -92,8 +92,6 @@ String _getLerpExpression(
   ParameterInfo field,
   AnnotationContext context,
 ) {
-  final typeName = field.type;
-
   final defaultExpression = 't < 0.5 ? $fieldName : other.$fieldName';
 
   if (field.dartType.element == null) {
@@ -102,28 +100,13 @@ String _getLerpExpression(
 
   final lerpParams = '$fieldName, other.$fieldName, t';
 
-  final hasLerp = _checkIfFieldHasLerp(field.dartType.element!);
+  final lerpMethod = _getLerpMethod(field, context);
 
-  // We need a custom TextStyle lerp for now
-  // Due to the shadow list merge behavior
-  // Later check if the min Flutter version has the Shadow lerp list
-  if (hasLerp && typeName != 'TextStyle') {
-    return '$typeName.lerp($lerpParams)';
+  if (lerpMethod == null) {
+    return defaultExpression;
   }
 
-  switch (typeName) {
-    case 'double':
-      return '${MixHelperRef.lerpDouble}($lerpParams)';
-    case 'Matrix4':
-      return '${MixHelperRef.lerpMatrix4}($lerpParams)';
-    case 'StrutStyle':
-      return '${MixHelperRef.lerpStrutStyle}($lerpParams)';
-
-    case 'TextStyle':
-      return '${MixHelperRef.lerpTextStyle}($lerpParams)';
-    default:
-      return defaultExpression;
-  }
+  return '$lerpMethod($lerpParams)';
 }
 
 bool _checkIfFieldHasLerp(Element element) {
