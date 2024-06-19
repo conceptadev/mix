@@ -30,29 +30,6 @@ w.TextStyle? _lerpTextStyle(w.TextStyle? a, w.TextStyle? b, double t) {
       ?.copyWith(shadows: w.Shadow.lerpList(a?.shadows, b?.shadows, t));
 }
 
-List<T>? _mergeList<T>(List<T>? a, List<T>? b) {
-  if (b == null) return a;
-  if (a == null) return b;
-
-  final mergedList = [...a];
-  for (int i = 0; i < b.length; i++) {
-    if (i < mergedList.length) {
-      final currentValue = mergedList[i];
-      final newValue = b[i];
-
-      if (currentValue is Dto && newValue is Dto) {
-        mergedList[i] = currentValue.merge(newValue) as T;
-      } else {
-        mergedList[i] = newValue ?? currentValue;
-      }
-    } else {
-      mergedList.add(b[i]);
-    }
-  }
-
-  return mergedList;
-}
-
 List<T>? _mergeDtoList<T>(List<T>? a, List<T>? b) {
   if (b == null) return a;
   if (a == null) return b;

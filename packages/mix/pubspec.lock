@@ -331,13 +331,20 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.4"
-  mix_builder:
-    dependency: "direct dev"
+  mix_annotations:
+    dependency: "direct main"
     description:
-      path: "../mix_builder"
+      path: "../mix_annotations"
       relative: true
     source: path
-    version: "1.0.0-beta.15"
+    version: "1.0.0"
+  mix_generator:
+    dependency: "direct dev"
+    description:
+      path: "../mix_generator"
+      relative: true
+    source: path
+    version: "0.1.0"
   package_config:
     dependency: transitive
     description:
