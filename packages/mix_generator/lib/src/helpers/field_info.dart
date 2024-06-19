@@ -38,6 +38,12 @@ final _dtoMap = {
   'TextDirective': 'TextDirectiveDto',
   'DecorationImage': 'DecorationImageDto',
   'LinearBorderEdge': 'LinearBorderEdgeDto',
+  'FlexSpec': 'FlexSpecAttribute',
+  'BoxSpec': 'BoxSpecAttribute',
+  'TextSpec': 'TextSpecAttribute',
+  'ImageSpec': 'ImageSpecAttribute',
+  'IconSpec': 'IconSpecAttribute',
+  'StackSpec': 'StackSpecAttribute',
 };
 
 /// Replace keys and values from teh _dtoMap
