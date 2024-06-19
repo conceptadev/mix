@@ -17,3 +17,5 @@ scripts:
   build_runner_clean: 
     run: melos exec --depends-on="build_runner" dart run build_runner clean
     description: Clean build_runner for projects that have it as a dependency
+  fix:
+    run: dart fix --apply &&  melos exec --depends-on="dart_code_metrics_presets" dcm fix .
