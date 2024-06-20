@@ -89,7 +89,7 @@ node_modules
 # FVM 
 
 # FVM Version Cache
-.fvm/
+.fvm
 
 .packages
 .pub/

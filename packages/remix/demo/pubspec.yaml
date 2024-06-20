@@ -1,0 +1,32 @@
+name: demo
+description: "A new Flutter project."
+
+publish_to: "none"
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.19.2 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.2
+  widgetbook_annotation: ^3.1.0
+  widgetbook: ^3.7.1
+  remix: 
+    path: ../
+    
+  mix: ^1.1.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^2.0.0
+  widgetbook_generator: ^3.7.0
+  build_runner: ^2.4.8
+
+flutter:
+  uses-material-design: true
