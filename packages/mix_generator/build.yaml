@@ -7,28 +7,26 @@ targets:
           exclude:
             - test
             - example
-          include:
-            - lib/**_spec.dart
       dto:
         enabled: true
         generate_for:
           exclude:
             - test
             - example
-          include:
-            - lib/**_dto.dart
 
 
 builders:
   spec:
     import: "package:mix_generator/mix_generator.dart"
     builder_factories: ["specDefinition"]
-    build_extensions: {".dart": [".g.dart"]}
+    build_extensions: {".dart": ["spec.g.part"]}
     auto_apply: dependents
-    build_to: source
+    build_to: cache
+    applies_builders: ["source_gen|combining_builder"]
   dto:
     import: "package:mix_generator/mix_generator.dart"
     builder_factories: ["dtoDefinition"]
-    build_extensions: {".dart": [".g.dart"]}
+    build_extensions: {".dart": ["dto.g.part"]}
     auto_apply: dependents
-    build_to: source
+    build_to: cache
+    applies_builders: ["source_gen|combining_builder"]

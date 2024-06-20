@@ -8,7 +8,7 @@ import 'attribute.dart';
 import 'factory/mix_data.dart';
 
 @immutable
-abstract base class Spec<T extends Spec<T>> with EqualityMixin {
+abstract class Spec<T extends Spec<T>> with EqualityMixin {
   final AnimatedData? animated;
 
   const Spec({this.animated});
@@ -46,5 +46,5 @@ abstract base class SpecUtility<Attr extends Attribute,
   final Attr Function(Value) builder;
   const SpecUtility(this.builder);
 
-  Attr only({AnimatedDataDto? animated});
+  Attr only();
 }

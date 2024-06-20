@@ -3,16 +3,14 @@ import 'package:mix_generator/src/mixable_dto_generator.dart';
 import 'package:mix_generator/src/mixable_spec_generator.dart';
 import 'package:source_gen/source_gen.dart';
 
-Builder specDefinition(BuilderOptions options) => PartBuilder(
+Builder specDefinition(BuilderOptions options) => SharedPartBuilder(
       [MixableSpecGenerator()],
-      '.g.dart',
+      'spec',
       allowSyntaxErrors: true,
-      options: options,
     );
 
-Builder dtoDefinition(BuilderOptions options) => PartBuilder(
+Builder dtoDefinition(BuilderOptions options) => SharedPartBuilder(
       [MixableDtoGenerator()],
-      '.g.dart',
+      'dto',
       allowSyntaxErrors: true,
-      options: options,
     );
