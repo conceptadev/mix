@@ -53,11 +53,11 @@ abstract class ContextVariant extends IVariant {
 }
 
 @immutable
-abstract class WidgetContextVariant<Value> extends ContextVariant {
+abstract class WidgetStateVariant<Value> extends ContextVariant {
   @override
   final priority = VariantPriority.highest;
 
-  const WidgetContextVariant();
+  const WidgetStateVariant();
 
   ContextVariantBuilder event(Style Function(Value) fn) {
     return ContextVariantBuilder(
