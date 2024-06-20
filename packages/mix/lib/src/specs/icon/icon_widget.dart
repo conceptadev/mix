@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../../core/factory/mix_provider.dart';
 import '../../core/styled_widget.dart';
+import '../../modifiers/modifiers.dart';
 import 'icon_spec.dart';
 
 class StyledIcon extends StyledWidget {
@@ -23,21 +25,16 @@ class StyledIcon extends StyledWidget {
     return withMix(context, (context) {
       final spec = IconSpec.of(context);
 
-      return spec.isAnimated
-          ? AnimatedIconSpecWidget(
-              icon,
-              spec: spec,
-              semanticLabel: semanticLabel,
-              textDirection: textDirection,
-              curve: spec.animated!.curve,
-              duration: spec.animated!.duration,
-            )
-          : IconSpecWidget(
-              icon,
-              spec: spec,
-              semanticLabel: semanticLabel,
-              textDirection: textDirection,
-            );
+      return RenderInlineModifiers(
+        mix: Mix.of(context),
+        orderOfModifiers: orderOfModifiers,
+        spec: spec,
+        child: spec(
+          icon: icon,
+          semanticLabel: semanticLabel,
+          textDirection: textDirection,
+        ),
+      );
     });
   }
 }

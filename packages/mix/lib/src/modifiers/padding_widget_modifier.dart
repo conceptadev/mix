@@ -2,9 +2,8 @@
 
 import 'package:flutter/material.dart';
 
-import '../attributes/spacing/spacing_dto.dart';
-import '../core/factory/mix_data.dart';
-import '../core/modifier.dart';
+import '../attributes/attributes.dart';
+import '../core/core.dart';
 
 final class PaddingSpec extends WidgetModifierSpec<PaddingSpec> {
   final EdgeInsetsGeometry padding;
@@ -38,7 +37,7 @@ final class PaddingModifierAttribute
 
   @override
   PaddingModifierAttribute merge(PaddingModifierAttribute? other) {
-    return PaddingModifierAttribute(other?.padding ?? padding);
+    return PaddingModifierAttribute(padding.merge(other?.padding));
   }
 
   @override
@@ -46,4 +45,10 @@ final class PaddingModifierAttribute
 
   @override
   get props => [padding];
+}
+
+final class PaddingModifierUtility<T extends Attribute>
+    extends MixUtility<T, PaddingModifierAttribute> {
+  const PaddingModifierUtility(super.builder);
+  T call(SpacingDto value) => builder(PaddingModifierAttribute(value));
 }

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
+import '../../core/factory/mix_provider.dart';
 import '../../core/styled_widget.dart';
 import '../../internal/constants.dart';
+import '../../modifiers/modifiers.dart';
 import 'image_spec.dart';
 
 class StyledImage extends StyledWidget {
@@ -38,35 +40,23 @@ class StyledImage extends StyledWidget {
     return withMix(context, (context) {
       final spec = ImageSpec.of(context);
 
-      return spec.isAnimated
-          ? AnimatedImageSpecWidget(
-              spec: spec,
-              image: image,
-              frameBuilder: frameBuilder,
-              loadingBuilder: loadingBuilder,
-              errorBuilder: errorBuilder,
-              semanticLabel: semanticLabel,
-              excludeFromSemantics: excludeFromSemantics,
-              duration: spec.animated!.duration,
-              curve: spec.animated!.curve,
-              gaplessPlayback: gaplessPlayback,
-              isAntiAlias: isAntiAlias,
-              matchTextDirection: matchTextDirection,
-              opacity: opacity,
-            )
-          : ImageSpecWidget(
-              spec: spec,
-              image: image,
-              frameBuilder: frameBuilder,
-              loadingBuilder: loadingBuilder,
-              errorBuilder: errorBuilder,
-              semanticLabel: semanticLabel,
-              excludeFromSemantics: excludeFromSemantics,
-              gaplessPlayback: gaplessPlayback,
-              isAntiAlias: isAntiAlias,
-              opacity: opacity,
-              matchTextDirection: matchTextDirection,
-            );
+      return RenderInlineModifiers(
+        mix: Mix.of(context),
+        orderOfModifiers: orderOfModifiers,
+        spec: spec,
+        child: spec(
+          image: image,
+          frameBuilder: frameBuilder,
+          loadingBuilder: loadingBuilder,
+          errorBuilder: errorBuilder,
+          semanticLabel: semanticLabel,
+          excludeFromSemantics: excludeFromSemantics,
+          gaplessPlayback: gaplessPlayback,
+          isAntiAlias: isAntiAlias,
+          matchTextDirection: matchTextDirection,
+          opacity: opacity,
+        ),
+      );
     });
   }
 }

@@ -41,7 +41,7 @@ const _shapeDecor = MixableUtility(
 );
 
 @MixableSpec()
-final class BoxSpec extends Spec<BoxSpec> with _$BoxSpec {
+final class BoxSpec extends ModifiableSpec<BoxSpec> with _$BoxSpec {
   /// {@macro box_spec_of}
   static const of = _$BoxSpec.of;
 
@@ -84,6 +84,15 @@ final class BoxSpec extends Spec<BoxSpec> with _$BoxSpec {
   /// Specifies the height of the box.
   final double? height;
 
+  @override
+  @MixableProperty(utilities: [
+    MixableUtility(
+      alias: '_modifiers',
+      properties: [(path: 'add', alias: 'mod')],
+    ),
+  ])
+  final Set<WidgetModifierSpec<dynamic>>? modifiers;
+
   const BoxSpec({
     this.alignment,
     this.padding,
@@ -96,10 +105,11 @@ final class BoxSpec extends Spec<BoxSpec> with _$BoxSpec {
     this.clipBehavior,
     this.width,
     this.height,
+    this.modifiers,
     super.animated,
   });
 
-  Widget call({Widget? child}) {
+  Widget call({required Widget? child}) {
     return isAnimated
         ? AnimatedBoxSpecWidget(
             spec: this,

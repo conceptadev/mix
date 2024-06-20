@@ -260,4 +260,84 @@ void main() {
 
     expect(find.byKey(childKey), findsOneWidget);
   });
+
+  group('inline Modifiers', () {
+    testWidgets('apply inline decorator', (tester) async {
+      final style = Style(
+        $box.mod.transform.scale(2),
+      );
+
+      final widget = Box(
+        style: style,
+      );
+
+      await tester.pumpWidget(widget);
+
+      expect(
+        find.descendant(
+          of: find.byWidget(widget),
+          matching: find.byType(Transform),
+        ),
+        findsOneWidget,
+      );
+
+      return;
+    });
+
+    testWidgets('applying different modifiers', (tester) async {
+      final style = Style(
+        $box.mod.transform.scale(2),
+        $box.mod.opacity(0.3),
+        $box.mod.opacity(0.5),
+      );
+
+      final widget = Box(
+        style: style,
+      );
+
+      await tester.pumpWidget(widget);
+
+      expect(
+        find.descendant(
+          of: find.byWidget(widget),
+          matching: find.byType(Transform),
+        ),
+        findsOneWidget,
+      );
+
+      expect(
+        find.descendant(
+          of: find.byWidget(widget),
+          matching: find.byType(Opacity),
+        ),
+        findsOneWidget,
+      );
+    });
+
+    testWidgets('applying twice the same modifier', (tester) async {
+      final style = Style(
+        $box.mod.transform.scale(2),
+        $box.mod.transform.scale(3),
+        $box.mod.transform.scale(20),
+        $box.mod.opacity(0.5),
+        $box.mod.opacity(0.3),
+        $box.mod.sizedBox(height: 100),
+        $box.mod.sizedBox(height: 200),
+      );
+
+      final widget = Box(
+        style: style,
+      );
+
+      await tester.pumpWidget(widget);
+
+      expect(
+        find.descendant(
+          of: find.byWidget(widget),
+          matching: find.byType(Opacity),
+        ),
+        findsOneWidget,
+      );
+    });
+  });
 }

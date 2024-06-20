@@ -81,6 +81,9 @@ String _utilityExpression({
   required String fieldName,
   required String utilityName,
 }) {
+  if (utilityName == 'InlineModifierUtility') {
+    return '${utilityName}((v) => only(${fieldName}: ModifierDto(v)))';
+  }
   return '${utilityName}((v) => only(${fieldName}: v))';
 }
 

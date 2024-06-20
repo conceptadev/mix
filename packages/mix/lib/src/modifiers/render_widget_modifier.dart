@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import '../core/attributes_map.dart';
 import '../core/factory/mix_data.dart';
 import '../core/modifier.dart';
+import '../core/spec.dart';
 import 'align_widget_modifier.dart';
 import 'aspect_ratio_widget_modifier.dart';
 import 'clip_widget_modifier.dart';
@@ -73,17 +74,30 @@ class RenderModifiers extends StatelessWidget {
   const RenderModifiers({
     required this.mix,
     required this.child,
-    super.key,
     required this.orderOfModifiers,
-  });
+    super.key,
+  })  : wasInitializedFromSpec = false,
+        spec = null;
+
+  const RenderModifiers.fromSpec({
+    required this.mix,
+    required this.child,
+    required this.orderOfModifiers,
+    required this.spec,
+    super.key,
+  }) : wasInitializedFromSpec = true;
 
   final MixData mix;
   final Widget child;
   final List<Type> orderOfModifiers;
+  final ModifiableSpec? spec;
+  final bool wasInitializedFromSpec;
 
   @override
   Widget build(BuildContext context) {
-    final specs = resolveModifierSpecs(orderOfModifiers, mix);
+    final specs = wasInitializedFromSpec
+        ? spec?.modifiers ?? {}
+        : resolveModifierSpecs(orderOfModifiers, mix);
 
     var current = child;
 
@@ -100,16 +114,31 @@ class RenderAnimatedModifiers extends ImplicitlyAnimatedWidget {
     required this.mix,
     required this.child,
     required this.orderOfModifiers,
-    super.key,
     required super.duration,
+    super.key,
     super.curve = Curves.linear,
     super.onEnd,
-  });
+  })  : mods = null,
+        wasInitializedFromSpec = false;
+
+  RenderAnimatedModifiers.fromSpec({
+    required this.mix,
+    required this.child,
+    required this.orderOfModifiers,
+    required ModifiableSpec spec,
+    super.key,
+    super.onEnd,
+  })  : mods = spec.modifiers,
+        wasInitializedFromSpec = true,
+        super(duration: spec.animated!.duration, curve: spec.animated!.curve);
 
   final MixData mix;
   final Widget child;
   final List<Type> orderOfModifiers;
 
+  final Set<WidgetModifierSpec<dynamic>>? mods;
+
+  final bool wasInitializedFromSpec;
   @override
   RenderAnimatedModifiersState createState() => RenderAnimatedModifiersState();
 }
@@ -120,12 +149,13 @@ class RenderAnimatedModifiersState
 
   @override
   void forEachTween(TweenVisitor<dynamic> visitor) {
-    final specs = resolveModifierSpecs(widget.orderOfModifiers, widget.mix);
+    final specs = widget.wasInitializedFromSpec
+        ? widget.mods ?? {}
+        : resolveModifierSpecs(widget.orderOfModifiers, widget.mix);
 
     for (final spec in specs) {
       final specType = spec.runtimeType;
       final previousSpec = _specs[specType];
-
       _specs[specType] = visitor(
         previousSpec,
         spec,
@@ -152,7 +182,7 @@ Set<WidgetModifierSpec> resolveModifierSpecs(
   List<Type> orderOfModifiers,
   MixData mix,
 ) {
-  final modifiers = mix.whereType<WidgetModifierAttribute>();
+  final modifiers = mix.whereType<WidgetModifierAttribute>().toList();
 
   if (modifiers.isEmpty) return {};
   final modifierMap = AttributeMap<WidgetModifierAttribute>(modifiers).toMap();
@@ -176,6 +206,38 @@ Set<WidgetModifierSpec> resolveModifierSpecs(
   }
 
   return specs.toSet();
+}
+
+class RenderInlineModifiers extends StatelessWidget {
+  const RenderInlineModifiers({
+    required this.mix,
+    required this.orderOfModifiers,
+    required this.child,
+    required this.spec,
+    super.key,
+  });
+
+  final MixData mix;
+  final Widget child;
+  final List<Type> orderOfModifiers;
+  final ModifiableSpec spec;
+
+  @override
+  Widget build(BuildContext context) {
+    return spec.isAnimated
+        ? RenderAnimatedModifiers.fromSpec(
+            mix: mix,
+            orderOfModifiers: orderOfModifiers,
+            spec: spec,
+            child: child,
+          )
+        : RenderModifiers.fromSpec(
+            mix: mix,
+            orderOfModifiers: orderOfModifiers,
+            spec: spec,
+            child: child,
+          );
+  }
 }
 
 class ModifierSpecTween extends Tween<WidgetModifierSpec> {

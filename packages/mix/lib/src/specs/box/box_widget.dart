@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../core/factory/mix_provider.dart';
-import '../../core/styled_widget.dart';
+import '../../core/core.dart';
+import '../../modifiers/modifiers.dart';
 import 'box_spec.dart';
 
 /// A [Container] equivalent widget for applying styles using Mix.
@@ -53,14 +53,12 @@ class Box extends StyledWidget {
     return withMix(context, (context) {
       final spec = BoxSpec.of(context);
 
-      return spec.isAnimated
-          ? AnimatedBoxSpecWidget(
-              spec: spec,
-              duration: spec.animated!.duration,
-              curve: spec.animated!.curve,
-              child: child,
-            )
-          : BoxSpecWidget(spec: spec, child: child);
+      return RenderInlineModifiers(
+        mix: Mix.of(context),
+        orderOfModifiers: orderOfModifiers,
+        spec: spec,
+        child: spec(child: child),
+      );
     });
   }
 }
@@ -93,11 +91,11 @@ class BoxSpecWidget extends StatelessWidget {
 class AnimatedBoxSpecWidget extends ImplicitlyAnimatedWidget {
   const AnimatedBoxSpecWidget({
     required this.spec,
-    super.key,
-    this.child,
     required super.duration,
+    super.key,
     super.curve = Curves.linear,
     super.onEnd,
+    this.child,
   });
 
   final Widget? child;

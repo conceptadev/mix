@@ -151,7 +151,7 @@ void main() {
             of: find.byKey(key),
             matching: find.byType(RenderModifiers),
           ),
-          findsOneWidget,
+          findsExactly(2),
         );
 
         expect(

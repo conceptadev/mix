@@ -42,6 +42,7 @@ base mixin _$IconSpec on Spec<IconSpec> {
     TextDirection? textDirection,
     bool? applyTextScaling,
     double? fill,
+    Set<WidgetModifierSpec<dynamic>>? modifiers,
     AnimatedData? animated,
   }) {
     return IconSpec(
@@ -54,6 +55,7 @@ base mixin _$IconSpec on Spec<IconSpec> {
       textDirection: textDirection ?? _$this.textDirection,
       applyTextScaling: applyTextScaling ?? _$this.applyTextScaling,
       fill: fill ?? _$this.fill,
+      modifiers: modifiers ?? _$this.modifiers,
       animated: animated ?? _$this.animated,
     );
   }
@@ -72,7 +74,7 @@ base mixin _$IconSpec on Spec<IconSpec> {
   /// - [Color.lerp] for [color].
   /// - [MixHelpers.lerpDouble] for [size] and [weight] and [grade] and [opticalSize] and [fill].
 
-  /// For [shadows] and [textDirection] and [applyTextScaling] and [animated], the interpolation is performed using a step function.
+  /// For [shadows] and [textDirection] and [applyTextScaling] and [modifiers] and [animated], the interpolation is performed using a step function.
   /// If [t] is less than 0.5, the value from the current [IconSpec] is used. Otherwise, the value
   /// from the [other] [IconSpec] is used.
   ///
@@ -94,6 +96,7 @@ base mixin _$IconSpec on Spec<IconSpec> {
       applyTextScaling:
           t < 0.5 ? _$this.applyTextScaling : other.applyTextScaling,
       fill: MixHelpers.lerpDouble(_$this.fill, other.fill, t),
+      modifiers: t < 0.5 ? _$this.modifiers : other.modifiers,
       animated: t < 0.5 ? _$this.animated : other.animated,
     );
   }
@@ -113,6 +116,7 @@ base mixin _$IconSpec on Spec<IconSpec> {
         _$this.textDirection,
         _$this.applyTextScaling,
         _$this.fill,
+        _$this.modifiers,
         _$this.animated,
       ];
 
@@ -126,7 +130,7 @@ base mixin _$IconSpec on Spec<IconSpec> {
 ///
 /// Use this class to configure the attributes of a [IconSpec] and pass it to
 /// the [IconSpec] constructor.
-final class IconSpecAttribute extends SpecAttribute<IconSpec> {
+final class IconSpecAttribute extends ModifiableSpecAttribute<IconSpec> {
   final ColorDto? color;
   final double? size;
   final double? weight;
@@ -147,6 +151,7 @@ final class IconSpecAttribute extends SpecAttribute<IconSpec> {
     this.textDirection,
     this.applyTextScaling,
     this.fill,
+    super.modifiers,
     super.animated,
   });
 
@@ -170,6 +175,7 @@ final class IconSpecAttribute extends SpecAttribute<IconSpec> {
       textDirection: textDirection,
       applyTextScaling: applyTextScaling,
       fill: fill,
+      modifiers: modifiers?.resolve(mix),
       animated: animated?.resolve(mix) ?? mix.animation,
     );
   }
@@ -196,6 +202,7 @@ final class IconSpecAttribute extends SpecAttribute<IconSpec> {
       textDirection: other.textDirection ?? textDirection,
       applyTextScaling: other.applyTextScaling ?? applyTextScaling,
       fill: other.fill ?? fill,
+      modifiers: modifiers?.merge(other.modifiers) ?? other.modifiers,
       animated: animated?.merge(other.animated) ?? other.animated,
     );
   }
@@ -215,6 +222,7 @@ final class IconSpecAttribute extends SpecAttribute<IconSpec> {
         textDirection,
         applyTextScaling,
         fill,
+        modifiers,
         animated,
       ];
 }
@@ -253,6 +261,10 @@ base class IconSpecUtility<T extends Attribute>
   /// Utility for defining [IconSpecAttribute.fill]
   late final fill = DoubleUtility((v) => only(fill: v));
 
+  /// Utility for defining [IconSpecAttribute.modifiers]
+  late final modifiers =
+      InlineModifierUtility((v) => only(modifiers: ModifierDto(v)));
+
   /// Utility for defining [IconSpecAttribute.animated]
   late final animated = AnimatedUtility((v) => only(animated: v));
 
@@ -272,6 +284,7 @@ base class IconSpecUtility<T extends Attribute>
     TextDirection? textDirection,
     bool? applyTextScaling,
     double? fill,
+    ModifierDto? modifiers,
     AnimatedDataDto? animated,
   }) {
     return builder(IconSpecAttribute(
@@ -284,6 +297,7 @@ base class IconSpecUtility<T extends Attribute>
       textDirection: textDirection,
       applyTextScaling: applyTextScaling,
       fill: fill,
+      modifiers: modifiers,
       animated: animated,
     ));
   }

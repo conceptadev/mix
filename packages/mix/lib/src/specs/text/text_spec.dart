@@ -6,7 +6,7 @@ import 'package:mix_annotations/mix_annotations.dart';
 part 'text_spec.g.dart';
 
 @MixableSpec()
-final class TextSpec extends Spec<TextSpec> with _$TextSpec {
+final class TextSpec extends ModifiableSpec<TextSpec> with _$TextSpec {
   final TextOverflow? overflow;
   final StrutStyle? strutStyle;
   final TextAlign? textAlign;
@@ -50,6 +50,7 @@ final class TextSpec extends Spec<TextSpec> with _$TextSpec {
     this.softWrap,
     this.directive,
     super.animated,
+    super.modifiers,
   });
 
   Widget call(String text) {

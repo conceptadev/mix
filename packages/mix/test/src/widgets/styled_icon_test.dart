@@ -14,10 +14,16 @@ void main() {
 
         await tester.pumpMaterialApp(
           Box(
-            style: Style($icon.color(color), $icon.size(size)),
-            child: const StyledIcon(Icons.access_time_filled_outlined),
+            style: Style(
+              $icon.color(color),
+              $icon.size(size),
+            ),
+            child: const StyledIcon(
+              Icons.access_time_filled_outlined,
+            ),
           ),
         );
+        await tester.pumpAndSettle();
 
         final iconWidget = tester.widget<Icon>(find.byType(Icon));
         expect(iconWidget.color, color);
@@ -51,7 +57,7 @@ void main() {
             of: find.byKey(key),
             matching: find.byType(RenderModifiers),
           ),
-          findsOneWidget,
+          findsExactly(2),
         );
 
         expect(

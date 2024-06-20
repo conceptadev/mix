@@ -16,7 +16,8 @@ void main() {
         ),
       );
 
-      expect(spec.transform, Matrix4.diagonal3Values(scale, scale, 1));
+      expect((spec as TransformModifierSpec).transform,
+          Matrix4.diagonal3Values(scale, scale, 1));
     });
 
     testWidgets(

@@ -6,7 +6,7 @@ import 'package:mix_annotations/mix_annotations.dart';
 part 'icon_spec.g.dart';
 
 @MixableSpec()
-final class IconSpec extends Spec<IconSpec> with _$IconSpec {
+final class IconSpec extends ModifiableSpec<IconSpec> with _$IconSpec {
   final Color? color;
   final double? size;
   final double? weight;
@@ -33,19 +33,30 @@ final class IconSpec extends Spec<IconSpec> with _$IconSpec {
     this.textDirection,
     this.applyTextScaling,
     this.fill,
+    super.modifiers,
     super.animated,
   });
 
-  Widget call([IconData? icon]) {
+  Widget call({
+    required IconData? icon,
+    required String? semanticLabel,
+    required TextDirection? textDirection,
+  }) {
     return isAnimated
         ? AnimatedIconSpecWidget(
             icon,
             spec: this,
+            semanticLabel: semanticLabel,
             textDirection: textDirection,
             curve: animated!.curve,
             duration: animated!.duration,
           )
-        : IconSpecWidget(icon, spec: this, textDirection: textDirection);
+        : IconSpecWidget(
+            icon,
+            spec: this,
+            semanticLabel: semanticLabel,
+            textDirection: textDirection,
+          );
   }
 }
 

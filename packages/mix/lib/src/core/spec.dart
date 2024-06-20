@@ -6,6 +6,7 @@ import '../attributes/scalars/scalar_util.dart';
 import '../internal/compare_mixin.dart';
 import 'attribute.dart';
 import 'factory/mix_data.dart';
+import 'modifier.dart';
 
 @immutable
 abstract class Spec<T extends Spec<T>> with EqualityMixin {
@@ -47,4 +48,18 @@ abstract base class SpecUtility<Attr extends Attribute,
   const SpecUtility(this.builder);
 
   Attr only();
+}
+
+@immutable
+abstract class ModifiableSpec<T extends Spec<T>> extends Spec<T> {
+  final InlineModifierSpec? modifiers;
+
+  const ModifiableSpec({this.modifiers, super.animated});
+}
+
+abstract base class ModifiableSpecAttribute<Value>
+    extends SpecAttribute<Value> {
+  final ModifierDto? modifiers;
+
+  const ModifiableSpecAttribute({super.animated, this.modifiers});
 }

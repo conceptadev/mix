@@ -7,7 +7,7 @@ import 'package:mix_annotations/mix_annotations.dart';
 part 'image_spec.g.dart';
 
 @MixableSpec()
-final class ImageSpec extends Spec<ImageSpec> with _$ImageSpec {
+final class ImageSpec extends ModifiableSpec<ImageSpec> with _$ImageSpec {
   final double? width, height;
   final Color? color;
   final ImageRepeat? repeat;
@@ -32,17 +32,50 @@ final class ImageSpec extends Spec<ImageSpec> with _$ImageSpec {
     this.centerSlice,
     this.filterQuality,
     this.colorBlendMode,
+    super.modifiers,
     super.animated,
   });
 
-  Widget call({required ImageProvider<Object> image}) {
+  Widget call({
+    required ImageProvider<Object> image,
+    required ImageFrameBuilder? frameBuilder,
+    required ImageLoadingBuilder? loadingBuilder,
+    required ImageErrorWidgetBuilder? errorBuilder,
+    required String? semanticLabel,
+    required bool excludeFromSemantics,
+    required bool gaplessPlayback,
+    required bool isAntiAlias,
+    required bool matchTextDirection,
+    required Animation<double>? opacity,
+  }) {
     return isAnimated
         ? AnimatedImageSpecWidget(
             spec: this,
             image: image,
+            frameBuilder: frameBuilder,
+            loadingBuilder: loadingBuilder,
+            errorBuilder: errorBuilder,
+            semanticLabel: semanticLabel,
+            excludeFromSemantics: excludeFromSemantics,
             duration: animated!.duration,
             curve: animated!.curve,
+            gaplessPlayback: gaplessPlayback,
+            isAntiAlias: isAntiAlias,
+            matchTextDirection: matchTextDirection,
+            opacity: opacity,
           )
-        : ImageSpecWidget(spec: this, image: image);
+        : ImageSpecWidget(
+            spec: this,
+            image: image,
+            frameBuilder: frameBuilder,
+            loadingBuilder: loadingBuilder,
+            errorBuilder: errorBuilder,
+            semanticLabel: semanticLabel,
+            excludeFromSemantics: excludeFromSemantics,
+            gaplessPlayback: gaplessPlayback,
+            isAntiAlias: isAntiAlias,
+            opacity: opacity,
+            matchTextDirection: matchTextDirection,
+          );
   }
 }
