@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:mix/mix.dart';
+import 'package:remix/components/button/button.style.dart';
 import 'package:remix/components/button/button.variants.dart';
+import 'package:remix/components/button/button_spec.dart';
 
-class RemixButton extends StatelessWidget
-    implements RemixComponentRecipe<RemixButtonStyle> {
-  const RemixButton({
+class RXButton extends StatelessWidget {
+  const RXButton({
     super.key,
-    this.label,
+    required this.label,
     this.disabled = false,
     this.loading = false,
     this.iconLeft,
@@ -16,10 +17,9 @@ class RemixButton extends StatelessWidget
     this.loadingLabel,
     required this.onPressed,
     this.style,
-    this.variants = const [],
   });
 
-  final String? label;
+  final String label;
   final bool disabled;
   final bool loading;
   final String? loadingLabel;
@@ -29,66 +29,65 @@ class RemixButton extends StatelessWidget
   final ButtonSize size;
   final VoidCallback? onPressed;
 
-  @override
   final Style? style;
 
-  @override
-  final List<Variant> variants;
-
-  RemixButtonStyle buildStyle(List<Variant> variants) {
-    final result = style == null ? RemixButtonStyle.base() : style!;
-    return result.applyVariants(variants);
+  Style _buildStyle() {
+    return defaultButtonStyle
+        .merge(style)
+        .applyVariants([size, type]).animate();
   }
 
-  List<Widget> _buildChildren(BuildContext context, RemixButtonStyle style) {
+  List<Widget> _buildChildren(IconSpec iconSpec, TextSpec labelSpec) {
     return loading
-        ? _buildLoadingChildren(context, style)
-        : _buildDefaultChildren(style);
+        ? _buildLoadingChildren(iconSpec, labelSpec)
+        : _buildDefaultChildren(iconSpec, labelSpec);
   }
 
-  List<Widget> _buildLoadingChildren(
-    BuildContext context,
-    RemixButtonStyle buttonStyle,
-  ) =>
-      [
-        _buildLoadingIndicator(context),
-        if (loadingLabel != null)
-          StyledText(
-            loadingLabel!,
-            style: buttonStyle.label,
-          ),
+  List<Widget> _buildLoadingChildren(IconSpec iconSpec, TextSpec labelSpec) => [
+        _buildLoadingIndicator(iconSpec),
+        if (loadingLabel != null) labelSpec(loadingLabel!),
       ];
 
-  Widget _buildLoadingIndicator(BuildContext context) {
-    final icon = IconSpec.of(context);
+  Widget _buildLoadingIndicator(IconSpec iconSpec) {
     const indicatorWidth = 2.5;
 
     return SizedBox(
-      width: icon.size,
-      height: icon.size,
+      width: iconSpec.size,
+      height: iconSpec.size,
       child: CircularProgressIndicator(
         strokeWidth: indicatorWidth,
-        color: icon.color,
+        color: iconSpec.color,
       ),
     );
   }
 
-  List<Widget> _buildDefaultChildren(RemixButtonStyle style) => [
-        if (iconLeft != null) StyledIcon(iconLeft, style: style.icon),
-        if (label != null) StyledText(label!, style: style.label),
-        if (iconRight != null) StyledIcon(iconRight, style: style.icon),
+  List<Widget> _buildDefaultChildren(IconSpec iconSpec, TextSpec labelSpec) => [
+        if (iconLeft != null) iconSpec(iconLeft),
+        if (label.isNotEmpty) labelSpec(label),
+        if (iconRight != null) iconSpec(iconRight),
       ];
 
   @override
   Widget build(BuildContext context) {
-    final style = buildStyle([size, type, ...variants]);
-
-    return PressableBox(
+    return Pressable(
       onPress: disabled || loading ? null : onPressed,
-      child: HBox(
-        style: style.container,
-        children: _buildChildren(context, style),
-      ),
+      child: SpecBuilder(
+          style: _buildStyle(),
+          builder: (context) {
+            final buttonSpec = ButtonSpec.of(context);
+
+            final containerSpec = buttonSpec.container;
+            final flexSpec = buttonSpec.flex;
+            final iconSpec = buttonSpec.icon;
+            final labelSpec = buttonSpec.label;
+
+            return containerSpec(
+              child: flexSpec(
+                direction: Axis.horizontal,
+                children: _buildChildren(iconSpec, labelSpec),
+              ),
+            );
+          }),
     );
   }
 }

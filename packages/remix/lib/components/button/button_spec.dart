@@ -6,14 +6,24 @@ part 'button_spec.g.dart';
 
 @MixableSpec()
 base class ButtonSpec extends Spec<ButtonSpec> with _$ButtonSpec {
-  final BoxSpec? container;
-  final IconSpec? icon;
-  final TextSpec? label;
+  final FlexSpec flex;
+  final BoxSpec container;
+  final IconSpec icon;
+  final TextSpec label;
+
+  /// {@macro button_spec_of}
+  static const of = _$ButtonSpec.of;
+
+  static const from = _$ButtonSpec.from;
 
   const ButtonSpec({
-    this.container,
-    this.icon,
-    this.label,
+    BoxSpec? container,
+    FlexSpec? flex,
+    IconSpec? icon,
+    TextSpec? label,
     super.animated,
-  });
+  })  : flex = flex ?? const FlexSpec(),
+        container = container ?? const BoxSpec(),
+        icon = icon ?? const IconSpec(),
+        label = label ?? const TextSpec();
 }

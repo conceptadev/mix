@@ -34,12 +34,14 @@ base mixin _$ButtonSpec on Spec<ButtonSpec> {
   @override
   ButtonSpec copyWith({
     BoxSpec? container,
+    FlexSpec? flex,
     IconSpec? icon,
     TextSpec? label,
     AnimatedData? animated,
   }) {
     return ButtonSpec(
       container: container ?? _$this.container,
+      flex: flex ?? _$this.flex,
       icon: icon ?? _$this.icon,
       label: label ?? _$this.label,
       animated: animated ?? _$this.animated,
@@ -58,6 +60,7 @@ base mixin _$ButtonSpec on Spec<ButtonSpec> {
   /// interpolation method:
   ///
   /// - [BoxSpec.lerp] for [container].
+  /// - [FlexSpec.lerp] for [flex].
   /// - [IconSpec.lerp] for [icon].
   /// - [TextSpec.lerp] for [label].
 
@@ -72,9 +75,10 @@ base mixin _$ButtonSpec on Spec<ButtonSpec> {
     if (other == null) return _$this;
 
     return ButtonSpec(
-      container: _$this.container?.lerp(other.container, t) ?? other.container,
-      icon: _$this.icon?.lerp(other.icon, t) ?? other.icon,
-      label: _$this.label?.lerp(other.label, t) ?? other.label,
+      container: _$this.container.lerp(other.container, t),
+      flex: _$this.flex.lerp(other.flex, t),
+      icon: _$this.icon.lerp(other.icon, t),
+      label: _$this.label.lerp(other.label, t),
       animated: t < 0.5 ? _$this.animated : other.animated,
     );
   }
@@ -86,6 +90,7 @@ base mixin _$ButtonSpec on Spec<ButtonSpec> {
   @override
   List<Object?> get props => [
         _$this.container,
+        _$this.flex,
         _$this.icon,
         _$this.label,
         _$this.animated,
@@ -103,11 +108,13 @@ base mixin _$ButtonSpec on Spec<ButtonSpec> {
 /// the [ButtonSpec] constructor.
 final class ButtonSpecAttribute extends SpecAttribute<ButtonSpec> {
   final BoxSpecAttribute? container;
+  final FlexSpecAttribute? flex;
   final IconSpecAttribute? icon;
   final TextSpecAttribute? label;
 
   const ButtonSpecAttribute({
     this.container,
+    this.flex,
     this.icon,
     this.label,
     super.animated,
@@ -125,6 +132,7 @@ final class ButtonSpecAttribute extends SpecAttribute<ButtonSpec> {
   ButtonSpec resolve(MixData mix) {
     return ButtonSpec(
       container: container?.resolve(mix),
+      flex: flex?.resolve(mix),
       icon: icon?.resolve(mix),
       label: label?.resolve(mix),
       animated: animated?.resolve(mix) ?? mix.animation,
@@ -145,6 +153,7 @@ final class ButtonSpecAttribute extends SpecAttribute<ButtonSpec> {
 
     return ButtonSpecAttribute(
       container: container?.merge(other.container) ?? other.container,
+      flex: flex?.merge(other.flex) ?? other.flex,
       icon: icon?.merge(other.icon) ?? other.icon,
       label: label?.merge(other.label) ?? other.label,
       animated: animated?.merge(other.animated) ?? other.animated,
@@ -158,6 +167,7 @@ final class ButtonSpecAttribute extends SpecAttribute<ButtonSpec> {
   @override
   List<Object?> get props => [
         container,
+        flex,
         icon,
         label,
         animated,
@@ -172,6 +182,9 @@ base class ButtonSpecUtility<T extends Attribute>
     extends SpecUtility<T, ButtonSpecAttribute> {
   /// Utility for defining [ButtonSpecAttribute.container]
   late final container = BoxSpecUtility((v) => only(container: v));
+
+  /// Utility for defining [ButtonSpecAttribute.flex]
+  late final flex = FlexSpecUtility((v) => only(flex: v));
 
   /// Utility for defining [ButtonSpecAttribute.icon]
   late final icon = IconSpecUtility((v) => only(icon: v));
@@ -190,12 +203,14 @@ base class ButtonSpecUtility<T extends Attribute>
   @override
   T only({
     BoxSpecAttribute? container,
+    FlexSpecAttribute? flex,
     IconSpecAttribute? icon,
     TextSpecAttribute? label,
     AnimatedDataDto? animated,
   }) {
     return builder(ButtonSpecAttribute(
       container: container,
+      flex: flex,
       icon: icon,
       label: label,
       animated: animated,

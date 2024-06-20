@@ -9,7 +9,7 @@ void main() {
       const label = 'Test Button';
       await tester.pumpWidget(
         MaterialApp(
-          home: RemixButton(label: label, onPressed: () {}),
+          home: RXButton(label: label, onPressed: () {}),
         ),
       );
 
@@ -27,7 +27,8 @@ void main() {
 
       await tester.pumpWidget(
         MaterialApp(
-          home: RemixButton(
+          home: RXButton(
+            label: 'Test Button',
             loading: true,
             loadingLabel: loadingLabel,
             onPressed: () {},
@@ -42,7 +43,8 @@ void main() {
     testWidgets('displays correct icons when provided',
         (WidgetTester tester) async {
       await tester.pumpWidget(MaterialApp(
-        home: RemixButton(
+        home: RXButton(
+          label: 'Test Button',
           iconLeft: Icons.arrow_back,
           iconRight: Icons.arrow_forward,
           onPressed: () {},
@@ -65,7 +67,7 @@ void main() {
     bool didCallOnPressed = false;
 
     await tester.pumpWidget(MaterialApp(
-      home: RemixButton(
+      home: RXButton(
         label: 'Disabled Button',
         onPressed: () {
           didCallOnPressed = true;
@@ -74,7 +76,7 @@ void main() {
       ),
     ));
 
-    await tester.tap(find.byType(RemixButton));
+    await tester.tap(find.byType(RXButton));
     await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
     expect(didCallOnPressed, false);
@@ -84,7 +86,7 @@ void main() {
     bool didCallOnPressed = false;
 
     await tester.pumpWidget(MaterialApp(
-      home: RemixButton(
+      home: RXButton(
         label: 'Disabled Button',
         onPressed: () {
           didCallOnPressed = true;
@@ -92,7 +94,7 @@ void main() {
       ),
     ));
 
-    await tester.tap(find.byType(RemixButton));
+    await tester.tap(find.byType(RXButton));
     await tester.pumpAndSettle(const Duration(milliseconds: 200));
 
     expect(didCallOnPressed, isTrue);

@@ -18,7 +18,7 @@ String mergeMethodBuilder({
   final fieldStatements = fields.map((field) {
     final propName = field.name;
     final thisName = isInternalRef ? field.asInternalRef : field.name;
-    final nullable = field.nullable ? '?' : '';
+    final nullable = '?';
 
     var propAssignment = '$propName:';
 

@@ -5,12 +5,12 @@ import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
 @widgetbook.UseCase(
   name: 'interactive playground',
-  type: RemixButton,
+  type: RXButton,
 )
 Widget buildButtonUseCase(BuildContext context) {
-  return Center(
-    child: RemixButton(
-      label: context.knobs.stringOrNull(
+  Widget buildButton(ButtonType type) {
+    return RXButton(
+      label: context.knobs.string(
         label: 'Title',
         initialValue: 'Title',
       ),
@@ -19,7 +19,7 @@ Widget buildButtonUseCase(BuildContext context) {
         label: 'Is loading',
         initialValue: false,
       ),
-      loadingLabel: context.knobs.stringOrNull(
+      loadingLabel: context.knobs.string(
         label: 'Loading label',
         initialValue: 'Loading',
       ),
@@ -29,14 +29,14 @@ Widget buildButtonUseCase(BuildContext context) {
       ),
       size: context.knobs.list(
         label: 'Size',
-        options: ButtonSizeVariant.values,
+        options: ButtonSize.values,
         labelBuilder: (value) => value.name.split('.').last,
       ),
-      type: context.knobs.list(
-        label: 'Type',
-        options: ButtonType.values,
-        labelBuilder: (value) => value.name.split('.').last,
-      ),
-    ),
+      type: type,
+    );
+  }
+
+  return Center(
+    child: Wrap(children: ButtonType.values.map(buildButton).toList()),
   );
 }

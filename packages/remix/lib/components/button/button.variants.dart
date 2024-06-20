@@ -1,35 +1,21 @@
 import 'package:mix/mix.dart';
 
-class RemixButtonTypes {
-  RemixButtonTypes();
-
-  final primary = const ButtonType('remix.button.primary');
-  final secondary = const ButtonType('remix.button.secondary');
-  final destructive = const ButtonType('remix.button.destructive');
-  final outline = const ButtonType('remix.button.outline');
-  final ghost = const ButtonType('remix.button.ghost');
-  final link = const ButtonType('remix.button.link');
+abstract class ButtonVariant extends Variant {
+  const ButtonVariant(super.name);
 }
 
-class RemixButtonSizes {
-  RemixButtonSizes();
-
-  final xsmall = const ButtonSize('remix.button.xsmall');
-  final small = const ButtonSize('remix.button.small');
-  final medium = const ButtonSize('remix.button.medium');
-  final large = const ButtonSize('remix.button.large');
-}
-
-class ButtonSize extends Variant {
+class ButtonSize extends ButtonVariant {
   const ButtonSize(super.name);
 
   static const xsmall = ButtonSize('remix.button.xsmall');
   static const small = ButtonSize('remix.button.small');
   static const medium = ButtonSize('remix.button.medium');
   static const large = ButtonSize('remix.button.large');
+
+  static List<ButtonSize> get values => [xsmall, small, medium, large];
 }
 
-class ButtonType extends Variant {
+class ButtonType extends ButtonVariant {
   const ButtonType(super.name);
 
   static const primary = ButtonType('remix.button.primary');
@@ -38,4 +24,13 @@ class ButtonType extends Variant {
   static const outline = ButtonType('remix.button.outline');
   static const ghost = ButtonType('remix.button.ghost');
   static const link = ButtonType('remix.button.link');
+
+  static List<ButtonType> get values => [
+        primary,
+        secondary,
+        destructive,
+        outline,
+        ghost,
+        link,
+      ];
 }
