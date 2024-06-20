@@ -1,7 +1,11 @@
+## 1.1.2
+
+- Chore: Changed the class modifier of the Spec class for code generation.
+
 ## 1.1.1
 
-- Fixed some specs not respecting nested animated
-- Added call build method to specs
+- Fixed some specs not respecting nested animated.
+- Added call build method to specs.
 
 ## 1.1.0
 
@@ -24,25 +28,25 @@ Visit our documentation site for more information [https://fluttermix.com](https
 
 ## 0.0.7
 
-- Performance improvements
-- Bug fixes [#59](https://github.com/leoafarias/mix/issues/59) by @bdlukaa
-- InheritedAttribute - Custiom Mix attributes [#94](https://github.com/leoafarias/mix/pull/94) by @pbissonho
+- Performance improvements.
+- Bug fixes [#59](https://github.com/leoafarias/mix/issues/59) by @bdlukaa.
+- InheritedAttribute - Custom Mix attributes [#94](https://github.com/leoafarias/mix/pull/94) by @pbissonho.
 
 ## 0.0.6
 
-- Refactored MixTheme & Context Tokens
-- ZBox Widget by @
-- Headless Widgets (Experimental)
+- Refactored MixTheme & Context Tokens.
+- ZBox Widget by @.
+- Headless Widgets (Experimental).
 - Lots of bug fixes and performance improvements.
 
 ## 0.0.5
 
-- Adjustments on Mix helper for applying variants, and attributes
+- Adjustments on Mix helper for applying variants and attributes.
 
 ## 0.0.4
 
-- Optimization improvements
-- Added clip decorator
+- Optimization improvements.
+- Added clip decorator.
 - Fixed some bugs.
 
 ## 0.0.3
