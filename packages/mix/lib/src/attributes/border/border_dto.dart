@@ -75,10 +75,10 @@ class BoxBorderDto extends Dto<BoxBorder> {
   bool get isDirectional => _hasStartOrEnd && !_hasLeftOrRight;
 
   Type? checkMergeType(BoxBorderDto other) {
-    if (_hasLeftOrRight && !other._hasStartOrEnd) {
+    if (other._hasLeftOrRight || !other._hasStartOrEnd) {
       return Border;
     }
-    if (_hasStartOrEnd && !other._hasLeftOrRight) {
+    if (other._hasStartOrEnd || !other._hasLeftOrRight) {
       return BorderDirectional;
     }
 
