@@ -37,6 +37,7 @@ base mixin _$ButtonSpec on Spec<ButtonSpec> {
     FlexSpec? flex,
     IconSpec? icon,
     TextSpec? label,
+    SpinnerSpec? spinner,
     AnimatedData? animated,
   }) {
     return ButtonSpec(
@@ -44,6 +45,7 @@ base mixin _$ButtonSpec on Spec<ButtonSpec> {
       flex: flex ?? _$this.flex,
       icon: icon ?? _$this.icon,
       label: label ?? _$this.label,
+      spinner: spinner ?? _$this.spinner,
       animated: animated ?? _$this.animated,
     );
   }
@@ -64,7 +66,7 @@ base mixin _$ButtonSpec on Spec<ButtonSpec> {
   /// - [IconSpec.lerp] for [icon].
   /// - [TextSpec.lerp] for [label].
 
-  /// For [animated], the interpolation is performed using a step function.
+  /// For [spinner] and [animated], the interpolation is performed using a step function.
   /// If [t] is less than 0.5, the value from the current [ButtonSpec] is used. Otherwise, the value
   /// from the [other] [ButtonSpec] is used.
   ///
@@ -79,6 +81,7 @@ base mixin _$ButtonSpec on Spec<ButtonSpec> {
       flex: _$this.flex.lerp(other.flex, t),
       icon: _$this.icon.lerp(other.icon, t),
       label: _$this.label.lerp(other.label, t),
+      spinner: t < 0.5 ? _$this.spinner : other.spinner,
       animated: t < 0.5 ? _$this.animated : other.animated,
     );
   }
@@ -93,6 +96,7 @@ base mixin _$ButtonSpec on Spec<ButtonSpec> {
         _$this.flex,
         _$this.icon,
         _$this.label,
+        _$this.spinner,
         _$this.animated,
       ];
 
@@ -111,12 +115,14 @@ final class ButtonSpecAttribute extends SpecAttribute<ButtonSpec> {
   final FlexSpecAttribute? flex;
   final IconSpecAttribute? icon;
   final TextSpecAttribute? label;
+  final SpinnerSpecAttribute? spinner;
 
   const ButtonSpecAttribute({
     this.container,
     this.flex,
     this.icon,
     this.label,
+    this.spinner,
     super.animated,
   });
 
@@ -135,6 +141,7 @@ final class ButtonSpecAttribute extends SpecAttribute<ButtonSpec> {
       flex: flex?.resolve(mix),
       icon: icon?.resolve(mix),
       label: label?.resolve(mix),
+      spinner: spinner?.resolve(mix),
       animated: animated?.resolve(mix) ?? mix.animation,
     );
   }
@@ -156,6 +163,7 @@ final class ButtonSpecAttribute extends SpecAttribute<ButtonSpec> {
       flex: flex?.merge(other.flex) ?? other.flex,
       icon: icon?.merge(other.icon) ?? other.icon,
       label: label?.merge(other.label) ?? other.label,
+      spinner: spinner?.merge(other.spinner) ?? other.spinner,
       animated: animated?.merge(other.animated) ?? other.animated,
     );
   }
@@ -170,6 +178,7 @@ final class ButtonSpecAttribute extends SpecAttribute<ButtonSpec> {
         flex,
         icon,
         label,
+        spinner,
         animated,
       ];
 }
@@ -192,6 +201,9 @@ base class ButtonSpecUtility<T extends Attribute>
   /// Utility for defining [ButtonSpecAttribute.label]
   late final label = TextSpecUtility((v) => only(label: v));
 
+  /// Utility for defining [ButtonSpecAttribute.spinner]
+  late final spinner = SpinnerSpecUtility((v) => only(spinner: v));
+
   /// Utility for defining [ButtonSpecAttribute.animated]
   late final animated = AnimatedUtility((v) => only(animated: v));
 
@@ -206,6 +218,7 @@ base class ButtonSpecUtility<T extends Attribute>
     FlexSpecAttribute? flex,
     IconSpecAttribute? icon,
     TextSpecAttribute? label,
+    SpinnerSpecAttribute? spinner,
     AnimatedDataDto? animated,
   }) {
     return builder(ButtonSpecAttribute(
@@ -213,6 +226,7 @@ base class ButtonSpecUtility<T extends Attribute>
       flex: flex,
       icon: icon,
       label: label,
+      spinner: spinner,
       animated: animated,
     ));
   }

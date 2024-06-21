@@ -36,7 +36,13 @@ Widget buildButtonUseCase(BuildContext context) {
     );
   }
 
-  return Center(
-    child: Wrap(children: ButtonType.values.map(buildButton).toList()),
+  return Container(
+    color: Colors.white,
+    child: Center(
+      child: Wrap(
+        spacing: 12,
+        children: ButtonType.values.map(buildButton).toList(),
+      ),
+    ),
   );
 }

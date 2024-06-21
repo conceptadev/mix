@@ -8,14 +8,7 @@ import 'package:remix/components/button/button_spec.dart';
 final _button = ButtonSpecUtility.self;
 
 Style get defaultButtonStyle => Style(
-      _button.flex.gap(6),
-      _button.flex.mainAxisAlignment.center(),
-      _button.flex.crossAxisAlignment.center(),
-      _button.flex.mainAxisSize.min(),
-      _button.container.borderRadius(6),
-      _button.label.style.height(1.1),
-      _button.label.style.letterSpacing(0.5),
-      _button.label.style.fontWeight(FontWeight.w600),
+      _baseStyle(),
 
       /// Size Variants
       _xsmallVariant(),
@@ -30,6 +23,21 @@ Style get defaultButtonStyle => Style(
       _ghostVariant(),
       _linkVariant(),
       _destructiveVariant(),
+      _futuristic(),
+    );
+
+Style get _baseStyle => Style(
+      _button.flex.gap(6),
+      _button.flex.mainAxisAlignment.center(),
+      _button.flex.crossAxisAlignment.center(),
+      _button.flex.mainAxisSize.min(),
+      _button.container.borderRadius(6),
+      _button.label.style.height(1.1),
+      _button.label.style.letterSpacing(0.5),
+      _button.label.style.fontWeight(FontWeight.w600),
+      _button.spinner.strokeWidth(.5),
+      _button.spinner.color(Colors.black),
+      _button.spinner.size(24),
     );
 
 Style get _xsmallVariant {
@@ -79,7 +87,30 @@ Style get _primaryVariant {
     ButtonType.primary(
       _button.container.color.black(),
       _button.icon.color(Colors.white),
+      _button.spinner.color(Colors.green),
+      _button.spinner.strokeWidth(1),
+      _button.spinner.duration.milliseconds(6000),
+      _button.spinner.style.dotted(),
       _button.label.style.color.white(),
+      $on.hover(
+        _button.container.color.black87(),
+      ),
+    ),
+  );
+}
+
+Style get _futuristic {
+  return Style(
+    ButtonType.futuristic(
+      _button.container.color.transparent(),
+      _button.container.shape.beveledRectangle.borderRadius(10, 0, 0, 10),
+      _button.container.shape.beveledRectangle.side.color(Colors.green),
+      _button.icon.color(Colors.black),
+      _button.spinner.color(Colors.green),
+      _button.spinner.strokeWidth(1),
+      _button.spinner.duration.milliseconds(6000),
+      _button.spinner.style.dotted(),
+      _button.label.style.color.black(),
       $on.hover(
         _button.container.color.black87(),
       ),
@@ -92,6 +123,7 @@ Style get _secondaryVariant {
     ButtonType.secondary(
       _button.container.color.grey.shade200(),
       _button.icon.color(Colors.black),
+      _button.spinner.color(Colors.black),
       _button.label.style.color.black87(),
       $on.hover(
         _button.container.color.grey.shade100(),
@@ -118,10 +150,8 @@ Style get _outlineVariant {
     ButtonType.outline(
       _button.container.color.transparent(),
       _button.label.style.color.black(),
-      _button.container.border.width(1.5),
-      _button.container.border.color.black12(),
-      _button.container.shadow.color(Colors.black12.withOpacity(0.1)),
-      _button.container.shadow.blurRadius(1),
+      _button.container.border.width(0.5),
+      _button.container.border.color(Colors.black),
       _button.icon.color(Colors.black),
     ),
   );

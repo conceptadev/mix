@@ -9,7 +9,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  mix: ^1.1.1
+  mix: ^1.1.2
   mix_annotations: ^0.1.0
 
 dev_dependencies:

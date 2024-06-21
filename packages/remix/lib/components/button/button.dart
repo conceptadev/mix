@@ -37,34 +37,21 @@ class RXButton extends StatelessWidget {
         .applyVariants([size, type]).animate();
   }
 
-  List<Widget> _buildChildren(IconSpec iconSpec, TextSpec labelSpec) {
-    return loading
-        ? _buildLoadingChildren(iconSpec, labelSpec)
-        : _buildDefaultChildren(iconSpec, labelSpec);
+  List<Widget> _buildChildren(ButtonSpec spec) {
+    return loading ? _buildLoadingChildren(spec) : _buildDefaultChildren(spec);
   }
 
-  List<Widget> _buildLoadingChildren(IconSpec iconSpec, TextSpec labelSpec) => [
-        _buildLoadingIndicator(iconSpec),
-        if (loadingLabel != null) labelSpec(loadingLabel!),
-      ];
-
-  Widget _buildLoadingIndicator(IconSpec iconSpec) {
-    const indicatorWidth = 2.5;
-
-    return SizedBox(
-      width: iconSpec.size,
-      height: iconSpec.size,
-      child: CircularProgressIndicator(
-        strokeWidth: indicatorWidth,
-        color: iconSpec.color,
-      ),
-    );
+  List<Widget> _buildLoadingChildren(ButtonSpec spec) {
+    return [
+      spec.spinner(),
+      if (loadingLabel != null) spec.label(loadingLabel!),
+    ];
   }
 
-  List<Widget> _buildDefaultChildren(IconSpec iconSpec, TextSpec labelSpec) => [
-        if (iconLeft != null) iconSpec(iconLeft),
-        if (label.isNotEmpty) labelSpec(label),
-        if (iconRight != null) iconSpec(iconRight),
+  List<Widget> _buildDefaultChildren(ButtonSpec spec) => [
+        if (iconLeft != null) spec.icon(iconLeft),
+        if (label.isNotEmpty) spec.label(label),
+        if (iconRight != null) spec.icon(iconRight),
       ];
 
   @override
@@ -74,17 +61,15 @@ class RXButton extends StatelessWidget {
       child: SpecBuilder(
           style: _buildStyle(),
           builder: (context) {
-            final buttonSpec = ButtonSpec.of(context);
+            var spec = ButtonSpec.of(context);
 
-            final containerSpec = buttonSpec.container;
-            final flexSpec = buttonSpec.flex;
-            final iconSpec = buttonSpec.icon;
-            final labelSpec = buttonSpec.label;
+            final containerSpec = spec.container;
+            final flexSpec = spec.flex;
 
             return containerSpec(
               child: flexSpec(
                 direction: Axis.horizontal,
-                children: _buildChildren(iconSpec, labelSpec),
+                children: _buildChildren(spec),
               ),
             );
           }),

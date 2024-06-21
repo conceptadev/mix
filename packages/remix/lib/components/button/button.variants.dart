@@ -24,6 +24,7 @@ class ButtonType extends ButtonVariant {
   static const outline = ButtonType('remix.button.outline');
   static const ghost = ButtonType('remix.button.ghost');
   static const link = ButtonType('remix.button.link');
+  static const futuristic = ButtonType('remix.button.link');
 
   static List<ButtonType> get values => [
         primary,
