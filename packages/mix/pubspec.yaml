@@ -18,7 +18,7 @@ dev_dependencies:
     sdk: flutter
   dart_code_metrics_presets: 2.9.0
   build_runner: ^2.4.9
-  mix_generator: ^0.1.1
+  mix_generator: ^0.1.2
 
 # flutter:
   # assets:
