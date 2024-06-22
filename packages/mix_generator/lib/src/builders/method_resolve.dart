@@ -12,7 +12,7 @@ String resolveMethodBuilder({
   final resolveStatements = fields.map((field) {
     final propName = field.name;
     var fieldName = isInternalRef ? field.asInternalRef : field.name;
-    var nullableSign = field.nullable ? '?' : '';
+    var nullableSign = '?';
 
     final fallbackExpression =
         field.nullable && withDefaults ? '?? $kDefaultValueRef.$propName' : '';
