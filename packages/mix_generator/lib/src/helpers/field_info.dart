@@ -203,10 +203,18 @@ MixableProperty _getMixableProperty(ConstantReader reader) {
 
 MixableFieldDto? _getMixableDto(ConstantReader? reader) {
   if (reader == null) return null;
-  final dtoType = reader.peek('type')?.typeValue.element?.name;
+  final peakedType = reader.peek('type');
+
+  String? dtoName;
+
+  if (peakedType?.isString == true) {
+    dtoName = peakedType!.stringValue;
+  } else if (peakedType?.isType == true) {
+    dtoName = peakedType!.typeValue.element!.name!;
+  }
 
   return MixableFieldDto(
-    type: dtoType,
+    type: dtoName,
   );
 }
 
