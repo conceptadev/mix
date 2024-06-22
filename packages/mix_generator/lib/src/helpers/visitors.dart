@@ -36,11 +36,16 @@ class ClassVisitor extends SimpleElementVisitor<void> {
     for (final param in element.parameters) {
       final fieldInfo = getFieldInfoFromParameter(param);
 
+      final field = fields[param.name];
+
+      final isNullable =
+          param.type.nullabilitySuffix == NullabilitySuffix.question;
+
       parameters[param.name] = ParameterInfo(
         name: param.name,
         dartType: param.type,
         type: getTypeNameFromDartType(param.type),
-        nullable: param.type.nullabilitySuffix == NullabilitySuffix.question,
+        nullable: field?.nullable ?? isNullable,
         isSuper: param.isSuperFormal,
         documentationComment: fieldInfo?.documentationComment,
         annotation: fieldInfo!.annotation,
