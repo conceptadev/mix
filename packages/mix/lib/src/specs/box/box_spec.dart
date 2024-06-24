@@ -35,11 +35,10 @@ const _boxDecor = MixableUtility(
 );
 
 const _shapeDecor = MixableUtility(
-    alias: 'shapeDecoration',
-    type: ShapeDecoration,
-    properties: [
-      (path: 'shape', alias: 'shape'),
-    ]);
+  alias: 'shapeDecoration',
+  type: ShapeDecoration,
+  properties: [(path: 'shape', alias: 'shape')],
+);
 
 @MixableSpec()
 final class BoxSpec extends Spec<BoxSpec> with _$BoxSpec {

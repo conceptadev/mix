@@ -135,7 +135,7 @@ base mixin _$TextStyleDto on Dto<TextStyle> {
     if (other == null) return _$this;
 
     return TextStyleDto._(
-      value: [...?_$this.value, ...?other.value],
+      value: [..._$this.value, ...other.value],
     );
   }
 

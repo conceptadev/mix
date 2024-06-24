@@ -26,9 +26,7 @@ sealed class ShapeBorderDto<T extends ShapeBorder> extends Dto<T> {
     BorderSideDto? side,
     BorderRadiusGeometryDto? borderRadius,
     BoxShape? boxShape,
-  }) extract(
-    ShapeBorderDto? dto,
-  ) {
+  }) extract(ShapeBorderDto? dto) {
     return dto is OutlinedBorderDto
         ? (
             side: dto.side,
@@ -73,18 +71,6 @@ sealed class OutlinedBorderDto<T extends OutlinedBorder>
     return _exhaustiveMerge(a, b);
   }
 
-  BorderRadiusGeometryDto? get _borderRadius;
-
-  BoxShape? _toBoxShape() {
-    if (this is CircleBorderDto) {
-      return BoxShape.circle;
-    } else if (this is RoundedRectangleBorderDto) {
-      return BoxShape.rectangle;
-    }
-
-    return null;
-  }
-
   static OutlinedBorderDto _exhaustiveMerge(
     OutlinedBorderDto a,
     OutlinedBorderDto b,
@@ -116,6 +102,18 @@ sealed class OutlinedBorderDto<T extends OutlinedBorder>
         throw ArgumentError('Unknown OutlinedBorderDto type: ${b.runtimeType}');
     }
   }
+
+  BoxShape? _toBoxShape() {
+    if (this is CircleBorderDto) {
+      return BoxShape.circle;
+    } else if (this is RoundedRectangleBorderDto) {
+      return BoxShape.rectangle;
+    }
+
+    return null;
+  }
+
+  BorderRadiusGeometryDto? get _borderRadius;
 
   /// Tries to get borderRadius if available for [OutlineBorderDto]
 

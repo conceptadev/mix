@@ -11,7 +11,7 @@ typedef _BaseDecorProperties = ({
   ColorDto? color,
   GradientDto? gradient,
   List<BoxShadowDto>? boxShadow,
-  DecorationImageDto? image
+  DecorationImageDto? image,
 });
 
 /// A Data transfer object that represents a [Decoration] value.
@@ -43,19 +43,6 @@ sealed class DecorationDto<T extends Decoration> extends Dto<T> {
     required this.image,
   });
 
-  bool get isMergeable;
-
-  _BaseDecorProperties _getBaseDecor() {
-    return (
-      color: color,
-      gradient: gradient,
-      boxShadow: boxShadow,
-      image: image
-    );
-  }
-
-  DecorationDto? mergeableDecor(covariant DecorationDto? other);
-
   static DecorationDto? tryToMerge(DecorationDto? a, DecorationDto? b) {
     if (b == null) return a;
     if (a == null) return b;
@@ -78,6 +65,19 @@ sealed class DecorationDto<T extends Decoration> extends Dto<T> {
 
     throw UnimplementedError('Merging of $a and $b is not supported.');
   }
+
+  _BaseDecorProperties _getBaseDecor() {
+    return (
+      color: color,
+      gradient: gradient,
+      boxShadow: boxShadow,
+      image: image,
+    );
+  }
+
+  bool get isMergeable;
+
+  DecorationDto? mergeableDecor(covariant DecorationDto? other);
 
   @override
   DecorationDto<T> merge(covariant DecorationDto<T>? other);
@@ -110,9 +110,6 @@ final class BoxDecorationDto extends DecorationDto<BoxDecoration>
   final BoxShape? shape;
   final BlendMode? backgroundBlendMode;
 
-  @override
-  bool get isMergeable => backgroundBlendMode == null;
-
   const BoxDecorationDto({
     this.border,
     this.borderRadius,
@@ -124,9 +121,6 @@ final class BoxDecorationDto extends DecorationDto<BoxDecoration>
     super.boxShadow,
   });
   @override
-  BoxDecoration get defaultValue => const BoxDecoration();
-
-  @override
   BoxDecorationDto mergeableDecor(ShapeDecorationDto? other) {
     if (other == null) return this;
 
@@ -137,16 +131,22 @@ final class BoxDecorationDto extends DecorationDto<BoxDecoration>
 
     return merge(
       BoxDecorationDto(
+        border: BoxBorderDto.fromSide(side),
+        borderRadius: borderRadius,
+        shape: boxShape,
         color: color,
         image: image,
         gradient: gradient,
-        shape: boxShape,
         boxShadow: boxShadow,
-        border: BoxBorderDto.fromSide(side),
-        borderRadius: borderRadius,
       ),
     );
   }
+
+  @override
+  bool get isMergeable => backgroundBlendMode == null;
+
+  @override
+  BoxDecoration get defaultValue => const BoxDecoration();
 }
 
 @MixableDto()
@@ -165,13 +165,7 @@ final class ShapeDecorationDto extends DecorationDto<ShapeDecoration>
   List<BoxShadowDto>? get shadows => boxShadow;
 
   @override
-  bool get isMergeable => (shape == null ||
-      (shape is CircleBorderDto &&
-          ((shape as CircleBorderDto).eccentricity == null)) ||
-      shape is RoundedRectangleBorderDto);
-
-  @override
-  ShapeDecorationDto? mergeableDecor(BoxDecorationDto? other) {
+  ShapeDecorationDto mergeableDecor(BoxDecorationDto? other) {
     if (other == null) return this;
 
     assert(
@@ -189,14 +183,20 @@ final class ShapeDecorationDto extends DecorationDto<ShapeDecoration>
 
     return merge(
       ShapeDecorationDto(
+        shape: shapeBorder,
         color: color,
         image: image,
         gradient: gradient,
         shadows: boxShadow,
-        shape: shapeBorder,
       ),
     );
   }
+
+  @override
+  bool get isMergeable => (shape == null ||
+      (shape is CircleBorderDto &&
+          ((shape as CircleBorderDto).eccentricity == null)) ||
+      shape is RoundedRectangleBorderDto);
 
   @override
   ShapeDecoration get defaultValue =>
@@ -207,14 +207,15 @@ final class ShapeDecorationDto extends DecorationDto<ShapeDecoration>
 BoxDecorationDto _toBoxDecorationDto(ShapeDecorationDto dto) {
   final (:boxShadow, :color, :gradient, :image) = dto._getBaseDecor();
   final (:borderRadius, :boxShape, :side) = ShapeBorderDto.extract(dto.shape);
+
   return BoxDecorationDto(
+    border: BoxBorderDto.fromSide(side),
+    borderRadius: borderRadius,
+    shape: boxShape,
     color: color,
     image: image,
     gradient: gradient,
-    shape: boxShape,
     boxShadow: boxShadow,
-    border: BoxBorderDto.fromSide(side),
-    borderRadius: borderRadius,
   );
 }
 
@@ -225,12 +226,13 @@ ShapeDecorationDto _toShapeDecorationDto(BoxDecorationDto dto) {
     side: dto.border?.top,
     borderRadius: dto.borderRadius,
   );
+
   return ShapeDecorationDto(
+    shape: shapeBorder,
     color: color,
     image: image,
     gradient: gradient,
     shadows: boxShadow,
-    shape: shapeBorder,
   );
 }
 
@@ -253,11 +255,12 @@ ShapeBorderDto? _fromBoxShape({
   if (shape == BoxShape.circle) {
     return CircleBorderDto(side: side);
   } else if (shape == BoxShape.rectangle) {
-    return RoundedRectangleBorderDto(side: side, borderRadius: borderRadius);
+    return RoundedRectangleBorderDto(borderRadius: borderRadius, side: side);
   }
 
   if (side != null || borderRadius != null) {
-    return RoundedRectangleBorderDto(side: side, borderRadius: borderRadius);
+    return RoundedRectangleBorderDto(borderRadius: borderRadius, side: side);
   }
+
   return null;
 }
