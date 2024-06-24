@@ -16,7 +16,7 @@ class ClassVisitor extends SimpleElementVisitor<void> {
       fields[element.name] = FieldInfo(
         name: element.name,
         dartType: element.type,
-        type: getTypeNameFromDartType(element.type),
+        type: element.type.getTypeAsString(),
         nullable: element.type.nullabilitySuffix == NullabilitySuffix.question,
         documentationComment: element.documentationComment,
         annotation: readFieldAnnotation(element),
@@ -44,7 +44,7 @@ class ClassVisitor extends SimpleElementVisitor<void> {
       parameters[param.name] = ParameterInfo(
         name: param.name,
         dartType: param.type,
-        type: getTypeNameFromDartType(param.type),
+        type: param.type.getTypeAsString(),
         nullable: field?.nullable ?? isNullable,
         isSuper: param.isSuperFormal,
         documentationComment: fieldInfo?.documentationComment,

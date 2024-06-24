@@ -1,5 +1,5 @@
-import 'package:mix_generator/src/helpers/builder_utils.dart';
 import 'package:mix_generator/src/helpers/field_info.dart';
+import 'package:mix_generator/src/helpers/type_ref_repository.dart';
 
 /// Generates utility fields for the given attribute class and fields.
 String generateUtilityFields(
@@ -11,7 +11,7 @@ String generateUtilityFields(
   for (final field in fields) {
     final annotatedUtilities = field.annotation.utilities ?? [];
     final propertyName = field.name;
-    final utilityName = field.defaultUtilityName;
+    final utilityName = typeRefs.getUtilityName(field.dartType);
 
     if (annotatedUtilities.isEmpty) {
       expressions.add(
@@ -28,9 +28,14 @@ String generateUtilityFields(
       for (final extraUtil in annotatedUtilities) {
         final aliasName = extraUtil.alias ?? propertyName;
 
-        final aliasUtilityName = getUtilityNameFromTypeName(
-          extraUtil.typeAsString ?? field.defaultUtilityName,
-        );
+        String aliasUtilityName;
+
+        if (extraUtil.typeAsString != null) {
+          aliasUtilityName =
+              typeRefs.getUtilityNameFromTypeName(extraUtil.typeAsString!);
+        } else {
+          aliasUtilityName = utilityName;
+        }
 
         expressions.add(_generateUtilityField(
           docPath: '$className.$propertyName',
@@ -108,7 +113,9 @@ String utilityMethodOnlyBuilder({
 
 String utilityMethodCallBuilder(List<ParameterInfo> fields) {
   final optionalParameters = fields.map((field) {
-    final fieldType = field.asResolvedType;
+    final fieldType = field.hasDto
+        ? typeRefs.getResolvedTypeFromDto(field.dartType)
+        : field.type;
     return '${fieldType}? ${field.name},';
   }).join('\n');
 
