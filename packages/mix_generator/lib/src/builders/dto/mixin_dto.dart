@@ -11,25 +11,33 @@ String dtoMixin(DtoAnnotationContext context) {
   final mixinName = context.mixinExtensionName;
   final fields = context.fields;
   final dtoRef = MixTypes.foundation.dto.symbol!;
-  final element = context.element;
+  final el = context.element;
 
-  // Find the supertype that matches Dto
-  final dtoSupertype = element.allSupertypes.firstWhere(
-    checkIfElementIsDto,
-    orElse: () => throw InvalidGenerationSource(
-      'The class $className must extend Dto.',
-      element: element,
-    ),
-  );
+  if (!el.isDto) {
+    throw InvalidGenerationSource(
+      'The class $className must extend a class that extends Dto.',
+      element: el,
+    );
+  }
 
   // Check if ClassElement has method getters called props, resolve, and merge
-  final hasEquality = element.methods.any((method) => method.name == 'props');
-  final hasResolve = element.methods.any((method) => method.name == 'resolve');
-  final hasMerge = element.methods.any((method) => method.name == 'merge');
+  final hasEquality = el.methods.any((method) => method.name == 'props');
+  final hasResolve = el.methods.any((method) => method.name == 'resolve');
+  final hasMerge = el.methods.any((method) => method.name == 'merge');
 
   // Get the generic type argument of Dto
-  final valueType = dtoSupertype.typeArguments.first;
-  final valueTypeName = getTypeNameFromDartType(valueType);
+  final valueType = el.getGenericTypeOfSuperclass();
+
+  if (valueType == null) {
+    throw InvalidGenerationSource(
+      'The class $className must extend a class that extends Dto.',
+      element: el,
+    );
+  }
+
+  final valueTypeName = valueType.getTypeAsString();
+
+  print('Generic type is $valueTypeName');
 
   final resolveMethod = !hasResolve
       ? resolveMethodBuilder(

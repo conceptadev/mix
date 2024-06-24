@@ -33,6 +33,11 @@ String mergeMethodBuilder({
       final hasTryToMerge = _checkIfHasTryToMerge(field.dartType.element!);
       final tryToMergeExpression =
           '$propAssignment ${field.dtoType}.tryToMerge($thisName, other.$propName)';
+
+      // I have a type name that I want to see if I can get an element
+      // to check if it has a tryToMerge method. How can I get that?
+      // I need to get the element of the type name.
+
       if (hasTryToMerge) {
         return tryToMergeExpression;
       }
