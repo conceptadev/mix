@@ -252,15 +252,19 @@ ShapeBorderDto? _fromBoxShape({
   required BorderSideDto? side,
   required BorderRadiusGeometryDto? borderRadius,
 }) {
-  if (shape == BoxShape.circle) {
-    return CircleBorderDto(side: side);
-  } else if (shape == BoxShape.rectangle) {
-    return RoundedRectangleBorderDto(borderRadius: borderRadius, side: side);
-  }
+  switch (shape) {
+    case BoxShape.circle:
+      return CircleBorderDto(side: side);
+    case BoxShape.rectangle:
+      return RoundedRectangleBorderDto(borderRadius: borderRadius, side: side);
+    default:
+      if (side != null || borderRadius != null) {
+        return RoundedRectangleBorderDto(
+          borderRadius: borderRadius,
+          side: side,
+        );
+      }
 
-  if (side != null || borderRadius != null) {
-    return RoundedRectangleBorderDto(borderRadius: borderRadius, side: side);
+      return null;
   }
-
-  return null;
 }
