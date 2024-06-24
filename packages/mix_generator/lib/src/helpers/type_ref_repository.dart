@@ -16,6 +16,7 @@ class TypeRefRepository {
   static Map<String, String> _utilityOverrides = {
     'EdgeInsetsGeometry': 'SpacingUtility',
     'AnimatedData': 'AnimatedUtility',
+    'Set<WidgetModifierSpec<dynamic>>': 'InlineModifierUtility',
   };
 
   static final _dtoMap = {
@@ -23,6 +24,7 @@ class TypeRefRepository {
     'BoxConstraints': 'BoxConstraintsDto',
     'Decoration': 'DecorationDto',
     'Color': 'ColorDto',
+    'Set<WidgetModifierSpec<dynamic>>': 'ModifierDto',
     'AnimatedData': 'AnimatedDataDto',
     'TextStyle': 'TextStyleDto',
     'ShapeBorder': 'ShapeBorderDto',
