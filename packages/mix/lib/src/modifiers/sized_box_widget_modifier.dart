@@ -67,9 +67,23 @@ final class SizedBoxModifierAttribute extends WidgetModifierAttribute<
 
 final class SizedBoxModifierUtility<T extends Attribute>
     extends MixUtility<T, SizedBoxModifierAttribute> {
-  const SizedBoxModifierUtility(super.builder);
+  SizedBoxModifierUtility(super.builder);
+
+  /// Utility for defining [SizedBoxModifierAttribute.height]
+  late final height = DoubleUtility((value) => call(height: value));
+
+  /// Utility for defining [SizedBoxModifierAttribute.width]
+  late final width = DoubleUtility((value) => call(width: value));
+
+  /// Utility for defining [SizedBoxModifierAttribute.width] 
+  /// and [SizedBoxModifierAttribute.height]
+  late final square = DoubleUtility((value) => call(width: value, height: value));
 
   T call({double? width, double? height}) {
     return builder(SizedBoxModifierAttribute(width: width, height: height));
   }
+
+  /// Utility for defining [SizedBoxModifierAttribute.width] and [SizedBoxModifierAttribute.height]
+  /// from [Size]
+  T as(Size size) => call(width: size.width, height: size.height);
 }
