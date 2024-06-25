@@ -60,8 +60,8 @@ runs:
         fatal_performance: true
         fatal_warnings: true
       
-    - run: melos exec --ignore="mix_lint" --ignore="mix_lint_test" --ignore="mix_generator" --scope="packages/**" flutter test
-
+    - name: Run Test
+      run: melos run test
       shell: bash
 
     - name: Install custom_lint
