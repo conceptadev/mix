@@ -103,7 +103,7 @@ base mixin _$StackSpec on Spec<StackSpec> {
 ///
 /// Use this class to configure the attributes of a [StackSpec] and pass it to
 /// the [StackSpec] constructor.
-final class StackSpecAttribute extends ModifiableSpecAttribute<StackSpec> {
+final class StackSpecAttribute extends SpecAttribute<StackSpec> {
   final AlignmentGeometry? alignment;
   final StackFit? fit;
   final TextDirection? textDirection;

@@ -7,7 +7,7 @@ String specAttributeClass(SpecAnnotationContext context) {
   final specName = context.name;
   final className = context.attributeClassName;
   final fields = context.fields;
-  final extendsType = 'ModifiableSpecAttribute<$specName>';
+  final extendsType = 'SpecAttribute<$specName>';
 
   final nonSuperFields = fields.where((field) => !field.isSuper).toList();
 

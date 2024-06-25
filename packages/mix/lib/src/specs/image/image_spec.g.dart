@@ -42,7 +42,7 @@ base mixin _$ImageSpec on Spec<ImageSpec> {
     Rect? centerSlice,
     FilterQuality? filterQuality,
     BlendMode? colorBlendMode,
-    Set<WidgetModifierSpec<dynamic>>? modifiers,
+    InlineModifiersData? inlineModifiers,
     AnimatedData? animated,
   }) {
     return ImageSpec(
@@ -55,7 +55,7 @@ base mixin _$ImageSpec on Spec<ImageSpec> {
       centerSlice: centerSlice ?? _$this.centerSlice,
       filterQuality: filterQuality ?? _$this.filterQuality,
       colorBlendMode: colorBlendMode ?? _$this.colorBlendMode,
-      modifiers: modifiers ?? _$this.modifiers,
+      inlineModifiers: inlineModifiers ?? _$this.inlineModifiers,
       animated: animated ?? _$this.animated,
     );
   }
@@ -76,7 +76,7 @@ base mixin _$ImageSpec on Spec<ImageSpec> {
   /// - [AlignmentGeometry.lerp] for [alignment].
   /// - [Rect.lerp] for [centerSlice].
 
-  /// For [repeat] and [fit] and [filterQuality] and [colorBlendMode] and [modifiers] and [animated], the interpolation is performed using a step function.
+  /// For [repeat] and [fit] and [filterQuality] and [colorBlendMode] and [inlineModifiers] and [animated], the interpolation is performed using a step function.
   /// If [t] is less than 0.5, the value from the current [ImageSpec] is used. Otherwise, the value
   /// from the [other] [ImageSpec] is used.
   ///
@@ -96,7 +96,7 @@ base mixin _$ImageSpec on Spec<ImageSpec> {
       centerSlice: Rect.lerp(_$this.centerSlice, other.centerSlice, t),
       filterQuality: t < 0.5 ? _$this.filterQuality : other.filterQuality,
       colorBlendMode: t < 0.5 ? _$this.colorBlendMode : other.colorBlendMode,
-      modifiers: t < 0.5 ? _$this.modifiers : other.modifiers,
+      inlineModifiers: t < 0.5 ? _$this.inlineModifiers : other.inlineModifiers,
       animated: t < 0.5 ? _$this.animated : other.animated,
     );
   }
@@ -116,7 +116,7 @@ base mixin _$ImageSpec on Spec<ImageSpec> {
         _$this.centerSlice,
         _$this.filterQuality,
         _$this.colorBlendMode,
-        _$this.modifiers,
+        _$this.inlineModifiers,
         _$this.animated,
       ];
 
@@ -130,7 +130,7 @@ base mixin _$ImageSpec on Spec<ImageSpec> {
 ///
 /// Use this class to configure the attributes of a [ImageSpec] and pass it to
 /// the [ImageSpec] constructor.
-final class ImageSpecAttribute extends ModifiableSpecAttribute<ImageSpec> {
+final class ImageSpecAttribute extends SpecAttribute<ImageSpec> {
   final double? width;
   final double? height;
   final ColorDto? color;
@@ -140,6 +140,7 @@ final class ImageSpecAttribute extends ModifiableSpecAttribute<ImageSpec> {
   final Rect? centerSlice;
   final FilterQuality? filterQuality;
   final BlendMode? colorBlendMode;
+  final InlineModifiersDataDto? inlineModifiers;
 
   const ImageSpecAttribute({
     this.width,
@@ -151,7 +152,7 @@ final class ImageSpecAttribute extends ModifiableSpecAttribute<ImageSpec> {
     this.centerSlice,
     this.filterQuality,
     this.colorBlendMode,
-    super.modifiers,
+    this.inlineModifiers,
     super.animated,
   });
 
@@ -175,7 +176,7 @@ final class ImageSpecAttribute extends ModifiableSpecAttribute<ImageSpec> {
       centerSlice: centerSlice,
       filterQuality: filterQuality,
       colorBlendMode: colorBlendMode,
-      modifiers: modifiers?.resolve(mix),
+      inlineModifiers: inlineModifiers?.resolve(mix),
       animated: animated?.resolve(mix) ?? mix.animation,
     );
   }
@@ -202,7 +203,8 @@ final class ImageSpecAttribute extends ModifiableSpecAttribute<ImageSpec> {
       centerSlice: other.centerSlice ?? centerSlice,
       filterQuality: other.filterQuality ?? filterQuality,
       colorBlendMode: other.colorBlendMode ?? colorBlendMode,
-      modifiers: modifiers?.merge(other.modifiers) ?? other.modifiers,
+      inlineModifiers: inlineModifiers?.merge(other.inlineModifiers) ??
+          other.inlineModifiers,
       animated: animated?.merge(other.animated) ?? other.animated,
     );
   }
@@ -222,7 +224,7 @@ final class ImageSpecAttribute extends ModifiableSpecAttribute<ImageSpec> {
         centerSlice,
         filterQuality,
         colorBlendMode,
-        modifiers,
+        inlineModifiers,
         animated,
       ];
 }
@@ -261,9 +263,12 @@ base class ImageSpecUtility<T extends Attribute>
   /// Utility for defining [ImageSpecAttribute.colorBlendMode]
   late final colorBlendMode = BlendModeUtility((v) => only(colorBlendMode: v));
 
-  /// Utility for defining [ImageSpecAttribute.modifiers]
-  late final modifiers =
-      InlineModifierUtility((v) => only(modifiers: ModifierDto(v)));
+  /// Utility for defining [ImageSpecAttribute.inlineModifiers]
+  late final _modifiers = InlineModifierUtility(
+      (v) => only(inlineModifiers: InlineModifiersDataDto(v)));
+
+  /// Utility for defining [ImageSpecAttribute._modifiers.add]
+  late final mod = _modifiers.add;
 
   /// Utility for defining [ImageSpecAttribute.animated]
   late final animated = AnimatedUtility((v) => only(animated: v));
@@ -284,7 +289,7 @@ base class ImageSpecUtility<T extends Attribute>
     Rect? centerSlice,
     FilterQuality? filterQuality,
     BlendMode? colorBlendMode,
-    ModifierDto? modifiers,
+    InlineModifiersDataDto? inlineModifiers,
     AnimatedDataDto? animated,
   }) {
     return builder(ImageSpecAttribute(
@@ -297,7 +302,7 @@ base class ImageSpecUtility<T extends Attribute>
       centerSlice: centerSlice,
       filterQuality: filterQuality,
       colorBlendMode: colorBlendMode,
-      modifiers: modifiers,
+      inlineModifiers: inlineModifiers,
       animated: animated,
     ));
   }

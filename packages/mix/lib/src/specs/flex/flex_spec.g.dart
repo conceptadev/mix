@@ -126,7 +126,7 @@ base mixin _$FlexSpec on Spec<FlexSpec> {
 ///
 /// Use this class to configure the attributes of a [FlexSpec] and pass it to
 /// the [FlexSpec] constructor.
-final class FlexSpecAttribute extends ModifiableSpecAttribute<FlexSpec> {
+final class FlexSpecAttribute extends SpecAttribute<FlexSpec> {
   final CrossAxisAlignment? crossAxisAlignment;
   final MainAxisAlignment? mainAxisAlignment;
   final MainAxisSize? mainAxisSize;

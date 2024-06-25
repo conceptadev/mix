@@ -43,8 +43,8 @@ base mixin _$BoxSpec on Spec<BoxSpec> {
     Clip? clipBehavior,
     double? width,
     double? height,
-    Set<WidgetModifierSpec<dynamic>>? modifiers,
     AnimatedData? animated,
+    InlineModifiersData? inlineModifiers,
   }) {
     return BoxSpec(
       alignment: alignment ?? _$this.alignment,
@@ -58,8 +58,8 @@ base mixin _$BoxSpec on Spec<BoxSpec> {
       clipBehavior: clipBehavior ?? _$this.clipBehavior,
       width: width ?? _$this.width,
       height: height ?? _$this.height,
-      modifiers: modifiers ?? _$this.modifiers,
       animated: animated ?? _$this.animated,
+      inlineModifiers: inlineModifiers ?? _$this.inlineModifiers,
     );
   }
 
@@ -81,7 +81,7 @@ base mixin _$BoxSpec on Spec<BoxSpec> {
   /// - [MixHelpers.lerpMatrix4] for [transform].
   /// - [MixHelpers.lerpDouble] for [width] and [height].
 
-  /// For [clipBehavior] and [modifiers] and [animated], the interpolation is performed using a step function.
+  /// For [clipBehavior] and [animated] and [inlineModifiers], the interpolation is performed using a step function.
   /// If [t] is less than 0.5, the value from the current [BoxSpec] is used. Otherwise, the value
   /// from the [other] [BoxSpec] is used.
   ///
@@ -106,8 +106,8 @@ base mixin _$BoxSpec on Spec<BoxSpec> {
       clipBehavior: t < 0.5 ? _$this.clipBehavior : other.clipBehavior,
       width: MixHelpers.lerpDouble(_$this.width, other.width, t),
       height: MixHelpers.lerpDouble(_$this.height, other.height, t),
-      modifiers: t < 0.5 ? _$this.modifiers : other.modifiers,
       animated: t < 0.5 ? _$this.animated : other.animated,
+      inlineModifiers: t < 0.5 ? _$this.inlineModifiers : other.inlineModifiers,
     );
   }
 
@@ -128,8 +128,8 @@ base mixin _$BoxSpec on Spec<BoxSpec> {
         _$this.clipBehavior,
         _$this.width,
         _$this.height,
-        _$this.modifiers,
         _$this.animated,
+        _$this.inlineModifiers,
       ];
 
   BoxSpec get _$this => this as BoxSpec;
@@ -142,7 +142,7 @@ base mixin _$BoxSpec on Spec<BoxSpec> {
 ///
 /// Use this class to configure the attributes of a [BoxSpec] and pass it to
 /// the [BoxSpec] constructor.
-final class BoxSpecAttribute extends ModifiableSpecAttribute<BoxSpec> {
+final class BoxSpecAttribute extends SpecAttribute<BoxSpec> {
   final AlignmentGeometry? alignment;
   final SpacingDto? padding;
   final SpacingDto? margin;
@@ -154,7 +154,7 @@ final class BoxSpecAttribute extends ModifiableSpecAttribute<BoxSpec> {
   final Clip? clipBehavior;
   final double? width;
   final double? height;
-  final ModifierDto? modifiers;
+  final InlineModifiersDataDto? inlineModifiers;
 
   const BoxSpecAttribute({
     this.alignment,
@@ -168,8 +168,8 @@ final class BoxSpecAttribute extends ModifiableSpecAttribute<BoxSpec> {
     this.clipBehavior,
     this.width,
     this.height,
-    this.modifiers,
     super.animated,
+    this.inlineModifiers,
   });
 
   /// Resolves to [BoxSpec] using the provided [MixData].
@@ -194,8 +194,8 @@ final class BoxSpecAttribute extends ModifiableSpecAttribute<BoxSpec> {
       clipBehavior: clipBehavior,
       width: width,
       height: height,
-      modifiers: modifiers?.resolve(mix),
       animated: animated?.resolve(mix) ?? mix.animation,
+      inlineModifiers: inlineModifiers?.resolve(mix),
     );
   }
 
@@ -224,8 +224,9 @@ final class BoxSpecAttribute extends ModifiableSpecAttribute<BoxSpec> {
       clipBehavior: other.clipBehavior ?? clipBehavior,
       width: other.width ?? width,
       height: other.height ?? height,
-      modifiers: modifiers?.merge(other.modifiers) ?? other.modifiers,
       animated: animated?.merge(other.animated) ?? other.animated,
+      inlineModifiers: inlineModifiers?.merge(other.inlineModifiers) ??
+          other.inlineModifiers,
     );
   }
 
@@ -246,8 +247,8 @@ final class BoxSpecAttribute extends ModifiableSpecAttribute<BoxSpec> {
         clipBehavior,
         width,
         height,
-        modifiers,
         animated,
+        inlineModifiers,
       ];
 }
 
@@ -347,15 +348,15 @@ base class BoxSpecUtility<T extends Attribute>
   /// Utility for defining [BoxSpecAttribute.height]
   late final height = DoubleUtility((v) => only(height: v));
 
-  /// Utility for defining [BoxSpecAttribute.modifiers]
-  late final _modifiers =
-      InlineModifierUtility((v) => only(modifiers: ModifierDto(v)));
+  /// Utility for defining [BoxSpecAttribute.animated]
+  late final animated = AnimatedUtility((v) => only(animated: v));
+
+  /// Utility for defining [BoxSpecAttribute.inlineModifiers]
+  late final _modifiers = InlineModifierUtility(
+      (v) => only(inlineModifiers: InlineModifiersDataDto(v)));
 
   /// Utility for defining [BoxSpecAttribute._modifiers.add]
   late final mod = _modifiers.add;
-
-  /// Utility for defining [BoxSpecAttribute.animated]
-  late final animated = AnimatedUtility((v) => only(animated: v));
 
   BoxSpecUtility(super.builder);
 
@@ -375,8 +376,8 @@ base class BoxSpecUtility<T extends Attribute>
     Clip? clipBehavior,
     double? width,
     double? height,
-    ModifierDto? modifiers,
     AnimatedDataDto? animated,
+    InlineModifiersDataDto? inlineModifiers,
   }) {
     return builder(BoxSpecAttribute(
       alignment: alignment,
@@ -390,8 +391,8 @@ base class BoxSpecUtility<T extends Attribute>
       clipBehavior: clipBehavior,
       width: width,
       height: height,
-      modifiers: modifiers,
       animated: animated,
+      inlineModifiers: inlineModifiers,
     ));
   }
 }

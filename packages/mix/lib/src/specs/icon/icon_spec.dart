@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:mix/mix.dart';
 import 'package:mix_annotations/mix_annotations.dart';
 
+import '../../attributes/inline_modifier/inline_modifiers_data.dart';
+
 part 'icon_spec.g.dart';
 
 @MixableSpec()
-final class IconSpec extends ModifiableSpec<IconSpec> with _$IconSpec {
+final class IconSpec extends Spec<IconSpec> with _$IconSpec {
   final Color? color;
   final double? size;
   final double? weight;
@@ -23,6 +25,16 @@ final class IconSpec extends ModifiableSpec<IconSpec> with _$IconSpec {
 
   static const from = _$IconSpec.from;
 
+  @override
+  @MixableProperty(utilities: [
+    MixableUtility(
+      alias: '_modifiers',
+      properties: [(path: 'add', alias: 'mod')],
+    ),
+  ])
+  // ignore: overridden_fields
+  final InlineModifiersData? inlineModifiers;
+
   const IconSpec({
     this.color,
     this.size,
@@ -33,7 +45,7 @@ final class IconSpec extends ModifiableSpec<IconSpec> with _$IconSpec {
     this.textDirection,
     this.applyTextScaling,
     this.fill,
-    super.modifiers,
+    this.inlineModifiers,
     super.animated,
   });
 

@@ -45,7 +45,7 @@ base mixin _$TextSpec on Spec<TextSpec> {
     bool? softWrap,
     TextDirective? directive,
     AnimatedData? animated,
-    Set<WidgetModifierSpec<dynamic>>? modifiers,
+    InlineModifiersData? inlineModifiers,
   }) {
     return TextSpec(
       overflow: overflow ?? _$this.overflow,
@@ -60,7 +60,7 @@ base mixin _$TextSpec on Spec<TextSpec> {
       softWrap: softWrap ?? _$this.softWrap,
       directive: directive ?? _$this.directive,
       animated: animated ?? _$this.animated,
-      modifiers: modifiers ?? _$this.modifiers,
+      inlineModifiers: inlineModifiers ?? _$this.inlineModifiers,
     );
   }
 
@@ -79,7 +79,7 @@ base mixin _$TextSpec on Spec<TextSpec> {
   /// - [MixHelpers.lerpDouble] for [textScaleFactor].
   /// - [MixHelpers.lerpTextStyle] for [style].
 
-  /// For [overflow] and [textAlign] and [maxLines] and [textWidthBasis] and [textHeightBehavior] and [textDirection] and [softWrap] and [directive] and [animated] and [modifiers], the interpolation is performed using a step function.
+  /// For [overflow] and [textAlign] and [maxLines] and [textWidthBasis] and [textHeightBehavior] and [textDirection] and [softWrap] and [directive] and [animated] and [inlineModifiers], the interpolation is performed using a step function.
   /// If [t] is less than 0.5, the value from the current [TextSpec] is used. Otherwise, the value
   /// from the [other] [TextSpec] is used.
   ///
@@ -105,7 +105,7 @@ base mixin _$TextSpec on Spec<TextSpec> {
       softWrap: t < 0.5 ? _$this.softWrap : other.softWrap,
       directive: t < 0.5 ? _$this.directive : other.directive,
       animated: t < 0.5 ? _$this.animated : other.animated,
-      modifiers: t < 0.5 ? _$this.modifiers : other.modifiers,
+      inlineModifiers: t < 0.5 ? _$this.inlineModifiers : other.inlineModifiers,
     );
   }
 
@@ -127,7 +127,7 @@ base mixin _$TextSpec on Spec<TextSpec> {
         _$this.softWrap,
         _$this.directive,
         _$this.animated,
-        _$this.modifiers,
+        _$this.inlineModifiers,
       ];
 
   TextSpec get _$this => this as TextSpec;
@@ -140,7 +140,7 @@ base mixin _$TextSpec on Spec<TextSpec> {
 ///
 /// Use this class to configure the attributes of a [TextSpec] and pass it to
 /// the [TextSpec] constructor.
-final class TextSpecAttribute extends ModifiableSpecAttribute<TextSpec> {
+final class TextSpecAttribute extends SpecAttribute<TextSpec> {
   final TextOverflow? overflow;
   final StrutStyleDto? strutStyle;
   final TextAlign? textAlign;
@@ -152,6 +152,7 @@ final class TextSpecAttribute extends ModifiableSpecAttribute<TextSpec> {
   final TextDirection? textDirection;
   final bool? softWrap;
   final TextDirectiveDto? directive;
+  final InlineModifiersDataDto? inlineModifiers;
 
   const TextSpecAttribute({
     this.overflow,
@@ -166,7 +167,7 @@ final class TextSpecAttribute extends ModifiableSpecAttribute<TextSpec> {
     this.softWrap,
     this.directive,
     super.animated,
-    super.modifiers,
+    this.inlineModifiers,
   });
 
   /// Resolves to [TextSpec] using the provided [MixData].
@@ -192,7 +193,7 @@ final class TextSpecAttribute extends ModifiableSpecAttribute<TextSpec> {
       softWrap: softWrap,
       directive: directive?.resolve(mix),
       animated: animated?.resolve(mix) ?? mix.animation,
-      modifiers: modifiers?.resolve(mix),
+      inlineModifiers: inlineModifiers?.resolve(mix),
     );
   }
 
@@ -221,7 +222,8 @@ final class TextSpecAttribute extends ModifiableSpecAttribute<TextSpec> {
       softWrap: other.softWrap ?? softWrap,
       directive: directive?.merge(other.directive) ?? other.directive,
       animated: animated?.merge(other.animated) ?? other.animated,
-      modifiers: modifiers?.merge(other.modifiers) ?? other.modifiers,
+      inlineModifiers: inlineModifiers?.merge(other.inlineModifiers) ??
+          other.inlineModifiers,
     );
   }
 
@@ -243,7 +245,7 @@ final class TextSpecAttribute extends ModifiableSpecAttribute<TextSpec> {
         softWrap,
         directive,
         animated,
-        modifiers,
+        inlineModifiers,
       ];
 }
 
@@ -307,9 +309,12 @@ base class TextSpecUtility<T extends Attribute>
   /// Utility for defining [TextSpecAttribute.animated]
   late final animated = AnimatedUtility((v) => only(animated: v));
 
-  /// Utility for defining [TextSpecAttribute.modifiers]
-  late final modifiers =
-      InlineModifierUtility((v) => only(modifiers: ModifierDto(v)));
+  /// Utility for defining [TextSpecAttribute.inlineModifiers]
+  late final _modifiers = InlineModifierUtility(
+      (v) => only(inlineModifiers: InlineModifiersDataDto(v)));
+
+  /// Utility for defining [TextSpecAttribute._modifiers.add]
+  late final mod = _modifiers.add;
 
   TextSpecUtility(super.builder);
 
@@ -330,7 +335,7 @@ base class TextSpecUtility<T extends Attribute>
     bool? softWrap,
     TextDirectiveDto? directive,
     AnimatedDataDto? animated,
-    ModifierDto? modifiers,
+    InlineModifiersDataDto? inlineModifiers,
   }) {
     return builder(TextSpecAttribute(
       overflow: overflow,
@@ -345,7 +350,7 @@ base class TextSpecUtility<T extends Attribute>
       softWrap: softWrap,
       directive: directive,
       animated: animated,
-      modifiers: modifiers,
+      inlineModifiers: inlineModifiers,
     ));
   }
 }

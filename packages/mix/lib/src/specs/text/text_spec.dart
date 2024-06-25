@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:mix/mix.dart';
 import 'package:mix_annotations/mix_annotations.dart';
 
+import '../../attributes/inline_modifier/inline_modifiers_data.dart';
+
 part 'text_spec.g.dart';
 
 @MixableSpec()
-final class TextSpec extends ModifiableSpec<TextSpec> with _$TextSpec {
+final class TextSpec extends Spec<TextSpec> with _$TextSpec {
   final TextOverflow? overflow;
   final StrutStyle? strutStyle;
   final TextAlign? textAlign;
@@ -17,6 +19,16 @@ final class TextSpec extends ModifiableSpec<TextSpec> with _$TextSpec {
   final TextStyle? style;
   final TextDirection? textDirection;
   final bool? softWrap;
+
+  @override
+  @MixableProperty(utilities: [
+    MixableUtility(
+      alias: '_modifiers',
+      properties: [(path: 'add', alias: 'mod')],
+    ),
+  ])
+  // ignore: overridden_fields
+  final InlineModifiersData? inlineModifiers;
 
   @MixableProperty(
     utilities: [
@@ -50,7 +62,7 @@ final class TextSpec extends ModifiableSpec<TextSpec> with _$TextSpec {
     this.softWrap,
     this.directive,
     super.animated,
-    super.modifiers,
+    this.inlineModifiers,
   });
 
   Widget call(String text) {

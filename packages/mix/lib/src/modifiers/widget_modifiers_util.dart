@@ -43,14 +43,3 @@ class WithModifierUtility<T extends Attribute>
 
   WithModifierUtility(super.builder);
 }
-
-final class InlineModifierUtility<T extends Attribute>
-    extends MixUtility<T, Set<WidgetModifierAttribute>> {
-  late final add = WithModifierUtility((v) => builder({v}));
-
-  InlineModifierUtility(super.builder);
-
-  T call(Set<WidgetModifierAttribute> modifiers) {
-    return builder(modifiers);
-  }
-}

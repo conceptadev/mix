@@ -90,13 +90,13 @@ class RenderModifiers extends StatelessWidget {
   final MixData mix;
   final Widget child;
   final List<Type> orderOfModifiers;
-  final ModifiableSpec? spec;
+  final Spec? spec;
   final bool wasInitializedFromSpec;
 
   @override
   Widget build(BuildContext context) {
     final specs = wasInitializedFromSpec
-        ? spec?.modifiers ?? {}
+        ? spec?.inlineModifiers?.modifiers ?? {}
         : resolveModifierSpecs(orderOfModifiers, mix);
 
     var current = child;
@@ -125,10 +125,10 @@ class RenderAnimatedModifiers extends ImplicitlyAnimatedWidget {
     required this.mix,
     required this.child,
     required this.orderOfModifiers,
-    required ModifiableSpec spec,
+    required Spec spec,
     super.key,
     super.onEnd,
-  })  : mods = spec.modifiers,
+  })  : mods = spec.inlineModifiers?.modifiers,
         wasInitializedFromSpec = true,
         super(duration: spec.animated!.duration, curve: spec.animated!.curve);
 
@@ -220,7 +220,7 @@ class RenderInlineModifiers extends StatelessWidget {
   final MixData mix;
   final Widget child;
   final List<Type> orderOfModifiers;
-  final ModifiableSpec spec;
+  final Spec spec;
 
   @override
   Widget build(BuildContext context) {
