@@ -1,4 +1,4 @@
-// ignore_for_file: unused_element, prefer_relative_imports
+// ignore_for_file: unused_element, prefer_relative_imports, avoid-importing-entrypoint-exports
 
 import 'dart:io';
 import 'dart:typed_data';
@@ -50,7 +50,6 @@ final class FontFeatureUtility<T extends Attribute>
     extends MixUtility<T, FontFeature> with _$FontFeatureUtility {
   const FontFeatureUtility(super.builder);
 }
-
 
 @MixableClassUtility()
 final class DurationUtility<T extends Attribute> extends MixUtility<T, Duration>
