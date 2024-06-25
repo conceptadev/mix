@@ -1,6 +1,6 @@
 // ignore_for_file: camel_case_types
 
-import '../attributes/scalars/scalar_util.dart';
+import '../attributes/enum/enum_util.dart';
 import '../specs/image/image_spec.dart';
 import 'attribute.dart';
 

@@ -19,6 +19,7 @@ export 'color/color_util.dart';
 export 'constraints/constraints_dto.dart';
 export 'decoration/decoration_dto.dart';
 export 'decoration/image/decoration_image_dto.dart';
+export 'enum/enum_util.dart';
 export 'gradient/gradient_dto.dart';
 export 'nested_style/nested_style_attribute.dart';
 export 'nested_style/nested_style_util.dart';

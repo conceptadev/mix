@@ -1,10 +1,10 @@
 import 'package:analyzer/dart/constant/value.dart' show DartObject;
 import 'package:analyzer/dart/element/element.dart'
     show ClassElement, FieldElement, ParameterElement, ConstructorElement;
-import 'package:analyzer/dart/element/nullability_suffix.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:mix_annotations/mix_annotations.dart';
 import 'package:mix_generator/src/helpers/builder_utils.dart';
+import 'package:mix_generator/src/helpers/dart_type_ext.dart';
 import 'package:mix_generator/src/helpers/type_ref_repository.dart';
 // ignore_for_file: prefer_relative_imports
 import 'package:source_gen/source_gen.dart' show ConstantReader, TypeChecker;
@@ -85,6 +85,18 @@ class ParameterInfo extends FieldInfo {
   String get asInternalRef => '$internalRefPrefix.$name';
 
   final bool isSuper;
+
+  static ParameterInfo fromFieldInfo(FieldInfo fieldInfo) {
+    return ParameterInfo(
+      name: fieldInfo.name,
+      type: fieldInfo.type,
+      nullable: fieldInfo.nullable,
+      isSuper: false,
+      dartType: fieldInfo.dartType,
+      annotation: fieldInfo.annotation,
+      documentationComment: fieldInfo.documentationComment,
+    );
+  }
 }
 
 MixableProperty readFieldAnnotation(
@@ -201,7 +213,7 @@ FieldInfo? getFieldInfoFromParameter(
     name: field.name,
     type: field.type.getDisplayString(withNullability: false),
     dartType: field.type,
-    nullable: field.type.nullabilitySuffix == NullabilitySuffix.question,
+    nullable: field.type.isNullableType,
     annotation: annotation,
     documentationComment: field.documentationComment,
   );

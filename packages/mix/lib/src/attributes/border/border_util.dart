@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../core/attribute.dart';
-import '../scalars/scalar_util.dart';
+import '../../core/dto.dart';
 import 'border_dto.dart';
 
 final class BoxBorderUtility<T extends Attribute>

@@ -30,7 +30,7 @@ class MixableDtoGenerator extends GeneratorForAnnotation<MixableDto> {
       );
     }
 
-    final classVisitor = ClassVisitor();
+    final classVisitor = CustomVisitor();
     element.visitChildren(classVisitor);
 
     final context = await _loadContext(

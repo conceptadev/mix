@@ -2,10 +2,10 @@
 
 import 'package:flutter/material.dart';
 
-import '../attributes/scalars/scalar_util.dart';
 import '../core/attribute.dart';
-import '../core/modifier.dart';
 import '../core/factory/mix_data.dart';
+import '../core/modifier.dart';
+import '../core/utility.dart';
 
 final class IntrinsicHeightModifierSpec
     extends WidgetModifierSpec<IntrinsicHeightModifierSpec> {
