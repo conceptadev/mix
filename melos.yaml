@@ -24,4 +24,6 @@ scripts:
     run: melos exec --category="should_test" flutter test
     description: Run flutter test in all projects that should be tested
   fix:
-    run: dart fix --apply &&  melos exec --depends-on="dart_code_metrics_presets" dcm fix .
+    run: melos exec dart fix --apply . &&  melos exec --depends-on="dart_code_metrics_presets" dcm fix .
+  analyze:
+    run: melos exec --category="mix_deps" dart analyze . && melos exec --category="mix_deps" --depends-on="dart_code_metrics_presets" dcm analyze .

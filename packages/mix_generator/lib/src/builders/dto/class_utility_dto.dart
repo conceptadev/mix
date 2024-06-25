@@ -3,7 +3,8 @@ import 'package:mix_generator/src/helpers/builder_utils.dart';
 
 String dtoUtilityClass(DtoAnnotationContext context) {
   final utilityType = context.name;
-  final resolvedType = getGenericTypeOfSuperclassString(context.element);
+  final resolvedType =
+      context.element.getGenericTypeOfSuperclass()?.getTypeAsString();
   // This class element is in context.element. This element is like this
   // class SampleClass extends AnotherClass<Generic> {}
   // taking this in consideration how can I get teh value of Generic?
