@@ -91,6 +91,7 @@ final class BoxSpec extends ModifiableSpec<BoxSpec> with _$BoxSpec {
       properties: [(path: 'add', alias: 'mod')],
     ),
   ])
+  // ignore: overridden_fields, avoid-dynamic
   final Set<WidgetModifierSpec<dynamic>>? modifiers;
 
   const BoxSpec({

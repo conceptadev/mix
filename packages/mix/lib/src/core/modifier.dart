@@ -36,6 +36,7 @@ abstract base class WidgetModifierAttribute<
   Value resolve(MixData mix);
 }
 
+// ignore: avoid-dynamic
 typedef InlineModifierSpec = Set<WidgetModifierSpec<dynamic>>;
 
 class ModifierDto extends Dto<InlineModifierSpec> {
