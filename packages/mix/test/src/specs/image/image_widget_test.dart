@@ -141,7 +141,9 @@ void main() {
               style: Style(
                 $image.width(200),
                 $image.height(200),
-              ).animate(duration: const Duration(milliseconds: 500)),
+              ).animate(
+                duration: const Duration(milliseconds: 500),
+              ),
             ),
           ),
         ),

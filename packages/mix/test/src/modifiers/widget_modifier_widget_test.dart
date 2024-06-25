@@ -21,7 +21,7 @@ void main() {
       await tester.pumpMaterialApp(
         RenderModifiers(
           mix: mixData,
-          orderOfModifiers: const [],
+          modifiers: resolveModifierSpecs(const [], mixData),
           child: const Text('child'),
         ),
       );
@@ -84,7 +84,7 @@ void main() {
       await tester.pumpMaterialApp(
         RenderModifiers(
           mix: mixData,
-          orderOfModifiers: const [],
+          modifiers: resolveModifierSpecs(const [], mixData),
           child: const Text('child'),
         ),
       );
@@ -99,7 +99,7 @@ void main() {
       await tester.pumpMaterialApp(
         RenderModifiers(
           mix: mixData,
-          orderOfModifiers: const [],
+          modifiers: resolveModifierSpecs(const [], mixData),
           child: const Text('child'),
         ),
       );
@@ -111,16 +111,17 @@ void main() {
     testWidgets(
       'Renders modifiers in the correct order with many overrides',
       (tester) async {
+        const orderOfModifiers = [
+          ClipOvalModifierAttribute,
+          AspectRatioModifierAttribute,
+          TransformModifierAttribute,
+          OpacityModifierAttribute,
+          VisibilityModifierAttribute,
+        ];
         await tester.pumpMaterialApp(
           RenderModifiers(
             mix: mixData,
-            orderOfModifiers: const [
-              ClipOvalModifierAttribute,
-              AspectRatioModifierAttribute,
-              TransformModifierAttribute,
-              OpacityModifierAttribute,
-              VisibilityModifierAttribute,
-            ],
+            modifiers: resolveModifierSpecs(orderOfModifiers, mixData),
             child: const Text('child'),
           ),
         );
@@ -181,13 +182,14 @@ void main() {
     testWidgets(
       'Renders modifiers in the correct order with a few overrides',
       (tester) async {
+        const orderOfModifiers = [
+          ClipOvalModifierAttribute,
+          AspectRatioModifierAttribute,
+        ];
         await tester.pumpMaterialApp(
           RenderModifiers(
             mix: mixData,
-            orderOfModifiers: const [
-              ClipOvalModifierAttribute,
-              AspectRatioModifierAttribute
-            ],
+            modifiers: resolveModifierSpecs(orderOfModifiers, mixData),
             child: const Text('child'),
           ),
         );
@@ -260,7 +262,7 @@ void main() {
       await tester.pumpMaterialApp(
         RenderAnimatedModifiers(
           mix: mixData,
-          orderOfModifiers: const [],
+          modifiers: resolveModifierSpecs([], mixData),
           duration: const Duration(milliseconds: 300),
           child: const Text('child'),
         ),

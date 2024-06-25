@@ -74,34 +74,19 @@ class RenderModifiers extends StatelessWidget {
   const RenderModifiers({
     required this.mix,
     required this.child,
-    required this.orderOfModifiers,
+    required this.modifiers,
     super.key,
-  })  : wasInitializedFromSpec = false,
-        spec = null;
-
-  const RenderModifiers.fromSpec({
-    required this.mix,
-    required this.child,
-    required this.orderOfModifiers,
-    required this.spec,
-    super.key,
-  }) : wasInitializedFromSpec = true;
+  });
 
   final MixData mix;
   final Widget child;
-  final List<Type> orderOfModifiers;
-  final Spec? spec;
-  final bool wasInitializedFromSpec;
+  final Set<WidgetModifierSpec<dynamic>> modifiers;
 
   @override
   Widget build(BuildContext context) {
-    final specs = wasInitializedFromSpec
-        ? spec?.inlineModifiers?.modifiers ?? {}
-        : resolveModifierSpecs(orderOfModifiers, mix);
-
     var current = child;
 
-    for (final spec in specs) {
+    for (final spec in modifiers) {
       current = spec.build(current);
     }
 
@@ -112,33 +97,19 @@ class RenderModifiers extends StatelessWidget {
 class RenderAnimatedModifiers extends ImplicitlyAnimatedWidget {
   const RenderAnimatedModifiers({
     required this.mix,
+    required this.modifiers,
     required this.child,
-    required this.orderOfModifiers,
     required super.duration,
     super.key,
     super.curve = Curves.linear,
     super.onEnd,
-  })  : mods = null,
-        wasInitializedFromSpec = false;
-
-  RenderAnimatedModifiers.fromSpec({
-    required this.mix,
-    required this.child,
-    required this.orderOfModifiers,
-    required Spec spec,
-    super.key,
-    super.onEnd,
-  })  : mods = spec.inlineModifiers?.modifiers,
-        wasInitializedFromSpec = true,
-        super(duration: spec.animated!.duration, curve: spec.animated!.curve);
+  });
 
   final MixData mix;
   final Widget child;
-  final List<Type> orderOfModifiers;
 
-  final Set<WidgetModifierSpec<dynamic>>? mods;
+  final Set<WidgetModifierSpec<dynamic>> modifiers;
 
-  final bool wasInitializedFromSpec;
   @override
   RenderAnimatedModifiersState createState() => RenderAnimatedModifiersState();
 }
@@ -149,11 +120,7 @@ class RenderAnimatedModifiersState
 
   @override
   void forEachTween(TweenVisitor<dynamic> visitor) {
-    final specs = widget.wasInitializedFromSpec
-        ? widget.mods ?? {}
-        : resolveModifierSpecs(widget.orderOfModifiers, widget.mix);
-
-    for (final spec in specs) {
+    for (final spec in widget.modifiers) {
       final specType = spec.runtimeType;
       final previousSpec = _specs[specType];
       _specs[specType] = visitor(
@@ -182,9 +149,18 @@ Set<WidgetModifierSpec> resolveModifierSpecs(
   List<Type> orderOfModifiers,
   MixData mix,
 ) {
-  final modifiers = mix.whereType<WidgetModifierAttribute>().toList();
+  final modifiers = mix.whereType<WidgetModifierAttribute>();
 
   if (modifiers.isEmpty) return {};
+
+  return orderModifierSpecs(orderOfModifiers, mix, modifiers);
+}
+
+Set<WidgetModifierSpec> orderModifierSpecs(
+  List<Type> orderOfModifiers,
+  MixData mix,
+  Iterable<WidgetModifierAttribute> modifiers,
+) {
   final modifierMap = AttributeMap<WidgetModifierAttribute>(modifiers).toMap();
 
   final listOfModifiers = {
@@ -225,16 +201,16 @@ class RenderInlineModifiers extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return spec.isAnimated
-        ? RenderAnimatedModifiers.fromSpec(
+        ? RenderAnimatedModifiers(
             mix: mix,
-            orderOfModifiers: orderOfModifiers,
-            spec: spec,
+            modifiers: spec.inlineModifiers?.modifiers ?? {},
+            duration: spec.animated!.duration,
+            curve: spec.animated!.curve,
             child: child,
           )
-        : RenderModifiers.fromSpec(
+        : RenderModifiers(
             mix: mix,
-            orderOfModifiers: orderOfModifiers,
-            spec: spec,
+            modifiers: spec.inlineModifiers?.modifiers ?? {},
             child: child,
           );
   }
