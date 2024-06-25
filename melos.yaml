@@ -9,6 +9,9 @@ categories:
     - packages/mix
     - packages/mix_annotations
     - packages/mix_generator
+  should_test:
+    - packages/mix
+    - examples/**
 
 scripts:
   build_runner:
@@ -17,5 +20,8 @@ scripts:
   build_runner_clean: 
     run: melos exec --depends-on="build_runner" dart run build_runner clean
     description: Clean build_runner for projects that have it as a dependency
+  test:
+    run: melos exec --category="should_test" flutter test
+    description: Run flutter test in all projects that should be tested
   fix:
     run: dart fix --apply &&  melos exec --depends-on="dart_code_metrics_presets" dcm fix .
