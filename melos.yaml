@@ -13,10 +13,18 @@ categories:
     - packages/mix
     - examples/**
 
+command:
+  bootstrap:
+    environment:
+      sdk: ">=3.0.6 <4.0.0"
+      flutter: ">=3.10.6"
+      
 scripts:
   build_runner:
-    run: melos run build_runner_clean && melos exec --depends-on="build_runner" --category="mix_deps" dart run build_runner build --delete-conflicting-outputs
     description: Run build_runner for projects that have it as a dependency
+    steps:
+      - melos run build_runner_clean
+      - melos exec --depends-on="build_runner" --category="mix_deps" dart run build_runner build --delete-conflicting-outputs
   build_runner_clean: 
     run: melos exec --depends-on="build_runner" dart run build_runner clean
     description: Clean build_runner for projects that have it as a dependency
@@ -24,6 +32,16 @@ scripts:
     run: melos exec --category="should_test" flutter test
     description: Run flutter test in all projects that should be tested
   fix:
-    run: melos exec dart fix --apply . &&  melos exec --depends-on="dart_code_metrics_presets" dcm fix .
+    steps:
+      - melos exec dart fix --apply .
+      - melos exec --depends-on="dart_code_metrics_presets" dcm fix .
+  custom_lint_analyze:
+    steps: 
+      - dart pub global activate custom_lint
+      - melos exec --depends-on="mix_lint" custom_lint
+
   analyze:
-    run: melos exec --category="mix_deps" dart analyze . && melos exec --category="mix_deps" --depends-on="dart_code_metrics_presets" dcm analyze .
+    steps: 
+      - melos exec --category="mix_deps" dart analyze .
+      - melos exec --category="mix_deps" --depends-on="dart_code_metrics_presets" dcm analyze .
+      - melos run custom_lint_analyze

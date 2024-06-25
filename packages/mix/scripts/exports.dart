@@ -121,7 +121,8 @@ Future<Map<String, List<String>>> _getImportedFilesByDirectory() async {
     // file path will like this src/theme/mix_theme.dart, or src/sub1/**/*/*.dart
     // I would like to get sub1 and or the first direcotry and save as a variable
     // so I can use it in the export file.
-    final dirName = relativePath.split('/')[1];
+    const dirIndex = 1;
+    final dirName = relativePath.split('/')[dirIndex];
 
     result.putIfAbsent(dirName, () => []);
     result[dirName]!.add(relativePath);
