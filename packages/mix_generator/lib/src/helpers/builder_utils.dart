@@ -7,7 +7,6 @@ import 'package:dart_style/dart_style.dart';
 import 'package:mix_annotations/mix_annotations.dart';
 // ignore_for_file: prefer_relative_imports
 import 'package:mix_generator/src/helpers/field_info.dart';
-import 'package:mix_generator/src/mixable_utility_generator.dart';
 import 'package:source_gen/source_gen.dart';
 
 class MixHelperRef {
@@ -45,28 +44,33 @@ Future<List<ClassElement>> getAnnotatedClasses(
 abstract class AnnotationContext<T> {
   final ClassElement element;
 
-  final List<ParameterInfo> fields;
-
-  final T annotation;
-
   AnnotationContext({
     required this.element,
-    required this.fields,
-    required this.annotation,
   });
 
   late final formatter = DartFormatter(pageWidth: 80, fixes: StyleFix.all);
 
   String get name => element.name;
 
-  String get mixinExtensionName => '_\$${name}';
+  String get generatedName => '_\$${name}';
 
   String generate(String contents) {
     return formatter.format(contents);
   }
 }
 
-class SpecAnnotationContext extends AnnotationContext<MixableSpec> {
+sealed class ClassVisitorAnnotationContext<T> extends AnnotationContext {
+  final List<ParameterInfo> fields;
+
+  final T annotation;
+  ClassVisitorAnnotationContext({
+    required super.element,
+    required this.fields,
+    required this.annotation,
+  });
+}
+
+class SpecAnnotationContext extends ClassVisitorAnnotationContext<MixableSpec> {
   SpecAnnotationContext({
     required super.element,
     required super.fields,
@@ -76,7 +80,7 @@ class SpecAnnotationContext extends AnnotationContext<MixableSpec> {
   String get attributeClassName => '${name}Attribute';
 }
 
-class DtoAnnotationContext extends AnnotationContext<MixableDto> {
+class DtoAnnotationContext extends ClassVisitorAnnotationContext<MixableDto> {
   DtoAnnotationContext({
     required super.element,
     required super.fields,
@@ -84,19 +88,51 @@ class DtoAnnotationContext extends AnnotationContext<MixableDto> {
   });
 }
 
-class UtilityAnnotationContext
-    extends AnnotationContext<MixableScalarUtilityAnnotation> {
-  final DartType valueType;
-  UtilityAnnotationContext({
+class EnumUtilityAnnotationContext extends AnnotationContext {
+  final EnumElement enumElement;
+  final bool generateCallMethod;
+  EnumUtilityAnnotationContext({
     required super.element,
-    required super.fields,
-    required super.annotation,
-    required this.valueType,
+    required this.enumElement,
+    required this.generateCallMethod,
   });
+}
+
+class ClassUtilityAnnotationContext extends AnnotationContext {
+  final ClassElement valueElement;
+  final ClassElement? mappingElement;
+  final bool generateCallMethod;
+  ClassUtilityAnnotationContext({
+    required super.element,
+    required this.valueElement,
+    required this.mappingElement,
+    required this.generateCallMethod,
+  });
+}
+
+extension EnumElementX on EnumElement {
+  List<String> get values {
+    final valuesField = getField('values');
+    final valuesObject = valuesField?.computeConstantValue();
+
+    if (valuesObject != null && valuesObject.toListValue() != null) {
+      return valuesObject
+          .toListValue()!
+          .map((obj) {
+            final enumField = obj.getField('_name');
+            return enumField?.toStringValue();
+          })
+          .whereType<String>()
+          .toList();
+    }
+    return [];
+  }
 }
 
 extension ClassElementX on ClassElement {
   bool get isConst => unnamedConstructor?.isConst ?? false;
+
+  bool get hasUnamedConstructor => unnamedConstructor != null;
 
   DartType? getGenericTypeOfSuperclass() {
     final supertype = this.supertype;

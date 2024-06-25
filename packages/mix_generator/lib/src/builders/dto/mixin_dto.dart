@@ -7,7 +7,7 @@ import 'package:source_gen/source_gen.dart';
 
 String dtoMixin(DtoAnnotationContext context) {
   final className = context.name;
-  final mixinName = context.mixinExtensionName;
+  final mixinName = context.generatedName;
   final fields = context.fields;
 
   final el = context.element;

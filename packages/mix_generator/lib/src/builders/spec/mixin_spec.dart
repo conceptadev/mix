@@ -7,7 +7,7 @@ import 'package:mix_generator/src/helpers/helpers.dart';
 
 String specMixin(SpecAnnotationContext context) {
   final className = context.name;
-  final mixinName = context.mixinExtensionName;
+  final mixinName = context.generatedName;
   final attributeName = context.attributeClassName;
   final fields = context.fields;
 

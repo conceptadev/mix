@@ -159,14 +159,21 @@ class MixableUtility {
   }
 }
 
-class MixableScalarUtility {
+class MixableClassUtility {
   /// Map you should use to map the field utilities
   final Type? type;
-  const MixableScalarUtility({this.type});
+  final bool generateCallMethod;
+  const MixableClassUtility({
+    this.type,
+    this.generateCallMethod = true,
+  });
 }
 
 class MixableEnumUtility {
   /// Map you should use to map the field utilities
-  final Type type;
-  const MixableEnumUtility({required this.type});
+
+  final bool generateCallMethod;
+  const MixableEnumUtility({
+    this.generateCallMethod = true,
+  });
 }

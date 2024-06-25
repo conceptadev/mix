@@ -5,6 +5,7 @@ import 'attribute.dart';
 abstract class MixUtility<Attr extends Attribute, Value> {
   @protected
   final Attr Function(Value) builder;
+
   const MixUtility(this.builder);
 
   static T selfBuilder<T>(T value) => value;
@@ -41,16 +42,6 @@ final class DoubleUtility<T extends Attribute>
 
   /// Creates an [Attribute] instance with a value of [double.infinity].
   T infinity() => builder(double.infinity);
-}
-
-final class StringListUtility<T extends Attribute>
-    extends ListUtility<T, String> {
-  const StringListUtility(super.builder);
-}
-
-final class DoubleListUtility<T extends Attribute>
-    extends ListUtility<T, double> {
-  const DoubleListUtility(super.builder);
 }
 
 /// A utility class for creating [Attribute] instances from [int] values.

@@ -89,7 +89,7 @@ final class LinearGradientUtility<T extends Attribute>
   late final colors = ColorListUtility((v) => only(colors: v));
 
   /// Utility for defining [LinearGradientDto.stops]
-  late final stops = DoubleListUtility((v) => only(stops: v));
+  late final stops = ListUtility<T, double>((v) => only(stops: v));
 
   LinearGradientUtility(super.builder) : super(valueToDto: (v) => v.toDto());
 
@@ -240,7 +240,7 @@ final class RadialGradientUtility<T extends Attribute>
   late final colors = ColorListUtility((v) => only(colors: v));
 
   /// Utility for defining [RadialGradientDto.stops]
-  late final stops = DoubleListUtility((v) => only(stops: v));
+  late final stops = ListUtility<T, double>((v) => only(stops: v));
 
   RadialGradientUtility(super.builder) : super(valueToDto: (v) => v.toDto());
 
@@ -395,7 +395,7 @@ final class SweepGradientUtility<T extends Attribute>
   late final colors = ColorListUtility((v) => only(colors: v));
 
   /// Utility for defining [SweepGradientDto.stops]
-  late final stops = DoubleListUtility((v) => only(stops: v));
+  late final stops = ListUtility<T, double>((v) => only(stops: v));
 
   SweepGradientUtility(super.builder) : super(valueToDto: (v) => v.toDto());
 
