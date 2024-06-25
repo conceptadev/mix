@@ -98,7 +98,6 @@ class TypeRefRepository {
 
     if (refType.isDto) {
       refType = extractDtoTypeArgument(refType.classElement!)!;
-      print(refType.getTypeAsString());
     }
 
     return _sanitizeUtilityName(refType.getTypeAsString(), isList);

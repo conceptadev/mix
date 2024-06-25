@@ -158,3 +158,15 @@ class MixableUtility {
     return type is String ? type as String : type?.toString();
   }
 }
+
+class MixableScalarUtility {
+  /// Map you should use to map the field utilities
+  final Type? type;
+  const MixableScalarUtility({this.type});
+}
+
+class MixableEnumUtility {
+  /// Map you should use to map the field utilities
+  final Type type;
+  const MixableEnumUtility({required this.type});
+}

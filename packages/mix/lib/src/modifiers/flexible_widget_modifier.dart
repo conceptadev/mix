@@ -2,11 +2,12 @@
 
 import 'package:flutter/material.dart';
 
-import '../attributes/scalars/scalar_util.dart';
+import '../attributes/enum/enum_util.dart';
 import '../core/attribute.dart';
-import '../core/modifier.dart';
-import '../internal/lerp_helpers.dart';
 import '../core/factory/mix_data.dart';
+import '../core/modifier.dart';
+import '../core/utility.dart';
+import '../internal/lerp_helpers.dart';
 
 final class FlexibleModifierSpec
     extends WidgetModifierSpec<FlexibleModifierSpec> {

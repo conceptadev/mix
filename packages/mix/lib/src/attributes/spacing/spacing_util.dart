@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
 import '../../core/attribute.dart';
+import '../../core/dto.dart';
+import '../../core/utility.dart';
 import '../../theme/tokens/space_token.dart';
-import '../scalars/scalar_util.dart';
 import 'spacing_dto.dart';
 
 @immutable

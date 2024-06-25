@@ -30,3 +30,10 @@ builders:
     auto_apply: dependents
     build_to: cache
     applies_builders: ["source_gen|combining_builder"]
+  utility:
+    import: "package:mix_generator/mix_generator.dart"
+    builder_factories: ["utilityDefinition"]
+    build_extensions: {".dart": ["utility.g.part"]}
+    auto_apply: dependents
+    build_to: cache
+    applies_builders: ["source_gen|combining_builder"]

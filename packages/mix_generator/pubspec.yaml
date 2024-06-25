@@ -10,12 +10,10 @@ environment:
 dependencies:
   mix_annotations: ^0.1.0
   build: ^2.4.1
-  code_builder: ^4.10.0
   source_gen: ^1.5.0
   analyzer: ^6.1.0
   dart_style: ^2.3.6
   collection: ^1.17.1
-  glob: ^2.1.2
   build_config: ^1.1.1
   
 

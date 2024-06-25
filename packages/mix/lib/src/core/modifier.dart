@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
-import 'spec.dart';
+import 'attribute.dart';
 import 'factory/mix_data.dart';
+import 'spec.dart';
+import 'utility.dart';
 
 abstract base class WidgetModifierSpec<Self extends WidgetModifierSpec<Self>>
     extends Spec<Self> {
@@ -35,4 +37,11 @@ abstract base class WidgetModifierAttribute<
 
   @override
   Value resolve(MixData mix);
+}
+
+abstract base class WidgetModifierUtility<
+    T extends Attribute,
+    D extends WidgetModifierAttribute<D, Value>,
+    Value extends WidgetModifierSpec<Value>> extends MixUtility<T, D> {
+  const WidgetModifierUtility(super.builder);
 }

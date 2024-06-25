@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../core/attribute.dart';
-import '../scalars/scalar_util.dart';
+import '../../core/utility.dart';
 import 'shadow_dto.dart';
 
 /// A utility class for building [Attribute] instances from a list of [ShadowDto] objects.

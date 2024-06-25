@@ -3,11 +3,11 @@
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:build/build.dart';
-import 'package:code_builder/code_builder.dart';
 import 'package:dart_style/dart_style.dart';
 import 'package:mix_annotations/mix_annotations.dart';
 // ignore_for_file: prefer_relative_imports
 import 'package:mix_generator/src/helpers/field_info.dart';
+import 'package:mix_generator/src/mixable_utility_generator.dart';
 import 'package:source_gen/source_gen.dart';
 
 class MixHelperRef {
@@ -57,22 +57,12 @@ abstract class AnnotationContext<T> {
 
   late final formatter = DartFormatter(pageWidth: 80, fixes: StyleFix.all);
 
-  late final emitter = DartEmitter(
-    orderDirectives: true,
-    useNullSafetySyntax: true,
-  );
-
   String get name => element.name;
 
   String get mixinExtensionName => '_\$${name}';
 
   String generate(String contents) {
-    final code = Code(contents);
-
-    final output = formatter.format('${code.accept(emitter)}');
-
-    // Analyze output
-    return output;
+    return formatter.format(contents);
   }
 }
 
@@ -94,13 +84,15 @@ class DtoAnnotationContext extends AnnotationContext<MixableDto> {
   });
 }
 
-extension ReferenceX on Reference {
-  TypeReference get nullable {
-    return TypeReference((b) => b
-      ..symbol = symbol
-      ..url = url
-      ..isNullable = true);
-  }
+class UtilityAnnotationContext
+    extends AnnotationContext<MixableScalarUtilityAnnotation> {
+  final DartType valueType;
+  UtilityAnnotationContext({
+    required super.element,
+    required super.fields,
+    required super.annotation,
+    required this.valueType,
+  });
 }
 
 extension ClassElementX on ClassElement {
@@ -117,6 +109,8 @@ extension ClassElementX on ClassElement {
   bool get isDto => _isMixType('Dto');
 
   bool get isSpec => _isMixType('Spec');
+
+  bool get isMixUtiilty => _isMixType('MixUtility');
 
   bool _isMixType(String className) {
     return allSupertypes.any((type) {

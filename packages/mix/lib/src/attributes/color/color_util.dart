@@ -3,8 +3,8 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 
 import '../../core/attribute.dart';
+import '../../core/utility.dart';
 import '../../theme/tokens/color_token.dart';
-import '../scalars/scalar_util.dart';
 import 'color_directives.dart';
 import 'color_dto.dart';
 
