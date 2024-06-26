@@ -25,6 +25,8 @@ runs:
       run: |
         curl -fsSL https://fvm.app/install.sh | bash
         fvm use ${{ inputs.flutter-version }} --force
+        fvm global ${{ inputs.flutter-version }}
+        echo "$HOME/.fvm/default/bin" >> $GITHUB_PATH
 
     - name: Flutter version
       shell: bash
