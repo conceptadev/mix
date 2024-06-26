@@ -169,3 +169,9 @@ extension StrutStyleMixExt on StrutStyle {
     );
   }
 }
+
+extension ListStrutStyleMixExt on List<StrutStyle> {
+  List<StrutStyleDto> toDto() {
+    return map((e) => e.toDto()).toList();
+  }
+}

@@ -149,17 +149,9 @@ final class BorderSideDto extends Dto<BorderSide> with _$BorderSideDto {
 
 extension BoxBorderExt on BoxBorder {
   BoxBorderDto toDto() {
-    if (this is Border) {
-      return (this as Border).toDto();
-    }
-    if (this is BorderDirectional) {
-      return (this as BorderDirectional).toDto();
-    }
-
-    throw ArgumentError.value(
-      this,
-      'border',
-      'Border type is not supported',
-    );
+    final self = this;
+    if (self is Border) return (self).toDto();
+    if (self is BorderDirectional) return (self).toDto();
+    throw UnimplementedError();
   }
 }

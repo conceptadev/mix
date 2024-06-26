@@ -71,6 +71,12 @@ extension BorderMixExt on Border {
   }
 }
 
+extension ListBorderMixExt on List<Border> {
+  List<BorderDto> toDto() {
+    return map((e) => e.toDto()).toList();
+  }
+}
+
 base mixin _$BorderDirectionalDto on Dto<BorderDirectional> {
   /// Resolves to [BorderDirectional] using the provided [MixData].
   ///
@@ -133,6 +139,12 @@ extension BorderDirectionalMixExt on BorderDirectional {
       start: start.toDto(),
       end: end.toDto(),
     );
+  }
+}
+
+extension ListBorderDirectionalMixExt on List<BorderDirectional> {
+  List<BorderDirectionalDto> toDto() {
+    return map((e) => e.toDto()).toList();
   }
 }
 
@@ -249,5 +261,11 @@ extension BorderSideMixExt on BorderSide {
       style: style,
       width: width,
     );
+  }
+}
+
+extension ListBorderSideMixExt on List<BorderSide> {
+  List<BorderSideDto> toDto() {
+    return map((e) => e.toDto()).toList();
   }
 }

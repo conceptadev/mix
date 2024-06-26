@@ -104,6 +104,12 @@ extension EdgeInsetsMixExt on EdgeInsets {
   }
 }
 
+extension ListEdgeInsetsMixExt on List<EdgeInsets> {
+  List<EdgeInsetsDto> toDto() {
+    return map((e) => e.toDto()).toList();
+  }
+}
+
 base mixin _$EdgeInsetsDirectionalDto on Dto<EdgeInsetsDirectional> {
   /// Merges the properties of this [EdgeInsetsDirectionalDto] with the properties of [other].
   ///
@@ -200,5 +206,11 @@ extension EdgeInsetsDirectionalMixExt on EdgeInsetsDirectional {
       start: start,
       end: end,
     );
+  }
+}
+
+extension ListEdgeInsetsDirectionalMixExt on List<EdgeInsetsDirectional> {
+  List<EdgeInsetsDirectionalDto> toDto() {
+    return map((e) => e.toDto()).toList();
   }
 }
