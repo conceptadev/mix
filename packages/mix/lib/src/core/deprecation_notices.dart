@@ -39,9 +39,10 @@ extension ImageSpecUtilityDeprecationX<T extends Attribute>
 }
 
 @RenamedDeprecated(
-    message: 'Use `WidgetStateVariant` instead.',
-    version: '2.0.0',
-    updatedName: 'WidgetStateVariant')
+  message: 'Use `WidgetStateVariant` instead.',
+  version: '2.0.0',
+  updatedName: 'WidgetStateVariant',
+)
 typedef WidgetContextVariant = WidgetStateVariant;
 @RenamedDeprecated(
   message: 'Use `WidgetStateModel` instead.',
@@ -50,9 +51,10 @@ typedef WidgetContextVariant = WidgetStateVariant;
 )
 typedef PressableState = WidgetStateModel;
 @RenamedDeprecated(
-    message: 'Use `WidgetStateAspect` instead.',
-    version: '2.0.0',
-    updatedName: 'WidgetStateAspect')
+  message: 'Use `WidgetStateAspect` instead.',
+  version: '2.0.0',
+  updatedName: 'WidgetStateAspect',
+)
 typedef PressableStateAspect = WidgetStateAspect;
 @RenamedDeprecated(
   message: 'Use `MixWidgetState` instead.',

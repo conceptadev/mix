@@ -61,8 +61,10 @@ final class WidgetStateModel extends InheritedModel<WidgetStateAspect> {
     BuildContext context, [
     WidgetStateAspect? aspect,
   ]) {
-    return InheritedModel.inheritFrom<WidgetStateModel>(context,
-        aspect: aspect);
+    return InheritedModel.inheritFrom<WidgetStateModel>(
+      context,
+      aspect: aspect,
+    );
   }
 
   static WidgetStateModel aspectOf(
