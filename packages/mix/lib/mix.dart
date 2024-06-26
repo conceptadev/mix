@@ -1,13 +1,3 @@
-library mix;
-
-export 'src/attributes/attributes.dart';
-export 'src/core/core.dart';
-export 'src/modifiers/modifiers.dart';
-export 'src/specs/specs.dart';
-export 'src/theme/theme.dart';
-export 'src/variants/variants.dart';
-export 'src/widgets/widgets.dart';
-
 ///   /\\\\            /\\\\  /\\\\\\\\\\\  /\\\       /\\\              
 ///   \/\\\\\\        /\\\\\\ \/////\\\///  \///\\\   /\\\/  
 ///    \/\\\//\\\    /\\\//\\\     \/\\\       \///\\\\\\/    
@@ -26,3 +16,12 @@ export 'src/widgets/widgets.dart';
 ///               \/\             Generated with barrel script        \ \
 ///                \/////////////////////////////////////////////////////
 
+library mix;
+
+export 'src/attributes/attributes.dart';
+export 'src/core/core.dart';
+export 'src/modifiers/modifiers.dart';
+export 'src/specs/specs.dart';
+export 'src/theme/theme.dart';
+export 'src/variants/variants.dart';
+export 'src/widgets/widgets.dart';

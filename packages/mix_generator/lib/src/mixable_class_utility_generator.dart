@@ -169,11 +169,11 @@ T call($valueName value) => builder(value);
 /// T constructor(params) => builder(ClassElement.constructor(params));
 String _generateUtilityConstructors(ClassUtilityAnnotationContext context) {
   final mappedEl = context.mappingElement ?? context.valueElement;
-  final valueEl = context.valueElement;
+
   final fieldStatements = <String>[];
 
-  final constructors = mappedEl.constructors.where((element) {
-    return _isValidConstructor(element, valueEl);
+  final constructors = mappedEl.constructors.where((constructor) {
+    return _isValidConstructor(constructor);
   });
 
   constructors.forEach((constructor) {
@@ -263,10 +263,7 @@ $signatureLine
 
 bool _isValidConstructor(
   ConstructorElement constructor,
-  ClassElement valueElement,
 ) {
-  final isSameReturnType =
-      constructor.returnType.isAssignableTo(valueElement.thisType);
   final isPublic = constructor.isPublic;
 
   final hasUndefinedParamTypes = constructor.parameters.any((param) {
@@ -278,8 +275,5 @@ bool _isValidConstructor(
     return param.isPrivate;
   });
 
-  return isSameReturnType &&
-      isPublic &&
-      !hasUndefinedParamTypes &&
-      !hasAnyPrivateParams;
+  return isPublic && !hasUndefinedParamTypes && !hasAnyPrivateParams;
 }

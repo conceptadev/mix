@@ -1,6 +1,6 @@
 // ignore_for_file: prefer-named-boolean-parameters
 
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 import '../attributes/enum/enum_util.dart';
 import '../core/attribute.dart';

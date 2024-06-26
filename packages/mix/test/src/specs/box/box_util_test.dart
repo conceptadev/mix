@@ -14,7 +14,7 @@ void main() {
         maxHeight: 100,
       );
 
-      const spacing = SpacingDto.only(top: 10, bottom: 10, left: 10, right: 10);
+      final spacing = SpacingDto.only(top: 10, bottom: 10, left: 10, right: 10);
 
       final container = boxUtility.only(
         alignment: Alignment.center,

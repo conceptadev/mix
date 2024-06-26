@@ -47,7 +47,37 @@ final class BoxShadowListUtility<T extends Attribute>
 /// [BoxShadowDto] objects using the [kElevationToShadow] map.
 final class ElevationUtility<T extends Attribute>
     extends MixUtility<T, List<BoxShadowDto>> {
-  const ElevationUtility(super.builder);
+  /// Creates an [T] instance with an elevation of 1.
+  late final e1 = one;
+
+  /// Creates an [T] instance with an elevation of 2.
+  late final e2 = two;
+
+  /// Creates an [T] instance with an elevation of 3.
+  late final e3 = three;
+
+  /// Creates an [T] instance with an elevation of 4.
+  late final e4 = four;
+
+  /// Creates an [T] instance with an elevation of 6.
+  late final e6 = six;
+
+  /// Creates an [T] instance with an elevation of 8.
+  late final e8 = eight;
+
+  /// Creates an [T] instance with an elevation of 9.
+  late final e9 = nine;
+
+  /// Creates an [T] instance with an elevation of 12.
+  late final e12 = twelve;
+
+  /// Creates an [T] instance with an elevation of 16
+  late final e16 = sixteen;
+
+  /// Creates an [T] instance with an elevation of 24.
+  late final e24 = twentyFour;
+
+  ElevationUtility(super.builder);
 
   /// Creates an [Attribute] instance from an elevation value.
   ///

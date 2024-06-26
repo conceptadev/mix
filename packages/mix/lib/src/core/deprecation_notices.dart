@@ -25,7 +25,7 @@ class InternalRenameDeprecatedAnnotation
 
 typedef RenamedDeprecated = InternalRenameDeprecatedAnnotation;
 
-extension ImageSpecUtilityDeprecationUtilityX<T extends Attribute>
+extension ImageSpecUtilityDeprecationX<T extends Attribute>
     on ImageSpecUtility<T> {
   @RenamedDeprecated(
     message:

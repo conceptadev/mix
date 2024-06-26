@@ -1,7 +1,7 @@
 // ignore_for_file: no_leading_underscores_for_local_identifiers
 // ignore_for_file: prefer_relative_imports,avoid-importing-entrypoint-exports
 
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:mix/mix.dart';
 import 'package:mix_annotations/mix_annotations.dart';
 
@@ -131,7 +131,7 @@ final class BoxDecorationDto extends DecorationDto<BoxDecoration>
 
     return merge(
       BoxDecorationDto(
-        border: BoxBorderDto.fromSide(side),
+        border: side != null ? BorderDto.all(side) : null,
         borderRadius: borderRadius,
         shape: boxShape,
         color: color,
@@ -209,7 +209,7 @@ BoxDecorationDto _toBoxDecorationDto(ShapeDecorationDto dto) {
   final (:borderRadius, :boxShape, :side) = ShapeBorderDto.extract(dto.shape);
 
   return BoxDecorationDto(
-    border: BoxBorderDto.fromSide(side),
+    border: side != null ? BorderDto.all(side) : null,
     borderRadius: borderRadius,
     shape: boxShape,
     color: color,
