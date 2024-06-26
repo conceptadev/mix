@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
+import 'package:mix/src/attributes/gap/gap_dto.dart';
 
 void main() {
   group('FlexUtility', () {
@@ -89,7 +90,7 @@ void main() {
     test('gap() returns correct instance', () {
       final flex = flexUtility.gap(10);
 
-      expect(flex.gap, 10);
+      expect(flex.gap, const GapDto(10));
     });
 
     // row()

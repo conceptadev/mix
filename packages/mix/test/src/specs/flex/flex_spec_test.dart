@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
+import 'package:mix/src/attributes/gap/gap_dto.dart';
 
 import '../../../helpers/testing_utils.dart';
 
@@ -21,7 +22,7 @@ void main() {
             textDirection: TextDirection.ltr,
             textBaseline: TextBaseline.alphabetic,
             clipBehavior: Clip.antiAlias,
-            gap: 10,
+            gap: GapDto(10),
           ),
         ),
       );

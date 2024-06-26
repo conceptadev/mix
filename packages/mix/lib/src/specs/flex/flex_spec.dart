@@ -3,6 +3,9 @@ import 'package:flutter/widgets.dart';
 import 'package:mix/mix.dart';
 import 'package:mix_annotations/mix_annotations.dart';
 
+import '../../attributes/gap/gap_dto.dart';
+import '../../attributes/gap/gap_util.dart';
+
 part 'flex_spec.g.dart';
 
 @MixableSpec()
@@ -25,7 +28,10 @@ final class FlexSpec extends Spec<FlexSpec> with _$FlexSpec {
   final TextDirection? textDirection;
   final TextBaseline? textBaseline;
   final Clip? clipBehavior;
-  @MixableProperty(utilities: [MixableUtility(type: SpacingSideUtility)])
+  @MixableProperty(
+    dto: MixableFieldDto(type: GapDto),
+    utilities: [MixableUtility(type: GapUtility)],
+  )
   final double? gap;
 
   static const of = _$FlexSpec.of;
