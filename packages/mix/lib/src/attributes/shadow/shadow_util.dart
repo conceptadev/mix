@@ -47,29 +47,6 @@ final class BoxShadowListUtility<T extends Attribute>
 /// [BoxShadowDto] objects using the [kElevationToShadow] map.
 final class ElevationUtility<T extends Attribute>
     extends MixUtility<T, List<BoxShadowDto>> {
-  ElevationUtility(super.builder);
-
-  /// Creates an [Attribute] instance from an elevation value.
-  ///
-  /// Retrieves the corresponding list of [BoxShadow] objects from the [kElevationToShadow]
-  /// map, maps each [BoxShadow] to a [BoxShadowDto], and passes the resulting list to
-  /// the [builder] function to create the [Attribute] instance.
-  ///
-  /// Throws an [AssertionError] if the provided [value] is not a valid elevation value.
-  T call(int value) {
-    assert(kElevationToShadow.containsKey(value), 'Invalid elevation value');
-
-    final boxShadows = kElevationToShadow[value]!.map((e) => e.toDto());
-
-    return builder(boxShadows.toList());
-  }
-
-  /// Creates an [T] instance with no elevation.
-  T none() => call(0);
-
-  /// Creates an [T] instance with an elevation of 1.
-  T one() => call(1);
-
   /// Creates an [T] instance with an elevation of 1.
   late final e1 = one;
 
@@ -99,6 +76,29 @@ final class ElevationUtility<T extends Attribute>
 
   /// Creates an [T] instance with an elevation of 24.
   late final e24 = twentyFour;
+
+  ElevationUtility(super.builder);
+
+  /// Creates an [Attribute] instance from an elevation value.
+  ///
+  /// Retrieves the corresponding list of [BoxShadow] objects from the [kElevationToShadow]
+  /// map, maps each [BoxShadow] to a [BoxShadowDto], and passes the resulting list to
+  /// the [builder] function to create the [Attribute] instance.
+  ///
+  /// Throws an [AssertionError] if the provided [value] is not a valid elevation value.
+  T call(int value) {
+    assert(kElevationToShadow.containsKey(value), 'Invalid elevation value');
+
+    final boxShadows = kElevationToShadow[value]!.map((e) => e.toDto());
+
+    return builder(boxShadows.toList());
+  }
+
+  /// Creates an [T] instance with no elevation.
+  T none() => call(0);
+
+  /// Creates an [T] instance with an elevation of 1.
+  T one() => call(1);
 
   /// Creates an [T] instance with an elevation of 2.
   T two() => call(2);
