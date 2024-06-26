@@ -1,14 +1,14 @@
 import '../../core/dto.dart';
 import '../../core/factory/mix_data.dart';
 
-class GapDto extends Dto<double> {
+class SpacingSideDto extends Dto<double> {
   final double? value;
 
-  const GapDto(this.value);
+  const SpacingSideDto(this.value);
 
   @override
-  GapDto merge(GapDto? other) {
-    return GapDto(other?.value ?? value);
+  SpacingSideDto merge(SpacingSideDto? other) {
+    return SpacingSideDto(other?.value ?? value);
   }
 
   @override
