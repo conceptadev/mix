@@ -5,10 +5,10 @@ inputs:
   token:
     description: 'Github token'
     required: true
-  flutter-version:
+  flavor:
     description: 'Flutter version'
     required: false
-    default: ""
+    default: "stable"
   run-dcm:
     description: 'Shoudl run DCM'
     required: false
@@ -20,11 +20,11 @@ runs:
     - name: Checkout mix repo
       uses: actions/checkout@v4
 
-    - name: Setup Flutter
-      uses: subosito/flutter-action@v2
-      with:
-        channel: "stable"
-        flutter-version: ${{ inputs.flutter-version }}
+    - name: Install FVM
+      shell: bash
+      run: |
+        curl -fsSL https://fvm.app/install.sh | bash
+        fvm use ${{ inputs.flutter-version }} --force
 
     - name: Flutter version
       shell: bash
