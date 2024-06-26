@@ -1,6 +1,6 @@
 // ignore_for_file: avoid-dynamic
 
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 import 'deep_collection_equality.dart';
 import 'iterable_ext.dart';

@@ -1,5 +1,6 @@
 name: mix_workspace
 
+sdkPath: .fvm/flutter_sdk
 packages:
   - packages/**
   - examples/**
@@ -9,15 +10,43 @@ categories:
     - packages/mix
     - packages/mix_annotations
     - packages/mix_generator
+  should_test:
+    - packages/mix
+    - examples/**
 
+command:
+  bootstrap:
+    environment:
+      sdk: ">=3.0.6 <4.0.0"
+      flutter: ">=3.10.6"
+      
 scripts:
-  build_runner:
-    run: melos run build_runner_clean && melos exec --depends-on="build_runner" --category="mix_deps" dart run build_runner build --delete-conflicting-outputs
+  brb:
     description: Run build_runner for projects that have it as a dependency
-  build_runner_clean: 
+    steps:
+      - melos run build_runner_clean
+      - melos exec --depends-on="build_runner" --category="mix_deps" dart run build_runner build --delete-conflicting-outputs
+  brbc: 
     run: melos exec --depends-on="build_runner" dart run build_runner clean
     description: Clean build_runner for projects that have it as a dependency
+  test:
+    run: melos exec --category="should_test" flutter test
+    description: Run flutter test in all projects that should be tested
   fix:
-    run: melos exec dart fix --apply . &&  melos exec --depends-on="dart_code_metrics_presets" dcm fix .
+    steps:
+      - melos exec dart fix --apply .
+      - melos exec --depends-on="dart_code_metrics_presets" dcm fix .
+  custom_lint_analyze:
+    steps: 
+      - dart pub global activate custom_lint
+      - melos exec --depends-on="mix_lint" custom_lint
+
   analyze:
-    run: melos exec --category="mix_deps" dart analyze . && melos exec --category="mix_deps" --depends-on="dart_code_metrics_presets" dcm analyze .
+    steps: 
+      - melos exec --category="mix_deps" dart analyze .
+      - melos exec --category="mix_deps" --depends-on="dart_code_metrics_presets" dcm analyze .
+      - melos run custom_lint_analyze
+
+  verify_version_pubspec_changelog:
+    run: ./scripts/verify_changelogs.sh packages
+    description: Verify that all packages have the same version

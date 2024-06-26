@@ -45,7 +45,7 @@ base mixin _$BoxDecorationDto on Dto<BoxDecoration> {
     if (other == null) return _$this;
 
     return BoxDecorationDto(
-      border: _$this.border?.merge(other.border) ?? other.border,
+      border: BoxBorderDto.tryToMerge(_$this.border, other.border),
       borderRadius:
           _$this.borderRadius?.merge(other.borderRadius) ?? other.borderRadius,
       shape: other.shape ?? _$this.shape,
@@ -185,6 +185,12 @@ extension BoxDecorationMixExt on BoxDecoration {
   }
 }
 
+extension ListBoxDecorationMixExt on List<BoxDecoration> {
+  List<BoxDecorationDto> toDto() {
+    return map((e) => e.toDto()).toList();
+  }
+}
+
 base mixin _$ShapeDecorationDto on Dto<ShapeDecoration> {
   /// Resolves to [ShapeDecoration] using the provided [MixData].
   ///
@@ -310,5 +316,11 @@ extension ShapeDecorationMixExt on ShapeDecoration {
       gradient: gradient?.toDto(),
       shadows: shadows?.map((e) => e.toDto()).toList(),
     );
+  }
+}
+
+extension ListShapeDecorationMixExt on List<ShapeDecoration> {
+  List<ShapeDecorationDto> toDto() {
+    return map((e) => e.toDto()).toList();
   }
 }

@@ -1,6 +1,6 @@
 // ignore_for_file: avoid-dynamic
 
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 import '../core/attributes_map.dart';
 import '../core/factory/mix_data.dart';

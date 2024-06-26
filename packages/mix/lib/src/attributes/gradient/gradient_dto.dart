@@ -1,8 +1,7 @@
 // ignore_for_file: prefer_relative_imports,avoid-importing-entrypoint-exports
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:mix/mix.dart';
 import 'package:mix_annotations/mix_annotations.dart';
-
-import '../../../mix.dart';
 
 part 'gradient_dto.g.dart';
 
@@ -149,9 +148,10 @@ final class SweepGradientDto extends GradientDto<SweepGradient>
 extension GradientExt on Gradient {
   // toDto
   GradientDto toDto() {
-    if (this is LinearGradient) return (this as LinearGradient).toDto();
-    if (this is RadialGradient) return (this as RadialGradient).toDto();
-    if (this is SweepGradient) return (this as SweepGradient).toDto();
+    final self = this;
+    if (self is LinearGradient) return (self).toDto();
+    if (self is RadialGradient) return (self).toDto();
+    if (self is SweepGradient) return (self).toDto();
 
     throw UnimplementedError();
   }

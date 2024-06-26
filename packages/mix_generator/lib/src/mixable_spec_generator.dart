@@ -31,7 +31,7 @@ class MixableSpecGenerator extends GeneratorForAnnotation<MixableSpec> {
       );
     }
 
-    final classVisitor = ClassVisitor();
+    final classVisitor = CustomVisitor();
     element.visitChildren(classVisitor);
 
     final context = await _loadContext(

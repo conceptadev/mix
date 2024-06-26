@@ -89,7 +89,7 @@ final class LinearGradientUtility<T extends Attribute>
   late final colors = ColorListUtility((v) => only(colors: v));
 
   /// Utility for defining [LinearGradientDto.stops]
-  late final stops = DoubleListUtility((v) => only(stops: v));
+  late final stops = ListUtility<T, double>((v) => only(stops: v));
 
   LinearGradientUtility(super.builder) : super(valueToDto: (v) => v.toDto());
 
@@ -142,6 +142,12 @@ extension LinearGradientMixExt on LinearGradient {
       colors: colors.map((e) => e.toDto()).toList(),
       stops: stops,
     );
+  }
+}
+
+extension ListLinearGradientMixExt on List<LinearGradient> {
+  List<LinearGradientDto> toDto() {
+    return map((e) => e.toDto()).toList();
   }
 }
 
@@ -240,7 +246,7 @@ final class RadialGradientUtility<T extends Attribute>
   late final colors = ColorListUtility((v) => only(colors: v));
 
   /// Utility for defining [RadialGradientDto.stops]
-  late final stops = DoubleListUtility((v) => only(stops: v));
+  late final stops = ListUtility<T, double>((v) => only(stops: v));
 
   RadialGradientUtility(super.builder) : super(valueToDto: (v) => v.toDto());
 
@@ -303,6 +309,12 @@ extension RadialGradientMixExt on RadialGradient {
       colors: colors.map((e) => e.toDto()).toList(),
       stops: stops,
     );
+  }
+}
+
+extension ListRadialGradientMixExt on List<RadialGradient> {
+  List<RadialGradientDto> toDto() {
+    return map((e) => e.toDto()).toList();
   }
 }
 
@@ -395,7 +407,7 @@ final class SweepGradientUtility<T extends Attribute>
   late final colors = ColorListUtility((v) => only(colors: v));
 
   /// Utility for defining [SweepGradientDto.stops]
-  late final stops = DoubleListUtility((v) => only(stops: v));
+  late final stops = ListUtility<T, double>((v) => only(stops: v));
 
   SweepGradientUtility(super.builder) : super(valueToDto: (v) => v.toDto());
 
@@ -453,5 +465,11 @@ extension SweepGradientMixExt on SweepGradient {
       colors: colors.map((e) => e.toDto()).toList(),
       stops: stops,
     );
+  }
+}
+
+extension ListSweepGradientMixExt on List<SweepGradient> {
+  List<SweepGradientDto> toDto() {
+    return map((e) => e.toDto()).toList();
   }
 }

@@ -1,6 +1,6 @@
 // ignore_for_file: prefer_relative_imports, avoid-importing-entrypoint-exports
 
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:mix/mix.dart';
 import 'package:mix_annotations/mix_annotations.dart';
 
@@ -307,17 +307,12 @@ final class StadiumBorderDto extends OutlinedBorderDto<StadiumBorder>
 
 extension ShapeBorderExt on ShapeBorder {
   ShapeBorderDto toDto() {
-    if (this is RoundedRectangleBorder) {
-      return (this as RoundedRectangleBorder).toDto();
-    } else if (this is BeveledRectangleBorder) {
-      return (this as BeveledRectangleBorder).toDto();
-    } else if (this is ContinuousRectangleBorder) {
-      return (this as ContinuousRectangleBorder).toDto();
-    } else if (this is CircleBorder) {
-      return (this as CircleBorder).toDto();
-    } else if (this is StadiumBorder) {
-      return (this as StadiumBorder).toDto();
-    }
+    final self = this;
+    if (self is RoundedRectangleBorder) return (self).toDto();
+    if (self is BeveledRectangleBorder) return (self).toDto();
+    if (self is ContinuousRectangleBorder) return (self).toDto();
+    if (self is CircleBorder) return (self).toDto();
+    if (self is StadiumBorder) return (self).toDto();
 
     throw ArgumentError.value(
       this,

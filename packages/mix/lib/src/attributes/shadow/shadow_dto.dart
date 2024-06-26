@@ -1,9 +1,8 @@
 // ignore_for_file: prefer_relative_imports, avoid-importing-entrypoint-exports
 
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:mix/mix.dart';
 import 'package:mix_annotations/mix_annotations.dart';
-
-import '../../../mix.dart';
 
 part 'shadow_dto.g.dart';
 
@@ -44,16 +43,4 @@ final class BoxShadowDto extends ShadowDtoImpl<BoxShadow> with _$BoxShadowDto {
 
   @override
   BoxShadow get defaultValue => const BoxShadow();
-}
-
-extension ListShadowExt on List<Shadow> {
-  List<ShadowDto> toDto() {
-    return map((e) => e.toDto()).toList();
-  }
-}
-
-extension ListBoxShadowExt on List<BoxShadow> {
-  List<BoxShadowDto> toDto() {
-    return map((e) => e.toDto()).toList();
-  }
 }

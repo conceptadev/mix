@@ -1,10 +1,10 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
+import '../../core/factory/style_mix.dart';
 import '../../internal/constants.dart';
 import '../../internal/custom_focusable_action_detector.dart';
 import '../../specs/box/box_widget.dart';
-import '../../core/factory/style_mix.dart';
 import 'pressable_state.dart';
 
 class PressableBox extends StatelessWidget {

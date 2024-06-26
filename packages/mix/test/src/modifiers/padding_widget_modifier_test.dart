@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mix/src/attributes/spacing/spacing_dto.dart';
-import 'package:mix/src/modifiers/padding_widget_modifier.dart';
+import 'package:mix/mix.dart';
 
 import '../../helpers/testing_utils.dart';
 
@@ -73,8 +72,8 @@ void main() {
   });
   group('PaddingModifierAttribute', () {
     test('merge returns correct PaddingModifierAttribute', () {
-      const padding1 = SpacingDto.all(10.0);
-      const padding2 = SpacingDto.all(20.0);
+      const padding1 = EdgeInsetsDto.all(10.0);
+      const padding2 = EdgeInsetsDto.all(20.0);
       const attribute1 = PaddingModifierAttribute(padding1);
       const attribute2 = PaddingModifierAttribute(padding2);
 
@@ -85,7 +84,7 @@ void main() {
 
     test('merge returns original PaddingModifierAttribute when other is null',
         () {
-      const padding = SpacingDto.all(10.0);
+      const padding = EdgeInsetsDto.all(10.0);
       const attribute = PaddingModifierAttribute(padding);
 
       final result = attribute.merge(null);
@@ -94,7 +93,7 @@ void main() {
     });
 
     test('resolve returns correct PaddingSpec', () {
-      const padding = SpacingDto.all(10.0);
+      const padding = EdgeInsetsDto.all(10.0);
       const attribute = PaddingModifierAttribute(padding);
       final mixData = EmptyMixData;
 
@@ -104,7 +103,7 @@ void main() {
     });
 
     test('props returns list with padding', () {
-      const padding = SpacingDto.all(10.0);
+      const padding = EdgeInsetsDto.all(10.0);
       const attribute = PaddingModifierAttribute(padding);
 
       expect(attribute.props, equals([padding]));
