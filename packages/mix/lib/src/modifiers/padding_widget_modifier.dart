@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 
-import '../attributes/spacing/spacing_dto.dart';
+import '../attributes/spacing/edge_insets_dto.dart';
 import '../core/factory/mix_data.dart';
 import '../core/modifier.dart';
 
@@ -33,7 +33,7 @@ final class PaddingSpec extends WidgetModifierSpec<PaddingSpec> {
 
 final class PaddingModifierAttribute
     extends WidgetModifierAttribute<PaddingModifierAttribute, PaddingSpec> {
-  final SpacingDto padding;
+  final EdgeInsetsGeometryDto padding;
   const PaddingModifierAttribute(this.padding);
 
   @override

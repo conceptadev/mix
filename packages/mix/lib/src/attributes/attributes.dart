@@ -28,7 +28,6 @@ export 'scalars/scalar_util.dart';
 export 'shadow/shadow_dto.dart';
 export 'shadow/shadow_util.dart';
 export 'spacing/edge_insets_dto.dart';
-export 'spacing/spacing_dto.dart';
 export 'spacing/spacing_util.dart';
 export 'strut_style/strut_style_dto.dart';
 export 'text_style/text_style_dto.dart';

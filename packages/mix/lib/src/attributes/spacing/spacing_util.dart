@@ -4,11 +4,11 @@ import '../../core/attribute.dart';
 import '../../core/dto.dart';
 import '../../core/utility.dart';
 import '../../theme/tokens/space_token.dart';
-import 'spacing_dto.dart';
+import 'edge_insets_dto.dart';
 
 @immutable
 final class SpacingUtility<T extends Attribute>
-    extends DtoUtility<T, SpacingDto, EdgeInsetsGeometry> {
+    extends DtoUtility<T, EdgeInsetsGeometryDto, EdgeInsetsGeometry> {
   late final directional = SpacingDirectionalUtility(builder);
 
   late final horizontal = SpacingSideUtility((v) => only(left: v, right: v));

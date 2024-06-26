@@ -1,6 +1,7 @@
-import 'package:flutter/material.dart';
+// ignore_for_file: prefer_relative_imports, avoid-importing-entrypoint-exports
 
-import '../../../mix.dart';
+import 'package:flutter/material.dart';
+import 'package:mix/mix.dart';
 
 final class BoxBorderUtility<T extends Attribute>
     extends DtoUtility<T, BoxBorderDto, BoxBorder> {
