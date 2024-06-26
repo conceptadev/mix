@@ -5,7 +5,7 @@ inputs:
   token:
     description: 'Github token'
     required: true
-  flavor:
+  flutter-version:
     description: 'Flutter version'
     required: false
     default: "stable"
@@ -28,7 +28,7 @@ runs:
         echo "$HOME/fvm/default/bin" >> $GITHUB_PATH
         echo "$HOME/fvm/default/bin/cache/dart-sdk/bin" >> $GITHUB_PATH
         echo "$HOME/.pub-cache/bin" >> $GITHUB_PATH
-        
+
         fvm global ${{ inputs.flutter-version }}
         flutter --version
         dart --version
