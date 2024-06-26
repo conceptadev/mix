@@ -19,12 +19,21 @@ runs:
   steps:
     - name: Checkout mix repo
       uses: actions/checkout@v4
+    
+    - name: Install FVM
+      shell: bash
+      run: |
+        curl -fsSL https://fvm.app/install.sh | bash
+        fvm use ${{ inputs.flutter-version }} --force
 
-    - name: Setup Flutter
-      uses: subosito/flutter-action@v2
+
+    - uses: kuhnroyal/flutter-fvm-config-action@v2
+      id: fvm-config-action
+
+    - uses: subosito/flutter-action@v2
       with:
-        channel: "stable"
-        flutter-version: ${{ inputs.flutter-version }}
+        flutter-version: ${{ steps.fvm-config-action.outputs.FLUTTER_VERSION }}
+        channel: ${{ steps.fvm-config-action.outputs.FLUTTER_CHANNEL }}
 
     - name: Flutter version
       shell: bash
