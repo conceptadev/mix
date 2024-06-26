@@ -39,7 +39,7 @@ runs:
       
     - name: Run build runner
       shell: bash    
-      run: melos run build_runner
+      run: melos run brb
 
     - name: Install DCM
       if: ${{ inputs.run-dcm }}
