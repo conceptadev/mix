@@ -27,6 +27,11 @@ runs:
         fvm use ${{ inputs.flutter-version }} --force
         fvm global ${{ inputs.flutter-version }}
         echo "$HOME/fvm/default/bin" >> $GITHUB_PATH
+        echo "$HOME/fvm/default/bin/cache/dart-sdk/bin" >> $GITHUB_PATH
+        echo "$HOME/.pub-cache/bin" >> $GITHUB_PATH
+        flutter --version
+        dart --version
+        flutter pub get
 
     - name: Flutter version
       shell: bash
