@@ -6,6 +6,136 @@ part of 'border_dto.dart';
 // MixableDtoGenerator
 // **************************************************************************
 
+base mixin _$BorderDto on Dto<Border> {
+  /// Resolves to [Border] using the provided [MixData].
+  ///
+  /// If a property is null in the [MixData], it falls back to the
+  /// default value defined in the `defaultValue` for that property.
+  ///
+  /// ```dart
+  /// final border = BorderDto(...).resolve(mix);
+  /// ```
+  @override
+  Border resolve(MixData mix) {
+    return Border(
+      top: _$this.top?.resolve(mix) ?? defaultValue.top,
+      bottom: _$this.bottom?.resolve(mix) ?? defaultValue.bottom,
+      left: _$this.left?.resolve(mix) ?? defaultValue.left,
+      right: _$this.right?.resolve(mix) ?? defaultValue.right,
+    );
+  }
+
+  /// Merges the properties of this [BorderDto] with the properties of [other].
+  ///
+  /// If [other] is null, returns this instance unchanged. Otherwise, returns a new
+  /// [BorderDto] with the properties of [other] taking precedence over
+  /// the corresponding properties of this instance.
+  ///
+  /// Properties from [other] that are null will fall back
+  /// to the values from this instance.
+  @override
+  BorderDto merge(BorderDto? other) {
+    if (other == null) return _$this;
+
+    return BorderDto(
+      top: _$this.top?.merge(other.top) ?? other.top,
+      bottom: _$this.bottom?.merge(other.bottom) ?? other.bottom,
+      left: _$this.left?.merge(other.left) ?? other.left,
+      right: _$this.right?.merge(other.right) ?? other.right,
+    );
+  }
+
+  /// The list of properties that constitute the state of this [BorderDto].
+  ///
+  /// This property is used by the [==] operator and the [hashCode] getter to
+  /// compare two [BorderDto] instances for equality.
+  @override
+  List<Object?> get props => [
+        _$this.top,
+        _$this.bottom,
+        _$this.left,
+        _$this.right,
+      ];
+
+  BorderDto get _$this => this as BorderDto;
+}
+
+extension BorderMixExt on Border {
+  BorderDto toDto() {
+    return BorderDto(
+      top: top.toDto(),
+      bottom: bottom.toDto(),
+      left: left.toDto(),
+      right: right.toDto(),
+    );
+  }
+}
+
+base mixin _$BorderDirectionalDto on Dto<BorderDirectional> {
+  /// Resolves to [BorderDirectional] using the provided [MixData].
+  ///
+  /// If a property is null in the [MixData], it falls back to the
+  /// default value defined in the `defaultValue` for that property.
+  ///
+  /// ```dart
+  /// final borderDirectional = BorderDirectionalDto(...).resolve(mix);
+  /// ```
+  @override
+  BorderDirectional resolve(MixData mix) {
+    return BorderDirectional(
+      top: _$this.top?.resolve(mix) ?? defaultValue.top,
+      bottom: _$this.bottom?.resolve(mix) ?? defaultValue.bottom,
+      start: _$this.start?.resolve(mix) ?? defaultValue.start,
+      end: _$this.end?.resolve(mix) ?? defaultValue.end,
+    );
+  }
+
+  /// Merges the properties of this [BorderDirectionalDto] with the properties of [other].
+  ///
+  /// If [other] is null, returns this instance unchanged. Otherwise, returns a new
+  /// [BorderDirectionalDto] with the properties of [other] taking precedence over
+  /// the corresponding properties of this instance.
+  ///
+  /// Properties from [other] that are null will fall back
+  /// to the values from this instance.
+  @override
+  BorderDirectionalDto merge(BorderDirectionalDto? other) {
+    if (other == null) return _$this;
+
+    return BorderDirectionalDto(
+      top: _$this.top?.merge(other.top) ?? other.top,
+      bottom: _$this.bottom?.merge(other.bottom) ?? other.bottom,
+      start: _$this.start?.merge(other.start) ?? other.start,
+      end: _$this.end?.merge(other.end) ?? other.end,
+    );
+  }
+
+  /// The list of properties that constitute the state of this [BorderDirectionalDto].
+  ///
+  /// This property is used by the [==] operator and the [hashCode] getter to
+  /// compare two [BorderDirectionalDto] instances for equality.
+  @override
+  List<Object?> get props => [
+        _$this.top,
+        _$this.bottom,
+        _$this.start,
+        _$this.end,
+      ];
+
+  BorderDirectionalDto get _$this => this as BorderDirectionalDto;
+}
+
+extension BorderDirectionalMixExt on BorderDirectional {
+  BorderDirectionalDto toDto() {
+    return BorderDirectionalDto(
+      top: top.toDto(),
+      bottom: bottom.toDto(),
+      start: start.toDto(),
+      end: end.toDto(),
+    );
+  }
+}
+
 base mixin _$BorderSideDto on Dto<BorderSide> {
   /// Resolves to [BorderSide] using the provided [MixData].
   ///
@@ -74,9 +204,6 @@ final class BorderSideUtility<T extends Attribute>
 
   /// Utility for defining [BorderSideDto.style]
   late final style = BorderStyleUtility((v) => only(style: v));
-
-  /// Utility for defining [BorderSideDto.style.none]
-  late final none = style.none;
 
   /// Utility for defining [BorderSideDto.width]
   late final width = DoubleUtility((v) => only(width: v));

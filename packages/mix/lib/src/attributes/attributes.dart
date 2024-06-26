@@ -16,6 +16,7 @@ export 'border/shape_border_dto.dart';
 export 'color/color_directives.dart';
 export 'color/color_dto.dart';
 export 'color/color_util.dart';
+export 'color/material_colors_util.dart';
 export 'constraints/constraints_dto.dart';
 export 'decoration/decoration_dto.dart';
 export 'decoration/image/decoration_image_dto.dart';

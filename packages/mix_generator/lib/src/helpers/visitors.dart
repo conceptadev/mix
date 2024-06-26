@@ -25,10 +25,15 @@ class CustomVisitor extends SimpleElementVisitor<void> {
   }
 
   void visitConstructorElement(ConstructorElement element) {
-    if (element.name != '_' && !element.isDefaultConstructor) {
-      return;
-    }
+    final notDefaultConstructor =
+        element.name != '_' && !element.isDefaultConstructor;
 
+    if (!notDefaultConstructor) {
+      return _visitDefaultConstructor(element);
+    }
+  }
+
+  void _visitDefaultConstructor(ConstructorElement element) {
     if (constructorSelected) return;
 
     constructorSelected = true;

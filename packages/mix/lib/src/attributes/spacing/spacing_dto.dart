@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import '../../core/dto.dart';
 import '../../core/factory/mix_data.dart';
 
+typedef SpacingDto2 = SpacingGeometryDto;
+
 @immutable
 class SpacingDto extends Dto<EdgeInsetsGeometry> {
   final double? top;
@@ -97,13 +99,13 @@ extension EdgeInsetsGeometryExt on EdgeInsetsGeometry {
   }
 }
 
-extension EdgeInsetsExt on EdgeInsets {
+extension EdgeInsetsX on EdgeInsets {
   SpacingDto toDto() {
     return SpacingDto._(top: top, bottom: bottom, left: left, right: right);
   }
 }
 
-extension EdgeInsetsDirectionalExt on EdgeInsetsDirectional {
+extension EdgeInsetsDirectionalX on EdgeInsetsDirectional {
   SpacingDto toDto() {
     return SpacingDto._(top: top, bottom: bottom, start: start, end: end);
   }
