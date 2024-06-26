@@ -25,10 +25,11 @@ runs:
       run: |
         curl -fsSL https://fvm.app/install.sh | bash
         fvm use ${{ inputs.flutter-version }} --force
-        fvm global ${{ inputs.flutter-version }}
         echo "$HOME/fvm/default/bin" >> $GITHUB_PATH
         echo "$HOME/fvm/default/bin/cache/dart-sdk/bin" >> $GITHUB_PATH
         echo "$HOME/.pub-cache/bin" >> $GITHUB_PATH
+        
+        fvm global ${{ inputs.flutter-version }}
         flutter --version
         dart --version
         flutter pub get
