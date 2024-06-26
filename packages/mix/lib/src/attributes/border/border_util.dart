@@ -1,6 +1,6 @@
 // ignore_for_file: prefer_relative_imports, avoid-importing-entrypoint-exports
 
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:mix/mix.dart';
 
 final class BoxBorderUtility<T extends Attribute>

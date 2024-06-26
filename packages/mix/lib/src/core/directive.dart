@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 import 'dto.dart';
 import 'factory/mix_data.dart';

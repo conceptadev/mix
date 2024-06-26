@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 class Empty extends StatelessWidget {
   const Empty({Key? key}) : super(key: key);
