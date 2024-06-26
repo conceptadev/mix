@@ -8,7 +8,7 @@ inputs:
   flutter-version:
     description: 'Flutter version'
     required: false
-    default: "stable"
+    default: ""
   run-dcm:
     description: 'Should run DCM'
     required: false
@@ -19,20 +19,21 @@ runs:
   steps:
     - name: Checkout mix repo
       uses: actions/checkout@v4
-
+    
     - name: Install FVM
       shell: bash
       run: |
         curl -fsSL https://fvm.app/install.sh | bash
-        fvm use ${{ inputs.flutter-version }} --force
-        echo "/home/runner/fvm/default/bin" >> $GITHUB_PATH
-        echo "/home/runner/fvm/default/bin/cache/dart-sdk/bin" >> $GITHUB_PATH
-        echo "/home/runner/.pub-cache/bin" >> $GITHUB_PATH
+        fvm use {{ inputs.flutter-version }} --force
 
-        fvm global ${{ inputs.flutter-version }}
-        flutter --version
-        dart --version
-        flutter pub get
+
+    - uses: kuhnroyal/flutter-fvm-config-action@v2
+      id: fvm-config-action
+
+    - uses: subosito/flutter-action@v2
+      with:
+        flutter-version: ${{ steps.fvm-config-action.outputs.FLUTTER_VERSION }}
+        channel: ${{ steps.fvm-config-action.outputs.FLUTTER_CHANNEL }}
 
     - name: Flutter version
       shell: bash
