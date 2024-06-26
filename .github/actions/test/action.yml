@@ -10,7 +10,7 @@ inputs:
     required: false
     default: ""
   run-dcm:
-    description: 'Shoudl run DCM'
+    description: 'Should run DCM'
     required: false
     default: "true"
 
@@ -64,12 +64,8 @@ runs:
       run: melos run test
       shell: bash
 
-    - name: Install custom_lint
-      run: dart pub global activate custom_lint
-      shell: bash
-
     - name: Run custom_lint
-      run: melos exec --depends-on="mix_lint" custom_lint
+      run: melos run custom_lint_analyze
       shell: bash
 
     - name: Verify if mix_lint_test is up to date with mix_lint
