@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 import '../../internal/build_context_ext.dart';
 import '../../theme/tokens/breakpoints_token.dart';

@@ -14,8 +14,8 @@ void main() {
         Style(
           BoxSpecAttribute(
             alignment: Alignment.center,
-            padding: const SpacingDto.only(top: 8, bottom: 16),
-            margin: const SpacingDto.only(top: 10.0, bottom: 12.0),
+            padding: SpacingDto.only(top: 8, bottom: 16),
+            margin: SpacingDto.only(top: 10.0, bottom: 12.0),
             constraints:
                 const BoxConstraintsDto(maxWidth: 300.0, minHeight: 200.0),
             decoration: const BoxDecorationDto(color: ColorDto(Colors.blue)),
@@ -202,9 +202,8 @@ void main() {
     test('merge() returns correct instance', () {
       final containerSpecAttribute = BoxSpecAttribute(
         alignment: Alignment.center,
-        padding:
-            const SpacingDto.only(top: 20, bottom: 20, left: 20, right: 20),
-        margin: const SpacingDto.only(
+        padding: SpacingDto.only(top: 20, bottom: 20, left: 20, right: 20),
+        margin: SpacingDto.only(
           top: 10,
           bottom: 10,
           left: 10,
@@ -223,9 +222,8 @@ void main() {
       final mergedBoxSpecAttribute = containerSpecAttribute.merge(
         BoxSpecAttribute(
           alignment: Alignment.centerLeft,
-          padding:
-              const SpacingDto.only(top: 30, bottom: 30, left: 30, right: 30),
-          margin: const SpacingDto.only(
+          padding: SpacingDto.only(top: 30, bottom: 30, left: 30, right: 30),
+          margin: SpacingDto.only(
             top: 20,
             bottom: 20,
             left: 20,
@@ -260,11 +258,11 @@ void main() {
       expect(mergedBoxSpecAttribute.height, 200);
       expect(
         mergedBoxSpecAttribute.margin,
-        const SpacingDto.only(top: 20, bottom: 20, left: 20, right: 20),
+        SpacingDto.only(top: 20, bottom: 20, left: 20, right: 20),
       );
       expect(
         mergedBoxSpecAttribute.padding,
-        const SpacingDto.only(top: 30, bottom: 30, left: 30, right: 30),
+        SpacingDto.only(top: 30, bottom: 30, left: 30, right: 30),
       );
       expect(mergedBoxSpecAttribute.transform, Matrix4.identity());
       expect(mergedBoxSpecAttribute.width, 200);

@@ -262,7 +262,7 @@ void main() {
           color: const ColorDto(Colors.red),
           shape: BoxShape.circle,
           boxShadow: const [boxShadowDto],
-          border: const BoxBorderDto(
+          border: const BorderDto(
             top: borderSide,
           ),
           borderRadius: firstBorderRadius,
@@ -274,7 +274,7 @@ void main() {
           gradient: const LinearGradientDto(
             colors: [ColorDto(Colors.yellow), ColorDto(Colors.green)],
           ),
-          border: const BoxBorderDto(
+          border: const BorderDto(
             bottom: borderSide,
           ),
           borderRadius: secondBorderRadius,
@@ -289,7 +289,7 @@ void main() {
         expect(merged.gradient, boxDeco2.gradient);
         expect(merged.boxShadow, boxDeco1.boxShadow);
         expect(merged.border,
-            const BoxBorderDto(top: borderSide, bottom: borderSide));
+            const BorderDto(top: borderSide, bottom: borderSide));
         expect(merged.borderRadius, boxDeco2.borderRadius);
         expect(merged.image, boxDeco2.image);
 
@@ -310,7 +310,7 @@ void main() {
           color: const ColorDto(Colors.red),
           shape: BoxShape.circle,
           boxShadow: const [boxShadowDto],
-          border: const BoxBorderDto(
+          border: const BorderDto(
             top: borderSide,
           ),
           borderRadius: firstBorderRadius,

@@ -45,7 +45,7 @@ base mixin _$BoxDecorationDto on Dto<BoxDecoration> {
     if (other == null) return _$this;
 
     return BoxDecorationDto(
-      border: _$this.border?.merge(other.border) ?? other.border,
+      border: BoxBorderDto.tryToMerge(_$this.border, other.border),
       borderRadius:
           _$this.borderRadius?.merge(other.borderRadius) ?? other.borderRadius,
       shape: other.shape ?? _$this.shape,

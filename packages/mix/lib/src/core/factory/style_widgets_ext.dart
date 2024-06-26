@@ -1,5 +1,5 @@
 // ignore_for_file: long-parameter-list
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 import '../../specs/box/box_widget.dart';
 import '../../specs/flex/flex_widget.dart';

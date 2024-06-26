@@ -1,11 +1,11 @@
 // ignore_for_file: prefer-named-boolean-parameters
 
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
-import '../attributes/scalars/scalar_util.dart';
 import '../core/attribute.dart';
-import '../core/modifier.dart';
 import '../core/factory/mix_data.dart';
+import '../core/modifier.dart';
+import '../core/utility.dart';
 import '../internal/lerp_helpers.dart';
 
 final class ClipOvalModifierSpec

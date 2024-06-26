@@ -1,6 +1,6 @@
-import '../../attributes/scalars/scalar_util.dart';
 import '../../core/attribute.dart';
 import '../../core/directive.dart';
+import '../../core/utility.dart';
 import '../../internal/string_ext.dart';
 
 final class TextDirectiveUtility<T extends Attribute>

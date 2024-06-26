@@ -1,6 +1,6 @@
 // ignore_for_file: camel_case_types
 
-import '../attributes/scalars/scalar_util.dart';
+import '../attributes/enum/enum_util.dart';
 import '../specs/image/image_spec.dart';
 import 'attribute.dart';
 
@@ -25,7 +25,7 @@ class InternalRenameDeprecatedAnnotation
 
 typedef RenamedDeprecated = InternalRenameDeprecatedAnnotation;
 
-extension ImageSpecUtilityDeprecationUtilityX<T extends Attribute>
+extension ImageSpecUtilityDeprecationX<T extends Attribute>
     on ImageSpecUtility<T> {
   @RenamedDeprecated(
     message:

@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 import '../../core/dto.dart';
 import '../../core/factory/mix_data.dart';
@@ -28,7 +28,7 @@ class ColorDto extends Dto<Color> {
 
   @override
   Color resolve(MixData mix) {
-    Color color = value ?? Colors.transparent;
+    Color color = value ?? defaultValue;
 
     if (color is ColorRef) {
       color = mix.tokens.colorRef(color);
@@ -52,7 +52,7 @@ class ColorDto extends Dto<Color> {
   }
 
   @override
-  Color get defaultValue => Colors.transparent;
+  Color get defaultValue => const Color(0x00000000);
 
   @override
   List<Object?> get props => [value, directives];

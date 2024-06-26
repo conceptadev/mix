@@ -94,11 +94,16 @@ class TypeRefRepository {
 
     if (isList) {
       refType = refType.getGenericType();
+      final dtoType = getDto(type);
+      if (dtoType == null) {
+        return 'ListUtility<T,$refType> ';
+      }
     }
 
-    if (refType.isDto) {
+    final isDto = refType.isDto;
+
+    if (isDto) {
       refType = extractDtoTypeArgument(refType.classElement!)!;
-      print(refType.getTypeAsString());
     }
 
     return _sanitizeUtilityName(refType.getTypeAsString(), isList);

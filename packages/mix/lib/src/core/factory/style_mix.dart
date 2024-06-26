@@ -1,6 +1,6 @@
 // ignore_for_file: non_constant_identifier_names, constant_identifier_names, long-parameter-list, prefer-named-boolean-parameters
 
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 import '../../attributes/animated/animated_data.dart';
 import '../../attributes/nested_style/nested_style_attribute.dart';

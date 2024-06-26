@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 import '../../core/factory/mix_provider.dart';
 import '../../core/styled_widget.dart';

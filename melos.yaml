@@ -1,5 +1,6 @@
 name: mix_workspace
 
+
 packages:
   - packages/**
   - examples/**
@@ -20,12 +21,12 @@ command:
       flutter: ">=3.10.6"
       
 scripts:
-  build_runner:
+  brb:
     description: Run build_runner for projects that have it as a dependency
     steps:
       - melos run build_runner_clean
       - melos exec --depends-on="build_runner" --category="mix_deps" dart run build_runner build --delete-conflicting-outputs
-  build_runner_clean: 
+  brbc: 
     run: melos exec --depends-on="build_runner" dart run build_runner clean
     description: Clean build_runner for projects that have it as a dependency
   test:
