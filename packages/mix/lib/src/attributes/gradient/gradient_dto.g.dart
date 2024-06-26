@@ -145,6 +145,12 @@ extension LinearGradientMixExt on LinearGradient {
   }
 }
 
+extension ListLinearGradientMixExt on List<LinearGradient> {
+  List<LinearGradientDto> toDto() {
+    return map((e) => e.toDto()).toList();
+  }
+}
+
 base mixin _$RadialGradientDto on Dto<RadialGradient> {
   /// Resolves to [RadialGradient] using the provided [MixData].
   ///
@@ -306,6 +312,12 @@ extension RadialGradientMixExt on RadialGradient {
   }
 }
 
+extension ListRadialGradientMixExt on List<RadialGradient> {
+  List<RadialGradientDto> toDto() {
+    return map((e) => e.toDto()).toList();
+  }
+}
+
 base mixin _$SweepGradientDto on Dto<SweepGradient> {
   /// Resolves to [SweepGradient] using the provided [MixData].
   ///
@@ -453,5 +465,11 @@ extension SweepGradientMixExt on SweepGradient {
       colors: colors.map((e) => e.toDto()).toList(),
       stops: stops,
     );
+  }
+}
+
+extension ListSweepGradientMixExt on List<SweepGradient> {
+  List<SweepGradientDto> toDto() {
+    return map((e) => e.toDto()).toList();
   }
 }

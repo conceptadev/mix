@@ -6,10 +6,6 @@ String dtoValueExtension(DtoAnnotationContext context) {
   final resolvedType = context.element.getGenericTypeOfSuperclass();
   final className = context.name;
 
-  /// resolvedType is a DartType
-  /// I would like to check if all the fields are nullable or not for the fieldStatement
-  /// But I don't know how to do it.
-  ///
   final resolvedTypeElement = resolvedType?.element;
 
   final params = <String, ParameterElement>{};
@@ -42,6 +38,21 @@ extension ${resolvedTypeName}MixExt on $resolvedTypeName {
     return $className(
       $fieldStatements
     );
+  }
+}
+''';
+}
+
+String dtoListValueExtension(DtoAnnotationContext context) {
+  final resolvedType = context.element.getGenericTypeOfSuperclass();
+  final className = context.name;
+  final resolvedTypeName =
+      resolvedType?.getDisplayString(withNullability: false);
+
+  return '''
+extension List${resolvedTypeName}MixExt on List<$resolvedTypeName> {
+  List<$className> toDto() {
+    return map((e) => e.toDto()).toList();
   }
 }
 ''';

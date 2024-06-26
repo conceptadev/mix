@@ -185,6 +185,12 @@ extension BoxDecorationMixExt on BoxDecoration {
   }
 }
 
+extension ListBoxDecorationMixExt on List<BoxDecoration> {
+  List<BoxDecorationDto> toDto() {
+    return map((e) => e.toDto()).toList();
+  }
+}
+
 base mixin _$ShapeDecorationDto on Dto<ShapeDecoration> {
   /// Resolves to [ShapeDecoration] using the provided [MixData].
   ///
@@ -310,5 +316,11 @@ extension ShapeDecorationMixExt on ShapeDecoration {
       gradient: gradient?.toDto(),
       shadows: shadows?.map((e) => e.toDto()).toList(),
     );
+  }
+}
+
+extension ListShapeDecorationMixExt on List<ShapeDecoration> {
+  List<ShapeDecorationDto> toDto() {
+    return map((e) => e.toDto()).toList();
   }
 }

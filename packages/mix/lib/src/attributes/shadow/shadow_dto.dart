@@ -44,15 +44,3 @@ final class BoxShadowDto extends ShadowDtoImpl<BoxShadow> with _$BoxShadowDto {
   @override
   BoxShadow get defaultValue => const BoxShadow();
 }
-
-extension ListShadowExt on List<Shadow> {
-  List<ShadowDto> toDto() {
-    return map((e) => e.toDto()).toList();
-  }
-}
-
-extension ListBoxShadowExt on List<BoxShadow> {
-  List<BoxShadowDto> toDto() {
-    return map((e) => e.toDto()).toList();
-  }
-}
