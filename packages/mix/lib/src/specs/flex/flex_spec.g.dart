@@ -169,7 +169,7 @@ final class FlexSpecAttribute extends SpecAttribute<FlexSpec> {
       textDirection: textDirection,
       textBaseline: textBaseline,
       clipBehavior: clipBehavior,
-      gap: gap,
+      gap: mix.tokens.spaceTokenRef(gap ?? 0),
       animated: animated?.resolve(mix) ?? mix.animation,
     );
   }

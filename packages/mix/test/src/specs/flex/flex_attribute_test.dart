@@ -46,6 +46,45 @@ void main() {
       expect(resolvedSpec.gap, 10.0);
     });
 
+    testWidgets('tokens resolve returns correct FlexSpec', (tester) async {
+      const tokenValue = 8.0;
+
+      final theme = MixThemeData(
+        spaces: {
+          $token.space.small: tokenValue,
+        },
+      );
+
+      late MixData mixData;
+
+      await tester.pumpWidget(
+        MixTheme(
+          data: theme,
+          child: MaterialApp(
+            home: Scaffold(
+              body: Builder(
+                builder: (BuildContext context) {
+                  mixData = MixData.create(
+                    context,
+                    Style(
+                      $flex.gap.ref($token.space.small),
+                    ),
+                  );
+
+                  return Container();
+                },
+              ),
+            ),
+          ),
+        ),
+      );
+
+      final attribute = mixData.whereType<FlexSpecAttribute>().first;
+      final resolvedSpec = attribute.resolve(mixData);
+
+      expect(resolvedSpec.gap, tokenValue);
+    });
+
     test('merge returns correct FlexMixAttribute', () {
       const attribute1 = FlexSpecAttribute(
         direction: Axis.horizontal,
