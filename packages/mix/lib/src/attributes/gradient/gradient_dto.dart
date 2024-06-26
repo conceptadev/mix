@@ -148,9 +148,10 @@ final class SweepGradientDto extends GradientDto<SweepGradient>
 extension GradientExt on Gradient {
   // toDto
   GradientDto toDto() {
-    if (this is LinearGradient) return (this as LinearGradient).toDto();
-    if (this is RadialGradient) return (this as RadialGradient).toDto();
-    if (this is SweepGradient) return (this as SweepGradient).toDto();
+    final self = this;
+    if (self is LinearGradient) return (self).toDto();
+    if (self is RadialGradient) return (self).toDto();
+    if (self is SweepGradient) return (self).toDto();
 
     throw UnimplementedError();
   }

@@ -52,6 +52,7 @@ class MixableDtoGenerator extends GeneratorForAnnotation<MixableDto> {
 
     if (generateValueExtension) {
       output.writeln(dtoValueExtension(context));
+      output.writeln(dtoListValueExtension(context));
     }
 
     final result = context.generate(output.toString());

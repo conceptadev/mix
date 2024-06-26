@@ -104,6 +104,12 @@ extension RoundedRectangleBorderMixExt on RoundedRectangleBorder {
   }
 }
 
+extension ListRoundedRectangleBorderMixExt on List<RoundedRectangleBorder> {
+  List<RoundedRectangleBorderDto> toDto() {
+    return map((e) => e.toDto()).toList();
+  }
+}
+
 base mixin _$BeveledRectangleBorderDto on Dto<BeveledRectangleBorder> {
   /// Resolves to [BeveledRectangleBorder] using the provided [MixData].
   ///
@@ -199,6 +205,12 @@ extension BeveledRectangleBorderMixExt on BeveledRectangleBorder {
       borderRadius: borderRadius.toDto(),
       side: side.toDto(),
     );
+  }
+}
+
+extension ListBeveledRectangleBorderMixExt on List<BeveledRectangleBorder> {
+  List<BeveledRectangleBorderDto> toDto() {
+    return map((e) => e.toDto()).toList();
   }
 }
 
@@ -302,6 +314,13 @@ extension ContinuousRectangleBorderMixExt on ContinuousRectangleBorder {
   }
 }
 
+extension ListContinuousRectangleBorderMixExt
+    on List<ContinuousRectangleBorder> {
+  List<ContinuousRectangleBorderDto> toDto() {
+    return map((e) => e.toDto()).toList();
+  }
+}
+
 base mixin _$CircleBorderDto on Dto<CircleBorder> {
   /// Resolves to [CircleBorder] using the provided [MixData].
   ///
@@ -393,6 +412,12 @@ extension CircleBorderMixExt on CircleBorder {
       side: side.toDto(),
       eccentricity: eccentricity,
     );
+  }
+}
+
+extension ListCircleBorderMixExt on List<CircleBorder> {
+  List<CircleBorderDto> toDto() {
+    return map((e) => e.toDto()).toList();
   }
 }
 
@@ -546,6 +571,12 @@ extension StarBorderMixExt on StarBorder {
   }
 }
 
+extension ListStarBorderMixExt on List<StarBorder> {
+  List<StarBorderDto> toDto() {
+    return map((e) => e.toDto()).toList();
+  }
+}
+
 base mixin _$LinearBorderDto on Dto<LinearBorder> {
   /// Resolves to [LinearBorder] using the provided [MixData].
   ///
@@ -673,6 +704,12 @@ extension LinearBorderMixExt on LinearBorder {
   }
 }
 
+extension ListLinearBorderMixExt on List<LinearBorder> {
+  List<LinearBorderDto> toDto() {
+    return map((e) => e.toDto()).toList();
+  }
+}
+
 base mixin _$LinearBorderEdgeDto on Dto<LinearBorderEdge> {
   /// Resolves to [LinearBorderEdge] using the provided [MixData].
   ///
@@ -767,6 +804,12 @@ extension LinearBorderEdgeMixExt on LinearBorderEdge {
   }
 }
 
+extension ListLinearBorderEdgeMixExt on List<LinearBorderEdge> {
+  List<LinearBorderEdgeDto> toDto() {
+    return map((e) => e.toDto()).toList();
+  }
+}
+
 base mixin _$StadiumBorderDto on Dto<StadiumBorder> {
   /// Resolves to [StadiumBorder] using the provided [MixData].
   ///
@@ -847,5 +890,11 @@ extension StadiumBorderMixExt on StadiumBorder {
     return StadiumBorderDto(
       side: side.toDto(),
     );
+  }
+}
+
+extension ListStadiumBorderMixExt on List<StadiumBorder> {
+  List<StadiumBorderDto> toDto() {
+    return map((e) => e.toDto()).toList();
   }
 }
