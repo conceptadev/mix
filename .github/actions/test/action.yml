@@ -10,7 +10,7 @@ inputs:
     required: false
     default: "stable"
   run-dcm:
-    description: 'Shoudl run DCM'
+    description: 'Should run DCM'
     required: false
     default: "true"
 
