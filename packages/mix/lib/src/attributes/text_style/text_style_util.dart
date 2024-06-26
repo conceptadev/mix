@@ -1,11 +1,13 @@
 import 'dart:ui';
 
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 import '../../core/attribute.dart';
+import '../../core/dto.dart';
 import '../../theme/tokens/text_style_token.dart';
 import '../color/color_dto.dart';
 import '../color/color_util.dart';
+import '../enum/enum_util.dart';
 import '../scalars/scalar_util.dart';
 import '../shadow/shadow_dto.dart';
 import 'text_style_dto.dart';

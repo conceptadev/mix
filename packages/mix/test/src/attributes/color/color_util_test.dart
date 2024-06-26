@@ -24,7 +24,7 @@ final class TestColorAttribute extends SpecAttribute<Color> {
 
 void main() {
   group('ColorUtility directives', () {
-    const colorUtility = ColorUtility(TestColorAttribute.new);
+    final colorUtility = ColorUtility(TestColorAttribute.new);
     // withOpacity
     test('withOpacity should return a new ColorDirective', () {
       final attribute = colorUtility.withOpacity(0.5);
@@ -312,7 +312,7 @@ void main() {
   });
   // group MaterialColorUtility
   group('MaterialColorUtility directives', () {
-    const colorUtility = ColorUtility(TestColorAttribute.new);
+    final colorUtility = ColorUtility(TestColorAttribute.new);
 
     // shade
     test('shade should return a new ColorDirective', () {
@@ -464,7 +464,7 @@ void main() {
     // Use the .values to compare against Material colors
     test('call should return a new TestColorAttribute with the primary color',
         () {
-      const colorUtil = ColorUtility(TestColorAttribute.new);
+      final colorUtil = ColorUtility(TestColorAttribute.new);
 
       expect(colorUtil.red().value?.value, Colors.red);
       expect(colorUtil.pink().value?.value, Colors.pink);
@@ -533,7 +533,7 @@ void main() {
     // Use the .values to compare against Material colors
     test('call should return a new TestColorAttribute with the primary color',
         () {
-      const blueUtil =
+      final blueUtil =
           MaterialColorUtility(TestColorAttribute.new, Colors.blue);
 
       expect(blueUtil().value?.value, Colors.blue);
@@ -554,7 +554,7 @@ void main() {
     // Use the .values to compare against MaterialAccent colors
     test('call should return a new TestColorAttribute with the primary color',
         () {
-      const blueUtil =
+      final blueUtil =
           MaterialAccentColorUtility(TestColorAttribute.new, Colors.blueAccent);
 
       expect(blueUtil().value?.value, Colors.blueAccent);

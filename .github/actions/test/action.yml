@@ -10,7 +10,7 @@ inputs:
     required: false
     default: ""
   run-dcm:
-    description: 'Shoudl run DCM'
+    description: 'Should run DCM'
     required: false
     default: "true"
 
@@ -19,12 +19,21 @@ runs:
   steps:
     - name: Checkout mix repo
       uses: actions/checkout@v4
+    
+    - name: Install FVM
+      shell: bash
+      run: |
+        curl -fsSL https://fvm.app/install.sh | bash
+        fvm use ${{ inputs.flutter-version }} --force
 
-    - name: Setup Flutter
-      uses: subosito/flutter-action@v2
+
+    - uses: kuhnroyal/flutter-fvm-config-action@v2
+      id: fvm-config-action
+
+    - uses: subosito/flutter-action@v2
       with:
-        channel: "stable"
-        flutter-version: ${{ inputs.flutter-version }}
+        flutter-version: ${{ steps.fvm-config-action.outputs.FLUTTER_VERSION }}
+        channel: ${{ steps.fvm-config-action.outputs.FLUTTER_CHANNEL }}
 
     - name: Flutter version
       shell: bash
@@ -39,7 +48,7 @@ runs:
       
     - name: Run build runner
       shell: bash    
-      run: melos run build_runner
+      run: melos run brb
 
     - name: Install DCM
       if: ${{ inputs.run-dcm }}
@@ -60,16 +69,12 @@ runs:
         fatal_performance: true
         fatal_warnings: true
       
-    - run: melos exec --ignore="mix_lint" --ignore="mix_lint_test" --ignore="mix_generator" --scope="packages/**" flutter test
-
-      shell: bash
-
-    - name: Install custom_lint
-      run: dart pub global activate custom_lint
+    - name: Run Test
+      run: melos run test
       shell: bash
 
     - name: Run custom_lint
-      run: melos exec --depends-on="mix_lint" custom_lint
+      run: melos run custom_lint_analyze
       shell: bash
 
     - name: Verify if mix_lint_test is up to date with mix_lint

@@ -5,7 +5,7 @@ import 'package:mix_generator/src/helpers/builder_utils.dart';
 import 'package:mix_generator/src/helpers/field_info.dart';
 
 String lerpMethodBuilder({
-  required AnnotationContext context,
+  required ClassVisitorAnnotationContext context,
   bool isInternalRef = false,
 }) {
   final className = context.name;

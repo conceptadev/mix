@@ -315,6 +315,9 @@ base class BoxSpecUtility<T extends Attribute>
   late final shapeDecoration =
       ShapeDecorationUtility((v) => only(decoration: v));
 
+  /// Utility for defining [BoxSpecAttribute.shapeDecoration.shape]
+  late final shape = shapeDecoration.shape;
+
   /// Utility for defining [BoxSpecAttribute.foregroundDecoration]
   late final foregroundDecoration =
       BoxDecorationUtility((v) => only(foregroundDecoration: v));

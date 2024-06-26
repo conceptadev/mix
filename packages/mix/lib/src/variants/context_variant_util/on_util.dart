@@ -1,4 +1,5 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/widgets.dart';
 
 import '../../theme/tokens/breakpoints_token.dart';
 import '../../widgets/widget_state/widget_state_variant.dart';

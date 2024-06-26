@@ -158,3 +158,22 @@ class MixableUtility {
     return type is String ? type as String : type?.toString();
   }
 }
+
+class MixableClassUtility {
+  /// Map you should use to map the field utilities
+  final Type? type;
+  final bool generateCallMethod;
+  const MixableClassUtility({
+    this.type,
+    this.generateCallMethod = true,
+  });
+}
+
+class MixableEnumUtility {
+  /// Map you should use to map the field utilities
+
+  final bool generateCallMethod;
+  const MixableEnumUtility({
+    this.generateCallMethod = true,
+  });
+}

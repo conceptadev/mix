@@ -7,7 +7,7 @@ import '../../../helpers/testing_utils.dart';
 void main() {
   group('BoxBorderDto', () {
     test('isDirectional', () {
-      const borderDto = BoxBorderDto(
+      const borderDto = BorderDto(
         top: BorderSideDto(width: 1.0),
         bottom: BorderSideDto(width: 1.0),
         left: BorderSideDto(width: 1.0),
@@ -16,7 +16,7 @@ void main() {
 
       expect(borderDto.isDirectional, false);
 
-      const directionalDto = BoxBorderDto(
+      const directionalDto = BorderDirectionalDto(
         top: BorderSideDto(width: 1.0),
         bottom: BorderSideDto(width: 1.0),
         start: BorderSideDto(width: 1.0),
@@ -27,14 +27,14 @@ void main() {
     });
 
     test('merge', () {
-      const borderDto1 = BoxBorderDto(
+      const borderDto1 = BorderDto(
         top: BorderSideDto(width: 1.0),
         bottom: BorderSideDto(width: 1.0),
         left: BorderSideDto(width: 1.0),
         right: BorderSideDto(width: 1.0),
       );
 
-      const borderDto2 = BoxBorderDto(
+      const borderDto2 = BorderDto(
         top: BorderSideDto(width: 2.0),
         bottom: BorderSideDto(width: 2.0),
         left: BorderSideDto(width: 2.0),
@@ -51,14 +51,14 @@ void main() {
 
     // resolve
     test('resolve() Border', () {
-      const borderDto = BoxBorderDto(
+      const borderDto = BorderDto(
         top: BorderSideDto(width: 5.0),
         bottom: BorderSideDto(width: 10.0),
         left: BorderSideDto(width: 15.0),
         right: BorderSideDto(width: 20.0),
       );
 
-      final resolvedBorder = borderDto.resolve(EmptyMixData) as Border;
+      final resolvedBorder = borderDto.resolve(EmptyMixData);
 
       expect(resolvedBorder.top, const BorderSide(width: 5.0));
       expect(resolvedBorder.bottom, const BorderSide(width: 10.0));
@@ -67,15 +67,14 @@ void main() {
     });
 
     test('resolve() BorderDirectional', () {
-      const borderDto = BoxBorderDto(
+      const borderDto = BorderDirectionalDto(
         top: BorderSideDto(width: 5.0),
         bottom: BorderSideDto(width: 10.0),
         start: BorderSideDto(width: 15.0),
         end: BorderSideDto(width: 20.0),
       );
 
-      final resolvedBorder =
-          borderDto.resolve(EmptyMixData) as BorderDirectional;
+      final resolvedBorder = borderDto.resolve(EmptyMixData);
 
       expect(resolvedBorder.top, const BorderSide(width: 5.0));
       expect(resolvedBorder.bottom, const BorderSide(width: 10.0));
@@ -85,14 +84,14 @@ void main() {
 
     //  merge
     test('merge() Border', () {
-      const borderDto1 = BoxBorderDto(
+      const borderDto1 = BorderDto(
         top: BorderSideDto(color: ColorDto(Colors.red), width: 1.0),
         bottom: BorderSideDto(color: ColorDto(Colors.red), width: 1.0),
         left: BorderSideDto(color: ColorDto(Colors.red), width: 1.0),
         right: BorderSideDto(color: ColorDto(Colors.red), width: 1.0),
       );
 
-      const borderDto2 = BoxBorderDto(
+      const borderDto2 = BorderDto(
         top: BorderSideDto(width: 2.0),
         bottom: BorderSideDto(width: 2.0),
         left: BorderSideDto(width: 2.0),
@@ -112,6 +111,49 @@ void main() {
 
       expect(merged.right?.width, 2.0);
       expect(merged.right?.color, const ColorDto(Colors.red));
+    });
+
+    test('merge BorderDto and BorderDirectionalDto', () {
+      final borderDto = BorderDto.all(
+        BorderSideDto(color: Colors.yellow.toDto(), width: 3.0),
+      );
+
+      final borderDirectionalDto = BorderDirectionalDto(
+        top: BorderSideDto(color: Colors.green.toDto()),
+        bottom: const BorderSideDto(width: 4.0),
+        start: BorderSideDto(color: Colors.red.toDto(), width: 1.0),
+        end: BorderSideDto(color: Colors.blue.toDto(), width: 2.0),
+      );
+      final mergedBorder =
+          BoxBorderDto.tryToMerge(borderDto, borderDirectionalDto)
+              as BorderDirectionalDto?;
+
+      expect(
+        mergedBorder?.top,
+        BorderSideDto(
+          color: Colors.green.toDto(),
+          width: 3.0,
+        ),
+      );
+      expect(
+        mergedBorder?.bottom,
+        BorderSideDto(color: Colors.yellow.toDto(), width: 4.0),
+      );
+
+      expect(
+        mergedBorder?.start,
+        BorderSideDto(
+          color: Colors.red.toDto(),
+          width: 1.0,
+        ),
+      );
+      expect(
+        mergedBorder?.end,
+        BorderSideDto(
+          color: Colors.blue.toDto(),
+          width: 2.0,
+        ),
+      );
     });
   });
 

@@ -3,7 +3,7 @@ import 'package:mix_generator/src/helpers/builder_utils.dart';
 import 'package:mix_generator/src/helpers/dart_type_ext.dart';
 
 String dtoValueExtension(DtoAnnotationContext context) {
-  final resolvedType = getGenericTypeOfSuperclass(context.element);
+  final resolvedType = context.element.getGenericTypeOfSuperclass();
   final className = context.name;
 
   /// resolvedType is a DartType

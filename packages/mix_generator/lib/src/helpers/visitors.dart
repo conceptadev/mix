@@ -4,7 +4,7 @@ import 'package:analyzer/dart/element/visitor.dart';
 import 'package:mix_generator/src/helpers/builder_utils.dart';
 import 'package:mix_generator/src/helpers/field_info.dart';
 
-class ClassVisitor extends SimpleElementVisitor<void> {
+class CustomVisitor extends SimpleElementVisitor<void> {
   final Map<String, FieldInfo> fields = {};
   final Map<String, ParameterInfo> parameters = {};
   final Map<String, List<bool>> hasInternalAnnotations = {};
@@ -16,7 +16,7 @@ class ClassVisitor extends SimpleElementVisitor<void> {
       fields[element.name] = FieldInfo(
         name: element.name,
         dartType: element.type,
-        type: getTypeNameFromDartType(element.type),
+        type: element.type.getTypeAsString(),
         nullable: element.type.nullabilitySuffix == NullabilitySuffix.question,
         documentationComment: element.documentationComment,
         annotation: readFieldAnnotation(element),
@@ -25,10 +25,15 @@ class ClassVisitor extends SimpleElementVisitor<void> {
   }
 
   void visitConstructorElement(ConstructorElement element) {
-    if (element.name != '_' && !element.isDefaultConstructor) {
-      return;
-    }
+    final notDefaultConstructor =
+        element.name != '_' && !element.isDefaultConstructor;
 
+    if (!notDefaultConstructor) {
+      return _visitDefaultConstructor(element);
+    }
+  }
+
+  void _visitDefaultConstructor(ConstructorElement element) {
     if (constructorSelected) return;
 
     constructorSelected = true;
@@ -36,11 +41,16 @@ class ClassVisitor extends SimpleElementVisitor<void> {
     for (final param in element.parameters) {
       final fieldInfo = getFieldInfoFromParameter(param);
 
+      final field = fields[param.name];
+
+      final isNullable =
+          param.type.nullabilitySuffix == NullabilitySuffix.question;
+
       parameters[param.name] = ParameterInfo(
         name: param.name,
         dartType: param.type,
-        type: getTypeNameFromDartType(param.type),
-        nullable: param.type.nullabilitySuffix == NullabilitySuffix.question,
+        type: param.type.getTypeAsString(),
+        nullable: field?.nullable ?? isNullable,
         isSuper: param.isSuperFormal,
         documentationComment: fieldInfo?.documentationComment,
         annotation: fieldInfo!.annotation,

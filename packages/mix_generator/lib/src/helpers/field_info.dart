@@ -1,55 +1,15 @@
 import 'package:analyzer/dart/constant/value.dart' show DartObject;
 import 'package:analyzer/dart/element/element.dart'
     show ClassElement, FieldElement, ParameterElement, ConstructorElement;
-import 'package:analyzer/dart/element/nullability_suffix.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:mix_annotations/mix_annotations.dart';
 import 'package:mix_generator/src/helpers/builder_utils.dart';
+import 'package:mix_generator/src/helpers/dart_type_ext.dart';
+import 'package:mix_generator/src/helpers/type_ref_repository.dart';
 // ignore_for_file: prefer_relative_imports
 import 'package:source_gen/source_gen.dart' show ConstantReader, TypeChecker;
 
 typedef MixTypeReferences = ({String utility, String lerp, String dto});
-
-final _utilityOverrides = {
-  'EdgeInsetsGeometry': 'SpacingUtility',
-  'AnimatedData': 'AnimatedUtility',
-};
-
-final _dtoMap = {
-  'EdgeInsetsGeometry': 'SpacingDto',
-  'BoxConstraints': 'BoxConstraintsDto',
-  'Decoration': 'DecorationDto',
-  'Color': 'ColorDto',
-  'AnimatedData': 'AnimatedDataDto',
-  'TextStyle': 'TextStyleDto',
-  'ShapeBorder': 'ShapeBorderDto',
-  'StrutStyle': 'StrutStyleDto',
-  'Shadow': 'ShadowDto',
-  'BoxShadow': 'BoxShadowDto',
-  'Gradient': 'GradientDto',
-  'List<Shadow>': 'List<ShadowDto>',
-  'List<BoxShadow>': 'List<BoxShadowDto>',
-  'List<Color>': 'List<ColorDto>',
-  'BoxBorder': 'BoxBorderDto',
-  'BorderSide': 'BorderSideDto',
-  'BorderRadius': 'BorderRadiusDto',
-  'BorderRadiusGeometry': 'BorderRadiusGeometryDto',
-  'BorderRadiusDirectional': 'BorderRadiusDirectionalDto',
-  'TextDirective': 'TextDirectiveDto',
-  'DecorationImage': 'DecorationImageDto',
-  'LinearBorderEdge': 'LinearBorderEdgeDto',
-  'FlexSpec': 'FlexSpecAttribute',
-  'BoxSpec': 'BoxSpecAttribute',
-  'TextSpec': 'TextSpecAttribute',
-  'ImageSpec': 'ImageSpecAttribute',
-  'IconSpec': 'IconSpecAttribute',
-  'StackSpec': 'StackSpecAttribute',
-};
-
-/// Replace keys and values from teh _dtoMap
-final _invertedDtoMap = {
-  for (var entry in _dtoMap.entries) entry.value: entry.key
-};
 
 /// Class field info relevant for code generation.
 class FieldInfo {
@@ -81,30 +41,15 @@ class FieldInfo {
   /// Returns whether the field has a DTO type associated with it.
   bool get hasDto => dtoType != null;
 
-  bool get isDto {
-    final isDtoType = _invertedDtoMap[type] != null;
+  bool get isDto => dartType.isDto;
 
-    if (isDtoType) {
-      return true;
-    }
+  bool get isSpec => dartType.isSpec;
 
-    if (isListType) {
-      final listType = getGenericTypeFromTypeName(type);
+  bool get isListType => dartType.isDartCoreList;
 
-      if (_invertedDtoMap[listType] != null) {
-        return true;
-      }
-      return _invertedDtoMap[listType] != null;
-    }
+  bool get isMapType => dartType.isDartCoreMap;
 
-    return false;
-  }
-
-  bool get isListType => type.startsWith('List<');
-
-  bool get isMapType => type.startsWith('Map<');
-
-  bool get isSetType => type.startsWith('Set<');
+  bool get isSetType => dartType.isDartCoreSet;
 
   /// Returns the DTO type associated with the field, if any.
   /// If a DTO type is explicitly specified in the `MixProperty` annotation, that is returned.
@@ -115,7 +60,7 @@ class FieldInfo {
       return annotation.dto!.typeAsString!;
     }
 
-    return isDto ? type : _dtoMap[type];
+    return typeRefs.getDto(dartType);
   }
 
   /// True if the type is `dynamic`.
@@ -137,39 +82,20 @@ class ParameterInfo extends FieldInfo {
 
   static const internalRefPrefix = '_\$this';
 
-  // String get asOtherName => 'other.$name';
-
-  // String get asThisName => 'this.$name';
-
   String get asInternalRef => '$internalRefPrefix.$name';
 
   final bool isSuper;
 
-  String get defaultUtilityName {
-    if (isListType) {
-      final utilityBaseType = getGenericTypeFromTypeName(type);
-      if (_utilityOverrides.containsKey(utilityBaseType)) {
-        return _utilityOverrides[utilityBaseType]!;
-      }
-      return getUtilityNameFromTypeName('${utilityBaseType}List');
-    }
-
-    if (_utilityOverrides.containsKey(type)) {
-      return _utilityOverrides[type]!;
-    }
-
-    return getUtilityNameFromTypeName(type);
-  }
-
-  String get asResolvedType {
-    if (isDto) {
-      final value = _invertedDtoMap[type];
-      if (value == null) {
-        throw Exception('No resolved type found for $type');
-      }
-      return value;
-    }
-    return type;
+  static ParameterInfo fromFieldInfo(FieldInfo fieldInfo) {
+    return ParameterInfo(
+      name: fieldInfo.name,
+      type: fieldInfo.type,
+      nullable: fieldInfo.nullable,
+      isSuper: false,
+      dartType: fieldInfo.dartType,
+      annotation: fieldInfo.annotation,
+      documentationComment: fieldInfo.documentationComment,
+    );
   }
 }
 
@@ -203,11 +129,17 @@ MixableProperty _getMixableProperty(ConstantReader reader) {
 
 MixableFieldDto? _getMixableDto(ConstantReader? reader) {
   if (reader == null) return null;
-  final dtoType = reader.peek('type')?.typeValue.element?.name;
+  final peakedType = reader.peek('type');
 
-  return MixableFieldDto(
-    type: dtoType,
-  );
+  String? dtoName;
+
+  if (peakedType?.isString == true) {
+    dtoName = peakedType!.stringValue;
+  } else if (peakedType?.isType == true) {
+    dtoName = peakedType!.typeValue.element!.name!;
+  }
+
+  return MixableFieldDto(type: dtoName);
 }
 
 MixableUtility _getMixableFieldUtility(ConstantReader reader) {
@@ -281,7 +213,7 @@ FieldInfo? getFieldInfoFromParameter(
     name: field.name,
     type: field.type.getDisplayString(withNullability: false),
     dartType: field.type,
-    nullable: field.type.nullabilitySuffix == NullabilitySuffix.question,
+    nullable: field.type.isNullableType,
     annotation: annotation,
     documentationComment: field.documentationComment,
   );

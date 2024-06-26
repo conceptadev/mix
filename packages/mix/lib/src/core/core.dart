@@ -18,4 +18,5 @@ export 'helpers.dart';
 export 'modifier.dart';
 export 'spec.dart';
 export 'styled_widget.dart';
+export 'utility.dart';
 export 'variant.dart';

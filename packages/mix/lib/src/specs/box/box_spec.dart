@@ -1,5 +1,5 @@
 // ignore_for_file: prefer_relative_imports,avoid-importing-entrypoint-exports, camel_case_types
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:mix/mix.dart';
 import 'package:mix_annotations/mix_annotations.dart';
 
@@ -37,6 +37,7 @@ const _boxDecor = MixableUtility(
 const _shapeDecor = MixableUtility(
   alias: 'shapeDecoration',
   type: ShapeDecoration,
+  properties: [(path: 'shape', alias: 'shape')],
 );
 
 @MixableSpec()

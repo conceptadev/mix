@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 import '../../variants/context_variant.dart';
 import 'widget_state.dart';

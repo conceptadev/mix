@@ -1,14 +1,11 @@
-import 'package:flutter/material.dart';
+// ignore_for_file: prefer_relative_imports, avoid-importing-entrypoint-exports
 
-import '../../core/attribute.dart';
-import '../scalars/scalar_util.dart';
-import 'border_dto.dart';
+import 'package:flutter/widgets.dart';
+import 'package:mix/mix.dart';
 
 final class BoxBorderUtility<T extends Attribute>
     extends DtoUtility<T, BoxBorderDto, BoxBorder> {
   late final directional = BorderDirectionalUtility(builder);
-  late final start = directional.start;
-  late final end = directional.end;
   late final all = _border.all;
   late final bottom = _border.bottom;
   late final top = _border.top;
@@ -16,91 +13,19 @@ final class BoxBorderUtility<T extends Attribute>
   late final right = _border.right;
   late final horizontal = _border.horizontal;
   late final vertical = _border.vertical;
-  late final color = all.color;
-  late final width = all.width;
-  late final style = all.style;
+  late final start = directional.start;
+  late final end = directional.end;
+
+  late final color = _border.color;
+  late final width = _border.width;
+  late final style = _border.style;
+  late final strokeAlign = _border.strokeAlign;
+
+  late final none = _border.none;
 
   late final _border = BorderUtility(builder);
 
-  BoxBorderUtility(super.builder) : super(valueToDto: (value) => value.toDto());
-
-  T call({
-    Color? color,
-    double? width,
-    BorderStyle? style,
-    double? strokeAlign,
-  }) {
-    return _border(
-      color: color,
-      strokeAlign: strokeAlign,
-      style: style,
-      width: width,
-    );
-  }
-
-  @override
-  T only({
-    BorderSideDto? top,
-    BorderSideDto? bottom,
-    BorderSideDto? left,
-    BorderSideDto? right,
-  }) {
-    return _border.only(top: top, bottom: bottom, left: left, right: right);
-  }
-}
-
-final class BorderUtility<T extends Attribute>
-    extends DtoUtility<T, BoxBorderDto, BoxBorder> {
-  late final start = _directional.start;
-
-  late final end = _directional.end;
-
-  late final all = BorderSideUtility((v) => builder(_fromBorderSide(v)));
-
-  late final bottom = BorderSideUtility((v) => only(bottom: v));
-
-  late final top = BorderSideUtility((v) => only(top: v));
-
-  late final left = BorderSideUtility((v) => only(left: v));
-
-  late final right = BorderSideUtility((v) => only(right: v));
-
-  late final vertical =
-      BorderSideUtility((v) => builder(_symmetric(vertical: v)));
-
-  late final horizontal = BorderSideUtility(
-    (v) => builder(_symmetric(horizontal: v)),
-  );
-
-  late final color = all.color;
-
-  late final style = all.style;
-
-  late final width = all.width;
-
-  late final strokeAlign = all.strokeAlign;
-
-  late final none = all.none;
-
-  late final _directional = BorderDirectionalUtility((v) => builder(v));
-
-  BorderUtility(super.builder) : super(valueToDto: (value) => value.toDto());
-
-  BoxBorderDto _symmetric({
-    BorderSideDto? vertical,
-    BorderSideDto? horizontal,
-  }) {
-    return BoxBorderDto(
-      top: horizontal,
-      bottom: horizontal,
-      left: vertical,
-      right: vertical,
-    );
-  }
-
-  BoxBorderDto _fromBorderSide(BorderSideDto side) {
-    return BoxBorderDto(top: side, bottom: side, left: side, right: side);
-  }
+  BoxBorderUtility(super.builder) : super(valueToDto: (v) => v.toDto());
 
   T call({
     Color? color,
@@ -124,14 +49,74 @@ final class BorderUtility<T extends Attribute>
     BorderSideDto? right,
   }) {
     return builder(
-      BoxBorderDto(top: top, bottom: bottom, left: left, right: right),
+      BorderDto(top: top, bottom: bottom, left: left, right: right),
+    );
+  }
+}
+
+final class BorderUtility<T extends Attribute>
+    extends DtoUtility<T, BorderDto, Border> {
+  late final all = BorderSideUtility((v) => builder(BorderDto.all(v)));
+
+  late final bottom = BorderSideUtility((v) => only(bottom: v));
+
+  late final top = BorderSideUtility((v) => only(top: v));
+
+  late final left = BorderSideUtility((v) => only(left: v));
+
+  late final right = BorderSideUtility((v) => only(right: v));
+
+  late final vertical = BorderSideUtility(
+    (v) => builder(BorderDto.vertical(v)),
+  );
+
+  late final horizontal = BorderSideUtility(
+    (v) => builder(BorderDto.horizontal(v)),
+  );
+
+  late final color = all.color;
+
+  late final style = all.style;
+
+  late final width = all.width;
+
+  late final strokeAlign = all.strokeAlign;
+
+  BorderUtility(super.builder) : super(valueToDto: (value) => value.toDto());
+
+  T none() => builder(const BorderDto.none());
+
+  T call({
+    Color? color,
+    double? width,
+    BorderStyle? style,
+    double? strokeAlign,
+  }) {
+    return all(
+      color: color,
+      strokeAlign: strokeAlign,
+      style: style,
+      width: width,
+    );
+  }
+
+  @override
+  T only({
+    BorderSideDto? top,
+    BorderSideDto? bottom,
+    BorderSideDto? left,
+    BorderSideDto? right,
+  }) {
+    return builder(
+      BorderDto(top: top, bottom: bottom, left: left, right: right),
     );
   }
 }
 
 final class BorderDirectionalUtility<T extends Attribute>
-    extends DtoUtility<T, BoxBorderDto, BoxBorder> {
-  late final all = BorderSideUtility((v) => builder(_fromBorderSide(v)));
+    extends DtoUtility<T, BorderDirectionalDto, BorderDirectional> {
+  late final all =
+      BorderSideUtility((v) => builder(BorderDirectionalDto.all(v)));
 
   late final bottom = BorderSideUtility((v) => only(bottom: v));
 
@@ -142,30 +127,15 @@ final class BorderDirectionalUtility<T extends Attribute>
   late final end = BorderSideUtility((v) => only(end: v));
 
   late final vertical =
-      BorderSideUtility((v) => builder(_symmetric(vertical: v)));
+      BorderSideUtility((v) => builder(BorderDirectionalDto.vertical(v)));
 
-  late final horizontal = BorderSideUtility(
-    (v) => builder(_symmetric(horizontal: v)),
-  );
+  late final horizontal =
+      BorderSideUtility((v) => builder(BorderDirectionalDto.horizontal(v)));
 
   BorderDirectionalUtility(super.builder)
       : super(valueToDto: (value) => value.toDto());
 
-  BoxBorderDto _symmetric({
-    BorderSideDto? vertical,
-    BorderSideDto? horizontal,
-  }) {
-    return BoxBorderDto(
-      top: horizontal,
-      bottom: horizontal,
-      start: vertical,
-      end: vertical,
-    );
-  }
-
-  BoxBorderDto _fromBorderSide(BorderSideDto side) {
-    return BoxBorderDto(top: side, bottom: side, start: side, end: side);
-  }
+  T none() => builder(const BorderDirectionalDto.none());
 
   T call({
     Color? color,
@@ -189,7 +159,7 @@ final class BorderDirectionalUtility<T extends Attribute>
     BorderSideDto? end,
   }) {
     return builder(
-      BoxBorderDto(top: top, bottom: bottom, start: start, end: end),
+      BorderDirectionalDto(top: top, bottom: bottom, start: start, end: end),
     );
   }
 }

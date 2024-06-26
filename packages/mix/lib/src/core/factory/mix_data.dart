@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 import '../../attributes/animated/animated_data.dart';
 import '../../internal/iterable_ext.dart';
