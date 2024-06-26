@@ -82,6 +82,22 @@ void main() {
       expect(result.padding, equals(padding2));
     });
 
+    test('deep merge returns correct PaddingModifierAttribute', () {
+      const padding1 = EdgeInsetsDto(top: 1, bottom: 2, left: 3, right: 4);
+      const padding2 = EdgeInsetsDto(top: 4, bottom: 3);
+      const attribute1 = PaddingModifierAttribute(padding1);
+      const attribute2 = PaddingModifierAttribute(padding2);
+
+      final result = attribute1.merge(attribute2);
+
+      expect(
+        result.padding,
+        equals(
+          const EdgeInsetsDto(top: 4, bottom: 3, left: 3, right: 4),
+        ),
+      );
+    });
+
     test('merge returns original PaddingModifierAttribute when other is null',
         () {
       const padding = EdgeInsetsDto.all(10.0);
