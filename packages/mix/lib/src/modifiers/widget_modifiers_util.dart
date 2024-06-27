@@ -37,7 +37,7 @@ class WithModifierUtility {
   late final align = const AlignWidgetUtility(MixUtility.selfBuilder);
   late final fractionallySizedBox =
       const FractionallySizedBoxModifierUtility(MixUtility.selfBuilder);
-  late final sizedBox = const SizedBoxModifierUtility(MixUtility.selfBuilder);
+  late final sizedBox = SizedBoxModifierUtility(MixUtility.selfBuilder);
   late final padding = SpacingUtility(PaddingModifierAttribute.new);
 
   static final self = WithModifierUtility._();
