@@ -89,7 +89,7 @@ void main() {
     test('gap() returns correct instance', () {
       final flex = flexUtility.gap(10);
 
-      expect(flex.gap, 10);
+      expect(flex.gap, const SpacingSideDto(10));
     });
 
     // row()
