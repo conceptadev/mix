@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
-import 'package:mix/src/attributes/gap/gap_dto.dart';
 
 import '../../../helpers/testing_utils.dart';
 
@@ -31,7 +30,7 @@ void main() {
         textDirection: TextDirection.rtl,
         textBaseline: TextBaseline.alphabetic,
         clipBehavior: Clip.antiAlias,
-        gap: GapDto(10.0),
+        gap: SpacingSideDto(10.0),
       );
       final mixData = MixData.create(MockBuildContext(), Style(attribute));
       final resolvedSpec = attribute.resolve(mixData);
@@ -96,7 +95,7 @@ void main() {
         textDirection: TextDirection.rtl,
         textBaseline: TextBaseline.alphabetic,
         clipBehavior: Clip.antiAlias,
-        gap: GapDto(10.0),
+        gap: SpacingSideDto(10.0),
       );
       const attribute2 = FlexSpecAttribute(
         direction: Axis.vertical,
@@ -107,7 +106,7 @@ void main() {
         textDirection: TextDirection.ltr,
         textBaseline: TextBaseline.ideographic,
         clipBehavior: Clip.hardEdge,
-        gap: GapDto(20.0),
+        gap: SpacingSideDto(20.0),
       );
       final mergedAttribute = attribute1.merge(attribute2);
 
@@ -119,7 +118,7 @@ void main() {
       expect(mergedAttribute.textDirection, TextDirection.ltr);
       expect(mergedAttribute.textBaseline, TextBaseline.ideographic);
       expect(mergedAttribute.clipBehavior, Clip.hardEdge);
-      expect(mergedAttribute.gap, const GapDto(20.0));
+      expect(mergedAttribute.gap, const SpacingSideDto(20.0));
     });
   });
 }

@@ -135,7 +135,7 @@ final class FlexSpecAttribute extends SpecAttribute<FlexSpec> {
   final TextDirection? textDirection;
   final TextBaseline? textBaseline;
   final Clip? clipBehavior;
-  final GapDto? gap;
+  final SpacingSideDto? gap;
 
   const FlexSpecAttribute({
     this.crossAxisAlignment,
@@ -280,7 +280,7 @@ base class FlexSpecUtility<T extends Attribute>
     TextDirection? textDirection,
     TextBaseline? textBaseline,
     Clip? clipBehavior,
-    GapDto? gap,
+    SpacingSideDto? gap,
     AnimatedDataDto? animated,
   }) {
     return builder(FlexSpecAttribute(
