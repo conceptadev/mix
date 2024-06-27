@@ -50,13 +50,6 @@ runs:
       shell: bash    
       run: melos run brb
 
-    - name: Install DCM
-      if: ${{ inputs.run-dcm }}
-      uses: CQLabs/setup-dcm@v1
-      with:
-        github_token: ${{ inputs.token }}
-        folders: packages/*/lib
-
     # - name: Run DCM
     #   if: ${{ inputs.run-dcm }}
     #   uses: CQLabs/dcm-action@v1
@@ -68,14 +61,24 @@ runs:
     #     fatal_style: true
     #     fatal_performance: true
     #     fatal_warnings: true
-    - name: analyze
-      run: melos run analyze
-      shell: bash
-      
     - name: Run Test
       run: melos run test
       shell: bash
 
+    - name: Install DCM
+      if: ${{ inputs.run-dcm }}
+      uses: CQLabs/setup-dcm@v1
+      with:
+        github_token: ${{ inputs.token }}
+
+    - name: Run fixes
+      run: melos run fix
+      shell: bash
+
+    - name: analyze
+      run: melos run analyze
+      shell: bash
+      
     - name: Run custom_lint
       run: melos run custom_lint_analyze
       shell: bash
