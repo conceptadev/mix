@@ -22,13 +22,14 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 
+permissions:
+  contents: read
+  pull-requests: write
+
 jobs:
   test:
     name: Test
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      pull-requests: write
     steps:
       - name: Checkout mix repo
         uses: actions/checkout@v2
@@ -41,10 +42,6 @@ jobs:
   test_min_sdk:
     runs-on: ubuntu-latest
     name: Test Min SDK
-    permissions:
-      contents: read
-      pull-requests: write
-  
     steps:
       - name: Checkout mix repo
         uses: actions/checkout@v2
