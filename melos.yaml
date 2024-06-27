@@ -1,6 +1,6 @@
 name: mix_workspace
 
-sdkPath: .fvm/flutter_sdk
+# sdkPath: .fvm/flutter_sdk
 packages:
   - packages/**
   - examples/**

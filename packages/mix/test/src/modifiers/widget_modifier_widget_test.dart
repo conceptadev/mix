@@ -20,8 +20,7 @@ void main() {
     testWidgets('Renders modifiers in the correct order', (tester) async {
       await tester.pumpMaterialApp(
         RenderModifiers(
-          mix: mixData,
-          orderOfModifiers: const [],
+          modifiers: resolveModifierSpecs(const [], mixData),
           child: const Text('child'),
         ),
       );
@@ -83,8 +82,7 @@ void main() {
 
       await tester.pumpMaterialApp(
         RenderModifiers(
-          mix: mixData,
-          orderOfModifiers: const [],
+          modifiers: resolveModifierSpecs(const [], mixData),
           child: const Text('child'),
         ),
       );
@@ -98,8 +96,7 @@ void main() {
 
       await tester.pumpMaterialApp(
         RenderModifiers(
-          mix: mixData,
-          orderOfModifiers: const [],
+          modifiers: resolveModifierSpecs(const [], mixData),
           child: const Text('child'),
         ),
       );
@@ -113,14 +110,13 @@ void main() {
       (tester) async {
         await tester.pumpMaterialApp(
           RenderModifiers(
-            mix: mixData,
-            orderOfModifiers: const [
+            modifiers: resolveModifierSpecs([
               ClipOvalModifierAttribute,
               AspectRatioModifierAttribute,
               TransformModifierAttribute,
               OpacityModifierAttribute,
               VisibilityModifierAttribute,
-            ],
+            ], mixData),
             child: const Text('child'),
           ),
         );
@@ -183,11 +179,9 @@ void main() {
       (tester) async {
         await tester.pumpMaterialApp(
           RenderModifiers(
-            mix: mixData,
-            orderOfModifiers: const [
-              ClipOvalModifierAttribute,
-              AspectRatioModifierAttribute
-            ],
+            modifiers: resolveModifierSpecs(
+                [ClipOvalModifierAttribute, AspectRatioModifierAttribute],
+                mixData),
             child: const Text('child'),
           ),
         );
@@ -259,8 +253,7 @@ void main() {
 
       await tester.pumpMaterialApp(
         RenderAnimatedModifiers(
-          mix: mixData,
-          orderOfModifiers: const [],
+          modifiers: resolveModifierSpecs(const [], mixData),
           duration: const Duration(milliseconds: 300),
           child: const Text('child'),
         ),

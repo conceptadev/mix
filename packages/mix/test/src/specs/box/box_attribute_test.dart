@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
+import 'package:mix/src/attributes/modifiers/modifiers_data_dto.dart';
 
 import '../../../helpers/testing_utils.dart';
 
@@ -22,6 +23,10 @@ void main() {
         clipBehavior: Clip.antiAlias,
         width: 100,
         height: 100,
+        modifiers: const ModifiersDataDto([
+          OpacityModifierAttribute(0.5),
+          SizedBoxModifierAttribute(height: 10, width: 10),
+        ]),
       );
 
       expect(containerSpecAttribute.alignment, Alignment.center);
@@ -47,26 +52,35 @@ void main() {
       );
       expect(containerSpecAttribute.transform, Matrix4.identity());
       expect(containerSpecAttribute.width, 100);
+      expect(
+          containerSpecAttribute.modifiers,
+          const ModifiersDataDto([
+            OpacityModifierAttribute(0.5),
+            SizedBoxModifierAttribute(height: 10, width: 10),
+          ]));
     });
 
     // resolve()
     test('resolve() returns correct instance', () {
       final containerSpecAttribute = BoxSpecAttribute(
-        alignment: Alignment.center,
-        padding: SpacingDto.only(top: 20, bottom: 20, left: 20, right: 20),
-        margin: SpacingDto.only(
-          top: 10,
-          bottom: 10,
-          left: 10,
-          right: 10,
-        ),
-        constraints: const BoxConstraintsDto(maxHeight: 100),
-        decoration: const BoxDecorationDto(color: ColorDto(Colors.blue)),
-        transform: Matrix4.identity(),
-        clipBehavior: Clip.antiAlias,
-        width: 100,
-        height: 100,
-      );
+          alignment: Alignment.center,
+          padding: SpacingDto.only(top: 20, bottom: 20, left: 20, right: 20),
+          margin: SpacingDto.only(
+            top: 10,
+            bottom: 10,
+            left: 10,
+            right: 10,
+          ),
+          constraints: const BoxConstraintsDto(maxHeight: 100),
+          decoration: const BoxDecorationDto(color: ColorDto(Colors.blue)),
+          transform: Matrix4.identity(),
+          clipBehavior: Clip.antiAlias,
+          width: 100,
+          height: 100,
+          modifiers: const ModifiersDataDto([
+            OpacityModifierAttribute(0.5),
+            SizedBoxModifierAttribute(height: 10, width: 10),
+          ]));
 
       final containerSpec = containerSpecAttribute.resolve(EmptyMixData);
 
@@ -90,26 +104,33 @@ void main() {
       );
       expect(containerSpec.transform, Matrix4.identity());
       expect(containerSpec.width, 100);
+      expect(containerSpec.modifiers!.value, [
+        const OpacityModifierSpec(0.5),
+        const SizedBoxModifierSpec(height: 10, width: 10),
+      ]);
     });
 
     // merge()
     test('merge() returns correct instance', () {
       final containerSpecAttribute = BoxSpecAttribute(
-        alignment: Alignment.center,
-        padding: SpacingDto.only(top: 20, bottom: 20, left: 20, right: 20),
-        margin: SpacingDto.only(
-          top: 10,
-          bottom: 10,
-          left: 10,
-          right: 10,
-        ),
-        constraints: const BoxConstraintsDto(maxHeight: 100),
-        decoration: const BoxDecorationDto(color: ColorDto(Colors.blue)),
-        transform: Matrix4.identity(),
-        clipBehavior: Clip.antiAlias,
-        width: 100,
-        height: 100,
-      );
+          alignment: Alignment.center,
+          padding: SpacingDto.only(top: 20, bottom: 20, left: 20, right: 20),
+          margin: SpacingDto.only(
+            top: 10,
+            bottom: 10,
+            left: 10,
+            right: 10,
+          ),
+          constraints: const BoxConstraintsDto(maxHeight: 100),
+          decoration: const BoxDecorationDto(color: ColorDto(Colors.blue)),
+          transform: Matrix4.identity(),
+          clipBehavior: Clip.antiAlias,
+          width: 100,
+          height: 100,
+          modifiers: const ModifiersDataDto([
+            OpacityModifierAttribute(0.5),
+            SizedBoxModifierAttribute(height: 10, width: 10),
+          ]));
 
       final mergedBoxSpecAttribute = containerSpecAttribute.merge(
         BoxSpecAttribute(
@@ -127,6 +148,9 @@ void main() {
           clipBehavior: Clip.antiAliasWithSaveLayer,
           width: 200,
           height: 200,
+          modifiers: const ModifiersDataDto([
+            SizedBoxModifierAttribute(width: 20),
+          ]),
         ),
       );
 
@@ -153,26 +177,35 @@ void main() {
       );
       expect(mergedBoxSpecAttribute.transform, Matrix4.identity());
       expect(mergedBoxSpecAttribute.width, 200);
+      expect(
+          mergedBoxSpecAttribute.modifiers,
+          const ModifiersDataDto([
+            OpacityModifierAttribute(0.5),
+            SizedBoxModifierAttribute(height: 10, width: 20),
+          ]));
     });
 
     // equality
     test('equality', () {
       final containerSpecAttribute = BoxSpecAttribute(
-        alignment: Alignment.center,
-        padding: SpacingDto.only(top: 20, bottom: 20, left: 20, right: 20),
-        margin: SpacingDto.only(
-          top: 10,
-          bottom: 10,
-          left: 10,
-          right: 10,
-        ),
-        constraints: const BoxConstraintsDto(maxHeight: 100),
-        decoration: const BoxDecorationDto(color: ColorDto(Colors.blue)),
-        transform: Matrix4.identity(),
-        clipBehavior: Clip.antiAlias,
-        width: 100,
-        height: 100,
-      );
+          alignment: Alignment.center,
+          padding: SpacingDto.only(top: 20, bottom: 20, left: 20, right: 20),
+          margin: SpacingDto.only(
+            top: 10,
+            bottom: 10,
+            left: 10,
+            right: 10,
+          ),
+          constraints: const BoxConstraintsDto(maxHeight: 100),
+          decoration: const BoxDecorationDto(color: ColorDto(Colors.blue)),
+          transform: Matrix4.identity(),
+          clipBehavior: Clip.antiAlias,
+          width: 100,
+          height: 100,
+          modifiers: const ModifiersDataDto([
+            OpacityModifierAttribute(0.5),
+            SizedBoxModifierAttribute(height: 10, width: 10),
+          ]));
 
       expect(
         containerSpecAttribute,
@@ -192,6 +225,12 @@ void main() {
             clipBehavior: Clip.antiAlias,
             width: 100,
             height: 100,
+            modifiers: const ModifiersDataDto(
+              [
+                OpacityModifierAttribute(0.5),
+                SizedBoxModifierAttribute(height: 10, width: 10),
+              ],
+            ),
           ),
         ),
       );
@@ -240,6 +279,12 @@ void main() {
               clipBehavior: Clip.antiAliasWithSaveLayer,
               width: 200,
               height: 200,
+              modifiers: const ModifiersDataDto(
+                [
+                  OpacityModifierAttribute(0.4),
+                  SizedBoxModifierAttribute(height: 20, width: 10),
+                ],
+              ),
             ),
           ),
         ),

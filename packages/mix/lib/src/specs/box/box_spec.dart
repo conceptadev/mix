@@ -3,6 +3,10 @@ import 'package:flutter/widgets.dart';
 import 'package:mix/mix.dart';
 import 'package:mix_annotations/mix_annotations.dart';
 
+import '../../attributes/modifiers/modifiers_data.dart';
+import '../../attributes/modifiers/modifiers_data_dto.dart';
+import '../../attributes/modifiers/modifiers_util.dart';
+
 part 'box_spec.g.dart';
 
 const _constraints = MixableUtility(
@@ -96,6 +100,7 @@ final class BoxSpec extends Spec<BoxSpec> with _$BoxSpec {
     this.clipBehavior,
     this.width,
     this.height,
+    super.modifiers,
     super.animated,
   });
 

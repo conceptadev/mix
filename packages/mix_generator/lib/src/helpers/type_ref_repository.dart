@@ -23,6 +23,7 @@ class TypeRefRepository {
     'BoxConstraints': 'BoxConstraintsDto',
     'Decoration': 'DecorationDto',
     'Color': 'ColorDto',
+    'ModifiersData': 'ModifiersDataDto',
     'AnimatedData': 'AnimatedDataDto',
     'TextStyle': 'TextStyleDto',
     'ShapeBorder': 'ShapeBorderDto',

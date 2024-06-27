@@ -430,10 +430,12 @@ class _TestableRenderModifier extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RenderModifiers(
-      orderOfModifiers: const [],
-      mix: MixData.create(
-        context,
-        style,
+      modifiers: resolveModifierSpecs(
+        const [],
+        MixData.create(
+          context,
+          style,
+        ),
       ),
       child: Container(),
     );

@@ -3,6 +3,8 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
+import 'package:mix/src/attributes/modifiers/modifiers_data.dart';
+import 'package:mix/src/attributes/modifiers/modifiers_data_dto.dart';
 
 import '../../../helpers/testing_utils.dart';
 
@@ -21,6 +23,10 @@ void main() {
             decoration: const BoxDecorationDto(color: ColorDto(Colors.blue)),
             transform: Matrix4.translationValues(10.0, 10.0, 0.0),
             clipBehavior: Clip.antiAlias,
+            modifiers: const ModifiersDataDto([
+              OpacityModifierAttribute(1),
+              SizedBoxModifierAttribute(height: 10, width: 10),
+            ]),
             width: 300,
             height: 200,
           ),
@@ -39,6 +45,10 @@ void main() {
       expect(spec.decoration, const BoxDecoration(color: Colors.blue));
 
       expect(spec.transform, Matrix4.translationValues(10.0, 10.0, 0.0));
+      expect(spec.modifiers!.value, [
+        const OpacityModifierSpec(1),
+        const SizedBoxModifierSpec(height: 10, width: 10),
+      ]);
       expect(spec.clipBehavior, Clip.antiAlias);
     });
 
@@ -55,9 +65,19 @@ void main() {
         transformAlignment: Alignment.center,
         width: 300,
         height: 200,
+        modifiers: const ModifiersData([
+          OpacityModifierSpec(0.5),
+          SizedBoxModifierSpec(height: 10, width: 10),
+        ]),
       );
 
-      final copiedSpec = spec.copyWith(width: 250.0, height: 150.0);
+      final copiedSpec = spec.copyWith(
+        width: 250.0,
+        height: 150.0,
+        modifiers: const ModifiersData([
+          OpacityModifierSpec(1),
+        ]),
+      );
 
       expect(copiedSpec.alignment, Alignment.center);
       expect(copiedSpec.padding, const EdgeInsets.all(16.0));
@@ -75,6 +95,13 @@ void main() {
       expect(copiedSpec.transform, Matrix4.translationValues(10.0, 10.0, 0.0));
       expect(copiedSpec.clipBehavior, Clip.antiAlias);
       expect(copiedSpec.width, 250.0);
+
+      expect(
+        copiedSpec.modifiers!.value,
+        const ModifiersData(
+          [OpacityModifierSpec(1)],
+        ).value,
+      );
       expect(copiedSpec.height, 150.0);
     });
 
@@ -179,6 +206,10 @@ void main() {
         clipBehavior: Clip.none,
         width: 300,
         height: 200,
+        modifiers: const ModifiersData([
+          OpacityModifierSpec(0.5),
+          SizedBoxModifierSpec(height: 10, width: 10),
+        ]),
       );
 
       final spec2 = BoxSpec(
@@ -193,6 +224,10 @@ void main() {
         clipBehavior: Clip.none,
         width: 300,
         height: 200,
+        modifiers: const ModifiersData([
+          OpacityModifierSpec(0.5),
+          SizedBoxModifierSpec(height: 10, width: 10),
+        ]),
       );
 
       expect(spec1, spec2);
@@ -217,6 +252,10 @@ void main() {
         clipBehavior: Clip.antiAlias,
         width: 100,
         height: 100,
+        modifiers: const ModifiersDataDto([
+          OpacityModifierAttribute(0.5),
+          SizedBoxModifierAttribute(height: 10, width: 10),
+        ]),
       );
 
       final mergedBoxSpecAttribute = containerSpecAttribute.merge(
@@ -237,6 +276,9 @@ void main() {
           clipBehavior: Clip.antiAliasWithSaveLayer,
           width: 200,
           height: 200,
+          modifiers: const ModifiersDataDto([
+            SizedBoxModifierAttribute(width: 100),
+          ]),
         ),
       );
 
@@ -266,6 +308,13 @@ void main() {
       );
       expect(mergedBoxSpecAttribute.transform, Matrix4.identity());
       expect(mergedBoxSpecAttribute.width, 200);
+      expect(
+        mergedBoxSpecAttribute.modifiers!.value,
+        [
+          const OpacityModifierAttribute(0.5),
+          const SizedBoxModifierAttribute(height: 10, width: 100),
+        ],
+      );
     });
   });
 }

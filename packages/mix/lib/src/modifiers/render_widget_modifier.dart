@@ -1,10 +1,11 @@
 // ignore_for_file: avoid-dynamic
 
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 
 import '../core/attributes_map.dart';
 import '../core/factory/mix_data.dart';
 import '../core/modifier.dart';
+import '../core/spec.dart';
 import 'align_widget_modifier.dart';
 import 'aspect_ratio_widget_modifier.dart';
 import 'clip_widget_modifier.dart';
@@ -71,23 +72,19 @@ const _defaultOrder = [
 
 class RenderModifiers extends StatelessWidget {
   const RenderModifiers({
-    required this.mix,
     required this.child,
+    required this.modifiers,
     super.key,
-    required this.orderOfModifiers,
   });
 
-  final MixData mix;
   final Widget child;
-  final List<Type> orderOfModifiers;
+  final Set<WidgetModifierSpec<dynamic>> modifiers;
 
   @override
   Widget build(BuildContext context) {
-    final specs = resolveModifierSpecs(orderOfModifiers, mix);
-
     var current = child;
 
-    for (final spec in specs) {
+    for (final spec in modifiers) {
       current = spec.build(current);
     }
 
@@ -97,18 +94,17 @@ class RenderModifiers extends StatelessWidget {
 
 class RenderAnimatedModifiers extends ImplicitlyAnimatedWidget {
   const RenderAnimatedModifiers({
-    required this.mix,
+    required this.modifiers,
     required this.child,
-    required this.orderOfModifiers,
-    super.key,
     required super.duration,
+    super.key,
     super.curve = Curves.linear,
     super.onEnd,
   });
 
-  final MixData mix;
   final Widget child;
-  final List<Type> orderOfModifiers;
+
+  final Set<WidgetModifierSpec<dynamic>> modifiers;
 
   @override
   RenderAnimatedModifiersState createState() => RenderAnimatedModifiersState();
@@ -120,12 +116,9 @@ class RenderAnimatedModifiersState
 
   @override
   void forEachTween(TweenVisitor<dynamic> visitor) {
-    final specs = resolveModifierSpecs(widget.orderOfModifiers, widget.mix);
-
-    for (final spec in specs) {
+    for (final spec in widget.modifiers) {
       final specType = spec.runtimeType;
       final previousSpec = _specs[specType];
-
       _specs[specType] = visitor(
         previousSpec,
         spec,
@@ -155,6 +148,15 @@ Set<WidgetModifierSpec> resolveModifierSpecs(
   final modifiers = mix.whereType<WidgetModifierAttribute>();
 
   if (modifiers.isEmpty) return {};
+
+  return orderModifierSpecs(orderOfModifiers, mix, modifiers);
+}
+
+Set<WidgetModifierSpec> orderModifierSpecs(
+  List<Type> orderOfModifiers,
+  MixData mix,
+  Iterable<WidgetModifierAttribute> modifiers,
+) {
   final modifierMap = AttributeMap<WidgetModifierAttribute>(modifiers).toMap();
 
   final listOfModifiers = {
@@ -176,6 +178,36 @@ Set<WidgetModifierSpec> resolveModifierSpecs(
   }
 
   return specs.toSet();
+}
+
+class RenderInlineModifiers extends StatelessWidget {
+  const RenderInlineModifiers({
+    required this.mix,
+    required this.orderOfModifiers,
+    required this.child,
+    required this.spec,
+    super.key,
+  });
+
+  final MixData mix;
+  final Widget child;
+  final List<Type> orderOfModifiers;
+  final Spec spec;
+
+  @override
+  Widget build(BuildContext context) {
+    return spec.isAnimated
+        ? RenderAnimatedModifiers(
+            modifiers: spec.modifiers?.value.toSet() ?? {},
+            duration: spec.animated!.duration,
+            curve: spec.animated!.curve,
+            child: child,
+          )
+        : RenderModifiers(
+            modifiers: spec.modifiers?.value.toSet() ?? {},
+            child: child,
+          );
+  }
 }
 
 class ModifierSpecTween extends Tween<WidgetModifierSpec> {
