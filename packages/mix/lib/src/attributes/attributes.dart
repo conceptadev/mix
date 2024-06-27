@@ -21,6 +21,8 @@ export 'constraints/constraints_dto.dart';
 export 'decoration/decoration_dto.dart';
 export 'decoration/image/decoration_image_dto.dart';
 export 'enum/enum_util.dart';
+export 'gap/gap_util.dart';
+export 'gap/spacing_side_dto.dart';
 export 'gradient/gradient_dto.dart';
 export 'nested_style/nested_style_attribute.dart';
 export 'nested_style/nested_style_util.dart';

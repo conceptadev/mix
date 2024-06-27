@@ -25,7 +25,10 @@ final class FlexSpec extends Spec<FlexSpec> with _$FlexSpec {
   final TextDirection? textDirection;
   final TextBaseline? textBaseline;
   final Clip? clipBehavior;
-  @MixableProperty(utilities: [MixableUtility(type: SpacingSideUtility)])
+  @MixableProperty(
+    dto: MixableFieldDto(type: SpacingSideDto),
+    utilities: [MixableUtility(type: GapUtility)],
+  )
   final double? gap;
 
   static const of = _$FlexSpec.of;
