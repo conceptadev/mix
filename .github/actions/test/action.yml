@@ -65,6 +65,7 @@ runs:
         ci_key: oss
         email: oss
         folders: .
+        pull_request_comment: false
         fatal_style: true
         fatal_performance: true
         fatal_warnings: true
