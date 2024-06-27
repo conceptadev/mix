@@ -2,6 +2,7 @@ import 'package:flutter/widgets.dart';
 
 import '../../core/factory/mix_provider.dart';
 import '../../core/styled_widget.dart';
+import '../../modifiers/render_widget_modifier.dart';
 import 'box_spec.dart';
 
 /// A [Container] equivalent widget for applying styles using Mix.
@@ -53,39 +54,42 @@ class Box extends StyledWidget {
     return withMix(context, (context) {
       final spec = BoxSpec.of(context);
 
-      return spec.isAnimated
-          ? AnimatedBoxSpecWidget(
-              spec: spec,
-              duration: spec.animated!.duration,
-              curve: spec.animated!.curve,
-              child: child,
-            )
-          : BoxSpecWidget(spec: spec, child: child);
+      return spec(child: child);
     });
   }
 }
 
 class BoxSpecWidget extends StatelessWidget {
-  const BoxSpecWidget({required this.spec, super.key, this.child});
+  const BoxSpecWidget({
+    required this.spec,
+    super.key,
+    this.child,
+    this.orderOfModifiers = const [],
+  });
 
   final Widget? child;
   final BoxSpec? spec;
+  final List<Type> orderOfModifiers;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      alignment: spec?.alignment,
-      padding: spec?.padding,
-      decoration: spec?.decoration,
-      foregroundDecoration: spec?.foregroundDecoration,
-      width: spec?.width,
-      height: spec?.height,
-      constraints: spec?.constraints,
-      margin: spec?.margin,
-      transform: spec?.transform,
-      transformAlignment: spec?.transformAlignment,
-      clipBehavior: spec?.clipBehavior ?? Clip.none,
-      child: child,
+    return RenderInlineModifiers(
+      orderOfModifiers: orderOfModifiers,
+      spec: spec ?? const BoxSpec(),
+      child: Container(
+        alignment: spec?.alignment,
+        padding: spec?.padding,
+        decoration: spec?.decoration,
+        foregroundDecoration: spec?.foregroundDecoration,
+        width: spec?.width,
+        height: spec?.height,
+        constraints: spec?.constraints,
+        margin: spec?.margin,
+        transform: spec?.transform,
+        transformAlignment: spec?.transformAlignment,
+        clipBehavior: spec?.clipBehavior ?? Clip.none,
+        child: child,
+      ),
     );
   }
 }
@@ -98,10 +102,12 @@ class AnimatedBoxSpecWidget extends ImplicitlyAnimatedWidget {
     required super.duration,
     super.curve = Curves.linear,
     super.onEnd,
+    this.orderOfModifiers = const [],
   });
 
   final Widget? child;
   final BoxSpec spec;
+  final List<Type> orderOfModifiers;
 
   @override
   AnimatedWidgetBaseState<AnimatedBoxSpecWidget> createState() =>

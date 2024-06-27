@@ -70,6 +70,23 @@ const _defaultOrder = [
   OpacityModifierAttribute,
 ];
 
+const _defaultOrderSpecs = [
+  VisibilityModifierSpec,
+  SizedBoxModifierSpec,
+  FractionallySizedBoxModifierSpec,
+  AlignModifierSpec,
+  IntrinsicHeightModifierSpec,
+  IntrinsicWidthModifierSpec,
+  AspectRatioModifierSpec,
+  TransformModifierSpec,
+  ClipOvalModifierSpec,
+  ClipRRectModifierSpec,
+  ClipPathModifierSpec,
+  ClipTriangleModifierSpec,
+  ClipRectModifierSpec,
+  OpacityModifierSpec,
+];
+
 class RenderModifiers extends StatelessWidget {
   const RenderModifiers({
     required this.child,
@@ -152,6 +169,31 @@ Set<WidgetModifierSpec> resolveModifierSpecs(
   return orderModifierSpecs(orderOfModifiers, mix, modifiers);
 }
 
+Set<WidgetModifierSpec<dynamic>> orderSpecs(
+  List<Type> orderOfModifiers, [
+  Set<WidgetModifierSpec<dynamic>> modifiers = const {},
+]) {
+  final listOfModifiers = ({
+    // Prioritize the order of modifiers provided by the user.
+    ...orderOfModifiers,
+    // Add the default order of modifiers.
+    ..._defaultOrderSpecs,
+    // Add any remaining modifiers that were not included in the order.
+    ...modifiers.map((e) => e.type),
+  }).toList();
+
+  final specs = <WidgetModifierSpec<dynamic>>{};
+
+  for (final modifierType in listOfModifiers) {
+    // Resolve the modifier and add it to the list of specs.
+    final modifier = modifiers.where((e) => e.type == modifierType).firstOrNull;
+    if (modifier == null) continue;
+    specs.add(modifier as WidgetModifierSpec<WidgetModifierSpec<dynamic>>);
+  }
+
+  return specs;
+}
+
 Set<WidgetModifierSpec> orderModifierSpecs(
   List<Type> orderOfModifiers,
   MixData mix,
@@ -182,14 +224,12 @@ Set<WidgetModifierSpec> orderModifierSpecs(
 
 class RenderInlineModifiers extends StatelessWidget {
   const RenderInlineModifiers({
-    required this.mix,
     required this.orderOfModifiers,
     required this.child,
     required this.spec,
     super.key,
   });
 
-  final MixData mix;
   final Widget child;
   final List<Type> orderOfModifiers;
   final Spec spec;
@@ -198,13 +238,19 @@ class RenderInlineModifiers extends StatelessWidget {
   Widget build(BuildContext context) {
     return spec.isAnimated
         ? RenderAnimatedModifiers(
-            modifiers: spec.modifiers?.value.toSet() ?? {},
+            modifiers: orderSpecs(
+              orderOfModifiers,
+              spec.modifiers?.value.toSet() ?? {},
+            ),
             duration: spec.animated!.duration,
             curve: spec.animated!.curve,
             child: child,
           )
         : RenderModifiers(
-            modifiers: spec.modifiers?.value.toSet() ?? {},
+            modifiers: orderSpecs(
+              orderOfModifiers,
+              spec.modifiers?.value.toSet() ?? {},
+            ),
             child: child,
           );
   }

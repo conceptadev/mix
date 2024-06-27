@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../core/styled_widget.dart';
+import '../../modifiers/render_widget_modifier.dart';
 import 'text_spec.dart';
 
 /// [StyledText] - A styled widget for displaying text with a mix of styles.
@@ -77,6 +78,7 @@ class TextSpecWidget extends StatelessWidget {
     required this.spec,
     this.semanticsLabel,
     this.locale,
+    this.orderOfModifiers = const [],
     super.key,
   });
 
@@ -84,27 +86,31 @@ class TextSpecWidget extends StatelessWidget {
   final String? semanticsLabel;
   final Locale? locale;
   final TextSpec? spec;
+  final List<Type> orderOfModifiers;
 
   @override
   Widget build(BuildContext context) {
     // The Text widget is used here, applying the resolved styles and properties from TextSpec.
-
-    return Text(
-      spec?.directive?.apply(text) ?? text,
-      style: spec?.style,
-      strutStyle: spec?.strutStyle,
-      textAlign: spec?.textAlign,
-      textDirection: spec?.textDirection,
-      locale: locale,
-      softWrap: spec?.softWrap,
-      overflow: spec?.overflow,
-      // ignore: deprecated_member_use, deprecated_member_use_from_same_package
-      textScaleFactor: spec?.textScaleFactor,
-      textScaler: spec?.textScaler,
-      maxLines: spec?.maxLines,
-      semanticsLabel: semanticsLabel,
-      textWidthBasis: spec?.textWidthBasis,
-      textHeightBehavior: spec?.textHeightBehavior,
+    return RenderInlineModifiers(
+      orderOfModifiers: const [],
+      spec: spec ?? const TextSpec(),
+      child: Text(
+        spec?.directive?.apply(text) ?? text,
+        style: spec?.style,
+        strutStyle: spec?.strutStyle,
+        textAlign: spec?.textAlign,
+        textDirection: spec?.textDirection,
+        locale: locale,
+        softWrap: spec?.softWrap,
+        overflow: spec?.overflow,
+        // ignore: deprecated_member_use, deprecated_member_use_from_same_package
+        textScaleFactor: spec?.textScaleFactor,
+        textScaler: spec?.textScaler,
+        maxLines: spec?.maxLines,
+        semanticsLabel: semanticsLabel,
+        textWidthBasis: spec?.textWidthBasis,
+        textHeightBehavior: spec?.textHeightBehavior,
+      ),
     );
   }
 }

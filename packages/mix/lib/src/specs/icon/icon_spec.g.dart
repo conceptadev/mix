@@ -45,6 +45,7 @@ base mixin _$IconSpec on Spec<IconSpec> {
     bool? applyTextScaling,
     double? fill,
     AnimatedData? animated,
+    WidgetModifiersData? modifiers,
   }) {
     return IconSpec(
       color: color ?? _$this.color,
@@ -57,6 +58,7 @@ base mixin _$IconSpec on Spec<IconSpec> {
       applyTextScaling: applyTextScaling ?? _$this.applyTextScaling,
       fill: fill ?? _$this.fill,
       animated: animated ?? _$this.animated,
+      modifiers: modifiers ?? _$this.modifiers,
     );
   }
 
@@ -74,7 +76,7 @@ base mixin _$IconSpec on Spec<IconSpec> {
   /// - [Color.lerp] for [color].
   /// - [MixHelpers.lerpDouble] for [size] and [weight] and [grade] and [opticalSize] and [fill].
 
-  /// For [shadows] and [textDirection] and [applyTextScaling] and [animated], the interpolation is performed using a step function.
+  /// For [shadows] and [textDirection] and [applyTextScaling] and [animated] and [modifiers], the interpolation is performed using a step function.
   /// If [t] is less than 0.5, the value from the current [IconSpec] is used. Otherwise, the value
   /// from the [other] [IconSpec] is used.
   ///
@@ -97,6 +99,7 @@ base mixin _$IconSpec on Spec<IconSpec> {
           t < 0.5 ? _$this.applyTextScaling : other.applyTextScaling,
       fill: MixHelpers.lerpDouble(_$this.fill, other.fill, t),
       animated: t < 0.5 ? _$this.animated : other.animated,
+      modifiers: t < 0.5 ? _$this.modifiers : other.modifiers,
     );
   }
 
@@ -116,6 +119,7 @@ base mixin _$IconSpec on Spec<IconSpec> {
         _$this.applyTextScaling,
         _$this.fill,
         _$this.animated,
+        _$this.modifiers,
       ];
 
   IconSpec get _$this => this as IconSpec;
@@ -150,6 +154,7 @@ final class IconSpecAttribute extends SpecAttribute<IconSpec> {
     this.applyTextScaling,
     this.fill,
     super.animated,
+    super.modifiers,
   });
 
   /// Resolves to [IconSpec] using the provided [MixData].
@@ -173,6 +178,7 @@ final class IconSpecAttribute extends SpecAttribute<IconSpec> {
       applyTextScaling: applyTextScaling,
       fill: fill,
       animated: animated?.resolve(mix) ?? mix.animation,
+      modifiers: modifiers?.resolve(mix),
     );
   }
 
@@ -199,6 +205,7 @@ final class IconSpecAttribute extends SpecAttribute<IconSpec> {
       applyTextScaling: other.applyTextScaling ?? applyTextScaling,
       fill: other.fill ?? fill,
       animated: animated?.merge(other.animated) ?? other.animated,
+      modifiers: modifiers?.merge(other.modifiers) ?? other.modifiers,
     );
   }
 
@@ -218,6 +225,7 @@ final class IconSpecAttribute extends SpecAttribute<IconSpec> {
         applyTextScaling,
         fill,
         animated,
+        modifiers,
       ];
 }
 
@@ -258,6 +266,9 @@ base class IconSpecUtility<T extends Attribute>
   /// Utility for defining [IconSpecAttribute.animated]
   late final animated = AnimatedUtility((v) => only(animated: v));
 
+  /// Utility for defining [IconSpecAttribute.modifiers]
+  late final modifiers = ModifierUtility((v) => only(modifiers: v));
+
   IconSpecUtility(super.builder);
 
   static final self = IconSpecUtility((v) => v);
@@ -275,6 +286,7 @@ base class IconSpecUtility<T extends Attribute>
     bool? applyTextScaling,
     double? fill,
     AnimatedDataDto? animated,
+    WidgetModifiersDataDto? modifiers,
   }) {
     return builder(IconSpecAttribute(
       color: color,
@@ -287,6 +299,7 @@ base class IconSpecUtility<T extends Attribute>
       applyTextScaling: applyTextScaling,
       fill: fill,
       animated: animated,
+      modifiers: modifiers,
     ));
   }
 }

@@ -1,7 +1,7 @@
 import '../../core/modifier.dart';
 
-class ModifiersData {
+class WidgetModifiersData {
   // ignore: avoid-dynamic
   final List<WidgetModifierSpec<dynamic>> value;
-  const ModifiersData(this.value);
+  const WidgetModifiersData(this.value);
 }

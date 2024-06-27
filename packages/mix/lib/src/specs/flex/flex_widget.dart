@@ -3,6 +3,7 @@
 import 'package:flutter/widgets.dart';
 
 import '../../core/styled_widget.dart';
+import '../../modifiers/render_widget_modifier.dart';
 import '../box/box_spec.dart';
 import '../box/box_widget.dart';
 import 'flex_spec.dart';
@@ -46,6 +47,7 @@ class StyledFlex extends StyledWidget {
       return FlexSpecWidget(
         spec: spec,
         direction: direction,
+        orderOfModifiers: orderOfModifiers,
         children: children,
       );
     });
@@ -58,11 +60,13 @@ class FlexSpecWidget extends StatelessWidget {
     this.spec,
     required this.children,
     required this.direction,
+    this.orderOfModifiers = const [],
   });
 
   final List<Widget> children;
   final Axis direction;
   final FlexSpec? spec;
+  final List<Type> orderOfModifiers;
 
   List<Widget> _buildChildren(double? gap) {
     if (gap == null) return children;
@@ -81,8 +85,7 @@ class FlexSpecWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final gap = spec?.gap;
-
-    return Flex(
+    final flexWidget = Flex(
       direction: direction,
       mainAxisAlignment:
           spec?.mainAxisAlignment ?? _defaultFlex.mainAxisAlignment,
@@ -93,6 +96,14 @@ class FlexSpecWidget extends StatelessWidget {
           spec?.verticalDirection ?? _defaultFlex.verticalDirection,
       children: _buildChildren(gap),
     );
+
+    return spec == null
+        ? flexWidget
+        : RenderInlineModifiers(
+            orderOfModifiers: orderOfModifiers,
+            spec: spec!,
+            child: flexWidget,
+          );
   }
 }
 

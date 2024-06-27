@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
-import 'package:mix/src/attributes/modifiers/modifiers_data_dto.dart';
+import 'package:mix/src/attributes/modifiers/widget_modifiers_data_dto.dart';
 
 import '../../../helpers/testing_utils.dart';
 
@@ -23,7 +23,7 @@ void main() {
         clipBehavior: Clip.antiAlias,
         width: 100,
         height: 100,
-        modifiers: const ModifiersDataDto([
+        modifiers: const WidgetModifiersDataDto([
           OpacityModifierAttribute(0.5),
           SizedBoxModifierAttribute(height: 10, width: 10),
         ]),
@@ -54,7 +54,7 @@ void main() {
       expect(containerSpecAttribute.width, 100);
       expect(
           containerSpecAttribute.modifiers,
-          const ModifiersDataDto([
+          const WidgetModifiersDataDto([
             OpacityModifierAttribute(0.5),
             SizedBoxModifierAttribute(height: 10, width: 10),
           ]));
@@ -77,7 +77,7 @@ void main() {
           clipBehavior: Clip.antiAlias,
           width: 100,
           height: 100,
-          modifiers: const ModifiersDataDto([
+          modifiers: const WidgetModifiersDataDto([
             OpacityModifierAttribute(0.5),
             SizedBoxModifierAttribute(height: 10, width: 10),
           ]));
@@ -127,7 +127,7 @@ void main() {
           clipBehavior: Clip.antiAlias,
           width: 100,
           height: 100,
-          modifiers: const ModifiersDataDto([
+          modifiers: const WidgetModifiersDataDto([
             OpacityModifierAttribute(0.5),
             SizedBoxModifierAttribute(height: 10, width: 10),
           ]));
@@ -148,7 +148,7 @@ void main() {
           clipBehavior: Clip.antiAliasWithSaveLayer,
           width: 200,
           height: 200,
-          modifiers: const ModifiersDataDto([
+          modifiers: const WidgetModifiersDataDto([
             SizedBoxModifierAttribute(width: 20),
           ]),
         ),
@@ -179,7 +179,7 @@ void main() {
       expect(mergedBoxSpecAttribute.width, 200);
       expect(
           mergedBoxSpecAttribute.modifiers,
-          const ModifiersDataDto([
+          const WidgetModifiersDataDto([
             OpacityModifierAttribute(0.5),
             SizedBoxModifierAttribute(height: 10, width: 20),
           ]));
@@ -202,7 +202,7 @@ void main() {
           clipBehavior: Clip.antiAlias,
           width: 100,
           height: 100,
-          modifiers: const ModifiersDataDto([
+          modifiers: const WidgetModifiersDataDto([
             OpacityModifierAttribute(0.5),
             SizedBoxModifierAttribute(height: 10, width: 10),
           ]));
@@ -225,7 +225,7 @@ void main() {
             clipBehavior: Clip.antiAlias,
             width: 100,
             height: 100,
-            modifiers: const ModifiersDataDto(
+            modifiers: const WidgetModifiersDataDto(
               [
                 OpacityModifierAttribute(0.5),
                 SizedBoxModifierAttribute(height: 10, width: 10),
@@ -279,7 +279,7 @@ void main() {
               clipBehavior: Clip.antiAliasWithSaveLayer,
               width: 200,
               height: 200,
-              modifiers: const ModifiersDataDto(
+              modifiers: const WidgetModifiersDataDto(
                 [
                   OpacityModifierAttribute(0.4),
                   SizedBoxModifierAttribute(height: 20, width: 10),

@@ -54,6 +54,7 @@ final class TextSpec extends Spec<TextSpec> with _$TextSpec {
     this.softWrap,
     this.directive,
     super.animated,
+    super.modifiers,
   }) : assert(
           textScaler == null || textScaleFactor == null,
           'textScaleFactor is deprecated and cannot be specified when textScaler is specified.',

@@ -40,6 +40,7 @@ base mixin _$StackSpec on Spec<StackSpec> {
     TextDirection? textDirection,
     Clip? clipBehavior,
     AnimatedData? animated,
+    WidgetModifiersData? modifiers,
   }) {
     return StackSpec(
       alignment: alignment ?? _$this.alignment,
@@ -47,6 +48,7 @@ base mixin _$StackSpec on Spec<StackSpec> {
       textDirection: textDirection ?? _$this.textDirection,
       clipBehavior: clipBehavior ?? _$this.clipBehavior,
       animated: animated ?? _$this.animated,
+      modifiers: modifiers ?? _$this.modifiers,
     );
   }
 
@@ -63,7 +65,7 @@ base mixin _$StackSpec on Spec<StackSpec> {
   ///
   /// - [AlignmentGeometry.lerp] for [alignment].
 
-  /// For [fit] and [textDirection] and [clipBehavior] and [animated], the interpolation is performed using a step function.
+  /// For [fit] and [textDirection] and [clipBehavior] and [animated] and [modifiers], the interpolation is performed using a step function.
   /// If [t] is less than 0.5, the value from the current [StackSpec] is used. Otherwise, the value
   /// from the [other] [StackSpec] is used.
   ///
@@ -79,6 +81,7 @@ base mixin _$StackSpec on Spec<StackSpec> {
       textDirection: t < 0.5 ? _$this.textDirection : other.textDirection,
       clipBehavior: t < 0.5 ? _$this.clipBehavior : other.clipBehavior,
       animated: t < 0.5 ? _$this.animated : other.animated,
+      modifiers: t < 0.5 ? _$this.modifiers : other.modifiers,
     );
   }
 
@@ -93,6 +96,7 @@ base mixin _$StackSpec on Spec<StackSpec> {
         _$this.textDirection,
         _$this.clipBehavior,
         _$this.animated,
+        _$this.modifiers,
       ];
 
   StackSpec get _$this => this as StackSpec;
@@ -117,6 +121,7 @@ final class StackSpecAttribute extends SpecAttribute<StackSpec> {
     this.textDirection,
     this.clipBehavior,
     super.animated,
+    super.modifiers,
   });
 
   /// Resolves to [StackSpec] using the provided [MixData].
@@ -135,6 +140,7 @@ final class StackSpecAttribute extends SpecAttribute<StackSpec> {
       textDirection: textDirection,
       clipBehavior: clipBehavior,
       animated: animated?.resolve(mix) ?? mix.animation,
+      modifiers: modifiers?.resolve(mix),
     );
   }
 
@@ -156,6 +162,7 @@ final class StackSpecAttribute extends SpecAttribute<StackSpec> {
       textDirection: other.textDirection ?? textDirection,
       clipBehavior: other.clipBehavior ?? clipBehavior,
       animated: animated?.merge(other.animated) ?? other.animated,
+      modifiers: modifiers?.merge(other.modifiers) ?? other.modifiers,
     );
   }
 
@@ -170,6 +177,7 @@ final class StackSpecAttribute extends SpecAttribute<StackSpec> {
         textDirection,
         clipBehavior,
         animated,
+        modifiers,
       ];
 }
 
@@ -195,6 +203,9 @@ base class StackSpecUtility<T extends Attribute>
   /// Utility for defining [StackSpecAttribute.animated]
   late final animated = AnimatedUtility((v) => only(animated: v));
 
+  /// Utility for defining [StackSpecAttribute.modifiers]
+  late final modifiers = ModifierUtility((v) => only(modifiers: v));
+
   StackSpecUtility(super.builder);
 
   static final self = StackSpecUtility((v) => v);
@@ -207,6 +218,7 @@ base class StackSpecUtility<T extends Attribute>
     TextDirection? textDirection,
     Clip? clipBehavior,
     AnimatedDataDto? animated,
+    WidgetModifiersDataDto? modifiers,
   }) {
     return builder(StackSpecAttribute(
       alignment: alignment,
@@ -214,6 +226,7 @@ base class StackSpecUtility<T extends Attribute>
       textDirection: textDirection,
       clipBehavior: clipBehavior,
       animated: animated,
+      modifiers: modifiers,
     ));
   }
 }

@@ -3,10 +3,6 @@ import 'package:flutter/widgets.dart';
 import 'package:mix/mix.dart';
 import 'package:mix_annotations/mix_annotations.dart';
 
-import '../../attributes/modifiers/modifiers_data.dart';
-import '../../attributes/modifiers/modifiers_data_dto.dart';
-import '../../attributes/modifiers/modifiers_util.dart';
-
 part 'box_spec.g.dart';
 
 const _constraints = MixableUtility(
@@ -104,7 +100,7 @@ final class BoxSpec extends Spec<BoxSpec> with _$BoxSpec {
     super.animated,
   });
 
-  Widget call({Widget? child}) {
+  Widget call({Widget? child, List<Type> orderOfModifiers = const []}) {
     return isAnimated
         ? AnimatedBoxSpecWidget(
             spec: this,
@@ -112,6 +108,10 @@ final class BoxSpec extends Spec<BoxSpec> with _$BoxSpec {
             curve: animated!.curve,
             child: child,
           )
-        : BoxSpecWidget(spec: this, child: child);
+        : BoxSpecWidget(
+            spec: this,
+            orderOfModifiers: orderOfModifiers,
+            child: child,
+          );
   }
 }

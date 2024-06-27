@@ -45,6 +45,7 @@ base mixin _$FlexSpec on Spec<FlexSpec> {
     Clip? clipBehavior,
     double? gap,
     AnimatedData? animated,
+    WidgetModifiersData? modifiers,
   }) {
     return FlexSpec(
       crossAxisAlignment: crossAxisAlignment ?? _$this.crossAxisAlignment,
@@ -57,6 +58,7 @@ base mixin _$FlexSpec on Spec<FlexSpec> {
       clipBehavior: clipBehavior ?? _$this.clipBehavior,
       gap: gap ?? _$this.gap,
       animated: animated ?? _$this.animated,
+      modifiers: modifiers ?? _$this.modifiers,
     );
   }
 
@@ -73,7 +75,7 @@ base mixin _$FlexSpec on Spec<FlexSpec> {
   ///
   /// - [MixHelpers.lerpDouble] for [gap].
 
-  /// For [crossAxisAlignment] and [mainAxisAlignment] and [mainAxisSize] and [verticalDirection] and [direction] and [textDirection] and [textBaseline] and [clipBehavior] and [animated], the interpolation is performed using a step function.
+  /// For [crossAxisAlignment] and [mainAxisAlignment] and [mainAxisSize] and [verticalDirection] and [direction] and [textDirection] and [textBaseline] and [clipBehavior] and [animated] and [modifiers], the interpolation is performed using a step function.
   /// If [t] is less than 0.5, the value from the current [FlexSpec] is used. Otherwise, the value
   /// from the [other] [FlexSpec] is used.
   ///
@@ -97,6 +99,7 @@ base mixin _$FlexSpec on Spec<FlexSpec> {
       clipBehavior: t < 0.5 ? _$this.clipBehavior : other.clipBehavior,
       gap: MixHelpers.lerpDouble(_$this.gap, other.gap, t),
       animated: t < 0.5 ? _$this.animated : other.animated,
+      modifiers: t < 0.5 ? _$this.modifiers : other.modifiers,
     );
   }
 
@@ -116,6 +119,7 @@ base mixin _$FlexSpec on Spec<FlexSpec> {
         _$this.clipBehavior,
         _$this.gap,
         _$this.animated,
+        _$this.modifiers,
       ];
 
   FlexSpec get _$this => this as FlexSpec;
@@ -150,6 +154,7 @@ final class FlexSpecAttribute extends SpecAttribute<FlexSpec> {
     this.clipBehavior,
     this.gap,
     super.animated,
+    super.modifiers,
   });
 
   /// Resolves to [FlexSpec] using the provided [MixData].
@@ -173,6 +178,7 @@ final class FlexSpecAttribute extends SpecAttribute<FlexSpec> {
       clipBehavior: clipBehavior,
       gap: gap?.resolve(mix),
       animated: animated?.resolve(mix) ?? mix.animation,
+      modifiers: modifiers?.resolve(mix),
     );
   }
 
@@ -199,6 +205,7 @@ final class FlexSpecAttribute extends SpecAttribute<FlexSpec> {
       clipBehavior: other.clipBehavior ?? clipBehavior,
       gap: gap?.merge(other.gap) ?? other.gap,
       animated: animated?.merge(other.animated) ?? other.animated,
+      modifiers: modifiers?.merge(other.modifiers) ?? other.modifiers,
     );
   }
 
@@ -218,6 +225,7 @@ final class FlexSpecAttribute extends SpecAttribute<FlexSpec> {
         clipBehavior,
         gap,
         animated,
+        modifiers,
       ];
 }
 
@@ -267,6 +275,9 @@ base class FlexSpecUtility<T extends Attribute>
   /// Utility for defining [FlexSpecAttribute.animated]
   late final animated = AnimatedUtility((v) => only(animated: v));
 
+  /// Utility for defining [FlexSpecAttribute.modifiers]
+  late final modifiers = ModifierUtility((v) => only(modifiers: v));
+
   FlexSpecUtility(super.builder);
 
   static final self = FlexSpecUtility((v) => v);
@@ -284,6 +295,7 @@ base class FlexSpecUtility<T extends Attribute>
     Clip? clipBehavior,
     SpacingSideDto? gap,
     AnimatedDataDto? animated,
+    WidgetModifiersDataDto? modifiers,
   }) {
     return builder(FlexSpecAttribute(
       crossAxisAlignment: crossAxisAlignment,
@@ -296,6 +308,7 @@ base class FlexSpecUtility<T extends Attribute>
       clipBehavior: clipBehavior,
       gap: gap,
       animated: animated,
+      modifiers: modifiers,
     ));
   }
 }

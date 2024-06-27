@@ -1,11 +1,12 @@
 import '../../core/core.dart';
 import '../../modifiers/modifiers.dart';
 import '../spacing/spacing_util.dart';
-import 'modifiers_data_dto.dart';
+import 'widget_modifiers_data_dto.dart';
 
-final class ModifiersDataUtility<T extends Attribute>
-    extends MixUtility<T, ModifiersDataDto> {
-  late final add = WithModifierUtility((v) => builder(ModifiersDataDto([v])));
+final class ModifierUtility<T extends Attribute>
+    extends MixUtility<T, WidgetModifiersDataDto> {
+  late final add =
+      WithModifierUtility((v) => builder(WidgetModifiersDataDto([v])));
 
   late final intrinsicWidth = IntrinsicWidthWidgetUtility(only);
   late final intrinsicHeight = IntrinsicHeightWidgetUtility(only);
@@ -30,9 +31,9 @@ final class ModifiersDataUtility<T extends Attribute>
   late final sizedBox = SizedBoxModifierUtility(only);
   late final padding = SpacingUtility(PaddingModifierUtility(only));
 
-  ModifiersDataUtility(super.builder);
+  ModifierUtility(super.builder);
 
   T only(WidgetModifierAttribute attribute) {
-    return builder(ModifiersDataDto([attribute]));
+    return builder(WidgetModifiersDataDto([attribute]));
   }
 }

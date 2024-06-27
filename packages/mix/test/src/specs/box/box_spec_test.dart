@@ -3,8 +3,8 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
-import 'package:mix/src/attributes/modifiers/modifiers_data.dart';
-import 'package:mix/src/attributes/modifiers/modifiers_data_dto.dart';
+import 'package:mix/src/attributes/modifiers/widget_modifiers_data.dart';
+import 'package:mix/src/attributes/modifiers/widget_modifiers_data_dto.dart';
 
 import '../../../helpers/testing_utils.dart';
 
@@ -23,7 +23,7 @@ void main() {
             decoration: const BoxDecorationDto(color: ColorDto(Colors.blue)),
             transform: Matrix4.translationValues(10.0, 10.0, 0.0),
             clipBehavior: Clip.antiAlias,
-            modifiers: const ModifiersDataDto([
+            modifiers: const WidgetModifiersDataDto([
               OpacityModifierAttribute(1),
               SizedBoxModifierAttribute(height: 10, width: 10),
             ]),
@@ -65,7 +65,7 @@ void main() {
         transformAlignment: Alignment.center,
         width: 300,
         height: 200,
-        modifiers: const ModifiersData([
+        modifiers: const WidgetModifiersData([
           OpacityModifierSpec(0.5),
           SizedBoxModifierSpec(height: 10, width: 10),
         ]),
@@ -74,7 +74,7 @@ void main() {
       final copiedSpec = spec.copyWith(
         width: 250.0,
         height: 150.0,
-        modifiers: const ModifiersData([
+        modifiers: const WidgetModifiersData([
           OpacityModifierSpec(1),
         ]),
       );
@@ -98,7 +98,7 @@ void main() {
 
       expect(
         copiedSpec.modifiers!.value,
-        const ModifiersData(
+        const WidgetModifiersData(
           [OpacityModifierSpec(1)],
         ).value,
       );
@@ -206,7 +206,7 @@ void main() {
         clipBehavior: Clip.none,
         width: 300,
         height: 200,
-        modifiers: const ModifiersData([
+        modifiers: const WidgetModifiersData([
           OpacityModifierSpec(0.5),
           SizedBoxModifierSpec(height: 10, width: 10),
         ]),
@@ -224,7 +224,7 @@ void main() {
         clipBehavior: Clip.none,
         width: 300,
         height: 200,
-        modifiers: const ModifiersData([
+        modifiers: const WidgetModifiersData([
           OpacityModifierSpec(0.5),
           SizedBoxModifierSpec(height: 10, width: 10),
         ]),
@@ -252,7 +252,7 @@ void main() {
         clipBehavior: Clip.antiAlias,
         width: 100,
         height: 100,
-        modifiers: const ModifiersDataDto([
+        modifiers: const WidgetModifiersDataDto([
           OpacityModifierAttribute(0.5),
           SizedBoxModifierAttribute(height: 10, width: 10),
         ]),
@@ -276,7 +276,7 @@ void main() {
           clipBehavior: Clip.antiAliasWithSaveLayer,
           width: 200,
           height: 200,
-          modifiers: const ModifiersDataDto([
+          modifiers: const WidgetModifiersDataDto([
             SizedBoxModifierAttribute(width: 100),
           ]),
         ),

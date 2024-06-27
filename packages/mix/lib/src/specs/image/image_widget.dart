@@ -2,6 +2,7 @@ import 'package:flutter/widgets.dart';
 
 import '../../core/styled_widget.dart';
 import '../../internal/constants.dart';
+import '../../modifiers/render_widget_modifier.dart';
 import 'image_spec.dart';
 
 class StyledImage extends StyledWidget {
@@ -74,7 +75,7 @@ class StyledImage extends StyledWidget {
 class ImageSpecWidget extends StatelessWidget {
   const ImageSpecWidget({
     super.key,
-    this.modifierOrder = const [],
+    this.orderOfModifiers = const [],
     this.spec,
     required this.image,
     this.frameBuilder,
@@ -95,7 +96,7 @@ class ImageSpecWidget extends StatelessWidget {
   final ImageErrorWidgetBuilder? errorBuilder;
   final String? semanticLabel;
   final bool excludeFromSemantics;
-  final List<Type> modifierOrder;
+  final List<Type> orderOfModifiers;
   final bool gaplessPlayback;
   final bool isAntiAlias;
   final bool matchTextDirection;
@@ -103,26 +104,30 @@ class ImageSpecWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Image(
-      image: image,
-      frameBuilder: frameBuilder,
-      loadingBuilder: loadingBuilder,
-      errorBuilder: errorBuilder,
-      semanticLabel: semanticLabel,
-      excludeFromSemantics: excludeFromSemantics,
-      width: spec?.width,
-      height: spec?.height,
-      color: spec?.color,
-      opacity: opacity,
-      colorBlendMode: spec?.colorBlendMode ?? BlendMode.clear,
-      fit: spec?.fit,
-      alignment: spec?.alignment ?? Alignment.center,
-      repeat: spec?.repeat ?? ImageRepeat.noRepeat,
-      centerSlice: spec?.centerSlice,
-      matchTextDirection: matchTextDirection,
-      gaplessPlayback: gaplessPlayback,
-      isAntiAlias: isAntiAlias,
-      filterQuality: spec?.filterQuality ?? FilterQuality.low,
+    return RenderInlineModifiers(
+      orderOfModifiers: orderOfModifiers,
+      spec: spec ?? const ImageSpec(),
+      child: Image(
+        image: image,
+        frameBuilder: frameBuilder,
+        loadingBuilder: loadingBuilder,
+        errorBuilder: errorBuilder,
+        semanticLabel: semanticLabel,
+        excludeFromSemantics: excludeFromSemantics,
+        width: spec?.width,
+        height: spec?.height,
+        color: spec?.color,
+        opacity: opacity,
+        colorBlendMode: spec?.colorBlendMode ?? BlendMode.clear,
+        fit: spec?.fit,
+        alignment: spec?.alignment ?? Alignment.center,
+        repeat: spec?.repeat ?? ImageRepeat.noRepeat,
+        centerSlice: spec?.centerSlice,
+        matchTextDirection: matchTextDirection,
+        gaplessPlayback: gaplessPlayback,
+        isAntiAlias: isAntiAlias,
+        filterQuality: spec?.filterQuality ?? FilterQuality.low,
+      ),
     );
   }
 }
