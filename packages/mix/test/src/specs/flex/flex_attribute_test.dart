@@ -30,7 +30,7 @@ void main() {
         textDirection: TextDirection.rtl,
         textBaseline: TextBaseline.alphabetic,
         clipBehavior: Clip.antiAlias,
-        gap: 10.0,
+        gap: SpacingSideDto(10.0),
       );
       final mixData = MixData.create(MockBuildContext(), Style(attribute));
       final resolvedSpec = attribute.resolve(mixData);
@@ -46,6 +46,45 @@ void main() {
       expect(resolvedSpec.gap, 10.0);
     });
 
+    testWidgets('tokens resolve returns correct FlexSpec', (tester) async {
+      const tokenValue = 8.0;
+
+      final theme = MixThemeData(
+        spaces: {
+          $token.space.small: tokenValue,
+        },
+      );
+
+      late MixData mixData;
+
+      await tester.pumpWidget(
+        MixTheme(
+          data: theme,
+          child: MaterialApp(
+            home: Scaffold(
+              body: Builder(
+                builder: (BuildContext context) {
+                  mixData = MixData.create(
+                    context,
+                    Style(
+                      $flex.gap.ref($token.space.small),
+                    ),
+                  );
+
+                  return Container();
+                },
+              ),
+            ),
+          ),
+        ),
+      );
+
+      final attribute = mixData.whereType<FlexSpecAttribute>().first;
+      final resolvedSpec = attribute.resolve(mixData);
+
+      expect(resolvedSpec.gap, tokenValue);
+    });
+
     test('merge returns correct FlexMixAttribute', () {
       const attribute1 = FlexSpecAttribute(
         direction: Axis.horizontal,
@@ -56,7 +95,7 @@ void main() {
         textDirection: TextDirection.rtl,
         textBaseline: TextBaseline.alphabetic,
         clipBehavior: Clip.antiAlias,
-        gap: 10.0,
+        gap: SpacingSideDto(10.0),
       );
       const attribute2 = FlexSpecAttribute(
         direction: Axis.vertical,
@@ -67,7 +106,7 @@ void main() {
         textDirection: TextDirection.ltr,
         textBaseline: TextBaseline.ideographic,
         clipBehavior: Clip.hardEdge,
-        gap: 20.0,
+        gap: SpacingSideDto(20.0),
       );
       final mergedAttribute = attribute1.merge(attribute2);
 
@@ -79,7 +118,7 @@ void main() {
       expect(mergedAttribute.textDirection, TextDirection.ltr);
       expect(mergedAttribute.textBaseline, TextBaseline.ideographic);
       expect(mergedAttribute.clipBehavior, Clip.hardEdge);
-      expect(mergedAttribute.gap, 20.0);
+      expect(mergedAttribute.gap, const SpacingSideDto(20.0));
     });
   });
 }

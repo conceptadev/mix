@@ -21,7 +21,7 @@ void main() {
             textDirection: TextDirection.ltr,
             textBaseline: TextBaseline.alphabetic,
             clipBehavior: Clip.antiAlias,
-            gap: 10,
+            gap: SpacingSideDto(10),
           ),
         ),
       );

@@ -135,7 +135,7 @@ final class FlexSpecAttribute extends SpecAttribute<FlexSpec> {
   final TextDirection? textDirection;
   final TextBaseline? textBaseline;
   final Clip? clipBehavior;
-  final double? gap;
+  final SpacingSideDto? gap;
 
   const FlexSpecAttribute({
     this.crossAxisAlignment,
@@ -169,7 +169,7 @@ final class FlexSpecAttribute extends SpecAttribute<FlexSpec> {
       textDirection: textDirection,
       textBaseline: textBaseline,
       clipBehavior: clipBehavior,
-      gap: gap,
+      gap: gap?.resolve(mix),
       animated: animated?.resolve(mix) ?? mix.animation,
     );
   }
@@ -195,7 +195,7 @@ final class FlexSpecAttribute extends SpecAttribute<FlexSpec> {
       textDirection: other.textDirection ?? textDirection,
       textBaseline: other.textBaseline ?? textBaseline,
       clipBehavior: other.clipBehavior ?? clipBehavior,
-      gap: other.gap ?? gap,
+      gap: gap?.merge(other.gap) ?? other.gap,
       animated: animated?.merge(other.animated) ?? other.animated,
     );
   }
@@ -260,7 +260,7 @@ base class FlexSpecUtility<T extends Attribute>
   late final clipBehavior = ClipUtility((v) => only(clipBehavior: v));
 
   /// Utility for defining [FlexSpecAttribute.gap]
-  late final gap = SpacingSideUtility((v) => only(gap: v));
+  late final gap = GapUtility((v) => only(gap: v));
 
   /// Utility for defining [FlexSpecAttribute.animated]
   late final animated = AnimatedUtility((v) => only(animated: v));
@@ -280,7 +280,7 @@ base class FlexSpecUtility<T extends Attribute>
     TextDirection? textDirection,
     TextBaseline? textBaseline,
     Clip? clipBehavior,
-    double? gap,
+    SpacingSideDto? gap,
     AnimatedDataDto? animated,
   }) {
     return builder(FlexSpecAttribute(

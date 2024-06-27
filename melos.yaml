@@ -24,7 +24,7 @@ scripts:
   brb:
     description: Run build_runner for projects that have it as a dependency
     steps:
-      - melos run build_runner_clean
+      - melos run brbc
       - melos exec --depends-on="build_runner" --category="mix_deps" dart run build_runner build --delete-conflicting-outputs
   brbc: 
     run: melos exec --depends-on="build_runner" dart run build_runner clean
