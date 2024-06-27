@@ -5,9 +5,6 @@ import 'widget_modifiers_data_dto.dart';
 
 final class ModifierUtility<T extends Attribute>
     extends MixUtility<T, WidgetModifiersDataDto> {
-  late final add =
-      WithModifierUtility((v) => builder(WidgetModifiersDataDto([v])));
-
   late final intrinsicWidth = IntrinsicWidthWidgetUtility(only);
   late final intrinsicHeight = IntrinsicHeightWidgetUtility(only);
   late final rotate = RotatedBoxWidgetUtility(only);
