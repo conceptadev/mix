@@ -33,10 +33,10 @@ class TodoButton extends StatelessWidget {
           $text.style.ref($token.textStyle.heading3),
           $text.style.bold(),
           $with.scale(1),
+          $with.align(alignment: Alignment.center),
           $on.press(
             $with.scale(1.1),
           ),
-          $with.align(alignment: Alignment.center),
         ),
       ),
     );

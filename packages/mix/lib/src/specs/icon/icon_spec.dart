@@ -36,16 +36,22 @@ final class IconSpec extends Spec<IconSpec> with _$IconSpec {
     super.animated,
   });
 
-  Widget call([IconData? icon]) {
+  Widget call(IconData? icon, {String? semanticLabel}) {
     return isAnimated
         ? AnimatedIconSpecWidget(
             icon,
             spec: this,
+            semanticLabel: semanticLabel,
             textDirection: textDirection,
             curve: animated!.curve,
             duration: animated!.duration,
           )
-        : IconSpecWidget(icon, spec: this, textDirection: textDirection);
+        : IconSpecWidget(
+            icon,
+            spec: this,
+            semanticLabel: semanticLabel,
+            textDirection: textDirection,
+          );
   }
 }
 

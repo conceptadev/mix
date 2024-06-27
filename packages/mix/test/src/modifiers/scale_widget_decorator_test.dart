@@ -14,7 +14,7 @@ void main() {
         MockMixData(
           Style(modifier),
         ),
-      );
+      ) as TransformModifierSpec;
 
       expect(spec.transform, Matrix4.diagonal3Values(scale, scale, 1));
     });
