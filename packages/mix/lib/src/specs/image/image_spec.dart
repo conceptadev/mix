@@ -36,15 +36,15 @@ final class ImageSpec extends Spec<ImageSpec> with _$ImageSpec {
 
   Widget call({
     required ImageProvider<Object> image,
-    required ImageFrameBuilder? frameBuilder,
-    required ImageLoadingBuilder? loadingBuilder,
-    required ImageErrorWidgetBuilder? errorBuilder,
-    required String? semanticLabel,
-    required bool excludeFromSemantics,
-    required bool gaplessPlayback,
-    required bool isAntiAlias,
-    required bool matchTextDirection,
-    required Animation<double>? opacity,
+    ImageFrameBuilder? frameBuilder,
+    ImageLoadingBuilder? loadingBuilder,
+    ImageErrorWidgetBuilder? errorBuilder,
+    String? semanticLabel,
+    bool excludeFromSemantics = false,
+    bool gaplessPlayback = false,
+    bool isAntiAlias = false,
+    bool matchTextDirection = false,
+    Animation<double>? opacity,
   }) {
     return isAnimated
         ? AnimatedImageSpecWidget(
