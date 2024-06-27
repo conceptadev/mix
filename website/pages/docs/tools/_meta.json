@@ -1,4 +1,4 @@
 {
-  "lint": "lint",
-  "generator": "generator"
+  "lint": "mix_lint",
+  "generator": "mix_generator"
 }
