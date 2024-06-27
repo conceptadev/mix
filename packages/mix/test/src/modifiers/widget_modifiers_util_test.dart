@@ -19,7 +19,7 @@ void main() {
     const clipOval = ClipOvalUtility(UtilityTestAttribute.new);
     const clipRect = ClipRectUtility(UtilityTestAttribute.new);
     const clipTriangle = ClipTriangleUtility(UtilityTestAttribute.new);
-    const sizedBox = SizedBoxModifierUtility(UtilityTestAttribute.new);
+    final sizedBox = SizedBoxModifierUtility(UtilityTestAttribute.new);
     const fractionallySizedBox =
         FractionallySizedBoxModifierUtility(UtilityTestAttribute.new);
     const intrinsicHeight =

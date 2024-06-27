@@ -157,11 +157,46 @@ void main() {
     test('Call method returns correct SizedBoxModifierAttribute', () {
       const width = 100.0;
       const height = 100.0;
-      const utility = SizedBoxModifierUtility(MixUtility.selfBuilder);
+      final utility = SizedBoxModifierUtility(MixUtility.selfBuilder);
       final result = utility(width: width, height: height);
 
       expect(result.width, width);
       expect(result.height, height);
+    });
+    
+    test('sizedBox.width returns correct SizedBoxModifierAttribute', () {
+      const width = 100.0;
+      final utility = SizedBoxModifierUtility(MixUtility.selfBuilder);
+      final result = utility.width(width);
+
+      expect(result.width, width);
+      expect(result.height, null);
+    });
+    
+    test('sizedBox.height returns correct SizedBoxModifierAttribute', () {
+      const height = 100.0;
+      final utility = SizedBoxModifierUtility(MixUtility.selfBuilder);
+      final result = utility.height(height);
+
+      expect(result.width, null);
+      expect(result.height, height);
+    });
+    
+    test('sizedBox.square returns correct SizedBoxModifierAttribute', () {
+      const size = 100.0;
+      final utility = SizedBoxModifierUtility(MixUtility.selfBuilder);
+      final result = utility.square(size);
+
+      expect(result.width, size);
+      expect(result.height, size);
+    });
+    
+    test('as method returns correct SizedBoxModifierAttribute', () {
+      final utility = SizedBoxModifierUtility(MixUtility.selfBuilder);
+      final result = utility.as(const Size(110.0, 100.0));
+
+      expect(result.width, 110.0);
+      expect(result.height, 100.0);
     });
   });
 }
