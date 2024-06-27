@@ -7,6 +7,7 @@ on:
 
 jobs:
   test:
+    environment: Production
     runs-on: ubuntu-latest
     steps:
       - name: Checkout mix repo
@@ -23,7 +24,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-
       - name: 'Publish Package'
         uses: k-paxian/dart-package-publisher@master
         with:
