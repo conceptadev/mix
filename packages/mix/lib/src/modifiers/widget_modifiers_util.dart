@@ -1,4 +1,6 @@
 import '../attributes/spacing/spacing_util.dart';
+import '../core/attribute.dart';
+import '../core/modifier.dart';
 import '../core/utility.dart';
 import 'align_widget_modifier.dart';
 import 'aspect_ratio_widget_modifier.dart';
@@ -13,35 +15,33 @@ import 'sized_box_widget_modifier.dart';
 import 'transform_widget_modifier.dart';
 import 'visibility_widget_modifier.dart';
 
-class WithModifierUtility {
-  late final intrinsicWidth =
-      const IntrinsicWidthWidgetUtility(MixUtility.selfBuilder);
-  late final intrinsicHeight =
-      const IntrinsicHeightWidgetUtility(MixUtility.selfBuilder);
-  late final rotate = const RotatedBoxWidgetUtility(MixUtility.selfBuilder);
-  late final opacity = const OpacityUtility(MixUtility.selfBuilder);
-  late final clipPath = const ClipPathUtility(MixUtility.selfBuilder);
-  late final clipRRect = const ClipRRectUtility(MixUtility.selfBuilder);
-  late final clipOval = const ClipOvalUtility(MixUtility.selfBuilder);
-  late final clipRect = const ClipRectUtility(MixUtility.selfBuilder);
-  late final clipTriangle = const ClipTriangleUtility(MixUtility.selfBuilder);
-  late final visibility = const VisibilityUtility(MixUtility.selfBuilder);
+class WithModifierUtility<T extends Attribute>
+    extends MixUtility<T, WidgetModifierAttribute> {
+  late final intrinsicWidth = IntrinsicWidthWidgetUtility(builder);
+  late final intrinsicHeight = IntrinsicHeightWidgetUtility(builder);
+  late final rotate = RotatedBoxWidgetUtility(builder);
+  late final opacity = OpacityUtility(builder);
+  late final clipPath = ClipPathUtility(builder);
+  late final clipRRect = ClipRRectUtility(builder);
+  late final clipOval = ClipOvalUtility(builder);
+  late final clipRect = ClipRectUtility(builder);
+  late final clipTriangle = ClipTriangleUtility(builder);
+  late final visibility = VisibilityUtility(builder);
   late final show = visibility.on;
   late final hide = visibility.off;
-  late final aspectRatio = const AspectRatioUtility(MixUtility.selfBuilder);
-  late final flexible = _flexible;
+  late final aspectRatio = AspectRatioUtility(builder);
+  late final flexible = FlexibleModifierUtility(builder);
   late final expanded = flexible.expanded;
-  late final transform = const TransformUtility(MixUtility.selfBuilder);
+  late final transform = TransformUtility(builder);
 
   late final scale = transform.scale;
-  late final align = const AlignWidgetUtility(MixUtility.selfBuilder);
+  late final align = AlignWidgetUtility(builder);
   late final fractionallySizedBox =
-      const FractionallySizedBoxModifierUtility(MixUtility.selfBuilder);
-  late final sizedBox = const SizedBoxModifierUtility(MixUtility.selfBuilder);
-  late final padding = SpacingUtility(PaddingModifierAttribute.new);
+      FractionallySizedBoxModifierUtility(builder);
+  late final sizedBox = SizedBoxModifierUtility(builder);
+  late final padding = SpacingUtility(PaddingModifierUtility(builder).call);
 
-  static final self = WithModifierUtility._();
-  late final _flexible = const FlexibleModifierUtility(MixUtility.selfBuilder);
+  static final self = WithModifierUtility(MixUtility.selfBuilder);
 
-  WithModifierUtility._();
+  WithModifierUtility(super.builder);
 }

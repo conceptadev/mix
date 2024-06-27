@@ -16,6 +16,7 @@ class StyledIcon extends StyledWidget {
 
   final IconData? icon;
   final String? semanticLabel;
+  // TODO: Should textDirection be a contructor argument or a style attribute?
   final TextDirection? textDirection;
 
   @override

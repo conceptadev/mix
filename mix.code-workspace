@@ -1,0 +1,24 @@
+{
+  "folders": [
+		{
+			"name": "mix",
+			"path": "packages/mix"
+		},
+		{
+			"name": "mix_generator",
+			"path": "packages/mix_generator"
+		},
+		{
+			"name": "mix_annotations",
+			"path": "packages/mix_annotations"
+		},
+		{
+			"name": "remix",
+			"path": "packages/remix"
+		}
+	],
+	"settings": {},
+	"extensions": {
+		"recommendations": []
+	}
+}

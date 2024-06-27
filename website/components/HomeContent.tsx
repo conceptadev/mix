@@ -22,7 +22,7 @@ const HomeContent = () => {
           </p>
 
           <div className="not-prose mb-16 mt-6 flex gap-3">
-            <Button href="/docs/overview/getting-started" arrow="right">
+            <Button href="/docs/overview" arrow="right">
               <>Getting Started</>
             </Button>
             <Button href="/docs/overview" variant="outline">
