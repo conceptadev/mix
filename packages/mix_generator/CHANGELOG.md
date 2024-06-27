@@ -1,4 +1,12 @@
 
+## 0.2.0
+
+- Fixed: issue with getting correct type override from MixableDto
+- Improved: Dto resolved type look up logic
+- Added: generation List of value extension of a Dto
+- Added: Class and Enum utility generation
+
+
 ## 0.1.2
 
 - Fixed: Resolved conflict on generators when not configured on build.yaml
