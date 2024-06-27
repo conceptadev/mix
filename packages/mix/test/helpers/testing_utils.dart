@@ -137,7 +137,7 @@ extension WidgetTesterExt on WidgetTester {
   }) async {
     await pumpWidget(
       MaterialApp(
-        home: PressableState(
+        home: WidgetStateModel(
           enabled: !disabled,
           focused: focus,
           pressed: pressed,
