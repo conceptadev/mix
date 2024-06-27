@@ -39,7 +39,7 @@ class WithModifierUtility<T extends Attribute>
   late final fractionallySizedBox =
       FractionallySizedBoxModifierUtility(builder);
   late final sizedBox = SizedBoxModifierUtility(builder);
-  late final padding = SpacingUtility(PaddingModifierUtility(builder));
+  late final padding = SpacingUtility(PaddingModifierUtility(builder).call);
 
   static final self = WithModifierUtility(MixUtility.selfBuilder);
 

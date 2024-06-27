@@ -52,7 +52,7 @@ final class TextSpec extends Spec<TextSpec> with _$TextSpec {
     super.animated,
   });
 
-  Widget call(String text, {String semanticLabel = '', Locale? locale}) {
+  Widget call(String text, {String? semanticLabel, Locale? locale}) {
     return isAnimated
         ? AnimatedTextSpecWidget(
             text,
