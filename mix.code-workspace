@@ -1,6 +1,10 @@
 {
   "folders": [
 	{
+	  	"name":"root",	
+	  	"path": "."
+	},
+	{
 		"name": "mix",
 		"path": "packages/mix"
 	},
