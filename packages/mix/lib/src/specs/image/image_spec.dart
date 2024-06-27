@@ -34,14 +34,46 @@ final class ImageSpec extends Spec<ImageSpec> with _$ImageSpec {
     super.animated,
   });
 
-  Widget call({required ImageProvider<Object> image}) {
+  Widget call({
+    required ImageProvider<Object> image,
+    ImageFrameBuilder? frameBuilder,
+    ImageLoadingBuilder? loadingBuilder,
+    ImageErrorWidgetBuilder? errorBuilder,
+    String? semanticLabel,
+    bool excludeFromSemantics = false,
+    bool gaplessPlayback = false,
+    bool isAntiAlias = false,
+    bool matchTextDirection = false,
+    Animation<double>? opacity,
+  }) {
     return isAnimated
         ? AnimatedImageSpecWidget(
             spec: this,
             image: image,
+            frameBuilder: frameBuilder,
+            loadingBuilder: loadingBuilder,
+            errorBuilder: errorBuilder,
+            semanticLabel: semanticLabel,
+            excludeFromSemantics: excludeFromSemantics,
             duration: animated!.duration,
             curve: animated!.curve,
+            gaplessPlayback: gaplessPlayback,
+            isAntiAlias: isAntiAlias,
+            matchTextDirection: matchTextDirection,
+            opacity: opacity,
           )
-        : ImageSpecWidget(spec: this, image: image);
+        : ImageSpecWidget(
+            spec: this,
+            image: image,
+            frameBuilder: frameBuilder,
+            loadingBuilder: loadingBuilder,
+            errorBuilder: errorBuilder,
+            semanticLabel: semanticLabel,
+            excludeFromSemantics: excludeFromSemantics,
+            gaplessPlayback: gaplessPlayback,
+            isAntiAlias: isAntiAlias,
+            opacity: opacity,
+            matchTextDirection: matchTextDirection,
+          );
   }
 }
