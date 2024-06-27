@@ -57,18 +57,20 @@ runs:
         github_token: ${{ inputs.token }}
         folders: packages/*/lib
 
-    - name: Run DCM
-      if: ${{ inputs.run-dcm }}
-      uses: CQLabs/dcm-action@v1
-      with:
-        github_token: ${{ inputs.token }}
-        ci_key: oss
-        email: oss
-        folders: .
-        pull_request_comment: false
-        fatal_style: true
-        fatal_performance: true
-        fatal_warnings: true
+    # - name: Run DCM
+    #   if: ${{ inputs.run-dcm }}
+    #   uses: CQLabs/dcm-action@v1
+    #   with:
+    #     github_token: ${{ inputs.token }}
+    #     ci_key: oss
+    #     email: oss
+    #     folders: .
+    #     fatal_style: true
+    #     fatal_performance: true
+    #     fatal_warnings: true
+    - name: analyze
+      run: melos run analyze
+      shell: bash
       
     - name: Run Test
       run: melos run test

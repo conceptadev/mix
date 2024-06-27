@@ -22,10 +22,6 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 
-permissions:
-  contents: read
-  pull-requests: write
-
 jobs:
   test:
     name: Test
@@ -33,7 +29,6 @@ jobs:
     steps:
       - name: Checkout mix repo
         uses: actions/checkout@v2
-
       - name: Run Tests
         uses: ./.github/actions/test/
         with:
