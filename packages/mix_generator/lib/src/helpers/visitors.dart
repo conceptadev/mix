@@ -4,7 +4,7 @@ import 'package:analyzer/dart/element/visitor.dart';
 import 'package:mix_generator/src/helpers/builder_utils.dart';
 import 'package:mix_generator/src/helpers/field_info.dart';
 
-class ClassVisitor extends SimpleElementVisitor<void> {
+class CustomVisitor extends SimpleElementVisitor<void> {
   final Map<String, FieldInfo> fields = {};
   final Map<String, ParameterInfo> parameters = {};
   final Map<String, List<bool>> hasInternalAnnotations = {};
@@ -25,10 +25,15 @@ class ClassVisitor extends SimpleElementVisitor<void> {
   }
 
   void visitConstructorElement(ConstructorElement element) {
-    if (element.name != '_' && !element.isDefaultConstructor) {
-      return;
-    }
+    final notDefaultConstructor =
+        element.name != '_' && !element.isDefaultConstructor;
 
+    if (!notDefaultConstructor) {
+      return _visitDefaultConstructor(element);
+    }
+  }
+
+  void _visitDefaultConstructor(ConstructorElement element) {
     if (constructorSelected) return;
 
     constructorSelected = true;

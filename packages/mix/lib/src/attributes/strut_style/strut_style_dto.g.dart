@@ -86,7 +86,7 @@ final class StrutStyleUtility<T extends Attribute>
 
   /// Utility for defining [StrutStyleDto.fontFamilyFallback]
   late final fontFamilyFallback =
-      StringListUtility((v) => only(fontFamilyFallback: v));
+      ListUtility<T, String>((v) => only(fontFamilyFallback: v));
 
   /// Utility for defining [StrutStyleDto.fontSize]
   late final fontSize = FontSizeUtility((v) => only(fontSize: v));
@@ -167,5 +167,11 @@ extension StrutStyleMixExt on StrutStyle {
       leading: leading,
       forceStrutHeight: forceStrutHeight,
     );
+  }
+}
+
+extension ListStrutStyleMixExt on List<StrutStyle> {
+  List<StrutStyleDto> toDto() {
+    return map((e) => e.toDto()).toList();
   }
 }

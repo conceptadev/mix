@@ -121,3 +121,9 @@ extension BoxConstraintsMixExt on BoxConstraints {
     );
   }
 }
+
+extension ListBoxConstraintsMixExt on List<BoxConstraints> {
+  List<BoxConstraintsDto> toDto() {
+    return map((e) => e.toDto()).toList();
+  }
+}

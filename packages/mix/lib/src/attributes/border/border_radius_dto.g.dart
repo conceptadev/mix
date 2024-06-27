@@ -53,6 +53,12 @@ extension BorderRadiusMixExt on BorderRadius {
   }
 }
 
+extension ListBorderRadiusMixExt on List<BorderRadius> {
+  List<BorderRadiusDto> toDto() {
+    return map((e) => e.toDto()).toList();
+  }
+}
+
 base mixin _$BorderRadiusDirectionalDto on Dto<BorderRadiusDirectional> {
   /// Merges the properties of this [BorderRadiusDirectionalDto] with the properties of [other].
   ///
@@ -97,5 +103,11 @@ extension BorderRadiusDirectionalMixExt on BorderRadiusDirectional {
       bottomStart: bottomStart,
       bottomEnd: bottomEnd,
     );
+  }
+}
+
+extension ListBorderRadiusDirectionalMixExt on List<BorderRadiusDirectional> {
+  List<BorderRadiusDirectionalDto> toDto() {
+    return map((e) => e.toDto()).toList();
   }
 }

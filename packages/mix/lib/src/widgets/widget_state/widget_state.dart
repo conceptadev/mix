@@ -1,10 +1,11 @@
 // ignore_for_file: avoid-inferrable-type-arguments
 
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 import '../../internal/compare_mixin.dart';
 
-enum PressableStateAspect {
+enum WidgetStateAspect {
   currentState,
   enabled,
   hovered,
@@ -14,15 +15,15 @@ enum PressableStateAspect {
   pointerPosition
 }
 
-enum PressableCurrentState {
+enum MixWidgetState {
   idle,
   hovered,
   pressed,
   longPressed,
 }
 
-class PressableState extends InheritedModel<PressableStateAspect> {
-  const PressableState({
+final class WidgetStateModel extends InheritedModel<WidgetStateAspect> {
+  const WidgetStateModel({
     super.key,
     required super.child,
     required this.enabled,
@@ -33,8 +34,8 @@ class PressableState extends InheritedModel<PressableStateAspect> {
     required this.pointerPosition,
   });
 
-  factory PressableState.none({Key? key, required Widget child}) {
-    return PressableState(
+  factory WidgetStateModel.none({Key? key, required Widget child}) {
+    return WidgetStateModel(
       key: key,
       enabled: false,
       hovered: false,
@@ -46,32 +47,35 @@ class PressableState extends InheritedModel<PressableStateAspect> {
     );
   }
 
-  static PressableState of(
+  static WidgetStateModel of(
     BuildContext context, [
-    PressableStateAspect? aspect,
+    WidgetStateAspect? aspect,
   ]) {
-    final PressableState? result = maybeOf(context, aspect);
+    final WidgetStateModel? result = maybeOf(context, aspect);
     assert(result != null, 'Unable to find an instance of PressableState...');
 
     return result!;
   }
 
-  static PressableState? maybeOf(
+  static WidgetStateModel? maybeOf(
     BuildContext context, [
-    PressableStateAspect? aspect,
+    WidgetStateAspect? aspect,
   ]) {
-    return InheritedModel.inheritFrom<PressableState>(context, aspect: aspect);
+    return InheritedModel.inheritFrom<WidgetStateModel>(
+      context,
+      aspect: aspect,
+    );
   }
 
-  static PressableState aspectOf(
+  static WidgetStateModel aspectOf(
     BuildContext context,
-    PressableStateAspect aspect,
+    WidgetStateAspect aspect,
   ) {
     return of(context, aspect);
   }
 
   static bool enabledOf(BuildContext context) {
-    return of(context, PressableStateAspect.enabled).enabled;
+    return of(context, WidgetStateAspect.enabled).enabled;
   }
 
   static bool disabledOf(BuildContext context) {
@@ -79,27 +83,27 @@ class PressableState extends InheritedModel<PressableStateAspect> {
   }
 
   static bool hoverOf(BuildContext context) {
-    return of(context, PressableStateAspect.hovered).hovered;
+    return of(context, WidgetStateAspect.hovered).hovered;
   }
 
   static bool focusOf(BuildContext context) {
-    return of(context, PressableStateAspect.focused).focused;
+    return of(context, WidgetStateAspect.focused).focused;
   }
 
   static bool pressOf(BuildContext context) {
-    return of(context, PressableStateAspect.pressed).pressed;
+    return of(context, WidgetStateAspect.pressed).pressed;
   }
 
   static bool longPressOf(BuildContext context) {
-    return of(context, PressableStateAspect.longPressed).longPressed;
+    return of(context, WidgetStateAspect.longPressed).longPressed;
   }
 
   static PointerPosition? pointerPositionOf(BuildContext context) {
-    return of(context, PressableStateAspect.pointerPosition).pointerPosition;
+    return of(context, WidgetStateAspect.pointerPosition).pointerPosition;
   }
 
-  static PressableCurrentState stateOf(BuildContext context) {
-    return of(context, PressableStateAspect.currentState).currentState;
+  static MixWidgetState stateOf(BuildContext context) {
+    return of(context, WidgetStateAspect.currentState).currentState;
   }
 
   final bool enabled;
@@ -110,24 +114,24 @@ class PressableState extends InheritedModel<PressableStateAspect> {
 
   final PointerPosition? pointerPosition;
 
-  PressableCurrentState get currentState {
+  MixWidgetState get currentState {
     if (enabled) {
       // Long pressed has priority over pressed
       // Due to delay of removing the _press state
-      if (longPressed) return PressableCurrentState.longPressed;
+      if (longPressed) return MixWidgetState.longPressed;
 
-      if (pressed) return PressableCurrentState.pressed;
+      if (pressed) return MixWidgetState.pressed;
     }
 
-    if (hovered) return PressableCurrentState.hovered;
+    if (hovered) return MixWidgetState.hovered;
 
-    return PressableCurrentState.idle;
+    return MixWidgetState.idle;
   }
 
   bool get disabled => !enabled;
 
   @override
-  bool updateShouldNotify(PressableState oldWidget) {
+  bool updateShouldNotify(WidgetStateModel oldWidget) {
     return oldWidget.enabled != enabled ||
         oldWidget.hovered != hovered ||
         oldWidget.focused != focused ||
@@ -138,22 +142,22 @@ class PressableState extends InheritedModel<PressableStateAspect> {
 
   @override
   bool updateShouldNotifyDependent(
-    PressableState oldWidget,
-    Set<PressableStateAspect> dependencies,
+    WidgetStateModel oldWidget,
+    Set<WidgetStateAspect> dependencies,
   ) {
-    return dependencies.contains(PressableStateAspect.enabled) &&
+    return dependencies.contains(WidgetStateAspect.enabled) &&
             oldWidget.enabled != enabled ||
-        dependencies.contains(PressableStateAspect.hovered) &&
+        dependencies.contains(WidgetStateAspect.hovered) &&
             oldWidget.hovered != hovered ||
-        dependencies.contains(PressableStateAspect.focused) &&
+        dependencies.contains(WidgetStateAspect.focused) &&
             oldWidget.focused != focused ||
-        dependencies.contains(PressableStateAspect.pressed) &&
+        dependencies.contains(WidgetStateAspect.pressed) &&
             oldWidget.pressed != pressed ||
-        dependencies.contains(PressableStateAspect.longPressed) &&
+        dependencies.contains(WidgetStateAspect.longPressed) &&
             oldWidget.longPressed != longPressed ||
-        dependencies.contains(PressableStateAspect.pointerPosition) &&
+        dependencies.contains(WidgetStateAspect.pointerPosition) &&
             oldWidget.pointerPosition != pointerPosition ||
-        dependencies.contains(PressableStateAspect.currentState) &&
+        dependencies.contains(WidgetStateAspect.currentState) &&
             oldWidget.currentState != currentState;
   }
 }

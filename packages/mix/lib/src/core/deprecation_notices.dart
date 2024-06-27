@@ -1,7 +1,9 @@
 // ignore_for_file: camel_case_types
 
-import '../attributes/scalars/scalar_util.dart';
+import '../attributes/enum/enum_util.dart';
 import '../specs/image/image_spec.dart';
+import '../variants/context_variant.dart';
+import '../widgets/widgets.dart';
 import 'attribute.dart';
 
 class InternalMixDeprecatedAnnotation extends Deprecated {
@@ -25,7 +27,7 @@ class InternalRenameDeprecatedAnnotation
 
 typedef RenamedDeprecated = InternalRenameDeprecatedAnnotation;
 
-extension ImageSpecUtilityDeprecationUtilityX<T extends Attribute>
+extension ImageSpecUtilityDeprecationX<T extends Attribute>
     on ImageSpecUtility<T> {
   @RenamedDeprecated(
     message:
@@ -35,3 +37,28 @@ extension ImageSpecUtilityDeprecationUtilityX<T extends Attribute>
   )
   BlendModeUtility<T> get blendMode => colorBlendMode;
 }
+
+@RenamedDeprecated(
+  message: 'Use `WidgetStateVariant` instead.',
+  version: '2.0.0',
+  updatedName: 'WidgetStateVariant',
+)
+typedef WidgetContextVariant = WidgetStateVariant;
+@RenamedDeprecated(
+  message: 'Use `WidgetStateModel` instead.',
+  version: '2.0.0',
+  updatedName: 'WidgetStateModel',
+)
+typedef PressableState = WidgetStateModel;
+@RenamedDeprecated(
+  message: 'Use `WidgetStateAspect` instead.',
+  version: '2.0.0',
+  updatedName: 'WidgetStateAspect',
+)
+typedef PressableStateAspect = WidgetStateAspect;
+@RenamedDeprecated(
+  message: 'Use `MixWidgetState` instead.',
+  version: '2.0.0',
+  updatedName: 'MixWidgetState',
+)
+typedef PressableCurrentState = MixWidgetState;

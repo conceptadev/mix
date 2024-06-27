@@ -1,5 +1,5 @@
-import '../attributes/scalars/scalar_util.dart';
 import '../attributes/spacing/spacing_util.dart';
+import '../core/utility.dart';
 import 'align_widget_modifier.dart';
 import 'aspect_ratio_widget_modifier.dart';
 import 'clip_widget_modifier.dart';

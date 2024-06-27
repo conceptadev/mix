@@ -3,14 +3,13 @@ import 'package:mix_generator/src/builders/method_equality.dart';
 import 'package:mix_generator/src/builders/method_merge.dart';
 import 'package:mix_generator/src/builders/method_resolve.dart';
 import 'package:mix_generator/src/helpers/builder_utils.dart';
-import 'package:mix_generator/src/helpers/types.dart';
 import 'package:source_gen/source_gen.dart';
 
 String dtoMixin(DtoAnnotationContext context) {
   final className = context.name;
-  final mixinName = context.mixinExtensionName;
+  final mixinName = context.generatedName;
   final fields = context.fields;
-  final dtoRef = MixTypes.foundation.dto.symbol!;
+
   final el = context.element;
 
   if (!el.isDto) {
@@ -36,8 +35,6 @@ String dtoMixin(DtoAnnotationContext context) {
   }
 
   final valueTypeName = valueType.getTypeAsString();
-
-  print('Generic type is $valueTypeName');
 
   final resolveMethod = !hasResolve
       ? resolveMethodBuilder(
@@ -69,7 +66,7 @@ String dtoMixin(DtoAnnotationContext context) {
   final selfGetter = getterSelfBuilder(className: className);
 
   return '''
-base mixin $mixinName on $dtoRef<$valueType> {
+base mixin $mixinName on Dto<$valueType> {
   $resolveMethod
 
   $mergeMethod
@@ -77,7 +74,6 @@ base mixin $mixinName on $dtoRef<$valueType> {
   $propsGetter
 
   $selfGetter
-
 }
 ''';
 }

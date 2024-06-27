@@ -22,7 +22,6 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 
-
 jobs:
   test:
     name: Test
@@ -48,4 +47,4 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           run-dcm: false
-          flutter-version: "3.10.6"
+          flutter-version: '3.10.6'

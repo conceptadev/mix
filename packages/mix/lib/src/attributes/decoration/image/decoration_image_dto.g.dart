@@ -166,3 +166,9 @@ extension DecorationImageMixExt on DecorationImage {
     );
   }
 }
+
+extension ListDecorationImageMixExt on List<DecorationImage> {
+  List<DecorationImageDto> toDto() {
+    return map((e) => e.toDto()).toList();
+  }
+}

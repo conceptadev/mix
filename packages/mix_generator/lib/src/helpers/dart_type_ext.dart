@@ -20,18 +20,18 @@ import 'package:source_gen/source_gen.dart';
 
 extension DartTypeExtension on DartType {
   bool isAssignableTo(DartType other) {
-    final me = this;
+    final self = this;
 
-    if (me is InterfaceType) {
-      final library = me.element.library;
+    if (self is InterfaceType) {
+      final library = self.element.library;
       return library.typeSystem.isAssignableTo(this, other);
     }
     return true;
   }
 
   bool get isEnum {
-    final myType = this;
-    return myType is InterfaceType && myType.element is EnumElement;
+    final self = this;
+    return self is InterfaceType && self.element is EnumElement;
   }
 
   bool get isNullableType =>

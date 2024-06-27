@@ -1,10 +1,10 @@
 // ignore_for_file: prefer_relative_imports,avoid-importing-entrypoint-exports
+
 import 'dart:ui';
 
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:mix/mix.dart';
 import 'package:mix_annotations/mix_annotations.dart';
-
-import '../../../mix.dart';
 
 part 'text_style_dto.g.dart';
 

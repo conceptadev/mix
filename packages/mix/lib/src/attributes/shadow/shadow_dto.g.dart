@@ -111,6 +111,12 @@ extension ShadowMixExt on Shadow {
   }
 }
 
+extension ListShadowMixExt on List<Shadow> {
+  List<ShadowDto> toDto() {
+    return map((e) => e.toDto()).toList();
+  }
+}
+
 base mixin _$BoxShadowDto on Dto<BoxShadow> {
   /// Resolves to [BoxShadow] using the provided [MixData].
   ///
@@ -224,5 +230,11 @@ extension BoxShadowMixExt on BoxShadow {
       blurRadius: blurRadius,
       spreadRadius: spreadRadius,
     );
+  }
+}
+
+extension ListBoxShadowMixExt on List<BoxShadow> {
+  List<BoxShadowDto> toDto() {
+    return map((e) => e.toDto()).toList();
   }
 }

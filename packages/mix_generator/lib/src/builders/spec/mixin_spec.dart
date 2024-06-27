@@ -4,15 +4,12 @@ import 'package:mix_generator/src/builders/method_equality.dart';
 import 'package:mix_generator/src/builders/method_lerp_builder.dart';
 import 'package:mix_generator/src/helpers/builder_utils.dart';
 import 'package:mix_generator/src/helpers/helpers.dart';
-import 'package:mix_generator/src/helpers/types.dart';
 
 String specMixin(SpecAnnotationContext context) {
   final className = context.name;
-  final mixinName = context.mixinExtensionName;
+  final mixinName = context.generatedName;
   final attributeName = context.attributeClassName;
   final fields = context.fields;
-
-  final specRef = MixTypes.foundation.spec.symbol!;
 
   final fromMethod = _staticMethodFromBuilder(
     specName: className,
@@ -44,7 +41,7 @@ String specMixin(SpecAnnotationContext context) {
   final selfGetter = getterSelfBuilder(className: className);
 
   return '''
-base mixin $mixinName on $specRef<$className> {
+base mixin $mixinName on Spec<$className> {
   $fromMethod
 
   $ofMethod

@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 import '../core/attribute.dart';
 import '../core/factory/style_mix.dart';
@@ -53,11 +53,11 @@ abstract class ContextVariant extends IVariant {
 }
 
 @immutable
-abstract class WidgetContextVariant<Value> extends ContextVariant {
+abstract class WidgetStateVariant<Value> extends ContextVariant {
   @override
   final priority = VariantPriority.highest;
 
-  const WidgetContextVariant();
+  const WidgetStateVariant();
 
   ContextVariantBuilder event(Style Function(Value) fn) {
     return ContextVariantBuilder(

@@ -1,25 +1,25 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 import '../../variants/context_variant.dart';
-import 'pressable_state.dart';
+import 'widget_state.dart';
 
 /// Applies styles when the widget is pressed.
-class OnPressVariant extends WidgetContextVariant<bool> {
+class OnPressVariant extends WidgetStateVariant<bool> {
   const OnPressVariant();
 
   @override
-  bool builder(BuildContext context) => PressableState.pressOf(context);
+  bool builder(BuildContext context) => WidgetStateModel.pressOf(context);
 
   @override
   bool when(BuildContext context) => builder(context);
 }
 
 /// Applies styles when the widget is long pressed.
-class OnLongPressVariant extends WidgetContextVariant<bool> {
+class OnLongPressVariant extends WidgetStateVariant<bool> {
   const OnLongPressVariant();
 
   @override
-  bool builder(BuildContext context) => PressableState.longPressOf(context);
+  bool builder(BuildContext context) => WidgetStateModel.longPressOf(context);
 
   @override
   bool when(BuildContext context) => builder(context);
@@ -28,45 +28,45 @@ class OnLongPressVariant extends WidgetContextVariant<bool> {
 @immutable
 
 /// Applies styles when widget is hovered over.
-class OnHoverVariant extends WidgetContextVariant<PointerPosition?> {
+class OnHoverVariant extends WidgetStateVariant<PointerPosition?> {
   const OnHoverVariant();
 
   @override
   PointerPosition? builder(BuildContext context) =>
-      PressableState.pointerPositionOf(context);
+      WidgetStateModel.pointerPositionOf(context);
 
   @override
-  bool when(BuildContext context) => PressableState.hoverOf(context);
+  bool when(BuildContext context) => WidgetStateModel.hoverOf(context);
 }
 
 /// Applies styles when the widget is enabled.
-class OnEnabledVariant extends WidgetContextVariant<bool> {
+class OnEnabledVariant extends WidgetStateVariant<bool> {
   const OnEnabledVariant();
 
   @override
-  bool builder(BuildContext context) => PressableState.enabledOf(context);
+  bool builder(BuildContext context) => WidgetStateModel.enabledOf(context);
 
   @override
   bool when(BuildContext context) => builder(context);
 }
 
 /// Applies styles when the widget is disabled.
-class OnDisabledVariant extends WidgetContextVariant<bool> {
+class OnDisabledVariant extends WidgetStateVariant<bool> {
   const OnDisabledVariant();
 
   @override
-  bool builder(BuildContext context) => PressableState.disabledOf(context);
+  bool builder(BuildContext context) => WidgetStateModel.disabledOf(context);
 
   @override
   bool when(BuildContext context) => builder(context);
 }
 
 /// Applies styles when the widget has focus.
-class OnFocusVariant extends WidgetContextVariant<bool> {
+class OnFocusVariant extends WidgetStateVariant<bool> {
   const OnFocusVariant();
 
   @override
-  bool builder(BuildContext context) => PressableState.focusOf(context);
+  bool builder(BuildContext context) => WidgetStateModel.focusOf(context);
 
   @override
   bool when(BuildContext context) => builder(context);

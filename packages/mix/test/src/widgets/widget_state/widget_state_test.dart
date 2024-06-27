@@ -44,7 +44,7 @@ void main() {
           builder: (BuildContext context, StateSetter setState) {
             return Column(
               children: [
-                PressableState(
+                WidgetStateModel(
                   enabled: true,
                   hovered: hovered,
                   focused: focused,
@@ -53,13 +53,13 @@ void main() {
                   pointerPosition: null,
                   child: Builder(
                     builder: (BuildContext context) {
-                      final bool enabled = PressableState.enabledOf(context);
-                      final bool hovered = PressableState.hoverOf(context);
-                      final bool pressed = PressableState.pressOf(context);
+                      final bool enabled = WidgetStateModel.enabledOf(context);
+                      final bool hovered = WidgetStateModel.hoverOf(context);
+                      final bool pressed = WidgetStateModel.pressOf(context);
                       final bool longPressed =
-                          PressableState.longPressOf(context);
-                      final PressableCurrentState state =
-                          PressableState.stateOf(context);
+                          WidgetStateModel.longPressOf(context);
+                      final MixWidgetState state =
+                          WidgetStateModel.stateOf(context);
                       return Column(
                         children: [
                           Text('Enabled: $enabled'),
@@ -95,8 +95,7 @@ void main() {
     expect(find.text('Pressed: false'), findsOneWidget);
     expect(find.text('LongPressed: false'), findsOneWidget);
     expect(find.text('Focused: false'), findsNothing);
-    expect(
-        find.text('Current State: PressableCurrentState.idle'), findsOneWidget);
+    expect(find.text('Current State: MixWidgetState.idle'), findsOneWidget);
 
     await tester.tap(find.text('Update State'));
     await tester.pump();
@@ -106,13 +105,13 @@ void main() {
     expect(find.text('Pressed: true'), findsOneWidget);
     expect(find.text('LongPressed: true'), findsOneWidget);
     expect(find.text('Focused: true'), findsNothing);
-    expect(find.text('Current State: PressableCurrentState.longPressed'),
-        findsOneWidget);
+    expect(
+        find.text('Current State: MixWidgetState.longPressed'), findsOneWidget);
   });
 
   test('PressableState.none() returns a PressableState with correct values',
       () {
-    final PressableState state = PressableState.none(
+    final WidgetStateModel state = WidgetStateModel.none(
       key: const Key('none'),
       child: const Text('none'),
     );
@@ -126,7 +125,7 @@ void main() {
 
     expect(state.key, const Key('none'));
     expect(state.hashCode, isNot(0));
-    expect(state.runtimeType, PressableState);
+    expect(state.runtimeType, WidgetStateModel);
   });
 
   testWidgets('PressableState updates inherit model',
@@ -145,8 +144,7 @@ void main() {
     expect(find.text('Pressed: Rebuilds(1), State(false)'), findsOneWidget);
     expect(find.text('LongPressed: Rebuilds(1), State(false)'), findsOneWidget);
     expect(
-      find.text(
-          'Current State: Rebuilds(1), State(PressableCurrentState.idle)'),
+      find.text('Current State: Rebuilds(1), State(MixWidgetState.idle)'),
       findsOneWidget,
     );
 
@@ -158,8 +156,7 @@ void main() {
     expect(find.text('Pressed: Rebuilds(1), State(false)'), findsOneWidget);
     expect(find.text('LongPressed: Rebuilds(1), State(false)'), findsOneWidget);
     expect(
-      find.text(
-          'Current State: Rebuilds(2), State(PressableCurrentState.hovered)'),
+      find.text('Current State: Rebuilds(2), State(MixWidgetState.hovered)'),
       findsOneWidget,
     );
 
@@ -171,8 +168,7 @@ void main() {
     expect(find.text('Pressed: Rebuilds(2), State(true)'), findsOneWidget);
     expect(find.text('LongPressed: Rebuilds(1), State(false)'), findsOneWidget);
     expect(
-      find.text(
-          'Current State: Rebuilds(3), State(PressableCurrentState.pressed)'),
+      find.text('Current State: Rebuilds(3), State(MixWidgetState.pressed)'),
       findsOneWidget,
     );
 
@@ -185,7 +181,7 @@ void main() {
     expect(find.text('LongPressed: Rebuilds(2), State(true)'), findsOneWidget);
     expect(
       find.text(
-          'Current State: Rebuilds(4), State(PressableCurrentState.longPressed)'),
+          'Current State: Rebuilds(4), State(MixWidgetState.longPressed)'),
       findsOneWidget,
     );
   });
@@ -244,7 +240,7 @@ class _PressableStateTestWidgetState extends State<PressableStateTestWidget> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        PressableState(
+        WidgetStateModel(
           enabled: true,
           hovered: hovered,
           focused: focused,
@@ -257,24 +253,24 @@ class _PressableStateTestWidgetState extends State<PressableStateTestWidget> {
                 children: [
                   const TrackingText(
                     text: 'Enabled',
-                    stateBuilder: PressableState.enabledOf,
+                    stateBuilder: WidgetStateModel.enabledOf,
                   ),
                   const TrackingText(
                     text: 'Hovered',
-                    stateBuilder: PressableState.hoverOf,
+                    stateBuilder: WidgetStateModel.hoverOf,
                   ),
                   const TrackingText(
                     text: 'Pressed',
-                    stateBuilder: PressableState.pressOf,
+                    stateBuilder: WidgetStateModel.pressOf,
                   ),
                   const TrackingText(
                     text: 'LongPressed',
-                    stateBuilder: PressableState.longPressOf,
+                    stateBuilder: WidgetStateModel.longPressOf,
                   ),
                   TrackingText(
                     text: 'Current State',
                     stateBuilder: (BuildContext context) {
-                      return PressableState.stateOf(context).toString();
+                      return WidgetStateModel.stateOf(context).toString();
                     },
                   ),
                 ],

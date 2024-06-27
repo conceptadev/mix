@@ -30,10 +30,10 @@ class MixableDtoGenerator extends GeneratorForAnnotation<MixableDto> {
       );
     }
 
-    final classVisitor = ClassVisitor();
+    final classVisitor = CustomVisitor();
     element.visitChildren(classVisitor);
 
-    final context = await _loadContext(
+    final context = await _readContext(
       element,
       classVisitor.parameters.values.toList(),
       buildStep,
@@ -52,31 +52,30 @@ class MixableDtoGenerator extends GeneratorForAnnotation<MixableDto> {
 
     if (generateValueExtension) {
       output.writeln(dtoValueExtension(context));
+      output.writeln(dtoListValueExtension(context));
     }
 
     final result = context.generate(output.toString());
 
     return result;
   }
+
+  Future<DtoAnnotationContext> _readContext(
+    ClassElement classElement,
+    List<ParameterInfo> params,
+    BuildStep buildStep,
+  ) async {
+    final annotation = typeChecker.firstAnnotationOfExact(classElement)!;
+
+    final context = DtoAnnotationContext(
+      element: classElement,
+      annotation: _readDtoAnnotation(Settings(), ConstantReader(annotation)),
+      fields: params,
+    );
+
+    return context;
+  }
 }
-
-Future<DtoAnnotationContext> _loadContext(
-  ClassElement classElement,
-  List<ParameterInfo> params,
-  BuildStep buildStep,
-) async {
-  final annotation = _typeChecker.firstAnnotationOfExact(classElement)!;
-
-  final context = DtoAnnotationContext(
-    element: classElement,
-    annotation: _readDtoAnnotation(Settings(), ConstantReader(annotation)),
-    fields: params,
-  );
-
-  return context;
-}
-
-const _typeChecker = TypeChecker.fromRuntime(MixableDto);
 
 MixableDto _readDtoAnnotation(
   Settings settings,

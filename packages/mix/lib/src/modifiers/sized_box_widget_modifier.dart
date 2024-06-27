@@ -2,12 +2,12 @@
 
 import 'dart:ui';
 
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
-import '../attributes/scalars/scalar_util.dart';
 import '../core/attribute.dart';
 import '../core/factory/mix_data.dart';
 import '../core/modifier.dart';
+import '../core/utility.dart';
 
 final class SizedBoxModifierSpec
     extends WidgetModifierSpec<SizedBoxModifierSpec> {
