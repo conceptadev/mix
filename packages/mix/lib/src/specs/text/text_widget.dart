@@ -115,6 +115,7 @@ class AnimatedTextSpecWidget extends ImplicitlyAnimatedWidget {
     super.key,
     required super.duration,
     super.curve = Curves.linear,
+    super.onEnd,
   });
 
   final String text;
