@@ -14,7 +14,7 @@ jobs:
         with:
           ref: ${{ github.event.pull_request.head.sha }}
           fetch-depth: 0
-      - uses: actions/github-script@v6
+      - uses: actions/github-script@v7
         with:
           script: |
             const { execSync } = require('child_process')
@@ -23,4 +23,9 @@ jobs:
             const files = rawFiles.split('\n').filter(Boolean)
 
             console.log(files)
+
+            const packagesFiles = files.filter(file => file.startsWith('packages/'))
+            const packages = packagesFiles.map(file => file.split('/')[1])
+            const uniquePackages = new Set(packages)
+            console.log(uniquePackages)
 
