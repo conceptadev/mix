@@ -8,6 +8,9 @@ on:
       - synchronize
       - reopened
 
+permissions:
+  pull-requests: read
+
 jobs:
   apply-label:
     runs-on: ubuntu-latest
