@@ -34,6 +34,7 @@ final class IconSpec extends Spec<IconSpec> with _$IconSpec {
     this.applyTextScaling,
     this.fill,
     super.animated,
+    super.modifiers,
   });
 
   Widget call(IconData? icon, {String? semanticLabel}) {

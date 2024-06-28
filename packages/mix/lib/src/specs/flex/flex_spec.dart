@@ -46,6 +46,7 @@ final class FlexSpec extends Spec<FlexSpec> with _$FlexSpec {
     this.clipBehavior,
     this.gap,
     super.animated,
+    super.modifiers,
   });
 
   Widget call({List<Widget> children = const [], required Axis direction}) {
