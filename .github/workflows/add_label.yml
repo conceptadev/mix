@@ -17,6 +17,13 @@ jobs:
       - uses: actions/github-script@v7
         with:
           script: |
+            github.rest.issues.removeLabel({
+              issue_number: issue_num,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              name: ["mix", "mix_lint", "mix_annotations", "mix_generator", "documentation", "examples", "repo"]
+            })
+
             const { execSync } = require('child_process')
             const { commits } = context.payload.pull_request
             const rawFiles = execSync(`git diff --name-only HEAD HEAD~${commits}`).toString()
