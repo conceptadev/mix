@@ -15,22 +15,13 @@ jobs:
           ref: ${{ github.event.pull_request.head.sha }}
           fetch-depth: 0
 
-      - uses: snnaplab/get-labels-action@v1
+      - uses: rogerluan/label-remover@v1.0.1
+        with:
+          github_token: ${{ secrets.github_token }}
 
       - uses: actions/github-script@v7
         with:
           script: |
-            const currentLabels = JSON.parse(process.env.LABELS)
-            if (currentLabels.length > 0) {
-              github.rest.issues.removeLabel({
-                issue_number: context.issue.number,
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                name: currentLabels
-              })
-            }
-            console.log(currentLabels)
-
             const { execSync } = require('child_process')
             const { commits } = context.payload.pull_request
             const rawFiles = execSync(`git diff --name-only HEAD HEAD~${commits}`).toString()
