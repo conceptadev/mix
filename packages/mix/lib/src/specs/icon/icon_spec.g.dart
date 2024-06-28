@@ -267,7 +267,7 @@ base class IconSpecUtility<T extends Attribute>
   late final animated = AnimatedUtility((v) => only(animated: v));
 
   /// Utility for defining [IconSpecAttribute.modifiers]
-  late final modifiers = ModifierUtility((v) => only(modifiers: v));
+  late final modifiers = SpecModifierUtility((v) => only(modifiers: v));
 
   IconSpecUtility(super.builder);
 

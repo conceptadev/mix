@@ -322,7 +322,7 @@ base class TextSpecUtility<T extends Attribute>
   late final animated = AnimatedUtility((v) => only(animated: v));
 
   /// Utility for defining [TextSpecAttribute.modifiers]
-  late final modifiers = ModifierUtility((v) => only(modifiers: v));
+  late final modifiers = SpecModifierUtility((v) => only(modifiers: v));
 
   TextSpecUtility(super.builder);
 
