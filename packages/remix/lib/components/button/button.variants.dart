@@ -1,37 +1,34 @@
 import 'package:mix/mix.dart';
 
-abstract class ButtonVariant extends Variant {
-  const ButtonVariant(super.name);
+interface class IButtonVariant extends Variant {
+  const IButtonVariant(super.name);
 }
 
-class ButtonSize extends ButtonVariant {
+class ButtonSize extends IButtonVariant {
   const ButtonSize(super.name);
 
-  static const xsmall = ButtonSize('remix.button.xsmall');
-  static const small = ButtonSize('remix.button.small');
-  static const medium = ButtonSize('remix.button.medium');
-  static const large = ButtonSize('remix.button.large');
+  static const small = ButtonSize('small');
+  static const medium = ButtonSize('medium');
+  static const large = ButtonSize('large');
+  static const xlarge = ButtonSize('xlarge');
 
-  static List<ButtonSize> get values => [xsmall, small, medium, large];
+  static List<ButtonSize> get values => [small, medium, large, xlarge];
 }
 
-class ButtonType extends ButtonVariant {
-  const ButtonType(super.name);
+class ButtonVariant extends IButtonVariant {
+  const ButtonVariant(super.name);
 
-  static const primary = ButtonType('remix.button.primary');
-  static const secondary = ButtonType('remix.button.secondary');
-  static const destructive = ButtonType('remix.button.destructive');
-  static const outline = ButtonType('remix.button.outline');
-  static const ghost = ButtonType('remix.button.ghost');
-  static const link = ButtonType('remix.button.link');
-  static const futuristic = ButtonType('remix.button.link');
+  static const solid = ButtonVariant('solid');
+  static const soft = ButtonVariant('soft');
+  static const surface = ButtonVariant('surface');
+  static const outline = ButtonVariant('outline');
+  static const ghost = ButtonVariant('ghost');
 
-  static List<ButtonType> get values => [
-        primary,
-        secondary,
-        destructive,
+  static List<ButtonVariant> get values => [
+        solid,
+        soft,
+        surface,
         outline,
         ghost,
-        link,
       ];
 }

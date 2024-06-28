@@ -165,7 +165,13 @@ final class TextStyleDto extends Dto<TextStyle> with _$TextStyleDto {
 }
 
 extension TextStyleExt on TextStyle {
-  TextStyleDto toDto() => TextStyleDto._(value: [_toData()]);
+  TextStyleDto toDto() {
+    if (this is TextStyleRef) {
+      return TextStyleDto.ref((this as TextStyleRef).token);
+    }
+    return TextStyleDto._(value: [_toData()]);
+  }
+
   TextStyleData _toData() => TextStyleData(
         background: background,
         backgroundColor: backgroundColor?.toDto(),

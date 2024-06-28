@@ -4,181 +4,183 @@ import 'package:flutter/material.dart';
 import 'package:mix/mix.dart';
 import 'package:remix/components/button/button.variants.dart';
 import 'package:remix/components/button/button_spec.dart';
+import 'package:remix/tokens/remix_tokens.dart';
 
 final _button = ButtonSpecUtility.self;
+final _label = _button.label;
+final _spinner = _button.spinner;
+final _container = _button.container;
+final _flex = _button.flex;
 
-Style get defaultButtonStyle => Style(
-      _baseStyle(),
+/// This applies to the icon, label, and spinner
+final _foreground = _button.foreground;
 
-      /// Size Variants
-      _xsmallVariant(),
-      _smallVariant(),
-      _mediumVariant(),
-      _largeVariant(),
+Style buildDefaultButtonStyle() {
+  final baseStyle = Style(
+    _flex.gap(0),
+    _flex.mainAxisAlignment.center(),
+    _flex.crossAxisAlignment.center(),
+    _flex.mainAxisSize.min(),
+    _container.borderRadius(6),
+    _label.style.fontWeight(FontWeight.w500),
+    _spinner.strokeWidth(1),
+    _label.textHeightBehavior(const TextHeightBehavior(
+      applyHeightToFirstAscent: false,
+      applyHeightToLastDescent: false,
+    )),
+  );
 
-      // Type variants
-      _primaryVariant(),
-      _secondaryVariant(),
-      _outlineVariant(),
-      _ghostVariant(),
-      _linkVariant(),
-      _destructiveVariant(),
-      _futuristic(),
-    );
-
-Style get _baseStyle => Style(
-      _button.flex.gap(6),
-      _button.flex.mainAxisAlignment.center(),
-      _button.flex.crossAxisAlignment.center(),
-      _button.flex.mainAxisSize.min(),
-      _button.container.borderRadius(6),
-      _button.label.style.height(1.1),
-      _button.label.style.letterSpacing(0.5),
-      _button.label.style.fontWeight(FontWeight.w600),
-      _button.spinner.strokeWidth(.5),
-      _button.spinner.color(Colors.black),
-      _button.spinner.size(24),
-    );
-
-Style get _xsmallVariant {
-  return Style(ButtonSize.xsmall(
-    _button.container.padding.horizontal(8),
-    _button.container.padding.vertical(4),
-    _button.label.style.fontSize(12),
-    _button.icon.size(12),
-  ));
-}
-
-Style get _smallVariant {
-  return Style(
+  final smallVariant = Style(
     ButtonSize.small(
-      _button.container.padding.horizontal(12),
-      _button.container.padding.vertical(6),
-      _button.label.style.fontSize(14),
-      _button.icon.size(14),
+      _label.style.as($rx.text1()),
+      _container.padding.vertical($rx.space1()),
+      _container.padding.horizontal($rx.space2()),
+      _flex.gap($rx.space1()),
+      _foreground(size: 12),
     ),
   );
-}
 
-Style get _mediumVariant {
-  return Style(
+  final mediumVariant = Style(
     ButtonSize.medium(
-      _button.container.padding.horizontal(16),
-      _button.container.padding.vertical(8),
-      _button.label.style.fontSize(16),
-      _button.icon.size(16),
+      _container.padding.vertical($rx.space2()),
+      _container.padding.horizontal($rx.space3()),
+      _flex.gap($rx.space2()),
+      _label.style.as($rx.text2()),
+      _foreground(size: 14),
     ),
   );
-}
 
-Style get _largeVariant {
-  return Style(
+  final largeVariant = Style(
     ButtonSize.large(
-      _button.container.padding.horizontal(20),
-      _button.container.padding.vertical(10),
-      _button.label.style.fontSize(18),
-      _button.icon.size(18),
+      _container.padding.vertical($rx.space2()),
+      _container.padding.horizontal($rx.space4()),
+      _flex.gap($rx.space3()),
+      _label.style.as($rx.text3()),
+      _foreground(size: 16),
     ),
   );
-}
 
-Style get _primaryVariant {
-  return Style(
-    ButtonType.primary(
-      _button.container.color.black(),
-      _button.icon.color(Colors.white),
-      _button.spinner.color(Colors.green),
-      _button.spinner.strokeWidth(1),
-      _button.spinner.duration.milliseconds(6000),
-      _button.spinner.style.dotted(),
-      _button.label.style.color.white(),
+  final xLargeVariant = Style(
+    ButtonSize.xlarge(
+      _container.padding.vertical($rx.space3()),
+      _container.padding.horizontal($rx.space5()),
+      _flex.gap($rx.space3()),
+      _label.style.as($rx.text4()),
+      _foreground(size: 18),
+    ),
+  );
+
+  final solidVariant = Style(
+    ButtonVariant.solid(
+      _container.color($rx.accent9()),
+      _foreground(color: Colors.white),
+      $on.dark(
+        _foreground(color: Colors.black),
+      ),
       $on.hover(
-        _button.container.color.black87(),
+        _container.color($rx.accent12()),
+      ),
+      $on.disabled(
+        _container.color($rx.neutral2A()),
       ),
     ),
   );
-}
 
-Style get _futuristic {
-  return Style(
-    ButtonType.futuristic(
-      _button.container.color.transparent(),
-      _button.container.shape.beveledRectangle.borderRadius(10, 0, 0, 10),
-      _button.container.shape.beveledRectangle.side.color(Colors.green),
-      _button.icon.color(Colors.black),
-      _button.spinner.color(Colors.green),
-      _button.spinner.strokeWidth(1),
-      _button.spinner.duration.milliseconds(6000),
-      _button.spinner.style.dotted(),
-      _button.label.style.color.black(),
+  final softVariant = Style(
+    ButtonVariant.soft(
+      _container.color($rx.accent3A()),
+      _foreground(color: $rx.accent11A()),
       $on.hover(
-        _button.container.color.black87(),
+        _container.color($rx.accent4A()),
+      ),
+      $on.disabled(
+        _container.color($rx.neutral2A()),
       ),
     ),
   );
-}
 
-Style get _secondaryVariant {
-  return Style(
-    ButtonType.secondary(
-      _button.container.color.grey.shade200(),
-      _button.icon.color(Colors.black),
-      _button.spinner.color(Colors.black),
-      _button.label.style.color.black87(),
+  final surfaceVariant = Style(
+    ButtonVariant.surface(
+      _container.color($rx.accent2A()),
+      _container.border.width(1),
+      _container.border.color($rx.accent7A()),
+      _foreground(color: $rx.accent11()),
       $on.hover(
-        _button.container.color.grey.shade100(),
+        _container.color($rx.accent3A()),
+        _container.border.color($rx.accent8A()),
+      ),
+      $on.disabled(
+        _container.color($rx.neutral2A()),
+        _container.border.color(
+          $rx.neutral6A(),
+        ),
       ),
     ),
   );
-}
 
-Style get _destructiveVariant {
-  return Style(
-    ButtonType.destructive(
-      _button.container.color.redAccent(),
-      _button.icon.color(Colors.white),
-      _button.label.style.color.white(),
+  final outlineVariant = Style(
+    ButtonVariant.outline(
+      _container.color(Colors.transparent),
+      _container.border.width(1),
+      _container.border.color($rx.accent8A()),
+      _foreground(color: $rx.accent8A()),
       $on.hover(
-        _button.container.color.redAccent.shade200(),
+        _container.color($rx.accent2A()),
+      ),
+      $on.disabled(
+        _container.border.color(
+          $rx.neutral6A(),
+        ),
       ),
     ),
   );
-}
 
-Style get _outlineVariant {
-  return Style(
-    ButtonType.outline(
-      _button.container.color.transparent(),
-      _button.label.style.color.black(),
-      _button.container.border.width(0.5),
-      _button.container.border.color(Colors.black),
-      _button.icon.color(Colors.black),
-    ),
-  );
-}
-
-Style get _ghostVariant {
-  return Style(
-    ButtonType.ghost(
-      _button.container.color.transparent(),
-      _button.label.style.color.black(),
+  final ghostVariant = Style(
+    ButtonVariant.ghost(
+      _container.border.style.none(),
+      _container.color(Colors.transparent),
+      _foreground(color: $rx.accent11A()),
       $on.hover(
-        _button.container.color.black12(),
+        _container.color($rx.accent3A()),
       ),
     ),
   );
-}
 
-Style get _linkVariant {
   return Style(
-    ButtonType.link(
-      _button.label.style.color.black(),
-      _button.container.color.transparent(),
-      _button.icon.color(Colors.black),
-      $on.hover(
-        _button.label.style.decoration(TextDecoration.underline),
-        _button.container.color.black12(),
+    baseStyle(),
+
+    /// Size Variants
+    smallVariant(),
+    mediumVariant(),
+    largeVariant(),
+    xLargeVariant(),
+
+    // Type variants
+    solidVariant(),
+    surfaceVariant(),
+    softVariant(),
+    outlineVariant(),
+    ghostVariant(),
+    $on.disabled(
+      _label.style.color(
+        $rx.neutral6A(),
       ),
+      _spinner.color($rx.neutral6A()),
     ),
   );
+}
+
+extension ButtonSpecUtilityX<T extends Attribute> on ButtonSpecUtility<T> {
+  Attribute foreground({Color? color, double? size}) {
+    final style = Style.create([
+      if (color != null) ...[
+        label.style.color(color),
+        icon.color(color),
+        spinner.color(color),
+      ],
+      if (size != null) ...[icon.size(size), spinner.size(size)],
+    ]);
+
+    return style();
+  }
 }

@@ -30,7 +30,6 @@ void main() {
           home: RXButton(
             label: 'Test Button',
             loading: true,
-            loadingLabel: loadingLabel,
             onPressed: () {},
           ),
         ),

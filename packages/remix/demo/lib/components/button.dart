@@ -8,7 +8,7 @@ import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
   type: RXButton,
 )
 Widget buildButtonUseCase(BuildContext context) {
-  Widget buildButton(ButtonType type) {
+  Widget buildButton(ButtonVariant type) {
     return RXButton(
       label: context.knobs.string(
         label: 'Title',
@@ -19,10 +19,6 @@ Widget buildButtonUseCase(BuildContext context) {
         label: 'Is loading',
         initialValue: false,
       ),
-      loadingLabel: context.knobs.string(
-        label: 'Loading label',
-        initialValue: 'Loading',
-      ),
       disabled: context.knobs.boolean(
         label: 'Disabled',
         initialValue: false,
@@ -30,6 +26,7 @@ Widget buildButtonUseCase(BuildContext context) {
       size: context.knobs.list(
         label: 'Size',
         options: ButtonSize.values,
+        initialOption: ButtonSize.medium,
         labelBuilder: (value) => value.name.split('.').last,
       ),
       type: type,
@@ -41,7 +38,7 @@ Widget buildButtonUseCase(BuildContext context) {
     child: Center(
       child: Wrap(
         spacing: 12,
-        children: ButtonType.values.map(buildButton).toList(),
+        children: ButtonVariant.values.map(buildButton).toList(),
       ),
     ),
   );

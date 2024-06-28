@@ -27,8 +27,8 @@ class RXSpinner extends StatelessWidget {
     return SpecBuilder(
       style: _buildStyle(),
       builder: (context) {
-        final spinnerSpec = SpinnerSpec.of(context);
-        return RxSpinnerSpecWidget(spec: spinnerSpec);
+        final SpinnerWidget = SpinnerSpec.of(context);
+        return SpinnerWidget();
       },
     );
   }
@@ -83,12 +83,10 @@ class _RxSpinnerSpecWidgetState extends State<RxSpinnerSpecWidget>
     return AnimatedBuilder(
       animation: controller,
       builder: (context, child) {
-        return SizedBox(
-          width: widget.spec.size,
-          height: widget.spec.size,
-          child: CustomPaint(
-            painter: painter,
-          ),
+        final size = widget.spec.size;
+        return CustomPaint(
+          size: Size(size, size),
+          painter: painter,
         );
       },
     );

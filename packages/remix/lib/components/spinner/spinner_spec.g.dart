@@ -158,11 +158,11 @@ final class SpinnerSpecAttribute extends SpecAttribute<SpinnerSpec> {
     if (other == null) return this;
 
     return SpinnerSpecAttribute(
-      size: other.size,
+      size: other.size ?? size,
       strokeWidth: other.strokeWidth ?? strokeWidth,
       color: color?.merge(other.color) ?? other.color,
-      duration: other.duration,
-      style: other.style,
+      duration: other.duration ?? duration,
+      style: other.style ?? style,
       animated: animated?.merge(other.animated) ?? other.animated,
     );
   }

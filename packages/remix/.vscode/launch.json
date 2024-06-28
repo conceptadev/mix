@@ -9,7 +9,8 @@
             "name": "demo",
             "cwd": "demo",
             "request": "launch",
-            "type": "dart"
+            "type": "dart",
+            "deviceId": "macos"
         },
         {
             "name": "demo (profile mode)",

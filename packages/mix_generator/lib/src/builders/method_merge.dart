@@ -23,10 +23,11 @@ String mergeMethodBuilder({
     var propAssignment = '$propName:';
 
     if (field.isListType) {
+      final listNullable = field.nullable ? '?' : '';
       if (shouldMergeLists) {
         return '$propAssignment ${MixHelperRef.mergeList}($thisName, other.$propName)';
       } else {
-        return '$propAssignment [...$nullable$thisName,...${nullable}other.$propName]';
+        return '$propAssignment [...$listNullable$thisName,...${listNullable}other.$propName]';
       }
     }
     if (field.hasDto) {
@@ -49,11 +50,7 @@ String mergeMethodBuilder({
 
       return '$propAssignment $thisName$nullable.merge(other.$propName) ?? other.$propName';
     } else {
-      if (field.nullable) {
-        return '$propAssignment other.$propName ?? $thisName';
-      } else {
-        return '$propAssignment other.$propName';
-      }
+      return '$propAssignment other.$propName ?? $thisName';
     }
   }).join(',\n      ');
 
