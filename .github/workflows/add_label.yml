@@ -21,11 +21,13 @@ jobs:
         with:
           script: |
             console.log(process.env.LABELS)
+            // convert process.env.LABELS to an array of strings
+            const labelsa = process.env.LABELS.split(',')
             github.rest.issues.removeLabel({
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              name: ["repo"]
+              name: labelsa
             })
 
             const { execSync } = require('child_process')
