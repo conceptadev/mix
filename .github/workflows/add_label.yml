@@ -13,6 +13,10 @@ jobs:
       - uses: actions/github-script@v7
         with:
           script: |
-            const files = context.payload.pull_request
-            console.log(`Modified files on this PR: ${files}`)
+            const { execSync } = require('child_process')
+            const { commits } = context.payload.pull_request
+            const rawFiles = execSync(`git diff --name-only HEAD HEAD~${commits}`).toString()
+            const files = rawFiles.split('\n').filter(Boolean)
+
+            console.log(files)
 
