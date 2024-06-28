@@ -16,16 +16,16 @@ jobs:
           fetch-depth: 0
 
       - uses: snnaplab/get-labels-action@v1
-      
+
       - uses: actions/github-script@v7
         with:
           script: |
-            console.log(env.LABELS)
+            console.log(process.env.LABELS)
             github.rest.issues.removeLabel({
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              name: env.LABELS
+              name: process.env.LABELS
             })
 
             const { execSync } = require('child_process')
