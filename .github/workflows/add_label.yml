@@ -1,3 +1,5 @@
+name: "Add labels"
+
 on:
   pull_request_target:
     types:
