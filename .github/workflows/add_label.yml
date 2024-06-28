@@ -22,12 +22,22 @@ jobs:
             const rawFiles = execSync(`git diff --name-only HEAD HEAD~${commits}`).toString()
             const files = rawFiles.split('\n').filter(Boolean)
 
-            const ignoredPackage = 'mix_lint_test'
-
-            const packagesFiles = files.filter(file => file.startsWith('packages/') && !file.includes('ignoredPackages'))
+            // verify packages
+            const packagesFiles = files.filter(file => file.startsWith('packages/') && !file.includes('mix_lint_test'))
             const packages = packagesFiles.map(file => file.split('/')[1])
-            const uniquePackages = new Set(packages)
-            const labels = Array.from(uniquePackages)
+            const labels = Array.from(new Set(packages))
+
+            // verify documentation
+            const packagesFiles = files.filter(file => file.startsWith('website/'))
+            labels.push('documentation')
+
+            // verify documentation
+            const packagesFiles = files.filter(file => file.startsWith('examples/'))
+            labels.push('examples')
+
+            // verify documentation
+            const packagesFiles = files.filter(file => !file.startsWith('website/') && !file.startsWith('packages/') && file.startsWith('!file.startsWith('examples/')'))
+            labels.push('repo')
 
             github.rest.issues.addLabels({
               issue_number: context.issue.number,
