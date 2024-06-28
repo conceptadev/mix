@@ -73,7 +73,7 @@ class BoxSpecWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return RenderInlineModifiers(
+    return RenderSpecModifiers(
       orderOfModifiers: orderOfModifiers,
       spec: spec ?? const BoxSpec(),
       child: Container(

@@ -222,8 +222,8 @@ Set<WidgetModifierSpec> orderModifierSpecs(
   return specs.toSet();
 }
 
-class RenderInlineModifiers extends StatelessWidget {
-  const RenderInlineModifiers({
+class RenderSpecModifiers extends StatelessWidget {
+  const RenderSpecModifiers({
     required this.orderOfModifiers,
     required this.child,
     required this.spec,

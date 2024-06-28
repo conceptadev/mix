@@ -55,7 +55,7 @@ class StackSpecWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // The Stack widget is used here, applying the resolved styles from StackSpec.
-    return RenderInlineModifiers(
+    return RenderSpecModifiers(
       orderOfModifiers: orderOfModifiers,
       spec: spec ?? const StackSpec(),
       child: Stack(

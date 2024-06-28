@@ -62,7 +62,7 @@ class IconSpecWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return RenderInlineModifiers(
+    return RenderSpecModifiers(
       orderOfModifiers: orderOfModifiers,
       spec: spec ?? const IconSpec(),
       child: Icon(
