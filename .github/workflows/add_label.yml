@@ -27,12 +27,12 @@ jobs:
             const packagesFiles = files.filter(file => file.startsWith('packages/') && !file.includes('ignoredPackages'))
             const packages = packagesFiles.map(file => file.split('/')[1])
             const uniquePackages = new Set(packages)
-            console.log(Array.from(uniquePackages))
+            const labels = Array.from(uniquePackages)
 
             github.rest.issues.addLabels({
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              labels: Array.from(uniquePackages)
+              labels: labels
             })
 
