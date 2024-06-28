@@ -40,7 +40,7 @@ jobs:
             }
 
             // verify repo
-            const wasRepoModified = files.filter(file => !file.startsWith('website/') && !file.startsWith('packages/') && file.startsWith('!file.startsWith('examples/')')).length > 0
+            const wasRepoModified = files.filter(file => !file.startsWith('website/') && !file.startsWith('packages/') && !file.startsWith('examples/')).length > 0
             if (wasRepoModified) {
               labels.push('repo')
             }
