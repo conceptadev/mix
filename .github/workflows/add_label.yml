@@ -22,7 +22,7 @@ jobs:
           script: |
             console.log(process.env.LABELS)
             // convert process.env.LABELS to an array of strings
-            const labelsa = process.env.LABELS.split(',')
+            const labelsa = JSON.parse(process.env.LABELS)
             github.rest.issues.removeLabel({
               issue_number: context.issue.number,
               owner: context.repo.owner,
