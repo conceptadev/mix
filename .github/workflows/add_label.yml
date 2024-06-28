@@ -14,7 +14,7 @@ jobs:
         with:
           script: |
             const files = context.payload.pull_request.files
-            console.log(`Modified files on this PR: ${files.map(f => f.filename).join(', ')}`)
+            console.log(`Modified files on this PR: ${files}`)
 
             github.rest.issues.addLabels({
               issue_number: context.issue.number,
