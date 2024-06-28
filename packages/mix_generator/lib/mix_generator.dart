@@ -17,10 +17,7 @@ Builder dtoDefinition(BuilderOptions options) => SharedPartBuilder(
       allowSyntaxErrors: true,
     );
 
-Builder classUtilityDefinition(
-  BuilderOptions options,
-) =>
-    SharedPartBuilder(
+Builder classUtilityDefinition(BuilderOptions options) => SharedPartBuilder(
       [MixableClassUtilityGenerator()],
       'class_utility',
       allowSyntaxErrors: true,
