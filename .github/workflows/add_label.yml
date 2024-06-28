@@ -27,16 +27,20 @@ jobs:
             const packages = packagesFiles.map(file => file.split('/')[1])
             const labels = Array.from(new Set(packages))
 
-            // verify documentation
-            const packagesFiles = files.filter(file => file.startsWith('website/'))
-            labels.push('documentation')
+            // verify documentation 
+            const wasDocModified = files.filter(file => file.startsWith('website/')).length > 0
+            if (wasDocModified) {
+              labels.push('documentation')
+            }
 
-            // verify documentation
-            const packagesFiles = files.filter(file => file.startsWith('examples/'))
-            labels.push('examples')
+            // verify examples
+            const wasExampleModified = files.filter(file => file.startsWith('examples/')).length > 0
+            if (wasExampleModified) {
+              labels.push('examples')
+            }
 
-            // verify documentation
-            const packagesFiles = files.filter(file => !file.startsWith('website/') && !file.startsWith('packages/') && file.startsWith('!file.startsWith('examples/')'))
+            // verify repo
+            const wasRepoModified = files.filter(file => !file.startsWith('website/') && !file.startsWith('packages/') && file.startsWith('!file.startsWith('examples/')'))
             labels.push('repo')
 
             github.rest.issues.addLabels({
@@ -45,5 +49,5 @@ jobs:
               repo: context.repo.repo,
               labels: labels
             })
-            
+
 
