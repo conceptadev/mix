@@ -1,0 +1,62 @@
+name: "Add labels"
+
+on:
+  pull_request:
+
+permissions:
+  pull-requests: write
+
+jobs:
+  apply-label:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
+
+      - uses: rogerluan/label-remover@v1.0.1
+        with:
+          github_token: ${{ secrets.github_token }}
+
+      - uses: actions/github-script@v7
+        with:
+          script: |
+            const { execSync } = require('child_process')
+            const { commits } = context.payload.pull_request
+            const rawFiles = execSync(`git diff --name-only HEAD HEAD~${commits}`).toString()
+            const files = rawFiles.split('\n').filter(Boolean)
+
+            // verify packages
+            const packagesFiles = files.filter(file => file.startsWith('packages/') && !file.includes('mix_lint_test'))
+            const packages = packagesFiles.map(file => file.split('/')[1])
+            const labels = Array.from(new Set(packages))
+
+            // verify documentation 
+            const wasDocModified = files.filter(file => file.startsWith('website/')).length > 0
+            if (wasDocModified) {
+              labels.push('documentation')
+            }
+
+            // verify examples
+            const wasExampleModified = files.filter(file => file.startsWith('examples/')).length > 0
+            if (wasExampleModified) {
+              labels.push('examples')
+            }
+
+            // verify repo
+            const wasRepoModified = files.filter(file => !file.startsWith('website/') && !file.startsWith('packages/') && !file.startsWith('examples/')).length > 0
+            if (wasRepoModified) {
+              labels.push('repo')
+            }
+
+            console.log(labels)
+
+            github.rest.issues.addLabels({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              labels: labels
+            })
+
+
