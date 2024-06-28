@@ -3,7 +3,7 @@
 - Improved merge behavior between ShapeDecoration and BoxDecoration
 - Fixed space token resolve on gap in flex attribute
 - Added remaining params to callable specs and modifiers
-
+ 
 ## 1.1.2
 
 - Chore: Changed the class modifier of the Spec class for code generation.
