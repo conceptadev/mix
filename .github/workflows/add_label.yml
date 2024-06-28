@@ -13,7 +13,9 @@ jobs:
       - uses: actions/github-script@v7
         with:
           script: |
-            console.log(steps.pr-files.outputs.changedFiles)
+            const files = context.payload.pull_request.files
+            console.log(`Modified files on this PR: ${files.map(f => f.filename).join(', ')}`)
+
             github.rest.issues.addLabels({
               issue_number: context.issue.number,
               owner: context.repo.owner,
