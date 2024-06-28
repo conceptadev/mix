@@ -21,14 +21,14 @@ jobs:
         with:
           script: |
             const currentLabels = JSON.parse(process.env.LABELS)
-
-            github.rest.issues.removeLabel({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              name: currentLabels
-            })
-
+            if (currentLabels.length > 0) {
+              github.rest.issues.removeLabel({
+                issue_number: context.issue.number,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                name: currentLabels
+              })
+            }
             console.log(currentLabels)
 
             const { execSync } = require('child_process')
