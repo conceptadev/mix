@@ -19,7 +19,10 @@ command:
     environment:
       sdk: ">=3.0.6 <4.0.0"
       flutter: ">=3.10.6"
-      
+  publish:
+    hooks:
+      pre: melos run pre-publish
+
 scripts:
   brb:
     description: Run build_runner for projects that have it as a dependency
@@ -46,6 +49,13 @@ scripts:
       - melos exec --category="mix_deps" dart analyze --fatal-infos .
       - melos exec --category="mix_deps" --depends-on="dart_code_metrics_presets" dcm analyze --fatal-warnings --fatal-style --fatal-performance .
       - melos run custom_lint_analyze
+
+  pre-publish: 
+    steps:
+      - melos run brbc
+      - melos run analyze
+      - melos run test
+    description: Run a quality check before publishing
 
   verify_version_pubspec_changelog:
     run: ./scripts/verify_changelogs.sh packages
