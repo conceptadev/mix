@@ -52,6 +52,7 @@ scripts:
 
   pre-publish: 
     steps:
+      - melos run verify_version_pubspec_changelog
       - melos run brbc
       - melos run analyze
       - melos run test
