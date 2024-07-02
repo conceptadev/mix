@@ -72,10 +72,7 @@ sealed class OutlinedBorderDto<T extends OutlinedBorder>
   }
 
   static B _exhaustiveMerge<A extends OutlinedBorderDto,
-      B extends OutlinedBorderDto>(
-    A a,
-    B b,
-  ) {
+      B extends OutlinedBorderDto>(A a, B b) {
     if (a.runtimeType == b.runtimeType) return a.merge(b) as B;
 
     return switch (b) {
