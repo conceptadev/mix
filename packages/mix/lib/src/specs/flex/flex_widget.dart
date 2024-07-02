@@ -2,7 +2,6 @@
 
 import 'package:flutter/widgets.dart';
 
-import '../../core/factory/style_mix.dart';
 import '../../core/styled_widget.dart';
 import '../box/box_spec.dart';
 import '../box/box_widget.dart';
@@ -67,6 +66,8 @@ class FlexSpecWidget extends StatelessWidget {
 
   List<Widget> _buildChildren(double? gap) {
     if (gap == null) return children;
+
+    if (children.isEmpty) return [];
 
     return List.generate(children.length + children.length - 1, (index) {
       if (index.isEven) return children[index ~/ 2];
@@ -211,11 +212,11 @@ class FlexBox extends StyledWidget {
 /// ```
 class HBox extends FlexBox {
   const HBox({
-    Style? style,
+    super.style,
     super.key,
     super.inherit,
     super.children = const <Widget>[],
-  }) : super(style: style, direction: Axis.horizontal);
+  }) : super(direction: Axis.horizontal);
 }
 
 /// A vertical flex container that uses `Style` for streamlined styling.
@@ -236,11 +237,11 @@ class HBox extends FlexBox {
 /// ```
 class VBox extends FlexBox {
   const VBox({
-    Style? style,
+    super.style,
     super.key,
     super.inherit,
     super.children = const <Widget>[],
-  }) : super(style: style, direction: Axis.vertical);
+  }) : super(direction: Axis.vertical);
 }
 
 final _defaultFlex = Flex(direction: Axis.horizontal, children: const []);
