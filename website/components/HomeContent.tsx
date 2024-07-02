@@ -25,6 +25,9 @@ const HomeContent = () => {
             <Button href="/docs/overview" arrow="right">
               <>Getting Started</>
             </Button>
+            <Button href="https://discord.com/invite/Ycn6GV3m2k" variant="discord" target="_blank">
+              <>Join our community</>
+            </Button>
             <Button href="/docs/overview" variant="outline">
               <>Documentation</>
             </Button>
