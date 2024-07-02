@@ -39,13 +39,13 @@ sealed class ShapeBorderDto<T extends ShapeBorder> extends Dto<T> {
   BorderSideDto? get _side =>
       this is OutlinedBorderDto ? (this as OutlinedBorderDto).side : null;
 
-  BeveledRectangleBorderDto toBeveledRectangleBorder();
-  RoundedRectangleBorderDto toRoundedRectangleBorder();
-  ContinuousRectangleBorderDto toContinuousRectangleBorder();
-  CircleBorderDto toCircleBorder();
+  BeveledRectangleBorderDto toBeveled();
+  RoundedRectangleBorderDto toRoundedRectangle();
+  ContinuousRectangleBorderDto toContinuous();
+  CircleBorderDto toCircle();
   StadiumBorderDto toStadiumBorder();
-  StarBorderDto toStarBorder();
-  LinearBorderDto toLinearBorder();
+  StarBorderDto toStar();
+  LinearBorderDto toLinear();
 
   @override
   ShapeBorderDto<T> merge(covariant ShapeBorderDto<T>? other);
@@ -71,36 +71,22 @@ sealed class OutlinedBorderDto<T extends OutlinedBorder>
     return _exhaustiveMerge(a, b);
   }
 
-  static OutlinedBorderDto _exhaustiveMerge(
-    OutlinedBorderDto a,
-    OutlinedBorderDto b,
+  static B _exhaustiveMerge<A extends OutlinedBorderDto,
+      B extends OutlinedBorderDto>(
+    A a,
+    B b,
   ) {
-    if (a.runtimeType == b.runtimeType) return a.merge(b);
+    if (a.runtimeType == b.runtimeType) return a.merge(b) as B;
 
-    switch (b.runtimeType) {
-      case BeveledRectangleBorderDto:
-        return a
-            .toBeveledRectangleBorder()
-            .merge(b as BeveledRectangleBorderDto);
-      case RoundedRectangleBorderDto:
-        return a
-            .toRoundedRectangleBorder()
-            .merge(b as RoundedRectangleBorderDto);
-      case ContinuousRectangleBorderDto:
-        return a
-            .toContinuousRectangleBorder()
-            .merge(b as ContinuousRectangleBorderDto);
-      case CircleBorderDto:
-        return a.toCircleBorder().merge(b as CircleBorderDto);
-      case StadiumBorderDto:
-        return a.toStadiumBorder().merge(b as StadiumBorderDto);
-      case StarBorderDto:
-        return a.toStarBorder().merge(b as StarBorderDto);
-      case LinearBorderDto:
-        return a.toLinearBorder().merge(b as LinearBorderDto);
-      default:
-        throw ArgumentError('Unknown OutlinedBorderDto type: ${b.runtimeType}');
-    }
+    return switch (b) {
+      (BeveledRectangleBorderDto g) => a.toBeveled().merge(g) as B,
+      (RoundedRectangleBorderDto g) => a.toRoundedRectangle().merge(g) as B,
+      (ContinuousRectangleBorderDto g) => a.toContinuous().merge(g) as B,
+      (CircleBorderDto g) => a.toCircle().merge(g) as B,
+      (StadiumBorderDto g) => a.toStadiumBorder().merge(g) as B,
+      (StarBorderDto g) => a.toStar().merge(g) as B,
+      (LinearBorderDto g) => a.toLinear().merge(g) as B,
+    };
   }
 
   BoxShape? _toBoxShape() {
@@ -118,7 +104,7 @@ sealed class OutlinedBorderDto<T extends OutlinedBorder>
   /// Tries to get borderRadius if available for [OutlineBorderDto]
 
   @override
-  BeveledRectangleBorderDto toBeveledRectangleBorder() {
+  BeveledRectangleBorderDto toBeveled() {
     if (this is BeveledRectangleBorderDto) {
       return this as BeveledRectangleBorderDto;
     }
@@ -130,7 +116,7 @@ sealed class OutlinedBorderDto<T extends OutlinedBorder>
   }
 
   @override
-  ContinuousRectangleBorderDto toContinuousRectangleBorder() {
+  ContinuousRectangleBorderDto toContinuous() {
     return ContinuousRectangleBorderDto(
       borderRadius: _borderRadius,
       side: _side,
@@ -138,7 +124,7 @@ sealed class OutlinedBorderDto<T extends OutlinedBorder>
   }
 
   @override
-  RoundedRectangleBorderDto toRoundedRectangleBorder() {
+  RoundedRectangleBorderDto toRoundedRectangle() {
     if (this is RoundedRectangleBorderDto) {
       return this as RoundedRectangleBorderDto;
     }
@@ -150,7 +136,7 @@ sealed class OutlinedBorderDto<T extends OutlinedBorder>
   }
 
   @override
-  CircleBorderDto toCircleBorder() {
+  CircleBorderDto toCircle() {
     if (this is CircleBorderDto) return this as CircleBorderDto;
 
     return CircleBorderDto(side: _side);
@@ -164,14 +150,14 @@ sealed class OutlinedBorderDto<T extends OutlinedBorder>
   }
 
   @override
-  LinearBorderDto toLinearBorder() {
+  LinearBorderDto toLinear() {
     if (this is LinearBorderDto) return this as LinearBorderDto;
 
     return LinearBorderDto(side: _side);
   }
 
   @override
-  StarBorderDto toStarBorder() {
+  StarBorderDto toStar() {
     if (this is StarBorderDto) return this as StarBorderDto;
 
     return StarBorderDto(side: _side);

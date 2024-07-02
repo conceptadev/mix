@@ -169,6 +169,7 @@ extension TextStyleExt on TextStyle {
     if (this is TextStyleRef) {
       return TextStyleDto.ref((this as TextStyleRef).token);
     }
+
     return TextStyleDto._(value: [_toData()]);
   }
 

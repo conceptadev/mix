@@ -145,8 +145,8 @@ final class BorderSideDto extends Dto<BorderSide> with _$BorderSideDto {
 
   @override
   BorderSide get defaultValue => const BorderSide(
-        width: 0.0,
         color: Colors.transparent,
+        width: 0.0,
       );
 }
 
