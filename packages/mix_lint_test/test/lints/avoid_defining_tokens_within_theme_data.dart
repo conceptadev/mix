@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mix/mix.dart';
 
 // Wrong case
-final theme = MixThemeData(
+final wrongTheme = MixThemeData(
   colors: {
     // expect_lint: mix_avoid_defining_tokens_within_theme_data
     ColorToken('a'): Colors.black,
@@ -34,7 +34,7 @@ final radiusToken = RadiusToken('c');
 final spaceToken = SpaceToken('d');
 final textStyleToken = TextStyleToken('e');
 
-final otherTheme = MixThemeData(
+final correctTheme = MixThemeData(
   colors: {
     colorToken: Colors.black,
   },
