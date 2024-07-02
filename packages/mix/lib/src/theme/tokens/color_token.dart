@@ -51,7 +51,7 @@ class ColorResolver extends Color with WithTokenResolver<Color> {
 ///
 /// This is used to reference a color token in a theme, and is used to resolve the color value.
 /// Allows pass a [ColorToken] as a [Color] value.
-class ColorRef extends Color with TokenRef<ColorToken, Color> {
+class ColorRef extends Color with TokenRef<ColorToken> {
   /// The token associated with the color reference.
   @override
   final ColorToken token;

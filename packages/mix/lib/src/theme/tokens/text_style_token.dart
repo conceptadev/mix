@@ -2,8 +2,28 @@ import 'dart:ui';
 
 import 'package:flutter/widgets.dart';
 
+import '../../attributes/text_style/text_style_dto.dart';
+import '../../core/factory/mix_data.dart';
 import '../mix/mix_theme.dart';
 import 'mix_token.dart';
+
+class TypographyToken extends MixToken<TextStyleData> {
+  const TypographyToken(super.name);
+
+  @override
+  TypographyRef call() => TypographyRef(this);
+
+  @override
+  TextStyleData resolve(BuildContext context) {
+    final themeValue = MixTheme.of(context).typography[this];
+    assert(
+      themeValue != null,
+      'TypographyToken $name is not defined in the theme',
+    );
+
+    return themeValue!;
+  }
+}
 
 class TextStyleToken extends MixToken<TextStyle> {
   const TextStyleToken(super.name);
@@ -36,7 +56,29 @@ class TextStyleResolver extends TextStyle with WithTokenResolver<TextStyle> {
 }
 
 @immutable
-class TextStyleRef extends TextStyle with TokenRef<TextStyleToken, TextStyle> {
+final class TypographyRef extends TextStyleData with TokenRef<TypographyToken> {
+  @override
+  final TypographyToken token;
+  const TypographyRef(this.token);
+
+  @override
+  operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is TypographyRef && other.token == token;
+  }
+
+  @override
+  int get hashCode => token.hashCode;
+
+  @override
+  TextStyle resolve(MixData mix) {
+    throw Exception('Cannot resolve a reference ');
+  }
+}
+
+@immutable
+final class TextStyleRef extends TextStyle with TokenRef<TextStyleToken> {
   @override
   final TextStyleToken token;
 

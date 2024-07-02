@@ -20,7 +20,7 @@ final directories = <_i1.WidgetbookNode>[
         name: 'button',
         children: [
           _i1.WidgetbookLeafComponent(
-            name: 'RXButton',
+            name: 'RxButton',
             useCase: _i1.WidgetbookUseCase(
               name: 'interactive playground',
               builder: _i2.buildButtonUseCase,

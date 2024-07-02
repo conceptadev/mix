@@ -33,7 +33,7 @@ class RadiusResolver extends Radius with WithTokenResolver<Radius> {
 }
 
 @immutable
-class RadiusRef extends Radius with TokenRef<RadiusToken, Radius> {
+class RadiusRef extends Radius with TokenRef<RadiusToken> {
   @override
   final RadiusToken token;
 

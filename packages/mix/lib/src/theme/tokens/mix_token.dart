@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-import '../../core/dto.dart';
 import '../../internal/compare_mixin.dart';
 import '../../internal/iterable_ext.dart';
 import 'color_token.dart';
@@ -36,12 +35,8 @@ abstract class MixToken<T> {
   int get hashCode => Object.hash(name, runtimeType);
 }
 
-mixin TokenRef<T extends MixToken<V>, V> {
+mixin TokenRef<T extends MixToken> {
   T get token;
-}
-
-mixin DtoRef<T extends Dto<V>, V> {
-  T get data;
 }
 
 mixin WithTokenResolver<V> {

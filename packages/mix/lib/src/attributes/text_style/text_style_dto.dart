@@ -1,7 +1,5 @@
 // ignore_for_file: prefer_relative_imports,avoid-importing-entrypoint-exports
 
-import 'dart:ui';
-
 import 'package:flutter/widgets.dart';
 import 'package:mix/mix.dart';
 import 'package:mix_annotations/mix_annotations.dart';
@@ -26,6 +24,10 @@ final class TextStyleDataRef extends TextStyleData {
   get props => [ref];
 }
 
+// TODO: Look for ways to consolidate TextStyleDto and TextStyleData
+// If we remove TextStyle from tokens, it means we don't need a list of resolvable values
+// to be resolved once we have a context. We can merge the values directly, simplifying the code,
+// and this will allow more predictable behavior overall.
 @MixableDto(generateUtility: false, generateValueExtension: false)
 base class TextStyleData extends Dto<TextStyle> with _$TextStyleData {
   final String? fontFamily;
@@ -151,11 +153,8 @@ final class TextStyleDto extends Dto<TextStyle> with _$TextStyleDto {
   TextStyle resolve(MixData mix) {
     final result = value
         .map((e) => e is TextStyleDataRef ? e.resolve(mix)._toData() : e)
-        .reduce((value, element) {
-      final singleresult = value.merge(element);
-
-      return singleresult;
-    }).resolve(mix);
+        .reduce((a, b) => a.merge(b))
+        .resolve(mix);
 
     return result;
   }

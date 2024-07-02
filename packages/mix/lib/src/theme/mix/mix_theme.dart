@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../attributes/text_style/text_style_dto.dart';
 import '../../internal/compare_mixin.dart';
 import '../material/material_theme.dart';
 import '../tokens/breakpoints_token.dart';
@@ -36,6 +37,7 @@ class MixThemeData with EqualityMixin {
   final StyledTokens<RadiusToken, Radius> radii;
   final StyledTokens<ColorToken, Color> colors;
   final StyledTokens<TextStyleToken, TextStyle> textStyles;
+  final StyledTokens<TypographyToken, TextStyleData> typography;
   final StyledTokens<BreakpointToken, Breakpoint> breakpoints;
   final StyledTokens<SpaceToken, double> spaces;
 
@@ -45,6 +47,7 @@ class MixThemeData with EqualityMixin {
     required this.breakpoints,
     required this.radii,
     required this.spaces,
+    required this.typography,
   });
 
   const MixThemeData.empty()
@@ -54,6 +57,7 @@ class MixThemeData with EqualityMixin {
           breakpoints: const StyledTokens.empty(),
           radii: const StyledTokens.empty(),
           spaces: const StyledTokens.empty(),
+          typography: const StyledTokens.empty(),
         );
 
   factory MixThemeData({
@@ -62,6 +66,7 @@ class MixThemeData with EqualityMixin {
     Map<SpaceToken, double>? spaces,
     Map<TextStyleToken, TextStyle>? textStyles,
     Map<RadiusToken, Radius>? radii,
+    Map<TypographyToken, TextStyleData>? typography,
   }) {
     return MixThemeData.raw(
       textStyles: StyledTokens(textStyles ?? const {}),
@@ -70,6 +75,7 @@ class MixThemeData with EqualityMixin {
           _breakpointTokenMap.merge(StyledTokens(breakpoints ?? const {})),
       radii: StyledTokens(radii ?? const {}),
       spaces: StyledTokens(spaces ?? const {}),
+      typography: StyledTokens(typography ?? const {}),
     );
   }
 
@@ -79,6 +85,7 @@ class MixThemeData with EqualityMixin {
     Map<SpaceToken, double>? spaces,
     Map<TextStyleToken, TextStyle>? textStyles,
     Map<RadiusToken, Radius>? radii,
+    Map<TypographyToken, TextStyleData>? typography,
   }) {
     return materialMixTheme.merge(
       MixThemeData(
@@ -87,6 +94,7 @@ class MixThemeData with EqualityMixin {
         spaces: spaces,
         textStyles: textStyles,
         radii: radii,
+        typography: typography,
       ),
     );
   }
@@ -97,6 +105,7 @@ class MixThemeData with EqualityMixin {
     Map<SpaceToken, double>? spaces,
     Map<TextStyleToken, TextStyle>? textStyles,
     Map<RadiusToken, Radius>? radii,
+    Map<TypographyToken, TextStyleData>? typography,
   }) {
     return MixThemeData.raw(
       textStyles:
@@ -106,6 +115,8 @@ class MixThemeData with EqualityMixin {
           breakpoints == null ? this.breakpoints : StyledTokens(breakpoints),
       radii: radii == null ? this.radii : StyledTokens(radii),
       spaces: spaces == null ? this.spaces : StyledTokens(spaces),
+      typography:
+          typography == null ? this.typography : StyledTokens(typography),
     );
   }
 
@@ -116,17 +127,20 @@ class MixThemeData with EqualityMixin {
       breakpoints: breakpoints.merge(other.breakpoints),
       radii: radii.merge(other.radii),
       spaces: spaces.merge(other.spaces),
+      typography: typography.merge(other.typography),
     );
   }
 
   @override
-  get props => [spaces, breakpoints, colors, textStyles, radii];
+  get props => [spaces, breakpoints, colors, textStyles, radii, typography];
 }
 
 final _breakpointTokenMap = StyledTokens({
   BreakpointToken.xsmall: const Breakpoint(maxWidth: 599),
   BreakpointToken.small: const Breakpoint(minWidth: 600, maxWidth: 1023),
   BreakpointToken.medium: const Breakpoint(minWidth: 1024, maxWidth: 1439),
-  BreakpointToken.large:
-      const Breakpoint(minWidth: 1440, maxWidth: double.infinity),
+  BreakpointToken.large: const Breakpoint(
+    minWidth: 1440,
+    maxWidth: double.infinity,
+  ),
 });

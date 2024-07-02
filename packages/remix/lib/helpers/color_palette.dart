@@ -46,6 +46,11 @@ class RadixColors {
   static const violetDark = RadixColors(_violetDark, _violetDarkAlpha);
   static const yellow = RadixColors(_yellow, _yellowAlpha);
   static const yellowDark = RadixColors(_yellowDark, _yellowDarkAlpha);
+  static const grass = RadixColors(_grass, _grassAlpha);
+  static const grassDark = RadixColors(_grassDark, _grassDarkAlpha);
+  static const sky = RadixColors(_sky, _skyAlpha);
+  static const skyDark = RadixColors(_skyDark, _skyDarkAlpha);
+  //TODO: ADD REMAINING COLORS
 
   Color get s1 => swatch[1]!;
   Color get s1Alpha => alphaSwatch[1]!;

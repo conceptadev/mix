@@ -5,7 +5,7 @@ import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
 @widgetbook.UseCase(
-  name: 'interactive playground',
+  name: 'Button Component',
   type: RxButton,
 )
 Widget buildButtonUseCase(BuildContext context) {
@@ -16,6 +16,12 @@ Widget buildButtonUseCase(BuildContext context) {
         initialValue: 'Button',
       ),
       onPressed: () {},
+      size: context.knobs.list(
+        label: 'Size',
+        options: ButtonSize.values,
+        initialOption: ButtonSize.medium,
+        labelBuilder: (value) => value.name.split('.').last,
+      ),
       loading: context.knobs.boolean(
         label: 'Is loading',
         initialValue: false,
@@ -31,12 +37,6 @@ Widget buildButtonUseCase(BuildContext context) {
       iconRight: context.knobs.iconData(
         label: 'Icon right',
         initialValue: null,
-      ),
-      size: context.knobs.list(
-        label: 'Size',
-        options: ButtonSize.values,
-        initialOption: ButtonSize.medium,
-        labelBuilder: (value) => value.name.split('.').last,
       ),
       type: type,
     );

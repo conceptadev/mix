@@ -9,7 +9,7 @@ final $rx = _RemixTokenRef();
 
 class _RemixTokenRef {
   _RemixTokenRef();
-  final _color = const RemixColor();
+  final _color = RemixColor();
   late final accent1 = _color.accent1;
   late final accent2 = _color.accent2;
   late final accent3 = _color.accent3;
@@ -59,35 +59,35 @@ class _RemixTokenRef {
   late final neutral11A = _color.neutral11A;
   late final neutral12A = _color.neutral12A;
 
-  final _space = const RemixSpace();
-  late final space1 = _space.s1;
-  late final space2 = _space.s2;
-  late final space3 = _space.s3;
-  late final space4 = _space.s4;
-  late final space5 = _space.s5;
-  late final space6 = _space.s6;
-  late final space7 = _space.s7;
-  late final space8 = _space.s8;
-  late final space9 = _space.s9;
+  final _space = RemixSpace();
+  late final space1 = _space.space1;
+  late final space2 = _space.space2;
+  late final space3 = _space.space3;
+  late final space4 = _space.space4;
+  late final space5 = _space.space5;
+  late final space6 = _space.space6;
+  late final space7 = _space.space7;
+  late final space8 = _space.space8;
+  late final space9 = _space.space9;
 
-  final _radius = const RemixRadius();
-  late final radius1 = _radius.r1;
-  late final radius2 = _radius.r2;
-  late final radius3 = _radius.r3;
-  late final radius4 = _radius.r4;
-  late final radius5 = _radius.r5;
-  late final radius6 = _radius.r6;
+  final _radius = RemixRadius();
+  late final radius1 = _radius.radius1;
+  late final radius2 = _radius.radius2;
+  late final radius3 = _radius.radius3;
+  late final radius4 = _radius.radius4;
+  late final radius5 = _radius.radius5;
+  late final radius6 = _radius.radius6;
 
-  final _text = const RemixTypography();
-  late final text1 = _text.t1;
-  late final text2 = _text.t2;
-  late final text3 = _text.t3;
-  late final text4 = _text.t4;
-  late final text5 = _text.t5;
-  late final text6 = _text.t6;
-  late final text7 = _text.t7;
-  late final text8 = _text.t8;
-  late final text9 = _text.t9;
+  final _text = RemixTypography();
+  late final text1 = _text.text1;
+  late final text2 = _text.text2;
+  late final text3 = _text.text3;
+  late final text4 = _text.text4;
+  late final text5 = _text.text5;
+  late final text6 = _text.text6;
+  late final text7 = _text.text7;
+  late final text8 = _text.text8;
+  late final text9 = _text.text9;
 }
 
 final _baseRemixTokens = MixThemeData(
@@ -96,6 +96,7 @@ final _baseRemixTokens = MixThemeData(
   spaces: remixSpaceTokens,
   radii: remixRadiusTokens,
 );
+
 final _lightRemixTokens = _baseRemixTokens;
 final _darkRemixTokens = _baseRemixTokens.copyWith(
   colors: remixDarkColorTokens,

@@ -1,80 +1,65 @@
 import 'package:flutter/widgets.dart';
 import 'package:mix/mix.dart';
 
-const _text1 = TextStyleToken('text1');
-const _text2 = TextStyleToken('text2');
-const _text3 = TextStyleToken('text3');
-const _text4 = TextStyleToken('text4');
-const _text5 = TextStyleToken('text5');
-const _text6 = TextStyleToken('text6');
-const _text7 = TextStyleToken('text7');
-const _text8 = TextStyleToken('text8');
-const _text9 = TextStyleToken('text9');
-
 class RemixTypography {
-  const RemixTypography();
+  RemixTypography();
 
-  final t1 = _text1;
-  final t2 = _text2;
-  final t3 = _text3;
-  final t4 = _text4;
-  final t5 = _text5;
-  final t6 = _text6;
-  final t7 = _text7;
-  final t8 = _text8;
-  final t9 = _text9;
+  final text1 = const TextStyleToken('--text-1');
+  final text2 = const TextStyleToken('--text-2');
+  final text3 = const TextStyleToken('--text-3');
+  final text4 = const TextStyleToken('--text-4');
+  final text5 = const TextStyleToken('--text-5');
+  final text6 = const TextStyleToken('--text-6');
+  final text7 = const TextStyleToken('--text-7');
+  final text8 = const TextStyleToken('--text-8');
+  final text9 = const TextStyleToken('--text-9');
 }
 
-const _typography = RemixTypography();
-
+final _t = RemixTypography();
 final remixTextTokens = <TextStyleToken, TextStyle>{
-  _typography.t1: const TextStyle(
-    inherit: false,
+  _t.text1: const TextStyle(
     fontSize: 12,
     letterSpacing: 0.0025,
-    height: 1.2,
+    height: 1.33,
   ),
-  _typography.t2: const TextStyle(
-    inherit: false,
+  _t.text2: const TextStyle(
     fontSize: 14,
     letterSpacing: 0,
-    height: 1.4,
+    height: 1.43,
   ),
-  _typography.t3: const TextStyle(
-    inherit: false,
+  _t.text3: const TextStyle(
     fontSize: 16,
     letterSpacing: 0,
-    height: 1.2,
+    height: 1.50,
   ),
-  _typography.t4: const TextStyle(
-    inherit: false,
+  _t.text4: const TextStyle(
     fontSize: 18,
     letterSpacing: -0.0025,
-    height: 1.2,
+    height: 1.44,
   ),
-  _typography.t5: const TextStyle(
+  _t.text5: const TextStyle(
     fontSize: 20,
     letterSpacing: -0.005,
-    height: 1.4,
+    height: 1.40,
   ),
-  _typography.t6: const TextStyle(
+  _t.text6: const TextStyle(
     fontSize: 24,
     letterSpacing: -0.00625,
-    height: 1.4,
+    height: 1.25,
   ),
-  _typography.t7: const TextStyle(
+  _t.text7: const TextStyle(
     fontSize: 28,
     letterSpacing: -0.0075,
-    height: 1.4,
+    height: 1.29,
   ),
-  _typography.t8: const TextStyle(
+  _t.text8: const TextStyle(
     fontSize: 35,
     letterSpacing: -0.01,
-    height: 1.4,
+    height: 1.14,
   ),
-  _typography.t9: const TextStyle(
+  _t.text9: const TextStyle(
     fontSize: 60,
     letterSpacing: -0.025,
-    height: 1.4,
+    height: 1.00,
   ),
 };

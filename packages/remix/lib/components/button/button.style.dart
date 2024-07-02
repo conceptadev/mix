@@ -21,13 +21,14 @@ Style get _baseStyle => Style(
       _flex.crossAxisAlignment.center(),
       _flex.mainAxisSize.min(),
       _container.borderRadius(6),
-      _label.style.fontWeight(FontWeight.w500),
       _spinner.strokeWidth(1),
-      _label.textHeightBehavior(const TextHeightBehavior(
-          // applyHeightToFirstAscent: false,
-          // applyHeightToLastDescent: false,
-          // leadingDistribution: TextLeadingDistribution.even,
-          )),
+      _label.style.fontWeight(FontWeight.w500),
+      _label.textHeightBehavior(
+        const TextHeightBehavior(
+          applyHeightToFirstAscent: false,
+          applyHeightToLastDescent: true,
+        ),
+      ),
     );
 
 final _onDisabledBackground = Style(

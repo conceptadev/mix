@@ -1,5 +1,4 @@
 import 'package:mix/mix.dart';
-import 'package:themed_button/styles/tokens.dart';
 
 import 'button.variants.dart';
 
@@ -16,20 +15,12 @@ Style container() => Style(
       //   $box.padding.horizontal.ref($token.space.xsmall),
       //   $box.padding.vertical.ref($token.space.xxsmall),
       // ),
-      ButtonSize.medium(
-        $box.padding.horizontal.ref($token.space.small),
-        $box.padding.vertical.ref($token.space.xxsmall),
-      ),
+
       // ButtonSize.large(
       //   $box.padding.horizontal.ref($token.space.medium),
       //   $box.padding.vertical.ref($token.space.xsmall),
       // ),
-      ButtonType.primary(
-        $box.color.ref($token.color.primary),
-        $on.hover(
-          $box.color.ref($token.color.primaryHover),
-        ),
-      ),
+
       // ButtonType.secondary(
       //   $box.color.grey.shade200(),
       //   $on.hover(
@@ -98,9 +89,7 @@ Style label() => Style(
       // ButtonSize.large(
       //   $text.style.fontSize(18),
       // ),
-      ButtonType.primary(
-        $text.style.color.ref($token.color.onPrimary),
-      ),
+
       // ButtonType.secondary(
       //   $text.style.color.ref($token.color.primaryHover),
       // ),

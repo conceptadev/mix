@@ -38,12 +38,12 @@ class RxButton extends StatelessWidget {
         .applyVariants([size, type]).animate();
   }
 
-  Widget _buildLoadingOverlay(Widget child) {
+  Widget _buildLoadingOverlay(ButtonSpec spec, Widget child) {
     return loading
         ? Stack(
             alignment: Alignment.center,
             children: [
-              child,
+              spec.spinner(),
               Opacity(opacity: 0.0, child: child),
             ],
           )
@@ -61,7 +61,7 @@ class RxButton extends StatelessWidget {
       ],
     );
 
-    return loading ? _buildLoadingOverlay(flexWidget) : flexWidget;
+    return loading ? _buildLoadingOverlay(spec, flexWidget) : flexWidget;
   }
 
   @override

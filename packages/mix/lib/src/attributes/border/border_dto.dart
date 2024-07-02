@@ -84,7 +84,7 @@ final class BorderDto extends BoxBorderDto<Border> with _$BorderDto {
   bool get isUniform => top == bottom && top == left && top == right;
 
   @override
-  Border get defaultValue => Border.all(color: Colors.transparent, width: 0.0);
+  Border get defaultValue => Border.all();
 }
 
 @MixableDto(generateUtility: false)
@@ -144,10 +144,7 @@ final class BorderSideDto extends Dto<BorderSide> with _$BorderSideDto {
   const BorderSideDto.none() : this(style: BorderStyle.none, width: 0.0);
 
   @override
-  BorderSide get defaultValue => const BorderSide(
-        color: Colors.transparent,
-        width: 0.0,
-      );
+  BorderSide get defaultValue => const BorderSide();
 }
 
 extension BoxBorderExt on BoxBorder {
