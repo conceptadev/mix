@@ -87,6 +87,30 @@ void main() {
     expect(containerOffset.dy, 0);
   });
 
+  testWidgets('Does not render Gap with no children', (tester) async {
+    await tester.pumpMaterialApp(
+      HBox(
+        style: Style($flex.gap(10)),
+        children: const [],
+      ),
+    );
+
+    expect(find.byType(SizedBox), findsNothing);
+  });
+
+  testWidgets('Does not render Gap with one child', (tester) async {
+    await tester.pumpMaterialApp(
+      HBox(
+        style: Style($flex.gap(10)),
+        children: const [
+          Text('test'),
+        ],
+      ),
+    );
+
+    expect(find.byType(SizedBox), findsNothing);
+  });
+
   testWidgets(
     'should render correctly when gap is applied to Hbox with any MainAxisAlignment',
     (WidgetTester tester) async {
