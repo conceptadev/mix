@@ -106,6 +106,7 @@ final class BoxSpec extends Spec<BoxSpec> with _$BoxSpec {
             spec: this,
             duration: animated!.duration,
             curve: animated!.curve,
+            orderOfModifiers: orderOfModifiers,
             child: child,
           )
         : BoxSpecWidget(

@@ -12,8 +12,15 @@ class StyledIcon extends StyledWidget {
     super.key,
     super.inherit = true,
     this.textDirection,
-    super.orderOfModifiers = const [],
-  });
+    @Deprecated('Use orderOfModifiers parameter instead')
+    List<Type> modifierOrder = const <Type>[],
+    List<Type> orderOfModifiers = const <Type>[],
+  })  : assert(modifierOrder == const <Type>[] ||
+            orderOfModifiers == const <Type>[]),
+        super(
+          orderOfModifiers:
+              orderOfModifiers == const [] ? modifierOrder : orderOfModifiers,
+        );
 
   final IconData? icon;
   final String? semanticLabel;
@@ -51,8 +58,13 @@ class IconSpecWidget extends StatelessWidget {
     this.semanticLabel,
     super.key,
     this.textDirection,
-    this.orderOfModifiers = const [],
-  });
+    @Deprecated('Use orderOfModifiers parameter instead')
+    List<Type> modifierOrder = const <Type>[],
+    List<Type> orderOfModifiers = const <Type>[],
+  })  : assert(modifierOrder == const <Type>[] ||
+            orderOfModifiers == const <Type>[]),
+        orderOfModifiers =
+            orderOfModifiers == const [] ? modifierOrder : orderOfModifiers;
 
   final IconData? icon;
   final IconSpec? spec;
@@ -90,8 +102,16 @@ class AnimatedStyledIcon extends StyledWidget {
     required this.progress,
     super.inherit,
     this.textDirection,
-    super.orderOfModifiers = const [],
-  });
+    @Deprecated('Use orderOfModifiers parameter instead')
+    List<Type> modifierOrder = const <Type>[],
+    List<Type> orderOfModifiers = const <Type>[],
+  })  : assert(modifierOrder == const <Type>[] ||
+            orderOfModifiers == const <Type>[]),
+        super(
+          orderOfModifiers: orderOfModifiers == const <Type>[]
+              ? modifierOrder
+              : orderOfModifiers,
+        );
 
   final AnimatedIconData icon;
   final String? semanticLabel;
@@ -122,11 +142,17 @@ class AnimatedIconSpecWidget extends ImplicitlyAnimatedWidget {
     super.key,
     this.semanticLabel,
     this.textDirection,
-    this.orderOfModifiers = const [],
     super.curve,
     required super.duration,
     super.onEnd,
-  });
+    @Deprecated('Use orderOfModifiers parameter instead')
+    List<Type> modifierOrder = const <Type>[],
+    List<Type> orderOfModifiers = const <Type>[],
+  })  : assert(modifierOrder == const <Type>[] ||
+            orderOfModifiers == const <Type>[]),
+        orderOfModifiers = orderOfModifiers == const <Type>[]
+            ? modifierOrder
+            : orderOfModifiers;
 
   final IconData? icon;
   final IconSpec spec;
