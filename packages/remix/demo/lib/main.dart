@@ -16,9 +16,40 @@ class HotReload extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Widgetbook.material(
+      addons: [
+        MaterialThemeAddon(
+          themes: [
+            WidgetbookTheme(
+              name: 'Light',
+              data: ThemeData.light(),
+            ),
+            WidgetbookTheme(
+              name: 'Dark',
+              data: ThemeData.dark(),
+            ),
+          ],
+          initialTheme: WidgetbookTheme(
+            name: 'Dark',
+            data: ThemeData.dark(),
+          ),
+        ),
+        BuilderAddon(
+          name: 'Remix Tokens',
+          builder: (context, child) {
+            final isDarkTheme = Theme.of(context).brightness == Brightness.dark;
+            return RemixTokens(
+              data: isDarkTheme ? RemixTokens.dark : RemixTokens.light,
+              child: Container(
+                color: isDarkTheme ? Colors.black87 : Colors.white,
+                child: Center(child: child),
+              ),
+            );
+          },
+        ),
+      ],
       appBuilder: (context, child) => MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: Scaffold(body: Center(child: RemixTokens(child: child))),
+        home: Scaffold(body: Center(child: child)),
       ),
       directories: directories,
     );

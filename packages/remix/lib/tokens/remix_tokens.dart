@@ -1,6 +1,5 @@
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 import 'package:mix/mix.dart';
-import 'package:remix/helpers/context_ext.dart';
 import 'package:remix/tokens/color_tokens.dart';
 import 'package:remix/tokens/radius_tokens.dart';
 import 'package:remix/tokens/space_tokens.dart';
@@ -103,14 +102,19 @@ final _darkRemixTokens = _baseRemixTokens.copyWith(
 );
 
 class RemixTokens extends StatelessWidget {
-  const RemixTokens({super.key, required this.child});
+  const RemixTokens({super.key, required this.child, required this.data});
 
   final Widget child;
+
+  final MixThemeData data;
+
+  static MixThemeData light = _lightRemixTokens;
+  static MixThemeData dark = _darkRemixTokens;
 
   @override
   Widget build(BuildContext context) {
     return MixTheme(
-      data: context.isDarkMode ? _darkRemixTokens : _lightRemixTokens,
+      data: data,
       child: child,
     );
   }

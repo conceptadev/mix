@@ -32,7 +32,7 @@ final remixTextTokens = <TextStyleToken, TextStyle>{
     inherit: false,
     fontSize: 12,
     letterSpacing: 0.0025,
-    height: 1.4,
+    height: 1.2,
   ),
   _typography.t2: const TextStyle(
     inherit: false,
@@ -44,13 +44,13 @@ final remixTextTokens = <TextStyleToken, TextStyle>{
     inherit: false,
     fontSize: 16,
     letterSpacing: 0,
-    height: 1.4,
+    height: 1.2,
   ),
   _typography.t4: const TextStyle(
     inherit: false,
     fontSize: 18,
     letterSpacing: -0.0025,
-    height: 1.4,
+    height: 1.2,
   ),
   _typography.t5: const TextStyle(
     fontSize: 20,

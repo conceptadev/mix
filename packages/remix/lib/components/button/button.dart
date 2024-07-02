@@ -4,8 +4,8 @@ import 'package:remix/components/button/button.style.dart';
 import 'package:remix/components/button/button.variants.dart';
 import 'package:remix/components/button/button_spec.dart';
 
-class RXButton extends StatelessWidget {
-  const RXButton({
+class RxButton extends StatelessWidget {
+  const RxButton({
     super.key,
     required this.label,
     this.disabled = false,
@@ -30,29 +30,38 @@ class RXButton extends StatelessWidget {
 
   final Style? style;
 
+  bool get _hasIcon => iconLeft != null || iconRight != null;
+
   Style _buildStyle() {
     return buildDefaultButtonStyle()
         .merge(style)
         .applyVariants([size, type]).animate();
   }
 
-  List<Widget> _buildChildren(ButtonSpec spec) {
-    if (loading) {
-      return [
-        Stack(
-          alignment: Alignment.center,
-          children: [
-            spec.spinner(),
-            Opacity(opacity: 0.0, child: spec.label(label)),
-          ],
-        )
-      ];
-    }
-    return [
-      if (iconLeft != null) spec.icon(iconLeft),
-      if (label.isNotEmpty) spec.label(label),
-      if (iconRight != null) spec.icon(iconRight),
-    ];
+  Widget _buildLoadingOverlay(Widget child) {
+    return loading
+        ? Stack(
+            alignment: Alignment.center,
+            children: [
+              child,
+              Opacity(opacity: 0.0, child: child),
+            ],
+          )
+        : child;
+  }
+
+  Widget _buildChildren(ButtonSpec spec) {
+    final flexWidget = spec.flex(
+      direction: Axis.horizontal,
+      children: [
+        if (iconLeft != null) spec.icon(iconLeft),
+        // If there is no icon always render the label
+        if (label.isNotEmpty || !_hasIcon) spec.label(label),
+        if (iconRight != null) spec.icon(iconRight),
+      ],
+    );
+
+    return loading ? _buildLoadingOverlay(flexWidget) : flexWidget;
   }
 
   @override
@@ -64,16 +73,10 @@ class RXButton extends StatelessWidget {
       child: SpecBuilder(
           style: _buildStyle(),
           builder: (context) {
-            var spec = ButtonSpec.of(context);
+            final spec = ButtonSpec.of(context);
 
-            final ContainerSpecWidget = spec.container;
-            final FlexSpecWidget = spec.flex;
-
-            return ContainerSpecWidget(
-              child: FlexSpecWidget(
-                direction: Axis.horizontal,
-                children: _buildChildren(spec),
-              ),
+            return spec.container(
+              child: _buildChildren(spec),
             );
           }),
     );

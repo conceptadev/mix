@@ -785,6 +785,7 @@
 /Users/leofarias/Projects/mix/packages/mix_annotations/lib/mix_annotations.dart
 /Users/leofarias/Projects/mix/packages/mix_annotations/lib/src/annotations.dart
 /Users/leofarias/Projects/mix/packages/remix/LICENSE
+/Users/leofarias/Projects/mix/packages/remix/demo/lib/addons/icon_data_knob.dart
 /Users/leofarias/Projects/mix/packages/remix/demo/lib/components/button.dart
 /Users/leofarias/Projects/mix/packages/remix/demo/lib/main.dart
 /Users/leofarias/Projects/mix/packages/remix/demo/lib/main.directories.g.dart
@@ -802,7 +803,6 @@
 /Users/leofarias/Projects/mix/packages/remix/lib/components/spinner/spinner_spec.dart
 /Users/leofarias/Projects/mix/packages/remix/lib/components/spinner/spinner_spec.g.dart
 /Users/leofarias/Projects/mix/packages/remix/lib/helpers/color_palette.dart
-/Users/leofarias/Projects/mix/packages/remix/lib/helpers/context_ext.dart
 /Users/leofarias/Projects/mix/packages/remix/lib/remix.dart
 /Users/leofarias/Projects/mix/packages/remix/lib/tokens/color_tokens.dart
 /Users/leofarias/Projects/mix/packages/remix/lib/tokens/radius_tokens.dart

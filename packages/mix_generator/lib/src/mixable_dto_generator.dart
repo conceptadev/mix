@@ -6,7 +6,6 @@ import 'package:mix_annotations/mix_annotations.dart';
 import 'package:mix_generator/src/builders/dto/class_utility_dto.dart';
 import 'package:mix_generator/src/builders/dto/extension_value.dart';
 import 'package:mix_generator/src/builders/dto/mixin_dto.dart';
-// ignore_for_file: prefer_relative_imports
 import 'package:mix_generator/src/helpers/field_info.dart';
 import 'package:mix_generator/src/helpers/settings.dart';
 import 'package:mix_generator/src/helpers/visitors.dart';
