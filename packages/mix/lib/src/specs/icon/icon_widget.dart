@@ -118,10 +118,10 @@ class AnimatedIconSpecWidget extends ImplicitlyAnimatedWidget {
     this.semanticLabel,
     this.textDirection,
     this.modifierOrder = const [],
-    Curve curve = Curves.linear,
-    required Duration duration,
-    VoidCallback? onEnd,
-  }) : super(curve: curve, duration: duration, onEnd: onEnd);
+    super.curve,
+    required super.duration,
+    super.onEnd,
+  });
 
   final IconData? icon;
   final IconSpec spec;

@@ -343,10 +343,10 @@ class AnimatedStyle extends Style {
   final AnimatedData animated;
 
   const AnimatedStyle._({
-    required AttributeMap<StyledAttribute> styles,
-    required AttributeMap<VariantAttribute> variants,
+    required super.styles,
+    required super.variants,
     required this.animated,
-  }) : super._(styles: styles, variants: variants);
+  }) : super._();
 
   factory AnimatedStyle(
     Style style, {

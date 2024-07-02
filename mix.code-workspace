@@ -5,6 +5,10 @@
 			"path": "packages/mix"
 		},
 		{
+			"name": "root",
+			"path": "."
+		},
+		{
 			"name": "mix_generator",
 			"path": "packages/mix_generator"
 		},
@@ -17,8 +21,4 @@
 			"path": "packages/remix"
 		}
 	],
-	"settings": {},
-	"extensions": {
-		"recommendations": []
-	}
 }

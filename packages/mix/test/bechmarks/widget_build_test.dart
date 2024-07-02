@@ -9,7 +9,7 @@ import 'package:mix/mix.dart';
 import '../helpers/testing_utils.dart';
 
 class _StyledContainerExample extends StatelessWidget {
-  const _StyledContainerExample({Key? key}) : super(key: key);
+  const _StyledContainerExample();
 
   @override
   Widget build(BuildContext context) {
@@ -164,7 +164,7 @@ void main() {
 }
 
 class StyleWidgetExpensiveAttributge extends StatelessWidget {
-  const StyleWidgetExpensiveAttributge({Key? key}) : super(key: key);
+  const StyleWidgetExpensiveAttributge({super.key});
 
   @override
   Widget build(BuildContext context) {

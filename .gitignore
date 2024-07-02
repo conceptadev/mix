@@ -88,11 +88,11 @@ node_modules
 
 # FVM 
 
-# FVM Version Cache
-.fvm/
-
 .packages
 .pub/
 .dart_tool/
 pubspec_overrides.yaml
 pubspec.lock
+
+# FVM Version Cache
+.fvm/

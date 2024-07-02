@@ -168,8 +168,7 @@ extension WidgetTesterExt on WidgetTester {
 const FillWidget = SizedBox(width: 25, height: 25);
 
 class WrapMixThemeWidget extends StatelessWidget {
-  const WrapMixThemeWidget({required this.child, this.theme, Key? key})
-      : super(key: key);
+  const WrapMixThemeWidget({required this.child, this.theme, super.key});
 
   final Widget child;
   final MixThemeData? theme;
