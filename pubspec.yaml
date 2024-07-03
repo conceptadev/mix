@@ -4,4 +4,5 @@ environment:
   sdk: ">=3.0.0 <4.0.0"
 
 dev_dependencies:
+  husky: ^0.1.7
   melos: ^6.0.0
