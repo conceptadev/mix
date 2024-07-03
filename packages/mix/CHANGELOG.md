@@ -1,11 +1,3 @@
-## 1.2.0
-
- - **FIX**: Exception when there is no children on flex (#345).
- - **FIX**: Added remaining params to callable specs and modifiers (#332).
- - **FIX**: Gap resolve SpaceToken in flex attribute (#327).
- - **FIX**: mix - Improved merge behavior between ShapeDecoration and BoxDecoration (#316).
- - **FEAT**: pressable supports keyboard events (#346).
-
 ## 1.1.3
 
 - Improved merge behavior between ShapeDecoration and BoxDecoration
