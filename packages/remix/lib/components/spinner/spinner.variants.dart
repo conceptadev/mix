@@ -1,10 +1,10 @@
 import 'package:mix/mix.dart';
 
-class SpinnerVariant extends Variant {
-  const SpinnerVariant(super.name);
+interface class ISpinnerVariant extends Variant {
+  const ISpinnerVariant(super.name);
 }
 
-class SpinnerSize extends SpinnerVariant {
+class SpinnerSize extends ISpinnerVariant {
   const SpinnerSize(super.name);
 
   static const xsmall = SpinnerSize('remix.spinner.xsmall');

@@ -46,6 +46,7 @@ class HotReload extends StatelessWidget {
             );
           },
         ),
+        InspectorAddon(),
       ],
       appBuilder: (context, child) => MaterialApp(
         debugShowCheckedModeBanner: false,

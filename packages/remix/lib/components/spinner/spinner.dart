@@ -2,10 +2,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:mix/mix.dart';
-import 'package:remix/components/spinner/painters/dotted_spinner_painter.dart';
-import 'package:remix/components/spinner/painters/solid_spinner_painter.dart';
 import 'package:remix/components/spinner/spinner.style.dart';
 import 'package:remix/components/spinner/spinner.variants.dart';
+import 'package:remix/components/spinner/spinner_painter.dart';
 import 'package:remix/components/spinner/spinner_spec.dart';
 
 class RXSpinner extends StatelessWidget {
