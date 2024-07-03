@@ -167,6 +167,12 @@ abstract class _MixStateWidgetBuilderState<T extends _MixStateWidgetBuilder>
   );
   int _pressCount = 0;
 
+  late final Map<Type, Action<Intent>> _actionMap = <Type, Action<Intent>>{
+    ActivateIntent: CallbackAction<ActivateIntent>(onInvoke: activateOnIntent),
+    ButtonActivateIntent:
+        CallbackAction<ButtonActivateIntent>(onInvoke: activateOnIntent),
+  };
+
   void _handleFocusUpdate(bool hasFocus) {
     updateState(() => _isFocused = hasFocus);
   }
@@ -235,6 +241,31 @@ abstract class _MixStateWidgetBuilderState<T extends _MixStateWidgetBuilder>
     }
   }
 
+  void _onTapUp(TapUpDetails details) {
+    if (_preventEvent) return;
+    _handlePressUpdate(false);
+  }
+
+  void _onTapCancel() {
+    if (_preventEvent) return;
+    _handlePressUpdate(false);
+  }
+
+  void _onLongPressStart(LongPressStartDetails details) {
+    if (_preventEvent) return;
+    handleLongPressUpdate(true);
+  }
+
+  void _onLongPressEnd(LongPressEndDetails details) {
+    if (_preventEvent) return;
+    handleLongPressUpdate(false);
+  }
+
+  void _onLongPressCancel() {
+    if (_preventEvent) return;
+    handleLongPressUpdate(false);
+  }
+
   void handleLongPressUpdate(bool isLongPressed) {
     if (isLongPressed == _isLongPressed) return;
 
@@ -265,31 +296,6 @@ abstract class _MixStateWidgetBuilderState<T extends _MixStateWidgetBuilder>
     if (widget.enableFeedback) Feedback.forTap(context);
   }
 
-  void _onTapUp(TapUpDetails details) {
-    if (_preventEvent) return;
-    _handlePressUpdate(false);
-  }
-
-  void _onTapCancel() {
-    if (_preventEvent) return;
-    _handlePressUpdate(false);
-  }
-
-  void _onLongPressStart(LongPressStartDetails details) {
-    if (_preventEvent) return;
-    handleLongPressUpdate(true);
-  }
-
-  void _onLongPressEnd(LongPressEndDetails details) {
-    if (_preventEvent) return;
-    handleLongPressUpdate(false);
-  }
-
-  void _onLongPressCancel() {
-    if (_preventEvent) return;
-    handleLongPressUpdate(false);
-  }
-
   void handleOnLongPress() {
     if (_preventEvent) return;
 
@@ -297,38 +303,45 @@ abstract class _MixStateWidgetBuilderState<T extends _MixStateWidgetBuilder>
     if (widget.enableFeedback) Feedback.forLongPress(context);
   }
 
+  void activateOnIntent(Intent? intent) {
+    handleOnPress();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTapUp: _onTapUp,
-      onTap: handleOnPress,
-      onTapCancel: _onTapCancel,
-      onLongPressCancel: _onLongPressCancel,
-      onLongPress: handleOnLongPress,
-      onLongPressStart: _onLongPressStart,
-      onLongPressEnd: _onLongPressEnd,
-      onPanDown: _handlePanDown,
-      onPanUpdate: _handlePanUpdate,
-      onPanEnd: _handlePanUp,
-      behavior: widget.hitTestBehavior,
-      child: CustomFocusableActionDetector(
-        enabled: widget.enabled,
-        focusNode: widget.focusNode,
-        autofocus: widget.autofocus,
-        onShowFocusHighlight: _handleFocusUpdate,
-        onShowHoverHighlight: _handleHoverUpdate,
-        onFocusChange: widget.onFocusChange,
-        onMouseEnter: _handleOnMouseEnter,
-        onMouseExit: _handleOnMouseExit,
-        onMouseHover: _handleMouseHover,
-        child: WidgetStateModel(
+    return Actions(
+      actions: _actionMap,
+      child: GestureDetector(
+        onTapUp: _onTapUp,
+        onTap: handleOnPress,
+        onTapCancel: _onTapCancel,
+        onLongPressCancel: _onLongPressCancel,
+        onLongPress: handleOnLongPress,
+        onLongPressStart: _onLongPressStart,
+        onLongPressEnd: _onLongPressEnd,
+        onPanDown: _handlePanDown,
+        onPanUpdate: _handlePanUpdate,
+        onPanEnd: _handlePanUp,
+        behavior: widget.hitTestBehavior,
+        child: CustomFocusableActionDetector(
           enabled: widget.enabled,
-          hovered: _isHovered,
-          focused: _isFocused,
-          pressed: _isPressed,
-          longPressed: _isLongPressed,
-          pointerPosition: _pointerPosition,
-          child: widget.child,
+          focusNode: widget.focusNode,
+          autofocus: widget.autofocus,
+          onShowFocusHighlight: _handleFocusUpdate,
+          onShowHoverHighlight: _handleHoverUpdate,
+          onFocusChange: widget.onFocusChange,
+          onMouseEnter: _handleOnMouseEnter,
+          onMouseExit: _handleOnMouseExit,
+          onMouseHover: _handleMouseHover,
+          child: WidgetStateModel(
+            enabled: widget.enabled,
+            hovered: _isHovered,
+            focused: _isFocused,
+            pressed: _isPressed,
+            longPressed: _isLongPressed,
+            pointerPosition: _pointerPosition,
+            child: widget.child,
+          ),
         ),
       ),
     );
