@@ -20,7 +20,8 @@ void main() {
     testWidgets('Renders modifiers in the correct order', (tester) async {
       await tester.pumpMaterialApp(
         RenderModifiers(
-          modifiers: resolveModifierSpecs(const [], mixData),
+          modifiers: mixData.modifiers,
+          orderOfModifiers: const [],
           child: const Text('child'),
         ),
       );
@@ -82,7 +83,8 @@ void main() {
 
       await tester.pumpMaterialApp(
         RenderModifiers(
-          modifiers: resolveModifierSpecs(const [], mixData),
+          modifiers: mixData.modifiers,
+          orderOfModifiers: const [],
           child: const Text('child'),
         ),
       );
@@ -96,7 +98,8 @@ void main() {
 
       await tester.pumpMaterialApp(
         RenderModifiers(
-          modifiers: resolveModifierSpecs(const [], mixData),
+          modifiers: mixData.modifiers,
+          orderOfModifiers: const [],
           child: const Text('child'),
         ),
       );
@@ -110,13 +113,15 @@ void main() {
       (tester) async {
         await tester.pumpMaterialApp(
           RenderModifiers(
-            modifiers: resolveModifierSpecs([
+            modifiers: mixData.modifiers,
+            orderOfModifiers: const [
               ClipOvalModifierAttribute,
               AspectRatioModifierAttribute,
               TransformModifierAttribute,
               OpacityModifierAttribute,
               VisibilityModifierAttribute,
-            ], mixData),
+            ],
+            mix: mixData,
             child: const Text('child'),
           ),
         );
@@ -179,9 +184,12 @@ void main() {
       (tester) async {
         await tester.pumpMaterialApp(
           RenderModifiers(
-            modifiers: resolveModifierSpecs(
-                [ClipOvalModifierAttribute, AspectRatioModifierAttribute],
-                mixData),
+            mix: mixData,
+            modifiers: mixData.modifiers,
+            orderOfModifiers: const [
+              ClipOvalModifierAttribute,
+              AspectRatioModifierAttribute
+            ],
             child: const Text('child'),
           ),
         );
@@ -253,7 +261,8 @@ void main() {
 
       await tester.pumpMaterialApp(
         RenderAnimatedModifiers(
-          modifiers: resolveModifierSpecs(const [], mixData),
+          modifiers: mixData.modifiers,
+          orderOfModifiers: const [],
           duration: const Duration(milliseconds: 300),
           child: const Text('child'),
         ),

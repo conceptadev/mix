@@ -75,8 +75,20 @@ class MixData {
     return _mergeAttributes(attributes) ?? attributes.last;
   }
 
+  List<WidgetModifierSpec<dynamic>>
+      modifiersOf<M extends WidgetModifierSpec<dynamic>>() {
+    return modifiers.whereType<M>().toList();
+  }
+
+  List<WidgetModifierSpec<dynamic>> get modifiers {
+    return _attributes
+        .whereType<WidgetModifierAttribute>()
+        .map((e) => e.resolve(this))
+        .toList();
+  }
+
   Iterable<A> whereType<A extends StyledAttribute>() {
-    return _attributes.whereType();
+    return _attributes.whereType<A>();
   }
 
   bool contains<T>() {
