@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 
 class Empty extends StatelessWidget {
-  const Empty({Key? key}) : super(key: key);
+  const Empty({super.key});
 
   @override
   Widget build(BuildContext context) {

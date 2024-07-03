@@ -45,7 +45,6 @@ scripts:
     steps: 
       - melos exec --category="mix_deps" dart analyze --fatal-infos .
       - melos exec --category="mix_deps" --depends-on="dart_code_metrics_presets" dcm analyze --fatal-warnings --fatal-style --fatal-performance .
-      - melos exec --category="mix_deps" --depends-on="dart_code_metrics_presets" dcm analyze .
       - melos run custom_lint_analyze
 
   verify_version_pubspec_changelog:
