@@ -3,6 +3,36 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2024-07-05
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`mix` - `v1.2.3`](#mix---v123)
+ - [`mix_lint` - `v3.2.12`](#mix_lint---v3212)
+ - [`mix_annotations` - `v2.3.4`](#mix_annotations---v234)
+ - [`mix_generator` - `v1.0.0-beta.1`](#mix_generator---v100-beta1)
+
+---
+
+#### `mix` - `v1.2.3`
+
+#### `mix_lint` - `v3.2.12`
+
+#### `mix_annotations` - `v2.3.4`
+
+#### `mix_generator` - `v1.0.0-beta.1`
+
+ - **FIX**: mix_generator - Get correct type override from MixableDto (#315).
+
+
 ## 2024-07-03
 
 ### Changes
