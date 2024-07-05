@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2024-07-05
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`mix` - `v2.0.0`](#mix---v200)
+
+---
+
+#### `mix` - `v2.0.0`
+
+
 ## 2024-07-03
 
 ### Changes
