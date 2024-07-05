@@ -29,4 +29,4 @@ jobs:
         uses: bluefireteam/melos-action@v3
 
       - name: 'Publish Package'
-        run: melos run publish
+        run: melos run publish --no-dry-run
