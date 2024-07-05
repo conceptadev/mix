@@ -1,7 +1,3 @@
-## 3.0.0
-
- - Bump "mix" to `3.0.0`.
-
 ## 1.2.0
 
  - **FIX**: Exception when there is no children on flex (#345).
