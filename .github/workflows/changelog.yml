@@ -32,7 +32,7 @@ jobs:
     - uses: kuhnroyal/flutter-fvm-config-action@v2
       id: fvm-config-action
       with:
-        flavor: 'mincompat'
+        flavor: 'prod'
 
     - uses: subosito/flutter-action@v2
       with:
