@@ -78,6 +78,9 @@ jobs:
 
         melos version --yes $packages_with_versions
 
+    - name: Configure Git User
+      run: git push --follow-tags
+
     - name: Create Pull Request
       uses: peter-evans/create-pull-request@v4
       with:
