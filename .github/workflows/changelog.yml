@@ -77,10 +77,10 @@ jobs:
         fi
 
         melos version --yes $packages_with_versions
-        
+
     - name: Push Tags
       run: |
-        gh auth token --hostname ${{ secrets.GITHUB_TOKEN }}
+        gh auth login --with-token ${{ secrets.GITHUB_TOKEN }}
         git checkout -b create-pull-request/package-versions
         git push --follow-tags
 
