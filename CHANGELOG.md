@@ -3,6 +3,38 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2024-07-05
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`mix` - `v1.2.3`](#mix---v123)
+ - [`mix_lint` - `v3.2.1`](#mix_lint---v321)
+ - [`mix_annotations` - `v1.2.0-beta.1`](#mix_annotations---v120-beta1)
+ - [`mix_generator` - `v0.2.0+1`](#mix_generator---v0201)
+
+Packages with dependency updates only:
+
+> Packages listed below depend on other packages in this workspace that have had changes. Their versions have been incremented to bump the minimum dependency versions of the packages they depend upon in this project.
+
+ - `mix_generator` - `v0.2.0+1`
+
+---
+
+#### `mix` - `v1.2.3`
+
+#### `mix_lint` - `v3.2.1`
+
+#### `mix_annotations` - `v1.2.0-beta.1`
+
+
 ## 2024-07-03
 
 ### Changes
