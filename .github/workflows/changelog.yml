@@ -48,7 +48,7 @@ jobs:
       run: |
         flutter --version
         
-    - name: Configure Git User
+    - name: Setup Melos
       run: |
         dart pub global activate melos
         melos bs
@@ -78,12 +78,10 @@ jobs:
 
         melos version --yes $packages_with_versions
 
-    - name: Push Tags
+    - name: Open PR
       run: |
-        gh auth login --with-token ${{ secrets.GITHUB_TOKEN }}
         git checkout -b create-pull-request/package-versions
         git push --follow-tags
-
-    - name: Create Pull
-      run: |
         gh pr create --title "chore: version packages" --body "This PR was opened by the changelog GitHub Actions workflow" -reviewer leoafarias
+      env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
