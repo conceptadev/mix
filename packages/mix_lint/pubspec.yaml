@@ -4,7 +4,7 @@ version: 0.1.0
 repository: https://github.com/conceptadev/mix
 
 environment:
-  sdk: ">=3.0.6 <4.0.0"
+  sdk: ">=3.3.0 <4.0.0"
 
 dependencies:
   analyzer: ^6.0.0
