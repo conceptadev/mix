@@ -77,7 +77,7 @@ runs:
 
     # Lint
     - name: analyze
-      run: melos run analyze
+      run: melos run --no-select analyze
       shell: bash
       
     - name: Run custom_lint
