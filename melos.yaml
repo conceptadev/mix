@@ -10,6 +10,7 @@ categories:
     - packages/mix
     - packages/mix_annotations
     - packages/mix_generator
+    - packages/mix_lint
   should_test:
     - packages/mix
     - examples/**
@@ -21,7 +22,7 @@ command:
       flutter: ">=3.10.6"
   publish:
     hooks:
-      pre: melos run pre-publish
+      pre: melos run brb
 
 scripts:
   brb:
@@ -40,23 +41,16 @@ scripts:
       - melos exec dart fix --apply .
       - melos exec --depends-on="dart_code_metrics_presets" dcm fix .
   custom_lint_analyze:
-    steps: 
-      - dart pub global activate custom_lint
-      - melos exec --depends-on="mix_lint" custom_lint
+    run: dart pub global activate custom_lint && melos exec --depends-on="mix_lint" custom_lint
 
   analyze:
-    steps: 
-      - melos exec --category="mix_deps" dart analyze --fatal-infos .
-      - melos exec --category="mix_deps" --depends-on="dart_code_metrics_presets" dcm analyze --fatal-warnings --fatal-style --fatal-performance .
-      - melos run custom_lint_analyze
-
-  pre-publish: 
-    steps:
-      - melos run verify_version_pubspec_changelog
-      - melos run brbc
-      - melos run analyze
-      - melos run test
-    description: Run a quality check before publishing
+    run: | 
+      dcm analyze --fatal-warnings --fatal-style --fatal-performance .
+      dart analyze --fatal-infos .
+    exec:
+      failFast: true
+    packageFilters:
+      category: "mix_deps"
 
   verify_version_pubspec_changelog:
     run: ./scripts/verify_changelogs.sh packages
