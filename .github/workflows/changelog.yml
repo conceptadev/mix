@@ -87,8 +87,9 @@ jobs:
         body: 'This PR was opened by the changelog GitHub Actions workflow'
         branch: 'create-pull-request/package-versions'
         reviewers: leoafarias
+        delete-branch: true
 
-    - name: Configure Git User
+    - name: Push Tags
       run: |
         git checkout create-pull-request/package-versions
         git push --follow-tags
