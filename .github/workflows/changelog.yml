@@ -83,7 +83,7 @@ jobs:
         git checkout -b release/package-versions
         git push --set-upstream origin release/package-versions --no-tags
         git pull
-        git push release/package-versions --tags
+        git push origin/release/package-versions --tags
         gh pr create --title "chore: version packages" --body "This PR was opened by the changelog GitHub Actions workflow" --reviewer leoafarias
       env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
