@@ -81,7 +81,7 @@ jobs:
     - name: Open PR
       run: |
         git checkout -b create-pull-request/package-versions
-        git push --set-upstream origin create-pull-request/package-versions
+        git push --set-upstream origin release/package-versions
         git push --follow-tags
         gh pr create --title "chore: version packages" --body "This PR was opened by the changelog GitHub Actions workflow" --reviewer leoafarias
       env:
