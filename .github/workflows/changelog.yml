@@ -86,6 +86,7 @@ jobs:
         title: 'chore: version packages'
         body: 'This PR was opened by the changelog GitHub Actions workflow'
         branch: 'create-pull-request/package-versions'
+        reviewers: leoafarias
 
     - name: Configure Git User
       run: |
