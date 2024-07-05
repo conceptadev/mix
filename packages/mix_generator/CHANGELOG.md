@@ -1,3 +1,7 @@
+## 1.0.2
+
+ - **FIX**: mix_generator - Get correct type override from MixableDto (#315).
+
 
 ## 0.2.0
 
