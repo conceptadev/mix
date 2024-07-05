@@ -91,5 +91,6 @@ jobs:
 
     - name: Push Tags
       run: |
+        git fetch
         git checkout create-pull-request/package-versions
         git push --follow-tags
