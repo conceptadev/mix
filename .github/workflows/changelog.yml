@@ -77,15 +77,11 @@ jobs:
         fi
 
         melos version --yes $packages_with_versions
-    
-    - uses: actions4gh/setup-gh@v1
-      with:
-        token: ${{ secrets.GITHUB_TOKEN }}
-   
+        
     - name: Push Tags
       run: |
-        git fetch
-        git checkout create-pull-request/package-versions
+        gh auth token --hostname ${{ secrets.GITHUB_TOKEN }}
+        git checkout -b create-pull-request/package-versions
         git push --follow-tags
 
     - name: Create Pull
