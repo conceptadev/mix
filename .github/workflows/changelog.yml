@@ -58,9 +58,12 @@ jobs:
         git config --global user.name 'GitHub Action'
         git config --global user.email 'action@github.com'
 
-    - name: Run melos version
+    - name: Creating the new version
 
       run: |
+        git checkout -b release/package-versions
+        git push --set-upstream origin release/package-versions
+
         packages_with_versions=""
 
         if [ "${{ github.event.inputs.mix }}" != "" ]; then
@@ -78,12 +81,7 @@ jobs:
 
         melos version --yes $packages_with_versions
 
-    - name: Open PR
-      run: |
-        git checkout -b release/package-versions
-        git push --set-upstream origin release/package-versions --no-tags
-        git pull
-        git push origin --tags
+        git push --follow-tags
         gh pr create --title "chore: version packages" --body "This PR was opened by the changelog GitHub Actions workflow" --reviewer leoafarias
       env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
