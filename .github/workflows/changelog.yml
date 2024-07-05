@@ -29,14 +29,10 @@ jobs:
       with:
         fetch-depth: 0
 
-    - name: Install FVM
-      shell: bash
-      run: |
-        curl -fsSL https://fvm.app/install.sh | bash
-        fvm use stable --force
-
     - uses: kuhnroyal/flutter-fvm-config-action@v2
       id: fvm-config-action
+      with:
+        flavor: 'mincompat'
 
     - uses: subosito/flutter-action@v2
       with:
@@ -75,7 +71,7 @@ jobs:
           packages_with_versions="$packages_with_versions -V mix_generator:${{ github.event.inputs.mix_generator }}"
         fi
 
-        melos version -y $packages_with_versions
+        melos version --yes $packages_with_versions
 
     - name: Create Pull Request
       uses: peter-evans/create-pull-request@v4
