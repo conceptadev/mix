@@ -38,11 +38,11 @@ jobs:
     - name: Flutter version
       shell: bash
       run: |
-        flutter --version
+        fvm run flutter --version
         
     - name: Configure Git User
       run: |
-        dart pub global activate melos
+        fvm run dart pub global activate melos
         melos bs
 
     - name: Configure Git User
