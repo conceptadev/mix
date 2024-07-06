@@ -67,6 +67,8 @@ class FlexSpecWidget extends StatelessWidget {
   List<Widget> _buildChildren(double? gap) {
     if (gap == null) return children;
 
+    if (children.isEmpty) return [];
+
     return List.generate(children.length + children.length - 1, (index) {
       if (index.isEven) return children[index ~/ 2];
 

@@ -1,5 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
 
@@ -104,6 +105,30 @@ void main() {
         expect(counter, 0);
       },
     );
+
+    testWidgets('Pressable responds to keyboard events',
+        (WidgetTester tester) async {
+      var wasPressed = false;
+
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Scaffold(
+            body: Pressable(
+              autofocus: true,
+              unpressDelay: Duration.zero,
+              onPress: () {
+                wasPressed = true;
+              },
+              child: const Text('Tap me'),
+            ),
+          ),
+        ),
+      );
+
+      await tester.sendKeyEvent(LogicalKeyboardKey.enter);
+
+      expect(wasPressed, isTrue);
+    });
   });
 
   group('PressableBox', () {
@@ -158,6 +183,30 @@ void main() {
         expect(counter, 0);
       },
     );
+
+    testWidgets('PressableBox responds to keyboard events',
+        (WidgetTester tester) async {
+      var wasPressed = false;
+
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Scaffold(
+            body: PressableBox(
+              autofocus: true,
+              unpressDelay: Duration.zero,
+              onPress: () {
+                wasPressed = true;
+              },
+              child: const Text('Tap me'),
+            ),
+          ),
+        ),
+      );
+
+      await tester.sendKeyEvent(LogicalKeyboardKey.enter);
+
+      expect(wasPressed, isTrue);
+    });
 
     testWidgets(r'must change to attributes in $on.hover variant when hovered',
         (WidgetTester tester) async {

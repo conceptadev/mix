@@ -1,9 +1,7 @@
 name: Publish to pub.dev
 
 on:
-  push:
-    tags:
-      - 'v[0-9]+.[0-9]+.[0-9]+*'
+  workflow_dispatch:
 
 jobs:
   test:
@@ -23,10 +21,20 @@ jobs:
     environment: Production
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - name: 'Publish Package'
-        uses: k-paxian/dart-package-publisher@master
+      - uses: actions/checkout@v4
+
+      - uses: kuhnroyal/flutter-fvm-config-action@v2
+        id: fvm-config-action
         with:
-          accessToken: ${{ secrets.OAUTH_ACCESS_TOKEN }}
-          refreshToken: ${{ secrets.OAUTH_REFRESH_TOKEN }}
-          relativePath: "packages/mix"
+          flavor: 'mincompat'
+
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ steps.fvm-config-action.outputs.FLUTTER_VERSION }}
+          channel: ${{ steps.fvm-config-action.outputs.FLUTTER_CHANNEL }}
+
+      - name: Setup Melos
+        uses: bluefireteam/melos-action@v3
+
+      - name: 'Publish Package'
+        run: melos run publish --no-dry-run
