@@ -9,4 +9,4 @@ dev_dependencies:
   melos: ^6.1.0
 
 lint_staged:
-  '**.dart': dart fix --apply && dart format --fix && dcm fix && dart analyze --fatal-infos --fatal-warnings && dcm analyze --fatal-warnings --fatal-infos
+  '**.dart': dart analyze --fatal-infos --fatal-warnings && dcm analyze --fatal-warnings --fatal-infos
