@@ -35,7 +35,6 @@ sealed class BorderRadiusGeometryDto<T extends BorderRadiusGeometry>
   Radius? get topEnd;
   Radius? get bottomStart;
   Radius? get bottomEnd;
-
   @override
   BorderRadiusGeometryDto<T> merge(covariant BorderRadiusGeometryDto<T>? other);
 
