@@ -21,7 +21,7 @@ const HomeContent = () => {
             and build design systems.
           </p>
 
-          <div className="not-prose mb-16 mt-6 flex gap-3">
+          <div className="not-prose mb-16 mt-6 flex flex-col sm:flex-row gap-3">
             <Button href="/docs/overview" arrow="right">
               <>Getting Started</>
             </Button>
