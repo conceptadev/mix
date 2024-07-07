@@ -5,6 +5,7 @@ import 'package:mix/mix.dart';
 import '../../../helpers/testing_utils.dart';
 
 void main() {
+  const token = MixTokensTest();
   group('FlexMixAttribute', () {
     test('of returns correct FlexMixAttribute', () {
       const attribute = FlexSpecAttribute();
@@ -51,7 +52,7 @@ void main() {
 
       final theme = MixThemeData(
         spaces: {
-          $token.space.small: tokenValue,
+          token.space.small: tokenValue,
         },
       );
 
@@ -67,7 +68,7 @@ void main() {
                   mixData = MixData.create(
                     context,
                     Style(
-                      $flex.gap.ref($token.space.small),
+                      $flex.gap.ref(token.space.small),
                     ),
                   );
 
