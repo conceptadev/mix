@@ -21,7 +21,6 @@ abstract class MixToken<T> {
   T call();
 
   T resolve(BuildContext context);
-
   @override
   operator ==(Object other) {
     if (identical(this, other)) return true;
