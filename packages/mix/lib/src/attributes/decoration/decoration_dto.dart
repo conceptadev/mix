@@ -78,7 +78,6 @@ sealed class DecorationDto<T extends Decoration> extends Dto<T> {
   bool get isMergeable;
 
   DecorationDto? mergeableDecor(covariant DecorationDto? other);
-
   @override
   DecorationDto<T> merge(covariant DecorationDto<T>? other);
 }
@@ -163,7 +162,6 @@ final class ShapeDecorationDto extends DecorationDto<ShapeDecoration>
   }) : super(boxShadow: shadows);
 
   List<BoxShadowDto>? get shadows => boxShadow;
-
   @override
   ShapeDecorationDto mergeableDecor(BoxDecorationDto? other) {
     if (other == null) return this;
