@@ -48,7 +48,6 @@ sealed class BoxBorderDto<T extends BoxBorder> extends Dto<T> {
   bool get isUniform;
 
   bool get isDirectional => this is BorderDirectionalDto;
-
   @override
   BoxBorderDto<T> merge(covariant BoxBorderDto<T>? other);
 }

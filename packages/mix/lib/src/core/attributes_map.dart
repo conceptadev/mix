@@ -60,7 +60,6 @@ class AttributeMap<T extends Attribute> {
   }
 
   Map<Object, T> toMap() => _map?.cast() ?? {};
-
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;

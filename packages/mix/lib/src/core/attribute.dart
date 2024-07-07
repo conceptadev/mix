@@ -10,7 +10,6 @@ abstract base class Attribute with MergeableMixin, EqualityMixin {
   // Used as the key to determine how
   // attributes get merged
   Object get mergeKey => runtimeType;
-
   @override
   Attribute merge(covariant Attribute? other);
 }

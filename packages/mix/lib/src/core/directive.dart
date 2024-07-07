@@ -12,7 +12,6 @@ class TextDirectiveDto extends Dto<TextDirective> {
 
   @visibleForTesting
   int get length => _modifiers.length;
-
   @override
   TextDirective resolve(MixData mix) {
     return TextDirective((String content) {
