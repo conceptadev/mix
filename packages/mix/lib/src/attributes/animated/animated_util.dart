@@ -13,7 +13,6 @@ final class AnimatedUtility<T extends Attribute>
   DurationUtility<T> get duration => DurationUtility((v) => only(duration: v));
 
   CurveUtility<T> get curve => CurveUtility((v) => only(curve: v));
-
   @override
   T only({Duration? duration, Curve? curve}) {
     return builder(AnimatedDataDto(duration: duration, curve: curve));

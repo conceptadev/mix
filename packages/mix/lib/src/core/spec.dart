@@ -35,7 +35,6 @@ abstract base class SpecAttribute<Value> extends StyledAttribute {
   const SpecAttribute({this.animated});
 
   Value resolve(MixData mix);
-
   @override
   SpecAttribute<Value> merge(covariant SpecAttribute<Value>? other);
 }

@@ -46,7 +46,6 @@ sealed class ShapeBorderDto<T extends ShapeBorder> extends Dto<T> {
   StadiumBorderDto toStadiumBorder();
   StarBorderDto toStar();
   LinearBorderDto toLinear();
-
   @override
   ShapeBorderDto<T> merge(covariant ShapeBorderDto<T>? other);
 
@@ -201,7 +200,6 @@ final class ContinuousRectangleBorderDto
 
   @override
   BorderRadiusGeometryDto? get _borderRadius => borderRadius;
-
   @override
   ContinuousRectangleBorder get defaultValue =>
       const ContinuousRectangleBorder();

@@ -24,7 +24,6 @@ base class FoundationColorUtility<T extends Attribute, C extends Color>
   const FoundationColorUtility(super.builder, this.color);
 
   T call() => _buildColor(color);
-
   @override
   T directive(ColorDirective directive) =>
       builder(ColorDto.raw(value: color, directives: [directive]));
