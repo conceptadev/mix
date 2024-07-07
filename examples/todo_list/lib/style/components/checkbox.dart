@@ -4,6 +4,8 @@ import 'package:todo_list/style/design_tokens.dart';
 import 'package:todo_list/style/patterns/outline.dart';
 import 'package:todo_list/style/patterns/scale_effect.dart';
 
+const _colors = ColorTokens();
+
 class _CheckboxVariant {
   static const checked = Variant("checked");
   static const unchecked = Variant("unchecked");
@@ -26,13 +28,13 @@ class TodoCheckbox extends StatelessWidget {
       style: Style(
         $box.height(20),
         $box.width(20),
-        $box.color.ref($token.color.surface),
+        $box.color.ref(_colors.surface),
         $box.borderRadius(3),
         scaleEffect(),
         outlinePattern(),
         _CheckboxVariant.checked(
-          $box.color.ref($token.color.primary),
-          $box.border.color.ref($token.color.primary),
+          $box.color.ref(_colors.primary),
+          $box.border.color.ref(_colors.primary),
         ),
       )
           .applyVariant(
@@ -45,7 +47,7 @@ class TodoCheckbox extends StatelessWidget {
         Icons.check,
         style: Style(
           $icon.weight(16),
-          $icon.color.ref($token.color.surface),
+          $icon.color.ref(_colors.surface),
           $with.opacity(0),
           $with.padding.top(5),
           _CheckboxVariant.checked(

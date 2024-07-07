@@ -4,6 +4,9 @@ import 'package:todo_list/style/design_tokens.dart';
 
 import '../patterns/scale_effect.dart';
 
+const _colors = ColorTokens();
+const _textStyles = TextStyleTokens();
+
 class TodoButton extends StatelessWidget {
   final String text;
   final VoidCallback? onPressed;
@@ -19,7 +22,7 @@ class TodoButton extends StatelessWidget {
     return PressableBox(
       onPress: onPressed,
       style: Style(
-        $box.color.ref($token.color.primary),
+        $box.color.ref(_colors.primary),
         $box.height(50),
         $box.borderRadius(6),
         scaleEffect(),
@@ -29,8 +32,8 @@ class TodoButton extends StatelessWidget {
       child: StyledText(
         text,
         style: Style(
-          $text.style.color.ref($token.color.surface),
-          $text.style.ref($token.textStyle.heading3),
+          $text.style.color.ref(_colors.surface),
+          $text.style.ref(_textStyles.heading3),
           $text.style.bold(),
           $with.scale(1),
           $with.align(alignment: Alignment.center),

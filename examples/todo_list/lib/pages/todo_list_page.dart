@@ -6,6 +6,9 @@ import 'package:todo_list/style/components/icon_button.dart';
 import 'package:todo_list/style/components/list_tile.dart';
 import 'package:todo_list/style/design_tokens.dart';
 
+const _colors = ColorTokens();
+const _textStyles = TextStyleTokens();
+
 class TodoListPage extends StatefulWidget {
   const TodoListPage({super.key});
 
@@ -19,13 +22,13 @@ class _TodoListPageState extends State<TodoListPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: $token.color.surface.resolve(context),
+      backgroundColor: _colors.surface.resolve(context),
       appBar: AppBar(
-        backgroundColor: $token.color.surface.resolve(context),
+        backgroundColor: _colors.surface.resolve(context),
         title: StyledText(
           'To Do List',
           style: Style(
-            $text.style.ref($token.textStyle.heading2),
+            $text.style.ref(_textStyles.heading2),
           ),
         ),
       ),
@@ -39,7 +42,7 @@ class _TodoListPageState extends State<TodoListPage> {
               if (index == 0) {
                 return Text(
                   'Today',
-                  style: $token.textStyle.heading1.resolve(context),
+                  style: _textStyles.heading1.resolve(context),
                 );
               }
               final item = value[index - 1];

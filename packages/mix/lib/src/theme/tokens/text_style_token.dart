@@ -69,12 +69,12 @@ final class TypographyRef extends TextStyleData with TokenRef<TypographyToken> {
   }
 
   @override
-  int get hashCode => token.hashCode;
-
-  @override
   TextStyle resolve(MixData mix) {
     throw Exception('Cannot resolve a reference ');
   }
+
+  @override
+  int get hashCode => token.hashCode;
 }
 
 @immutable

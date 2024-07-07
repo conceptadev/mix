@@ -10,10 +10,6 @@ import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 Widget buildCheckboxUseCase(BuildContext context) {
   Widget buildCheckbox(CheckboxVariant variant) {
     return RxCheckbox(
-      label: context.knobs.string(
-        label: 'Label',
-        initialValue: 'Checkbox',
-      ),
       value: context.knobs.boolean(label: 'Value', initialValue: true),
       onChanged: (value) {},
       size: context.knobs.list(
