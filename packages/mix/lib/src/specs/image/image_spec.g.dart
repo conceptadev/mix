@@ -6,6 +6,8 @@ part of 'image_spec.dart';
 // MixableSpecGenerator
 // **************************************************************************
 
+// ignore_for_file: deprecated_member_use_from_same_package
+
 base mixin _$ImageSpec on Spec<ImageSpec> {
   static ImageSpec from(MixData mix) {
     return mix.attributeOf<ImageSpecAttribute>()?.resolve(mix) ??

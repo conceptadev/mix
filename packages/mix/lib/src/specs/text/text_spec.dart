@@ -13,12 +13,13 @@ final class TextSpec extends Spec<TextSpec> with _$TextSpec {
   final int? maxLines;
   final TextWidthBasis? textWidthBasis;
   final TextHeightBehavior? textHeightBehavior;
-  @Deprecated('Use textScaler instead')
-  final double? textScaleFactor;
   final TextScaler? textScaler;
   final TextStyle? style;
   final TextDirection? textDirection;
   final bool? softWrap;
+
+  @Deprecated('Use textScaler instead')
+  final double? textScaleFactor;
 
   @MixableProperty(
     utilities: [
