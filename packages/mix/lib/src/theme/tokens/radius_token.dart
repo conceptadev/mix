@@ -30,6 +30,21 @@ class RadiusResolver extends Radius with WithTokenResolver<Radius> {
   final BuildContextResolver<Radius> resolve;
 
   const RadiusResolver(this.resolve) : super.circular(0);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (runtimeType != other.runtimeType) {
+      return false;
+    }
+
+    return other is Radius && other.x == x && other.y == y;
+  }
+
+  @override
+  int get hashCode => Object.hash(x, y);
 }
 
 @immutable

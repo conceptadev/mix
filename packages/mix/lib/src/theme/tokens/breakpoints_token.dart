@@ -72,6 +72,18 @@ class BreakpointToken extends MixToken<Breakpoint> {
         ? themeValue.resolve(context)
         : themeValue ?? const Breakpoint();
   }
+
+  @override
+  operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    if (runtimeType != other.runtimeType) return false;
+
+    return other is MixToken && other.name == name;
+  }
+
+  @override
+  int get hashCode => Object.hash(name, runtimeType);
 }
 
 /// A resolver for breakpoint tokens.
