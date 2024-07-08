@@ -32,7 +32,7 @@ void main() {
       textDirection: TextDirection.rtl,
       softWrap: false,
       overflow: TextOverflow.ellipsis,
-      textScaleFactor: 1.5,
+      textScaler: TextScaler.linear(1.5),
       maxLines: 3,
       textWidthBasis: TextWidthBasis.longestLine,
       textHeightBehavior: TextHeightBehavior(applyHeightToFirstAscent: false),

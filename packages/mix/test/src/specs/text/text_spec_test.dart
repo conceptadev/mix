@@ -14,7 +14,7 @@ void main() {
             overflow: TextOverflow.ellipsis,
             strutStyle: const StrutStyleDto(fontSize: 20.0),
             textAlign: TextAlign.center,
-            textScaleFactor: 1.0,
+            textScaler: const TextScaler.linear(1.0),
             maxLines: 2,
             style: TextStyleDto(color: const ColorDto(Colors.red)),
             textWidthBasis: TextWidthBasis.longestLine,
@@ -54,7 +54,7 @@ void main() {
         overflow: TextOverflow.ellipsis,
         strutStyle: StrutStyle(fontSize: 20.0),
         textAlign: TextAlign.center,
-        textScaleFactor: 1.0,
+        textScaler: TextScaler.linear(1.0),
         maxLines: 2,
         style: TextStyle(color: Colors.red),
         textWidthBasis: TextWidthBasis.longestLine,
@@ -71,7 +71,7 @@ void main() {
         overflow: TextOverflow.fade,
         strutStyle: const StrutStyle(fontSize: 30.0),
         textAlign: TextAlign.start,
-        textScaleFactor: 2.0,
+        textScaler: const TextScaler.linear(2.0),
         maxLines: 3,
         style: const TextStyle(color: Colors.blue),
         textWidthBasis: TextWidthBasis.parent,
@@ -106,7 +106,7 @@ void main() {
         overflow: TextOverflow.ellipsis,
         strutStyle: StrutStyle(fontSize: 20.0),
         textAlign: TextAlign.center,
-        textScaleFactor: 1.0,
+        textScaler: TextScaler.linear(1.0),
         maxLines: 2,
         style: TextStyle(color: Colors.red),
         textWidthBasis: TextWidthBasis.longestLine,
@@ -122,7 +122,7 @@ void main() {
         overflow: TextOverflow.fade,
         strutStyle: StrutStyle(fontSize: 30.0),
         textAlign: TextAlign.start,
-        textScaleFactor: 2.0,
+        textScaler: TextScaler.linear(2.0),
         maxLines: 3,
         style: TextStyle(color: Colors.blue),
         textWidthBasis: TextWidthBasis.parent,
@@ -141,7 +141,7 @@ void main() {
       expect(lerpedSpec.overflow, TextOverflow.fade);
       expect(lerpedSpec.strutStyle, const StrutStyle(fontSize: 25));
       expect(lerpedSpec.textAlign, TextAlign.start);
-      expect(lerpedSpec.textScaler, const TextScaler.linear(1.5));
+      expect(lerpedSpec.textScaler, const TextScaler.linear(2));
       expect(lerpedSpec.maxLines, 3);
       expect(
         lerpedSpec.style,
@@ -190,7 +190,7 @@ void main() {
             overflow: TextOverflow.ellipsis,
             strutStyle: const StrutStyleDto(fontSize: 20.0),
             textAlign: TextAlign.center,
-            textScaleFactor: 1.0,
+            textScaler: const TextScaler.linear(1.0),
             maxLines: 2,
             style: TextStyleDto(color: const ColorDto(Colors.red)),
             textWidthBasis: TextWidthBasis.longestLine,
@@ -229,7 +229,7 @@ void main() {
         overflow: TextOverflow.ellipsis,
         strutStyle: StrutStyle(fontSize: 20.0),
         textAlign: TextAlign.center,
-        textScaleFactor: 1.0,
+        textScaler: TextScaler.linear(1.0),
         maxLines: 2,
         style: TextStyle(color: Colors.red),
         textWidthBasis: TextWidthBasis.longestLine,
@@ -245,7 +245,7 @@ void main() {
         overflow: TextOverflow.fade,
         strutStyle: StrutStyle(fontSize: 30.0),
         textAlign: TextAlign.start,
-        textScaleFactor: 2.0,
+        textScaler: TextScaler.linear(2.0),
         maxLines: 3,
         style: TextStyle(color: Colors.blue),
         textWidthBasis: TextWidthBasis.parent,
@@ -263,7 +263,7 @@ void main() {
       expect(lerpedSpec.overflow, TextOverflow.fade);
       expect(lerpedSpec.strutStyle, const StrutStyle(fontSize: 25));
       expect(lerpedSpec.textAlign, TextAlign.start);
-      expect(lerpedSpec.textScaler, const TextScaler.linear(1.5));
+      expect(lerpedSpec.textScaler, const TextScaler.linear(2));
       expect(lerpedSpec.maxLines, 3);
       expect(
         lerpedSpec.style,
