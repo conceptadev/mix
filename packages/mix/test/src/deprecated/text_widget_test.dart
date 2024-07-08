@@ -1,4 +1,4 @@
-// ignore_for_file: deprecated_member_use_from_same_package
+// ignore_for_file: deprecated_member_use_from_same_package, deprecated_member_use
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
@@ -49,7 +49,7 @@ void main() {
       textDirection: textSpec.textDirection,
       softWrap: textSpec.softWrap,
       overflow: textSpec.overflow,
-      textScaler: textSpec.textScaler,
+      textScaleFactor: textSpec.textScaleFactor,
       maxLines: textSpec.maxLines,
       textWidthBasis: textSpec.textWidthBasis,
       textHeightBehavior: textSpec.textHeightBehavior,
@@ -90,7 +90,7 @@ void main() {
     expect(textWidget.textDirection, mixedTextWidget.textDirection);
     expect(textWidget.softWrap, mixedTextWidget.softWrap);
     expect(textWidget.overflow, mixedTextWidget.overflow);
-    expect(textWidget.textScaler, mixedTextWidget.textScaler);
+    expect(textWidget.textScaleFactor, mixedTextWidget.textScaleFactor);
     expect(textWidget.maxLines, mixedTextWidget.maxLines);
     expect(textWidget.textWidthBasis, mixedTextWidget.textWidthBasis);
     expect(textWidget.textHeightBehavior, mixedTextWidget.textHeightBehavior);
