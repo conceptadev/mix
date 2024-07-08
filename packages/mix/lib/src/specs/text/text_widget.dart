@@ -88,6 +88,11 @@ class TextSpecWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // The Text widget is used here, applying the resolved styles and properties from TextSpec.
+
+    final textScaler =
+        // ignore: deprecated_member_use_from_same_package
+        spec?.textScaler ?? TextScaler.linear(spec?.textScaleFactor ?? 1);
+
     return Text(
       spec?.directive?.apply(text) ?? text,
       style: spec?.style,
@@ -97,7 +102,7 @@ class TextSpecWidget extends StatelessWidget {
       locale: locale,
       softWrap: spec?.softWrap,
       overflow: spec?.overflow,
-      textScaleFactor: spec?.textScaleFactor,
+      textScaler: textScaler,
       maxLines: spec?.maxLines,
       semanticsLabel: semanticsLabel,
       textWidthBasis: spec?.textWidthBasis,

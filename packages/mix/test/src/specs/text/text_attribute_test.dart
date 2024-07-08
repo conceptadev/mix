@@ -98,7 +98,7 @@ void main() {
       expect(resolved.strutStyle!.fontSize, 12);
       expect(resolved.strutStyle!.fontWeight, FontWeight.w500);
       expect(resolved.textAlign, TextAlign.center);
-      expect(resolved.textScaleFactor, 1.5);
+      expect(resolved.textScaler, const TextScaler.linear(1.5));
       expect(resolved.maxLines, 2);
       expect(resolved.style!.fontFamily, 'Roboto');
       expect(resolved.style!.fontSize, 12);

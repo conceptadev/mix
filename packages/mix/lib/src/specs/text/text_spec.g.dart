@@ -1,5 +1,7 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
+// ignore_for_file: deprecated_member_use_from_same_package
+
 part of 'text_spec.dart';
 
 // **************************************************************************
@@ -37,6 +39,7 @@ base mixin _$TextSpec on Spec<TextSpec> {
     StrutStyle? strutStyle,
     TextAlign? textAlign,
     double? textScaleFactor,
+    TextScaler? textScaler,
     int? maxLines,
     TextStyle? style,
     TextWidthBasis? textWidthBasis,
@@ -51,6 +54,7 @@ base mixin _$TextSpec on Spec<TextSpec> {
       strutStyle: strutStyle ?? _$this.strutStyle,
       textAlign: textAlign ?? _$this.textAlign,
       textScaleFactor: textScaleFactor ?? _$this.textScaleFactor,
+      textScaler: textScaler ?? _$this.textScaler,
       maxLines: maxLines ?? _$this.maxLines,
       style: style ?? _$this.style,
       textWidthBasis: textWidthBasis ?? _$this.textWidthBasis,
@@ -77,7 +81,7 @@ base mixin _$TextSpec on Spec<TextSpec> {
   /// - [MixHelpers.lerpDouble] for [textScaleFactor].
   /// - [MixHelpers.lerpTextStyle] for [style].
 
-  /// For [overflow] and [textAlign] and [maxLines] and [textWidthBasis] and [textHeightBehavior] and [textDirection] and [softWrap] and [directive] and [animated], the interpolation is performed using a step function.
+  /// For [overflow] and [textAlign] and [textScaler] and [maxLines] and [textWidthBasis] and [textHeightBehavior] and [textDirection] and [softWrap] and [directive] and [animated], the interpolation is performed using a step function.
   /// If [t] is less than 0.5, the value from the current [TextSpec] is used. Otherwise, the value
   /// from the [other] [TextSpec] is used.
   ///
@@ -94,6 +98,7 @@ base mixin _$TextSpec on Spec<TextSpec> {
       textAlign: t < 0.5 ? _$this.textAlign : other.textAlign,
       textScaleFactor: MixHelpers.lerpDouble(
           _$this.textScaleFactor, other.textScaleFactor, t),
+      textScaler: t < 0.5 ? _$this.textScaler : other.textScaler,
       maxLines: t < 0.5 ? _$this.maxLines : other.maxLines,
       style: MixHelpers.lerpTextStyle(_$this.style, other.style, t),
       textWidthBasis: t < 0.5 ? _$this.textWidthBasis : other.textWidthBasis,
@@ -116,6 +121,7 @@ base mixin _$TextSpec on Spec<TextSpec> {
         _$this.strutStyle,
         _$this.textAlign,
         _$this.textScaleFactor,
+        _$this.textScaler,
         _$this.maxLines,
         _$this.style,
         _$this.textWidthBasis,
@@ -141,6 +147,7 @@ final class TextSpecAttribute extends SpecAttribute<TextSpec> {
   final StrutStyleDto? strutStyle;
   final TextAlign? textAlign;
   final double? textScaleFactor;
+  final TextScaler? textScaler;
   final int? maxLines;
   final TextStyleDto? style;
   final TextWidthBasis? textWidthBasis;
@@ -154,6 +161,7 @@ final class TextSpecAttribute extends SpecAttribute<TextSpec> {
     this.strutStyle,
     this.textAlign,
     this.textScaleFactor,
+    this.textScaler,
     this.maxLines,
     this.style,
     this.textWidthBasis,
@@ -179,6 +187,7 @@ final class TextSpecAttribute extends SpecAttribute<TextSpec> {
       strutStyle: strutStyle?.resolve(mix),
       textAlign: textAlign,
       textScaleFactor: textScaleFactor,
+      textScaler: textScaler,
       maxLines: maxLines,
       style: style?.resolve(mix),
       textWidthBasis: textWidthBasis,
@@ -207,6 +216,7 @@ final class TextSpecAttribute extends SpecAttribute<TextSpec> {
       strutStyle: strutStyle?.merge(other.strutStyle) ?? other.strutStyle,
       textAlign: other.textAlign ?? textAlign,
       textScaleFactor: other.textScaleFactor ?? textScaleFactor,
+      textScaler: other.textScaler ?? textScaler,
       maxLines: other.maxLines ?? maxLines,
       style: style?.merge(other.style) ?? other.style,
       textWidthBasis: other.textWidthBasis ?? textWidthBasis,
@@ -228,6 +238,7 @@ final class TextSpecAttribute extends SpecAttribute<TextSpec> {
         strutStyle,
         textAlign,
         textScaleFactor,
+        textScaler,
         maxLines,
         style,
         textWidthBasis,
@@ -256,6 +267,9 @@ base class TextSpecUtility<T extends Attribute>
 
   /// Utility for defining [TextSpecAttribute.textScaleFactor]
   late final textScaleFactor = DoubleUtility((v) => only(textScaleFactor: v));
+
+  /// Utility for defining [TextSpecAttribute.textScaler]
+  late final textScaler = TextScalerUtility((v) => only(textScaler: v));
 
   /// Utility for defining [TextSpecAttribute.maxLines]
   late final maxLines = IntUtility((v) => only(maxLines: v));
@@ -310,6 +324,7 @@ base class TextSpecUtility<T extends Attribute>
     StrutStyleDto? strutStyle,
     TextAlign? textAlign,
     double? textScaleFactor,
+    TextScaler? textScaler,
     int? maxLines,
     TextStyleDto? style,
     TextWidthBasis? textWidthBasis,
@@ -324,6 +339,7 @@ base class TextSpecUtility<T extends Attribute>
       strutStyle: strutStyle,
       textAlign: textAlign,
       textScaleFactor: textScaleFactor,
+      textScaler: textScaler,
       maxLines: maxLines,
       style: style,
       textWidthBasis: textWidthBasis,
