@@ -1,6 +1,7 @@
 import 'dart:math' as math;
 import 'dart:ui' as ui;
 
+import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart' as r;
 import 'package:flutter/widgets.dart' as w;
 
@@ -26,8 +27,14 @@ class MixHelpers {
 }
 
 w.TextStyle? _lerpTextStyle(w.TextStyle? a, w.TextStyle? b, double t) {
-  return w.TextStyle.lerp(a, b, t)
-      ?.copyWith(shadows: w.Shadow.lerpList(a?.shadows, b?.shadows, t));
+  return w.TextStyle.lerp(a, b, t)?.copyWith(
+    shadows: w.Shadow.lerpList(a?.shadows, b?.shadows, t),
+    fontVariations: lerpFontVariations(
+      a?.fontVariations,
+      b?.fontVariations,
+      t,
+    ),
+  );
 }
 
 List<T>? _mergeDtoList<T>(List<T>? a, List<T>? b) {

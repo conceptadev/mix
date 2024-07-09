@@ -7,7 +7,8 @@ import '../../../helpers/testing_utils.dart';
 void main() {
   group('TextStyleDto', () {
     test('from constructor sets all values correctly', () {
-      final attr = TextStyleDto(color: Colors.red.toDto());
+      final attr =
+          TextStyleDto(color: Colors.red.toDto(), fontVariations: const []);
       final result = attr.resolve(EmptyMixData);
       expect(result.color, Colors.red);
     });
@@ -19,6 +20,9 @@ void main() {
         fontStyle: FontStyle.italic,
         letterSpacing: 1.0,
         wordSpacing: 2.0,
+        fontVariations: const [
+          FontVariation('wght', 900),
+        ],
         textBaseline: TextBaseline.ideographic,
         decoration: TextDecoration.underline,
         decorationColor: Colors.blue.toDto(),
@@ -34,6 +38,9 @@ void main() {
         fontStyle: FontStyle.normal,
         letterSpacing: 2.0,
         wordSpacing: 3.0,
+        fontVariations: const [
+          FontVariation('wght', 400),
+        ],
         textBaseline: TextBaseline.alphabetic,
         decoration: TextDecoration.lineThrough,
         decorationColor: Colors.red.toDto(),
@@ -51,6 +58,7 @@ void main() {
       expect(merged.decorationStyle, TextDecorationStyle.dotted);
       expect(merged.fontWeight, FontWeight.w100);
       expect(merged.fontStyle, FontStyle.normal);
+      expect(merged.fontVariations, [const FontVariation('wght', 400)]);
       expect(merged.letterSpacing, 2.0);
       expect(merged.wordSpacing, 3.0);
       expect(merged.height, 3.0);
@@ -65,6 +73,9 @@ void main() {
         fontStyle: FontStyle.italic,
         letterSpacing: 1.0,
         wordSpacing: 2.0,
+        fontVariations: const [
+          FontVariation('wght', 900),
+        ],
         textBaseline: TextBaseline.ideographic,
         decoration: TextDecoration.underline,
         decorationColor: Colors.blue.toDto(),
@@ -80,6 +91,7 @@ void main() {
       expect(textStyle.decorationStyle, TextDecorationStyle.dashed);
       expect(textStyle.fontWeight, FontWeight.bold);
       expect(textStyle.fontStyle, FontStyle.italic);
+      expect(textStyle.fontVariations, [const FontVariation('wght', 900)]);
       expect(textStyle.letterSpacing, 1.0);
       expect(textStyle.wordSpacing, 2.0);
       expect(textStyle.height, 2.0);
@@ -89,13 +101,17 @@ void main() {
       return const Placeholder();
     });
     test('Equality holds when all attributes are the same', () {
-      final attr1 = TextStyleDto(color: Colors.red.toDto());
-      final attr2 = TextStyleDto(color: Colors.red.toDto());
+      final attr1 =
+          TextStyleDto(color: Colors.red.toDto(), fontVariations: const []);
+      final attr2 =
+          TextStyleDto(color: Colors.red.toDto(), fontVariations: const []);
       expect(attr1, attr2);
     });
     test('Equality fails when attributes are different', () {
-      final attr1 = TextStyleDto(color: Colors.red.toDto());
-      final attr2 = TextStyleDto(color: Colors.blue.toDto());
+      final attr1 =
+          TextStyleDto(color: Colors.red.toDto(), fontVariations: const []);
+      final attr2 =
+          TextStyleDto(color: Colors.blue.toDto(), fontVariations: const []);
       expect(attr1, isNot(attr2));
     });
   });
