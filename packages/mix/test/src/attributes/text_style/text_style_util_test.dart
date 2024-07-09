@@ -1,7 +1,3 @@
-// Import necessary packages
-
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
@@ -38,6 +34,9 @@ void main() {
         ],
         textBaseline: TextBaseline.ideographic,
         wordSpacing: 2.0,
+        fontVariations: const [
+          FontVariation('wght', 900),
+        ],
       );
 
       final attrWithPaint = textStyle(
@@ -68,6 +67,7 @@ void main() {
       expect(resolvedValue.decoration, TextDecoration.underline);
       expect(resolvedValue.decorationColor, Colors.green);
       expect(resolvedValue.decorationStyle, TextDecorationStyle.dashed);
+      expect(resolvedValue.fontVariations, [const FontVariation('wght', 900)]);
 
       expect(resolvedValue.debugLabel, 'debugLabel');
       expect(resolvedValue.locale, const Locale('en', 'US'));
@@ -213,6 +213,18 @@ void main() {
       final resolvedValue = attribute.value.resolve(EmptyMixData);
 
       expect(resolvedValue.background, purplePaint);
+    });
+
+    test('fontVariations() creates TextStyleDto correctly', () {
+      final attribute = textStyle(
+        fontVariations: const [
+          FontVariation('wght', 900),
+        ],
+      );
+
+      final resolvedValue = attribute.value.resolve(EmptyMixData);
+
+      expect(resolvedValue.fontVariations, [const FontVariation('wght', 900)]);
     });
   });
 }

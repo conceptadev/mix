@@ -84,14 +84,14 @@ Widget createDirectionality(TextDirection direction) {
   );
 }
 
-Widget createWithMixTheme(MixThemeData theme) {
+Widget createWithMixTheme(MixThemeData theme, {Widget? child}) {
   return MixTheme(
     data: theme,
     child: MaterialApp(
       home: Scaffold(
         body: Builder(
           builder: (BuildContext context) {
-            return Container();
+            return child ?? Container();
           },
         ),
       ),

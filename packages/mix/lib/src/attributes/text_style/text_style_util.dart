@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/widgets.dart';
 
 import '../../core/attribute.dart';
@@ -45,6 +43,10 @@ final class TextStyleUtility<T extends Attribute>
 
   T letterSpacing(double v) => only(letterSpacing: v);
 
+  T fontVariations(List<FontVariation> v) => only(fontVariations: v);
+
+  T fontVariation(FontVariation v) => only(fontVariations: [v]);
+
   T shadows(List<Shadow> v) => only(shadows: v.map((e) => e.toDto()).toList());
 
   T italic() => fontStyle.italic();
@@ -78,6 +80,7 @@ final class TextStyleUtility<T extends Attribute>
     List<Shadow>? shadows,
     Color? color,
     Color? backgroundColor,
+    List<FontVariation>? fontVariations,
     List<FontFeature>? fontFeatures,
     TextDecoration? decoration,
     TextDecorationStyle? decorationStyle,
@@ -102,6 +105,7 @@ final class TextStyleUtility<T extends Attribute>
       decorationColor: decorationColor?.toDto(),
       decorationStyle: decorationStyle,
       textBaseline: textBaseline,
+      fontVariations: fontVariations,
       shadows: shadows?.map((e) => e.toDto()).toList(),
       fontFeatures: fontFeatures,
       foreground: foreground,
@@ -128,6 +132,7 @@ final class TextStyleUtility<T extends Attribute>
     ColorDto? decorationColor,
     TextDecorationStyle? decorationStyle,
     TextBaseline? textBaseline,
+    List<FontVariation>? fontVariations,
     List<ShadowDto>? shadows,
     List<FontFeature>? fontFeatures,
     Paint? foreground,
@@ -154,6 +159,7 @@ final class TextStyleUtility<T extends Attribute>
       decoration: decoration,
       decorationColor: decorationColor,
       decorationStyle: decorationStyle,
+      fontVariations: fontVariations,
       locale: locale,
       height: height,
       foreground: foreground,

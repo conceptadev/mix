@@ -601,3 +601,22 @@ base mixin _$FontFamilyUtility<T extends Attribute> on MixUtility<T, String> {
   /// Creates an [Attribute] instance with the specified String value.
   T call(String value) => builder(value);
 }
+
+/// {@template text_scaler_utility}
+/// A utility class for creating [Attribute] instances from [TextScaler] values.
+///
+/// This class extends [MixUtility] and provides methods to create [Attribute] instances
+/// from predefined [TextScaler] values.
+/// {@endtemplate}
+base mixin _$TextScalerUtility<T extends Attribute>
+    on MixUtility<T, TextScaler> {
+  /// Creates an [Attribute] instance with [TextScaler.noScaling] value.
+  T noScaling() => builder(TextScaler.noScaling);
+
+  /// Creates an [Attribute] instance using the [TextScaler.linear] constructor.
+  T linear(double textScaleFactor) =>
+      builder(TextScaler.linear(textScaleFactor));
+
+  /// Creates an [Attribute] instance with the specified TextScaler value.
+  T call(TextScaler value) => builder(value);
+}

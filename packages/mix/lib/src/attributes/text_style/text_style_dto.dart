@@ -1,7 +1,5 @@
 // ignore_for_file: prefer_relative_imports,avoid-importing-entrypoint-exports
 
-import 'dart:ui';
-
 import 'package:flutter/widgets.dart';
 import 'package:mix/mix.dart';
 import 'package:mix_annotations/mix_annotations.dart';
@@ -22,6 +20,7 @@ final class TextStyleDataRef extends TextStyleData {
 
   @override
   TextStyle resolve(MixData mix) => mix.tokens.textStyleRef(ref);
+
   @override
   get props => [ref];
 }
@@ -43,6 +42,7 @@ base class TextStyleData extends Dto<TextStyle> with _$TextStyleData {
   final ColorDto? backgroundColor;
   final List<ShadowDto>? shadows;
   final List<FontFeature>? fontFeatures;
+  final List<FontVariation>? fontVariations;
   final TextDecoration? decoration;
   final ColorDto? decorationColor;
   final TextDecorationStyle? decorationStyle;
@@ -65,6 +65,7 @@ base class TextStyleData extends Dto<TextStyle> with _$TextStyleData {
     this.decorationThickness,
     this.fontFamily,
     this.fontFamilyFallback,
+    this.fontVariations,
     this.fontFeatures,
     this.fontSize,
     this.fontStyle,
@@ -106,6 +107,7 @@ final class TextStyleDto extends Dto<TextStyle> with _$TextStyleDto {
     TextDecoration? decoration,
     ColorDto? decorationColor,
     TextDecorationStyle? decorationStyle,
+    List<FontVariation>? fontVariations,
     Locale? locale,
     double? height,
     Paint? foreground,
@@ -126,6 +128,7 @@ final class TextStyleDto extends Dto<TextStyle> with _$TextStyleDto {
         decorationThickness: decorationThickness,
         fontFamily: fontFamily,
         fontFamilyFallback: fontFamilyFallback,
+        fontVariations: fontVariations,
         fontFeatures: fontFeatures,
         fontSize: fontSize,
         fontStyle: fontStyle,
@@ -185,6 +188,7 @@ extension TextStyleExt on TextStyle {
         decorationThickness: decorationThickness,
         fontFamily: fontFamily,
         fontFamilyFallback: fontFamilyFallback,
+        fontVariations: fontVariations,
         fontFeatures: fontFeatures,
         fontSize: fontSize,
         fontStyle: fontStyle,

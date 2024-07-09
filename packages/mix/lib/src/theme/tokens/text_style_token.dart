@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/widgets.dart';
 
 import '../../attributes/text_style/text_style_dto.dart';
