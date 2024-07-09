@@ -7,12 +7,11 @@ interface class ISpinnerVariant extends RemixVariant {
 class SpinnerSize extends ISpinnerVariant {
   const SpinnerSize(String name) : super('size.$name');
 
-  static const xsmall = SpinnerSize('xsmall');
   static const small = SpinnerSize('small');
   static const medium = SpinnerSize('medium');
   static const large = SpinnerSize('large');
 
-  static List<SpinnerSize> get values => [xsmall, small, medium, large];
+  static List<SpinnerSize> get values => [small, medium, large];
 }
 
 class SpinnerVariant extends ISpinnerVariant {

@@ -42,6 +42,7 @@ Style get _softVariant => Style(
 Style get _outlineVariant => Style(
       _container.color(Colors.transparent),
       _container.border.color.ref($rx.accent8A),
+      _container.border.width(1.5),
       _indicator.color.ref($rx.accent11A),
       $on.hover(
         _container.color.ref($rx.accent2A),

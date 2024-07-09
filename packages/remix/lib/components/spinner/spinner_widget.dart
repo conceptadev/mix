@@ -12,17 +12,13 @@ class RxSpinner extends StatelessWidget {
     this.style,
     super.key,
     this.size = SpinnerSize.medium,
-    this.variant = SpinnerVariant.solid,
   });
 
   final Style? style;
   final SpinnerSize size;
-  final SpinnerVariant variant;
 
   Style _buildStyle() {
-    return defaultSpinnerStyle()
-        .merge(style)
-        .applyVariants([variant, size]).animate();
+    return buildSpinnerStyle().merge(style).applyVariant(size).animate();
   }
 
   @override
@@ -30,11 +26,7 @@ class RxSpinner extends StatelessWidget {
     return SpecBuilder(
       style: _buildStyle(),
       builder: (context) {
-        final SpinnerWidget = SpinnerSpec.of(context).copyWith(
-          style: variant == SpinnerVariant.dotted
-              ? SpinnerStyle.dotted
-              : SpinnerStyle.solid,
-        );
+        final SpinnerWidget = SpinnerSpec.of(context);
         return SpinnerWidget();
       },
     );
@@ -83,14 +75,25 @@ class _RxSpinnerSpecWidgetState extends State<RxSpinnerSpecWidget>
 
   @override
   Widget build(BuildContext context) {
-    final painter = widget.spec.style == SpinnerStyle.dotted
-        ? DottedSpinnerPainter(animation: controller, spec: widget.spec)
-        : SolidSpinnerPainter(animation: controller, spec: widget.spec);
+    final spec = widget.spec;
+    final color = spec.color;
+    final strokeWidth = spec.strokeWidth ?? 1;
+    final size = spec.size;
+    final painter = spec.style == SpinnerStyle.dotted
+        ? DottedSpinnerPainter(
+            animation: controller,
+            color: color,
+            strokeWidth: strokeWidth,
+          )
+        : SolidSpinnerPainter(
+            animation: controller,
+            color: color,
+            strokeWidth: strokeWidth,
+          );
 
     return AnimatedBuilder(
       animation: controller,
       builder: (context, child) {
-        final size = widget.spec.size;
         return CustomPaint(
           size: Size(size, size),
           painter: painter,

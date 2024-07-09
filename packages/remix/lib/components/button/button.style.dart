@@ -61,7 +61,7 @@ Style get _softVariant => Style(
 
 Style get _outlineVariant => Style(
       _container.color(Colors.transparent),
-      _container.border.width(1),
+      _container.border.width(1.5),
       _container.border.strokeAlign(0),
       _container.border.color.ref($rx.accent8A),
       _foreground.color.ref($rx.accent11A),
