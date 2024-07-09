@@ -97,7 +97,7 @@ class RenderModifiers extends StatelessWidget {
 }
 
 class RenderAnimatedModifiers extends ImplicitlyAnimatedWidget {
-  const RenderAnimatedModifiers({
+  RenderAnimatedModifiers({
     //TODO Should be required in the next version
     this.modifiers = const [],
     required this.child,
@@ -107,12 +107,13 @@ class RenderAnimatedModifiers extends ImplicitlyAnimatedWidget {
     super.key,
     super.curve = Curves.linear,
     super.onEnd,
-  });
+  }) : _appliedModifiers = _combineModifiers(mix, modifiers, orderOfModifiers);
 
   final Widget child;
   final MixData? mix;
   final List<Type> orderOfModifiers;
   final List<WidgetModifierSpec<dynamic>> modifiers;
+  final List<WidgetModifierSpec<dynamic>> _appliedModifiers;
 
   @override
   RenderAnimatedModifiersState createState() => RenderAnimatedModifiersState();
@@ -121,22 +122,10 @@ class RenderAnimatedModifiers extends ImplicitlyAnimatedWidget {
 class RenderAnimatedModifiersState
     extends AnimatedWidgetBaseState<RenderAnimatedModifiers> {
   final Map<Type, ModifierSpecTween> _specs = {};
-  final List<WidgetModifierSpec<dynamic>> _modifiers = [];
-
-  @override
-  void initState() {
-    super.initState();
-
-    _modifiers.addAll(_combineModifiers(
-      widget.mix,
-      widget.modifiers,
-      widget.orderOfModifiers,
-    ));
-  }
 
   @override
   void forEachTween(TweenVisitor<dynamic> visitor) {
-    for (final spec in _modifiers.reversed) {
+    for (final spec in widget._appliedModifiers.reversed) {
       final specType = spec.runtimeType;
       final previousSpec = _specs[specType];
       _specs[specType] = visitor(

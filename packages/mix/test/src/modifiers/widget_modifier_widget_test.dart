@@ -277,6 +277,34 @@ void main() {
       await tester.pump(const Duration(milliseconds: 150));
       await tester.pump(const Duration(milliseconds: 150));
     });
+
+    testWidgets('Renders animated modifiers', (tester) async {
+      await tester.pumpWidget(
+        const _TestableAnimatedModifiers(),
+      );
+
+      final gestureFinder = find.byType(GestureDetector);
+      expect(gestureFinder, findsOneWidget);
+
+      final finder = find.byType(Opacity);
+      expect(finder, findsOneWidget);
+
+      final finderSizedBox = find.byType(SizedBox);
+      expect(finderSizedBox, findsOneWidget);
+
+      await tester.tap(gestureFinder);
+      await tester.pump();
+
+      await tester.pump(const Duration(milliseconds: 100));
+      expect(tester.widget<Opacity>(finder).opacity, 0.5);
+      expect(tester.widget<SizedBox>(finderSizedBox).height, 25);
+      expect(tester.widget<SizedBox>(finderSizedBox).width, 25);
+
+      await tester.pump(const Duration(milliseconds: 100));
+      expect(tester.widget<Opacity>(finder).opacity, 0.0);
+      expect(tester.widget<SizedBox>(finderSizedBox).height, 0);
+      expect(tester.widget<SizedBox>(finderSizedBox).width, 0);
+    });
   });
 
   group('Modifiers attributes', () {
@@ -412,4 +440,42 @@ void main() {
       });
     });
   });
+}
+
+class _TestableAnimatedModifiers extends StatefulWidget {
+  const _TestableAnimatedModifiers();
+
+  @override
+  State<_TestableAnimatedModifiers> createState() =>
+      _TestableAnimatedModifiersState();
+}
+
+class _TestableAnimatedModifiersState
+    extends State<_TestableAnimatedModifiers> {
+  bool _isActive = true;
+
+  void _handleToggle() {
+    setState(() {
+      _isActive = !_isActive;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Pressable(
+      onPress: _handleToggle,
+      child: RenderAnimatedModifiers(
+        duration: const Duration(milliseconds: 200),
+        orderOfModifiers: const [],
+        modifiers: [
+          OpacityModifierSpec(_isActive ? 1.0 : 0.0),
+          SizedBoxModifierSpec(
+            height: _isActive ? 50.0 : 0.0,
+            width: _isActive ? 50.0 : 0.0,
+          ),
+        ],
+        child: Container(),
+      ),
+    );
+  }
 }
