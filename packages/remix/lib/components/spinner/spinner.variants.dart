@@ -1,16 +1,25 @@
-import 'package:mix/mix.dart';
+import 'package:remix/helpers/variant.dart';
 
-interface class ISpinnerVariant extends Variant {
-  const ISpinnerVariant(super.name);
+interface class ISpinnerVariant extends RemixVariant {
+  const ISpinnerVariant(String name) : super('spinner.$name');
 }
 
 class SpinnerSize extends ISpinnerVariant {
-  const SpinnerSize(super.name);
+  const SpinnerSize(String name) : super('size.$name');
 
-  static const xsmall = SpinnerSize('remix.spinner.xsmall');
-  static const small = SpinnerSize('remix.spinner.small');
-  static const medium = SpinnerSize('remix.spinner.medium');
-  static const large = SpinnerSize('remix.spinner.large');
+  static const xsmall = SpinnerSize('xsmall');
+  static const small = SpinnerSize('small');
+  static const medium = SpinnerSize('medium');
+  static const large = SpinnerSize('large');
 
   static List<SpinnerSize> get values => [xsmall, small, medium, large];
+}
+
+class SpinnerVariant extends ISpinnerVariant {
+  const SpinnerVariant(String name) : super('variant.$name');
+
+  static const solid = SpinnerVariant('solid');
+  static const dotted = SpinnerVariant('dotted');
+
+  static List<SpinnerVariant> get values => [dotted, solid];
 }

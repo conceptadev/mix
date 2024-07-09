@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mix/mix.dart';
 import 'package:remix/components/checkbox/checkbox_spec.dart';
 import 'package:remix/components/checkbox/checkbox_style.dart';
-import 'package:remix/components/checkbox/checkbox_variant.dart';
+import 'package:remix/components/checkbox/checkbox_variants.dart';
 
 class RxCheckbox extends StatelessWidget {
   const RxCheckbox({
@@ -43,6 +43,7 @@ class RxCheckbox extends StatelessWidget {
   Widget build(BuildContext context) {
     return Pressable(
       onPress: disabled ? null : _handleOnPress,
+      enabled: !disabled,
       child: SpecBuilder(
         style: _buildStyle(),
         builder: (context) {

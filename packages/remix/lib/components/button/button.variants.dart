@@ -1,11 +1,11 @@
-import 'package:mix/mix.dart';
+import 'package:remix/helpers/variant.dart';
 
-interface class IButtonVariant extends Variant {
-  const IButtonVariant(super.name);
+interface class IButtonVariant extends RemixVariant {
+  const IButtonVariant(String name) : super('button.$name');
 }
 
 class ButtonSize extends IButtonVariant {
-  const ButtonSize(super.name);
+  const ButtonSize(String name) : super('size.$name');
 
   static const small = ButtonSize('small');
   static const medium = ButtonSize('medium');
@@ -16,7 +16,7 @@ class ButtonSize extends IButtonVariant {
 }
 
 class ButtonVariant extends IButtonVariant {
-  const ButtonVariant(super.name);
+  const ButtonVariant(String name) : super('variant.$name');
 
   static const solid = ButtonVariant('solid');
   static const soft = ButtonVariant('soft');

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mix/mix.dart';
 import 'package:mix_annotations/mix_annotations.dart';
-import 'package:remix/components/spinner/spinner.dart';
+import 'package:remix/components/spinner/spinner_widget.dart';
 
 part 'spinner_spec.g.dart';
 

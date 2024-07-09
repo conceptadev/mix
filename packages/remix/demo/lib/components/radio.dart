@@ -1,30 +1,31 @@
 import 'package:demo/helpers/use_case_state.dart';
 import 'package:flutter/material.dart';
-import 'package:remix/remix.dart';
+import 'package:remix/components/radio/radio_variants.dart';
+import 'package:remix/components/radio/radio_widget.dart';
 import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
 @widgetbook.UseCase(
-  name: 'Checkbox Component',
-  type: RxCheckbox,
+  name: 'Radio Component',
+  type: RxRadio,
 )
-Widget buildCheckboxUseCase(BuildContext context) {
+Widget buildRadioUseCase(BuildContext context) {
   final knobState = WidgetbookState.of(context);
 
-  Widget buildCheckbox(CheckboxVariant variant) {
+  Widget buildRadio(RadioVariant variant) {
     return Column(
       children: [
         Text(variant.label),
         const SizedBox(height: 10),
-        RxCheckbox(
-          value: context.knobs.boolean(label: 'Checked', initialValue: true),
-          onChanged: (value) => knobState.updateKnob('Checked', value),
+        RxRadio(
+          value: context.knobs.boolean(label: 'Selected', initialValue: true),
+          onChanged: (value) => knobState.updateKnob('Selected', value),
           variant: variant,
           size: context.knobs.list(
             label: 'Size',
-            options: CheckboxSize.values,
-            initialOption: CheckboxSize.medium,
-            labelBuilder: (value) => value.name.split('.').last,
+            options: RadioSize.values,
+            initialOption: RadioSize.medium,
+            labelBuilder: (value) => value.label,
           ),
           disabled: context.knobs.boolean(
             label: 'Disabled',
@@ -38,6 +39,6 @@ Widget buildCheckboxUseCase(BuildContext context) {
   return Wrap(
     spacing: 12,
     runSpacing: 12,
-    children: CheckboxVariant.values.map(buildCheckbox).toList(),
+    children: RadioVariant.values.map(buildRadio).toList(),
   );
 }

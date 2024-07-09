@@ -11,6 +11,8 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:demo/components/button.dart' as _i2;
 import 'package:demo/components/checkbox.dart' as _i3;
+import 'package:demo/components/radio.dart' as _i4;
+import 'package:demo/components/spinner.dart' as _i5;
 import 'package:widgetbook/widgetbook.dart' as _i1;
 
 final directories = <_i1.WidgetbookNode>[
@@ -37,6 +39,30 @@ final directories = <_i1.WidgetbookNode>[
             useCase: _i1.WidgetbookUseCase(
               name: 'Checkbox Component',
               builder: _i3.buildCheckboxUseCase,
+            ),
+          )
+        ],
+      ),
+      _i1.WidgetbookFolder(
+        name: 'radio',
+        children: [
+          _i1.WidgetbookLeafComponent(
+            name: 'RxRadio',
+            useCase: _i1.WidgetbookUseCase(
+              name: 'Radio Component',
+              builder: _i4.buildRadioUseCase,
+            ),
+          )
+        ],
+      ),
+      _i1.WidgetbookFolder(
+        name: 'spinner',
+        children: [
+          _i1.WidgetbookLeafComponent(
+            name: 'RxSpinner',
+            useCase: _i1.WidgetbookUseCase(
+              name: 'Spinner Component',
+              builder: _i5.buildSpinnerUseCase,
             ),
           )
         ],

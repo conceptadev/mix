@@ -6,14 +6,14 @@ import 'package:remix/components/button/button.variants.dart';
 import 'package:remix/components/button/button_spec.dart';
 import 'package:remix/tokens/remix_tokens.dart';
 
-final _button = ButtonSpecUtility.self;
-final _label = _button.label;
-final _spinner = _button.spinner;
-final _container = _button.container;
-final _flex = _button.flex;
+final _util = ButtonSpecUtility.self;
+final _label = _util.label;
+final _spinner = _util.spinner;
+final _container = _util.container;
+final _flex = _util.flex;
 
 /// This applies to the icon, label, and spinner
-final _foreground = _button.foreground;
+final _foreground = _util.foreground;
 
 Style get _baseStyle => Style(
       _flex.gap(0),
@@ -31,110 +31,100 @@ Style get _baseStyle => Style(
       ),
     );
 
-final _onDisabledBackground = Style(
-  $on.disabled(
-    _container.color(
-      $rx.neutral3A(),
-    ),
-  ),
-);
+Style get _onDisabledForeground => Style(
+      $on.disabled(
+        _foreground.color.ref($rx.neutral7A),
+      ),
+    );
 
-final _onDisabledForeground = Style(
-  $on.disabled(
-    _foreground(color: $rx.neutral7A()),
-  ),
-);
+Style get _solidVariant => Style(
+      _container.color.ref($rx.accent9),
+      _foreground.color.ref($rx.neutral1),
+      $on.hover(
+        _container.color.ref($rx.accent12),
+      ),
+      $on.disabled(
+        _container.color.ref($rx.neutral3A),
+      ),
+    );
 
-final _solidVariant = Style(
-  _container.color($rx.accent9()),
-  _foreground(color: $rx.neutral1()),
-  $on.hover(
-    _container.color($rx.accent12()),
-  ),
-  _onDisabledBackground(),
-);
+Style get _softVariant => Style(
+      _container.color.ref($rx.accent3A),
+      _foreground.color.ref($rx.accent11A),
+      $on.hover(
+        _container.color.ref($rx.accent4A),
+      ),
+      $on.disabled(
+        _container.color.ref($rx.neutral3A),
+      ),
+    );
 
-final _softVariant = Style(
-  _container.color($rx.accent3A()),
-  _foreground(color: $rx.accent11A()),
-  $on.hover(
-    _container.color($rx.accent4A()),
-  ),
-  _onDisabledBackground(),
-);
+Style get _outlineVariant => Style(
+      _container.color(Colors.transparent),
+      _container.border.width(1),
+      _container.border.strokeAlign(0),
+      _container.border.color.ref($rx.accent8A),
+      _foreground.color.ref($rx.accent11A),
+      $on.hover(
+        _container.color.ref($rx.accent2A),
+      ),
+      $on.disabled(
+        _container.border.color.ref($rx.neutral8A),
+        _container.color.transparent(),
+      ),
+    );
+Style get _surfaceVariant => Style(
+      _outlineVariant(),
+      _container.color.ref($rx.accent3A),
+      $on.hover(
+        _container.color.ref($rx.accent4A),
+        _container.border.color.ref($rx.accent8A),
+      ),
+      $on.disabled(
+        _container.color.ref($rx.neutral2A),
+      ),
+    );
 
-final _outlineVariant = Style(
-  _container.color(Colors.transparent),
-  _container.border.width(1),
-  _container.border.strokeAlign(0),
-  _container.border.color($rx.accent8A()),
-  _foreground(color: $rx.accent11A()),
-  $on.hover(
-    _container.color(
-      $rx.accent2A(),
-    ),
-  ),
-  $on.disabled(
-    _container.border.color(
-      $rx.neutral8A(),
-    ),
-    _container.color.transparent(),
-  ),
-);
-final _surfaceVariant = Style(
-  _outlineVariant(),
-  _container.color($rx.accent2A()),
-  $on.hover(
-    _container.color($rx.accent3A()),
-    _container.border.color($rx.accent8A()),
-  ),
-  $on.disabled(
-    _container.color(
-      $rx.neutral2A(),
-    ),
-  ),
-);
+Style get _ghostVariant => Style(
+      _container.border.style.none(),
+      _container.color(Colors.transparent),
+      _foreground.color.ref($rx.accent11A),
+      $on.hover(
+        _container.color.ref($rx.accent3A),
+      ),
+    );
 
-final _ghostVariant = Style(
-  _container.border.style.none(),
-  _container.color(Colors.transparent),
-  _foreground(color: $rx.accent11A()),
-  $on.hover(
-    _container.color($rx.accent3A()),
-  ),
-);
+Style get _smallVariant => Style(
+      _label.style.ref($rx.text1),
+      _container.padding.vertical.ref($rx.space1),
+      _container.padding.horizontal.ref($rx.space2),
+      _flex.gap.ref($rx.space1),
+      _foreground.size(12),
+    );
 
-final _smallVariant = Style(
-  _label.style.as($rx.text1()),
-  _container.padding.vertical($rx.space1()),
-  _container.padding.horizontal($rx.space2()),
-  _flex.gap($rx.space1()),
-  _foreground(size: 12),
-);
+Style get _mediumVariant => Style(
+      _container.padding.vertical.ref($rx.space2),
+      _container.padding.horizontal.ref($rx.space3),
+      _flex.gap.ref($rx.space2),
+      _label.style.ref($rx.text2),
+      _foreground.size(14),
+    );
 
-final _mediumVariant = Style(
-  _container.padding.vertical($rx.space2()),
-  _container.padding.horizontal($rx.space3()),
-  _flex.gap($rx.space2()),
-  _label.style.as($rx.text2()),
-  _foreground(size: 14),
-);
+Style get _largeVariant => Style(
+      _container.padding.vertical.ref($rx.space2),
+      _container.padding.horizontal.ref($rx.space4),
+      _flex.gap.ref($rx.space3),
+      _label.style.ref($rx.text3),
+      _foreground.size(16),
+    );
 
-final _largeVariant = Style(
-  _container.padding.vertical($rx.space2()),
-  _container.padding.horizontal($rx.space4()),
-  _flex.gap($rx.space3()),
-  _label.style.as($rx.text3()),
-  _foreground(size: 16),
-);
-
-final _xLargeVariant = Style(
-  _container.padding.vertical($rx.space3()),
-  _container.padding.horizontal($rx.space5()),
-  _flex.gap($rx.space3()),
-  _label.style.as($rx.text4()),
-  _foreground(size: 18),
-);
+Style get _xLargeVariant => Style(
+      _container.padding.vertical.ref($rx.space3),
+      _container.padding.horizontal.ref($rx.space5),
+      _flex.gap.ref($rx.space3),
+      _label.style.ref($rx.text4),
+      _foreground.size(18),
+    );
 
 Style buildDefaultButtonStyle() {
   return Style(
@@ -158,16 +148,21 @@ Style buildDefaultButtonStyle() {
 }
 
 extension ButtonSpecUtilityX<T extends Attribute> on ButtonSpecUtility<T> {
-  Attribute foreground({Color? color, double? size}) {
-    final style = Style.create([
-      if (color != null) ...[
-        label.style.color(color),
-        icon.color(color),
-        spinner.color(color),
-      ],
-      if (size != null) ...[icon.size(size), spinner.size(size)],
-    ]);
+  ForegroundUtility<T> get foreground => ForegroundUtility((v) {
+        return only().merge(label.style
+            .only(color: v.color)
+            .merge(icon.only(color: v.color, size: v.size))
+            .merge(spinner.only(color: v.color, size: v.size))) as T;
+      });
+}
 
-    return style();
+class ForegroundUtility<T extends Attribute>
+    extends MixUtility<T, ({ColorDto? color, double? size})> {
+  ForegroundUtility(super.builder);
+  late final color = ColorUtility((v) => only(color: v));
+
+  late final size = FontSizeUtility((v) => only(size: v));
+  T only({ColorDto? color, double? size}) {
+    return builder((color: color, size: size));
   }
 }

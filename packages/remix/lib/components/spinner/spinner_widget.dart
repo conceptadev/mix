@@ -7,18 +7,22 @@ import 'package:remix/components/spinner/spinner.variants.dart';
 import 'package:remix/components/spinner/spinner_painter.dart';
 import 'package:remix/components/spinner/spinner_spec.dart';
 
-class RXSpinner extends StatelessWidget {
-  const RXSpinner({
+class RxSpinner extends StatelessWidget {
+  const RxSpinner({
     this.style,
     super.key,
     this.size = SpinnerSize.medium,
+    this.variant = SpinnerVariant.solid,
   });
 
   final Style? style;
   final SpinnerSize size;
+  final SpinnerVariant variant;
 
   Style _buildStyle() {
-    return defaultSpinnerStyle.merge(style).applyVariants([size]).animate();
+    return defaultSpinnerStyle()
+        .merge(style)
+        .applyVariants([variant, size]).animate();
   }
 
   @override
@@ -26,7 +30,11 @@ class RXSpinner extends StatelessWidget {
     return SpecBuilder(
       style: _buildStyle(),
       builder: (context) {
-        final SpinnerWidget = SpinnerSpec.of(context);
+        final SpinnerWidget = SpinnerSpec.of(context).copyWith(
+          style: variant == SpinnerVariant.dotted
+              ? SpinnerStyle.dotted
+              : SpinnerStyle.solid,
+        );
         return SpinnerWidget();
       },
     );

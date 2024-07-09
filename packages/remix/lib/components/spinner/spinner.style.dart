@@ -1,11 +1,11 @@
-import 'package:flutter/material.dart';
 import 'package:mix/mix.dart';
 import 'package:remix/components/spinner/spinner_spec.dart';
+import 'package:remix/tokens/remix_tokens.dart';
 
-final _spinner = SpinnerSpecUtility.self;
+final _util = SpinnerSpecUtility.self;
 
-Style get defaultSpinnerStyle => Style(
-      _spinner.strokeWidth(2),
-      _spinner.color(Colors.black),
-      _spinner.size(24),
+Style defaultSpinnerStyle() => Style(
+      _util.strokeWidth(2),
+      _util.color.ref($rx.accent9),
+      _util.size(24),
     );
