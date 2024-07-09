@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
@@ -74,10 +76,14 @@ void main() {
         $token.space.medium: 50,
       },
       textStyles: {
-        $material.textTheme.bodyText1:
-            const TextStyle(color: Colors.red, fontSize: 10),
-        $material.textTheme.bodyText2:
-            const TextStyle(color: Colors.blue, fontSize: 20),
+        $material.textTheme.bodyText1: const TextStyle(
+            color: Colors.red,
+            fontSize: 10,
+            fontVariations: [FontVariation('wght', 400)]),
+        $material.textTheme.bodyText2: const TextStyle(
+            color: Colors.blue,
+            fontSize: 20,
+            fontVariations: [FontVariation('wght', 700)]),
       },
       radii: {
         $token.radius.medium: const Radius.elliptical(10, 50),
@@ -121,6 +127,11 @@ void main() {
     expect(
       textWidget.style!.fontSize,
       themeData.textStyles[$material.textTheme.bodyText2]!.fontSize,
+    );
+
+    expect(
+      textWidget.style!.fontVariations,
+      themeData.textStyles[$material.textTheme.bodyText2]!.fontVariations,
     );
 
     expect(
@@ -354,5 +365,33 @@ void main() {
         throwsA(isA<TokenFieldAccessError>()),
       );
     });
+  });
+
+  testWidgets('Test fontVariations are applied', (tester) async {
+    const test = TextStyleToken('test');
+    final theme = MixThemeData(
+      textStyles: {
+        test: const TextStyle(
+          color: Colors.red,
+          fontVariations: [FontVariation('wght', 900)],
+        ),
+      },
+    );
+
+    await tester.pumpWidget(createWithMixTheme(
+      theme,
+      child: StyledText(
+        'test',
+        style: Style($text.style.ref(test)),
+      ),
+    ));
+
+    final widget = tester.widget<Text>(find.byType(Text));
+
+    expect(widget.style?.color, Colors.red);
+    expect(
+      widget.style?.fontVariations,
+      const [FontVariation('wght', 900)],
+    );
   });
 }
