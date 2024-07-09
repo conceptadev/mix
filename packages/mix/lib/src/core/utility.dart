@@ -80,13 +80,3 @@ abstract base class SizingUtility<T extends Attribute>
     extends ScalarUtility<T, double> {
   SizingUtility(super.builder);
 }
-
-// create a Utility class for TextScaler
-final class TextScalerUtility<T extends Attribute>
-    extends ScalarUtility<T, TextScaler> {
-  const TextScalerUtility(super.builder);
-
-  T noScaling() => builder(TextScaler.noScaling);
-  T linear(double textScaleFactor) =>
-      builder(TextScaler.linear(textScaleFactor));
-}

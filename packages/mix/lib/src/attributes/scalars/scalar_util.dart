@@ -160,3 +160,9 @@ final class FontFamilyUtility<T extends Attribute> extends MixUtility<T, String>
     with _$FontFamilyUtility {
   const FontFamilyUtility(super.builder);
 }
+
+@MixableClassUtility()
+final class TextScalerUtility<T extends Attribute>
+    extends MixUtility<T, TextScaler> with _$TextScalerUtility {
+  const TextScalerUtility(super.builder);
+}
