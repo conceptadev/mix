@@ -1,3 +1,4 @@
+// ignore_for_file: avoid-dynamic
 import 'package:flutter/widgets.dart';
 
 import '../../attributes/animated/animated_data.dart';
@@ -59,6 +60,13 @@ class MixData {
   @visibleForTesting
   AttributeMap get attributes => _attributes;
 
+  List<WidgetModifierSpec<dynamic>> get modifiers {
+    return _attributes
+        .whereType<WidgetModifierAttribute>()
+        .map((e) => e.resolve(this))
+        .toList();
+  }
+
   MixData toInheritable() {
     final inheritableAttributes = _attributes.values.where(
       (attr) => attr is! WidgetModifierAttribute,
@@ -80,15 +88,8 @@ class MixData {
     return modifiers.whereType<M>().toList();
   }
 
-  List<WidgetModifierSpec<dynamic>> get modifiers {
-    return _attributes
-        .whereType<WidgetModifierAttribute>()
-        .map((e) => e.resolve(this))
-        .toList();
-  }
-
   Iterable<A> whereType<A extends StyledAttribute>() {
-    return _attributes.whereType<A>();
+    return _attributes.whereType();
   }
 
   bool contains<T>() {

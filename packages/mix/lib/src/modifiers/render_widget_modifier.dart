@@ -163,7 +163,9 @@ class RenderAnimatedModifiersState
 
 @visibleForTesting
 List<WidgetModifierSpec<dynamic>> resolveModifierSpecs(
-    List<Type> orderOfModifiers, MixData mix) {
+  List<Type> orderOfModifiers,
+  MixData mix,
+) {
   return orderModifiers(orderOfModifiers, mix.modifiers);
 }
 
@@ -187,6 +189,7 @@ List<WidgetModifierSpec<dynamic>> orderModifiers(
     // Resolve the modifier and add it to the list of specs.
     final modifier = modifiers.where((e) => e.type == modifierType).firstOrNull;
     if (modifier == null) continue;
+    // ignore: avoid-unnecessary-type-casts
     specs.add(modifier as WidgetModifierSpec<WidgetModifierSpec<dynamic>>);
   }
 
@@ -208,11 +211,12 @@ class RenderSpecModifiers extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final modifiers = spec.modifiers?.value ?? [];
+
     return spec.isAnimated
         ? RenderAnimatedModifiers(
             modifiers: modifiers,
-            orderOfModifiers: orderOfModifiers,
             duration: spec.animated!.duration,
+            orderOfModifiers: orderOfModifiers,
             curve: spec.animated!.curve,
             child: child,
           )
@@ -258,8 +262,11 @@ List<Type> _normalizeOrderedTypes(MixData? mix, List<Type>? orderedTypes) {
   return specs;
 }
 
-List<WidgetModifierSpec<dynamic>> _combineModifiers(MixData? mix,
-    List<WidgetModifierSpec<dynamic>> modifiers, List<Type> orderOfModifiers) {
+List<WidgetModifierSpec<dynamic>> _combineModifiers(
+  MixData? mix,
+  List<WidgetModifierSpec<dynamic>> modifiers,
+  List<Type> orderOfModifiers,
+) {
   final normalizedModifiers = _normalizeOrderedTypes(mix, orderOfModifiers);
 
   final mergedModifiers = [...modifiers];
