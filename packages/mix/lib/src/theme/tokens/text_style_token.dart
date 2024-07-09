@@ -1,4 +1,4 @@
-import 'package:flutter/foundation.dart';
+
 import 'package:flutter/widgets.dart';
 
 import '../mix/mix_theme.dart';
@@ -32,81 +32,6 @@ class TextStyleResolver extends TextStyle with WithTokenResolver<TextStyle> {
   final BuildContextResolver<TextStyle> resolve;
 
   const TextStyleResolver(this.resolve);
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) {
-      return true;
-    }
-    if (other.runtimeType != runtimeType) {
-      return false;
-    }
-
-    return other is TextStyle &&
-        other.inherit == inherit &&
-        other.color == color &&
-        other.backgroundColor == backgroundColor &&
-        other.fontSize == fontSize &&
-        other.fontWeight == fontWeight &&
-        other.fontStyle == fontStyle &&
-        other.letterSpacing == letterSpacing &&
-        other.wordSpacing == wordSpacing &&
-        other.textBaseline == textBaseline &&
-        other.height == height &&
-        other.leadingDistribution == leadingDistribution &&
-        other.locale == locale &&
-        other.foreground == foreground &&
-        other.background == background &&
-        listEquals(other.shadows, shadows) &&
-        listEquals(other.fontFeatures, fontFeatures) &&
-        listEquals(other.fontVariations, fontVariations) &&
-        other.decoration == decoration &&
-        other.decorationColor == decorationColor &&
-        other.decorationStyle == decorationStyle &&
-        other.decorationThickness == decorationThickness &&
-        other.fontFamily == fontFamily &&
-        listEquals(other.fontFamilyFallback, fontFamilyFallback) &&
-        other.overflow == overflow;
-  }
-
-  @override
-  int get hashCode {
-    final List<String>? fontFamilyFallback = this.fontFamilyFallback;
-    final int fontHash = Object.hash(
-      decorationStyle,
-      decorationThickness,
-      fontFamily,
-      fontFamilyFallback == null ? null : Object.hashAll(fontFamilyFallback),
-      overflow,
-    );
-
-    final List<Shadow>? shadows = this.shadows;
-    final List<FontFeature>? fontFeatures = this.fontFeatures;
-    final List<FontVariation>? fontVariations = this.fontVariations;
-
-    return Object.hash(
-      inherit,
-      color,
-      backgroundColor,
-      fontSize,
-      fontWeight,
-      fontStyle,
-      letterSpacing,
-      wordSpacing,
-      textBaseline,
-      height,
-      leadingDistribution,
-      locale,
-      foreground,
-      background,
-      shadows == null ? null : Object.hashAll(shadows),
-      fontFeatures == null ? null : Object.hashAll(fontFeatures),
-      fontVariations == null ? null : Object.hashAll(fontVariations),
-      decoration,
-      decorationColor,
-      fontHash,
-    );
-  }
 }
 
 @immutable

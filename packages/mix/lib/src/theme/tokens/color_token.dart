@@ -45,21 +45,6 @@ class ColorResolver extends Color with WithTokenResolver<Color> {
   final BuildContextResolver<Color> resolve;
 
   const ColorResolver(this.resolve) : super(0);
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) {
-      return true;
-    }
-    if (other.runtimeType != runtimeType) {
-      return false;
-    }
-
-    return other is Color && other.value == value;
-  }
-
-  @override
-  int get hashCode => value.hashCode;
 }
 
 /// A reference to a color token.
