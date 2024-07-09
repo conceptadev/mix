@@ -25,6 +25,7 @@ dart_code_metrics:
     avoid-importing-entrypoint-exports:
         only-in-src: true
     prefer-match-file-name: false
+    prefer-overriding-parent-equality: false
     prefer-correct-callback-field-name: false
     prefer-single-widget-per-file: false
     match-getter-setter-field-names: false

@@ -6,6 +6,8 @@ part of 'box_spec.dart';
 // MixableSpecGenerator
 // **************************************************************************
 
+// ignore_for_file: deprecated_member_use_from_same_package
+
 base mixin _$BoxSpec on Spec<BoxSpec> {
   static BoxSpec from(MixData mix) {
     return mix.attributeOf<BoxSpecAttribute>()?.resolve(mix) ?? const BoxSpec();

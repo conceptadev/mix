@@ -1,8 +1,9 @@
+// ignore_for_file: deprecated_member_use_from_same_package, deprecated_member_use
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
 
-import '../../../helpers/testing_utils.dart';
+import '../../helpers/testing_utils.dart';
 
 void main() {
   testWidgets(
@@ -32,7 +33,7 @@ void main() {
       textDirection: TextDirection.rtl,
       softWrap: false,
       overflow: TextOverflow.ellipsis,
-      textScaler: TextScaler.linear(1.5),
+      textScaleFactor: 1.5,
       maxLines: 3,
       textWidthBasis: TextWidthBasis.longestLine,
       textHeightBehavior: TextHeightBehavior(applyHeightToFirstAscent: false),
@@ -48,7 +49,7 @@ void main() {
       textDirection: textSpec.textDirection,
       softWrap: textSpec.softWrap,
       overflow: textSpec.overflow,
-      textScaler: textSpec.textScaler,
+      textScaleFactor: textSpec.textScaleFactor,
       maxLines: textSpec.maxLines,
       textWidthBasis: textSpec.textWidthBasis,
       textHeightBehavior: textSpec.textHeightBehavior,
@@ -73,7 +74,6 @@ void main() {
     final textFinder = find.byKey(textKey);
     final textWidget = tester.widget<Text>(textFinder);
     expect(textFinder, findsOneWidget);
-
     final mixedTextFinder = find.byKey(mixedTextKey);
     expect(mixedTextFinder, findsOneWidget);
 
@@ -90,7 +90,7 @@ void main() {
     expect(textWidget.textDirection, mixedTextWidget.textDirection);
     expect(textWidget.softWrap, mixedTextWidget.softWrap);
     expect(textWidget.overflow, mixedTextWidget.overflow);
-    expect(textWidget.textScaler, mixedTextWidget.textScaler);
+    expect(textWidget.textScaleFactor, mixedTextWidget.textScaleFactor);
     expect(textWidget.maxLines, mixedTextWidget.maxLines);
     expect(textWidget.textWidthBasis, mixedTextWidget.textWidthBasis);
     expect(textWidget.textHeightBehavior, mixedTextWidget.textHeightBehavior);
