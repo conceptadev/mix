@@ -140,7 +140,7 @@ abstract class _MixStateWidgetBuilder extends StatefulWidget {
   final FocusNode? focusNode;
 
   /// {@macro flutter.widgets.Focus.onKey}
-  final FocusOnKeyCallback? onKey;
+  final FocusOnKeyEventCallback? onKey;
 
   /// {@macro flutter.widgets.Focus.onKeyEvent}
   final FocusOnKeyEventCallback? onKeyEvent;

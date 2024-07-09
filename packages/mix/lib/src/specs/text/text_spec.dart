@@ -10,13 +10,16 @@ final class TextSpec extends Spec<TextSpec> with _$TextSpec {
   final TextOverflow? overflow;
   final StrutStyle? strutStyle;
   final TextAlign? textAlign;
-  final double? textScaleFactor;
   final int? maxLines;
   final TextWidthBasis? textWidthBasis;
   final TextHeightBehavior? textHeightBehavior;
+  final TextScaler? textScaler;
   final TextStyle? style;
   final TextDirection? textDirection;
   final bool? softWrap;
+
+  @Deprecated('Use textScaler instead')
+  final double? textScaleFactor;
 
   @MixableProperty(
     utilities: [
@@ -41,7 +44,8 @@ final class TextSpec extends Spec<TextSpec> with _$TextSpec {
     this.overflow,
     this.strutStyle,
     this.textAlign,
-    this.textScaleFactor,
+    @Deprecated('Use textScaler instead') this.textScaleFactor,
+    this.textScaler,
     this.maxLines,
     this.style,
     this.textWidthBasis,

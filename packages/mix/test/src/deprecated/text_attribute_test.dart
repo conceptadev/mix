@@ -1,8 +1,9 @@
+// ignore_for_file: deprecated_member_use_from_same_package
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
 
-import '../../../helpers/testing_utils.dart';
+import '../../helpers/testing_utils.dart';
 
 void main() {
   group('TextSpecAttribute', () {
@@ -98,7 +99,7 @@ void main() {
       expect(resolved.strutStyle!.fontSize, 12);
       expect(resolved.strutStyle!.fontWeight, FontWeight.w500);
       expect(resolved.textAlign, TextAlign.center);
-      expect(resolved.textScaler, null);
+      expect(resolved.textScaleFactor, 1.5);
       expect(resolved.maxLines, 2);
       expect(resolved.style!.fontFamily, 'Roboto');
       expect(resolved.style!.fontSize, 12);

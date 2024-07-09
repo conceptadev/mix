@@ -27,30 +27,44 @@ jobs:
             const rawFiles = execSync(`git diff --name-only HEAD HEAD~${commits}`).toString()
             const files = rawFiles.split('\n').filter(Boolean)
 
+            console.log('##### Modified Files #####')
+            console.log(files)
+            console.log('##########################')
+
             // verify packages
             const packagesFiles = files.filter(file => file.startsWith('packages/') && !file.includes('mix_lint_test'))
             const packages = packagesFiles.map(file => file.split('/')[1])
             const labels = Array.from(new Set(packages))
 
+            console.log('##### PackagesLabels #####')
+            console.log(labels)
+            console.log('##########################')
+            
             // verify documentation 
             const wasDocModified = files.filter(file => file.startsWith('website/')).length > 0
             if (wasDocModified) {
               labels.push('documentation')
+              
+              console.log('documentation label was added')
             }
 
             // verify examples
             const wasExampleModified = files.filter(file => file.startsWith('examples/')).length > 0
             if (wasExampleModified) {
               labels.push('examples')
+              console.log('examples label was added')
             }
 
             // verify repo
             const wasRepoModified = files.filter(file => !file.startsWith('website/') && !file.startsWith('packages/') && !file.startsWith('examples/')).length > 0
             if (wasRepoModified) {
               labels.push('repo')
+              console.log('rep label was added')
             }
 
+            console.log('##### Added Labels #####')
             console.log(labels)
+            console.log('##########################')
 
             github.rest.issues.addLabels({
               issue_number: context.issue.number,

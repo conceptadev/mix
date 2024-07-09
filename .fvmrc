@@ -1,5 +1,5 @@
 {
-  "flutter": "3.10.6",
+  "flutter": "3.19.0",
   "flavors": {
     "prod": "stable",
     "mincompat": "3.10.6"
@@ -7,4 +7,5 @@
   "runPubGetOnSdkChanges": true,
   "updateVscodeSettings": true,
   "updateGitIgnore": false
+  }
 }

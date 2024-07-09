@@ -2,7 +2,6 @@
 
 import 'dart:io';
 import 'dart:typed_data';
-import 'dart:ui';
 
 import 'package:flutter/widgets.dart';
 import 'package:mix/mix.dart';
@@ -160,4 +159,10 @@ final class Matrix4Utility<T extends Attribute> extends MixUtility<T, Matrix4>
 final class FontFamilyUtility<T extends Attribute> extends MixUtility<T, String>
     with _$FontFamilyUtility {
   const FontFamilyUtility(super.builder);
+}
+
+@MixableClassUtility()
+final class TextScalerUtility<T extends Attribute>
+    extends MixUtility<T, TextScaler> with _$TextScalerUtility {
+  const TextScalerUtility(super.builder);
 }

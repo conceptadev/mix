@@ -32,6 +32,7 @@ base mixin _$TextStyleData on Dto<TextStyle> {
       fontFamily: _$this.fontFamily ?? defaultValue.fontFamily,
       fontFamilyFallback:
           _$this.fontFamilyFallback ?? defaultValue.fontFamilyFallback,
+      fontVariations: _$this.fontVariations ?? defaultValue.fontVariations,
       fontFeatures: _$this.fontFeatures ?? defaultValue.fontFeatures,
       fontSize: _$this.fontSize ?? defaultValue.fontSize,
       fontStyle: _$this.fontStyle ?? defaultValue.fontStyle,
@@ -74,6 +75,8 @@ base mixin _$TextStyleData on Dto<TextStyle> {
       fontFamily: other.fontFamily ?? _$this.fontFamily,
       fontFamilyFallback: MixHelpers.mergeList(
           _$this.fontFamilyFallback, other.fontFamilyFallback),
+      fontVariations:
+          MixHelpers.mergeList(_$this.fontVariations, other.fontVariations),
       fontFeatures:
           MixHelpers.mergeList(_$this.fontFeatures, other.fontFeatures),
       fontSize: other.fontSize ?? _$this.fontSize,
@@ -105,6 +108,7 @@ base mixin _$TextStyleData on Dto<TextStyle> {
         _$this.decorationThickness,
         _$this.fontFamily,
         _$this.fontFamilyFallback,
+        _$this.fontVariations,
         _$this.fontFeatures,
         _$this.fontSize,
         _$this.fontStyle,
