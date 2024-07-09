@@ -54,10 +54,7 @@ final class TextSpec extends Spec<TextSpec> with _$TextSpec {
     this.softWrap,
     this.directive,
     super.animated,
-  }) : assert(
-          textScaler == null || textScaleFactor == null,
-          'textScaleFactor is deprecated and cannot be specified when textScaler is specified.',
-        );
+  });
 
   Widget call(String text, {String? semanticLabel, Locale? locale}) {
     return isAnimated
