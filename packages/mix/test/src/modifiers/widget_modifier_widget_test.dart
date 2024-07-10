@@ -280,7 +280,20 @@ void main() {
 
     testWidgets('Renders animated modifiers', (tester) async {
       await tester.pumpWidget(
-        const _TestableAnimatedModifiers(),
+        _TestableAnimatedModifiers(
+          (isActive) => RenderAnimatedModifiers(
+            duration: const Duration(milliseconds: 200),
+            orderOfModifiers: const [],
+            modifiers: [
+              OpacityModifierSpec(isActive ? 1.0 : 0.0),
+              SizedBoxModifierSpec(
+                height: isActive ? 50.0 : 0.0,
+                width: isActive ? 50.0 : 0.0,
+              ),
+            ],
+            child: Container(),
+          ),
+        ),
       );
 
       final gestureFinder = find.byType(GestureDetector);
@@ -304,6 +317,42 @@ void main() {
       expect(tester.widget<Opacity>(finder).opacity, 0.0);
       expect(tester.widget<SizedBox>(finderSizedBox).height, 0);
       expect(tester.widget<SizedBox>(finderSizedBox).width, 0);
+    });
+
+    testWidgets('Renders animated modifiers', (tester) async {
+      gestureFinder() => find.byType(GestureDetector);
+
+      await tester.pumpWidget(
+        _TestableAnimatedModifiers(
+          (isActive) => RenderAnimatedModifiers(
+            duration: const Duration(milliseconds: 200),
+            orderOfModifiers: const [],
+            modifiers: [
+              const OpacityModifierSpec(0.0),
+              if (!isActive)
+                TransformModifierSpec(transform: Matrix4.rotationZ(0.5)),
+            ],
+            child: Container(),
+          ),
+        ),
+      );
+
+      expect(find.byType(Opacity), findsOneWidget);
+      expect(find.byType(Transform), findsNothing);
+
+      await tester.tap(gestureFinder());
+      await tester.pump();
+
+      expect(find.byType(Opacity), findsOneWidget);
+      expect(find.byType(Transform), findsOneWidget);
+      await tester.pumpAndSettle(const Duration(milliseconds: 200));
+
+      await tester.tap(gestureFinder());
+      await tester.pump();
+
+      expect(find.byType(Opacity), findsOneWidget);
+      expect(find.byType(Transform), findsNothing);
+      await tester.pumpAndSettle(const Duration(milliseconds: 200));
     });
   });
 
@@ -443,7 +492,11 @@ void main() {
 }
 
 class _TestableAnimatedModifiers extends StatefulWidget {
-  const _TestableAnimatedModifiers();
+  const _TestableAnimatedModifiers(
+    this.child,
+  );
+
+  final Widget Function(bool) child;
 
   @override
   State<_TestableAnimatedModifiers> createState() =>
@@ -464,18 +517,7 @@ class _TestableAnimatedModifiersState
   Widget build(BuildContext context) {
     return Pressable(
       onPress: _handleToggle,
-      child: RenderAnimatedModifiers(
-        duration: const Duration(milliseconds: 200),
-        orderOfModifiers: const [],
-        modifiers: [
-          OpacityModifierSpec(_isActive ? 1.0 : 0.0),
-          SizedBoxModifierSpec(
-            height: _isActive ? 50.0 : 0.0,
-            width: _isActive ? 50.0 : 0.0,
-          ),
-        ],
-        child: Container(),
-      ),
+      child: widget.child(_isActive),
     );
   }
 }

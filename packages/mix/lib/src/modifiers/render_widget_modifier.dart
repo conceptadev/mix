@@ -125,6 +125,25 @@ class RenderAnimatedModifiersState
 
   @override
   void forEachTween(TweenVisitor<dynamic> visitor) {
+    cleanUpSpecs();
+    updateModifiersSpecs(visitor);
+  }
+
+  Map<Type, ModifierSpecTween> cleanUpSpecs() {
+    final difference = _specs.keys
+        .toSet()
+        .difference(widget._appliedModifiers.map((e) => e.runtimeType).toSet());
+
+    if (difference.isNotEmpty) {
+      for (var e in difference) {
+        _specs.remove(e);
+      }
+    }
+
+    return _specs;
+  }
+
+  void updateModifiersSpecs(TweenVisitor<dynamic> visitor) {
     for (final spec in widget._appliedModifiers.reversed) {
       final specType = spec.runtimeType;
       final previousSpec = _specs[specType];
