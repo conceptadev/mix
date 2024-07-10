@@ -6,6 +6,8 @@ part of 'progress_spec.dart';
 // MixableSpecGenerator
 // **************************************************************************
 
+// ignore_for_file: deprecated_member_use_from_same_package
+
 base mixin _$ProgressSpec on Spec<ProgressSpec> {
   static ProgressSpec from(MixData mix) {
     return mix.attributeOf<ProgressSpecAttribute>()?.resolve(mix) ??

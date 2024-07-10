@@ -6,6 +6,8 @@ part of 'switch_spec.dart';
 // MixableSpecGenerator
 // **************************************************************************
 
+// ignore_for_file: deprecated_member_use_from_same_package
+
 base mixin _$SwitchSpec on Spec<SwitchSpec> {
   static SwitchSpec from(MixData mix) {
     return mix.attributeOf<SwitchSpecAttribute>()?.resolve(mix) ??

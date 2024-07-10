@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mix/mix.dart';
-import 'package:remix/components/checkbox/checkbox.dart';
 import 'package:remix/components/checkbox/checkbox_variants.dart';
+import 'package:remix/components/checkbox/checkbox_widget.dart';
 
 class RxCheckboxGroup extends StatefulWidget {
   const RxCheckboxGroup({

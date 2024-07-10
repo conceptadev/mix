@@ -41,7 +41,7 @@ Style get _solidVariant => Style(
       _container.color.ref($rx.accent9),
       _foreground.color.ref($rx.neutral1),
       $on.hover(
-        _container.color.ref($rx.accent12),
+        _container.color.ref($rx.accent10),
       ),
       $on.disabled(
         _container.color.ref($rx.neutral3A),

@@ -1,26 +1,26 @@
-import 'package:mix/mix.dart';
+import 'package:remix/helpers/variant.dart';
 
-abstract interface class IBadgeVariant extends Variant {
-  const IBadgeVariant(super.name);
+abstract interface class IBadgeVariant extends RemixVariant {
+  const IBadgeVariant(String name) : super('badge.$name');
 }
 
 class BadgeVariant extends IBadgeVariant {
-  const BadgeVariant(super.name);
+  const BadgeVariant(String name) : super('variant.$name');
 
-  static const solid = BadgeVariant('remix.badge.solid');
-  static const soft = BadgeVariant('remix.badge.soft');
-  static const surface = BadgeVariant('remix.badge.surface');
-  static const outline = BadgeVariant('remix.badge.outline');
+  static const solid = BadgeVariant('solid');
+  static const soft = BadgeVariant('soft');
+  static const surface = BadgeVariant('surface');
+  static const outline = BadgeVariant('outline');
 
   static List<BadgeVariant> get values => [solid, soft, surface, outline];
 }
 
 class BadgeSize extends IBadgeVariant {
-  const BadgeSize(super.name);
+  const BadgeSize(String name) : super('size.$name');
 
-  static const small = BadgeSize('remix.badge.small');
-  static const medium = BadgeSize('remix.badge.medium');
-  static const large = BadgeSize('remix.badge.large');
+  static const small = BadgeSize('small');
+  static const medium = BadgeSize('medium');
+  static const large = BadgeSize('large');
 
   static List<BadgeSize> get values => [small, medium, large];
 }

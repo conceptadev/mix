@@ -4,6 +4,8 @@ import 'package:remix/remix.dart';
 import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
+final _key = GlobalKey();
+
 @widgetbook.UseCase(
   name: 'Checkbox Component',
   type: RxCheckbox,
@@ -35,9 +37,12 @@ Widget buildCheckboxUseCase(BuildContext context) {
     );
   }
 
-  return Wrap(
-    spacing: 12,
-    runSpacing: 12,
-    children: CheckboxVariant.values.map(buildCheckbox).toList(),
+  return KeyedSubtree(
+    key: _key,
+    child: Wrap(
+      spacing: 12,
+      runSpacing: 12,
+      children: CheckboxVariant.values.map(buildCheckbox).toList(),
+    ),
   );
 }

@@ -7,7 +7,7 @@ part 'checkbox_spec.g.dart';
 @MixableSpec()
 base class CheckboxSpec extends Spec<CheckboxSpec> with _$CheckboxSpec {
   final BoxSpec container;
-  final IconSpec icon;
+  final IconSpec indicator;
 
   /// {@macro button_spec_of}
   static const of = _$CheckboxSpec.of;
@@ -16,8 +16,8 @@ base class CheckboxSpec extends Spec<CheckboxSpec> with _$CheckboxSpec {
 
   const CheckboxSpec({
     BoxSpec? container,
-    IconSpec? icon,
+    IconSpec? indicator,
     super.animated,
   })  : container = container ?? const BoxSpec(),
-        icon = icon ?? const IconSpec();
+        indicator = indicator ?? const IconSpec();
 }

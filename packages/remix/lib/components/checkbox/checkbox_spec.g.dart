@@ -6,6 +6,8 @@ part of 'checkbox_spec.dart';
 // MixableSpecGenerator
 // **************************************************************************
 
+// ignore_for_file: deprecated_member_use_from_same_package
+
 base mixin _$CheckboxSpec on Spec<CheckboxSpec> {
   static CheckboxSpec from(MixData mix) {
     return mix.attributeOf<CheckboxSpecAttribute>()?.resolve(mix) ??
@@ -34,12 +36,12 @@ base mixin _$CheckboxSpec on Spec<CheckboxSpec> {
   @override
   CheckboxSpec copyWith({
     BoxSpec? container,
-    IconSpec? icon,
+    IconSpec? indicator,
     AnimatedData? animated,
   }) {
     return CheckboxSpec(
       container: container ?? _$this.container,
-      icon: icon ?? _$this.icon,
+      indicator: indicator ?? _$this.indicator,
       animated: animated ?? _$this.animated,
     );
   }
@@ -56,7 +58,7 @@ base mixin _$CheckboxSpec on Spec<CheckboxSpec> {
   /// interpolation method:
   ///
   /// - [BoxSpec.lerp] for [container].
-  /// - [IconSpec.lerp] for [icon].
+  /// - [IconSpec.lerp] for [indicator].
 
   /// For [animated], the interpolation is performed using a step function.
   /// If [t] is less than 0.5, the value from the current [CheckboxSpec] is used. Otherwise, the value
@@ -70,7 +72,7 @@ base mixin _$CheckboxSpec on Spec<CheckboxSpec> {
 
     return CheckboxSpec(
       container: _$this.container.lerp(other.container, t),
-      icon: _$this.icon.lerp(other.icon, t),
+      indicator: _$this.indicator.lerp(other.indicator, t),
       animated: t < 0.5 ? _$this.animated : other.animated,
     );
   }
@@ -82,7 +84,7 @@ base mixin _$CheckboxSpec on Spec<CheckboxSpec> {
   @override
   List<Object?> get props => [
         _$this.container,
-        _$this.icon,
+        _$this.indicator,
         _$this.animated,
       ];
 
@@ -98,11 +100,11 @@ base mixin _$CheckboxSpec on Spec<CheckboxSpec> {
 /// the [CheckboxSpec] constructor.
 final class CheckboxSpecAttribute extends SpecAttribute<CheckboxSpec> {
   final BoxSpecAttribute? container;
-  final IconSpecAttribute? icon;
+  final IconSpecAttribute? indicator;
 
   const CheckboxSpecAttribute({
     this.container,
-    this.icon,
+    this.indicator,
     super.animated,
   });
 
@@ -118,7 +120,7 @@ final class CheckboxSpecAttribute extends SpecAttribute<CheckboxSpec> {
   CheckboxSpec resolve(MixData mix) {
     return CheckboxSpec(
       container: container?.resolve(mix),
-      icon: icon?.resolve(mix),
+      indicator: indicator?.resolve(mix),
       animated: animated?.resolve(mix) ?? mix.animation,
     );
   }
@@ -137,7 +139,7 @@ final class CheckboxSpecAttribute extends SpecAttribute<CheckboxSpec> {
 
     return CheckboxSpecAttribute(
       container: container?.merge(other.container) ?? other.container,
-      icon: icon?.merge(other.icon) ?? other.icon,
+      indicator: indicator?.merge(other.indicator) ?? other.indicator,
       animated: animated?.merge(other.animated) ?? other.animated,
     );
   }
@@ -149,7 +151,7 @@ final class CheckboxSpecAttribute extends SpecAttribute<CheckboxSpec> {
   @override
   List<Object?> get props => [
         container,
-        icon,
+        indicator,
         animated,
       ];
 }
@@ -163,8 +165,8 @@ base class CheckboxSpecUtility<T extends Attribute>
   /// Utility for defining [CheckboxSpecAttribute.container]
   late final container = BoxSpecUtility((v) => only(container: v));
 
-  /// Utility for defining [CheckboxSpecAttribute.icon]
-  late final icon = IconSpecUtility((v) => only(icon: v));
+  /// Utility for defining [CheckboxSpecAttribute.indicator]
+  late final indicator = IconSpecUtility((v) => only(indicator: v));
 
   /// Utility for defining [CheckboxSpecAttribute.animated]
   late final animated = AnimatedUtility((v) => only(animated: v));
@@ -177,12 +179,12 @@ base class CheckboxSpecUtility<T extends Attribute>
   @override
   T only({
     BoxSpecAttribute? container,
-    IconSpecAttribute? icon,
+    IconSpecAttribute? indicator,
     AnimatedDataDto? animated,
   }) {
     return builder(CheckboxSpecAttribute(
       container: container,
-      icon: icon,
+      indicator: indicator,
       animated: animated,
     ));
   }

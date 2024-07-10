@@ -5,10 +5,10 @@ abstract interface class ICheckboxVariant extends RemixVariant {
 }
 
 class CheckboxStatus extends ICheckboxVariant {
-  const CheckboxStatus(String name) : super('status.$name');
+  const CheckboxStatus._(String name) : super('status.$name');
 
-  static const checked = CheckboxStatus('checked');
-  static const unchecked = CheckboxStatus('unchecked');
+  static const checked = CheckboxStatus._('checked');
+  static const unchecked = CheckboxStatus._('unchecked');
 }
 
 class CheckboxVariant extends ICheckboxVariant {

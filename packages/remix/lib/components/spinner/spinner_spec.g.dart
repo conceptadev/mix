@@ -6,6 +6,8 @@ part of 'spinner_spec.dart';
 // MixableSpecGenerator
 // **************************************************************************
 
+// ignore_for_file: deprecated_member_use_from_same_package
+
 base mixin _$SpinnerSpec on Spec<SpinnerSpec> {
   static SpinnerSpec from(MixData mix) {
     return mix.attributeOf<SpinnerSpecAttribute>()?.resolve(mix) ??

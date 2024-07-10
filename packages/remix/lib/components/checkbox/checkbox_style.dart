@@ -9,7 +9,7 @@ import 'package:remix/tokens/remix_tokens.dart';
 
 final _util = CheckboxSpecUtility.self;
 final _container = _util.container;
-final _icon = _util.icon;
+final _indicator = _util.indicator;
 
 Style get _baseStyle => Style(
       _container.borderRadius(4),
@@ -17,15 +17,15 @@ Style get _baseStyle => Style(
 
 Style get _onDisabledForeground => Style(
       $on.disabled(
-        _icon.color.ref($rx.neutral7A),
+        _indicator.color.ref($rx.neutral7A),
       ),
     );
 
 Style get _solidVariant => Style(
       _container.color.ref($rx.accent9),
-      _icon.color.ref($rx.neutral1),
+      _indicator.color.ref($rx.neutral1),
       $on.hover(
-        _container.color.ref($rx.accent12),
+        _container.color.ref($rx.accent10),
       ),
       $on.disabled(
         _container.color.ref($rx.neutral3A),
@@ -34,7 +34,7 @@ Style get _solidVariant => Style(
 
 Style get _softVariant => Style(
       _container.color.ref($rx.accent3A),
-      _icon.color.ref($rx.accent11A),
+      _indicator.color.ref($rx.accent11A),
       $on.hover(
         _container.color.ref($rx.accent4A),
       ),
@@ -46,7 +46,7 @@ Style get _outlineVariant => Style(
       _container.color(Colors.transparent),
       _container.border.color.ref($rx.accent8A),
       _container.border.width(1.5),
-      _icon.color.ref($rx.accent11A),
+      _indicator.color.ref($rx.accent11A),
       $on.hover(
         _container.color.ref($rx.accent2A),
       ),
@@ -71,7 +71,7 @@ Style get _surfaceVariant => Style(
 final _ghostVariant = Style(
   _container.border.style.none(),
   _container.color(Colors.transparent),
-  _icon.color.ref($rx.accent11A),
+  _indicator.color.ref($rx.accent11A),
   $on.hover(
     _container.color.ref($rx.accent3A),
   ),
@@ -80,22 +80,22 @@ final _ghostVariant = Style(
 Style get _disabledVariant => Style(
       _container.color.ref($rx.neutral3A),
       _container.border.color.ref($rx.neutral5A),
-      _icon.color.ref($rx.neutral7A),
+      _indicator.color.ref($rx.neutral7A),
     );
 
 Style get _smallVariant => Style(
       _container.size(16),
-      _icon.size(12),
+      _indicator.size(12),
     );
 
 Style get _mediumVariant => Style(
       _container.size(20),
-      _icon.size(16),
+      _indicator.size(16),
     );
 
 Style get _largeVariant => Style(
       _container.size(24),
-      _icon.size(20),
+      _indicator.size(20),
     );
 
 Style buildDefaultCheckboxStyle() {

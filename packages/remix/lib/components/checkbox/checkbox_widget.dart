@@ -34,9 +34,11 @@ class RxCheckbox extends StatelessWidget {
   void _handleOnPress() => onChanged?.call(!value);
 
   Style _buildStyle() {
-    return buildDefaultCheckboxStyle()
-        .merge(style)
-        .applyVariants([size, variant]).animate();
+    return buildDefaultCheckboxStyle().merge(style).applyVariants([
+      size,
+      variant,
+      value ? CheckboxStatus.checked : CheckboxStatus.unchecked
+    ]).animate();
   }
 
   @override
@@ -50,7 +52,7 @@ class RxCheckbox extends StatelessWidget {
           final spec = CheckboxSpec.of(context);
 
           final ContainerWidget = spec.container;
-          final IconWidget = spec.icon;
+          final IconWidget = spec.indicator;
 
           return ContainerWidget(
             child: IconWidget(
