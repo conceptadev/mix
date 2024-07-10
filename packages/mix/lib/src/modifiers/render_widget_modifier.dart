@@ -124,8 +124,18 @@ class RenderAnimatedModifiersState
   final Map<Type, ModifierSpecTween> _specs = {};
 
   @override
+  void didUpdateWidget(covariant RenderAnimatedModifiers oldWidget) {
+    if (oldWidget.modifiers != widget.modifiers ||
+        oldWidget.mix != widget.mix ||
+        oldWidget.orderOfModifiers != widget.orderOfModifiers) {
+      cleanUpSpecs();
+    }
+
+    super.didUpdateWidget(oldWidget);
+  }
+
+  @override
   void forEachTween(TweenVisitor<dynamic> visitor) {
-    cleanUpSpecs();
     updateModifiersSpecs(visitor);
   }
 
