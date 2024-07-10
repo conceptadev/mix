@@ -7,14 +7,7 @@
     "title": "Overview",
     "display": "children"
   },
-  "-- Tools": {
-    "type": "separator",
-    "title": "Tools"
-  },
-  "tools": {
-    "title": "Tools",
-    "display": "children"
-  },
+
   "-- Guides": {
     "type": "separator",
     "title": "Guides"
@@ -29,6 +22,14 @@
   },
   "tutorials": {
     "title": "Tutorials",
+    "display": "children"
+  },
+  "-- Tools": {
+    "type": "separator",
+    "title": "Tools"
+  },
+  "tools": {
+    "title": "Tools",
     "display": "children"
   },
   "-- Widgets": {
