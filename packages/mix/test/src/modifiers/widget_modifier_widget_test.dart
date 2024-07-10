@@ -319,7 +319,8 @@ void main() {
       expect(tester.widget<SizedBox>(finderSizedBox).width, 0);
     });
 
-    testWidgets('Renders animated modifiers', (tester) async {
+    testWidgets('Transition correctly when there is conditional specs',
+        (tester) async {
       gestureFinder() => find.byType(GestureDetector);
 
       await tester.pumpWidget(
