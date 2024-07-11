@@ -45,6 +45,7 @@ base mixin _$ImageSpec on Spec<ImageSpec> {
     FilterQuality? filterQuality,
     BlendMode? colorBlendMode,
     AnimatedData? animated,
+    WidgetModifiersData? modifiers,
   }) {
     return ImageSpec(
       width: width ?? _$this.width,
@@ -57,6 +58,7 @@ base mixin _$ImageSpec on Spec<ImageSpec> {
       filterQuality: filterQuality ?? _$this.filterQuality,
       colorBlendMode: colorBlendMode ?? _$this.colorBlendMode,
       animated: animated ?? _$this.animated,
+      modifiers: modifiers ?? _$this.modifiers,
     );
   }
 
@@ -76,7 +78,7 @@ base mixin _$ImageSpec on Spec<ImageSpec> {
   /// - [AlignmentGeometry.lerp] for [alignment].
   /// - [Rect.lerp] for [centerSlice].
 
-  /// For [repeat] and [fit] and [filterQuality] and [colorBlendMode] and [animated], the interpolation is performed using a step function.
+  /// For [repeat] and [fit] and [filterQuality] and [colorBlendMode] and [animated] and [modifiers], the interpolation is performed using a step function.
   /// If [t] is less than 0.5, the value from the current [ImageSpec] is used. Otherwise, the value
   /// from the [other] [ImageSpec] is used.
   ///
@@ -97,6 +99,7 @@ base mixin _$ImageSpec on Spec<ImageSpec> {
       filterQuality: t < 0.5 ? _$this.filterQuality : other.filterQuality,
       colorBlendMode: t < 0.5 ? _$this.colorBlendMode : other.colorBlendMode,
       animated: t < 0.5 ? _$this.animated : other.animated,
+      modifiers: t < 0.5 ? _$this.modifiers : other.modifiers,
     );
   }
 
@@ -116,6 +119,7 @@ base mixin _$ImageSpec on Spec<ImageSpec> {
         _$this.filterQuality,
         _$this.colorBlendMode,
         _$this.animated,
+        _$this.modifiers,
       ];
 
   ImageSpec get _$this => this as ImageSpec;
@@ -150,6 +154,7 @@ final class ImageSpecAttribute extends SpecAttribute<ImageSpec> {
     this.filterQuality,
     this.colorBlendMode,
     super.animated,
+    super.modifiers,
   });
 
   /// Resolves to [ImageSpec] using the provided [MixData].
@@ -173,6 +178,7 @@ final class ImageSpecAttribute extends SpecAttribute<ImageSpec> {
       filterQuality: filterQuality,
       colorBlendMode: colorBlendMode,
       animated: animated?.resolve(mix) ?? mix.animation,
+      modifiers: modifiers?.resolve(mix),
     );
   }
 
@@ -199,6 +205,7 @@ final class ImageSpecAttribute extends SpecAttribute<ImageSpec> {
       filterQuality: other.filterQuality ?? filterQuality,
       colorBlendMode: other.colorBlendMode ?? colorBlendMode,
       animated: animated?.merge(other.animated) ?? other.animated,
+      modifiers: modifiers?.merge(other.modifiers) ?? other.modifiers,
     );
   }
 
@@ -218,6 +225,7 @@ final class ImageSpecAttribute extends SpecAttribute<ImageSpec> {
         filterQuality,
         colorBlendMode,
         animated,
+        modifiers,
       ];
 }
 
@@ -258,6 +266,9 @@ base class ImageSpecUtility<T extends Attribute>
   /// Utility for defining [ImageSpecAttribute.animated]
   late final animated = AnimatedUtility((v) => only(animated: v));
 
+  /// Utility for defining [ImageSpecAttribute.modifiers]
+  late final wrap = SpecModifierUtility((v) => only(modifiers: v));
+
   ImageSpecUtility(super.builder);
 
   static final self = ImageSpecUtility((v) => v);
@@ -275,6 +286,7 @@ base class ImageSpecUtility<T extends Attribute>
     FilterQuality? filterQuality,
     BlendMode? colorBlendMode,
     AnimatedDataDto? animated,
+    WidgetModifiersDataDto? modifiers,
   }) {
     return builder(ImageSpecAttribute(
       width: width,
@@ -287,6 +299,7 @@ base class ImageSpecUtility<T extends Attribute>
       filterQuality: filterQuality,
       colorBlendMode: colorBlendMode,
       animated: animated,
+      modifiers: modifiers,
     ));
   }
 }

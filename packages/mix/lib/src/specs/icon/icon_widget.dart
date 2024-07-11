@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../core/styled_widget.dart';
+import '../../modifiers/render_widget_modifier.dart';
 import 'icon_spec.dart';
 
 class StyledIcon extends StyledWidget {
@@ -11,8 +12,15 @@ class StyledIcon extends StyledWidget {
     super.key,
     super.inherit = true,
     this.textDirection,
-    super.orderOfModifiers = const [],
-  });
+    @Deprecated('Use orderOfModifiers parameter instead')
+    List<Type> modifierOrder = const <Type>[],
+    List<Type> orderOfModifiers = const <Type>[],
+  })  : assert(modifierOrder == const <Type>[] ||
+            orderOfModifiers == const <Type>[]),
+        super(
+          orderOfModifiers:
+              orderOfModifiers == const [] ? modifierOrder : orderOfModifiers,
+        );
 
   final IconData? icon;
   final String? semanticLabel;
@@ -50,28 +58,37 @@ class IconSpecWidget extends StatelessWidget {
     this.semanticLabel,
     super.key,
     this.textDirection,
-    this.modifierOrder = const [],
-  });
+    @Deprecated('Use orderOfModifiers parameter instead')
+    List<Type> modifierOrder = const <Type>[],
+    List<Type> orderOfModifiers = const <Type>[],
+  })  : assert(modifierOrder == const <Type>[] ||
+            orderOfModifiers == const <Type>[]),
+        orderOfModifiers =
+            orderOfModifiers == const [] ? modifierOrder : orderOfModifiers;
 
   final IconData? icon;
   final IconSpec? spec;
   final String? semanticLabel;
   final TextDirection? textDirection;
-  final List<Type> modifierOrder;
+  final List<Type> orderOfModifiers;
 
   @override
   Widget build(BuildContext context) {
-    return Icon(
-      icon,
-      size: spec?.size,
-      fill: spec?.fill,
-      weight: spec?.weight,
-      grade: spec?.grade,
-      opticalSize: spec?.opticalSize,
-      color: spec?.color,
-      shadows: spec?.shadows,
-      semanticLabel: semanticLabel,
-      textDirection: textDirection,
+    return RenderSpecModifiers(
+      orderOfModifiers: orderOfModifiers,
+      spec: spec ?? const IconSpec(),
+      child: Icon(
+        icon,
+        size: spec?.size,
+        fill: spec?.fill,
+        weight: spec?.weight,
+        grade: spec?.grade,
+        opticalSize: spec?.opticalSize,
+        color: spec?.color,
+        shadows: spec?.shadows,
+        semanticLabel: semanticLabel,
+        textDirection: textDirection,
+      ),
     );
   }
 }
@@ -85,8 +102,16 @@ class AnimatedStyledIcon extends StyledWidget {
     required this.progress,
     super.inherit,
     this.textDirection,
-    super.orderOfModifiers = const [],
-  });
+    @Deprecated('Use orderOfModifiers parameter instead')
+    List<Type> modifierOrder = const <Type>[],
+    List<Type> orderOfModifiers = const <Type>[],
+  })  : assert(modifierOrder == const <Type>[] ||
+            orderOfModifiers == const <Type>[]),
+        super(
+          orderOfModifiers: orderOfModifiers == const <Type>[]
+              ? modifierOrder
+              : orderOfModifiers,
+        );
 
   final AnimatedIconData icon;
   final String? semanticLabel;
@@ -117,17 +142,23 @@ class AnimatedIconSpecWidget extends ImplicitlyAnimatedWidget {
     super.key,
     this.semanticLabel,
     this.textDirection,
-    this.modifierOrder = const [],
     super.curve,
     required super.duration,
     super.onEnd,
-  });
+    @Deprecated('Use orderOfModifiers parameter instead')
+    List<Type> modifierOrder = const <Type>[],
+    List<Type> orderOfModifiers = const <Type>[],
+  })  : assert(modifierOrder == const <Type>[] ||
+            orderOfModifiers == const <Type>[]),
+        orderOfModifiers = orderOfModifiers == const <Type>[]
+            ? modifierOrder
+            : orderOfModifiers;
 
   final IconData? icon;
   final IconSpec spec;
   final String? semanticLabel;
   final TextDirection? textDirection;
-  final List<Type> modifierOrder;
+  final List<Type> orderOfModifiers;
 
   @override
   // ignore: library_private_types_in_public_api
@@ -158,6 +189,7 @@ class _AnimatedIconSpecState
       spec: spec,
       semanticLabel: widget.semanticLabel,
       textDirection: widget.textDirection,
+      orderOfModifiers: widget.orderOfModifiers,
     );
   }
 }

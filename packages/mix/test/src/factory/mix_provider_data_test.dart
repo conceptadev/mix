@@ -1,5 +1,6 @@
 // ignore_for_file: non_constant_identifier_names
 
+import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
 
@@ -105,6 +106,51 @@ void main() {
         mergedMixData.attributeOf<MockSpecDoubleAttribute>(),
         const MockSpecDoubleAttribute(4.0),
       );
+    });
+
+    test(
+        'modifiersOf returns a list of resolved WidgetModifierSpec of the specified type',
+        () {
+      final style = Style(
+        $with.scale(2.0),
+        $with.opacity(0.5),
+        $with.visibility.on(),
+        $with.clipOval(),
+        $with.aspectRatio(2.0),
+      );
+
+      final mixData = MixData.create(MockBuildContext(), style);
+
+      final modifiers = mixData.modifiersOf();
+
+      expect(modifiers.length, 5);
+
+      final scaleModifiers = mixData.modifiersOf<TransformModifierSpec>();
+      expect(scaleModifiers, [
+        TransformModifierSpec(
+          transform: Matrix4.diagonal3Values(2.0, 2.0, 1.0),
+          alignment: Alignment.center,
+        ),
+      ]);
+
+      final opacityModifiers = mixData.modifiersOf<OpacityModifierSpec>();
+      expect(opacityModifiers, [const OpacityModifierSpec(0.5)]);
+
+      final visibilityModifiers = mixData.modifiersOf<VisibilityModifierSpec>();
+      expect(visibilityModifiers, [const VisibilityModifierSpec(true)]);
+
+      final clipModifiers = mixData.modifiersOf<ClipOvalModifierSpec>();
+      expect(clipModifiers, [const ClipOvalModifierSpec()]);
+
+      final aspectRatioModifiers =
+          mixData.modifiersOf<AspectRatioModifierSpec>();
+      expect(aspectRatioModifiers, [const AspectRatioModifierSpec(2.0)]);
+
+      final customModifiers = mixData.modifiersOf<ClipPathModifierSpec>();
+      expect(customModifiers, isEmpty);
+
+      final nonExistentModifiers = mixData.modifiersOf<ClipRectModifierSpec>();
+      expect(nonExistentModifiers, isEmpty);
     });
 
     group('applyContextToVisualAttributes', () {

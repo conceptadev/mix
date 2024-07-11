@@ -1,9 +1,11 @@
+// ignore_for_file: deprecated_member_use_from_same_package
+
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
 
-import '../../empty_widget.dart';
-import '../../helpers/testing_utils.dart';
+import '../empty_widget.dart';
+import '../helpers/testing_utils.dart';
 
 void main() {
   group('Modifiers: ', () {
@@ -429,10 +431,12 @@ class _TestableRenderModifier extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final mix = MixData.create(MockBuildContext(), style);
     return RenderModifiers(
-      modifiers: mix.modifiers,
       orderOfModifiers: const [],
+      mix: MixData.create(
+        context,
+        style,
+      ),
       child: Container(),
     );
   }

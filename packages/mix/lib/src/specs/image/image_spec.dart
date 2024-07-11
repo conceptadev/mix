@@ -32,6 +32,7 @@ final class ImageSpec extends Spec<ImageSpec> with _$ImageSpec {
     this.filterQuality,
     this.colorBlendMode,
     super.animated,
+    super.modifiers,
   });
 
   Widget call({

@@ -1,7 +1,10 @@
 import 'package:flutter/foundation.dart';
+import 'package:mix_annotations/mix_annotations.dart';
 
 import '../attributes/animated/animated_data.dart';
 import '../attributes/animated/animated_data_dto.dart';
+import '../attributes/modifiers/widget_modifiers_data.dart';
+import '../attributes/modifiers/widget_modifiers_data_dto.dart';
 import '../internal/compare_mixin.dart';
 import 'attribute.dart';
 import 'factory/mix_data.dart';
@@ -11,7 +14,10 @@ import 'utility.dart';
 abstract class Spec<T extends Spec<T>> with EqualityMixin {
   final AnimatedData? animated;
 
-  const Spec({this.animated});
+  @MixableProperty(utilities: [MixableUtility(alias: 'wrap')])
+  final WidgetModifiersData? modifiers;
+
+  const Spec({this.animated, this.modifiers});
 
   Type get type => T;
 
@@ -31,8 +37,9 @@ abstract class Spec<T extends Spec<T>> with EqualityMixin {
 /// The [Self] type represents the concrete implementation of the attribute, while the [Value] type represents the resolvable value.
 abstract base class SpecAttribute<Value> extends StyledAttribute {
   final AnimatedDataDto? animated;
+  final WidgetModifiersDataDto? modifiers;
 
-  const SpecAttribute({this.animated});
+  const SpecAttribute({this.animated, this.modifiers});
 
   Value resolve(MixData mix);
   @override

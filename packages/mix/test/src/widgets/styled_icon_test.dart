@@ -51,7 +51,7 @@ void main() {
             of: find.byKey(key),
             matching: find.byType(RenderModifiers),
           ),
-          findsOneWidget,
+          findsNWidgets(2),
         );
 
         expect(

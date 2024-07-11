@@ -22,6 +22,7 @@ final class StackSpec extends Spec<StackSpec> with _$StackSpec {
     this.textDirection,
     this.clipBehavior,
     super.animated,
+    super.modifiers,
   });
 
   Widget call({List<Widget> children = const []}) {

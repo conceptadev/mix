@@ -54,6 +54,7 @@ final class TextSpec extends Spec<TextSpec> with _$TextSpec {
     this.softWrap,
     this.directive,
     super.animated,
+    super.modifiers,
   });
 
   Widget call(String text, {String? semanticLabel, Locale? locale}) {

@@ -1,9 +1,7 @@
 import 'package:flutter/widgets.dart';
 
-import '../modifiers/render_widget_modifier.dart';
-import 'factory/mix_data.dart';
-import 'factory/mix_provider.dart';
-import 'factory/style_mix.dart';
+import '../modifiers/modifiers.dart';
+import 'core.dart';
 
 /// An abstract widget for applying custom styles.
 ///
@@ -60,16 +58,21 @@ abstract class StyledWidget extends StatelessWidget {
   }
 
   Widget applyModifiers(MixData mix, Widget child) {
+    final modifiers = mix
+        .whereType<WidgetModifierAttribute>()
+        .map((e) => e.resolve(mix))
+        .toList();
+
     return mix.isAnimated
         ? RenderAnimatedModifiers(
-            mix: mix,
-            orderOfModifiers: orderOfModifiers,
+            modifiers: modifiers,
             duration: mix.animation!.duration,
+            orderOfModifiers: orderOfModifiers,
             curve: mix.animation!.curve,
             child: child,
           )
         : RenderModifiers(
-            mix: mix,
+            modifiers: modifiers,
             orderOfModifiers: orderOfModifiers,
             child: child,
           );

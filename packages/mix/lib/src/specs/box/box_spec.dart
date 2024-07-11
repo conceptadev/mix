@@ -96,17 +96,23 @@ final class BoxSpec extends Spec<BoxSpec> with _$BoxSpec {
     this.clipBehavior,
     this.width,
     this.height,
+    super.modifiers,
     super.animated,
   });
 
-  Widget call({Widget? child}) {
+  Widget call({Widget? child, List<Type> orderOfModifiers = const []}) {
     return isAnimated
         ? AnimatedBoxSpecWidget(
             spec: this,
             duration: animated!.duration,
             curve: animated!.curve,
+            orderOfModifiers: orderOfModifiers,
             child: child,
           )
-        : BoxSpecWidget(spec: this, child: child);
+        : BoxSpecWidget(
+            spec: this,
+            orderOfModifiers: orderOfModifiers,
+            child: child,
+          );
   }
 }
