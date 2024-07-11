@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../mix/mix_theme.dart';
@@ -33,6 +34,43 @@ class ColorToken extends MixToken<Color> {
         ? themeValue.resolve(context)
         : themeValue ?? Colors.transparent;
   }
+}
+
+@immutable
+class ColorSwatchToken<T> extends ColorToken {
+  final Map<T, ColorToken> swatch;
+  const ColorSwatchToken(super.name, this.swatch);
+
+  operator [](int index) => swatch[index];
+
+  static ColorSwatchToken<int> scale(String name, int steps) {
+    return ColorSwatchToken(name, {
+      for (var i = 1; i <= steps; i++) i: ColorToken('$name-$i'),
+    });
+  }
+
+  @override
+  ColorSwatch<T> resolve(BuildContext context) {
+    final themeValue = MixTheme.of(context).colors[this];
+    assert(
+      themeValue != null,
+      'ColorSwatchToken $name is not defined in the theme',
+    );
+
+    return themeValue as ColorSwatch<T>;
+  }
+
+  @override
+  operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is ColorSwatchToken &&
+        other.name == name &&
+        mapEquals(other.swatch, swatch);
+  }
+
+  @override
+  int get hashCode => name.hashCode ^ swatch.hashCode;
 }
 
 /// A color resolver that allows dynamic resolution of a color value.
