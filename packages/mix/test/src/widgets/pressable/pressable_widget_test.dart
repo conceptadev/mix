@@ -131,6 +131,31 @@ void main() {
     });
   });
 
+  testWidgets('Pressable cancel timer on dispose', (WidgetTester tester) async {
+    var wasPressed = false;
+
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Scaffold(
+          body: Pressable(
+            autofocus: true,
+            unpressDelay: const Duration(minutes: 1),
+            onPress: () {
+              wasPressed = !wasPressed;
+            },
+            child: const Text('Tap me'),
+          ),
+        ),
+      ),
+    );
+
+    await tester.sendKeyEvent(LogicalKeyboardKey.enter);
+    expect(wasPressed, isTrue);
+
+    await tester.sendKeyEvent(LogicalKeyboardKey.enter);
+    expect(wasPressed, isFalse);
+  });
+
   group('PressableBox', () {
     testWidgets(
       'must be clickable when enable is setted to true',
