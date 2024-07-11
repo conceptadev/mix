@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 
 import '../../core/dto.dart';
@@ -15,7 +16,7 @@ import 'color_directives.dart';
 /// * [Color], which is the Flutter equivalent class.
 /// {@category DTO}
 @immutable
-class ColorDto extends Dto<Color> {
+class ColorDto extends Dto<Color> with Diagnosticable {
   final Color? value;
   final List<ColorDirective> directives;
 
@@ -49,6 +50,19 @@ class ColorDto extends Dto<Color> {
             value: other.value ?? value,
             directives: [...directives, ...other.directives],
           );
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+
+    Color color = value ?? defaultValue;
+
+    if (color is ColorRef) {
+      properties.add(DiagnosticsProperty('token', color.token.name));
+    }
+
+    properties.add(ColorProperty('color', color));
   }
 
   @override

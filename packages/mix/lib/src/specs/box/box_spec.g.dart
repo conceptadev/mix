@@ -144,7 +144,8 @@ base mixin _$BoxSpec on Spec<BoxSpec> {
 ///
 /// Use this class to configure the attributes of a [BoxSpec] and pass it to
 /// the [BoxSpec] constructor.
-final class BoxSpecAttribute extends SpecAttribute<BoxSpec> {
+final class BoxSpecAttribute extends SpecAttribute<BoxSpec>
+    with Diagnosticable {
   final AlignmentGeometry? alignment;
   final SpacingDto? padding;
   final SpacingDto? margin;
@@ -250,6 +251,34 @@ final class BoxSpecAttribute extends SpecAttribute<BoxSpec> {
         modifiers,
         animated,
       ];
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+        .add(DiagnosticsProperty('alignment', alignment, defaultValue: null));
+    properties.add(DiagnosticsProperty('padding', padding, defaultValue: null));
+    properties.add(DiagnosticsProperty('margin', margin, defaultValue: null));
+    properties.add(
+        DiagnosticsProperty('constraints', constraints, defaultValue: null));
+    properties.add(DiagnosticsProperty('decoration', decoration,
+        defaultValue: null, expandableValue: true));
+    properties.add(DiagnosticsProperty(
+        'foregroundDecoration', foregroundDecoration,
+        defaultValue: null));
+    properties
+        .add(DiagnosticsProperty('transform', transform, defaultValue: null));
+    properties.add(DiagnosticsProperty('transformAlignment', transformAlignment,
+        defaultValue: null));
+    properties.add(
+        DiagnosticsProperty('clipBehavior', clipBehavior, defaultValue: null));
+    properties.add(DiagnosticsProperty('width', width, defaultValue: null));
+    properties.add(DiagnosticsProperty('height', height, defaultValue: null));
+    properties
+        .add(DiagnosticsProperty('modifiers', modifiers, defaultValue: null));
+    properties
+        .add(DiagnosticsProperty('animated', animated, defaultValue: null));
+  }
 }
 
 /// Utility class for configuring [BoxSpecAttribute] properties.

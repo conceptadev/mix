@@ -2,6 +2,7 @@
 
 import 'dart:ui';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 
 import '../core/attribute.dart';
@@ -84,6 +85,14 @@ final class AlignModifierAttribute
       widthFactor: other?.widthFactor ?? widthFactor,
       heightFactor: other?.heightFactor ?? heightFactor,
     );
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(DiagnosticsProperty('alignment', alignment));
+    properties.add(DiagnosticsProperty('widthFactor', widthFactor));
+    properties.add(DiagnosticsProperty('heightFactor', heightFactor));
   }
 
   @override

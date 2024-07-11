@@ -1,5 +1,6 @@
 // ignore_for_file: prefer-named-boolean-parameters
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 
 import '../core/attribute.dart';
@@ -63,6 +64,12 @@ final class TransformModifierAttribute extends WidgetModifierAttribute<
   @override
   TransformModifierSpec resolve(MixData mix) {
     return TransformModifierSpec(transform: transform, alignment: alignment);
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(TransformProperty('transform', transform));
   }
 
   @override

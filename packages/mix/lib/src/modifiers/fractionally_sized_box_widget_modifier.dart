@@ -2,6 +2,7 @@
 
 import 'dart:ui';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 
 import '../core/attribute.dart';
@@ -91,6 +92,14 @@ final class FractionallySizedBoxModifierAttribute
       heightFactor: heightFactor,
       alignment: alignment,
     );
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(DiagnosticsProperty('widthFactor', widthFactor));
+    properties.add(DiagnosticsProperty('heightFactor', heightFactor));
+    properties.add(DiagnosticsProperty('alignment', alignment));
   }
 
   @override

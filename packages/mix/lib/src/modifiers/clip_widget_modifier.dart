@@ -1,5 +1,6 @@
 // ignore_for_file: prefer-named-boolean-parameters
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 
 import '../core/attribute.dart';
@@ -65,6 +66,13 @@ final class ClipOvalModifierAttribute extends WidgetModifierAttribute<
   @override
   ClipOvalModifierSpec resolve(MixData mix) {
     return ClipOvalModifierSpec(clipper: clipper, clipBehavior: clipBehavior);
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(DiagnosticsProperty('clipper', clipper));
+    properties.add(DiagnosticsProperty('clipBehavior', clipBehavior));
   }
 
   @override

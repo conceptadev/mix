@@ -109,7 +109,8 @@ base mixin _$StackSpec on Spec<StackSpec> {
 ///
 /// Use this class to configure the attributes of a [StackSpec] and pass it to
 /// the [StackSpec] constructor.
-final class StackSpecAttribute extends SpecAttribute<StackSpec> {
+final class StackSpecAttribute extends SpecAttribute<StackSpec>
+    with Diagnosticable {
   final AlignmentGeometry? alignment;
   final StackFit? fit;
   final TextDirection? textDirection;
@@ -179,6 +180,22 @@ final class StackSpecAttribute extends SpecAttribute<StackSpec> {
         animated,
         modifiers,
       ];
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+        .add(DiagnosticsProperty('alignment', alignment, defaultValue: null));
+    properties.add(DiagnosticsProperty('fit', fit, defaultValue: null));
+    properties.add(DiagnosticsProperty('textDirection', textDirection,
+        defaultValue: null));
+    properties.add(
+        DiagnosticsProperty('clipBehavior', clipBehavior, defaultValue: null));
+    properties
+        .add(DiagnosticsProperty('animated', animated, defaultValue: null));
+    properties
+        .add(DiagnosticsProperty('modifiers', modifiers, defaultValue: null));
+  }
 }
 
 /// Utility class for configuring [StackSpecAttribute] properties.

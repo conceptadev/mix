@@ -1,5 +1,6 @@
 // ignore_for_file: prefer-named-boolean-parameters
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 
 import '../attributes/spacing/edge_insets_dto.dart';
@@ -45,6 +46,12 @@ final class PaddingModifierAttribute
 
   @override
   PaddingSpec resolve(MixData mix) => PaddingSpec(padding.resolve(mix));
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(DiagnosticsProperty('padding', padding));
+  }
 
   @override
   get props => [padding];

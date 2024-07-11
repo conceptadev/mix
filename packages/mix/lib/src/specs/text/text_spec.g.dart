@@ -146,7 +146,8 @@ base mixin _$TextSpec on Spec<TextSpec> {
 ///
 /// Use this class to configure the attributes of a [TextSpec] and pass it to
 /// the [TextSpec] constructor.
-final class TextSpecAttribute extends SpecAttribute<TextSpec> {
+final class TextSpecAttribute extends SpecAttribute<TextSpec>
+    with Diagnosticable {
   final TextOverflow? overflow;
   final StrutStyleDto? strutStyle;
   final TextAlign? textAlign;
@@ -256,6 +257,38 @@ final class TextSpecAttribute extends SpecAttribute<TextSpec> {
         animated,
         modifiers,
       ];
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+        .add(DiagnosticsProperty('overflow', overflow, defaultValue: null));
+    properties
+        .add(DiagnosticsProperty('strutStyle', strutStyle, defaultValue: null));
+    properties
+        .add(DiagnosticsProperty('textAlign', textAlign, defaultValue: null));
+    properties.add(DiagnosticsProperty('textScaleFactor', textScaleFactor,
+        defaultValue: null));
+    properties
+        .add(DiagnosticsProperty('textScaler', textScaler, defaultValue: null));
+    properties
+        .add(DiagnosticsProperty('maxLines', maxLines, defaultValue: null));
+    properties.add(DiagnosticsProperty('style', style, defaultValue: null));
+    properties.add(DiagnosticsProperty('textWidthBasis', textWidthBasis,
+        defaultValue: null));
+    properties.add(DiagnosticsProperty('textHeightBehavior', textHeightBehavior,
+        defaultValue: null));
+    properties.add(DiagnosticsProperty('textDirection', textDirection,
+        defaultValue: null));
+    properties
+        .add(DiagnosticsProperty('softWrap', softWrap, defaultValue: null));
+    properties
+        .add(DiagnosticsProperty('directive', directive, defaultValue: null));
+    properties
+        .add(DiagnosticsProperty('animated', animated, defaultValue: null));
+    properties
+        .add(DiagnosticsProperty('modifiers', modifiers, defaultValue: null));
+  }
 }
 
 /// Utility class for configuring [TextSpecAttribute] properties.

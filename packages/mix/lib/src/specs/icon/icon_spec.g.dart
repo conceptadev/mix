@@ -132,7 +132,8 @@ base mixin _$IconSpec on Spec<IconSpec> {
 ///
 /// Use this class to configure the attributes of a [IconSpec] and pass it to
 /// the [IconSpec] constructor.
-final class IconSpecAttribute extends SpecAttribute<IconSpec> {
+final class IconSpecAttribute extends SpecAttribute<IconSpec>
+    with Diagnosticable {
   final ColorDto? color;
   final double? size;
   final double? weight;
@@ -227,6 +228,28 @@ final class IconSpecAttribute extends SpecAttribute<IconSpec> {
         animated,
         modifiers,
       ];
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(DiagnosticsProperty('color', color,
+        defaultValue: null, expandableValue: false));
+    properties.add(DiagnosticsProperty('size', size, defaultValue: null));
+    properties.add(DiagnosticsProperty('weight', weight, defaultValue: null));
+    properties.add(DiagnosticsProperty('grade', grade, defaultValue: null));
+    properties.add(
+        DiagnosticsProperty('opticalSize', opticalSize, defaultValue: null));
+    properties.add(DiagnosticsProperty('shadows', shadows, defaultValue: null));
+    properties.add(DiagnosticsProperty('textDirection', textDirection,
+        defaultValue: null));
+    properties.add(DiagnosticsProperty('applyTextScaling', applyTextScaling,
+        defaultValue: null));
+    properties.add(DiagnosticsProperty('fill', fill, defaultValue: null));
+    properties
+        .add(DiagnosticsProperty('animated', animated, defaultValue: null));
+    properties
+        .add(DiagnosticsProperty('modifiers', modifiers, defaultValue: null));
+  }
 }
 
 /// Utility class for configuring [IconSpecAttribute] properties.

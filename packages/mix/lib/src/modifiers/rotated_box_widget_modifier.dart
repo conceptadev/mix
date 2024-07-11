@@ -1,5 +1,6 @@
 // ignore_for_file: prefer-named-boolean-parameters
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 
 import '../core/attribute.dart';
@@ -49,6 +50,12 @@ final class RotatedBoxModifierAttribute extends WidgetModifierAttribute<
   @override
   RotatedBoxModifierSpec resolve(MixData mix) =>
       RotatedBoxModifierSpec(quarterTurns);
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(DiagnosticsProperty('quarterTurns', quarterTurns));
+  }
 
   @override
   List<Object?> get props => [quarterTurns];

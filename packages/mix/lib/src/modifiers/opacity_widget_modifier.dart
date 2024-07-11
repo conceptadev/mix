@@ -2,6 +2,7 @@
 
 import 'dart:ui';
 
+import 'package:flutter/src/foundation/diagnostics.dart';
 import 'package:flutter/widgets.dart';
 
 import '../core/attribute.dart';
@@ -58,6 +59,12 @@ final class OpacityModifierAttribute extends WidgetModifierAttribute<
   @override
   OpacityModifierSpec resolve(MixData mix) {
     return OpacityModifierSpec(opacity);
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(DiagnosticsProperty('opacity', opacity));
   }
 
   @override

@@ -1,5 +1,6 @@
 // ignore_for_file: prefer-named-boolean-parameters
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 
 import '../core/attribute.dart';
@@ -47,6 +48,12 @@ final class VisibilityModifierAttribute extends WidgetModifierAttribute<
   @override
   VisibilityModifierSpec resolve(MixData mix) {
     return VisibilityModifierSpec(visible);
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(DiagnosticsProperty('visible', visible));
   }
 
   @override

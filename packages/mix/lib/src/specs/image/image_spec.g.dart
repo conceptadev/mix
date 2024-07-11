@@ -132,7 +132,8 @@ base mixin _$ImageSpec on Spec<ImageSpec> {
 ///
 /// Use this class to configure the attributes of a [ImageSpec] and pass it to
 /// the [ImageSpec] constructor.
-final class ImageSpecAttribute extends SpecAttribute<ImageSpec> {
+final class ImageSpecAttribute extends SpecAttribute<ImageSpec>
+    with Diagnosticable {
   final double? width;
   final double? height;
   final ColorDto? color;
@@ -227,6 +228,28 @@ final class ImageSpecAttribute extends SpecAttribute<ImageSpec> {
         animated,
         modifiers,
       ];
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(DiagnosticsProperty('width', width, defaultValue: null));
+    properties.add(DiagnosticsProperty('height', height, defaultValue: null));
+    properties.add(DiagnosticsProperty('color', color, defaultValue: null));
+    properties.add(DiagnosticsProperty('repeat', repeat, defaultValue: null));
+    properties.add(DiagnosticsProperty('fit', fit, defaultValue: null));
+    properties
+        .add(DiagnosticsProperty('alignment', alignment, defaultValue: null));
+    properties.add(
+        DiagnosticsProperty('centerSlice', centerSlice, defaultValue: null));
+    properties.add(DiagnosticsProperty('filterQuality', filterQuality,
+        defaultValue: null));
+    properties.add(DiagnosticsProperty('colorBlendMode', colorBlendMode,
+        defaultValue: null));
+    properties
+        .add(DiagnosticsProperty('animated', animated, defaultValue: null));
+    properties
+        .add(DiagnosticsProperty('modifiers', modifiers, defaultValue: null));
+  }
 }
 
 /// Utility class for configuring [ImageSpecAttribute] properties.
