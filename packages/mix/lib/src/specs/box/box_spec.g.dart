@@ -349,7 +349,7 @@ base class BoxSpecUtility<T extends Attribute>
   late final height = DoubleUtility((v) => only(height: v));
 
   /// Utility for defining [BoxSpecAttribute.modifiers]
-  late final modifiers = SpecModifierUtility((v) => only(modifiers: v));
+  late final wrap = SpecModifierUtility((v) => only(modifiers: v));
 
   /// Utility for defining [BoxSpecAttribute.animated]
   late final animated = AnimatedUtility((v) => only(animated: v));

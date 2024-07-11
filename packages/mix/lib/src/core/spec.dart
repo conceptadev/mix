@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:mix_annotations/mix_annotations.dart';
 
 import '../attributes/animated/animated_data.dart';
 import '../attributes/animated/animated_data_dto.dart';
@@ -12,6 +13,8 @@ import 'utility.dart';
 @immutable
 abstract class Spec<T extends Spec<T>> with EqualityMixin {
   final AnimatedData? animated;
+
+  @MixableProperty(utilities: [MixableUtility(alias: 'wrap')])
   final WidgetModifiersData? modifiers;
 
   const Spec({this.animated, this.modifiers});
