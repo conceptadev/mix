@@ -294,6 +294,9 @@ abstract class _MixStateWidgetBuilderState<T extends _MixStateWidgetBuilder>
       }
     }
 
+    _timer?.cancel();
+    _timer = null;
+
     final delay = widget.unpressDelay;
 
     if (delay != Duration.zero) {
