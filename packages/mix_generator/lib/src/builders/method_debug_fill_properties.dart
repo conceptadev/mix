@@ -7,6 +7,9 @@ String methodDebugFillProperties({
 }) {
   final fieldStatements = fields.map((field) {
     final fieldName = isInternalRef ? field.asInternalRef : field.name;
+    if (fieldName == 'decoration') {
+      return 'properties.add(DiagnosticsProperty(\'$fieldName\', $fieldName, defaultValue: null, expandableValue: true));';
+    }
     return 'properties.add(DiagnosticsProperty(\'$fieldName\', $fieldName, defaultValue: null));';
   }).join('\n');
 
