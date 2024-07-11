@@ -6,6 +6,8 @@ part of 'badge_spec.dart';
 // MixableSpecGenerator
 // **************************************************************************
 
+// ignore_for_file: deprecated_member_use_from_same_package
+
 base mixin _$BadgeSpec on Spec<BadgeSpec> {
   static BadgeSpec from(MixData mix) {
     return mix.attributeOf<BadgeSpecAttribute>()?.resolve(mix) ??

@@ -12,6 +12,37 @@ class RemixSpace {
   final space7 = const SpaceToken('--space-7');
   final space8 = const SpaceToken('--space-8');
   final space9 = const SpaceToken('--space-9');
+
+  operator [](int index) {
+    return call(index);
+  }
+
+  SpaceToken call(int step) {
+    switch (step) {
+      case 1:
+        return space1;
+      case 2:
+        return space2;
+      case 3:
+        return space3;
+      case 4:
+        return space4;
+      case 5:
+        return space5;
+      case 6:
+        return space6;
+      case 7:
+        return space7;
+      case 8:
+        return space8;
+      case 9:
+        return space9;
+      default:
+        throw Exception(
+          'Invalid space step: $step found. Space step should be between 1 and 9.',
+        );
+    }
+  }
 }
 
 final _s = RemixSpace();

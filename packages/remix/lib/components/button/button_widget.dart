@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mix/mix.dart';
-import 'package:remix/components/button/button.style.dart';
-import 'package:remix/components/button/button.variants.dart';
 import 'package:remix/components/button/button_spec.dart';
+import 'package:remix/components/button/button_style.dart';
+import 'package:remix/components/button/button_variants.dart';
 
 /// A customizable button component with various styling options.
 ///

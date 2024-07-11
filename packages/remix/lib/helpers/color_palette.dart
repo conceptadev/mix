@@ -67,31 +67,6 @@ class RadixColors {
   static const whiteAlpha = RadixColors(_whiteAlpha, _whiteAlpha);
   static const sage = RadixColors(_sage, _sageAlpha);
   static const sageDark = RadixColors(_sageDark, _sageDarkAlpha);
-
-  Color get s1 => swatch[1]!;
-  Color get s1Alpha => alphaSwatch[1]!;
-  Color get s2 => swatch[2]!;
-  Color get s2Alpha => alphaSwatch[2]!;
-  Color get s3 => swatch[3]!;
-  Color get s3Alpha => alphaSwatch[3]!;
-  Color get s4 => swatch[4]!;
-  Color get s4Alpha => alphaSwatch[4]!;
-  Color get s5 => swatch[5]!;
-  Color get s5Alpha => alphaSwatch[5]!;
-  Color get s6 => swatch[6]!;
-  Color get s6Alpha => alphaSwatch[6]!;
-  Color get s7 => swatch[7]!;
-  Color get s7Alpha => alphaSwatch[7]!;
-  Color get s8 => swatch[8]!;
-  Color get s8Alpha => alphaSwatch[8]!;
-  Color get s9 => swatch[9]!;
-  Color get s9Alpha => alphaSwatch[9]!;
-  Color get s10 => swatch[10]!;
-  Color get s10Alpha => alphaSwatch[10]!;
-  Color get s11 => swatch[11]!;
-  Color get s11Alpha => alphaSwatch[11]!;
-  Color get s12 => swatch[12]!;
-  Color get s12Alpha => alphaSwatch[12]!;
 }
 
 const _amber = ColorSwatch(

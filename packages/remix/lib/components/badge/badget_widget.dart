@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mix/mix.dart';
-import 'package:remix/components/badge/badge.style.dart';
-import 'package:remix/components/badge/badge.variants.dart';
 import 'package:remix/components/badge/badge_spec.dart';
+import 'package:remix/components/badge/badge_style.dart';
+import 'package:remix/components/badge/badge_variants.dart';
 
 class RxBadge extends StatelessWidget {
   const RxBadge({
@@ -23,16 +23,10 @@ class RxBadge extends StatelessWidget {
   final BadgeSize size;
   final BadgeVariant variant;
 
-  Style _buildStyle() {
-    return buildDefaultBadgeStyle()
-        .merge(style)
-        .applyVariants([size, variant]).animate();
-  }
-
   @override
   Widget build(BuildContext context) {
     return SpecBuilder(
-      style: _buildStyle(),
+      style: badgeStyle(style, [size, variant]),
       builder: (context) {
         final spec = BadgeSpec.of(context);
 

@@ -6,6 +6,8 @@ part of 'button_spec.dart';
 // MixableSpecGenerator
 // **************************************************************************
 
+// ignore_for_file: deprecated_member_use_from_same_package
+
 base mixin _$ButtonSpec on Spec<ButtonSpec> {
   static ButtonSpec from(MixData mix) {
     return mix.attributeOf<ButtonSpecAttribute>()?.resolve(mix) ??

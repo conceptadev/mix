@@ -1,12 +1,12 @@
 library remix;
 
-export 'components/button/button.style.dart';
-export 'components/button/button.variants.dart';
 export 'components/button/button_spec.dart';
+export 'components/button/button_style.dart';
+export 'components/button/button_variants.dart';
 export 'components/button/button_widget.dart';
-export 'components/card/card.style.dart';
-export 'components/card/card.variants.dart';
 export 'components/card/card_spec.dart';
+export 'components/card/card_style.dart';
+export 'components/card/card_variants.dart';
 export 'components/card/card_widget.dart';
 export 'components/checkbox/checkbox_spec.dart';
 export 'components/checkbox/checkbox_style.dart';
@@ -19,8 +19,8 @@ export 'components/spinner/spinner.style.dart';
 export 'components/spinner/spinner.variants.dart';
 export 'components/spinner/spinner_spec.dart';
 export 'components/spinner/spinner_widget.dart';
-export 'components/switch/switch.style.dart';
-export 'components/switch/switch.variants.dart';
 export 'components/switch/switch_spec.dart';
+export 'components/switch/switch_style.dart';
+export 'components/switch/switch_variants.dart';
 export 'components/switch/switch_widget.dart';
 export 'tokens/remix_tokens.dart';

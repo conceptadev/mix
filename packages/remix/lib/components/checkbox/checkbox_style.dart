@@ -17,70 +17,70 @@ Style get _baseStyle => Style(
 
 Style get _onDisabledForeground => Style(
       $on.disabled(
-        _indicator.color.ref($rx.neutral7A),
+        _indicator.color.ref($rx.color.neutralAlpha(7)),
       ),
     );
 
 Style get _solidVariant => Style(
-      _container.color.ref($rx.accent9),
-      _indicator.color.ref($rx.neutral1),
+      _container.color.ref($rx.color.accent(9)),
+      _indicator.color.ref($rx.color.neutral(1)),
       $on.hover(
-        _container.color.ref($rx.accent10),
+        _container.color.ref($rx.color.accent(10)),
       ),
       $on.disabled(
-        _container.color.ref($rx.neutral3A),
+        _container.color.ref($rx.color.neutralAlpha(3)),
       ),
     );
 
 Style get _softVariant => Style(
-      _container.color.ref($rx.accent3A),
-      _indicator.color.ref($rx.accent11A),
+      _container.color.ref($rx.color.accentAlpha(3)),
+      _indicator.color.ref($rx.color.accentAlpha(11)),
       $on.hover(
-        _container.color.ref($rx.accent4A),
+        _container.color.ref($rx.color.accentAlpha(4)),
       ),
       $on.disabled(
-        _container.color.ref($rx.neutral3A),
+        _container.color.ref($rx.color.neutralAlpha(3)),
       ),
     );
 Style get _outlineVariant => Style(
       _container.color(Colors.transparent),
-      _container.border.color.ref($rx.accent8A),
+      _container.border.color.ref($rx.color.accentAlpha(8)),
       _container.border.width(1.5),
-      _indicator.color.ref($rx.accent11A),
+      _indicator.color.ref($rx.color.accentAlpha(11)),
       $on.hover(
-        _container.color.ref($rx.accent2A),
+        _container.color.ref($rx.color.accentAlpha(2)),
       ),
       $on.disabled(
-        _container.border.color.ref($rx.neutral8A),
+        _container.border.color.ref($rx.color.neutralAlpha(8)),
         _container.color.transparent(),
       ),
     );
 
 Style get _surfaceVariant => Style(
       _outlineVariant(),
-      _container.color.ref($rx.accent3A),
+      _container.color.ref($rx.color.accentAlpha(3)),
       $on.hover(
-        _container.color.ref($rx.accent4A),
-        _container.border.color.ref($rx.accent8A),
+        _container.color.ref($rx.color.accentAlpha(4)),
+        _container.border.color.ref($rx.color.accentAlpha(8)),
       ),
       $on.disabled(
-        _container.color.ref($rx.neutral2A),
+        _container.color.ref($rx.color.neutralAlpha(2)),
       ),
     );
 
 final _ghostVariant = Style(
   _container.border.style.none(),
   _container.color(Colors.transparent),
-  _indicator.color.ref($rx.accent11A),
+  _indicator.color.ref($rx.color.accentAlpha(11)),
   $on.hover(
-    _container.color.ref($rx.accent3A),
+    _container.color.ref($rx.color.accentAlpha(3)),
   ),
 );
 
 Style get _disabledVariant => Style(
-      _container.color.ref($rx.neutral3A),
-      _container.border.color.ref($rx.neutral5A),
-      _indicator.color.ref($rx.neutral7A),
+      _container.color.ref($rx.color.neutralAlpha(3)),
+      _container.border.color.ref($rx.color.neutralAlpha(5)),
+      _indicator.color.ref($rx.color.neutralAlpha(7)),
     );
 
 Style get _smallVariant => Style(

@@ -2,8 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:mix/mix.dart';
-import 'package:remix/components/button/button.variants.dart';
 import 'package:remix/components/button/button_spec.dart';
+import 'package:remix/components/button/button_variants.dart';
 import 'package:remix/tokens/remix_tokens.dart';
 
 final _util = ButtonSpecUtility.self;
@@ -13,7 +13,7 @@ final _container = _util.container;
 final _flex = _util.flex;
 
 /// This applies to the icon, label, and spinner
-final _foreground = _util.foreground;
+final _items = _util.items;
 
 Style get _baseStyle => Style(
       _flex.gap(0),
@@ -33,29 +33,29 @@ Style get _baseStyle => Style(
 
 Style get _onDisabledForeground => Style(
       $on.disabled(
-        _foreground.color.ref($rx.neutral7A),
+        _items.color.ref($rx.color.neutralAlpha(7)),
       ),
     );
 
 Style get _solidVariant => Style(
-      _container.color.ref($rx.accent9),
-      _foreground.color.ref($rx.neutral1),
+      _container.color.ref($rx.color.accent(9)),
+      _items.color.ref($rx.color.white()),
       $on.hover(
-        _container.color.ref($rx.accent10),
+        _container.color.ref($rx.color.accent(10)),
       ),
       $on.disabled(
-        _container.color.ref($rx.neutral3A),
+        _container.color.ref($rx.color.neutralAlpha(3)),
       ),
     );
 
 Style get _softVariant => Style(
-      _container.color.ref($rx.accent3A),
-      _foreground.color.ref($rx.accent11A),
+      _container.color.ref($rx.color.accentAlpha(3)),
+      _items.color.ref($rx.color.accentAlpha(11)),
       $on.hover(
-        _container.color.ref($rx.accent4A),
+        _container.color.ref($rx.color.accentAlpha(4)),
       ),
       $on.disabled(
-        _container.color.ref($rx.neutral3A),
+        _container.color.ref($rx.color.neutralAlpha(3)),
       ),
     );
 
@@ -63,67 +63,67 @@ Style get _outlineVariant => Style(
       _container.color(Colors.transparent),
       _container.border.width(1.5),
       _container.border.strokeAlign(0),
-      _container.border.color.ref($rx.accent8A),
-      _foreground.color.ref($rx.accent11A),
+      _container.border.color.ref($rx.color.accentAlpha(8)),
+      _items.color.ref($rx.color.accentAlpha(11)),
       $on.hover(
-        _container.color.ref($rx.accent2A),
+        _container.color.ref($rx.color.accentAlpha(2)),
       ),
       $on.disabled(
-        _container.border.color.ref($rx.neutral8A),
+        _container.border.color.ref($rx.color.neutralAlpha(8)),
         _container.color.transparent(),
       ),
     );
 Style get _surfaceVariant => Style(
       _outlineVariant(),
-      _container.color.ref($rx.accent3A),
+      _container.color.ref($rx.color.accentAlpha(3)),
       $on.hover(
-        _container.color.ref($rx.accent4A),
-        _container.border.color.ref($rx.accent8A),
+        _container.color.ref($rx.color.accentAlpha(4)),
+        _container.border.color.ref($rx.color.accentAlpha(8)),
       ),
       $on.disabled(
-        _container.color.ref($rx.neutral2A),
+        _container.color.ref($rx.color.neutralAlpha(2)),
       ),
     );
 
 Style get _ghostVariant => Style(
       _container.border.style.none(),
       _container.color(Colors.transparent),
-      _foreground.color.ref($rx.accent11A),
+      _items.color.ref($rx.color.accentAlpha(11)),
       $on.hover(
-        _container.color.ref($rx.accent3A),
+        _container.color.ref($rx.color.accentAlpha(3)),
       ),
     );
 
 Style get _smallVariant => Style(
-      _label.style.ref($rx.text1),
-      _container.padding.vertical.ref($rx.space1),
-      _container.padding.horizontal.ref($rx.space2),
-      _flex.gap.ref($rx.space1),
-      _foreground.size(12),
+      _label.style.ref($rx.text.text1),
+      _container.padding.vertical.ref($rx.space(1)),
+      _container.padding.horizontal.ref($rx.space(2)),
+      _flex.gap.ref($rx.space(1)),
+      _items.size(12),
     );
 
 Style get _mediumVariant => Style(
-      _container.padding.vertical.ref($rx.space2),
-      _container.padding.horizontal.ref($rx.space3),
-      _flex.gap.ref($rx.space2),
-      _label.style.ref($rx.text2),
-      _foreground.size(14),
+      _container.padding.vertical.ref($rx.space(2)),
+      _container.padding.horizontal.ref($rx.space(3)),
+      _flex.gap.ref($rx.space(2)),
+      _label.style.ref($rx.text.text2),
+      _items.size(14),
     );
 
 Style get _largeVariant => Style(
-      _container.padding.vertical.ref($rx.space2),
-      _container.padding.horizontal.ref($rx.space4),
-      _flex.gap.ref($rx.space3),
-      _label.style.ref($rx.text3),
-      _foreground.size(16),
+      _container.padding.vertical.ref($rx.space(2)),
+      _container.padding.horizontal.ref($rx.space(4)),
+      _flex.gap.ref($rx.space(3)),
+      _label.style.ref($rx.text.text3),
+      _items.size(16),
     );
 
 Style get _xLargeVariant => Style(
-      _container.padding.vertical.ref($rx.space3),
-      _container.padding.horizontal.ref($rx.space5),
-      _flex.gap.ref($rx.space3),
-      _label.style.ref($rx.text4),
-      _foreground.size(18),
+      _container.padding.vertical.ref($rx.space(3)),
+      _container.padding.horizontal.ref($rx.space(5)),
+      _flex.gap.ref($rx.space(3)),
+      _label.style.ref($rx.text.text4),
+      _items.size(18),
     );
 
 Style buildDefaultButtonStyle() {
@@ -148,7 +148,7 @@ Style buildDefaultButtonStyle() {
 }
 
 extension ButtonSpecUtilityX<T extends Attribute> on ButtonSpecUtility<T> {
-  ForegroundUtility<T> get foreground => ForegroundUtility((v) {
+  ForegroundUtility<T> get items => ForegroundUtility((v) {
         return only().merge(label.style
             .only(color: v.color)
             .merge(icon.only(color: v.color, size: v.size))

@@ -1,8 +1,8 @@
 import 'package:flutter/widgets.dart';
 import 'package:mix/mix.dart';
-import 'package:remix/components/switch/switch.style.dart';
-import 'package:remix/components/switch/switch.variants.dart';
 import 'package:remix/components/switch/switch_spec.dart';
+import 'package:remix/components/switch/switch_style.dart';
+import 'package:remix/components/switch/switch_variants.dart';
 
 class RxSwitch extends StatelessWidget {
   const RxSwitch({

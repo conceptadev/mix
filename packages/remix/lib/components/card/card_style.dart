@@ -1,6 +1,6 @@
 import 'package:mix/mix.dart';
-import 'package:remix/components/card/card.variants.dart';
 import 'package:remix/components/card/card_spec.dart';
+import 'package:remix/components/card/card_variants.dart';
 import 'package:remix/tokens/remix_tokens.dart';
 
 final _util = CardSpecUtility.self;
@@ -14,16 +14,16 @@ Style get _baseStyle => Style(
     );
 
 Style get _solidVariant => Style(
-      _container.border.color.ref($rx.neutral1),
+      _container.border.color.ref($rx.color.neutral(1)),
     );
 
 Style get _softVariant => Style(
-      _container.color.ref($rx.neutral3A),
+      _container.color.ref($rx.color.neutralAlpha(3)),
     );
 
 Style get _surfaceVariant => Style(
-      _container.color.ref($rx.neutral3A),
-      _container.border.color.ref($rx.neutral7A),
+      _container.color.ref($rx.color.neutralAlpha(3)),
+      _container.border.color.ref($rx.color.neutralAlpha(7)),
       _container.border.strokeAlign(1),
     );
 

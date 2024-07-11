@@ -2,8 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:mix/mix.dart';
-import 'package:remix/components/badge/badge.variants.dart';
 import 'package:remix/components/badge/badge_spec.dart';
+import 'package:remix/components/badge/badge_variants.dart';
 import 'package:remix/tokens/remix_tokens.dart';
 
 final _badge = BadgeSpecUtility.self;
@@ -16,46 +16,46 @@ Style get _baseStyle => Style(
     );
 
 Style get _solidVariant => Style(
-      _container.color($rx.accent9()),
-      _label.style.color($rx.neutral1()),
+      _container.color($rx.color.accent(9)()),
+      _label.style.color($rx.color.neutral(1)()),
     );
 
 Style get _softVariant => Style(
-      _container.color($rx.accent3A()),
-      _label.style.color($rx.accent11A()),
+      _container.color($rx.color.accentAlpha(3)()),
+      _label.style.color($rx.color.accentAlpha(11)()),
     );
 
 Style get _surfaceVariant => Style(
-      _container.color($rx.accent2A()),
-      _label.style.color($rx.accent11A()),
+      _container.color($rx.color.accentAlpha(2)()),
+      _label.style.color($rx.color.accentAlpha(11)()),
     );
 
 Style get _outlineVariant => Style(
       _container.color(Colors.transparent),
       _container.border.width(1),
-      _container.border.color($rx.accent8A()),
-      _label.style.color($rx.accent11A()),
+      _container.border.color($rx.color.accentAlpha(8)()),
+      _label.style.color($rx.color.accentAlpha(11)()),
     );
 
 final _smallVariant = Style(
-  _container.padding.vertical($rx.space1()),
-  _container.padding.horizontal($rx.space2()),
-  _label.style.as($rx.text1()),
+  _container.padding.vertical.ref($rx.space.space1),
+  _container.padding.horizontal.ref($rx.space.space2),
+  _label.style.as($rx.text.text1()),
 );
 
 final _mediumVariant = Style(
-  _container.padding.vertical($rx.space1()),
-  _container.padding.horizontal($rx.space3()),
-  _label.style.as($rx.text2()),
+  _container.padding.vertical.ref($rx.space.space1),
+  _container.padding.horizontal.ref($rx.space.space3),
+  _label.style.as($rx.text.text2()),
 );
 
 final _largeVariant = Style(
-  _container.padding.vertical($rx.space2()),
-  _container.padding.horizontal($rx.space4()),
-  _label.style.as($rx.text3()),
+  _container.padding.vertical.ref($rx.space.space2),
+  _container.padding.horizontal.ref($rx.space.space4),
+  _label.style.as($rx.text.text3()),
 );
 
-Style buildDefaultBadgeStyle() {
+Style badgeStyle(Style? style, List<IBadgeVariant> variants) {
   return Style(
     _baseStyle(),
 
@@ -69,5 +69,5 @@ Style buildDefaultBadgeStyle() {
     BadgeVariant.soft(_softVariant()),
     BadgeVariant.surface(_surfaceVariant()),
     BadgeVariant.outline(_outlineVariant()),
-  );
+  ).merge(style).applyVariants(variants);
 }

@@ -1,8 +1,8 @@
 // ignore_for_file: camel_case_types
 
 import 'package:mix/mix.dart';
-import 'package:remix/components/progress/progress.variants.dart';
 import 'package:remix/components/progress/progress_spec.dart';
+import 'package:remix/components/progress/progress_variants.dart';
 import 'package:remix/tokens/remix_tokens.dart';
 
 final _progress = ProgressSpecUtility.self;
@@ -12,8 +12,8 @@ final _fill = _progress.fill;
 
 Style get _baseStyle => Style(
       _container.borderRadius(99),
-      _track.color($rx.neutral3A()),
-      _fill.color($rx.accent9()),
+      _track.color($rx.color.neutralAlpha(3)()),
+      _fill.color($rx.color.accent(9)()),
     );
 
 final _smallVariant = Style(
@@ -29,18 +29,18 @@ final _largeVariant = Style(
 );
 
 final _classicVariant = Style(
-  _track.color($rx.neutral3A()),
-  _fill.color($rx.accent9()),
+  _track.color($rx.color.neutralAlpha(3)()),
+  _fill.color($rx.color.accent(9)()),
 );
 
 final _surfaceVariant = Style(
-  _track.color($rx.neutral2A()),
-  _fill.color($rx.accent9()),
+  _track.color($rx.color.neutralAlpha(2)()),
+  _fill.color($rx.color.accent(9)()),
 );
 
 final _softVariant = Style(
-  _track.color($rx.accent3A()),
-  _fill.color($rx.accent9()),
+  _track.color($rx.color.accentAlpha(3)()),
+  _fill.color($rx.color.accent(9)()),
 );
 
 final _noneRadiusVariant = Style(

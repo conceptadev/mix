@@ -6,7 +6,7 @@ import 'package:remix/tokens/remix_tokens.dart';
 final _util = SpinnerSpecUtility.self;
 
 Style get _baseStyle => Style(
-      _util.color.ref($rx.accent9),
+      _util.color.ref($rx.color.accent(9)),
     );
 
 Style get _smallVariant => Style(

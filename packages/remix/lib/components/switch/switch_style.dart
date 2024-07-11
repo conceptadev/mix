@@ -1,6 +1,6 @@
 import 'package:mix/mix.dart';
-import 'package:remix/components/switch/switch.variants.dart';
 import 'package:remix/components/switch/switch_spec.dart';
+import 'package:remix/components/switch/switch_variants.dart';
 import 'package:remix/helpers/utility_extension.dart';
 import 'package:remix/tokens/remix_tokens.dart';
 
@@ -21,30 +21,30 @@ Style get _baseStyle => Style(
     );
 
 Style get _solidVariant => Style(
-      _indicator.color.ref($rx.neutral1),
+      _indicator.color.ref($rx.color.neutral(1)),
       SwitchStatus.on(
-        _container.color.ref($rx.accent9),
+        _container.color.ref($rx.color.accent(9)),
       ),
       SwitchStatus.off(
-        _container.color.ref($rx.neutral3),
+        _container.color.ref($rx.color.neutral(3)),
       ),
       $on.disabled(
-        _container.color.ref($rx.neutral3A),
-        _indicator.color.ref($rx.neutral7A),
+        _container.color.ref($rx.color.neutralAlpha(3)),
+        _indicator.color.ref($rx.color.neutralAlpha(7)),
       ),
     );
 
 Style get _softVariant => Style(
-      _indicator.color.ref($rx.accent11A),
+      _indicator.color.ref($rx.color.accentAlpha(11)),
       SwitchStatus.on(
-        _container.color.ref($rx.accent3A),
+        _container.color.ref($rx.color.accentAlpha(3)),
       ),
       SwitchStatus.off(
-        _container.color.ref($rx.neutral4),
+        _container.color.ref($rx.color.neutral(4)),
       ),
       $on.disabled(
-        _container.color.ref($rx.neutral3A),
-        _indicator.color.ref($rx.neutral7A),
+        _container.color.ref($rx.color.neutralAlpha(3)),
+        _indicator.color.ref($rx.color.neutralAlpha(7)),
       ),
     );
 
@@ -52,30 +52,30 @@ Style get _outlineVariant => Style(
       _container.color.transparent(),
       _container.border.width(1.5),
       _container.border.strokeAlign(1),
-      _indicator.color.ref($rx.accent11A),
+      _indicator.color.ref($rx.color.accentAlpha(11)),
       SwitchStatus.on(
-        _container.border.color.ref($rx.accent8A),
+        _container.border.color.ref($rx.color.accentAlpha(8)),
       ),
       SwitchStatus.off(
-        _container.border.color.ref($rx.neutral4),
+        _container.border.color.ref($rx.color.neutral(4)),
       ),
       $on.disabled(
-        _container.border.color.ref($rx.neutral8A),
-        _indicator.color.ref($rx.neutral7A),
+        _container.border.color.ref($rx.color.neutralAlpha(8)),
+        _indicator.color.ref($rx.color.neutralAlpha(7)),
       ),
     );
 
 Style get _surfaceVariant => Style(
       _outlineVariant(),
       SwitchStatus.on(
-        _container.color.ref($rx.accent3A),
+        _container.color.ref($rx.color.accentAlpha(3)),
       ),
       SwitchStatus.off(
-        _container.color.ref($rx.neutral3A),
-        _container.border.color.ref($rx.neutral4),
+        _container.color.ref($rx.color.neutralAlpha(3)),
+        _container.border.color.ref($rx.color.neutral(4)),
       ),
       $on.disabled(
-        _container.color.ref($rx.neutral2A),
+        _container.color.ref($rx.color.neutralAlpha(2)),
       ),
     );
 
