@@ -4,6 +4,8 @@ import 'package:flutter/widgets.dart';
 import 'package:mix/mix.dart';
 import 'package:mix_annotations/mix_annotations.dart';
 
+import '../../internal/diagnostic_properties_builder_ext.dart';
+
 part 'box_spec.g.dart';
 
 const _constraints = MixableUtility(

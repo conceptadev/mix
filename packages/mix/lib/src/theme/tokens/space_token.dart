@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 import '../mix/mix_theme.dart';
 import 'mix_token.dart';
 
+//TODO: Explore 'type extension' and then check if we can use it here
 typedef SpaceRef = double;
 
 extension SpaceRefExt on SpaceRef {

@@ -184,17 +184,12 @@ final class StackSpecAttribute extends SpecAttribute<StackSpec>
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties
-        .add(DiagnosticsProperty('alignment', alignment, defaultValue: null));
-    properties.add(DiagnosticsProperty('fit', fit, defaultValue: null));
-    properties.add(DiagnosticsProperty('textDirection', textDirection,
-        defaultValue: null));
-    properties.add(
-        DiagnosticsProperty('clipBehavior', clipBehavior, defaultValue: null));
-    properties
-        .add(DiagnosticsProperty('animated', animated, defaultValue: null));
-    properties
-        .add(DiagnosticsProperty('modifiers', modifiers, defaultValue: null));
+    properties.addUsingDefault('alignment', alignment);
+    properties.addUsingDefault('fit', fit);
+    properties.addUsingDefault('textDirection', textDirection);
+    properties.addUsingDefault('clipBehavior', clipBehavior);
+    properties.addUsingDefault('animated', animated);
+    properties.addUsingDefault('modifiers', modifiers);
   }
 }
 

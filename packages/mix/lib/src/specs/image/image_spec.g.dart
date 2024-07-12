@@ -232,23 +232,17 @@ final class ImageSpecAttribute extends SpecAttribute<ImageSpec>
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty('width', width, defaultValue: null));
-    properties.add(DiagnosticsProperty('height', height, defaultValue: null));
-    properties.add(DiagnosticsProperty('color', color, defaultValue: null));
-    properties.add(DiagnosticsProperty('repeat', repeat, defaultValue: null));
-    properties.add(DiagnosticsProperty('fit', fit, defaultValue: null));
-    properties
-        .add(DiagnosticsProperty('alignment', alignment, defaultValue: null));
-    properties.add(
-        DiagnosticsProperty('centerSlice', centerSlice, defaultValue: null));
-    properties.add(DiagnosticsProperty('filterQuality', filterQuality,
-        defaultValue: null));
-    properties.add(DiagnosticsProperty('colorBlendMode', colorBlendMode,
-        defaultValue: null));
-    properties
-        .add(DiagnosticsProperty('animated', animated, defaultValue: null));
-    properties
-        .add(DiagnosticsProperty('modifiers', modifiers, defaultValue: null));
+    properties.addUsingDefault('width', width);
+    properties.addUsingDefault('height', height);
+    properties.addUsingDefault('color', color);
+    properties.addUsingDefault('repeat', repeat);
+    properties.addUsingDefault('fit', fit);
+    properties.addUsingDefault('alignment', alignment);
+    properties.addUsingDefault('centerSlice', centerSlice);
+    properties.addUsingDefault('filterQuality', filterQuality);
+    properties.addUsingDefault('colorBlendMode', colorBlendMode);
+    properties.addUsingDefault('animated', animated);
+    properties.addUsingDefault('modifiers', modifiers);
   }
 }
 

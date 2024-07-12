@@ -1,5 +1,7 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 
+import '../../internal/diagnostic_properties_builder_ext.dart';
 import '../mix/mix_theme.dart';
 import 'mix_token.dart';
 
@@ -33,7 +35,8 @@ class RadiusResolver extends Radius with WithTokenResolver<Radius> {
 }
 
 @immutable
-class RadiusRef extends Radius with TokenRef<RadiusToken, Radius> {
+class RadiusRef extends Radius
+    with TokenRef<RadiusToken, Radius>, Diagnosticable {
   @override
   final RadiusToken token;
 
@@ -44,6 +47,12 @@ class RadiusRef extends Radius with TokenRef<RadiusToken, Radius> {
     if (identical(this, other)) return true;
 
     return other is RadiusRef && other.token == token;
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.addUsingDefault('token', token.name);
   }
 
   @override

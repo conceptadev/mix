@@ -1,5 +1,7 @@
 import 'package:mix_generator/src/helpers/field_info.dart';
 
+const _expandableFields = ['decoration', 'style'];
+
 String methodDebugFillProperties({
   required String className,
   required List<ParameterInfo> fields,
@@ -7,10 +9,10 @@ String methodDebugFillProperties({
 }) {
   final fieldStatements = fields.map((field) {
     final fieldName = isInternalRef ? field.asInternalRef : field.name;
-    if (fieldName == 'decoration') {
-      return 'properties.add(DiagnosticsProperty(\'$fieldName\', $fieldName, defaultValue: null, expandableValue: true));';
+    if (_expandableFields.contains(fieldName)) {
+      return 'properties.addUsingDefault(\'$fieldName\', $fieldName, expandableValue: true);';
     }
-    return 'properties.add(DiagnosticsProperty(\'$fieldName\', $fieldName, defaultValue: null));';
+    return 'properties.addUsingDefault(\'$fieldName\', $fieldName);';
   }).join('\n');
 
   return '''

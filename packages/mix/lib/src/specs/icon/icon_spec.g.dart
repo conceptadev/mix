@@ -232,23 +232,17 @@ final class IconSpecAttribute extends SpecAttribute<IconSpec>
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty('color', color,
-        defaultValue: null, expandableValue: false));
-    properties.add(DiagnosticsProperty('size', size, defaultValue: null));
-    properties.add(DiagnosticsProperty('weight', weight, defaultValue: null));
-    properties.add(DiagnosticsProperty('grade', grade, defaultValue: null));
-    properties.add(
-        DiagnosticsProperty('opticalSize', opticalSize, defaultValue: null));
-    properties.add(DiagnosticsProperty('shadows', shadows, defaultValue: null));
-    properties.add(DiagnosticsProperty('textDirection', textDirection,
-        defaultValue: null));
-    properties.add(DiagnosticsProperty('applyTextScaling', applyTextScaling,
-        defaultValue: null));
-    properties.add(DiagnosticsProperty('fill', fill, defaultValue: null));
-    properties
-        .add(DiagnosticsProperty('animated', animated, defaultValue: null));
-    properties
-        .add(DiagnosticsProperty('modifiers', modifiers, defaultValue: null));
+    properties.addUsingDefault('color', color);
+    properties.addUsingDefault('size', size);
+    properties.addUsingDefault('weight', weight);
+    properties.addUsingDefault('grade', grade);
+    properties.addUsingDefault('opticalSize', opticalSize);
+    properties.addUsingDefault('shadows', shadows);
+    properties.addUsingDefault('textDirection', textDirection);
+    properties.addUsingDefault('applyTextScaling', applyTextScaling);
+    properties.addUsingDefault('fill', fill);
+    properties.addUsingDefault('animated', animated);
+    properties.addUsingDefault('modifiers', modifiers);
   }
 }
 

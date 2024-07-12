@@ -2,7 +2,7 @@
 
 import 'dart:ui';
 
-import 'package:flutter/src/foundation/diagnostics.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 
 import '../core/attribute.dart';
