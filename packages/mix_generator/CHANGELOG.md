@@ -1,3 +1,8 @@
+## 0.2.1
+
+ - **REFACTOR**: bump flutter version to 3.19.0 (#365).
+ - **FEAT**: modifiers in spec (#333).
+
 
 ## 0.2.0
 
