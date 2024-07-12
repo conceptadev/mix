@@ -13,7 +13,7 @@ final _fill = _progress.fill;
 Style get _baseStyle => Style(
       _container.borderRadius(99),
       _track.color($rx.color.neutralAlpha(3)()),
-      _fill.color($rx.color.accent(9)()),
+      _fill.color($rx.color.accent()()),
     );
 
 final _smallVariant = Style(
@@ -30,17 +30,17 @@ final _largeVariant = Style(
 
 final _classicVariant = Style(
   _track.color($rx.color.neutralAlpha(3)()),
-  _fill.color($rx.color.accent(9)()),
+  _fill.color($rx.color.accent()()),
 );
 
 final _surfaceVariant = Style(
   _track.color($rx.color.neutralAlpha(2)()),
-  _fill.color($rx.color.accent(9)()),
+  _fill.color($rx.color.accent()()),
 );
 
 final _softVariant = Style(
   _track.color($rx.color.accentAlpha(3)()),
-  _fill.color($rx.color.accent(9)()),
+  _fill.color($rx.color.accent()()),
 );
 
 final _noneRadiusVariant = Style(

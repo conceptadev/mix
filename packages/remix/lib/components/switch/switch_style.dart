@@ -21,9 +21,9 @@ Style get _baseStyle => Style(
     );
 
 Style get _solidVariant => Style(
-      _indicator.color.ref($rx.color.neutral(1)),
+      _indicator.color.ref($rx.color.white()),
       SwitchStatus.on(
-        _container.color.ref($rx.color.accent(9)),
+        _container.color.ref($rx.color.accent()),
       ),
       SwitchStatus.off(
         _container.color.ref($rx.color.neutral(3)),

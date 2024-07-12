@@ -21,7 +21,7 @@ Style get _baseStyle => Style(
     );
 
 Style get _solidVariant => Style(
-      _container.color($rx.color.accent(9)()),
+      _container.color($rx.color.accent()()),
     );
 
 Style get _softVariant => Style(

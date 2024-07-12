@@ -857,10 +857,10 @@
 /Users/leofarias/Projects/mix/packages/remix/demo/lib/main.dart
 /Users/leofarias/Projects/mix/packages/remix/demo/lib/main.directories.g.dart
 /Users/leofarias/Projects/mix/packages/remix/demo/pubspec.yaml
-/Users/leofarias/Projects/mix/packages/remix/lib/components/avatar/avatar.style.dart
-/Users/leofarias/Projects/mix/packages/remix/lib/components/avatar/avatar.variants.dart
 /Users/leofarias/Projects/mix/packages/remix/lib/components/avatar/avatar_spec.dart
 /Users/leofarias/Projects/mix/packages/remix/lib/components/avatar/avatar_spec.g.dart
+/Users/leofarias/Projects/mix/packages/remix/lib/components/avatar/avatar_style.dart
+/Users/leofarias/Projects/mix/packages/remix/lib/components/avatar/avatar_variants.dart
 /Users/leofarias/Projects/mix/packages/remix/lib/components/avatar/avatar_widget.dart
 /Users/leofarias/Projects/mix/packages/remix/lib/components/button/button_spec.dart
 /Users/leofarias/Projects/mix/packages/remix/lib/components/button/button_spec.g.dart

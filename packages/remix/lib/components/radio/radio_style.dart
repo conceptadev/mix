@@ -18,7 +18,7 @@ Style get _baseStyle => Style(
     );
 
 Style get _solidVariant => Style(
-      _container.color.ref($rx.color.accent(9)),
+      _container.color.ref($rx.color.accent()),
       _indicator.color.ref($rx.color.neutral(1)),
       $on.hover(
         _container.color.ref($rx.color.accent(10)),
