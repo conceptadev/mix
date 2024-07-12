@@ -30,6 +30,9 @@ jobs:
   publish:
     needs: [test-mincompat, test-stable]
     environment: Production
+    permissions:
+      contents: write
+      id-token: write
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -54,6 +57,6 @@ jobs:
 
       - name: Setup Melos
         uses: bluefireteam/melos-action@v3
-
-      - name: 'Publish Package'
-        run: melos publish --no-dry-run --yes
+        with:
+          publish: true
+      
