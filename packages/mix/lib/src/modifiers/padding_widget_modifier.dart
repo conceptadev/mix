@@ -8,6 +8,7 @@ import '../core/attribute.dart';
 import '../core/factory/mix_data.dart';
 import '../core/modifier.dart';
 import '../core/utility.dart';
+import '../internal/diagnostic_properties_builder_ext.dart';
 
 final class PaddingSpec extends WidgetModifierSpec<PaddingSpec> {
   final EdgeInsetsGeometry padding;
@@ -50,7 +51,7 @@ final class PaddingModifierAttribute
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty('padding', padding));
+    properties.addUsingDefault('padding', padding);
   }
 
   @override

@@ -9,6 +9,7 @@ import '../core/attribute.dart';
 import '../core/factory/mix_data.dart';
 import '../core/modifier.dart';
 import '../core/utility.dart';
+import '../internal/diagnostic_properties_builder_ext.dart';
 
 final class FractionallySizedBoxModifierSpec
     extends WidgetModifierSpec<FractionallySizedBoxModifierSpec> {
@@ -97,9 +98,9 @@ final class FractionallySizedBoxModifierAttribute
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty('widthFactor', widthFactor));
-    properties.add(DiagnosticsProperty('heightFactor', heightFactor));
-    properties.add(DiagnosticsProperty('alignment', alignment));
+    properties.addUsingDefault('widthFactor', widthFactor);
+    properties.addUsingDefault('heightFactor', heightFactor);
+    properties.addUsingDefault('alignment', alignment);
   }
 
   @override

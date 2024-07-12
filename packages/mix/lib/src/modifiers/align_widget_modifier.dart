@@ -9,6 +9,7 @@ import '../core/attribute.dart';
 import '../core/factory/mix_data.dart';
 import '../core/modifier.dart';
 import '../core/utility.dart';
+import '../internal/diagnostic_properties_builder_ext.dart';
 
 final class AlignModifierSpec extends WidgetModifierSpec<AlignModifierSpec> {
   final AlignmentGeometry? alignment;
@@ -90,9 +91,9 @@ final class AlignModifierAttribute
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty('alignment', alignment));
-    properties.add(DiagnosticsProperty('widthFactor', widthFactor));
-    properties.add(DiagnosticsProperty('heightFactor', heightFactor));
+    properties.addUsingDefault('alignment', alignment);
+    properties.addUsingDefault('widthFactor', widthFactor);
+    properties.addUsingDefault('heightFactor', heightFactor);
   }
 
   @override

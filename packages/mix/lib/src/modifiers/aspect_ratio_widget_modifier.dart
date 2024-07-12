@@ -9,6 +9,7 @@ import '../core/attribute.dart';
 import '../core/factory/mix_data.dart';
 import '../core/modifier.dart';
 import '../core/utility.dart';
+import '../internal/diagnostic_properties_builder_ext.dart';
 
 /// A modifier that wraps a widget with the [AspectRatio] widget.
 ///
@@ -34,7 +35,7 @@ final class AspectRatioModifierAttribute extends WidgetModifierAttribute<
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty('aspectRatio', aspectRatio));
+    properties.addUsingDefault('aspectRatio', aspectRatio);
   }
 
   @override

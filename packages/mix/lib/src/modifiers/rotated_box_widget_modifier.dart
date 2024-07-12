@@ -7,6 +7,7 @@ import '../core/attribute.dart';
 import '../core/factory/mix_data.dart';
 import '../core/modifier.dart';
 import '../core/utility.dart';
+import '../internal/diagnostic_properties_builder_ext.dart';
 import '../internal/lerp_helpers.dart';
 
 final class RotatedBoxModifierSpec
@@ -54,7 +55,7 @@ final class RotatedBoxModifierAttribute extends WidgetModifierAttribute<
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty('quarterTurns', quarterTurns));
+    properties.addUsingDefault('quarterTurns', quarterTurns);
   }
 
   @override

@@ -9,6 +9,7 @@ import '../core/attribute.dart';
 import '../core/factory/mix_data.dart';
 import '../core/modifier.dart';
 import '../core/utility.dart';
+import '../internal/diagnostic_properties_builder_ext.dart';
 
 final class SizedBoxModifierSpec
     extends WidgetModifierSpec<SizedBoxModifierSpec> {
@@ -65,8 +66,8 @@ final class SizedBoxModifierAttribute extends WidgetModifierAttribute<
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty('width', width));
-    properties.add(DiagnosticsProperty('height', height));
+    properties.addUsingDefault('width', width);
+    properties.addUsingDefault('height', height);
   }
 
   @override

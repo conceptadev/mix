@@ -6,6 +6,8 @@ import 'package:flutter/widgets.dart';
 import 'package:mix/mix.dart';
 import 'package:mix_annotations/mix_annotations.dart';
 
+import '../../internal/diagnostic_properties_builder_ext.dart';
+
 part 'decoration_dto.g.dart';
 
 typedef _BaseDecorProperties = ({
@@ -151,31 +153,20 @@ final class BoxDecorationDto extends DecorationDto<BoxDecoration>
       ..defaultDiagnosticsTreeStyle = DiagnosticsTreeStyle.whitespace
       ..emptyBodyDescription = '<no decorations specified>';
 
-    properties.add(DiagnosticsProperty('image', image, defaultValue: null));
-    properties.add(DiagnosticsProperty('color', color, defaultValue: null));
-    properties.add(
-      DiagnosticsProperty('border', border, defaultValue: null),
-    );
-    properties.add(DiagnosticsProperty(
-      'borderRadius',
-      borderRadius,
-      defaultValue: null,
-    ));
+    properties.addUsingDefault('image', image);
+    properties.addUsingDefault('color', color);
+    properties.addUsingDefault('border', border);
+    properties.addUsingDefault('borderRadius', borderRadius);
+    properties.addUsingDefault('gradient', gradient);
     properties.add(IterableProperty<BoxShadowDto>(
       'boxShadow',
       boxShadow,
-      defaultValue: null,
-      style: DiagnosticsTreeStyle.whitespace,
-    ));
-    properties.add(DiagnosticsProperty(
-      'gradient',
-      gradient,
       defaultValue: null,
     ));
     properties.add(EnumProperty<BoxShape>(
       'shape',
       shape,
-      defaultValue: BoxShape.rectangle,
+      defaultValue: null,
     ));
   }
 

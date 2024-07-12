@@ -8,6 +8,7 @@ import '../core/attribute.dart';
 import '../core/factory/mix_data.dart';
 import '../core/modifier.dart';
 import '../core/utility.dart';
+import '../internal/diagnostic_properties_builder_ext.dart';
 import '../internal/lerp_helpers.dart';
 
 final class FlexibleModifierSpec
@@ -67,8 +68,8 @@ final class FlexibleModifierAttribute extends WidgetModifierAttribute<
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty('flex', flex));
-    properties.add(DiagnosticsProperty('fit', fit));
+    properties.addUsingDefault('flex', flex);
+    properties.addUsingDefault('fit', fit);
   }
 
   @override

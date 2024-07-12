@@ -9,6 +9,7 @@ import '../core/attribute.dart';
 import '../core/factory/mix_data.dart';
 import '../core/modifier.dart';
 import '../core/utility.dart';
+import '../internal/diagnostic_properties_builder_ext.dart';
 
 /// A modifier that wraps a widget with the [Opacity] widget.
 ///
@@ -64,7 +65,7 @@ final class OpacityModifierAttribute extends WidgetModifierAttribute<
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty('opacity', opacity));
+    properties.addUsingDefault('opacity', opacity);
   }
 
   @override

@@ -7,6 +7,7 @@ import '../core/attribute.dart';
 import '../core/factory/mix_data.dart';
 import '../core/modifier.dart';
 import '../core/utility.dart';
+import '../internal/diagnostic_properties_builder_ext.dart';
 import '../internal/lerp_helpers.dart';
 
 final class TransformModifierSpec
@@ -69,7 +70,7 @@ final class TransformModifierAttribute extends WidgetModifierAttribute<
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(TransformProperty('transform', transform));
+    properties.addUsingDefault('transform', transform);
   }
 
   @override
