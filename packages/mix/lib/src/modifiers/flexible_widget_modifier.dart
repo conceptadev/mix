@@ -1,5 +1,6 @@
 // ignore_for_file: prefer-named-boolean-parameters
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 
 import '../attributes/enum/enum_util.dart';
@@ -7,6 +8,7 @@ import '../core/attribute.dart';
 import '../core/factory/mix_data.dart';
 import '../core/modifier.dart';
 import '../core/utility.dart';
+import '../internal/diagnostic_properties_builder_ext.dart';
 import '../internal/lerp_helpers.dart';
 
 final class FlexibleModifierSpec
@@ -61,6 +63,13 @@ final class FlexibleModifierAttribute extends WidgetModifierAttribute<
   @override
   FlexibleModifierSpec resolve(MixData mix) {
     return FlexibleModifierSpec(flex: flex, fit: fit);
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.addUsingDefault('flex', flex);
+    properties.addUsingDefault('fit', fit);
   }
 
   @override

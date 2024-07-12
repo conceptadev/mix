@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 
 import 'mix_data.dart';
@@ -29,6 +30,17 @@ class Mix extends InheritedWidget {
 
   @override
   bool updateShouldNotify(Mix oldWidget) => data != oldWidget.data;
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+
+    properties.add(DiagnosticsProperty<MixData>(
+      'attributes',
+      data,
+      expandableValue: true,
+    ));
+  }
 
   /// Builds a [Mix] widget.
   ///

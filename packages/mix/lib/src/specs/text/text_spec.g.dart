@@ -146,7 +146,8 @@ base mixin _$TextSpec on Spec<TextSpec> {
 ///
 /// Use this class to configure the attributes of a [TextSpec] and pass it to
 /// the [TextSpec] constructor.
-final class TextSpecAttribute extends SpecAttribute<TextSpec> {
+final class TextSpecAttribute extends SpecAttribute<TextSpec>
+    with Diagnosticable {
   final TextOverflow? overflow;
   final StrutStyleDto? strutStyle;
   final TextAlign? textAlign;
@@ -256,6 +257,25 @@ final class TextSpecAttribute extends SpecAttribute<TextSpec> {
         animated,
         modifiers,
       ];
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.addUsingDefault('overflow', overflow);
+    properties.addUsingDefault('strutStyle', strutStyle);
+    properties.addUsingDefault('textAlign', textAlign);
+    properties.addUsingDefault('textScaleFactor', textScaleFactor);
+    properties.addUsingDefault('textScaler', textScaler);
+    properties.addUsingDefault('maxLines', maxLines);
+    properties.addUsingDefault('style', style, expandableValue: true);
+    properties.addUsingDefault('textWidthBasis', textWidthBasis);
+    properties.addUsingDefault('textHeightBehavior', textHeightBehavior);
+    properties.addUsingDefault('textDirection', textDirection);
+    properties.addUsingDefault('softWrap', softWrap);
+    properties.addUsingDefault('directive', directive);
+    properties.addUsingDefault('animated', animated);
+    properties.addUsingDefault('modifiers', modifiers);
+  }
 }
 
 /// Utility class for configuring [TextSpecAttribute] properties.

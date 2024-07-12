@@ -1,9 +1,12 @@
 // ignore_for_file: no_leading_underscores_for_local_identifiers
 // ignore_for_file: prefer_relative_imports,avoid-importing-entrypoint-exports
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:mix/mix.dart';
 import 'package:mix_annotations/mix_annotations.dart';
+
+import '../../internal/diagnostic_properties_builder_ext.dart';
 
 part 'decoration_dto.g.dart';
 
@@ -21,7 +24,8 @@ typedef _BaseDecorProperties = ({
 /// This class needs to have the different properties that are not found in the [Modifiers] class.
 /// In order to support merging of [Decoration] values, and reusable of common properties.
 @immutable
-sealed class DecorationDto<T extends Decoration> extends Dto<T> {
+sealed class DecorationDto<T extends Decoration> extends Dto<T>
+    with Diagnosticable {
   final ColorDto? color;
   final GradientDto? gradient;
   final DecorationImageDto? image;
@@ -78,6 +82,7 @@ sealed class DecorationDto<T extends Decoration> extends Dto<T> {
   bool get isMergeable;
 
   DecorationDto? mergeableDecor(covariant DecorationDto? other);
+
   @override
   DecorationDto<T> merge(covariant DecorationDto<T>? other);
 }
@@ -139,6 +144,30 @@ final class BoxDecorationDto extends DecorationDto<BoxDecoration>
         boxShadow: boxShadow,
       ),
     );
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..defaultDiagnosticsTreeStyle = DiagnosticsTreeStyle.whitespace
+      ..emptyBodyDescription = '<no decorations specified>';
+
+    properties.addUsingDefault('image', image);
+    properties.addUsingDefault('color', color);
+    properties.addUsingDefault('border', border);
+    properties.addUsingDefault('borderRadius', borderRadius);
+    properties.addUsingDefault('gradient', gradient);
+    properties.add(IterableProperty<BoxShadowDto>(
+      'boxShadow',
+      boxShadow,
+      defaultValue: null,
+    ));
+    properties.add(EnumProperty<BoxShape>(
+      'shape',
+      shape,
+      defaultValue: null,
+    ));
   }
 
   @override

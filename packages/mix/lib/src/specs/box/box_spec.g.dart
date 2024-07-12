@@ -144,7 +144,8 @@ base mixin _$BoxSpec on Spec<BoxSpec> {
 ///
 /// Use this class to configure the attributes of a [BoxSpec] and pass it to
 /// the [BoxSpec] constructor.
-final class BoxSpecAttribute extends SpecAttribute<BoxSpec> {
+final class BoxSpecAttribute extends SpecAttribute<BoxSpec>
+    with Diagnosticable {
   final AlignmentGeometry? alignment;
   final SpacingDto? padding;
   final SpacingDto? margin;
@@ -250,6 +251,24 @@ final class BoxSpecAttribute extends SpecAttribute<BoxSpec> {
         modifiers,
         animated,
       ];
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.addUsingDefault('alignment', alignment);
+    properties.addUsingDefault('padding', padding);
+    properties.addUsingDefault('margin', margin);
+    properties.addUsingDefault('constraints', constraints);
+    properties.addUsingDefault('decoration', decoration, expandableValue: true);
+    properties.addUsingDefault('foregroundDecoration', foregroundDecoration);
+    properties.addUsingDefault('transform', transform);
+    properties.addUsingDefault('transformAlignment', transformAlignment);
+    properties.addUsingDefault('clipBehavior', clipBehavior);
+    properties.addUsingDefault('width', width);
+    properties.addUsingDefault('height', height);
+    properties.addUsingDefault('modifiers', modifiers);
+    properties.addUsingDefault('animated', animated);
+  }
 }
 
 /// Utility class for configuring [BoxSpecAttribute] properties.

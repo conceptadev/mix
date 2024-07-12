@@ -132,7 +132,8 @@ base mixin _$FlexSpec on Spec<FlexSpec> {
 ///
 /// Use this class to configure the attributes of a [FlexSpec] and pass it to
 /// the [FlexSpec] constructor.
-final class FlexSpecAttribute extends SpecAttribute<FlexSpec> {
+final class FlexSpecAttribute extends SpecAttribute<FlexSpec>
+    with Diagnosticable {
   final CrossAxisAlignment? crossAxisAlignment;
   final MainAxisAlignment? mainAxisAlignment;
   final MainAxisSize? mainAxisSize;
@@ -227,6 +228,22 @@ final class FlexSpecAttribute extends SpecAttribute<FlexSpec> {
         animated,
         modifiers,
       ];
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.addUsingDefault('crossAxisAlignment', crossAxisAlignment);
+    properties.addUsingDefault('mainAxisAlignment', mainAxisAlignment);
+    properties.addUsingDefault('mainAxisSize', mainAxisSize);
+    properties.addUsingDefault('verticalDirection', verticalDirection);
+    properties.addUsingDefault('direction', direction);
+    properties.addUsingDefault('textDirection', textDirection);
+    properties.addUsingDefault('textBaseline', textBaseline);
+    properties.addUsingDefault('clipBehavior', clipBehavior);
+    properties.addUsingDefault('gap', gap);
+    properties.addUsingDefault('animated', animated);
+    properties.addUsingDefault('modifiers', modifiers);
+  }
 }
 
 /// Utility class for configuring [FlexSpecAttribute] properties.

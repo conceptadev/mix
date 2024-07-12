@@ -77,6 +77,16 @@ class TextStyleRef extends TextStyle with TokenRef<TextStyleToken, TextStyle> {
     TextOverflow? overflow,
   }) =>
       throw _e(token.name, 'copyWith');
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    try {
+      return super.toString(minLevel: minLevel);
+    } catch (e) {
+      return token.name;
+    }
+  }
+
   @override
   String get fontFamily => throw _e(token.name, 'fontFamily');
 

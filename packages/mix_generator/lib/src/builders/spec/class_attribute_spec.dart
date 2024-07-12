@@ -1,3 +1,4 @@
+import 'package:mix_generator/src/builders/method_debug_fill_properties.dart';
 import 'package:mix_generator/src/builders/method_equality.dart';
 import 'package:mix_generator/src/builders/method_merge.dart';
 import 'package:mix_generator/src/builders/method_resolve.dart';
@@ -31,6 +32,11 @@ String specAttributeClass(SpecAnnotationContext context) {
     context: context,
   );
 
+  final debugFillProperties = methodDebugFillProperties(
+    className: className,
+    fields: fields,
+  );
+
   final propsGetter = getterPropsBuilder(
     className: className,
     fields: fields,
@@ -44,7 +50,7 @@ String specAttributeClass(SpecAnnotationContext context) {
 ///
 /// Use this class to configure the attributes of a [$specName] and pass it to
 /// the [$specName] constructor.
-final class $className extends $extendsType {
+final class $className extends $extendsType with Diagnosticable {
   $fieldDeclarations
 
   const $className({
@@ -56,6 +62,8 @@ final class $className extends $extendsType {
   $mergeMethod
 
   $propsGetter
+
+  $debugFillProperties
 }
 ''';
 }

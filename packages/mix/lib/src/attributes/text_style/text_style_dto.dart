@@ -1,8 +1,11 @@
 // ignore_for_file: prefer_relative_imports,avoid-importing-entrypoint-exports
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:mix/mix.dart';
 import 'package:mix_annotations/mix_annotations.dart';
+
+import '../../internal/diagnostic_properties_builder_ext.dart';
 
 part 'text_style_dto.g.dart';
 
@@ -22,11 +25,18 @@ final class TextStyleDataRef extends TextStyleData {
   TextStyle resolve(MixData mix) => mix.tokens.textStyleRef(ref);
 
   @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.addUsingDefault('token', ref.token.name);
+  }
+
+  @override
   get props => [ref];
 }
 
 @MixableDto(generateUtility: false, generateValueExtension: false)
-base class TextStyleData extends Dto<TextStyle> with _$TextStyleData {
+base class TextStyleData extends Dto<TextStyle>
+    with _$TextStyleData, Diagnosticable {
   final String? fontFamily;
   final FontWeight? fontWeight;
   final FontStyle? fontStyle;
@@ -76,6 +86,33 @@ base class TextStyleData extends Dto<TextStyle> with _$TextStyleData {
   });
 
   @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.addUsingDefault('background', background);
+    properties.addUsingDefault('backgroundColor', backgroundColor);
+    properties.addUsingDefault('color', color);
+    properties.addUsingDefault('debugLabel', debugLabel);
+    properties.addUsingDefault('decoration', decoration);
+    properties.addUsingDefault('decorationColor', decorationColor);
+    properties.addUsingDefault('decorationStyle', decorationStyle);
+    properties.addUsingDefault('decorationThickness', decorationThickness);
+    properties.addUsingDefault('fontFamily', fontFamily);
+    properties.addUsingDefault('fontFamilyFallback', fontFamilyFallback);
+    properties.addUsingDefault('fontVariations', fontVariations);
+    properties.addUsingDefault('fontFeatures', fontFeatures);
+    properties.addUsingDefault('fontSize', fontSize);
+    properties.addUsingDefault('fontStyle', fontStyle);
+    properties.addUsingDefault('fontWeight', fontWeight);
+    properties.addUsingDefault('foreground', foreground);
+    properties.addUsingDefault('height', height);
+    properties.addUsingDefault('letterSpacing', letterSpacing);
+    properties.addUsingDefault('locale', locale);
+    properties.addUsingDefault('shadows', shadows);
+    properties.addUsingDefault('textBaseline', textBaseline);
+    properties.addUsingDefault('wordSpacing', wordSpacing);
+  }
+
+  @override
   TextStyle get defaultValue => const TextStyle();
 }
 
@@ -84,7 +121,8 @@ base class TextStyleData extends Dto<TextStyle> with _$TextStyleData {
   generateValueExtension: false,
   mergeLists: false,
 )
-final class TextStyleDto extends Dto<TextStyle> with _$TextStyleDto {
+final class TextStyleDto extends Dto<TextStyle>
+    with _$TextStyleDto, Diagnosticable {
   final List<TextStyleData> value;
   const TextStyleDto._({this.value = const []});
 
@@ -161,6 +199,22 @@ final class TextStyleDto extends Dto<TextStyle> with _$TextStyleDto {
     }).resolve(mix);
 
     return result;
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+
+    for (var e in value) {
+      properties.add(
+        DiagnosticsProperty(
+          e.toStringShort(),
+          e,
+          expandableValue: true,
+          style: DiagnosticsTreeStyle.whitespace,
+        ),
+      );
+    }
   }
 
   @override
