@@ -25,6 +25,10 @@ class ColorToken extends MixToken<Color> {
   @override
   Color resolve(BuildContext context) {
     final themeValue = MixTheme.of(context).colors[this];
+
+    if (themeValue == null) {
+      // Look for maybe been a swatch token
+    }
     assert(
       themeValue != null,
       'ColorToken $name is not defined in the theme',
@@ -43,9 +47,13 @@ class ColorSwatchToken<T> extends ColorToken {
 
   operator [](int index) => swatch[index];
 
-  static ColorSwatchToken<int> scale(String name, int steps) {
+  static ColorSwatchToken<int> scale(
+    String name,
+    int steps, {
+    String separator = '-',
+  }) {
     return ColorSwatchToken(name, {
-      for (var i = 1; i <= steps; i++) i: ColorToken('$name-$i'),
+      for (var i = 1; i <= steps; i++) i: ColorToken('$name$separator$i'),
     });
   }
 
@@ -59,18 +67,6 @@ class ColorSwatchToken<T> extends ColorToken {
 
     return themeValue as ColorSwatch<T>;
   }
-
-  @override
-  operator ==(Object other) {
-    if (identical(this, other)) return true;
-
-    return other is ColorSwatchToken &&
-        other.name == name &&
-        mapEquals(other.swatch, swatch);
-  }
-
-  @override
-  int get hashCode => name.hashCode ^ swatch.hashCode;
 }
 
 /// A color resolver that allows dynamic resolution of a color value.
