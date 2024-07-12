@@ -1,5 +1,113 @@
+import 'package:analyzer/dart/element/element.dart';
 import 'package:mix_generator/src/helpers/field_info.dart';
 import 'package:mix_generator/src/helpers/type_ref_repository.dart';
+import 'package:mix_generator/src/mixable_class_utility_generator.dart';
+
+/// Generates the utility statements for public consts
+/// static methods of `mappingElement` in the context
+///
+/// For example:
+/// T staticValue() => builder(ClassElement.staticValue);
+String generateUtilityFieldsFromClass(ClassElement element) {
+  final fieldStatements = <String>[];
+
+  final constructors = element.constructors.where((constructor) {
+    return isValidConstructor(constructor);
+  });
+
+  constructors.forEach((constructor) {
+    final utilityConstructor = generateUtilityForConstructor(
+      constructor,
+      skipCallMethod: true,
+    );
+    if (utilityConstructor.isNotEmpty) {
+      fieldStatements.add(utilityConstructor);
+    }
+  });
+
+  return fieldStatements.join('\n');
+}
+
+String generateUtilityForConstructor(
+  ConstructorElement constructor, {
+  bool skipCallMethod = false,
+  ClassElement? mappedEl,
+}) {
+  final isConst = constructor.isConst;
+  final isUnamed = constructor.name.isEmpty;
+
+  mappedEl ??= constructor.enclosingElement as ClassElement;
+
+  if (isUnamed && skipCallMethod) return '';
+
+  final name = constructor.name.isEmpty ? '' : '.${constructor.name}';
+  final methodName = constructor.name.isEmpty ? 'call' : '${constructor.name}';
+  final type = mappedEl.name;
+
+  final parameters = constructor.parameters;
+
+  final constStatement = isConst && parameters.isEmpty ? 'const' : '';
+
+  final signatureRequiredParams = <String>[];
+  final invocationRequiredParams = <String>[];
+  final signatureOptionalParams = <String>[];
+  final invocationOptionalParams = <String>[];
+  final signatureNamedParams = <String>[];
+  final invocationNamedParams = <String>[];
+
+  parameters.forEach((param) {
+    final paramName = param.name;
+    final paramType = param.type.getDisplayString(withNullability: true);
+    final defaultValue =
+        param.defaultValueCode != null ? ' = ${param.defaultValueCode}' : '';
+
+    if (param.isPositional) {
+      if (param.isRequiredPositional) {
+        signatureRequiredParams.add('$paramType $paramName$defaultValue');
+        invocationRequiredParams.add(paramName);
+      } else {
+        signatureOptionalParams.add('$paramType $paramName$defaultValue');
+        invocationOptionalParams.add(paramName);
+      }
+    } else if (param.isNamed) {
+      final requiredParam = param.isRequiredNamed ? 'required' : '';
+      signatureNamedParams
+          .add('$requiredParam $paramType $paramName$defaultValue');
+      invocationNamedParams.add('$paramName: $paramName');
+    }
+  });
+
+  final signatureParams = [
+    ...signatureRequiredParams,
+    if (signatureOptionalParams.isNotEmpty)
+      '[${signatureOptionalParams.join(', ')}]',
+    if (signatureNamedParams.isNotEmpty) '{${signatureNamedParams.join(', ')}}'
+  ].join(', ');
+
+  final invocationParams = [
+    ...invocationRequiredParams,
+    if (invocationOptionalParams.isNotEmpty)
+      '${invocationOptionalParams.join(', ')}',
+    if (invocationNamedParams.isNotEmpty) '${invocationNamedParams.join(', ')}'
+  ].join(', ');
+
+  final signature = 'T $methodName($signatureParams)';
+  final invocation = 'builder($constStatement $type$name($invocationParams))';
+
+  final totalCharacters = signature.length + invocation.length;
+  String signatureLine;
+
+  if (totalCharacters > 80) {
+    signatureLine = '$signature { return $invocation;} ';
+  } else {
+    signatureLine = '$signature => $invocation;';
+  }
+
+  return '''
+/// Creates an [Attribute] instance using the [$type$name] constructor.
+$signatureLine
+''';
+}
 
 /// Generates utility fields for the given attribute class and fields.
 String generateUtilityFields(

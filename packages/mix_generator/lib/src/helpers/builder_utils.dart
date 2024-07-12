@@ -151,7 +151,7 @@ extension ClassElementX on ClassElement {
   bool _isMixType(String className) {
     return allSupertypes.any((type) {
       final mixPackageUri = Uri(scheme: 'package', path: 'mix/');
-      final hasType = type.element.name == 'Dto';
+      final hasType = type.element.name == className;
       final isMixPackage =
           type.element.source.uri.scheme == mixPackageUri.scheme &&
               type.element.source.uri.path.startsWith(mixPackageUri.path);
