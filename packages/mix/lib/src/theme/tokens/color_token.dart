@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../mix/mix_theme.dart';
@@ -41,11 +40,45 @@ class ColorToken extends MixToken<Color> {
 }
 
 @immutable
+class ColorTokenOfSwatch<T> extends ColorToken {
+  final ColorSwatchToken<T> _swatchToken;
+  final T index;
+
+  const ColorTokenOfSwatch(super.name, this._swatchToken, this.index);
+
+  @override
+  ColorRef call() => ColorRef(this);
+
+  @override
+  Color resolve(BuildContext context) {
+    final colorSwatch = MixTheme.of(context).colors[_swatchToken];
+    assert(
+      colorSwatch != null,
+      'ColorSwatchToken $name is not defined in the theme',
+    );
+
+    assert(
+      colorSwatch is ColorSwatch<T>,
+      'ColorSwatchToken $name is not of type ColorSwatch<$T>',
+    );
+
+    return (colorSwatch as ColorSwatch<T>)[index]!;
+  }
+}
+
+@immutable
 class ColorSwatchToken<T> extends ColorToken {
-  final Map<T, ColorToken> swatch;
+  final Map<T, String> swatch;
   const ColorSwatchToken(super.name, this.swatch);
 
-  operator [](int index) => swatch[index];
+  operator [](T index) {
+    final colorName = swatch[index];
+    assert(
+      colorName != null,
+      'ColorSwatchToken $name does not have a value for index $index',
+    );
+    return ColorTokenOfSwatch(colorName!, this, index);
+  }
 
   static ColorSwatchToken<int> scale(
     String name,
@@ -53,7 +86,7 @@ class ColorSwatchToken<T> extends ColorToken {
     String separator = '-',
   }) {
     return ColorSwatchToken(name, {
-      for (var i = 1; i <= steps; i++) i: ColorToken('$name$separator$i'),
+      for (var i = 1; i <= steps; i++) i: '$name$separator$i',
     });
   }
 

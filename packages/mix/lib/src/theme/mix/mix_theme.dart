@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../attributes/text_style/text_style_dto.dart';
-import '../../internal/compare_mixin.dart';
 import '../material/material_theme.dart';
 import '../tokens/breakpoints_token.dart';
 import '../tokens/color_token.dart';
@@ -33,7 +32,7 @@ class MixTheme extends InheritedWidget {
 }
 
 @immutable
-class MixThemeData with EqualityMixin {
+class MixThemeData {
   final StyledTokens<RadiusToken, Radius> radii;
   final StyledTokens<ColorToken, Color> colors;
   final StyledTokens<TextStyleToken, TextStyle> textStyles;
@@ -132,7 +131,27 @@ class MixThemeData with EqualityMixin {
   }
 
   @override
-  get props => [spaces, breakpoints, colors, textStyles, radii, typography];
+  operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is MixThemeData &&
+        other.textStyles == textStyles &&
+        other.colors == colors &&
+        other.breakpoints == breakpoints &&
+        other.radii == radii &&
+        other.spaces == spaces &&
+        other.typography == typography;
+  }
+
+  @override
+  int get hashCode {
+    return textStyles.hashCode ^
+        colors.hashCode ^
+        breakpoints.hashCode ^
+        radii.hashCode ^
+        spaces.hashCode ^
+        typography.hashCode;
+  }
 }
 
 final _breakpointTokenMap = StyledTokens({

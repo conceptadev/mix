@@ -1,26 +1,18 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-import '../../internal/compare_mixin.dart';
 import '../../internal/iterable_ext.dart';
-import 'color_token.dart';
-import 'radius_token.dart';
-import 'text_style_token.dart';
 
 @immutable
 abstract class MixToken<T> {
   final String name;
   const MixToken(this.name);
 
-  static ColorToken color(String name) => ColorToken(name);
-
-  static TextStyleToken textStyle(String name) => TextStyleToken(name);
-
-  static RadiusToken radius(String name) => RadiusToken(name);
-
   T call();
 
   T resolve(BuildContext context);
+
   @override
   operator ==(Object other) {
     if (identical(this, other)) return true;
@@ -44,7 +36,7 @@ mixin WithTokenResolver<V> {
 
 typedef BuildContextResolver<T> = T Function(BuildContext context);
 
-class StyledTokens<T extends MixToken<V>, V> with EqualityMixin {
+class StyledTokens<T extends MixToken<V>, V> {
   final Map<T, V> _map;
 
   const StyledTokens(this._map);
@@ -69,5 +61,16 @@ class StyledTokens<T extends MixToken<V>, V> with EqualityMixin {
   }
 
   @override
-  get props => [_map];
+  operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is StyledTokens &&
+        mapEquals(
+          other._map,
+          _map,
+        );
+  }
+
+  @override
+  int get hashCode => _map.hashCode;
 }
