@@ -1,27 +1,7 @@
 import 'package:flutter/widgets.dart';
 
-import '../../attributes/text_style/text_style_dto.dart';
-import '../../core/factory/mix_data.dart';
 import '../mix/mix_theme.dart';
 import 'mix_token.dart';
-
-class TypographyToken extends MixToken<TextStyleData> {
-  const TypographyToken(super.name);
-
-  @override
-  TypographyRef call() => TypographyRef(this);
-
-  @override
-  TextStyleData resolve(BuildContext context) {
-    final themeValue = MixTheme.of(context).typography[this];
-    assert(
-      themeValue != null,
-      'TypographyToken $name is not defined in the theme',
-    );
-
-    return themeValue!;
-  }
-}
 
 class TextStyleToken extends MixToken<TextStyle> {
   const TextStyleToken(super.name);

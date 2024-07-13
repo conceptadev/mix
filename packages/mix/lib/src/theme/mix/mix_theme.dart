@@ -35,7 +35,7 @@ class MixThemeData {
   final StyledTokens<RadiusToken, Radius> radii;
   final StyledTokens<ColorToken, Color> colors;
   final StyledTokens<TextStyleToken, TextStyle> textStyles;
-  final StyledTokens<TypographyToken, TextStyleData> typography;
+
   final StyledTokens<BreakpointToken, Breakpoint> breakpoints;
   final StyledTokens<SpaceToken, double> spaces;
 
@@ -45,7 +45,6 @@ class MixThemeData {
     required this.breakpoints,
     required this.radii,
     required this.spaces,
-    required this.typography,
   });
 
   const MixThemeData.empty()
@@ -55,7 +54,6 @@ class MixThemeData {
           breakpoints: const StyledTokens.empty(),
           radii: const StyledTokens.empty(),
           spaces: const StyledTokens.empty(),
-          typography: const StyledTokens.empty(),
         );
 
   factory MixThemeData({
@@ -64,7 +62,6 @@ class MixThemeData {
     Map<SpaceToken, double>? spaces,
     Map<TextStyleToken, TextStyle>? textStyles,
     Map<RadiusToken, Radius>? radii,
-    Map<TypographyToken, TextStyleData>? typography,
   }) {
     return MixThemeData.raw(
       textStyles: StyledTokens(textStyles ?? const {}),
@@ -73,7 +70,6 @@ class MixThemeData {
           _breakpointTokenMap.merge(StyledTokens(breakpoints ?? const {})),
       radii: StyledTokens(radii ?? const {}),
       spaces: StyledTokens(spaces ?? const {}),
-      typography: StyledTokens(typography ?? const {}),
     );
   }
 
@@ -83,7 +79,6 @@ class MixThemeData {
     Map<SpaceToken, double>? spaces,
     Map<TextStyleToken, TextStyle>? textStyles,
     Map<RadiusToken, Radius>? radii,
-    Map<TypographyToken, TextStyleData>? typography,
   }) {
     return materialMixTheme.merge(
       MixThemeData(
@@ -92,7 +87,6 @@ class MixThemeData {
         spaces: spaces,
         textStyles: textStyles,
         radii: radii,
-        typography: typography,
       ),
     );
   }
@@ -103,7 +97,6 @@ class MixThemeData {
     Map<SpaceToken, double>? spaces,
     Map<TextStyleToken, TextStyle>? textStyles,
     Map<RadiusToken, Radius>? radii,
-    Map<TypographyToken, TextStyleData>? typography,
   }) {
     return MixThemeData.raw(
       textStyles:
@@ -113,8 +106,6 @@ class MixThemeData {
           breakpoints == null ? this.breakpoints : StyledTokens(breakpoints),
       radii: radii == null ? this.radii : StyledTokens(radii),
       spaces: spaces == null ? this.spaces : StyledTokens(spaces),
-      typography:
-          typography == null ? this.typography : StyledTokens(typography),
     );
   }
 
@@ -125,7 +116,6 @@ class MixThemeData {
       breakpoints: breakpoints.merge(other.breakpoints),
       radii: radii.merge(other.radii),
       spaces: spaces.merge(other.spaces),
-      typography: typography.merge(other.typography),
     );
   }
 
