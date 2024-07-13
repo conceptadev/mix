@@ -35,6 +35,69 @@ class ColorToken extends MixToken<Color> {
   }
 }
 
+@immutable
+class ColorTokenOfSwatch<T> extends ColorToken {
+  final ColorSwatchToken<T> _swatchToken;
+  final T index;
+
+  const ColorTokenOfSwatch(super.name, this._swatchToken, this.index);
+
+  @override
+  ColorRef call() => ColorRef(this);
+
+  @override
+  Color resolve(BuildContext context) {
+    final colorSwatch = MixTheme.of(context).colors[_swatchToken];
+    assert(
+      colorSwatch != null,
+      'ColorSwatchToken $name is not defined in the theme',
+    );
+
+    assert(
+      colorSwatch is ColorSwatch<T>,
+      'ColorSwatchToken $name is not of type ColorSwatch<$T>',
+    );
+
+    return (colorSwatch as ColorSwatch<T>)[index]!;
+  }
+}
+
+@immutable
+class ColorSwatchToken<T> extends ColorToken {
+  final Map<T, String> swatch;
+  const ColorSwatchToken(super.name, this.swatch);
+
+  operator [](T index) {
+    final colorName = swatch[index];
+    assert(
+      colorName != null,
+      'ColorSwatchToken $name does not have a value for index $index',
+    );
+    return ColorTokenOfSwatch(colorName!, this, index);
+  }
+
+  static ColorSwatchToken<int> scale(
+    String name,
+    int steps, {
+    String separator = '-',
+  }) {
+    return ColorSwatchToken(name, {
+      for (var i = 1; i <= steps; i++) i: '$name$separator$i',
+    });
+  }
+
+  @override
+  ColorSwatch<T> resolve(BuildContext context) {
+    final themeValue = MixTheme.of(context).colors[this];
+    assert(
+      themeValue != null,
+      'ColorSwatchToken $name is not defined in the theme',
+    );
+
+    return themeValue as ColorSwatch<T>;
+  }
+}
+
 /// A color resolver that allows dynamic resolution of a color value.
 ///
 /// This is useful when the color value is dependent on the current [BuildContext],
@@ -51,7 +114,7 @@ class ColorResolver extends Color with WithTokenResolver<Color> {
 ///
 /// This is used to reference a color token in a theme, and is used to resolve the color value.
 /// Allows pass a [ColorToken] as a [Color] value.
-class ColorRef extends Color with TokenRef<ColorToken, Color> {
+class ColorRef extends Color with TokenRef<ColorToken> {
   /// The token associated with the color reference.
   @override
   final ColorToken token;

@@ -6,15 +6,16 @@ import '../../helpers/testing_utils.dart';
 
 void main() {
   const primaryColor = ColorToken('primary');
+  const tokenUtil = MixTokensTest();
   final theme = MixThemeData(
     breakpoints: {
-      $token.breakpoint.small: const Breakpoint(minWidth: 0, maxWidth: 599),
+      tokenUtil.breakpoint.small: const Breakpoint(minWidth: 0, maxWidth: 599),
     },
     colors: {
       primaryColor: Colors.blue,
       $material.colorScheme.error: Colors.redAccent,
     },
-    spaces: {$token.space.small: 30},
+    spaces: {tokenUtil.space.small: 30},
     textStyles: {
       $material.textTheme.bodyLarge: const TextStyle(
         fontSize: 200,
@@ -22,8 +23,8 @@ void main() {
       ),
     },
     radii: {
-      $token.radius.small: const Radius.circular(200),
-      $token.radius.large: const Radius.circular(2000),
+      tokenUtil.radius.small: const Radius.circular(200),
+      tokenUtil.radius.large: const Radius.circular(2000),
     },
   );
 
@@ -46,8 +47,8 @@ void main() {
           Box(
             style: Style(
               $box.color.ref(primaryColor),
-              $box.borderRadius.all.ref($token.radius.small),
-              $box.padding.horizontal.ref($token.space.small),
+              $box.borderRadius.all.ref(tokenUtil.radius.small),
+              $box.padding.horizontal.ref(tokenUtil.space.small),
               $text.style.ref($material.textTheme.bodyLarge),
             ),
             key: key,
@@ -67,12 +68,13 @@ void main() {
           container.decoration,
           BoxDecoration(
             color: theme.colors[primaryColor],
-            borderRadius: BorderRadius.all(theme.radii[$token.radius.small]!),
+            borderRadius:
+                BorderRadius.all(theme.radii[tokenUtil.radius.small]!),
           ),
         );
 
         expect(container.padding!.horizontal / 2,
-            theme.spaces[$token.space.small]);
+            theme.spaces[tokenUtil.space.small]);
 
         final textWidget = tester.widget<Text>(
           find.descendant(of: find.byKey(key), matching: find.byType(Text)),

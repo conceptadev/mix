@@ -5,6 +5,8 @@ import 'package:todo_list/style/design_tokens.dart';
 import '../patterns/outline.dart';
 import '../patterns/scale_effect.dart';
 
+const _colors = ColorTokens();
+
 class TodoIconButton extends StatelessWidget {
   final IconData icon;
   final VoidCallback? onPressed;
@@ -20,16 +22,16 @@ class TodoIconButton extends StatelessWidget {
     return PressableBox(
       onPress: onPressed,
       style: Style(
-        $box.color.ref($token.color.surface),
+        $box.color.ref(_colors.surface),
         $box.height(50),
         $box.width(50),
         $box.borderRadius(4),
         scaleEffect(),
-        $icon.color.ref($token.color.primary),
+        $icon.color.ref(_colors.primary),
         $icon.weight(20),
         outlinePattern(),
         $on.press(
-          $box.color.ref($token.color.surfaceContainer),
+          $box.color.ref(_colors.surfaceContainer),
         ),
       ).animate(
         duration: const Duration(milliseconds: 150),

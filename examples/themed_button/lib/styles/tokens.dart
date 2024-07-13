@@ -1,32 +1,34 @@
 import 'package:mix/mix.dart';
 
-extension ColorExt on ColorTokenUtil {
-  ColorToken get primary => const ColorToken('primary');
-  ColorToken get primaryHover => const ColorToken('primary.hover');
-  ColorToken get onPrimary => const ColorToken('on.primary');
-  // ColorToken get secondary => const ColorToken('secondary');
-  // ColorToken get onSecondary => const ColorToken('on.secondary');
-  // ColorToken get outline => const ColorToken('outline');
+class ColorTokens {
+  final ColorToken primary = const ColorToken('primary');
+  final ColorToken primaryHover = const ColorToken('primary.hover');
+  final ColorToken onPrimary = const ColorToken('on.primary');
+  // final ColorToken secondary = const ColorToken('secondary');
+  // final ColorToken onSecondary = const ColorToken('on.secondary');
+  // final ColorToken outline = const ColorToken('outline');
 }
 
-extension RadiusExt on RadiusTokenUtil {
-  RadiusToken get small => const RadiusToken('radius.small');
-  RadiusToken get normal => const RadiusToken('radius.normal');
-  RadiusToken get large => const RadiusToken('radius.large');
-  RadiusToken get full => const RadiusToken('radius.full');
+class RadiusTokens {
+  final RadiusToken small = const RadiusToken('radius.small');
+  final RadiusToken normal = const RadiusToken('radius.normal');
+  final RadiusToken large = const RadiusToken('radius.large');
+  final RadiusToken full = const RadiusToken('radius.full');
 }
 
-extension SpacingExt on SpaceTokenUtil {
-  SpaceToken get xxxsmall => const SpaceToken('space.xxxsmall');
-  SpaceToken get xxsmall => const SpaceToken('space.xxsmall');
-  SpaceToken get xsmall => const SpaceToken('space.xsmall');
-  SpaceToken get small => const SpaceToken('space.small');
-  SpaceToken get medium => const SpaceToken('space.medium');
+class SpaceTokens {
+  final SpaceToken xxxsmall = const SpaceToken('space.xxxsmall');
+  final SpaceToken xxsmall = const SpaceToken('space.xxsmall');
+  final SpaceToken xsmall = const SpaceToken('space.xsmall');
+  final SpaceToken small = const SpaceToken('space.small');
+  final SpaceToken medium = const SpaceToken('space.medium');
+  final SpaceToken large = const SpaceToken('space.large');
 }
 
-extension TextStyleExt on TextStyleTokenUtil {
-  TextStyleToken get small => const TextStyleToken('textstyle.small');
-  TextStyleToken get normal => const TextStyleToken('textstyle.normall');
-  TextStyleToken get large => const TextStyleToken('textstyle.large');
-  TextStyleToken get extraLarge => const TextStyleToken('textstyle.extraLarge');
+class TextStyleTokens {
+  final TextStyleToken small = const TextStyleToken('textstyle.small');
+  final TextStyleToken normal = const TextStyleToken('textstyle.normall');
+  final TextStyleToken large = const TextStyleToken('textstyle.large');
+  final TextStyleToken extraLarge =
+      const TextStyleToken('textstyle.extraLarge');
 }
