@@ -54,28 +54,6 @@ class TextStyleResolver extends TextStyle with WithTokenResolver<TextStyle> {
 }
 
 @immutable
-final class TypographyRef extends TextStyleData with TokenRef<TypographyToken> {
-  @override
-  final TypographyToken token;
-  const TypographyRef(this.token);
-
-  @override
-  operator ==(Object other) {
-    if (identical(this, other)) return true;
-
-    return other is TypographyRef && other.token == token;
-  }
-
-  @override
-  TextStyle resolve(MixData mix) {
-    throw Exception('Cannot resolve a reference ');
-  }
-
-  @override
-  int get hashCode => token.hashCode;
-}
-
-@immutable
 final class TextStyleRef extends TextStyle with TokenRef<TextStyleToken> {
   @override
   final TextStyleToken token;

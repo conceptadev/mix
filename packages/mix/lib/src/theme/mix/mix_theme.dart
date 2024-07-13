@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../attributes/text_style/text_style_dto.dart';
 import '../material/material_theme.dart';
 import '../tokens/breakpoints_token.dart';
 import '../tokens/color_token.dart';
@@ -139,8 +138,7 @@ class MixThemeData {
         other.colors == colors &&
         other.breakpoints == breakpoints &&
         other.radii == radii &&
-        other.spaces == spaces &&
-        other.typography == typography;
+        other.spaces == spaces;
   }
 
   @override
@@ -149,8 +147,7 @@ class MixThemeData {
         colors.hashCode ^
         breakpoints.hashCode ^
         radii.hashCode ^
-        spaces.hashCode ^
-        typography.hashCode;
+        spaces.hashCode;
   }
 }
 

@@ -41,17 +41,19 @@ class ColorToken extends MixToken<Color> {
 
 @immutable
 class ColorTokenOfSwatch<T> extends ColorToken {
-  final ColorSwatchToken<T> _swatchToken;
   final T index;
 
-  const ColorTokenOfSwatch(super.name, this._swatchToken, this.index);
+  @visibleForTesting
+  final ColorSwatchToken<T> swatchToken;
+
+  const ColorTokenOfSwatch(super.name, this.swatchToken, this.index);
 
   @override
   ColorRef call() => ColorRef(this);
 
   @override
   Color resolve(BuildContext context) {
-    final colorSwatch = MixTheme.of(context).colors[_swatchToken];
+    final colorSwatch = MixTheme.of(context).colors[swatchToken];
     assert(
       colorSwatch != null,
       'ColorSwatchToken $name is not defined in the theme',
@@ -71,15 +73,6 @@ class ColorSwatchToken<T> extends ColorToken {
   final Map<T, String> swatch;
   const ColorSwatchToken(super.name, this.swatch);
 
-  operator [](T index) {
-    final colorName = swatch[index];
-    assert(
-      colorName != null,
-      'ColorSwatchToken $name does not have a value for index $index',
-    );
-    return ColorTokenOfSwatch(colorName!, this, index);
-  }
-
   static ColorSwatchToken<int> scale(
     String name,
     int steps, {
@@ -88,6 +81,16 @@ class ColorSwatchToken<T> extends ColorToken {
     return ColorSwatchToken(name, {
       for (var i = 1; i <= steps; i++) i: '$name$separator$i',
     });
+  }
+
+  operator [](T index) {
+    final colorName = swatch[index];
+    assert(
+      colorName != null,
+      'ColorSwatchToken $name does not have a value for index $index',
+    );
+
+    return ColorTokenOfSwatch(colorName!, this, index);
   }
 
   @override
