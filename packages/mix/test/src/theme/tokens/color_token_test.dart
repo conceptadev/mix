@@ -135,4 +135,79 @@ void main() {
       expect(colorRef1.hashCode, colorRef2.hashCode);
     });
   });
+
+  group('ColorSwatchToken Tests', () {
+    test('Constructor assigns name and swatch correctly', () {
+      const swatchToken =
+          ColorSwatchToken('testSwatch', {100: 'color100', 200: 'color200'});
+      expect(swatchToken.name, 'testSwatch');
+      expect(swatchToken.swatch, {100: 'color100', 200: 'color200'});
+    });
+
+    test('[] operator returns ColorTokenOfSwatch', () {
+      const swatchToken =
+          ColorSwatchToken('testSwatch', {100: 'color100', 200: 'color200'});
+      final tokenOfSwatch = swatchToken[100];
+      expect(tokenOfSwatch, isA<ColorTokenOfSwatch>());
+      expect(tokenOfSwatch.name, 'color100');
+      expect(tokenOfSwatch.index, 100);
+    });
+
+    test('scale method creates ColorSwatchToken with correct swatch', () {
+      final swatchToken = ColorSwatchToken.scale('testSwatch', 3);
+      expect(swatchToken.name, 'testSwatch');
+      expect(swatchToken.swatch,
+          {1: 'testSwatch-1', 2: 'testSwatch-2', 3: 'testSwatch-3'});
+    });
+
+    testWidgets('resolve method returns correct ColorSwatch', (tester) async {
+      const swatchToken =
+          ColorSwatchToken('testSwatch', {100: 'color100', 200: 'color200'});
+      final theme = MixThemeData(
+        colors: {
+          swatchToken:
+              const ColorSwatch(100, {100: Colors.red, 200: Colors.blue}),
+        },
+      );
+
+      await tester.pumpWidget(createWithMixTheme(theme));
+
+      final context = tester.element(find.byType(Container));
+      final resolvedSwatch = swatchToken.resolve(context);
+
+      expect(resolvedSwatch, isA<ColorSwatch>());
+      expect(resolvedSwatch[100], Colors.red);
+      expect(resolvedSwatch[200], Colors.blue);
+    });
+  });
+
+  group('ColorTokenOfSwatch Tests', () {
+    test('Constructor assigns name, swatchToken, and index correctly', () {
+      const swatchToken =
+          ColorSwatchToken('testSwatch', {100: 'color100', 200: 'color200'});
+      const tokenOfSwatch = ColorTokenOfSwatch('color100', swatchToken, 100);
+      expect(tokenOfSwatch.name, 'color100');
+      expect(tokenOfSwatch.swatchToken, swatchToken);
+      expect(tokenOfSwatch.index, 100);
+    });
+
+    testWidgets('resolve method returns correct Color', (tester) async {
+      const swatchToken =
+          ColorSwatchToken('testSwatch', {100: 'color100', 200: 'color200'});
+      const tokenOfSwatch = ColorTokenOfSwatch('color100', swatchToken, 100);
+      final theme = MixThemeData(
+        colors: {
+          swatchToken:
+              const ColorSwatch(100, {100: Colors.red, 200: Colors.blue}),
+        },
+      );
+
+      await tester.pumpWidget(createWithMixTheme(theme));
+
+      final context = tester.element(find.byType(Container));
+      final resolvedColor = tokenOfSwatch.resolve(context);
+
+      expect(resolvedColor, Colors.red);
+    });
+  });
 }

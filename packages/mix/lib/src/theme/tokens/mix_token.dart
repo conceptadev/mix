@@ -64,11 +64,7 @@ class StyledTokens<T extends MixToken<V>, V> {
   operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is StyledTokens &&
-        mapEquals(
-          other._map,
-          _map,
-        );
+    return other is StyledTokens && mapEquals(other._map, _map);
   }
 
   @override

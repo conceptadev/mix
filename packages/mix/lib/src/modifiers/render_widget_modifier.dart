@@ -125,13 +125,12 @@ class RenderAnimatedModifiersState
 
   @override
   void didUpdateWidget(covariant RenderAnimatedModifiers oldWidget) {
+    super.didUpdateWidget(oldWidget);
     if (oldWidget.modifiers != widget.modifiers ||
         oldWidget.mix != widget.mix ||
         oldWidget.orderOfModifiers != widget.orderOfModifiers) {
       cleanUpSpecs();
     }
-
-    super.didUpdateWidget(oldWidget);
   }
 
   @override
