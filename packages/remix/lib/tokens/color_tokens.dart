@@ -62,27 +62,3 @@ final remixDarkColorTokens = _mapColorRadixTokens(
   accent: RadixColors.indigoDark,
   neutral: RadixColors.slateDark,
 );
-// class RemixColorUtility {
-//   final ColorSwatchToken<int> swatch;
-//   const RemixColorUtility(this.swatch);
-
-//   ColorToken call([int? index]) => index == null ? swatch : swatch[index];
-
-//   operator +(int index) {
-//     if (index == 0) return this;
-
-//     // check if index on swatch exists
-//     if (swatch[index] == null) return this;
-
-//     return swatch[index];
-//   }
-
-//   operator -(int index) {
-//     if (index == 0) return this;
-
-//     // check if index on swatch exists
-//     if (swatch[index] == null) return this;
-
-//     return swatch[index];
-//   }
-// }

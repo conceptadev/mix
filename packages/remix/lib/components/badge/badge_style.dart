@@ -16,25 +16,25 @@ Style get _baseStyle => Style(
     );
 
 Style get _solidVariant => Style(
-      _container.color($rx.color.accent()()),
-      _label.style.color($rx.color.neutral(1)()),
+      _container.color.ref($rx.color.accent()),
+      _label.style.color.ref($rx.color.neutral(1)),
     );
 
 Style get _softVariant => Style(
-      _container.color($rx.color.accentAlpha(3)()),
-      _label.style.color($rx.color.accentAlpha(11)()),
+      _container.color.ref($rx.color.accentAlpha(3)),
+      _label.style.color.ref($rx.color.accentAlpha(11)),
     );
 
 Style get _surfaceVariant => Style(
-      _container.color($rx.color.accentAlpha(2)()),
-      _label.style.color($rx.color.accentAlpha(11)()),
+      _container.color.ref($rx.color.accentAlpha(2)),
+      _label.style.color.ref($rx.color.accentAlpha(11)),
     );
 
 Style get _outlineVariant => Style(
       _container.color(Colors.transparent),
       _container.border.width(1),
-      _container.border.color($rx.color.accentAlpha(8)()),
-      _label.style.color($rx.color.accentAlpha(11)()),
+      _container.border.color.ref($rx.color.accentAlpha(8)),
+      _label.style.color.ref($rx.color.accentAlpha(11)),
     );
 
 final _smallVariant = Style(

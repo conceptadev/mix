@@ -739,6 +739,9 @@
 /Users/leofarias/Projects/mix/packages/mix/lib/src/attributes/gap/spacing_side_dto.dart
 /Users/leofarias/Projects/mix/packages/mix/lib/src/attributes/gradient/gradient_dto.dart
 /Users/leofarias/Projects/mix/packages/mix/lib/src/attributes/gradient/gradient_dto.g.dart
+/Users/leofarias/Projects/mix/packages/mix/lib/src/attributes/modifiers/widget_modifiers_data.dart
+/Users/leofarias/Projects/mix/packages/mix/lib/src/attributes/modifiers/widget_modifiers_data_dto.dart
+/Users/leofarias/Projects/mix/packages/mix/lib/src/attributes/modifiers/widget_modifiers_util.dart
 /Users/leofarias/Projects/mix/packages/mix/lib/src/attributes/nested_style/nested_style_attribute.dart
 /Users/leofarias/Projects/mix/packages/mix/lib/src/attributes/nested_style/nested_style_util.dart
 /Users/leofarias/Projects/mix/packages/mix/lib/src/attributes/scalars/scalar_util.dart
@@ -775,6 +778,7 @@
 /Users/leofarias/Projects/mix/packages/mix/lib/src/internal/constants.dart
 /Users/leofarias/Projects/mix/packages/mix/lib/src/internal/custom_focusable_action_detector.dart
 /Users/leofarias/Projects/mix/packages/mix/lib/src/internal/deep_collection_equality.dart
+/Users/leofarias/Projects/mix/packages/mix/lib/src/internal/diagnostic_properties_builder_ext.dart
 /Users/leofarias/Projects/mix/packages/mix/lib/src/internal/helper_util.dart
 /Users/leofarias/Projects/mix/packages/mix/lib/src/internal/iterable_ext.dart
 /Users/leofarias/Projects/mix/packages/mix/lib/src/internal/lerp_helpers.dart

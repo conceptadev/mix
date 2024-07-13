@@ -6,21 +6,21 @@
     "configurations": [
    
         {
-            "name": "demo",
+            "name": "Remix (debug mode)",
             "cwd": "demo",
             "request": "launch",
             "type": "dart",
             "deviceId": "macos"
         },
         {
-            "name": "demo (profile mode)",
+            "name": "Remix (profile mode)",
             "cwd": "demo",
             "request": "launch",
             "type": "dart",
             "flutterMode": "profile"
         },
         {
-            "name": "demo (release mode)",
+            "name": "Remix (release mode)",
             "cwd": "demo",
             "request": "launch",
             "type": "dart",
