@@ -135,4 +135,112 @@ void main() {
       expect(colorRef1.hashCode, colorRef2.hashCode);
     });
   });
+
+  group('ColorSwatchToken Tests', () {
+    test('Constructor assigns name and swatch correctly', () {
+      const swatchToken =
+          ColorSwatchToken('testSwatch', {100: 'color100', 200: 'color200'});
+      expect(swatchToken.name, 'testSwatch');
+      expect(swatchToken.swatch, {100: 'color100', 200: 'color200'});
+    });
+
+    test('[] operator returns ColorTokenOfSwatch', () {
+      const swatchToken =
+          ColorSwatchToken('testSwatch', {100: 'color100', 200: 'color200'});
+      final tokenOfSwatch = swatchToken[100];
+      expect(tokenOfSwatch, isA<ColorTokenOfSwatch>());
+      expect(tokenOfSwatch.name, 'color100');
+      expect(tokenOfSwatch.index, 100);
+    });
+
+    test('[] operator throws assertion error for non-existent index', () {
+      const swatchToken = ColorSwatchToken('testSwatch', {100: 'color100'});
+      expect(() => swatchToken[200], throwsAssertionError);
+    });
+
+    test('Equality and hashCode', () {
+      const swatchToken1 = ColorSwatchToken('testSwatch', {100: 'color100'});
+      const swatchToken2 = ColorSwatchToken('testSwatch', {100: 'color100'});
+      const swatchToken3 =
+          ColorSwatchToken('differentSwatch', {100: 'color100'});
+
+      expect(swatchToken1, equals(swatchToken2));
+      expect(swatchToken1.hashCode, equals(swatchToken2.hashCode));
+      expect(swatchToken1, isNot(equals(swatchToken3)));
+    });
+
+    test('scale method creates ColorSwatchToken with correct swatch', () {
+      final swatchToken = ColorSwatchToken.scale('testSwatch', 3);
+      expect(swatchToken.name, 'testSwatch');
+      expect(swatchToken.swatch,
+          {1: 'testSwatch-1', 2: 'testSwatch-2', 3: 'testSwatch-3'});
+    });
+
+    testWidgets('resolve method returns correct ColorSwatch', (tester) async {
+      const swatchToken =
+          ColorSwatchToken('testSwatch', {100: 'color100', 200: 'color200'});
+      final theme = MixThemeData(
+        colors: {
+          swatchToken:
+              const ColorSwatch(100, {100: Colors.red, 200: Colors.blue}),
+        },
+      );
+
+      await tester.pumpWidget(createWithMixTheme(theme));
+
+      final context = tester.element(find.byType(Container));
+      final resolvedSwatch = swatchToken.resolve(context);
+
+      expect(resolvedSwatch, isA<ColorSwatch>());
+      expect(resolvedSwatch[100], Colors.red);
+      expect(resolvedSwatch[200], Colors.blue);
+    });
+  });
+
+  group('ColorTokenOfSwatch Tests', () {
+    test('Constructor assigns name, swatchToken, and index correctly', () {
+      const swatchToken =
+          ColorSwatchToken('testSwatch', {100: 'color100', 200: 'color200'});
+      const tokenOfSwatch = ColorTokenOfSwatch('color100', swatchToken, 100);
+      expect(tokenOfSwatch.name, 'color100');
+      expect(tokenOfSwatch.swatchToken, swatchToken);
+      expect(tokenOfSwatch.index, 100);
+    });
+
+    testWidgets('resolve method returns correct Color', (tester) async {
+      const swatchToken =
+          ColorSwatchToken('testSwatch', {100: 'color100', 200: 'color200'});
+      const tokenOfSwatch = ColorTokenOfSwatch('color100', swatchToken, 100);
+      final theme = MixThemeData(
+        colors: {
+          swatchToken:
+              const ColorSwatch(100, {100: Colors.red, 200: Colors.blue}),
+        },
+      );
+
+      await tester.pumpWidget(createWithMixTheme(theme));
+
+      final context = tester.element(find.byType(Container));
+      final resolvedColor = tokenOfSwatch.resolve(context);
+
+      expect(resolvedColor, Colors.red);
+    });
+
+    test('call() method returns ColorRef with correct token', () {
+      const swatchToken = ColorSwatchToken('testSwatch', {100: 'color100'});
+      const tokenOfSwatch = ColorTokenOfSwatch('color100', swatchToken, 100);
+      expect(tokenOfSwatch(), equals(const ColorRef(tokenOfSwatch)));
+    });
+
+    test('Equality and hashCode', () {
+      const swatchToken = ColorSwatchToken('testSwatch', {100: 'color100'});
+      const tokenOfSwatch1 = ColorTokenOfSwatch('color100', swatchToken, 100);
+      const tokenOfSwatch2 = ColorTokenOfSwatch('color100', swatchToken, 100);
+      const tokenOfSwatch3 = ColorTokenOfSwatch('color200', swatchToken, 200);
+
+      expect(tokenOfSwatch1, equals(tokenOfSwatch2));
+      expect(tokenOfSwatch1.hashCode, equals(tokenOfSwatch2.hashCode));
+      expect(tokenOfSwatch1, isNot(equals(tokenOfSwatch3)));
+    });
+  });
 }

@@ -86,11 +86,18 @@ class BreakpointResolver extends Breakpoint with WithTokenResolver<Breakpoint> {
 
 /// A reference to a breakpoint token.
 @immutable
-class BreakpointRef extends Breakpoint
-    with TokenRef<BreakpointToken, Breakpoint> {
+class BreakpointRef extends Breakpoint with TokenRef<BreakpointToken> {
   @override
   final BreakpointToken token;
 
   /// Creates a new breakpoint reference with the given [token].
   const BreakpointRef(this.token);
+}
+
+class BreakpointTokenUtil {
+  final xsmall = BreakpointToken.xsmall;
+  final small = BreakpointToken.small;
+  final medium = BreakpointToken.medium;
+  final large = BreakpointToken.large;
+  const BreakpointTokenUtil();
 }

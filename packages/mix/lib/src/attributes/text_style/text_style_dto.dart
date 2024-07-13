@@ -34,6 +34,10 @@ final class TextStyleDataRef extends TextStyleData {
   get props => [ref];
 }
 
+// TODO: Look for ways to consolidate TextStyleDto and TextStyleData
+// If we remove TextStyle from tokens, it means we don't need a list of resolvable values
+// to be resolved once we have a context. We can merge the values directly, simplifying the code,
+// and this will allow more predictable behavior overall.
 @MixableDto(generateUtility: false, generateValueExtension: false)
 base class TextStyleData extends Dto<TextStyle>
     with _$TextStyleData, Diagnosticable {
@@ -192,11 +196,8 @@ final class TextStyleDto extends Dto<TextStyle>
   TextStyle resolve(MixData mix) {
     final result = value
         .map((e) => e is TextStyleDataRef ? e.resolve(mix)._toData() : e)
-        .reduce((value, element) {
-      final singleresult = value.merge(element);
-
-      return singleresult;
-    }).resolve(mix);
+        .reduce((a, b) => a.merge(b))
+        .resolve(mix);
 
     return result;
   }
@@ -222,7 +223,14 @@ final class TextStyleDto extends Dto<TextStyle>
 }
 
 extension TextStyleExt on TextStyle {
-  TextStyleDto toDto() => TextStyleDto._(value: [_toData()]);
+  TextStyleDto toDto() {
+    if (this is TextStyleRef) {
+      return TextStyleDto.ref((this as TextStyleRef).token);
+    }
+
+    return TextStyleDto._(value: [_toData()]);
+  }
+
   TextStyleData _toData() => TextStyleData(
         background: background,
         backgroundColor: backgroundColor?.toDto(),

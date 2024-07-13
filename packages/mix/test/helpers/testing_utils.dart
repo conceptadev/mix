@@ -387,3 +387,36 @@ abstract base class TestScalarAttribute<
     return other ?? this as Self;
   }
 }
+
+class MixTokensTest {
+  final space = const SpaceTokenUtil();
+  final radius = const RadiusTokenUtil();
+  final color = const ColorTokenUtil();
+  final breakpoint = const BreakpointTokenUtil();
+  final textStyle = const TextStyleTokenUtil();
+
+  const MixTokensTest();
+}
+
+class RadiusTokenUtil {
+  final small = const RadiusToken('mix.radius.small');
+  final medium = const RadiusToken('mix.radius.medium');
+  final large = const RadiusToken('mix.radius.large');
+  const RadiusTokenUtil();
+}
+
+class SpaceTokenUtil {
+  final large = const SpaceToken('mix.space.large');
+  final medium = const SpaceToken('mix.space.medium');
+  final small = const SpaceToken('mix.space.small');
+
+  const SpaceTokenUtil();
+}
+
+class ColorTokenUtil {
+  const ColorTokenUtil();
+}
+
+class TextStyleTokenUtil {
+  const TextStyleTokenUtil();
+}

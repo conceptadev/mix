@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../internal/compare_mixin.dart';
 import '../material/material_theme.dart';
 import '../tokens/breakpoints_token.dart';
 import '../tokens/color_token.dart';
@@ -32,7 +31,7 @@ class MixTheme extends InheritedWidget {
 }
 
 @immutable
-class MixThemeData with EqualityMixin {
+class MixThemeData {
   final StyledTokens<RadiusToken, Radius> radii;
   final StyledTokens<ColorToken, Color> colors;
   final StyledTokens<TextStyleToken, TextStyle> textStyles;
@@ -120,13 +119,33 @@ class MixThemeData with EqualityMixin {
   }
 
   @override
-  get props => [spaces, breakpoints, colors, textStyles, radii];
+  operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is MixThemeData &&
+        other.textStyles == textStyles &&
+        other.colors == colors &&
+        other.breakpoints == breakpoints &&
+        other.radii == radii &&
+        other.spaces == spaces;
+  }
+
+  @override
+  int get hashCode {
+    return textStyles.hashCode ^
+        colors.hashCode ^
+        breakpoints.hashCode ^
+        radii.hashCode ^
+        spaces.hashCode;
+  }
 }
 
 final _breakpointTokenMap = StyledTokens({
   BreakpointToken.xsmall: const Breakpoint(maxWidth: 599),
   BreakpointToken.small: const Breakpoint(minWidth: 600, maxWidth: 1023),
   BreakpointToken.medium: const Breakpoint(minWidth: 1024, maxWidth: 1439),
-  BreakpointToken.large:
-      const Breakpoint(minWidth: 1440, maxWidth: double.infinity),
+  BreakpointToken.large: const Breakpoint(
+    minWidth: 1440,
+    maxWidth: double.infinity,
+  ),
 });
