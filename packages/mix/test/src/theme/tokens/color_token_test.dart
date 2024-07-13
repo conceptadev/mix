@@ -153,6 +153,22 @@ void main() {
       expect(tokenOfSwatch.index, 100);
     });
 
+    test('[] operator throws assertion error for non-existent index', () {
+      const swatchToken = ColorSwatchToken('testSwatch', {100: 'color100'});
+      expect(() => swatchToken[200], throwsAssertionError);
+    });
+
+    test('Equality and hashCode', () {
+      const swatchToken1 = ColorSwatchToken('testSwatch', {100: 'color100'});
+      const swatchToken2 = ColorSwatchToken('testSwatch', {100: 'color100'});
+      const swatchToken3 =
+          ColorSwatchToken('differentSwatch', {100: 'color100'});
+
+      expect(swatchToken1, equals(swatchToken2));
+      expect(swatchToken1.hashCode, equals(swatchToken2.hashCode));
+      expect(swatchToken1, isNot(equals(swatchToken3)));
+    });
+
     test('scale method creates ColorSwatchToken with correct swatch', () {
       final swatchToken = ColorSwatchToken.scale('testSwatch', 3);
       expect(swatchToken.name, 'testSwatch');
@@ -208,6 +224,23 @@ void main() {
       final resolvedColor = tokenOfSwatch.resolve(context);
 
       expect(resolvedColor, Colors.red);
+    });
+
+    test('call() method returns ColorRef with correct token', () {
+      const swatchToken = ColorSwatchToken('testSwatch', {100: 'color100'});
+      const tokenOfSwatch = ColorTokenOfSwatch('color100', swatchToken, 100);
+      expect(tokenOfSwatch(), equals(const ColorRef(tokenOfSwatch)));
+    });
+
+    test('Equality and hashCode', () {
+      const swatchToken = ColorSwatchToken('testSwatch', {100: 'color100'});
+      const tokenOfSwatch1 = ColorTokenOfSwatch('color100', swatchToken, 100);
+      const tokenOfSwatch2 = ColorTokenOfSwatch('color100', swatchToken, 100);
+      const tokenOfSwatch3 = ColorTokenOfSwatch('color200', swatchToken, 200);
+
+      expect(tokenOfSwatch1, equals(tokenOfSwatch2));
+      expect(tokenOfSwatch1.hashCode, equals(tokenOfSwatch2.hashCode));
+      expect(tokenOfSwatch1, isNot(equals(tokenOfSwatch3)));
     });
   });
 }
