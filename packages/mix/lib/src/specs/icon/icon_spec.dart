@@ -1,7 +1,10 @@
 // ignore_for_file: prefer_relative_imports,avoid-importing-entrypoint-exports,
+import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:mix/mix.dart';
 import 'package:mix_annotations/mix_annotations.dart';
+
+import '../../internal/diagnostic_properties_builder_ext.dart';
 
 part 'icon_spec.g.dart';
 
@@ -34,6 +37,7 @@ final class IconSpec extends Spec<IconSpec> with _$IconSpec {
     this.applyTextScaling,
     this.fill,
     super.animated,
+    super.modifiers,
   });
 
   Widget call(IconData? icon, {String? semanticLabel}) {

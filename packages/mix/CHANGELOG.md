@@ -1,3 +1,10 @@
+## 1.3.0
+
+ - **REFACTOR**: unpressDelay uses timer instead of future<void> now (#374).
+ - **REFACTOR**: bump min flutter version to 3.19.0 (#365).
+ - **FEAT**: added modifiers per spec (#333).
+ - **FEAT**: add attribute to fontVariantion (#371).
+
 ## 1.2.0
 
  - **FIX**: Exception when there is no children on flex (#345).

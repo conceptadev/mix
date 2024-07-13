@@ -1,8 +1,11 @@
 // ignore_for_file: prefer_relative_imports, avoid-importing-entrypoint-exports
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:mix/mix.dart';
 import 'package:mix_annotations/mix_annotations.dart';
+
+import '../../internal/diagnostic_properties_builder_ext.dart';
 
 part 'border_radius_dto.g.dart';
 
@@ -18,7 +21,7 @@ part 'border_radius_dto.g.dart';
 /// - [BorderRadiusGeometry], which is the Flutter counterpart of this class.
 @immutable
 sealed class BorderRadiusGeometryDto<T extends BorderRadiusGeometry>
-    extends Dto<T> {
+    extends Dto<T> with Diagnosticable {
   const BorderRadiusGeometryDto();
 
   Radius _getRadiusValue(MixData mix, Radius? radius) {
@@ -37,6 +40,20 @@ sealed class BorderRadiusGeometryDto<T extends BorderRadiusGeometry>
   Radius? get bottomEnd;
   @override
   BorderRadiusGeometryDto<T> merge(covariant BorderRadiusGeometryDto<T>? other);
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+
+    properties.addUsingDefault('topLeft', topLeft);
+    properties.addUsingDefault('topRight', topRight);
+    properties.addUsingDefault('bottomLeft', bottomLeft);
+    properties.addUsingDefault('bottomRight', bottomRight);
+    properties.addUsingDefault('topStart', topStart);
+    properties.addUsingDefault('topEnd', topEnd);
+    properties.addUsingDefault('bottomStart', bottomStart);
+    properties.addUsingDefault('bottomEnd', bottomEnd);
+  }
 
   @override
   T resolve(MixData mix);

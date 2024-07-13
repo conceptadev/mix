@@ -131,6 +131,31 @@ void main() {
     });
   });
 
+  testWidgets('Pressable cancel timer on dispose', (WidgetTester tester) async {
+    var wasPressed = false;
+
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Scaffold(
+          body: Pressable(
+            autofocus: true,
+            unpressDelay: const Duration(minutes: 1),
+            onPress: () {
+              wasPressed = !wasPressed;
+            },
+            child: const Text('Tap me'),
+          ),
+        ),
+      ),
+    );
+
+    await tester.sendKeyEvent(LogicalKeyboardKey.enter);
+    expect(wasPressed, isTrue);
+
+    await tester.sendKeyEvent(LogicalKeyboardKey.enter);
+    expect(wasPressed, isFalse);
+  });
+
   group('PressableBox', () {
     testWidgets(
       'must be clickable when enable is setted to true',
@@ -208,12 +233,41 @@ void main() {
       expect(wasPressed, isTrue);
     });
 
+    testWidgets('animates correctly on hover', (WidgetTester tester) async {
+      await tester.pumpMaterialApp(
+        PressableBox(
+          unpressDelay: const Duration(milliseconds: 200),
+          style: Style(
+            $with.opacity(1.0),
+            $on.hover(
+              $with.opacity(0.0),
+            ),
+          ).animate(
+            duration: const Duration(milliseconds: 200),
+          ),
+          child: const Box(),
+        ),
+      );
+
+      final finder = find.byType(Opacity);
+      expect(finder, findsOneWidget);
+
+      Opacity opacityWidget = tester.widget(finder);
+      expect(opacityWidget.opacity, 1.0);
+
+      await tester.hover(finder);
+      await tester.pump(const Duration(milliseconds: 100));
+
+      opacityWidget = tester.widget(finder);
+      expect(opacityWidget.opacity, 0.5);
+    });
+
     testWidgets(r'must change to attributes in $on.hover variant when hovered',
         (WidgetTester tester) async {
       await pumpTestCase(
         tester: tester,
         condition: $on.hover,
-        action: () => tester.hover(find.byType(PressableBox)),
+        action: () => tester.hoverAndSettle(find.byType(PressableBox)),
       );
     });
 
@@ -246,7 +300,7 @@ void main() {
       await pumpTestCase(
         tester: tester,
         condition: ($on.longPress | $on.hover),
-        action: () => tester.hover(find.byType(PressableBox)),
+        action: () => tester.hoverAndSettle(find.byType(PressableBox)),
       );
     });
 
@@ -311,7 +365,7 @@ void main() {
         duration: const Duration(milliseconds: 250),
         condition: ($on.hover | $on.press),
         action: () async {
-          await tester.hover(find.byType(PressableBox));
+          await tester.hoverAndSettle(find.byType(PressableBox));
         },
       );
     });
@@ -363,7 +417,7 @@ void main() {
         tester: tester,
         condition: ($on.longPress | $on.press),
         action: () async {
-          await tester.hover(find.byType(PressableBox));
+          await tester.hoverAndSettle(find.byType(PressableBox));
         },
         finalExpectedOpacity: 0.5,
       );
@@ -377,7 +431,7 @@ void main() {
         duration: const Duration(milliseconds: 250),
         condition: ($on.hover & $on.press),
         action: () async {
-          await tester.hover(find.byType(PressableBox));
+          await tester.hoverAndSettle(find.byType(PressableBox));
           await tester.pump();
           await tester.tap(find.byType(PressableBox));
           await tester.pump();
@@ -392,7 +446,7 @@ void main() {
         tester: tester,
         condition: ($on.hover & $on.longPress),
         action: () async {
-          await tester.hover(find.byType(PressableBox));
+          await tester.hoverAndSettle(find.byType(PressableBox));
           await tester.pump();
 
           // Custom way to long press
@@ -414,6 +468,11 @@ void main() {
 }
 
 extension WidgetTesterExt on WidgetTester {
+  Future<void> hoverAndSettle(Finder finder) async {
+    await hover(finder);
+    await pumpAndSettle();
+  }
+
   Future<void> hover(Finder finder) async {
     FocusManager.instance.highlightStrategy =
         FocusHighlightStrategy.alwaysTraditional;
@@ -423,8 +482,6 @@ extension WidgetTesterExt on WidgetTester {
     await gesture.addPointer(location: Offset.zero);
     await pump();
     await gesture.moveTo(getCenter(finder));
-
-    await pumpAndSettle();
 
     addTearDown(gesture.removePointer);
   }

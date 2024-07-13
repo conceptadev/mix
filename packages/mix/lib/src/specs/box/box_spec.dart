@@ -1,7 +1,10 @@
 // ignore_for_file: prefer_relative_imports,avoid-importing-entrypoint-exports, camel_case_types
+import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:mix/mix.dart';
 import 'package:mix_annotations/mix_annotations.dart';
+
+import '../../internal/diagnostic_properties_builder_ext.dart';
 
 part 'box_spec.g.dart';
 
@@ -96,17 +99,23 @@ final class BoxSpec extends Spec<BoxSpec> with _$BoxSpec {
     this.clipBehavior,
     this.width,
     this.height,
+    super.modifiers,
     super.animated,
   });
 
-  Widget call({Widget? child}) {
+  Widget call({Widget? child, List<Type> orderOfModifiers = const []}) {
     return isAnimated
         ? AnimatedBoxSpecWidget(
             spec: this,
             duration: animated!.duration,
             curve: animated!.curve,
+            orderOfModifiers: orderOfModifiers,
             child: child,
           )
-        : BoxSpecWidget(spec: this, child: child);
+        : BoxSpecWidget(
+            spec: this,
+            orderOfModifiers: orderOfModifiers,
+            child: child,
+          );
   }
 }

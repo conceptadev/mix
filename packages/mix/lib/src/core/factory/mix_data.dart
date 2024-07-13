@@ -1,7 +1,11 @@
+// ignore_for_file: avoid-dynamic
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 
-import '../../attributes/animated/animated_data.dart';
+import '../../attributes/attributes.dart';
 import '../../internal/iterable_ext.dart';
+import '../../internal/string_ext.dart';
 import '../../theme/tokens/token_resolver.dart';
 import '../../variants/context_variant.dart';
 import '../../variants/variant_attribute.dart';
@@ -15,7 +19,7 @@ import 'style_mix.dart';
 /// It contains a mixture of properties and methods useful for handling different attributes,
 /// modifiers and token resolvers.
 @immutable
-class MixData {
+class MixData with Diagnosticable {
   final AnimatedData? animation;
 
   // Instance variables for widget attributes, widget modifiers and token resolver.
@@ -59,6 +63,13 @@ class MixData {
   @visibleForTesting
   AttributeMap get attributes => _attributes;
 
+  List<WidgetModifierSpec<dynamic>> get modifiers {
+    return _attributes
+        .whereType<WidgetModifierAttribute>()
+        .map((e) => e.resolve(this))
+        .toList();
+  }
+
   MixData toInheritable() {
     final inheritableAttributes = _attributes.values.where(
       (attr) => attr is! WidgetModifierAttribute,
@@ -73,6 +84,11 @@ class MixData {
     if (attributes.isEmpty) return null;
 
     return _mergeAttributes(attributes) ?? attributes.last;
+  }
+
+  List<WidgetModifierSpec<dynamic>>
+      modifiersOf<M extends WidgetModifierSpec<dynamic>>() {
+    return modifiers.whereType<M>().toList();
   }
 
   Iterable<A> whereType<A extends StyledAttribute>() {
@@ -117,6 +133,21 @@ class MixData {
     return other is MixData &&
         other._attributes == _attributes &&
         other.animation == animation;
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    for (var attr in attributes.values) {
+      properties.add(
+        DiagnosticsProperty(
+          attr.runtimeType.toString().camelCase,
+          attr,
+          description: attr.runtimeType.toString().camelCase,
+          expandableValue: true,
+        ),
+      );
+    }
   }
 
   @override

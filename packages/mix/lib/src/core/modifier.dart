@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 
 import 'attribute.dart';
@@ -7,7 +8,6 @@ import 'utility.dart';
 
 abstract base class WidgetModifierSpec<Self extends WidgetModifierSpec<Self>>
     extends Spec<Self> {
-  @override
   const WidgetModifierSpec({super.animated});
 
   static WidgetModifierSpec? lerpValue(
@@ -31,8 +31,9 @@ abstract base class WidgetModifierSpec<Self extends WidgetModifierSpec<Self>>
 }
 
 abstract base class WidgetModifierAttribute<
-    Self extends WidgetModifierAttribute<Self, Value>,
-    Value extends WidgetModifierSpec<Value>> extends SpecAttribute<Value> {
+        Self extends WidgetModifierAttribute<Self, Value>,
+        Value extends WidgetModifierSpec<Value>> extends SpecAttribute<Value>
+    with Diagnosticable {
   const WidgetModifierAttribute();
 
   @override

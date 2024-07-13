@@ -2,12 +2,14 @@
 
 import 'dart:ui';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 
 import '../core/attribute.dart';
 import '../core/factory/mix_data.dart';
 import '../core/modifier.dart';
 import '../core/utility.dart';
+import '../internal/diagnostic_properties_builder_ext.dart';
 
 /// A modifier that wraps a widget with the [AspectRatio] widget.
 ///
@@ -28,6 +30,12 @@ final class AspectRatioModifierAttribute extends WidgetModifierAttribute<
   @override
   AspectRatioModifierSpec resolve(MixData mix) {
     return AspectRatioModifierSpec(aspectRatio);
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.addUsingDefault('aspectRatio', aspectRatio);
   }
 
   @override

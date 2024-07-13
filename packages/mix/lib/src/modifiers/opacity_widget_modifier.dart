@@ -2,12 +2,14 @@
 
 import 'dart:ui';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 
 import '../core/attribute.dart';
 import '../core/factory/mix_data.dart';
 import '../core/modifier.dart';
 import '../core/utility.dart';
+import '../internal/diagnostic_properties_builder_ext.dart';
 
 /// A modifier that wraps a widget with the [Opacity] widget.
 ///
@@ -58,6 +60,12 @@ final class OpacityModifierAttribute extends WidgetModifierAttribute<
   @override
   OpacityModifierSpec resolve(MixData mix) {
     return OpacityModifierSpec(opacity);
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.addUsingDefault('opacity', opacity);
   }
 
   @override

@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use_from_same_package
+
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
@@ -20,7 +22,7 @@ void main() {
     testWidgets('Renders modifiers in the correct order', (tester) async {
       await tester.pumpMaterialApp(
         RenderModifiers(
-          mix: mixData,
+          modifiers: mixData.modifiers,
           orderOfModifiers: const [],
           child: const Text('child'),
         ),
@@ -83,7 +85,7 @@ void main() {
 
       await tester.pumpMaterialApp(
         RenderModifiers(
-          mix: mixData,
+          modifiers: mixData.modifiers,
           orderOfModifiers: const [],
           child: const Text('child'),
         ),
@@ -98,7 +100,7 @@ void main() {
 
       await tester.pumpMaterialApp(
         RenderModifiers(
-          mix: mixData,
+          modifiers: mixData.modifiers,
           orderOfModifiers: const [],
           child: const Text('child'),
         ),
@@ -113,7 +115,7 @@ void main() {
       (tester) async {
         await tester.pumpMaterialApp(
           RenderModifiers(
-            mix: mixData,
+            modifiers: mixData.modifiers,
             orderOfModifiers: const [
               ClipOvalModifierAttribute,
               AspectRatioModifierAttribute,
@@ -121,6 +123,7 @@ void main() {
               OpacityModifierAttribute,
               VisibilityModifierAttribute,
             ],
+            mix: mixData,
             child: const Text('child'),
           ),
         );
@@ -184,6 +187,7 @@ void main() {
         await tester.pumpMaterialApp(
           RenderModifiers(
             mix: mixData,
+            modifiers: mixData.modifiers,
             orderOfModifiers: const [
               ClipOvalModifierAttribute,
               AspectRatioModifierAttribute
@@ -259,7 +263,7 @@ void main() {
 
       await tester.pumpMaterialApp(
         RenderAnimatedModifiers(
-          mix: mixData,
+          modifiers: mixData.modifiers,
           orderOfModifiers: const [],
           duration: const Duration(milliseconds: 300),
           child: const Text('child'),
@@ -272,6 +276,84 @@ void main() {
       // Trigger animation and pump frames
       await tester.pump(const Duration(milliseconds: 150));
       await tester.pump(const Duration(milliseconds: 150));
+    });
+
+    testWidgets('Renders animated modifiers', (tester) async {
+      await tester.pumpWidget(
+        _TestableAnimatedModifiers(
+          (isActive) => RenderAnimatedModifiers(
+            duration: const Duration(milliseconds: 200),
+            orderOfModifiers: const [],
+            modifiers: [
+              OpacityModifierSpec(isActive ? 1.0 : 0.0),
+              SizedBoxModifierSpec(
+                height: isActive ? 50.0 : 0.0,
+                width: isActive ? 50.0 : 0.0,
+              ),
+            ],
+            child: Container(),
+          ),
+        ),
+      );
+
+      final gestureFinder = find.byType(GestureDetector);
+      expect(gestureFinder, findsOneWidget);
+
+      final finder = find.byType(Opacity);
+      expect(finder, findsOneWidget);
+
+      final finderSizedBox = find.byType(SizedBox);
+      expect(finderSizedBox, findsOneWidget);
+
+      await tester.tap(gestureFinder);
+      await tester.pump();
+
+      await tester.pump(const Duration(milliseconds: 100));
+      expect(tester.widget<Opacity>(finder).opacity, 0.5);
+      expect(tester.widget<SizedBox>(finderSizedBox).height, 25);
+      expect(tester.widget<SizedBox>(finderSizedBox).width, 25);
+
+      await tester.pump(const Duration(milliseconds: 100));
+      expect(tester.widget<Opacity>(finder).opacity, 0.0);
+      expect(tester.widget<SizedBox>(finderSizedBox).height, 0);
+      expect(tester.widget<SizedBox>(finderSizedBox).width, 0);
+    });
+
+    testWidgets('Transition correctly when there is conditional specs',
+        (tester) async {
+      gestureFinder() => find.byType(GestureDetector);
+
+      await tester.pumpWidget(
+        _TestableAnimatedModifiers(
+          (isActive) => RenderAnimatedModifiers(
+            duration: const Duration(milliseconds: 200),
+            orderOfModifiers: const [],
+            modifiers: [
+              const OpacityModifierSpec(0.0),
+              if (!isActive)
+                TransformModifierSpec(transform: Matrix4.rotationZ(0.5)),
+            ],
+            child: Container(),
+          ),
+        ),
+      );
+
+      expect(find.byType(Opacity), findsOneWidget);
+      expect(find.byType(Transform), findsNothing);
+
+      await tester.tap(gestureFinder());
+      await tester.pump();
+
+      expect(find.byType(Opacity), findsOneWidget);
+      expect(find.byType(Transform), findsOneWidget);
+      await tester.pumpAndSettle(const Duration(milliseconds: 200));
+
+      await tester.tap(gestureFinder());
+      await tester.pump();
+
+      expect(find.byType(Opacity), findsOneWidget);
+      expect(find.byType(Transform), findsNothing);
+      await tester.pumpAndSettle(const Duration(milliseconds: 200));
     });
   });
 
@@ -408,4 +490,35 @@ void main() {
       });
     });
   });
+}
+
+class _TestableAnimatedModifiers extends StatefulWidget {
+  const _TestableAnimatedModifiers(
+    this.child,
+  );
+
+  final Widget Function(bool) child;
+
+  @override
+  State<_TestableAnimatedModifiers> createState() =>
+      _TestableAnimatedModifiersState();
+}
+
+class _TestableAnimatedModifiersState
+    extends State<_TestableAnimatedModifiers> {
+  bool _isActive = true;
+
+  void _handleToggle() {
+    setState(() {
+      _isActive = !_isActive;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Pressable(
+      onPress: _handleToggle,
+      child: widget.child(_isActive),
+    );
+  }
 }

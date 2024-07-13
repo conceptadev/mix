@@ -2,12 +2,14 @@
 
 import 'dart:ui';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 
 import '../core/attribute.dart';
 import '../core/factory/mix_data.dart';
 import '../core/modifier.dart';
 import '../core/utility.dart';
+import '../internal/diagnostic_properties_builder_ext.dart';
 
 final class AlignModifierSpec extends WidgetModifierSpec<AlignModifierSpec> {
   final AlignmentGeometry? alignment;
@@ -84,6 +86,14 @@ final class AlignModifierAttribute
       widthFactor: other?.widthFactor ?? widthFactor,
       heightFactor: other?.heightFactor ?? heightFactor,
     );
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.addUsingDefault('alignment', alignment);
+    properties.addUsingDefault('widthFactor', widthFactor);
+    properties.addUsingDefault('heightFactor', heightFactor);
   }
 
   @override

@@ -1,7 +1,10 @@
 // ignore_for_file: prefer_relative_imports, avoid-importing-entrypoint-exports
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:mix/mix.dart';
 import 'package:mix_annotations/mix_annotations.dart';
+
+import '../../internal/diagnostic_properties_builder_ext.dart';
 
 part 'edge_insets_dto.g.dart';
 
@@ -83,7 +86,7 @@ sealed class EdgeInsetsGeometryDto<T extends EdgeInsetsGeometry>
 
 @MixableDto()
 final class EdgeInsetsDto extends EdgeInsetsGeometryDto<EdgeInsets>
-    with _$EdgeInsetsDto {
+    with _$EdgeInsetsDto, Diagnosticable {
   final double? left;
   final double? right;
 
@@ -105,6 +108,16 @@ final class EdgeInsetsDto extends EdgeInsetsGeometryDto<EdgeInsets>
       right: mix.tokens.spaceTokenRef(right ?? 0),
       bottom: mix.tokens.spaceTokenRef(bottom ?? 0),
     );
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+
+    properties.addUsingDefault('top', top);
+    properties.addUsingDefault('bottom', bottom);
+    properties.addUsingDefault('left', left);
+    properties.addUsingDefault('right', right);
   }
 }
 

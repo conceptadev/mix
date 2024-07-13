@@ -32,6 +32,11 @@ class TodoCheckbox extends StatelessWidget {
         $box.borderRadius(3),
         scaleEffect(),
         outlinePattern(),
+        $icon.size(16),
+        $icon.color.ref($token.color.surface),
+        $icon.wrap.opacity(0),
+        $icon.wrap.padding.top(5),
+        $icon.wrap.scale(0.5),
         _CheckboxVariant.checked(
           $box.color.ref(_colors.primary),
           $box.border.color.ref(_colors.primary),
@@ -43,7 +48,7 @@ class TodoCheckbox extends StatelessWidget {
           .animate(
             duration: const Duration(milliseconds: 150),
           ),
-      child: StyledIcon(
+      child: const StyledIcon(
         Icons.check,
         style: Style(
           $icon.weight(16),

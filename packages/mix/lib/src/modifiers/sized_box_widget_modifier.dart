@@ -2,12 +2,14 @@
 
 import 'dart:ui';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 
 import '../core/attribute.dart';
 import '../core/factory/mix_data.dart';
 import '../core/modifier.dart';
 import '../core/utility.dart';
+import '../internal/diagnostic_properties_builder_ext.dart';
 
 final class SizedBoxModifierSpec
     extends WidgetModifierSpec<SizedBoxModifierSpec> {
@@ -59,6 +61,13 @@ final class SizedBoxModifierAttribute extends WidgetModifierAttribute<
       width: other?.width ?? width,
       height: other?.height ?? height,
     );
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.addUsingDefault('width', width);
+    properties.addUsingDefault('height', height);
   }
 
   @override

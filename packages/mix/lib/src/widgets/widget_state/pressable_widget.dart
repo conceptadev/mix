@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
@@ -277,15 +279,30 @@ abstract class _MixStateWidgetBuilderState<T extends _MixStateWidgetBuilder>
     setState(fn);
   }
 
-  Future<void> unpressAfterDelay(int initialPressCount) async {
+  Timer? _timer;
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    super.dispose();
+  }
+
+  void unpressAfterDelay(int initialPressCount) {
+    void unpressCallback() {
+      if (_isPressed && _pressCount == initialPressCount) {
+        updateState(() => _isPressed = false);
+      }
+    }
+
+    _timer?.cancel();
+    _timer = null;
+
     final delay = widget.unpressDelay;
 
     if (delay != Duration.zero) {
-      await Future.delayed(delay);
-    }
-
-    if (_isPressed && _pressCount == initialPressCount) {
-      updateState(() => _isPressed = false);
+      _timer = Timer(delay, unpressCallback);
+    } else {
+      unpressCallback();
     }
   }
 

@@ -13,12 +13,11 @@ body {
 }
 
 .dark body {
-  background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, #111 300px),
-    fixed 0 0 / 20px 20px radial-gradient(#7700ff 1px, transparent 0),
-    fixed 10px 10px / 20px 20px radial-gradient(#7700ff 1px, transparent 0);
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, #111 300px);
+    
 }
 
 pre {
   background-color: #120d1c !important;
-  border: 1px solid #422875;
+  border: 1px solid #361E65;
 }

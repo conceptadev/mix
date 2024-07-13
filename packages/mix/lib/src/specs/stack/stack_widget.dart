@@ -1,6 +1,7 @@
 import 'package:flutter/widgets.dart';
 
 import '../../core/styled_widget.dart';
+import '../../modifiers/render_widget_modifier.dart';
 import '../box/box_spec.dart';
 import '../box/box_widget.dart';
 import 'stack_spec.dart';
@@ -40,20 +41,30 @@ class StyledStack extends StyledWidget {
 }
 
 class StackSpecWidget extends StatelessWidget {
-  const StackSpecWidget({this.spec, super.key, this.children});
+  const StackSpecWidget({
+    this.spec,
+    this.children,
+    this.orderOfModifiers = const [],
+    super.key,
+  });
 
   final List<Widget>? children;
   final StackSpec? spec;
+  final List<Type> orderOfModifiers;
 
   @override
   Widget build(BuildContext context) {
     // The Stack widget is used here, applying the resolved styles from StackSpec.
-    return Stack(
-      alignment: spec?.alignment ?? _defaultStack.alignment,
-      textDirection: spec?.textDirection,
-      fit: spec?.fit ?? _defaultStack.fit,
-      clipBehavior: spec?.clipBehavior ?? _defaultStack.clipBehavior,
-      children: children ?? const [],
+    return RenderSpecModifiers(
+      orderOfModifiers: orderOfModifiers,
+      spec: spec ?? const StackSpec(),
+      child: Stack(
+        alignment: spec?.alignment ?? _defaultStack.alignment,
+        textDirection: spec?.textDirection,
+        fit: spec?.fit ?? _defaultStack.fit,
+        clipBehavior: spec?.clipBehavior ?? _defaultStack.clipBehavior,
+        children: children ?? const [],
+      ),
     );
   }
 }
