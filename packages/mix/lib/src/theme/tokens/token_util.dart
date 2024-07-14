@@ -1,14 +1,13 @@
-import 'package:flutter/widgets.dart';
-
 import '../material/material_tokens.dart';
 import 'breakpoints_token.dart';
 import 'radius_token.dart';
 import 'space_token.dart';
 
 const $material = MaterialTokens();
+@Deprecated('You should define your own token utility')
 const $token = MixTokens();
 
-@immutable
+@Deprecated('You should define your own token utility')
 class MixTokens {
   final space = const SpaceTokenUtil();
   final radius = const RadiusTokenUtil();
@@ -19,7 +18,7 @@ class MixTokens {
   const MixTokens();
 }
 
-@immutable
+@Deprecated('You should define your own token utility')
 class RadiusTokenUtil {
   final small = const RadiusToken('mix.radius.small');
   final medium = const RadiusToken('mix.radius.medium');
@@ -27,7 +26,7 @@ class RadiusTokenUtil {
   const RadiusTokenUtil();
 }
 
-@immutable
+@Deprecated('You should define your own token utility')
 class SpaceTokenUtil {
   final large = const SpaceToken('mix.space.large');
   final medium = const SpaceToken('mix.space.medium');
@@ -36,21 +35,12 @@ class SpaceTokenUtil {
   const SpaceTokenUtil();
 }
 
-@immutable
+@Deprecated('You should define your own token utility')
 class ColorTokenUtil {
   const ColorTokenUtil();
 }
 
-@immutable
+@Deprecated('You should define your own token utility')
 class TextStyleTokenUtil {
   const TextStyleTokenUtil();
-}
-
-@immutable
-class BreakpointTokenUtil {
-  final xsmall = BreakpointToken.xsmall;
-  final small = BreakpointToken.small;
-  final medium = BreakpointToken.medium;
-  final large = BreakpointToken.large;
-  const BreakpointTokenUtil();
 }

@@ -53,8 +53,7 @@ class AttributeMap<T extends Attribute> {
 
   Attr? attributeOfType<Attr extends SpecAttribute>() => _map?[Attr] as Attr?;
 
-  Iterable<Attr> whereType<Attr extends T>() =>
-      _map?.values.whereType<Attr>() ?? [];
+  Iterable<Attr> whereType<Attr extends T>() => _map?.values.whereType() ?? [];
 
   AttributeMap<T> merge(AttributeMap<T>? other) {
     return other == null ? this : AttributeMap([...values, ...other.values]);

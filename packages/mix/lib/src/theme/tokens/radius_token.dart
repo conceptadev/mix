@@ -35,8 +35,7 @@ class RadiusResolver extends Radius with WithTokenResolver<Radius> {
 }
 
 @immutable
-class RadiusRef extends Radius
-    with TokenRef<RadiusToken, Radius>, Diagnosticable {
+class RadiusRef extends Radius with TokenRef<RadiusToken>, Diagnosticable {
   @override
   final RadiusToken token;
 

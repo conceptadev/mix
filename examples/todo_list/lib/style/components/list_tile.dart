@@ -4,6 +4,9 @@ import 'package:todo_list/style/components/checkbox.dart';
 import 'package:todo_list/style/design_tokens.dart';
 import 'package:todo_list/style/patterns/scale_effect.dart';
 
+const _colors = ColorTokens();
+const _textStyles = TextStyleTokens();
+
 class CheckboxTileVariant {
   static const checked = Variant("checked");
   static const unchecked = Variant("unchecked");
@@ -38,11 +41,11 @@ class TodoCheckboxListTile extends StatelessWidget {
           StyledText(
             text,
             style: Style(
-              $text.style.ref($token.textStyle.heading3),
-              $text.style.color.ref($token.color.onSurface),
+              $text.style.ref(_textStyles.heading3),
+              $text.style.color.ref(_colors.onSurface),
               CheckboxTileVariant.checked(
                 $text.style.decoration.lineThrough(),
-                $text.style.color.ref($token.color.onSurfaceVariant),
+                $text.style.color.ref(_colors.onSurfaceVariant),
               ),
             )
                 .applyVariant(

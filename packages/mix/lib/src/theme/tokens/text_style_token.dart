@@ -34,7 +34,7 @@ class TextStyleResolver extends TextStyle with WithTokenResolver<TextStyle> {
 }
 
 @immutable
-class TextStyleRef extends TextStyle with TokenRef<TextStyleToken, TextStyle> {
+final class TextStyleRef extends TextStyle with TokenRef<TextStyleToken> {
   @override
   final TextStyleToken token;
 

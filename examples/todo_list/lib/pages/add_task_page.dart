@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:mix/mix.dart';
 import 'package:todo_list/model/task.dart';
 import 'package:todo_list/pages/controller/task_controller.dart';
 import 'package:todo_list/style/design_tokens.dart';
 
 import '../style/components/button.dart';
+
+const _colors = ColorTokens();
+const _textStyles = TextStyleTokens();
 
 class AddTaskPage extends StatefulWidget {
   const AddTaskPage({super.key, required this.controller});
@@ -22,12 +24,12 @@ class _AddTaskPageState extends State<AddTaskPage> {
   Widget build(BuildContext context) {
     return Material(
       child: Scaffold(
-        backgroundColor: $token.color.surface.resolve(context),
+        backgroundColor: _colors.surface.resolve(context),
         appBar: AppBar(
-          backgroundColor: $token.color.surface.resolve(context),
+          backgroundColor: _colors.surface.resolve(context),
           title: Text(
             'Create Task',
-            style: $token.textStyle.heading2.resolve(context),
+            style: _textStyles.heading2.resolve(context),
           ),
         ),
         body: Padding(
