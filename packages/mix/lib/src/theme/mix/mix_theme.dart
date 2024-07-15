@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../internal/iterable_ext.dart';
 import '../material/material_theme.dart';
 import '../tokens/breakpoints_token.dart';
 import '../tokens/color_token.dart';
@@ -37,6 +38,7 @@ class MixThemeData {
   final StyledTokens<TextStyleToken, TextStyle> textStyles;
   final StyledTokens<BreakpointToken, Breakpoint> breakpoints;
   final StyledTokens<SpaceToken, double> spaces;
+  final List<Type>? defaultOrderOfModifiers;
 
   const MixThemeData.raw({
     required this.textStyles,
@@ -44,6 +46,7 @@ class MixThemeData {
     required this.breakpoints,
     required this.radii,
     required this.spaces,
+    this.defaultOrderOfModifiers,
   });
 
   const MixThemeData.empty()
@@ -53,6 +56,7 @@ class MixThemeData {
           breakpoints: const StyledTokens.empty(),
           radii: const StyledTokens.empty(),
           spaces: const StyledTokens.empty(),
+          defaultOrderOfModifiers: null,
         );
 
   factory MixThemeData({
@@ -61,6 +65,7 @@ class MixThemeData {
     Map<SpaceToken, double>? spaces,
     Map<TextStyleToken, TextStyle>? textStyles,
     Map<RadiusToken, Radius>? radii,
+    List<Type>? defaultOrderOfModifiers,
   }) {
     return MixThemeData.raw(
       textStyles: StyledTokens(textStyles ?? const {}),
@@ -69,6 +74,7 @@ class MixThemeData {
           _breakpointTokenMap.merge(StyledTokens(breakpoints ?? const {})),
       radii: StyledTokens(radii ?? const {}),
       spaces: StyledTokens(spaces ?? const {}),
+      defaultOrderOfModifiers: defaultOrderOfModifiers,
     );
   }
 
@@ -78,6 +84,7 @@ class MixThemeData {
     Map<SpaceToken, double>? spaces,
     Map<TextStyleToken, TextStyle>? textStyles,
     Map<RadiusToken, Radius>? radii,
+    List<Type>? defaultOrderOfModifiers,
   }) {
     return materialMixTheme.merge(
       MixThemeData(
@@ -86,6 +93,7 @@ class MixThemeData {
         spaces: spaces,
         textStyles: textStyles,
         radii: radii,
+        defaultOrderOfModifiers: defaultOrderOfModifiers,
       ),
     );
   }
@@ -96,6 +104,7 @@ class MixThemeData {
     Map<SpaceToken, double>? spaces,
     Map<TextStyleToken, TextStyle>? textStyles,
     Map<RadiusToken, Radius>? radii,
+    List<Type>? defaultOrderOfModifiers,
   }) {
     return MixThemeData.raw(
       textStyles:
@@ -105,6 +114,8 @@ class MixThemeData {
           breakpoints == null ? this.breakpoints : StyledTokens(breakpoints),
       radii: radii == null ? this.radii : StyledTokens(radii),
       spaces: spaces == null ? this.spaces : StyledTokens(spaces),
+      defaultOrderOfModifiers:
+          this.defaultOrderOfModifiers ?? defaultOrderOfModifiers,
     );
   }
 
@@ -115,6 +126,8 @@ class MixThemeData {
       breakpoints: breakpoints.merge(other.breakpoints),
       radii: radii.merge(other.radii),
       spaces: spaces.merge(other.spaces),
+      defaultOrderOfModifiers:
+          (defaultOrderOfModifiers ?? []).merge(other.defaultOrderOfModifiers),
     );
   }
 
@@ -127,7 +140,8 @@ class MixThemeData {
         other.colors == colors &&
         other.breakpoints == breakpoints &&
         other.radii == radii &&
-        other.spaces == spaces;
+        other.spaces == spaces &&
+        other.defaultOrderOfModifiers == defaultOrderOfModifiers;
   }
 
   @override
@@ -136,7 +150,8 @@ class MixThemeData {
         colors.hashCode ^
         breakpoints.hashCode ^
         radii.hashCode ^
-        spaces.hashCode;
+        spaces.hashCode ^
+        defaultOrderOfModifiers.hashCode;
   }
 }
 

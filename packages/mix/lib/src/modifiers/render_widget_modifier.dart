@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import '../core/factory/mix_data.dart';
 import '../core/modifier.dart';
 import '../core/spec.dart';
+import '../theme/theme.dart';
 import 'modifiers.dart';
 
 const _defaultOrder = [
@@ -112,7 +113,8 @@ class RenderAnimatedModifiers extends ImplicitlyAnimatedWidget {
     super.key,
     super.curve = Curves.linear,
     super.onEnd,
-  }) : _appliedModifiers = _combineModifiers(mix, modifiers, orderOfModifiers);
+  }) : _appliedModifiers =
+            modifiers.isEmpty ? (mix?.modifiers ?? []) : modifiers;
 
   final Widget child;
   final MixData? mix;
@@ -138,11 +140,6 @@ class RenderAnimatedModifiersState
     }
   }
 
-  @override
-  void forEachTween(TweenVisitor<dynamic> visitor) {
-    updateModifiersSpecs(visitor);
-  }
-
   Map<Type, ModifierSpecTween> cleanUpSpecs() {
     final difference = _specs.keys
         .toSet()
@@ -155,6 +152,11 @@ class RenderAnimatedModifiersState
     }
 
     return _specs;
+  }
+
+  @override
+  void forEachTween(TweenVisitor<dynamic> visitor) {
+    updateModifiersSpecs(visitor);
   }
 
   void updateModifiersSpecs(TweenVisitor<dynamic> visitor) {
@@ -174,48 +176,21 @@ class RenderAnimatedModifiersState
   Widget build(BuildContext context) {
     var current = widget.child;
 
-    for (final spec in _specs.keys) {
-      final evaluatedSpec = _specs[spec]!.evaluate(animation);
+    final orderedModifierList = _combineModifiers(
+      widget.mix,
+      widget._appliedModifiers,
+      widget.orderOfModifiers,
+      defaultOrder:
+          MixTheme.maybeOf(context)?.defaultOrderOfModifiers?.reversed.toList(),
+    ).map((e) => e.runtimeType).toList();
+
+    for (final modifier in orderedModifierList) {
+      final evaluatedSpec = _specs[modifier]!.evaluate(animation);
       current = evaluatedSpec.build(current);
     }
 
     return current;
   }
-}
-
-@visibleForTesting
-List<WidgetModifierSpec<dynamic>> resolveModifierSpecs(
-  List<Type> orderOfModifiers,
-  MixData mix,
-) {
-  return orderModifiers(orderOfModifiers, mix.modifiers);
-}
-
-@visibleForTesting
-List<WidgetModifierSpec<dynamic>> orderModifiers(
-  List<Type> orderOfModifiers,
-  List<WidgetModifierSpec<dynamic>> modifiers,
-) {
-  final listOfModifiers = ({
-    // Prioritize the order of modifiers provided by the user.
-    ...orderOfModifiers,
-    // Add the default order of modifiers.
-    ..._defaultOrder,
-    // Add any remaining modifiers that were not included in the order.
-    ...modifiers.map((e) => e.type),
-  }).toList();
-
-  final specs = <WidgetModifierSpec<dynamic>>[];
-
-  for (final modifierType in listOfModifiers) {
-    // Resolve the modifier and add it to the list of specs.
-    final modifier = modifiers.where((e) => e.type == modifierType).firstOrNull;
-    if (modifier == null) continue;
-    // ignore: avoid-unnecessary-type-casts
-    specs.add(modifier as WidgetModifierSpec<WidgetModifierSpec<dynamic>>);
-  }
-
-  return specs;
 }
 
 class RenderSpecModifiers extends StatelessWidget {
@@ -287,8 +262,9 @@ List<Type> _normalizeOrderedTypes(MixData? mix, List<Type>? orderedTypes) {
 List<WidgetModifierSpec<dynamic>> _combineModifiers(
   MixData? mix,
   List<WidgetModifierSpec<dynamic>> modifiers,
-  List<Type> orderOfModifiers,
-) {
+  List<Type> orderOfModifiers, {
+  List<Type>? defaultOrder,
+}) {
   final normalizedModifiers = _normalizeOrderedTypes(mix, orderOfModifiers);
 
   final mergedModifiers = [...modifiers];
@@ -297,5 +273,37 @@ List<WidgetModifierSpec<dynamic>> _combineModifiers(
     mergedModifiers.addAll(mix.modifiers);
   }
 
-  return orderModifiers(normalizedModifiers, mergedModifiers);
+  return orderModifiers(
+    normalizedModifiers,
+    mergedModifiers,
+    defaultOrder: defaultOrder,
+  );
+}
+
+// @visibleForTesting
+List<WidgetModifierSpec<dynamic>> orderModifiers(
+  List<Type> orderOfModifiers,
+  List<WidgetModifierSpec<dynamic>> modifiers, {
+  List<Type>? defaultOrder,
+}) {
+  final listOfModifiers = ({
+    // Prioritize the order of modifiers provided by the user.
+    ...orderOfModifiers,
+    // Add the default order of modifiers.
+    ...defaultOrder ?? _defaultOrder,
+    // Add any remaining modifiers that were not included in the order.
+    ...modifiers.map((e) => e.type),
+  }).toList();
+
+  final specs = <WidgetModifierSpec<dynamic>>[];
+
+  for (final modifierType in listOfModifiers) {
+    // Resolve the modifier and add it to the list of specs.
+    final modifier = modifiers.where((e) => e.type == modifierType).firstOrNull;
+    if (modifier == null) continue;
+    // ignore: avoid-unnecessary-type-casts
+    specs.add(modifier as WidgetModifierSpec<WidgetModifierSpec<dynamic>>);
+  }
+
+  return specs;
 }

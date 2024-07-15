@@ -370,44 +370,4 @@ void main() {
       },
     );
   });
-
-  group('resolveModifierSpecs', () {
-    test('Returns empty set when no modifiers are provided', () {
-      final result = resolveModifierSpecs(const [], EmptyMixData);
-      expect(result, isEmpty);
-    });
-
-    test('Returns resolved modifier specs in the correct order', () {
-      final style = Style(
-        $with.scale(2.0),
-        $with.opacity(0.5),
-        $with.visibility.on(),
-        $with.clipOval(),
-        $with.aspectRatio(2.0),
-      );
-
-      final mix = style.of(MockBuildContext());
-      final result = resolveModifierSpecs(
-        [
-          ClipOvalModifierAttribute,
-          AspectRatioModifierAttribute,
-          TransformModifierAttribute,
-          OpacityModifierAttribute,
-          VisibilityModifierAttribute,
-        ],
-        mix,
-      );
-
-      expect(result, {
-        const VisibilityModifierSpec(true),
-        const OpacityModifierSpec(0.5),
-        TransformModifierSpec(
-          transform: Matrix4.diagonal3Values(2.0, 2.0, 1.0),
-          alignment: Alignment.center,
-        ),
-        const AspectRatioModifierSpec(2.0),
-        const ClipOvalModifierSpec(),
-      });
-    });
-  });
 }
