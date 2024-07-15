@@ -55,9 +55,8 @@ const _defaultOrder = [
   // sizing adjustments to ensure that the widget's contents are not affected by the padding.
   PaddingSpec,
 
-  // 11. TransformModifier: Applies arbitrary transformations, such as rotation, scaling, and translation.
-  // Transformations are applied after all sizing and positioning adjustments to modify the widget's appearance
-  // and position in more complex ways without altering the logical layout.
+  // 11. RotatedBoxModifier: Rotates the widget by a given angle. This modifier is applied after all sizing
+  // and positioning adjustments to ensure that the widget's contents will be rotated correctly.
   RotatedBoxModifierSpec,
 
   // 12. Clip Modifiers: Applies clipping in various shapes to the transformed widget, shaping the final appearance.
