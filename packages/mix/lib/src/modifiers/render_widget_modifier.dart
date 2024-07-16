@@ -90,11 +90,24 @@ class RenderModifiers extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return _RenderModifiers(
+      modifiers: _combineModifiers(mix, modifiers, orderOfModifiers).reversed,
+      child: child,
+    );
+  }
+}
+
+class _RenderModifiers extends StatelessWidget {
+  const _RenderModifiers({required this.child, required this.modifiers});
+
+  final Widget child;
+  final Iterable<WidgetModifierSpec<dynamic>> modifiers;
+
+  @override
+  Widget build(BuildContext context) {
     var current = child;
 
-    final orderedSpecs = _combineModifiers(mix, modifiers, orderOfModifiers);
-
-    for (final spec in orderedSpecs.reversed) {
+    for (final spec in modifiers) {
       current = spec.build(current);
     }
 
@@ -102,40 +115,71 @@ class RenderModifiers extends StatelessWidget {
   }
 }
 
-class RenderAnimatedModifiers extends ImplicitlyAnimatedWidget {
-  RenderAnimatedModifiers({
+class RenderAnimatedModifiers extends StatelessWidget {
+  const RenderAnimatedModifiers({
+    super.key,
     //TODO Should be required in the next version
     this.modifiers = const [],
     required this.child,
-    required super.duration,
+    required this.duration,
     @Deprecated("Use modifiers parameter") this.mix,
     required this.orderOfModifiers,
-    super.key,
-    super.curve = Curves.linear,
-    super.onEnd,
-  }) : _appliedModifiers =
-            modifiers.isEmpty ? (mix?.modifiers ?? []) : modifiers;
+    this.curve = Curves.linear,
+    this.onEnd,
+  });
 
   final Widget child;
   final MixData? mix;
   final List<Type> orderOfModifiers;
   final List<WidgetModifierSpec<dynamic>> modifiers;
-  final List<WidgetModifierSpec<dynamic>> _appliedModifiers;
+  final Duration duration;
+  final Curve curve;
+  final VoidCallback? onEnd;
 
   @override
-  RenderAnimatedModifiersState createState() => RenderAnimatedModifiersState();
+  Widget build(BuildContext context) {
+    return _RenderAnimatedModifiers(
+      modifiers: _combineModifiers(
+        mix,
+        modifiers,
+        orderOfModifiers,
+        defaultOrder: MixTheme.maybeOf(context)?.defaultOrderOfModifiers,
+      ).reversed,
+      duration: duration,
+      curve: curve,
+      onEnd: onEnd,
+      child: child,
+    );
+  }
 }
 
-class RenderAnimatedModifiersState
-    extends AnimatedWidgetBaseState<RenderAnimatedModifiers> {
+class _RenderAnimatedModifiers extends ImplicitlyAnimatedWidget {
+  const _RenderAnimatedModifiers({
+    //TODO Should be required in the next version
+    this.modifiers = const [],
+    required this.child,
+    required super.duration,
+    super.curve = Curves.linear,
+    super.onEnd,
+  });
+
+  final Widget child;
+
+  final Iterable<WidgetModifierSpec<dynamic>> modifiers;
+
+  @override
+  _RenderAnimatedModifiersState createState() =>
+      _RenderAnimatedModifiersState();
+}
+
+class _RenderAnimatedModifiersState
+    extends AnimatedWidgetBaseState<_RenderAnimatedModifiers> {
   final Map<Type, ModifierSpecTween> _specs = {};
 
   @override
-  void didUpdateWidget(covariant RenderAnimatedModifiers oldWidget) {
+  void didUpdateWidget(covariant _RenderAnimatedModifiers oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (oldWidget.modifiers != widget.modifiers ||
-        oldWidget.mix != widget.mix ||
-        oldWidget.orderOfModifiers != widget.orderOfModifiers) {
+    if (oldWidget.modifiers != widget.modifiers) {
       cleanUpSpecs();
     }
   }
@@ -143,7 +187,7 @@ class RenderAnimatedModifiersState
   Map<Type, ModifierSpecTween> cleanUpSpecs() {
     final difference = _specs.keys
         .toSet()
-        .difference(widget._appliedModifiers.map((e) => e.runtimeType).toSet());
+        .difference(widget.modifiers.map((e) => e.runtimeType).toSet());
 
     if (difference.isNotEmpty) {
       for (var e in difference) {
@@ -160,7 +204,7 @@ class RenderAnimatedModifiersState
   }
 
   void updateModifiersSpecs(TweenVisitor<dynamic> visitor) {
-    for (final spec in widget._appliedModifiers.reversed) {
+    for (final spec in widget.modifiers) {
       final specType = spec.runtimeType;
       final previousSpec = _specs[specType];
       _specs[specType] = visitor(
@@ -175,16 +219,8 @@ class RenderAnimatedModifiersState
   @override
   Widget build(BuildContext context) {
     var current = widget.child;
-
-    final orderedModifierList = _combineModifiers(
-      widget.mix,
-      widget._appliedModifiers,
-      widget.orderOfModifiers,
-      defaultOrder:
-          MixTheme.maybeOf(context)?.defaultOrderOfModifiers?.reversed.toList(),
-    ).map((e) => e.runtimeType).toList();
-
-    for (final modifier in orderedModifierList) {
+    final typeOfModifiers = widget.modifiers.map((e) => e.runtimeType);
+    for (final modifier in typeOfModifiers) {
       final evaluatedSpec = _specs[modifier]!.evaluate(animation);
       current = evaluatedSpec.build(current);
     }
