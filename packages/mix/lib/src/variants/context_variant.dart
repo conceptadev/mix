@@ -53,24 +53,6 @@ abstract class ContextVariant extends IVariant {
 }
 
 @immutable
-abstract class WidgetStateVariant<Value> extends ContextVariant {
-  @override
-  final priority = VariantPriority.highest;
-
-  const WidgetStateVariant();
-
-  ContextVariantBuilder event(Style Function(Value) fn) {
-    return ContextVariantBuilder(
-      (BuildContext context) => fn(builder(context)),
-      this,
-    );
-  }
-
-  @protected
-  Value builder(BuildContext context);
-}
-
-@immutable
 abstract class MediaQueryContextVariant extends ContextVariant {
   @override
   final priority = VariantPriority.normal;
