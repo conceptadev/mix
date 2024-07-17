@@ -163,7 +163,6 @@ class _RenderAnimatedModifiers extends ImplicitlyAnimatedWidget {
   });
 
   final Widget child;
-
   final List<WidgetModifierSpec<dynamic>> modifiers;
 
   @override
@@ -175,7 +174,13 @@ class _RenderAnimatedModifiersState
     extends AnimatedWidgetBaseState<_RenderAnimatedModifiers> {
   final Map<Type, ModifierSpecTween> _specs = {};
 
-  late Iterable<Type> _typeOfModifiers = updateTypeOfAppliedModifiers();
+  Iterable<Type> _typeOfModifiers = [];
+
+  @override
+  void initState() {
+    super.initState();
+    updateTypeOfAppliedModifiers();
+  }
 
   @override
   void didUpdateWidget(covariant _RenderAnimatedModifiers oldWidget) {
