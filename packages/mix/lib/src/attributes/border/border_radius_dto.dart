@@ -24,13 +24,6 @@ sealed class BorderRadiusGeometryDto<T extends BorderRadiusGeometry>
     extends Dto<T> with Diagnosticable {
   const BorderRadiusGeometryDto();
 
-  @visibleForTesting
-  Radius getRadiusValue(MixData mix, Radius? radius) {
-    if (radius == null) return Radius.zero;
-
-    return radius is RadiusRef ? mix.tokens.radiiRef(radius) : radius;
-  }
-
   Radius? get topLeft;
   Radius? get topRight;
   Radius? get bottomLeft;
@@ -39,6 +32,13 @@ sealed class BorderRadiusGeometryDto<T extends BorderRadiusGeometry>
   Radius? get topEnd;
   Radius? get bottomStart;
   Radius? get bottomEnd;
+  @visibleForTesting
+  Radius getRadiusValue(MixData mix, Radius? radius) {
+    if (radius == null) return Radius.zero;
+
+    return radius is RadiusRef ? mix.tokens.radiiRef(radius) : radius;
+  }
+
   @override
   BorderRadiusGeometryDto<T> merge(covariant BorderRadiusGeometryDto<T>? other);
 
