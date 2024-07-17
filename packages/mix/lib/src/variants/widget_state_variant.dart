@@ -1,7 +1,28 @@
 import 'package:flutter/widgets.dart';
 
-import '../../variants/context_variant.dart';
-import 'widget_state.dart';
+import '../core/factory/style_mix.dart';
+import '../core/variant.dart';
+import '../internal/widget_state/interactive_widget.dart';
+import '../internal/widget_state/widget_state.dart';
+import 'context_variant.dart';
+
+@immutable
+abstract class WidgetStateVariant<Value> extends ContextVariant {
+  @override
+  final priority = VariantPriority.highest;
+
+  const WidgetStateVariant();
+
+  ContextVariantBuilder event(Style Function(Value) fn) {
+    return ContextVariantBuilder(
+      (BuildContext context) => fn(builder(context)),
+      this,
+    );
+  }
+
+  @protected
+  Value builder(BuildContext context);
+}
 
 /// Applies styles when the widget is pressed.
 class OnPressVariant extends WidgetStateVariant<bool> {
@@ -12,6 +33,17 @@ class OnPressVariant extends WidgetStateVariant<bool> {
 
   @override
   bool when(BuildContext context) => builder(context);
+}
+
+class OnWidgetStateVariant extends WidgetStateVariant<WidgetMixState> {
+  const OnWidgetStateVariant();
+
+  @override
+  WidgetMixState builder(BuildContext context) =>
+      WidgetStateModel.stateOf(context);
+
+  @override
+  bool when(BuildContext context) => builder(context) != WidgetMixState.idle;
 }
 
 /// Applies styles when the widget is long pressed.

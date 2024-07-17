@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 
+import '../internal/widget_state/interactive_widget.dart';
 import '../modifiers/modifiers.dart';
 import 'core.dart';
 
@@ -45,16 +46,18 @@ abstract class StyledWidget extends StatelessWidget {
     BuildContext context,
     Widget Function(BuildContext context) builder,
   ) {
-    final inheritedMix = inherit ? Mix.maybeOfInherited(context) : null;
+    return InteractiveBuilder(builder: (context) {
+      final inheritedMix = inherit ? Mix.maybeOfInherited(context) : null;
 
-    final mix = style.of(context);
+      final mix = style.of(context);
 
-    final mergedMix = inheritedMix?.merge(mix) ?? mix;
+      final mergedMix = inheritedMix?.merge(mix) ?? mix;
 
-    return Mix(
-      data: mergedMix,
-      child: applyModifiers(mergedMix, Builder(builder: builder)),
-    );
+      return Mix(
+        data: mergedMix,
+        child: applyModifiers(mergedMix, Builder(builder: builder)),
+      );
+    });
   }
 
   Widget applyModifiers(MixData mix, Widget child) {

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
+import 'package:mix/src/internal/widget_state/interactive_widget.dart';
 
 import '../../../helpers/testing_utils.dart';
 
@@ -43,17 +44,23 @@ void main() {
       final secondContext = tester.element(find.byKey(secondKey));
       final thirdContext = tester.element(find.byKey(thirdKey));
 
-      final firstNotifier = WidgetStateModel.of(firstContext);
-      final secondNotifier = WidgetStateModel.of(secondContext);
-      final thirdNotifier = WidgetStateModel.of(thirdContext);
+      final firstNotifier = InteractiveState.of(firstContext);
+      final secondNotifier = InteractiveState.of(secondContext);
+      final thirdNotifier = InteractiveState.of(thirdContext);
 
-      expect(onEnabledAttr.variant.when(firstContext), false);
-      expect(firstNotifier.disabled, true);
-      expect(onEnabledAttr.variant.when(secondContext), false);
-      expect(secondNotifier.disabled, true);
+      expect(onEnabledAttr.variant.when(firstContext), false,
+          reason: 'First Pressable should be disabled');
+      expect(firstNotifier.disabled, true,
+          reason: 'First Pressable should have disabled state');
+      expect(onEnabledAttr.variant.when(secondContext), false,
+          reason: 'Second Pressable should be disabled');
+      expect(secondNotifier.disabled, true,
+          reason: 'Second Pressable should have disabled state');
 
-      expect(onEnabledAttr.variant.when(thirdContext), true);
-      expect(thirdNotifier.disabled, false);
+      expect(onEnabledAttr.variant.when(thirdContext), true,
+          reason: 'Third Pressable should be enabled');
+      expect(thirdNotifier.disabled, false,
+          reason: 'Third Pressable should not have disabled state');
     });
 
     testWidgets(

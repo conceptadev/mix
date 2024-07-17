@@ -2,7 +2,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mix/mix.dart';
+import 'package:mix/src/internal/widget_state/gesturable_builder.dart';
+import 'package:mix/src/internal/widget_state/interactive_widget.dart';
+import 'package:mix/src/internal/widget_state/widget_state.dart';
 
 class TrackingText<T> extends StatefulWidget {
   final String text;
@@ -44,32 +46,34 @@ void main() {
           builder: (BuildContext context, StateSetter setState) {
             return Column(
               children: [
-                WidgetStateModel(
-                  enabled: true,
-                  hovered: hovered,
-                  focused: focused,
+                GesturableState(
                   pressed: pressed,
                   longPressed: longPressed,
-                  pointerPosition: null,
-                  child: Builder(
-                    builder: (BuildContext context) {
-                      final bool enabled = WidgetStateModel.enabledOf(context);
-                      final bool hovered = WidgetStateModel.hoverOf(context);
-                      final bool pressed = WidgetStateModel.pressOf(context);
-                      final bool longPressed =
-                          WidgetStateModel.longPressOf(context);
-                      final MixWidgetState state =
-                          WidgetStateModel.stateOf(context);
-                      return Column(
-                        children: [
-                          Text('Enabled: $enabled'),
-                          Text('Hovered: $hovered'),
-                          Text('LongPressed: $longPressed'),
-                          Text('Pressed: $pressed'),
-                          Text('Current State: $state'),
-                        ],
-                      );
-                    },
+                  child: InteractiveState(
+                    enabled: true,
+                    hovered: hovered,
+                    focused: focused,
+                    pointerPosition: null,
+                    child: Builder(
+                      builder: (BuildContext context) {
+                        final bool enabled =
+                            WidgetStateModel.enabledOf(context);
+                        final bool hovered = WidgetStateModel.hoverOf(context);
+                        final bool pressed = WidgetStateModel.pressOf(context);
+                        final bool longPressed =
+                            WidgetStateModel.longPressOf(context);
+                        final state = WidgetStateModel.stateOf(context);
+                        return Column(
+                          children: [
+                            Text('Enabled: $enabled'),
+                            Text('Hovered: $hovered'),
+                            Text('LongPressed: $longPressed'),
+                            Text('Pressed: $pressed'),
+                            Text('Current State: $state'),
+                          ],
+                        );
+                      },
+                    ),
                   ),
                 ),
                 ElevatedButton(
@@ -95,7 +99,7 @@ void main() {
     expect(find.text('Pressed: false'), findsOneWidget);
     expect(find.text('LongPressed: false'), findsOneWidget);
     expect(find.text('Focused: false'), findsNothing);
-    expect(find.text('Current State: MixWidgetState.idle'), findsOneWidget);
+    expect(find.text('Current State: ${WidgetMixState.idle}'), findsOneWidget);
 
     await tester.tap(find.text('Update State'));
     await tester.pump();
@@ -105,27 +109,8 @@ void main() {
     expect(find.text('Pressed: true'), findsOneWidget);
     expect(find.text('LongPressed: true'), findsOneWidget);
     expect(find.text('Focused: true'), findsNothing);
-    expect(
-        find.text('Current State: MixWidgetState.longPressed'), findsOneWidget);
-  });
-
-  test('PressableState.none() returns a PressableState with correct values',
-      () {
-    final WidgetStateModel state = WidgetStateModel.none(
-      key: const Key('none'),
-      child: const Text('none'),
-    );
-
-    expect(state.enabled, false);
-    expect(state.hovered, false);
-    expect(state.pressed, false);
-    expect(state.longPressed, false);
-    expect(state.focused, false);
-    expect(state.pointerPosition, null);
-
-    expect(state.key, const Key('none'));
-    expect(state.hashCode, isNot(0));
-    expect(state.runtimeType, WidgetStateModel);
+    expect(find.text('Current State: ${WidgetMixState.longPressed}'),
+        findsOneWidget);
   });
 
   testWidgets('PressableState updates inherit model',
@@ -144,7 +129,7 @@ void main() {
     expect(find.text('Pressed: Rebuilds(1), State(false)'), findsOneWidget);
     expect(find.text('LongPressed: Rebuilds(1), State(false)'), findsOneWidget);
     expect(
-      find.text('Current State: Rebuilds(1), State(MixWidgetState.idle)'),
+      find.text('Current State: Rebuilds(1), State(${WidgetMixState.idle})'),
       findsOneWidget,
     );
 
@@ -156,7 +141,7 @@ void main() {
     expect(find.text('Pressed: Rebuilds(1), State(false)'), findsOneWidget);
     expect(find.text('LongPressed: Rebuilds(1), State(false)'), findsOneWidget);
     expect(
-      find.text('Current State: Rebuilds(2), State(MixWidgetState.hovered)'),
+      find.text('Current State: Rebuilds(2), State(${WidgetMixState.hovered})'),
       findsOneWidget,
     );
 
@@ -168,7 +153,7 @@ void main() {
     expect(find.text('Pressed: Rebuilds(2), State(true)'), findsOneWidget);
     expect(find.text('LongPressed: Rebuilds(1), State(false)'), findsOneWidget);
     expect(
-      find.text('Current State: Rebuilds(3), State(MixWidgetState.pressed)'),
+      find.text('Current State: Rebuilds(3), State(${WidgetMixState.pressed})'),
       findsOneWidget,
     );
 
@@ -181,7 +166,7 @@ void main() {
     expect(find.text('LongPressed: Rebuilds(2), State(true)'), findsOneWidget);
     expect(
       find.text(
-          'Current State: Rebuilds(4), State(MixWidgetState.longPressed)'),
+          'Current State: Rebuilds(4), State(${WidgetMixState.longPressed})'),
       findsOneWidget,
     );
   });
@@ -240,42 +225,44 @@ class _PressableStateTestWidgetState extends State<PressableStateTestWidget> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        WidgetStateModel(
-          enabled: true,
-          hovered: hovered,
-          focused: focused,
+        GesturableState(
           pressed: pressed,
           longPressed: longPressed,
-          pointerPosition: null,
-          child: Builder(
-            builder: (BuildContext context) {
-              return Column(
-                children: [
-                  const TrackingText(
-                    text: 'Enabled',
-                    stateBuilder: WidgetStateModel.enabledOf,
-                  ),
-                  const TrackingText(
-                    text: 'Hovered',
-                    stateBuilder: WidgetStateModel.hoverOf,
-                  ),
-                  const TrackingText(
-                    text: 'Pressed',
-                    stateBuilder: WidgetStateModel.pressOf,
-                  ),
-                  const TrackingText(
-                    text: 'LongPressed',
-                    stateBuilder: WidgetStateModel.longPressOf,
-                  ),
-                  TrackingText(
-                    text: 'Current State',
-                    stateBuilder: (BuildContext context) {
-                      return WidgetStateModel.stateOf(context).toString();
-                    },
-                  ),
-                ],
-              );
-            },
+          child: InteractiveState(
+            enabled: true,
+            hovered: hovered,
+            focused: focused,
+            pointerPosition: null,
+            child: Builder(
+              builder: (BuildContext context) {
+                return Column(
+                  children: [
+                    const TrackingText(
+                      text: 'Enabled',
+                      stateBuilder: WidgetStateModel.enabledOf,
+                    ),
+                    const TrackingText(
+                      text: 'Hovered',
+                      stateBuilder: WidgetStateModel.hoverOf,
+                    ),
+                    const TrackingText(
+                      text: 'Pressed',
+                      stateBuilder: WidgetStateModel.pressOf,
+                    ),
+                    const TrackingText(
+                      text: 'LongPressed',
+                      stateBuilder: WidgetStateModel.longPressOf,
+                    ),
+                    TrackingText(
+                      text: 'Current State',
+                      stateBuilder: (BuildContext context) {
+                        return WidgetStateModel.stateOf(context).toString();
+                      },
+                    ),
+                  ],
+                );
+              },
+            ),
           ),
         ),
       ],
