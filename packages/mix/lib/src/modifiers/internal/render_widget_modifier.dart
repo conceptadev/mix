@@ -1,12 +1,11 @@
 // ignore_for_file: avoid-dynamic
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-import '../core/factory/mix_data.dart';
-import '../core/modifier.dart';
-import '../core/spec.dart';
-import '../theme/theme.dart';
-import 'modifiers.dart';
+import '../../core/core.dart';
+import '../../theme/theme.dart';
+import '../modifiers.dart';
 
 const _defaultOrder = [
   // 1. FlexibleModifier: When the widget is used inside a Row, Column, or Flex widget, it will
@@ -144,7 +143,7 @@ class RenderAnimatedModifiers extends StatelessWidget {
         modifiers,
         orderOfModifiers,
         defaultOrder: MixTheme.maybeOf(context)?.defaultOrderOfModifiers,
-      ).reversed,
+      ).reversed.toList(),
       duration: duration,
       curve: curve,
       onEnd: onEnd,
@@ -165,7 +164,7 @@ class _RenderAnimatedModifiers extends ImplicitlyAnimatedWidget {
 
   final Widget child;
 
-  final Iterable<WidgetModifierSpec<dynamic>> modifiers;
+  final List<WidgetModifierSpec<dynamic>> modifiers;
 
   @override
   _RenderAnimatedModifiersState createState() =>
@@ -176,12 +175,19 @@ class _RenderAnimatedModifiersState
     extends AnimatedWidgetBaseState<_RenderAnimatedModifiers> {
   final Map<Type, ModifierSpecTween> _specs = {};
 
+  late Iterable<Type> _typeOfModifiers = updateTypeOfAppliedModifiers();
+
   @override
   void didUpdateWidget(covariant _RenderAnimatedModifiers oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (oldWidget.modifiers != widget.modifiers) {
+    if (!listEquals(oldWidget.modifiers, widget.modifiers)) {
+      updateTypeOfAppliedModifiers();
       cleanUpSpecs();
     }
+  }
+
+  updateTypeOfAppliedModifiers() {
+    _typeOfModifiers = widget.modifiers.map((e) => e.runtimeType);
   }
 
   Map<Type, ModifierSpecTween> cleanUpSpecs() {
@@ -219,8 +225,8 @@ class _RenderAnimatedModifiersState
   @override
   Widget build(BuildContext context) {
     var current = widget.child;
-    final typeOfModifiers = widget.modifiers.map((e) => e.runtimeType);
-    for (final modifier in typeOfModifiers) {
+
+    for (final modifier in _typeOfModifiers) {
       final evaluatedSpec = _specs[modifier]!.evaluate(animation);
       current = evaluatedSpec.build(current);
     }
@@ -316,7 +322,7 @@ List<WidgetModifierSpec<dynamic>> _combineModifiers(
   );
 }
 
-// @visibleForTesting
+@visibleForTesting
 List<WidgetModifierSpec<dynamic>> orderModifiers(
   List<Type> orderOfModifiers,
   List<WidgetModifierSpec<dynamic>> modifiers, {

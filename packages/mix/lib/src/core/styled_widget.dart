@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
 
-import '../modifiers/modifiers.dart';
+import '../modifiers/internal/render_widget_modifier.dart';
 import 'core.dart';
 
 /// An abstract widget for applying custom styles.
