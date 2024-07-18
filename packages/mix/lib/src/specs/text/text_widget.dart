@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../core/styled_widget.dart';
-import '../../modifiers/render_widget_modifier.dart';
+import '../../modifiers/internal/render_widget_modifier.dart';
 import 'text_spec.dart';
 
 /// [StyledText] - A styled widget for displaying text with a mix of styles.

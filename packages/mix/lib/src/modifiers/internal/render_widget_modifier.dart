@@ -1,11 +1,11 @@
 // ignore_for_file: avoid-dynamic
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-import '../core/factory/mix_data.dart';
-import '../core/modifier.dart';
-import '../core/spec.dart';
-import 'modifiers.dart';
+import '../../core/core.dart';
+import '../../theme/theme.dart';
+import '../modifiers.dart';
 
 const _defaultOrder = [
   // 1. FlexibleModifier: When the widget is used inside a Row, Column, or Flex widget, it will
@@ -89,11 +89,24 @@ class RenderModifiers extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return _RenderModifiers(
+      modifiers: _combineModifiers(mix, modifiers, orderOfModifiers).reversed,
+      child: child,
+    );
+  }
+}
+
+class _RenderModifiers extends StatelessWidget {
+  const _RenderModifiers({required this.child, required this.modifiers});
+
+  final Widget child;
+  final Iterable<WidgetModifierSpec<dynamic>> modifiers;
+
+  @override
+  Widget build(BuildContext context) {
     var current = child;
 
-    final orderedSpecs = _combineModifiers(mix, modifiers, orderOfModifiers);
-
-    for (final spec in orderedSpecs.reversed) {
+    for (final spec in modifiers) {
       current = spec.build(current);
     }
 
@@ -101,52 +114,91 @@ class RenderModifiers extends StatelessWidget {
   }
 }
 
-class RenderAnimatedModifiers extends ImplicitlyAnimatedWidget {
-  RenderAnimatedModifiers({
+class RenderAnimatedModifiers extends StatelessWidget {
+  const RenderAnimatedModifiers({
+    super.key,
     //TODO Should be required in the next version
     this.modifiers = const [],
     required this.child,
-    required super.duration,
+    required this.duration,
     @Deprecated("Use modifiers parameter") this.mix,
     required this.orderOfModifiers,
-    super.key,
-    super.curve = Curves.linear,
-    super.onEnd,
-  }) : _appliedModifiers = _combineModifiers(mix, modifiers, orderOfModifiers);
+    this.curve = Curves.linear,
+    this.onEnd,
+  });
 
   final Widget child;
   final MixData? mix;
   final List<Type> orderOfModifiers;
   final List<WidgetModifierSpec<dynamic>> modifiers;
-  final List<WidgetModifierSpec<dynamic>> _appliedModifiers;
+  final Duration duration;
+  final Curve curve;
+  final VoidCallback? onEnd;
 
   @override
-  RenderAnimatedModifiersState createState() => RenderAnimatedModifiersState();
+  Widget build(BuildContext context) {
+    return _RenderAnimatedModifiers(
+      modifiers: _combineModifiers(
+        mix,
+        modifiers,
+        orderOfModifiers,
+        defaultOrder: MixTheme.maybeOf(context)?.defaultOrderOfModifiers,
+      ).reversed.toList(),
+      duration: duration,
+      curve: curve,
+      onEnd: onEnd,
+      child: child,
+    );
+  }
 }
 
-class RenderAnimatedModifiersState
-    extends AnimatedWidgetBaseState<RenderAnimatedModifiers> {
-  final Map<Type, ModifierSpecTween> _specs = {};
+class _RenderAnimatedModifiers extends ImplicitlyAnimatedWidget {
+  const _RenderAnimatedModifiers({
+    //TODO Should be required in the next version
+    this.modifiers = const [],
+    required this.child,
+    required super.duration,
+    super.curve = Curves.linear,
+    super.onEnd,
+  });
+
+  final Widget child;
+  final List<WidgetModifierSpec<dynamic>> modifiers;
 
   @override
-  void didUpdateWidget(covariant RenderAnimatedModifiers oldWidget) {
+  _RenderAnimatedModifiersState createState() =>
+      _RenderAnimatedModifiersState();
+}
+
+class _RenderAnimatedModifiersState
+    extends AnimatedWidgetBaseState<_RenderAnimatedModifiers> {
+  final Map<Type, ModifierSpecTween> _specs = {};
+
+  Iterable<Type> _typeOfModifiers = [];
+
+  @override
+  void initState() {
+    super.initState();
+    updateTypeOfAppliedModifiers();
+  }
+
+  @override
+  void didUpdateWidget(covariant _RenderAnimatedModifiers oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (oldWidget.modifiers != widget.modifiers ||
-        oldWidget.mix != widget.mix ||
-        oldWidget.orderOfModifiers != widget.orderOfModifiers) {
+    if (!listEquals(oldWidget.modifiers, widget.modifiers)) {
+      updateTypeOfAppliedModifiers();
       cleanUpSpecs();
     }
   }
 
-  @override
-  void forEachTween(TweenVisitor<dynamic> visitor) {
-    updateModifiersSpecs(visitor);
+  updateTypeOfAppliedModifiers() {
+    _typeOfModifiers = widget.modifiers.map((e) => e.runtimeType);
   }
 
   Map<Type, ModifierSpecTween> cleanUpSpecs() {
     final difference = _specs.keys
         .toSet()
-        .difference(widget._appliedModifiers.map((e) => e.runtimeType).toSet());
+        .difference(widget.modifiers.map((e) => e.runtimeType).toSet());
 
     if (difference.isNotEmpty) {
       for (var e in difference) {
@@ -157,8 +209,13 @@ class RenderAnimatedModifiersState
     return _specs;
   }
 
+  @override
+  void forEachTween(TweenVisitor<dynamic> visitor) {
+    updateModifiersSpecs(visitor);
+  }
+
   void updateModifiersSpecs(TweenVisitor<dynamic> visitor) {
-    for (final spec in widget._appliedModifiers.reversed) {
+    for (final spec in widget.modifiers) {
       final specType = spec.runtimeType;
       final previousSpec = _specs[specType];
       _specs[specType] = visitor(
@@ -174,48 +231,13 @@ class RenderAnimatedModifiersState
   Widget build(BuildContext context) {
     var current = widget.child;
 
-    for (final spec in _specs.keys) {
-      final evaluatedSpec = _specs[spec]!.evaluate(animation);
+    for (final modifier in _typeOfModifiers) {
+      final evaluatedSpec = _specs[modifier]!.evaluate(animation);
       current = evaluatedSpec.build(current);
     }
 
     return current;
   }
-}
-
-@visibleForTesting
-List<WidgetModifierSpec<dynamic>> resolveModifierSpecs(
-  List<Type> orderOfModifiers,
-  MixData mix,
-) {
-  return orderModifiers(orderOfModifiers, mix.modifiers);
-}
-
-@visibleForTesting
-List<WidgetModifierSpec<dynamic>> orderModifiers(
-  List<Type> orderOfModifiers,
-  List<WidgetModifierSpec<dynamic>> modifiers,
-) {
-  final listOfModifiers = ({
-    // Prioritize the order of modifiers provided by the user.
-    ...orderOfModifiers,
-    // Add the default order of modifiers.
-    ..._defaultOrder,
-    // Add any remaining modifiers that were not included in the order.
-    ...modifiers.map((e) => e.type),
-  }).toList();
-
-  final specs = <WidgetModifierSpec<dynamic>>[];
-
-  for (final modifierType in listOfModifiers) {
-    // Resolve the modifier and add it to the list of specs.
-    final modifier = modifiers.where((e) => e.type == modifierType).firstOrNull;
-    if (modifier == null) continue;
-    // ignore: avoid-unnecessary-type-casts
-    specs.add(modifier as WidgetModifierSpec<WidgetModifierSpec<dynamic>>);
-  }
-
-  return specs;
 }
 
 class RenderSpecModifiers extends StatelessWidget {
@@ -287,8 +309,9 @@ List<Type> _normalizeOrderedTypes(MixData? mix, List<Type>? orderedTypes) {
 List<WidgetModifierSpec<dynamic>> _combineModifiers(
   MixData? mix,
   List<WidgetModifierSpec<dynamic>> modifiers,
-  List<Type> orderOfModifiers,
-) {
+  List<Type> orderOfModifiers, {
+  List<Type>? defaultOrder,
+}) {
   final normalizedModifiers = _normalizeOrderedTypes(mix, orderOfModifiers);
 
   final mergedModifiers = [...modifiers];
@@ -297,5 +320,37 @@ List<WidgetModifierSpec<dynamic>> _combineModifiers(
     mergedModifiers.addAll(mix.modifiers);
   }
 
-  return orderModifiers(normalizedModifiers, mergedModifiers);
+  return orderModifiers(
+    normalizedModifiers,
+    mergedModifiers,
+    defaultOrder: defaultOrder,
+  );
+}
+
+@visibleForTesting
+List<WidgetModifierSpec<dynamic>> orderModifiers(
+  List<Type> orderOfModifiers,
+  List<WidgetModifierSpec<dynamic>> modifiers, {
+  List<Type>? defaultOrder,
+}) {
+  final listOfModifiers = ({
+    // Prioritize the order of modifiers provided by the user.
+    ...orderOfModifiers,
+    // Add the default order of modifiers.
+    ...defaultOrder ?? _defaultOrder,
+    // Add any remaining modifiers that were not included in the order.
+    ...modifiers.map((e) => e.type),
+  }).toList();
+
+  final specs = <WidgetModifierSpec<dynamic>>[];
+
+  for (final modifierType in listOfModifiers) {
+    // Resolve the modifier and add it to the list of specs.
+    final modifier = modifiers.where((e) => e.type == modifierType).firstOrNull;
+    if (modifier == null) continue;
+    // ignore: avoid-unnecessary-type-casts
+    specs.add(modifier as WidgetModifierSpec<WidgetModifierSpec<dynamic>>);
+  }
+
+  return specs;
 }

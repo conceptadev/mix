@@ -2,7 +2,7 @@ import 'package:flutter/widgets.dart';
 
 import '../../core/styled_widget.dart';
 import '../../internal/constants.dart';
-import '../../modifiers/render_widget_modifier.dart';
+import '../../modifiers/internal/render_widget_modifier.dart';
 import 'image_spec.dart';
 
 class StyledImage extends StyledWidget {
