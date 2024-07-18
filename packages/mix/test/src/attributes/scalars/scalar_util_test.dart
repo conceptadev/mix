@@ -1,3 +1,6 @@
+import 'dart:io';
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
@@ -488,6 +491,72 @@ void main() {
       expect(utility.dotted().value, TextDecorationStyle.dotted);
       expect(utility.dashed().value, TextDecorationStyle.dashed);
       expect(utility.wavy().value, TextDecorationStyle.wavy);
+    });
+  });
+
+  group('ImageProviderUtility Tests', () {
+    const utility = ImageProviderUtility(UtilityTestAttribute.new);
+
+    test('network() returns correct instance', () {
+      final imageProvider = utility.network('https://example.com/image.png');
+
+      expect(imageProvider.value, isA<NetworkImage>());
+      expect((imageProvider.value as NetworkImage).url,
+          'https://example.com/image.png');
+    });
+
+    test('file() returns correct instance', () {
+      final file = File('path/to/image.png');
+      final imageProvider = utility.file(file);
+
+      expect(imageProvider.value, isA<FileImage>());
+      expect((imageProvider.value as FileImage).file, file);
+    });
+
+    test('asset() returns correct instance', () {
+      final imageProvider = utility.asset('assets/image.png');
+
+      expect(imageProvider.value, isA<AssetImage>());
+      expect((imageProvider.value as AssetImage).assetName, 'assets/image.png');
+    });
+
+    test('memory() returns correct instance', () {
+      final bytes = Uint8List.fromList([0, 1, 2, 3]);
+      final imageProvider = utility.memory(bytes);
+
+      expect(imageProvider.value, isA<MemoryImage>());
+      expect((imageProvider.value as MemoryImage).bytes, bytes);
+    });
+  });
+
+  group('TextHeightBehaviorUtility Tests', () {
+    const utility = TextHeightBehaviorUtility(UtilityTestAttribute.new);
+
+    test('call() returns correct instance', () {
+      final textHeightBehavior = utility(
+        const TextHeightBehavior(
+          applyHeightToFirstAscent: true,
+          applyHeightToLastDescent: false,
+        ),
+      );
+
+      expect(textHeightBehavior.value, isA<TextHeightBehavior>());
+      expect(textHeightBehavior.value.applyHeightToFirstAscent, isTrue);
+      expect(textHeightBehavior.value.applyHeightToLastDescent, isFalse);
+    });
+    group('TextScalerUtility Tests', () {
+      const utility = TextScalerUtility(UtilityTestAttribute.new);
+
+      test('call() returns correct instance', () {
+        final textScaler = utility(
+          const TextScaler.linear(2),
+        );
+
+        expect(textScaler.value, isA<TextScaler>());
+        expect(textScaler.value.maxLines, equals(3));
+        expect(textScaler.value.overflow, equals(TextOverflow.ellipsis));
+        expect(textScaler.value.semanticsLabel, equals('Test Label'));
+      });
     });
   });
 }
