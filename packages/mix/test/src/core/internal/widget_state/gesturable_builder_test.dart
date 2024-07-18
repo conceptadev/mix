@@ -104,5 +104,74 @@ void main() {
       final context = tester.element(find.byKey(key));
       expect(GesturableState.pressedOf(context), isFalse);
     });
+
+    testWidgets('GesturableWidget pan functions test', (
+      WidgetTester tester,
+    ) async {
+      bool isPanStartCalled = false;
+      bool isPanDownCalled = false;
+      bool isPanUpdateCalled = false;
+      bool isPanEndCalled = false;
+
+      await tester.pumpWidget(
+        MaterialApp(
+          home: GesturableWidget(
+            onPanStart: (details) {
+              isPanStartCalled = true;
+            },
+            onPanDown: (details) {
+              isPanDownCalled = true;
+            },
+            onPanUpdate: (details) {
+              isPanUpdateCalled = true;
+            },
+            onPanEnd: (details) {
+              isPanEndCalled = true;
+            },
+            unpressDelay: Duration.zero,
+            child: const SizedBox(width: 100, height: 100),
+          ),
+        ),
+      );
+
+      final gesturableWidget = find.byType(GesturableWidget);
+      expect(gesturableWidget, findsOneWidget);
+
+      final gesturableWidgetCenter = tester.getCenter(gesturableWidget);
+      final gesture = await tester.startGesture(gesturableWidgetCenter);
+      await gesture.moveBy(const Offset(50, 50), timeStamp: Durations.medium1);
+      // move back to the original position
+      await gesture.moveBy(const Offset(-50, -50),
+          timeStamp: Durations.medium1);
+      await gesture.up();
+
+      // move it again but cancel it
+      await gesture.down(gesturableWidgetCenter);
+
+      await gesture.moveBy(const Offset(50, 50));
+      await gesture.cancel(timeStamp: const Duration(milliseconds: 100));
+      await tester.pump(const Duration(milliseconds: 200));
+
+      expect(
+        isPanStartCalled,
+        isTrue,
+        reason: 'onPanStart was not called',
+      );
+      expect(
+        isPanDownCalled,
+        isTrue,
+        reason: 'onPanDown was not called',
+      );
+      expect(
+        isPanUpdateCalled,
+        isTrue,
+        reason: 'onPanUpdate was not called',
+      );
+      expect(
+        isPanEndCalled,
+        isTrue,
+        reason: 'onPanEnd was not called',
+      );
+    });
   });
 }

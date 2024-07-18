@@ -144,14 +144,14 @@ class Pressable extends StatefulWidget {
   final Duration unpressDelay;
 
   @override
-  // ignore: library_private_types_in_public_api
-  _PressableState createState() => _PressableState();
+  State createState() => PressableWidgetState();
 }
 
-class _PressableState extends State<Pressable> {
+@visibleForTesting
+class PressableWidgetState extends State<Pressable> {
   bool get _hasOnPress => widget.onPress != null;
 
-  MouseCursor get _mouseCursor {
+  MouseCursor get mouseCursor {
     if (widget.mouseCursor != null) {
       return widget.mouseCursor!;
     }
@@ -166,7 +166,7 @@ class _PressableState extends State<Pressable> {
   /// Binds the [ActivateIntent] from the Flutter SDK to the onPressed callback by default.
   /// This enables SPACE and ENTER key activation on most platforms.
   /// Additional actions can be provided externally to extend functionality.
-  Map<Type, Action<Intent>> get _actions {
+  Map<Type, Action<Intent>> get actions {
     return {
       if (widget.onPress != null) ...{
         ActivateIntent:
@@ -199,8 +199,8 @@ class _PressableState extends State<Pressable> {
         onKey: widget.onKey,
         onKeyEvent: widget.onKeyEvent,
         canRequestFocus: widget.canRequestFocus,
-        mouseCursor: _mouseCursor,
-        actions: _actions,
+        mouseCursor: mouseCursor,
+        actions: actions,
         child: widget.child,
       ),
     );

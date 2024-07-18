@@ -472,6 +472,71 @@ void main() {
       );
     });
   });
+
+  group('Mouse Cursor tests', () {
+    testWidgets('uses custom mouseCursor when provided',
+        (WidgetTester tester) async {
+      await tester.pumpWidget(
+        const Pressable(
+          mouseCursor: SystemMouseCursors.help,
+          child: SizedBox(),
+        ),
+      );
+
+      final finder = find.byType(Pressable);
+      expect(finder, findsOneWidget);
+
+      final pressableState = tester.state<PressableWidgetState>(finder);
+      expect(pressableState.mouseCursor, equals(SystemMouseCursors.help));
+    });
+
+    testWidgets('uses forbidden mouseCursor when disabled',
+        (WidgetTester tester) async {
+      await tester.pumpWidget(
+        const Pressable(
+          enabled: false,
+          child: SizedBox(),
+        ),
+      );
+
+      final finder = find.byType(Pressable);
+      expect(finder, findsOneWidget);
+
+      final pressableState = tester.state<PressableWidgetState>(finder);
+      expect(pressableState.mouseCursor, equals(SystemMouseCursors.forbidden));
+    });
+
+    testWidgets('uses click mouseCursor when enabled and onPress provided',
+        (WidgetTester tester) async {
+      await tester.pumpWidget(
+        Pressable(
+          onPress: () {},
+          child: const SizedBox(),
+        ),
+      );
+
+      final finder = find.byType(Pressable);
+      expect(finder, findsOneWidget);
+
+      final pressableState = tester.state<PressableWidgetState>(finder);
+      expect(pressableState.mouseCursor, equals(SystemMouseCursors.click));
+    });
+
+    testWidgets('defers mouseCursor when enabled and onPress not provided',
+        (WidgetTester tester) async {
+      await tester.pumpWidget(
+        const Pressable(
+          child: SizedBox(),
+        ),
+      );
+
+      final finder = find.byType(Pressable);
+      expect(finder, findsOneWidget);
+
+      final pressableState = tester.state<PressableWidgetState>(finder);
+      expect(pressableState.mouseCursor, equals(MouseCursor.defer));
+    });
+  });
 }
 
 extension WidgetTesterExt on WidgetTester {

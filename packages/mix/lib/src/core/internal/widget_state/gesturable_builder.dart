@@ -18,6 +18,8 @@ class GesturableWidget extends GesturableWidgetBuilder {
     super.onPanDown,
     super.onPanUpdate,
     super.onPanEnd,
+    super.onPanCancel,
+    super.onPanStart,
     super.excludeFromSemantics = false,
     super.hitTestBehavior = HitTestBehavior.opaque,
     required super.unpressDelay,
@@ -45,6 +47,8 @@ abstract class GesturableWidgetBuilder extends StatefulWidget {
     this.onPanDown,
     this.onPanUpdate,
     this.onPanEnd,
+    this.onPanCancel,
+    this.onPanStart,
     this.excludeFromSemantics = false,
     this.hitTestBehavior = HitTestBehavior.opaque,
     required this.unpressDelay,
@@ -80,6 +84,10 @@ abstract class GesturableWidgetBuilder extends StatefulWidget {
   /// The callback that is called when the user moves their finger during a pan gesture.
   final GestureDragUpdateCallback? onPanUpdate;
 
+  final GestureDragCancelCallback? onPanCancel;
+
+  final GestureDragStartCallback? onPanStart;
+
   /// The callback that is called when the user ends a pan gesture.
   final GestureDragEndCallback? onPanEnd;
 
@@ -112,15 +120,15 @@ abstract class GesturableWidgetStateBuilder<T extends GesturableWidgetBuilder>
     _controller.enabled = widget.enabled;
   }
 
-  void _handlePanUpdate(DragUpdateDetails event) {
+  void _onPanUpdate(DragUpdateDetails event) {
     widget.onPanUpdate?.call(event);
   }
 
-  void _handlePanDown(DragDownDetails details) {
+  void _onPanDown(DragDownDetails details) {
     widget.onPanDown?.call(details);
   }
 
-  void _handlePanEnd(DragEndDetails details) {
+  void _onPanEnd(DragEndDetails details) {
     _updatePress(true);
     widget.onPanEnd?.call(details);
   }
@@ -160,6 +168,14 @@ abstract class GesturableWidgetStateBuilder<T extends GesturableWidgetBuilder>
   void _onLongPressCancel() {
     _controller.longPressed = false;
     widget.onLongPressCancel?.call();
+  }
+
+  void _onPanCancel() {
+    widget.onPanCancel?.call();
+  }
+
+  void _onPanStart(DragStartDetails details) {
+    widget.onPanStart?.call(details);
   }
 
   void _unpressAfterDelay(int initialPressCount) {
@@ -216,9 +232,11 @@ abstract class GesturableWidgetStateBuilder<T extends GesturableWidgetBuilder>
       onLongPress: _onLongPress,
       onLongPressStart: _onLongPressStart,
       onLongPressEnd: _onLongPressEnd,
-      onPanDown: _handlePanDown,
-      onPanUpdate: _handlePanUpdate,
-      onPanEnd: _handlePanEnd,
+      onPanDown: _onPanDown,
+      onPanStart: _onPanStart,
+      onPanUpdate: _onPanUpdate,
+      onPanEnd: _onPanEnd,
+      onPanCancel: _onPanCancel,
       behavior: widget.hitTestBehavior,
       excludeFromSemantics: widget.excludeFromSemantics,
       child: ListenableBuilder(
