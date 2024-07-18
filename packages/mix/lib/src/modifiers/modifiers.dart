@@ -13,7 +13,6 @@ export 'intrinsic_widget_modifier.dart';
 export 'modifiers.dart';
 export 'opacity_widget_modifier.dart';
 export 'padding_widget_modifier.dart';
-export 'render_widget_modifier.dart';
 export 'rotated_box_widget_modifier.dart';
 export 'sized_box_widget_modifier.dart';
 export 'transform_widget_modifier.dart';

@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
+import 'package:mix/src/modifiers/internal/render_widget_modifier.dart';
 
 import '../../helpers/testing_utils.dart';
 
@@ -355,6 +356,43 @@ void main() {
       expect(find.byType(Transform), findsNothing);
       await tester.pumpAndSettle(const Duration(milliseconds: 200));
     });
+
+    testWidgets('override default orderOfModifiers using MixTheme',
+        (tester) async {
+      await tester.pumpWithMixTheme(
+        Box(
+          style: Style(
+            $with.scale(2),
+            $with.clipRect(),
+            $with.sizedBox.square(100),
+          ).animate(),
+        ),
+        theme: MixThemeData(
+          defaultOrderOfModifiers: const [
+            SizedBoxModifierSpec,
+            ClipRectModifierSpec,
+            TransformModifierSpec,
+          ],
+        ),
+      );
+
+      final firstFinder = find.byType(SizedBox);
+      expect(firstFinder, findsOneWidget);
+
+      final secondFinder = find.descendant(
+        of: firstFinder,
+        matching: find.byType(ClipRect),
+      );
+
+      expect(secondFinder, findsOneWidget);
+
+      final thirdFinder = find.descendant(
+        of: secondFinder,
+        matching: find.byType(Transform),
+      );
+
+      expect(thirdFinder, findsOneWidget);
+    });
   });
 
   group('Modifiers attributes', () {
@@ -449,46 +487,6 @@ void main() {
         );
       },
     );
-  });
-
-  group('resolveModifierSpecs', () {
-    test('Returns empty set when no modifiers are provided', () {
-      final result = resolveModifierSpecs(const [], EmptyMixData);
-      expect(result, isEmpty);
-    });
-
-    test('Returns resolved modifier specs in the correct order', () {
-      final style = Style(
-        $with.scale(2.0),
-        $with.opacity(0.5),
-        $with.visibility.on(),
-        $with.clipOval(),
-        $with.aspectRatio(2.0),
-      );
-
-      final mix = style.of(MockBuildContext());
-      final result = resolveModifierSpecs(
-        [
-          ClipOvalModifierAttribute,
-          AspectRatioModifierAttribute,
-          TransformModifierAttribute,
-          OpacityModifierAttribute,
-          VisibilityModifierAttribute,
-        ],
-        mix,
-      );
-
-      expect(result, {
-        const VisibilityModifierSpec(true),
-        const OpacityModifierSpec(0.5),
-        TransformModifierSpec(
-          transform: Matrix4.diagonal3Values(2.0, 2.0, 1.0),
-          alignment: Alignment.center,
-        ),
-        const AspectRatioModifierSpec(2.0),
-        const ClipOvalModifierSpec(),
-      });
-    });
   });
 }
 

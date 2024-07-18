@@ -12,7 +12,7 @@ part of 'scalar_util.dart';
 /// This class extends [MixUtility] and provides methods to create [Attribute] instances
 /// from predefined [AlignmentGeometry] values.
 /// {@endtemplate}
-base mixin _$AlignmentUtility<T extends Attribute>
+mixin _$AlignmentUtility<T extends Attribute>
     on MixUtility<T, AlignmentGeometry> {
   /// Creates an [Attribute] instance with [Alignment.topLeft] value.
   T topLeft() => builder(Alignment.topLeft);
@@ -51,7 +51,7 @@ base mixin _$AlignmentUtility<T extends Attribute>
 /// This class extends [MixUtility] and provides methods to create [Attribute] instances
 /// from predefined [AlignmentDirectional] values.
 /// {@endtemplate}
-base mixin _$AlignmentDirectionalUtility<T extends Attribute>
+mixin _$AlignmentDirectionalUtility<T extends Attribute>
     on MixUtility<T, AlignmentDirectional> {
   /// Creates an [Attribute] instance with [AlignmentDirectional.topStart] value.
   T topStart() => builder(AlignmentDirectional.topStart);
@@ -90,8 +90,7 @@ base mixin _$AlignmentDirectionalUtility<T extends Attribute>
 /// This class extends [MixUtility] and provides methods to create [Attribute] instances
 /// from predefined [FontFeature] values.
 /// {@endtemplate}
-base mixin _$FontFeatureUtility<T extends Attribute>
-    on MixUtility<T, FontFeature> {
+mixin _$FontFeatureUtility<T extends Attribute> on MixUtility<T, FontFeature> {
   /// Creates an [Attribute] instance using the [FontFeature.enable] constructor.
   T enable(String feature) => builder(FontFeature.enable(feature));
 
@@ -186,7 +185,7 @@ base mixin _$FontFeatureUtility<T extends Attribute>
 /// This class extends [MixUtility] and provides methods to create [Attribute] instances
 /// from predefined [Duration] values.
 /// {@endtemplate}
-base mixin _$DurationUtility<T extends Attribute> on MixUtility<T, Duration> {
+mixin _$DurationUtility<T extends Attribute> on MixUtility<T, Duration> {
   /// Creates an [Attribute] instance with [Duration.zero] value.
   T zero() => builder(Duration.zero);
 
@@ -200,8 +199,7 @@ base mixin _$DurationUtility<T extends Attribute> on MixUtility<T, Duration> {
 /// This class extends [MixUtility] and provides methods to create [Attribute] instances
 /// from predefined [FontWeight] values.
 /// {@endtemplate}
-base mixin _$FontWeightUtility<T extends Attribute>
-    on MixUtility<T, FontWeight> {
+mixin _$FontWeightUtility<T extends Attribute> on MixUtility<T, FontWeight> {
   /// Creates an [Attribute] instance with [FontWeight.w100] value.
   T w100() => builder(FontWeight.w100);
 
@@ -245,7 +243,7 @@ base mixin _$FontWeightUtility<T extends Attribute>
 /// This class extends [MixUtility] and provides methods to create [Attribute] instances
 /// from predefined [TextDecoration] values.
 /// {@endtemplate}
-base mixin _$TextDecorationUtility<T extends Attribute>
+mixin _$TextDecorationUtility<T extends Attribute>
     on MixUtility<T, TextDecoration> {
   /// Creates an [Attribute] instance with [TextDecoration.none] value.
   T none() => builder(TextDecoration.none);
@@ -274,7 +272,7 @@ base mixin _$TextDecorationUtility<T extends Attribute>
 /// This class extends [MixUtility] and provides methods to create [Attribute] instances
 /// from predefined [Curve] values.
 /// {@endtemplate}
-base mixin _$CurveUtility<T extends Attribute> on MixUtility<T, Curve> {
+mixin _$CurveUtility<T extends Attribute> on MixUtility<T, Curve> {
   /// Creates an [Attribute] instance with [Curves.linear] value.
   T linear() => builder(Curves.linear);
 
@@ -414,7 +412,7 @@ base mixin _$CurveUtility<T extends Attribute> on MixUtility<T, Curve> {
 /// This class extends [MixUtility] and provides methods to create [Attribute] instances
 /// from predefined [Offset] values.
 /// {@endtemplate}
-base mixin _$OffsetUtility<T extends Attribute> on MixUtility<T, Offset> {
+mixin _$OffsetUtility<T extends Attribute> on MixUtility<T, Offset> {
   /// Creates an [Attribute] instance with [Offset.zero] value.
   T zero() => builder(Offset.zero);
 
@@ -436,7 +434,7 @@ base mixin _$OffsetUtility<T extends Attribute> on MixUtility<T, Offset> {
 /// This class extends [MixUtility] and provides methods to create [Attribute] instances
 /// from predefined [Radius] values.
 /// {@endtemplate}
-base mixin _$RadiusUtility<T extends Attribute> on MixUtility<T, Radius> {
+mixin _$RadiusUtility<T extends Attribute> on MixUtility<T, Radius> {
   /// Creates an [Attribute] instance with [Radius.zero] value.
   T zero() => builder(Radius.zero);
 
@@ -453,7 +451,7 @@ base mixin _$RadiusUtility<T extends Attribute> on MixUtility<T, Radius> {
 /// This class extends [MixUtility] and provides methods to create [Attribute] instances
 /// from predefined [Rect] values.
 /// {@endtemplate}
-base mixin _$RectUtility<T extends Attribute> on MixUtility<T, Rect> {
+mixin _$RectUtility<T extends Attribute> on MixUtility<T, Rect> {
   /// Creates an [Attribute] instance with [Rect.zero] value.
   T zero() => builder(Rect.zero);
 
@@ -495,7 +493,7 @@ base mixin _$RectUtility<T extends Attribute> on MixUtility<T, Rect> {
 /// This class extends [MixUtility] and provides methods to create [Attribute] instances
 /// from predefined [ImageProvider] values.
 /// {@endtemplate}
-base mixin _$ImageProviderUtility<T extends Attribute>
+mixin _$ImageProviderUtility<T extends Attribute>
     on MixUtility<T, ImageProvider> {
   /// Creates an [Attribute] instance with the specified ImageProvider value.
   T call(ImageProvider value) => builder(value);
@@ -507,7 +505,7 @@ base mixin _$ImageProviderUtility<T extends Attribute>
 /// This class extends [MixUtility] and provides methods to create [Attribute] instances
 /// from predefined [TextHeightBehavior] values.
 /// {@endtemplate}
-base mixin _$TextHeightBehaviorUtility<T extends Attribute>
+mixin _$TextHeightBehaviorUtility<T extends Attribute>
     on MixUtility<T, TextHeightBehavior> {
   /// Creates an [Attribute] instance with the specified TextHeightBehavior value.
   T call(TextHeightBehavior value) => builder(value);
@@ -519,7 +517,7 @@ base mixin _$TextHeightBehaviorUtility<T extends Attribute>
 /// This class extends [MixUtility] and provides methods to create [Attribute] instances
 /// from predefined [GradientTransform] values.
 /// {@endtemplate}
-base mixin _$GradientTransformUtility<T extends Attribute>
+mixin _$GradientTransformUtility<T extends Attribute>
     on MixUtility<T, GradientTransform> {
   /// Creates an [Attribute] instance with the specified GradientTransform value.
   T call(GradientTransform value) => builder(value);
@@ -531,7 +529,7 @@ base mixin _$GradientTransformUtility<T extends Attribute>
 /// This class extends [MixUtility] and provides methods to create [Attribute] instances
 /// from predefined [Matrix4] values.
 /// {@endtemplate}
-base mixin _$Matrix4Utility<T extends Attribute> on MixUtility<T, Matrix4> {
+mixin _$Matrix4Utility<T extends Attribute> on MixUtility<T, Matrix4> {
   /// Creates an [Attribute] instance using the [Matrix4.fromList] constructor.
   T fromList(List<double> values) => builder(Matrix4.fromList(values));
 
@@ -584,7 +582,7 @@ base mixin _$Matrix4Utility<T extends Attribute> on MixUtility<T, Matrix4> {
 /// This class extends [MixUtility] and provides methods to create [Attribute] instances
 /// from predefined [String] values.
 /// {@endtemplate}
-base mixin _$FontFamilyUtility<T extends Attribute> on MixUtility<T, String> {
+mixin _$FontFamilyUtility<T extends Attribute> on MixUtility<T, String> {
   /// Creates an [Attribute] instance using the [String.fromCharCodes] constructor.
   T fromCharCodes(Iterable<int> charCodes, [int start = 0, int? end]) {
     return builder(String.fromCharCodes(charCodes, start, end));
@@ -608,8 +606,7 @@ base mixin _$FontFamilyUtility<T extends Attribute> on MixUtility<T, String> {
 /// This class extends [MixUtility] and provides methods to create [Attribute] instances
 /// from predefined [TextScaler] values.
 /// {@endtemplate}
-base mixin _$TextScalerUtility<T extends Attribute>
-    on MixUtility<T, TextScaler> {
+mixin _$TextScalerUtility<T extends Attribute> on MixUtility<T, TextScaler> {
   /// Creates an [Attribute] instance with [TextScaler.noScaling] value.
   T noScaling() => builder(TextScaler.noScaling);
 

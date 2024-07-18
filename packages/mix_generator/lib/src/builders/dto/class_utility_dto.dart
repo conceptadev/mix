@@ -13,6 +13,8 @@ String dtoUtilityClass(DtoAnnotationContext context) {
 
   final fields = generateUtilityFields(utilityType, context.fields);
 
+  final valueClassFields = generateUtilityFieldsFromClass(context.element);
+
   final callMethod = utilityMethodCallBuilder(context.fields);
 
   final onlyMethod = utilityMethodOnlyBuilder(
@@ -27,6 +29,8 @@ String dtoUtilityClass(DtoAnnotationContext context) {
 /// Use the methods of this class to configure specific properties of a [$utilityType].
 final class $utilityClassName<T extends Attribute> extends DtoUtility<T, $utilityType, $resolvedType> {
   $fields
+
+  $valueClassFields
 
   $utilityClassName(super.builder) : super(valueToDto: (v)=>v.toDto());
 

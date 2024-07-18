@@ -12,7 +12,7 @@ part of 'enum_util.dart';
 /// This class extends [MixUtility] and provides methods to create [Attribute] instances
 /// from predefined [VerticalDirection] values.
 /// {@endtemplate}
-base mixin _$VerticalDirectionUtility<T extends Attribute>
+mixin _$VerticalDirectionUtility<T extends Attribute>
     on MixUtility<T, VerticalDirection> {
   /// Creates an [Attribute] instance with [VerticalDirection.up] value.
   T up() => builder(VerticalDirection.up);
@@ -30,8 +30,7 @@ base mixin _$VerticalDirectionUtility<T extends Attribute>
 /// This class extends [MixUtility] and provides methods to create [Attribute] instances
 /// from predefined [BorderStyle] values.
 /// {@endtemplate}
-base mixin _$BorderStyleUtility<T extends Attribute>
-    on MixUtility<T, BorderStyle> {
+mixin _$BorderStyleUtility<T extends Attribute> on MixUtility<T, BorderStyle> {
   /// Creates an [Attribute] instance with [BorderStyle.none] value.
   T none() => builder(BorderStyle.none);
 
@@ -48,7 +47,7 @@ base mixin _$BorderStyleUtility<T extends Attribute>
 /// This class extends [MixUtility] and provides methods to create [Attribute] instances
 /// from predefined [Clip] values.
 /// {@endtemplate}
-base mixin _$ClipUtility<T extends Attribute> on MixUtility<T, Clip> {
+mixin _$ClipUtility<T extends Attribute> on MixUtility<T, Clip> {
   /// Creates an [Attribute] instance with [Clip.none] value.
   T none() => builder(Clip.none);
 
@@ -71,7 +70,7 @@ base mixin _$ClipUtility<T extends Attribute> on MixUtility<T, Clip> {
 /// This class extends [MixUtility] and provides methods to create [Attribute] instances
 /// from predefined [Axis] values.
 /// {@endtemplate}
-base mixin _$AxisUtility<T extends Attribute> on MixUtility<T, Axis> {
+mixin _$AxisUtility<T extends Attribute> on MixUtility<T, Axis> {
   /// Creates an [Attribute] instance with [Axis.horizontal] value.
   T horizontal() => builder(Axis.horizontal);
 
@@ -88,7 +87,7 @@ base mixin _$AxisUtility<T extends Attribute> on MixUtility<T, Axis> {
 /// This class extends [MixUtility] and provides methods to create [Attribute] instances
 /// from predefined [FlexFit] values.
 /// {@endtemplate}
-base mixin _$FlexFitUtility<T extends Attribute> on MixUtility<T, FlexFit> {
+mixin _$FlexFitUtility<T extends Attribute> on MixUtility<T, FlexFit> {
   /// Creates an [Attribute] instance with [FlexFit.tight] value.
   T tight() => builder(FlexFit.tight);
 
@@ -105,7 +104,7 @@ base mixin _$FlexFitUtility<T extends Attribute> on MixUtility<T, FlexFit> {
 /// This class extends [MixUtility] and provides methods to create [Attribute] instances
 /// from predefined [StackFit] values.
 /// {@endtemplate}
-base mixin _$StackFitUtility<T extends Attribute> on MixUtility<T, StackFit> {
+mixin _$StackFitUtility<T extends Attribute> on MixUtility<T, StackFit> {
   /// Creates an [Attribute] instance with [StackFit.loose] value.
   T loose() => builder(StackFit.loose);
 
@@ -125,8 +124,7 @@ base mixin _$StackFitUtility<T extends Attribute> on MixUtility<T, StackFit> {
 /// This class extends [MixUtility] and provides methods to create [Attribute] instances
 /// from predefined [ImageRepeat] values.
 /// {@endtemplate}
-base mixin _$ImageRepeatUtility<T extends Attribute>
-    on MixUtility<T, ImageRepeat> {
+mixin _$ImageRepeatUtility<T extends Attribute> on MixUtility<T, ImageRepeat> {
   /// Creates an [Attribute] instance with [ImageRepeat.repeat] value.
   T repeat() => builder(ImageRepeat.repeat);
 
@@ -146,7 +144,7 @@ base mixin _$ImageRepeatUtility<T extends Attribute>
 /// This class extends [MixUtility] and provides methods to create [Attribute] instances
 /// from predefined [TextDirection] values.
 /// {@endtemplate}
-base mixin _$TextDirectionUtility<T extends Attribute>
+mixin _$TextDirectionUtility<T extends Attribute>
     on MixUtility<T, TextDirection> {
   /// Creates an [Attribute] instance with [TextDirection.rtl] value.
   T rtl() => builder(TextDirection.rtl);
@@ -164,7 +162,7 @@ base mixin _$TextDirectionUtility<T extends Attribute>
 /// This class extends [MixUtility] and provides methods to create [Attribute] instances
 /// from predefined [TileMode] values.
 /// {@endtemplate}
-base mixin _$TileModeUtility<T extends Attribute> on MixUtility<T, TileMode> {
+mixin _$TileModeUtility<T extends Attribute> on MixUtility<T, TileMode> {
   /// Creates an [Attribute] instance with [TileMode.clamp] value.
   T clamp() => builder(TileMode.clamp);
 
@@ -187,7 +185,7 @@ base mixin _$TileModeUtility<T extends Attribute> on MixUtility<T, TileMode> {
 /// This class extends [MixUtility] and provides methods to create [Attribute] instances
 /// from predefined [MainAxisAlignment] values.
 /// {@endtemplate}
-base mixin _$MainAxisAlignmentUtility<T extends Attribute>
+mixin _$MainAxisAlignmentUtility<T extends Attribute>
     on MixUtility<T, MainAxisAlignment> {
   /// Creates an [Attribute] instance with [MainAxisAlignment.start] value.
   T start() => builder(MainAxisAlignment.start);
@@ -217,7 +215,7 @@ base mixin _$MainAxisAlignmentUtility<T extends Attribute>
 /// This class extends [MixUtility] and provides methods to create [Attribute] instances
 /// from predefined [CrossAxisAlignment] values.
 /// {@endtemplate}
-base mixin _$CrossAxisAlignmentUtility<T extends Attribute>
+mixin _$CrossAxisAlignmentUtility<T extends Attribute>
     on MixUtility<T, CrossAxisAlignment> {
   /// Creates an [Attribute] instance with [CrossAxisAlignment.start] value.
   T start() => builder(CrossAxisAlignment.start);
@@ -244,7 +242,7 @@ base mixin _$CrossAxisAlignmentUtility<T extends Attribute>
 /// This class extends [MixUtility] and provides methods to create [Attribute] instances
 /// from predefined [MainAxisSize] values.
 /// {@endtemplate}
-base mixin _$MainAxisSizeUtility<T extends Attribute>
+mixin _$MainAxisSizeUtility<T extends Attribute>
     on MixUtility<T, MainAxisSize> {
   /// Creates an [Attribute] instance with [MainAxisSize.min] value.
   T min() => builder(MainAxisSize.min);
@@ -262,7 +260,7 @@ base mixin _$MainAxisSizeUtility<T extends Attribute>
 /// This class extends [MixUtility] and provides methods to create [Attribute] instances
 /// from predefined [BoxFit] values.
 /// {@endtemplate}
-base mixin _$BoxFitUtility<T extends Attribute> on MixUtility<T, BoxFit> {
+mixin _$BoxFitUtility<T extends Attribute> on MixUtility<T, BoxFit> {
   /// Creates an [Attribute] instance with [BoxFit.fill] value.
   T fill() => builder(BoxFit.fill);
 
@@ -294,7 +292,7 @@ base mixin _$BoxFitUtility<T extends Attribute> on MixUtility<T, BoxFit> {
 /// This class extends [MixUtility] and provides methods to create [Attribute] instances
 /// from predefined [BlendMode] values.
 /// {@endtemplate}
-base mixin _$BlendModeUtility<T extends Attribute> on MixUtility<T, BlendMode> {
+mixin _$BlendModeUtility<T extends Attribute> on MixUtility<T, BlendMode> {
   /// Creates an [Attribute] instance with [BlendMode.clear] value.
   T clear() => builder(BlendMode.clear);
 
@@ -392,7 +390,7 @@ base mixin _$BlendModeUtility<T extends Attribute> on MixUtility<T, BlendMode> {
 /// This class extends [MixUtility] and provides methods to create [Attribute] instances
 /// from predefined [BoxShape] values.
 /// {@endtemplate}
-base mixin _$BoxShapeUtility<T extends Attribute> on MixUtility<T, BoxShape> {
+mixin _$BoxShapeUtility<T extends Attribute> on MixUtility<T, BoxShape> {
   /// Creates an [Attribute] instance with [BoxShape.rectangle] value.
   T rectangle() => builder(BoxShape.rectangle);
 
@@ -409,7 +407,7 @@ base mixin _$BoxShapeUtility<T extends Attribute> on MixUtility<T, BoxShape> {
 /// This class extends [MixUtility] and provides methods to create [Attribute] instances
 /// from predefined [FontStyle] values.
 /// {@endtemplate}
-base mixin _$FontStyleUtility<T extends Attribute> on MixUtility<T, FontStyle> {
+mixin _$FontStyleUtility<T extends Attribute> on MixUtility<T, FontStyle> {
   /// Creates an [Attribute] instance with [FontStyle.normal] value.
   T normal() => builder(FontStyle.normal);
 
@@ -426,7 +424,7 @@ base mixin _$FontStyleUtility<T extends Attribute> on MixUtility<T, FontStyle> {
 /// This class extends [MixUtility] and provides methods to create [Attribute] instances
 /// from predefined [TextDecorationStyle] values.
 /// {@endtemplate}
-base mixin _$TextDecorationStyleUtility<T extends Attribute>
+mixin _$TextDecorationStyleUtility<T extends Attribute>
     on MixUtility<T, TextDecorationStyle> {
   /// Creates an [Attribute] instance with [TextDecorationStyle.solid] value.
   T solid() => builder(TextDecorationStyle.solid);
@@ -453,7 +451,7 @@ base mixin _$TextDecorationStyleUtility<T extends Attribute>
 /// This class extends [MixUtility] and provides methods to create [Attribute] instances
 /// from predefined [TextBaseline] values.
 /// {@endtemplate}
-base mixin _$TextBaselineUtility<T extends Attribute>
+mixin _$TextBaselineUtility<T extends Attribute>
     on MixUtility<T, TextBaseline> {
   /// Creates an [Attribute] instance with [TextBaseline.alphabetic] value.
   T alphabetic() => builder(TextBaseline.alphabetic);
@@ -471,7 +469,7 @@ base mixin _$TextBaselineUtility<T extends Attribute>
 /// This class extends [MixUtility] and provides methods to create [Attribute] instances
 /// from predefined [TextOverflow] values.
 /// {@endtemplate}
-base mixin _$TextOverflowUtility<T extends Attribute>
+mixin _$TextOverflowUtility<T extends Attribute>
     on MixUtility<T, TextOverflow> {
   /// Creates an [Attribute] instance with [TextOverflow.clip] value.
   T clip() => builder(TextOverflow.clip);
@@ -495,7 +493,7 @@ base mixin _$TextOverflowUtility<T extends Attribute>
 /// This class extends [MixUtility] and provides methods to create [Attribute] instances
 /// from predefined [TextWidthBasis] values.
 /// {@endtemplate}
-base mixin _$TextWidthBasisUtility<T extends Attribute>
+mixin _$TextWidthBasisUtility<T extends Attribute>
     on MixUtility<T, TextWidthBasis> {
   /// Creates an [Attribute] instance with [TextWidthBasis.parent] value.
   T parent() => builder(TextWidthBasis.parent);
@@ -513,7 +511,7 @@ base mixin _$TextWidthBasisUtility<T extends Attribute>
 /// This class extends [MixUtility] and provides methods to create [Attribute] instances
 /// from predefined [TextAlign] values.
 /// {@endtemplate}
-base mixin _$TextAlignUtility<T extends Attribute> on MixUtility<T, TextAlign> {
+mixin _$TextAlignUtility<T extends Attribute> on MixUtility<T, TextAlign> {
   /// Creates an [Attribute] instance with [TextAlign.left] value.
   T left() => builder(TextAlign.left);
 
@@ -542,7 +540,7 @@ base mixin _$TextAlignUtility<T extends Attribute> on MixUtility<T, TextAlign> {
 /// This class extends [MixUtility] and provides methods to create [Attribute] instances
 /// from predefined [FilterQuality] values.
 /// {@endtemplate}
-base mixin _$FilterQualityUtility<T extends Attribute>
+mixin _$FilterQualityUtility<T extends Attribute>
     on MixUtility<T, FilterQuality> {
   /// Creates an [Attribute] instance with [FilterQuality.none] value.
   T none() => builder(FilterQuality.none);

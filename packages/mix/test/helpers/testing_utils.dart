@@ -3,6 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
+import 'package:mix/src/core/internal/widget_state/gesturable_builder.dart';
+import 'package:mix/src/core/internal/widget_state/interactive_widget.dart';
 import 'package:mix/src/internal/lerp_helpers.dart';
 
 export 'package:mix/src/internal/values_ext.dart';
@@ -137,14 +139,16 @@ extension WidgetTesterExt on WidgetTester {
   }) async {
     await pumpWidget(
       MaterialApp(
-        home: WidgetStateModel(
-          enabled: !disabled,
-          focused: focus,
-          pressed: pressed,
-          hovered: hovered,
+        home: GesturableState(
           longPressed: longPressed,
-          pointerPosition: null,
-          child: widget,
+          pressed: pressed,
+          child: InteractiveState(
+            enabled: !disabled,
+            focused: focus,
+            hovered: hovered,
+            pointerPosition: null,
+            child: widget,
+          ),
         ),
       ),
     );

@@ -24,6 +24,10 @@ class ColorToken extends MixToken<Color> {
   @override
   Color resolve(BuildContext context) {
     final themeValue = MixTheme.of(context).colors[this];
+
+    if (themeValue == null) {
+      // Look for maybe been a swatch token
+    }
     assert(
       themeValue != null,
       'ColorToken $name is not defined in the theme',

@@ -1,0 +1,24 @@
+name: remix
+description: Completely unstyled, widgets designed to integrate with Mix
+
+version: 0.0.1
+
+environment:
+  sdk: ">=3.3.0 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  mix: ^1.1.2
+  mix_annotations: ^0.1.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^2.0.0
+  mix_generator: ^0.1.2
+  build_runner: ^2.4.9
+
+flutter:
+  uses-material-design: true
