@@ -6,8 +6,6 @@ import 'package:mix/mix.dart';
 import 'package:mix/src/core/internal/widget_state/gesturable_builder.dart';
 import 'package:mix/src/core/internal/widget_state/interactive_widget.dart';
 import 'package:mix/src/internal/lerp_helpers.dart';
-import 'package:mix/src/internal/widget_state/gesturable_builder.dart';
-import 'package:mix/src/internal/widget_state/interactive_widget.dart';
 
 export 'package:mix/src/internal/values_ext.dart';
 
