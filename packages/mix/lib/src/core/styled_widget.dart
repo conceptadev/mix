@@ -1,8 +1,8 @@
 import 'package:flutter/widgets.dart';
 
-import '../internal/widget_state/interactive_widget.dart';
-import '../modifiers/modifiers.dart';
+import '../modifiers/internal/render_widget_modifier.dart';
 import 'core.dart';
+import 'internal/widget_state/interactive_widget.dart';
 
 /// An abstract widget for applying custom styles.
 ///
@@ -46,7 +46,7 @@ abstract class StyledWidget extends StatelessWidget {
     BuildContext context,
     Widget Function(BuildContext context) builder,
   ) {
-    return InteractiveBuilder(builder: (context) {
+    return _InteractiveBuilder(builder: (context) {
       final inheritedMix = inherit ? Mix.maybeOfInherited(context) : null;
 
       final mix = style.of(context);
@@ -83,6 +83,18 @@ abstract class StyledWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context);
+}
+
+class _InteractiveBuilder extends StatelessWidget {
+  const _InteractiveBuilder({required this.builder});
+
+  final Widget Function(BuildContext context) builder;
+  @override
+  Widget build(BuildContext context) {
+    return InteractiveState.maybeOf(context) == null
+        ? InteractiveWidget(child: Builder(builder: builder))
+        : builder(context);
+  }
 }
 
 /// A styled widget that builds its child using a [MixData] object.

@@ -102,7 +102,7 @@ T $fieldName() => builder($enumTypeName.$fieldName);
 
   return '''
 $comments
-base mixin $generatedClassName<T extends Attribute> on MixUtility<T,$enumTypeName> {
+mixin $generatedClassName<T extends Attribute> on MixUtility<T,$enumTypeName> {
 
 $fieldStatements
 

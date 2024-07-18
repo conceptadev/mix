@@ -59,6 +59,11 @@ const attributeChecker = TypeChecker.fromName(
   packageName: 'mix',
 );
 
+const specAttributeChecker = TypeChecker.fromName(
+  'SpecAttribute',
+  packageName: 'mix',
+);
+
 const styleChecker = TypeChecker.fromName(
   'Style',
   packageName: 'mix',

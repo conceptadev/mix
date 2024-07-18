@@ -131,4 +131,39 @@ void main() {
           isNull);
     });
   });
+  group('InteractiveWidget', () {
+    testWidgets(
+        'passes mouseCursor to FocusableActionDetector and skips first MouseRegion',
+        (WidgetTester tester) async {
+      const mouseCursor = SystemMouseCursors.click;
+
+      await tester.pumpWidget(
+        const InteractiveWidget(
+          mouseCursor: mouseCursor,
+          child: SizedBox(),
+        ),
+      );
+
+      final mouseRegionFinder = find.byType(MouseRegion);
+      expect(mouseRegionFinder, findsNWidgets(2));
+
+      final firstMouseRegion =
+          tester.widget<MouseRegion>(mouseRegionFinder.first);
+      expect(firstMouseRegion.cursor, equals(MouseCursor.defer));
+
+      final focusableActionDetectorFinder =
+          find.byType(FocusableActionDetector);
+      expect(focusableActionDetectorFinder, findsOneWidget);
+
+      final secondMouseRegionFinder = find.descendant(
+        of: focusableActionDetectorFinder,
+        matching: find.byType(MouseRegion),
+      );
+      expect(secondMouseRegionFinder, findsOneWidget);
+
+      final secondMouseRegion =
+          tester.widget<MouseRegion>(secondMouseRegionFinder);
+      expect(secondMouseRegion.cursor, equals(mouseCursor));
+    });
+  });
 }

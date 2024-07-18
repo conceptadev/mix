@@ -21,8 +21,11 @@ class TypeRefRepository {
 
   static final _dtoMap = {
     'EdgeInsetsGeometry': 'SpacingDto',
+    'EdgeInsets': 'EdgeInsetsDto',
+    'EdgeInsetsDirectional': 'EdgeInsetsDirectionalDto',
     'BoxConstraints': 'BoxConstraintsDto',
     'Decoration': 'DecorationDto',
+    'BoxDecoration': 'BoxDecorationDto',
     'Color': 'ColorDto',
     'WidgetModifiersData': 'WidgetModifiersDataDto',
     'AnimatedData': 'AnimatedDataDto',
@@ -33,6 +36,8 @@ class TypeRefRepository {
     'BoxShadow': 'BoxShadowDto',
     'Gradient': 'GradientDto',
     'BoxBorder': 'BoxBorderDto',
+    'Border': 'BorderDto',
+    'BorderDirectional': 'BorderDirectionalDto',
     'BorderSide': 'BorderSideDto',
     'BorderRadius': 'BorderRadiusDto',
     'BorderRadiusGeometry': 'BorderRadiusGeometryDto',
