@@ -3,5 +3,8 @@
   "flavors": {
     "prod": "stable",
     "mincompat": "3.19.0"
-  }
+  },
+  "runPubGetOnSdkChanges": true,
+  "updateVscodeSettings": true,
+  "updateGitIgnore": false
 }

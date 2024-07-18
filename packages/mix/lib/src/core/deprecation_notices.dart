@@ -1,10 +1,10 @@
 // ignore_for_file: camel_case_types
 
 import '../attributes/enum/enum_util.dart';
+import '../core/internal/widget_state/widget_state.dart';
 import '../specs/image/image_spec.dart';
 import '../variants/widget_state_variant.dart';
 import 'attribute.dart';
-import 'internal/widget_state/widget_state.dart';
 
 class InternalMixDeprecatedAnnotation extends Deprecated {
   final String version;
