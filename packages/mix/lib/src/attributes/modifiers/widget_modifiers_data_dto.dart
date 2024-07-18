@@ -1,6 +1,9 @@
 import 'package:flutter/foundation.dart';
 
-import '../../core/core.dart';
+import '../../core/attributes_map.dart';
+import '../../core/dto.dart';
+import '../../core/factory/mix_data.dart';
+import '../../core/modifier.dart';
 import 'widget_modifiers_data.dart';
 
 class WidgetModifiersDataDto extends Dto<WidgetModifiersData>

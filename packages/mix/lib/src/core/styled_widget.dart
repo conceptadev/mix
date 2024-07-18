@@ -1,8 +1,11 @@
 import 'package:flutter/widgets.dart';
 
 import '../modifiers/internal/render_widget_modifier.dart';
-import 'core.dart';
+import 'factory/mix_data.dart';
+import 'factory/mix_provider.dart';
+import 'factory/style_mix.dart';
 import 'internal/widget_state/interactive_widget.dart';
+import 'modifier.dart';
 
 /// An abstract widget for applying custom styles.
 ///

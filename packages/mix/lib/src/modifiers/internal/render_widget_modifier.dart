@@ -3,9 +3,22 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-import '../../core/core.dart';
-import '../../theme/theme.dart';
-import '../modifiers.dart';
+import '../../core/factory/mix_data.dart';
+import '../../core/modifier.dart';
+import '../../core/spec.dart';
+import '../../theme/mix/mix_theme.dart';
+import '../align_widget_modifier.dart';
+import '../aspect_ratio_widget_modifier.dart';
+import '../clip_widget_modifier.dart';
+import '../flexible_widget_modifier.dart';
+import '../fractionally_sized_box_widget_modifier.dart';
+import '../intrinsic_widget_modifier.dart';
+import '../opacity_widget_modifier.dart';
+import '../padding_widget_modifier.dart';
+import '../rotated_box_widget_modifier.dart';
+import '../sized_box_widget_modifier.dart';
+import '../transform_widget_modifier.dart';
+import '../visibility_widget_modifier.dart';
 
 const _defaultOrder = [
   // 1. FlexibleModifier: When the widget is used inside a Row, Column, or Flex widget, it will

@@ -29,16 +29,17 @@ Future<void> _libraryExport() async {
   // Traverse the /lib/ directory
   for (final key in fileMap.keys) {
     final importList = fileMap[key]!;
-    // final barrelDir = Directory(_joinPaths(_srcDirectory.path, key));
-    // final barreFile = File(_joinPaths(barrelDir.path, '$key.dart'));
-    // barreFile.deleteSync();
+    final barrelDir = Directory(_joinPaths(_srcDirectory.path, key));
+    final barreFile = File(_joinPaths(barrelDir.path, '$key.dart'));
+    if (barreFile.existsSync()) {
+      barreFile.deleteSync();
+    }
     libOutputString.writeln('/// ${key.toUpperCase()}');
 
     final barrelOutput = StringBuffer();
     barrelOutput.write(_generatedMessage);
     for (final import in importList) {
-      final relativePath = import.replaceAll('src/', '');
-      libOutputString.writeln('export \'$relativePath\';');
+      libOutputString.writeln('export \'$import\';');
     }
   }
 
