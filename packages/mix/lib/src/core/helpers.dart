@@ -6,7 +6,7 @@ import 'package:flutter/rendering.dart' as r;
 import 'package:flutter/widgets.dart' as w;
 
 import '../internal/deep_collection_equality.dart';
-import 'core.dart';
+import 'dto.dart';
 
 /// Class to provide some helpers without conflicting
 /// name space with other libraries.

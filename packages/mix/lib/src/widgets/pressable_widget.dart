@@ -4,7 +4,7 @@ import '../core/factory/style_mix.dart';
 import '../core/internal/widget_state/gesturable_builder.dart';
 import '../core/internal/widget_state/interactive_widget.dart';
 import '../internal/constants.dart';
-import '../specs/specs.dart';
+import '../specs/box/box_widget.dart';
 
 class PressableBox extends StatelessWidget {
   const PressableBox({

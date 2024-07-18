@@ -3,7 +3,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 
-import '../../attributes/attributes.dart';
+import '../../attributes/animated/animated_data.dart';
 import '../../internal/iterable_ext.dart';
 import '../../internal/string_ext.dart';
 import '../../theme/tokens/token_resolver.dart';
