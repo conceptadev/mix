@@ -768,6 +768,9 @@
 /Users/leofarias/Projects/mix/packages/mix/lib/src/core/factory/style_mix.dart
 /Users/leofarias/Projects/mix/packages/mix/lib/src/core/factory/style_widgets_ext.dart
 /Users/leofarias/Projects/mix/packages/mix/lib/src/core/helpers.dart
+/Users/leofarias/Projects/mix/packages/mix/lib/src/core/internal/widget_state/gesturable_builder.dart
+/Users/leofarias/Projects/mix/packages/mix/lib/src/core/internal/widget_state/interactive_widget.dart
+/Users/leofarias/Projects/mix/packages/mix/lib/src/core/internal/widget_state/widget_state.dart
 /Users/leofarias/Projects/mix/packages/mix/lib/src/core/modifier.dart
 /Users/leofarias/Projects/mix/packages/mix/lib/src/core/spec.dart
 /Users/leofarias/Projects/mix/packages/mix/lib/src/core/styled_widget.dart
@@ -776,7 +779,6 @@
 /Users/leofarias/Projects/mix/packages/mix/lib/src/internal/build_context_ext.dart
 /Users/leofarias/Projects/mix/packages/mix/lib/src/internal/compare_mixin.dart
 /Users/leofarias/Projects/mix/packages/mix/lib/src/internal/constants.dart
-/Users/leofarias/Projects/mix/packages/mix/lib/src/internal/custom_focusable_action_detector.dart
 /Users/leofarias/Projects/mix/packages/mix/lib/src/internal/deep_collection_equality.dart
 /Users/leofarias/Projects/mix/packages/mix/lib/src/internal/diagnostic_properties_builder_ext.dart
 /Users/leofarias/Projects/mix/packages/mix/lib/src/internal/helper_util.dart
@@ -788,11 +790,11 @@
 /Users/leofarias/Projects/mix/packages/mix/lib/src/modifiers/clip_widget_modifier.dart
 /Users/leofarias/Projects/mix/packages/mix/lib/src/modifiers/flexible_widget_modifier.dart
 /Users/leofarias/Projects/mix/packages/mix/lib/src/modifiers/fractionally_sized_box_widget_modifier.dart
+/Users/leofarias/Projects/mix/packages/mix/lib/src/modifiers/internal/render_widget_modifier.dart
 /Users/leofarias/Projects/mix/packages/mix/lib/src/modifiers/intrinsic_widget_modifier.dart
 /Users/leofarias/Projects/mix/packages/mix/lib/src/modifiers/modifiers.dart
 /Users/leofarias/Projects/mix/packages/mix/lib/src/modifiers/opacity_widget_modifier.dart
 /Users/leofarias/Projects/mix/packages/mix/lib/src/modifiers/padding_widget_modifier.dart
-/Users/leofarias/Projects/mix/packages/mix/lib/src/modifiers/render_widget_modifier.dart
 /Users/leofarias/Projects/mix/packages/mix/lib/src/modifiers/rotated_box_widget_modifier.dart
 /Users/leofarias/Projects/mix/packages/mix/lib/src/modifiers/sized_box_widget_modifier.dart
 /Users/leofarias/Projects/mix/packages/mix/lib/src/modifiers/transform_widget_modifier.dart
@@ -840,9 +842,8 @@
 /Users/leofarias/Projects/mix/packages/mix/lib/src/variants/context_variant_util/on_util.dart
 /Users/leofarias/Projects/mix/packages/mix/lib/src/variants/variant_attribute.dart
 /Users/leofarias/Projects/mix/packages/mix/lib/src/variants/variants.dart
-/Users/leofarias/Projects/mix/packages/mix/lib/src/widgets/widget_state/pressable_widget.dart
-/Users/leofarias/Projects/mix/packages/mix/lib/src/widgets/widget_state/widget_state.dart
-/Users/leofarias/Projects/mix/packages/mix/lib/src/widgets/widget_state/widget_state_variant.dart
+/Users/leofarias/Projects/mix/packages/mix/lib/src/variants/widget_state_variant.dart
+/Users/leofarias/Projects/mix/packages/mix/lib/src/widgets/pressable_widget.dart
 /Users/leofarias/Projects/mix/packages/mix/lib/src/widgets/widgets.dart
 /Users/leofarias/Projects/mix/packages/mix_annotations/LICENSE
 /Users/leofarias/Projects/mix/packages/mix_annotations/lib/mix_annotations.dart
