@@ -2,7 +2,7 @@ import 'package:flutter/widgets.dart';
 
 import '../../core/factory/mix_provider.dart';
 import '../../core/styled_widget.dart';
-import '../../modifiers/render_widget_modifier.dart';
+import '../../modifiers/internal/render_widget_modifier.dart';
 import 'box_spec.dart';
 
 /// A [Container] equivalent widget for applying styles using Mix.

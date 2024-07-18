@@ -3,7 +3,7 @@
 import 'package:flutter/widgets.dart';
 
 import '../../core/styled_widget.dart';
-import '../../modifiers/render_widget_modifier.dart';
+import '../../modifiers/internal/render_widget_modifier.dart';
 import '../box/box_spec.dart';
 import '../box/box_widget.dart';
 import 'flex_spec.dart';

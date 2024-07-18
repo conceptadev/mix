@@ -2,9 +2,9 @@
 
 import '../attributes/enum/enum_util.dart';
 import '../specs/image/image_spec.dart';
-import '../variants/context_variant.dart';
-import '../widgets/widgets.dart';
+import '../variants/widget_state_variant.dart';
 import 'attribute.dart';
+import 'internal/widget_state/widget_state.dart';
 
 class InternalMixDeprecatedAnnotation extends Deprecated {
   final String version;
@@ -50,15 +50,10 @@ typedef WidgetContextVariant = WidgetStateVariant;
   updatedName: 'WidgetStateModel',
 )
 typedef PressableState = WidgetStateModel;
-@RenamedDeprecated(
-  message: 'Use `WidgetStateAspect` instead.',
-  version: '2.0.0',
-  updatedName: 'WidgetStateAspect',
-)
-typedef PressableStateAspect = WidgetStateAspect;
+
 @RenamedDeprecated(
   message: 'Use `MixWidgetState` instead.',
   version: '2.0.0',
   updatedName: 'MixWidgetState',
 )
-typedef PressableCurrentState = MixWidgetState;
+typedef PressableCurrentState = WidgetMixState;
