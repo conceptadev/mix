@@ -23,7 +23,18 @@ class MixHelpers {
 
   static const lerpTextStyle = _lerpTextStyle;
 
+  static const lerpInt = _lerpInt;
+
+  static const lerpSnap = _lerpSnap;
+
   const MixHelpers._();
+}
+
+P? _lerpSnap<P>(P? from, P? to, double t) {
+  if (from == null) return to;
+  if (to == null) return from;
+
+  return t < 0.5 ? from : to;
 }
 
 w.TextStyle? _lerpTextStyle(w.TextStyle? a, w.TextStyle? b, double t) {
@@ -35,6 +46,13 @@ w.TextStyle? _lerpTextStyle(w.TextStyle? a, w.TextStyle? b, double t) {
       t,
     ),
   );
+}
+
+int _lerpInt(int? a, int? b, double t) {
+  a ??= 0;
+  b ??= 0;
+
+  return (a + (b - a) * t).round();
 }
 
 List<T>? _mergeDtoList<T>(List<T>? a, List<T>? b) {

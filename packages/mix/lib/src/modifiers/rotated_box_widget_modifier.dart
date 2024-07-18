@@ -5,10 +5,10 @@ import 'package:flutter/widgets.dart';
 
 import '../core/attribute.dart';
 import '../core/factory/mix_data.dart';
+import '../core/helpers.dart';
 import '../core/modifier.dart';
 import '../core/utility.dart';
 import '../internal/diagnostic_properties_builder_ext.dart';
-import '../internal/lerp_helpers.dart';
 
 final class RotatedBoxModifierSpec
     extends WidgetModifierSpec<RotatedBoxModifierSpec> {
@@ -19,7 +19,7 @@ final class RotatedBoxModifierSpec
   RotatedBoxModifierSpec lerp(RotatedBoxModifierSpec? other, double t) {
     // Use lerpInt for interpolating between integers
     return RotatedBoxModifierSpec(
-      lerpInt(quarterTurns, other?.quarterTurns, t),
+      MixHelpers.lerpInt(quarterTurns, other?.quarterTurns, t),
     );
   }
 

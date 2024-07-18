@@ -24,12 +24,6 @@ sealed class BorderRadiusGeometryDto<T extends BorderRadiusGeometry>
     extends Dto<T> with Diagnosticable {
   const BorderRadiusGeometryDto();
 
-  Radius _getRadiusValue(MixData mix, Radius? radius) {
-    if (radius == null) return Radius.zero;
-
-    return radius is RadiusRef ? mix.tokens.radiiRef(radius) : radius;
-  }
-
   Radius? get topLeft;
   Radius? get topRight;
   Radius? get bottomLeft;
@@ -38,6 +32,13 @@ sealed class BorderRadiusGeometryDto<T extends BorderRadiusGeometry>
   Radius? get topEnd;
   Radius? get bottomStart;
   Radius? get bottomEnd;
+  @visibleForTesting
+  Radius getRadiusValue(MixData mix, Radius? radius) {
+    if (radius == null) return Radius.zero;
+
+    return radius is RadiusRef ? mix.tokens.radiiRef(radius) : radius;
+  }
+
   @override
   BorderRadiusGeometryDto<T> merge(covariant BorderRadiusGeometryDto<T>? other);
 
@@ -81,10 +82,10 @@ final class BorderRadiusDto extends BorderRadiusGeometryDto<BorderRadius>
   @override
   BorderRadius resolve(MixData mix) {
     return BorderRadius.only(
-      topLeft: _getRadiusValue(mix, topLeft),
-      topRight: _getRadiusValue(mix, topRight),
-      bottomLeft: _getRadiusValue(mix, bottomLeft),
-      bottomRight: _getRadiusValue(mix, bottomRight),
+      topLeft: getRadiusValue(mix, topLeft),
+      topRight: getRadiusValue(mix, topRight),
+      bottomLeft: getRadiusValue(mix, bottomLeft),
+      bottomRight: getRadiusValue(mix, bottomRight),
     );
   }
 
@@ -124,10 +125,10 @@ final class BorderRadiusDirectionalDto
   @override
   BorderRadiusDirectional resolve(MixData mix) {
     return BorderRadiusDirectional.only(
-      topStart: _getRadiusValue(mix, topStart),
-      topEnd: _getRadiusValue(mix, topEnd),
-      bottomStart: _getRadiusValue(mix, bottomStart),
-      bottomEnd: _getRadiusValue(mix, bottomEnd),
+      topStart: getRadiusValue(mix, topStart),
+      topEnd: getRadiusValue(mix, topEnd),
+      bottomStart: getRadiusValue(mix, bottomStart),
+      bottomEnd: getRadiusValue(mix, bottomEnd),
     );
   }
 

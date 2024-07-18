@@ -5,10 +5,10 @@ import 'package:flutter/widgets.dart';
 
 import '../core/attribute.dart';
 import '../core/factory/mix_data.dart';
+import '../core/helpers.dart';
 import '../core/modifier.dart';
 import '../core/utility.dart';
 import '../internal/diagnostic_properties_builder_ext.dart';
-import '../internal/lerp_helpers.dart';
 
 final class ClipOvalModifierSpec
     extends WidgetModifierSpec<ClipOvalModifierSpec> {
@@ -20,8 +20,8 @@ final class ClipOvalModifierSpec
   @override
   ClipOvalModifierSpec lerp(ClipOvalModifierSpec? other, double t) {
     return ClipOvalModifierSpec(
-      clipper: lerpSnap(clipper, other?.clipper, t),
-      clipBehavior: lerpSnap(clipBehavior, other?.clipBehavior, t),
+      clipper: MixHelpers.lerpSnap(clipper, other?.clipper, t),
+      clipBehavior: MixHelpers.lerpSnap(clipBehavior, other?.clipBehavior, t),
     );
   }
 
@@ -90,9 +90,9 @@ final class ClipRectModifierSpec
   @override
   ClipRectModifierSpec lerp(ClipRectModifierSpec? other, double t) {
     return ClipRectModifierSpec(
-      clipper: lerpSnap(clipper, other?.clipper, t),
-      clipBehavior:
-          lerpSnap(clipBehavior, other?.clipBehavior, t) ?? clipBehavior,
+      clipper: MixHelpers.lerpSnap(clipper, other?.clipper, t),
+      clipBehavior: MixHelpers.lerpSnap(clipBehavior, other?.clipBehavior, t) ??
+          clipBehavior,
     );
   }
 
@@ -164,9 +164,9 @@ final class ClipRRectModifierSpec
     return ClipRRectModifierSpec(
       borderRadius:
           BorderRadiusGeometry.lerp(borderRadius, other?.borderRadius, t),
-      clipper: lerpSnap(clipper, other?.clipper, t),
-      clipBehavior:
-          lerpSnap(clipBehavior, other?.clipBehavior, t) ?? clipBehavior,
+      clipper: MixHelpers.lerpSnap(clipper, other?.clipper, t),
+      clipBehavior: MixHelpers.lerpSnap(clipBehavior, other?.clipBehavior, t) ??
+          clipBehavior,
     );
   }
 
@@ -242,9 +242,9 @@ final class ClipPathModifierSpec
   @override
   ClipPathModifierSpec lerp(ClipPathModifierSpec? other, double t) {
     return ClipPathModifierSpec(
-      clipper: lerpSnap(clipper, other?.clipper, t),
-      clipBehavior:
-          lerpSnap(clipBehavior, other?.clipBehavior, t) ?? clipBehavior,
+      clipper: MixHelpers.lerpSnap(clipper, other?.clipper, t),
+      clipBehavior: MixHelpers.lerpSnap(clipBehavior, other?.clipBehavior, t) ??
+          clipBehavior,
     );
   }
 
@@ -312,8 +312,8 @@ final class ClipTriangleModifierSpec
   @override
   ClipTriangleModifierSpec lerp(ClipTriangleModifierSpec? other, double t) {
     return ClipTriangleModifierSpec(
-      clipBehavior:
-          lerpSnap(clipBehavior, other?.clipBehavior, t) ?? clipBehavior,
+      clipBehavior: MixHelpers.lerpSnap(clipBehavior, other?.clipBehavior, t) ??
+          clipBehavior,
     );
   }
 

@@ -5,10 +5,10 @@ import 'package:flutter/widgets.dart';
 
 import '../core/attribute.dart';
 import '../core/factory/mix_data.dart';
+import '../core/helpers.dart';
 import '../core/modifier.dart';
 import '../core/utility.dart';
 import '../internal/diagnostic_properties_builder_ext.dart';
-import '../internal/lerp_helpers.dart';
 
 final class TransformModifierSpec
     extends WidgetModifierSpec<TransformModifierSpec> {
@@ -20,7 +20,7 @@ final class TransformModifierSpec
   @override
   TransformModifierSpec lerp(TransformModifierSpec? other, double t) {
     return TransformModifierSpec(
-      transform: lerpMatrix4(transform, other?.transform, t),
+      transform: MixHelpers.lerpMatrix4(transform, other?.transform, t),
     );
   }
 

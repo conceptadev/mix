@@ -5,7 +5,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
 import 'package:mix/src/core/internal/widget_state/gesturable_builder.dart';
 import 'package:mix/src/core/internal/widget_state/interactive_widget.dart';
-import 'package:mix/src/internal/lerp_helpers.dart';
 
 export 'package:mix/src/internal/values_ext.dart';
 
@@ -327,7 +326,8 @@ final class CustomWidgetModifierSpec
   CustomWidgetModifierSpec lerp(CustomWidgetModifierSpec? other, double t) {
     if (other == null) return this;
 
-    return CustomWidgetModifierSpec(lerpSnap(value, other.value, t) ?? value);
+    return CustomWidgetModifierSpec(
+        MixHelpers.lerpSnap(value, other.value, t) ?? value);
   }
 
   @override

@@ -448,4 +448,196 @@ void main() {
       expect(mergedDto, equals(stadiumBorderDto));
     });
   });
+
+  // Additional tests for StarBorderDto
+  group('StarBorderDto', () {
+    test('from factory method should create StarBorderDto from StarBorder', () {
+      const starBorder = StarBorder(
+        side: BorderSide(color: Colors.teal),
+        points: 5,
+        innerRadiusRatio: 0.5,
+        pointRounding: 0.2,
+        valleyRounding: 0.1,
+        rotation: 0.3,
+        squash: 0.4,
+      );
+
+      final starBorderDto = starBorder.toDto();
+
+      expect(starBorderDto.side,
+          equals(const BorderSide(color: Colors.teal).toDto()));
+      expect(starBorderDto.points, equals(5));
+      expect(starBorderDto.innerRadiusRatio, equals(0.5));
+      expect(starBorderDto.pointRounding, equals(0.2));
+      expect(starBorderDto.valleyRounding, equals(0.1));
+      expect(starBorderDto.rotation, equals(0.3));
+      expect(starBorderDto.squash, equals(0.4));
+    });
+
+    test('merge method should handle null values correctly', () {
+      final starBorderDto = StarBorderDto(
+        side: const BorderSide(color: Colors.teal).toDto(),
+        points: 5,
+        innerRadiusRatio: 0.5,
+        pointRounding: 0.2,
+        valleyRounding: 0.1,
+        rotation: 0.3,
+        squash: 0.4,
+      );
+
+      final mergedDto = starBorderDto.merge(null);
+
+      expect(mergedDto, equals(starBorderDto));
+    });
+  });
+
+  // Additional tests for LinearBorderDto
+  group('LinearBorderDto', () {
+    test('from factory method should create LinearBorderDto from LinearBorder',
+        () {
+      const linearBorder = LinearBorder(
+        side: BorderSide(color: Colors.brown),
+        start: LinearBorderEdge(size: 0.1, alignment: 0.1),
+        end: LinearBorderEdge(size: 0.2, alignment: 0.2),
+        top: LinearBorderEdge(size: 0.3, alignment: 0.3),
+        bottom: LinearBorderEdge(size: 0.4, alignment: 0.4),
+      );
+
+      final linearBorderDto = linearBorder.toDto();
+
+      expect(linearBorderDto.side,
+          equals(const BorderSide(color: Colors.brown).toDto()));
+      expect(linearBorderDto.start,
+          equals(const LinearBorderEdge(size: 0.1, alignment: 0.1).toDto()));
+      expect(linearBorderDto.end,
+          equals(const LinearBorderEdge(size: 0.2, alignment: 0.2).toDto()));
+      expect(linearBorderDto.top,
+          equals(const LinearBorderEdge(size: 0.3, alignment: 0.3).toDto()));
+      expect(linearBorderDto.bottom,
+          equals(const LinearBorderEdge(size: 0.4, alignment: 0.4).toDto()));
+    });
+
+    test('merge method should handle null values correctly', () {
+      final linearBorderDto = LinearBorderDto(
+        side: const BorderSide(color: Colors.brown).toDto(),
+        start: const LinearBorderEdge(size: 0.1, alignment: 0.1).toDto(),
+        end: const LinearBorderEdge(size: 0.2, alignment: 0.2).toDto(),
+        top: const LinearBorderEdge(size: 0.3, alignment: 0.3).toDto(),
+        bottom: const LinearBorderEdge(size: 0.4, alignment: 0.4).toDto(),
+      );
+
+      final mergedDto = linearBorderDto.merge(null);
+
+      expect(mergedDto, equals(linearBorderDto));
+    });
+
+    // Additional tests for LinearBorderEdgeDto
+    group('LinearBorderEdgeDto', () {
+      test(
+          'from factory method should create LinearBorderEdgeDto from LinearBorderEdge',
+          () {
+        const linearBorderEdge = LinearBorderEdge(size: 1.0, alignment: 0.1);
+
+        final linearBorderEdgeDto = linearBorderEdge.toDto();
+
+        expect(linearBorderEdgeDto.size, equals(1.0));
+        expect(linearBorderEdgeDto.alignment, equals(0.1));
+      });
+
+      test('merge method should handle null values correctly', () {
+        const linearBorderEdgeDto =
+            LinearBorderEdgeDto(size: 1.0, alignment: 0.1);
+
+        final mergedDto = linearBorderEdgeDto.merge(null);
+
+        expect(mergedDto, equals(linearBorderEdgeDto));
+      });
+
+      // test equality
+      test('== should return true if two LinearBorderEdgeDto are equal', () {
+        const linearBorderEdgeDto1 =
+            LinearBorderEdgeDto(size: 1.0, alignment: 0.1);
+        const linearBorderEdgeDto2 =
+            LinearBorderEdgeDto(size: 1.0, alignment: 0.1);
+
+        expect(linearBorderEdgeDto1, equals(linearBorderEdgeDto2));
+      });
+    });
+
+    // Additional tests for ShapeBorderUtility
+    group('ShapeBorderUtility', () {
+      test('should create utility instances for each shape border type', () {
+        final shapeBorderUtility = ShapeBorderUtility(UtilityTestAttribute.new);
+
+        expect(shapeBorderUtility.roundedRectangle,
+            isA<RoundedRectangleBorderUtility>());
+        expect(shapeBorderUtility.circle, isA<CircleBorderUtility>());
+        expect(shapeBorderUtility.beveledRectangle,
+            isA<BeveledRectangleBorderUtility>());
+        expect(shapeBorderUtility.stadium, isA<StadiumBorderUtility>());
+        expect(shapeBorderUtility.continuousRectangle,
+            isA<ContinuousRectangleBorderUtility>());
+      });
+    });
+  });
+
+  group('ShapeBorderDto.tryToMerge', () {
+    test('should return null when both inputs are null', () {
+      final result = ShapeBorderDto.tryToMerge(null, null);
+      expect(result, isNull);
+    });
+
+    test('should return the non-null input when one input is null', () {
+      const dto = RoundedRectangleBorderDto();
+      expect(ShapeBorderDto.tryToMerge(dto, null), equals(dto));
+      expect(ShapeBorderDto.tryToMerge(null, dto), equals(dto));
+    });
+
+    test(
+        'should return the second input when both inputs are not OutlinedBorderDto',
+        () {
+      const dto1 = CircleBorderDto();
+      const dto2 = StarBorderDto();
+      expect(ShapeBorderDto.tryToMerge(dto1, dto2), equals(dto2));
+    });
+
+    test(
+        'should call OutlinedBorderDto.tryToMerge when both inputs are OutlinedBorderDto',
+        () {
+      const dto1 = RoundedRectangleBorderDto(
+          borderRadius: BorderRadiusDto(topLeft: Radius.circular(10)));
+      final dto2 = RoundedRectangleBorderDto(
+          side: BorderSideDto(color: Colors.red.toDto()));
+      final expectedResult = RoundedRectangleBorderDto(
+        borderRadius: const BorderRadiusDto(topLeft: Radius.circular(10)),
+        side: BorderSideDto(color: Colors.red.toDto()),
+      );
+      expect(ShapeBorderDto.tryToMerge(dto1, dto2), equals(expectedResult));
+    });
+  });
+
+  group('OutlinedBorderDto.tryToMerge', () {
+    test('should return null when both inputs are null', () {
+      final result = OutlinedBorderDto.tryToMerge(null, null);
+      expect(result, isNull);
+    });
+
+    test('should return the non-null input when one input is null', () {
+      const dto = RoundedRectangleBorderDto();
+      expect(OutlinedBorderDto.tryToMerge(dto, null), equals(dto));
+      expect(OutlinedBorderDto.tryToMerge(null, dto), equals(dto));
+    });
+
+    test('should call _exhaustiveMerge when both inputs are not null', () {
+      const dto1 = RoundedRectangleBorderDto(
+          borderRadius: BorderRadiusDto(topLeft: Radius.circular(10)));
+      final dto2 = RoundedRectangleBorderDto(
+          side: BorderSideDto(color: Colors.red.toDto()));
+      final expectedResult = RoundedRectangleBorderDto(
+        borderRadius: const BorderRadiusDto(topLeft: Radius.circular(10)),
+        side: BorderSideDto(color: Colors.red.toDto()),
+      );
+      expect(OutlinedBorderDto.tryToMerge(dto1, dto2), equals(expectedResult));
+    });
+  });
 }
