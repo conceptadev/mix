@@ -80,12 +80,12 @@ abstract class _InteractableWidgetBuilder extends StatefulWidget {
 
 abstract class _InteractiveStateBuilderState<
     T extends _InteractableWidgetBuilder> extends State<T> {
-  late final _InteractableDataController _controller;
+  late final _InteractiveStateController _controller;
 
   @override
   void initState() {
     super.initState();
-    _controller = _InteractableDataController();
+    _controller = _InteractiveStateController();
     _controller.enabled = widget.enabled;
   }
 
@@ -141,11 +141,12 @@ abstract class _InteractiveStateBuilderState<
       onEnter: _onEnter,
       onExit: _onExit,
       onHover: _onHover,
-      cursor: widget.mouseCursor,
+      cursor: MouseCursor.defer,
       child: FocusableActionDetector(
         enabled: widget.enabled,
         focusNode: widget.focusNode,
         autofocus: widget.autofocus,
+        mouseCursor: widget.mouseCursor,
         shortcuts: widget.shortcuts,
         actions: widget.actions,
         onShowFocusHighlight: _onShowFocusHighlight,
@@ -168,7 +169,7 @@ abstract class _InteractiveStateBuilderState<
   }
 }
 
-class _InteractableDataController extends ChangeNotifier {
+class _InteractiveStateController extends ChangeNotifier {
   bool _enabled = false;
   bool _focused = false;
   bool _hovered = false;
