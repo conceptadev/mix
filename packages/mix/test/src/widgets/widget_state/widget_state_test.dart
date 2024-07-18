@@ -2,9 +2,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mix/src/internal/widget_state/gesturable_builder.dart';
-import 'package:mix/src/internal/widget_state/interactive_widget.dart';
-import 'package:mix/src/internal/widget_state/widget_state.dart';
+import 'package:mix/src/core/internal/widget_state/gesturable_builder.dart';
+import 'package:mix/src/core/internal/widget_state/interactive_widget.dart';
+import 'package:mix/src/core/internal/widget_state/widget_state.dart';
 
 class TrackingText<T> extends StatefulWidget {
   final String text;

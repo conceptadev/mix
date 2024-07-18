@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
-import 'package:mix/src/internal/widget_state/interactive_widget.dart';
+import 'package:mix/src/core/internal/widget_state/interactive_widget.dart';
 
 import '../../../helpers/testing_utils.dart';
 

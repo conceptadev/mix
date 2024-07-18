@@ -1,9 +1,9 @@
 import 'package:flutter/widgets.dart';
 
 import '../core/factory/style_mix.dart';
+import '../core/internal/widget_state/interactive_widget.dart';
+import '../core/internal/widget_state/widget_state.dart';
 import '../core/variant.dart';
-import '../internal/widget_state/interactive_widget.dart';
-import '../internal/widget_state/widget_state.dart';
 import 'context_variant.dart';
 
 @immutable

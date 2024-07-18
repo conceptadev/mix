@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 import '../core/factory/style_mix.dart';
+import '../core/internal/widget_state/gesturable_builder.dart';
+import '../core/internal/widget_state/interactive_widget.dart';
 import '../internal/constants.dart';
-import '../internal/widget_state/gesturable_builder.dart';
-import '../internal/widget_state/interactive_widget.dart';
 import '../specs/specs.dart';
 
 class PressableBox extends StatelessWidget {

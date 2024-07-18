@@ -1,18 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
-class InteractiveBuilder extends StatelessWidget {
-  const InteractiveBuilder({super.key, required this.builder});
-
-  final Widget Function(BuildContext context) builder;
-  @override
-  Widget build(BuildContext context) {
-    return InteractiveState.maybeOf(context) == null
-        ? InteractiveWidget(child: Builder(builder: builder))
-        : builder(context);
-  }
-}
-
 class InteractiveWidget extends _InteractableWidgetBuilder {
   const InteractiveWidget({
     super.key,
@@ -35,11 +23,11 @@ class InteractiveWidget extends _InteractableWidgetBuilder {
   });
 
   @override
-  State createState() => _InterctableState();
+  State createState() => _InteractiveStateBuilder();
 }
 
-class _InterctableState
-    extends _InteractableWidgetBuilderState<InteractiveWidget> {}
+class _InteractiveStateBuilder
+    extends _InteractiveStateBuilderState<InteractiveWidget> {}
 
 abstract class _InteractableWidgetBuilder extends StatefulWidget {
   const _InteractableWidgetBuilder({
@@ -90,7 +78,7 @@ abstract class _InteractableWidgetBuilder extends StatefulWidget {
   final void Function(PointerHoverEvent event)? onHover;
 }
 
-abstract class _InteractableWidgetBuilderState<
+abstract class _InteractiveStateBuilderState<
     T extends _InteractableWidgetBuilder> extends State<T> {
   late final _InteractableDataController _controller;
 
