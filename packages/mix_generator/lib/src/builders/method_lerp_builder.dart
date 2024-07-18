@@ -104,7 +104,7 @@ String _getLerpExpression(
 
   final hasLerpMethod = _checkIfInstanceHasLerp(field.dartType.element!);
 
-  if (hasLerpMethod) {
+  if (hasLerpMethod || field.isSpec) {
     return '$thisFieldName$nullable.lerp($otherFieldName, t) ${field.nullable ? '?? $otherFieldName' : ''}';
   }
 
@@ -124,29 +124,13 @@ bool _checkIfInstanceHasLerp(Element element) {
     return false;
   }
 
-  // Check if the class element or any of its mixins have a method called lerp
-  bool hasLerpMethod(InterfaceElement classElement) {
-    final methods = classElement.methods;
-    if (methods.isNotEmpty) {
-      for (final method in methods) {
-        if (method.name == 'lerp' &&
-            method.isPublic &&
-            method.parameters.length == 2 &&
-            method.parameters.last.type.isDartCoreDouble) {
-          return true;
-        }
-      }
-    }
-    return false;
-  }
-
-  if (hasLerpMethod(element)) {
+  if (_hasLerpMethod(element)) {
     return true;
   }
 
   // Check mixins for the lerp method
   for (final mixin in element.mixins) {
-    if (hasLerpMethod(mixin.element)) {
+    if (_hasLerpMethod(mixin.element)) {
       return true;
     }
   }
@@ -182,5 +166,22 @@ bool _checkIfFieldHasLerp(Element element) {
     }
   }
 
+  return false;
+}
+
+// Check if the class element or any of its mixins have a method called lerp
+bool _hasLerpMethod(InterfaceElement classElement) {
+  final methods = classElement.methods;
+
+  if (methods.isNotEmpty) {
+    for (final method in methods) {
+      if (method.name == 'lerp' &&
+          method.isPublic &&
+          method.parameters.length == 2 &&
+          method.parameters.last.type.isDartCoreDouble) {
+        return true;
+      }
+    }
+  }
   return false;
 }
