@@ -36,6 +36,7 @@ class MixThemeData {
   final StyledTokens<RadiusToken, Radius> radii;
   final StyledTokens<ColorToken, Color> colors;
   final StyledTokens<TextStyleToken, TextStyle> textStyles;
+
   final StyledTokens<BreakpointToken, Breakpoint> breakpoints;
   final StyledTokens<SpaceToken, double> spaces;
   final List<Type>? defaultOrderOfModifiers;
