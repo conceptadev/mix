@@ -146,12 +146,12 @@ abstract class _InteractiveStateBuilderState<
         enabled: widget.enabled,
         focusNode: widget.focusNode,
         autofocus: widget.autofocus,
-        mouseCursor: widget.mouseCursor,
         shortcuts: widget.shortcuts,
         actions: widget.actions,
         onShowFocusHighlight: _onShowFocusHighlight,
         onShowHoverHighlight: _onShowHoverHighlight,
         onFocusChange: widget.onFocusChange,
+        mouseCursor: widget.mouseCursor,
         child: ListenableBuilder(
           listenable: _controller,
           builder: (context, _) {
