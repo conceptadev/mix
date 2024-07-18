@@ -4,6 +4,7 @@ import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:build/build.dart';
 import 'package:mix_annotations/mix_annotations.dart';
+import 'package:mix_generator/src/builders/utility_class_builder.dart';
 import 'package:mix_generator/src/helpers/dart_type_ext.dart';
 import 'package:mix_generator/src/helpers/helpers.dart';
 import 'package:source_gen/source_gen.dart';
@@ -88,6 +89,7 @@ DartType? _getUtilityType(ClassElement element) {
 /// Returns the generated mixin code as a string.
 String _generateUtilityMixin(ClassUtilityAnnotationContext context) {
   final className = context.name;
+
   final generatedName = context.generatedName;
 
   final valueName = context.valueElement.name;
@@ -96,7 +98,7 @@ String _generateUtilityMixin(ClassUtilityAnnotationContext context) {
 
   final fieldStatements = _generateUtilityFields(context);
 
-  final constructorStatements = _generateUtilityConstructors(context);
+  final constructorStatements = generateUtilityConstructors(context);
 
   final comments = '''
 /// {@template ${className.snakecase}}
@@ -108,7 +110,7 @@ String _generateUtilityMixin(ClassUtilityAnnotationContext context) {
 
   return '''
 $comments
-base mixin $generatedName<T extends Attribute> on MixUtility<T,$valueName> {
+mixin $generatedName<T extends Attribute> on MixUtility<T,$valueName> {
 
 $fieldStatements
 
@@ -167,108 +169,40 @@ T call($valueName value) => builder(value);
 ///
 /// For example:
 /// T constructor(params) => builder(ClassElement.constructor(params));
-String _generateUtilityConstructors(ClassUtilityAnnotationContext context) {
+String generateUtilityConstructors(ClassUtilityAnnotationContext context) {
   final mappedEl = context.mappingElement ?? context.valueElement;
 
   final fieldStatements = <String>[];
 
   final constructors = mappedEl.constructors.where((constructor) {
-    return _isValidConstructor(constructor);
+    return isValidConstructor(constructor);
   });
 
   constructors.forEach((constructor) {
-    final isConst = constructor.isConst;
-
-    final isUnamed = constructor.name.isEmpty;
-
     // Do not genrate for  unamed constructors
-    if (isUnamed && context.generateCallMethod) return;
-    final name = constructor.name.isEmpty ? '' : '.${constructor.name}';
-    final methodName =
-        constructor.name.isEmpty ? 'call' : '${constructor.name}';
-    final type = mappedEl.name;
 
-    final parameters = constructor.parameters;
+    final statement = generateUtilityForConstructor(
+      constructor,
+      skipCallMethod: context.generateCallMethod,
+      mappedEl: context.mappingElement,
+    );
 
-    final constStatement = isConst && parameters.isEmpty ? 'const' : '';
-
-    final signatureRequiredParams = <String>[];
-    final invocationRequiredParams = <String>[];
-    final signatureOptionalParams = <String>[];
-    final invocationOptionalParams = <String>[];
-    final signatureNamedParams = <String>[];
-    final invocationNamedParams = <String>[];
-
-    parameters.forEach((param) {
-      final paramName = param.name;
-
-      final paramType = param.type.getDisplayString(withNullability: true);
-
-      final defaultValue =
-          param.defaultValueCode != null ? ' = ${param.defaultValueCode}' : '';
-
-      if (param.isPositional) {
-        if (param.isRequiredPositional) {
-          signatureRequiredParams.add('$paramType $paramName$defaultValue');
-          invocationRequiredParams.add(paramName);
-        } else {
-          signatureOptionalParams.add('$paramType $paramName$defaultValue');
-          invocationOptionalParams.add(paramName);
-        }
-      } else if (param.isNamed) {
-        final requiredParam = param.isRequiredNamed ? 'required' : '';
-        signatureNamedParams
-            .add('$requiredParam $paramType $paramName$defaultValue');
-        invocationNamedParams.add('$paramName: $paramName');
-      }
-    });
-
-    final signatureParams = [
-      ...signatureRequiredParams,
-      if (signatureOptionalParams.isNotEmpty)
-        '[${signatureOptionalParams.join(', ')}]',
-      if (signatureNamedParams.isNotEmpty)
-        '{${signatureNamedParams.join(', ')}}'
-    ].join(', ');
-
-    final invocationParams = [
-      ...invocationRequiredParams,
-      if (invocationOptionalParams.isNotEmpty)
-        '${invocationOptionalParams.join(', ')}',
-      if (invocationNamedParams.isNotEmpty)
-        '${invocationNamedParams.join(', ')}'
-    ].join(', ');
-
-    final signature = 'T $methodName($signatureParams)';
-
-    final invocation = 'builder($constStatement $type$name($invocationParams))';
-
-    final totalCharacters = signature.length + invocation.length;
-    String signatureLine;
-
-    if (totalCharacters > 80) {
-      signatureLine = '$signature { return $invocation;} ';
-    } else {
-      signatureLine = '$signature => $invocation;';
+    if (statement.isNotEmpty) {
+      fieldStatements.add(statement);
     }
-
-    fieldStatements.add('''
-/// Creates an [Attribute] instance using the [$type$name] constructor.
-$signatureLine
-''');
   });
 
   return fieldStatements.join('\n');
 }
 
-bool _isValidConstructor(
+bool isValidConstructor(
   ConstructorElement constructor,
 ) {
   final isPublic = constructor.isPublic;
 
   final hasUndefinedParamTypes = constructor.parameters.any((param) {
     final library = param.type.element?.library;
-    return library != null && !library.isInSdk;
+    return library != null && !library.isFlutterOrDart;
   });
 
   final hasAnyPrivateParams = constructor.parameters.any((param) {

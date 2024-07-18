@@ -72,3 +72,31 @@ extension DartTypeExtension on DartType {
   DartType? _getImplementationType(TypeChecker checker) =>
       typeImplementations.firstWhereOrNull(checker.isExactlyType);
 }
+
+extension ElementX on Element {
+  Iterable<LibraryImportElement> get nonCoreImports =>
+      library?.libraryImports.where((element) {
+        final lib = element.importedLibrary;
+        if (lib == null) {
+          return false;
+        }
+        return !lib.isDartAsync && //
+            !lib.isDartCore &&
+            !lib.isInSdk;
+      }) ??
+      [];
+}
+
+// Check if identifier starts with 'package:flutter/' or 'dart:
+// Also check if there is a depednency on pubspec, that matches 'package:NAME/'
+
+extension LibraryElementX on LibraryElement {
+  bool get isFlutterLibrary =>
+      source.uri.toString().startsWith('package:flutter/');
+
+  bool get isDartLibrary => source.uri.toString().startsWith('dart:');
+
+  bool get isFlutterOrDart {
+    return isFlutterLibrary || isDartLibrary;
+  }
+}
