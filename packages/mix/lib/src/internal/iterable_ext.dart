@@ -45,19 +45,3 @@ extension ListExt<T> on List<T> {
     });
   }
 }
-
-List<T>? merge<T>(List<T>? a, List<T>? b) {
-  if (b == null) return a;
-  if (a == null) return b;
-
-  return List.generate(max(a.length, b.length), (index) {
-    if (index < a.length) {
-      final currentValue = a[index];
-      final otherValue = index < b.length ? b[index] : null;
-
-      return otherValue ?? currentValue;
-    }
-
-    return b[index];
-  });
-}

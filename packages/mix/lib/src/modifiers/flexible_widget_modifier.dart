@@ -6,10 +6,10 @@ import 'package:flutter/widgets.dart';
 import '../attributes/enum/enum_util.dart';
 import '../core/attribute.dart';
 import '../core/factory/mix_data.dart';
+import '../core/helpers.dart';
 import '../core/modifier.dart';
 import '../core/utility.dart';
 import '../internal/diagnostic_properties_builder_ext.dart';
-import '../internal/lerp_helpers.dart';
 
 final class FlexibleModifierSpec
     extends WidgetModifierSpec<FlexibleModifierSpec> {
@@ -20,8 +20,8 @@ final class FlexibleModifierSpec
   @override
   FlexibleModifierSpec lerp(FlexibleModifierSpec? other, double t) {
     return FlexibleModifierSpec(
-      flex: lerpInt(flex, other?.flex, t),
-      fit: lerpSnap(fit, other?.fit, t),
+      flex: MixHelpers.lerpInt(flex, other?.flex, t),
+      fit: MixHelpers.lerpSnap(fit, other?.fit, t),
     );
   }
 

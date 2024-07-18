@@ -5,10 +5,10 @@ import 'package:flutter/widgets.dart';
 
 import '../core/attribute.dart';
 import '../core/factory/mix_data.dart';
+import '../core/helpers.dart';
 import '../core/modifier.dart';
 import '../core/utility.dart';
 import '../internal/diagnostic_properties_builder_ext.dart';
-import '../internal/lerp_helpers.dart';
 
 final class VisibilityModifierSpec
     extends WidgetModifierSpec<VisibilityModifierSpec> {
@@ -18,7 +18,7 @@ final class VisibilityModifierSpec
   @override
   VisibilityModifierSpec lerp(VisibilityModifierSpec? other, double t) {
     return VisibilityModifierSpec(
-      lerpSnap(visible, other?.visible, t) ?? visible,
+      MixHelpers.lerpSnap(visible, other?.visible, t) ?? visible,
     );
   }
 

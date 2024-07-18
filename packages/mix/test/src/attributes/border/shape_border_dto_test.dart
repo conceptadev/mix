@@ -580,4 +580,64 @@ void main() {
       });
     });
   });
+
+  group('ShapeBorderDto.tryToMerge', () {
+    test('should return null when both inputs are null', () {
+      final result = ShapeBorderDto.tryToMerge(null, null);
+      expect(result, isNull);
+    });
+
+    test('should return the non-null input when one input is null', () {
+      const dto = RoundedRectangleBorderDto();
+      expect(ShapeBorderDto.tryToMerge(dto, null), equals(dto));
+      expect(ShapeBorderDto.tryToMerge(null, dto), equals(dto));
+    });
+
+    test(
+        'should return the second input when both inputs are not OutlinedBorderDto',
+        () {
+      const dto1 = CircleBorderDto();
+      const dto2 = StarBorderDto();
+      expect(ShapeBorderDto.tryToMerge(dto1, dto2), equals(dto2));
+    });
+
+    test(
+        'should call OutlinedBorderDto.tryToMerge when both inputs are OutlinedBorderDto',
+        () {
+      const dto1 = RoundedRectangleBorderDto(
+          borderRadius: BorderRadiusDto(topLeft: Radius.circular(10)));
+      final dto2 = RoundedRectangleBorderDto(
+          side: BorderSideDto(color: Colors.red.toDto()));
+      final expectedResult = RoundedRectangleBorderDto(
+        borderRadius: const BorderRadiusDto(topLeft: Radius.circular(10)),
+        side: BorderSideDto(color: Colors.red.toDto()),
+      );
+      expect(ShapeBorderDto.tryToMerge(dto1, dto2), equals(expectedResult));
+    });
+  });
+
+  group('OutlinedBorderDto.tryToMerge', () {
+    test('should return null when both inputs are null', () {
+      final result = OutlinedBorderDto.tryToMerge(null, null);
+      expect(result, isNull);
+    });
+
+    test('should return the non-null input when one input is null', () {
+      const dto = RoundedRectangleBorderDto();
+      expect(OutlinedBorderDto.tryToMerge(dto, null), equals(dto));
+      expect(OutlinedBorderDto.tryToMerge(null, dto), equals(dto));
+    });
+
+    test('should call _exhaustiveMerge when both inputs are not null', () {
+      const dto1 = RoundedRectangleBorderDto(
+          borderRadius: BorderRadiusDto(topLeft: Radius.circular(10)));
+      final dto2 = RoundedRectangleBorderDto(
+          side: BorderSideDto(color: Colors.red.toDto()));
+      final expectedResult = RoundedRectangleBorderDto(
+        borderRadius: const BorderRadiusDto(topLeft: Radius.circular(10)),
+        side: BorderSideDto(color: Colors.red.toDto()),
+      );
+      expect(OutlinedBorderDto.tryToMerge(dto1, dto2), equals(expectedResult));
+    });
+  });
 }

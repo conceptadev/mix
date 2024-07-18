@@ -115,4 +115,35 @@ void main() {
       expect(attr1, isNot(attr2));
     });
   });
+  test('TextStyleDto.ref creates a TextStyleDto with a TextStyleDataRef', () {
+    const token = TextStyleToken('test_token');
+    final attr = TextStyleDto.ref(token);
+    expect(attr.value.length, 1);
+    expect(attr.value.first, isA<TextStyleDataRef>());
+    expect((attr.value.first as TextStyleDataRef).ref.token, token);
+  });
+
+  test('TextStyleExt toDto method converts TextStyle to TextStyleDto correctly',
+      () {
+    const style = TextStyle(
+      color: Colors.blue,
+      fontSize: 18.0,
+      fontWeight: FontWeight.bold,
+    );
+    final attr = style.toDto();
+    expect(attr.value.length, 1);
+    expect(attr.value.first.color?.value, Colors.blue);
+    expect(attr.value.first.fontSize, 18.0);
+    expect(attr.value.first.fontWeight, FontWeight.bold);
+  });
+
+  test('TextStyleExt toDto method handles TextStyleRef correctly', () {
+    const token = TextStyleToken('test_token');
+    const style = TextStyleRef(token);
+    final attr = style.toDto();
+    expect(attr, isA<TextStyleDto>());
+    expect(attr.value.length, 1);
+    expect(attr.value.first, isA<TextStyleDataRef>());
+    expect((attr.value.first as TextStyleDataRef).ref.token, token);
+  });
 }
