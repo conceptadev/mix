@@ -19,7 +19,7 @@ class ExtractAttributes extends DartAssist {
     final unit = await resolver.getResolvedUnitResult();
 
     context.registry.addInstanceCreationExpression((node) {
-      if (!node.sourceRange.covers(target)) return;
+      if (!node.argumentList.sourceRange.covers(target)) return;
       if (node.staticType == null ||
           !styleChecker.isAssignableFromType(node.staticType!)) return;
 
