@@ -1,15 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mix/src/core/internal/widget_state/gesturable_builder.dart';
+import 'package:mix/src/core/internal/mix_state/gesture_mix_state.dart';
+import 'package:mix/src/core/internal/mix_state/widget_state_controller.dart';
 
 void main() {
   group('GesturableWidget', () {
     const key = Key('context_key');
     const unpressDelay = Duration(milliseconds: 500);
+
+    GestureMixStateController controllerOf(BuildContext context) {
+      return _MixStateController.ofType<GestureMixStateController>(context);
+    }
+
     testWidgets('should update press state when tapped', (tester) async {
       bool onTapCalled = false;
       await tester.pumpWidget(
-        GesturableWidget(
+        GestureMixStateWidget(
           onTap: () {
             onTapCalled = true;
           },
@@ -22,12 +28,12 @@ void main() {
         ),
       );
 
-      await tester.tap(find.byType(GesturableWidget));
+      await tester.tap(find.byType(GestureMixStateWidget));
       await tester.pump();
 
       final context = tester.element(find.byKey(key));
 
-      expect(GesturableState.pressedOf(context), isTrue);
+      expect(controllerOf(context).pressed, isTrue);
       expect(onTapCalled, isTrue);
     });
 
@@ -35,7 +41,7 @@ void main() {
         (tester) async {
       bool onLongPressCalled = false;
       await tester.pumpWidget(
-        GesturableWidget(
+        GestureMixStateWidget(
           onLongPress: () {
             onLongPressCalled = true;
           },
@@ -47,26 +53,26 @@ void main() {
       );
 
       final context = tester.element(find.byKey(key));
-      await tester.longPress(find.byType(GesturableWidget));
+      await tester.longPress(find.byType(GestureMixStateWidget));
 
       expect(onLongPressCalled, isTrue);
-      expect(GesturableState.longPressedOf(context), isTrue);
+      expect(controllerOf(context).longPressed, isTrue);
     });
 
     testWidgets('should update press state after delay when tapped',
         (tester) async {
       await tester.pumpWidget(
-        const GesturableWidget(
+        const GestureMixStateWidget(
           unpressDelay: Duration(milliseconds: 100),
           child: SizedBox(key: key),
         ),
       );
 
-      await tester.tap(find.byType(GesturableWidget));
+      await tester.tap(find.byType(GestureMixStateWidget));
       await tester.pump();
       final context = tester.element(find.byKey(key));
       expect(
-        GesturableState.pressedOf(context),
+        controllerOf(context).pressed,
         isTrue,
         reason: 'GesturableState should be pressed immediately after tap',
       );
@@ -75,7 +81,7 @@ void main() {
         const Duration(milliseconds: 50),
       );
       expect(
-        GesturableState.pressedOf(context),
+        controllerOf(context).pressed,
         isTrue,
         reason: 'GesturableState should still be pressed 50ms after tap',
       );
@@ -84,7 +90,7 @@ void main() {
         const Duration(milliseconds: 100),
       );
       expect(
-        GesturableState.pressedOf(context),
+        controllerOf(context).pressed,
         isFalse,
         reason:
             'GesturableState should be unpressed after unpressDelay has passed',
@@ -93,16 +99,16 @@ void main() {
 
     testWidgets('should not update press state when disabled', (tester) async {
       await tester.pumpWidget(
-        const GesturableWidget(
+        const GestureMixStateWidget(
           enabled: false,
           unpressDelay: Duration.zero,
           child: SizedBox(key: key),
         ),
       );
 
-      await tester.tap(find.byType(GesturableWidget));
+      await tester.tap(find.byType(GestureMixStateWidget));
       final context = tester.element(find.byKey(key));
-      expect(GesturableState.pressedOf(context), isFalse);
+      expect(controllerOf(context).pressed, isFalse);
     });
 
     testWidgets('GesturableWidget pan functions test', (
@@ -115,7 +121,7 @@ void main() {
 
       await tester.pumpWidget(
         MaterialApp(
-          home: GesturableWidget(
+          home: GestureMixStateWidget(
             onPanStart: (details) {
               isPanStartCalled = true;
             },
@@ -134,7 +140,7 @@ void main() {
         ),
       );
 
-      final gesturableWidget = find.byType(GesturableWidget);
+      final gesturableWidget = find.byType(GestureMixStateWidget);
       expect(gesturableWidget, findsOneWidget);
 
       final gesturableWidgetCenter = tester.getCenter(gesturableWidget);

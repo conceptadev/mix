@@ -2,7 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
-import 'package:mix/src/core/internal/widget_state/interactive_widget.dart';
+import 'package:mix/src/core/internal/mix_state/interactive_mix_state.dart';
 
 import '../../helpers/testing_utils.dart';
 
@@ -43,9 +43,9 @@ void main() {
       final secondContext = tester.element(find.byKey(secondKey));
       final thirdContext = tester.element(find.byKey(thirdKey));
 
-      final firstNotifier = InteractiveState.of(firstContext);
-      final secondNotifier = InteractiveState.of(secondContext);
-      final thirdNotifier = InteractiveState.of(thirdContext);
+      final firstNotifier = InteractiveMixState.of(firstContext);
+      final secondNotifier = InteractiveMixState.of(secondContext);
+      final thirdNotifier = InteractiveMixState.of(thirdContext);
 
       expect(onEnabledAttr.variant.when(firstContext), false);
       expect(firstNotifier.disabled, true);

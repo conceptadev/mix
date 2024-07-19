@@ -124,7 +124,7 @@ class _MockContextVariant extends ContextVariant {
   bool when(BuildContext context) => true;
 }
 
-class _MockWidgetContextVariant<T> extends WidgetStateVariant<T> {
+class _MockWidgetContextVariant<T> extends MixStateVariant<T> {
   final T value;
   const _MockWidgetContextVariant(this.value);
 

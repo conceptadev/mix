@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../core/factory/style_mix.dart';
-import '../core/internal/widget_state/gesturable_builder.dart';
-import '../core/internal/widget_state/interactive_widget.dart';
+import '../core/internal/mix_state/gesture_mix_state.dart';
+import '../core/internal/mix_state/interactive_mix_state.dart';
 import '../internal/constants.dart';
 import '../specs/box/box_widget.dart';
 
@@ -184,15 +184,15 @@ class PressableWidgetState extends State<Pressable> {
 
   @override
   Widget build(BuildContext context) {
-    Widget current = GesturableWidget(
+    Widget current = GestureMixStateWidget(
       enableFeedback: widget.enableFeedback,
       onTap: widget.enabled ? _handlePressed : null,
       onLongPress: widget.onLongPress,
       excludeFromSemantics: widget.excludeFromSemantics,
       hitTestBehavior: widget.hitTestBehavior,
       unpressDelay: widget.unpressDelay,
-      child: InteractiveWidget(
-        enabled: widget.enabled,
+      child: InteractiveMixStateWidget(
+        disabled: widget.enabled,
         onFocusChange: widget.onFocusChange,
         autofocus: widget.autofocus,
         focusNode: widget.focusNode,

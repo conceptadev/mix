@@ -1,11 +1,8 @@
 import 'package:flutter/widgets.dart';
 
+import '../../mix.dart';
 import '../modifiers/internal/render_widget_modifier.dart';
-import 'factory/mix_data.dart';
-import 'factory/mix_provider.dart';
-import 'factory/style_mix.dart';
-import 'internal/widget_state/interactive_widget.dart';
-import 'modifier.dart';
+import 'internal/mix_state/interactive_mix_state.dart';
 
 /// An abstract widget for applying custom styles.
 ///
@@ -49,21 +46,23 @@ abstract class StyledWidget extends StatelessWidget {
     BuildContext context,
     Widget Function(BuildContext context) builder,
   ) {
-    return _InteractiveBuilder(builder: (context) {
-      final inheritedMix = inherit ? Mix.maybeOfInherited(context) : null;
+    return _InteractiveMixStateBuilder(
+        style: style,
+        builder: (context) {
+          final inheritedMix = inherit ? Mix.maybeOfInherited(context) : null;
 
-      final mix = style.of(context);
+          final mix = style.of(context);
 
-      final mergedMix = inheritedMix?.merge(mix) ?? mix;
+          final mergedMix = inheritedMix?.merge(mix) ?? mix;
 
-      return Mix(
-        data: mergedMix,
-        child: applyModifiers(mergedMix, Builder(builder: builder)),
-      );
-    });
+          return Mix(
+            data: mergedMix,
+            child: _applyModifiers(mergedMix, Builder(builder: builder)),
+          );
+        });
   }
 
-  Widget applyModifiers(MixData mix, Widget child) {
+  Widget _applyModifiers(MixData mix, Widget child) {
     final modifiers = mix
         .whereType<WidgetModifierAttribute>()
         .map((e) => e.resolve(mix))
@@ -88,14 +87,22 @@ abstract class StyledWidget extends StatelessWidget {
   Widget build(BuildContext context);
 }
 
-class _InteractiveBuilder extends StatelessWidget {
-  const _InteractiveBuilder({required this.builder});
+class _InteractiveMixStateBuilder extends StatelessWidget {
+  const _InteractiveMixStateBuilder({
+    required this.builder,
+    required this.style,
+  });
 
   final Widget Function(BuildContext context) builder;
+  final Style style;
   @override
   Widget build(BuildContext context) {
-    return InteractiveState.maybeOf(context) == null
-        ? InteractiveWidget(child: Builder(builder: builder))
+    final needsInteractive = style.variants.values
+            .any((attr) => attr.variant is InteractiveMixStateVariant) &&
+        InteractiveMixState.maybeOf(context) != null;
+
+    return needsInteractive
+        ? InteractiveMixStateWidget(child: Builder(builder: builder))
         : builder(context);
   }
 }
