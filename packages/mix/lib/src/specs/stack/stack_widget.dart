@@ -35,7 +35,7 @@ class StyledStack extends StyledWidget {
     return withMix(context, (context) {
       final spec = StackSpec.of(context);
 
-      return StackSpecWidget(spec: spec, children: children);
+      return spec(children: children);
     });
   }
 }
@@ -65,6 +65,52 @@ class StackSpecWidget extends StatelessWidget {
         clipBehavior: spec?.clipBehavior ?? _defaultStack.clipBehavior,
         children: children ?? const [],
       ),
+    );
+  }
+}
+
+class AnimatedStackSpecWidget extends ImplicitlyAnimatedWidget {
+  const AnimatedStackSpecWidget({
+    super.key,
+    required this.spec,
+    required this.children,
+    this.orderOfModifiers = const [],
+    super.curve,
+    required super.duration,
+    super.onEnd,
+  });
+
+  final StackSpec spec;
+  final List<Widget> children;
+  final List<Type> orderOfModifiers;
+
+  @override
+  AnimatedStackSpecWidgetState createState() => AnimatedStackSpecWidgetState();
+}
+
+class AnimatedStackSpecWidgetState
+    extends AnimatedWidgetBaseState<AnimatedStackSpecWidget> {
+  StackSpecTween? _specTween;
+
+  @override
+  // ignore: avoid-dynamic
+  void forEachTween(TweenVisitor<dynamic> visitor) {
+    _specTween = visitor(
+      _specTween,
+      widget.spec,
+      // ignore: avoid-dynamic
+      (dynamic value) => StackSpecTween(begin: value as StackSpec),
+    ) as StackSpecTween?;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final spec = _specTween!.evaluate(animation);
+
+    return StackSpecWidget(
+      spec: spec,
+      orderOfModifiers: widget.orderOfModifiers,
+      children: widget.children,
     );
   }
 }
@@ -99,10 +145,7 @@ class ZBox extends StyledWidget {
       final boxSpec = BoxSpec.of(mix);
       final stackSpec = StackSpec.of(mix);
 
-      return BoxSpecWidget(
-        spec: boxSpec,
-        child: StackSpecWidget(spec: stackSpec, children: children),
-      );
+      return boxSpec(child: stackSpec(children: children));
     });
   }
 }

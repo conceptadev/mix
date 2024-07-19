@@ -3,23 +3,74 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
 import 'package:mix/src/modifiers/internal/render_widget_modifier.dart';
 
+
 void main() {
   group('orderSpecs', () {
     test('should order modifiers based on provided order', () {
       final orderOfModifiers = [
         ClipOvalModifierSpec,
-        OpacityModifierSpec,
-        AlignModifierSpec,
         TransformModifierSpec,
+        AlignModifierSpec,
+        OpacityModifierSpec,
       ];
       final modifiers = <WidgetModifierSpec>[
         const OpacityModifierSpec(1),
-        TransformModifierSpec(transform: Matrix4.rotationX(3)),
         const AlignModifierSpec(alignment: Alignment.center),
+        TransformModifierSpec(transform: Matrix4.rotationX(3)),
         const ClipOvalModifierSpec(),
       ];
 
       final result = orderModifiers(orderOfModifiers, modifiers);
+
+      expect(result.map((e) => e.type).toList(), orderOfModifiers);
+    });
+
+    test('should order modifiers based on provided order', () {
+      final orderOfModifiers = [
+        ClipOvalModifierSpec,
+        AspectRatioModifierSpec,
+        TransformModifierSpec,
+        OpacityModifierSpec,
+        VisibilityModifierSpec,
+      ];
+      const modifiers = <WidgetModifierSpec>[
+        VisibilityModifierSpec(true),
+        OpacityModifierSpec(1),
+        TransformModifierSpec(),
+        AspectRatioModifierSpec(2),
+        ClipOvalModifierSpec(),
+      ];
+
+      final result = orderModifiers(
+        orderOfModifiers,
+        modifiers,
+        defaultOrder: null,
+      );
+
+      expect(result.map((e) => e.type).toList(), orderOfModifiers);
+    });
+
+    test('should order modifiers based on provided order', () {
+      final orderOfModifiers = [
+        ClipOvalModifierSpec,
+        AspectRatioModifierSpec,
+        TransformModifierSpec,
+        OpacityModifierSpec,
+        VisibilityModifierSpec,
+      ];
+
+      final result = combineModifiers(
+        null,
+        const [
+          VisibilityModifierSpec(true),
+          OpacityModifierSpec(1),
+          TransformModifierSpec(),
+          AspectRatioModifierSpec(2),
+          ClipOvalModifierSpec(),
+        ],
+        orderOfModifiers,
+        defaultOrder: null,
+      );
 
       expect(result.map((e) => e.type).toList(), orderOfModifiers);
     });

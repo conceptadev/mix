@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
 
+import '../../../helpers/override_modifiers_order.dart';
 import '../../../helpers/testing_utils.dart';
 
 void main() {
@@ -100,6 +101,21 @@ void main() {
       );
 
       expect(find.byType(Align), findsOneWidget);
+    },
+  );
+
+  testWidgets(
+    'Renders modifiers in the correct order with many overrides',
+    (tester) async {
+      testOverrideModifiersOrder(
+        tester,
+        widgetBuilder: (style, orderOfModifiers) {
+          return ZBox(
+            style: style,
+            orderOfModifiers: orderOfModifiers,
+          );
+        },
+      );
     },
   );
 }

@@ -103,7 +103,7 @@ class RenderModifiers extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _RenderModifiers(
-      modifiers: _combineModifiers(mix, modifiers, orderOfModifiers).reversed,
+      modifiers: combineModifiers(mix, modifiers, orderOfModifiers).reversed,
       child: child,
     );
   }
@@ -151,7 +151,7 @@ class RenderAnimatedModifiers extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _RenderAnimatedModifiers(
-      modifiers: _combineModifiers(
+      modifiers: combineModifiers(
         mix,
         modifiers,
         orderOfModifiers,
@@ -319,7 +319,8 @@ List<Type> _normalizeOrderedTypes(MixData? mix, List<Type>? orderedTypes) {
   return specs;
 }
 
-List<WidgetModifierSpec<dynamic>> _combineModifiers(
+@visibleForTesting
+List<WidgetModifierSpec<dynamic>> combineModifiers(
   MixData? mix,
   List<WidgetModifierSpec<dynamic>> modifiers,
   List<Type> orderOfModifiers, {
