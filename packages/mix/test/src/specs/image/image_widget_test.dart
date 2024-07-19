@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
 
+import '../../../helpers/override_modifiers_order.dart';
 import '../../../helpers/testing_utils.dart';
 
 void main() {
@@ -187,5 +188,21 @@ void main() {
       expect(imageWidget.color, Colors.red);
       expect(imageWidget.fit, BoxFit.cover);
     });
+
+    testWidgets(
+      'Renders modifiers in the correct order with many overrides',
+      (tester) async {
+        testOverrideModifiersOrder(
+          tester,
+          widgetBuilder: (style, orderOfModifiers) {
+            return StyledImage(
+              image: FileImage(File('test_resources/logo.png')),
+              style: style,
+              orderOfModifiers: orderOfModifiers,
+            );
+          },
+        );
+      },
+    );
   });
 }
