@@ -3,8 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
-import 'package:mix/src/core/internal/mix_state/gesture_mix_state.dart';
-import 'package:mix/src/core/internal/mix_state/interactive_mix_state.dart';
 import 'package:mix/src/core/internal/mix_state/widget_state_controller.dart';
 
 export 'package:mix/src/internal/values_ext.dart';
@@ -132,28 +130,25 @@ extension WidgetTesterExt on WidgetTester {
   Future<void> pumpWithPressable(
     Widget widget, {
     bool disabled = false,
-    bool focus = false,
+    bool focused = false,
     bool pressed = false,
     bool hovered = false,
     bool longPressed = false,
   }) async {
-    final gestureController = GestureMixStateController();
-    final interactiveController = InteractiveMixStateController();
+    final controller = MixWidgetStateController();
 
-    interactiveController.update(InteractiveMixState.disabled, disabled);
-    interactiveController.update(InteractiveMixState.focused, focus);
-    interactiveController.update(InteractiveMixState.hovered, hovered);
-    gestureController.update(GestureMixState.pressed, pressed);
-    gestureController.update(GestureMixState.longPressed, longPressed);
+    controller.disabled = disabled;
+    controller.focused = focused;
+    controller.hovered = hovered;
+    controller.pressed = pressed;
+    controller.longPressed = longPressed;
+
     await pumpWidget(
       MaterialApp(
-        home: MixStateBuilder(
-          controller: gestureController,
+        home: MixWidgetStateBuilder(
+          controller: controller,
           builder: (_) {
-            return MixStateBuilder(
-              controller: interactiveController,
-              builder: (_) => widget,
-            );
+            return widget;
           },
         ),
       ),

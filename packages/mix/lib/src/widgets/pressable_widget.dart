@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../core/factory/style_mix.dart';
 import '../core/internal/mix_state/gesture_mix_state.dart';
 import '../core/internal/mix_state/interactive_mix_state.dart';
+import '../core/internal/mix_state/widget_state_controller.dart';
 import '../internal/constants.dart';
 import '../specs/box/box_widget.dart';
 
@@ -12,6 +13,7 @@ class PressableBox extends StatelessWidget {
     this.style,
     this.onLongPress,
     this.focusNode,
+    required this.child,
     this.autofocus = false,
     this.enableFeedback = false,
     this.unpressDelay = kDefaultAnimationDuration,
@@ -19,7 +21,6 @@ class PressableBox extends StatelessWidget {
     this.onPress,
     this.hitTestBehavior = HitTestBehavior.opaque,
     this.enabled = true,
-    required this.child,
   });
 
   /// Should gestures provide audible and/or haptic feedback
@@ -149,7 +150,15 @@ class Pressable extends StatefulWidget {
 
 @visibleForTesting
 class PressableWidgetState extends State<Pressable> {
-  bool get _hasOnPress => widget.onPress != null;
+  final MixWidgetStateController _controller = MixWidgetStateController();
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  bool get hasOnPress => widget.onPress != null;
 
   MouseCursor get mouseCursor {
     if (widget.mouseCursor != null) {
@@ -160,7 +169,7 @@ class PressableWidgetState extends State<Pressable> {
       return SystemMouseCursors.forbidden;
     }
 
-    return _hasOnPress ? SystemMouseCursors.click : MouseCursor.defer;
+    return hasOnPress ? SystemMouseCursors.click : MouseCursor.defer;
   }
 
   /// Binds the [ActivateIntent] from the Flutter SDK to the onPressed callback by default.
@@ -170,29 +179,29 @@ class PressableWidgetState extends State<Pressable> {
     return {
       if (widget.onPress != null) ...{
         ActivateIntent:
-            CallbackAction<Intent>(onInvoke: (_) => _handlePressed()),
+            CallbackAction<Intent>(onInvoke: (_) => handlePressed()),
       },
       ...(widget.actions ?? {}),
     };
   }
 
-  void _handlePressed() {
-    if (widget.enabled) {
-      widget.onPress?.call();
-    }
+  void handlePressed() {
+    widget.onPress?.call();
   }
 
   @override
   Widget build(BuildContext context) {
     Widget current = GestureMixStateWidget(
+      controller: _controller,
       enableFeedback: widget.enableFeedback,
-      onTap: widget.enabled ? _handlePressed : null,
-      onLongPress: widget.onLongPress,
+      onTap: widget.enabled ? handlePressed : null,
+      onLongPress: widget.enabled ? widget.onLongPress : null,
       excludeFromSemantics: widget.excludeFromSemantics,
       hitTestBehavior: widget.hitTestBehavior,
       unpressDelay: widget.unpressDelay,
       child: InteractiveMixStateWidget(
-        disabled: widget.enabled,
+        controller: _controller,
+        enabled: widget.enabled,
         onFocusChange: widget.onFocusChange,
         autofocus: widget.autofocus,
         focusNode: widget.focusNode,
@@ -201,7 +210,10 @@ class PressableWidgetState extends State<Pressable> {
         canRequestFocus: widget.canRequestFocus,
         mouseCursor: mouseCursor,
         actions: actions,
-        child: widget.child,
+        child: MixWidgetStateBuilder(
+          controller: _controller,
+          builder: (_) => widget.child,
+        ),
       ),
     );
 

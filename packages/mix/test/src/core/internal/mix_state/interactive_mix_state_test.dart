@@ -1,80 +1,81 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mix/src/core/internal/mix_state/interactive_mix_state.dart';
 import 'package:mix/src/core/internal/mix_state/widget_state_controller.dart';
 
 void main() {
   group('InteractiveMixState', () {
-    InteractiveMixStateController controllerOf(BuildContext context) {
-      return _MixStateController.ofType<InteractiveMixStateController>(context);
-    }
-
     testWidgets('should update enabled state', (WidgetTester tester) async {
-      final controller = InteractiveMixStateController();
-      controller.update(InteractiveMixState.disabled, false);
+      final controller = MixWidgetStateController();
+
+      controller.disabled = true;
       await tester.pumpWidget(
-        MixStateBuilder(controller: controller, builder: (_) => Container()),
+        MixWidgetStateBuilder(
+            controller: controller, builder: (_) => Container()),
       );
 
       var context = tester.element(find.byType(Container));
 
       expect(
-        controllerOf(context).enabled,
+        MixWidgetState.hasStateOf(context, MixWidgetState.disabled),
         isTrue,
       );
-      expect(
-        controllerOf(context).disabled,
-        isFalse,
-      );
 
-      controller.update(InteractiveMixState.disabled, true);
+      controller.disabled = false;
 
       await tester.pump();
 
       context = tester.element(find.byType(Container));
 
-      expect(controllerOf(context).enabled, isFalse);
-      expect(controllerOf(context).disabled, isTrue);
+      expect(
+          MixWidgetState.hasStateOf(context, MixWidgetState.disabled), isFalse);
     });
 
     testWidgets('should update focused state', (WidgetTester tester) async {
-      final controller = InteractiveMixStateController();
-      controller.update(InteractiveMixState.disabled, true);
-      controller.update(InteractiveMixState.focused, true);
+      final controller = MixWidgetStateController();
+      controller.focused = true;
       await tester.pumpWidget(
-        MixStateBuilder(controller: controller, builder: (_) => Container()),
+        MixWidgetStateBuilder(
+            controller: controller, builder: (_) => Container()),
       );
 
       var context = tester.element(find.byType(Container));
-      expect(controllerOf(context).focused, isTrue);
+      expect(
+        MixWidgetState.hasStateOf(context, MixWidgetState.focused),
+        isTrue,
+      );
 
-      controller.update(InteractiveMixState.focused, false);
+      controller.focused = false;
 
       await tester.pump();
 
       context = tester.element(find.byType(Container));
 
-      expect(controllerOf(context).focused, isFalse);
+      expect(
+          MixWidgetState.hasStateOf(context, MixWidgetState.focused), isFalse);
     });
 
     testWidgets('should update hovered state', (WidgetTester tester) async {
-      final controller = InteractiveMixStateController();
-      controller.update(InteractiveMixState.disabled, false);
-      controller.update(InteractiveMixState.hovered, true);
+      final controller = MixWidgetStateController();
+
+      controller.hovered = true;
+
       await tester.pumpWidget(
-        MixStateBuilder(controller: controller, builder: (_) => Container()),
+        MixWidgetStateBuilder(
+            controller: controller, builder: (_) => Container()),
       );
 
       var context = tester.element(find.byType(Container));
-      expect(controllerOf(context).hovered, isTrue);
+      expect(
+          MixWidgetState.hasStateOf(context, MixWidgetState.hovered), isTrue);
 
-      controller.update(InteractiveMixState.hovered, false);
+      controller.hovered = false;
 
       await tester.pump();
 
       context = tester.element(find.byType(Container));
 
-      expect(controllerOf(context).hovered, isFalse);
+      expect(
+          MixWidgetState.hasStateOf(context, MixWidgetState.hovered), isFalse);
     });
   });
 }

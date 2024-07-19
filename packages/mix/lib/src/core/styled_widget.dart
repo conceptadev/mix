@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 import '../../mix.dart';
 import '../modifiers/internal/render_widget_modifier.dart';
 import 'internal/mix_state/interactive_mix_state.dart';
+import 'internal/mix_state/widget_state_controller.dart';
 
 /// An abstract widget for applying custom styles.
 ///
@@ -46,7 +47,7 @@ abstract class StyledWidget extends StatelessWidget {
     BuildContext context,
     Widget Function(BuildContext context) builder,
   ) {
-    return _InteractiveMixStateBuilder(
+    return _MixWidgetStateWrapper(
         style: style,
         builder: (context) {
           final inheritedMix = inherit ? Mix.maybeOfInherited(context) : null;
@@ -87,8 +88,8 @@ abstract class StyledWidget extends StatelessWidget {
   Widget build(BuildContext context);
 }
 
-class _InteractiveMixStateBuilder extends StatelessWidget {
-  const _InteractiveMixStateBuilder({
+class _MixWidgetStateWrapper extends StatelessWidget {
+  const _MixWidgetStateWrapper({
     required this.builder,
     required this.style,
   });
@@ -97,12 +98,14 @@ class _InteractiveMixStateBuilder extends StatelessWidget {
   final Style style;
   @override
   Widget build(BuildContext context) {
-    final needsInteractive = style.variants.values
-            .any((attr) => attr.variant is InteractiveMixStateVariant) &&
-        InteractiveMixState.maybeOf(context) != null;
+    final needsWidgetState = style.variants.values
+            .any((attr) => attr.variant is MixWidgetStateVariant) &&
+        MixWidgetState.of(context) == null;
 
-    return needsInteractive
-        ? InteractiveMixStateWidget(child: Builder(builder: builder))
+    return needsWidgetState
+        ? InteractiveMixStateWidget(
+            controller: MixWidgetStateController(),
+            child: Builder(builder: builder))
         : builder(context);
   }
 }

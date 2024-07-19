@@ -6,7 +6,7 @@ class InteractiveMixStateWidget extends StatefulWidget {
   const InteractiveMixStateWidget({
     super.key,
     required this.child,
-    this.disabled = false,
+    this.enabled = true,
     this.onFocusChange,
     this.autofocus = false,
     this.focusNode,
@@ -17,11 +17,14 @@ class InteractiveMixStateWidget extends StatefulWidget {
     this.canRequestFocus = true,
     this.mouseCursor = MouseCursor.defer,
     this.shortcuts,
+    required this.controller,
     this.actions,
   });
 
-  final bool disabled;
+  final bool enabled;
   final MouseCursor mouseCursor;
+
+  final MixWidgetStateController controller;
 
   final bool canRequestFocus;
 
@@ -48,44 +51,35 @@ class InteractiveMixStateWidget extends StatefulWidget {
 }
 
 class _InteractiveStateBuilderState extends State<InteractiveMixStateWidget> {
-  late final InteractiveMixStateController _controller;
-
   @override
   void initState() {
     super.initState();
-    _controller = InteractiveMixStateController();
 
-    _controller.update(InteractiveMixState.disabled, widget.disabled);
+    widget.controller.disabled = !widget.enabled;
   }
 
   void _onShowFocusHighlight(bool hasFocus) {
-    _controller.update(InteractiveMixState.focused, hasFocus);
+    widget.controller.focused = hasFocus;
     widget.onShowFocusHighlight?.call(hasFocus);
   }
 
   void _onShowHoverHighlight(bool isHovered) {
-    _controller.update(InteractiveMixState.hovered, isHovered);
+    widget.controller.hovered = isHovered;
     widget.onShowHoverHighlight?.call(isHovered);
   }
 
   @override
   void didUpdateWidget(InteractiveMixStateWidget oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (widget.disabled != oldWidget.disabled) {
-      _controller.update(InteractiveMixState.disabled, widget.disabled);
+    if (widget.enabled != oldWidget.enabled) {
+      widget.controller.disabled = !widget.enabled;
     }
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return FocusableActionDetector(
-      enabled: widget.disabled,
+      enabled: widget.enabled,
       focusNode: widget.focusNode,
       autofocus: widget.autofocus,
       shortcuts: widget.shortcuts,
@@ -94,33 +88,7 @@ class _InteractiveStateBuilderState extends State<InteractiveMixStateWidget> {
       onShowHoverHighlight: _onShowHoverHighlight,
       onFocusChange: widget.onFocusChange,
       mouseCursor: widget.mouseCursor,
-      child: MixStateBuilder(
-        controller: _controller,
-        builder: (_) => widget.child,
-      ),
+      child: widget.child,
     );
   }
-}
-
-enum InteractiveMixState {
-  focused,
-  disabled,
-  hovered;
-
-  static const of = MixStateController.ofType<InteractiveMixStateController>;
-
-  static const maybeOf =
-      MixStateController.maybeOfType<InteractiveMixStateController>;
-}
-
-class InteractiveMixStateController
-    extends MixStateEnumController<InteractiveMixState> {
-  bool get enabled => !disabled;
-  bool get disabled => has(InteractiveMixState.disabled);
-  bool get focused => has(InteractiveMixState.focused);
-  bool get hovered => has(InteractiveMixState.hovered);
-
-  set disabled(bool value) => update(InteractiveMixState.disabled, !value);
-  set focused(bool value) => update(InteractiveMixState.focused, value);
-  set hovered(bool value) => update(InteractiveMixState.hovered, value);
 }

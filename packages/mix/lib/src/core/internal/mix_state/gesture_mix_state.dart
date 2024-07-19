@@ -7,9 +7,9 @@ import 'widget_state_controller.dart';
 class GestureMixStateWidget extends StatefulWidget {
   const GestureMixStateWidget({
     super.key,
-    this.enabled = true,
     required this.child,
     this.enableFeedback = false,
+    required this.controller,
     this.onTap,
     this.onLongPress,
     this.onTapUp,
@@ -27,11 +27,11 @@ class GestureMixStateWidget extends StatefulWidget {
     required this.unpressDelay,
   });
 
-  final bool enabled;
-
   /// The child widget.
-
   final Widget child;
+
+  /// The controller for the widget state.
+  final MixWidgetStateController controller;
 
   /// Whether to provide feedback for gestures.
   final bool enableFeedback;
@@ -84,29 +84,12 @@ class GestureMixStateWidget extends StatefulWidget {
 }
 
 class _GestureMixStateWidgetState extends State<GestureMixStateWidget> {
-  late final GestureMixStateController _controller;
   int _pressCount = 0;
   Timer? _timer;
-
-  bool get _isPressed => _controller.has(GestureMixState.pressed);
-
-  set _isPressed(bool value) {
-    _controller.update(GestureMixState.pressed, value);
-    if (value) {
-      _pressCount++;
-      final initialPressCount = _pressCount;
-      _unpressAfterDelay(initialPressCount);
-    }
-  }
-
-  set _isLongPressed(bool value) {
-    _controller.update(GestureMixState.longPressed, value);
-  }
 
   @override
   void initState() {
     super.initState();
-    _controller = GestureMixStateController();
   }
 
   void _onPanUpdate(DragUpdateDetails event) {
@@ -117,33 +100,42 @@ class _GestureMixStateWidgetState extends State<GestureMixStateWidget> {
     widget.onPanDown?.call(details);
   }
 
+  _handlePress(bool value) {
+    widget.controller.pressed = value;
+    if (value) {
+      _pressCount++;
+      final initialPressCount = _pressCount;
+      _unpressAfterDelay(initialPressCount);
+    }
+  }
+
   void _onPanEnd(DragEndDetails details) {
-    _isPressed = true;
+    _handlePress(true);
     widget.onPanEnd?.call(details);
   }
 
   void _onTapUp(TapUpDetails details) {
-    _isLongPressed = false;
+    widget.controller.longPressed = false;
     widget.onTapUp?.call(details);
   }
 
   void _onTapCancel() {
-    _isLongPressed = false;
+    widget.controller.longPressed = false;
     widget.onTapCancel?.call();
   }
 
   void _onLongPressStart(LongPressStartDetails details) {
-    _controller.update(GestureMixState.longPressed, true);
+    widget.controller.longPressed = true;
     widget.onLongPressStart?.call(details);
   }
 
   void _onLongPressEnd(LongPressEndDetails details) {
-    _isLongPressed = false;
+    widget.controller.longPressed = false;
     widget.onLongPressEnd?.call(details);
   }
 
   void _onLongPressCancel() {
-    _isLongPressed = false;
+    widget.controller.longPressed = false;
     widget.onLongPressCancel?.call();
   }
 
@@ -157,8 +149,8 @@ class _GestureMixStateWidgetState extends State<GestureMixStateWidget> {
 
   void _unpressAfterDelay(int initialPressCount) {
     void unpressCallback() {
-      if (_isPressed && _pressCount == initialPressCount) {
-        _isPressed = false;
+      if (widget.controller.pressed && _pressCount == initialPressCount) {
+        widget.controller.pressed = false;
       }
     }
 
@@ -174,7 +166,7 @@ class _GestureMixStateWidgetState extends State<GestureMixStateWidget> {
   }
 
   void _onTap() {
-    _isPressed = true;
+    _handlePress(true);
     widget.onTap?.call();
     if (widget.enableFeedback) Feedback.forTap(context);
   }
@@ -207,25 +199,7 @@ class _GestureMixStateWidgetState extends State<GestureMixStateWidget> {
       onPanCancel: _onPanCancel,
       behavior: widget.hitTestBehavior,
       excludeFromSemantics: widget.excludeFromSemantics,
-      child: MixStateBuilder(
-        controller: _controller,
-        builder: (_) => widget.child,
-      ),
+      child: widget.child,
     );
   }
-}
-
-enum GestureMixState {
-  pressed,
-  longPressed;
-
-  static const of = MixStateController.ofType<GestureMixStateController>;
-
-  static const maybeOf =
-      MixStateController.maybeOfType<GestureMixStateController>;
-}
-
-class GestureMixStateController extends MixStateController<GestureMixState> {
-  bool get pressed => has(GestureMixState.pressed);
-  bool get longPressed => has(GestureMixState.longPressed);
 }

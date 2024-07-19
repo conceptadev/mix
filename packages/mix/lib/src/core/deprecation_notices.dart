@@ -1,35 +1,33 @@
 // ignore_for_file: camel_case_types
 
+import 'package:flutter/widgets.dart';
+
 import '../attributes/enum/enum_util.dart';
 import '../specs/image/image_spec.dart';
 import '../variants/widget_state_variant.dart';
 import 'attribute.dart';
-import 'internal/mix_state/widget_state.dart';
 
-class InternalMixDeprecatedAnnotation extends Deprecated {
+class _DeprecatedAnnotation extends Deprecated {
   final String version;
-  const InternalMixDeprecatedAnnotation({
+  const _DeprecatedAnnotation({
     required String message,
     required this.version,
   }) : super(message);
 }
 
-class InternalRenameDeprecatedAnnotation
-    extends InternalMixDeprecatedAnnotation {
+class _RenamedAnnotation extends _DeprecatedAnnotation {
   final String updatedName;
 
-  const InternalRenameDeprecatedAnnotation({
+  const _RenamedAnnotation({
     required super.message,
     required super.version,
     required this.updatedName,
   });
 }
 
-typedef RenamedDeprecated = InternalRenameDeprecatedAnnotation;
-
 extension ImageSpecUtilityDeprecationX<T extends Attribute>
     on ImageSpecUtility<T> {
-  @RenamedDeprecated(
+  @_RenamedAnnotation(
     message:
         'To match Flutter naming conventions, use `colorBlendMode` instead.',
     version: '2.0.0',
@@ -38,22 +36,27 @@ extension ImageSpecUtilityDeprecationX<T extends Attribute>
   BlendModeUtility<T> get blendMode => colorBlendMode;
 }
 
-@RenamedDeprecated(
-  message: 'Use `WidgetStateVariant` instead.',
+@_RenamedAnnotation(
+  message: 'Use `MixWidgetStateVariant` instead.',
   version: '2.0.0',
-  updatedName: 'WidgetStateVariant',
+  updatedName: 'MixWidgetStateVariant',
 )
-typedef WidgetContextVariant = MixStateVariant;
-@RenamedDeprecated(
-  message: 'Use `WidgetStateModel` instead.',
-  version: '2.0.0',
-  updatedName: 'WidgetStateModel',
-)
-typedef PressableState = WidgetStateModel;
+typedef WidgetContextVariant = MixWidgetStateVariant;
 
-@RenamedDeprecated(
-  message: 'Use `MixWidgetState` instead.',
+@_RenamedAnnotation(
+  message: 'Use `OnFocusedVariant` instead.',
   version: '2.0.0',
-  updatedName: 'MixWidgetState',
+  updatedName: 'OnFocusedVariant',
 )
-typedef PressableCurrentState = WidgetMixState;
+typedef OnFocusVariant = OnFocusedVariant;
+
+@_DeprecatedAnnotation(
+  message: 'Use OnNotVariant(OnDisabledVariant())',
+  version: '2.0.0',
+)
+class OnEnabledVariant extends OnDisabledVariant {
+  const OnEnabledVariant();
+
+  @override
+  bool when(BuildContext context) => !super.when(context);
+}
