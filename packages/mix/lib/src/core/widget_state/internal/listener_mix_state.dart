@@ -2,32 +2,28 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
-class PointerPositionStateWidget extends StatefulWidget {
-  const PointerPositionStateWidget({
+class ListenerMixStateWidget extends StatefulWidget {
+  const ListenerMixStateWidget({
     super.key,
     required this.child,
-    this.onEnter,
-    this.onExit,
     this.onHover,
   });
 
   final Widget child;
-  final void Function(PointerEnterEvent event)? onEnter;
-  final void Function(PointerExitEvent event)? onExit;
+
   final void Function(PointerHoverEvent event)? onHover;
 
   @override
-  State createState() => _PointerPositionStateWidgetState();
+  State createState() => _ListenerMixStateWidgetState();
 }
 
-class _PointerPositionStateWidgetState
-    extends State<PointerPositionStateWidget> {
-  late final _MouseRegionMixStateController _controller;
+class _ListenerMixStateWidgetState extends State<ListenerMixStateWidget> {
+  late final _ListenerMixStateController _controller;
 
   @override
   void initState() {
     super.initState();
-    _controller = _MouseRegionMixStateController();
+    _controller = _ListenerMixStateController();
   }
 
   void _updateCursorPosition(Offset cursorOffset) {
@@ -42,16 +38,6 @@ class _PointerPositionStateWidgetState
     widget.onHover?.call(event);
   }
 
-  void _onEnter(PointerEnterEvent event) {
-    _updateCursorPosition(event.localPosition);
-    widget.onEnter?.call(event);
-  }
-
-  void _onExit(PointerExitEvent event) {
-    _updateCursorPosition(event.localPosition);
-    widget.onExit?.call(event);
-  }
-
   @override
   void dispose() {
     _controller.dispose();
@@ -62,15 +48,12 @@ class _PointerPositionStateWidgetState
   Widget build(BuildContext context) {
     // Check if we need MouseRegion
 
-    return MouseRegion(
-      onEnter: _onEnter,
-      onExit: _onExit,
-      onHover: _onHover,
-      cursor: MouseCursor.defer,
+    return Listener(
+      onPointerHover: _onHover,
       child: ListenableBuilder(
         listenable: _controller,
         builder: (context, _) {
-          return PointerPositionProvider(
+          return ListerMixStateProvider(
             pointerPosition: _controller.pointerPosition,
             child: widget.child,
           );
@@ -80,7 +63,7 @@ class _PointerPositionStateWidgetState
   }
 }
 
-class _MouseRegionMixStateController extends ChangeNotifier {
+class _ListenerMixStateController extends ChangeNotifier {
   PointerPosition? _pointerPosition;
 
   PointerPosition? get pointerPosition => _pointerPosition;
@@ -102,21 +85,21 @@ class _MouseRegionMixStateController extends ChangeNotifier {
   }
 }
 
-class PointerPositionProvider extends InheritedWidget {
-  const PointerPositionProvider({
+class ListerMixStateProvider extends InheritedWidget {
+  const ListerMixStateProvider({
     super.key,
     required super.child,
     required this.pointerPosition,
   });
 
-  static PointerPositionProvider? of(BuildContext context) {
+  static ListerMixStateProvider? of(BuildContext context) {
     return context.dependOnInheritedWidgetOfExactType();
   }
 
   final PointerPosition? pointerPosition;
 
   @override
-  bool updateShouldNotify(PointerPositionProvider oldWidget) {
+  bool updateShouldNotify(ListerMixStateProvider oldWidget) {
     return pointerPosition != oldWidget.pointerPosition;
   }
 }

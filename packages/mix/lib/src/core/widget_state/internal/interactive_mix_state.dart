@@ -98,6 +98,7 @@ class _InteractiveStateBuilderState extends State<InteractiveMixStateWidget> {
       onShowHoverHighlight: _onShowHoverHighlight,
       onFocusChange: widget.onFocusChange,
       mouseCursor: widget.mouseCursor,
+      includeFocusSemantics: false,
       child: widget.child,
     );
   }

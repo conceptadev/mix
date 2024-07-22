@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../core/factory/style_mix.dart';
 import '../core/widget_state/internal/gesture_mix_state.dart';
 import '../core/widget_state/internal/interactive_mix_state.dart';
-import '../core/widget_state/internal/pointer_position_mix_state.dart';
+import '../core/widget_state/internal/listener_mix_state.dart';
 import '../core/widget_state/widget_state_controller.dart';
 import '../internal/constants.dart';
 import '../specs/box/box_widget.dart';
@@ -197,20 +197,22 @@ class PressableWidgetState extends State<Pressable> {
       excludeFromSemantics: widget.excludeFromSemantics,
       hitTestBehavior: widget.hitTestBehavior,
       unpressDelay: widget.unpressDelay,
-      child: InteractiveMixStateWidget(
-        enabled: widget.enabled,
-        onFocusChange: widget.onFocusChange,
-        autofocus: widget.autofocus,
-        focusNode: widget.focusNode,
-        onKey: widget.onKey,
-        onKeyEvent: widget.onKeyEvent,
-        canRequestFocus: widget.canRequestFocus,
-        mouseCursor: mouseCursor,
-        controller: _controller,
-        actions: actions,
-        child: MixWidgetStateBuilder(
+      child: ListenerMixStateWidget(
+        child: InteractiveMixStateWidget(
+          enabled: widget.enabled,
+          onFocusChange: widget.onFocusChange,
+          autofocus: widget.autofocus,
+          focusNode: widget.focusNode,
+          onKey: widget.onKey,
+          onKeyEvent: widget.onKeyEvent,
+          canRequestFocus: widget.canRequestFocus,
+          mouseCursor: mouseCursor,
           controller: _controller,
-          builder: (_) => widget.child,
+          actions: actions,
+          child: MixWidgetStateBuilder(
+            controller: _controller,
+            builder: (_) => widget.child,
+          ),
         ),
       ),
     );
@@ -298,7 +300,7 @@ class _InteractableState extends State<Interactable> {
 
   @override
   Widget build(BuildContext context) {
-    return PointerPositionStateWidget(
+    return ListenerMixStateWidget(
       child: InteractiveMixStateWidget(
         enabled: widget.enabled,
         onFocusChange: widget.onFocusChange,

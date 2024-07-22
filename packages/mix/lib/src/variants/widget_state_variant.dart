@@ -2,7 +2,7 @@ import 'package:flutter/widgets.dart';
 
 import '../core/factory/style_mix.dart';
 import '../core/variant.dart';
-import '../core/widget_state/internal/pointer_position_mix_state.dart';
+import '../core/widget_state/internal/listener_mix_state.dart';
 import '../core/widget_state/widget_state_controller.dart';
 import 'context_variant.dart';
 
@@ -40,8 +40,15 @@ class OnHoverVariant extends MixWidgetStateVariant<PointerPosition?> {
   const OnHoverVariant();
 
   @override
-  PointerPosition? builder(BuildContext context) {
-    return PointerPositionProvider.of(context)?.pointerPosition;
+  PointerPosition builder(BuildContext context) {
+    final pointerPosition = ListerMixStateProvider.of(context)?.pointerPosition;
+
+    return when(context) && pointerPosition != null
+        ? pointerPosition
+        : const PointerPosition(
+            position: Alignment.center,
+            offset: Offset.zero,
+          );
   }
 
   @override
