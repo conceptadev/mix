@@ -29,6 +29,13 @@ final class StackSpec extends Spec<StackSpec> with _$StackSpec {
   });
 
   Widget call({List<Widget> children = const []}) {
-    return StackSpecWidget(spec: this, children: children);
+    return isAnimated
+        ? AnimatedStackSpecWidget(
+            spec: this,
+            curve: animated!.curve,
+            duration: animated!.duration,
+            children: children,
+          )
+        : StackSpecWidget(spec: this, children: children);
   }
 }

@@ -5,7 +5,6 @@ import 'package:flutter/widgets.dart';
 import '../../core/styled_widget.dart';
 import '../../modifiers/internal/render_widget_modifier.dart';
 import '../box/box_spec.dart';
-import '../box/box_widget.dart';
 import 'flex_spec.dart';
 
 /// A flexible layout widget enhanced with `Style` for simplified styling.
@@ -44,12 +43,7 @@ class StyledFlex extends StyledWidget {
     return withMix(context, (context) {
       final spec = FlexSpec.of(context);
 
-      return FlexSpecWidget(
-        spec: spec,
-        direction: direction,
-        orderOfModifiers: orderOfModifiers,
-        children: children,
-      );
+      return spec(direction: direction, children: children);
     });
   }
 }
@@ -104,6 +98,53 @@ class FlexSpecWidget extends StatelessWidget {
             spec: spec!,
             child: flexWidget,
           );
+  }
+}
+
+class AnimatedFlexSpecWidget extends ImplicitlyAnimatedWidget {
+  const AnimatedFlexSpecWidget({
+    super.key,
+    required this.spec,
+    required this.children,
+    required this.direction,
+    this.orderOfModifiers = const [],
+    super.curve,
+    required super.duration,
+    super.onEnd,
+  });
+
+  final FlexSpec spec;
+  final List<Widget> children;
+  final Axis direction;
+  final List<Type> orderOfModifiers;
+
+  @override
+  AnimatedFlexSpecWidgetState createState() => AnimatedFlexSpecWidgetState();
+}
+
+class AnimatedFlexSpecWidgetState
+    extends AnimatedWidgetBaseState<AnimatedFlexSpecWidget> {
+  FlexSpecTween? _specTween;
+
+  @override
+  // ignore: avoid-dynamic
+  void forEachTween(TweenVisitor<dynamic> visitor) {
+    _specTween = visitor(
+      _specTween,
+      widget.spec,
+      // ignore: avoid-dynamic
+      (dynamic value) => FlexSpecTween(begin: value as FlexSpec),
+    ) as FlexSpecTween?;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return FlexSpecWidget(
+      spec: _specTween?.evaluate(animation),
+      direction: widget.direction,
+      orderOfModifiers: widget.orderOfModifiers,
+      children: widget.children,
+    );
   }
 }
 
@@ -191,16 +232,12 @@ class FlexBox extends StyledWidget {
   @override
   Widget build(BuildContext context) {
     return withMix(context, (mix) {
-      final box = BoxSpec.of(mix);
-      final flex = FlexSpec.of(mix);
+      final boxSpec = BoxSpec.of(mix);
+      final flexSpec = FlexSpec.of(mix);
 
-      return BoxSpecWidget(
-        spec: box,
-        child: FlexSpecWidget(
-          spec: flex,
-          direction: direction,
-          children: children,
-        ),
+      return boxSpec(
+        orderOfModifiers: orderOfModifiers,
+        child: flexSpec(direction: direction, children: children),
       );
     });
   }

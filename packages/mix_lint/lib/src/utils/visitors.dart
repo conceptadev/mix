@@ -14,3 +14,19 @@ class RecursiveSimpleIdentifierVisitor extends RecursiveAstVisitor<void> {
     node.visitChildren(this);
   }
 }
+
+class RecursiveFunctionExpressionInvocationVisitor
+    extends RecursiveAstVisitor<void> {
+  const RecursiveFunctionExpressionInvocationVisitor({
+    required this.onVisitFunctionExpressionInvocation,
+  });
+
+  final void Function(FunctionExpressionInvocation node)
+      onVisitFunctionExpressionInvocation;
+
+  @override
+  void visitFunctionExpressionInvocation(FunctionExpressionInvocation node) {
+    onVisitFunctionExpressionInvocation(node);
+    node.visitChildren(this);
+  }
+}

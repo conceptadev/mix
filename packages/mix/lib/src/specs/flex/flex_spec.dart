@@ -53,10 +53,18 @@ final class FlexSpec extends Spec<FlexSpec> with _$FlexSpec {
   });
 
   Widget call({List<Widget> children = const [], required Axis direction}) {
-    return FlexSpecWidget(
-      spec: this,
-      direction: direction,
-      children: children,
-    );
+    return isAnimated
+        ? AnimatedFlexSpecWidget(
+            spec: this,
+            direction: direction,
+            curve: animated!.curve,
+            duration: animated!.duration,
+            children: children,
+          )
+        : FlexSpecWidget(
+            spec: this,
+            direction: direction,
+            children: children,
+          );
   }
 }
