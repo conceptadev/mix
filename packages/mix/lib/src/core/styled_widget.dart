@@ -1,12 +1,15 @@
 import 'package:flutter/widgets.dart';
 
 import '../modifiers/internal/render_widget_modifier.dart';
+import '../variants/context_variant.dart';
 import '../variants/widget_state_variant.dart';
-import '../widgets/pressable_widget.dart';
 import 'factory/mix_data.dart';
 import 'factory/mix_provider.dart';
 import 'factory/style_mix.dart';
 import 'modifier.dart';
+import 'widget_state/internal/interactive_mix_state.dart';
+import 'widget_state/internal/listener_mix_state.dart';
+import 'widget_state/internal/mix_widget_state_builder.dart';
 import 'widget_state/widget_state_controller.dart';
 
 /// An abstract widget for applying custom styles.
@@ -79,9 +82,11 @@ class SpecBuilder extends StatelessWidget {
     List<Type>? orderOfModifiers,
   }) : orderOfModifiers = orderOfModifiers ?? const [];
 
-  // Getter to check if the style has any MixWidgetStateVariant
   bool get _hasWidgetStateVariant => style.variants.values
       .any((attr) => attr.variant is MixWidgetStateVariant);
+
+  bool get _hasListenerVariant => style.variants.values.any((attr) =>
+      attr is ContextVariantBuilder && attr.variant is OnHoverVariant);
 
   // Required builder function
   final Widget Function(BuildContext) builder;
@@ -136,18 +141,30 @@ class SpecBuilder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Widget current = Builder(builder: _buildMixedChild);
     // Check if the widget needs widget state and if it's not available in the context
     final needsWidgetState =
         _hasWidgetStateVariant && MixWidgetState.of(context) == null;
+
+    final needsListener = _hasListenerVariant &&
+        PointerListenerMixWidgetState.of(context) == null;
     // If widget state is needed or a controller is provided, wrap the child with InteractiveMixStateWidget
-    if (needsWidgetState || controller != null) {
-      return Interactable(
-        controller: controller,
-        child: Builder(builder: _buildMixedChild),
+    if (controller != null) {
+      current = MixWidgetStateBuilder(
+        controller: controller!,
+        builder: (_) => current,
       );
+    }
+    if (needsWidgetState) {
+      current =
+          InteractiveMixStateWidget(controller: controller, child: current);
+    }
+
+    if (needsListener) {
+      current = PointerListenerMixStateWidget(child: current);
     }
 
     // Otherwise, directly build the mixed child widget
-    return _buildMixedChild(context);
+    return current;
   }
 }

@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mix/src/core/widget_state/internal/mix_widget_state_builder.dart';
 import 'package:mix/src/core/widget_state/widget_state_controller.dart';
 
 class TrackRebuildWidget<T> extends StatefulWidget {

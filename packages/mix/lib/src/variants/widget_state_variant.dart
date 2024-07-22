@@ -41,7 +41,8 @@ class OnHoverVariant extends MixWidgetStateVariant<PointerPosition?> {
 
   @override
   PointerPosition builder(BuildContext context) {
-    final pointerPosition = ListerMixStateProvider.of(context)?.pointerPosition;
+    final pointerPosition =
+        PointerListenerMixWidgetState.of(context)?.pointerPosition;
 
     return when(context) && pointerPosition != null
         ? pointerPosition

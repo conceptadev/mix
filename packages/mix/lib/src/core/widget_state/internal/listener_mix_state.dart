@@ -2,40 +2,30 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
-class ListenerMixStateWidget extends StatefulWidget {
-  const ListenerMixStateWidget({
-    super.key,
-    required this.child,
-    this.onHover,
-  });
+class PointerListenerMixStateWidget extends StatefulWidget {
+  const PointerListenerMixStateWidget({super.key, required this.child});
 
   final Widget child;
 
-  final void Function(PointerHoverEvent event)? onHover;
-
   @override
-  State createState() => _ListenerMixStateWidgetState();
+  State createState() => _PointerListenerMixStateWidgetState();
 }
 
-class _ListenerMixStateWidgetState extends State<ListenerMixStateWidget> {
-  late final _ListenerMixStateController _controller;
+class _PointerListenerMixStateWidgetState
+    extends State<PointerListenerMixStateWidget> {
+  late final PointerListenerMixStateController _controller;
 
   @override
   void initState() {
     super.initState();
-    _controller = _ListenerMixStateController();
-  }
-
-  void _updateCursorPosition(Offset cursorOffset) {
-    final size = context.size;
-    if (size != null) {
-      _controller.updateCursorPosition(cursorOffset, size);
-    }
+    _controller = PointerListenerMixStateController();
   }
 
   void _onHover(PointerHoverEvent event) {
-    _updateCursorPosition(event.localPosition);
-    widget.onHover?.call(event);
+    final size = context.size;
+    if (size != null) {
+      _controller.updateCursorPosition(event.localPosition, size);
+    }
   }
 
   @override
@@ -53,8 +43,8 @@ class _ListenerMixStateWidgetState extends State<ListenerMixStateWidget> {
       child: ListenableBuilder(
         listenable: _controller,
         builder: (context, _) {
-          return ListerMixStateProvider(
-            pointerPosition: _controller.pointerPosition,
+          return PointerListenerMixWidgetState(
+            notifier: _controller,
             child: widget.child,
           );
         },
@@ -63,7 +53,7 @@ class _ListenerMixStateWidgetState extends State<ListenerMixStateWidget> {
   }
 }
 
-class _ListenerMixStateController extends ChangeNotifier {
+class PointerListenerMixStateController extends ChangeNotifier {
   PointerPosition? _pointerPosition;
 
   PointerPosition? get pointerPosition => _pointerPosition;
@@ -85,22 +75,18 @@ class _ListenerMixStateController extends ChangeNotifier {
   }
 }
 
-class ListerMixStateProvider extends InheritedWidget {
-  const ListerMixStateProvider({
+class PointerListenerMixWidgetState
+    extends InheritedNotifier<PointerListenerMixStateController> {
+  const PointerListenerMixWidgetState({
     super.key,
+    required super.notifier,
     required super.child,
-    required this.pointerPosition,
   });
 
-  static ListerMixStateProvider? of(BuildContext context) {
-    return context.dependOnInheritedWidgetOfExactType();
-  }
-
-  final PointerPosition? pointerPosition;
-
-  @override
-  bool updateShouldNotify(ListerMixStateProvider oldWidget) {
-    return pointerPosition != oldWidget.pointerPosition;
+  static PointerListenerMixStateController? of(BuildContext context) {
+    return context
+        .dependOnInheritedWidgetOfExactType<PointerListenerMixWidgetState>()
+        ?.notifier;
   }
 }
 
