@@ -87,11 +87,6 @@ class _GestureMixStateWidgetState extends State<GestureMixStateWidget> {
   int _pressCount = 0;
   Timer? _timer;
 
-  @override
-  void initState() {
-    super.initState();
-  }
-
   void _onPanUpdate(DragUpdateDetails event) {
     widget.onPanUpdate?.call(event);
   }

@@ -192,15 +192,14 @@ class PressableWidgetState extends State<Pressable> {
   @override
   Widget build(BuildContext context) {
     Widget current = GestureMixStateWidget(
-      controller: _controller,
       enableFeedback: widget.enableFeedback,
+      controller: _controller,
       onTap: widget.enabled ? handlePressed : null,
       onLongPress: widget.enabled ? widget.onLongPress : null,
       excludeFromSemantics: widget.excludeFromSemantics,
       hitTestBehavior: widget.hitTestBehavior,
       unpressDelay: widget.unpressDelay,
       child: InteractiveMixStateWidget(
-        controller: _controller,
         enabled: widget.enabled,
         onFocusChange: widget.onFocusChange,
         autofocus: widget.autofocus,
@@ -209,6 +208,7 @@ class PressableWidgetState extends State<Pressable> {
         onKeyEvent: widget.onKeyEvent,
         canRequestFocus: widget.canRequestFocus,
         mouseCursor: mouseCursor,
+        controller: _controller,
         actions: actions,
         child: MixWidgetStateBuilder(
           controller: _controller,

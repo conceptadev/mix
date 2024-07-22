@@ -63,14 +63,6 @@ class MixWidgetStateController extends ChangeNotifier {
 }
 
 class MixWidgetStateModel extends InheritedModel<MixWidgetState> {
-  final bool disabled;
-  final bool hovered;
-  final bool focused;
-  final bool pressed;
-  final bool dragged;
-  final bool selected;
-  final bool longPressed;
-
   const MixWidgetStateModel({
     super.key,
     required this.disabled,
@@ -98,6 +90,7 @@ class MixWidgetStateModel extends InheritedModel<MixWidgetState> {
     if (model == null) {
       return false;
     }
+
     return switch (state) {
       MixWidgetState.disabled => model.disabled,
       MixWidgetState.hovered => model.hovered,
@@ -108,6 +101,14 @@ class MixWidgetStateModel extends InheritedModel<MixWidgetState> {
       MixWidgetState.longPressed => model.longPressed,
     };
   }
+
+  final bool disabled;
+  final bool hovered;
+  final bool focused;
+  final bool pressed;
+  final bool dragged;
+  final bool selected;
+  final bool longPressed;
 
   @override
   bool updateShouldNotify(MixWidgetStateModel oldWidget) {
@@ -161,18 +162,19 @@ class _MixWidgetStateBuilder extends State<MixWidgetStateBuilder> {
   @override
   Widget build(BuildContext context) {
     return ListenableBuilder(
-        listenable: widget.controller,
-        builder: (context, _) {
-          return MixWidgetStateModel(
-            disabled: widget.controller.disabled,
-            hovered: widget.controller.hovered,
-            focused: widget.controller.focused,
-            pressed: widget.controller.pressed,
-            dragged: widget.controller.dragged,
-            selected: widget.controller.selected,
-            longPressed: widget.controller.longPressed,
-            child: Builder(builder: widget.builder),
-          );
-        });
+      listenable: widget.controller,
+      builder: (context, _) {
+        return MixWidgetStateModel(
+          disabled: widget.controller.disabled,
+          hovered: widget.controller.hovered,
+          focused: widget.controller.focused,
+          pressed: widget.controller.pressed,
+          dragged: widget.controller.dragged,
+          selected: widget.controller.selected,
+          longPressed: widget.controller.longPressed,
+          child: Builder(builder: widget.builder),
+        );
+      },
+    );
   }
 }

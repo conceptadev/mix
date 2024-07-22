@@ -46,8 +46,8 @@ abstract base class SpecAttribute<Value> extends StyledAttribute {
   SpecAttribute<Value> merge(covariant SpecAttribute<Value>? other);
 }
 
-abstract base class SpecUtility<Attr extends Attribute,
-    Value extends SpecAttribute> implements MixUtility<Attr, Value> {
+abstract class SpecUtility<Attr extends Attribute, Value extends SpecAttribute>
+    implements MixUtility<Attr, Value> {
   @override
   final Attr Function(Value) builder;
   const SpecUtility(this.builder);
