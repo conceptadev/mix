@@ -34,6 +34,7 @@ class MixWidgetStateController extends ChangeNotifier {
 
   set longPressed(bool value) => update(MixWidgetState.longPressed, value);
 
+  // ignore: prefer-named-boolean-parameters
   void update(MixWidgetState key, bool add) {
     final valueHasChanged = add ? value.add(key) : value.remove(key);
 
@@ -143,7 +144,7 @@ class MixWidgetStateModel extends InheritedModel<MixWidgetState> {
   }
 }
 
-class MixWidgetStateBuilder extends StatefulWidget {
+class MixWidgetStateBuilder extends StatelessWidget {
   const MixWidgetStateBuilder({
     super.key,
     required this.controller,
@@ -155,24 +156,19 @@ class MixWidgetStateBuilder extends StatefulWidget {
   final Widget Function(BuildContext context) builder;
 
   @override
-  State createState() => _MixWidgetStateBuilder();
-}
-
-class _MixWidgetStateBuilder extends State<MixWidgetStateBuilder> {
-  @override
   Widget build(BuildContext context) {
     return ListenableBuilder(
-      listenable: widget.controller,
+      listenable: controller,
       builder: (context, _) {
         return MixWidgetStateModel(
-          disabled: widget.controller.disabled,
-          hovered: widget.controller.hovered,
-          focused: widget.controller.focused,
-          pressed: widget.controller.pressed,
-          dragged: widget.controller.dragged,
-          selected: widget.controller.selected,
-          longPressed: widget.controller.longPressed,
-          child: Builder(builder: widget.builder),
+          disabled: controller.disabled,
+          hovered: controller.hovered,
+          focused: controller.focused,
+          pressed: controller.pressed,
+          dragged: controller.dragged,
+          selected: controller.selected,
+          longPressed: controller.longPressed,
+          child: Builder(builder: builder),
         );
       },
     );

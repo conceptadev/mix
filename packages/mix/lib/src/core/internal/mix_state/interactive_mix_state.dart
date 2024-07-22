@@ -17,14 +17,14 @@ class InteractiveMixStateWidget extends StatefulWidget {
     this.canRequestFocus = true,
     this.mouseCursor = MouseCursor.defer,
     this.shortcuts,
-    required this.controller,
+    this.controller,
     this.actions,
   });
 
   final bool enabled;
   final MouseCursor mouseCursor;
 
-  final MixWidgetStateController controller;
+  final MixWidgetStateController? controller;
 
   final bool canRequestFocus;
 
@@ -51,28 +51,38 @@ class InteractiveMixStateWidget extends StatefulWidget {
 }
 
 class _InteractiveStateBuilderState extends State<InteractiveMixStateWidget> {
+  late final MixWidgetStateController _controller;
   @override
   void initState() {
     super.initState();
+    _controller = widget.controller ?? MixWidgetStateController();
 
-    widget.controller.disabled = !widget.enabled;
+    _controller.disabled = !widget.enabled;
   }
 
   void _onShowFocusHighlight(bool hasFocus) {
-    widget.controller.focused = hasFocus;
+    _controller.focused = hasFocus;
     widget.onShowFocusHighlight?.call(hasFocus);
   }
 
   void _onShowHoverHighlight(bool isHovered) {
-    widget.controller.hovered = isHovered;
+    _controller.hovered = isHovered;
     widget.onShowHoverHighlight?.call(isHovered);
+  }
+
+  @override
+  void dispose() {
+    // Only dispose if its being managed internally
+    if (widget.controller == null) _controller.dispose();
+
+    super.dispose();
   }
 
   @override
   void didUpdateWidget(InteractiveMixStateWidget oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (widget.enabled != oldWidget.enabled) {
-      widget.controller.disabled = !widget.enabled;
+      _controller.disabled = !widget.enabled;
     }
   }
 

@@ -1,9 +1,13 @@
 import 'package:flutter/widgets.dart';
 
-import '../../mix.dart';
 import '../modifiers/internal/render_widget_modifier.dart';
+import '../variants/widget_state_variant.dart';
+import 'factory/mix_data.dart';
+import 'factory/mix_provider.dart';
+import 'factory/style_mix.dart';
 import 'internal/mix_state/interactive_mix_state.dart';
 import 'internal/mix_state/widget_state_controller.dart';
+import 'modifier.dart';
 
 /// An abstract widget for applying custom styles.
 ///
@@ -48,19 +52,20 @@ abstract class StyledWidget extends StatelessWidget {
     Widget Function(BuildContext context) builder,
   ) {
     return _MixWidgetStateWrapper(
-        style: style,
-        builder: (context) {
-          final inheritedMix = inherit ? Mix.maybeOfInherited(context) : null;
+      builder: (context) {
+        final inheritedMix = inherit ? Mix.maybeOfInherited(context) : null;
 
-          final mix = style.of(context);
+        final mix = style.of(context);
 
-          final mergedMix = inheritedMix?.merge(mix) ?? mix;
+        final mergedMix = inheritedMix?.merge(mix) ?? mix;
 
-          return Mix(
-            data: mergedMix,
-            child: _applyModifiers(mergedMix, Builder(builder: builder)),
-          );
-        });
+        return Mix(
+          data: mergedMix,
+          child: _applyModifiers(mergedMix, Builder(builder: builder)),
+        );
+      },
+      style: style,
+    );
   }
 
   Widget _applyModifiers(MixData mix, Widget child) {
@@ -89,10 +94,7 @@ abstract class StyledWidget extends StatelessWidget {
 }
 
 class _MixWidgetStateWrapper extends StatelessWidget {
-  const _MixWidgetStateWrapper({
-    required this.builder,
-    required this.style,
-  });
+  const _MixWidgetStateWrapper({required this.builder, required this.style});
 
   final Widget Function(BuildContext context) builder;
   final Style style;
@@ -103,9 +105,7 @@ class _MixWidgetStateWrapper extends StatelessWidget {
         MixWidgetState.of(context) == null;
 
     return needsWidgetState
-        ? InteractiveMixStateWidget(
-            controller: MixWidgetStateController(),
-            child: Builder(builder: builder))
+        ? InteractiveMixStateWidget(child: Builder(builder: builder))
         : builder(context);
   }
 }
