@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'widget_state_controller.dart';
+import '../widget_state_controller.dart';
 
 class InteractiveMixStateWidget extends StatefulWidget {
   const InteractiveMixStateWidget({

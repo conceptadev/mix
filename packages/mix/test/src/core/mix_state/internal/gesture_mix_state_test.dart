@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mix/src/core/internal/mix_state/gesture_mix_state.dart';
-import 'package:mix/src/core/internal/mix_state/widget_state_controller.dart';
+import 'package:mix/src/core/widget_state/internal/gesture_mix_state.dart';
+import 'package:mix/src/core/widget_state/widget_state_controller.dart';
 
 void main() {
   group('GesturableWidget', () {

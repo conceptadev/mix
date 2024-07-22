@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
-import 'widget_state_controller.dart';
+import '../widget_state_controller.dart';
 
 class GestureMixStateWidget extends StatefulWidget {
   const GestureMixStateWidget({

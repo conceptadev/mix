@@ -2,12 +2,12 @@ import 'package:flutter/widgets.dart';
 
 import '../modifiers/internal/render_widget_modifier.dart';
 import '../variants/widget_state_variant.dart';
+import '../widgets/pressable_widget.dart';
 import 'factory/mix_data.dart';
 import 'factory/mix_provider.dart';
 import 'factory/style_mix.dart';
-import 'internal/mix_state/interactive_mix_state.dart';
-import 'internal/mix_state/widget_state_controller.dart';
 import 'modifier.dart';
+import 'widget_state/widget_state_controller.dart';
 
 /// An abstract widget for applying custom styles.
 ///
@@ -51,29 +51,58 @@ abstract class StyledWidget extends StatelessWidget {
     BuildContext context,
     Widget Function(BuildContext context) builder,
   ) {
-    return _MixWidgetStateWrapper(
-      builder: (context) {
-        final inheritedMix = inherit ? Mix.maybeOfInherited(context) : null;
-
-        final mix = style.of(context);
-
-        final mergedMix = inheritedMix?.merge(mix) ?? mix;
-
-        return Mix(
-          data: mergedMix,
-          child: _applyModifiers(mergedMix, Builder(builder: builder)),
-        );
-      },
+    return SpecBuilder(
+      builder: builder,
       style: style,
+      inherit: inherit,
+      orderOfModifiers: orderOfModifiers,
     );
   }
 
+  @override
+  Widget build(BuildContext context);
+}
+
+/// A styled widget that builds its child using a [MixData] object.
+///
+/// `SpecBuilder` is a concrete implementation of [StyledWidget] that
+/// builds its child using a [withMix] method from [StyledWidget].
+/// This widget is useful for creating custom styled widgets.
+class SpecBuilder extends StatelessWidget {
+  // Requires a builder function and accepts optional parameters
+  const SpecBuilder({
+    required this.builder,
+    this.controller,
+    super.key,
+    this.style = const Style.empty(),
+    this.inherit = false,
+    List<Type>? orderOfModifiers,
+  }) : orderOfModifiers = orderOfModifiers ?? const [];
+
+  // Getter to check if the style has any MixWidgetStateVariant
+  bool get _hasWidgetStateVariant => style.variants.values
+      .any((attr) => attr.variant is MixWidgetStateVariant);
+
+  // Required builder function
+  final Widget Function(BuildContext) builder;
+  // Optional controller for managing widget state
+  final MixWidgetStateController? controller;
+  // Style to be applied to the widget
+  final Style style;
+  // Flag to determine if the style should be inherited
+  final bool inherit;
+  // List of modifier types in the desired order
+  final List<Type> orderOfModifiers;
+
+  // Method to apply modifiers to the child widget
   Widget _applyModifiers(MixData mix, Widget child) {
+    // Get the list of WidgetModifierAttribute from the mix
     final modifiers = mix
         .whereType<WidgetModifierAttribute>()
         .map((e) => e.resolve(mix))
         .toList();
 
+    // If the mix is animated, use RenderAnimatedModifiers, otherwise use RenderModifiers
     return mix.isAnimated
         ? RenderAnimatedModifiers(
             modifiers: modifiers,
@@ -89,44 +118,36 @@ abstract class StyledWidget extends StatelessWidget {
           );
   }
 
-  @override
-  Widget build(BuildContext context);
-}
+  // Method to build the mixed child widget
+  Widget _buildMixedChild(BuildContext context) {
+    // Get the inherited mix if inherit flag is true, otherwise null
+    final inheritedMix = inherit ? Mix.maybeOfInherited(context) : null;
+    // Get the mix from the style
+    final mix = style.of(context);
+    // Merge the inherited mix with the current mix, or use the current mix if no inherited mix
+    final mergedMix = inheritedMix?.merge(mix) ?? mix;
 
-class _MixWidgetStateWrapper extends StatelessWidget {
-  const _MixWidgetStateWrapper({required this.builder, required this.style});
+    // Return a Mix widget with the merged mix and the child widget with modifiers applied
+    return Mix(
+      data: mergedMix,
+      child: _applyModifiers(mergedMix, Builder(builder: builder)),
+    );
+  }
 
-  final Widget Function(BuildContext context) builder;
-  final Style style;
   @override
   Widget build(BuildContext context) {
-    final needsWidgetState = style.variants.values
-            .any((attr) => attr.variant is MixWidgetStateVariant) &&
-        MixWidgetState.of(context) == null;
+    // Check if the widget needs widget state and if it's not available in the context
+    final needsWidgetState =
+        _hasWidgetStateVariant && MixWidgetState.of(context) == null;
+    // If widget state is needed or a controller is provided, wrap the child with InteractiveMixStateWidget
+    if (needsWidgetState || controller != null) {
+      return Interactable(
+        controller: controller,
+        child: Builder(builder: _buildMixedChild),
+      );
+    }
 
-    return needsWidgetState
-        ? InteractiveMixStateWidget(child: Builder(builder: builder))
-        : builder(context);
+    // Otherwise, directly build the mixed child widget
+    return _buildMixedChild(context);
   }
-}
-
-/// A styled widget that builds its child using a [MixData] object.
-///
-/// `SpecBuilder` is a concrete implementation of [StyledWidget] that
-/// builds its child using a [withMix] method from [StyledWidget].
-/// This widget is useful for creating custom styled widgets.
-
-class SpecBuilder extends StyledWidget {
-  const SpecBuilder({
-    required this.builder,
-    super.style,
-    super.inherit,
-    super.orderOfModifiers = const [],
-    super.key,
-  });
-
-  final Widget Function(BuildContext) builder;
-
-  @override
-  Widget build(BuildContext context) => withMix(context, builder);
 }

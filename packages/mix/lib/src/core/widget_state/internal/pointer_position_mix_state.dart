@@ -2,8 +2,8 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
-class MouseRegionBuilder extends StatefulWidget {
-  const MouseRegionBuilder({
+class PointerPositionStateWidget extends StatefulWidget {
+  const PointerPositionStateWidget({
     super.key,
     required this.child,
     this.onEnter,
@@ -17,16 +17,17 @@ class MouseRegionBuilder extends StatefulWidget {
   final void Function(PointerHoverEvent event)? onHover;
 
   @override
-  State createState() => _MouseRegionBuilderState();
+  State createState() => _PointerPositionStateWidgetState();
 }
 
-class _MouseRegionBuilderState extends State<MouseRegionBuilder> {
-  late final _MouseRegionStateController _controller;
+class _PointerPositionStateWidgetState
+    extends State<PointerPositionStateWidget> {
+  late final _MouseRegionMixStateController _controller;
 
   @override
   void initState() {
     super.initState();
-    _controller = _MouseRegionStateController();
+    _controller = _MouseRegionMixStateController();
   }
 
   void _updateCursorPosition(Offset cursorOffset) {
@@ -59,6 +60,8 @@ class _MouseRegionBuilderState extends State<MouseRegionBuilder> {
 
   @override
   Widget build(BuildContext context) {
+    // Check if we need MouseRegion
+
     return MouseRegion(
       onEnter: _onEnter,
       onExit: _onExit,
@@ -67,7 +70,7 @@ class _MouseRegionBuilderState extends State<MouseRegionBuilder> {
       child: ListenableBuilder(
         listenable: _controller,
         builder: (context, _) {
-          return MouseRegionState(
+          return PointerPositionProvider(
             pointerPosition: _controller.pointerPosition,
             child: widget.child,
           );
@@ -77,7 +80,7 @@ class _MouseRegionBuilderState extends State<MouseRegionBuilder> {
   }
 }
 
-class _MouseRegionStateController extends ChangeNotifier {
+class _MouseRegionMixStateController extends ChangeNotifier {
   PointerPosition? _pointerPosition;
 
   PointerPosition? get pointerPosition => _pointerPosition;
@@ -99,25 +102,21 @@ class _MouseRegionStateController extends ChangeNotifier {
   }
 }
 
-class MouseRegionState extends InheritedWidget {
-  const MouseRegionState({
+class PointerPositionProvider extends InheritedWidget {
+  const PointerPositionProvider({
     super.key,
     required super.child,
     required this.pointerPosition,
   });
 
-  static MouseRegionState? maybeOf(BuildContext context) {
+  static PointerPositionProvider? of(BuildContext context) {
     return context.dependOnInheritedWidgetOfExactType();
-  }
-
-  static PointerPosition? pointerPositionOf(BuildContext context) {
-    return maybeOf(context)?.pointerPosition;
   }
 
   final PointerPosition? pointerPosition;
 
   @override
-  bool updateShouldNotify(MouseRegionState oldWidget) {
+  bool updateShouldNotify(PointerPositionProvider oldWidget) {
     return pointerPosition != oldWidget.pointerPosition;
   }
 }

@@ -1,9 +1,9 @@
 import 'package:flutter/widgets.dart';
 
 import '../core/factory/style_mix.dart';
-import '../core/internal/mix_state/mouse_region_widget_state.dart';
-import '../core/internal/mix_state/widget_state_controller.dart';
 import '../core/variant.dart';
+import '../core/widget_state/internal/pointer_position_mix_state.dart';
+import '../core/widget_state/widget_state_controller.dart';
 import 'context_variant.dart';
 
 @immutable
@@ -40,8 +40,9 @@ class OnHoverVariant extends MixWidgetStateVariant<PointerPosition?> {
   const OnHoverVariant();
 
   @override
-  PointerPosition builder(BuildContext context) =>
-      const PointerPosition(position: Alignment.center, offset: Offset.zero);
+  PointerPosition? builder(BuildContext context) {
+    return PointerPositionProvider.of(context)?.pointerPosition;
+  }
 
   @override
   bool when(BuildContext context) => MixWidgetState.hasStateOf(
