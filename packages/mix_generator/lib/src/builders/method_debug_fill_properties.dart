@@ -10,9 +10,9 @@ String methodDebugFillProperties({
   final fieldStatements = fields.map((field) {
     final fieldName = isInternalRef ? field.asInternalRef : field.name;
     if (_expandableFields.contains(fieldName)) {
-      return 'properties.addUsingDefault(\'$fieldName\', $fieldName, expandableValue: true);';
+      return 'properties.add(DiagnosticsProperty(\'$fieldName\', $fieldName, expandableValue: true));';
     }
-    return 'properties.addUsingDefault(\'$fieldName\', $fieldName);';
+    return 'properties.add(DiagnosticsProperty(\'$fieldName\', $fieldName));';
   }).join('\n');
 
   return '''

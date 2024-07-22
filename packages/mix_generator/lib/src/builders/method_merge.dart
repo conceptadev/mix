@@ -50,7 +50,7 @@ String mergeMethodBuilder({
 
       return '$propAssignment $thisName$nullable.merge(other.$propName) ?? other.$propName';
     } else {
-      return '$propAssignment other.$propName ?? $thisName';
+      return '$propAssignment other$nullable.$propName ?? $thisName';
     }
   }).join(',\n      ');
 
