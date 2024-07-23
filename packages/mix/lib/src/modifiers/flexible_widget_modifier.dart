@@ -8,7 +8,6 @@ import '../attributes/enum/enum_util.dart';
 import '../core/attribute.dart';
 import '../core/factory/mix_data.dart';
 import '../core/factory/mix_provider.dart';
-import '../core/helpers.dart';
 import '../core/modifier.dart';
 import '../core/utility.dart';
 import '../internal/diagnostic_properties_builder_ext.dart';
