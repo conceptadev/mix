@@ -31,8 +31,8 @@ class OnContextVariantUtility {
 
   late final press = const OnPressVariant();
   late final hover = const OnHoverVariant();
-  late final focus = const OnFocusVariant();
-  late final enabled = const OnEnabledVariant();
+  late final focus = const OnFocusedVariant();
+  late final enabled = const OnNotVariant(OnDisabledVariant());
   late final disabled = const OnDisabledVariant();
   late final longPress = const OnLongPressVariant();
 

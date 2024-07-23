@@ -1,8 +1,9 @@
+import 'dart:developer';
 import 'dart:io';
 
 void main(List<String> arguments) {
   if (arguments.isEmpty) {
-    print('Please provide a component name as an argument.');
+    log('Please provide a component name as an argument.');
     return;
   }
 
@@ -13,7 +14,7 @@ void main(List<String> arguments) {
   generateStyleFile(componentName);
   generateVariantsFile(componentName);
 
-  print('Files generated successfully!');
+  log('Files generated successfully!');
 }
 
 void generateSpecFile(String componentName) {

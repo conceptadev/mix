@@ -8,8 +8,8 @@ import '../../helpers/testing_utils.dart';
 void main() {
   const onPressed = OnPressVariant();
   const onLongPressed = OnLongPressVariant();
-  const onFocused = OnFocusVariant();
-  const onEnabled = OnEnabledVariant();
+  const onFocused = OnFocusedVariant();
+  const onEnabled = OnNotVariant(OnDisabledVariant());
   const onDisabled = OnDisabledVariant();
   const onHover = OnHoverVariant();
   group('Pressable Util', () {
@@ -20,7 +20,7 @@ void main() {
       await tester.pumpWithPressable(
         Container(),
         pressed: true,
-        focus: true,
+        focused: true,
       );
 
       final context = tester.element(find.byType(Container));
@@ -37,7 +37,7 @@ void main() {
       await tester.pumpWithPressable(
         Container(),
         longPressed: true,
-        focus: true,
+        focused: true,
       );
 
       final context = tester.element(find.byType(Container));
@@ -57,7 +57,7 @@ void main() {
       await tester.pumpWithPressable(
         Container(),
         hovered: true,
-        focus: true,
+        focused: true,
       );
 
       final context = tester.element(find.byType(Container));
@@ -73,7 +73,7 @@ void main() {
       await tester.pumpWithPressable(
         Container(),
         disabled: true,
-        focus: true,
+        focused: true,
       );
 
       final context = tester.element(find.byType(Container));
@@ -93,7 +93,7 @@ void main() {
       await tester.pumpWithPressable(
         Container(),
         disabled: false,
-        focus: true,
+        focused: true,
       );
 
       final context = tester.element(find.byType(Container));
@@ -110,7 +110,7 @@ void main() {
       await tester.pumpWithPressable(
         Container(),
         pressed: true,
-        focus: true,
+        focused: true,
       );
 
       final context = tester.element(find.byType(Container));

@@ -2,41 +2,14 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
-class GesturableWidget extends GesturableWidgetBuilder {
-  const GesturableWidget({
+import '../widget_state_controller.dart';
+
+class GestureMixStateWidget extends StatefulWidget {
+  const GestureMixStateWidget({
     super.key,
-    required super.child,
-    super.enableFeedback = false,
-    super.enabled = true,
-    super.onTap,
-    super.onLongPress,
-    super.onTapUp,
-    super.onTapCancel,
-    super.onLongPressStart,
-    super.onLongPressEnd,
-    super.onLongPressCancel,
-    super.onPanDown,
-    super.onPanUpdate,
-    super.onPanEnd,
-    super.onPanCancel,
-    super.onPanStart,
-    super.excludeFromSemantics = false,
-    super.hitTestBehavior = HitTestBehavior.opaque,
-    required super.unpressDelay,
-  });
-
-  @override
-  State createState() => _GesturableState();
-}
-
-class _GesturableState extends GesturableWidgetStateBuilder<GesturableWidget> {}
-
-abstract class GesturableWidgetBuilder extends StatefulWidget {
-  const GesturableWidgetBuilder({
-    super.key,
-    required this.enabled,
     required this.child,
     this.enableFeedback = false,
+    this.controller,
     this.onTap,
     this.onLongPress,
     this.onTapUp,
@@ -54,11 +27,11 @@ abstract class GesturableWidgetBuilder extends StatefulWidget {
     required this.unpressDelay,
   });
 
-  final bool enabled;
-
   /// The child widget.
-
   final Widget child;
+
+  /// The controller for the widget state.
+  final MixWidgetStateController? controller;
 
   /// Whether to provide feedback for gestures.
   final bool enableFeedback;
@@ -105,19 +78,20 @@ abstract class GesturableWidgetBuilder extends StatefulWidget {
 
   /// The duration to wait after the press is released before updating the press state.
   final Duration unpressDelay;
+
+  @override
+  State createState() => _GestureMixStateWidgetState();
 }
 
-abstract class GesturableWidgetStateBuilder<T extends GesturableWidgetBuilder>
-    extends State<T> {
-  late final _GesturableDataController _controller;
+class _GestureMixStateWidgetState extends State<GestureMixStateWidget> {
   int _pressCount = 0;
   Timer? _timer;
+  late final MixWidgetStateController _controller;
 
   @override
   void initState() {
     super.initState();
-    _controller = _GesturableDataController();
-    _controller.enabled = widget.enabled;
+    _controller = widget.controller ?? MixWidgetStateController();
   }
 
   void _onPanUpdate(DragUpdateDetails event) {
@@ -128,21 +102,18 @@ abstract class GesturableWidgetStateBuilder<T extends GesturableWidgetBuilder>
     widget.onPanDown?.call(details);
   }
 
-  void _onPanEnd(DragEndDetails details) {
-    _updatePress(true);
-    widget.onPanEnd?.call(details);
-  }
-
-  void _updatePress(bool isPressed) {
-    if (isPressed == _controller.pressed) return;
-
-    _controller.pressed = isPressed;
-
-    if (isPressed) {
+  _handlePress(bool value) {
+    _controller.pressed = value;
+    if (value) {
       _pressCount++;
       final initialPressCount = _pressCount;
       _unpressAfterDelay(initialPressCount);
     }
+  }
+
+  void _onPanEnd(DragEndDetails details) {
+    _handlePress(true);
+    widget.onPanEnd?.call(details);
   }
 
   void _onTapUp(TapUpDetails details) {
@@ -186,7 +157,6 @@ abstract class GesturableWidgetStateBuilder<T extends GesturableWidgetBuilder>
     }
 
     _timer?.cancel();
-    _timer = null;
 
     final delay = widget.unpressDelay;
 
@@ -198,7 +168,7 @@ abstract class GesturableWidgetStateBuilder<T extends GesturableWidgetBuilder>
   }
 
   void _onTap() {
-    _updatePress(true);
+    _handlePress(true);
     widget.onTap?.call();
     if (widget.enableFeedback) Feedback.forTap(context);
   }
@@ -209,16 +179,10 @@ abstract class GesturableWidgetStateBuilder<T extends GesturableWidgetBuilder>
   }
 
   @override
-  void didUpdateWidget(T oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    if (widget.enabled != oldWidget.enabled) {
-      _controller.enabled = widget.enabled;
-    }
-  }
-
-  @override
   void dispose() {
     _timer?.cancel();
+    // Dispose if  being managed internally
+    if (widget.controller == null) _controller.dispose();
     super.dispose();
   }
 
@@ -239,107 +203,7 @@ abstract class GesturableWidgetStateBuilder<T extends GesturableWidgetBuilder>
       onPanCancel: _onPanCancel,
       behavior: widget.hitTestBehavior,
       excludeFromSemantics: widget.excludeFromSemantics,
-      child: ListenableBuilder(
-        listenable: _controller,
-        builder: (context, _) {
-          return GesturableState(
-            longPressed: _controller.longPressed,
-            pressed: _controller.pressed,
-            child: widget.child,
-          );
-        },
-      ),
+      child: widget.child,
     );
-  }
-}
-
-class _GesturableDataController extends ChangeNotifier {
-  bool _enabled = false;
-  bool _pressed = false;
-  bool _longPressed = false;
-
-  bool get enabled => _enabled;
-  bool get disabled => !_enabled;
-  bool get pressed => enabled && _pressed;
-  bool get longPressed => enabled && _longPressed;
-
-  set enabled(bool value) {
-    if (_enabled == value) return;
-
-    _enabled = value;
-    notifyListeners();
-  }
-
-  set pressed(bool value) {
-    if (_pressed == value) return;
-
-    _pressed = value;
-    notifyListeners();
-  }
-
-  set longPressed(bool value) {
-    if (_longPressed == value) return;
-    _longPressed = value;
-    notifyListeners();
-  }
-}
-
-enum GestureStateAspect {
-  pressed,
-  longPressed,
-}
-
-class GesturableState extends InheritedModel<GestureStateAspect> {
-  const GesturableState({
-    super.key,
-    required super.child,
-    required this.longPressed,
-    required this.pressed,
-  });
-
-  static GesturableState of(
-    BuildContext context, [
-    GestureStateAspect? aspect,
-  ]) {
-    final GesturableState? result = maybeOf(context, aspect);
-    assert(result != null, 'Unable to find an instance of GesturableState...');
-
-    return result!;
-  }
-
-  static GesturableState? maybeOf(
-    BuildContext context, [
-    GestureStateAspect? aspect,
-  ]) {
-    return InheritedModel.inheritFrom<GesturableState>(
-      context,
-      aspect: aspect,
-    );
-  }
-
-  static bool pressedOf(BuildContext context) {
-    return of(context, GestureStateAspect.pressed).pressed;
-  }
-
-  static bool longPressedOf(BuildContext context) {
-    return of(context, GestureStateAspect.longPressed).longPressed;
-  }
-
-  final bool pressed;
-  final bool longPressed;
-  @override
-  bool updateShouldNotify(GesturableState oldWidget) {
-    return oldWidget.pressed != pressed || oldWidget.longPressed != longPressed;
-  }
-
-  @override
-  bool updateShouldNotifyDependent(
-    GesturableState oldWidget,
-    Set<GestureStateAspect> dependencies,
-  ) {
-    return dependencies.contains(GestureStateAspect.pressed) &&
-            oldWidget.pressed != pressed ||
-        dependencies.contains(GestureStateAspect.longPressed) &&
-            oldWidget.longPressed != longPressed;
   }
 }

@@ -1,17 +1,17 @@
 import 'package:flutter/widgets.dart';
 
 import '../core/factory/style_mix.dart';
-import '../core/internal/widget_state/interactive_widget.dart';
-import '../core/internal/widget_state/widget_state.dart';
 import '../core/variant.dart';
+import '../core/widget_state/internal/mouse_region_mix_state.dart';
+import '../core/widget_state/widget_state_controller.dart';
 import 'context_variant.dart';
 
 @immutable
-abstract class WidgetStateVariant<Value> extends ContextVariant {
+abstract class MixWidgetStateVariant<Value> extends ContextVariant {
   @override
   final priority = VariantPriority.highest;
 
-  const WidgetStateVariant();
+  const MixWidgetStateVariant();
 
   ContextVariantBuilder event(Style Function(Value) fn) {
     return ContextVariantBuilder(
@@ -24,82 +24,67 @@ abstract class WidgetStateVariant<Value> extends ContextVariant {
   Value builder(BuildContext context);
 }
 
-/// Applies styles when the widget is pressed.
-class OnPressVariant extends WidgetStateVariant<bool> {
-  const OnPressVariant();
+abstract class _ToggleMixStateVariant extends MixWidgetStateVariant<bool> {
+  final MixWidgetState _state;
+  const _ToggleMixStateVariant(this._state);
 
   @override
-  bool builder(BuildContext context) => WidgetStateModel.pressOf(context);
+  bool builder(BuildContext context) => when(context);
 
   @override
-  bool when(BuildContext context) => builder(context);
+  bool when(BuildContext context) => MixWidgetState.hasStateOf(context, _state);
 }
-
-class OnWidgetStateVariant extends WidgetStateVariant<WidgetMixState> {
-  const OnWidgetStateVariant();
-
-  @override
-  WidgetMixState builder(BuildContext context) =>
-      WidgetStateModel.stateOf(context);
-
-  @override
-  bool when(BuildContext context) => builder(context) != WidgetMixState.idle;
-}
-
-/// Applies styles when the widget is long pressed.
-class OnLongPressVariant extends WidgetStateVariant<bool> {
-  const OnLongPressVariant();
-
-  @override
-  bool builder(BuildContext context) => WidgetStateModel.longPressOf(context);
-
-  @override
-  bool when(BuildContext context) => builder(context);
-}
-
-@immutable
 
 /// Applies styles when widget is hovered over.
-class OnHoverVariant extends WidgetStateVariant<PointerPosition?> {
+class OnHoverVariant extends MixWidgetStateVariant<PointerPosition?> {
   const OnHoverVariant();
 
   @override
-  PointerPosition? builder(BuildContext context) =>
-      WidgetStateModel.pointerPositionOf(context);
+  PointerPosition builder(BuildContext context) {
+    final pointerPosition =
+        MouseRegionMixWidgetState.of(context)?.pointerPosition;
+
+    return when(context) && pointerPosition != null
+        ? pointerPosition
+        : const PointerPosition(
+            position: Alignment.center,
+            offset: Offset.zero,
+          );
+  }
 
   @override
-  bool when(BuildContext context) => WidgetStateModel.hoverOf(context);
+  bool when(BuildContext context) => MixWidgetState.hasStateOf(
+        context,
+        MixWidgetState.hovered,
+      );
 }
 
-/// Applies styles when the widget is enabled.
-class OnEnabledVariant extends WidgetStateVariant<bool> {
-  const OnEnabledVariant();
+/// Applies styles when the widget is pressed.
+class OnPressVariant extends _ToggleMixStateVariant {
+  const OnPressVariant() : super(MixWidgetState.pressed);
+}
 
-  @override
-  bool builder(BuildContext context) => WidgetStateModel.enabledOf(context);
-
-  @override
-  bool when(BuildContext context) => builder(context);
+/// Applies styles when the widget is long pressed.
+class OnLongPressVariant extends _ToggleMixStateVariant {
+  const OnLongPressVariant() : super(MixWidgetState.longPressed);
 }
 
 /// Applies styles when the widget is disabled.
-class OnDisabledVariant extends WidgetStateVariant<bool> {
-  const OnDisabledVariant();
-
-  @override
-  bool builder(BuildContext context) => WidgetStateModel.disabledOf(context);
-
-  @override
-  bool when(BuildContext context) => builder(context);
+class OnDisabledVariant extends _ToggleMixStateVariant {
+  const OnDisabledVariant() : super(MixWidgetState.disabled);
 }
 
 /// Applies styles when the widget has focus.
-class OnFocusVariant extends WidgetStateVariant<bool> {
-  const OnFocusVariant();
+class OnFocusedVariant extends _ToggleMixStateVariant {
+  const OnFocusedVariant() : super(MixWidgetState.focused);
+}
 
-  @override
-  bool builder(BuildContext context) => WidgetStateModel.focusOf(context);
+/// Applies styles when the widget is selected
+class OnSelectedVariant extends _ToggleMixStateVariant {
+  const OnSelectedVariant() : super(MixWidgetState.selected);
+}
 
-  @override
-  bool when(BuildContext context) => builder(context);
+/// Applies styles when the widget is dragged.
+class OnDraggedVariant extends _ToggleMixStateVariant {
+  const OnDraggedVariant() : super(MixWidgetState.dragged);
 }
