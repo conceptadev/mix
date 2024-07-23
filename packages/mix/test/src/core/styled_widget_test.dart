@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
+import 'package:mix/src/core/widget_state/internal/interactive_mix_state.dart';
+import 'package:mix/src/core/widget_state/internal/mouse_region_mix_state.dart';
+import 'package:mix/src/core/widget_state/widget_state_controller.dart';
+import 'package:mix/src/modifiers/internal/render_widget_modifier.dart';
 
 import '../../helpers/testing_utils.dart';
 
@@ -82,5 +86,144 @@ void main() {
         );
       },
     );
+    group('SpecBuilder', () {
+      testWidgets(
+        'When a SpecBuilder has a controller, it should wrap the child with Interactable',
+        (tester) async {
+          final controller = MixWidgetStateController();
+          await tester.pumpWidget(
+            SpecBuilder(
+              controller: controller,
+              builder: (context) => const SizedBox(),
+            ),
+          );
+
+          expect(find.byType(InteractiveMixStateWidget), findsOneWidget);
+        },
+      );
+
+      testWidgets(
+        'When a SpecBuilder has a style with MixWidgetStateVariant, it should wrap the child with Interactable',
+        (tester) async {
+          await tester.pumpWidget(
+            SpecBuilder(
+              style: Style(
+                $box.color(
+                  Colors.red,
+                ),
+                $on.press(
+                  $box.color(Colors.blue),
+                ),
+              ),
+              builder: (context) => const SizedBox(),
+            ),
+          );
+
+          expect(find.byType(InteractiveMixStateWidget), findsOneWidget);
+        },
+      );
+
+      testWidgets(
+        'When a SpecBuilder has a style with OnHoverVariant, it should wrap the child with PointerListenerMixStateWidget',
+        (tester) async {
+          await tester.pumpWidget(
+            SpecBuilder(
+              style: Style(
+                $box.color(Colors.red),
+                $on.hover.event((event) {
+                  return const Style.empty();
+                }),
+              ),
+              builder: (context) => const SizedBox(),
+            ),
+          );
+
+          expect(find.byType(MouseRegionMixStateWidget), findsOneWidget);
+          expect(find.byType(InteractiveMixStateWidget), findsOneWidget);
+        },
+      );
+
+      // Create a test that already has a Interactable and ther is only one InteractiveMixStateWidget
+      testWidgets(
+        'When a SpecBuilder has a controller and a style with MixWidgetStateVariant, it should wrap the child with Interactable',
+        (tester) async {
+          await tester.pumpWidget(
+            Interactable(
+              child: SpecBuilder(
+                style: Style(
+                  $box.color(
+                    Colors.red,
+                  ),
+                  $on.press(
+                    $box.color(Colors.blue),
+                  ),
+                ),
+                builder: (context) => const SizedBox(),
+              ),
+            ),
+          );
+
+          expect(find.byType(InteractiveMixStateWidget), findsOneWidget);
+        },
+      );
+
+      //  do not add interactive mix state if its not needed
+      testWidgets(
+        'When a SpecBuilder has a controller and a style with MixWidgetStateVariant, it should wrap the child with Interactable',
+        (tester) async {
+          await tester.pumpWidget(
+            SpecBuilder(
+              style: Style($box.color(Colors.red)),
+              builder: (context) => const SizedBox(),
+            ),
+          );
+
+          expect(find.byType(InteractiveMixStateWidget), findsNothing);
+        },
+      );
+
+      testWidgets(
+        'When a SpecBuilder has a controller it should wrap the widget',
+        (tester) async {
+          await tester.pumpWidget(
+            SpecBuilder(
+              controller: MixWidgetStateController(),
+              style: Style($box.color(Colors.red)),
+              builder: (context) => const SizedBox(),
+            ),
+          );
+
+          expect(find.byType(InteractiveMixStateWidget), findsOneWidget);
+        },
+      );
+
+      testWidgets(
+        'When a SpecBuilder has an animated style, it should use RenderAnimatedModifiers',
+        (tester) async {
+          await tester.pumpWidget(
+            SpecBuilder(
+              style: Style($box.color(Colors.red)).animate(),
+              builder: (context) => const SizedBox(),
+            ),
+          );
+
+          expect(find.byType(RenderAnimatedModifiers), findsOneWidget);
+        },
+      );
+
+      testWidgets(
+        'When a SpecBuilder has a non-animated style, it should use RenderModifiers',
+        (tester) async {
+          await tester.pumpWidget(
+            SpecBuilder(
+              style: Style($box.color(Colors.red)),
+              builder: (context) => const SizedBox(),
+            ),
+          );
+
+          expect(find.byType(RenderModifiers), findsOneWidget);
+        },
+      );
+    });
   });
 }

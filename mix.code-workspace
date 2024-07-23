@@ -21,4 +21,17 @@
 			"path": "packages/remix"
 		}
 	],
+  "settings": {
+	"search.exclude": {
+		".fvm/**": true,
+		"website":true,
+	  },
+	  "files.watcherExclude": {
+		".fvm/**": true,
+		"website":true,
+	  },
+	  "files.exclude": {
+		".fvm/**": true,
+		"website":true,
+	  },}
 }
