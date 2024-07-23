@@ -74,10 +74,6 @@ void main() {
         ),
       );
 
-      controller.addListener(() {
-        print('controller state: ${controller.value}');
-      });
-
       await tester.longPress(find.byType(GestureMixStateWidget));
       final context = tester.element(find.byKey(key));
 

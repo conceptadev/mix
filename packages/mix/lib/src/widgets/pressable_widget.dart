@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import '../core/factory/style_mix.dart';
 import '../core/widget_state/internal/gesture_mix_state.dart';
 import '../core/widget_state/internal/interactive_mix_state.dart';
-import '../core/widget_state/internal/listener_mix_state.dart';
 import '../core/widget_state/internal/mix_widget_state_builder.dart';
+import '../core/widget_state/internal/mouse_region_mix_state.dart';
 import '../core/widget_state/widget_state_controller.dart';
 import '../internal/constants.dart';
 import '../specs/box/box_widget.dart';
@@ -198,7 +198,7 @@ class PressableWidgetState extends State<Pressable> {
       excludeFromSemantics: widget.excludeFromSemantics,
       hitTestBehavior: widget.hitTestBehavior,
       unpressDelay: widget.unpressDelay,
-      child: PointerListenerMixStateWidget(
+      child: MouseRegionMixStateWidget(
         child: InteractiveMixStateWidget(
           enabled: widget.enabled,
           onFocusChange: widget.onFocusChange,

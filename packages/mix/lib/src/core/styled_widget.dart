@@ -3,13 +3,12 @@ import 'package:flutter/widgets.dart';
 import '../modifiers/internal/render_widget_modifier.dart';
 import '../variants/context_variant.dart';
 import '../variants/widget_state_variant.dart';
+import '../widgets/pressable_widget.dart';
 import 'factory/mix_data.dart';
 import 'factory/mix_provider.dart';
 import 'factory/style_mix.dart';
 import 'modifier.dart';
-import 'widget_state/internal/interactive_mix_state.dart';
-import 'widget_state/internal/listener_mix_state.dart';
-import 'widget_state/internal/mix_widget_state_builder.dart';
+import 'widget_state/internal/mouse_region_mix_state.dart';
 import 'widget_state/widget_state_controller.dart';
 
 /// An abstract widget for applying custom styles.
@@ -146,22 +145,16 @@ class SpecBuilder extends StatelessWidget {
     final needsWidgetState =
         _hasWidgetStateVariant && MixWidgetState.of(context) == null;
 
-    final needsListener = _hasListenerVariant &&
-        PointerListenerMixWidgetState.of(context) == null;
+    final needsListener =
+        _hasListenerVariant && MouseRegionMixWidgetState.of(context) == null;
     // If widget state is needed or a controller is provided, wrap the child with InteractiveMixStateWidget
-    if (controller != null) {
-      current = MixWidgetStateBuilder(
-        controller: controller!,
-        builder: (_) => current,
-      );
-    }
-    if (needsWidgetState) {
-      current =
-          InteractiveMixStateWidget(controller: controller, child: current);
+
+    if (needsWidgetState || controller != null) {
+      current = Interactable(controller: controller, child: current);
     }
 
     if (needsListener) {
-      current = PointerListenerMixStateWidget(child: current);
+      current = MouseRegionMixStateWidget(child: current);
     }
 
     // Otherwise, directly build the mixed child widget

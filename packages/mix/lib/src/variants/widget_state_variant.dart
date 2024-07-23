@@ -2,7 +2,7 @@ import 'package:flutter/widgets.dart';
 
 import '../core/factory/style_mix.dart';
 import '../core/variant.dart';
-import '../core/widget_state/internal/listener_mix_state.dart';
+import '../core/widget_state/internal/mouse_region_mix_state.dart';
 import '../core/widget_state/widget_state_controller.dart';
 import 'context_variant.dart';
 
@@ -42,7 +42,7 @@ class OnHoverVariant extends MixWidgetStateVariant<PointerPosition?> {
   @override
   PointerPosition builder(BuildContext context) {
     final pointerPosition =
-        PointerListenerMixWidgetState.of(context)?.pointerPosition;
+        MouseRegionMixWidgetState.of(context)?.pointerPosition;
 
     return when(context) && pointerPosition != null
         ? pointerPosition

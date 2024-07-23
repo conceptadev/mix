@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 void main() {
@@ -24,5 +25,5 @@ void main() {
 
   contextFile.writeAsStringSync('# Dart Files\n');
   processDirectory(rootDirectory);
-  print('context.md file generated successfully.');
+  log('context.md file generated successfully.');
 }

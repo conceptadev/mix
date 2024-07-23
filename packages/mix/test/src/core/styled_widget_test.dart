@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
 import 'package:mix/src/core/widget_state/internal/interactive_mix_state.dart';
-import 'package:mix/src/core/widget_state/internal/listener_mix_state.dart';
+import 'package:mix/src/core/widget_state/internal/mouse_region_mix_state.dart';
 import 'package:mix/src/core/widget_state/widget_state_controller.dart';
 import 'package:mix/src/modifiers/internal/render_widget_modifier.dart';
 
@@ -138,7 +138,7 @@ void main() {
             ),
           );
 
-          expect(find.byType(PointerListenerMixStateWidget), findsOneWidget);
+          expect(find.byType(MouseRegionMixStateWidget), findsOneWidget);
           expect(find.byType(InteractiveMixStateWidget), findsOneWidget);
         },
       );
