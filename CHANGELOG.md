@@ -25,19 +25,16 @@ Packages with other changes:
 
 #### `mix` - `v1.4.0`
 
- - **FIX**: order modifier (#389).
- - **FIX**: animations of Stack and Flex.
- - **FIX**: add flexible as the first in the order of modifiers (#379).
+ - **FIX**: Normalization of order of modifier when applied to a Styled Widget (#389).
+ - **FIX**: Animations of Stack and Flex (#388).
+ - **FIX**: Review the order of modifiers adding FlexibleModifier, PaddingModifier, and RotatedModifier (#379).
  - **FEAT**: Ability to pass MixWidgetStateController to SpecBuilder (#391).
- - **FEAT**: remix - Foundational components (#317).
- - **FEAT**: interactive widget state by default (#384).
+ - **FEAT**: Interactive widget state by default (#384).
  - **FEAT**: MixThemeData can alter default order of modifiers (#380).
- - **FEAT**: Dto utility generation now adds constructor and static methods.
+ - **FEAT**: Dto utility generation now adds constructor and static methods (#377).
  - **FEAT**: ColorSwatchToken and other token improvements (#378).
 
 #### `mix_annotations` - `v0.2.1`
-
- - **FEAT**: ColorSwatchToken and other token improvements (#378).
 
 #### `mix_generator` - `v0.2.2`
 
@@ -46,9 +43,9 @@ Packages with other changes:
 
 #### `mix_lint` - `v0.1.1`
 
- - **FEAT**: Improvements for the "extract attributes" assist  (#387).
- - **FEAT**: implement quick fix for mix_attributes_ordering rule (#381).
- - **FEAT**: ColorSwatchToken and other token improvements (#378).
+ - **FEAT**: Improvements for the "extract attributes" assist (#387).
+ - **FEAT**: Create an assist to extract attributes from a Style (#383)
+ - **FEAT**: Implement quick fix for mix_attributes_ordering rule (#381).
 
 #### `remix` - `v0.0.2`
 

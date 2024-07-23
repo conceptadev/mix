@@ -1,13 +1,12 @@
 ## 1.4.0
 
- - **FIX**: order modifier (#389).
- - **FIX**: animations of Stack and Flex.
- - **FIX**: add flexible as the first in the order of modifiers (#379).
+ - **FIX**: Normalization of order of modifier when applied to a Styled Widget (#389).
+ - **FIX**: Animations of Stack and Flex (#388).
+ - **FIX**: Review the order of modifiers adding FlexibleModifier, PaddingModifier, and RotatedModifier (#379).
  - **FEAT**: Ability to pass MixWidgetStateController to SpecBuilder (#391).
- - **FEAT**: remix - Foundational components (#317).
- - **FEAT**: interactive widget state by default (#384).
+ - **FEAT**: Interactive widget state by default (#384).
  - **FEAT**: MixThemeData can alter default order of modifiers (#380).
- - **FEAT**: Dto utility generation now adds constructor and static methods.
+ - **FEAT**: Dto utility generation now adds constructor and static methods (#377).
  - **FEAT**: ColorSwatchToken and other token improvements (#378).
 
 ## 1.3.0
