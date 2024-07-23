@@ -20,7 +20,7 @@ void main() {
       const end = FlexibleModifierSpec(flex: 3, fit: FlexFit.tight);
       final result = start.lerp(end, 0.5);
 
-      expect(result.flex, 2);
+      expect(result.flex, 3);
       expect(result.fit, FlexFit.tight);
     });
 

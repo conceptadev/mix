@@ -7,42 +7,43 @@ import 'package:mix_annotations/mix_annotations.dart';
 import '../core/attribute.dart';
 import '../core/factory/mix_data.dart';
 import '../core/factory/mix_provider.dart';
+import '../core/helpers.dart';
 import '../core/modifier.dart';
-import '../core/spec.dart';
 import '../core/utility.dart';
 import '../internal/diagnostic_properties_builder_ext.dart';
 
 part 'rotated_box_widget_modifier.g.dart';
 
-@MixableSpec()
-final class RotatedBoxSpec extends Spec<RotatedBoxSpec>
-    with _$RotatedBoxSpec, ModifierSpecMixin {
-  final int? quarterTurns;
-  const RotatedBoxSpec._({
-    this.quarterTurns,
-  });
-  factory RotatedBoxSpec(int quarterTurns) =>
-      RotatedBoxSpec._(quarterTurns: quarterTurns);
+@MixableSpec(prefix: 'RotatedBoxModifier', skipUtility: true)
+final class RotatedBoxModifierSpec
+    extends WidgetModifierSpec<RotatedBoxModifierSpec>
+    with _$RotatedBoxModifierSpec {
+  final int quarterTurns;
+  const RotatedBoxModifierSpec([int? quarterTurns])
+      : quarterTurns = quarterTurns ?? 0;
+
+  @override
+  RotatedBoxModifierSpec lerp(RotatedBoxModifierSpec? other, double t) {
+    if (other == null) return _$this;
+
+    return RotatedBoxModifierSpec(
+      MixHelpers.lerpInt(quarterTurns, other.quarterTurns, t),
+    );
+  }
 
   @override
   Widget build(Widget child) {
-    return RotatedBox(quarterTurns: quarterTurns ?? 0, child: child);
+    return RotatedBox(quarterTurns: quarterTurns, child: child);
   }
 }
 
-extension RotatedBoxSpecUtilityX<T extends Attribute>
-    on RotatedBoxSpecUtility<T> {
-  T call(int value) => only(quarterTurns: value);
-  T d90() => only(quarterTurns: 1);
-  T d180() => only(quarterTurns: 2);
-  T d270() => only(quarterTurns: 3);
+final class RotatedBoxModifierUtility<T extends Attribute>
+    extends MixUtility<T, RotatedBoxModifierAttribute> {
+  const RotatedBoxModifierUtility(super.builder);
+  T d90() => call(1);
+  T d180() => call(2);
+  T d270() => call(3);
+
+  T call(int value) =>
+      builder(RotatedBoxModifierAttribute(quarterTurns: value));
 }
-
-@Deprecated('Use RotatedBoxSpec instead')
-typedef RotatedBoxModifierSpec = RotatedBoxSpec;
-
-@Deprecated('Use RotatedBoxSpecAttribute instead')
-typedef RotatedBoxModifierAttribute = RotatedBoxSpecAttribute;
-
-@Deprecated('Use RotatedBoxSpecUtility instead')
-typedef RotatedBoxWidgetUtility = RotatedBoxSpecUtility;

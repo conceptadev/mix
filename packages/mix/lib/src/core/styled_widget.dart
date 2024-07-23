@@ -102,7 +102,7 @@ class SpecBuilder extends StatelessWidget {
   Widget _applyModifiers(MixData mix, Widget child) {
     // Get the list of WidgetModifierAttribute from the mix
     final modifiers = mix
-        .whereType<WidgetModifierAttribute>()
+        .whereType<WidgetModifierSpecAttribute>()
         .map((e) => e.resolve(mix))
         .toList();
 

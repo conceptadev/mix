@@ -1,4 +1,3 @@
-import 'package:analyzer/dart/constant/value.dart' show DartObject;
 import 'package:analyzer/dart/element/element.dart'
     show ClassElement, FieldElement, ParameterElement, ConstructorElement;
 import 'package:analyzer/dart/element/nullability_suffix.dart';
@@ -9,8 +8,6 @@ import 'package:mix_generator/src/helpers/annotation_helpers.dart';
 import 'package:mix_generator/src/helpers/builder_utils.dart';
 import 'package:mix_generator/src/helpers/dart_type_ext.dart';
 import 'package:mix_generator/src/helpers/type_ref_repository.dart';
-// ignore_for_file: prefer_relative_imports
-import 'package:source_gen/source_gen.dart' show ConstantReader, TypeChecker;
 
 typedef MixTypeReferences = ({String utility, String lerp, String dto});
 

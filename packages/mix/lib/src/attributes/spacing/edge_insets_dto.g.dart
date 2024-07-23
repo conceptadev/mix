@@ -20,10 +20,11 @@ base mixin _$EdgeInsetsDto on Dto<EdgeInsets> {
     if (other == null) return _$this;
 
     return EdgeInsetsDto(
-        top: other.top ?? _$this.top,
-        bottom: other.bottom ?? _$this.bottom,
-        left: other.left ?? _$this.left,
-        right: other.right ?? _$this.right);
+      top: other.top ?? _$this.top,
+      bottom: other.bottom ?? _$this.bottom,
+      left: other.left ?? _$this.left,
+      right: other.right ?? _$this.right,
+    );
   }
 
   /// The list of properties that constitute the state of this [EdgeInsetsDto].
@@ -45,7 +46,7 @@ base mixin _$EdgeInsetsDto on Dto<EdgeInsets> {
 ///
 /// This class provides methods to set individual properties of a [EdgeInsetsDto].
 /// Use the methods of this class to configure specific properties of a [EdgeInsetsDto].
-final class EdgeInsetsUtility<T extends Attribute>
+class EdgeInsetsUtility<T extends Attribute>
     extends DtoUtility<T, EdgeInsetsDto, EdgeInsets> {
   /// Utility for defining [EdgeInsetsDto.top]
   late final top = DoubleUtility((v) => only(top: v));
@@ -129,10 +130,11 @@ base mixin _$EdgeInsetsDirectionalDto on Dto<EdgeInsetsDirectional> {
     if (other == null) return _$this;
 
     return EdgeInsetsDirectionalDto(
-        top: other.top ?? _$this.top,
-        bottom: other.bottom ?? _$this.bottom,
-        start: other.start ?? _$this.start,
-        end: other.end ?? _$this.end);
+      top: other.top ?? _$this.top,
+      bottom: other.bottom ?? _$this.bottom,
+      start: other.start ?? _$this.start,
+      end: other.end ?? _$this.end,
+    );
   }
 
   /// The list of properties that constitute the state of this [EdgeInsetsDirectionalDto].
@@ -154,7 +156,7 @@ base mixin _$EdgeInsetsDirectionalDto on Dto<EdgeInsetsDirectional> {
 ///
 /// This class provides methods to set individual properties of a [EdgeInsetsDirectionalDto].
 /// Use the methods of this class to configure specific properties of a [EdgeInsetsDirectionalDto].
-final class EdgeInsetsDirectionalUtility<T extends Attribute>
+class EdgeInsetsDirectionalUtility<T extends Attribute>
     extends DtoUtility<T, EdgeInsetsDirectionalDto, EdgeInsetsDirectional> {
   /// Utility for defining [EdgeInsetsDirectionalDto.top]
   late final top = DoubleUtility((v) => only(top: v));

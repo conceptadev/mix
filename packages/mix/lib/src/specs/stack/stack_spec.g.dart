@@ -43,12 +43,13 @@ mixin _$StackSpec on Spec<StackSpec> {
     WidgetModifiersData? modifiers,
   }) {
     return StackSpec(
-        alignment: alignment ?? _$this.alignment,
-        fit: fit ?? _$this.fit,
-        textDirection: textDirection ?? _$this.textDirection,
-        clipBehavior: clipBehavior ?? _$this.clipBehavior,
-        animated: animated ?? _$this.animated,
-        modifiers: modifiers ?? _$this.modifiers);
+      alignment: alignment ?? _$this.alignment,
+      fit: fit ?? _$this.fit,
+      textDirection: textDirection ?? _$this.textDirection,
+      clipBehavior: clipBehavior ?? _$this.clipBehavior,
+      animated: animated ?? _$this.animated,
+      modifiers: modifiers ?? _$this.modifiers,
+    );
   }
 
   /// Linearly interpolates between this [StackSpec] and another [StackSpec] based on the given parameter [t].
@@ -75,12 +76,13 @@ mixin _$StackSpec on Spec<StackSpec> {
     if (other == null) return _$this;
 
     return StackSpec(
-        alignment: AlignmentGeometry.lerp(_$this.alignment, other.alignment, t),
-        fit: t < 0.5 ? _$this.fit : other.fit,
-        textDirection: t < 0.5 ? _$this.textDirection : other.textDirection,
-        clipBehavior: t < 0.5 ? _$this.clipBehavior : other.clipBehavior,
-        animated: t < 0.5 ? _$this.animated : other.animated,
-        modifiers: t < 0.5 ? _$this.modifiers : other.modifiers);
+      alignment: AlignmentGeometry.lerp(_$this.alignment, other.alignment, t),
+      fit: t < 0.5 ? _$this.fit : other.fit,
+      textDirection: t < 0.5 ? _$this.textDirection : other.textDirection,
+      clipBehavior: t < 0.5 ? _$this.clipBehavior : other.clipBehavior,
+      animated: t < 0.5 ? _$this.animated : other.animated,
+      modifiers: t < 0.5 ? _$this.modifiers : other.modifiers,
+    );
   }
 
   /// The list of properties that constitute the state of this [StackSpec].
@@ -114,13 +116,14 @@ final class StackSpecAttribute extends SpecAttribute<StackSpec>
   final TextDirection? textDirection;
   final Clip? clipBehavior;
 
-  const StackSpecAttribute(
-      {this.alignment,
-      this.fit,
-      this.textDirection,
-      this.clipBehavior,
-      super.animated,
-      super.modifiers});
+  const StackSpecAttribute({
+    this.alignment,
+    this.fit,
+    this.textDirection,
+    this.clipBehavior,
+    super.animated,
+    super.modifiers,
+  });
 
   /// Resolves to [StackSpec] using the provided [MixData].
   ///
@@ -133,12 +136,13 @@ final class StackSpecAttribute extends SpecAttribute<StackSpec>
   @override
   StackSpec resolve(MixData mix) {
     return StackSpec(
-        alignment: alignment,
-        fit: fit,
-        textDirection: textDirection,
-        clipBehavior: clipBehavior,
-        animated: animated?.resolve(mix) ?? mix.animation,
-        modifiers: modifiers?.resolve(mix));
+      alignment: alignment,
+      fit: fit,
+      textDirection: textDirection,
+      clipBehavior: clipBehavior,
+      animated: animated?.resolve(mix) ?? mix.animation,
+      modifiers: modifiers?.resolve(mix),
+    );
   }
 
   /// Merges the properties of this [StackSpecAttribute] with the properties of [other].
@@ -154,12 +158,13 @@ final class StackSpecAttribute extends SpecAttribute<StackSpec>
     if (other == null) return this;
 
     return StackSpecAttribute(
-        alignment: other.alignment ?? alignment,
-        fit: other.fit ?? fit,
-        textDirection: other.textDirection ?? textDirection,
-        clipBehavior: other.clipBehavior ?? clipBehavior,
-        animated: animated?.merge(other.animated) ?? other.animated,
-        modifiers: modifiers?.merge(other.modifiers) ?? other.modifiers);
+      alignment: other.alignment ?? alignment,
+      fit: other.fit ?? fit,
+      textDirection: other.textDirection ?? textDirection,
+      clipBehavior: other.clipBehavior ?? clipBehavior,
+      animated: animated?.merge(other.animated) ?? other.animated,
+      modifiers: modifiers?.merge(other.modifiers) ?? other.modifiers,
+    );
   }
 
   /// The list of properties that constitute the state of this [StackSpecAttribute].
@@ -179,7 +184,6 @@ final class StackSpecAttribute extends SpecAttribute<StackSpec>
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-
     properties.addUsingDefault('alignment', alignment);
     properties.addUsingDefault('fit', fit);
     properties.addUsingDefault('textDirection', textDirection);
@@ -193,7 +197,7 @@ final class StackSpecAttribute extends SpecAttribute<StackSpec>
 ///
 /// This class provides methods to set individual properties of a [StackSpecAttribute].
 /// Use the methods of this class to configure specific properties of a [StackSpecAttribute].
-base class StackSpecUtility<T extends Attribute>
+class StackSpecUtility<T extends Attribute>
     extends SpecUtility<T, StackSpecAttribute> {
   /// Utility for defining [StackSpecAttribute.alignment]
   late final alignment = AlignmentGeometryUtility((v) => only(alignment: v));

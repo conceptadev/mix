@@ -23,7 +23,7 @@ void main() {
         width: 100,
         height: 100,
         modifiers: const WidgetModifiersDataDto([
-          OpacityModifierAttribute(0.5),
+          OpacityModifierAttribute(opacity: 0.5),
           SizedBoxModifierAttribute(height: 10, width: 10),
         ]),
       );
@@ -54,7 +54,7 @@ void main() {
       expect(
           containerSpecAttribute.modifiers,
           const WidgetModifiersDataDto([
-            OpacityModifierAttribute(0.5),
+            OpacityModifierAttribute(opacity: 0.5),
             SizedBoxModifierAttribute(height: 10, width: 10),
           ]));
     });
@@ -77,7 +77,7 @@ void main() {
           width: 100,
           height: 100,
           modifiers: const WidgetModifiersDataDto([
-            OpacityModifierAttribute(0.5),
+            OpacityModifierAttribute(opacity: 0.5),
             SizedBoxModifierAttribute(height: 10, width: 10),
           ]));
 
@@ -127,7 +127,7 @@ void main() {
           width: 100,
           height: 100,
           modifiers: const WidgetModifiersDataDto([
-            OpacityModifierAttribute(0.5),
+            OpacityModifierAttribute(opacity: 0.5),
             SizedBoxModifierAttribute(height: 10, width: 10),
           ]));
 
@@ -179,7 +179,7 @@ void main() {
       expect(
           mergedBoxSpecAttribute.modifiers,
           const WidgetModifiersDataDto([
-            OpacityModifierAttribute(0.5),
+            OpacityModifierAttribute(opacity: 0.5),
             SizedBoxModifierAttribute(height: 10, width: 20),
           ]));
     });
@@ -202,7 +202,7 @@ void main() {
           width: 100,
           height: 100,
           modifiers: const WidgetModifiersDataDto([
-            OpacityModifierAttribute(0.5),
+            OpacityModifierAttribute(opacity: 0.5),
             SizedBoxModifierAttribute(height: 10, width: 10),
           ]));
 
@@ -226,7 +226,7 @@ void main() {
             height: 100,
             modifiers: const WidgetModifiersDataDto(
               [
-                OpacityModifierAttribute(0.5),
+                OpacityModifierAttribute(opacity: 0.5),
                 SizedBoxModifierAttribute(height: 10, width: 10),
               ],
             ),
@@ -280,7 +280,7 @@ void main() {
               height: 200,
               modifiers: const WidgetModifiersDataDto(
                 [
-                  OpacityModifierAttribute(0.4),
+                  OpacityModifierAttribute(opacity: 0.4),
                   SizedBoxModifierAttribute(height: 20, width: 10),
                 ],
               ),

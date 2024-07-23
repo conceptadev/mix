@@ -95,7 +95,11 @@ final class SpacingDirectionalUtility<T extends Attribute>
   T only({double? top, double? bottom, double? start, double? end}) {
     return builder(
       EdgeInsetsGeometryDto.only(
-          top: top, bottom: bottom, start: start, end: end),
+        top: top,
+        bottom: bottom,
+        start: start,
+        end: end,
+      ),
     );
   }
 }

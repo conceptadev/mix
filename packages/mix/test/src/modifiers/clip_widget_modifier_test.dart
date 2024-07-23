@@ -157,12 +157,12 @@ void main() {
 
     test('merge', () {
       final modifier = ClipRRectModifierAttribute(
-        borderRadius: borderRadius,
+        borderRadius: borderRadius.toDto(),
         clipper: clipper,
         clipBehavior: clipBehavior,
       );
       final other = ClipRRectModifierAttribute(
-        borderRadius: borderRadius2,
+        borderRadius: borderRadius2.toDto(),
         clipper: clipper2,
         clipBehavior: clipBehavior2,
       );
@@ -172,7 +172,7 @@ void main() {
 
     test('resolve', () {
       final modifier = ClipRRectModifierAttribute(
-        borderRadius: borderRadius,
+        borderRadius: borderRadius.toDto(),
         clipper: clipper,
         clipBehavior: clipBehavior,
       );

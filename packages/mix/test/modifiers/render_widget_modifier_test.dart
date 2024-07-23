@@ -3,7 +3,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
 import 'package:mix/src/modifiers/internal/render_widget_modifier.dart';
 
-
 void main() {
   group('orderSpecs', () {
     test('should order modifiers based on provided order', () {

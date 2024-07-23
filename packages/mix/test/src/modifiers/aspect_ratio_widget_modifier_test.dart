@@ -54,27 +54,27 @@ void main() {
 
   group('AspectRatioModifierAttribute', () {
     test('merge', () {
-      const modifier = AspectRatioModifierAttribute(1.0);
-      const other = AspectRatioModifierAttribute(1.0);
+      const modifier = AspectRatioModifierAttribute(aspectRatio: 1.0);
+      const other = AspectRatioModifierAttribute(aspectRatio: 1.0);
       final result = modifier.merge(other);
       expect(result, modifier);
     });
 
     test('resolve', () {
-      const modifier = AspectRatioModifierAttribute(1.0);
+      const modifier = AspectRatioModifierAttribute(aspectRatio: 1.0);
       final result = modifier.resolve(EmptyMixData);
       expect(result, isA<AspectRatioModifierSpec>());
     });
 
     test('equality', () {
-      const modifier = AspectRatioModifierAttribute(1.0);
-      const other = AspectRatioModifierAttribute(1.0);
+      const modifier = AspectRatioModifierAttribute(aspectRatio: 1.0);
+      const other = AspectRatioModifierAttribute(aspectRatio: 1.0);
       expect(modifier, other);
     });
 
     test('inequality', () {
-      const modifier = AspectRatioModifierAttribute(1.0);
-      const other = AspectRatioModifierAttribute(2.0);
+      const modifier = AspectRatioModifierAttribute(aspectRatio: 1.0);
+      const other = AspectRatioModifierAttribute(aspectRatio: 2.0);
       expect(modifier, isNot(equals(other)));
     });
   });

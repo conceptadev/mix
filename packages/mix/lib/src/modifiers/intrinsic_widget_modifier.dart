@@ -8,14 +8,15 @@ import '../core/attribute.dart';
 import '../core/factory/mix_data.dart';
 import '../core/factory/mix_provider.dart';
 import '../core/modifier.dart';
-import '../core/spec.dart';
+import '../core/utility.dart';
 
 part 'intrinsic_widget_modifier.g.dart';
 
-@MixableSpec()
-final class IntrinsicHeightSpec extends Spec<IntrinsicHeightSpec>
-    with _$IntrinsicHeightSpec, ModifierSpecMixin {
-  const IntrinsicHeightSpec();
+@MixableSpec(prefix: 'IntrinsicHeightModifier', skipUtility: true)
+final class IntrinsicHeightModifierSpec
+    extends WidgetModifierSpec<IntrinsicHeightModifierSpec>
+    with _$IntrinsicHeightModifierSpec {
+  const IntrinsicHeightModifierSpec();
 
   @override
   Widget build(Widget child) {
@@ -23,10 +24,11 @@ final class IntrinsicHeightSpec extends Spec<IntrinsicHeightSpec>
   }
 }
 
-@MixableSpec()
-final class IntrinsicWidthSpec extends Spec<IntrinsicWidthSpec>
-    with _$IntrinsicWidthSpec, ModifierSpecMixin {
-  const IntrinsicWidthSpec();
+@MixableSpec(prefix: 'IntrinsicWidthModifier', skipUtility: true)
+final class IntrinsicWidthModifierSpec
+    extends WidgetModifierSpec<IntrinsicWidthModifierSpec>
+    with _$IntrinsicWidthModifierSpec {
+  const IntrinsicWidthModifierSpec();
 
   @override
   Widget build(Widget child) {
@@ -34,30 +36,14 @@ final class IntrinsicWidthSpec extends Spec<IntrinsicWidthSpec>
   }
 }
 
-extension IntrinsicHeightSpecUtilityX<T extends Attribute>
-    on IntrinsicHeightSpecUtility<T> {
-  T call() => only();
+final class IntrinsicHeightModifierUtility<T extends Attribute>
+    extends MixUtility<T, IntrinsicHeightModifierAttribute> {
+  const IntrinsicHeightModifierUtility(super.builder);
+  T call() => builder(const IntrinsicHeightModifierAttribute());
 }
 
-extension IntrinsicWidthSpecUtilityX<T extends Attribute>
-    on IntrinsicWidthSpecUtility<T> {
-  T call() => only();
+final class IntrinsicWidthModifierUtility<T extends Attribute>
+    extends MixUtility<T, IntrinsicWidthModifierAttribute> {
+  const IntrinsicWidthModifierUtility(super.builder);
+  T call() => builder(const IntrinsicWidthModifierAttribute());
 }
-
-@Deprecated('Use IntrinsicHeightSpec instead')
-typedef IntrinsicHeightModifierSpec = IntrinsicHeightSpec;
-
-@Deprecated('Use IntrinsicHeightSpecAttribute instead')
-typedef IntrinsicHeightModifierAttribute = IntrinsicHeightSpecAttribute;
-
-@Deprecated('Use IntrinsicHeightSpecUtility instead')
-typedef IntrinsicHeightWidgetUtility = IntrinsicHeightSpecUtility;
-
-@Deprecated('Use IntrinsicWidthSpec instead')
-typedef IntrinsicWidthModifierSpec = IntrinsicWidthSpec;
-
-@Deprecated('Use IntrinsicWidthSpecAttribute instead')
-typedef IntrinsicWidthModifierAttribute = IntrinsicWidthSpecAttribute;
-
-@Deprecated('Use IntrinsicWidthSpecUtility instead')
-typedef IntrinsicWidthWidgetUtility = IntrinsicWidthSpecUtility;

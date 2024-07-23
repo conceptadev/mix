@@ -8,18 +8,17 @@ import '../core/attribute.dart';
 import '../core/factory/mix_data.dart';
 import '../core/factory/mix_provider.dart';
 import '../core/modifier.dart';
-import '../core/spec.dart';
 import '../core/utility.dart';
 import '../internal/diagnostic_properties_builder_ext.dart';
 
 part 'visibility_widget_modifier.g.dart';
 
-@MixableSpec()
-final class VisibilitySpec extends Spec<VisibilitySpec>
-    with _$VisibilitySpec, ModifierSpecMixin {
+@MixableSpec(prefix: 'VisibilityModifier', skipUtility: true)
+final class VisibilityModifierSpec
+    extends WidgetModifierSpec<VisibilityModifierSpec>
+    with _$VisibilityModifierSpec {
   final bool visible;
-  const VisibilitySpec._({bool? visible}) : visible = visible ?? true;
-  factory VisibilitySpec(bool visible) => VisibilitySpec._(visible: visible);
+  const VisibilityModifierSpec([bool? visible]) : visible = visible ?? true;
 
   @override
   Widget build(Widget child) {
@@ -27,18 +26,11 @@ final class VisibilitySpec extends Spec<VisibilitySpec>
   }
 }
 
-extension VisibilitySpecUtilityX<T extends Attribute>
-    on VisibilitySpecUtility<T> {
-  T call(bool value) => only(visible: value);
-  T on() => only(visible: true);
-  T off() => only(visible: false);
+final class VisibilityModifierUtility<T extends Attribute>
+    extends MixUtility<T, VisibilityModifierAttribute> {
+  const VisibilityModifierUtility(super.builder);
+  T on() => call(true);
+  T off() => call(false);
+
+  T call(bool value) => builder(VisibilityModifierAttribute(visible: value));
 }
-
-@Deprecated('Use VisibilitySpec instead')
-typedef VisibilityModifierSpec = VisibilitySpec;
-
-@Deprecated('Use VisibilitySpecAttribute instead')
-typedef VisibilityModifierAttribute = VisibilitySpecAttribute;
-
-@Deprecated('Use VisibilitySpecUtility instead')
-typedef VisibilityUtility = VisibilitySpecUtility;

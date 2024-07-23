@@ -51,20 +51,21 @@ mixin _$TextSpec on Spec<TextSpec> {
     WidgetModifiersData? modifiers,
   }) {
     return TextSpec(
-        overflow: overflow ?? _$this.overflow,
-        strutStyle: strutStyle ?? _$this.strutStyle,
-        textAlign: textAlign ?? _$this.textAlign,
-        textScaleFactor: textScaleFactor ?? _$this.textScaleFactor,
-        textScaler: textScaler ?? _$this.textScaler,
-        maxLines: maxLines ?? _$this.maxLines,
-        style: style ?? _$this.style,
-        textWidthBasis: textWidthBasis ?? _$this.textWidthBasis,
-        textHeightBehavior: textHeightBehavior ?? _$this.textHeightBehavior,
-        textDirection: textDirection ?? _$this.textDirection,
-        softWrap: softWrap ?? _$this.softWrap,
-        directive: directive ?? _$this.directive,
-        animated: animated ?? _$this.animated,
-        modifiers: modifiers ?? _$this.modifiers);
+      overflow: overflow ?? _$this.overflow,
+      strutStyle: strutStyle ?? _$this.strutStyle,
+      textAlign: textAlign ?? _$this.textAlign,
+      textScaleFactor: textScaleFactor ?? _$this.textScaleFactor,
+      textScaler: textScaler ?? _$this.textScaler,
+      maxLines: maxLines ?? _$this.maxLines,
+      style: style ?? _$this.style,
+      textWidthBasis: textWidthBasis ?? _$this.textWidthBasis,
+      textHeightBehavior: textHeightBehavior ?? _$this.textHeightBehavior,
+      textDirection: textDirection ?? _$this.textDirection,
+      softWrap: softWrap ?? _$this.softWrap,
+      directive: directive ?? _$this.directive,
+      animated: animated ?? _$this.animated,
+      modifiers: modifiers ?? _$this.modifiers,
+    );
   }
 
   /// Linearly interpolates between this [TextSpec] and another [TextSpec] based on the given parameter [t].
@@ -93,23 +94,24 @@ mixin _$TextSpec on Spec<TextSpec> {
     if (other == null) return _$this;
 
     return TextSpec(
-        overflow: t < 0.5 ? _$this.overflow : other.overflow,
-        strutStyle:
-            MixHelpers.lerpStrutStyle(_$this.strutStyle, other.strutStyle, t),
-        textAlign: t < 0.5 ? _$this.textAlign : other.textAlign,
-        textScaleFactor: MixHelpers.lerpDouble(
-            _$this.textScaleFactor, other.textScaleFactor, t),
-        textScaler: t < 0.5 ? _$this.textScaler : other.textScaler,
-        maxLines: t < 0.5 ? _$this.maxLines : other.maxLines,
-        style: MixHelpers.lerpTextStyle(_$this.style, other.style, t),
-        textWidthBasis: t < 0.5 ? _$this.textWidthBasis : other.textWidthBasis,
-        textHeightBehavior:
-            t < 0.5 ? _$this.textHeightBehavior : other.textHeightBehavior,
-        textDirection: t < 0.5 ? _$this.textDirection : other.textDirection,
-        softWrap: t < 0.5 ? _$this.softWrap : other.softWrap,
-        directive: t < 0.5 ? _$this.directive : other.directive,
-        animated: t < 0.5 ? _$this.animated : other.animated,
-        modifiers: t < 0.5 ? _$this.modifiers : other.modifiers);
+      overflow: t < 0.5 ? _$this.overflow : other.overflow,
+      strutStyle:
+          MixHelpers.lerpStrutStyle(_$this.strutStyle, other.strutStyle, t),
+      textAlign: t < 0.5 ? _$this.textAlign : other.textAlign,
+      textScaleFactor: MixHelpers.lerpDouble(
+          _$this.textScaleFactor, other.textScaleFactor, t),
+      textScaler: t < 0.5 ? _$this.textScaler : other.textScaler,
+      maxLines: t < 0.5 ? _$this.maxLines : other.maxLines,
+      style: MixHelpers.lerpTextStyle(_$this.style, other.style, t),
+      textWidthBasis: t < 0.5 ? _$this.textWidthBasis : other.textWidthBasis,
+      textHeightBehavior:
+          t < 0.5 ? _$this.textHeightBehavior : other.textHeightBehavior,
+      textDirection: t < 0.5 ? _$this.textDirection : other.textDirection,
+      softWrap: t < 0.5 ? _$this.softWrap : other.softWrap,
+      directive: t < 0.5 ? _$this.directive : other.directive,
+      animated: t < 0.5 ? _$this.animated : other.animated,
+      modifiers: t < 0.5 ? _$this.modifiers : other.modifiers,
+    );
   }
 
   /// The list of properties that constitute the state of this [TextSpec].
@@ -159,21 +161,22 @@ final class TextSpecAttribute extends SpecAttribute<TextSpec>
   final bool? softWrap;
   final TextDirectiveDto? directive;
 
-  const TextSpecAttribute(
-      {this.overflow,
-      this.strutStyle,
-      this.textAlign,
-      this.textScaleFactor,
-      this.textScaler,
-      this.maxLines,
-      this.style,
-      this.textWidthBasis,
-      this.textHeightBehavior,
-      this.textDirection,
-      this.softWrap,
-      this.directive,
-      super.animated,
-      super.modifiers});
+  const TextSpecAttribute({
+    this.overflow,
+    this.strutStyle,
+    this.textAlign,
+    this.textScaleFactor,
+    this.textScaler,
+    this.maxLines,
+    this.style,
+    this.textWidthBasis,
+    this.textHeightBehavior,
+    this.textDirection,
+    this.softWrap,
+    this.directive,
+    super.animated,
+    super.modifiers,
+  });
 
   /// Resolves to [TextSpec] using the provided [MixData].
   ///
@@ -186,20 +189,21 @@ final class TextSpecAttribute extends SpecAttribute<TextSpec>
   @override
   TextSpec resolve(MixData mix) {
     return TextSpec(
-        overflow: overflow,
-        strutStyle: strutStyle?.resolve(mix),
-        textAlign: textAlign,
-        textScaleFactor: textScaleFactor,
-        textScaler: textScaler,
-        maxLines: maxLines,
-        style: style?.resolve(mix),
-        textWidthBasis: textWidthBasis,
-        textHeightBehavior: textHeightBehavior,
-        textDirection: textDirection,
-        softWrap: softWrap,
-        directive: directive?.resolve(mix),
-        animated: animated?.resolve(mix) ?? mix.animation,
-        modifiers: modifiers?.resolve(mix));
+      overflow: overflow,
+      strutStyle: strutStyle?.resolve(mix),
+      textAlign: textAlign,
+      textScaleFactor: textScaleFactor,
+      textScaler: textScaler,
+      maxLines: maxLines,
+      style: style?.resolve(mix),
+      textWidthBasis: textWidthBasis,
+      textHeightBehavior: textHeightBehavior,
+      textDirection: textDirection,
+      softWrap: softWrap,
+      directive: directive?.resolve(mix),
+      animated: animated?.resolve(mix) ?? mix.animation,
+      modifiers: modifiers?.resolve(mix),
+    );
   }
 
   /// Merges the properties of this [TextSpecAttribute] with the properties of [other].
@@ -215,20 +219,21 @@ final class TextSpecAttribute extends SpecAttribute<TextSpec>
     if (other == null) return this;
 
     return TextSpecAttribute(
-        overflow: other.overflow ?? overflow,
-        strutStyle: strutStyle?.merge(other.strutStyle) ?? other.strutStyle,
-        textAlign: other.textAlign ?? textAlign,
-        textScaleFactor: other.textScaleFactor ?? textScaleFactor,
-        textScaler: other.textScaler ?? textScaler,
-        maxLines: other.maxLines ?? maxLines,
-        style: style?.merge(other.style) ?? other.style,
-        textWidthBasis: other.textWidthBasis ?? textWidthBasis,
-        textHeightBehavior: other.textHeightBehavior ?? textHeightBehavior,
-        textDirection: other.textDirection ?? textDirection,
-        softWrap: other.softWrap ?? softWrap,
-        directive: directive?.merge(other.directive) ?? other.directive,
-        animated: animated?.merge(other.animated) ?? other.animated,
-        modifiers: modifiers?.merge(other.modifiers) ?? other.modifiers);
+      overflow: other.overflow ?? overflow,
+      strutStyle: strutStyle?.merge(other.strutStyle) ?? other.strutStyle,
+      textAlign: other.textAlign ?? textAlign,
+      textScaleFactor: other.textScaleFactor ?? textScaleFactor,
+      textScaler: other.textScaler ?? textScaler,
+      maxLines: other.maxLines ?? maxLines,
+      style: style?.merge(other.style) ?? other.style,
+      textWidthBasis: other.textWidthBasis ?? textWidthBasis,
+      textHeightBehavior: other.textHeightBehavior ?? textHeightBehavior,
+      textDirection: other.textDirection ?? textDirection,
+      softWrap: other.softWrap ?? softWrap,
+      directive: directive?.merge(other.directive) ?? other.directive,
+      animated: animated?.merge(other.animated) ?? other.animated,
+      modifiers: modifiers?.merge(other.modifiers) ?? other.modifiers,
+    );
   }
 
   /// The list of properties that constitute the state of this [TextSpecAttribute].
@@ -256,7 +261,6 @@ final class TextSpecAttribute extends SpecAttribute<TextSpec>
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-
     properties.addUsingDefault('overflow', overflow);
     properties.addUsingDefault('strutStyle', strutStyle);
     properties.addUsingDefault('textAlign', textAlign);
@@ -278,7 +282,7 @@ final class TextSpecAttribute extends SpecAttribute<TextSpec>
 ///
 /// This class provides methods to set individual properties of a [TextSpecAttribute].
 /// Use the methods of this class to configure specific properties of a [TextSpecAttribute].
-base class TextSpecUtility<T extends Attribute>
+class TextSpecUtility<T extends Attribute>
     extends SpecUtility<T, TextSpecAttribute> {
   /// Utility for defining [TextSpecAttribute.overflow]
   late final overflow = TextOverflowUtility((v) => only(overflow: v));

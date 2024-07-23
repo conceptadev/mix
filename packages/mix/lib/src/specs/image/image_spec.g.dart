@@ -48,17 +48,18 @@ mixin _$ImageSpec on Spec<ImageSpec> {
     WidgetModifiersData? modifiers,
   }) {
     return ImageSpec(
-        width: width ?? _$this.width,
-        height: height ?? _$this.height,
-        color: color ?? _$this.color,
-        repeat: repeat ?? _$this.repeat,
-        fit: fit ?? _$this.fit,
-        alignment: alignment ?? _$this.alignment,
-        centerSlice: centerSlice ?? _$this.centerSlice,
-        filterQuality: filterQuality ?? _$this.filterQuality,
-        colorBlendMode: colorBlendMode ?? _$this.colorBlendMode,
-        animated: animated ?? _$this.animated,
-        modifiers: modifiers ?? _$this.modifiers);
+      width: width ?? _$this.width,
+      height: height ?? _$this.height,
+      color: color ?? _$this.color,
+      repeat: repeat ?? _$this.repeat,
+      fit: fit ?? _$this.fit,
+      alignment: alignment ?? _$this.alignment,
+      centerSlice: centerSlice ?? _$this.centerSlice,
+      filterQuality: filterQuality ?? _$this.filterQuality,
+      colorBlendMode: colorBlendMode ?? _$this.colorBlendMode,
+      animated: animated ?? _$this.animated,
+      modifiers: modifiers ?? _$this.modifiers,
+    );
   }
 
   /// Linearly interpolates between this [ImageSpec] and another [ImageSpec] based on the given parameter [t].
@@ -88,17 +89,18 @@ mixin _$ImageSpec on Spec<ImageSpec> {
     if (other == null) return _$this;
 
     return ImageSpec(
-        width: MixHelpers.lerpDouble(_$this.width, other.width, t),
-        height: MixHelpers.lerpDouble(_$this.height, other.height, t),
-        color: Color.lerp(_$this.color, other.color, t),
-        repeat: t < 0.5 ? _$this.repeat : other.repeat,
-        fit: t < 0.5 ? _$this.fit : other.fit,
-        alignment: AlignmentGeometry.lerp(_$this.alignment, other.alignment, t),
-        centerSlice: Rect.lerp(_$this.centerSlice, other.centerSlice, t),
-        filterQuality: t < 0.5 ? _$this.filterQuality : other.filterQuality,
-        colorBlendMode: t < 0.5 ? _$this.colorBlendMode : other.colorBlendMode,
-        animated: t < 0.5 ? _$this.animated : other.animated,
-        modifiers: t < 0.5 ? _$this.modifiers : other.modifiers);
+      width: MixHelpers.lerpDouble(_$this.width, other.width, t),
+      height: MixHelpers.lerpDouble(_$this.height, other.height, t),
+      color: Color.lerp(_$this.color, other.color, t),
+      repeat: t < 0.5 ? _$this.repeat : other.repeat,
+      fit: t < 0.5 ? _$this.fit : other.fit,
+      alignment: AlignmentGeometry.lerp(_$this.alignment, other.alignment, t),
+      centerSlice: Rect.lerp(_$this.centerSlice, other.centerSlice, t),
+      filterQuality: t < 0.5 ? _$this.filterQuality : other.filterQuality,
+      colorBlendMode: t < 0.5 ? _$this.colorBlendMode : other.colorBlendMode,
+      animated: t < 0.5 ? _$this.animated : other.animated,
+      modifiers: t < 0.5 ? _$this.modifiers : other.modifiers,
+    );
   }
 
   /// The list of properties that constitute the state of this [ImageSpec].
@@ -142,18 +144,19 @@ final class ImageSpecAttribute extends SpecAttribute<ImageSpec>
   final FilterQuality? filterQuality;
   final BlendMode? colorBlendMode;
 
-  const ImageSpecAttribute(
-      {this.width,
-      this.height,
-      this.color,
-      this.repeat,
-      this.fit,
-      this.alignment,
-      this.centerSlice,
-      this.filterQuality,
-      this.colorBlendMode,
-      super.animated,
-      super.modifiers});
+  const ImageSpecAttribute({
+    this.width,
+    this.height,
+    this.color,
+    this.repeat,
+    this.fit,
+    this.alignment,
+    this.centerSlice,
+    this.filterQuality,
+    this.colorBlendMode,
+    super.animated,
+    super.modifiers,
+  });
 
   /// Resolves to [ImageSpec] using the provided [MixData].
   ///
@@ -166,17 +169,18 @@ final class ImageSpecAttribute extends SpecAttribute<ImageSpec>
   @override
   ImageSpec resolve(MixData mix) {
     return ImageSpec(
-        width: width,
-        height: height,
-        color: color?.resolve(mix),
-        repeat: repeat,
-        fit: fit,
-        alignment: alignment,
-        centerSlice: centerSlice,
-        filterQuality: filterQuality,
-        colorBlendMode: colorBlendMode,
-        animated: animated?.resolve(mix) ?? mix.animation,
-        modifiers: modifiers?.resolve(mix));
+      width: width,
+      height: height,
+      color: color?.resolve(mix),
+      repeat: repeat,
+      fit: fit,
+      alignment: alignment,
+      centerSlice: centerSlice,
+      filterQuality: filterQuality,
+      colorBlendMode: colorBlendMode,
+      animated: animated?.resolve(mix) ?? mix.animation,
+      modifiers: modifiers?.resolve(mix),
+    );
   }
 
   /// Merges the properties of this [ImageSpecAttribute] with the properties of [other].
@@ -192,17 +196,18 @@ final class ImageSpecAttribute extends SpecAttribute<ImageSpec>
     if (other == null) return this;
 
     return ImageSpecAttribute(
-        width: other.width ?? width,
-        height: other.height ?? height,
-        color: color?.merge(other.color) ?? other.color,
-        repeat: other.repeat ?? repeat,
-        fit: other.fit ?? fit,
-        alignment: other.alignment ?? alignment,
-        centerSlice: other.centerSlice ?? centerSlice,
-        filterQuality: other.filterQuality ?? filterQuality,
-        colorBlendMode: other.colorBlendMode ?? colorBlendMode,
-        animated: animated?.merge(other.animated) ?? other.animated,
-        modifiers: modifiers?.merge(other.modifiers) ?? other.modifiers);
+      width: other.width ?? width,
+      height: other.height ?? height,
+      color: color?.merge(other.color) ?? other.color,
+      repeat: other.repeat ?? repeat,
+      fit: other.fit ?? fit,
+      alignment: other.alignment ?? alignment,
+      centerSlice: other.centerSlice ?? centerSlice,
+      filterQuality: other.filterQuality ?? filterQuality,
+      colorBlendMode: other.colorBlendMode ?? colorBlendMode,
+      animated: animated?.merge(other.animated) ?? other.animated,
+      modifiers: modifiers?.merge(other.modifiers) ?? other.modifiers,
+    );
   }
 
   /// The list of properties that constitute the state of this [ImageSpecAttribute].
@@ -227,7 +232,6 @@ final class ImageSpecAttribute extends SpecAttribute<ImageSpec>
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-
     properties.addUsingDefault('width', width);
     properties.addUsingDefault('height', height);
     properties.addUsingDefault('color', color);
@@ -246,7 +250,7 @@ final class ImageSpecAttribute extends SpecAttribute<ImageSpec>
 ///
 /// This class provides methods to set individual properties of a [ImageSpecAttribute].
 /// Use the methods of this class to configure specific properties of a [ImageSpecAttribute].
-base class ImageSpecUtility<T extends Attribute>
+class ImageSpecUtility<T extends Attribute>
     extends SpecUtility<T, ImageSpecAttribute> {
   /// Utility for defining [ImageSpecAttribute.width]
   late final width = DoubleUtility((v) => only(width: v));

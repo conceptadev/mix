@@ -4,26 +4,25 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:mix_annotations/mix_annotations.dart';
 
-import '../attributes/scalars/scalar_util.dart';
 import '../core/attribute.dart';
 import '../core/factory/mix_data.dart';
 import '../core/factory/mix_provider.dart';
 import '../core/helpers.dart';
 import '../core/modifier.dart';
-import '../core/spec.dart';
 import '../core/utility.dart';
 import '../internal/diagnostic_properties_builder_ext.dart';
 
 part 'fractionally_sized_box_widget_modifier.g.dart';
 
-@MixableSpec()
-final class FractionallySizedBoxSpec extends Spec<FractionallySizedBoxSpec>
-    with _$FractionallySizedBoxSpec, ModifierSpecMixin {
+@MixableSpec(prefix: 'FractionallySizedBoxModifier', skipUtility: true)
+final class FractionallySizedBoxModifierSpec
+    extends WidgetModifierSpec<FractionallySizedBoxModifierSpec>
+    with _$FractionallySizedBoxModifierSpec {
   final double? widthFactor;
   final double? heightFactor;
   final AlignmentGeometry? alignment;
 
-  const FractionallySizedBoxSpec({
+  const FractionallySizedBoxModifierSpec({
     this.widthFactor,
     this.heightFactor,
     this.alignment,
@@ -40,27 +39,21 @@ final class FractionallySizedBoxSpec extends Spec<FractionallySizedBoxSpec>
   }
 }
 
-extension FractionallySizedBoxSpecUtilityX<T extends Attribute>
-    on FractionallySizedBoxSpecUtility<T> {
+final class FractionallySizedBoxModifierUtility<T extends Attribute>
+    extends MixUtility<T, FractionallySizedBoxModifierAttribute> {
+  const FractionallySizedBoxModifierUtility(super.builder);
+
   T call({
     AlignmentGeometry? alignment,
     double? widthFactor,
     double? heightFactor,
   }) {
-    return only(
-      widthFactor: widthFactor,
-      heightFactor: heightFactor,
-      alignment: alignment,
+    return builder(
+      FractionallySizedBoxModifierAttribute(
+        widthFactor: widthFactor,
+        heightFactor: heightFactor,
+        alignment: alignment,
+      ),
     );
   }
 }
-
-@Deprecated('Use FractionallySizedBoxSpec instead')
-typedef FractionallySizedBoxModifierSpec = FractionallySizedBoxSpec;
-
-@Deprecated('Use FractionallySizedBoxSpecAttribute instead')
-typedef FractionallySizedBoxModifierAttribute
-    = FractionallySizedBoxSpecAttribute;
-
-@Deprecated('Use FractionallySizedBoxSpecUtility instead')
-typedef FractionallySizedBoxModifierUtility = FractionallySizedBoxSpecUtility;

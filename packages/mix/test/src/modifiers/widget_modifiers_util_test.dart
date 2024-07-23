@@ -8,13 +8,13 @@ import '../../helpers/testing_utils.dart';
 
 void main() {
   group('Modifiers: ', () {
-    const aspectRatio = AspectRatioUtility(UtilityTestAttribute.new);
+    const aspectRatio = AspectRatioModifierUtility(UtilityTestAttribute.new);
     const flexible = FlexibleModifierUtility(UtilityTestAttribute.new);
-    const visibility = VisibilityUtility(UtilityTestAttribute.new);
-    const transform = TransformUtility(UtilityTestAttribute.new);
+    const visibility = VisibilityModifierUtility(UtilityTestAttribute.new);
+    const transform = TransformModifierUtility(UtilityTestAttribute.new);
 
-    const opacity = OpacityUtility(UtilityTestAttribute.new);
-    const rotate = RotatedBoxWidgetUtility(UtilityTestAttribute.new);
+    const opacity = OpacityModifierUtility(UtilityTestAttribute.new);
+    const rotate = RotatedBoxModifierUtility(UtilityTestAttribute.new);
     const clipPath = ClipPathUtility(UtilityTestAttribute.new);
     const clipRRect = ClipRRectUtility(UtilityTestAttribute.new);
     const clipOval = ClipOvalUtility(UtilityTestAttribute.new);
@@ -24,10 +24,10 @@ void main() {
     const fractionallySizedBox =
         FractionallySizedBoxModifierUtility(UtilityTestAttribute.new);
     const intrinsicHeight =
-        IntrinsicHeightWidgetUtility(UtilityTestAttribute.new);
+        IntrinsicHeightModifierUtility(UtilityTestAttribute.new);
     const intrinsicWidth =
-        IntrinsicWidthWidgetUtility(UtilityTestAttribute.new);
-    const align = AlignWidgetUtility(UtilityTestAttribute.new);
+        IntrinsicWidthModifierUtility(UtilityTestAttribute.new);
+    const align = AlignModifierUtility(UtilityTestAttribute.new);
 
     test('aspectRatio creates AspectRatioModifier correctly', () {
       final aspectRatioModifier = aspectRatio(2.0);
@@ -90,7 +90,7 @@ void main() {
 
       final modifier = clipRRectModifier.value;
 
-      expect(modifier.borderRadius, BorderRadius.circular(10.0));
+      expect(modifier.borderRadius, BorderRadius.circular(10.0).toDto());
     });
 
     test('clipOval creates ClipOvalModifier correctly', () {

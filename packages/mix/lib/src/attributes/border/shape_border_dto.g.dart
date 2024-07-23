@@ -18,9 +18,10 @@ base mixin _$RoundedRectangleBorderDto on Dto<RoundedRectangleBorder> {
   @override
   RoundedRectangleBorder resolve(MixData mix) {
     return RoundedRectangleBorder(
-        borderRadius:
-            _$this.borderRadius?.resolve(mix) ?? defaultValue.borderRadius,
-        side: _$this.side?.resolve(mix) ?? defaultValue.side);
+      borderRadius:
+          _$this.borderRadius?.resolve(mix) ?? defaultValue.borderRadius,
+      side: _$this.side?.resolve(mix) ?? defaultValue.side,
+    );
   }
 
   /// Merges the properties of this [RoundedRectangleBorderDto] with the properties of [other].
@@ -36,9 +37,10 @@ base mixin _$RoundedRectangleBorderDto on Dto<RoundedRectangleBorder> {
     if (other == null) return _$this;
 
     return RoundedRectangleBorderDto(
-        borderRadius: _$this.borderRadius?.merge(other.borderRadius) ??
-            other.borderRadius,
-        side: _$this.side?.merge(other.side) ?? other.side);
+      borderRadius:
+          _$this.borderRadius?.merge(other.borderRadius) ?? other.borderRadius,
+      side: _$this.side?.merge(other.side) ?? other.side,
+    );
   }
 
   /// The list of properties that constitute the state of this [RoundedRectangleBorderDto].
@@ -58,7 +60,7 @@ base mixin _$RoundedRectangleBorderDto on Dto<RoundedRectangleBorder> {
 ///
 /// This class provides methods to set individual properties of a [RoundedRectangleBorderDto].
 /// Use the methods of this class to configure specific properties of a [RoundedRectangleBorderDto].
-final class RoundedRectangleBorderUtility<T extends Attribute>
+class RoundedRectangleBorderUtility<T extends Attribute>
     extends DtoUtility<T, RoundedRectangleBorderDto, RoundedRectangleBorder> {
   /// Utility for defining [RoundedRectangleBorderDto.borderRadius]
   late final borderRadius =
@@ -120,9 +122,10 @@ base mixin _$BeveledRectangleBorderDto on Dto<BeveledRectangleBorder> {
   @override
   BeveledRectangleBorder resolve(MixData mix) {
     return BeveledRectangleBorder(
-        borderRadius:
-            _$this.borderRadius?.resolve(mix) ?? defaultValue.borderRadius,
-        side: _$this.side?.resolve(mix) ?? defaultValue.side);
+      borderRadius:
+          _$this.borderRadius?.resolve(mix) ?? defaultValue.borderRadius,
+      side: _$this.side?.resolve(mix) ?? defaultValue.side,
+    );
   }
 
   /// Merges the properties of this [BeveledRectangleBorderDto] with the properties of [other].
@@ -138,9 +141,10 @@ base mixin _$BeveledRectangleBorderDto on Dto<BeveledRectangleBorder> {
     if (other == null) return _$this;
 
     return BeveledRectangleBorderDto(
-        borderRadius: _$this.borderRadius?.merge(other.borderRadius) ??
-            other.borderRadius,
-        side: _$this.side?.merge(other.side) ?? other.side);
+      borderRadius:
+          _$this.borderRadius?.merge(other.borderRadius) ?? other.borderRadius,
+      side: _$this.side?.merge(other.side) ?? other.side,
+    );
   }
 
   /// The list of properties that constitute the state of this [BeveledRectangleBorderDto].
@@ -160,7 +164,7 @@ base mixin _$BeveledRectangleBorderDto on Dto<BeveledRectangleBorder> {
 ///
 /// This class provides methods to set individual properties of a [BeveledRectangleBorderDto].
 /// Use the methods of this class to configure specific properties of a [BeveledRectangleBorderDto].
-final class BeveledRectangleBorderUtility<T extends Attribute>
+class BeveledRectangleBorderUtility<T extends Attribute>
     extends DtoUtility<T, BeveledRectangleBorderDto, BeveledRectangleBorder> {
   /// Utility for defining [BeveledRectangleBorderDto.borderRadius]
   late final borderRadius =
@@ -222,9 +226,10 @@ base mixin _$ContinuousRectangleBorderDto on Dto<ContinuousRectangleBorder> {
   @override
   ContinuousRectangleBorder resolve(MixData mix) {
     return ContinuousRectangleBorder(
-        borderRadius:
-            _$this.borderRadius?.resolve(mix) ?? defaultValue.borderRadius,
-        side: _$this.side?.resolve(mix) ?? defaultValue.side);
+      borderRadius:
+          _$this.borderRadius?.resolve(mix) ?? defaultValue.borderRadius,
+      side: _$this.side?.resolve(mix) ?? defaultValue.side,
+    );
   }
 
   /// Merges the properties of this [ContinuousRectangleBorderDto] with the properties of [other].
@@ -240,9 +245,10 @@ base mixin _$ContinuousRectangleBorderDto on Dto<ContinuousRectangleBorder> {
     if (other == null) return _$this;
 
     return ContinuousRectangleBorderDto(
-        borderRadius: _$this.borderRadius?.merge(other.borderRadius) ??
-            other.borderRadius,
-        side: _$this.side?.merge(other.side) ?? other.side);
+      borderRadius:
+          _$this.borderRadius?.merge(other.borderRadius) ?? other.borderRadius,
+      side: _$this.side?.merge(other.side) ?? other.side,
+    );
   }
 
   /// The list of properties that constitute the state of this [ContinuousRectangleBorderDto].
@@ -263,9 +269,8 @@ base mixin _$ContinuousRectangleBorderDto on Dto<ContinuousRectangleBorder> {
 ///
 /// This class provides methods to set individual properties of a [ContinuousRectangleBorderDto].
 /// Use the methods of this class to configure specific properties of a [ContinuousRectangleBorderDto].
-final class ContinuousRectangleBorderUtility<T extends Attribute>
-    extends DtoUtility<T, ContinuousRectangleBorderDto,
-        ContinuousRectangleBorder> {
+class ContinuousRectangleBorderUtility<T extends Attribute> extends DtoUtility<
+    T, ContinuousRectangleBorderDto, ContinuousRectangleBorder> {
   /// Utility for defining [ContinuousRectangleBorderDto.borderRadius]
   late final borderRadius =
       BorderRadiusGeometryUtility((v) => only(borderRadius: v));
@@ -327,8 +332,9 @@ base mixin _$CircleBorderDto on Dto<CircleBorder> {
   @override
   CircleBorder resolve(MixData mix) {
     return CircleBorder(
-        side: _$this.side?.resolve(mix) ?? defaultValue.side,
-        eccentricity: _$this.eccentricity ?? defaultValue.eccentricity);
+      side: _$this.side?.resolve(mix) ?? defaultValue.side,
+      eccentricity: _$this.eccentricity ?? defaultValue.eccentricity,
+    );
   }
 
   /// Merges the properties of this [CircleBorderDto] with the properties of [other].
@@ -344,8 +350,9 @@ base mixin _$CircleBorderDto on Dto<CircleBorder> {
     if (other == null) return _$this;
 
     return CircleBorderDto(
-        side: _$this.side?.merge(other.side) ?? other.side,
-        eccentricity: other.eccentricity ?? _$this.eccentricity);
+      side: _$this.side?.merge(other.side) ?? other.side,
+      eccentricity: other.eccentricity ?? _$this.eccentricity,
+    );
   }
 
   /// The list of properties that constitute the state of this [CircleBorderDto].
@@ -365,7 +372,7 @@ base mixin _$CircleBorderDto on Dto<CircleBorder> {
 ///
 /// This class provides methods to set individual properties of a [CircleBorderDto].
 /// Use the methods of this class to configure specific properties of a [CircleBorderDto].
-final class CircleBorderUtility<T extends Attribute>
+class CircleBorderUtility<T extends Attribute>
     extends DtoUtility<T, CircleBorderDto, CircleBorder> {
   /// Utility for defining [CircleBorderDto.side]
   late final side = BorderSideUtility((v) => only(side: v));
@@ -425,14 +432,15 @@ base mixin _$StarBorderDto on Dto<StarBorder> {
   @override
   StarBorder resolve(MixData mix) {
     return StarBorder(
-        side: _$this.side?.resolve(mix) ?? defaultValue.side,
-        points: _$this.points ?? defaultValue.points,
-        innerRadiusRatio:
-            _$this.innerRadiusRatio ?? defaultValue.innerRadiusRatio,
-        pointRounding: _$this.pointRounding ?? defaultValue.pointRounding,
-        valleyRounding: _$this.valleyRounding ?? defaultValue.valleyRounding,
-        rotation: _$this.rotation ?? defaultValue.rotation,
-        squash: _$this.squash ?? defaultValue.squash);
+      side: _$this.side?.resolve(mix) ?? defaultValue.side,
+      points: _$this.points ?? defaultValue.points,
+      innerRadiusRatio:
+          _$this.innerRadiusRatio ?? defaultValue.innerRadiusRatio,
+      pointRounding: _$this.pointRounding ?? defaultValue.pointRounding,
+      valleyRounding: _$this.valleyRounding ?? defaultValue.valleyRounding,
+      rotation: _$this.rotation ?? defaultValue.rotation,
+      squash: _$this.squash ?? defaultValue.squash,
+    );
   }
 
   /// Merges the properties of this [StarBorderDto] with the properties of [other].
@@ -448,13 +456,14 @@ base mixin _$StarBorderDto on Dto<StarBorder> {
     if (other == null) return _$this;
 
     return StarBorderDto(
-        side: _$this.side?.merge(other.side) ?? other.side,
-        points: other.points ?? _$this.points,
-        innerRadiusRatio: other.innerRadiusRatio ?? _$this.innerRadiusRatio,
-        pointRounding: other.pointRounding ?? _$this.pointRounding,
-        valleyRounding: other.valleyRounding ?? _$this.valleyRounding,
-        rotation: other.rotation ?? _$this.rotation,
-        squash: other.squash ?? _$this.squash);
+      side: _$this.side?.merge(other.side) ?? other.side,
+      points: other.points ?? _$this.points,
+      innerRadiusRatio: other.innerRadiusRatio ?? _$this.innerRadiusRatio,
+      pointRounding: other.pointRounding ?? _$this.pointRounding,
+      valleyRounding: other.valleyRounding ?? _$this.valleyRounding,
+      rotation: other.rotation ?? _$this.rotation,
+      squash: other.squash ?? _$this.squash,
+    );
   }
 
   /// The list of properties that constitute the state of this [StarBorderDto].
@@ -479,7 +488,7 @@ base mixin _$StarBorderDto on Dto<StarBorder> {
 ///
 /// This class provides methods to set individual properties of a [StarBorderDto].
 /// Use the methods of this class to configure specific properties of a [StarBorderDto].
-final class StarBorderUtility<T extends Attribute>
+class StarBorderUtility<T extends Attribute>
     extends DtoUtility<T, StarBorderDto, StarBorder> {
   /// Utility for defining [StarBorderDto.side]
   late final side = BorderSideUtility((v) => only(side: v));
@@ -579,11 +588,12 @@ base mixin _$LinearBorderDto on Dto<LinearBorder> {
   @override
   LinearBorder resolve(MixData mix) {
     return LinearBorder(
-        side: _$this.side?.resolve(mix) ?? defaultValue.side,
-        start: _$this.start?.resolve(mix) ?? defaultValue.start,
-        end: _$this.end?.resolve(mix) ?? defaultValue.end,
-        top: _$this.top?.resolve(mix) ?? defaultValue.top,
-        bottom: _$this.bottom?.resolve(mix) ?? defaultValue.bottom);
+      side: _$this.side?.resolve(mix) ?? defaultValue.side,
+      start: _$this.start?.resolve(mix) ?? defaultValue.start,
+      end: _$this.end?.resolve(mix) ?? defaultValue.end,
+      top: _$this.top?.resolve(mix) ?? defaultValue.top,
+      bottom: _$this.bottom?.resolve(mix) ?? defaultValue.bottom,
+    );
   }
 
   /// Merges the properties of this [LinearBorderDto] with the properties of [other].
@@ -599,11 +609,12 @@ base mixin _$LinearBorderDto on Dto<LinearBorder> {
     if (other == null) return _$this;
 
     return LinearBorderDto(
-        side: _$this.side?.merge(other.side) ?? other.side,
-        start: _$this.start?.merge(other.start) ?? other.start,
-        end: _$this.end?.merge(other.end) ?? other.end,
-        top: _$this.top?.merge(other.top) ?? other.top,
-        bottom: _$this.bottom?.merge(other.bottom) ?? other.bottom);
+      side: _$this.side?.merge(other.side) ?? other.side,
+      start: _$this.start?.merge(other.start) ?? other.start,
+      end: _$this.end?.merge(other.end) ?? other.end,
+      top: _$this.top?.merge(other.top) ?? other.top,
+      bottom: _$this.bottom?.merge(other.bottom) ?? other.bottom,
+    );
   }
 
   /// The list of properties that constitute the state of this [LinearBorderDto].
@@ -626,7 +637,7 @@ base mixin _$LinearBorderDto on Dto<LinearBorder> {
 ///
 /// This class provides methods to set individual properties of a [LinearBorderDto].
 /// Use the methods of this class to configure specific properties of a [LinearBorderDto].
-final class LinearBorderUtility<T extends Attribute>
+class LinearBorderUtility<T extends Attribute>
     extends DtoUtility<T, LinearBorderDto, LinearBorder> {
   /// Utility for defining [LinearBorderDto.side]
   late final side = BorderSideUtility((v) => only(side: v));
@@ -710,8 +721,9 @@ base mixin _$LinearBorderEdgeDto on Dto<LinearBorderEdge> {
   @override
   LinearBorderEdge resolve(MixData mix) {
     return LinearBorderEdge(
-        size: _$this.size ?? defaultValue.size,
-        alignment: _$this.alignment ?? defaultValue.alignment);
+      size: _$this.size ?? defaultValue.size,
+      alignment: _$this.alignment ?? defaultValue.alignment,
+    );
   }
 
   /// Merges the properties of this [LinearBorderEdgeDto] with the properties of [other].
@@ -727,8 +739,9 @@ base mixin _$LinearBorderEdgeDto on Dto<LinearBorderEdge> {
     if (other == null) return _$this;
 
     return LinearBorderEdgeDto(
-        size: other.size ?? _$this.size,
-        alignment: other.alignment ?? _$this.alignment);
+      size: other.size ?? _$this.size,
+      alignment: other.alignment ?? _$this.alignment,
+    );
   }
 
   /// The list of properties that constitute the state of this [LinearBorderEdgeDto].
@@ -748,7 +761,7 @@ base mixin _$LinearBorderEdgeDto on Dto<LinearBorderEdge> {
 ///
 /// This class provides methods to set individual properties of a [LinearBorderEdgeDto].
 /// Use the methods of this class to configure specific properties of a [LinearBorderEdgeDto].
-final class LinearBorderEdgeUtility<T extends Attribute>
+class LinearBorderEdgeUtility<T extends Attribute>
     extends DtoUtility<T, LinearBorderEdgeDto, LinearBorderEdge> {
   /// Utility for defining [LinearBorderEdgeDto.size]
   late final size = DoubleUtility((v) => only(size: v));
@@ -807,7 +820,9 @@ base mixin _$StadiumBorderDto on Dto<StadiumBorder> {
   /// ```
   @override
   StadiumBorder resolve(MixData mix) {
-    return StadiumBorder(side: _$this.side?.resolve(mix) ?? defaultValue.side);
+    return StadiumBorder(
+      side: _$this.side?.resolve(mix) ?? defaultValue.side,
+    );
   }
 
   /// Merges the properties of this [StadiumBorderDto] with the properties of [other].
@@ -822,7 +837,9 @@ base mixin _$StadiumBorderDto on Dto<StadiumBorder> {
   StadiumBorderDto merge(StadiumBorderDto? other) {
     if (other == null) return _$this;
 
-    return StadiumBorderDto(side: _$this.side?.merge(other.side) ?? other.side);
+    return StadiumBorderDto(
+      side: _$this.side?.merge(other.side) ?? other.side,
+    );
   }
 
   /// The list of properties that constitute the state of this [StadiumBorderDto].
@@ -841,7 +858,7 @@ base mixin _$StadiumBorderDto on Dto<StadiumBorder> {
 ///
 /// This class provides methods to set individual properties of a [StadiumBorderDto].
 /// Use the methods of this class to configure specific properties of a [StadiumBorderDto].
-final class StadiumBorderUtility<T extends Attribute>
+class StadiumBorderUtility<T extends Attribute>
     extends DtoUtility<T, StadiumBorderDto, StadiumBorder> {
   /// Utility for defining [StadiumBorderDto.side]
   late final side = BorderSideUtility((v) => only(side: v));

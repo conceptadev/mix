@@ -18,10 +18,11 @@ base mixin _$BorderDto on Dto<Border> {
   @override
   Border resolve(MixData mix) {
     return Border(
-        top: _$this.top?.resolve(mix) ?? defaultValue.top,
-        bottom: _$this.bottom?.resolve(mix) ?? defaultValue.bottom,
-        left: _$this.left?.resolve(mix) ?? defaultValue.left,
-        right: _$this.right?.resolve(mix) ?? defaultValue.right);
+      top: _$this.top?.resolve(mix) ?? defaultValue.top,
+      bottom: _$this.bottom?.resolve(mix) ?? defaultValue.bottom,
+      left: _$this.left?.resolve(mix) ?? defaultValue.left,
+      right: _$this.right?.resolve(mix) ?? defaultValue.right,
+    );
   }
 
   /// Merges the properties of this [BorderDto] with the properties of [other].
@@ -37,10 +38,11 @@ base mixin _$BorderDto on Dto<Border> {
     if (other == null) return _$this;
 
     return BorderDto(
-        top: _$this.top?.merge(other.top) ?? other.top,
-        bottom: _$this.bottom?.merge(other.bottom) ?? other.bottom,
-        left: _$this.left?.merge(other.left) ?? other.left,
-        right: _$this.right?.merge(other.right) ?? other.right);
+      top: _$this.top?.merge(other.top) ?? other.top,
+      bottom: _$this.bottom?.merge(other.bottom) ?? other.bottom,
+      left: _$this.left?.merge(other.left) ?? other.left,
+      right: _$this.right?.merge(other.right) ?? other.right,
+    );
   }
 
   /// The list of properties that constitute the state of this [BorderDto].
@@ -87,10 +89,11 @@ base mixin _$BorderDirectionalDto on Dto<BorderDirectional> {
   @override
   BorderDirectional resolve(MixData mix) {
     return BorderDirectional(
-        top: _$this.top?.resolve(mix) ?? defaultValue.top,
-        bottom: _$this.bottom?.resolve(mix) ?? defaultValue.bottom,
-        start: _$this.start?.resolve(mix) ?? defaultValue.start,
-        end: _$this.end?.resolve(mix) ?? defaultValue.end);
+      top: _$this.top?.resolve(mix) ?? defaultValue.top,
+      bottom: _$this.bottom?.resolve(mix) ?? defaultValue.bottom,
+      start: _$this.start?.resolve(mix) ?? defaultValue.start,
+      end: _$this.end?.resolve(mix) ?? defaultValue.end,
+    );
   }
 
   /// Merges the properties of this [BorderDirectionalDto] with the properties of [other].
@@ -106,10 +109,11 @@ base mixin _$BorderDirectionalDto on Dto<BorderDirectional> {
     if (other == null) return _$this;
 
     return BorderDirectionalDto(
-        top: _$this.top?.merge(other.top) ?? other.top,
-        bottom: _$this.bottom?.merge(other.bottom) ?? other.bottom,
-        start: _$this.start?.merge(other.start) ?? other.start,
-        end: _$this.end?.merge(other.end) ?? other.end);
+      top: _$this.top?.merge(other.top) ?? other.top,
+      bottom: _$this.bottom?.merge(other.bottom) ?? other.bottom,
+      start: _$this.start?.merge(other.start) ?? other.start,
+      end: _$this.end?.merge(other.end) ?? other.end,
+    );
   }
 
   /// The list of properties that constitute the state of this [BorderDirectionalDto].
@@ -156,10 +160,11 @@ base mixin _$BorderSideDto on Dto<BorderSide> {
   @override
   BorderSide resolve(MixData mix) {
     return BorderSide(
-        color: _$this.color?.resolve(mix) ?? defaultValue.color,
-        strokeAlign: _$this.strokeAlign ?? defaultValue.strokeAlign,
-        style: _$this.style ?? defaultValue.style,
-        width: _$this.width ?? defaultValue.width);
+      color: _$this.color?.resolve(mix) ?? defaultValue.color,
+      strokeAlign: _$this.strokeAlign ?? defaultValue.strokeAlign,
+      style: _$this.style ?? defaultValue.style,
+      width: _$this.width ?? defaultValue.width,
+    );
   }
 
   /// Merges the properties of this [BorderSideDto] with the properties of [other].
@@ -175,10 +180,11 @@ base mixin _$BorderSideDto on Dto<BorderSide> {
     if (other == null) return _$this;
 
     return BorderSideDto(
-        color: _$this.color?.merge(other.color) ?? other.color,
-        strokeAlign: other.strokeAlign ?? _$this.strokeAlign,
-        style: other.style ?? _$this.style,
-        width: other.width ?? _$this.width);
+      color: _$this.color?.merge(other.color) ?? other.color,
+      strokeAlign: other.strokeAlign ?? _$this.strokeAlign,
+      style: other.style ?? _$this.style,
+      width: other.width ?? _$this.width,
+    );
   }
 
   /// The list of properties that constitute the state of this [BorderSideDto].
@@ -200,7 +206,7 @@ base mixin _$BorderSideDto on Dto<BorderSide> {
 ///
 /// This class provides methods to set individual properties of a [BorderSideDto].
 /// Use the methods of this class to configure specific properties of a [BorderSideDto].
-final class BorderSideUtility<T extends Attribute>
+class BorderSideUtility<T extends Attribute>
     extends DtoUtility<T, BorderSideDto, BorderSide> {
   /// Utility for defining [BorderSideDto.color]
   late final color = ColorUtility((v) => only(color: v));

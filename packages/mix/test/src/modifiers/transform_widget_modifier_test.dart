@@ -117,7 +117,7 @@ void main() {
   group('TransformUtility', () {
     test('call', () {
       final utility =
-          TransformUtility<TransformModifierAttribute>((attr) => attr);
+          TransformModifierUtility<TransformModifierAttribute>((attr) => attr);
       final matrix = Matrix4.rotationX(0.5);
       final result = utility(matrix);
       expect(result.transform, matrix);
@@ -125,7 +125,7 @@ void main() {
 
     test('scale', () {
       final utility =
-          TransformUtility<TransformModifierAttribute>((attr) => attr);
+          TransformModifierUtility<TransformModifierAttribute>((attr) => attr);
       final result = utility.scale(2.0);
       expect(result.transform, Matrix4.diagonal3Values(2.0, 2.0, 1.0));
       expect(result.alignment, Alignment.center);
@@ -133,7 +133,7 @@ void main() {
 
     test('rotate', () {
       final utility =
-          TransformUtility<TransformModifierAttribute>((attr) => attr);
+          TransformModifierUtility<TransformModifierAttribute>((attr) => attr);
       final result = utility.rotate(0.5);
       expect(result.transform, Matrix4.rotationZ(0.5));
       expect(result.alignment, Alignment.center);

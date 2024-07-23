@@ -9,8 +9,8 @@ void main() {
     test('lerp returns correct PaddingSpec', () {
       const padding1 = EdgeInsets.all(10.0);
       const padding2 = EdgeInsets.all(20.0);
-      const spec1 = PaddingSpec(padding1);
-      const spec2 = PaddingSpec(padding2);
+      const spec1 = PaddingModifierSpec(padding1);
+      const spec2 = PaddingModifierSpec(padding2);
 
       final result = spec1.lerp(spec2, 0.5);
 
@@ -21,20 +21,19 @@ void main() {
       const padding = EdgeInsets.all(10.0);
       const padding2 = EdgeInsets.all(20.0);
       const padding3 = EdgeInsets.all(30.0);
-      const spec = PaddingSpec(padding);
-      const spec2 = PaddingSpec(padding2);
-      const spec3 = PaddingSpec(padding3);
+      const spec = PaddingModifierSpec(padding);
+      const spec2 = PaddingModifierSpec(padding2);
+      const spec3 = PaddingModifierSpec(padding3);
 
       final lerp1 = spec.lerp(null, 0.5);
-
       final lerp2 = spec.lerp(spec2, 0.5);
       final lerp3 = spec.lerp(spec3, 0.5);
-      final insets1 = EdgeInsets.lerp(padding, null, 0.5);
 
+      final insets1 = EdgeInsets.lerp(padding, null, 0.5);
       final insets2 = EdgeInsets.lerp(padding, padding2, 0.5);
       final insets3 = EdgeInsets.lerp(padding, padding3, 0.5);
 
-      expect(lerp1.padding, equals(insets1));
+      expect(lerp1.padding, equals(spec.padding));
       expect(lerp2.padding, equals(insets2));
       expect(lerp3.padding, equals(insets3));
     });
@@ -42,7 +41,7 @@ void main() {
     test('copyWith returns new PaddingSpec with updated padding', () {
       const padding1 = EdgeInsets.all(10.0);
       const padding2 = EdgeInsets.all(20.0);
-      const spec = PaddingSpec(padding1);
+      const spec = PaddingModifierSpec(padding1);
 
       final result = spec.copyWith(padding: padding2);
 
@@ -51,7 +50,7 @@ void main() {
 
     test('copyWith returns original PaddingSpec when padding is null', () {
       const padding = EdgeInsets.all(10.0);
-      const spec = PaddingSpec(padding);
+      const spec = PaddingModifierSpec(padding);
 
       final result = spec.copyWith();
 
@@ -61,7 +60,7 @@ void main() {
     testWidgets('build returns Padding widget with correct padding',
         (WidgetTester tester) async {
       const padding = EdgeInsets.all(10.0);
-      const spec = PaddingSpec(padding);
+      const spec = PaddingModifierSpec(padding);
       const child = SizedBox();
 
       await tester.pumpWidget(spec.build(child));
@@ -74,8 +73,8 @@ void main() {
     test('merge returns correct PaddingModifierAttribute', () {
       const padding1 = EdgeInsetsDto.all(10.0);
       const padding2 = EdgeInsetsDto.all(20.0);
-      const attribute1 = PaddingModifierAttribute(padding1);
-      const attribute2 = PaddingModifierAttribute(padding2);
+      const attribute1 = PaddingModifierAttribute(padding: padding1);
+      const attribute2 = PaddingModifierAttribute(padding: padding2);
 
       final result = attribute1.merge(attribute2);
 
@@ -85,8 +84,8 @@ void main() {
     test('deep merge returns correct PaddingModifierAttribute', () {
       const padding1 = EdgeInsetsDto(top: 1, bottom: 2, left: 3, right: 4);
       const padding2 = EdgeInsetsDto(top: 4, bottom: 3);
-      const attribute1 = PaddingModifierAttribute(padding1);
-      const attribute2 = PaddingModifierAttribute(padding2);
+      const attribute1 = PaddingModifierAttribute(padding: padding1);
+      const attribute2 = PaddingModifierAttribute(padding: padding2);
 
       final result = attribute1.merge(attribute2);
 
@@ -101,7 +100,7 @@ void main() {
     test('merge returns original PaddingModifierAttribute when other is null',
         () {
       const padding = EdgeInsetsDto.all(10.0);
-      const attribute = PaddingModifierAttribute(padding);
+      const attribute = PaddingModifierAttribute(padding: padding);
 
       final result = attribute.merge(null);
 
@@ -110,7 +109,7 @@ void main() {
 
     test('resolve returns correct PaddingSpec', () {
       const padding = EdgeInsetsDto.all(10.0);
-      const attribute = PaddingModifierAttribute(padding);
+      const attribute = PaddingModifierAttribute(padding: padding);
       final mixData = EmptyMixData;
 
       final result = attribute.resolve(mixData);
@@ -120,7 +119,7 @@ void main() {
 
     test('props returns list with padding', () {
       const padding = EdgeInsetsDto.all(10.0);
-      const attribute = PaddingModifierAttribute(padding);
+      const attribute = PaddingModifierAttribute(padding: padding);
 
       expect(attribute.props, equals([padding]));
     });

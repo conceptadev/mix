@@ -18,17 +18,18 @@ base mixin _$BoxDecorationDto on Dto<BoxDecoration> {
   @override
   BoxDecoration resolve(MixData mix) {
     return BoxDecoration(
-        border: _$this.border?.resolve(mix) ?? defaultValue.border,
-        borderRadius:
-            _$this.borderRadius?.resolve(mix) ?? defaultValue.borderRadius,
-        shape: _$this.shape ?? defaultValue.shape,
-        backgroundBlendMode:
-            _$this.backgroundBlendMode ?? defaultValue.backgroundBlendMode,
-        color: _$this.color?.resolve(mix) ?? defaultValue.color,
-        image: _$this.image?.resolve(mix) ?? defaultValue.image,
-        gradient: _$this.gradient?.resolve(mix) ?? defaultValue.gradient,
-        boxShadow: _$this.boxShadow?.map((e) => e.resolve(mix)).toList() ??
-            defaultValue.boxShadow);
+      border: _$this.border?.resolve(mix) ?? defaultValue.border,
+      borderRadius:
+          _$this.borderRadius?.resolve(mix) ?? defaultValue.borderRadius,
+      shape: _$this.shape ?? defaultValue.shape,
+      backgroundBlendMode:
+          _$this.backgroundBlendMode ?? defaultValue.backgroundBlendMode,
+      color: _$this.color?.resolve(mix) ?? defaultValue.color,
+      image: _$this.image?.resolve(mix) ?? defaultValue.image,
+      gradient: _$this.gradient?.resolve(mix) ?? defaultValue.gradient,
+      boxShadow: _$this.boxShadow?.map((e) => e.resolve(mix)).toList() ??
+          defaultValue.boxShadow,
+    );
   }
 
   /// Merges the properties of this [BoxDecorationDto] with the properties of [other].
@@ -44,16 +45,17 @@ base mixin _$BoxDecorationDto on Dto<BoxDecoration> {
     if (other == null) return _$this;
 
     return BoxDecorationDto(
-        border: BoxBorderDto.tryToMerge(_$this.border, other.border),
-        borderRadius: _$this.borderRadius?.merge(other.borderRadius) ??
-            other.borderRadius,
-        shape: other.shape ?? _$this.shape,
-        backgroundBlendMode:
-            other.backgroundBlendMode ?? _$this.backgroundBlendMode,
-        color: _$this.color?.merge(other.color) ?? other.color,
-        image: _$this.image?.merge(other.image) ?? other.image,
-        gradient: GradientDto.tryToMerge(_$this.gradient, other.gradient),
-        boxShadow: MixHelpers.mergeList(_$this.boxShadow, other.boxShadow));
+      border: BoxBorderDto.tryToMerge(_$this.border, other.border),
+      borderRadius:
+          _$this.borderRadius?.merge(other.borderRadius) ?? other.borderRadius,
+      shape: other.shape ?? _$this.shape,
+      backgroundBlendMode:
+          other.backgroundBlendMode ?? _$this.backgroundBlendMode,
+      color: _$this.color?.merge(other.color) ?? other.color,
+      image: _$this.image?.merge(other.image) ?? other.image,
+      gradient: GradientDto.tryToMerge(_$this.gradient, other.gradient),
+      boxShadow: MixHelpers.mergeList(_$this.boxShadow, other.boxShadow),
+    );
   }
 
   /// The list of properties that constitute the state of this [BoxDecorationDto].
@@ -79,7 +81,7 @@ base mixin _$BoxDecorationDto on Dto<BoxDecoration> {
 ///
 /// This class provides methods to set individual properties of a [BoxDecorationDto].
 /// Use the methods of this class to configure specific properties of a [BoxDecorationDto].
-final class BoxDecorationUtility<T extends Attribute>
+class BoxDecorationUtility<T extends Attribute>
     extends DtoUtility<T, BoxDecorationDto, BoxDecoration> {
   /// Utility for defining [BoxDecorationDto.border]
   late final border = BoxBorderUtility((v) => only(border: v));
@@ -201,12 +203,13 @@ base mixin _$ShapeDecorationDto on Dto<ShapeDecoration> {
   @override
   ShapeDecoration resolve(MixData mix) {
     return ShapeDecoration(
-        shape: _$this.shape?.resolve(mix) ?? defaultValue.shape,
-        color: _$this.color?.resolve(mix) ?? defaultValue.color,
-        image: _$this.image?.resolve(mix) ?? defaultValue.image,
-        gradient: _$this.gradient?.resolve(mix) ?? defaultValue.gradient,
-        shadows: _$this.shadows?.map((e) => e.resolve(mix)).toList() ??
-            defaultValue.shadows);
+      shape: _$this.shape?.resolve(mix) ?? defaultValue.shape,
+      color: _$this.color?.resolve(mix) ?? defaultValue.color,
+      image: _$this.image?.resolve(mix) ?? defaultValue.image,
+      gradient: _$this.gradient?.resolve(mix) ?? defaultValue.gradient,
+      shadows: _$this.shadows?.map((e) => e.resolve(mix)).toList() ??
+          defaultValue.shadows,
+    );
   }
 
   /// Merges the properties of this [ShapeDecorationDto] with the properties of [other].
@@ -222,11 +225,12 @@ base mixin _$ShapeDecorationDto on Dto<ShapeDecoration> {
     if (other == null) return _$this;
 
     return ShapeDecorationDto(
-        shape: ShapeBorderDto.tryToMerge(_$this.shape, other.shape),
-        color: _$this.color?.merge(other.color) ?? other.color,
-        image: _$this.image?.merge(other.image) ?? other.image,
-        gradient: GradientDto.tryToMerge(_$this.gradient, other.gradient),
-        shadows: MixHelpers.mergeList(_$this.shadows, other.shadows));
+      shape: ShapeBorderDto.tryToMerge(_$this.shape, other.shape),
+      color: _$this.color?.merge(other.color) ?? other.color,
+      image: _$this.image?.merge(other.image) ?? other.image,
+      gradient: GradientDto.tryToMerge(_$this.gradient, other.gradient),
+      shadows: MixHelpers.mergeList(_$this.shadows, other.shadows),
+    );
   }
 
   /// The list of properties that constitute the state of this [ShapeDecorationDto].
@@ -249,7 +253,7 @@ base mixin _$ShapeDecorationDto on Dto<ShapeDecoration> {
 ///
 /// This class provides methods to set individual properties of a [ShapeDecorationDto].
 /// Use the methods of this class to configure specific properties of a [ShapeDecorationDto].
-final class ShapeDecorationUtility<T extends Attribute>
+class ShapeDecorationUtility<T extends Attribute>
     extends DtoUtility<T, ShapeDecorationDto, ShapeDecoration> {
   /// Utility for defining [ShapeDecorationDto.shape]
   late final shape = ShapeBorderUtility((v) => only(shape: v));

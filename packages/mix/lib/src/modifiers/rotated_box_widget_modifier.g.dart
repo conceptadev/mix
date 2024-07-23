@@ -8,122 +8,104 @@ part of 'rotated_box_widget_modifier.dart';
 
 // ignore_for_file: deprecated_member_use_from_same_package
 
-mixin _$RotatedBoxSpec on Spec<RotatedBoxSpec> {
-  static RotatedBoxSpec from(MixData mix) {
-    return mix.attributeOf<RotatedBoxSpecAttribute>()?.resolve(mix) ??
-        const RotatedBoxSpec._();
+mixin _$RotatedBoxModifierSpec on WidgetModifierSpec<RotatedBoxModifierSpec> {
+  static RotatedBoxModifierSpec from(MixData mix) {
+    return mix.attributeOf<RotatedBoxModifierAttribute>()?.resolve(mix) ??
+        const RotatedBoxModifierSpec();
   }
 
-  /// {@template rotated_box_spec_of}
-  /// Retrieves the [RotatedBoxSpec] from the nearest [Mix] ancestor in the widget tree.
+  /// {@template rotated_box_modifier_spec_of}
+  /// Retrieves the [RotatedBoxModifierSpec] from the nearest [Mix] ancestor in the widget tree.
   ///
   /// This method uses [Mix.of] to obtain the [Mix] instance associated with the
-  /// given [BuildContext], and then retrieves the [RotatedBoxSpec] from that [Mix].
-  /// If no ancestor [Mix] is found, this method returns an empty [RotatedBoxSpec].
+  /// given [BuildContext], and then retrieves the [RotatedBoxModifierSpec] from that [Mix].
+  /// If no ancestor [Mix] is found, this method returns an empty [RotatedBoxModifierSpec].
   ///
   /// Example:
   ///
   /// ```dart
-  /// final rotatedBoxSpec = RotatedBoxSpec.of(context);
+  /// final rotatedBoxModifierSpec = RotatedBoxModifierSpec.of(context);
   /// ```
   /// {@endtemplate}
-  static RotatedBoxSpec of(BuildContext context) {
-    return _$RotatedBoxSpec.from(Mix.of(context));
+  static RotatedBoxModifierSpec of(BuildContext context) {
+    return _$RotatedBoxModifierSpec.from(Mix.of(context));
   }
 
-  /// Creates a copy of this [RotatedBoxSpec] but with the given fields
+  /// Creates a copy of this [RotatedBoxModifierSpec] but with the given fields
   /// replaced with the new values.
   @override
-  RotatedBoxSpec copyWith({
+  RotatedBoxModifierSpec copyWith({
     int? quarterTurns,
   }) {
-    return RotatedBoxSpec._(quarterTurns: quarterTurns ?? _$this.quarterTurns);
+    return RotatedBoxModifierSpec(
+      quarterTurns ?? _$this.quarterTurns,
+    );
   }
 
-  /// Linearly interpolates between this [RotatedBoxSpec] and another [RotatedBoxSpec] based on the given parameter [t].
-  ///
-  /// The parameter [t] represents the interpolation factor, typically ranging from 0.0 to 1.0.
-  /// When [t] is 0.0, the current [RotatedBoxSpec] is returned. When [t] is 1.0, the [other] [RotatedBoxSpec] is returned.
-  /// For values of [t] between 0.0 and 1.0, an interpolated [RotatedBoxSpec] is returned.
-  ///
-  /// If [other] is null, this method returns the current [RotatedBoxSpec] instance.
-  ///
-  /// The interpolation is performed on each property of the [RotatedBoxSpec] using the appropriate
-  /// interpolation method:
-  ///
-
-  /// For [quarterTurns], the interpolation is performed using a step function.
-  /// If [t] is less than 0.5, the value from the current [RotatedBoxSpec] is used. Otherwise, the value
-  /// from the [other] [RotatedBoxSpec] is used.
-  ///
-  /// This method is typically used in animations to smoothly transition between
-  /// different [RotatedBoxSpec] configurations.
-  @override
-  RotatedBoxSpec lerp(RotatedBoxSpec? other, double t) {
-    if (other == null) return _$this;
-
-    return RotatedBoxSpec._(
-        quarterTurns: t < 0.5 ? _$this.quarterTurns : other.quarterTurns);
-  }
-
-  /// The list of properties that constitute the state of this [RotatedBoxSpec].
+  /// The list of properties that constitute the state of this [RotatedBoxModifierSpec].
   ///
   /// This property is used by the [==] operator and the [hashCode] getter to
-  /// compare two [RotatedBoxSpec] instances for equality.
+  /// compare two [RotatedBoxModifierSpec] instances for equality.
   @override
   List<Object?> get props => [
         _$this.quarterTurns,
       ];
 
-  RotatedBoxSpec get _$this => this as RotatedBoxSpec;
+  RotatedBoxModifierSpec get _$this => this as RotatedBoxModifierSpec;
 }
 
-/// Represents the attributes of a [RotatedBoxSpec].
+/// Represents the attributes of a [RotatedBoxModifierSpec].
 ///
 /// This class encapsulates properties defining the layout and
-/// appearance of a [RotatedBoxSpec].
+/// appearance of a [RotatedBoxModifierSpec].
 ///
-/// Use this class to configure the attributes of a [RotatedBoxSpec] and pass it to
-/// the [RotatedBoxSpec] constructor.
-final class RotatedBoxSpecAttribute extends SpecAttribute<RotatedBoxSpec>
+/// Use this class to configure the attributes of a [RotatedBoxModifierSpec] and pass it to
+/// the [RotatedBoxModifierSpec] constructor.
+final class RotatedBoxModifierAttribute
+    extends WidgetModifierSpecAttribute<RotatedBoxModifierSpec>
     with Diagnosticable {
   final int? quarterTurns;
 
-  const RotatedBoxSpecAttribute({this.quarterTurns});
+  const RotatedBoxModifierAttribute({
+    this.quarterTurns,
+  });
 
-  /// Resolves to [RotatedBoxSpec] using the provided [MixData].
+  /// Resolves to [RotatedBoxModifierSpec] using the provided [MixData].
   ///
   /// If a property is null in the [MixData], it falls back to the
   /// default value defined in the `defaultValue` for that property.
   ///
   /// ```dart
-  /// final rotatedBoxSpec = RotatedBoxSpecAttribute(...).resolve(mix);
+  /// final rotatedBoxModifierSpec = RotatedBoxModifierAttribute(...).resolve(mix);
   /// ```
   @override
-  RotatedBoxSpec resolve(MixData mix) {
-    return RotatedBoxSpec._(quarterTurns: quarterTurns);
+  RotatedBoxModifierSpec resolve(MixData mix) {
+    return RotatedBoxModifierSpec(
+      quarterTurns,
+    );
   }
 
-  /// Merges the properties of this [RotatedBoxSpecAttribute] with the properties of [other].
+  /// Merges the properties of this [RotatedBoxModifierAttribute] with the properties of [other].
   ///
   /// If [other] is null, returns this instance unchanged. Otherwise, returns a new
-  /// [RotatedBoxSpecAttribute] with the properties of [other] taking precedence over
+  /// [RotatedBoxModifierAttribute] with the properties of [other] taking precedence over
   /// the corresponding properties of this instance.
   ///
   /// Properties from [other] that are null will fall back
   /// to the values from this instance.
   @override
-  RotatedBoxSpecAttribute merge(RotatedBoxSpecAttribute? other) {
+  RotatedBoxModifierAttribute merge(RotatedBoxModifierAttribute? other) {
     if (other == null) return this;
 
-    return RotatedBoxSpecAttribute._(
-        quarterTurns: other.quarterTurns ?? quarterTurns);
+    return RotatedBoxModifierAttribute(
+      quarterTurns: other.quarterTurns ?? quarterTurns,
+    );
   }
 
-  /// The list of properties that constitute the state of this [RotatedBoxSpecAttribute].
+  /// The list of properties that constitute the state of this [RotatedBoxModifierAttribute].
   ///
   /// This property is used by the [==] operator and the [hashCode] getter to
-  /// compare two [RotatedBoxSpecAttribute] instances for equality.
+  /// compare two [RotatedBoxModifierAttribute] instances for equality.
   @override
   List<Object?> get props => [
         quarterTurns,
@@ -132,48 +114,23 @@ final class RotatedBoxSpecAttribute extends SpecAttribute<RotatedBoxSpec>
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-
     properties.addUsingDefault('quarterTurns', quarterTurns);
   }
 }
 
-/// Utility class for configuring [RotatedBoxSpecAttribute] properties.
-///
-/// This class provides methods to set individual properties of a [RotatedBoxSpecAttribute].
-/// Use the methods of this class to configure specific properties of a [RotatedBoxSpecAttribute].
-base class RotatedBoxSpecUtility<T extends Attribute>
-    extends SpecUtility<T, RotatedBoxSpecAttribute> {
-  /// Utility for defining [RotatedBoxSpecAttribute.quarterTurns]
-  late final quarterTurns = IntUtility((v) => only(quarterTurns: v));
-
-  RotatedBoxSpecUtility(super.builder);
-
-  static final self = RotatedBoxSpecUtility((v) => v);
-
-  /// Returns a new [RotatedBoxSpecAttribute] with the specified properties.
-  @override
-  T only({
-    int? quarterTurns,
-  }) {
-    return builder(RotatedBoxSpecAttribute(
-      quarterTurns: quarterTurns,
-    ));
-  }
-}
-
-/// A tween that interpolates between two [RotatedBoxSpec] instances.
+/// A tween that interpolates between two [RotatedBoxModifierSpec] instances.
 ///
 /// This class can be used in animations to smoothly transition between
-/// different [RotatedBoxSpec] specifications.
-class RotatedBoxSpecTween extends Tween<RotatedBoxSpec?> {
-  RotatedBoxSpecTween({
+/// different [RotatedBoxModifierSpec] specifications.
+class RotatedBoxModifierSpecTween extends Tween<RotatedBoxModifierSpec?> {
+  RotatedBoxModifierSpecTween({
     super.begin,
     super.end,
   });
 
   @override
-  RotatedBoxSpec lerp(double t) {
-    if (begin == null && end == null) return RotatedBoxSpec._();
+  RotatedBoxModifierSpec lerp(double t) {
+    if (begin == null && end == null) return const RotatedBoxModifierSpec();
     if (begin == null) return end!;
 
     return begin!.lerp(end!, t);

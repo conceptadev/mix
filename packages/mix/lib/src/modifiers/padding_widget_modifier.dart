@@ -15,45 +15,19 @@ import '../internal/diagnostic_properties_builder_ext.dart';
 
 part 'padding_widget_modifier.g.dart';
 
-/// A modifier that wraps a widget with the [Padding] widget.
-///
-/// The [Padding] widget is used to add padding around a widget.
-@MixableSpec()
-final class PaddingSpec extends Spec<PaddingSpec>
-    with _$PaddingSpec, ModifierSpecMixin {
-  final EdgeInsetsGeometry? padding;
-  const PaddingSpec._({this.padding});
-  factory PaddingSpec({EdgeInsetsGeometry? padding}) =>
-      PaddingSpec._(padding: padding);
+@Deprecated('Use PaddingModifierSpec instead')
+typedef PaddingSpec = PaddingModifierSpec;
 
-  static const of = _$PaddingSpec.of;
-  static const from = _$PaddingSpec.from;
+@MixableSpec(prefix: 'PaddingModifier')
+final class PaddingModifierSpec extends WidgetModifierSpec<PaddingModifierSpec>
+    with _$PaddingModifierSpec {
+  final EdgeInsetsGeometry padding;
+
+  const PaddingModifierSpec([EdgeInsetsGeometry? padding])
+      : padding = padding ?? EdgeInsets.zero;
 
   @override
   Widget build(Widget child) {
-    return Padding(padding: padding ?? EdgeInsets.zero, child: child);
+    return Padding(padding: padding, child: child);
   }
 }
-
-extension PaddingSpecUtilityX<T extends Attribute> on PaddingSpecUtility<T> {
-  // TODO: This is inconsistent with other utilities. Should be `call` instead of `only`.
-  T call(EdgeInsetsGeometryDto padding) => only(padding: padding);
-}
-
-/// A modifier that wraps a widget with the [Padding] widget.
-///
-/// The [Padding] widget is used to add padding around a widget.
-@Deprecated('Use PaddingSpec instead')
-final class PaddingModifierSpec extends PaddingSpec {
-  const PaddingModifierSpec(EdgeInsetsGeometry padding)
-      : super(padding: padding);
-}
-
-@Deprecated('Use PaddingSpecAttribute instead')
-final class PaddingModifierAttribute extends PaddingSpecAttribute {
-  const PaddingModifierAttribute(EdgeInsetsGeometryDto padding)
-      : super(padding: padding);
-}
-
-@Deprecated('Use PaddingSpecUtility instead')
-typedef PaddingUtility = PaddingSpecUtility;

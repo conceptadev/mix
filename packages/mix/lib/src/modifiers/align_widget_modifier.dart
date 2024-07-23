@@ -10,20 +10,19 @@ import '../core/factory/mix_data.dart';
 import '../core/factory/mix_provider.dart';
 import '../core/helpers.dart';
 import '../core/modifier.dart';
-import '../core/spec.dart';
 import '../core/utility.dart';
 import '../internal/diagnostic_properties_builder_ext.dart';
 
 part 'align_widget_modifier.g.dart';
 
-@MixableSpec()
-final class AlignSpec extends Spec<AlignSpec>
-    with _$AlignSpec, ModifierSpecMixin {
+@MixableSpec(prefix: 'AlignModifier', skipUtility: true)
+final class AlignModifierSpec extends WidgetModifierSpec<AlignModifierSpec>
+    with _$AlignModifierSpec {
   final AlignmentGeometry? alignment;
   final double? widthFactor;
   final double? heightFactor;
 
-  const AlignSpec({
+  const AlignModifierSpec({
     this.alignment,
     this.widthFactor,
     this.heightFactor,
@@ -40,25 +39,20 @@ final class AlignSpec extends Spec<AlignSpec>
   }
 }
 
-extension AlignSpecUtilityX<T extends Attribute> on AlignSpecUtility<T> {
+final class AlignModifierUtility<T extends Attribute>
+    extends MixUtility<T, AlignModifierAttribute> {
+  const AlignModifierUtility(super.builder);
   T call({
     AlignmentGeometry? alignment,
     double? widthFactor,
     double? heightFactor,
   }) {
-    return only(
-      alignment: alignment,
-      widthFactor: widthFactor,
-      heightFactor: heightFactor,
+    return builder(
+      AlignModifierAttribute(
+        alignment: alignment,
+        widthFactor: widthFactor,
+        heightFactor: heightFactor,
+      ),
     );
   }
 }
-
-@Deprecated('Use AlignSpec instead')
-typedef AlignModifierSpec = AlignSpec;
-
-@Deprecated('Use AlignSpecAttribute instead')
-typedef AlignModifierAttribute = AlignSpecAttribute;
-
-@Deprecated('Use AlignSpecUtility instead')
-typedef AlignWidgetUtility = AlignSpecUtility;

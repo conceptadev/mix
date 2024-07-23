@@ -6,17 +6,7 @@ import 'factory/mix_data.dart';
 import 'spec.dart';
 import 'utility.dart';
 
-mixin ModifierSpecMixin<T extends Spec<T>> on Spec<T> {
-  Widget build(Widget child);
-}
-
-base mixin ModifierSpecAttributeMixin<T extends ModifierSpecMixin<T>>
-    on SpecAttribute<T> {
-  @override
-  T resolve(MixData mix);
-}
-
-abstract base class WidgetModifierSpec<Self extends WidgetModifierSpec<Self>>
+abstract class WidgetModifierSpec<Self extends WidgetModifierSpec<Self>>
     extends Spec<Self> {
   const WidgetModifierSpec({super.animated});
 
@@ -40,11 +30,10 @@ abstract base class WidgetModifierSpec<Self extends WidgetModifierSpec<Self>>
   Widget build(Widget child);
 }
 
-abstract base class WidgetModifierAttribute<
-        Self extends WidgetModifierAttribute<Self, Value>,
+abstract base class WidgetModifierSpecAttribute<
         Value extends WidgetModifierSpec<Value>> extends SpecAttribute<Value>
     with Diagnosticable {
-  const WidgetModifierAttribute();
+  const WidgetModifierSpecAttribute();
 
   @override
   Value resolve(MixData mix);
@@ -52,7 +41,7 @@ abstract base class WidgetModifierAttribute<
 
 abstract base class WidgetModifierUtility<
     T extends Attribute,
-    D extends WidgetModifierAttribute<D, Value>,
+    D extends WidgetModifierSpecAttribute<Value>,
     Value extends WidgetModifierSpec<Value>> extends MixUtility<T, D> {
   const WidgetModifierUtility(super.builder);
 }

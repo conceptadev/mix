@@ -18,14 +18,15 @@ base mixin _$DecorationImageDto on Dto<DecorationImage> {
   @override
   DecorationImage resolve(MixData mix) {
     return DecorationImage(
-        image: _$this.image ?? defaultValue.image,
-        fit: _$this.fit ?? defaultValue.fit,
-        alignment: _$this.alignment ?? defaultValue.alignment,
-        centerSlice: _$this.centerSlice ?? defaultValue.centerSlice,
-        repeat: _$this.repeat ?? defaultValue.repeat,
-        filterQuality: _$this.filterQuality ?? defaultValue.filterQuality,
-        invertColors: _$this.invertColors ?? defaultValue.invertColors,
-        isAntiAlias: _$this.isAntiAlias ?? defaultValue.isAntiAlias);
+      image: _$this.image ?? defaultValue.image,
+      fit: _$this.fit ?? defaultValue.fit,
+      alignment: _$this.alignment ?? defaultValue.alignment,
+      centerSlice: _$this.centerSlice ?? defaultValue.centerSlice,
+      repeat: _$this.repeat ?? defaultValue.repeat,
+      filterQuality: _$this.filterQuality ?? defaultValue.filterQuality,
+      invertColors: _$this.invertColors ?? defaultValue.invertColors,
+      isAntiAlias: _$this.isAntiAlias ?? defaultValue.isAntiAlias,
+    );
   }
 
   /// Merges the properties of this [DecorationImageDto] with the properties of [other].
@@ -41,14 +42,15 @@ base mixin _$DecorationImageDto on Dto<DecorationImage> {
     if (other == null) return _$this;
 
     return DecorationImageDto(
-        image: other.image ?? _$this.image,
-        fit: other.fit ?? _$this.fit,
-        alignment: other.alignment ?? _$this.alignment,
-        centerSlice: other.centerSlice ?? _$this.centerSlice,
-        repeat: other.repeat ?? _$this.repeat,
-        filterQuality: other.filterQuality ?? _$this.filterQuality,
-        invertColors: other.invertColors ?? _$this.invertColors,
-        isAntiAlias: other.isAntiAlias ?? _$this.isAntiAlias);
+      image: other.image ?? _$this.image,
+      fit: other.fit ?? _$this.fit,
+      alignment: other.alignment ?? _$this.alignment,
+      centerSlice: other.centerSlice ?? _$this.centerSlice,
+      repeat: other.repeat ?? _$this.repeat,
+      filterQuality: other.filterQuality ?? _$this.filterQuality,
+      invertColors: other.invertColors ?? _$this.invertColors,
+      isAntiAlias: other.isAntiAlias ?? _$this.isAntiAlias,
+    );
   }
 
   /// The list of properties that constitute the state of this [DecorationImageDto].
@@ -74,7 +76,7 @@ base mixin _$DecorationImageDto on Dto<DecorationImage> {
 ///
 /// This class provides methods to set individual properties of a [DecorationImageDto].
 /// Use the methods of this class to configure specific properties of a [DecorationImageDto].
-final class DecorationImageUtility<T extends Attribute>
+class DecorationImageUtility<T extends Attribute>
     extends DtoUtility<T, DecorationImageDto, DecorationImage> {
   /// Utility for defining [DecorationImageDto.image]
   late final provider = ImageProviderUtility((v) => only(image: v));
@@ -106,7 +108,7 @@ final class DecorationImageUtility<T extends Attribute>
   /// Returns a new [DecorationImageDto] with the specified properties.
   @override
   T only({
-    ImageProvider? image,
+    ImageProvider<Object>? image,
     BoxFit? fit,
     AlignmentGeometry? alignment,
     Rect? centerSlice,
@@ -128,7 +130,7 @@ final class DecorationImageUtility<T extends Attribute>
   }
 
   T call({
-    ImageProvider? image,
+    ImageProvider<Object>? image,
     BoxFit? fit,
     AlignmentGeometry? alignment,
     Rect? centerSlice,

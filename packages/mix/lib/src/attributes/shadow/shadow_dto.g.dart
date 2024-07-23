@@ -18,9 +18,10 @@ base mixin _$ShadowDto on Dto<Shadow> {
   @override
   Shadow resolve(MixData mix) {
     return Shadow(
-        blurRadius: _$this.blurRadius ?? defaultValue.blurRadius,
-        color: _$this.color?.resolve(mix) ?? defaultValue.color,
-        offset: _$this.offset ?? defaultValue.offset);
+      blurRadius: _$this.blurRadius ?? defaultValue.blurRadius,
+      color: _$this.color?.resolve(mix) ?? defaultValue.color,
+      offset: _$this.offset ?? defaultValue.offset,
+    );
   }
 
   /// Merges the properties of this [ShadowDto] with the properties of [other].
@@ -36,9 +37,10 @@ base mixin _$ShadowDto on Dto<Shadow> {
     if (other == null) return _$this;
 
     return ShadowDto(
-        blurRadius: other.blurRadius ?? _$this.blurRadius,
-        color: _$this.color?.merge(other.color) ?? other.color,
-        offset: other.offset ?? _$this.offset);
+      blurRadius: other.blurRadius ?? _$this.blurRadius,
+      color: _$this.color?.merge(other.color) ?? other.color,
+      offset: other.offset ?? _$this.offset,
+    );
   }
 
   /// The list of properties that constitute the state of this [ShadowDto].
@@ -59,7 +61,7 @@ base mixin _$ShadowDto on Dto<Shadow> {
 ///
 /// This class provides methods to set individual properties of a [ShadowDto].
 /// Use the methods of this class to configure specific properties of a [ShadowDto].
-final class ShadowUtility<T extends Attribute>
+class ShadowUtility<T extends Attribute>
     extends DtoUtility<T, ShadowDto, Shadow> {
   /// Utility for defining [ShadowDto.blurRadius]
   late final blurRadius = DoubleUtility((v) => only(blurRadius: v));
@@ -127,10 +129,11 @@ base mixin _$BoxShadowDto on Dto<BoxShadow> {
   @override
   BoxShadow resolve(MixData mix) {
     return BoxShadow(
-        color: _$this.color?.resolve(mix) ?? defaultValue.color,
-        offset: _$this.offset ?? defaultValue.offset,
-        blurRadius: _$this.blurRadius ?? defaultValue.blurRadius,
-        spreadRadius: _$this.spreadRadius ?? defaultValue.spreadRadius);
+      color: _$this.color?.resolve(mix) ?? defaultValue.color,
+      offset: _$this.offset ?? defaultValue.offset,
+      blurRadius: _$this.blurRadius ?? defaultValue.blurRadius,
+      spreadRadius: _$this.spreadRadius ?? defaultValue.spreadRadius,
+    );
   }
 
   /// Merges the properties of this [BoxShadowDto] with the properties of [other].
@@ -146,10 +149,11 @@ base mixin _$BoxShadowDto on Dto<BoxShadow> {
     if (other == null) return _$this;
 
     return BoxShadowDto(
-        color: _$this.color?.merge(other.color) ?? other.color,
-        offset: other.offset ?? _$this.offset,
-        blurRadius: other.blurRadius ?? _$this.blurRadius,
-        spreadRadius: other.spreadRadius ?? _$this.spreadRadius);
+      color: _$this.color?.merge(other.color) ?? other.color,
+      offset: other.offset ?? _$this.offset,
+      blurRadius: other.blurRadius ?? _$this.blurRadius,
+      spreadRadius: other.spreadRadius ?? _$this.spreadRadius,
+    );
   }
 
   /// The list of properties that constitute the state of this [BoxShadowDto].
@@ -171,7 +175,7 @@ base mixin _$BoxShadowDto on Dto<BoxShadow> {
 ///
 /// This class provides methods to set individual properties of a [BoxShadowDto].
 /// Use the methods of this class to configure specific properties of a [BoxShadowDto].
-final class BoxShadowUtility<T extends Attribute>
+class BoxShadowUtility<T extends Attribute>
     extends DtoUtility<T, BoxShadowDto, BoxShadow> {
   /// Utility for defining [BoxShadowDto.color]
   late final color = ColorUtility((v) => only(color: v));

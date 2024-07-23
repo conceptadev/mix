@@ -75,8 +75,6 @@ String? _getLerpMethod(
   switch (typeName) {
     case 'double':
       return MixHelperRef.lerpDouble;
-    case 'int':
-      return MixHelperRef.lerpInt;
     case 'Matrix4':
       return MixHelperRef.lerpMatrix4;
     case 'StrutStyle':

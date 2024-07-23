@@ -51,27 +51,27 @@ void main() {
 
   group('OpacityModifierAttribute', () {
     test('merge', () {
-      const modifier = OpacityModifierAttribute(0.5);
-      const other = OpacityModifierAttribute(0.5);
+      const modifier = OpacityModifierAttribute(opacity: 0.5);
+      const other = OpacityModifierAttribute(opacity: 0.5);
       final result = modifier.merge(other);
       expect(result, modifier);
     });
 
     test('resolve', () {
-      const modifier = OpacityModifierAttribute(0.5);
+      const modifier = OpacityModifierAttribute(opacity: 0.5);
       final result = modifier.resolve(EmptyMixData);
       expect(result, isA<OpacityModifierSpec>());
     });
 
     test('equality', () {
-      const modifier = OpacityModifierAttribute(0.5);
-      const other = OpacityModifierAttribute(0.5);
+      const modifier = OpacityModifierAttribute(opacity: 0.5);
+      const other = OpacityModifierAttribute(opacity: 0.5);
       expect(modifier, other);
     });
 
     test('inequality', () {
-      const modifier = OpacityModifierAttribute(0.5);
-      const other = OpacityModifierAttribute(0.8);
+      const modifier = OpacityModifierAttribute(opacity: 0.5);
+      const other = OpacityModifierAttribute(opacity: 0.8);
       expect(modifier == other, false);
     });
   });

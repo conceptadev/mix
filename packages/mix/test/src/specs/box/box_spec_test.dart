@@ -22,7 +22,7 @@ void main() {
             transform: Matrix4.translationValues(10.0, 10.0, 0.0),
             clipBehavior: Clip.antiAlias,
             modifiers: const WidgetModifiersDataDto([
-              OpacityModifierAttribute(1),
+              OpacityModifierAttribute(opacity: 1),
               SizedBoxModifierAttribute(height: 10, width: 10),
             ]),
             width: 300,
@@ -251,7 +251,7 @@ void main() {
         width: 100,
         height: 100,
         modifiers: const WidgetModifiersDataDto([
-          OpacityModifierAttribute(0.5),
+          OpacityModifierAttribute(opacity: 0.5),
           SizedBoxModifierAttribute(height: 10, width: 10),
         ]),
       );
@@ -309,7 +309,7 @@ void main() {
       expect(
         mergedBoxSpecAttribute.modifiers!.value,
         [
-          const OpacityModifierAttribute(0.5),
+          const OpacityModifierAttribute(opacity: 0.5),
           const SizedBoxModifierAttribute(height: 10, width: 100),
         ],
       );

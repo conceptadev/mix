@@ -65,14 +65,14 @@ class MixData with Diagnosticable {
 
   List<WidgetModifierSpec<dynamic>> get modifiers {
     return _attributes
-        .whereType<WidgetModifierAttribute>()
+        .whereType<WidgetModifierSpecAttribute>()
         .map((e) => e.resolve(this))
         .toList();
   }
 
   MixData toInheritable() {
     final inheritableAttributes = _attributes.values.where(
-      (attr) => attr is! WidgetModifierAttribute,
+      (attr) => attr is! WidgetModifierSpecAttribute,
     );
 
     return copyWith(attributes: AttributeMap(inheritableAttributes));

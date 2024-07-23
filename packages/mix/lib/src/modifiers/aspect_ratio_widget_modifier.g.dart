@@ -8,124 +8,132 @@ part of 'aspect_ratio_widget_modifier.dart';
 
 // ignore_for_file: deprecated_member_use_from_same_package
 
-mixin _$AspectRatioSpec on Spec<AspectRatioSpec> {
-  static AspectRatioSpec from(MixData mix) {
-    return mix.attributeOf<AspectRatioSpecAttribute>()?.resolve(mix) ??
-        const AspectRatioSpec();
+mixin _$AspectRatioModifierSpec on WidgetModifierSpec<AspectRatioModifierSpec> {
+  static AspectRatioModifierSpec from(MixData mix) {
+    return mix.attributeOf<AspectRatioModifierAttribute>()?.resolve(mix) ??
+        const AspectRatioModifierSpec();
   }
 
-  /// {@template aspect_ratio_spec_of}
-  /// Retrieves the [AspectRatioSpec] from the nearest [Mix] ancestor in the widget tree.
+  /// {@template aspect_ratio_modifier_spec_of}
+  /// Retrieves the [AspectRatioModifierSpec] from the nearest [Mix] ancestor in the widget tree.
   ///
   /// This method uses [Mix.of] to obtain the [Mix] instance associated with the
-  /// given [BuildContext], and then retrieves the [AspectRatioSpec] from that [Mix].
-  /// If no ancestor [Mix] is found, this method returns an empty [AspectRatioSpec].
+  /// given [BuildContext], and then retrieves the [AspectRatioModifierSpec] from that [Mix].
+  /// If no ancestor [Mix] is found, this method returns an empty [AspectRatioModifierSpec].
   ///
   /// Example:
   ///
   /// ```dart
-  /// final aspectRatioSpec = AspectRatioSpec.of(context);
+  /// final aspectRatioModifierSpec = AspectRatioModifierSpec.of(context);
   /// ```
   /// {@endtemplate}
-  static AspectRatioSpec of(BuildContext context) {
-    return _$AspectRatioSpec.from(Mix.of(context));
+  static AspectRatioModifierSpec of(BuildContext context) {
+    return _$AspectRatioModifierSpec.from(Mix.of(context));
   }
 
-  /// Creates a copy of this [AspectRatioSpec] but with the given fields
+  /// Creates a copy of this [AspectRatioModifierSpec] but with the given fields
   /// replaced with the new values.
   @override
-  AspectRatioSpec copyWith({
+  AspectRatioModifierSpec copyWith({
     double? aspectRatio,
   }) {
-    return AspectRatioSpec(aspectRatio: aspectRatio ?? _$this.aspectRatio);
+    return AspectRatioModifierSpec(
+      aspectRatio ?? _$this.aspectRatio,
+    );
   }
 
-  /// Linearly interpolates between this [AspectRatioSpec] and another [AspectRatioSpec] based on the given parameter [t].
+  /// Linearly interpolates between this [AspectRatioModifierSpec] and another [AspectRatioModifierSpec] based on the given parameter [t].
   ///
   /// The parameter [t] represents the interpolation factor, typically ranging from 0.0 to 1.0.
-  /// When [t] is 0.0, the current [AspectRatioSpec] is returned. When [t] is 1.0, the [other] [AspectRatioSpec] is returned.
-  /// For values of [t] between 0.0 and 1.0, an interpolated [AspectRatioSpec] is returned.
+  /// When [t] is 0.0, the current [AspectRatioModifierSpec] is returned. When [t] is 1.0, the [other] [AspectRatioModifierSpec] is returned.
+  /// For values of [t] between 0.0 and 1.0, an interpolated [AspectRatioModifierSpec] is returned.
   ///
-  /// If [other] is null, this method returns the current [AspectRatioSpec] instance.
+  /// If [other] is null, this method returns the current [AspectRatioModifierSpec] instance.
   ///
-  /// The interpolation is performed on each property of the [AspectRatioSpec] using the appropriate
+  /// The interpolation is performed on each property of the [AspectRatioModifierSpec] using the appropriate
   /// interpolation method:
   ///
   /// - [MixHelpers.lerpDouble] for [aspectRatio].
 
   /// For , the interpolation is performed using a step function.
-  /// If [t] is less than 0.5, the value from the current [AspectRatioSpec] is used. Otherwise, the value
-  /// from the [other] [AspectRatioSpec] is used.
+  /// If [t] is less than 0.5, the value from the current [AspectRatioModifierSpec] is used. Otherwise, the value
+  /// from the [other] [AspectRatioModifierSpec] is used.
   ///
   /// This method is typically used in animations to smoothly transition between
-  /// different [AspectRatioSpec] configurations.
+  /// different [AspectRatioModifierSpec] configurations.
   @override
-  AspectRatioSpec lerp(AspectRatioSpec? other, double t) {
+  AspectRatioModifierSpec lerp(AspectRatioModifierSpec? other, double t) {
     if (other == null) return _$this;
 
-    return AspectRatioSpec(
-        aspectRatio:
-            MixHelpers.lerpDouble(_$this.aspectRatio, other.aspectRatio, t));
+    return AspectRatioModifierSpec(
+      MixHelpers.lerpDouble(_$this.aspectRatio, other.aspectRatio, t)!,
+    );
   }
 
-  /// The list of properties that constitute the state of this [AspectRatioSpec].
+  /// The list of properties that constitute the state of this [AspectRatioModifierSpec].
   ///
   /// This property is used by the [==] operator and the [hashCode] getter to
-  /// compare two [AspectRatioSpec] instances for equality.
+  /// compare two [AspectRatioModifierSpec] instances for equality.
   @override
   List<Object?> get props => [
         _$this.aspectRatio,
       ];
 
-  AspectRatioSpec get _$this => this as AspectRatioSpec;
+  AspectRatioModifierSpec get _$this => this as AspectRatioModifierSpec;
 }
 
-/// Represents the attributes of a [AspectRatioSpec].
+/// Represents the attributes of a [AspectRatioModifierSpec].
 ///
 /// This class encapsulates properties defining the layout and
-/// appearance of a [AspectRatioSpec].
+/// appearance of a [AspectRatioModifierSpec].
 ///
-/// Use this class to configure the attributes of a [AspectRatioSpec] and pass it to
-/// the [AspectRatioSpec] constructor.
-final class AspectRatioSpecAttribute extends SpecAttribute<AspectRatioSpec>
+/// Use this class to configure the attributes of a [AspectRatioModifierSpec] and pass it to
+/// the [AspectRatioModifierSpec] constructor.
+final class AspectRatioModifierAttribute
+    extends WidgetModifierSpecAttribute<AspectRatioModifierSpec>
     with Diagnosticable {
   final double? aspectRatio;
 
-  const AspectRatioSpecAttribute({this.aspectRatio});
+  const AspectRatioModifierAttribute({
+    this.aspectRatio,
+  });
 
-  /// Resolves to [AspectRatioSpec] using the provided [MixData].
+  /// Resolves to [AspectRatioModifierSpec] using the provided [MixData].
   ///
   /// If a property is null in the [MixData], it falls back to the
   /// default value defined in the `defaultValue` for that property.
   ///
   /// ```dart
-  /// final aspectRatioSpec = AspectRatioSpecAttribute(...).resolve(mix);
+  /// final aspectRatioModifierSpec = AspectRatioModifierAttribute(...).resolve(mix);
   /// ```
   @override
-  AspectRatioSpec resolve(MixData mix) {
-    return AspectRatioSpec(aspectRatio: aspectRatio);
+  AspectRatioModifierSpec resolve(MixData mix) {
+    return AspectRatioModifierSpec(
+      aspectRatio,
+    );
   }
 
-  /// Merges the properties of this [AspectRatioSpecAttribute] with the properties of [other].
+  /// Merges the properties of this [AspectRatioModifierAttribute] with the properties of [other].
   ///
   /// If [other] is null, returns this instance unchanged. Otherwise, returns a new
-  /// [AspectRatioSpecAttribute] with the properties of [other] taking precedence over
+  /// [AspectRatioModifierAttribute] with the properties of [other] taking precedence over
   /// the corresponding properties of this instance.
   ///
   /// Properties from [other] that are null will fall back
   /// to the values from this instance.
   @override
-  AspectRatioSpecAttribute merge(AspectRatioSpecAttribute? other) {
+  AspectRatioModifierAttribute merge(AspectRatioModifierAttribute? other) {
     if (other == null) return this;
 
-    return AspectRatioSpecAttribute(
-        aspectRatio: other.aspectRatio ?? aspectRatio);
+    return AspectRatioModifierAttribute(
+      aspectRatio: other.aspectRatio ?? aspectRatio,
+    );
   }
 
-  /// The list of properties that constitute the state of this [AspectRatioSpecAttribute].
+  /// The list of properties that constitute the state of this [AspectRatioModifierAttribute].
   ///
   /// This property is used by the [==] operator and the [hashCode] getter to
-  /// compare two [AspectRatioSpecAttribute] instances for equality.
+  /// compare two [AspectRatioModifierAttribute] instances for equality.
   @override
   List<Object?> get props => [
         aspectRatio,
@@ -134,48 +142,23 @@ final class AspectRatioSpecAttribute extends SpecAttribute<AspectRatioSpec>
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-
     properties.addUsingDefault('aspectRatio', aspectRatio);
   }
 }
 
-/// Utility class for configuring [AspectRatioSpecAttribute] properties.
-///
-/// This class provides methods to set individual properties of a [AspectRatioSpecAttribute].
-/// Use the methods of this class to configure specific properties of a [AspectRatioSpecAttribute].
-base class AspectRatioSpecUtility<T extends Attribute>
-    extends SpecUtility<T, AspectRatioSpecAttribute> {
-  /// Utility for defining [AspectRatioSpecAttribute.aspectRatio]
-  late final _aspectRatio = DoubleUtility((v) => only(aspectRatio: v));
-
-  AspectRatioSpecUtility(super.builder);
-
-  static final self = AspectRatioSpecUtility((v) => v);
-
-  /// Returns a new [AspectRatioSpecAttribute] with the specified properties.
-  @override
-  T only({
-    double? aspectRatio,
-  }) {
-    return builder(AspectRatioSpecAttribute(
-      aspectRatio: aspectRatio,
-    ));
-  }
-}
-
-/// A tween that interpolates between two [AspectRatioSpec] instances.
+/// A tween that interpolates between two [AspectRatioModifierSpec] instances.
 ///
 /// This class can be used in animations to smoothly transition between
-/// different [AspectRatioSpec] specifications.
-class AspectRatioSpecTween extends Tween<AspectRatioSpec?> {
-  AspectRatioSpecTween({
+/// different [AspectRatioModifierSpec] specifications.
+class AspectRatioModifierSpecTween extends Tween<AspectRatioModifierSpec?> {
+  AspectRatioModifierSpecTween({
     super.begin,
     super.end,
   });
 
   @override
-  AspectRatioSpec lerp(double t) {
-    if (begin == null && end == null) return const AspectRatioSpec();
+  AspectRatioModifierSpec lerp(double t) {
+    if (begin == null && end == null) return const AspectRatioModifierSpec();
     if (begin == null) return end!;
 
     return begin!.lerp(end!, t);

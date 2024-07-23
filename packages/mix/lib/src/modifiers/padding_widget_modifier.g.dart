@@ -8,123 +8,132 @@ part of 'padding_widget_modifier.dart';
 
 // ignore_for_file: deprecated_member_use_from_same_package
 
-mixin _$PaddingSpec on Spec<PaddingSpec> {
-  static PaddingSpec from(MixData mix) {
-    return mix.attributeOf<PaddingSpecAttribute>()?.resolve(mix) ??
-        const PaddingSpec._();
+mixin _$PaddingModifierSpec on WidgetModifierSpec<PaddingModifierSpec> {
+  static PaddingModifierSpec from(MixData mix) {
+    return mix.attributeOf<PaddingModifierAttribute>()?.resolve(mix) ??
+        const PaddingModifierSpec();
   }
 
-  /// {@template padding_spec_of}
-  /// Retrieves the [PaddingSpec] from the nearest [Mix] ancestor in the widget tree.
+  /// {@template padding_modifier_spec_of}
+  /// Retrieves the [PaddingModifierSpec] from the nearest [Mix] ancestor in the widget tree.
   ///
   /// This method uses [Mix.of] to obtain the [Mix] instance associated with the
-  /// given [BuildContext], and then retrieves the [PaddingSpec] from that [Mix].
-  /// If no ancestor [Mix] is found, this method returns an empty [PaddingSpec].
+  /// given [BuildContext], and then retrieves the [PaddingModifierSpec] from that [Mix].
+  /// If no ancestor [Mix] is found, this method returns an empty [PaddingModifierSpec].
   ///
   /// Example:
   ///
   /// ```dart
-  /// final paddingSpec = PaddingSpec.of(context);
+  /// final paddingModifierSpec = PaddingModifierSpec.of(context);
   /// ```
   /// {@endtemplate}
-  static PaddingSpec of(BuildContext context) {
-    return _$PaddingSpec.from(Mix.of(context));
+  static PaddingModifierSpec of(BuildContext context) {
+    return _$PaddingModifierSpec.from(Mix.of(context));
   }
 
-  /// Creates a copy of this [PaddingSpec] but with the given fields
+  /// Creates a copy of this [PaddingModifierSpec] but with the given fields
   /// replaced with the new values.
   @override
-  PaddingSpec copyWith({
+  PaddingModifierSpec copyWith({
     EdgeInsetsGeometry? padding,
   }) {
-    return PaddingSpec._(padding: padding ?? _$this.padding);
+    return PaddingModifierSpec(
+      padding ?? _$this.padding,
+    );
   }
 
-  /// Linearly interpolates between this [PaddingSpec] and another [PaddingSpec] based on the given parameter [t].
+  /// Linearly interpolates between this [PaddingModifierSpec] and another [PaddingModifierSpec] based on the given parameter [t].
   ///
   /// The parameter [t] represents the interpolation factor, typically ranging from 0.0 to 1.0.
-  /// When [t] is 0.0, the current [PaddingSpec] is returned. When [t] is 1.0, the [other] [PaddingSpec] is returned.
-  /// For values of [t] between 0.0 and 1.0, an interpolated [PaddingSpec] is returned.
+  /// When [t] is 0.0, the current [PaddingModifierSpec] is returned. When [t] is 1.0, the [other] [PaddingModifierSpec] is returned.
+  /// For values of [t] between 0.0 and 1.0, an interpolated [PaddingModifierSpec] is returned.
   ///
-  /// If [other] is null, this method returns the current [PaddingSpec] instance.
+  /// If [other] is null, this method returns the current [PaddingModifierSpec] instance.
   ///
-  /// The interpolation is performed on each property of the [PaddingSpec] using the appropriate
+  /// The interpolation is performed on each property of the [PaddingModifierSpec] using the appropriate
   /// interpolation method:
   ///
   /// - [EdgeInsetsGeometry.lerp] for [padding].
 
   /// For , the interpolation is performed using a step function.
-  /// If [t] is less than 0.5, the value from the current [PaddingSpec] is used. Otherwise, the value
-  /// from the [other] [PaddingSpec] is used.
+  /// If [t] is less than 0.5, the value from the current [PaddingModifierSpec] is used. Otherwise, the value
+  /// from the [other] [PaddingModifierSpec] is used.
   ///
   /// This method is typically used in animations to smoothly transition between
-  /// different [PaddingSpec] configurations.
+  /// different [PaddingModifierSpec] configurations.
   @override
-  PaddingSpec lerp(PaddingSpec? other, double t) {
+  PaddingModifierSpec lerp(PaddingModifierSpec? other, double t) {
     if (other == null) return _$this;
 
-    return PaddingSpec._(
-        padding: EdgeInsetsGeometry.lerp(_$this.padding, other.padding, t));
+    return PaddingModifierSpec(
+      EdgeInsetsGeometry.lerp(_$this.padding, other.padding, t)!,
+    );
   }
 
-  /// The list of properties that constitute the state of this [PaddingSpec].
+  /// The list of properties that constitute the state of this [PaddingModifierSpec].
   ///
   /// This property is used by the [==] operator and the [hashCode] getter to
-  /// compare two [PaddingSpec] instances for equality.
+  /// compare two [PaddingModifierSpec] instances for equality.
   @override
   List<Object?> get props => [
         _$this.padding,
       ];
 
-  PaddingSpec get _$this => this as PaddingSpec;
+  PaddingModifierSpec get _$this => this as PaddingModifierSpec;
 }
 
-/// Represents the attributes of a [PaddingSpec].
+/// Represents the attributes of a [PaddingModifierSpec].
 ///
 /// This class encapsulates properties defining the layout and
-/// appearance of a [PaddingSpec].
+/// appearance of a [PaddingModifierSpec].
 ///
-/// Use this class to configure the attributes of a [PaddingSpec] and pass it to
-/// the [PaddingSpec] constructor.
-final class PaddingSpecAttribute extends SpecAttribute<PaddingSpec>
+/// Use this class to configure the attributes of a [PaddingModifierSpec] and pass it to
+/// the [PaddingModifierSpec] constructor.
+final class PaddingModifierAttribute
+    extends WidgetModifierSpecAttribute<PaddingModifierSpec>
     with Diagnosticable {
-  final EdgeInsetsGeometryDto? padding;
+  final SpacingDto? padding;
 
-  const PaddingSpecAttribute({this.padding});
+  const PaddingModifierAttribute({
+    this.padding,
+  });
 
-  /// Resolves to [PaddingSpec] using the provided [MixData].
+  /// Resolves to [PaddingModifierSpec] using the provided [MixData].
   ///
   /// If a property is null in the [MixData], it falls back to the
   /// default value defined in the `defaultValue` for that property.
   ///
   /// ```dart
-  /// final paddingSpec = PaddingSpecAttribute(...).resolve(mix);
+  /// final paddingModifierSpec = PaddingModifierAttribute(...).resolve(mix);
   /// ```
   @override
-  PaddingSpec resolve(MixData mix) {
-    return PaddingSpec._(padding: padding?.resolve(mix));
+  PaddingModifierSpec resolve(MixData mix) {
+    return PaddingModifierSpec(
+      padding?.resolve(mix),
+    );
   }
 
-  /// Merges the properties of this [PaddingSpecAttribute] with the properties of [other].
+  /// Merges the properties of this [PaddingModifierAttribute] with the properties of [other].
   ///
   /// If [other] is null, returns this instance unchanged. Otherwise, returns a new
-  /// [PaddingSpecAttribute] with the properties of [other] taking precedence over
+  /// [PaddingModifierAttribute] with the properties of [other] taking precedence over
   /// the corresponding properties of this instance.
   ///
   /// Properties from [other] that are null will fall back
   /// to the values from this instance.
   @override
-  PaddingSpecAttribute merge(PaddingSpecAttribute? other) {
+  PaddingModifierAttribute merge(PaddingModifierAttribute? other) {
     if (other == null) return this;
 
-    return PaddingSpecAttribute._(
-        padding: padding?.merge(other.padding) ?? other.padding);
+    return PaddingModifierAttribute(
+      padding: padding?.merge(other.padding) ?? other.padding,
+    );
   }
 
-  /// The list of properties that constitute the state of this [PaddingSpecAttribute].
+  /// The list of properties that constitute the state of this [PaddingModifierAttribute].
   ///
   /// This property is used by the [==] operator and the [hashCode] getter to
-  /// compare two [PaddingSpecAttribute] instances for equality.
+  /// compare two [PaddingModifierAttribute] instances for equality.
   @override
   List<Object?> get props => [
         padding,
@@ -133,48 +142,47 @@ final class PaddingSpecAttribute extends SpecAttribute<PaddingSpec>
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-
     properties.addUsingDefault('padding', padding);
   }
 }
 
-/// Utility class for configuring [PaddingSpecAttribute] properties.
+/// Utility class for configuring [PaddingModifierAttribute] properties.
 ///
-/// This class provides methods to set individual properties of a [PaddingSpecAttribute].
-/// Use the methods of this class to configure specific properties of a [PaddingSpecAttribute].
-base class PaddingSpecUtility<T extends Attribute>
-    extends SpecUtility<T, PaddingSpecAttribute> {
-  /// Utility for defining [PaddingSpecAttribute.padding]
+/// This class provides methods to set individual properties of a [PaddingModifierAttribute].
+/// Use the methods of this class to configure specific properties of a [PaddingModifierAttribute].
+class PaddingModifierUtility<T extends Attribute>
+    extends SpecUtility<T, PaddingModifierAttribute> {
+  /// Utility for defining [PaddingModifierAttribute.padding]
   late final padding = SpacingUtility((v) => only(padding: v));
 
-  PaddingSpecUtility(super.builder);
+  PaddingModifierUtility(super.builder);
 
-  static final self = PaddingSpecUtility((v) => v);
+  static final self = PaddingModifierUtility((v) => v);
 
-  /// Returns a new [PaddingSpecAttribute] with the specified properties.
+  /// Returns a new [PaddingModifierAttribute] with the specified properties.
   @override
   T only({
-    EdgeInsetsGeometryDto? padding,
+    SpacingDto? padding,
   }) {
-    return builder(PaddingSpecAttribute(
+    return builder(PaddingModifierAttribute(
       padding: padding,
     ));
   }
 }
 
-/// A tween that interpolates between two [PaddingSpec] instances.
+/// A tween that interpolates between two [PaddingModifierSpec] instances.
 ///
 /// This class can be used in animations to smoothly transition between
-/// different [PaddingSpec] specifications.
-class PaddingSpecTween extends Tween<PaddingSpec?> {
-  PaddingSpecTween({
+/// different [PaddingModifierSpec] specifications.
+class PaddingModifierSpecTween extends Tween<PaddingModifierSpec?> {
+  PaddingModifierSpecTween({
     super.begin,
     super.end,
   });
 
   @override
-  PaddingSpec lerp(double t) {
-    if (begin == null && end == null) return PaddingSpec._();
+  PaddingModifierSpec lerp(double t) {
+    if (begin == null && end == null) return const PaddingModifierSpec();
     if (begin == null) return end!;
 
     return begin!.lerp(end!, t);

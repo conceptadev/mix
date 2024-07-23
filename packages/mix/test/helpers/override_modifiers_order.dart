@@ -9,12 +9,12 @@ testOverrideModifiersOrder(
   required Widget Function(Style, List<Type>) widgetBuilder,
 }) async {
   final style = Style(
-    const VisibilityModifierAttribute(true),
-    const OpacityModifierAttribute(1),
+    const VisibilityModifierAttribute(visible: true),
+    const OpacityModifierAttribute(opacity: 1),
     const TransformModifierAttribute(),
-    const AspectRatioModifierAttribute(2),
+    const AspectRatioModifierAttribute(aspectRatio: 2),
     const ClipOvalModifierAttribute(),
-    const PaddingModifierAttribute(EdgeInsetsDirectionalDto(top: 10)),
+    const PaddingModifierAttribute(padding: EdgeInsetsDirectionalDto(top: 10)),
   );
   const orderOfModifiersOnlySpecs = [
     ClipOvalModifierSpec,

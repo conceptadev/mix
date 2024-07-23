@@ -9,19 +9,19 @@ import '../core/factory/mix_data.dart';
 import '../core/factory/mix_provider.dart';
 import '../core/helpers.dart';
 import '../core/modifier.dart';
-import '../core/spec.dart';
 import '../core/utility.dart';
 import '../internal/diagnostic_properties_builder_ext.dart';
 
 part 'sized_box_widget_modifier.g.dart';
 
-@MixableSpec()
-final class SizedBoxSpec extends Spec<SizedBoxSpec>
-    with _$SizedBoxSpec, ModifierSpecMixin {
+@MixableSpec(prefix: 'SizedBoxModifier', skipUtility: true)
+final class SizedBoxModifierSpec
+    extends WidgetModifierSpec<SizedBoxModifierSpec>
+    with _$SizedBoxModifierSpec {
   final double? width;
   final double? height;
 
-  const SizedBoxSpec({this.width, this.height});
+  const SizedBoxModifierSpec({this.width, this.height});
 
   @override
   Widget build(Widget child) {
@@ -29,21 +29,26 @@ final class SizedBoxSpec extends Spec<SizedBoxSpec>
   }
 }
 
-extension SizedBoxSpecUtilityX<T extends Attribute> on SizedBoxSpecUtility<T> {
+final class SizedBoxModifierUtility<T extends Attribute>
+    extends MixUtility<T, SizedBoxModifierAttribute> {
+  /// Utility for defining [SizedBoxModifierAttribute.height]
+  late final height = DoubleUtility((value) => call(height: value));
+
+  /// Utility for defining [SizedBoxModifierAttribute.width]
+  late final width = DoubleUtility((value) => call(width: value));
+
+  /// Utility for defining [SizedBoxModifierAttribute.width]
+  /// and [SizedBoxModifierAttribute.height]
+  late final square =
+      DoubleUtility((value) => call(width: value, height: value));
+
+  SizedBoxModifierUtility(super.builder);
+
   T call({double? width, double? height}) {
-    return only(width: width, height: height);
+    return builder(SizedBoxModifierAttribute(width: width, height: height));
   }
 
-  /// Utility for defining [SizedBoxSpec.width] and [SizedBoxSpec.height]
+  /// Utility for defining [SizedBoxModifierAttribute.width] and [SizedBoxModifierAttribute.height]
   /// from [Size]
   T as(Size size) => call(width: size.width, height: size.height);
 }
-
-@Deprecated('Use SizedBoxSpec instead')
-typedef SizedBoxModifierSpec = SizedBoxSpec;
-
-@Deprecated('Use SizedBoxSpecAttribute instead')
-typedef SizedBoxModifierAttribute = SizedBoxSpecAttribute;
-
-@Deprecated('Use SizedBoxSpecUtility instead')
-typedef SizedBoxModifierUtility = SizedBoxSpecUtility;

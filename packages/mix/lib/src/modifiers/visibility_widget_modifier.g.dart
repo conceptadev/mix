@@ -8,120 +8,131 @@ part of 'visibility_widget_modifier.dart';
 
 // ignore_for_file: deprecated_member_use_from_same_package
 
-mixin _$VisibilitySpec on Spec<VisibilitySpec> {
-  static VisibilitySpec from(MixData mix) {
-    return mix.attributeOf<VisibilitySpecAttribute>()?.resolve(mix) ??
-        const VisibilitySpec._();
+mixin _$VisibilityModifierSpec on WidgetModifierSpec<VisibilityModifierSpec> {
+  static VisibilityModifierSpec from(MixData mix) {
+    return mix.attributeOf<VisibilityModifierAttribute>()?.resolve(mix) ??
+        const VisibilityModifierSpec();
   }
 
-  /// {@template visibility_spec_of}
-  /// Retrieves the [VisibilitySpec] from the nearest [Mix] ancestor in the widget tree.
+  /// {@template visibility_modifier_spec_of}
+  /// Retrieves the [VisibilityModifierSpec] from the nearest [Mix] ancestor in the widget tree.
   ///
   /// This method uses [Mix.of] to obtain the [Mix] instance associated with the
-  /// given [BuildContext], and then retrieves the [VisibilitySpec] from that [Mix].
-  /// If no ancestor [Mix] is found, this method returns an empty [VisibilitySpec].
+  /// given [BuildContext], and then retrieves the [VisibilityModifierSpec] from that [Mix].
+  /// If no ancestor [Mix] is found, this method returns an empty [VisibilityModifierSpec].
   ///
   /// Example:
   ///
   /// ```dart
-  /// final visibilitySpec = VisibilitySpec.of(context);
+  /// final visibilityModifierSpec = VisibilityModifierSpec.of(context);
   /// ```
   /// {@endtemplate}
-  static VisibilitySpec of(BuildContext context) {
-    return _$VisibilitySpec.from(Mix.of(context));
+  static VisibilityModifierSpec of(BuildContext context) {
+    return _$VisibilityModifierSpec.from(Mix.of(context));
   }
 
-  /// Creates a copy of this [VisibilitySpec] but with the given fields
+  /// Creates a copy of this [VisibilityModifierSpec] but with the given fields
   /// replaced with the new values.
   @override
-  VisibilitySpec copyWith({
+  VisibilityModifierSpec copyWith({
     bool? visible,
   }) {
-    return VisibilitySpec._(visible: visible ?? _$this.visible);
+    return VisibilityModifierSpec(
+      visible ?? _$this.visible,
+    );
   }
 
-  /// Linearly interpolates between this [VisibilitySpec] and another [VisibilitySpec] based on the given parameter [t].
+  /// Linearly interpolates between this [VisibilityModifierSpec] and another [VisibilityModifierSpec] based on the given parameter [t].
   ///
   /// The parameter [t] represents the interpolation factor, typically ranging from 0.0 to 1.0.
-  /// When [t] is 0.0, the current [VisibilitySpec] is returned. When [t] is 1.0, the [other] [VisibilitySpec] is returned.
-  /// For values of [t] between 0.0 and 1.0, an interpolated [VisibilitySpec] is returned.
+  /// When [t] is 0.0, the current [VisibilityModifierSpec] is returned. When [t] is 1.0, the [other] [VisibilityModifierSpec] is returned.
+  /// For values of [t] between 0.0 and 1.0, an interpolated [VisibilityModifierSpec] is returned.
   ///
-  /// If [other] is null, this method returns the current [VisibilitySpec] instance.
+  /// If [other] is null, this method returns the current [VisibilityModifierSpec] instance.
   ///
-  /// The interpolation is performed on each property of the [VisibilitySpec] using the appropriate
+  /// The interpolation is performed on each property of the [VisibilityModifierSpec] using the appropriate
   /// interpolation method:
   ///
 
   /// For [visible], the interpolation is performed using a step function.
-  /// If [t] is less than 0.5, the value from the current [VisibilitySpec] is used. Otherwise, the value
-  /// from the [other] [VisibilitySpec] is used.
+  /// If [t] is less than 0.5, the value from the current [VisibilityModifierSpec] is used. Otherwise, the value
+  /// from the [other] [VisibilityModifierSpec] is used.
   ///
   /// This method is typically used in animations to smoothly transition between
-  /// different [VisibilitySpec] configurations.
+  /// different [VisibilityModifierSpec] configurations.
   @override
-  VisibilitySpec lerp(VisibilitySpec? other, double t) {
+  VisibilityModifierSpec lerp(VisibilityModifierSpec? other, double t) {
     if (other == null) return _$this;
 
-    return VisibilitySpec._(visible: t < 0.5 ? _$this.visible : other.visible);
+    return VisibilityModifierSpec(
+      t < 0.5 ? _$this.visible : other.visible,
+    );
   }
 
-  /// The list of properties that constitute the state of this [VisibilitySpec].
+  /// The list of properties that constitute the state of this [VisibilityModifierSpec].
   ///
   /// This property is used by the [==] operator and the [hashCode] getter to
-  /// compare two [VisibilitySpec] instances for equality.
+  /// compare two [VisibilityModifierSpec] instances for equality.
   @override
   List<Object?> get props => [
         _$this.visible,
       ];
 
-  VisibilitySpec get _$this => this as VisibilitySpec;
+  VisibilityModifierSpec get _$this => this as VisibilityModifierSpec;
 }
 
-/// Represents the attributes of a [VisibilitySpec].
+/// Represents the attributes of a [VisibilityModifierSpec].
 ///
 /// This class encapsulates properties defining the layout and
-/// appearance of a [VisibilitySpec].
+/// appearance of a [VisibilityModifierSpec].
 ///
-/// Use this class to configure the attributes of a [VisibilitySpec] and pass it to
-/// the [VisibilitySpec] constructor.
-final class VisibilitySpecAttribute extends SpecAttribute<VisibilitySpec>
+/// Use this class to configure the attributes of a [VisibilityModifierSpec] and pass it to
+/// the [VisibilityModifierSpec] constructor.
+final class VisibilityModifierAttribute
+    extends WidgetModifierSpecAttribute<VisibilityModifierSpec>
     with Diagnosticable {
   final bool? visible;
 
-  const VisibilitySpecAttribute({this.visible});
+  const VisibilityModifierAttribute({
+    this.visible,
+  });
 
-  /// Resolves to [VisibilitySpec] using the provided [MixData].
+  /// Resolves to [VisibilityModifierSpec] using the provided [MixData].
   ///
   /// If a property is null in the [MixData], it falls back to the
   /// default value defined in the `defaultValue` for that property.
   ///
   /// ```dart
-  /// final visibilitySpec = VisibilitySpecAttribute(...).resolve(mix);
+  /// final visibilityModifierSpec = VisibilityModifierAttribute(...).resolve(mix);
   /// ```
   @override
-  VisibilitySpec resolve(MixData mix) {
-    return VisibilitySpec._(visible: visible);
+  VisibilityModifierSpec resolve(MixData mix) {
+    return VisibilityModifierSpec(
+      visible,
+    );
   }
 
-  /// Merges the properties of this [VisibilitySpecAttribute] with the properties of [other].
+  /// Merges the properties of this [VisibilityModifierAttribute] with the properties of [other].
   ///
   /// If [other] is null, returns this instance unchanged. Otherwise, returns a new
-  /// [VisibilitySpecAttribute] with the properties of [other] taking precedence over
+  /// [VisibilityModifierAttribute] with the properties of [other] taking precedence over
   /// the corresponding properties of this instance.
   ///
   /// Properties from [other] that are null will fall back
   /// to the values from this instance.
   @override
-  VisibilitySpecAttribute merge(VisibilitySpecAttribute? other) {
+  VisibilityModifierAttribute merge(VisibilityModifierAttribute? other) {
     if (other == null) return this;
 
-    return VisibilitySpecAttribute._(visible: other.visible ?? visible);
+    return VisibilityModifierAttribute(
+      visible: other.visible ?? visible,
+    );
   }
 
-  /// The list of properties that constitute the state of this [VisibilitySpecAttribute].
+  /// The list of properties that constitute the state of this [VisibilityModifierAttribute].
   ///
   /// This property is used by the [==] operator and the [hashCode] getter to
-  /// compare two [VisibilitySpecAttribute] instances for equality.
+  /// compare two [VisibilityModifierAttribute] instances for equality.
   @override
   List<Object?> get props => [
         visible,
@@ -130,48 +141,23 @@ final class VisibilitySpecAttribute extends SpecAttribute<VisibilitySpec>
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-
     properties.addUsingDefault('visible', visible);
   }
 }
 
-/// Utility class for configuring [VisibilitySpecAttribute] properties.
-///
-/// This class provides methods to set individual properties of a [VisibilitySpecAttribute].
-/// Use the methods of this class to configure specific properties of a [VisibilitySpecAttribute].
-base class VisibilitySpecUtility<T extends Attribute>
-    extends SpecUtility<T, VisibilitySpecAttribute> {
-  /// Utility for defining [VisibilitySpecAttribute.visible]
-  late final visible = BoolUtility((v) => only(visible: v));
-
-  VisibilitySpecUtility(super.builder);
-
-  static final self = VisibilitySpecUtility((v) => v);
-
-  /// Returns a new [VisibilitySpecAttribute] with the specified properties.
-  @override
-  T only({
-    bool? visible,
-  }) {
-    return builder(VisibilitySpecAttribute(
-      visible: visible,
-    ));
-  }
-}
-
-/// A tween that interpolates between two [VisibilitySpec] instances.
+/// A tween that interpolates between two [VisibilityModifierSpec] instances.
 ///
 /// This class can be used in animations to smoothly transition between
-/// different [VisibilitySpec] specifications.
-class VisibilitySpecTween extends Tween<VisibilitySpec?> {
-  VisibilitySpecTween({
+/// different [VisibilityModifierSpec] specifications.
+class VisibilityModifierSpecTween extends Tween<VisibilityModifierSpec?> {
+  VisibilityModifierSpecTween({
     super.begin,
     super.end,
   });
 
   @override
-  VisibilitySpec lerp(double t) {
-    if (begin == null && end == null) return VisibilitySpec._();
+  VisibilityModifierSpec lerp(double t) {
+    if (begin == null && end == null) return const VisibilityModifierSpec();
     if (begin == null) return end!;
 
     return begin!.lerp(end!, t);
