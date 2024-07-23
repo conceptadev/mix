@@ -16,7 +16,7 @@ testOverrideModifiersOrder(
     const ClipOvalModifierAttribute(),
     const PaddingModifierAttribute(EdgeInsetsDirectionalDto(top: 10)),
   );
-  const orderOfModifiers = [
+  const orderOfModifiersOnlySpecs = [
     ClipOvalModifierSpec,
     AspectRatioModifierSpec,
     TransformModifierSpec,
@@ -24,7 +24,52 @@ testOverrideModifiersOrder(
     VisibilityModifierSpec,
   ];
 
-  final widget = widgetBuilder(style, orderOfModifiers);
+  // JUST SPECS
+  await verifyDescendants(
+    widgetBuilder(style, orderOfModifiersOnlySpecs),
+    style,
+    orderOfModifiersOnlySpecs,
+    tester,
+  );
+
+  // SPECS + ATTRIBUTES
+  const orderOfModifiersSpecsAndAttributes = [
+    ClipOvalModifierSpec,
+    AspectRatioModifierAttribute,
+    TransformModifierAttribute,
+    OpacityModifierSpec,
+    VisibilityModifierAttribute,
+  ];
+  await verifyDescendants(
+    widgetBuilder(style, orderOfModifiersSpecsAndAttributes),
+    style,
+    orderOfModifiersSpecsAndAttributes,
+    tester,
+  );
+
+  // JUST ATTRIBUTES
+  const orderOfModifiersOnlyAttributes = [
+    ClipOvalModifierAttribute,
+    AspectRatioModifierAttribute,
+    TransformModifierAttribute,
+    OpacityModifierAttribute,
+    VisibilityModifierAttribute,
+  ];
+
+  await verifyDescendants(
+    widgetBuilder(style, orderOfModifiersOnlyAttributes),
+    style,
+    orderOfModifiersOnlyAttributes,
+    tester,
+  );
+}
+
+Future<void> verifyDescendants(
+  Widget widget,
+  Style style,
+  List<Type> orderOfModifiers,
+  WidgetTester tester,
+) async {
   await tester.pumpMaterialApp(
     widget,
   );

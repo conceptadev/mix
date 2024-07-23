@@ -73,12 +73,14 @@ abstract class StyledWidget extends StatelessWidget {
         ? RenderAnimatedModifiers(
             modifiers: modifiers,
             duration: mix.animation!.duration,
+            mix: mix,
             orderOfModifiers: orderOfModifiers,
             curve: mix.animation!.curve,
             child: child,
           )
         : RenderModifiers(
             modifiers: modifiers,
+            mix: mix,
             orderOfModifiers: orderOfModifiers,
             child: child,
           );

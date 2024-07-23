@@ -90,7 +90,9 @@ class RenderModifiers extends StatelessWidget {
   const RenderModifiers({
     required this.child,
     this.modifiers = const [],
-    @Deprecated("Use modifiers parameter") this.mix,
+    // the mix parameter is needed to allow users to specify the order of modifiers
+    // in two different ways. Using Attributes and Specs
+    this.mix,
     required this.orderOfModifiers,
     super.key,
   });
@@ -130,11 +132,12 @@ class _RenderModifiers extends StatelessWidget {
 class RenderAnimatedModifiers extends StatelessWidget {
   const RenderAnimatedModifiers({
     super.key,
-    //TODO Should be required in the next version
     this.modifiers = const [],
     required this.child,
     required this.duration,
-    @Deprecated("Use modifiers parameter") this.mix,
+    // the mix parameter is needed to allow users to specify the order of modifiers
+    // in two different ways. Using Attributes and Specs
+    this.mix,
     required this.orderOfModifiers,
     this.curve = Curves.linear,
     this.onEnd,
