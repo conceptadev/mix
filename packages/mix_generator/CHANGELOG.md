@@ -1,3 +1,8 @@
+## 0.2.2
+
+ - **FEAT**: Dto utility generation now adds constructor and static methods.
+ - **FEAT**: ColorSwatchToken and other token improvements (#378).
+
 ## 0.2.1
 
  - **REFACTOR**: bump flutter version to 3.19.0 (#365).

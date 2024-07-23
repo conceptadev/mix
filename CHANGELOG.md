@@ -3,6 +3,59 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2024-07-23
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`mix` - `v1.4.0`](#mix---v140)
+ - [`mix_annotations` - `v0.2.1`](#mix_annotations---v021)
+ - [`mix_generator` - `v0.2.2`](#mix_generator---v022)
+ - [`mix_lint` - `v0.1.1`](#mix_lint---v011)
+ - [`remix` - `v0.0.2`](#remix---v002)
+
+---
+
+#### `mix` - `v1.4.0`
+
+ - **FIX**: order modifier (#389).
+ - **FIX**: animations of Stack and Flex.
+ - **FIX**: add flexible as the first in the order of modifiers (#379).
+ - **FEAT**: Ability to pass MixWidgetStateController to SpecBuilder (#391).
+ - **FEAT**: remix - Foundational components (#317).
+ - **FEAT**: interactive widget state by default (#384).
+ - **FEAT**: MixThemeData can alter default order of modifiers (#380).
+ - **FEAT**: Dto utility generation now adds constructor and static methods.
+ - **FEAT**: ColorSwatchToken and other token improvements (#378).
+
+#### `mix_annotations` - `v0.2.1`
+
+ - **FEAT**: ColorSwatchToken and other token improvements (#378).
+
+#### `mix_generator` - `v0.2.2`
+
+ - **FEAT**: Dto utility generation now adds constructor and static methods.
+ - **FEAT**: ColorSwatchToken and other token improvements (#378).
+
+#### `mix_lint` - `v0.1.1`
+
+ - **FEAT**: Improvements for the "extract attributes" assist  (#387).
+ - **FEAT**: implement quick fix for mix_attributes_ordering rule (#381).
+ - **FEAT**: ColorSwatchToken and other token improvements (#378).
+
+#### `remix` - `v0.0.2`
+
+ - **FEAT**: Ability to pass MixWidgetStateController to SpecBuilder (#391).
+ - **FEAT**: remix - Foundational components (#317).
+
+
 ## 2024-07-12
 
 ### Changes
