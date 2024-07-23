@@ -1,23 +1,20 @@
-import 'package:analyzer/dart/element/element.dart';
-import 'package:mix_generator/src/helpers/builder_utils.dart';
-import 'package:mix_generator/src/helpers/dart_type_ext.dart';
+import 'package:mix_annotations/mix_annotations.dart';
+import 'package:mix_generator/src/helpers/field_info.dart';
 
-String dtoValueExtension(DtoAnnotationContext context) {
-  final resolvedType = context.element.getGenericTypeOfSuperclass();
+String toDtoExtension(ClassBuilderContext<MixableDto> context) {
+  final resolvedType = context.referenceClass;
+
   final className = context.name;
 
-  final resolvedTypeElement = resolvedType?.element;
+  final params = <String, ParameterInfo>{};
 
-  final params = <String, ParameterElement>{};
+  resolvedType.unnamedConstructor?.parameters.forEach((element) {
+    params[element.name] = ParameterInfo.ofElement(element);
+  });
 
-  if (resolvedTypeElement is ClassElement) {
-    resolvedTypeElement.unnamedConstructor?.parameters.forEach((element) {
-      params[element.name] = element;
-    });
-  }
   final fieldStatements = context.fields.map((field) {
     final fieldName = field.name;
-    final paramIsNullable = params[fieldName]?.type.isNullableType ?? false;
+    final paramIsNullable = params[fieldName]?.nullable ?? false;
     final fieldNameRef = paramIsNullable ? '$fieldName?' : fieldName;
 
     if (field.hasDto) {
@@ -30,8 +27,7 @@ String dtoValueExtension(DtoAnnotationContext context) {
     return '$fieldName: $fieldName,';
   }).join('\n');
 
-  final resolvedTypeName =
-      resolvedType?.getDisplayString(withNullability: false);
+  final resolvedTypeName = resolvedType.name;
   return '''
 extension ${resolvedTypeName}MixExt on $resolvedTypeName {
   $className toDto() {
@@ -40,16 +36,7 @@ extension ${resolvedTypeName}MixExt on $resolvedTypeName {
     );
   }
 }
-''';
-}
 
-String dtoListValueExtension(DtoAnnotationContext context) {
-  final resolvedType = context.element.getGenericTypeOfSuperclass();
-  final className = context.name;
-  final resolvedTypeName =
-      resolvedType?.getDisplayString(withNullability: false);
-
-  return '''
 extension List${resolvedTypeName}MixExt on List<$resolvedTypeName> {
   List<$className> toDto() {
     return map((e) => e.toDto()).toList();

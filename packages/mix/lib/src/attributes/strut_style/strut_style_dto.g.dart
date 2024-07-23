@@ -18,17 +18,16 @@ base mixin _$StrutStyleDto on Dto<StrutStyle> {
   @override
   StrutStyle resolve(MixData mix) {
     return StrutStyle(
-      fontFamily: _$this.fontFamily ?? defaultValue.fontFamily,
-      fontFamilyFallback:
-          _$this.fontFamilyFallback ?? defaultValue.fontFamilyFallback,
-      fontSize: _$this.fontSize ?? defaultValue.fontSize,
-      fontWeight: _$this.fontWeight ?? defaultValue.fontWeight,
-      fontStyle: _$this.fontStyle ?? defaultValue.fontStyle,
-      height: _$this.height ?? defaultValue.height,
-      leading: _$this.leading ?? defaultValue.leading,
-      forceStrutHeight:
-          _$this.forceStrutHeight ?? defaultValue.forceStrutHeight,
-    );
+        fontFamily: _$this.fontFamily ?? defaultValue.fontFamily,
+        fontFamilyFallback:
+            _$this.fontFamilyFallback ?? defaultValue.fontFamilyFallback,
+        fontSize: _$this.fontSize ?? defaultValue.fontSize,
+        fontWeight: _$this.fontWeight ?? defaultValue.fontWeight,
+        fontStyle: _$this.fontStyle ?? defaultValue.fontStyle,
+        height: _$this.height ?? defaultValue.height,
+        leading: _$this.leading ?? defaultValue.leading,
+        forceStrutHeight:
+            _$this.forceStrutHeight ?? defaultValue.forceStrutHeight);
   }
 
   /// Merges the properties of this [StrutStyleDto] with the properties of [other].
@@ -44,16 +43,15 @@ base mixin _$StrutStyleDto on Dto<StrutStyle> {
     if (other == null) return _$this;
 
     return StrutStyleDto(
-      fontFamily: other.fontFamily ?? _$this.fontFamily,
-      fontFamilyFallback: MixHelpers.mergeList(
-          _$this.fontFamilyFallback, other.fontFamilyFallback),
-      fontSize: other.fontSize ?? _$this.fontSize,
-      fontWeight: other.fontWeight ?? _$this.fontWeight,
-      fontStyle: other.fontStyle ?? _$this.fontStyle,
-      height: other.height ?? _$this.height,
-      leading: other.leading ?? _$this.leading,
-      forceStrutHeight: other.forceStrutHeight ?? _$this.forceStrutHeight,
-    );
+        fontFamily: other.fontFamily ?? _$this.fontFamily,
+        fontFamilyFallback: MixHelpers.mergeList(
+            _$this.fontFamilyFallback, other.fontFamilyFallback),
+        fontSize: other.fontSize ?? _$this.fontSize,
+        fontWeight: other.fontWeight ?? _$this.fontWeight,
+        fontStyle: other.fontStyle ?? _$this.fontStyle,
+        height: other.height ?? _$this.height,
+        leading: other.leading ?? _$this.leading,
+        forceStrutHeight: other.forceStrutHeight ?? _$this.forceStrutHeight);
   }
 
   /// The list of properties that constitute the state of this [StrutStyleDto].

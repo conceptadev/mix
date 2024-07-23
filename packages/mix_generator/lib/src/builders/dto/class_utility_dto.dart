@@ -1,33 +1,33 @@
+import 'package:mix_annotations/mix_annotations.dart';
 import 'package:mix_generator/src/builders/utility_class_builder.dart';
-import 'package:mix_generator/src/helpers/builder_utils.dart';
+import 'package:mix_generator/src/helpers/field_info.dart';
 
-String dtoUtilityClass(DtoAnnotationContext context) {
-  final utilityType = context.name;
-  final resolvedType =
-      context.element.getGenericTypeOfSuperclass()?.getTypeAsString();
+String dtoUtilityClass(ClassBuilderContext<MixableDto> context) {
+  final className = context.name;
+  final referenceType = context.referenceClass.name;
   // This class element is in context.element. This element is like this
   // class SampleClass extends AnotherClass<Generic> {}
   // taking this in consideration how can I get teh value of Generic?
 
-  final utilityClassName = '${resolvedType}Utility';
+  final utilityClassName = '${referenceType}Utility';
 
-  final fields = generateUtilityFields(utilityType, context.fields);
+  final fields = generateUtilityFields(className, context.fields);
 
-  final valueClassFields = generateUtilityFieldsFromClass(context.element);
+  final valueClassFields = generateUtilityFieldsFromClass(context.classElement);
 
   final callMethod = utilityMethodCallBuilder(context.fields);
 
   final onlyMethod = utilityMethodOnlyBuilder(
-    utilityType: utilityType,
+    utilityType: className,
     fields: context.fields,
   );
 
   return '''
-/// Utility class for configuring [$utilityType] properties.
+/// Utility class for configuring [$className] properties.
 ///
-/// This class provides methods to set individual properties of a [$utilityType].
-/// Use the methods of this class to configure specific properties of a [$utilityType].
-final class $utilityClassName<T extends Attribute> extends DtoUtility<T, $utilityType, $resolvedType> {
+/// This class provides methods to set individual properties of a [$className].
+/// Use the methods of this class to configure specific properties of a [$className].
+ class $utilityClassName<T extends Attribute> extends DtoUtility<T, $className, $referenceType> {
   $fields
 
   $valueClassFields

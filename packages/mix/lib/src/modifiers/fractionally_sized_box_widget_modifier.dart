@@ -1,55 +1,33 @@
 // ignore_for_file: prefer-named-boolean-parameters
 
-import 'dart:ui';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
+import 'package:mix_annotations/mix_annotations.dart';
 
+import '../attributes/scalars/scalar_util.dart';
 import '../core/attribute.dart';
 import '../core/factory/mix_data.dart';
+import '../core/factory/mix_provider.dart';
+import '../core/helpers.dart';
 import '../core/modifier.dart';
+import '../core/spec.dart';
 import '../core/utility.dart';
 import '../internal/diagnostic_properties_builder_ext.dart';
 
-final class FractionallySizedBoxModifierSpec
-    extends WidgetModifierSpec<FractionallySizedBoxModifierSpec> {
+part 'fractionally_sized_box_widget_modifier.g.dart';
+
+@MixableSpec()
+final class FractionallySizedBoxSpec extends Spec<FractionallySizedBoxSpec>
+    with _$FractionallySizedBoxSpec, ModifierSpecMixin {
   final double? widthFactor;
   final double? heightFactor;
   final AlignmentGeometry? alignment;
 
-  const FractionallySizedBoxModifierSpec({
+  const FractionallySizedBoxSpec({
     this.widthFactor,
     this.heightFactor,
     this.alignment,
   });
-
-  @override
-  FractionallySizedBoxModifierSpec copyWith({
-    double? widthFactor,
-    double? heightFactor,
-    AlignmentGeometry? alignment,
-  }) {
-    return FractionallySizedBoxModifierSpec(
-      widthFactor: widthFactor ?? this.widthFactor,
-      heightFactor: heightFactor ?? this.heightFactor,
-      alignment: alignment ?? this.alignment,
-    );
-  }
-
-  @override
-  FractionallySizedBoxModifierSpec lerp(
-    FractionallySizedBoxModifierSpec? other,
-    double t,
-  ) {
-    return FractionallySizedBoxModifierSpec(
-      widthFactor: lerpDouble(widthFactor, other?.widthFactor, t),
-      heightFactor: lerpDouble(heightFactor, other?.heightFactor, t),
-      alignment: AlignmentGeometry.lerp(alignment, other?.alignment, t),
-    );
-  }
-
-  @override
-  get props => [widthFactor, heightFactor, alignment];
 
   @override
   Widget build(Widget child) {
@@ -62,66 +40,27 @@ final class FractionallySizedBoxModifierSpec
   }
 }
 
-final class FractionallySizedBoxModifierAttribute
-    extends WidgetModifierAttribute<FractionallySizedBoxModifierAttribute,
-        FractionallySizedBoxModifierSpec> {
-  final double? widthFactor;
-  final double? heightFactor;
-  final AlignmentGeometry? alignment;
-
-  const FractionallySizedBoxModifierAttribute({
-    this.widthFactor,
-    this.heightFactor,
-    this.alignment,
-  });
-
-  @override
-  FractionallySizedBoxModifierAttribute merge(
-    FractionallySizedBoxModifierAttribute? other,
-  ) {
-    return FractionallySizedBoxModifierAttribute(
-      widthFactor: other?.widthFactor ?? widthFactor,
-      heightFactor: other?.heightFactor ?? heightFactor,
-      alignment: other?.alignment ?? alignment,
-    );
-  }
-
-  @override
-  FractionallySizedBoxModifierSpec resolve(MixData mix) {
-    return FractionallySizedBoxModifierSpec(
-      widthFactor: widthFactor,
-      heightFactor: heightFactor,
-      alignment: alignment,
-    );
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties.addUsingDefault('widthFactor', widthFactor);
-    properties.addUsingDefault('heightFactor', heightFactor);
-    properties.addUsingDefault('alignment', alignment);
-  }
-
-  @override
-  get props => [widthFactor, heightFactor, alignment];
-}
-
-final class FractionallySizedBoxModifierUtility<T extends Attribute>
-    extends MixUtility<T, FractionallySizedBoxModifierAttribute> {
-  const FractionallySizedBoxModifierUtility(super.builder);
-
+extension FractionallySizedBoxSpecUtilityX<T extends Attribute>
+    on FractionallySizedBoxSpecUtility<T> {
   T call({
     AlignmentGeometry? alignment,
     double? widthFactor,
     double? heightFactor,
   }) {
-    return builder(
-      FractionallySizedBoxModifierAttribute(
-        widthFactor: widthFactor,
-        heightFactor: heightFactor,
-        alignment: alignment,
-      ),
+    return only(
+      widthFactor: widthFactor,
+      heightFactor: heightFactor,
+      alignment: alignment,
     );
   }
 }
+
+@Deprecated('Use FractionallySizedBoxSpec instead')
+typedef FractionallySizedBoxModifierSpec = FractionallySizedBoxSpec;
+
+@Deprecated('Use FractionallySizedBoxSpecAttribute instead')
+typedef FractionallySizedBoxModifierAttribute
+    = FractionallySizedBoxSpecAttribute;
+
+@Deprecated('Use FractionallySizedBoxSpecUtility instead')
+typedef FractionallySizedBoxModifierUtility = FractionallySizedBoxSpecUtility;

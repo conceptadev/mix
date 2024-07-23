@@ -6,12 +6,10 @@ import 'package:mix_annotations/mix_annotations.dart';
 import 'package:mix_generator/src/builders/dto/class_utility_dto.dart';
 import 'package:mix_generator/src/builders/dto/extension_value.dart';
 import 'package:mix_generator/src/builders/dto/mixin_dto.dart';
+import 'package:mix_generator/src/helpers/builder_utils.dart';
 import 'package:mix_generator/src/helpers/field_info.dart';
-import 'package:mix_generator/src/helpers/settings.dart';
-import 'package:mix_generator/src/helpers/visitors.dart';
+import 'package:mix_generator/src/helpers/helpers.dart';
 import 'package:source_gen/source_gen.dart';
-
-import 'helpers/builder_utils.dart';
 
 class MixableDtoGenerator extends GeneratorForAnnotation<MixableDto> {
   MixableDtoGenerator();
@@ -22,21 +20,7 @@ class MixableDtoGenerator extends GeneratorForAnnotation<MixableDto> {
     ConstantReader reader,
     BuildStep buildStep,
   ) async {
-    if (element is! ClassElement) {
-      throw InvalidGenerationSourceError(
-        'The annotation can only be applied to a class.',
-        element: element,
-      );
-    }
-
-    final classVisitor = CustomVisitor();
-    element.visitChildren(classVisitor);
-
-    final context = await _readContext(
-      element,
-      classVisitor.parameters.values.toList(),
-      buildStep,
-    );
+    final context = await _loadContext(element);
 
     final generateUtility = context.annotation.generateUtility;
     final generateValueExtension = context.annotation.generateValueExtension;
@@ -50,45 +34,49 @@ class MixableDtoGenerator extends GeneratorForAnnotation<MixableDto> {
     }
 
     if (generateValueExtension) {
-      output.writeln(dtoValueExtension(context));
-      output.writeln(dtoListValueExtension(context));
+      output.writeln(toDtoExtension(context));
     }
 
-    final result = context.generate(output.toString());
-
-    return result;
+    return dartFormat(output.toString());
   }
 
-  Future<DtoAnnotationContext> _readContext(
-    ClassElement classElement,
-    List<ParameterInfo> params,
-    BuildStep buildStep,
-  ) async {
-    final annotation = typeChecker.firstAnnotationOfExact(classElement)!;
+  MixableDto _readDtoAnnotation(ClassElement classElement) {
+    final annotation = typeChecker.firstAnnotationOfExact(classElement);
 
-    final context = DtoAnnotationContext(
-      element: classElement,
-      annotation: _readDtoAnnotation(Settings(), ConstantReader(annotation)),
-      fields: params,
+    if (annotation == null) {
+      throw InvalidGenerationSourceError(
+        'No MixableSpec annotation found on the class',
+        element: classElement,
+      );
+    }
+
+    final reader = ConstantReader(annotation);
+
+    return MixableDto(
+      mergeLists: reader.read('mergeLists').boolValue,
+      generateValueExtension: reader.read('generateValueExtension').boolValue,
+      generateUtility: reader.read('generateUtility').boolValue,
     );
-
-    return context;
   }
-}
 
-MixableDto _readDtoAnnotation(
-  Settings settings,
-  ConstantReader reader,
-) {
-  final shouldMergeLists = reader.read('mergeLists').boolValue;
+  ClassBuilderContext<MixableDto> _loadContext(Element element) {
+    if (element is! ClassElement) {
+      throw InvalidGenerationSourceError(
+        'The annotation can only be applied to a class.',
+        element: element,
+      );
+    }
 
-  final generateValueExtension =
-      reader.read('generateValueExtension').boolValue;
-  final generateUtility = reader.read('generateUtility').boolValue;
+    if (!element.isDto) {
+      throw InvalidGenerationSource(
+        'The class ${element.name} must extend a class that extends Dto.',
+        element: element,
+      );
+    }
 
-  return MixableDto(
-    mergeLists: shouldMergeLists,
-    generateValueExtension: generateValueExtension,
-    generateUtility: generateUtility,
-  );
+    return ClassBuilderContext(
+      annotation: _readDtoAnnotation(element),
+      classElement: element,
+    );
+  }
 }

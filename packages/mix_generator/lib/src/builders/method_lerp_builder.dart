@@ -3,17 +3,21 @@
 import 'package:analyzer/dart/element/element.dart';
 import 'package:mix_generator/src/helpers/builder_utils.dart';
 import 'package:mix_generator/src/helpers/field_info.dart';
+import 'package:mix_generator/src/helpers/helpers.dart';
 
-String lerpMethodBuilder({
-  required ClassVisitorAnnotationContext context,
-  bool isInternalRef = false,
-}) {
-  final className = context.name;
+String lerpMethodBuilder(
+  ClassInfo instance,
+) {
   final lerpMethods = <String, List<String>>{};
   final stepMethod = <String>[];
 
-  for (final field in context.fields) {
-    final method = _getLerpMethod(field, context);
+  final fields = instance.fields;
+  final className = instance.name;
+
+  final isInternalRef = instance.isInternalRef;
+
+  for (final field in fields) {
+    final method = _getLerpMethod(field);
 
     if (method != null) {
       lerpMethods.putIfAbsent(method, () => []).add(field.name);
@@ -21,10 +25,10 @@ String lerpMethodBuilder({
       stepMethod.add(field.name);
     }
   }
-  final lerpStatements = context.fields.map((field) {
-    final lerpExpression = _getLerpExpression(field, context, isInternalRef);
-    return '${field.name}: $lerpExpression,';
-  }).join('\n');
+
+  final lerpStatements = buildConstructorParams(fields, (ParameterInfo field) {
+    return _getLerpExpression(field, isInternalRef);
+  });
 
   final thisRef = isInternalRef ? ParameterInfo.internalRefPrefix : 'this';
 
@@ -51,16 +55,13 @@ ${lerpMethods.entries.map((entry) => '/// - [${entry.key}] for ${entry.value.map
   $className lerp($className? other, double t) {
     if (other == null) return $thisRef;
 
-    return $className(
-      $lerpStatements
-    );
+    return ${instance.writeConstructor()}($lerpStatements);
   }
 ''';
 }
 
 String? _getLerpMethod(
   ParameterInfo field,
-  AnnotationContext context,
 ) {
   final typeName = field.type;
   final hasLerp = _checkIfFieldHasLerp(field.dartType.element!);
@@ -74,6 +75,8 @@ String? _getLerpMethod(
   switch (typeName) {
     case 'double':
       return MixHelperRef.lerpDouble;
+    case 'int':
+      return MixHelperRef.lerpInt;
     case 'Matrix4':
       return MixHelperRef.lerpMatrix4;
     case 'StrutStyle':
@@ -88,11 +91,11 @@ String? _getLerpMethod(
 
 String _getLerpExpression(
   ParameterInfo field,
-  AnnotationContext context,
   bool isInternalRef,
 ) {
   final thisFieldName = isInternalRef ? field.asInternalRef : field.name;
   final otherFieldName = 'other.${field.name}';
+  final force = field.nullable ? '' : '!';
 
   final defaultExpression = 't < 0.5 ? $thisFieldName : $otherFieldName';
 
@@ -110,13 +113,13 @@ String _getLerpExpression(
 
   final lerpParams = '$thisFieldName, $otherFieldName, t';
 
-  final hasLerpStatic = _getLerpMethod(field, context);
+  final hasLerpStatic = _getLerpMethod(field);
 
   if (hasLerpStatic == null) {
     return defaultExpression;
   }
 
-  return '$hasLerpStatic($lerpParams)';
+  return '$hasLerpStatic($lerpParams)$force';
 }
 
 bool _checkIfInstanceHasLerp(Element element) {

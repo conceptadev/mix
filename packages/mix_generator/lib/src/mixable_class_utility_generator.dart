@@ -30,7 +30,7 @@ class MixableClassUtilityGenerator
 
     final context = _readContext(element);
 
-    return context.generate(_generateUtilityMixin(context));
+    return dartFormat(_generateUtilityMixin(context));
   }
 
   /// Reads the annotation context for the given [element].
@@ -88,9 +88,9 @@ DartType? _getUtilityType(ClassElement element) {
 ///
 /// Returns the generated mixin code as a string.
 String _generateUtilityMixin(ClassUtilityAnnotationContext context) {
-  final className = context.name;
+  final className = context.element.name;
 
-  final generatedName = context.generatedName;
+  final generatedName = context.element.generatedName;
 
   final valueName = context.valueElement.name;
 

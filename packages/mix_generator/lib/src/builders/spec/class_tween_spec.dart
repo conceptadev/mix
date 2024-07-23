@@ -1,9 +1,10 @@
-import 'package:mix_generator/src/helpers/builder_utils.dart';
+import 'package:mix_generator/src/helpers/field_info.dart';
 
-String specTweenClass(SpecAnnotationContext context) {
-  final className = context.name;
+String specTweenClass(ClassBuilderContext classInfo) {
+  final className = classInfo.name;
+  final constructorRef = classInfo.constructorRef;
 
-  final constIndicator = context.element.isConst ? 'const' : '';
+  final constIndicator = classInfo.isConst ? 'const' : '';
 
   return '''
 /// A tween that interpolates between two [$className] instances.
@@ -17,7 +18,7 @@ class ${className}Tween extends Tween<$className?> {
 
   @override
   $className lerp(double t) {
-    if (begin == null && end == null) return $constIndicator $className();
+    if (begin == null && end == null) return $constIndicator $className$constructorRef();
     if (begin == null) return end!;
     
     return begin!.lerp(end!, t);

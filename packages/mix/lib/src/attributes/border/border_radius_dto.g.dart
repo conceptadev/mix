@@ -20,11 +20,10 @@ base mixin _$BorderRadiusDto on Dto<BorderRadius> {
     if (other == null) return _$this;
 
     return BorderRadiusDto(
-      topLeft: other.topLeft ?? _$this.topLeft,
-      topRight: other.topRight ?? _$this.topRight,
-      bottomLeft: other.bottomLeft ?? _$this.bottomLeft,
-      bottomRight: other.bottomRight ?? _$this.bottomRight,
-    );
+        topLeft: other.topLeft ?? _$this.topLeft,
+        topRight: other.topRight ?? _$this.topRight,
+        bottomLeft: other.bottomLeft ?? _$this.bottomLeft,
+        bottomRight: other.bottomRight ?? _$this.bottomRight);
   }
 
   /// The list of properties that constitute the state of this [BorderRadiusDto].
@@ -73,11 +72,10 @@ base mixin _$BorderRadiusDirectionalDto on Dto<BorderRadiusDirectional> {
     if (other == null) return _$this;
 
     return BorderRadiusDirectionalDto(
-      topStart: other.topStart ?? _$this.topStart,
-      topEnd: other.topEnd ?? _$this.topEnd,
-      bottomStart: other.bottomStart ?? _$this.bottomStart,
-      bottomEnd: other.bottomEnd ?? _$this.bottomEnd,
-    );
+        topStart: other.topStart ?? _$this.topStart,
+        topEnd: other.topEnd ?? _$this.topEnd,
+        bottomStart: other.bottomStart ?? _$this.bottomStart,
+        bottomEnd: other.bottomEnd ?? _$this.bottomEnd);
   }
 
   /// The list of properties that constitute the state of this [BorderRadiusDirectionalDto].

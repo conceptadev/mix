@@ -2,64 +2,58 @@
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
+import 'package:mix_annotations/mix_annotations.dart';
 
 import '../attributes/spacing/edge_insets_dto.dart';
+import '../attributes/spacing/spacing_util.dart';
 import '../core/attribute.dart';
 import '../core/factory/mix_data.dart';
+import '../core/factory/mix_provider.dart';
 import '../core/modifier.dart';
-import '../core/utility.dart';
+import '../core/spec.dart';
 import '../internal/diagnostic_properties_builder_ext.dart';
 
-final class PaddingSpec extends WidgetModifierSpec<PaddingSpec> {
-  final EdgeInsetsGeometry padding;
-  const PaddingSpec(this.padding);
+part 'padding_widget_modifier.g.dart';
 
-  @override
-  PaddingSpec lerp(PaddingSpec? other, double t) {
-    return PaddingSpec(
-      EdgeInsetsGeometry.lerp(padding, other?.padding, t) ?? padding,
-    );
-  }
+/// A modifier that wraps a widget with the [Padding] widget.
+///
+/// The [Padding] widget is used to add padding around a widget.
+@MixableSpec()
+final class PaddingSpec extends Spec<PaddingSpec>
+    with _$PaddingSpec, ModifierSpecMixin {
+  final EdgeInsetsGeometry? padding;
+  const PaddingSpec._({this.padding});
+  factory PaddingSpec({EdgeInsetsGeometry? padding}) =>
+      PaddingSpec._(padding: padding);
 
-  @override
-  PaddingSpec copyWith({EdgeInsetsGeometry? padding}) {
-    return PaddingSpec(padding ?? this.padding);
-  }
-
-  @override
-  get props => [padding];
+  static const of = _$PaddingSpec.of;
+  static const from = _$PaddingSpec.from;
 
   @override
   Widget build(Widget child) {
-    return Padding(padding: padding, child: child);
+    return Padding(padding: padding ?? EdgeInsets.zero, child: child);
   }
 }
 
-final class PaddingModifierAttribute
-    extends WidgetModifierAttribute<PaddingModifierAttribute, PaddingSpec> {
-  final EdgeInsetsGeometryDto padding;
-  const PaddingModifierAttribute(this.padding);
-
-  @override
-  PaddingModifierAttribute merge(PaddingModifierAttribute? other) {
-    return PaddingModifierAttribute(padding.merge(other?.padding));
-  }
-
-  @override
-  PaddingSpec resolve(MixData mix) => PaddingSpec(padding.resolve(mix));
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties.addUsingDefault('padding', padding);
-  }
-
-  @override
-  get props => [padding];
+extension PaddingSpecUtilityX<T extends Attribute> on PaddingSpecUtility<T> {
+  // TODO: This is inconsistent with other utilities. Should be `call` instead of `only`.
+  T call(EdgeInsetsGeometryDto padding) => only(padding: padding);
 }
 
-final class PaddingModifierUtility<T extends Attribute>
-    extends MixUtility<T, PaddingModifierAttribute> {
-  const PaddingModifierUtility(super.builder);
-  T call(SpacingDto value) => builder(PaddingModifierAttribute(value));
+/// A modifier that wraps a widget with the [Padding] widget.
+///
+/// The [Padding] widget is used to add padding around a widget.
+@Deprecated('Use PaddingSpec instead')
+final class PaddingModifierSpec extends PaddingSpec {
+  const PaddingModifierSpec(EdgeInsetsGeometry padding)
+      : super(padding: padding);
 }
+
+@Deprecated('Use PaddingSpecAttribute instead')
+final class PaddingModifierAttribute extends PaddingSpecAttribute {
+  const PaddingModifierAttribute(EdgeInsetsGeometryDto padding)
+      : super(padding: padding);
+}
+
+@Deprecated('Use PaddingSpecUtility instead')
+typedef PaddingUtility = PaddingSpecUtility;

@@ -6,6 +6,16 @@ import 'factory/mix_data.dart';
 import 'spec.dart';
 import 'utility.dart';
 
+mixin ModifierSpecMixin<T extends Spec<T>> on Spec<T> {
+  Widget build(Widget child);
+}
+
+base mixin ModifierSpecAttributeMixin<T extends ModifierSpecMixin<T>>
+    on SpecAttribute<T> {
+  @override
+  T resolve(MixData mix);
+}
+
 abstract base class WidgetModifierSpec<Self extends WidgetModifierSpec<Self>>
     extends Spec<Self> {
   const WidgetModifierSpec({super.animated});

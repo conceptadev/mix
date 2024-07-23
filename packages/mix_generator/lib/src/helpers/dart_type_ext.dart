@@ -100,3 +100,24 @@ extension LibraryElementX on LibraryElement {
     return isFlutterLibrary || isDartLibrary;
   }
 }
+
+extension ConstructorElementX on ConstructorElement {
+  bool get isUnamedConstructor => name == '' && !isFactory;
+  bool get isPrivateConstructor => name.startsWith('_') && !isFactory;
+}
+
+extension ConstantReaderX on ConstantReader {
+  String? get typeAsString {
+    final peakedType = peek('type');
+
+    String? name;
+
+    if (peakedType?.isString == true) {
+      return peakedType!.stringValue;
+    } else if (peakedType?.isType == true) {
+      return peakedType!.typeValue.element!.name!;
+    }
+
+    return name;
+  }
+}

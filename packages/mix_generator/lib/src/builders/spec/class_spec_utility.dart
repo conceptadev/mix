@@ -1,28 +1,40 @@
+import 'package:mix_annotations/mix_annotations.dart';
 import 'package:mix_generator/src/builders/utility_class_builder.dart';
-import 'package:mix_generator/src/helpers/builder_utils.dart';
+import 'package:mix_generator/src/helpers/field_info.dart';
 
-String specUtilityClass(SpecAnnotationContext context) {
-  final utilityType = context.attributeClassName;
-  final utilityClassName = '${context.name}Utility';
+String specUtilityClass(ClassBuilderContext<MixableSpec> context) {
+  if (context.annotation.skipUtility) {
+    return '';
+  }
 
-  final fields = generateUtilityFields(utilityType, context.fields);
+  final attributeName = context.attributeName;
+
+  final instance = ClassInfo(
+      name: context.utilityName,
+      fields: context.fields,
+      extendsType: 'SpecUtility<T, $attributeName> ',
+      genericTypes: ['T extends Attribute']);
+
+  final className = instance.name;
+
+  final fields = generateUtilityFields(attributeName, context.fields);
 
   final onlyMethod = utilityMethodOnlyBuilder(
-    utilityType: utilityType,
+    utilityType: attributeName,
     fields: context.fields,
   );
 
   return '''
-/// Utility class for configuring [$utilityType] properties.
+/// Utility class for configuring [$attributeName] properties.
 ///
-/// This class provides methods to set individual properties of a [$utilityType].
-/// Use the methods of this class to configure specific properties of a [$utilityType].
-base class $utilityClassName<T extends Attribute> extends SpecUtility<T, $utilityType> {
+/// This class provides methods to set individual properties of a [$attributeName].
+/// Use the methods of this class to configure specific properties of a [$attributeName].
+ ${instance.writeDefinition()} {
   $fields
 
-  $utilityClassName(super.builder);
+  ${instance.writeConstructor()}(super.builder);
 
-  static final self = $utilityClassName((v) => v);
+  static final self = $className((v) => v);
 
   $onlyMethod
 }

@@ -1,41 +1,27 @@
 // ignore_for_file: prefer-named-boolean-parameters
 
-import 'dart:ui';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
+import 'package:mix_annotations/mix_annotations.dart';
 
 import '../core/attribute.dart';
 import '../core/factory/mix_data.dart';
+import '../core/factory/mix_provider.dart';
+import '../core/helpers.dart';
 import '../core/modifier.dart';
+import '../core/spec.dart';
 import '../core/utility.dart';
 import '../internal/diagnostic_properties_builder_ext.dart';
 
-final class SizedBoxModifierSpec
-    extends WidgetModifierSpec<SizedBoxModifierSpec> {
+part 'sized_box_widget_modifier.g.dart';
+
+@MixableSpec()
+final class SizedBoxSpec extends Spec<SizedBoxSpec>
+    with _$SizedBoxSpec, ModifierSpecMixin {
   final double? width;
   final double? height;
 
-  const SizedBoxModifierSpec({this.width, this.height});
-
-  @override
-  SizedBoxModifierSpec lerp(SizedBoxModifierSpec? other, double t) {
-    return SizedBoxModifierSpec(
-      width: lerpDouble(width, other?.width, t),
-      height: lerpDouble(height, other?.height, t),
-    );
-  }
-
-  @override
-  SizedBoxModifierSpec copyWith({double? width, double? height}) {
-    return SizedBoxModifierSpec(
-      width: width ?? this.width,
-      height: height ?? this.height,
-    );
-  }
-
-  @override
-  get props => [width, height];
+  const SizedBoxSpec({this.width, this.height});
 
   @override
   Widget build(Widget child) {
@@ -43,57 +29,21 @@ final class SizedBoxModifierSpec
   }
 }
 
-final class SizedBoxModifierAttribute extends WidgetModifierAttribute<
-    SizedBoxModifierAttribute, SizedBoxModifierSpec> {
-  final double? width;
-  final double? height;
-
-  const SizedBoxModifierAttribute({this.width, this.height});
-
-  @override
-  SizedBoxModifierSpec resolve(MixData mix) {
-    return SizedBoxModifierSpec(width: width, height: height);
-  }
-
-  @override
-  SizedBoxModifierAttribute merge(SizedBoxModifierAttribute? other) {
-    return SizedBoxModifierAttribute(
-      width: other?.width ?? width,
-      height: other?.height ?? height,
-    );
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties.addUsingDefault('width', width);
-    properties.addUsingDefault('height', height);
-  }
-
-  @override
-  get props => [width, height];
-}
-
-final class SizedBoxModifierUtility<T extends Attribute>
-    extends MixUtility<T, SizedBoxModifierAttribute> {
-  /// Utility for defining [SizedBoxModifierAttribute.height]
-  late final height = DoubleUtility((value) => call(height: value));
-
-  /// Utility for defining [SizedBoxModifierAttribute.width]
-  late final width = DoubleUtility((value) => call(width: value));
-
-  /// Utility for defining [SizedBoxModifierAttribute.width]
-  /// and [SizedBoxModifierAttribute.height]
-  late final square =
-      DoubleUtility((value) => call(width: value, height: value));
-
-  SizedBoxModifierUtility(super.builder);
-
+extension SizedBoxSpecUtilityX<T extends Attribute> on SizedBoxSpecUtility<T> {
   T call({double? width, double? height}) {
-    return builder(SizedBoxModifierAttribute(width: width, height: height));
+    return only(width: width, height: height);
   }
 
-  /// Utility for defining [SizedBoxModifierAttribute.width] and [SizedBoxModifierAttribute.height]
+  /// Utility for defining [SizedBoxSpec.width] and [SizedBoxSpec.height]
   /// from [Size]
   T as(Size size) => call(width: size.width, height: size.height);
 }
+
+@Deprecated('Use SizedBoxSpec instead')
+typedef SizedBoxModifierSpec = SizedBoxSpec;
+
+@Deprecated('Use SizedBoxSpecAttribute instead')
+typedef SizedBoxModifierAttribute = SizedBoxSpecAttribute;
+
+@Deprecated('Use SizedBoxSpecUtility instead')
+typedef SizedBoxModifierUtility = SizedBoxSpecUtility;

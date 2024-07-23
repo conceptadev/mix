@@ -20,11 +20,10 @@ base mixin _$EdgeInsetsDto on Dto<EdgeInsets> {
     if (other == null) return _$this;
 
     return EdgeInsetsDto(
-      top: other.top ?? _$this.top,
-      bottom: other.bottom ?? _$this.bottom,
-      left: other.left ?? _$this.left,
-      right: other.right ?? _$this.right,
-    );
+        top: other.top ?? _$this.top,
+        bottom: other.bottom ?? _$this.bottom,
+        left: other.left ?? _$this.left,
+        right: other.right ?? _$this.right);
   }
 
   /// The list of properties that constitute the state of this [EdgeInsetsDto].
@@ -130,11 +129,10 @@ base mixin _$EdgeInsetsDirectionalDto on Dto<EdgeInsetsDirectional> {
     if (other == null) return _$this;
 
     return EdgeInsetsDirectionalDto(
-      top: other.top ?? _$this.top,
-      bottom: other.bottom ?? _$this.bottom,
-      start: other.start ?? _$this.start,
-      end: other.end ?? _$this.end,
-    );
+        top: other.top ?? _$this.top,
+        bottom: other.bottom ?? _$this.bottom,
+        start: other.start ?? _$this.start,
+        end: other.end ?? _$this.end);
   }
 
   /// The list of properties that constitute the state of this [EdgeInsetsDirectionalDto].

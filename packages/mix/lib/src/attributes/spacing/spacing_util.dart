@@ -48,7 +48,7 @@ final class SpacingUtility<T extends Attribute>
     double? end,
   }) {
     return builder(
-      SpacingDto.only(
+      EdgeInsetsGeometryDto.only(
         top: top,
         bottom: bottom,
         left: left,
@@ -62,7 +62,7 @@ final class SpacingUtility<T extends Attribute>
 
 @immutable
 final class SpacingDirectionalUtility<T extends Attribute>
-    extends DtoUtility<T, SpacingDto, EdgeInsetsGeometry> {
+    extends DtoUtility<T, EdgeInsetsGeometryDto, EdgeInsetsGeometry> {
   late final all = SpacingSideUtility(
     (v) => only(top: v, bottom: v, start: v, end: v),
   );
@@ -94,7 +94,8 @@ final class SpacingDirectionalUtility<T extends Attribute>
   @override
   T only({double? top, double? bottom, double? start, double? end}) {
     return builder(
-      SpacingDto.only(top: top, bottom: bottom, start: start, end: end),
+      EdgeInsetsGeometryDto.only(
+          top: top, bottom: bottom, start: start, end: end),
     );
   }
 }

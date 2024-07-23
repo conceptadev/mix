@@ -2,72 +2,47 @@
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
+import 'package:mix_annotations/mix_annotations.dart';
 
 import '../core/attribute.dart';
 import '../core/factory/mix_data.dart';
-import '../core/helpers.dart';
+import '../core/factory/mix_provider.dart';
 import '../core/modifier.dart';
+import '../core/spec.dart';
 import '../core/utility.dart';
 import '../internal/diagnostic_properties_builder_ext.dart';
 
-final class RotatedBoxModifierSpec
-    extends WidgetModifierSpec<RotatedBoxModifierSpec> {
-  final int quarterTurns;
-  const RotatedBoxModifierSpec(this.quarterTurns);
+part 'rotated_box_widget_modifier.g.dart';
 
-  @override
-  RotatedBoxModifierSpec lerp(RotatedBoxModifierSpec? other, double t) {
-    // Use lerpInt for interpolating between integers
-    return RotatedBoxModifierSpec(
-      MixHelpers.lerpInt(quarterTurns, other?.quarterTurns, t),
-    );
-  }
-
-  @override
-  RotatedBoxModifierSpec copyWith({int? quarterTurns}) {
-    return RotatedBoxModifierSpec(quarterTurns ?? this.quarterTurns);
-  }
-
-  @override
-  List<Object?> get props => [quarterTurns];
+@MixableSpec()
+final class RotatedBoxSpec extends Spec<RotatedBoxSpec>
+    with _$RotatedBoxSpec, ModifierSpecMixin {
+  final int? quarterTurns;
+  const RotatedBoxSpec._({
+    this.quarterTurns,
+  });
+  factory RotatedBoxSpec(int quarterTurns) =>
+      RotatedBoxSpec._(quarterTurns: quarterTurns);
 
   @override
   Widget build(Widget child) {
-    return RotatedBox(quarterTurns: quarterTurns, child: child);
+    return RotatedBox(quarterTurns: quarterTurns ?? 0, child: child);
   }
 }
 
-final class RotatedBoxModifierAttribute extends WidgetModifierAttribute<
-    RotatedBoxModifierAttribute, RotatedBoxModifierSpec> {
-  final int quarterTurns;
-  const RotatedBoxModifierAttribute(this.quarterTurns);
-
-  @override
-  RotatedBoxModifierAttribute merge(RotatedBoxModifierAttribute? other) {
-    // Merge by prioritizing the properties of the other instance if available
-    return RotatedBoxModifierAttribute(other?.quarterTurns ?? quarterTurns);
-  }
-
-  @override
-  RotatedBoxModifierSpec resolve(MixData mix) =>
-      RotatedBoxModifierSpec(quarterTurns);
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties.addUsingDefault('quarterTurns', quarterTurns);
-  }
-
-  @override
-  List<Object?> get props => [quarterTurns];
+extension RotatedBoxSpecUtilityX<T extends Attribute>
+    on RotatedBoxSpecUtility<T> {
+  T call(int value) => only(quarterTurns: value);
+  T d90() => only(quarterTurns: 1);
+  T d180() => only(quarterTurns: 2);
+  T d270() => only(quarterTurns: 3);
 }
 
-final class RotatedBoxWidgetUtility<T extends Attribute>
-    extends MixUtility<T, RotatedBoxModifierAttribute> {
-  const RotatedBoxWidgetUtility(super.builder);
-  T d90() => builder(const RotatedBoxModifierAttribute(1));
-  T d180() => builder(const RotatedBoxModifierAttribute(2));
-  T d270() => builder(const RotatedBoxModifierAttribute(3));
+@Deprecated('Use RotatedBoxSpec instead')
+typedef RotatedBoxModifierSpec = RotatedBoxSpec;
 
-  T call(int value) => builder(RotatedBoxModifierAttribute(value));
-}
+@Deprecated('Use RotatedBoxSpecAttribute instead')
+typedef RotatedBoxModifierAttribute = RotatedBoxSpecAttribute;
+
+@Deprecated('Use RotatedBoxSpecUtility instead')
+typedef RotatedBoxWidgetUtility = RotatedBoxSpecUtility;

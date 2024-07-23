@@ -8,7 +8,7 @@ part of 'icon_spec.dart';
 
 // ignore_for_file: deprecated_member_use_from_same_package
 
-base mixin _$IconSpec on Spec<IconSpec> {
+mixin _$IconSpec on Spec<IconSpec> {
   static IconSpec from(MixData mix) {
     return mix.attributeOf<IconSpecAttribute>()?.resolve(mix) ??
         const IconSpec();
@@ -48,18 +48,17 @@ base mixin _$IconSpec on Spec<IconSpec> {
     WidgetModifiersData? modifiers,
   }) {
     return IconSpec(
-      color: color ?? _$this.color,
-      size: size ?? _$this.size,
-      weight: weight ?? _$this.weight,
-      grade: grade ?? _$this.grade,
-      opticalSize: opticalSize ?? _$this.opticalSize,
-      shadows: shadows ?? _$this.shadows,
-      textDirection: textDirection ?? _$this.textDirection,
-      applyTextScaling: applyTextScaling ?? _$this.applyTextScaling,
-      fill: fill ?? _$this.fill,
-      animated: animated ?? _$this.animated,
-      modifiers: modifiers ?? _$this.modifiers,
-    );
+        color: color ?? _$this.color,
+        size: size ?? _$this.size,
+        weight: weight ?? _$this.weight,
+        grade: grade ?? _$this.grade,
+        opticalSize: opticalSize ?? _$this.opticalSize,
+        shadows: shadows ?? _$this.shadows,
+        textDirection: textDirection ?? _$this.textDirection,
+        applyTextScaling: applyTextScaling ?? _$this.applyTextScaling,
+        fill: fill ?? _$this.fill,
+        animated: animated ?? _$this.animated,
+        modifiers: modifiers ?? _$this.modifiers);
   }
 
   /// Linearly interpolates between this [IconSpec] and another [IconSpec] based on the given parameter [t].
@@ -87,20 +86,19 @@ base mixin _$IconSpec on Spec<IconSpec> {
     if (other == null) return _$this;
 
     return IconSpec(
-      color: Color.lerp(_$this.color, other.color, t),
-      size: MixHelpers.lerpDouble(_$this.size, other.size, t),
-      weight: MixHelpers.lerpDouble(_$this.weight, other.weight, t),
-      grade: MixHelpers.lerpDouble(_$this.grade, other.grade, t),
-      opticalSize:
-          MixHelpers.lerpDouble(_$this.opticalSize, other.opticalSize, t),
-      shadows: t < 0.5 ? _$this.shadows : other.shadows,
-      textDirection: t < 0.5 ? _$this.textDirection : other.textDirection,
-      applyTextScaling:
-          t < 0.5 ? _$this.applyTextScaling : other.applyTextScaling,
-      fill: MixHelpers.lerpDouble(_$this.fill, other.fill, t),
-      animated: t < 0.5 ? _$this.animated : other.animated,
-      modifiers: t < 0.5 ? _$this.modifiers : other.modifiers,
-    );
+        color: Color.lerp(_$this.color, other.color, t),
+        size: MixHelpers.lerpDouble(_$this.size, other.size, t),
+        weight: MixHelpers.lerpDouble(_$this.weight, other.weight, t),
+        grade: MixHelpers.lerpDouble(_$this.grade, other.grade, t),
+        opticalSize:
+            MixHelpers.lerpDouble(_$this.opticalSize, other.opticalSize, t),
+        shadows: t < 0.5 ? _$this.shadows : other.shadows,
+        textDirection: t < 0.5 ? _$this.textDirection : other.textDirection,
+        applyTextScaling:
+            t < 0.5 ? _$this.applyTextScaling : other.applyTextScaling,
+        fill: MixHelpers.lerpDouble(_$this.fill, other.fill, t),
+        animated: t < 0.5 ? _$this.animated : other.animated,
+        modifiers: t < 0.5 ? _$this.modifiers : other.modifiers);
   }
 
   /// The list of properties that constitute the state of this [IconSpec].
@@ -144,19 +142,18 @@ final class IconSpecAttribute extends SpecAttribute<IconSpec>
   final bool? applyTextScaling;
   final double? fill;
 
-  const IconSpecAttribute({
-    this.color,
-    this.size,
-    this.weight,
-    this.grade,
-    this.opticalSize,
-    this.shadows,
-    this.textDirection,
-    this.applyTextScaling,
-    this.fill,
-    super.animated,
-    super.modifiers,
-  });
+  const IconSpecAttribute(
+      {this.color,
+      this.size,
+      this.weight,
+      this.grade,
+      this.opticalSize,
+      this.shadows,
+      this.textDirection,
+      this.applyTextScaling,
+      this.fill,
+      super.animated,
+      super.modifiers});
 
   /// Resolves to [IconSpec] using the provided [MixData].
   ///
@@ -169,18 +166,17 @@ final class IconSpecAttribute extends SpecAttribute<IconSpec>
   @override
   IconSpec resolve(MixData mix) {
     return IconSpec(
-      color: color?.resolve(mix),
-      size: size,
-      weight: weight,
-      grade: grade,
-      opticalSize: opticalSize,
-      shadows: shadows?.map((e) => e.resolve(mix)).toList(),
-      textDirection: textDirection,
-      applyTextScaling: applyTextScaling,
-      fill: fill,
-      animated: animated?.resolve(mix) ?? mix.animation,
-      modifiers: modifiers?.resolve(mix),
-    );
+        color: color?.resolve(mix),
+        size: size,
+        weight: weight,
+        grade: grade,
+        opticalSize: opticalSize,
+        shadows: shadows?.map((e) => e.resolve(mix)).toList(),
+        textDirection: textDirection,
+        applyTextScaling: applyTextScaling,
+        fill: fill,
+        animated: animated?.resolve(mix) ?? mix.animation,
+        modifiers: modifiers?.resolve(mix));
   }
 
   /// Merges the properties of this [IconSpecAttribute] with the properties of [other].
@@ -196,18 +192,17 @@ final class IconSpecAttribute extends SpecAttribute<IconSpec>
     if (other == null) return this;
 
     return IconSpecAttribute(
-      color: color?.merge(other.color) ?? other.color,
-      size: other.size ?? size,
-      weight: other.weight ?? weight,
-      grade: other.grade ?? grade,
-      opticalSize: other.opticalSize ?? opticalSize,
-      shadows: MixHelpers.mergeList(shadows, other.shadows),
-      textDirection: other.textDirection ?? textDirection,
-      applyTextScaling: other.applyTextScaling ?? applyTextScaling,
-      fill: other.fill ?? fill,
-      animated: animated?.merge(other.animated) ?? other.animated,
-      modifiers: modifiers?.merge(other.modifiers) ?? other.modifiers,
-    );
+        color: color?.merge(other.color) ?? other.color,
+        size: other.size ?? size,
+        weight: other.weight ?? weight,
+        grade: other.grade ?? grade,
+        opticalSize: other.opticalSize ?? opticalSize,
+        shadows: MixHelpers.mergeList(shadows, other.shadows),
+        textDirection: other.textDirection ?? textDirection,
+        applyTextScaling: other.applyTextScaling ?? applyTextScaling,
+        fill: other.fill ?? fill,
+        animated: animated?.merge(other.animated) ?? other.animated,
+        modifiers: modifiers?.merge(other.modifiers) ?? other.modifiers);
   }
 
   /// The list of properties that constitute the state of this [IconSpecAttribute].
@@ -232,6 +227,7 @@ final class IconSpecAttribute extends SpecAttribute<IconSpec>
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
+
     properties.addUsingDefault('color', color);
     properties.addUsingDefault('size', size);
     properties.addUsingDefault('weight', weight);

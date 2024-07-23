@@ -1,48 +1,58 @@
+import 'package:mix_annotations/mix_annotations.dart';
 import 'package:mix_generator/src/builders/method_debug_fill_properties.dart';
 import 'package:mix_generator/src/builders/method_equality.dart';
 import 'package:mix_generator/src/builders/method_merge.dart';
 import 'package:mix_generator/src/builders/method_resolve.dart';
 import 'package:mix_generator/src/helpers/builder_utils.dart';
+import 'package:mix_generator/src/helpers/field_info.dart';
 
-String specAttributeClass(SpecAnnotationContext context) {
+String specAttributeClass(ClassBuilderContext<MixableSpec> context) {
   final specName = context.name;
-  final className = context.attributeClassName;
-  final fields = context.fields;
-  final extendsType = 'SpecAttribute<$specName>';
 
-  final nonSuperFields = fields.where((field) => !field.isSuper).toList();
+  final mixins =
+      context.classElement.isMixRef ? ['Diagnosticable'] : <String>[];
+
+  final specInstance = ClassInfo.ofElement(context.classElement);
+
+  final attributeInstance = ClassInfo(
+    name: context.attributeName,
+    isBase: specInstance.isBase,
+    isFinal: specInstance.isFinal,
+    fields: context.fields,
+    mixinTypes: mixins,
+    extendsType: context.attributeExtendsType,
+  );
+
+  final nonSuperFields =
+      attributeInstance.fields.where((field) => !field.isSuper).toList();
 
   final fieldDeclarations = nonSuperFields.map((field) {
-    final fieldType = field.dtoType ?? '${field.type}';
+    final fieldType = field.dtoType ?? field.type;
     return 'final $fieldType? ${field.name};';
   }).join('\n  ');
 
-  final constructorParameters = fields.map((field) {
+  final optionalParameters = attributeInstance.fields.map((field) {
     return field.isSuper ? 'super.${field.name}' : 'this.${field.name}';
   }).join(', ');
 
   final resolveMethod = resolveMethodBuilder(
-    className: className,
-    resolvedType: specName,
-    fields: fields,
+    attributeInstance,
+    resolvedName: specInstance.name,
+    resolvedConstructor: specInstance.constructorRef,
+    withDefaults: false,
   );
 
-  final mergeMethod = mergeMethodBuilder(
-    className: className,
-    context: context,
-  );
+  final mergeMethod = mergeMethodBuilder(attributeInstance);
 
-  final debugFillProperties = methodDebugFillProperties(
-    className: className,
-    fields: fields,
-  );
+  final debugFillProperties = methodDebugFillProperties(attributeInstance);
 
-  final propsGetter = getterPropsBuilder(
-    className: className,
-    fields: fields,
-  );
+  final propsGetter = getterPropsBuilder(attributeInstance);
+
+  final contructorParameters =
+      attributeInstance.fields.isEmpty ? '' : '{$optionalParameters,}';
 
   return '''
+
 /// Represents the attributes of a [$specName].
 ///
 /// This class encapsulates properties defining the layout and
@@ -50,12 +60,11 @@ String specAttributeClass(SpecAnnotationContext context) {
 ///
 /// Use this class to configure the attributes of a [$specName] and pass it to
 /// the [$specName] constructor.
-final class $className extends $extendsType with Diagnosticable {
+${attributeInstance.writeDefinition()}{
+
   $fieldDeclarations
 
-  const $className({
-    $constructorParameters,
-  });
+  const ${attributeInstance.writeConstructor()}($contructorParameters);
 
   $resolveMethod
 
@@ -64,6 +73,8 @@ final class $className extends $extendsType with Diagnosticable {
   $propsGetter
 
   $debugFillProperties
+
+
 }
 ''';
 }

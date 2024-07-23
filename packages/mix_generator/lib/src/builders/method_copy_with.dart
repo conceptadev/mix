@@ -1,26 +1,29 @@
 import 'package:mix_generator/src/helpers/field_info.dart';
+import 'package:mix_generator/src/helpers/helpers.dart';
 
-String copyWithMethodBuilder({
-  required String className,
-  required List<ParameterInfo> fields,
-  bool isInternalRef = false,
-}) {
-  final fieldStatements = fields.map((field) {
+String copyWithMethodBuilder(ClassInfo instance) {
+  final fields = instance.fields;
+  final className = instance.name;
+
+  final isInternalRef = instance.isInternalRef;
+
+  final fieldStatements = buildConstructorParams(fields, (field) {
     final fieldName =
         isInternalRef ? field.asInternalRef : 'this.${field.name}';
-    return '${field.name}: ${field.name} ?? $fieldName';
-  }).join(',\n      ');
+    return '${field.name} ?? $fieldName';
+  });
+
+  final optionalParams =
+      '${fields.map((field) => '${field.type}? ${field.name},').join('\n')}';
+
+  final copyWithParams = fields.isEmpty ? '' : '{$optionalParams}';
 
   return '''
   /// Creates a copy of this [$className] but with the given fields
   /// replaced with the new values.
   @override
-  $className copyWith({
-    ${fields.map((field) => '${field.type}? ${field.name},').join('\n    ')}
-  }) {
-    return $className(
-      $fieldStatements,
-    );
+  $className copyWith($copyWithParams) {
+     return ${instance.writeConstructor()}($fieldStatements);
   }
 ''';
 }

@@ -42,7 +42,7 @@ const _defaultOrder = [
   // 5. AlignModifier: Aligns the widget within its allocated space, which is especially important
   // for positioning the widget correctly before applying any transformations that could affect its position.
   // Alignment is based on the size constraints established by previous modifiers.
-  AlignModifierSpec,
+  AlignSpec,
 
   // 6. IntrinsicHeightModifier: Adjusts the widget's height to fit its child's intrinsic height,
   // ensuring that the widget does not force its children to conform to an unnatural height. This is particularly

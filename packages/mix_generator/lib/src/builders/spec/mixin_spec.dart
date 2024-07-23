@@ -1,50 +1,44 @@
+import 'package:mix_annotations/mix_annotations.dart';
 import 'package:mix_generator/src/builders/getter_self_reference.dart';
 import 'package:mix_generator/src/builders/method_copy_with.dart';
 import 'package:mix_generator/src/builders/method_equality.dart';
 import 'package:mix_generator/src/builders/method_lerp_builder.dart';
-import 'package:mix_generator/src/helpers/builder_utils.dart';
+import 'package:mix_generator/src/helpers/field_info.dart';
 import 'package:mix_generator/src/helpers/helpers.dart';
 
-String specMixin(SpecAnnotationContext context) {
-  final className = context.name;
+String specMixin(ClassBuilderContext<MixableSpec> context) {
+  final specClass = ClassInfo.ofElement(
+    context.classElement,
+    internalRef: true,
+  );
+
+  final specClassName = specClass.name;
+
   final mixinName = context.generatedName;
-  final attributeName = context.attributeClassName;
-  final fields = context.fields;
+  final specType = context.specType;
 
-  final fromMethod = _staticMethodFromBuilder(
-    specName: className,
-    attributeName: attributeName,
-  );
+  final hasCopyWith =
+      context.classElement.methods.any((e) => e.name == 'copyWith');
+  final hasLerp = context.classElement.methods.any((e) => e.name == 'lerp');
 
-  final ofMethod = _staticMethodOfBuilder(
-    specName: className,
-    mixinName: mixinName,
-  );
+  final copyMethod = hasCopyWith ? '' : copyWithMethodBuilder(specClass);
 
-  final copyMethod = copyWithMethodBuilder(
-    className: className,
-    fields: fields,
-    isInternalRef: true,
-  );
+  final lerpMethod = hasLerp ? '' : lerpMethodBuilder(specClass);
 
-  final lerpMethod = lerpMethodBuilder(
-    context: context,
-    isInternalRef: true,
-  );
+  final propsGetter = getterPropsBuilder(specClass);
 
-  final propsGetter = getterPropsBuilder(
-    className: className,
-    fields: fields,
-    isInternalRef: true,
-  );
+  final selfGetter = getterSelfBuilder(specClass);
 
-  final selfGetter = getterSelfBuilder(className: className);
+  final staticMethodFrom = _staticMethodFromBuilder(context);
+
+  final staticMethodOf = _staticMethodOfBuilder(context);
 
   return '''
-base mixin $mixinName on Spec<$className> {
-  $fromMethod
+ mixin $mixinName on $specType<$specClassName> {
 
-  $ofMethod
+  $staticMethodFrom
+
+  $staticMethodOf
 
   $copyMethod
 
@@ -53,25 +47,30 @@ base mixin $mixinName on Spec<$className> {
   $propsGetter
 
   $selfGetter
+
 }
 ''';
 }
 
-String _staticMethodFromBuilder({
-  required String specName,
-  required String attributeName,
-}) {
+String _staticMethodFromBuilder(ClassBuilderContext<MixableSpec> context) {
+  final specName = context.name;
+  final attributeName = context.attributeName;
+  final constructorRef = context.constructorRef;
+  final constDef = context.isConst ? 'const ' : '';
   return '''
 static $specName from(MixData mix) {
-   return mix.attributeOf<$attributeName>()?.resolve(mix) ?? const $specName();
+   return mix.attributeOf<$attributeName>()?.resolve(mix) ?? $constDef$specName$constructorRef();
 }
 ''';
 }
 
-String _staticMethodOfBuilder({
-  required String specName,
-  required String mixinName,
-}) {
+String _staticMethodOfBuilder(
+  ClassBuilderContext<MixableSpec> context,
+) {
+  final specName = context.name;
+
+  final generatedName = context.generatedName;
+
   return '''
 /// {@template ${specName.snakecase}_of}
 /// Retrieves the [$specName] from the nearest [Mix] ancestor in the widget tree.
@@ -87,7 +86,7 @@ String _staticMethodOfBuilder({
 /// ```
 /// {@endtemplate}
 static $specName of(BuildContext context) {
-  return $mixinName.from(Mix.of(context));
+  return $generatedName.from(Mix.of(context));
 }
 ''';
 }

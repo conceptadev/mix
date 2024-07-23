@@ -1,5 +1,18 @@
 class MixableSpec {
-  const MixableSpec();
+  final bool withCopyWith;
+  final bool withEquality;
+  final bool withLerp;
+  final bool skipUtility;
+
+  final String prefix;
+
+  const MixableSpec({
+    this.withCopyWith = true,
+    this.withEquality = true,
+    this.withLerp = true,
+    this.skipUtility = false,
+    this.prefix = '',
+  });
 }
 
 /// Annotation of `MixableDto` with the specified options.

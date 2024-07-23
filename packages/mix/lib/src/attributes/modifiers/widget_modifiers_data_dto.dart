@@ -8,7 +8,7 @@ import 'widget_modifiers_data.dart';
 
 class WidgetModifiersDataDto extends Dto<WidgetModifiersData>
     with Diagnosticable {
-  final List<WidgetModifierAttribute> value;
+  final List<ModifierSpecAttributeMixin> value;
 
   const WidgetModifiersDataDto(this.value);
 

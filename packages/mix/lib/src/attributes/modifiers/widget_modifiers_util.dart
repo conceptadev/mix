@@ -8,7 +8,7 @@ final class SpecModifierUtility<T extends Attribute>
   SpecModifierUtility(super.builder);
 
   @override
-  T only(WidgetModifierAttribute attribute) {
+  T only(ModifierSpecMixin attribute) {
     return builder(WidgetModifiersDataDto([attribute]));
   }
 }

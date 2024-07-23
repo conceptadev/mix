@@ -1,6 +1,6 @@
 import '../attributes/spacing/spacing_util.dart';
 import '../core/attribute.dart';
-import '../core/modifier.dart';
+import '../core/spec.dart';
 import '../core/utility.dart';
 import 'align_widget_modifier.dart';
 import 'aspect_ratio_widget_modifier.dart';
@@ -20,7 +20,7 @@ abstract class ModifierUtility<T extends Attribute, Value>
   late final intrinsicWidth = IntrinsicWidthWidgetUtility(only);
   late final intrinsicHeight = IntrinsicHeightWidgetUtility(only);
   late final rotate = RotatedBoxWidgetUtility(only);
-  late final opacity = OpacityUtility(only);
+  late final opacity = OpacitySpecUtility(only);
   late final clipPath = ClipPathUtility(only);
   late final clipRRect = ClipRRectUtility(only);
   late final clipOval = ClipOvalUtility(only);
@@ -30,29 +30,29 @@ abstract class ModifierUtility<T extends Attribute, Value>
   late final show = visibility.on;
   late final hide = visibility.off;
   late final aspectRatio = AspectRatioUtility(only);
-  late final flexible = FlexibleModifierUtility(only);
+  late final flexible = FlexibleSpecUtility(only);
   late final expanded = flexible.expanded;
   late final transform = TransformUtility(only);
 
   late final scale = transform.scale;
-  late final align = AlignWidgetUtility(only);
+  late final align = AlignSpecUtility(only);
   late final fractionallySizedBox = FractionallySizedBoxModifierUtility(only);
   late final sizedBox = SizedBoxModifierUtility(only);
-  late final padding = SpacingUtility(PaddingModifierUtility(only).call);
+  late final padding = SpacingUtility(PaddingSpecUtility(only).call);
 
   ModifierUtility(super.builder);
 
-  T only(WidgetModifierAttribute attribute);
+  T only(SpecAttribute attribute);
 }
 
 class WithModifierUtility<T extends Attribute>
-    extends ModifierUtility<T, WidgetModifierAttribute> {
+    extends ModifierUtility<T, SpecAttribute> {
   static final self = WithModifierUtility(MixUtility.selfBuilder);
 
   WithModifierUtility(super.builder);
 
   @override
-  T only(WidgetModifierAttribute attribute) {
+  T only(SpecAttribute attribute) {
     return builder(attribute);
   }
 }

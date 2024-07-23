@@ -2,33 +2,24 @@
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
+import 'package:mix_annotations/mix_annotations.dart';
 
 import '../core/attribute.dart';
 import '../core/factory/mix_data.dart';
-import '../core/helpers.dart';
+import '../core/factory/mix_provider.dart';
 import '../core/modifier.dart';
+import '../core/spec.dart';
 import '../core/utility.dart';
 import '../internal/diagnostic_properties_builder_ext.dart';
 
-final class VisibilityModifierSpec
-    extends WidgetModifierSpec<VisibilityModifierSpec> {
+part 'visibility_widget_modifier.g.dart';
+
+@MixableSpec()
+final class VisibilitySpec extends Spec<VisibilitySpec>
+    with _$VisibilitySpec, ModifierSpecMixin {
   final bool visible;
-  const VisibilityModifierSpec(this.visible);
-
-  @override
-  VisibilityModifierSpec lerp(VisibilityModifierSpec? other, double t) {
-    return VisibilityModifierSpec(
-      MixHelpers.lerpSnap(visible, other?.visible, t) ?? visible,
-    );
-  }
-
-  @override
-  VisibilityModifierSpec copyWith({bool? visible}) {
-    return VisibilityModifierSpec(visible ?? this.visible);
-  }
-
-  @override
-  get props => [visible];
+  const VisibilitySpec._({bool? visible}) : visible = visible ?? true;
+  factory VisibilitySpec(bool visible) => VisibilitySpec._(visible: visible);
 
   @override
   Widget build(Widget child) {
@@ -36,36 +27,18 @@ final class VisibilityModifierSpec
   }
 }
 
-final class VisibilityModifierAttribute extends WidgetModifierAttribute<
-    VisibilityModifierAttribute, VisibilityModifierSpec> {
-  final bool visible;
-  const VisibilityModifierAttribute(this.visible);
-
-  @override
-  VisibilityModifierAttribute merge(VisibilityModifierAttribute? other) {
-    return VisibilityModifierAttribute(other?.visible ?? visible);
-  }
-
-  @override
-  VisibilityModifierSpec resolve(MixData mix) {
-    return VisibilityModifierSpec(visible);
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties.addUsingDefault('visible', visible);
-  }
-
-  @override
-  get props => [visible];
+extension VisibilitySpecUtilityX<T extends Attribute>
+    on VisibilitySpecUtility<T> {
+  T call(bool value) => only(visible: value);
+  T on() => only(visible: true);
+  T off() => only(visible: false);
 }
 
-final class VisibilityUtility<T extends Attribute>
-    extends MixUtility<T, VisibilityModifierAttribute> {
-  const VisibilityUtility(super.builder);
-  T on() => builder(const VisibilityModifierAttribute(true));
-  T off() => builder(const VisibilityModifierAttribute(false));
+@Deprecated('Use VisibilitySpec instead')
+typedef VisibilityModifierSpec = VisibilitySpec;
 
-  T call(bool value) => builder(VisibilityModifierAttribute(value));
-}
+@Deprecated('Use VisibilitySpecAttribute instead')
+typedef VisibilityModifierAttribute = VisibilitySpecAttribute;
+
+@Deprecated('Use VisibilitySpecUtility instead')
+typedef VisibilityUtility = VisibilitySpecUtility;

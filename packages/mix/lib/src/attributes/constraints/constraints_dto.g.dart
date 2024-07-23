@@ -18,11 +18,10 @@ base mixin _$BoxConstraintsDto on Dto<BoxConstraints> {
   @override
   BoxConstraints resolve(MixData mix) {
     return BoxConstraints(
-      minWidth: _$this.minWidth ?? defaultValue.minWidth,
-      maxWidth: _$this.maxWidth ?? defaultValue.maxWidth,
-      minHeight: _$this.minHeight ?? defaultValue.minHeight,
-      maxHeight: _$this.maxHeight ?? defaultValue.maxHeight,
-    );
+        minWidth: _$this.minWidth ?? defaultValue.minWidth,
+        maxWidth: _$this.maxWidth ?? defaultValue.maxWidth,
+        minHeight: _$this.minHeight ?? defaultValue.minHeight,
+        maxHeight: _$this.maxHeight ?? defaultValue.maxHeight);
   }
 
   /// Merges the properties of this [BoxConstraintsDto] with the properties of [other].
@@ -38,11 +37,10 @@ base mixin _$BoxConstraintsDto on Dto<BoxConstraints> {
     if (other == null) return _$this;
 
     return BoxConstraintsDto(
-      minWidth: other.minWidth ?? _$this.minWidth,
-      maxWidth: other.maxWidth ?? _$this.maxWidth,
-      minHeight: other.minHeight ?? _$this.minHeight,
-      maxHeight: other.maxHeight ?? _$this.maxHeight,
-    );
+        minWidth: other.minWidth ?? _$this.minWidth,
+        maxWidth: other.maxWidth ?? _$this.maxWidth,
+        minHeight: other.minHeight ?? _$this.minHeight,
+        maxHeight: other.maxHeight ?? _$this.maxHeight);
   }
 
   /// The list of properties that constitute the state of this [BoxConstraintsDto].

@@ -18,14 +18,13 @@ base mixin _$LinearGradientDto on Dto<LinearGradient> {
   @override
   LinearGradient resolve(MixData mix) {
     return LinearGradient(
-      begin: _$this.begin ?? defaultValue.begin,
-      end: _$this.end ?? defaultValue.end,
-      tileMode: _$this.tileMode ?? defaultValue.tileMode,
-      transform: _$this.transform ?? defaultValue.transform,
-      colors: _$this.colors?.map((e) => e.resolve(mix)).toList() ??
-          defaultValue.colors,
-      stops: _$this.stops ?? defaultValue.stops,
-    );
+        begin: _$this.begin ?? defaultValue.begin,
+        end: _$this.end ?? defaultValue.end,
+        tileMode: _$this.tileMode ?? defaultValue.tileMode,
+        transform: _$this.transform ?? defaultValue.transform,
+        colors: _$this.colors?.map((e) => e.resolve(mix)).toList() ??
+            defaultValue.colors,
+        stops: _$this.stops ?? defaultValue.stops);
   }
 
   /// Merges the properties of this [LinearGradientDto] with the properties of [other].
@@ -41,13 +40,12 @@ base mixin _$LinearGradientDto on Dto<LinearGradient> {
     if (other == null) return _$this;
 
     return LinearGradientDto(
-      begin: other.begin ?? _$this.begin,
-      end: other.end ?? _$this.end,
-      tileMode: other.tileMode ?? _$this.tileMode,
-      transform: other.transform ?? _$this.transform,
-      colors: MixHelpers.mergeList(_$this.colors, other.colors),
-      stops: MixHelpers.mergeList(_$this.stops, other.stops),
-    );
+        begin: other.begin ?? _$this.begin,
+        end: other.end ?? _$this.end,
+        tileMode: other.tileMode ?? _$this.tileMode,
+        transform: other.transform ?? _$this.transform,
+        colors: MixHelpers.mergeList(_$this.colors, other.colors),
+        stops: MixHelpers.mergeList(_$this.stops, other.stops));
   }
 
   /// The list of properties that constitute the state of this [LinearGradientDto].
@@ -163,16 +161,15 @@ base mixin _$RadialGradientDto on Dto<RadialGradient> {
   @override
   RadialGradient resolve(MixData mix) {
     return RadialGradient(
-      center: _$this.center ?? defaultValue.center,
-      radius: _$this.radius ?? defaultValue.radius,
-      tileMode: _$this.tileMode ?? defaultValue.tileMode,
-      focal: _$this.focal ?? defaultValue.focal,
-      focalRadius: _$this.focalRadius ?? defaultValue.focalRadius,
-      transform: _$this.transform ?? defaultValue.transform,
-      colors: _$this.colors?.map((e) => e.resolve(mix)).toList() ??
-          defaultValue.colors,
-      stops: _$this.stops ?? defaultValue.stops,
-    );
+        center: _$this.center ?? defaultValue.center,
+        radius: _$this.radius ?? defaultValue.radius,
+        tileMode: _$this.tileMode ?? defaultValue.tileMode,
+        focal: _$this.focal ?? defaultValue.focal,
+        focalRadius: _$this.focalRadius ?? defaultValue.focalRadius,
+        transform: _$this.transform ?? defaultValue.transform,
+        colors: _$this.colors?.map((e) => e.resolve(mix)).toList() ??
+            defaultValue.colors,
+        stops: _$this.stops ?? defaultValue.stops);
   }
 
   /// Merges the properties of this [RadialGradientDto] with the properties of [other].
@@ -188,15 +185,14 @@ base mixin _$RadialGradientDto on Dto<RadialGradient> {
     if (other == null) return _$this;
 
     return RadialGradientDto(
-      center: other.center ?? _$this.center,
-      radius: other.radius ?? _$this.radius,
-      tileMode: other.tileMode ?? _$this.tileMode,
-      focal: other.focal ?? _$this.focal,
-      focalRadius: other.focalRadius ?? _$this.focalRadius,
-      transform: other.transform ?? _$this.transform,
-      colors: MixHelpers.mergeList(_$this.colors, other.colors),
-      stops: MixHelpers.mergeList(_$this.stops, other.stops),
-    );
+        center: other.center ?? _$this.center,
+        radius: other.radius ?? _$this.radius,
+        tileMode: other.tileMode ?? _$this.tileMode,
+        focal: other.focal ?? _$this.focal,
+        focalRadius: other.focalRadius ?? _$this.focalRadius,
+        transform: other.transform ?? _$this.transform,
+        colors: MixHelpers.mergeList(_$this.colors, other.colors),
+        stops: MixHelpers.mergeList(_$this.stops, other.stops));
   }
 
   /// The list of properties that constitute the state of this [RadialGradientDto].
@@ -330,15 +326,14 @@ base mixin _$SweepGradientDto on Dto<SweepGradient> {
   @override
   SweepGradient resolve(MixData mix) {
     return SweepGradient(
-      center: _$this.center ?? defaultValue.center,
-      startAngle: _$this.startAngle ?? defaultValue.startAngle,
-      endAngle: _$this.endAngle ?? defaultValue.endAngle,
-      tileMode: _$this.tileMode ?? defaultValue.tileMode,
-      transform: _$this.transform ?? defaultValue.transform,
-      colors: _$this.colors?.map((e) => e.resolve(mix)).toList() ??
-          defaultValue.colors,
-      stops: _$this.stops ?? defaultValue.stops,
-    );
+        center: _$this.center ?? defaultValue.center,
+        startAngle: _$this.startAngle ?? defaultValue.startAngle,
+        endAngle: _$this.endAngle ?? defaultValue.endAngle,
+        tileMode: _$this.tileMode ?? defaultValue.tileMode,
+        transform: _$this.transform ?? defaultValue.transform,
+        colors: _$this.colors?.map((e) => e.resolve(mix)).toList() ??
+            defaultValue.colors,
+        stops: _$this.stops ?? defaultValue.stops);
   }
 
   /// Merges the properties of this [SweepGradientDto] with the properties of [other].
@@ -354,14 +349,13 @@ base mixin _$SweepGradientDto on Dto<SweepGradient> {
     if (other == null) return _$this;
 
     return SweepGradientDto(
-      center: other.center ?? _$this.center,
-      startAngle: other.startAngle ?? _$this.startAngle,
-      endAngle: other.endAngle ?? _$this.endAngle,
-      tileMode: other.tileMode ?? _$this.tileMode,
-      transform: other.transform ?? _$this.transform,
-      colors: MixHelpers.mergeList(_$this.colors, other.colors),
-      stops: MixHelpers.mergeList(_$this.stops, other.stops),
-    );
+        center: other.center ?? _$this.center,
+        startAngle: other.startAngle ?? _$this.startAngle,
+        endAngle: other.endAngle ?? _$this.endAngle,
+        tileMode: other.tileMode ?? _$this.tileMode,
+        transform: other.transform ?? _$this.transform,
+        colors: MixHelpers.mergeList(_$this.colors, other.colors),
+        stops: MixHelpers.mergeList(_$this.stops, other.stops));
   }
 
   /// The list of properties that constitute the state of this [SweepGradientDto].

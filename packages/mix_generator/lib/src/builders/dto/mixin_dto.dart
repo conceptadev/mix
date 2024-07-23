@@ -1,23 +1,13 @@
+import 'package:mix_annotations/mix_annotations.dart';
 import 'package:mix_generator/src/builders/getter_self_reference.dart';
 import 'package:mix_generator/src/builders/method_equality.dart';
 import 'package:mix_generator/src/builders/method_merge.dart';
 import 'package:mix_generator/src/builders/method_resolve.dart';
-import 'package:mix_generator/src/helpers/builder_utils.dart';
-import 'package:source_gen/source_gen.dart';
+import 'package:mix_generator/src/helpers/field_info.dart';
 
-String dtoMixin(DtoAnnotationContext context) {
-  final className = context.name;
+String dtoMixin(ClassBuilderContext<MixableDto> context) {
   final mixinName = context.generatedName;
-  final fields = context.fields;
-
-  final el = context.element;
-
-  if (!el.isDto) {
-    throw InvalidGenerationSource(
-      'The class $className must extend a class that extends Dto.',
-      element: el,
-    );
-  }
+  final el = context.classElement;
 
   // Check if ClassElement has method getters called props, resolve, and merge
   final hasEquality = el.methods.any((method) => method.name == 'props');
@@ -25,48 +15,33 @@ String dtoMixin(DtoAnnotationContext context) {
   final hasMerge = el.methods.any((method) => method.name == 'merge');
 
   // Get the generic type argument of Dto
-  final valueType = el.getGenericTypeOfSuperclass();
 
-  if (valueType == null) {
-    throw InvalidGenerationSource(
-      'The class $className must extend a class that extends Dto.',
-      element: el,
-    );
-  }
+  final instance = ClassInfo.ofElement(context.classElement, internalRef: true);
 
-  final valueTypeName = valueType.getTypeAsString();
+  final referenceName = context.referenceClass.name;
 
   final resolveMethod = !hasResolve
       ? resolveMethodBuilder(
-          className: className,
-          resolvedType: valueTypeName,
-          fields: fields,
-          isInternalRef: true,
+          instance,
+          resolvedName: referenceName,
+          resolvedConstructor: '',
           withDefaults: true,
         )
       : '';
 
   final mergeMethod = !hasMerge
       ? mergeMethodBuilder(
-          className: className,
-          context: context,
-          isInternalRef: true,
+          instance,
           shouldMergeLists: context.annotation.mergeLists,
         )
       : '';
 
-  final propsGetter = !hasEquality
-      ? getterPropsBuilder(
-          className: className,
-          fields: fields,
-          isInternalRef: true,
-        )
-      : '';
+  final propsGetter = !hasEquality ? getterPropsBuilder(instance) : '';
 
-  final selfGetter = getterSelfBuilder(className: className);
+  final selfGetter = getterSelfBuilder(instance);
 
   return '''
-base mixin $mixinName on Dto<$valueType> {
+base mixin $mixinName on Dto<$referenceName> {
   $resolveMethod
 
   $mergeMethod

@@ -1,10 +1,9 @@
 import 'package:mix_generator/src/helpers/field_info.dart';
 
-String getterPropsBuilder({
-  required String className,
-  required List<ParameterInfo> fields,
-  bool isInternalRef = false,
-}) {
+String getterPropsBuilder(ClassInfo instance) {
+  final className = instance.name;
+  final fields = instance.fields;
+  final isInternalRef = instance.isInternalRef;
   final fieldStatements = fields.map((field) {
     final fieldName = isInternalRef ? field.asInternalRef : field.name;
     return '$fieldName,';
