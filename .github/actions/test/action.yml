@@ -65,7 +65,7 @@ runs:
       if: ${{ inputs.run-dcm }}
       uses: CQLabs/dcm-action@v1
       with:
-        github_token: ${{ secrets.ADD_LABEL_BOT_TOKEN }}
+        github_token: ${{ inputs.token }}
         ci_key: oss
         email: oss
         folders: .
