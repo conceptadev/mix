@@ -1,7 +1,13 @@
 name: "Add labels"
 
 on:
-  pull_request:
+  pull_request_target:
+    types:
+      - opened
+      - edited
+      - synchronize
+      - reopened
+
 
 permissions:
   pull-requests: write
@@ -22,7 +28,7 @@ jobs:
           script: |
             const { execSync } = require('child_process')
             const { commits } = context.payload.pull_request
-            const rawFiles = execSync(`git diff --name-only HEAD HEAD~${commits}`).toString()
+            const rawFiles = execSync(`git diff --name-only ${{ github.head_ref }}`).toString()
             const files = rawFiles.split('\n').filter(Boolean)
 
             console.log('##### Modified Files #####')
