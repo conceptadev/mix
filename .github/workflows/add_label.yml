@@ -1,7 +1,13 @@
 name: "Add labels"
 
 on:
-  pull_request:
+  pull_request_target:
+    types:
+      - opened
+      - edited
+      - synchronize
+      - reopened
+
 
 permissions:
   pull-requests: write
@@ -16,11 +22,13 @@ jobs:
           fetch-depth: 0
 
       - uses: actions/github-script@v7
+        env:
+          GH_TOKEN: ${{ secrets.ADD_LABEL_BOT_TOKEN }}
         with:
           script: |
             const { execSync } = require('child_process')
             const { commits } = context.payload.pull_request
-            const rawFiles = execSync(`git diff --name-only HEAD HEAD~${commits}`).toString()
+            const rawFiles = execSync(`git diff --name-only origin/${{ github.base_ref }}`).toString()
             const files = rawFiles.split('\n').filter(Boolean)
 
             console.log('##### Modified Files #####')

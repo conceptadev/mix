@@ -50,17 +50,6 @@ runs:
       shell: bash    
       run: melos run brb
 
-    # - name: Run DCM
-    #   if: ${{ inputs.run-dcm }}
-    #   uses: CQLabs/dcm-action@v1
-    #   with:
-    #     github_token: ${{ inputs.token }}
-    #     ci_key: oss
-    #     email: oss
-    #     folders: .
-    #     fatal_style: true
-    #     fatal_performance: true
-    #     fatal_warnings: true
     - name: Run Test
       run: melos run test
       shell: bash
@@ -70,6 +59,19 @@ runs:
       uses: CQLabs/setup-dcm@v1
       with:
         github_token: ${{ inputs.token }}
+        folders: packages/*/lib
+
+    - name: Run DCM
+      if: ${{ inputs.run-dcm }}
+      uses: CQLabs/dcm-action@v1
+      with:
+        github_token: ${{ inputs.token }}
+        ci_key: oss
+        email: oss
+        folders: .
+        fatal_style: true
+        fatal_performance: true
+        fatal_warnings: true
 
     - name: Run fixes
       run: melos run fix
