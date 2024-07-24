@@ -12,7 +12,7 @@ mixin _$IntrinsicHeightModifierSpec
   /// replaced with the new values.
   @override
   IntrinsicHeightModifierSpec copyWith() {
-    return const IntrinsicHeightModifierSpec();
+    return IntrinsicHeightModifierSpec();
   }
 
   /// Linearly interpolates between this [IntrinsicHeightModifierSpec] and another [IntrinsicHeightModifierSpec] based on the given parameter [t].
@@ -38,7 +38,7 @@ mixin _$IntrinsicHeightModifierSpec
       IntrinsicHeightModifierSpec? other, double t) {
     if (other == null) return _$this;
 
-    return const IntrinsicHeightModifierSpec();
+    return IntrinsicHeightModifierSpec();
   }
 
   /// The list of properties that constitute the state of this [IntrinsicHeightModifierSpec].
@@ -75,7 +75,7 @@ final class IntrinsicHeightModifierSpecAttribute
   /// ```
   @override
   IntrinsicHeightModifierSpec resolve(MixData mix) {
-    return const IntrinsicHeightModifierSpec();
+    return IntrinsicHeightModifierSpec();
   }
 
   /// Merges the properties of this [IntrinsicHeightModifierSpecAttribute] with the properties of [other].
@@ -120,9 +120,8 @@ class IntrinsicHeightModifierSpecTween
 
   @override
   IntrinsicHeightModifierSpec lerp(double t) {
-    if (begin == null && end == null) {
+    if (begin == null && end == null)
       return const IntrinsicHeightModifierSpec();
-    }
     if (begin == null) return end!;
 
     return begin!.lerp(end!, t);
@@ -135,7 +134,7 @@ mixin _$IntrinsicWidthModifierSpec
   /// replaced with the new values.
   @override
   IntrinsicWidthModifierSpec copyWith() {
-    return const IntrinsicWidthModifierSpec();
+    return IntrinsicWidthModifierSpec();
   }
 
   /// Linearly interpolates between this [IntrinsicWidthModifierSpec] and another [IntrinsicWidthModifierSpec] based on the given parameter [t].
@@ -160,7 +159,7 @@ mixin _$IntrinsicWidthModifierSpec
   IntrinsicWidthModifierSpec lerp(IntrinsicWidthModifierSpec? other, double t) {
     if (other == null) return _$this;
 
-    return const IntrinsicWidthModifierSpec();
+    return IntrinsicWidthModifierSpec();
   }
 
   /// The list of properties that constitute the state of this [IntrinsicWidthModifierSpec].
@@ -197,7 +196,7 @@ final class IntrinsicWidthModifierSpecAttribute
   /// ```
   @override
   IntrinsicWidthModifierSpec resolve(MixData mix) {
-    return const IntrinsicWidthModifierSpec();
+    return IntrinsicWidthModifierSpec();
   }
 
   /// Merges the properties of this [IntrinsicWidthModifierSpecAttribute] with the properties of [other].

@@ -168,9 +168,8 @@ class FractionallySizedBoxModifierSpecTween
 
   @override
   FractionallySizedBoxModifierSpec lerp(double t) {
-    if (begin == null && end == null) {
+    if (begin == null && end == null)
       return const FractionallySizedBoxModifierSpec();
-    }
     if (begin == null) return end!;
 
     return begin!.lerp(end!, t);
