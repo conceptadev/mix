@@ -16,11 +16,17 @@ part 'transform_widget_modifier.g.dart';
 @MixableSpec(skipUtility: true)
 final class TransformModifierSpec
     extends WidgetModifierSpec<TransformModifierSpec>
-    with _$TransformModifierSpec {
+    with _$TransformModifierSpec, Diagnosticable {
   final Matrix4? transform;
   final Alignment? alignment;
 
   const TransformModifierSpec({this.transform, this.alignment});
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    _debugFillProperties(properties);
+  }
 
   @override
   Widget build(Widget child) {

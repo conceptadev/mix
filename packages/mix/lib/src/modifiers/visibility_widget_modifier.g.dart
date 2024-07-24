@@ -79,6 +79,10 @@ mixin _$VisibilityModifierSpec on WidgetModifierSpec<VisibilityModifierSpec> {
       ];
 
   VisibilityModifierSpec get _$this => this as VisibilityModifierSpec;
+
+  void _debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    properties.add(DiagnosticsProperty('visible', _$this.visible));
+  }
 }
 
 /// Represents the attributes of a [VisibilityModifierSpec].

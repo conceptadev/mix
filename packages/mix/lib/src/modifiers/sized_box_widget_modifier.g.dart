@@ -84,6 +84,11 @@ mixin _$SizedBoxModifierSpec on WidgetModifierSpec<SizedBoxModifierSpec> {
       ];
 
   SizedBoxModifierSpec get _$this => this as SizedBoxModifierSpec;
+
+  void _debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    properties.add(DiagnosticsProperty('width', _$this.width));
+    properties.add(DiagnosticsProperty('height', _$this.height));
+  }
 }
 
 /// Represents the attributes of a [SizedBoxModifierSpec].

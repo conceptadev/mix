@@ -16,7 +16,7 @@ part 'fractionally_sized_box_widget_modifier.g.dart';
 @MixableSpec(skipUtility: true)
 final class FractionallySizedBoxModifierSpec
     extends WidgetModifierSpec<FractionallySizedBoxModifierSpec>
-    with _$FractionallySizedBoxModifierSpec {
+    with _$FractionallySizedBoxModifierSpec, Diagnosticable {
   final double? widthFactor;
   final double? heightFactor;
   final AlignmentGeometry? alignment;
@@ -26,6 +26,12 @@ final class FractionallySizedBoxModifierSpec
     this.heightFactor,
     this.alignment,
   });
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    _debugFillProperties(properties);
+  }
 
   @override
   Widget build(Widget child) {

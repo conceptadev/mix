@@ -80,6 +80,10 @@ mixin _$AspectRatioModifierSpec on WidgetModifierSpec<AspectRatioModifierSpec> {
       ];
 
   AspectRatioModifierSpec get _$this => this as AspectRatioModifierSpec;
+
+  void _debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    properties.add(DiagnosticsProperty('aspectRatio', _$this.aspectRatio));
+  }
 }
 
 /// Represents the attributes of a [AspectRatioModifierSpec].

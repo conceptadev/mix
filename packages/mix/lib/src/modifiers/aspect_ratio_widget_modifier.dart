@@ -16,11 +16,17 @@ part 'aspect_ratio_widget_modifier.g.dart';
 @MixableSpec(skipUtility: true)
 final class AspectRatioModifierSpec
     extends WidgetModifierSpec<AspectRatioModifierSpec>
-    with _$AspectRatioModifierSpec {
+    with _$AspectRatioModifierSpec, Diagnosticable {
   final double aspectRatio;
 
   const AspectRatioModifierSpec([double? aspectRatio])
       : aspectRatio = aspectRatio ?? 1.0;
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    _debugFillProperties(properties);
+  }
 
   @override
   Widget build(Widget child) {

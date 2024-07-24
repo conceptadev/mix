@@ -16,7 +16,8 @@ String dtoMixin(ClassBuilderContext<MixableDto> context) {
 
   // Get the generic type argument of Dto
 
-  final instance = ClassInfo.ofElement(context.classElement, internalRef: true);
+  final instance =
+      ClassInfo.ofElement(context.classElement, asInternalRef: true);
 
   final referenceName = context.referenceClass.name;
 

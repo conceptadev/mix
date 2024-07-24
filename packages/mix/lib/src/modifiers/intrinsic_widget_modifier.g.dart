@@ -75,6 +75,8 @@ mixin _$IntrinsicHeightModifierSpec
   List<Object?> get props => [];
 
   IntrinsicHeightModifierSpec get _$this => this as IntrinsicHeightModifierSpec;
+
+  void _debugFillProperties(DiagnosticPropertiesBuilder properties) {}
 }
 
 /// Represents the attributes of a [IntrinsicHeightModifierSpec].
@@ -220,6 +222,8 @@ mixin _$IntrinsicWidthModifierSpec
   List<Object?> get props => [];
 
   IntrinsicWidthModifierSpec get _$this => this as IntrinsicWidthModifierSpec;
+
+  void _debugFillProperties(DiagnosticPropertiesBuilder properties) {}
 }
 
 /// Represents the attributes of a [IntrinsicWidthModifierSpec].

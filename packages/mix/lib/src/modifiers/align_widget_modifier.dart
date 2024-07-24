@@ -15,7 +15,7 @@ part 'align_widget_modifier.g.dart';
 
 @MixableSpec(skipUtility: true)
 final class AlignModifierSpec extends WidgetModifierSpec<AlignModifierSpec>
-    with _$AlignModifierSpec {
+    with _$AlignModifierSpec, Diagnosticable {
   final AlignmentGeometry? alignment;
   final double? widthFactor;
   final double? heightFactor;
@@ -25,6 +25,12 @@ final class AlignModifierSpec extends WidgetModifierSpec<AlignModifierSpec>
     this.widthFactor,
     this.heightFactor,
   });
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    _debugFillProperties(properties);
+  }
 
   @override
   Widget build(Widget child) {

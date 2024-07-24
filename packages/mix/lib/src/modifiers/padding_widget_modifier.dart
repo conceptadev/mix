@@ -16,11 +16,17 @@ part 'padding_widget_modifier.g.dart';
 
 @MixableSpec()
 final class PaddingModifierSpec extends WidgetModifierSpec<PaddingModifierSpec>
-    with _$PaddingModifierSpec {
+    with _$PaddingModifierSpec, Diagnosticable {
   final EdgeInsetsGeometry padding;
 
   const PaddingModifierSpec([EdgeInsetsGeometry? padding])
       : padding = padding ?? EdgeInsets.zero;
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    _debugFillProperties(properties);
+  }
 
   @override
   Widget build(Widget child) {

@@ -80,6 +80,10 @@ mixin _$OpacityModifierSpec on WidgetModifierSpec<OpacityModifierSpec> {
       ];
 
   OpacityModifierSpec get _$this => this as OpacityModifierSpec;
+
+  void _debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    properties.add(DiagnosticsProperty('opacity', _$this.opacity));
+  }
 }
 
 /// Represents the attributes of a [OpacityModifierSpec].

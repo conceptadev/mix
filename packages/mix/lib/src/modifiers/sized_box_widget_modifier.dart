@@ -16,11 +16,17 @@ part 'sized_box_widget_modifier.g.dart';
 @MixableSpec(skipUtility: true)
 final class SizedBoxModifierSpec
     extends WidgetModifierSpec<SizedBoxModifierSpec>
-    with _$SizedBoxModifierSpec {
+    with _$SizedBoxModifierSpec, Diagnosticable {
   final double? width;
   final double? height;
 
   const SizedBoxModifierSpec({this.width, this.height});
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    _debugFillProperties(properties);
+  }
 
   @override
   Widget build(Widget child) {

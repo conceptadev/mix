@@ -83,6 +83,11 @@ mixin _$FlexibleModifierSpec on WidgetModifierSpec<FlexibleModifierSpec> {
       ];
 
   FlexibleModifierSpec get _$this => this as FlexibleModifierSpec;
+
+  void _debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    properties.add(DiagnosticsProperty('flex', _$this.flex));
+    properties.add(DiagnosticsProperty('fit', _$this.fit));
+  }
 }
 
 /// Represents the attributes of a [FlexibleModifierSpec].

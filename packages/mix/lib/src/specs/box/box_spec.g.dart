@@ -135,6 +135,24 @@ mixin _$BoxSpec on Spec<BoxSpec> {
       ];
 
   BoxSpec get _$this => this as BoxSpec;
+
+  void _debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    properties.add(DiagnosticsProperty('alignment', _$this.alignment));
+    properties.add(DiagnosticsProperty('padding', _$this.padding));
+    properties.add(DiagnosticsProperty('margin', _$this.margin));
+    properties.add(DiagnosticsProperty('constraints', _$this.constraints));
+    properties.add(DiagnosticsProperty('decoration', _$this.decoration));
+    properties.add(DiagnosticsProperty(
+        'foregroundDecoration', _$this.foregroundDecoration));
+    properties.add(DiagnosticsProperty('transform', _$this.transform));
+    properties.add(
+        DiagnosticsProperty('transformAlignment', _$this.transformAlignment));
+    properties.add(DiagnosticsProperty('clipBehavior', _$this.clipBehavior));
+    properties.add(DiagnosticsProperty('width', _$this.width));
+    properties.add(DiagnosticsProperty('height', _$this.height));
+    properties.add(DiagnosticsProperty('modifiers', _$this.modifiers));
+    properties.add(DiagnosticsProperty('animated', _$this.animated));
+  }
 }
 
 /// Represents the attributes of a [BoxSpec].

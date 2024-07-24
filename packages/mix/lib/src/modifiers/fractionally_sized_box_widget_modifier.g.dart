@@ -96,6 +96,12 @@ mixin _$FractionallySizedBoxModifierSpec
 
   FractionallySizedBoxModifierSpec get _$this =>
       this as FractionallySizedBoxModifierSpec;
+
+  void _debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    properties.add(DiagnosticsProperty('widthFactor', _$this.widthFactor));
+    properties.add(DiagnosticsProperty('heightFactor', _$this.heightFactor));
+    properties.add(DiagnosticsProperty('alignment', _$this.alignment));
+  }
 }
 
 /// Represents the attributes of a [FractionallySizedBoxModifierSpec].

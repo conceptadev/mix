@@ -135,9 +135,10 @@ class ClassInfo {
     this.isConst = false,
     this.isInternalRef = false,
     this.constructorName = '',
-    this.mixinTypes = const [],
+    this.mixinTypes = const {},
     this.extendsType = '',
-    this.genericTypes = const [],
+    this.genericTypes = const {},
+    this.methods = const {},
   });
 
   final String name;
@@ -145,12 +146,43 @@ class ClassInfo {
   final bool isBase;
   final bool isFinal;
   final bool isInternalRef;
-  final List<String> mixinTypes;
+  final Set<String> mixinTypes;
   final String extendsType;
-  final List<String> genericTypes;
+  final Set<String> methods;
+  final Set<String> genericTypes;
 
   final bool isConst;
   final String constructorName;
+
+  ClassInfo copyWith({
+    String? name,
+    List<ParameterInfo>? fields,
+    bool? isBase,
+    bool? isFinal,
+    bool? isConst,
+    bool? isInternalRef,
+    String? constructorName,
+    Set<String>? mixinTypes,
+    String? extendsType,
+    Set<String>? genericTypes,
+    Set<String>? methods,
+  }) {
+    return ClassInfo(
+      name: name ?? this.name,
+      fields: fields ?? this.fields,
+      isBase: isBase ?? this.isBase,
+      isFinal: isFinal ?? this.isFinal,
+      isConst: isConst ?? this.isConst,
+      isInternalRef: isInternalRef ?? this.isInternalRef,
+      constructorName: constructorName ?? this.constructorName,
+      mixinTypes: mixinTypes ?? this.mixinTypes,
+      extendsType: extendsType ?? this.extendsType,
+      genericTypes: genericTypes ?? this.genericTypes,
+      methods: methods ?? this.methods,
+    );
+  }
+
+  bool hasMethod(String name) => methods.contains(name);
 
   String writeConstructor() {
     return '$name$constructorRef';
@@ -189,7 +221,7 @@ class ClassInfo {
 
   factory ClassInfo.ofElement(
     ClassElement element, {
-    bool internalRef = false,
+    bool asInternalRef = false,
   }) {
     final constructor = element.defaultConstructor;
     return ClassInfo(
@@ -197,11 +229,12 @@ class ClassInfo {
       isFinal: element.isFinal,
       isBase: element.isBase,
       isConst: element.isConst,
-      isInternalRef: internalRef,
+      isInternalRef: asInternalRef,
       constructorName: constructor.name,
+      methods: element.methods.map((e) => e.name).toSet(),
       mixinTypes: element.mixins
           .map((e) => e.getDisplayString(withNullability: false))
-          .toList(),
+          .toSet(),
       fields: constructor.parameters.map(ParameterInfo.ofElement).toList(),
     );
   }
@@ -313,6 +346,8 @@ extension ClassContextSpecX on ClassBuilderContext<MixableSpec> {
   String get tweenClassName => '${_prefix}Tween';
 
   String get attributeExtendsType => '${specType}Attribute<$name>';
+
+  bool get hasDiagnosticable => annotation.withDiagnosticable;
 }
 
 extension ClassContextDtoX on ClassBuilderContext<MixableDto> {

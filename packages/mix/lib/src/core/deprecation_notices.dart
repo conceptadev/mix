@@ -23,7 +23,8 @@ import 'modifier.dart';
 extension ImageSpecUtilityDeprecationX<T extends Attribute>
     on ImageSpecUtility<T> {
   @Deprecated(
-      'To match Flutter naming conventions, use `colorBlendMode` instead.')
+    'To match Flutter naming conventions, use `colorBlendMode` instead.',
+  )
   BlendModeUtility<T> get blendMode => colorBlendMode;
 }
 

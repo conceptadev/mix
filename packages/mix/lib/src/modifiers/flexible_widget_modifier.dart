@@ -16,10 +16,16 @@ part 'flexible_widget_modifier.g.dart';
 @MixableSpec(skipUtility: true)
 final class FlexibleModifierSpec
     extends WidgetModifierSpec<FlexibleModifierSpec>
-    with _$FlexibleModifierSpec {
+    with _$FlexibleModifierSpec, Diagnosticable {
   final int? flex;
   final FlexFit? fit;
   const FlexibleModifierSpec({this.flex, this.fit});
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    _debugFillProperties(properties);
+  }
 
   @override
   Widget build(Widget child) {

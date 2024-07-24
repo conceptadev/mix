@@ -19,7 +19,7 @@ import 'stack_widget.dart';
 part 'stack_spec.g.dart';
 
 @MixableSpec()
-final class StackSpec extends Spec<StackSpec> with _$StackSpec {
+final class StackSpec extends Spec<StackSpec> with _$StackSpec, Diagnosticable {
   final AlignmentGeometry? alignment;
   final StackFit? fit;
   final TextDirection? textDirection;
@@ -47,5 +47,11 @@ final class StackSpec extends Spec<StackSpec> with _$StackSpec {
             children: children,
           )
         : StackSpecWidget(spec: this, children: children);
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    _debugFillProperties(properties);
   }
 }

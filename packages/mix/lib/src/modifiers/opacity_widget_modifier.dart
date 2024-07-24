@@ -18,11 +18,17 @@ part 'opacity_widget_modifier.g.dart';
 /// The [Opacity] widget is used to make a widget partially transparent.
 @MixableSpec(skipUtility: true)
 final class OpacityModifierSpec extends WidgetModifierSpec<OpacityModifierSpec>
-    with _$OpacityModifierSpec {
+    with _$OpacityModifierSpec, Diagnosticable {
   /// The [opacity] argument must not be null and
   /// must be between 0.0 and 1.0 (inclusive).
   final double opacity;
   const OpacityModifierSpec([double? opacity]) : opacity = opacity ?? 1.0;
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    _debugFillProperties(properties);
+  }
 
   @override
   Widget build(Widget child) {

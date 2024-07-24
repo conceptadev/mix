@@ -15,8 +15,14 @@ part 'intrinsic_widget_modifier.g.dart';
 @MixableSpec(skipUtility: true)
 final class IntrinsicHeightModifierSpec
     extends WidgetModifierSpec<IntrinsicHeightModifierSpec>
-    with _$IntrinsicHeightModifierSpec {
+    with _$IntrinsicHeightModifierSpec, Diagnosticable {
   const IntrinsicHeightModifierSpec();
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    _debugFillProperties(properties);
+  }
 
   @override
   Widget build(Widget child) {
@@ -27,8 +33,14 @@ final class IntrinsicHeightModifierSpec
 @MixableSpec(skipUtility: true)
 final class IntrinsicWidthModifierSpec
     extends WidgetModifierSpec<IntrinsicWidthModifierSpec>
-    with _$IntrinsicWidthModifierSpec {
+    with _$IntrinsicWidthModifierSpec, Diagnosticable {
   const IntrinsicWidthModifierSpec();
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    _debugFillProperties(properties);
+  }
 
   @override
   Widget build(Widget child) {

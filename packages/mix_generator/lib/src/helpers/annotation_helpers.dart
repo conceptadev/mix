@@ -26,6 +26,7 @@ MixableSpec readMixableSpec(
     withCopyWith: reader.read('withCopyWith').boolValue,
     withEquality: reader.read('withEquality').boolValue,
     skipUtility: reader.read('skipUtility').boolValue,
+    withDiagnosticable: reader.read('withDiagnosticable').boolValue,
     prefix: prefix.isEmpty ? classElement.name : prefix,
     withLerp: reader.read('withLerp').boolValue,
   );

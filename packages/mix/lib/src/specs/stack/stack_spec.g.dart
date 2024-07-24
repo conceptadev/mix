@@ -100,6 +100,15 @@ mixin _$StackSpec on Spec<StackSpec> {
       ];
 
   StackSpec get _$this => this as StackSpec;
+
+  void _debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    properties.add(DiagnosticsProperty('alignment', _$this.alignment));
+    properties.add(DiagnosticsProperty('fit', _$this.fit));
+    properties.add(DiagnosticsProperty('textDirection', _$this.textDirection));
+    properties.add(DiagnosticsProperty('clipBehavior', _$this.clipBehavior));
+    properties.add(DiagnosticsProperty('animated', _$this.animated));
+    properties.add(DiagnosticsProperty('modifiers', _$this.modifiers));
+  }
 }
 
 /// Represents the attributes of a [StackSpec].

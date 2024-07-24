@@ -123,6 +123,23 @@ mixin _$FlexSpec on Spec<FlexSpec> {
       ];
 
   FlexSpec get _$this => this as FlexSpec;
+
+  void _debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    properties.add(
+        DiagnosticsProperty('crossAxisAlignment', _$this.crossAxisAlignment));
+    properties.add(
+        DiagnosticsProperty('mainAxisAlignment', _$this.mainAxisAlignment));
+    properties.add(DiagnosticsProperty('mainAxisSize', _$this.mainAxisSize));
+    properties.add(
+        DiagnosticsProperty('verticalDirection', _$this.verticalDirection));
+    properties.add(DiagnosticsProperty('direction', _$this.direction));
+    properties.add(DiagnosticsProperty('textDirection', _$this.textDirection));
+    properties.add(DiagnosticsProperty('textBaseline', _$this.textBaseline));
+    properties.add(DiagnosticsProperty('clipBehavior', _$this.clipBehavior));
+    properties.add(DiagnosticsProperty('gap', _$this.gap));
+    properties.add(DiagnosticsProperty('animated', _$this.animated));
+    properties.add(DiagnosticsProperty('modifiers', _$this.modifiers));
+  }
 }
 
 /// Represents the attributes of a [FlexSpec].

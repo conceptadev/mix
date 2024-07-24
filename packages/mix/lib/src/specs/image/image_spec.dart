@@ -23,7 +23,7 @@ import 'image_widget.dart';
 part 'image_spec.g.dart';
 
 @MixableSpec()
-final class ImageSpec extends Spec<ImageSpec> with _$ImageSpec {
+final class ImageSpec extends Spec<ImageSpec> with _$ImageSpec, Diagnosticable {
   final double? width, height;
   final Color? color;
   final ImageRepeat? repeat;
@@ -93,5 +93,11 @@ final class ImageSpec extends Spec<ImageSpec> with _$ImageSpec {
             opacity: opacity,
             matchTextDirection: matchTextDirection,
           );
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    _debugFillProperties(properties);
   }
 }

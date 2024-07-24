@@ -80,6 +80,10 @@ mixin _$PaddingModifierSpec on WidgetModifierSpec<PaddingModifierSpec> {
       ];
 
   PaddingModifierSpec get _$this => this as PaddingModifierSpec;
+
+  void _debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    properties.add(DiagnosticsProperty('padding', _$this.padding));
+  }
 }
 
 /// Represents the attributes of a [PaddingModifierSpec].

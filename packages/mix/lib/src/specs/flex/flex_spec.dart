@@ -21,7 +21,7 @@ import 'flex_widget.dart';
 part 'flex_spec.g.dart';
 
 @MixableSpec()
-final class FlexSpec extends Spec<FlexSpec> with _$FlexSpec {
+final class FlexSpec extends Spec<FlexSpec> with _$FlexSpec, Diagnosticable {
   @MixableProperty(
     utilities: [
       MixableUtility(
@@ -63,7 +63,6 @@ final class FlexSpec extends Spec<FlexSpec> with _$FlexSpec {
     super.animated,
     super.modifiers,
   });
-
   Widget call({List<Widget> children = const [], required Axis direction}) {
     return isAnimated
         ? AnimatedFlexSpecWidget(
@@ -78,5 +77,11 @@ final class FlexSpec extends Spec<FlexSpec> with _$FlexSpec {
             direction: direction,
             children: children,
           );
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    _debugFillProperties(properties);
   }
 }

@@ -60,7 +60,7 @@ const _shapeDecor = MixableUtility(
 );
 
 @MixableSpec()
-final class BoxSpec extends Spec<BoxSpec> with _$BoxSpec {
+final class BoxSpec extends Spec<BoxSpec> with _$BoxSpec, Diagnosticable {
   /// {@macro box_spec_of}
   static const of = _$BoxSpec.of;
 
@@ -133,5 +133,11 @@ final class BoxSpec extends Spec<BoxSpec> with _$BoxSpec {
             orderOfModifiers: orderOfModifiers,
             child: child,
           );
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    _debugFillProperties(properties);
   }
 }

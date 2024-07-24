@@ -52,6 +52,10 @@ mixin _$RotatedBoxModifierSpec on WidgetModifierSpec<RotatedBoxModifierSpec> {
       ];
 
   RotatedBoxModifierSpec get _$this => this as RotatedBoxModifierSpec;
+
+  void _debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    properties.add(DiagnosticsProperty('quarterTurns', _$this.quarterTurns));
+  }
 }
 
 /// Represents the attributes of a [RotatedBoxModifierSpec].

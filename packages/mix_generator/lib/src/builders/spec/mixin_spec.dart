@@ -1,16 +1,18 @@
 import 'package:mix_annotations/mix_annotations.dart';
 import 'package:mix_generator/src/builders/getter_self_reference.dart';
 import 'package:mix_generator/src/builders/method_copy_with.dart';
+import 'package:mix_generator/src/builders/method_debug_fill_properties.dart';
 import 'package:mix_generator/src/builders/method_equality.dart';
 import 'package:mix_generator/src/builders/method_lerp_builder.dart';
 import 'package:mix_generator/src/helpers/field_info.dart';
 import 'package:mix_generator/src/helpers/helpers.dart';
 
 String specMixin(ClassBuilderContext<MixableSpec> context) {
-  final specClass = ClassInfo.ofElement(
-    context.classElement,
-    internalRef: true,
-  );
+  final hasDiagnosticable = context.hasDiagnosticable &&
+      context.classElement.mixins.any((element) =>
+          element.getDisplayString(withNullability: false) == 'Diagnosticable');
+  final specClass =
+      ClassInfo.ofElement(context.classElement, asInternalRef: true);
 
   final specClassName = specClass.name;
 
@@ -31,6 +33,9 @@ String specMixin(ClassBuilderContext<MixableSpec> context) {
 
   final staticMethodFrom = _staticMethodFromBuilder(context);
 
+  final debugFillProperties =
+      hasDiagnosticable ? methodDebugFillProperties(specClass) : '';
+
   final staticMethodOf = _staticMethodOfBuilder(context);
 
   return '''
@@ -47,6 +52,8 @@ String specMixin(ClassBuilderContext<MixableSpec> context) {
   $propsGetter
 
   $selfGetter
+
+  $debugFillProperties
 
 }
 ''';

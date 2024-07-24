@@ -24,7 +24,7 @@ import 'icon_widget.dart';
 part 'icon_spec.g.dart';
 
 @MixableSpec()
-final class IconSpec extends Spec<IconSpec> with _$IconSpec {
+final class IconSpec extends Spec<IconSpec> with _$IconSpec, Diagnosticable {
   final Color? color;
   final double? size;
   final double? weight;
@@ -71,6 +71,12 @@ final class IconSpec extends Spec<IconSpec> with _$IconSpec {
             semanticLabel: semanticLabel,
             textDirection: textDirection,
           );
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    _debugFillProperties(properties);
   }
 }
 

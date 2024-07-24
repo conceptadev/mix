@@ -85,6 +85,11 @@ mixin _$TransformModifierSpec on WidgetModifierSpec<TransformModifierSpec> {
       ];
 
   TransformModifierSpec get _$this => this as TransformModifierSpec;
+
+  void _debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    properties.add(DiagnosticsProperty('transform', _$this.transform));
+    properties.add(DiagnosticsProperty('alignment', _$this.alignment));
+  }
 }
 
 /// Represents the attributes of a [TransformModifierSpec].

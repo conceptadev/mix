@@ -3,23 +3,20 @@ import 'package:mix_generator/src/builders/method_debug_fill_properties.dart';
 import 'package:mix_generator/src/builders/method_equality.dart';
 import 'package:mix_generator/src/builders/method_merge.dart';
 import 'package:mix_generator/src/builders/method_resolve.dart';
-import 'package:mix_generator/src/helpers/builder_utils.dart';
 import 'package:mix_generator/src/helpers/field_info.dart';
 
 String specAttributeClass(ClassBuilderContext<MixableSpec> context) {
   final specName = context.name;
 
-  final mixins =
-      context.classElement.isMixRef ? ['Diagnosticable'] : <String>[];
-
   final specInstance = ClassInfo.ofElement(context.classElement);
+  final hasDiagnosticable = context.hasDiagnosticable;
 
   final attributeInstance = ClassInfo(
     name: context.attributeName,
     isBase: specInstance.isBase,
     isFinal: specInstance.isFinal,
     fields: context.fields,
-    mixinTypes: mixins,
+    mixinTypes: hasDiagnosticable ? {'Diagnosticable'} : {},
     extendsType: context.attributeExtendsType,
   );
 
@@ -44,7 +41,8 @@ String specAttributeClass(ClassBuilderContext<MixableSpec> context) {
 
   final mergeMethod = mergeMethodBuilder(attributeInstance);
 
-  final debugFillProperties = methodDebugFillProperties(attributeInstance);
+  final debugFillProperties =
+      hasDiagnosticable ? methodDebugFillProperties(attributeInstance) : '';
 
   final propsGetter = getterPropsBuilder(attributeInstance);
 
@@ -73,8 +71,6 @@ ${attributeInstance.writeDefinition()}{
   $propsGetter
 
   $debugFillProperties
-
-
 }
 ''';
 }

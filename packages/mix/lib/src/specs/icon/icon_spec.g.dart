@@ -123,6 +123,21 @@ mixin _$IconSpec on Spec<IconSpec> {
       ];
 
   IconSpec get _$this => this as IconSpec;
+
+  void _debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    properties.add(DiagnosticsProperty('color', _$this.color));
+    properties.add(DiagnosticsProperty('size', _$this.size));
+    properties.add(DiagnosticsProperty('weight', _$this.weight));
+    properties.add(DiagnosticsProperty('grade', _$this.grade));
+    properties.add(DiagnosticsProperty('opticalSize', _$this.opticalSize));
+    properties.add(DiagnosticsProperty('shadows', _$this.shadows));
+    properties.add(DiagnosticsProperty('textDirection', _$this.textDirection));
+    properties
+        .add(DiagnosticsProperty('applyTextScaling', _$this.applyTextScaling));
+    properties.add(DiagnosticsProperty('fill', _$this.fill));
+    properties.add(DiagnosticsProperty('animated', _$this.animated));
+    properties.add(DiagnosticsProperty('modifiers', _$this.modifiers));
+  }
 }
 
 /// Represents the attributes of a [IconSpec].

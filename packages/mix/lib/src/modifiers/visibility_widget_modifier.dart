@@ -15,9 +15,15 @@ part 'visibility_widget_modifier.g.dart';
 @MixableSpec(skipUtility: true)
 final class VisibilityModifierSpec
     extends WidgetModifierSpec<VisibilityModifierSpec>
-    with _$VisibilityModifierSpec {
+    with _$VisibilityModifierSpec, Diagnosticable {
   final bool visible;
   const VisibilityModifierSpec([bool? visible]) : visible = visible ?? true;
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    _debugFillProperties(properties);
+  }
 
   @override
   Widget build(Widget child) {

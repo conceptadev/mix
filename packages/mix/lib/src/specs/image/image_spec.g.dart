@@ -123,6 +123,21 @@ mixin _$ImageSpec on Spec<ImageSpec> {
       ];
 
   ImageSpec get _$this => this as ImageSpec;
+
+  void _debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    properties.add(DiagnosticsProperty('width', _$this.width));
+    properties.add(DiagnosticsProperty('height', _$this.height));
+    properties.add(DiagnosticsProperty('color', _$this.color));
+    properties.add(DiagnosticsProperty('repeat', _$this.repeat));
+    properties.add(DiagnosticsProperty('fit', _$this.fit));
+    properties.add(DiagnosticsProperty('alignment', _$this.alignment));
+    properties.add(DiagnosticsProperty('centerSlice', _$this.centerSlice));
+    properties.add(DiagnosticsProperty('filterQuality', _$this.filterQuality));
+    properties
+        .add(DiagnosticsProperty('colorBlendMode', _$this.colorBlendMode));
+    properties.add(DiagnosticsProperty('animated', _$this.animated));
+    properties.add(DiagnosticsProperty('modifiers', _$this.modifiers));
+  }
 }
 
 /// Represents the attributes of a [ImageSpec].

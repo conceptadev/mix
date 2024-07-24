@@ -10,10 +10,11 @@ String specUtilityClass(ClassBuilderContext<MixableSpec> context) {
   final attributeName = context.attributeName;
 
   final instance = ClassInfo(
-      name: context.utilityName,
-      fields: context.fields,
-      extendsType: 'SpecUtility<T, $attributeName> ',
-      genericTypes: ['T extends Attribute']);
+    name: context.utilityName,
+    fields: context.fields,
+    extendsType: 'SpecUtility<T, $attributeName>',
+    genericTypes: {'T extends Attribute'},
+  );
 
   final className = instance.name;
 

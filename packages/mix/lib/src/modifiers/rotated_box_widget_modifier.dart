@@ -16,10 +16,16 @@ part 'rotated_box_widget_modifier.g.dart';
 @MixableSpec(skipUtility: true)
 final class RotatedBoxModifierSpec
     extends WidgetModifierSpec<RotatedBoxModifierSpec>
-    with _$RotatedBoxModifierSpec {
+    with _$RotatedBoxModifierSpec, Diagnosticable {
   final int quarterTurns;
   const RotatedBoxModifierSpec([int? quarterTurns])
       : quarterTurns = quarterTurns ?? 0;
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    _debugFillProperties(properties);
+  }
 
   @override
   RotatedBoxModifierSpec lerp(RotatedBoxModifierSpec? other, double t) {

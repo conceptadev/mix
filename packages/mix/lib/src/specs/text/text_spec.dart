@@ -26,7 +26,7 @@ import 'text_widget.dart';
 part 'text_spec.g.dart';
 
 @MixableSpec()
-final class TextSpec extends Spec<TextSpec> with _$TextSpec {
+final class TextSpec extends Spec<TextSpec> with _$TextSpec, Diagnosticable {
   final TextOverflow? overflow;
   final StrutStyle? strutStyle;
   final TextAlign? textAlign;
@@ -93,5 +93,11 @@ final class TextSpec extends Spec<TextSpec> with _$TextSpec {
             semanticsLabel: semanticLabel,
             locale: locale,
           );
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    _debugFillProperties(properties);
   }
 }

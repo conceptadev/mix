@@ -83,6 +83,11 @@ mixin _$ClipOvalModifierSpec on WidgetModifierSpec<ClipOvalModifierSpec> {
       ];
 
   ClipOvalModifierSpec get _$this => this as ClipOvalModifierSpec;
+
+  void _debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    properties.add(DiagnosticsProperty('clipper', _$this.clipper));
+    properties.add(DiagnosticsProperty('clipBehavior', _$this.clipBehavior));
+  }
 }
 
 /// Represents the attributes of a [ClipOvalModifierSpec].
@@ -251,6 +256,11 @@ mixin _$ClipRectModifierSpec on WidgetModifierSpec<ClipRectModifierSpec> {
       ];
 
   ClipRectModifierSpec get _$this => this as ClipRectModifierSpec;
+
+  void _debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    properties.add(DiagnosticsProperty('clipper', _$this.clipper));
+    properties.add(DiagnosticsProperty('clipBehavior', _$this.clipBehavior));
+  }
 }
 
 /// Represents the attributes of a [ClipRectModifierSpec].
@@ -425,6 +435,12 @@ mixin _$ClipRRectModifierSpec on WidgetModifierSpec<ClipRRectModifierSpec> {
       ];
 
   ClipRRectModifierSpec get _$this => this as ClipRRectModifierSpec;
+
+  void _debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    properties.add(DiagnosticsProperty('borderRadius', _$this.borderRadius));
+    properties.add(DiagnosticsProperty('clipper', _$this.clipper));
+    properties.add(DiagnosticsProperty('clipBehavior', _$this.clipBehavior));
+  }
 }
 
 /// Represents the attributes of a [ClipRRectModifierSpec].
@@ -600,6 +616,11 @@ mixin _$ClipPathModifierSpec on WidgetModifierSpec<ClipPathModifierSpec> {
       ];
 
   ClipPathModifierSpec get _$this => this as ClipPathModifierSpec;
+
+  void _debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    properties.add(DiagnosticsProperty('clipper', _$this.clipper));
+    properties.add(DiagnosticsProperty('clipBehavior', _$this.clipBehavior));
+  }
 }
 
 /// Represents the attributes of a [ClipPathModifierSpec].
@@ -765,6 +786,10 @@ mixin _$ClipTriangleModifierSpec
       ];
 
   ClipTriangleModifierSpec get _$this => this as ClipTriangleModifierSpec;
+
+  void _debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    properties.add(DiagnosticsProperty('clipBehavior', _$this.clipBehavior));
+  }
 }
 
 /// Represents the attributes of a [ClipTriangleModifierSpec].
