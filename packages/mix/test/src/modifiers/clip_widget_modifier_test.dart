@@ -58,24 +58,24 @@ void main() {
     );
   });
 
-  // ClipPathModifierAttribute
-  group('ClipPathModifierAttribute', () {
+  // ClipPathModifierSpecAttribute
+  group('ClipPathModifierSpecAttribute', () {
     const clipper = _PathClipper();
     const clipper2 = _OtherPathClipper();
     const clipBehavior = Clip.antiAlias;
     const clipBehavior2 = Clip.antiAliasWithSaveLayer;
 
     test('merge', () {
-      const modifier = ClipPathModifierAttribute(
+      const modifier = ClipPathModifierSpecAttribute(
           clipper: clipper, clipBehavior: clipBehavior);
-      const other = ClipPathModifierAttribute(
+      const other = ClipPathModifierSpecAttribute(
           clipper: clipper2, clipBehavior: clipBehavior2);
       final result = modifier.merge(other);
       expect(result, other);
     });
 
     test('resolve', () {
-      const modifier = ClipPathModifierAttribute(
+      const modifier = ClipPathModifierSpecAttribute(
           clipper: clipper, clipBehavior: clipBehavior);
       final result = modifier.resolve(EmptyMixData);
       expect(result, isA<ClipPathModifierSpec>());
@@ -146,8 +146,8 @@ void main() {
     });
   });
 
-  // ClipRRectModifierAttribute
-  group('ClipRRectModifierAttribute', () {
+  // ClipRRectModifierSpecAttribute
+  group('ClipRRectModifierSpecAttribute', () {
     final borderRadius = BorderRadius.circular(10.0);
     final borderRadius2 = BorderRadius.circular(20.0);
     const clipper = _RRectClipper();
@@ -156,12 +156,12 @@ void main() {
     const clipBehavior2 = Clip.antiAliasWithSaveLayer;
 
     test('merge', () {
-      final modifier = ClipRRectModifierAttribute(
+      final modifier = ClipRRectModifierSpecAttribute(
         borderRadius: borderRadius.toDto(),
         clipper: clipper,
         clipBehavior: clipBehavior,
       );
-      final other = ClipRRectModifierAttribute(
+      final other = ClipRRectModifierSpecAttribute(
         borderRadius: borderRadius2.toDto(),
         clipper: clipper2,
         clipBehavior: clipBehavior2,
@@ -171,7 +171,7 @@ void main() {
     });
 
     test('resolve', () {
-      final modifier = ClipRRectModifierAttribute(
+      final modifier = ClipRRectModifierSpecAttribute(
         borderRadius: borderRadius.toDto(),
         clipper: clipper,
         clipBehavior: clipBehavior,
@@ -243,19 +243,19 @@ void main() {
     );
   });
 
-  // ClipOvalModifierAttribute
-  group('ClipOvalModifierAttribute', () {
+  // ClipOvalModifierSpecAttribute
+  group('ClipOvalModifierSpecAttribute', () {
     const clipBehavior = Clip.antiAlias;
     const clipBehavior2 = Clip.antiAliasWithSaveLayer;
     const clipper = _RectClipper();
     const clipper2 = _OtherRectClipper();
 
     test('merge', () {
-      const modifier = ClipOvalModifierAttribute(
+      const modifier = ClipOvalModifierSpecAttribute(
         clipper: clipper,
         clipBehavior: clipBehavior,
       );
-      const other = ClipOvalModifierAttribute(
+      const other = ClipOvalModifierSpecAttribute(
         clipper: clipper2,
         clipBehavior: clipBehavior2,
       );
@@ -264,7 +264,7 @@ void main() {
     });
 
     test('resolve', () {
-      const modifier = ClipOvalModifierAttribute(
+      const modifier = ClipOvalModifierSpecAttribute(
         clipper: clipper,
         clipBehavior: clipBehavior,
       );
@@ -334,19 +334,19 @@ void main() {
     );
   });
 
-  // ClipRectModifierAttribute
-  group('ClipRectModifierAttribute', () {
+  // ClipRectModifierSpecAttribute
+  group('ClipRectModifierSpecAttribute', () {
     const clipBehavior = Clip.hardEdge;
     const clipBehavior2 = Clip.antiAliasWithSaveLayer;
     const clipper = _RectClipper();
     const clipper2 = _OtherRectClipper();
 
     test('merge', () {
-      const modifier = ClipRectModifierAttribute(
+      const modifier = ClipRectModifierSpecAttribute(
         clipper: clipper,
         clipBehavior: clipBehavior,
       );
-      const other = ClipRectModifierAttribute(
+      const other = ClipRectModifierSpecAttribute(
         clipper: clipper2,
         clipBehavior: clipBehavior2,
       );
@@ -355,7 +355,7 @@ void main() {
     });
 
     test('resolve', () {
-      const modifier = ClipRectModifierAttribute(
+      const modifier = ClipRectModifierSpecAttribute(
         clipper: clipper,
         clipBehavior: clipBehavior,
       );
@@ -413,22 +413,23 @@ void main() {
     );
   });
 
-  // ClipTriangleModifierAttribute
-  group('ClipTriangleModifierAttribute', () {
+  // ClipTriangleModifierSpecAttribute
+  group('ClipTriangleModifierSpecAttribute', () {
     const clipBehavior = Clip.antiAlias;
     const clipBehavior2 = Clip.antiAliasWithSaveLayer;
 
     test('merge', () {
       const modifier =
-          ClipTriangleModifierAttribute(clipBehavior: clipBehavior);
-      const other = ClipTriangleModifierAttribute(clipBehavior: clipBehavior2);
+          ClipTriangleModifierSpecAttribute(clipBehavior: clipBehavior);
+      const other =
+          ClipTriangleModifierSpecAttribute(clipBehavior: clipBehavior2);
       final result = modifier.merge(other);
       expect(result, other);
     });
 
     test('resolve', () {
       const modifier =
-          ClipTriangleModifierAttribute(clipBehavior: clipBehavior);
+          ClipTriangleModifierSpecAttribute(clipBehavior: clipBehavior);
       final result = modifier.resolve(EmptyMixData);
       expect(result, isA<ClipTriangleModifierSpec>());
       expect(result.clipBehavior, clipBehavior);

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mix/src/modifiers/aspect_ratio_widget_modifier.dart';
+import 'package:mix/mix.dart';
 
 import '../../helpers/testing_utils.dart';
 
@@ -52,29 +52,29 @@ void main() {
     );
   });
 
-  group('AspectRatioModifierAttribute', () {
+  group('AspectRatioModifierSpecAttribute', () {
     test('merge', () {
-      const modifier = AspectRatioModifierAttribute(aspectRatio: 1.0);
-      const other = AspectRatioModifierAttribute(aspectRatio: 1.0);
+      const modifier = AspectRatioModifierSpecAttribute(aspectRatio: 1.0);
+      const other = AspectRatioModifierSpecAttribute(aspectRatio: 1.0);
       final result = modifier.merge(other);
       expect(result, modifier);
     });
 
     test('resolve', () {
-      const modifier = AspectRatioModifierAttribute(aspectRatio: 1.0);
+      const modifier = AspectRatioModifierSpecAttribute(aspectRatio: 1.0);
       final result = modifier.resolve(EmptyMixData);
       expect(result, isA<AspectRatioModifierSpec>());
     });
 
     test('equality', () {
-      const modifier = AspectRatioModifierAttribute(aspectRatio: 1.0);
-      const other = AspectRatioModifierAttribute(aspectRatio: 1.0);
+      const modifier = AspectRatioModifierSpecAttribute(aspectRatio: 1.0);
+      const other = AspectRatioModifierSpecAttribute(aspectRatio: 1.0);
       expect(modifier, other);
     });
 
     test('inequality', () {
-      const modifier = AspectRatioModifierAttribute(aspectRatio: 1.0);
-      const other = AspectRatioModifierAttribute(aspectRatio: 2.0);
+      const modifier = AspectRatioModifierSpecAttribute(aspectRatio: 1.0);
+      const other = AspectRatioModifierSpecAttribute(aspectRatio: 2.0);
       expect(modifier, isNot(equals(other)));
     });
   });

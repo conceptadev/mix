@@ -10,11 +10,10 @@ import '../core/factory/mix_provider.dart';
 import '../core/helpers.dart';
 import '../core/modifier.dart';
 import '../core/utility.dart';
-import '../internal/diagnostic_properties_builder_ext.dart';
 
 part 'align_widget_modifier.g.dart';
 
-@MixableSpec(prefix: 'AlignModifier', skipUtility: true)
+@MixableSpec(skipUtility: true)
 final class AlignModifierSpec extends WidgetModifierSpec<AlignModifierSpec>
     with _$AlignModifierSpec {
   final AlignmentGeometry? alignment;
@@ -38,16 +37,16 @@ final class AlignModifierSpec extends WidgetModifierSpec<AlignModifierSpec>
   }
 }
 
-final class AlignModifierUtility<T extends Attribute>
-    extends MixUtility<T, AlignModifierAttribute> {
-  const AlignModifierUtility(super.builder);
+final class AlignModifierSpecUtility<T extends Attribute>
+    extends MixUtility<T, AlignModifierSpecAttribute> {
+  const AlignModifierSpecUtility(super.builder);
   T call({
     AlignmentGeometry? alignment,
     double? widthFactor,
     double? heightFactor,
   }) {
     return builder(
-      AlignModifierAttribute(
+      AlignModifierSpecAttribute(
         alignment: alignment,
         widthFactor: widthFactor,
         heightFactor: heightFactor,

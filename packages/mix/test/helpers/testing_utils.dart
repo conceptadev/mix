@@ -342,8 +342,8 @@ final class CustomWidgetModifierSpec
   }
 }
 
-final class CustomModifierAttribute extends WidgetModifierAttribute<
-    CustomModifierAttribute, CustomWidgetModifierSpec> {
+final class CustomModifierAttribute
+    extends WidgetModifierSpecAttribute<CustomWidgetModifierSpec> {
   final bool? value;
   const CustomModifierAttribute([this.value = true]);
 

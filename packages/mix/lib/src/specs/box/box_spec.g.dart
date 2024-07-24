@@ -255,19 +255,22 @@ final class BoxSpecAttribute extends SpecAttribute<BoxSpec>
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.addUsingDefault('alignment', alignment);
-    properties.addUsingDefault('padding', padding);
-    properties.addUsingDefault('margin', margin);
-    properties.addUsingDefault('constraints', constraints);
-    properties.addUsingDefault('decoration', decoration, expandableValue: true);
-    properties.addUsingDefault('foregroundDecoration', foregroundDecoration);
-    properties.addUsingDefault('transform', transform);
-    properties.addUsingDefault('transformAlignment', transformAlignment);
-    properties.addUsingDefault('clipBehavior', clipBehavior);
-    properties.addUsingDefault('width', width);
-    properties.addUsingDefault('height', height);
-    properties.addUsingDefault('modifiers', modifiers);
-    properties.addUsingDefault('animated', animated);
+    properties.add(DiagnosticsProperty('alignment', alignment));
+    properties.add(DiagnosticsProperty('padding', padding));
+    properties.add(DiagnosticsProperty('margin', margin));
+    properties.add(DiagnosticsProperty('constraints', constraints));
+    properties.add(
+        DiagnosticsProperty('decoration', decoration, expandableValue: true));
+    properties
+        .add(DiagnosticsProperty('foregroundDecoration', foregroundDecoration));
+    properties.add(DiagnosticsProperty('transform', transform));
+    properties
+        .add(DiagnosticsProperty('transformAlignment', transformAlignment));
+    properties.add(DiagnosticsProperty('clipBehavior', clipBehavior));
+    properties.add(DiagnosticsProperty('width', width));
+    properties.add(DiagnosticsProperty('height', height));
+    properties.add(DiagnosticsProperty('modifiers', modifiers));
+    properties.add(DiagnosticsProperty('animated', animated));
   }
 }
 

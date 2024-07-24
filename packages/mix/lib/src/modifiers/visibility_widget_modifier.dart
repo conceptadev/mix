@@ -9,11 +9,10 @@ import '../core/factory/mix_data.dart';
 import '../core/factory/mix_provider.dart';
 import '../core/modifier.dart';
 import '../core/utility.dart';
-import '../internal/diagnostic_properties_builder_ext.dart';
 
 part 'visibility_widget_modifier.g.dart';
 
-@MixableSpec(prefix: 'VisibilityModifier', skipUtility: true)
+@MixableSpec(skipUtility: true)
 final class VisibilityModifierSpec
     extends WidgetModifierSpec<VisibilityModifierSpec>
     with _$VisibilityModifierSpec {
@@ -26,11 +25,12 @@ final class VisibilityModifierSpec
   }
 }
 
-final class VisibilityModifierUtility<T extends Attribute>
-    extends MixUtility<T, VisibilityModifierAttribute> {
-  const VisibilityModifierUtility(super.builder);
+final class VisibilityModifierSpecUtility<T extends Attribute>
+    extends MixUtility<T, VisibilityModifierSpecAttribute> {
+  const VisibilityModifierSpecUtility(super.builder);
   T on() => call(true);
   T off() => call(false);
 
-  T call(bool value) => builder(VisibilityModifierAttribute(visible: value));
+  T call(bool value) =>
+      builder(VisibilityModifierSpecAttribute(visible: value));
 }

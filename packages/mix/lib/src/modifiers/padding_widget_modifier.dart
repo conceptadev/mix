@@ -11,14 +11,10 @@ import '../core/factory/mix_data.dart';
 import '../core/factory/mix_provider.dart';
 import '../core/modifier.dart';
 import '../core/spec.dart';
-import '../internal/diagnostic_properties_builder_ext.dart';
 
 part 'padding_widget_modifier.g.dart';
 
-@Deprecated('Use PaddingModifierSpec instead')
-typedef PaddingSpec = PaddingModifierSpec;
-
-@MixableSpec(prefix: 'PaddingModifier')
+@MixableSpec()
 final class PaddingModifierSpec extends WidgetModifierSpec<PaddingModifierSpec>
     with _$PaddingModifierSpec {
   final EdgeInsetsGeometry padding;

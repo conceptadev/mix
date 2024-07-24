@@ -10,7 +10,7 @@ part of 'visibility_widget_modifier.dart';
 
 mixin _$VisibilityModifierSpec on WidgetModifierSpec<VisibilityModifierSpec> {
   static VisibilityModifierSpec from(MixData mix) {
-    return mix.attributeOf<VisibilityModifierAttribute>()?.resolve(mix) ??
+    return mix.attributeOf<VisibilityModifierSpecAttribute>()?.resolve(mix) ??
         const VisibilityModifierSpec();
   }
 
@@ -88,12 +88,12 @@ mixin _$VisibilityModifierSpec on WidgetModifierSpec<VisibilityModifierSpec> {
 ///
 /// Use this class to configure the attributes of a [VisibilityModifierSpec] and pass it to
 /// the [VisibilityModifierSpec] constructor.
-final class VisibilityModifierAttribute
+final class VisibilityModifierSpecAttribute
     extends WidgetModifierSpecAttribute<VisibilityModifierSpec>
     with Diagnosticable {
   final bool? visible;
 
-  const VisibilityModifierAttribute({
+  const VisibilityModifierSpecAttribute({
     this.visible,
   });
 
@@ -103,7 +103,7 @@ final class VisibilityModifierAttribute
   /// default value defined in the `defaultValue` for that property.
   ///
   /// ```dart
-  /// final visibilityModifierSpec = VisibilityModifierAttribute(...).resolve(mix);
+  /// final visibilityModifierSpec = VisibilityModifierSpecAttribute(...).resolve(mix);
   /// ```
   @override
   VisibilityModifierSpec resolve(MixData mix) {
@@ -112,27 +112,28 @@ final class VisibilityModifierAttribute
     );
   }
 
-  /// Merges the properties of this [VisibilityModifierAttribute] with the properties of [other].
+  /// Merges the properties of this [VisibilityModifierSpecAttribute] with the properties of [other].
   ///
   /// If [other] is null, returns this instance unchanged. Otherwise, returns a new
-  /// [VisibilityModifierAttribute] with the properties of [other] taking precedence over
+  /// [VisibilityModifierSpecAttribute] with the properties of [other] taking precedence over
   /// the corresponding properties of this instance.
   ///
   /// Properties from [other] that are null will fall back
   /// to the values from this instance.
   @override
-  VisibilityModifierAttribute merge(VisibilityModifierAttribute? other) {
+  VisibilityModifierSpecAttribute merge(
+      VisibilityModifierSpecAttribute? other) {
     if (other == null) return this;
 
-    return VisibilityModifierAttribute(
+    return VisibilityModifierSpecAttribute(
       visible: other.visible ?? visible,
     );
   }
 
-  /// The list of properties that constitute the state of this [VisibilityModifierAttribute].
+  /// The list of properties that constitute the state of this [VisibilityModifierSpecAttribute].
   ///
   /// This property is used by the [==] operator and the [hashCode] getter to
-  /// compare two [VisibilityModifierAttribute] instances for equality.
+  /// compare two [VisibilityModifierSpecAttribute] instances for equality.
   @override
   List<Object?> get props => [
         visible,
@@ -141,7 +142,7 @@ final class VisibilityModifierAttribute
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.addUsingDefault('visible', visible);
+    properties.add(DiagnosticsProperty('visible', visible));
   }
 }
 

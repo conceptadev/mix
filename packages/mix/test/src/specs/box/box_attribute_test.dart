@@ -23,8 +23,8 @@ void main() {
         width: 100,
         height: 100,
         modifiers: const WidgetModifiersDataDto([
-          OpacityModifierAttribute(opacity: 0.5),
-          SizedBoxModifierAttribute(height: 10, width: 10),
+          OpacityModifierSpecAttribute(opacity: 0.5),
+          SizedBoxModifierSpecAttribute(height: 10, width: 10),
         ]),
       );
 
@@ -54,8 +54,8 @@ void main() {
       expect(
           containerSpecAttribute.modifiers,
           const WidgetModifiersDataDto([
-            OpacityModifierAttribute(opacity: 0.5),
-            SizedBoxModifierAttribute(height: 10, width: 10),
+            OpacityModifierSpecAttribute(opacity: 0.5),
+            SizedBoxModifierSpecAttribute(height: 10, width: 10),
           ]));
     });
 
@@ -77,8 +77,8 @@ void main() {
           width: 100,
           height: 100,
           modifiers: const WidgetModifiersDataDto([
-            OpacityModifierAttribute(opacity: 0.5),
-            SizedBoxModifierAttribute(height: 10, width: 10),
+            OpacityModifierSpecAttribute(opacity: 0.5),
+            SizedBoxModifierSpecAttribute(height: 10, width: 10),
           ]));
 
       final containerSpec = containerSpecAttribute.resolve(EmptyMixData);
@@ -127,8 +127,8 @@ void main() {
           width: 100,
           height: 100,
           modifiers: const WidgetModifiersDataDto([
-            OpacityModifierAttribute(opacity: 0.5),
-            SizedBoxModifierAttribute(height: 10, width: 10),
+            OpacityModifierSpecAttribute(opacity: 0.5),
+            SizedBoxModifierSpecAttribute(height: 10, width: 10),
           ]));
 
       final mergedBoxSpecAttribute = containerSpecAttribute.merge(
@@ -148,7 +148,7 @@ void main() {
           width: 200,
           height: 200,
           modifiers: const WidgetModifiersDataDto([
-            SizedBoxModifierAttribute(width: 20),
+            SizedBoxModifierSpecAttribute(width: 20),
           ]),
         ),
       );
@@ -179,8 +179,8 @@ void main() {
       expect(
           mergedBoxSpecAttribute.modifiers,
           const WidgetModifiersDataDto([
-            OpacityModifierAttribute(opacity: 0.5),
-            SizedBoxModifierAttribute(height: 10, width: 20),
+            OpacityModifierSpecAttribute(opacity: 0.5),
+            SizedBoxModifierSpecAttribute(height: 10, width: 20),
           ]));
     });
 
@@ -202,8 +202,8 @@ void main() {
           width: 100,
           height: 100,
           modifiers: const WidgetModifiersDataDto([
-            OpacityModifierAttribute(opacity: 0.5),
-            SizedBoxModifierAttribute(height: 10, width: 10),
+            OpacityModifierSpecAttribute(opacity: 0.5),
+            SizedBoxModifierSpecAttribute(height: 10, width: 10),
           ]));
 
       expect(
@@ -226,8 +226,8 @@ void main() {
             height: 100,
             modifiers: const WidgetModifiersDataDto(
               [
-                OpacityModifierAttribute(opacity: 0.5),
-                SizedBoxModifierAttribute(height: 10, width: 10),
+                OpacityModifierSpecAttribute(opacity: 0.5),
+                SizedBoxModifierSpecAttribute(height: 10, width: 10),
               ],
             ),
           ),
@@ -280,8 +280,8 @@ void main() {
               height: 200,
               modifiers: const WidgetModifiersDataDto(
                 [
-                  OpacityModifierAttribute(opacity: 0.4),
-                  SizedBoxModifierAttribute(height: 20, width: 10),
+                  OpacityModifierSpecAttribute(opacity: 0.4),
+                  SizedBoxModifierSpecAttribute(height: 20, width: 10),
                 ],
               ),
             ),

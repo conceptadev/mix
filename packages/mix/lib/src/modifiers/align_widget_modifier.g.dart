@@ -10,7 +10,7 @@ part of 'align_widget_modifier.dart';
 
 mixin _$AlignModifierSpec on WidgetModifierSpec<AlignModifierSpec> {
   static AlignModifierSpec from(MixData mix) {
-    return mix.attributeOf<AlignModifierAttribute>()?.resolve(mix) ??
+    return mix.attributeOf<AlignModifierSpecAttribute>()?.resolve(mix) ??
         const AlignModifierSpec();
   }
 
@@ -100,13 +100,13 @@ mixin _$AlignModifierSpec on WidgetModifierSpec<AlignModifierSpec> {
 ///
 /// Use this class to configure the attributes of a [AlignModifierSpec] and pass it to
 /// the [AlignModifierSpec] constructor.
-final class AlignModifierAttribute
+final class AlignModifierSpecAttribute
     extends WidgetModifierSpecAttribute<AlignModifierSpec> with Diagnosticable {
   final AlignmentGeometry? alignment;
   final double? widthFactor;
   final double? heightFactor;
 
-  const AlignModifierAttribute({
+  const AlignModifierSpecAttribute({
     this.alignment,
     this.widthFactor,
     this.heightFactor,
@@ -118,7 +118,7 @@ final class AlignModifierAttribute
   /// default value defined in the `defaultValue` for that property.
   ///
   /// ```dart
-  /// final alignModifierSpec = AlignModifierAttribute(...).resolve(mix);
+  /// final alignModifierSpec = AlignModifierSpecAttribute(...).resolve(mix);
   /// ```
   @override
   AlignModifierSpec resolve(MixData mix) {
@@ -129,29 +129,29 @@ final class AlignModifierAttribute
     );
   }
 
-  /// Merges the properties of this [AlignModifierAttribute] with the properties of [other].
+  /// Merges the properties of this [AlignModifierSpecAttribute] with the properties of [other].
   ///
   /// If [other] is null, returns this instance unchanged. Otherwise, returns a new
-  /// [AlignModifierAttribute] with the properties of [other] taking precedence over
+  /// [AlignModifierSpecAttribute] with the properties of [other] taking precedence over
   /// the corresponding properties of this instance.
   ///
   /// Properties from [other] that are null will fall back
   /// to the values from this instance.
   @override
-  AlignModifierAttribute merge(AlignModifierAttribute? other) {
+  AlignModifierSpecAttribute merge(AlignModifierSpecAttribute? other) {
     if (other == null) return this;
 
-    return AlignModifierAttribute(
+    return AlignModifierSpecAttribute(
       alignment: other.alignment ?? alignment,
       widthFactor: other.widthFactor ?? widthFactor,
       heightFactor: other.heightFactor ?? heightFactor,
     );
   }
 
-  /// The list of properties that constitute the state of this [AlignModifierAttribute].
+  /// The list of properties that constitute the state of this [AlignModifierSpecAttribute].
   ///
   /// This property is used by the [==] operator and the [hashCode] getter to
-  /// compare two [AlignModifierAttribute] instances for equality.
+  /// compare two [AlignModifierSpecAttribute] instances for equality.
   @override
   List<Object?> get props => [
         alignment,
@@ -162,9 +162,9 @@ final class AlignModifierAttribute
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.addUsingDefault('alignment', alignment);
-    properties.addUsingDefault('widthFactor', widthFactor);
-    properties.addUsingDefault('heightFactor', heightFactor);
+    properties.add(DiagnosticsProperty('alignment', alignment));
+    properties.add(DiagnosticsProperty('widthFactor', widthFactor));
+    properties.add(DiagnosticsProperty('heightFactor', heightFactor));
   }
 }
 

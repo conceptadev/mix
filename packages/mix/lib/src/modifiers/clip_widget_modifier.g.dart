@@ -10,7 +10,7 @@ part of 'clip_widget_modifier.dart';
 
 mixin _$ClipOvalModifierSpec on WidgetModifierSpec<ClipOvalModifierSpec> {
   static ClipOvalModifierSpec from(MixData mix) {
-    return mix.attributeOf<ClipOvalModifierAttribute>()?.resolve(mix) ??
+    return mix.attributeOf<ClipOvalModifierSpecAttribute>()?.resolve(mix) ??
         const ClipOvalModifierSpec();
   }
 
@@ -92,13 +92,13 @@ mixin _$ClipOvalModifierSpec on WidgetModifierSpec<ClipOvalModifierSpec> {
 ///
 /// Use this class to configure the attributes of a [ClipOvalModifierSpec] and pass it to
 /// the [ClipOvalModifierSpec] constructor.
-final class ClipOvalModifierAttribute
+final class ClipOvalModifierSpecAttribute
     extends WidgetModifierSpecAttribute<ClipOvalModifierSpec>
     with Diagnosticable {
   final CustomClipper<Rect>? clipper;
   final Clip? clipBehavior;
 
-  const ClipOvalModifierAttribute({
+  const ClipOvalModifierSpecAttribute({
     this.clipper,
     this.clipBehavior,
   });
@@ -109,7 +109,7 @@ final class ClipOvalModifierAttribute
   /// default value defined in the `defaultValue` for that property.
   ///
   /// ```dart
-  /// final clipOvalModifierSpec = ClipOvalModifierAttribute(...).resolve(mix);
+  /// final clipOvalModifierSpec = ClipOvalModifierSpecAttribute(...).resolve(mix);
   /// ```
   @override
   ClipOvalModifierSpec resolve(MixData mix) {
@@ -119,28 +119,28 @@ final class ClipOvalModifierAttribute
     );
   }
 
-  /// Merges the properties of this [ClipOvalModifierAttribute] with the properties of [other].
+  /// Merges the properties of this [ClipOvalModifierSpecAttribute] with the properties of [other].
   ///
   /// If [other] is null, returns this instance unchanged. Otherwise, returns a new
-  /// [ClipOvalModifierAttribute] with the properties of [other] taking precedence over
+  /// [ClipOvalModifierSpecAttribute] with the properties of [other] taking precedence over
   /// the corresponding properties of this instance.
   ///
   /// Properties from [other] that are null will fall back
   /// to the values from this instance.
   @override
-  ClipOvalModifierAttribute merge(ClipOvalModifierAttribute? other) {
+  ClipOvalModifierSpecAttribute merge(ClipOvalModifierSpecAttribute? other) {
     if (other == null) return this;
 
-    return ClipOvalModifierAttribute(
+    return ClipOvalModifierSpecAttribute(
       clipper: other.clipper ?? clipper,
       clipBehavior: other.clipBehavior ?? clipBehavior,
     );
   }
 
-  /// The list of properties that constitute the state of this [ClipOvalModifierAttribute].
+  /// The list of properties that constitute the state of this [ClipOvalModifierSpecAttribute].
   ///
   /// This property is used by the [==] operator and the [hashCode] getter to
-  /// compare two [ClipOvalModifierAttribute] instances for equality.
+  /// compare two [ClipOvalModifierSpecAttribute] instances for equality.
   @override
   List<Object?> get props => [
         clipper,
@@ -150,8 +150,8 @@ final class ClipOvalModifierAttribute
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.addUsingDefault('clipper', clipper);
-    properties.addUsingDefault('clipBehavior', clipBehavior);
+    properties.add(DiagnosticsProperty('clipper', clipper));
+    properties.add(DiagnosticsProperty('clipBehavior', clipBehavior));
   }
 }
 
@@ -178,7 +178,7 @@ class ClipOvalModifierSpecTween extends Tween<ClipOvalModifierSpec?> {
 
 mixin _$ClipRectModifierSpec on WidgetModifierSpec<ClipRectModifierSpec> {
   static ClipRectModifierSpec from(MixData mix) {
-    return mix.attributeOf<ClipRectModifierAttribute>()?.resolve(mix) ??
+    return mix.attributeOf<ClipRectModifierSpecAttribute>()?.resolve(mix) ??
         const ClipRectModifierSpec();
   }
 
@@ -260,13 +260,13 @@ mixin _$ClipRectModifierSpec on WidgetModifierSpec<ClipRectModifierSpec> {
 ///
 /// Use this class to configure the attributes of a [ClipRectModifierSpec] and pass it to
 /// the [ClipRectModifierSpec] constructor.
-final class ClipRectModifierAttribute
+final class ClipRectModifierSpecAttribute
     extends WidgetModifierSpecAttribute<ClipRectModifierSpec>
     with Diagnosticable {
   final CustomClipper<Rect>? clipper;
   final Clip? clipBehavior;
 
-  const ClipRectModifierAttribute({
+  const ClipRectModifierSpecAttribute({
     this.clipper,
     this.clipBehavior,
   });
@@ -277,7 +277,7 @@ final class ClipRectModifierAttribute
   /// default value defined in the `defaultValue` for that property.
   ///
   /// ```dart
-  /// final clipRectModifierSpec = ClipRectModifierAttribute(...).resolve(mix);
+  /// final clipRectModifierSpec = ClipRectModifierSpecAttribute(...).resolve(mix);
   /// ```
   @override
   ClipRectModifierSpec resolve(MixData mix) {
@@ -287,28 +287,28 @@ final class ClipRectModifierAttribute
     );
   }
 
-  /// Merges the properties of this [ClipRectModifierAttribute] with the properties of [other].
+  /// Merges the properties of this [ClipRectModifierSpecAttribute] with the properties of [other].
   ///
   /// If [other] is null, returns this instance unchanged. Otherwise, returns a new
-  /// [ClipRectModifierAttribute] with the properties of [other] taking precedence over
+  /// [ClipRectModifierSpecAttribute] with the properties of [other] taking precedence over
   /// the corresponding properties of this instance.
   ///
   /// Properties from [other] that are null will fall back
   /// to the values from this instance.
   @override
-  ClipRectModifierAttribute merge(ClipRectModifierAttribute? other) {
+  ClipRectModifierSpecAttribute merge(ClipRectModifierSpecAttribute? other) {
     if (other == null) return this;
 
-    return ClipRectModifierAttribute(
+    return ClipRectModifierSpecAttribute(
       clipper: other.clipper ?? clipper,
       clipBehavior: other.clipBehavior ?? clipBehavior,
     );
   }
 
-  /// The list of properties that constitute the state of this [ClipRectModifierAttribute].
+  /// The list of properties that constitute the state of this [ClipRectModifierSpecAttribute].
   ///
   /// This property is used by the [==] operator and the [hashCode] getter to
-  /// compare two [ClipRectModifierAttribute] instances for equality.
+  /// compare two [ClipRectModifierSpecAttribute] instances for equality.
   @override
   List<Object?> get props => [
         clipper,
@@ -318,8 +318,8 @@ final class ClipRectModifierAttribute
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.addUsingDefault('clipper', clipper);
-    properties.addUsingDefault('clipBehavior', clipBehavior);
+    properties.add(DiagnosticsProperty('clipper', clipper));
+    properties.add(DiagnosticsProperty('clipBehavior', clipBehavior));
   }
 }
 
@@ -346,7 +346,7 @@ class ClipRectModifierSpecTween extends Tween<ClipRectModifierSpec?> {
 
 mixin _$ClipRRectModifierSpec on WidgetModifierSpec<ClipRRectModifierSpec> {
   static ClipRRectModifierSpec from(MixData mix) {
-    return mix.attributeOf<ClipRRectModifierAttribute>()?.resolve(mix) ??
+    return mix.attributeOf<ClipRRectModifierSpecAttribute>()?.resolve(mix) ??
         const ClipRRectModifierSpec();
   }
 
@@ -434,14 +434,14 @@ mixin _$ClipRRectModifierSpec on WidgetModifierSpec<ClipRRectModifierSpec> {
 ///
 /// Use this class to configure the attributes of a [ClipRRectModifierSpec] and pass it to
 /// the [ClipRRectModifierSpec] constructor.
-final class ClipRRectModifierAttribute
+final class ClipRRectModifierSpecAttribute
     extends WidgetModifierSpecAttribute<ClipRRectModifierSpec>
     with Diagnosticable {
   final BorderRadiusGeometryDto? borderRadius;
   final CustomClipper<RRect>? clipper;
   final Clip? clipBehavior;
 
-  const ClipRRectModifierAttribute({
+  const ClipRRectModifierSpecAttribute({
     this.borderRadius,
     this.clipper,
     this.clipBehavior,
@@ -453,7 +453,7 @@ final class ClipRRectModifierAttribute
   /// default value defined in the `defaultValue` for that property.
   ///
   /// ```dart
-  /// final clipRRectModifierSpec = ClipRRectModifierAttribute(...).resolve(mix);
+  /// final clipRRectModifierSpec = ClipRRectModifierSpecAttribute(...).resolve(mix);
   /// ```
   @override
   ClipRRectModifierSpec resolve(MixData mix) {
@@ -464,19 +464,19 @@ final class ClipRRectModifierAttribute
     );
   }
 
-  /// Merges the properties of this [ClipRRectModifierAttribute] with the properties of [other].
+  /// Merges the properties of this [ClipRRectModifierSpecAttribute] with the properties of [other].
   ///
   /// If [other] is null, returns this instance unchanged. Otherwise, returns a new
-  /// [ClipRRectModifierAttribute] with the properties of [other] taking precedence over
+  /// [ClipRRectModifierSpecAttribute] with the properties of [other] taking precedence over
   /// the corresponding properties of this instance.
   ///
   /// Properties from [other] that are null will fall back
   /// to the values from this instance.
   @override
-  ClipRRectModifierAttribute merge(ClipRRectModifierAttribute? other) {
+  ClipRRectModifierSpecAttribute merge(ClipRRectModifierSpecAttribute? other) {
     if (other == null) return this;
 
-    return ClipRRectModifierAttribute(
+    return ClipRRectModifierSpecAttribute(
       borderRadius:
           borderRadius?.merge(other.borderRadius) ?? other.borderRadius,
       clipper: other.clipper ?? clipper,
@@ -484,10 +484,10 @@ final class ClipRRectModifierAttribute
     );
   }
 
-  /// The list of properties that constitute the state of this [ClipRRectModifierAttribute].
+  /// The list of properties that constitute the state of this [ClipRRectModifierSpecAttribute].
   ///
   /// This property is used by the [==] operator and the [hashCode] getter to
-  /// compare two [ClipRRectModifierAttribute] instances for equality.
+  /// compare two [ClipRRectModifierSpecAttribute] instances for equality.
   @override
   List<Object?> get props => [
         borderRadius,
@@ -498,9 +498,9 @@ final class ClipRRectModifierAttribute
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.addUsingDefault('borderRadius', borderRadius);
-    properties.addUsingDefault('clipper', clipper);
-    properties.addUsingDefault('clipBehavior', clipBehavior);
+    properties.add(DiagnosticsProperty('borderRadius', borderRadius));
+    properties.add(DiagnosticsProperty('clipper', clipper));
+    properties.add(DiagnosticsProperty('clipBehavior', clipBehavior));
   }
 }
 
@@ -527,7 +527,7 @@ class ClipRRectModifierSpecTween extends Tween<ClipRRectModifierSpec?> {
 
 mixin _$ClipPathModifierSpec on WidgetModifierSpec<ClipPathModifierSpec> {
   static ClipPathModifierSpec from(MixData mix) {
-    return mix.attributeOf<ClipPathModifierAttribute>()?.resolve(mix) ??
+    return mix.attributeOf<ClipPathModifierSpecAttribute>()?.resolve(mix) ??
         const ClipPathModifierSpec();
   }
 
@@ -609,13 +609,13 @@ mixin _$ClipPathModifierSpec on WidgetModifierSpec<ClipPathModifierSpec> {
 ///
 /// Use this class to configure the attributes of a [ClipPathModifierSpec] and pass it to
 /// the [ClipPathModifierSpec] constructor.
-final class ClipPathModifierAttribute
+final class ClipPathModifierSpecAttribute
     extends WidgetModifierSpecAttribute<ClipPathModifierSpec>
     with Diagnosticable {
   final CustomClipper<Path>? clipper;
   final Clip? clipBehavior;
 
-  const ClipPathModifierAttribute({
+  const ClipPathModifierSpecAttribute({
     this.clipper,
     this.clipBehavior,
   });
@@ -626,7 +626,7 @@ final class ClipPathModifierAttribute
   /// default value defined in the `defaultValue` for that property.
   ///
   /// ```dart
-  /// final clipPathModifierSpec = ClipPathModifierAttribute(...).resolve(mix);
+  /// final clipPathModifierSpec = ClipPathModifierSpecAttribute(...).resolve(mix);
   /// ```
   @override
   ClipPathModifierSpec resolve(MixData mix) {
@@ -636,28 +636,28 @@ final class ClipPathModifierAttribute
     );
   }
 
-  /// Merges the properties of this [ClipPathModifierAttribute] with the properties of [other].
+  /// Merges the properties of this [ClipPathModifierSpecAttribute] with the properties of [other].
   ///
   /// If [other] is null, returns this instance unchanged. Otherwise, returns a new
-  /// [ClipPathModifierAttribute] with the properties of [other] taking precedence over
+  /// [ClipPathModifierSpecAttribute] with the properties of [other] taking precedence over
   /// the corresponding properties of this instance.
   ///
   /// Properties from [other] that are null will fall back
   /// to the values from this instance.
   @override
-  ClipPathModifierAttribute merge(ClipPathModifierAttribute? other) {
+  ClipPathModifierSpecAttribute merge(ClipPathModifierSpecAttribute? other) {
     if (other == null) return this;
 
-    return ClipPathModifierAttribute(
+    return ClipPathModifierSpecAttribute(
       clipper: other.clipper ?? clipper,
       clipBehavior: other.clipBehavior ?? clipBehavior,
     );
   }
 
-  /// The list of properties that constitute the state of this [ClipPathModifierAttribute].
+  /// The list of properties that constitute the state of this [ClipPathModifierSpecAttribute].
   ///
   /// This property is used by the [==] operator and the [hashCode] getter to
-  /// compare two [ClipPathModifierAttribute] instances for equality.
+  /// compare two [ClipPathModifierSpecAttribute] instances for equality.
   @override
   List<Object?> get props => [
         clipper,
@@ -667,8 +667,8 @@ final class ClipPathModifierAttribute
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.addUsingDefault('clipper', clipper);
-    properties.addUsingDefault('clipBehavior', clipBehavior);
+    properties.add(DiagnosticsProperty('clipper', clipper));
+    properties.add(DiagnosticsProperty('clipBehavior', clipBehavior));
   }
 }
 
@@ -696,7 +696,7 @@ class ClipPathModifierSpecTween extends Tween<ClipPathModifierSpec?> {
 mixin _$ClipTriangleModifierSpec
     on WidgetModifierSpec<ClipTriangleModifierSpec> {
   static ClipTriangleModifierSpec from(MixData mix) {
-    return mix.attributeOf<ClipTriangleModifierAttribute>()?.resolve(mix) ??
+    return mix.attributeOf<ClipTriangleModifierSpecAttribute>()?.resolve(mix) ??
         const ClipTriangleModifierSpec();
   }
 
@@ -774,12 +774,12 @@ mixin _$ClipTriangleModifierSpec
 ///
 /// Use this class to configure the attributes of a [ClipTriangleModifierSpec] and pass it to
 /// the [ClipTriangleModifierSpec] constructor.
-final class ClipTriangleModifierAttribute
+final class ClipTriangleModifierSpecAttribute
     extends WidgetModifierSpecAttribute<ClipTriangleModifierSpec>
     with Diagnosticable {
   final Clip? clipBehavior;
 
-  const ClipTriangleModifierAttribute({
+  const ClipTriangleModifierSpecAttribute({
     this.clipBehavior,
   });
 
@@ -789,7 +789,7 @@ final class ClipTriangleModifierAttribute
   /// default value defined in the `defaultValue` for that property.
   ///
   /// ```dart
-  /// final clipTriangleModifierSpec = ClipTriangleModifierAttribute(...).resolve(mix);
+  /// final clipTriangleModifierSpec = ClipTriangleModifierSpecAttribute(...).resolve(mix);
   /// ```
   @override
   ClipTriangleModifierSpec resolve(MixData mix) {
@@ -798,27 +798,28 @@ final class ClipTriangleModifierAttribute
     );
   }
 
-  /// Merges the properties of this [ClipTriangleModifierAttribute] with the properties of [other].
+  /// Merges the properties of this [ClipTriangleModifierSpecAttribute] with the properties of [other].
   ///
   /// If [other] is null, returns this instance unchanged. Otherwise, returns a new
-  /// [ClipTriangleModifierAttribute] with the properties of [other] taking precedence over
+  /// [ClipTriangleModifierSpecAttribute] with the properties of [other] taking precedence over
   /// the corresponding properties of this instance.
   ///
   /// Properties from [other] that are null will fall back
   /// to the values from this instance.
   @override
-  ClipTriangleModifierAttribute merge(ClipTriangleModifierAttribute? other) {
+  ClipTriangleModifierSpecAttribute merge(
+      ClipTriangleModifierSpecAttribute? other) {
     if (other == null) return this;
 
-    return ClipTriangleModifierAttribute(
+    return ClipTriangleModifierSpecAttribute(
       clipBehavior: other.clipBehavior ?? clipBehavior,
     );
   }
 
-  /// The list of properties that constitute the state of this [ClipTriangleModifierAttribute].
+  /// The list of properties that constitute the state of this [ClipTriangleModifierSpecAttribute].
   ///
   /// This property is used by the [==] operator and the [hashCode] getter to
-  /// compare two [ClipTriangleModifierAttribute] instances for equality.
+  /// compare two [ClipTriangleModifierSpecAttribute] instances for equality.
   @override
   List<Object?> get props => [
         clipBehavior,
@@ -827,7 +828,7 @@ final class ClipTriangleModifierAttribute
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.addUsingDefault('clipBehavior', clipBehavior);
+    properties.add(DiagnosticsProperty('clipBehavior', clipBehavior));
   }
 }
 

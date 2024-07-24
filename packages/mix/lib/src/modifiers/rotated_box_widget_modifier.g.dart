@@ -10,7 +10,7 @@ part of 'rotated_box_widget_modifier.dart';
 
 mixin _$RotatedBoxModifierSpec on WidgetModifierSpec<RotatedBoxModifierSpec> {
   static RotatedBoxModifierSpec from(MixData mix) {
-    return mix.attributeOf<RotatedBoxModifierAttribute>()?.resolve(mix) ??
+    return mix.attributeOf<RotatedBoxModifierSpecAttribute>()?.resolve(mix) ??
         const RotatedBoxModifierSpec();
   }
 
@@ -61,12 +61,12 @@ mixin _$RotatedBoxModifierSpec on WidgetModifierSpec<RotatedBoxModifierSpec> {
 ///
 /// Use this class to configure the attributes of a [RotatedBoxModifierSpec] and pass it to
 /// the [RotatedBoxModifierSpec] constructor.
-final class RotatedBoxModifierAttribute
+final class RotatedBoxModifierSpecAttribute
     extends WidgetModifierSpecAttribute<RotatedBoxModifierSpec>
     with Diagnosticable {
   final int? quarterTurns;
 
-  const RotatedBoxModifierAttribute({
+  const RotatedBoxModifierSpecAttribute({
     this.quarterTurns,
   });
 
@@ -76,7 +76,7 @@ final class RotatedBoxModifierAttribute
   /// default value defined in the `defaultValue` for that property.
   ///
   /// ```dart
-  /// final rotatedBoxModifierSpec = RotatedBoxModifierAttribute(...).resolve(mix);
+  /// final rotatedBoxModifierSpec = RotatedBoxModifierSpecAttribute(...).resolve(mix);
   /// ```
   @override
   RotatedBoxModifierSpec resolve(MixData mix) {
@@ -85,27 +85,28 @@ final class RotatedBoxModifierAttribute
     );
   }
 
-  /// Merges the properties of this [RotatedBoxModifierAttribute] with the properties of [other].
+  /// Merges the properties of this [RotatedBoxModifierSpecAttribute] with the properties of [other].
   ///
   /// If [other] is null, returns this instance unchanged. Otherwise, returns a new
-  /// [RotatedBoxModifierAttribute] with the properties of [other] taking precedence over
+  /// [RotatedBoxModifierSpecAttribute] with the properties of [other] taking precedence over
   /// the corresponding properties of this instance.
   ///
   /// Properties from [other] that are null will fall back
   /// to the values from this instance.
   @override
-  RotatedBoxModifierAttribute merge(RotatedBoxModifierAttribute? other) {
+  RotatedBoxModifierSpecAttribute merge(
+      RotatedBoxModifierSpecAttribute? other) {
     if (other == null) return this;
 
-    return RotatedBoxModifierAttribute(
+    return RotatedBoxModifierSpecAttribute(
       quarterTurns: other.quarterTurns ?? quarterTurns,
     );
   }
 
-  /// The list of properties that constitute the state of this [RotatedBoxModifierAttribute].
+  /// The list of properties that constitute the state of this [RotatedBoxModifierSpecAttribute].
   ///
   /// This property is used by the [==] operator and the [hashCode] getter to
-  /// compare two [RotatedBoxModifierAttribute] instances for equality.
+  /// compare two [RotatedBoxModifierSpecAttribute] instances for equality.
   @override
   List<Object?> get props => [
         quarterTurns,
@@ -114,7 +115,7 @@ final class RotatedBoxModifierAttribute
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.addUsingDefault('quarterTurns', quarterTurns);
+    properties.add(DiagnosticsProperty('quarterTurns', quarterTurns));
   }
 }
 

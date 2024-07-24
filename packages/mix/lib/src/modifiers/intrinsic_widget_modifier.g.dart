@@ -11,7 +11,9 @@ part of 'intrinsic_widget_modifier.dart';
 mixin _$IntrinsicHeightModifierSpec
     on WidgetModifierSpec<IntrinsicHeightModifierSpec> {
   static IntrinsicHeightModifierSpec from(MixData mix) {
-    return mix.attributeOf<IntrinsicHeightModifierAttribute>()?.resolve(mix) ??
+    return mix
+            .attributeOf<IntrinsicHeightModifierSpecAttribute>()
+            ?.resolve(mix) ??
         const IntrinsicHeightModifierSpec();
   }
 
@@ -82,10 +84,10 @@ mixin _$IntrinsicHeightModifierSpec
 ///
 /// Use this class to configure the attributes of a [IntrinsicHeightModifierSpec] and pass it to
 /// the [IntrinsicHeightModifierSpec] constructor.
-final class IntrinsicHeightModifierAttribute
+final class IntrinsicHeightModifierSpecAttribute
     extends WidgetModifierSpecAttribute<IntrinsicHeightModifierSpec>
     with Diagnosticable {
-  const IntrinsicHeightModifierAttribute();
+  const IntrinsicHeightModifierSpecAttribute();
 
   /// Resolves to [IntrinsicHeightModifierSpec] using the provided [MixData].
   ///
@@ -93,33 +95,33 @@ final class IntrinsicHeightModifierAttribute
   /// default value defined in the `defaultValue` for that property.
   ///
   /// ```dart
-  /// final intrinsicHeightModifierSpec = IntrinsicHeightModifierAttribute(...).resolve(mix);
+  /// final intrinsicHeightModifierSpec = IntrinsicHeightModifierSpecAttribute(...).resolve(mix);
   /// ```
   @override
   IntrinsicHeightModifierSpec resolve(MixData mix) {
     return IntrinsicHeightModifierSpec();
   }
 
-  /// Merges the properties of this [IntrinsicHeightModifierAttribute] with the properties of [other].
+  /// Merges the properties of this [IntrinsicHeightModifierSpecAttribute] with the properties of [other].
   ///
   /// If [other] is null, returns this instance unchanged. Otherwise, returns a new
-  /// [IntrinsicHeightModifierAttribute] with the properties of [other] taking precedence over
+  /// [IntrinsicHeightModifierSpecAttribute] with the properties of [other] taking precedence over
   /// the corresponding properties of this instance.
   ///
   /// Properties from [other] that are null will fall back
   /// to the values from this instance.
   @override
-  IntrinsicHeightModifierAttribute merge(
-      IntrinsicHeightModifierAttribute? other) {
+  IntrinsicHeightModifierSpecAttribute merge(
+      IntrinsicHeightModifierSpecAttribute? other) {
     if (other == null) return this;
 
     return other;
   }
 
-  /// The list of properties that constitute the state of this [IntrinsicHeightModifierAttribute].
+  /// The list of properties that constitute the state of this [IntrinsicHeightModifierSpecAttribute].
   ///
   /// This property is used by the [==] operator and the [hashCode] getter to
-  /// compare two [IntrinsicHeightModifierAttribute] instances for equality.
+  /// compare two [IntrinsicHeightModifierSpecAttribute] instances for equality.
   @override
   List<Object?> get props => [];
 
@@ -155,7 +157,9 @@ class IntrinsicHeightModifierSpecTween
 mixin _$IntrinsicWidthModifierSpec
     on WidgetModifierSpec<IntrinsicWidthModifierSpec> {
   static IntrinsicWidthModifierSpec from(MixData mix) {
-    return mix.attributeOf<IntrinsicWidthModifierAttribute>()?.resolve(mix) ??
+    return mix
+            .attributeOf<IntrinsicWidthModifierSpecAttribute>()
+            ?.resolve(mix) ??
         const IntrinsicWidthModifierSpec();
   }
 
@@ -225,10 +229,10 @@ mixin _$IntrinsicWidthModifierSpec
 ///
 /// Use this class to configure the attributes of a [IntrinsicWidthModifierSpec] and pass it to
 /// the [IntrinsicWidthModifierSpec] constructor.
-final class IntrinsicWidthModifierAttribute
+final class IntrinsicWidthModifierSpecAttribute
     extends WidgetModifierSpecAttribute<IntrinsicWidthModifierSpec>
     with Diagnosticable {
-  const IntrinsicWidthModifierAttribute();
+  const IntrinsicWidthModifierSpecAttribute();
 
   /// Resolves to [IntrinsicWidthModifierSpec] using the provided [MixData].
   ///
@@ -236,33 +240,33 @@ final class IntrinsicWidthModifierAttribute
   /// default value defined in the `defaultValue` for that property.
   ///
   /// ```dart
-  /// final intrinsicWidthModifierSpec = IntrinsicWidthModifierAttribute(...).resolve(mix);
+  /// final intrinsicWidthModifierSpec = IntrinsicWidthModifierSpecAttribute(...).resolve(mix);
   /// ```
   @override
   IntrinsicWidthModifierSpec resolve(MixData mix) {
     return IntrinsicWidthModifierSpec();
   }
 
-  /// Merges the properties of this [IntrinsicWidthModifierAttribute] with the properties of [other].
+  /// Merges the properties of this [IntrinsicWidthModifierSpecAttribute] with the properties of [other].
   ///
   /// If [other] is null, returns this instance unchanged. Otherwise, returns a new
-  /// [IntrinsicWidthModifierAttribute] with the properties of [other] taking precedence over
+  /// [IntrinsicWidthModifierSpecAttribute] with the properties of [other] taking precedence over
   /// the corresponding properties of this instance.
   ///
   /// Properties from [other] that are null will fall back
   /// to the values from this instance.
   @override
-  IntrinsicWidthModifierAttribute merge(
-      IntrinsicWidthModifierAttribute? other) {
+  IntrinsicWidthModifierSpecAttribute merge(
+      IntrinsicWidthModifierSpecAttribute? other) {
     if (other == null) return this;
 
     return other;
   }
 
-  /// The list of properties that constitute the state of this [IntrinsicWidthModifierAttribute].
+  /// The list of properties that constitute the state of this [IntrinsicWidthModifierSpecAttribute].
   ///
   /// This property is used by the [==] operator and the [hashCode] getter to
-  /// compare two [IntrinsicWidthModifierAttribute] instances for equality.
+  /// compare two [IntrinsicWidthModifierSpecAttribute] instances for equality.
   @override
   List<Object?> get props => [];
 

@@ -10,7 +10,7 @@ part of 'flexible_widget_modifier.dart';
 
 mixin _$FlexibleModifierSpec on WidgetModifierSpec<FlexibleModifierSpec> {
   static FlexibleModifierSpec from(MixData mix) {
-    return mix.attributeOf<FlexibleModifierAttribute>()?.resolve(mix) ??
+    return mix.attributeOf<FlexibleModifierSpecAttribute>()?.resolve(mix) ??
         const FlexibleModifierSpec();
   }
 
@@ -92,13 +92,13 @@ mixin _$FlexibleModifierSpec on WidgetModifierSpec<FlexibleModifierSpec> {
 ///
 /// Use this class to configure the attributes of a [FlexibleModifierSpec] and pass it to
 /// the [FlexibleModifierSpec] constructor.
-final class FlexibleModifierAttribute
+final class FlexibleModifierSpecAttribute
     extends WidgetModifierSpecAttribute<FlexibleModifierSpec>
     with Diagnosticable {
   final int? flex;
   final FlexFit? fit;
 
-  const FlexibleModifierAttribute({
+  const FlexibleModifierSpecAttribute({
     this.flex,
     this.fit,
   });
@@ -109,7 +109,7 @@ final class FlexibleModifierAttribute
   /// default value defined in the `defaultValue` for that property.
   ///
   /// ```dart
-  /// final flexibleModifierSpec = FlexibleModifierAttribute(...).resolve(mix);
+  /// final flexibleModifierSpec = FlexibleModifierSpecAttribute(...).resolve(mix);
   /// ```
   @override
   FlexibleModifierSpec resolve(MixData mix) {
@@ -119,28 +119,28 @@ final class FlexibleModifierAttribute
     );
   }
 
-  /// Merges the properties of this [FlexibleModifierAttribute] with the properties of [other].
+  /// Merges the properties of this [FlexibleModifierSpecAttribute] with the properties of [other].
   ///
   /// If [other] is null, returns this instance unchanged. Otherwise, returns a new
-  /// [FlexibleModifierAttribute] with the properties of [other] taking precedence over
+  /// [FlexibleModifierSpecAttribute] with the properties of [other] taking precedence over
   /// the corresponding properties of this instance.
   ///
   /// Properties from [other] that are null will fall back
   /// to the values from this instance.
   @override
-  FlexibleModifierAttribute merge(FlexibleModifierAttribute? other) {
+  FlexibleModifierSpecAttribute merge(FlexibleModifierSpecAttribute? other) {
     if (other == null) return this;
 
-    return FlexibleModifierAttribute(
+    return FlexibleModifierSpecAttribute(
       flex: other.flex ?? flex,
       fit: other.fit ?? fit,
     );
   }
 
-  /// The list of properties that constitute the state of this [FlexibleModifierAttribute].
+  /// The list of properties that constitute the state of this [FlexibleModifierSpecAttribute].
   ///
   /// This property is used by the [==] operator and the [hashCode] getter to
-  /// compare two [FlexibleModifierAttribute] instances for equality.
+  /// compare two [FlexibleModifierSpecAttribute] instances for equality.
   @override
   List<Object?> get props => [
         flex,
@@ -150,8 +150,8 @@ final class FlexibleModifierAttribute
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.addUsingDefault('flex', flex);
-    properties.addUsingDefault('fit', fit);
+    properties.add(DiagnosticsProperty('flex', flex));
+    properties.add(DiagnosticsProperty('fit', fit));
   }
 }
 

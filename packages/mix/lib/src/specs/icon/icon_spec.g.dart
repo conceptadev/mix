@@ -232,17 +232,17 @@ final class IconSpecAttribute extends SpecAttribute<IconSpec>
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.addUsingDefault('color', color);
-    properties.addUsingDefault('size', size);
-    properties.addUsingDefault('weight', weight);
-    properties.addUsingDefault('grade', grade);
-    properties.addUsingDefault('opticalSize', opticalSize);
-    properties.addUsingDefault('shadows', shadows);
-    properties.addUsingDefault('textDirection', textDirection);
-    properties.addUsingDefault('applyTextScaling', applyTextScaling);
-    properties.addUsingDefault('fill', fill);
-    properties.addUsingDefault('animated', animated);
-    properties.addUsingDefault('modifiers', modifiers);
+    properties.add(DiagnosticsProperty('color', color));
+    properties.add(DiagnosticsProperty('size', size));
+    properties.add(DiagnosticsProperty('weight', weight));
+    properties.add(DiagnosticsProperty('grade', grade));
+    properties.add(DiagnosticsProperty('opticalSize', opticalSize));
+    properties.add(DiagnosticsProperty('shadows', shadows));
+    properties.add(DiagnosticsProperty('textDirection', textDirection));
+    properties.add(DiagnosticsProperty('applyTextScaling', applyTextScaling));
+    properties.add(DiagnosticsProperty('fill', fill));
+    properties.add(DiagnosticsProperty('animated', animated));
+    properties.add(DiagnosticsProperty('modifiers', modifiers));
   }
 }
 

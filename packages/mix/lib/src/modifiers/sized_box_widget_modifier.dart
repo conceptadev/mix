@@ -10,11 +10,10 @@ import '../core/factory/mix_provider.dart';
 import '../core/helpers.dart';
 import '../core/modifier.dart';
 import '../core/utility.dart';
-import '../internal/diagnostic_properties_builder_ext.dart';
 
 part 'sized_box_widget_modifier.g.dart';
 
-@MixableSpec(prefix: 'SizedBoxModifier', skipUtility: true)
+@MixableSpec(skipUtility: true)
 final class SizedBoxModifierSpec
     extends WidgetModifierSpec<SizedBoxModifierSpec>
     with _$SizedBoxModifierSpec {
@@ -29,26 +28,26 @@ final class SizedBoxModifierSpec
   }
 }
 
-final class SizedBoxModifierUtility<T extends Attribute>
-    extends MixUtility<T, SizedBoxModifierAttribute> {
-  /// Utility for defining [SizedBoxModifierAttribute.height]
+final class SizedBoxModifierSpecUtility<T extends Attribute>
+    extends MixUtility<T, SizedBoxModifierSpecAttribute> {
+  /// Utility for defining [SizedBoxModifierSpecAttribute.height]
   late final height = DoubleUtility((value) => call(height: value));
 
-  /// Utility for defining [SizedBoxModifierAttribute.width]
+  /// Utility for defining [SizedBoxModifierSpecAttribute.width]
   late final width = DoubleUtility((value) => call(width: value));
 
-  /// Utility for defining [SizedBoxModifierAttribute.width]
-  /// and [SizedBoxModifierAttribute.height]
+  /// Utility for defining [SizedBoxModifierSpecAttribute.width]
+  /// and [SizedBoxModifierSpecAttribute.height]
   late final square =
       DoubleUtility((value) => call(width: value, height: value));
 
-  SizedBoxModifierUtility(super.builder);
+  SizedBoxModifierSpecUtility(super.builder);
 
   T call({double? width, double? height}) {
-    return builder(SizedBoxModifierAttribute(width: width, height: height));
+    return builder(SizedBoxModifierSpecAttribute(width: width, height: height));
   }
 
-  /// Utility for defining [SizedBoxModifierAttribute.width] and [SizedBoxModifierAttribute.height]
+  /// Utility for defining [SizedBoxModifierSpecAttribute.width] and [SizedBoxModifierSpecAttribute.height]
   /// from [Size]
   T as(Size size) => call(width: size.width, height: size.height);
 }

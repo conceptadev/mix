@@ -261,20 +261,21 @@ final class TextSpecAttribute extends SpecAttribute<TextSpec>
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.addUsingDefault('overflow', overflow);
-    properties.addUsingDefault('strutStyle', strutStyle);
-    properties.addUsingDefault('textAlign', textAlign);
-    properties.addUsingDefault('textScaleFactor', textScaleFactor);
-    properties.addUsingDefault('textScaler', textScaler);
-    properties.addUsingDefault('maxLines', maxLines);
-    properties.addUsingDefault('style', style, expandableValue: true);
-    properties.addUsingDefault('textWidthBasis', textWidthBasis);
-    properties.addUsingDefault('textHeightBehavior', textHeightBehavior);
-    properties.addUsingDefault('textDirection', textDirection);
-    properties.addUsingDefault('softWrap', softWrap);
-    properties.addUsingDefault('directive', directive);
-    properties.addUsingDefault('animated', animated);
-    properties.addUsingDefault('modifiers', modifiers);
+    properties.add(DiagnosticsProperty('overflow', overflow));
+    properties.add(DiagnosticsProperty('strutStyle', strutStyle));
+    properties.add(DiagnosticsProperty('textAlign', textAlign));
+    properties.add(DiagnosticsProperty('textScaleFactor', textScaleFactor));
+    properties.add(DiagnosticsProperty('textScaler', textScaler));
+    properties.add(DiagnosticsProperty('maxLines', maxLines));
+    properties.add(DiagnosticsProperty('style', style, expandableValue: true));
+    properties.add(DiagnosticsProperty('textWidthBasis', textWidthBasis));
+    properties
+        .add(DiagnosticsProperty('textHeightBehavior', textHeightBehavior));
+    properties.add(DiagnosticsProperty('textDirection', textDirection));
+    properties.add(DiagnosticsProperty('softWrap', softWrap));
+    properties.add(DiagnosticsProperty('directive', directive));
+    properties.add(DiagnosticsProperty('animated', animated));
+    properties.add(DiagnosticsProperty('modifiers', modifiers));
   }
 }
 

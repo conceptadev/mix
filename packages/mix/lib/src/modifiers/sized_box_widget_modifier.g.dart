@@ -10,7 +10,7 @@ part of 'sized_box_widget_modifier.dart';
 
 mixin _$SizedBoxModifierSpec on WidgetModifierSpec<SizedBoxModifierSpec> {
   static SizedBoxModifierSpec from(MixData mix) {
-    return mix.attributeOf<SizedBoxModifierAttribute>()?.resolve(mix) ??
+    return mix.attributeOf<SizedBoxModifierSpecAttribute>()?.resolve(mix) ??
         const SizedBoxModifierSpec();
   }
 
@@ -93,13 +93,13 @@ mixin _$SizedBoxModifierSpec on WidgetModifierSpec<SizedBoxModifierSpec> {
 ///
 /// Use this class to configure the attributes of a [SizedBoxModifierSpec] and pass it to
 /// the [SizedBoxModifierSpec] constructor.
-final class SizedBoxModifierAttribute
+final class SizedBoxModifierSpecAttribute
     extends WidgetModifierSpecAttribute<SizedBoxModifierSpec>
     with Diagnosticable {
   final double? width;
   final double? height;
 
-  const SizedBoxModifierAttribute({
+  const SizedBoxModifierSpecAttribute({
     this.width,
     this.height,
   });
@@ -110,7 +110,7 @@ final class SizedBoxModifierAttribute
   /// default value defined in the `defaultValue` for that property.
   ///
   /// ```dart
-  /// final sizedBoxModifierSpec = SizedBoxModifierAttribute(...).resolve(mix);
+  /// final sizedBoxModifierSpec = SizedBoxModifierSpecAttribute(...).resolve(mix);
   /// ```
   @override
   SizedBoxModifierSpec resolve(MixData mix) {
@@ -120,28 +120,28 @@ final class SizedBoxModifierAttribute
     );
   }
 
-  /// Merges the properties of this [SizedBoxModifierAttribute] with the properties of [other].
+  /// Merges the properties of this [SizedBoxModifierSpecAttribute] with the properties of [other].
   ///
   /// If [other] is null, returns this instance unchanged. Otherwise, returns a new
-  /// [SizedBoxModifierAttribute] with the properties of [other] taking precedence over
+  /// [SizedBoxModifierSpecAttribute] with the properties of [other] taking precedence over
   /// the corresponding properties of this instance.
   ///
   /// Properties from [other] that are null will fall back
   /// to the values from this instance.
   @override
-  SizedBoxModifierAttribute merge(SizedBoxModifierAttribute? other) {
+  SizedBoxModifierSpecAttribute merge(SizedBoxModifierSpecAttribute? other) {
     if (other == null) return this;
 
-    return SizedBoxModifierAttribute(
+    return SizedBoxModifierSpecAttribute(
       width: other.width ?? width,
       height: other.height ?? height,
     );
   }
 
-  /// The list of properties that constitute the state of this [SizedBoxModifierAttribute].
+  /// The list of properties that constitute the state of this [SizedBoxModifierSpecAttribute].
   ///
   /// This property is used by the [==] operator and the [hashCode] getter to
-  /// compare two [SizedBoxModifierAttribute] instances for equality.
+  /// compare two [SizedBoxModifierSpecAttribute] instances for equality.
   @override
   List<Object?> get props => [
         width,
@@ -151,8 +151,8 @@ final class SizedBoxModifierAttribute
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.addUsingDefault('width', width);
-    properties.addUsingDefault('height', height);
+    properties.add(DiagnosticsProperty('width', width));
+    properties.add(DiagnosticsProperty('height', height));
   }
 }
 

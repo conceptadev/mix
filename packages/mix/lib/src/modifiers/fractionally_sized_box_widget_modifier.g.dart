@@ -12,7 +12,7 @@ mixin _$FractionallySizedBoxModifierSpec
     on WidgetModifierSpec<FractionallySizedBoxModifierSpec> {
   static FractionallySizedBoxModifierSpec from(MixData mix) {
     return mix
-            .attributeOf<FractionallySizedBoxModifierAttribute>()
+            .attributeOf<FractionallySizedBoxModifierSpecAttribute>()
             ?.resolve(mix) ??
         const FractionallySizedBoxModifierSpec();
   }
@@ -105,14 +105,14 @@ mixin _$FractionallySizedBoxModifierSpec
 ///
 /// Use this class to configure the attributes of a [FractionallySizedBoxModifierSpec] and pass it to
 /// the [FractionallySizedBoxModifierSpec] constructor.
-final class FractionallySizedBoxModifierAttribute
+final class FractionallySizedBoxModifierSpecAttribute
     extends WidgetModifierSpecAttribute<FractionallySizedBoxModifierSpec>
     with Diagnosticable {
   final double? widthFactor;
   final double? heightFactor;
   final AlignmentGeometry? alignment;
 
-  const FractionallySizedBoxModifierAttribute({
+  const FractionallySizedBoxModifierSpecAttribute({
     this.widthFactor,
     this.heightFactor,
     this.alignment,
@@ -124,7 +124,7 @@ final class FractionallySizedBoxModifierAttribute
   /// default value defined in the `defaultValue` for that property.
   ///
   /// ```dart
-  /// final fractionallySizedBoxModifierSpec = FractionallySizedBoxModifierAttribute(...).resolve(mix);
+  /// final fractionallySizedBoxModifierSpec = FractionallySizedBoxModifierSpecAttribute(...).resolve(mix);
   /// ```
   @override
   FractionallySizedBoxModifierSpec resolve(MixData mix) {
@@ -135,30 +135,30 @@ final class FractionallySizedBoxModifierAttribute
     );
   }
 
-  /// Merges the properties of this [FractionallySizedBoxModifierAttribute] with the properties of [other].
+  /// Merges the properties of this [FractionallySizedBoxModifierSpecAttribute] with the properties of [other].
   ///
   /// If [other] is null, returns this instance unchanged. Otherwise, returns a new
-  /// [FractionallySizedBoxModifierAttribute] with the properties of [other] taking precedence over
+  /// [FractionallySizedBoxModifierSpecAttribute] with the properties of [other] taking precedence over
   /// the corresponding properties of this instance.
   ///
   /// Properties from [other] that are null will fall back
   /// to the values from this instance.
   @override
-  FractionallySizedBoxModifierAttribute merge(
-      FractionallySizedBoxModifierAttribute? other) {
+  FractionallySizedBoxModifierSpecAttribute merge(
+      FractionallySizedBoxModifierSpecAttribute? other) {
     if (other == null) return this;
 
-    return FractionallySizedBoxModifierAttribute(
+    return FractionallySizedBoxModifierSpecAttribute(
       widthFactor: other.widthFactor ?? widthFactor,
       heightFactor: other.heightFactor ?? heightFactor,
       alignment: other.alignment ?? alignment,
     );
   }
 
-  /// The list of properties that constitute the state of this [FractionallySizedBoxModifierAttribute].
+  /// The list of properties that constitute the state of this [FractionallySizedBoxModifierSpecAttribute].
   ///
   /// This property is used by the [==] operator and the [hashCode] getter to
-  /// compare two [FractionallySizedBoxModifierAttribute] instances for equality.
+  /// compare two [FractionallySizedBoxModifierSpecAttribute] instances for equality.
   @override
   List<Object?> get props => [
         widthFactor,
@@ -169,9 +169,9 @@ final class FractionallySizedBoxModifierAttribute
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.addUsingDefault('widthFactor', widthFactor);
-    properties.addUsingDefault('heightFactor', heightFactor);
-    properties.addUsingDefault('alignment', alignment);
+    properties.add(DiagnosticsProperty('widthFactor', widthFactor));
+    properties.add(DiagnosticsProperty('heightFactor', heightFactor));
+    properties.add(DiagnosticsProperty('alignment', alignment));
   }
 }
 

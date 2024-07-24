@@ -190,3 +190,19 @@ class MixableEnumUtility {
     this.generateCallMethod = true,
   });
 }
+
+sealed class MixDeprecated {
+  const MixDeprecated();
+}
+
+class MixDeprecatedRenamed extends MixDeprecated {
+  final String updatedName;
+  final String version;
+  final String message;
+
+  const MixDeprecatedRenamed({
+    required this.message,
+    required this.version,
+    required this.updatedName,
+  });
+}

@@ -10,11 +10,10 @@ import '../core/factory/mix_provider.dart';
 import '../core/helpers.dart';
 import '../core/modifier.dart';
 import '../core/utility.dart';
-import '../internal/diagnostic_properties_builder_ext.dart';
 
 part 'fractionally_sized_box_widget_modifier.g.dart';
 
-@MixableSpec(prefix: 'FractionallySizedBoxModifier', skipUtility: true)
+@MixableSpec(skipUtility: true)
 final class FractionallySizedBoxModifierSpec
     extends WidgetModifierSpec<FractionallySizedBoxModifierSpec>
     with _$FractionallySizedBoxModifierSpec {
@@ -39,9 +38,9 @@ final class FractionallySizedBoxModifierSpec
   }
 }
 
-final class FractionallySizedBoxModifierUtility<T extends Attribute>
-    extends MixUtility<T, FractionallySizedBoxModifierAttribute> {
-  const FractionallySizedBoxModifierUtility(super.builder);
+final class FractionallySizedBoxModifierSpecUtility<T extends Attribute>
+    extends MixUtility<T, FractionallySizedBoxModifierSpecAttribute> {
+  const FractionallySizedBoxModifierSpecUtility(super.builder);
 
   T call({
     AlignmentGeometry? alignment,
@@ -49,7 +48,7 @@ final class FractionallySizedBoxModifierUtility<T extends Attribute>
     double? heightFactor,
   }) {
     return builder(
-      FractionallySizedBoxModifierAttribute(
+      FractionallySizedBoxModifierSpecAttribute(
         widthFactor: widthFactor,
         heightFactor: heightFactor,
         alignment: alignment,

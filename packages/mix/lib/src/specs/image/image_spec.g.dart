@@ -232,17 +232,17 @@ final class ImageSpecAttribute extends SpecAttribute<ImageSpec>
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.addUsingDefault('width', width);
-    properties.addUsingDefault('height', height);
-    properties.addUsingDefault('color', color);
-    properties.addUsingDefault('repeat', repeat);
-    properties.addUsingDefault('fit', fit);
-    properties.addUsingDefault('alignment', alignment);
-    properties.addUsingDefault('centerSlice', centerSlice);
-    properties.addUsingDefault('filterQuality', filterQuality);
-    properties.addUsingDefault('colorBlendMode', colorBlendMode);
-    properties.addUsingDefault('animated', animated);
-    properties.addUsingDefault('modifiers', modifiers);
+    properties.add(DiagnosticsProperty('width', width));
+    properties.add(DiagnosticsProperty('height', height));
+    properties.add(DiagnosticsProperty('color', color));
+    properties.add(DiagnosticsProperty('repeat', repeat));
+    properties.add(DiagnosticsProperty('fit', fit));
+    properties.add(DiagnosticsProperty('alignment', alignment));
+    properties.add(DiagnosticsProperty('centerSlice', centerSlice));
+    properties.add(DiagnosticsProperty('filterQuality', filterQuality));
+    properties.add(DiagnosticsProperty('colorBlendMode', colorBlendMode));
+    properties.add(DiagnosticsProperty('animated', animated));
+    properties.add(DiagnosticsProperty('modifiers', modifiers));
   }
 }
 

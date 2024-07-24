@@ -10,7 +10,7 @@ part of 'aspect_ratio_widget_modifier.dart';
 
 mixin _$AspectRatioModifierSpec on WidgetModifierSpec<AspectRatioModifierSpec> {
   static AspectRatioModifierSpec from(MixData mix) {
-    return mix.attributeOf<AspectRatioModifierAttribute>()?.resolve(mix) ??
+    return mix.attributeOf<AspectRatioModifierSpecAttribute>()?.resolve(mix) ??
         const AspectRatioModifierSpec();
   }
 
@@ -89,12 +89,12 @@ mixin _$AspectRatioModifierSpec on WidgetModifierSpec<AspectRatioModifierSpec> {
 ///
 /// Use this class to configure the attributes of a [AspectRatioModifierSpec] and pass it to
 /// the [AspectRatioModifierSpec] constructor.
-final class AspectRatioModifierAttribute
+final class AspectRatioModifierSpecAttribute
     extends WidgetModifierSpecAttribute<AspectRatioModifierSpec>
     with Diagnosticable {
   final double? aspectRatio;
 
-  const AspectRatioModifierAttribute({
+  const AspectRatioModifierSpecAttribute({
     this.aspectRatio,
   });
 
@@ -104,7 +104,7 @@ final class AspectRatioModifierAttribute
   /// default value defined in the `defaultValue` for that property.
   ///
   /// ```dart
-  /// final aspectRatioModifierSpec = AspectRatioModifierAttribute(...).resolve(mix);
+  /// final aspectRatioModifierSpec = AspectRatioModifierSpecAttribute(...).resolve(mix);
   /// ```
   @override
   AspectRatioModifierSpec resolve(MixData mix) {
@@ -113,27 +113,28 @@ final class AspectRatioModifierAttribute
     );
   }
 
-  /// Merges the properties of this [AspectRatioModifierAttribute] with the properties of [other].
+  /// Merges the properties of this [AspectRatioModifierSpecAttribute] with the properties of [other].
   ///
   /// If [other] is null, returns this instance unchanged. Otherwise, returns a new
-  /// [AspectRatioModifierAttribute] with the properties of [other] taking precedence over
+  /// [AspectRatioModifierSpecAttribute] with the properties of [other] taking precedence over
   /// the corresponding properties of this instance.
   ///
   /// Properties from [other] that are null will fall back
   /// to the values from this instance.
   @override
-  AspectRatioModifierAttribute merge(AspectRatioModifierAttribute? other) {
+  AspectRatioModifierSpecAttribute merge(
+      AspectRatioModifierSpecAttribute? other) {
     if (other == null) return this;
 
-    return AspectRatioModifierAttribute(
+    return AspectRatioModifierSpecAttribute(
       aspectRatio: other.aspectRatio ?? aspectRatio,
     );
   }
 
-  /// The list of properties that constitute the state of this [AspectRatioModifierAttribute].
+  /// The list of properties that constitute the state of this [AspectRatioModifierSpecAttribute].
   ///
   /// This property is used by the [==] operator and the [hashCode] getter to
-  /// compare two [AspectRatioModifierAttribute] instances for equality.
+  /// compare two [AspectRatioModifierSpecAttribute] instances for equality.
   @override
   List<Object?> get props => [
         aspectRatio,
@@ -142,7 +143,7 @@ final class AspectRatioModifierAttribute
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.addUsingDefault('aspectRatio', aspectRatio);
+    properties.add(DiagnosticsProperty('aspectRatio', aspectRatio));
   }
 }
 

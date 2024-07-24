@@ -10,11 +10,10 @@ import '../core/factory/mix_provider.dart';
 import '../core/helpers.dart';
 import '../core/modifier.dart';
 import '../core/utility.dart';
-import '../internal/diagnostic_properties_builder_ext.dart';
 
 part 'aspect_ratio_widget_modifier.g.dart';
 
-@MixableSpec(prefix: 'AspectRatioModifier', skipUtility: true)
+@MixableSpec(skipUtility: true)
 final class AspectRatioModifierSpec
     extends WidgetModifierSpec<AspectRatioModifierSpec>
     with _$AspectRatioModifierSpec {
@@ -29,10 +28,10 @@ final class AspectRatioModifierSpec
   }
 }
 
-final class AspectRatioModifierUtility<T extends Attribute>
-    extends MixUtility<T, AspectRatioModifierAttribute> {
-  const AspectRatioModifierUtility(super.builder);
+final class AspectRatioModifierSpecUtility<T extends Attribute>
+    extends MixUtility<T, AspectRatioModifierSpecAttribute> {
+  const AspectRatioModifierSpecUtility(super.builder);
   T call(double value) {
-    return builder(AspectRatioModifierAttribute(aspectRatio: value));
+    return builder(AspectRatioModifierSpecAttribute(aspectRatio: value));
   }
 }

@@ -5,33 +5,33 @@ import 'package:mix/mix.dart';
 import '../../helpers/testing_utils.dart';
 
 void main() {
-  group('AlignModifierAttribute', () {
+  group('AlignModifierSpecAttribute', () {
     test('merge', () {
-      const modifier = AlignModifierAttribute();
-      const other = AlignModifierAttribute();
+      const modifier = AlignModifierSpecAttribute();
+      const other = AlignModifierSpecAttribute();
       final result = modifier.merge(other);
       expect(result, modifier);
     });
 
     test('resolve', () {
-      const modifier = AlignModifierAttribute();
+      const modifier = AlignModifierSpecAttribute();
       final result = modifier.resolve(EmptyMixData);
       expect(result, isA<AlignModifierSpec>());
     });
 
     // equality
     test('equality', () {
-      const modifier = AlignModifierAttribute(
+      const modifier = AlignModifierSpecAttribute(
           alignment: Alignment.center, widthFactor: 0.5, heightFactor: 0.5);
-      const other = AlignModifierAttribute(
+      const other = AlignModifierSpecAttribute(
           alignment: Alignment.center, widthFactor: 0.5, heightFactor: 0.5);
       expect(modifier, other);
     });
 
     test('inequality', () {
-      const modifier = AlignModifierAttribute(
+      const modifier = AlignModifierSpecAttribute(
           alignment: Alignment.topCenter, widthFactor: 0.5, heightFactor: 0.5);
-      const other = AlignModifierAttribute(
+      const other = AlignModifierSpecAttribute(
           alignment: Alignment.center, widthFactor: 0.5, heightFactor: 0.5);
       expect(modifier, isNot(equals(other)));
     });

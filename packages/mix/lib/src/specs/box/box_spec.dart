@@ -1,10 +1,26 @@
-// ignore_for_file: prefer_relative_imports,avoid-importing-entrypoint-exports, camel_case_types
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
-import 'package:mix/mix.dart';
 import 'package:mix_annotations/mix_annotations.dart';
 
-import '../../internal/diagnostic_properties_builder_ext.dart';
+import '../../attributes/animated/animated_data.dart';
+import '../../attributes/animated/animated_data_dto.dart';
+import '../../attributes/animated/animated_util.dart';
+import '../../attributes/constraints/constraints_dto.dart';
+import '../../attributes/decoration/decoration_dto.dart';
+import '../../attributes/enum/enum_util.dart';
+import '../../attributes/modifiers/widget_modifiers_data.dart';
+import '../../attributes/modifiers/widget_modifiers_data_dto.dart';
+import '../../attributes/modifiers/widget_modifiers_util.dart';
+import '../../attributes/scalars/scalar_util.dart';
+import '../../attributes/spacing/edge_insets_dto.dart';
+import '../../attributes/spacing/spacing_util.dart';
+import '../../core/attribute.dart';
+import '../../core/factory/mix_data.dart';
+import '../../core/factory/mix_provider.dart';
+import '../../core/helpers.dart';
+import '../../core/spec.dart';
+import '../../core/utility.dart';
+import 'box_widget.dart';
 
 part 'box_spec.g.dart';
 

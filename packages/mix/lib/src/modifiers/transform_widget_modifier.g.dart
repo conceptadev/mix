@@ -10,7 +10,7 @@ part of 'transform_widget_modifier.dart';
 
 mixin _$TransformModifierSpec on WidgetModifierSpec<TransformModifierSpec> {
   static TransformModifierSpec from(MixData mix) {
-    return mix.attributeOf<TransformModifierAttribute>()?.resolve(mix) ??
+    return mix.attributeOf<TransformModifierSpecAttribute>()?.resolve(mix) ??
         const TransformModifierSpec();
   }
 
@@ -94,13 +94,13 @@ mixin _$TransformModifierSpec on WidgetModifierSpec<TransformModifierSpec> {
 ///
 /// Use this class to configure the attributes of a [TransformModifierSpec] and pass it to
 /// the [TransformModifierSpec] constructor.
-final class TransformModifierAttribute
+final class TransformModifierSpecAttribute
     extends WidgetModifierSpecAttribute<TransformModifierSpec>
     with Diagnosticable {
   final Matrix4? transform;
   final Alignment? alignment;
 
-  const TransformModifierAttribute({
+  const TransformModifierSpecAttribute({
     this.transform,
     this.alignment,
   });
@@ -111,7 +111,7 @@ final class TransformModifierAttribute
   /// default value defined in the `defaultValue` for that property.
   ///
   /// ```dart
-  /// final transformModifierSpec = TransformModifierAttribute(...).resolve(mix);
+  /// final transformModifierSpec = TransformModifierSpecAttribute(...).resolve(mix);
   /// ```
   @override
   TransformModifierSpec resolve(MixData mix) {
@@ -121,28 +121,28 @@ final class TransformModifierAttribute
     );
   }
 
-  /// Merges the properties of this [TransformModifierAttribute] with the properties of [other].
+  /// Merges the properties of this [TransformModifierSpecAttribute] with the properties of [other].
   ///
   /// If [other] is null, returns this instance unchanged. Otherwise, returns a new
-  /// [TransformModifierAttribute] with the properties of [other] taking precedence over
+  /// [TransformModifierSpecAttribute] with the properties of [other] taking precedence over
   /// the corresponding properties of this instance.
   ///
   /// Properties from [other] that are null will fall back
   /// to the values from this instance.
   @override
-  TransformModifierAttribute merge(TransformModifierAttribute? other) {
+  TransformModifierSpecAttribute merge(TransformModifierSpecAttribute? other) {
     if (other == null) return this;
 
-    return TransformModifierAttribute(
+    return TransformModifierSpecAttribute(
       transform: other.transform ?? transform,
       alignment: other.alignment ?? alignment,
     );
   }
 
-  /// The list of properties that constitute the state of this [TransformModifierAttribute].
+  /// The list of properties that constitute the state of this [TransformModifierSpecAttribute].
   ///
   /// This property is used by the [==] operator and the [hashCode] getter to
-  /// compare two [TransformModifierAttribute] instances for equality.
+  /// compare two [TransformModifierSpecAttribute] instances for equality.
   @override
   List<Object?> get props => [
         transform,
@@ -152,8 +152,8 @@ final class TransformModifierAttribute
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.addUsingDefault('transform', transform);
-    properties.addUsingDefault('alignment', alignment);
+    properties.add(DiagnosticsProperty('transform', transform));
+    properties.add(DiagnosticsProperty('alignment', alignment));
   }
 }
 

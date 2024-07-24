@@ -12,7 +12,7 @@ import '../core/utility.dart';
 
 part 'intrinsic_widget_modifier.g.dart';
 
-@MixableSpec(prefix: 'IntrinsicHeightModifier', skipUtility: true)
+@MixableSpec(skipUtility: true)
 final class IntrinsicHeightModifierSpec
     extends WidgetModifierSpec<IntrinsicHeightModifierSpec>
     with _$IntrinsicHeightModifierSpec {
@@ -24,7 +24,7 @@ final class IntrinsicHeightModifierSpec
   }
 }
 
-@MixableSpec(prefix: 'IntrinsicWidthModifier', skipUtility: true)
+@MixableSpec(skipUtility: true)
 final class IntrinsicWidthModifierSpec
     extends WidgetModifierSpec<IntrinsicWidthModifierSpec>
     with _$IntrinsicWidthModifierSpec {
@@ -36,14 +36,14 @@ final class IntrinsicWidthModifierSpec
   }
 }
 
-final class IntrinsicHeightModifierUtility<T extends Attribute>
-    extends MixUtility<T, IntrinsicHeightModifierAttribute> {
-  const IntrinsicHeightModifierUtility(super.builder);
-  T call() => builder(const IntrinsicHeightModifierAttribute());
+final class IntrinsicHeightModifierSpecUtility<T extends Attribute>
+    extends MixUtility<T, IntrinsicHeightModifierSpecAttribute> {
+  const IntrinsicHeightModifierSpecUtility(super.builder);
+  T call() => builder(const IntrinsicHeightModifierSpecAttribute());
 }
 
-final class IntrinsicWidthModifierUtility<T extends Attribute>
-    extends MixUtility<T, IntrinsicWidthModifierAttribute> {
-  const IntrinsicWidthModifierUtility(super.builder);
-  T call() => builder(const IntrinsicWidthModifierAttribute());
+final class IntrinsicWidthModifierSpecUtility<T extends Attribute>
+    extends MixUtility<T, IntrinsicWidthModifierSpecAttribute> {
+  const IntrinsicWidthModifierSpecUtility(super.builder);
+  T call() => builder(const IntrinsicWidthModifierSpecAttribute());
 }

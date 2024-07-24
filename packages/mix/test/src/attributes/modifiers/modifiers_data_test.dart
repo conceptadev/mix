@@ -95,8 +95,8 @@ final class TestModifierSpec extends WidgetModifierSpec<TestModifierSpec> {
   List<Object?> get props => [value];
 }
 
-final class TestModifierSpecAttribute extends WidgetModifierAttribute<
-    TestModifierSpecAttribute, TestModifierSpec> {
+final class TestModifierSpecAttribute
+    extends WidgetModifierSpecAttribute<TestModifierSpec> {
   const TestModifierSpecAttribute([this.value = 1]);
 
   final int value;

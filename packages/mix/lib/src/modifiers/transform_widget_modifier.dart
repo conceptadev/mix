@@ -10,11 +10,10 @@ import '../core/factory/mix_provider.dart';
 import '../core/helpers.dart';
 import '../core/modifier.dart';
 import '../core/utility.dart';
-import '../internal/diagnostic_properties_builder_ext.dart';
 
 part 'transform_widget_modifier.g.dart';
 
-@MixableSpec(prefix: 'TransformModifier', skipUtility: true)
+@MixableSpec(skipUtility: true)
 final class TransformModifierSpec
     extends WidgetModifierSpec<TransformModifierSpec>
     with _$TransformModifierSpec {
@@ -33,12 +32,12 @@ final class TransformModifierSpec
   }
 }
 
-final class TransformModifierUtility<T extends Attribute>
-    extends MixUtility<T, TransformModifierAttribute> {
-  const TransformModifierUtility(super.builder);
+final class TransformModifierSpecUtility<T extends Attribute>
+    extends MixUtility<T, TransformModifierSpecAttribute> {
+  const TransformModifierSpecUtility(super.builder);
 
   T _flip(bool x, bool y) => builder(
-        TransformModifierAttribute(
+        TransformModifierSpecAttribute(
           transform: Matrix4.diagonal3Values(
             x ? -1.0 : 1.0,
             y ? -1.0 : 1.0,
@@ -52,17 +51,17 @@ final class TransformModifierUtility<T extends Attribute>
   T flipY() => _flip(false, true);
 
   T call(Matrix4 value) =>
-      builder(TransformModifierAttribute(transform: value));
+      builder(TransformModifierSpecAttribute(transform: value));
 
   T scale(double value) => builder(
-        TransformModifierAttribute(
+        TransformModifierSpecAttribute(
           transform: Matrix4.diagonal3Values(value, value, 1.0),
           alignment: Alignment.center,
         ),
       );
 
   T rotate(double value) => builder(
-        TransformModifierAttribute(
+        TransformModifierSpecAttribute(
           transform: Matrix4.rotationZ(value),
           alignment: Alignment.center,
         ),

@@ -10,14 +10,13 @@ import '../core/factory/mix_provider.dart';
 import '../core/helpers.dart';
 import '../core/modifier.dart';
 import '../core/utility.dart';
-import '../internal/diagnostic_properties_builder_ext.dart';
 
 part 'opacity_widget_modifier.g.dart';
 
 /// A modifier that wraps a widget with the [Opacity] widget.
 ///
 /// The [Opacity] widget is used to make a widget partially transparent.
-@MixableSpec(prefix: 'OpacityModifier', skipUtility: true)
+@MixableSpec(skipUtility: true)
 final class OpacityModifierSpec extends WidgetModifierSpec<OpacityModifierSpec>
     with _$OpacityModifierSpec {
   /// The [opacity] argument must not be null and
@@ -31,8 +30,8 @@ final class OpacityModifierSpec extends WidgetModifierSpec<OpacityModifierSpec>
   }
 }
 
-final class OpacityModifierUtility<T extends Attribute>
-    extends MixUtility<T, OpacityModifierAttribute> {
-  const OpacityModifierUtility(super.builder);
-  T call(double value) => builder(OpacityModifierAttribute(opacity: value));
+final class OpacityModifierSpecUtility<T extends Attribute>
+    extends MixUtility<T, OpacityModifierSpecAttribute> {
+  const OpacityModifierSpecUtility(super.builder);
+  T call(double value) => builder(OpacityModifierSpecAttribute(opacity: value));
 }

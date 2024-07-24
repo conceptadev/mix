@@ -232,17 +232,18 @@ final class FlexSpecAttribute extends SpecAttribute<FlexSpec>
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.addUsingDefault('crossAxisAlignment', crossAxisAlignment);
-    properties.addUsingDefault('mainAxisAlignment', mainAxisAlignment);
-    properties.addUsingDefault('mainAxisSize', mainAxisSize);
-    properties.addUsingDefault('verticalDirection', verticalDirection);
-    properties.addUsingDefault('direction', direction);
-    properties.addUsingDefault('textDirection', textDirection);
-    properties.addUsingDefault('textBaseline', textBaseline);
-    properties.addUsingDefault('clipBehavior', clipBehavior);
-    properties.addUsingDefault('gap', gap);
-    properties.addUsingDefault('animated', animated);
-    properties.addUsingDefault('modifiers', modifiers);
+    properties
+        .add(DiagnosticsProperty('crossAxisAlignment', crossAxisAlignment));
+    properties.add(DiagnosticsProperty('mainAxisAlignment', mainAxisAlignment));
+    properties.add(DiagnosticsProperty('mainAxisSize', mainAxisSize));
+    properties.add(DiagnosticsProperty('verticalDirection', verticalDirection));
+    properties.add(DiagnosticsProperty('direction', direction));
+    properties.add(DiagnosticsProperty('textDirection', textDirection));
+    properties.add(DiagnosticsProperty('textBaseline', textBaseline));
+    properties.add(DiagnosticsProperty('clipBehavior', clipBehavior));
+    properties.add(DiagnosticsProperty('gap', gap));
+    properties.add(DiagnosticsProperty('animated', animated));
+    properties.add(DiagnosticsProperty('modifiers', modifiers));
   }
 }
 

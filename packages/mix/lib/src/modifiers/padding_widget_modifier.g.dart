@@ -10,7 +10,7 @@ part of 'padding_widget_modifier.dart';
 
 mixin _$PaddingModifierSpec on WidgetModifierSpec<PaddingModifierSpec> {
   static PaddingModifierSpec from(MixData mix) {
-    return mix.attributeOf<PaddingModifierAttribute>()?.resolve(mix) ??
+    return mix.attributeOf<PaddingModifierSpecAttribute>()?.resolve(mix) ??
         const PaddingModifierSpec();
   }
 
@@ -89,12 +89,12 @@ mixin _$PaddingModifierSpec on WidgetModifierSpec<PaddingModifierSpec> {
 ///
 /// Use this class to configure the attributes of a [PaddingModifierSpec] and pass it to
 /// the [PaddingModifierSpec] constructor.
-final class PaddingModifierAttribute
+final class PaddingModifierSpecAttribute
     extends WidgetModifierSpecAttribute<PaddingModifierSpec>
     with Diagnosticable {
   final SpacingDto? padding;
 
-  const PaddingModifierAttribute({
+  const PaddingModifierSpecAttribute({
     this.padding,
   });
 
@@ -104,7 +104,7 @@ final class PaddingModifierAttribute
   /// default value defined in the `defaultValue` for that property.
   ///
   /// ```dart
-  /// final paddingModifierSpec = PaddingModifierAttribute(...).resolve(mix);
+  /// final paddingModifierSpec = PaddingModifierSpecAttribute(...).resolve(mix);
   /// ```
   @override
   PaddingModifierSpec resolve(MixData mix) {
@@ -113,27 +113,27 @@ final class PaddingModifierAttribute
     );
   }
 
-  /// Merges the properties of this [PaddingModifierAttribute] with the properties of [other].
+  /// Merges the properties of this [PaddingModifierSpecAttribute] with the properties of [other].
   ///
   /// If [other] is null, returns this instance unchanged. Otherwise, returns a new
-  /// [PaddingModifierAttribute] with the properties of [other] taking precedence over
+  /// [PaddingModifierSpecAttribute] with the properties of [other] taking precedence over
   /// the corresponding properties of this instance.
   ///
   /// Properties from [other] that are null will fall back
   /// to the values from this instance.
   @override
-  PaddingModifierAttribute merge(PaddingModifierAttribute? other) {
+  PaddingModifierSpecAttribute merge(PaddingModifierSpecAttribute? other) {
     if (other == null) return this;
 
-    return PaddingModifierAttribute(
+    return PaddingModifierSpecAttribute(
       padding: padding?.merge(other.padding) ?? other.padding,
     );
   }
 
-  /// The list of properties that constitute the state of this [PaddingModifierAttribute].
+  /// The list of properties that constitute the state of this [PaddingModifierSpecAttribute].
   ///
   /// This property is used by the [==] operator and the [hashCode] getter to
-  /// compare two [PaddingModifierAttribute] instances for equality.
+  /// compare two [PaddingModifierSpecAttribute] instances for equality.
   @override
   List<Object?> get props => [
         padding,
@@ -142,29 +142,29 @@ final class PaddingModifierAttribute
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.addUsingDefault('padding', padding);
+    properties.add(DiagnosticsProperty('padding', padding));
   }
 }
 
-/// Utility class for configuring [PaddingModifierAttribute] properties.
+/// Utility class for configuring [PaddingModifierSpecAttribute] properties.
 ///
-/// This class provides methods to set individual properties of a [PaddingModifierAttribute].
-/// Use the methods of this class to configure specific properties of a [PaddingModifierAttribute].
-class PaddingModifierUtility<T extends Attribute>
-    extends SpecUtility<T, PaddingModifierAttribute> {
-  /// Utility for defining [PaddingModifierAttribute.padding]
+/// This class provides methods to set individual properties of a [PaddingModifierSpecAttribute].
+/// Use the methods of this class to configure specific properties of a [PaddingModifierSpecAttribute].
+class PaddingModifierSpecUtility<T extends Attribute>
+    extends SpecUtility<T, PaddingModifierSpecAttribute> {
+  /// Utility for defining [PaddingModifierSpecAttribute.padding]
   late final padding = SpacingUtility((v) => only(padding: v));
 
-  PaddingModifierUtility(super.builder);
+  PaddingModifierSpecUtility(super.builder);
 
-  static final self = PaddingModifierUtility((v) => v);
+  static final self = PaddingModifierSpecUtility((v) => v);
 
-  /// Returns a new [PaddingModifierAttribute] with the specified properties.
+  /// Returns a new [PaddingModifierSpecAttribute] with the specified properties.
   @override
   T only({
     SpacingDto? padding,
   }) {
-    return builder(PaddingModifierAttribute(
+    return builder(PaddingModifierSpecAttribute(
       padding: padding,
     ));
   }
