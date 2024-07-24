@@ -25,9 +25,9 @@ final class AlignModifierSpec extends WidgetModifierSpec<AlignModifierSpec> {
   @override
   AlignModifierSpec lerp(AlignModifierSpec? other, double t) {
     return AlignModifierSpec(
-      alignment: AlignmentGeometry.lerp(alignment, other?.alignment, t),
       widthFactor: lerpDouble(widthFactor, other?.widthFactor, t),
       heightFactor: lerpDouble(heightFactor, other?.heightFactor, t),
+      alignment: AlignmentGeometry.lerp(alignment, other?.alignment, t),
     );
   }
 
