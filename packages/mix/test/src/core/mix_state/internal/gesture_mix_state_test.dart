@@ -199,5 +199,25 @@ void main() {
         reason: 'onPanEnd was not called',
       );
     });
+
+    testWidgets(
+      'should propagate the onTap when it doesn\'t receive null',
+      (tester) async {
+        bool onTapCalled = false;
+
+        await tester.pumpWidget(
+          GestureDetector(
+            onTap: () {
+              onTapCalled = true;
+            },
+            child: buildGestureMixStateWidget(),
+          ),
+        );
+
+        await tester.tap(find.byType(GestureMixStateWidget));
+
+        expect(onTapCalled, isTrue);
+      },
+    );
   });
 }
