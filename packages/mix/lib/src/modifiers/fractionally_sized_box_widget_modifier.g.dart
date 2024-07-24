@@ -6,8 +6,6 @@ part of 'fractionally_sized_box_widget_modifier.dart';
 // MixableSpecGenerator
 // **************************************************************************
 
-// ignore_for_file: deprecated_member_use_from_same_package
-
 mixin _$FractionallySizedBoxModifierSpec
     on WidgetModifierSpec<FractionallySizedBoxModifierSpec> {
   static FractionallySizedBoxModifierSpec from(MixData mix) {

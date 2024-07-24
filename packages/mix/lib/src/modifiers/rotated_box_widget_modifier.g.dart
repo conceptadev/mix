@@ -6,8 +6,6 @@ part of 'rotated_box_widget_modifier.dart';
 // MixableSpecGenerator
 // **************************************************************************
 
-// ignore_for_file: deprecated_member_use_from_same_package
-
 mixin _$RotatedBoxModifierSpec on WidgetModifierSpec<RotatedBoxModifierSpec> {
   static RotatedBoxModifierSpec from(MixData mix) {
     return mix.attributeOf<RotatedBoxModifierSpecAttribute>()?.resolve(mix) ??

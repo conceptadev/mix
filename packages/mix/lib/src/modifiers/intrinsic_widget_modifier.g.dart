@@ -6,8 +6,6 @@ part of 'intrinsic_widget_modifier.dart';
 // MixableSpecGenerator
 // **************************************************************************
 
-// ignore_for_file: deprecated_member_use_from_same_package
-
 mixin _$IntrinsicHeightModifierSpec
     on WidgetModifierSpec<IntrinsicHeightModifierSpec> {
   static IntrinsicHeightModifierSpec from(MixData mix) {
@@ -153,8 +151,6 @@ class IntrinsicHeightModifierSpecTween
     return begin!.lerp(end!, t);
   }
 }
-
-// ignore_for_file: deprecated_member_use_from_same_package
 
 mixin _$IntrinsicWidthModifierSpec
     on WidgetModifierSpec<IntrinsicWidthModifierSpec> {

@@ -6,8 +6,6 @@ part of 'align_widget_modifier.dart';
 // MixableSpecGenerator
 // **************************************************************************
 
-// ignore_for_file: deprecated_member_use_from_same_package
-
 mixin _$AlignModifierSpec on WidgetModifierSpec<AlignModifierSpec> {
   static AlignModifierSpec from(MixData mix) {
     return mix.attributeOf<AlignModifierSpecAttribute>()?.resolve(mix) ??

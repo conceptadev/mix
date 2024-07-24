@@ -6,8 +6,6 @@ part of 'visibility_widget_modifier.dart';
 // MixableSpecGenerator
 // **************************************************************************
 
-// ignore_for_file: deprecated_member_use_from_same_package
-
 mixin _$VisibilityModifierSpec on WidgetModifierSpec<VisibilityModifierSpec> {
   static VisibilityModifierSpec from(MixData mix) {
     return mix.attributeOf<VisibilityModifierSpecAttribute>()?.resolve(mix) ??

@@ -6,8 +6,6 @@ part of 'transform_widget_modifier.dart';
 // MixableSpecGenerator
 // **************************************************************************
 
-// ignore_for_file: deprecated_member_use_from_same_package
-
 mixin _$TransformModifierSpec on WidgetModifierSpec<TransformModifierSpec> {
   static TransformModifierSpec from(MixData mix) {
     return mix.attributeOf<TransformModifierSpecAttribute>()?.resolve(mix) ??

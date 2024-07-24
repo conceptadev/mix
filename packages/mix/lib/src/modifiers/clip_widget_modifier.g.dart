@@ -6,8 +6,6 @@ part of 'clip_widget_modifier.dart';
 // MixableSpecGenerator
 // **************************************************************************
 
-// ignore_for_file: deprecated_member_use_from_same_package
-
 mixin _$ClipOvalModifierSpec on WidgetModifierSpec<ClipOvalModifierSpec> {
   static ClipOvalModifierSpec from(MixData mix) {
     return mix.attributeOf<ClipOvalModifierSpecAttribute>()?.resolve(mix) ??
@@ -179,8 +177,6 @@ class ClipOvalModifierSpecTween extends Tween<ClipOvalModifierSpec?> {
   }
 }
 
-// ignore_for_file: deprecated_member_use_from_same_package
-
 mixin _$ClipRectModifierSpec on WidgetModifierSpec<ClipRectModifierSpec> {
   static ClipRectModifierSpec from(MixData mix) {
     return mix.attributeOf<ClipRectModifierSpecAttribute>()?.resolve(mix) ??
@@ -351,8 +347,6 @@ class ClipRectModifierSpecTween extends Tween<ClipRectModifierSpec?> {
     return begin!.lerp(end!, t);
   }
 }
-
-// ignore_for_file: deprecated_member_use_from_same_package
 
 mixin _$ClipRRectModifierSpec on WidgetModifierSpec<ClipRRectModifierSpec> {
   static ClipRRectModifierSpec from(MixData mix) {
@@ -539,8 +533,6 @@ class ClipRRectModifierSpecTween extends Tween<ClipRRectModifierSpec?> {
   }
 }
 
-// ignore_for_file: deprecated_member_use_from_same_package
-
 mixin _$ClipPathModifierSpec on WidgetModifierSpec<ClipPathModifierSpec> {
   static ClipPathModifierSpec from(MixData mix) {
     return mix.attributeOf<ClipPathModifierSpecAttribute>()?.resolve(mix) ??
@@ -711,8 +703,6 @@ class ClipPathModifierSpecTween extends Tween<ClipPathModifierSpec?> {
     return begin!.lerp(end!, t);
   }
 }
-
-// ignore_for_file: deprecated_member_use_from_same_package
 
 mixin _$ClipTriangleModifierSpec
     on WidgetModifierSpec<ClipTriangleModifierSpec> {

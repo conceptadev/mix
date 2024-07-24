@@ -6,8 +6,6 @@ part of 'aspect_ratio_widget_modifier.dart';
 // MixableSpecGenerator
 // **************************************************************************
 
-// ignore_for_file: deprecated_member_use_from_same_package
-
 mixin _$AspectRatioModifierSpec on WidgetModifierSpec<AspectRatioModifierSpec> {
   static AspectRatioModifierSpec from(MixData mix) {
     return mix.attributeOf<AspectRatioModifierSpecAttribute>()?.resolve(mix) ??
