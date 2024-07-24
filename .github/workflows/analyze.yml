@@ -38,7 +38,7 @@ jobs:
         uses: CQLabs/dcm-action@v1
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          folders: packages/*/lib
+          folders: .
           ci_key: oss
           email: oss
           fatal_style: true
