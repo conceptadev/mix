@@ -19,6 +19,8 @@ jobs:
       
       - name: Setup FVM
         uses: ./.github/actions/fvm/
+        with:
+          flutter-version: 'stable'
 
       - name: Setup Melos
         uses: bluefireteam/melos-action@v3
