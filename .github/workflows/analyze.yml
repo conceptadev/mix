@@ -30,7 +30,7 @@ jobs:
       - name: Install DCM
         uses: CQLabs/setup-dcm@v1
         with:
-          github_token: ${{ inputs.token }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Run DCM
         uses: CQLabs/dcm-action@v1
