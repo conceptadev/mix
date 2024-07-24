@@ -73,9 +73,19 @@ runs:
         fatal_performance: true
         fatal_warnings: true
 
-    - name: Run fixes
+    - name: Run melos fix
       run: melos run fix
       shell: bash
+      
+    - name: Commit changes
+      run: |
+        git config --global user.email "github-actions[bot]@users.noreply.github.com"
+        git config --global user.name "github-actions[bot]"
+        git add .
+        git diff-index --quiet HEAD || git commit -m "Automated code fixes"
+        git push
+      shell: bash
+
 
     # Lint
     - name: analyze
