@@ -4,8 +4,6 @@ import 'package:flutter/widgets.dart';
 import 'package:mix/mix.dart';
 import 'package:mix_annotations/mix_annotations.dart';
 
-import '../../internal/diagnostic_properties_builder_ext.dart';
-
 part 'flex_spec.g.dart';
 
 @MixableSpec()

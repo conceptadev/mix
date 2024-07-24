@@ -255,19 +255,29 @@ final class BoxSpecAttribute extends SpecAttribute<BoxSpec>
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.addUsingDefault('alignment', alignment);
-    properties.addUsingDefault('padding', padding);
-    properties.addUsingDefault('margin', margin);
-    properties.addUsingDefault('constraints', constraints);
-    properties.addUsingDefault('decoration', decoration, expandableValue: true);
-    properties.addUsingDefault('foregroundDecoration', foregroundDecoration);
-    properties.addUsingDefault('transform', transform);
-    properties.addUsingDefault('transformAlignment', transformAlignment);
-    properties.addUsingDefault('clipBehavior', clipBehavior);
-    properties.addUsingDefault('width', width);
-    properties.addUsingDefault('height', height);
-    properties.addUsingDefault('modifiers', modifiers);
-    properties.addUsingDefault('animated', animated);
+    properties
+        .add(DiagnosticsProperty('alignment', alignment, defaultValue: null));
+    properties.add(DiagnosticsProperty('padding', padding, defaultValue: null));
+    properties.add(DiagnosticsProperty('margin', margin, defaultValue: null));
+    properties.add(
+        DiagnosticsProperty('constraints', constraints, defaultValue: null));
+    properties.add(DiagnosticsProperty('decoration', decoration,
+        expandableValue: true, defaultValue: null));
+    properties.add(DiagnosticsProperty(
+        'foregroundDecoration', foregroundDecoration,
+        defaultValue: null));
+    properties
+        .add(DiagnosticsProperty('transform', transform, defaultValue: null));
+    properties.add(DiagnosticsProperty('transformAlignment', transformAlignment,
+        defaultValue: null));
+    properties.add(
+        DiagnosticsProperty('clipBehavior', clipBehavior, defaultValue: null));
+    properties.add(DiagnosticsProperty('width', width, defaultValue: null));
+    properties.add(DiagnosticsProperty('height', height, defaultValue: null));
+    properties
+        .add(DiagnosticsProperty('modifiers', modifiers, defaultValue: null));
+    properties
+        .add(DiagnosticsProperty('animated', animated, defaultValue: null));
   }
 }
 
