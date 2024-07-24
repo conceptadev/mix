@@ -28,7 +28,6 @@ jobs:
         run: melos run brb
 
       - name: Install DCM
-        if: ${{ inputs.run-dcm }}
         uses: CQLabs/setup-dcm@v1
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
