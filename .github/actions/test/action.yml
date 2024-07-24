@@ -73,7 +73,7 @@ runs:
         fatal_performance: true
         fatal_warnings: true
 
-    - name: Run fixes
+    - name: Run melos fix
       run: melos run fix
       shell: bash
 

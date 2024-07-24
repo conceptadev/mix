@@ -6,31 +6,7 @@ part of 'transform_widget_modifier.dart';
 // MixableSpecGenerator
 // **************************************************************************
 
-// ignore_for_file: deprecated_member_use_from_same_package
-
 mixin _$TransformModifierSpec on WidgetModifierSpec<TransformModifierSpec> {
-  static TransformModifierSpec from(MixData mix) {
-    return mix.attributeOf<TransformModifierSpecAttribute>()?.resolve(mix) ??
-        const TransformModifierSpec();
-  }
-
-  /// {@template transform_modifier_spec_of}
-  /// Retrieves the [TransformModifierSpec] from the nearest [Mix] ancestor in the widget tree.
-  ///
-  /// This method uses [Mix.of] to obtain the [Mix] instance associated with the
-  /// given [BuildContext], and then retrieves the [TransformModifierSpec] from that [Mix].
-  /// If no ancestor [Mix] is found, this method returns an empty [TransformModifierSpec].
-  ///
-  /// Example:
-  ///
-  /// ```dart
-  /// final transformModifierSpec = TransformModifierSpec.of(context);
-  /// ```
-  /// {@endtemplate}
-  static TransformModifierSpec of(BuildContext context) {
-    return _$TransformModifierSpec.from(Mix.of(context));
-  }
-
   /// Creates a copy of this [TransformModifierSpec] but with the given fields
   /// replaced with the new values.
   @override
@@ -174,8 +150,13 @@ class TransformModifierSpecTween extends Tween<TransformModifierSpec?> {
 
   @override
   TransformModifierSpec lerp(double t) {
-    if (begin == null && end == null) return const TransformModifierSpec();
-    if (begin == null) return end!;
+    if (begin == null && end == null) {
+      return const TransformModifierSpec();
+    }
+
+    if (begin == null) {
+      return end!;
+    }
 
     return begin!.lerp(end!, t);
   }

@@ -418,8 +418,13 @@ class TextSpecTween extends Tween<TextSpec?> {
 
   @override
   TextSpec lerp(double t) {
-    if (begin == null && end == null) return const TextSpec();
-    if (begin == null) return end!;
+    if (begin == null && end == null) {
+      return const TextSpec();
+    }
+
+    if (begin == null) {
+      return end!;
+    }
 
     return begin!.lerp(end!, t);
   }

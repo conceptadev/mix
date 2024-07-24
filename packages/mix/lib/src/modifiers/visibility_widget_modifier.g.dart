@@ -6,31 +6,7 @@ part of 'visibility_widget_modifier.dart';
 // MixableSpecGenerator
 // **************************************************************************
 
-// ignore_for_file: deprecated_member_use_from_same_package
-
 mixin _$VisibilityModifierSpec on WidgetModifierSpec<VisibilityModifierSpec> {
-  static VisibilityModifierSpec from(MixData mix) {
-    return mix.attributeOf<VisibilityModifierSpecAttribute>()?.resolve(mix) ??
-        const VisibilityModifierSpec();
-  }
-
-  /// {@template visibility_modifier_spec_of}
-  /// Retrieves the [VisibilityModifierSpec] from the nearest [Mix] ancestor in the widget tree.
-  ///
-  /// This method uses [Mix.of] to obtain the [Mix] instance associated with the
-  /// given [BuildContext], and then retrieves the [VisibilityModifierSpec] from that [Mix].
-  /// If no ancestor [Mix] is found, this method returns an empty [VisibilityModifierSpec].
-  ///
-  /// Example:
-  ///
-  /// ```dart
-  /// final visibilityModifierSpec = VisibilityModifierSpec.of(context);
-  /// ```
-  /// {@endtemplate}
-  static VisibilityModifierSpec of(BuildContext context) {
-    return _$VisibilityModifierSpec.from(Mix.of(context));
-  }
-
   /// Creates a copy of this [VisibilityModifierSpec] but with the given fields
   /// replaced with the new values.
   @override
@@ -162,8 +138,13 @@ class VisibilityModifierSpecTween extends Tween<VisibilityModifierSpec?> {
 
   @override
   VisibilityModifierSpec lerp(double t) {
-    if (begin == null && end == null) return const VisibilityModifierSpec();
-    if (begin == null) return end!;
+    if (begin == null && end == null) {
+      return const VisibilityModifierSpec();
+    }
+
+    if (begin == null) {
+      return end!;
+    }
 
     return begin!.lerp(end!, t);
   }

@@ -6,31 +6,7 @@ part of 'clip_widget_modifier.dart';
 // MixableSpecGenerator
 // **************************************************************************
 
-// ignore_for_file: deprecated_member_use_from_same_package
-
 mixin _$ClipOvalModifierSpec on WidgetModifierSpec<ClipOvalModifierSpec> {
-  static ClipOvalModifierSpec from(MixData mix) {
-    return mix.attributeOf<ClipOvalModifierSpecAttribute>()?.resolve(mix) ??
-        const ClipOvalModifierSpec();
-  }
-
-  /// {@template clip_oval_modifier_spec_of}
-  /// Retrieves the [ClipOvalModifierSpec] from the nearest [Mix] ancestor in the widget tree.
-  ///
-  /// This method uses [Mix.of] to obtain the [Mix] instance associated with the
-  /// given [BuildContext], and then retrieves the [ClipOvalModifierSpec] from that [Mix].
-  /// If no ancestor [Mix] is found, this method returns an empty [ClipOvalModifierSpec].
-  ///
-  /// Example:
-  ///
-  /// ```dart
-  /// final clipOvalModifierSpec = ClipOvalModifierSpec.of(context);
-  /// ```
-  /// {@endtemplate}
-  static ClipOvalModifierSpec of(BuildContext context) {
-    return _$ClipOvalModifierSpec.from(Mix.of(context));
-  }
-
   /// Creates a copy of this [ClipOvalModifierSpec] but with the given fields
   /// replaced with the new values.
   @override
@@ -172,38 +148,19 @@ class ClipOvalModifierSpecTween extends Tween<ClipOvalModifierSpec?> {
 
   @override
   ClipOvalModifierSpec lerp(double t) {
-    if (begin == null && end == null) return const ClipOvalModifierSpec();
-    if (begin == null) return end!;
+    if (begin == null && end == null) {
+      return const ClipOvalModifierSpec();
+    }
+
+    if (begin == null) {
+      return end!;
+    }
 
     return begin!.lerp(end!, t);
   }
 }
 
-// ignore_for_file: deprecated_member_use_from_same_package
-
 mixin _$ClipRectModifierSpec on WidgetModifierSpec<ClipRectModifierSpec> {
-  static ClipRectModifierSpec from(MixData mix) {
-    return mix.attributeOf<ClipRectModifierSpecAttribute>()?.resolve(mix) ??
-        const ClipRectModifierSpec();
-  }
-
-  /// {@template clip_rect_modifier_spec_of}
-  /// Retrieves the [ClipRectModifierSpec] from the nearest [Mix] ancestor in the widget tree.
-  ///
-  /// This method uses [Mix.of] to obtain the [Mix] instance associated with the
-  /// given [BuildContext], and then retrieves the [ClipRectModifierSpec] from that [Mix].
-  /// If no ancestor [Mix] is found, this method returns an empty [ClipRectModifierSpec].
-  ///
-  /// Example:
-  ///
-  /// ```dart
-  /// final clipRectModifierSpec = ClipRectModifierSpec.of(context);
-  /// ```
-  /// {@endtemplate}
-  static ClipRectModifierSpec of(BuildContext context) {
-    return _$ClipRectModifierSpec.from(Mix.of(context));
-  }
-
   /// Creates a copy of this [ClipRectModifierSpec] but with the given fields
   /// replaced with the new values.
   @override
@@ -345,38 +302,19 @@ class ClipRectModifierSpecTween extends Tween<ClipRectModifierSpec?> {
 
   @override
   ClipRectModifierSpec lerp(double t) {
-    if (begin == null && end == null) return const ClipRectModifierSpec();
-    if (begin == null) return end!;
+    if (begin == null && end == null) {
+      return const ClipRectModifierSpec();
+    }
+
+    if (begin == null) {
+      return end!;
+    }
 
     return begin!.lerp(end!, t);
   }
 }
 
-// ignore_for_file: deprecated_member_use_from_same_package
-
 mixin _$ClipRRectModifierSpec on WidgetModifierSpec<ClipRRectModifierSpec> {
-  static ClipRRectModifierSpec from(MixData mix) {
-    return mix.attributeOf<ClipRRectModifierSpecAttribute>()?.resolve(mix) ??
-        const ClipRRectModifierSpec();
-  }
-
-  /// {@template clip_r_rect_modifier_spec_of}
-  /// Retrieves the [ClipRRectModifierSpec] from the nearest [Mix] ancestor in the widget tree.
-  ///
-  /// This method uses [Mix.of] to obtain the [Mix] instance associated with the
-  /// given [BuildContext], and then retrieves the [ClipRRectModifierSpec] from that [Mix].
-  /// If no ancestor [Mix] is found, this method returns an empty [ClipRRectModifierSpec].
-  ///
-  /// Example:
-  ///
-  /// ```dart
-  /// final clipRRectModifierSpec = ClipRRectModifierSpec.of(context);
-  /// ```
-  /// {@endtemplate}
-  static ClipRRectModifierSpec of(BuildContext context) {
-    return _$ClipRRectModifierSpec.from(Mix.of(context));
-  }
-
   /// Creates a copy of this [ClipRRectModifierSpec] but with the given fields
   /// replaced with the new values.
   @override
@@ -532,38 +470,19 @@ class ClipRRectModifierSpecTween extends Tween<ClipRRectModifierSpec?> {
 
   @override
   ClipRRectModifierSpec lerp(double t) {
-    if (begin == null && end == null) return const ClipRRectModifierSpec();
-    if (begin == null) return end!;
+    if (begin == null && end == null) {
+      return const ClipRRectModifierSpec();
+    }
+
+    if (begin == null) {
+      return end!;
+    }
 
     return begin!.lerp(end!, t);
   }
 }
 
-// ignore_for_file: deprecated_member_use_from_same_package
-
 mixin _$ClipPathModifierSpec on WidgetModifierSpec<ClipPathModifierSpec> {
-  static ClipPathModifierSpec from(MixData mix) {
-    return mix.attributeOf<ClipPathModifierSpecAttribute>()?.resolve(mix) ??
-        const ClipPathModifierSpec();
-  }
-
-  /// {@template clip_path_modifier_spec_of}
-  /// Retrieves the [ClipPathModifierSpec] from the nearest [Mix] ancestor in the widget tree.
-  ///
-  /// This method uses [Mix.of] to obtain the [Mix] instance associated with the
-  /// given [BuildContext], and then retrieves the [ClipPathModifierSpec] from that [Mix].
-  /// If no ancestor [Mix] is found, this method returns an empty [ClipPathModifierSpec].
-  ///
-  /// Example:
-  ///
-  /// ```dart
-  /// final clipPathModifierSpec = ClipPathModifierSpec.of(context);
-  /// ```
-  /// {@endtemplate}
-  static ClipPathModifierSpec of(BuildContext context) {
-    return _$ClipPathModifierSpec.from(Mix.of(context));
-  }
-
   /// Creates a copy of this [ClipPathModifierSpec] but with the given fields
   /// replaced with the new values.
   @override
@@ -705,39 +624,20 @@ class ClipPathModifierSpecTween extends Tween<ClipPathModifierSpec?> {
 
   @override
   ClipPathModifierSpec lerp(double t) {
-    if (begin == null && end == null) return const ClipPathModifierSpec();
-    if (begin == null) return end!;
+    if (begin == null && end == null) {
+      return const ClipPathModifierSpec();
+    }
+
+    if (begin == null) {
+      return end!;
+    }
 
     return begin!.lerp(end!, t);
   }
 }
 
-// ignore_for_file: deprecated_member_use_from_same_package
-
 mixin _$ClipTriangleModifierSpec
     on WidgetModifierSpec<ClipTriangleModifierSpec> {
-  static ClipTriangleModifierSpec from(MixData mix) {
-    return mix.attributeOf<ClipTriangleModifierSpecAttribute>()?.resolve(mix) ??
-        const ClipTriangleModifierSpec();
-  }
-
-  /// {@template clip_triangle_modifier_spec_of}
-  /// Retrieves the [ClipTriangleModifierSpec] from the nearest [Mix] ancestor in the widget tree.
-  ///
-  /// This method uses [Mix.of] to obtain the [Mix] instance associated with the
-  /// given [BuildContext], and then retrieves the [ClipTriangleModifierSpec] from that [Mix].
-  /// If no ancestor [Mix] is found, this method returns an empty [ClipTriangleModifierSpec].
-  ///
-  /// Example:
-  ///
-  /// ```dart
-  /// final clipTriangleModifierSpec = ClipTriangleModifierSpec.of(context);
-  /// ```
-  /// {@endtemplate}
-  static ClipTriangleModifierSpec of(BuildContext context) {
-    return _$ClipTriangleModifierSpec.from(Mix.of(context));
-  }
-
   /// Creates a copy of this [ClipTriangleModifierSpec] but with the given fields
   /// replaced with the new values.
   @override
@@ -869,8 +769,13 @@ class ClipTriangleModifierSpecTween extends Tween<ClipTriangleModifierSpec?> {
 
   @override
   ClipTriangleModifierSpec lerp(double t) {
-    if (begin == null && end == null) return const ClipTriangleModifierSpec();
-    if (begin == null) return end!;
+    if (begin == null && end == null) {
+      return const ClipTriangleModifierSpec();
+    }
+
+    if (begin == null) {
+      return end!;
+    }
 
     return begin!.lerp(end!, t);
   }

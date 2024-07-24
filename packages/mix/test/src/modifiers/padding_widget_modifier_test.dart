@@ -29,7 +29,6 @@ void main() {
       final lerp2 = spec.lerp(spec2, 0.5);
       final lerp3 = spec.lerp(spec3, 0.5);
 
-      final insets1 = EdgeInsets.lerp(padding, null, 0.5);
       final insets2 = EdgeInsets.lerp(padding, padding2, 0.5);
       final insets3 = EdgeInsets.lerp(padding, padding3, 0.5);
 

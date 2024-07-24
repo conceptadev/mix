@@ -6,8 +6,6 @@ part of 'image_spec.dart';
 // MixableSpecGenerator
 // **************************************************************************
 
-// ignore_for_file: deprecated_member_use_from_same_package
-
 mixin _$ImageSpec on Spec<ImageSpec> {
   static ImageSpec from(MixData mix) {
     return mix.attributeOf<ImageSpecAttribute>()?.resolve(mix) ??
@@ -348,8 +346,13 @@ class ImageSpecTween extends Tween<ImageSpec?> {
 
   @override
   ImageSpec lerp(double t) {
-    if (begin == null && end == null) return const ImageSpec();
-    if (begin == null) return end!;
+    if (begin == null && end == null) {
+      return const ImageSpec();
+    }
+
+    if (begin == null) {
+      return end!;
+    }
 
     return begin!.lerp(end!, t);
   }
