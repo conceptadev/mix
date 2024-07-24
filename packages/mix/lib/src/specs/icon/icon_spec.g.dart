@@ -8,7 +8,7 @@ part of 'icon_spec.dart';
 
 // ignore_for_file: deprecated_member_use_from_same_package
 
-base mixin _$IconSpec on Spec<IconSpec> {
+mixin _$IconSpec on Spec<IconSpec> {
   static IconSpec from(MixData mix) {
     return mix.attributeOf<IconSpecAttribute>()?.resolve(mix) ??
         const IconSpec();
@@ -123,6 +123,21 @@ base mixin _$IconSpec on Spec<IconSpec> {
       ];
 
   IconSpec get _$this => this as IconSpec;
+
+  void _debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    properties.add(DiagnosticsProperty('color', _$this.color));
+    properties.add(DiagnosticsProperty('size', _$this.size));
+    properties.add(DiagnosticsProperty('weight', _$this.weight));
+    properties.add(DiagnosticsProperty('grade', _$this.grade));
+    properties.add(DiagnosticsProperty('opticalSize', _$this.opticalSize));
+    properties.add(DiagnosticsProperty('shadows', _$this.shadows));
+    properties.add(DiagnosticsProperty('textDirection', _$this.textDirection));
+    properties
+        .add(DiagnosticsProperty('applyTextScaling', _$this.applyTextScaling));
+    properties.add(DiagnosticsProperty('fill', _$this.fill));
+    properties.add(DiagnosticsProperty('animated', _$this.animated));
+    properties.add(DiagnosticsProperty('modifiers', _$this.modifiers));
+  }
 }
 
 /// Represents the attributes of a [IconSpec].
@@ -232,22 +247,17 @@ final class IconSpecAttribute extends SpecAttribute<IconSpec>
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty('color', color, defaultValue: null));
-    properties.add(DiagnosticsProperty('size', size, defaultValue: null));
-    properties.add(DiagnosticsProperty('weight', weight, defaultValue: null));
-    properties.add(DiagnosticsProperty('grade', grade, defaultValue: null));
-    properties.add(
-        DiagnosticsProperty('opticalSize', opticalSize, defaultValue: null));
-    properties.add(DiagnosticsProperty('shadows', shadows, defaultValue: null));
-    properties.add(DiagnosticsProperty('textDirection', textDirection,
-        defaultValue: null));
-    properties.add(DiagnosticsProperty('applyTextScaling', applyTextScaling,
-        defaultValue: null));
-    properties.add(DiagnosticsProperty('fill', fill, defaultValue: null));
-    properties
-        .add(DiagnosticsProperty('animated', animated, defaultValue: null));
-    properties
-        .add(DiagnosticsProperty('modifiers', modifiers, defaultValue: null));
+    properties.add(DiagnosticsProperty('color', color));
+    properties.add(DiagnosticsProperty('size', size));
+    properties.add(DiagnosticsProperty('weight', weight));
+    properties.add(DiagnosticsProperty('grade', grade));
+    properties.add(DiagnosticsProperty('opticalSize', opticalSize));
+    properties.add(DiagnosticsProperty('shadows', shadows));
+    properties.add(DiagnosticsProperty('textDirection', textDirection));
+    properties.add(DiagnosticsProperty('applyTextScaling', applyTextScaling));
+    properties.add(DiagnosticsProperty('fill', fill));
+    properties.add(DiagnosticsProperty('animated', animated));
+    properties.add(DiagnosticsProperty('modifiers', modifiers));
   }
 }
 
@@ -255,7 +265,7 @@ final class IconSpecAttribute extends SpecAttribute<IconSpec>
 ///
 /// This class provides methods to set individual properties of a [IconSpecAttribute].
 /// Use the methods of this class to configure specific properties of a [IconSpecAttribute].
-base class IconSpecUtility<T extends Attribute>
+class IconSpecUtility<T extends Attribute>
     extends SpecUtility<T, IconSpecAttribute> {
   /// Utility for defining [IconSpecAttribute.color]
   late final color = ColorUtility((v) => only(color: v));

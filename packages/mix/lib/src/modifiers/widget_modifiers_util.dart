@@ -1,4 +1,3 @@
-import '../attributes/spacing/spacing_util.dart';
 import '../core/attribute.dart';
 import '../core/modifier.dart';
 import '../core/utility.dart';
@@ -17,42 +16,43 @@ import 'visibility_widget_modifier.dart';
 
 abstract class ModifierUtility<T extends Attribute, Value>
     extends MixUtility<T, Value> {
-  late final intrinsicWidth = IntrinsicWidthWidgetUtility(only);
-  late final intrinsicHeight = IntrinsicHeightWidgetUtility(only);
-  late final rotate = RotatedBoxWidgetUtility(only);
-  late final opacity = OpacityUtility(only);
-  late final clipPath = ClipPathUtility(only);
-  late final clipRRect = ClipRRectUtility(only);
-  late final clipOval = ClipOvalUtility(only);
-  late final clipRect = ClipRectUtility(only);
-  late final clipTriangle = ClipTriangleUtility(only);
-  late final visibility = VisibilityUtility(only);
+  late final intrinsicWidth = IntrinsicWidthModifierSpecUtility(only);
+  late final intrinsicHeight = IntrinsicHeightModifierSpecUtility(only);
+  late final rotate = RotatedBoxModifierSpecUtility(only);
+  late final opacity = OpacityModifierSpecUtility(only);
+  late final clipPath = ClipPathModifierSpecUtility(only);
+  late final clipRRect = ClipRRectModifierSpecUtility(only);
+  late final clipOval = ClipOvalModifierSpecUtility(only);
+  late final clipRect = ClipRectModifierSpecUtility(only);
+  late final clipTriangle = ClipTriangleModifierSpecUtility(only);
+  late final visibility = VisibilityModifierSpecUtility(only);
   late final show = visibility.on;
   late final hide = visibility.off;
-  late final aspectRatio = AspectRatioUtility(only);
-  late final flexible = FlexibleModifierUtility(only);
+  late final aspectRatio = AspectRatioModifierSpecUtility(only);
+  late final flexible = FlexibleModifierSpecUtility(only);
   late final expanded = flexible.expanded;
-  late final transform = TransformUtility(only);
+  late final transform = TransformModifierSpecUtility(only);
 
   late final scale = transform.scale;
-  late final align = AlignWidgetUtility(only);
-  late final fractionallySizedBox = FractionallySizedBoxModifierUtility(only);
-  late final sizedBox = SizedBoxModifierUtility(only);
-  late final padding = SpacingUtility(PaddingModifierUtility(only).call);
+  late final align = AlignModifierSpecUtility(only);
+  late final fractionallySizedBox =
+      FractionallySizedBoxModifierSpecUtility(only);
+  late final sizedBox = SizedBoxModifierSpecUtility(only);
+  late final padding = PaddingModifierSpecUtility(only).padding;
 
   ModifierUtility(super.builder);
 
-  T only(WidgetModifierAttribute attribute);
+  T only(WidgetModifierSpecAttribute attribute);
 }
 
 class WithModifierUtility<T extends Attribute>
-    extends ModifierUtility<T, WidgetModifierAttribute> {
+    extends ModifierUtility<T, WidgetModifierSpecAttribute> {
   static final self = WithModifierUtility(MixUtility.selfBuilder);
 
   WithModifierUtility(super.builder);
 
   @override
-  T only(WidgetModifierAttribute attribute) {
+  T only(WidgetModifierSpecAttribute attribute) {
     return builder(attribute);
   }
 }

@@ -69,7 +69,7 @@ final class _TestModifierSpec extends WidgetModifierSpec<_TestModifierSpec> {
 }
 
 final class _TestModifierAttribute
-    extends WidgetModifierAttribute<_TestModifierAttribute, _TestModifierSpec> {
+    extends WidgetModifierSpecAttribute<_TestModifierSpec> {
   final double value;
   const _TestModifierAttribute(this.value);
 

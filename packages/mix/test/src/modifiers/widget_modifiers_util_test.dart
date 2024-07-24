@@ -8,26 +8,28 @@ import '../../helpers/testing_utils.dart';
 
 void main() {
   group('Modifiers: ', () {
-    const aspectRatio = AspectRatioUtility(UtilityTestAttribute.new);
-    const flexible = FlexibleModifierUtility(UtilityTestAttribute.new);
-    const visibility = VisibilityUtility(UtilityTestAttribute.new);
-    const transform = TransformUtility(UtilityTestAttribute.new);
+    const aspectRatio =
+        AspectRatioModifierSpecUtility(UtilityTestAttribute.new);
+    const flexible = FlexibleModifierSpecUtility(UtilityTestAttribute.new);
+    const visibility = VisibilityModifierSpecUtility(UtilityTestAttribute.new);
+    const transform = TransformModifierSpecUtility(UtilityTestAttribute.new);
 
-    const opacity = OpacityUtility(UtilityTestAttribute.new);
-    const rotate = RotatedBoxWidgetUtility(UtilityTestAttribute.new);
-    const clipPath = ClipPathUtility(UtilityTestAttribute.new);
-    const clipRRect = ClipRRectUtility(UtilityTestAttribute.new);
-    const clipOval = ClipOvalUtility(UtilityTestAttribute.new);
-    const clipRect = ClipRectUtility(UtilityTestAttribute.new);
-    const clipTriangle = ClipTriangleUtility(UtilityTestAttribute.new);
-    final sizedBox = SizedBoxModifierUtility(UtilityTestAttribute.new);
+    const opacity = OpacityModifierSpecUtility(UtilityTestAttribute.new);
+    const rotate = RotatedBoxModifierSpecUtility(UtilityTestAttribute.new);
+    const clipPath = ClipPathModifierSpecUtility(UtilityTestAttribute.new);
+    const clipRRect = ClipRRectModifierSpecUtility(UtilityTestAttribute.new);
+    const clipOval = ClipOvalModifierSpecUtility(UtilityTestAttribute.new);
+    const clipRect = ClipRectModifierSpecUtility(UtilityTestAttribute.new);
+    const clipTriangle =
+        ClipTriangleModifierSpecUtility(UtilityTestAttribute.new);
+    final sizedBox = SizedBoxModifierSpecUtility(UtilityTestAttribute.new);
     const fractionallySizedBox =
-        FractionallySizedBoxModifierUtility(UtilityTestAttribute.new);
+        FractionallySizedBoxModifierSpecUtility(UtilityTestAttribute.new);
     const intrinsicHeight =
-        IntrinsicHeightWidgetUtility(UtilityTestAttribute.new);
+        IntrinsicHeightModifierSpecUtility(UtilityTestAttribute.new);
     const intrinsicWidth =
-        IntrinsicWidthWidgetUtility(UtilityTestAttribute.new);
-    const align = AlignWidgetUtility(UtilityTestAttribute.new);
+        IntrinsicWidthModifierSpecUtility(UtilityTestAttribute.new);
+    const align = AlignModifierSpecUtility(UtilityTestAttribute.new);
 
     test('aspectRatio creates AspectRatioModifier correctly', () {
       final aspectRatioModifier = aspectRatio(2.0);
@@ -36,7 +38,7 @@ void main() {
     });
 
     test('expanded creates FlexibleModifierUtility correctly', () {
-      const flexible = FlexibleModifierUtility(UtilityTestAttribute.new);
+      const flexible = FlexibleModifierSpecUtility(UtilityTestAttribute.new);
       final flexibleModifier = flexible.expanded();
 
       expect(flexibleModifier.value.fit, FlexFit.tight);
@@ -90,7 +92,7 @@ void main() {
 
       final modifier = clipRRectModifier.value;
 
-      expect(modifier.borderRadius, BorderRadius.circular(10.0));
+      expect(modifier.borderRadius, BorderRadius.circular(10.0).toDto());
     });
 
     test('clipOval creates ClipOvalModifier correctly', () {

@@ -60,7 +60,7 @@ base mixin _$RoundedRectangleBorderDto on Dto<RoundedRectangleBorder> {
 ///
 /// This class provides methods to set individual properties of a [RoundedRectangleBorderDto].
 /// Use the methods of this class to configure specific properties of a [RoundedRectangleBorderDto].
-final class RoundedRectangleBorderUtility<T extends Attribute>
+class RoundedRectangleBorderUtility<T extends Attribute>
     extends DtoUtility<T, RoundedRectangleBorderDto, RoundedRectangleBorder> {
   /// Utility for defining [RoundedRectangleBorderDto.borderRadius]
   late final borderRadius =
@@ -164,7 +164,7 @@ base mixin _$BeveledRectangleBorderDto on Dto<BeveledRectangleBorder> {
 ///
 /// This class provides methods to set individual properties of a [BeveledRectangleBorderDto].
 /// Use the methods of this class to configure specific properties of a [BeveledRectangleBorderDto].
-final class BeveledRectangleBorderUtility<T extends Attribute>
+class BeveledRectangleBorderUtility<T extends Attribute>
     extends DtoUtility<T, BeveledRectangleBorderDto, BeveledRectangleBorder> {
   /// Utility for defining [BeveledRectangleBorderDto.borderRadius]
   late final borderRadius =
@@ -269,9 +269,8 @@ base mixin _$ContinuousRectangleBorderDto on Dto<ContinuousRectangleBorder> {
 ///
 /// This class provides methods to set individual properties of a [ContinuousRectangleBorderDto].
 /// Use the methods of this class to configure specific properties of a [ContinuousRectangleBorderDto].
-final class ContinuousRectangleBorderUtility<T extends Attribute>
-    extends DtoUtility<T, ContinuousRectangleBorderDto,
-        ContinuousRectangleBorder> {
+class ContinuousRectangleBorderUtility<T extends Attribute> extends DtoUtility<
+    T, ContinuousRectangleBorderDto, ContinuousRectangleBorder> {
   /// Utility for defining [ContinuousRectangleBorderDto.borderRadius]
   late final borderRadius =
       BorderRadiusGeometryUtility((v) => only(borderRadius: v));
@@ -373,7 +372,7 @@ base mixin _$CircleBorderDto on Dto<CircleBorder> {
 ///
 /// This class provides methods to set individual properties of a [CircleBorderDto].
 /// Use the methods of this class to configure specific properties of a [CircleBorderDto].
-final class CircleBorderUtility<T extends Attribute>
+class CircleBorderUtility<T extends Attribute>
     extends DtoUtility<T, CircleBorderDto, CircleBorder> {
   /// Utility for defining [CircleBorderDto.side]
   late final side = BorderSideUtility((v) => only(side: v));
@@ -489,7 +488,7 @@ base mixin _$StarBorderDto on Dto<StarBorder> {
 ///
 /// This class provides methods to set individual properties of a [StarBorderDto].
 /// Use the methods of this class to configure specific properties of a [StarBorderDto].
-final class StarBorderUtility<T extends Attribute>
+class StarBorderUtility<T extends Attribute>
     extends DtoUtility<T, StarBorderDto, StarBorder> {
   /// Utility for defining [StarBorderDto.side]
   late final side = BorderSideUtility((v) => only(side: v));
@@ -638,7 +637,7 @@ base mixin _$LinearBorderDto on Dto<LinearBorder> {
 ///
 /// This class provides methods to set individual properties of a [LinearBorderDto].
 /// Use the methods of this class to configure specific properties of a [LinearBorderDto].
-final class LinearBorderUtility<T extends Attribute>
+class LinearBorderUtility<T extends Attribute>
     extends DtoUtility<T, LinearBorderDto, LinearBorder> {
   /// Utility for defining [LinearBorderDto.side]
   late final side = BorderSideUtility((v) => only(side: v));
@@ -762,7 +761,7 @@ base mixin _$LinearBorderEdgeDto on Dto<LinearBorderEdge> {
 ///
 /// This class provides methods to set individual properties of a [LinearBorderEdgeDto].
 /// Use the methods of this class to configure specific properties of a [LinearBorderEdgeDto].
-final class LinearBorderEdgeUtility<T extends Attribute>
+class LinearBorderEdgeUtility<T extends Attribute>
     extends DtoUtility<T, LinearBorderEdgeDto, LinearBorderEdge> {
   /// Utility for defining [LinearBorderEdgeDto.size]
   late final size = DoubleUtility((v) => only(size: v));
@@ -859,7 +858,7 @@ base mixin _$StadiumBorderDto on Dto<StadiumBorder> {
 ///
 /// This class provides methods to set individual properties of a [StadiumBorderDto].
 /// Use the methods of this class to configure specific properties of a [StadiumBorderDto].
-final class StadiumBorderUtility<T extends Attribute>
+class StadiumBorderUtility<T extends Attribute>
     extends DtoUtility<T, StadiumBorderDto, StadiumBorder> {
   /// Utility for defining [StadiumBorderDto.side]
   late final side = BorderSideUtility((v) => only(side: v));

@@ -206,7 +206,7 @@ base mixin _$BorderSideDto on Dto<BorderSide> {
 ///
 /// This class provides methods to set individual properties of a [BorderSideDto].
 /// Use the methods of this class to configure specific properties of a [BorderSideDto].
-final class BorderSideUtility<T extends Attribute>
+class BorderSideUtility<T extends Attribute>
     extends DtoUtility<T, BorderSideDto, BorderSide> {
   /// Utility for defining [BorderSideDto.color]
   late final color = ColorUtility((v) => only(color: v));

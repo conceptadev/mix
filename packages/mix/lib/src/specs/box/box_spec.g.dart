@@ -8,7 +8,7 @@ part of 'box_spec.dart';
 
 // ignore_for_file: deprecated_member_use_from_same_package
 
-base mixin _$BoxSpec on Spec<BoxSpec> {
+mixin _$BoxSpec on Spec<BoxSpec> {
   static BoxSpec from(MixData mix) {
     return mix.attributeOf<BoxSpecAttribute>()?.resolve(mix) ?? const BoxSpec();
   }
@@ -135,6 +135,24 @@ base mixin _$BoxSpec on Spec<BoxSpec> {
       ];
 
   BoxSpec get _$this => this as BoxSpec;
+
+  void _debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    properties.add(DiagnosticsProperty('alignment', _$this.alignment));
+    properties.add(DiagnosticsProperty('padding', _$this.padding));
+    properties.add(DiagnosticsProperty('margin', _$this.margin));
+    properties.add(DiagnosticsProperty('constraints', _$this.constraints));
+    properties.add(DiagnosticsProperty('decoration', _$this.decoration));
+    properties.add(DiagnosticsProperty(
+        'foregroundDecoration', _$this.foregroundDecoration));
+    properties.add(DiagnosticsProperty('transform', _$this.transform));
+    properties.add(
+        DiagnosticsProperty('transformAlignment', _$this.transformAlignment));
+    properties.add(DiagnosticsProperty('clipBehavior', _$this.clipBehavior));
+    properties.add(DiagnosticsProperty('width', _$this.width));
+    properties.add(DiagnosticsProperty('height', _$this.height));
+    properties.add(DiagnosticsProperty('modifiers', _$this.modifiers));
+    properties.add(DiagnosticsProperty('animated', _$this.animated));
+  }
 }
 
 /// Represents the attributes of a [BoxSpec].
@@ -255,29 +273,22 @@ final class BoxSpecAttribute extends SpecAttribute<BoxSpec>
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties
-        .add(DiagnosticsProperty('alignment', alignment, defaultValue: null));
-    properties.add(DiagnosticsProperty('padding', padding, defaultValue: null));
-    properties.add(DiagnosticsProperty('margin', margin, defaultValue: null));
+    properties.add(DiagnosticsProperty('alignment', alignment));
+    properties.add(DiagnosticsProperty('padding', padding));
+    properties.add(DiagnosticsProperty('margin', margin));
+    properties.add(DiagnosticsProperty('constraints', constraints));
     properties.add(
-        DiagnosticsProperty('constraints', constraints, defaultValue: null));
-    properties.add(DiagnosticsProperty('decoration', decoration,
-        expandableValue: true, defaultValue: null));
-    properties.add(DiagnosticsProperty(
-        'foregroundDecoration', foregroundDecoration,
-        defaultValue: null));
+        DiagnosticsProperty('decoration', decoration, expandableValue: true));
     properties
-        .add(DiagnosticsProperty('transform', transform, defaultValue: null));
-    properties.add(DiagnosticsProperty('transformAlignment', transformAlignment,
-        defaultValue: null));
-    properties.add(
-        DiagnosticsProperty('clipBehavior', clipBehavior, defaultValue: null));
-    properties.add(DiagnosticsProperty('width', width, defaultValue: null));
-    properties.add(DiagnosticsProperty('height', height, defaultValue: null));
+        .add(DiagnosticsProperty('foregroundDecoration', foregroundDecoration));
+    properties.add(DiagnosticsProperty('transform', transform));
     properties
-        .add(DiagnosticsProperty('modifiers', modifiers, defaultValue: null));
-    properties
-        .add(DiagnosticsProperty('animated', animated, defaultValue: null));
+        .add(DiagnosticsProperty('transformAlignment', transformAlignment));
+    properties.add(DiagnosticsProperty('clipBehavior', clipBehavior));
+    properties.add(DiagnosticsProperty('width', width));
+    properties.add(DiagnosticsProperty('height', height));
+    properties.add(DiagnosticsProperty('modifiers', modifiers));
+    properties.add(DiagnosticsProperty('animated', animated));
   }
 }
 
@@ -285,7 +296,7 @@ final class BoxSpecAttribute extends SpecAttribute<BoxSpec>
 ///
 /// This class provides methods to set individual properties of a [BoxSpecAttribute].
 /// Use the methods of this class to configure specific properties of a [BoxSpecAttribute].
-base class BoxSpecUtility<T extends Attribute>
+class BoxSpecUtility<T extends Attribute>
     extends SpecUtility<T, BoxSpecAttribute> {
   /// Utility for defining [BoxSpecAttribute.alignment]
   late final alignment = AlignmentGeometryUtility((v) => only(alignment: v));

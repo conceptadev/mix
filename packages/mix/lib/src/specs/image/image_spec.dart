@@ -1,13 +1,29 @@
-// ignore_for_file: prefer_relative_imports,avoid-importing-entrypoint-exports,
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
-import 'package:mix/mix.dart';
 import 'package:mix_annotations/mix_annotations.dart';
+
+import '../../attributes/animated/animated_data.dart';
+import '../../attributes/animated/animated_data_dto.dart';
+import '../../attributes/animated/animated_util.dart';
+import '../../attributes/color/color_dto.dart';
+import '../../attributes/color/color_util.dart';
+import '../../attributes/enum/enum_util.dart';
+import '../../attributes/modifiers/widget_modifiers_data.dart';
+import '../../attributes/modifiers/widget_modifiers_data_dto.dart';
+import '../../attributes/modifiers/widget_modifiers_util.dart';
+import '../../attributes/scalars/scalar_util.dart';
+import '../../core/attribute.dart';
+import '../../core/factory/mix_data.dart';
+import '../../core/factory/mix_provider.dart';
+import '../../core/helpers.dart';
+import '../../core/spec.dart';
+import '../../core/utility.dart';
+import 'image_widget.dart';
 
 part 'image_spec.g.dart';
 
 @MixableSpec()
-final class ImageSpec extends Spec<ImageSpec> with _$ImageSpec {
+final class ImageSpec extends Spec<ImageSpec> with _$ImageSpec, Diagnosticable {
   final double? width, height;
   final Color? color;
   final ImageRepeat? repeat;
@@ -77,5 +93,11 @@ final class ImageSpec extends Spec<ImageSpec> with _$ImageSpec {
             opacity: opacity,
             matchTextDirection: matchTextDirection,
           );
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    _debugFillProperties(properties);
   }
 }

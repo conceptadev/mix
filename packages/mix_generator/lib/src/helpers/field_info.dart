@@ -1,13 +1,13 @@
-import 'package:analyzer/dart/constant/value.dart' show DartObject;
 import 'package:analyzer/dart/element/element.dart'
     show ClassElement, FieldElement, ParameterElement, ConstructorElement;
+import 'package:analyzer/dart/element/nullability_suffix.dart';
 import 'package:analyzer/dart/element/type.dart';
+import 'package:collection/collection.dart';
 import 'package:mix_annotations/mix_annotations.dart';
+import 'package:mix_generator/src/helpers/annotation_helpers.dart';
 import 'package:mix_generator/src/helpers/builder_utils.dart';
 import 'package:mix_generator/src/helpers/dart_type_ext.dart';
 import 'package:mix_generator/src/helpers/type_ref_repository.dart';
-// ignore_for_file: prefer_relative_imports
-import 'package:source_gen/source_gen.dart' show ConstantReader, TypeChecker;
 
 typedef MixTypeReferences = ({String utility, String lerp, String dto});
 
@@ -67,6 +67,17 @@ class FieldInfo {
   bool get isDynamic => type == 'dynamic';
 
   String toString() => 'FieldInfo(name: $name, type: $type)';
+
+  factory FieldInfo.ofElement(FieldElement element) {
+    return FieldInfo(
+      name: element.name,
+      dartType: element.type,
+      type: element.type.getTypeAsString(),
+      nullable: element.type.isNullableType,
+      annotation: readMixableProperty(element),
+      documentationComment: element.documentationComment,
+    );
+  }
 }
 
 class ParameterInfo extends FieldInfo {
@@ -75,9 +86,12 @@ class ParameterInfo extends FieldInfo {
     required super.type,
     required super.nullable,
     required this.isSuper,
+    required this.isPositional,
     required super.dartType,
     required super.annotation,
     required super.documentationComment,
+    required this.isRequiredNamed,
+    required this.isRequiredPositional,
   });
 
   static const internalRefPrefix = '_\$this';
@@ -85,94 +99,145 @@ class ParameterInfo extends FieldInfo {
   String get asInternalRef => '$internalRefPrefix.$name';
 
   final bool isSuper;
+  final bool isPositional;
+  final bool isRequiredNamed;
+  final bool isRequiredPositional;
 
-  static ParameterInfo fromFieldInfo(FieldInfo fieldInfo) {
+  bool get isRequired => isRequiredNamed || isRequiredPositional;
+
+  factory ParameterInfo.ofElement(ParameterElement element) {
+    final fieldInfo = getFieldInfoFromParameter(element);
+
+    final isNullable =
+        element.type.nullabilitySuffix == NullabilitySuffix.question;
+
     return ParameterInfo(
-      name: fieldInfo.name,
-      type: fieldInfo.type,
-      nullable: fieldInfo.nullable,
-      isSuper: false,
-      dartType: fieldInfo.dartType,
-      annotation: fieldInfo.annotation,
-      documentationComment: fieldInfo.documentationComment,
+      name: element.name,
+      dartType: element.type,
+      type: element.type.getDisplayString(withNullability: false),
+      nullable: fieldInfo?.nullable ?? isNullable,
+      isSuper: element.isSuperFormal,
+      isRequiredNamed: element.isRequiredNamed,
+      isRequiredPositional: element.isRequiredPositional,
+      isPositional: element.isPositional,
+      documentationComment: fieldInfo?.documentationComment,
+      annotation: fieldInfo?.annotation ?? MixableProperty(),
     );
   }
 }
 
-MixableProperty readFieldAnnotation(
-  FieldElement element,
-) {
-  const defaults = MixableProperty();
+class ClassInfo {
+  ClassInfo({
+    required this.name,
+    required this.fields,
+    this.isBase = false,
+    this.isFinal = false,
+    this.isConst = false,
+    this.isInternalRef = false,
+    this.constructorName = '',
+    this.mixinTypes = const {},
+    this.extendsType = '',
+    this.genericTypes = const {},
+    this.methods = const {},
+  });
 
-  const checker = TypeChecker.fromRuntime(MixableProperty);
-  final annotation = checker.firstAnnotationOf(element);
-  if (annotation is! DartObject) {
-    return defaults;
+  final String name;
+  final List<ParameterInfo> fields;
+  final bool isBase;
+  final bool isFinal;
+  final bool isInternalRef;
+  final Set<String> mixinTypes;
+  final String extendsType;
+  final Set<String> methods;
+  final Set<String> genericTypes;
+
+  final bool isConst;
+  final String constructorName;
+
+  ClassInfo copyWith({
+    String? name,
+    List<ParameterInfo>? fields,
+    bool? isBase,
+    bool? isFinal,
+    bool? isConst,
+    bool? isInternalRef,
+    String? constructorName,
+    Set<String>? mixinTypes,
+    String? extendsType,
+    Set<String>? genericTypes,
+    Set<String>? methods,
+  }) {
+    return ClassInfo(
+      name: name ?? this.name,
+      fields: fields ?? this.fields,
+      isBase: isBase ?? this.isBase,
+      isFinal: isFinal ?? this.isFinal,
+      isConst: isConst ?? this.isConst,
+      isInternalRef: isInternalRef ?? this.isInternalRef,
+      constructorName: constructorName ?? this.constructorName,
+      mixinTypes: mixinTypes ?? this.mixinTypes,
+      extendsType: extendsType ?? this.extendsType,
+      genericTypes: genericTypes ?? this.genericTypes,
+      methods: methods ?? this.methods,
+    );
   }
 
-  return _getMixableProperty(ConstantReader(annotation));
-}
+  bool hasMethod(String name) => methods.contains(name);
 
-MixableProperty _getMixableProperty(ConstantReader reader) {
-  final dto = reader.peek('dto');
-  final utilities = reader
-      .peek('utilities')
-      ?.listValue
-      .map((e) => _getMixableFieldUtility(ConstantReader(e)))
-      .toList();
-
-  return MixableProperty(
-    dto: dto == null ? null : _getMixableDto(dto),
-    utilities: utilities,
-  );
-}
-
-MixableFieldDto? _getMixableDto(ConstantReader? reader) {
-  if (reader == null) return null;
-  final peakedType = reader.peek('type');
-
-  String? dtoName;
-
-  if (peakedType?.isString == true) {
-    dtoName = peakedType!.stringValue;
-  } else if (peakedType?.isType == true) {
-    dtoName = peakedType!.typeValue.element!.name!;
+  String writeConstructor() {
+    return '$name$constructorRef';
   }
 
-  return MixableFieldDto(type: dtoName);
-}
+  String writeDefinition() {
+    final bufferString = StringBuffer();
 
-MixableUtility _getMixableFieldUtility(ConstantReader reader) {
-  final peakedType = reader.peek('type');
+    if (isFinal) {
+      bufferString.write('final ');
+    }
 
-  String? utilityName;
+    if (isBase) {
+      bufferString.write('base ');
+    }
 
-  if (peakedType?.isString == true) {
-    utilityName = peakedType!.stringValue;
-  } else if (peakedType?.isType == true) {
-    utilityName = peakedType!.typeValue.element!.name!;
+    bufferString.write('class $name ');
+
+    if (genericTypes.isNotEmpty) {
+      bufferString.write('<${genericTypes.join(', ')}> ');
+    }
+
+    if (extendsType.isNotEmpty) {
+      bufferString.write('extends $extendsType ');
+    }
+
+    if (mixinTypes.isNotEmpty) {
+      bufferString.write('with ${mixinTypes.join(', ')} ');
+    }
+
+    return bufferString.toString();
   }
 
-  final utilityAlias = reader.peek('alias')?.stringValue;
+  String get constructorRef =>
+      constructorName.isEmpty ? '' : '.$constructorName';
 
-  final extraUtilities = reader
-      .read('properties')
-      .listValue
-      .map((e) => _getMixableUtilityAlias(ConstantReader(e)))
-      .toList();
-
-  return MixableUtility(
-    type: utilityName,
-    alias: utilityAlias,
-    properties: extraUtilities,
-  );
-}
-
-MixableUtilityProps _getMixableUtilityAlias(ConstantReader reader) {
-  final path = reader.read('path').stringValue;
-  final alias = reader.read('alias').stringValue;
-
-  return (path: path, alias: alias);
+  factory ClassInfo.ofElement(
+    ClassElement element, {
+    bool asInternalRef = false,
+  }) {
+    final constructor = element.defaultConstructor;
+    return ClassInfo(
+      name: element.name,
+      isFinal: element.isFinal,
+      isBase: element.isBase,
+      isConst: element.isConst,
+      isInternalRef: asInternalRef,
+      constructorName: constructor.name,
+      methods: element.methods.map((e) => e.name).toSet(),
+      mixinTypes: element.mixins
+          .map((e) => e.getDisplayString(withNullability: false))
+          .toSet(),
+      fields: constructor.parameters.map(ParameterInfo.ofElement).toList(),
+    );
+  }
 }
 
 FieldInfo? getFieldInfoFromParameter(
@@ -207,7 +272,7 @@ FieldInfo? getFieldInfoFromParameter(
 
   if (field == null) return null;
 
-  final annotation = readFieldAnnotation(field);
+  final annotation = readMixableProperty(field);
 
   return FieldInfo(
     name: field.name,
@@ -217,4 +282,89 @@ FieldInfo? getFieldInfoFromParameter(
     annotation: annotation,
     documentationComment: field.documentationComment,
   );
+}
+
+class ClassBuilderContext<T> {
+  List<ParameterInfo>? _fieldsCache;
+
+  ClassBuilderContext({
+    required this.classElement,
+    required this.annotation,
+  });
+
+  final ClassElement classElement;
+  final T annotation;
+
+  List<ParameterInfo> get fields {
+    if (_fieldsCache != null) return _fieldsCache!;
+
+    return _fieldsCache =
+        constructor.parameters.map(ParameterInfo.ofElement).toList();
+  }
+
+  ConstructorElement get constructor {
+    final defaultContructor = classElement.constructors.firstWhereOrNull(
+      (element) =>
+          element.isDefaultConstructor ||
+          element.isPrivateConstructor ||
+          element.isUnamedConstructor,
+    );
+
+    return defaultContructor ?? classElement.unnamedConstructor!;
+  }
+
+  Set<String> get superTypes =>
+      classElement.allSupertypes.map((e) => e.element.name).toSet();
+
+  String get name => classElement.name;
+
+  /// Class Context is being used in an internal Mix class
+  bool get isMixInternal => classElement.isMixRef;
+  bool get isConst => classElement.isConst;
+
+  String get dtoName => '${name}Dto';
+
+  String get generatedName => '_\$${name}';
+
+  String get constructorRef =>
+      constructor.name.isEmpty ? '' : '.${constructor.name}';
+
+  bool get isBase => classElement.isBase;
+  bool get isFinal => classElement.isFinal;
+  bool get isAbstract => classElement.isAbstract;
+}
+
+extension ClassContextSpecX on ClassBuilderContext<MixableSpec> {
+  String get specType => classElement.isWidgetModifier
+      ? MixType.widgetModifierSpec.name
+      : MixType.spec.name;
+
+  String get _prefix =>
+      annotation.prefix.isEmpty ? name : '${annotation.prefix}';
+  String get attributeName => '${_prefix}Attribute';
+  String get utilityName => '${_prefix}Utility';
+  String get tweenClassName => '${_prefix}Tween';
+
+  String get attributeExtendsType => '${specType}Attribute<$name>';
+
+  bool get hasDiagnosticable => annotation.withDiagnosticable;
+}
+
+extension ClassContextDtoX on ClassBuilderContext<MixableDto> {
+  bool get mergeLists => annotation.mergeLists;
+  bool get generateValueExtension => annotation.generateValueExtension;
+  bool get generateUtility => annotation.generateUtility;
+  ClassElement get referenceClass =>
+      classElement.getGenericTypeOfSuperclass()!.element as ClassElement;
+}
+
+enum MixType {
+  dto('Dto'),
+  spec('Spec'),
+  utility('Utility'),
+  widgetModifierSpec('WidgetModifierSpec');
+
+  const MixType(this.name);
+
+  final String name;
 }

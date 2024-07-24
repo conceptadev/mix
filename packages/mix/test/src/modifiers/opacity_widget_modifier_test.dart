@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mix/src/modifiers/opacity_widget_modifier.dart';
+import 'package:mix/mix.dart';
 
 import '../../helpers/testing_utils.dart';
 
@@ -49,29 +49,29 @@ void main() {
     );
   });
 
-  group('OpacityModifierAttribute', () {
+  group('OpacityModifierSpecAttribute', () {
     test('merge', () {
-      const modifier = OpacityModifierAttribute(0.5);
-      const other = OpacityModifierAttribute(0.5);
+      const modifier = OpacityModifierSpecAttribute(opacity: 0.5);
+      const other = OpacityModifierSpecAttribute(opacity: 0.5);
       final result = modifier.merge(other);
       expect(result, modifier);
     });
 
     test('resolve', () {
-      const modifier = OpacityModifierAttribute(0.5);
+      const modifier = OpacityModifierSpecAttribute(opacity: 0.5);
       final result = modifier.resolve(EmptyMixData);
       expect(result, isA<OpacityModifierSpec>());
     });
 
     test('equality', () {
-      const modifier = OpacityModifierAttribute(0.5);
-      const other = OpacityModifierAttribute(0.5);
+      const modifier = OpacityModifierSpecAttribute(opacity: 0.5);
+      const other = OpacityModifierSpecAttribute(opacity: 0.5);
       expect(modifier, other);
     });
 
     test('inequality', () {
-      const modifier = OpacityModifierAttribute(0.5);
-      const other = OpacityModifierAttribute(0.8);
+      const modifier = OpacityModifierSpecAttribute(opacity: 0.5);
+      const other = OpacityModifierSpecAttribute(opacity: 0.8);
       expect(modifier == other, false);
     });
   });

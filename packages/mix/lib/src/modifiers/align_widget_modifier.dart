@@ -1,17 +1,21 @@
 // ignore_for_file: prefer-named-boolean-parameters
 
-import 'dart:ui';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
+import 'package:mix_annotations/mix_annotations.dart';
 
 import '../core/attribute.dart';
 import '../core/factory/mix_data.dart';
+import '../core/factory/mix_provider.dart';
+import '../core/helpers.dart';
 import '../core/modifier.dart';
 import '../core/utility.dart';
-import '../internal/diagnostic_properties_builder_ext.dart';
 
-final class AlignModifierSpec extends WidgetModifierSpec<AlignModifierSpec> {
+part 'align_widget_modifier.g.dart';
+
+@MixableSpec(skipUtility: true)
+final class AlignModifierSpec extends WidgetModifierSpec<AlignModifierSpec>
+    with _$AlignModifierSpec, Diagnosticable {
   final AlignmentGeometry? alignment;
   final double? widthFactor;
   final double? heightFactor;
@@ -23,29 +27,10 @@ final class AlignModifierSpec extends WidgetModifierSpec<AlignModifierSpec> {
   });
 
   @override
-  AlignModifierSpec lerp(AlignModifierSpec? other, double t) {
-    return AlignModifierSpec(
-      alignment: AlignmentGeometry.lerp(alignment, other?.alignment, t),
-      widthFactor: lerpDouble(widthFactor, other?.widthFactor, t),
-      heightFactor: lerpDouble(heightFactor, other?.heightFactor, t),
-    );
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    _debugFillProperties(properties);
   }
-
-  @override
-  AlignModifierSpec copyWith({
-    AlignmentGeometry? alignment,
-    double? widthFactor,
-    double? heightFactor,
-  }) {
-    return AlignModifierSpec(
-      alignment: alignment ?? this.alignment,
-      widthFactor: widthFactor ?? this.widthFactor,
-      heightFactor: heightFactor ?? this.heightFactor,
-    );
-  }
-
-  @override
-  get props => [alignment, widthFactor, heightFactor];
 
   @override
   Widget build(Widget child) {
@@ -58,58 +43,16 @@ final class AlignModifierSpec extends WidgetModifierSpec<AlignModifierSpec> {
   }
 }
 
-final class AlignModifierAttribute
-    extends WidgetModifierAttribute<AlignModifierAttribute, AlignModifierSpec> {
-  final AlignmentGeometry? alignment;
-  final double? widthFactor;
-  final double? heightFactor;
-
-  const AlignModifierAttribute({
-    this.alignment,
-    this.widthFactor,
-    this.heightFactor,
-  });
-
-  @override
-  AlignModifierSpec resolve(MixData mix) {
-    return AlignModifierSpec(
-      alignment: alignment,
-      widthFactor: widthFactor,
-      heightFactor: heightFactor,
-    );
-  }
-
-  @override
-  AlignModifierAttribute merge(AlignModifierAttribute? other) {
-    return AlignModifierAttribute(
-      alignment: other?.alignment ?? alignment,
-      widthFactor: other?.widthFactor ?? widthFactor,
-      heightFactor: other?.heightFactor ?? heightFactor,
-    );
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties.addUsingDefault('alignment', alignment);
-    properties.addUsingDefault('widthFactor', widthFactor);
-    properties.addUsingDefault('heightFactor', heightFactor);
-  }
-
-  @override
-  get props => [alignment, widthFactor, heightFactor];
-}
-
-final class AlignWidgetUtility<T extends Attribute>
-    extends MixUtility<T, AlignModifierAttribute> {
-  const AlignWidgetUtility(super.builder);
+final class AlignModifierSpecUtility<T extends Attribute>
+    extends MixUtility<T, AlignModifierSpecAttribute> {
+  const AlignModifierSpecUtility(super.builder);
   T call({
     AlignmentGeometry? alignment,
     double? widthFactor,
     double? heightFactor,
   }) {
     return builder(
-      AlignModifierAttribute(
+      AlignModifierSpecAttribute(
         alignment: alignment,
         widthFactor: widthFactor,
         heightFactor: heightFactor,

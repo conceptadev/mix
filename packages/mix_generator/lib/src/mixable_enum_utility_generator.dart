@@ -61,14 +61,12 @@ class MixableEnumUtilityGenerator
 
     output.writeln(_abstractEnumUtility(context));
 
-    final result = context.generate(output.toString());
-
-    return result;
+    return dartFormat(output.toString());
   }
 }
 
 String _abstractEnumUtility(EnumUtilityAnnotationContext context) {
-  final className = context.name;
+  final className = context.element.name;
   final generatedClassName = context.generatedName;
 
   final shouldGenerateCallMethod = context.generateCallMethod;

@@ -1,18 +1,22 @@
 // ignore_for_file: prefer-named-boolean-parameters
 
-import 'dart:ui';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
+import 'package:mix_annotations/mix_annotations.dart';
 
 import '../core/attribute.dart';
 import '../core/factory/mix_data.dart';
+import '../core/factory/mix_provider.dart';
+import '../core/helpers.dart';
 import '../core/modifier.dart';
 import '../core/utility.dart';
-import '../internal/diagnostic_properties_builder_ext.dart';
 
+part 'fractionally_sized_box_widget_modifier.g.dart';
+
+@MixableSpec(skipUtility: true)
 final class FractionallySizedBoxModifierSpec
-    extends WidgetModifierSpec<FractionallySizedBoxModifierSpec> {
+    extends WidgetModifierSpec<FractionallySizedBoxModifierSpec>
+    with _$FractionallySizedBoxModifierSpec, Diagnosticable {
   final double? widthFactor;
   final double? heightFactor;
   final AlignmentGeometry? alignment;
@@ -24,32 +28,10 @@ final class FractionallySizedBoxModifierSpec
   });
 
   @override
-  FractionallySizedBoxModifierSpec copyWith({
-    double? widthFactor,
-    double? heightFactor,
-    AlignmentGeometry? alignment,
-  }) {
-    return FractionallySizedBoxModifierSpec(
-      widthFactor: widthFactor ?? this.widthFactor,
-      heightFactor: heightFactor ?? this.heightFactor,
-      alignment: alignment ?? this.alignment,
-    );
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    _debugFillProperties(properties);
   }
-
-  @override
-  FractionallySizedBoxModifierSpec lerp(
-    FractionallySizedBoxModifierSpec? other,
-    double t,
-  ) {
-    return FractionallySizedBoxModifierSpec(
-      widthFactor: lerpDouble(widthFactor, other?.widthFactor, t),
-      heightFactor: lerpDouble(heightFactor, other?.heightFactor, t),
-      alignment: AlignmentGeometry.lerp(alignment, other?.alignment, t),
-    );
-  }
-
-  @override
-  get props => [widthFactor, heightFactor, alignment];
 
   @override
   Widget build(Widget child) {
@@ -62,54 +44,9 @@ final class FractionallySizedBoxModifierSpec
   }
 }
 
-final class FractionallySizedBoxModifierAttribute
-    extends WidgetModifierAttribute<FractionallySizedBoxModifierAttribute,
-        FractionallySizedBoxModifierSpec> {
-  final double? widthFactor;
-  final double? heightFactor;
-  final AlignmentGeometry? alignment;
-
-  const FractionallySizedBoxModifierAttribute({
-    this.widthFactor,
-    this.heightFactor,
-    this.alignment,
-  });
-
-  @override
-  FractionallySizedBoxModifierAttribute merge(
-    FractionallySizedBoxModifierAttribute? other,
-  ) {
-    return FractionallySizedBoxModifierAttribute(
-      widthFactor: other?.widthFactor ?? widthFactor,
-      heightFactor: other?.heightFactor ?? heightFactor,
-      alignment: other?.alignment ?? alignment,
-    );
-  }
-
-  @override
-  FractionallySizedBoxModifierSpec resolve(MixData mix) {
-    return FractionallySizedBoxModifierSpec(
-      widthFactor: widthFactor,
-      heightFactor: heightFactor,
-      alignment: alignment,
-    );
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties.addUsingDefault('widthFactor', widthFactor);
-    properties.addUsingDefault('heightFactor', heightFactor);
-    properties.addUsingDefault('alignment', alignment);
-  }
-
-  @override
-  get props => [widthFactor, heightFactor, alignment];
-}
-
-final class FractionallySizedBoxModifierUtility<T extends Attribute>
-    extends MixUtility<T, FractionallySizedBoxModifierAttribute> {
-  const FractionallySizedBoxModifierUtility(super.builder);
+final class FractionallySizedBoxModifierSpecUtility<T extends Attribute>
+    extends MixUtility<T, FractionallySizedBoxModifierSpecAttribute> {
+  const FractionallySizedBoxModifierSpecUtility(super.builder);
 
   T call({
     AlignmentGeometry? alignment,
@@ -117,7 +54,7 @@ final class FractionallySizedBoxModifierUtility<T extends Attribute>
     double? heightFactor,
   }) {
     return builder(
-      FractionallySizedBoxModifierAttribute(
+      FractionallySizedBoxModifierSpecAttribute(
         widthFactor: widthFactor,
         heightFactor: heightFactor,
         alignment: alignment,

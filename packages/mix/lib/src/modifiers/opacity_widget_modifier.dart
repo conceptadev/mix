@@ -1,79 +1,43 @@
 // ignore_for_file: prefer-named-boolean-parameters
 
-import 'dart:ui';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
+import 'package:mix_annotations/mix_annotations.dart';
 
 import '../core/attribute.dart';
 import '../core/factory/mix_data.dart';
+import '../core/factory/mix_provider.dart';
+import '../core/helpers.dart';
 import '../core/modifier.dart';
 import '../core/utility.dart';
-import '../internal/diagnostic_properties_builder_ext.dart';
+
+part 'opacity_widget_modifier.g.dart';
 
 /// A modifier that wraps a widget with the [Opacity] widget.
 ///
 /// The [Opacity] widget is used to make a widget partially transparent.
-final class OpacityModifierSpec
-    extends WidgetModifierSpec<OpacityModifierSpec> {
+@MixableSpec(skipUtility: true)
+final class OpacityModifierSpec extends WidgetModifierSpec<OpacityModifierSpec>
+    with _$OpacityModifierSpec, Diagnosticable {
   /// The [opacity] argument must not be null and
   /// must be between 0.0 and 1.0 (inclusive).
   final double opacity;
-  const OpacityModifierSpec(this.opacity);
-
-  @override
-  OpacityModifierSpec lerp(OpacityModifierSpec? other, double t) {
-    return OpacityModifierSpec(
-      lerpDouble(opacity, other?.opacity, t) ?? opacity,
-    );
-  }
-
-  @override
-  OpacityModifierSpec copyWith({double? opacity}) {
-    return OpacityModifierSpec(opacity ?? this.opacity);
-  }
-
-  @override
-  get props => [opacity];
-
-  @override
-  Widget build(Widget child) {
-    assert(
-      opacity >= 0.0 && opacity <= 1.0,
-      'The opacity must be between 0.0 and 1.0 (inclusive).',
-    );
-
-    return Opacity(opacity: opacity, child: child);
-  }
-}
-
-final class OpacityModifierAttribute extends WidgetModifierAttribute<
-    OpacityModifierAttribute, OpacityModifierSpec> {
-  final double opacity;
-  const OpacityModifierAttribute(this.opacity);
-
-  @override
-  OpacityModifierAttribute merge(OpacityModifierAttribute? other) {
-    return OpacityModifierAttribute(other?.opacity ?? opacity);
-  }
-
-  @override
-  OpacityModifierSpec resolve(MixData mix) {
-    return OpacityModifierSpec(opacity);
-  }
+  const OpacityModifierSpec([double? opacity]) : opacity = opacity ?? 1.0;
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.addUsingDefault('opacity', opacity);
+    _debugFillProperties(properties);
   }
 
   @override
-  get props => [opacity];
+  Widget build(Widget child) {
+    return Opacity(opacity: opacity, child: child);
+  }
 }
 
-final class OpacityUtility<T extends Attribute>
-    extends MixUtility<T, OpacityModifierAttribute> {
-  const OpacityUtility(super.builder);
-  T call(double value) => builder(OpacityModifierAttribute(value));
+final class OpacityModifierSpecUtility<T extends Attribute>
+    extends MixUtility<T, OpacityModifierSpecAttribute> {
+  const OpacityModifierSpecUtility(super.builder);
+  T call(double value) => builder(OpacityModifierSpecAttribute(opacity: value));
 }

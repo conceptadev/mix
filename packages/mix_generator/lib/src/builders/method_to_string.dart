@@ -1,10 +1,11 @@
 import 'package:mix_generator/src/helpers/field_info.dart';
 
 String toStringMethodBuilder({
-  required String className,
-  required List<ParameterInfo> fields,
+  required ClassInfo instance,
   bool isInternalRef = false,
 }) {
+  final className = instance.name;
+  final fields = instance.fields;
   final fieldStatements = fields.map((field) {
     final fieldName = isInternalRef ? field.asInternalRef : field.name;
     return '${field.name}: $fieldName,';

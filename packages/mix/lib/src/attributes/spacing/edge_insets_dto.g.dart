@@ -46,7 +46,7 @@ base mixin _$EdgeInsetsDto on Dto<EdgeInsets> {
 ///
 /// This class provides methods to set individual properties of a [EdgeInsetsDto].
 /// Use the methods of this class to configure specific properties of a [EdgeInsetsDto].
-final class EdgeInsetsUtility<T extends Attribute>
+class EdgeInsetsUtility<T extends Attribute>
     extends DtoUtility<T, EdgeInsetsDto, EdgeInsets> {
   /// Utility for defining [EdgeInsetsDto.top]
   late final top = DoubleUtility((v) => only(top: v));
@@ -156,7 +156,7 @@ base mixin _$EdgeInsetsDirectionalDto on Dto<EdgeInsetsDirectional> {
 ///
 /// This class provides methods to set individual properties of a [EdgeInsetsDirectionalDto].
 /// Use the methods of this class to configure specific properties of a [EdgeInsetsDirectionalDto].
-final class EdgeInsetsDirectionalUtility<T extends Attribute>
+class EdgeInsetsDirectionalUtility<T extends Attribute>
     extends DtoUtility<T, EdgeInsetsDirectionalDto, EdgeInsetsDirectional> {
   /// Utility for defining [EdgeInsetsDirectionalDto.top]
   late final top = DoubleUtility((v) => only(top: v));

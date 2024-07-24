@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mix/src/modifiers/fractionally_sized_box_widget_modifier.dart';
+import 'package:mix/mix.dart';
 
 import '../../helpers/testing_utils.dart';
 
@@ -79,14 +79,14 @@ void main() {
     );
   });
 
-  // FractionallySizedBoxModifierAttribute
-  group('FractionallySizedBoxModifierAttribute', () {
+  // FractionallySizedBoxModifierSpecAttribute
+  group('FractionallySizedBoxModifierSpecAttribute', () {
     test('merge', () {
-      const modifier = FractionallySizedBoxModifierAttribute(
+      const modifier = FractionallySizedBoxModifierSpecAttribute(
         widthFactor: 0.5,
         heightFactor: 0.5,
       );
-      const other = FractionallySizedBoxModifierAttribute(
+      const other = FractionallySizedBoxModifierSpecAttribute(
         widthFactor: 0.5,
         heightFactor: 0.5,
       );
@@ -95,7 +95,7 @@ void main() {
     });
 
     test('resolve', () {
-      const modifier = FractionallySizedBoxModifierAttribute(
+      const modifier = FractionallySizedBoxModifierSpecAttribute(
         widthFactor: 0.5,
         heightFactor: 0.5,
       );
@@ -104,11 +104,11 @@ void main() {
     });
 
     test('equality', () {
-      const modifier = FractionallySizedBoxModifierAttribute(
+      const modifier = FractionallySizedBoxModifierSpecAttribute(
         widthFactor: 0.5,
         heightFactor: 0.5,
       );
-      const other = FractionallySizedBoxModifierAttribute(
+      const other = FractionallySizedBoxModifierSpecAttribute(
         widthFactor: 0.5,
         heightFactor: 0.5,
       );
@@ -116,11 +116,11 @@ void main() {
     });
 
     test('inequality', () {
-      const modifier = FractionallySizedBoxModifierAttribute(
+      const modifier = FractionallySizedBoxModifierSpecAttribute(
         widthFactor: 0.5,
         heightFactor: 0.5,
       );
-      const other = FractionallySizedBoxModifierAttribute(
+      const other = FractionallySizedBoxModifierSpecAttribute(
         widthFactor: 0.5,
         heightFactor: 0.6,
       );

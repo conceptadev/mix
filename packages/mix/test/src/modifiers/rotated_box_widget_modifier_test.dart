@@ -50,30 +50,30 @@ void main() {
     );
   });
 
-  group('RotateModifierAttribute', () {
+  group('RotateModifierSpecAttribute', () {
     test('merge', () {
-      const modifier = RotatedBoxModifierAttribute(1);
-      const other = RotatedBoxModifierAttribute(1);
+      const modifier = RotatedBoxModifierSpecAttribute(quarterTurns: 1);
+      const other = RotatedBoxModifierSpecAttribute(quarterTurns: 1);
       final result = modifier.merge(other);
       expect(result, modifier);
     });
 
     test('resolve', () {
-      const modifier = RotatedBoxModifierAttribute(1);
+      const modifier = RotatedBoxModifierSpecAttribute(quarterTurns: 1);
       final result = modifier.resolve(EmptyMixData);
       expect(result, isA<RotatedBoxModifierSpec>());
     });
 
     test('equality', () {
-      const modifier = RotatedBoxModifierAttribute(1);
-      const other = RotatedBoxModifierAttribute(1);
+      const modifier = RotatedBoxModifierSpecAttribute(quarterTurns: 1);
+      const other = RotatedBoxModifierSpecAttribute(quarterTurns: 1);
       expect(modifier, other);
     });
 
     // inequality
     test('inequality', () {
-      const modifier = RotatedBoxModifierAttribute(1);
-      const other = RotatedBoxModifierAttribute(2);
+      const modifier = RotatedBoxModifierSpecAttribute(quarterTurns: 1);
+      const other = RotatedBoxModifierSpecAttribute(quarterTurns: 2);
       expect(modifier, isNot(other));
     });
   });

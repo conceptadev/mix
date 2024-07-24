@@ -8,7 +8,7 @@ part of 'image_spec.dart';
 
 // ignore_for_file: deprecated_member_use_from_same_package
 
-base mixin _$ImageSpec on Spec<ImageSpec> {
+mixin _$ImageSpec on Spec<ImageSpec> {
   static ImageSpec from(MixData mix) {
     return mix.attributeOf<ImageSpecAttribute>()?.resolve(mix) ??
         const ImageSpec();
@@ -123,6 +123,21 @@ base mixin _$ImageSpec on Spec<ImageSpec> {
       ];
 
   ImageSpec get _$this => this as ImageSpec;
+
+  void _debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    properties.add(DiagnosticsProperty('width', _$this.width));
+    properties.add(DiagnosticsProperty('height', _$this.height));
+    properties.add(DiagnosticsProperty('color', _$this.color));
+    properties.add(DiagnosticsProperty('repeat', _$this.repeat));
+    properties.add(DiagnosticsProperty('fit', _$this.fit));
+    properties.add(DiagnosticsProperty('alignment', _$this.alignment));
+    properties.add(DiagnosticsProperty('centerSlice', _$this.centerSlice));
+    properties.add(DiagnosticsProperty('filterQuality', _$this.filterQuality));
+    properties
+        .add(DiagnosticsProperty('colorBlendMode', _$this.colorBlendMode));
+    properties.add(DiagnosticsProperty('animated', _$this.animated));
+    properties.add(DiagnosticsProperty('modifiers', _$this.modifiers));
+  }
 }
 
 /// Represents the attributes of a [ImageSpec].
@@ -232,23 +247,17 @@ final class ImageSpecAttribute extends SpecAttribute<ImageSpec>
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty('width', width, defaultValue: null));
-    properties.add(DiagnosticsProperty('height', height, defaultValue: null));
-    properties.add(DiagnosticsProperty('color', color, defaultValue: null));
-    properties.add(DiagnosticsProperty('repeat', repeat, defaultValue: null));
-    properties.add(DiagnosticsProperty('fit', fit, defaultValue: null));
-    properties
-        .add(DiagnosticsProperty('alignment', alignment, defaultValue: null));
-    properties.add(
-        DiagnosticsProperty('centerSlice', centerSlice, defaultValue: null));
-    properties.add(DiagnosticsProperty('filterQuality', filterQuality,
-        defaultValue: null));
-    properties.add(DiagnosticsProperty('colorBlendMode', colorBlendMode,
-        defaultValue: null));
-    properties
-        .add(DiagnosticsProperty('animated', animated, defaultValue: null));
-    properties
-        .add(DiagnosticsProperty('modifiers', modifiers, defaultValue: null));
+    properties.add(DiagnosticsProperty('width', width));
+    properties.add(DiagnosticsProperty('height', height));
+    properties.add(DiagnosticsProperty('color', color));
+    properties.add(DiagnosticsProperty('repeat', repeat));
+    properties.add(DiagnosticsProperty('fit', fit));
+    properties.add(DiagnosticsProperty('alignment', alignment));
+    properties.add(DiagnosticsProperty('centerSlice', centerSlice));
+    properties.add(DiagnosticsProperty('filterQuality', filterQuality));
+    properties.add(DiagnosticsProperty('colorBlendMode', colorBlendMode));
+    properties.add(DiagnosticsProperty('animated', animated));
+    properties.add(DiagnosticsProperty('modifiers', modifiers));
   }
 }
 
@@ -256,7 +265,7 @@ final class ImageSpecAttribute extends SpecAttribute<ImageSpec>
 ///
 /// This class provides methods to set individual properties of a [ImageSpecAttribute].
 /// Use the methods of this class to configure specific properties of a [ImageSpecAttribute].
-base class ImageSpecUtility<T extends Attribute>
+class ImageSpecUtility<T extends Attribute>
     extends SpecUtility<T, ImageSpecAttribute> {
   /// Utility for defining [ImageSpecAttribute.width]
   late final width = DoubleUtility((v) => only(width: v));

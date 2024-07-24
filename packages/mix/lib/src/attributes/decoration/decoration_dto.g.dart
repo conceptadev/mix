@@ -81,7 +81,7 @@ base mixin _$BoxDecorationDto on Dto<BoxDecoration> {
 ///
 /// This class provides methods to set individual properties of a [BoxDecorationDto].
 /// Use the methods of this class to configure specific properties of a [BoxDecorationDto].
-final class BoxDecorationUtility<T extends Attribute>
+class BoxDecorationUtility<T extends Attribute>
     extends DtoUtility<T, BoxDecorationDto, BoxDecoration> {
   /// Utility for defining [BoxDecorationDto.border]
   late final border = BoxBorderUtility((v) => only(border: v));
@@ -253,7 +253,7 @@ base mixin _$ShapeDecorationDto on Dto<ShapeDecoration> {
 ///
 /// This class provides methods to set individual properties of a [ShapeDecorationDto].
 /// Use the methods of this class to configure specific properties of a [ShapeDecorationDto].
-final class ShapeDecorationUtility<T extends Attribute>
+class ShapeDecorationUtility<T extends Attribute>
     extends DtoUtility<T, ShapeDecorationDto, ShapeDecoration> {
   /// Utility for defining [ShapeDecorationDto.shape]
   late final shape = ShapeBorderUtility((v) => only(shape: v));

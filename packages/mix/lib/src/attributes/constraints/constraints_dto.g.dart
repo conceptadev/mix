@@ -64,7 +64,7 @@ base mixin _$BoxConstraintsDto on Dto<BoxConstraints> {
 ///
 /// This class provides methods to set individual properties of a [BoxConstraintsDto].
 /// Use the methods of this class to configure specific properties of a [BoxConstraintsDto].
-final class BoxConstraintsUtility<T extends Attribute>
+class BoxConstraintsUtility<T extends Attribute>
     extends DtoUtility<T, BoxConstraintsDto, BoxConstraints> {
   /// Utility for defining [BoxConstraintsDto.minWidth]
   late final minWidth = DoubleUtility((v) => only(minWidth: v));

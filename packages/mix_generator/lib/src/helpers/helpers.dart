@@ -1,4 +1,6 @@
 import 'package:analyzer/dart/element/element.dart' show ClassElement;
+import 'package:dart_style/dart_style.dart';
+import 'package:mix_generator/src/helpers/field_info.dart';
 
 /// Returns parameter names or full parameters declaration declared by this class or an empty string.
 ///
@@ -40,5 +42,65 @@ extension StringX on String {
 
   String get snakecase {
     return this.replaceAll(RegExp(r'(?<!^)(?=[A-Z])'), '_').toLowerCase();
+  }
+}
+
+String buildConstructorParams(
+  List<ParameterInfo> params,
+  String Function(ParameterInfo) buildParam,
+) {
+  if (params.isEmpty) return '';
+
+  final buffer = StringBuffer();
+  final positionalParams = <ParameterInfo>[];
+  final namedParams = <ParameterInfo>[];
+
+  for (final param in params) {
+    if (param.isPositional) {
+      positionalParams.add(param);
+    } else {
+      namedParams.add(param);
+    }
+  }
+
+  if (positionalParams.isNotEmpty) {
+    buffer.write(positionalParams.map(buildParam).join(', '));
+  }
+  if (buffer.isNotEmpty) buffer.write(', ');
+  if (namedParams.isNotEmpty) {
+    buffer.write(namedParams
+        .map((param) => '${param.name}: ${buildParam(param)}')
+        .join(', '));
+
+    buffer.write(', ');
+  }
+
+  return buffer.toString();
+}
+
+String buildConstructorParamsAsNamed(
+  List<ParameterInfo> params,
+  String Function(ParameterInfo) buildParam,
+) {
+  if (params.isEmpty) return '';
+
+  final buffer = StringBuffer();
+
+  for (final param in params) {
+    buffer.write('${param.name}: ${buildParam(param)}');
+    buffer.write(', ');
+  }
+
+  return buffer.toString();
+}
+
+late final _formatter = DartFormatter(pageWidth: 80, fixes: StyleFix.all);
+
+String dartFormat(String contents) {
+  try {
+    return _formatter.format(contents);
+  } catch (e) {
+    print('Generating: $contents');
+    rethrow;
   }
 }

@@ -2,42 +2,31 @@
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
+import 'package:mix_annotations/mix_annotations.dart';
 
+import '../attributes/border/border_radius_dto.dart';
 import '../core/attribute.dart';
 import '../core/factory/mix_data.dart';
-import '../core/helpers.dart';
+import '../core/factory/mix_provider.dart';
 import '../core/modifier.dart';
 import '../core/utility.dart';
-import '../internal/diagnostic_properties_builder_ext.dart';
 
+part 'clip_widget_modifier.g.dart';
+
+@MixableSpec(skipUtility: true)
 final class ClipOvalModifierSpec
-    extends WidgetModifierSpec<ClipOvalModifierSpec> {
+    extends WidgetModifierSpec<ClipOvalModifierSpec>
+    with _$ClipOvalModifierSpec, Diagnosticable {
   final CustomClipper<Rect>? clipper;
   final Clip? clipBehavior;
 
   const ClipOvalModifierSpec({this.clipper, this.clipBehavior});
 
   @override
-  ClipOvalModifierSpec lerp(ClipOvalModifierSpec? other, double t) {
-    return ClipOvalModifierSpec(
-      clipper: MixHelpers.lerpSnap(clipper, other?.clipper, t),
-      clipBehavior: MixHelpers.lerpSnap(clipBehavior, other?.clipBehavior, t),
-    );
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    _debugFillProperties(properties);
   }
-
-  @override
-  ClipOvalModifierSpec copyWith({
-    CustomClipper<Rect>? clipper,
-    Clip? clipBehavior,
-  }) {
-    return ClipOvalModifierSpec(
-      clipper: clipper ?? this.clipper,
-      clipBehavior: clipBehavior ?? this.clipBehavior,
-    );
-  }
-
-  @override
-  get props => [clipper, clipBehavior];
 
   @override
   Widget build(Widget child) {
@@ -49,66 +38,20 @@ final class ClipOvalModifierSpec
   }
 }
 
-final class ClipOvalModifierAttribute extends WidgetModifierAttribute<
-    ClipOvalModifierAttribute, ClipOvalModifierSpec> {
-  final CustomClipper<Rect>? clipper;
-  final Clip? clipBehavior;
-
-  const ClipOvalModifierAttribute({this.clipper, this.clipBehavior});
-
-  @override
-  ClipOvalModifierAttribute merge(ClipOvalModifierAttribute? other) {
-    return ClipOvalModifierAttribute(
-      clipper: other?.clipper ?? clipper,
-      clipBehavior: other?.clipBehavior ?? clipBehavior,
-    );
-  }
-
-  @override
-  ClipOvalModifierSpec resolve(MixData mix) {
-    return ClipOvalModifierSpec(clipper: clipper, clipBehavior: clipBehavior);
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties.addUsingDefault('clipper', clipper);
-    properties.addUsingDefault('clipBehavior', clipBehavior);
-  }
-
-  @override
-  get props => [clipper, clipBehavior];
-}
-
+@MixableSpec(skipUtility: true)
 final class ClipRectModifierSpec
-    extends WidgetModifierSpec<ClipRectModifierSpec> {
+    extends WidgetModifierSpec<ClipRectModifierSpec>
+    with _$ClipRectModifierSpec, Diagnosticable {
   final CustomClipper<Rect>? clipper;
   final Clip? clipBehavior;
 
   const ClipRectModifierSpec({this.clipper, this.clipBehavior});
 
   @override
-  ClipRectModifierSpec lerp(ClipRectModifierSpec? other, double t) {
-    return ClipRectModifierSpec(
-      clipper: MixHelpers.lerpSnap(clipper, other?.clipper, t),
-      clipBehavior: MixHelpers.lerpSnap(clipBehavior, other?.clipBehavior, t) ??
-          clipBehavior,
-    );
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    _debugFillProperties(properties);
   }
-
-  @override
-  ClipRectModifierSpec copyWith({
-    CustomClipper<Rect>? clipper,
-    Clip? clipBehavior,
-  }) {
-    return ClipRectModifierSpec(
-      clipper: clipper ?? this.clipper,
-      clipBehavior: clipBehavior ?? this.clipBehavior,
-    );
-  }
-
-  @override
-  get props => [clipper, clipBehavior];
 
   @override
   Widget build(Widget child) {
@@ -120,35 +63,10 @@ final class ClipRectModifierSpec
   }
 }
 
-/// A modifier that wraps a widget with a [ClipRect] widget.
-///
-/// The [ClipRect] widget is used to clip a widget to a rectangle.
-final class ClipRectModifierAttribute extends WidgetModifierAttribute<
-    ClipRectModifierAttribute, ClipRectModifierSpec> {
-  final CustomClipper<Rect>? clipper;
-  final Clip? clipBehavior;
-
-  const ClipRectModifierAttribute({this.clipper, this.clipBehavior});
-
-  @override
-  ClipRectModifierAttribute merge(ClipRectModifierAttribute? other) {
-    return ClipRectModifierAttribute(
-      clipper: other?.clipper ?? clipper,
-      clipBehavior: other?.clipBehavior ?? clipBehavior,
-    );
-  }
-
-  @override
-  ClipRectModifierSpec resolve(MixData mix) {
-    return ClipRectModifierSpec(clipper: clipper, clipBehavior: clipBehavior);
-  }
-
-  @override
-  get props => [clipper, clipBehavior];
-}
-
+@MixableSpec(skipUtility: true)
 final class ClipRRectModifierSpec
-    extends WidgetModifierSpec<ClipRRectModifierSpec> {
+    extends WidgetModifierSpec<ClipRRectModifierSpec>
+    with _$ClipRRectModifierSpec, Diagnosticable {
   final BorderRadiusGeometry? borderRadius;
   final CustomClipper<RRect>? clipper;
   final Clip? clipBehavior;
@@ -158,33 +76,11 @@ final class ClipRRectModifierSpec
     this.clipper,
     this.clipBehavior,
   });
-
   @override
-  ClipRRectModifierSpec lerp(ClipRRectModifierSpec? other, double t) {
-    return ClipRRectModifierSpec(
-      borderRadius:
-          BorderRadiusGeometry.lerp(borderRadius, other?.borderRadius, t),
-      clipper: MixHelpers.lerpSnap(clipper, other?.clipper, t),
-      clipBehavior: MixHelpers.lerpSnap(clipBehavior, other?.clipBehavior, t) ??
-          clipBehavior,
-    );
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    _debugFillProperties(properties);
   }
-
-  @override
-  ClipRRectModifierSpec copyWith({
-    BorderRadiusGeometry? borderRadius,
-    CustomClipper<RRect>? clipper,
-    Clip? clipBehavior,
-  }) {
-    return ClipRRectModifierSpec(
-      borderRadius: borderRadius ?? this.borderRadius,
-      clipper: clipper ?? this.clipper,
-      clipBehavior: clipBehavior ?? this.clipBehavior,
-    );
-  }
-
-  @override
-  get props => [borderRadius, clipper, clipBehavior];
 
   @override
   Widget build(Widget child) {
@@ -197,70 +93,20 @@ final class ClipRRectModifierSpec
   }
 }
 
-final class ClipRRectModifierAttribute extends WidgetModifierAttribute<
-    ClipRRectModifierAttribute, ClipRRectModifierSpec> {
-  final BorderRadiusGeometry? borderRadius;
-  final CustomClipper<RRect>? clipper;
-  final Clip? clipBehavior;
-
-  const ClipRRectModifierAttribute({
-    this.borderRadius,
-    this.clipper,
-    this.clipBehavior,
-  });
-
-  @override
-  ClipRRectModifierAttribute merge(ClipRRectModifierAttribute? other) {
-    return ClipRRectModifierAttribute(
-      borderRadius: other?.borderRadius ?? borderRadius,
-      clipper: other?.clipper ?? clipper,
-      clipBehavior: other?.clipBehavior ?? clipBehavior,
-    );
-  }
-
-  @override
-  ClipRRectModifierSpec resolve(MixData mix) {
-    return ClipRRectModifierSpec(
-      borderRadius: borderRadius,
-      clipper: clipper,
-      clipBehavior: clipBehavior ?? Clip.antiAlias,
-    );
-  }
-
-  @override
-  get props => [borderRadius, clipper, clipBehavior];
-}
-
-@immutable
+@MixableSpec(skipUtility: true)
 final class ClipPathModifierSpec
-    extends WidgetModifierSpec<ClipPathModifierSpec> {
+    extends WidgetModifierSpec<ClipPathModifierSpec>
+    with _$ClipPathModifierSpec, Diagnosticable {
   final CustomClipper<Path>? clipper;
   final Clip? clipBehavior;
 
   const ClipPathModifierSpec({this.clipper, this.clipBehavior});
 
   @override
-  ClipPathModifierSpec lerp(ClipPathModifierSpec? other, double t) {
-    return ClipPathModifierSpec(
-      clipper: MixHelpers.lerpSnap(clipper, other?.clipper, t),
-      clipBehavior: MixHelpers.lerpSnap(clipBehavior, other?.clipBehavior, t) ??
-          clipBehavior,
-    );
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    _debugFillProperties(properties);
   }
-
-  @override
-  ClipPathModifierSpec copyWith({
-    CustomClipper<Path>? clipper,
-    Clip? clipBehavior,
-  }) {
-    return ClipPathModifierSpec(
-      clipper: clipper ?? this.clipper,
-      clipBehavior: clipBehavior ?? this.clipBehavior,
-    );
-  }
-
-  @override
-  get props => [clipper, clipBehavior];
 
   @override
   Widget build(Widget child) {
@@ -272,60 +118,19 @@ final class ClipPathModifierSpec
   }
 }
 
-/// A modifier that wraps a widget with a [ClipPath] widget.
-///
-/// The [ClipPath] widget is used to clip a widget using a custom clipper.
-final class ClipPathModifierAttribute extends WidgetModifierAttribute<
-    ClipPathModifierAttribute, ClipPathModifierSpec> {
-  final CustomClipper<Path>? clipper;
-  final Clip? clipBehavior;
-
-  const ClipPathModifierAttribute({this.clipper, this.clipBehavior});
-
-  @override
-  ClipPathModifierAttribute merge(ClipPathModifierAttribute? other) {
-    return ClipPathModifierAttribute(
-      clipper: other?.clipper ?? clipper,
-      clipBehavior: other?.clipBehavior ?? clipBehavior,
-    );
-  }
-
-  @override
-  ClipPathModifierSpec resolve(MixData mix) {
-    return ClipPathModifierSpec(
-      clipper: clipper,
-      clipBehavior: clipBehavior ?? Clip.antiAlias,
-    );
-  }
-
-  @override
-  get props => [clipper, clipBehavior];
-}
-
-@immutable
+@MixableSpec(skipUtility: true)
 final class ClipTriangleModifierSpec
-    extends WidgetModifierSpec<ClipTriangleModifierSpec> {
+    extends WidgetModifierSpec<ClipTriangleModifierSpec>
+    with _$ClipTriangleModifierSpec, Diagnosticable {
   final Clip? clipBehavior;
 
   const ClipTriangleModifierSpec({this.clipBehavior});
 
   @override
-  ClipTriangleModifierSpec lerp(ClipTriangleModifierSpec? other, double t) {
-    return ClipTriangleModifierSpec(
-      clipBehavior: MixHelpers.lerpSnap(clipBehavior, other?.clipBehavior, t) ??
-          clipBehavior,
-    );
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    _debugFillProperties(properties);
   }
-
-  @override
-  ClipTriangleModifierSpec copyWith({Clip? clipBehavior}) {
-    return ClipTriangleModifierSpec(
-      clipBehavior: clipBehavior ?? this.clipBehavior,
-    );
-  }
-
-  @override
-  get props => [clipBehavior];
 
   @override
   Widget build(Widget child) {
@@ -335,31 +140,6 @@ final class ClipTriangleModifierSpec
       child: child,
     );
   }
-}
-
-/// A modifier that wraps a widget with a custom [ClipPath] widget with a [TriangleClipper].
-///
-/// The [TriangleClipper] is used to clip a widget to a triangle shape.
-final class ClipTriangleModifierAttribute extends WidgetModifierAttribute<
-    ClipTriangleModifierAttribute, ClipTriangleModifierSpec> {
-  final Clip? clipBehavior;
-
-  const ClipTriangleModifierAttribute({this.clipBehavior});
-
-  @override
-  ClipTriangleModifierAttribute merge(ClipTriangleModifierAttribute? other) {
-    return ClipTriangleModifierAttribute(
-      clipBehavior: other?.clipBehavior ?? clipBehavior,
-    );
-  }
-
-  @override
-  ClipTriangleModifierSpec resolve(MixData mix) {
-    return ClipTriangleModifierSpec(clipBehavior: clipBehavior);
-  }
-
-  @override
-  get props => [clipBehavior];
 }
 
 class TriangleClipper extends CustomClipper<Path> {
@@ -379,28 +159,13 @@ class TriangleClipper extends CustomClipper<Path> {
   bool shouldReclip(TriangleClipper oldClipper) => false;
 }
 
-final class ClipPathUtility<T extends Attribute>
-    extends MixUtility<T, ClipPathModifierAttribute> {
-  const ClipPathUtility(super.builder);
+final class ClipPathModifierSpecUtility<T extends Attribute>
+    extends MixUtility<T, ClipPathModifierSpecAttribute> {
+  const ClipPathModifierSpecUtility(super.builder);
 
   T call({CustomClipper<Path>? clipper, Clip? clipBehavior}) {
     return builder(
-      ClipPathModifierAttribute(clipper: clipper, clipBehavior: clipBehavior),
-    );
-  }
-}
-
-final class ClipRRectUtility<T extends Attribute>
-    extends MixUtility<T, ClipRRectModifierAttribute> {
-  const ClipRRectUtility(super.builder);
-  T call({
-    BorderRadius? borderRadius,
-    CustomClipper<RRect>? clipper,
-    Clip? clipBehavior,
-  }) {
-    return builder(
-      ClipRRectModifierAttribute(
-        borderRadius: borderRadius,
+      ClipPathModifierSpecAttribute(
         clipper: clipper,
         clipBehavior: clipBehavior,
       ),
@@ -408,30 +173,56 @@ final class ClipRRectUtility<T extends Attribute>
   }
 }
 
-final class ClipOvalUtility<T extends Attribute>
-    extends MixUtility<T, ClipOvalModifierAttribute> {
-  const ClipOvalUtility(super.builder);
-  T call({CustomClipper<Rect>? clipper, Clip? clipBehavior}) {
+final class ClipRRectModifierSpecUtility<T extends Attribute>
+    extends MixUtility<T, ClipRRectModifierSpecAttribute> {
+  const ClipRRectModifierSpecUtility(super.builder);
+  T call({
+    BorderRadius? borderRadius,
+    CustomClipper<RRect>? clipper,
+    Clip? clipBehavior,
+  }) {
     return builder(
-      ClipOvalModifierAttribute(clipper: clipper, clipBehavior: clipBehavior),
+      ClipRRectModifierSpecAttribute(
+        borderRadius: borderRadius?.toDto(),
+        clipper: clipper,
+        clipBehavior: clipBehavior,
+      ),
     );
   }
 }
 
-final class ClipRectUtility<T extends Attribute>
-    extends MixUtility<T, ClipRectModifierAttribute> {
-  const ClipRectUtility(super.builder);
+final class ClipOvalModifierSpecUtility<T extends Attribute>
+    extends MixUtility<T, ClipOvalModifierSpecAttribute> {
+  const ClipOvalModifierSpecUtility(super.builder);
   T call({CustomClipper<Rect>? clipper, Clip? clipBehavior}) {
     return builder(
-      ClipRectModifierAttribute(clipper: clipper, clipBehavior: clipBehavior),
+      ClipOvalModifierSpecAttribute(
+        clipper: clipper,
+        clipBehavior: clipBehavior,
+      ),
     );
   }
 }
 
-final class ClipTriangleUtility<T extends Attribute>
-    extends MixUtility<T, ClipTriangleModifierAttribute> {
-  const ClipTriangleUtility(super.builder);
+final class ClipRectModifierSpecUtility<T extends Attribute>
+    extends MixUtility<T, ClipRectModifierSpecAttribute> {
+  const ClipRectModifierSpecUtility(super.builder);
+  T call({CustomClipper<Rect>? clipper, Clip? clipBehavior}) {
+    return builder(
+      ClipRectModifierSpecAttribute(
+        clipper: clipper,
+        clipBehavior: clipBehavior,
+      ),
+    );
+  }
+}
+
+final class ClipTriangleModifierSpecUtility<T extends Attribute>
+    extends MixUtility<T, ClipTriangleModifierSpecAttribute> {
+  const ClipTriangleModifierSpecUtility(super.builder);
   T call({Clip? clipBehavior}) {
-    return builder(ClipTriangleModifierAttribute(clipBehavior: clipBehavior));
+    return builder(
+      ClipTriangleModifierSpecAttribute(clipBehavior: clipBehavior),
+    );
   }
 }

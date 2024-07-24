@@ -3,9 +3,9 @@
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:build/build.dart';
-import 'package:dart_style/dart_style.dart';
+import 'package:collection/collection.dart';
 import 'package:mix_annotations/mix_annotations.dart';
-// ignore_for_file: prefer_relative_imports
+import 'package:mix_generator/src/helpers/dart_type_ext.dart';
 import 'package:mix_generator/src/helpers/field_info.dart';
 import 'package:source_gen/source_gen.dart';
 
@@ -25,6 +25,8 @@ class MixHelperRef {
   static String get lerpMatrix4 => '$_refName.lerpMatrix4';
 
   static String get lerpTextStyle => '$_refName.lerpTextStyle';
+
+  static String get lerpInt => '$_refName.lerpInt';
 }
 
 Future<List<ClassElement>> getAnnotatedClasses(
@@ -47,44 +49,35 @@ abstract class AnnotationContext<T> {
   AnnotationContext({
     required this.element,
   });
-
-  late final formatter = DartFormatter(pageWidth: 80, fixes: StyleFix.all);
-
-  String get name => element.name;
-
-  String get generatedName => '_\$${name}';
-
-  String generate(String contents) {
-    return formatter.format(contents);
-  }
 }
 
 sealed class ClassVisitorAnnotationContext<T> extends AnnotationContext {
-  final List<ParameterInfo> fields;
+  final ClassBuilderContext classInfo;
 
   final T annotation;
   ClassVisitorAnnotationContext({
-    required super.element,
-    required this.fields,
     required this.annotation,
+    required this.classInfo,
+    required super.element,
   });
+
+  // String buildContructor(String params) =>
+  //     '${element.name}${_classVisitor.constructorElement.name}($params)';
 }
 
 class SpecAnnotationContext extends ClassVisitorAnnotationContext<MixableSpec> {
   SpecAnnotationContext({
-    required super.element,
-    required super.fields,
+    required super.classInfo,
     required super.annotation,
+    required super.element,
   });
-
-  String get attributeClassName => '${name}Attribute';
 }
 
 class DtoAnnotationContext extends ClassVisitorAnnotationContext<MixableDto> {
   DtoAnnotationContext({
-    required super.element,
-    required super.fields,
+    required super.classInfo,
     required super.annotation,
+    required super.element,
   });
 }
 
@@ -96,6 +89,10 @@ class EnumUtilityAnnotationContext extends AnnotationContext {
     required this.enumElement,
     required this.generateCallMethod,
   });
+
+  String get name => element.name;
+
+  String get generatedName => element.generatedName;
 }
 
 class ClassUtilityAnnotationContext extends AnnotationContext {
@@ -134,6 +131,19 @@ extension ClassElementX on ClassElement {
 
   bool get hasUnamedConstructor => unnamedConstructor != null;
 
+  ConstructorElement get defaultConstructor {
+    final selectedConstructor = constructors.firstWhereOrNull((element) {
+      return element.isDefaultConstructor ||
+          element.isUnamedConstructor ||
+          element.isPrivateConstructor;
+    });
+    if (selectedConstructor == null) {
+      throw Exception('No default constructor found for class $name');
+    }
+
+    return selectedConstructor;
+  }
+
   DartType? getGenericTypeOfSuperclass() {
     final supertype = this.supertype;
     if (supertype != null) {
@@ -142,23 +152,41 @@ extension ClassElementX on ClassElement {
     return null;
   }
 
+  String get generatedName => '_\$$name';
+
   bool get isDto => _isMixType('Dto');
 
   bool get isSpec => _isMixType('Spec');
+
+  bool get isWidgetModifier => _isMixType('WidgetModifierSpec');
 
   bool get isMixUtiilty => _isMixType('MixUtility');
 
   bool _isMixType(String className) {
     return allSupertypes.any((type) {
-      final mixPackageUri = Uri(scheme: 'package', path: 'mix/');
       final hasType = type.element.name == className;
-      final isMixPackage =
-          type.element.source.uri.scheme == mixPackageUri.scheme &&
-              type.element.source.uri.path.startsWith(mixPackageUri.path);
+      final isMixPackage = type.element.isMixRef;
 
-      return hasType && isMixPackage;
+      if (hasType && isMixPackage) {
+        return true;
+      }
+
+      if (isMixPackage) {
+        // Check if the current type or any of its supertypes has the specified className
+        return type.element.allSupertypes.any((supertype) {
+          return supertype.element.name == className;
+        });
+      }
+      return false;
     });
   }
+}
+
+extension InterfaceElementX on InterfaceElement {
+  Uri get _mixUri => Uri(scheme: 'package', path: 'mix/');
+  bool get isMixRef =>
+      source.uri.scheme == _mixUri.scheme &&
+      source.uri.path.startsWith(_mixUri.path);
 }
 
 Future<ClassElement?> getClassElementForTypeName(
@@ -224,6 +252,7 @@ extension DartTypeX on DartType {
   bool get isDto => interfaceType?.isDto ?? false;
 
   bool get isSpec => interfaceType?.isSpec ?? false;
+
   DartType? tryGetTypeGeneric() {
     if (this is ParameterizedType) {
       final type = this as ParameterizedType;

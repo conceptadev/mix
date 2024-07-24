@@ -61,7 +61,7 @@ base mixin _$ShadowDto on Dto<Shadow> {
 ///
 /// This class provides methods to set individual properties of a [ShadowDto].
 /// Use the methods of this class to configure specific properties of a [ShadowDto].
-final class ShadowUtility<T extends Attribute>
+class ShadowUtility<T extends Attribute>
     extends DtoUtility<T, ShadowDto, Shadow> {
   /// Utility for defining [ShadowDto.blurRadius]
   late final blurRadius = DoubleUtility((v) => only(blurRadius: v));
@@ -175,7 +175,7 @@ base mixin _$BoxShadowDto on Dto<BoxShadow> {
 ///
 /// This class provides methods to set individual properties of a [BoxShadowDto].
 /// Use the methods of this class to configure specific properties of a [BoxShadowDto].
-final class BoxShadowUtility<T extends Attribute>
+class BoxShadowUtility<T extends Attribute>
     extends DtoUtility<T, BoxShadowDto, BoxShadow> {
   /// Utility for defining [BoxShadowDto.color]
   late final color = ColorUtility((v) => only(color: v));

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mix/src/modifiers/intrinsic_widget_modifier.dart';
+import 'package:mix/mix.dart';
 
 import '../../helpers/testing_utils.dart';
 
@@ -41,25 +41,25 @@ void main() {
     });
   });
 
-  // IntrinsicHeightModifierAttribute
-  group('IntrinsicHeightModifierAttribute', () {
+  // IntrinsicHeightModifierSpecAttribute
+  group('IntrinsicHeightModifierSpecAttribute', () {
     test('merge', () {
-      const modifier = IntrinsicHeightModifierAttribute();
-      const other = IntrinsicHeightModifierAttribute();
+      const modifier = IntrinsicHeightModifierSpecAttribute();
+      const other = IntrinsicHeightModifierSpecAttribute();
       final result = modifier.merge(other);
       expect(result, modifier);
     });
 
     test('resolve', () {
-      const modifier = IntrinsicHeightModifierAttribute();
+      const modifier = IntrinsicHeightModifierSpecAttribute();
       final result = modifier.resolve(EmptyMixData);
       expect(result, isA<IntrinsicHeightModifierSpec>());
     });
 
     // equality
     test('equality', () {
-      const modifier = IntrinsicHeightModifierAttribute();
-      const other = IntrinsicHeightModifierAttribute();
+      const modifier = IntrinsicHeightModifierSpecAttribute();
+      const other = IntrinsicHeightModifierSpecAttribute();
       expect(modifier, other);
     });
   });
@@ -101,24 +101,24 @@ void main() {
   });
 
   // IntrinsicWidthModifierAttribute
-  group('IntrinsicWidthModifierAttribute', () {
+  group('IntrinsicWidthModifierSpecAttribute', () {
     test('merge', () {
-      const modifier = IntrinsicWidthModifierAttribute();
-      const other = IntrinsicWidthModifierAttribute();
+      const modifier = IntrinsicWidthModifierSpecAttribute();
+      const other = IntrinsicWidthModifierSpecAttribute();
       final result = modifier.merge(other);
       expect(result, modifier);
     });
 
     test('resolve', () {
-      const modifier = IntrinsicWidthModifierAttribute();
+      const modifier = IntrinsicWidthModifierSpecAttribute();
       final result = modifier.resolve(EmptyMixData);
       expect(result, isA<IntrinsicWidthModifierSpec>());
     });
 
     // equality
     test('equality', () {
-      const modifier = IntrinsicWidthModifierAttribute();
-      const other = IntrinsicWidthModifierAttribute();
+      const modifier = IntrinsicWidthModifierSpecAttribute();
+      const other = IntrinsicWidthModifierSpecAttribute();
       expect(modifier, other);
     });
   });

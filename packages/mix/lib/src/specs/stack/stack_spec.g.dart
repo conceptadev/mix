@@ -8,7 +8,7 @@ part of 'stack_spec.dart';
 
 // ignore_for_file: deprecated_member_use_from_same_package
 
-base mixin _$StackSpec on Spec<StackSpec> {
+mixin _$StackSpec on Spec<StackSpec> {
   static StackSpec from(MixData mix) {
     return mix.attributeOf<StackSpecAttribute>()?.resolve(mix) ??
         const StackSpec();
@@ -100,6 +100,15 @@ base mixin _$StackSpec on Spec<StackSpec> {
       ];
 
   StackSpec get _$this => this as StackSpec;
+
+  void _debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    properties.add(DiagnosticsProperty('alignment', _$this.alignment));
+    properties.add(DiagnosticsProperty('fit', _$this.fit));
+    properties.add(DiagnosticsProperty('textDirection', _$this.textDirection));
+    properties.add(DiagnosticsProperty('clipBehavior', _$this.clipBehavior));
+    properties.add(DiagnosticsProperty('animated', _$this.animated));
+    properties.add(DiagnosticsProperty('modifiers', _$this.modifiers));
+  }
 }
 
 /// Represents the attributes of a [StackSpec].
@@ -184,17 +193,12 @@ final class StackSpecAttribute extends SpecAttribute<StackSpec>
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties
-        .add(DiagnosticsProperty('alignment', alignment, defaultValue: null));
-    properties.add(DiagnosticsProperty('fit', fit, defaultValue: null));
-    properties.add(DiagnosticsProperty('textDirection', textDirection,
-        defaultValue: null));
-    properties.add(
-        DiagnosticsProperty('clipBehavior', clipBehavior, defaultValue: null));
-    properties
-        .add(DiagnosticsProperty('animated', animated, defaultValue: null));
-    properties
-        .add(DiagnosticsProperty('modifiers', modifiers, defaultValue: null));
+    properties.add(DiagnosticsProperty('alignment', alignment));
+    properties.add(DiagnosticsProperty('fit', fit));
+    properties.add(DiagnosticsProperty('textDirection', textDirection));
+    properties.add(DiagnosticsProperty('clipBehavior', clipBehavior));
+    properties.add(DiagnosticsProperty('animated', animated));
+    properties.add(DiagnosticsProperty('modifiers', modifiers));
   }
 }
 
@@ -202,7 +206,7 @@ final class StackSpecAttribute extends SpecAttribute<StackSpec>
 ///
 /// This class provides methods to set individual properties of a [StackSpecAttribute].
 /// Use the methods of this class to configure specific properties of a [StackSpecAttribute].
-base class StackSpecUtility<T extends Attribute>
+class StackSpecUtility<T extends Attribute>
     extends SpecUtility<T, StackSpecAttribute> {
   /// Utility for defining [StackSpecAttribute.alignment]
   late final alignment = AlignmentGeometryUtility((v) => only(alignment: v));

@@ -1,13 +1,30 @@
-// ignore_for_file: prefer_relative_imports,avoid-importing-entrypoint-exports,
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
-import 'package:mix/mix.dart';
 import 'package:mix_annotations/mix_annotations.dart';
+
+import '../../attributes/animated/animated_data.dart';
+import '../../attributes/animated/animated_data_dto.dart';
+import '../../attributes/animated/animated_util.dart';
+import '../../attributes/color/color_dto.dart';
+import '../../attributes/color/color_util.dart';
+import '../../attributes/enum/enum_util.dart';
+import '../../attributes/modifiers/widget_modifiers_data.dart';
+import '../../attributes/modifiers/widget_modifiers_data_dto.dart';
+import '../../attributes/modifiers/widget_modifiers_util.dart';
+import '../../attributes/shadow/shadow_dto.dart';
+import '../../attributes/shadow/shadow_util.dart';
+import '../../core/attribute.dart';
+import '../../core/factory/mix_data.dart';
+import '../../core/factory/mix_provider.dart';
+import '../../core/helpers.dart';
+import '../../core/spec.dart';
+import '../../core/utility.dart';
+import 'icon_widget.dart';
 
 part 'icon_spec.g.dart';
 
 @MixableSpec()
-final class IconSpec extends Spec<IconSpec> with _$IconSpec {
+final class IconSpec extends Spec<IconSpec> with _$IconSpec, Diagnosticable {
   final Color? color;
   final double? size;
   final double? weight;
@@ -54,6 +71,12 @@ final class IconSpec extends Spec<IconSpec> with _$IconSpec {
             semanticLabel: semanticLabel,
             textDirection: textDirection,
           );
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    _debugFillProperties(properties);
   }
 }
 

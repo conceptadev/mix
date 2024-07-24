@@ -79,7 +79,7 @@ base mixin _$StrutStyleDto on Dto<StrutStyle> {
 ///
 /// This class provides methods to set individual properties of a [StrutStyleDto].
 /// Use the methods of this class to configure specific properties of a [StrutStyleDto].
-final class StrutStyleUtility<T extends Attribute>
+class StrutStyleUtility<T extends Attribute>
     extends DtoUtility<T, StrutStyleDto, StrutStyle> {
   /// Utility for defining [StrutStyleDto.fontFamily]
   late final fontFamily = FontFamilyUtility((v) => only(fontFamily: v));

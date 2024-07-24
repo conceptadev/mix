@@ -76,7 +76,7 @@ base mixin _$DecorationImageDto on Dto<DecorationImage> {
 ///
 /// This class provides methods to set individual properties of a [DecorationImageDto].
 /// Use the methods of this class to configure specific properties of a [DecorationImageDto].
-final class DecorationImageUtility<T extends Attribute>
+class DecorationImageUtility<T extends Attribute>
     extends DtoUtility<T, DecorationImageDto, DecorationImage> {
   /// Utility for defining [DecorationImageDto.image]
   late final provider = ImageProviderUtility((v) => only(image: v));
@@ -108,7 +108,7 @@ final class DecorationImageUtility<T extends Attribute>
   /// Returns a new [DecorationImageDto] with the specified properties.
   @override
   T only({
-    ImageProvider? image,
+    ImageProvider<Object>? image,
     BoxFit? fit,
     AlignmentGeometry? alignment,
     Rect? centerSlice,
@@ -130,7 +130,7 @@ final class DecorationImageUtility<T extends Attribute>
   }
 
   T call({
-    ImageProvider? image,
+    ImageProvider<Object>? image,
     BoxFit? fit,
     AlignmentGeometry? alignment,
     Rect? centerSlice,

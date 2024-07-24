@@ -66,7 +66,7 @@ const _defaultOrder = [
 
   // 10. PaddingModifier: Adds padding or empty space around a widget. Padding is applied after all
   // sizing adjustments to ensure that the widget's contents are not affected by the padding.
-  PaddingSpec,
+  PaddingModifierSpec,
 
   // 11. RotatedBoxModifier: Rotates the widget by a given angle. This modifier is applied after all sizing
   // and positioning adjustments to ensure that the widget's contents will be rotated correctly.
@@ -90,9 +90,7 @@ class RenderModifiers extends StatelessWidget {
   const RenderModifiers({
     required this.child,
     this.modifiers = const [],
-    // the mix parameter is needed to allow users to specify the order of modifiers
-    // in two different ways. Using Attributes and Specs
-    this.mix,
+    @Deprecated("Use modifiers parameter") this.mix,
     required this.orderOfModifiers,
     super.key,
   });
@@ -132,12 +130,11 @@ class _RenderModifiers extends StatelessWidget {
 class RenderAnimatedModifiers extends StatelessWidget {
   const RenderAnimatedModifiers({
     super.key,
+    //TODO Should be required in the next version
     this.modifiers = const [],
     required this.child,
     required this.duration,
-    // the mix parameter is needed to allow users to specify the order of modifiers
-    // in two different ways. Using Attributes and Specs
-    this.mix,
+    @Deprecated("Use modifiers parameter") this.mix,
     required this.orderOfModifiers,
     this.curve = Curves.linear,
     this.onEnd,
@@ -305,7 +302,7 @@ List<Type> _normalizeOrderedTypes(MixData? mix, List<Type>? orderedTypes) {
   orderedTypes ??= [];
   if (mix == null) return orderedTypes;
 
-  final modifierAttributes = mix.whereType<WidgetModifierAttribute>();
+  final modifierAttributes = mix.whereType<WidgetModifierSpecAttribute>();
 
   final specs = [...orderedTypes];
 

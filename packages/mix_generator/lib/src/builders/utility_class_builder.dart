@@ -206,12 +206,12 @@ String utilityMethodOnlyBuilder({
     return '$fieldType? ${e.name},';
   }).join('\n');
 
+  final onlyParams = fields.isEmpty ? '' : '{${optionalParameters}}';
+
   return '''
   /// Returns a new [$utilityType] with the specified properties.
   @override
-  T only({
-    $optionalParameters
-  }) {
+  T only($onlyParams) {
     return builder($utilityType(
       $fieldStatements
     ));
