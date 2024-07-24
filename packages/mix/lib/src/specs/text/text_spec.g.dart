@@ -261,20 +261,34 @@ final class TextSpecAttribute extends SpecAttribute<TextSpec>
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.addUsingDefault('overflow', overflow);
-    properties.addUsingDefault('strutStyle', strutStyle);
-    properties.addUsingDefault('textAlign', textAlign);
-    properties.addUsingDefault('textScaleFactor', textScaleFactor);
-    properties.addUsingDefault('textScaler', textScaler);
-    properties.addUsingDefault('maxLines', maxLines);
-    properties.addUsingDefault('style', style, expandableValue: true);
-    properties.addUsingDefault('textWidthBasis', textWidthBasis);
-    properties.addUsingDefault('textHeightBehavior', textHeightBehavior);
-    properties.addUsingDefault('textDirection', textDirection);
-    properties.addUsingDefault('softWrap', softWrap);
-    properties.addUsingDefault('directive', directive);
-    properties.addUsingDefault('animated', animated);
-    properties.addUsingDefault('modifiers', modifiers);
+    properties
+        .add(DiagnosticsProperty('overflow', overflow, defaultValue: null));
+    properties
+        .add(DiagnosticsProperty('strutStyle', strutStyle, defaultValue: null));
+    properties
+        .add(DiagnosticsProperty('textAlign', textAlign, defaultValue: null));
+    properties.add(DiagnosticsProperty('textScaleFactor', textScaleFactor,
+        defaultValue: null));
+    properties
+        .add(DiagnosticsProperty('textScaler', textScaler, defaultValue: null));
+    properties
+        .add(DiagnosticsProperty('maxLines', maxLines, defaultValue: null));
+    properties.add(DiagnosticsProperty('style', style,
+        expandableValue: true, defaultValue: null));
+    properties.add(DiagnosticsProperty('textWidthBasis', textWidthBasis,
+        defaultValue: null));
+    properties.add(DiagnosticsProperty('textHeightBehavior', textHeightBehavior,
+        defaultValue: null));
+    properties.add(DiagnosticsProperty('textDirection', textDirection,
+        defaultValue: null));
+    properties
+        .add(DiagnosticsProperty('softWrap', softWrap, defaultValue: null));
+    properties
+        .add(DiagnosticsProperty('directive', directive, defaultValue: null));
+    properties
+        .add(DiagnosticsProperty('animated', animated, defaultValue: null));
+    properties
+        .add(DiagnosticsProperty('modifiers', modifiers, defaultValue: null));
   }
 }
 
