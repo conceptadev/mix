@@ -262,8 +262,13 @@ class StackSpecTween extends Tween<StackSpec?> {
 
   @override
   StackSpec lerp(double t) {
-    if (begin == null && end == null) return const StackSpec();
-    if (begin == null) return end!;
+    if (begin == null && end == null) {
+      return const StackSpec();
+    }
+
+    if (begin == null) {
+      return end!;
+    }
 
     return begin!.lerp(end!, t);
   }

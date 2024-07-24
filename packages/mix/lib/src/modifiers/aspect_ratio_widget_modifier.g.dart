@@ -139,8 +139,13 @@ class AspectRatioModifierSpecTween extends Tween<AspectRatioModifierSpec?> {
 
   @override
   AspectRatioModifierSpec lerp(double t) {
-    if (begin == null && end == null) return const AspectRatioModifierSpec();
-    if (begin == null) return end!;
+    if (begin == null && end == null) {
+      return const AspectRatioModifierSpec();
+    }
+
+    if (begin == null) {
+      return end!;
+    }
 
     return begin!.lerp(end!, t);
   }

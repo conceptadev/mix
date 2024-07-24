@@ -162,8 +162,13 @@ class PaddingModifierSpecTween extends Tween<PaddingModifierSpec?> {
 
   @override
   PaddingModifierSpec lerp(double t) {
-    if (begin == null && end == null) return const PaddingModifierSpec();
-    if (begin == null) return end!;
+    if (begin == null && end == null) {
+      return const PaddingModifierSpec();
+    }
+
+    if (begin == null) {
+      return end!;
+    }
 
     return begin!.lerp(end!, t);
   }

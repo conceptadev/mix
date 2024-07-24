@@ -138,8 +138,13 @@ class VisibilityModifierSpecTween extends Tween<VisibilityModifierSpec?> {
 
   @override
   VisibilityModifierSpec lerp(double t) {
-    if (begin == null && end == null) return const VisibilityModifierSpec();
-    if (begin == null) return end!;
+    if (begin == null && end == null) {
+      return const VisibilityModifierSpec();
+    }
+
+    if (begin == null) {
+      return end!;
+    }
 
     return begin!.lerp(end!, t);
   }

@@ -33,6 +33,9 @@ String resolveMethodBuilder(
     return '$fieldName $fallbackExpression';
   });
 
+  final ignoreLabel =
+      fields.isEmpty ? '// ignore: prefer_const_constructors' : '';
+
   return '''
   /// Resolves to [$resolvedName] using the provided [MixData].
   /// 
@@ -44,6 +47,7 @@ String resolveMethodBuilder(
   /// ```
   @override
   $resolvedName resolve(MixData mix) {
+    $ignoreLabel
     return $resolvedName$resolvedConstructor(
       $resolveStatements
     );

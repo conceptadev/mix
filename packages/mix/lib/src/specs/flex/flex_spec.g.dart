@@ -358,8 +358,13 @@ class FlexSpecTween extends Tween<FlexSpec?> {
 
   @override
   FlexSpec lerp(double t) {
-    if (begin == null && end == null) return const FlexSpec();
-    if (begin == null) return end!;
+    if (begin == null && end == null) {
+      return const FlexSpec();
+    }
+
+    if (begin == null) {
+      return end!;
+    }
 
     return begin!.lerp(end!, t);
   }

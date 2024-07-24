@@ -148,8 +148,13 @@ class ClipOvalModifierSpecTween extends Tween<ClipOvalModifierSpec?> {
 
   @override
   ClipOvalModifierSpec lerp(double t) {
-    if (begin == null && end == null) return const ClipOvalModifierSpec();
-    if (begin == null) return end!;
+    if (begin == null && end == null) {
+      return const ClipOvalModifierSpec();
+    }
+
+    if (begin == null) {
+      return end!;
+    }
 
     return begin!.lerp(end!, t);
   }
@@ -297,8 +302,13 @@ class ClipRectModifierSpecTween extends Tween<ClipRectModifierSpec?> {
 
   @override
   ClipRectModifierSpec lerp(double t) {
-    if (begin == null && end == null) return const ClipRectModifierSpec();
-    if (begin == null) return end!;
+    if (begin == null && end == null) {
+      return const ClipRectModifierSpec();
+    }
+
+    if (begin == null) {
+      return end!;
+    }
 
     return begin!.lerp(end!, t);
   }
@@ -460,8 +470,13 @@ class ClipRRectModifierSpecTween extends Tween<ClipRRectModifierSpec?> {
 
   @override
   ClipRRectModifierSpec lerp(double t) {
-    if (begin == null && end == null) return const ClipRRectModifierSpec();
-    if (begin == null) return end!;
+    if (begin == null && end == null) {
+      return const ClipRRectModifierSpec();
+    }
+
+    if (begin == null) {
+      return end!;
+    }
 
     return begin!.lerp(end!, t);
   }
@@ -609,8 +624,13 @@ class ClipPathModifierSpecTween extends Tween<ClipPathModifierSpec?> {
 
   @override
   ClipPathModifierSpec lerp(double t) {
-    if (begin == null && end == null) return const ClipPathModifierSpec();
-    if (begin == null) return end!;
+    if (begin == null && end == null) {
+      return const ClipPathModifierSpec();
+    }
+
+    if (begin == null) {
+      return end!;
+    }
 
     return begin!.lerp(end!, t);
   }
@@ -749,8 +769,13 @@ class ClipTriangleModifierSpecTween extends Tween<ClipTriangleModifierSpec?> {
 
   @override
   ClipTriangleModifierSpec lerp(double t) {
-    if (begin == null && end == null) return const ClipTriangleModifierSpec();
-    if (begin == null) return end!;
+    if (begin == null && end == null) {
+      return const ClipTriangleModifierSpec();
+    }
+
+    if (begin == null) {
+      return end!;
+    }
 
     return begin!.lerp(end!, t);
   }

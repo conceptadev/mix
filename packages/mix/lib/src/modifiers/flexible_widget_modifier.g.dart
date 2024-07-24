@@ -148,8 +148,13 @@ class FlexibleModifierSpecTween extends Tween<FlexibleModifierSpec?> {
 
   @override
   FlexibleModifierSpec lerp(double t) {
-    if (begin == null && end == null) return const FlexibleModifierSpec();
-    if (begin == null) return end!;
+    if (begin == null && end == null) {
+      return const FlexibleModifierSpec();
+    }
+
+    if (begin == null) {
+      return end!;
+    }
 
     return begin!.lerp(end!, t);
   }

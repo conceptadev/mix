@@ -111,8 +111,13 @@ class RotatedBoxModifierSpecTween extends Tween<RotatedBoxModifierSpec?> {
 
   @override
   RotatedBoxModifierSpec lerp(double t) {
-    if (begin == null && end == null) return const RotatedBoxModifierSpec();
-    if (begin == null) return end!;
+    if (begin == null && end == null) {
+      return const RotatedBoxModifierSpec();
+    }
+
+    if (begin == null) {
+      return end!;
+    }
 
     return begin!.lerp(end!, t);
   }
