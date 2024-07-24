@@ -2,18 +2,9 @@ name: mix_workspace
 
 sdkPath: .fvm/flutter_sdk
 packages:
-  - packages/**
-  - examples/**
-
-categories:
-  mix_deps:
-    - packages/mix
-    - packages/mix_annotations
-    - packages/mix_generator
-    - packages/mix_lint
-  should_test:
-    - packages/mix
-    - examples/**
+  - packages/*
+  - packages/*/example
+  - examples/*
 
 command:
   bootstrap:
@@ -22,40 +13,86 @@ command:
       flutter: ">=3.19.0"
   publish:
     hooks:
-      pre: melos run brb
+      pre: melos run gen:build
 
 scripts:
-  brb:
-    description: Run build_runner for projects that have it as a dependency
-    steps:
-      - melos run brbc
-      - melos exec --depends-on="build_runner" --category="mix_deps" dart run build_runner build --delete-conflicting-outputs
-  brbc: 
-    run: melos exec --depends-on="build_runner" dart run build_runner clean
-    description: Clean build_runner for projects that have it as a dependency
+  # ANALYSIS
+  lint:all:
+    run: melos run lint:dart && melos run lint:dcm
+    description: Run all static analysis checks.
+
+  lint:fix:all:
+    run: melos run lint:dart:fix && melos run lint:dcm:fix
+    description: Run all static analysis checks and apply fixes.
+
+  lint:dart:
+    run: melos exec -c 10 -- dart analyze --fatal-infos
+    description: Run Dart static analysis checks.
+
+  lint:dart:fix:
+    run: melos exec -- dart fix --apply .
+    description: Run Dart static analysis checks.
+
+  lint:dcm:fix:
+    run: melos exec -- dcm fix .
+    description: Run DCM static analysis checks.
+    packageFilters:
+      dependsOn: "dart_code_metrics_presets"
+
+  lint:dcm:
+    run: melos exec -c 10 -- dcm analyze . --fatal-style --fatal-performance --fatal-warnings
+    description: Run DCM static analysis checks.
+    packageFilters:
+      dependsOn: "dart_code_metrics_presets"
+
+  gen:watch:
+    run: melos exec -- dart run build_runner watch --delete-conflicting-outputs
+    description: Generate code for all packages
+    packageFilters:
+      dependsOn: "build_runner"
+
+  gen:build:
+    run: melos run gen:clean && melos exec -- dart run build_runner build --delete-conflicting-outputs
+    description: Generate code for all packages
+    packageFilters:
+      dependsOn: "build_runner"
+
+  gen:clean:
+    run: melos exec -- dart run build_runner clean
+    description: Clean generated code for all packages
+    packageFilters:
+      dependsOn: "build_runner"
+      
+
+
   test:
-    run: melos exec --category="should_test" flutter test
-    description: Run flutter test in all projects that should be tested
+    run: melos exec -- flutter test
+    description: Run flutter test
+    packageFilters:
+      dirExists: test
+    exec:
+      failFast: true
+
+  test:coverage:
+    run: melos exec flutter test --coverage
+    description: Run flutter test with coverage
+    packageFilters:
+      dirExists: test
+
+  brb:
+    run: melos run gen:build
+    
+  brbc: 
+    run: melos run gen:clean
   fix:
-    steps:
-      - melos exec dart fix --apply .
-      - melos exec --depends-on="dart_code_metrics_presets" dcm fix .
+    run: melos run lint:fix:all
   custom_lint_analyze:
     run: dart pub global activate custom_lint && melos exec --depends-on="mix_lint" custom_lint
 
   mix_exports:
     run: melos exec --scope="packages/mix" dart run ./scripts/exports.dart
     description: Generate exports for the mix package
-    
-  analyze:
-    run: | 
-      dcm analyze --fatal-warnings --fatal-style --fatal-performance .
-      dart analyze --fatal-infos .
-    exec:
-      failFast: true
-    packageFilters:
-      category: "mix_deps"
-
+  
   verify_version_pubspec_changelog:
     run: ./scripts/verify_changelogs.sh packages
     description: Verify that all packages have the same version
