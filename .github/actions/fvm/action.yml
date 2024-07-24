@@ -1,0 +1,31 @@
+name: "Setup FVM"
+description: "Install and setup FVM"
+
+inputs:
+  flutter-version:
+    description: 'Flutter version'
+    required: false
+    default: ""
+
+runs:
+  using: "composite"
+  steps:
+    - name: Install FVM
+      shell: bash
+      run: |
+        curl -fsSL https://fvm.app/install.sh | bash
+        fvm use ${{ inputs.flutter-version }} --force
+
+
+    - uses: kuhnroyal/flutter-fvm-config-action@v2
+      id: fvm-config-action
+
+    - uses: subosito/flutter-action@v2
+      with:
+        flutter-version: ${{ steps.fvm-config-action.outputs.FLUTTER_VERSION }}
+        channel: ${{ steps.fvm-config-action.outputs.FLUTTER_CHANNEL }}
+
+    - name: Flutter version
+      shell: bash
+      run: flutter --version
+      
