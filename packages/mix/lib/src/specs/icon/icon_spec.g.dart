@@ -6,8 +6,6 @@ part of 'icon_spec.dart';
 // MixableSpecGenerator
 // **************************************************************************
 
-// ignore_for_file: deprecated_member_use_from_same_package
-
 mixin _$IconSpec on Spec<IconSpec> {
   static IconSpec from(MixData mix) {
     return mix.attributeOf<IconSpecAttribute>()?.resolve(mix) ??
@@ -348,8 +346,13 @@ class IconSpecTween extends Tween<IconSpec?> {
 
   @override
   IconSpec lerp(double t) {
-    if (begin == null && end == null) return const IconSpec();
-    if (begin == null) return end!;
+    if (begin == null && end == null) {
+      return const IconSpec();
+    }
+
+    if (begin == null) {
+      return end!;
+    }
 
     return begin!.lerp(end!, t);
   }

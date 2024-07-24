@@ -20,12 +20,15 @@ class FieldInfo {
     required this.documentationComment,
     required this.annotation,
     required this.nullable,
+    required this.hasDeprecated,
   });
 
   /// Parameter / field type.
   final String name;
 
   final DartType dartType;
+
+  final bool hasDeprecated;
 
   final MixableProperty annotation;
 
@@ -74,6 +77,7 @@ class FieldInfo {
       dartType: element.type,
       type: element.type.getTypeAsString(),
       nullable: element.type.isNullableType,
+      hasDeprecated: element.hasDeprecated,
       annotation: readMixableProperty(element),
       documentationComment: element.documentationComment,
     );
@@ -90,6 +94,7 @@ class ParameterInfo extends FieldInfo {
     required super.dartType,
     required super.annotation,
     required super.documentationComment,
+    required super.hasDeprecated,
     required this.isRequiredNamed,
     required this.isRequiredPositional,
   });
@@ -113,6 +118,8 @@ class ParameterInfo extends FieldInfo {
 
     return ParameterInfo(
       name: element.name,
+      hasDeprecated:
+          (fieldInfo?.hasDeprecated ?? false) || element.hasDeprecated,
       dartType: element.type,
       type: element.type.getDisplayString(withNullability: false),
       nullable: fieldInfo?.nullable ?? isNullable,
@@ -279,6 +286,7 @@ FieldInfo? getFieldInfoFromParameter(
     type: field.type.getDisplayString(withNullability: false),
     dartType: field.type,
     nullable: field.type.isNullableType,
+    hasDeprecated: field.hasDeprecated,
     annotation: annotation,
     documentationComment: field.documentationComment,
   );

@@ -26,6 +26,8 @@ String lerpMethodBuilder(
     }
   }
 
+  final shouldAddConst = fields.isEmpty && instance.isConst;
+
   final lerpStatements = buildConstructorParams(fields, (ParameterInfo field) {
     return _getLerpExpression(field, isInternalRef);
   });
@@ -55,7 +57,7 @@ ${lerpMethods.entries.map((entry) => '/// - [${entry.key}] for ${entry.value.map
   $className lerp($className? other, double t) {
     if (other == null) return $thisRef;
 
-    return ${instance.writeConstructor()}($lerpStatements);
+    return ${shouldAddConst ? 'const' : ''} ${instance.writeConstructor()}($lerpStatements);
   }
 ''';
 }

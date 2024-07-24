@@ -18,12 +18,14 @@ String copyWithMethodBuilder(ClassInfo instance) {
 
   final copyWithParams = fields.isEmpty ? '' : '{$optionalParams}';
 
+  final shouldAddConst = fields.isEmpty && instance.isConst;
+
   return '''
   /// Creates a copy of this [$className] but with the given fields
   /// replaced with the new values.
   @override
   $className copyWith($copyWithParams) {
-     return ${instance.writeConstructor()}($fieldStatements);
+     return ${shouldAddConst ? 'const' : ''} ${instance.writeConstructor()}($fieldStatements);
   }
 ''';
 }

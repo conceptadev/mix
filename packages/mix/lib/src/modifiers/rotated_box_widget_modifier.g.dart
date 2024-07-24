@@ -6,31 +6,7 @@ part of 'rotated_box_widget_modifier.dart';
 // MixableSpecGenerator
 // **************************************************************************
 
-// ignore_for_file: deprecated_member_use_from_same_package
-
 mixin _$RotatedBoxModifierSpec on WidgetModifierSpec<RotatedBoxModifierSpec> {
-  static RotatedBoxModifierSpec from(MixData mix) {
-    return mix.attributeOf<RotatedBoxModifierSpecAttribute>()?.resolve(mix) ??
-        const RotatedBoxModifierSpec();
-  }
-
-  /// {@template rotated_box_modifier_spec_of}
-  /// Retrieves the [RotatedBoxModifierSpec] from the nearest [Mix] ancestor in the widget tree.
-  ///
-  /// This method uses [Mix.of] to obtain the [Mix] instance associated with the
-  /// given [BuildContext], and then retrieves the [RotatedBoxModifierSpec] from that [Mix].
-  /// If no ancestor [Mix] is found, this method returns an empty [RotatedBoxModifierSpec].
-  ///
-  /// Example:
-  ///
-  /// ```dart
-  /// final rotatedBoxModifierSpec = RotatedBoxModifierSpec.of(context);
-  /// ```
-  /// {@endtemplate}
-  static RotatedBoxModifierSpec of(BuildContext context) {
-    return _$RotatedBoxModifierSpec.from(Mix.of(context));
-  }
-
   /// Creates a copy of this [RotatedBoxModifierSpec] but with the given fields
   /// replaced with the new values.
   @override
@@ -135,8 +111,13 @@ class RotatedBoxModifierSpecTween extends Tween<RotatedBoxModifierSpec?> {
 
   @override
   RotatedBoxModifierSpec lerp(double t) {
-    if (begin == null && end == null) return const RotatedBoxModifierSpec();
-    if (begin == null) return end!;
+    if (begin == null && end == null) {
+      return const RotatedBoxModifierSpec();
+    }
+
+    if (begin == null) {
+      return end!;
+    }
 
     return begin!.lerp(end!, t);
   }

@@ -23,10 +23,13 @@ class MixableSpecGenerator extends GeneratorForAnnotation<MixableSpec> {
   ) async {
     final context = await _loadContext(element);
 
+    final deprecatedRule = context.fields.any((e) => e.hasDeprecated)
+        ? '// ignore_for_file: deprecated_member_use_from_same_package'
+        : '';
+
     final output = '''
-
-    // ignore_for_file: deprecated_member_use_from_same_package
-
+    $deprecatedRule
+    
     ${specMixin(context)}
 
     ${specAttributeClass(context)}

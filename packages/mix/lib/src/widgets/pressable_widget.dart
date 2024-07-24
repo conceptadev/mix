@@ -179,13 +179,10 @@ class PressableWidgetState extends State<Pressable> {
   /// Additional actions can be provided externally to extend functionality.
   Map<Type, Action<Intent>> get actions {
     return {
-      ActivateIntent: CallbackAction<Intent>(onInvoke: (_) => handlePressed()),
+      ActivateIntent:
+          CallbackAction<Intent>(onInvoke: (_) => widget.onPress?.call()),
       ...?widget.actions,
     };
-  }
-
-  void handlePressed() {
-    widget.onPress?.call();
   }
 
   @override
@@ -193,8 +190,8 @@ class PressableWidgetState extends State<Pressable> {
     Widget current = GestureMixStateWidget(
       enableFeedback: widget.enableFeedback,
       controller: _controller,
-      onTap: widget.enabled ? handlePressed : null,
-      onLongPress: widget.enabled ? widget.onLongPress : null,
+      onTap: widget.enabled ? widget.onPress?.call : null,
+      onLongPress: widget.enabled ? widget.onLongPress?.call : null,
       excludeFromSemantics: widget.excludeFromSemantics,
       hitTestBehavior: widget.hitTestBehavior,
       unpressDelay: widget.unpressDelay,
@@ -301,23 +298,25 @@ class _InteractableState extends State<Interactable> {
 
   @override
   Widget build(BuildContext context) {
-    return InteractiveMixStateWidget(
-      enabled: widget.enabled,
-      onFocusChange: widget.onFocusChange,
-      autofocus: widget.autofocus,
-      focusNode: widget.focusNode,
-      onKey: widget.onKey,
-      onShowFocusHighlight: widget.onShowFocusHighlight,
-      onShowHoverHighlight: widget.onShowHoverHighlight,
-      onKeyEvent: widget.onKeyEvent,
-      canRequestFocus: widget.canRequestFocus,
-      mouseCursor: widget.mouseCursor,
-      shortcuts: widget.shortcuts,
-      controller: _controller,
-      actions: widget.actions,
-      child: MixWidgetStateBuilder(
+    return MouseRegionMixStateWidget(
+      child: InteractiveMixStateWidget(
+        enabled: widget.enabled,
+        onFocusChange: widget.onFocusChange,
+        autofocus: widget.autofocus,
+        focusNode: widget.focusNode,
+        onKey: widget.onKey,
+        onShowFocusHighlight: widget.onShowFocusHighlight,
+        onShowHoverHighlight: widget.onShowHoverHighlight,
+        onKeyEvent: widget.onKeyEvent,
+        canRequestFocus: widget.canRequestFocus,
+        mouseCursor: widget.mouseCursor,
+        shortcuts: widget.shortcuts,
         controller: _controller,
-        builder: (context) => widget.child,
+        actions: widget.actions,
+        child: MixWidgetStateBuilder(
+          controller: _controller,
+          builder: (context) => widget.child,
+        ),
       ),
     );
   }
