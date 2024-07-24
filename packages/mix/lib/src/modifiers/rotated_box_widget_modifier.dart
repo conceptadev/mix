@@ -23,7 +23,9 @@ final class RotatedBoxModifierSpec
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    
     super.debugFillProperties(properties);
+
     _debugFillProperties(properties);
   }
 
