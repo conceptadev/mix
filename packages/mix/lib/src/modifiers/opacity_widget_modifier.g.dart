@@ -7,28 +7,6 @@ part of 'opacity_widget_modifier.dart';
 // **************************************************************************
 
 mixin _$OpacityModifierSpec on WidgetModifierSpec<OpacityModifierSpec> {
-  static OpacityModifierSpec from(MixData mix) {
-    return mix.attributeOf<OpacityModifierSpecAttribute>()?.resolve(mix) ??
-        const OpacityModifierSpec();
-  }
-
-  /// {@template opacity_modifier_spec_of}
-  /// Retrieves the [OpacityModifierSpec] from the nearest [Mix] ancestor in the widget tree.
-  ///
-  /// This method uses [Mix.of] to obtain the [Mix] instance associated with the
-  /// given [BuildContext], and then retrieves the [OpacityModifierSpec] from that [Mix].
-  /// If no ancestor [Mix] is found, this method returns an empty [OpacityModifierSpec].
-  ///
-  /// Example:
-  ///
-  /// ```dart
-  /// final opacityModifierSpec = OpacityModifierSpec.of(context);
-  /// ```
-  /// {@endtemplate}
-  static OpacityModifierSpec of(BuildContext context) {
-    return _$OpacityModifierSpec.from(Mix.of(context));
-  }
-
   /// Creates a copy of this [OpacityModifierSpec] but with the given fields
   /// replaced with the new values.
   @override

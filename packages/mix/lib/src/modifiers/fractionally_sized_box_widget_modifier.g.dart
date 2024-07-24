@@ -8,30 +8,6 @@ part of 'fractionally_sized_box_widget_modifier.dart';
 
 mixin _$FractionallySizedBoxModifierSpec
     on WidgetModifierSpec<FractionallySizedBoxModifierSpec> {
-  static FractionallySizedBoxModifierSpec from(MixData mix) {
-    return mix
-            .attributeOf<FractionallySizedBoxModifierSpecAttribute>()
-            ?.resolve(mix) ??
-        const FractionallySizedBoxModifierSpec();
-  }
-
-  /// {@template fractionally_sized_box_modifier_spec_of}
-  /// Retrieves the [FractionallySizedBoxModifierSpec] from the nearest [Mix] ancestor in the widget tree.
-  ///
-  /// This method uses [Mix.of] to obtain the [Mix] instance associated with the
-  /// given [BuildContext], and then retrieves the [FractionallySizedBoxModifierSpec] from that [Mix].
-  /// If no ancestor [Mix] is found, this method returns an empty [FractionallySizedBoxModifierSpec].
-  ///
-  /// Example:
-  ///
-  /// ```dart
-  /// final fractionallySizedBoxModifierSpec = FractionallySizedBoxModifierSpec.of(context);
-  /// ```
-  /// {@endtemplate}
-  static FractionallySizedBoxModifierSpec of(BuildContext context) {
-    return _$FractionallySizedBoxModifierSpec.from(Mix.of(context));
-  }
-
   /// Creates a copy of this [FractionallySizedBoxModifierSpec] but with the given fields
   /// replaced with the new values.
   @override
@@ -192,8 +168,9 @@ class FractionallySizedBoxModifierSpecTween
 
   @override
   FractionallySizedBoxModifierSpec lerp(double t) {
-    if (begin == null && end == null)
+    if (begin == null && end == null) {
       return const FractionallySizedBoxModifierSpec();
+    }
     if (begin == null) return end!;
 
     return begin!.lerp(end!, t);

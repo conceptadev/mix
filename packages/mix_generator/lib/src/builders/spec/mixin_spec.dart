@@ -4,6 +4,7 @@ import 'package:mix_generator/src/builders/method_copy_with.dart';
 import 'package:mix_generator/src/builders/method_debug_fill_properties.dart';
 import 'package:mix_generator/src/builders/method_equality.dart';
 import 'package:mix_generator/src/builders/method_lerp_builder.dart';
+import 'package:mix_generator/src/helpers/builder_utils.dart';
 import 'package:mix_generator/src/helpers/field_info.dart';
 import 'package:mix_generator/src/helpers/helpers.dart';
 
@@ -19,6 +20,8 @@ String specMixin(ClassBuilderContext<MixableSpec> context) {
   final mixinName = context.generatedName;
   final specType = context.specType;
 
+  final generateStaticMethods = !context.classElement.isWidgetModifier;
+
   final hasCopyWith =
       context.classElement.methods.any((e) => e.name == 'copyWith');
   final hasLerp = context.classElement.methods.any((e) => e.name == 'lerp');
@@ -31,12 +34,14 @@ String specMixin(ClassBuilderContext<MixableSpec> context) {
 
   final selfGetter = getterSelfBuilder(specClass);
 
-  final staticMethodFrom = _staticMethodFromBuilder(context);
-
   final debugFillProperties =
       hasDiagnosticable ? methodDebugFillProperties(specClass) : '';
 
-  final staticMethodOf = _staticMethodOfBuilder(context);
+  final staticMethodFrom =
+      generateStaticMethods ? _staticMethodFromBuilder(context) : '';
+
+  final staticMethodOf =
+      generateStaticMethods ? _staticMethodOfBuilder(context) : '';
 
   return '''
  mixin $mixinName on $specType<$specClassName> {

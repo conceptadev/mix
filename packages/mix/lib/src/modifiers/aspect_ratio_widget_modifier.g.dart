@@ -7,28 +7,6 @@ part of 'aspect_ratio_widget_modifier.dart';
 // **************************************************************************
 
 mixin _$AspectRatioModifierSpec on WidgetModifierSpec<AspectRatioModifierSpec> {
-  static AspectRatioModifierSpec from(MixData mix) {
-    return mix.attributeOf<AspectRatioModifierSpecAttribute>()?.resolve(mix) ??
-        const AspectRatioModifierSpec();
-  }
-
-  /// {@template aspect_ratio_modifier_spec_of}
-  /// Retrieves the [AspectRatioModifierSpec] from the nearest [Mix] ancestor in the widget tree.
-  ///
-  /// This method uses [Mix.of] to obtain the [Mix] instance associated with the
-  /// given [BuildContext], and then retrieves the [AspectRatioModifierSpec] from that [Mix].
-  /// If no ancestor [Mix] is found, this method returns an empty [AspectRatioModifierSpec].
-  ///
-  /// Example:
-  ///
-  /// ```dart
-  /// final aspectRatioModifierSpec = AspectRatioModifierSpec.of(context);
-  /// ```
-  /// {@endtemplate}
-  static AspectRatioModifierSpec of(BuildContext context) {
-    return _$AspectRatioModifierSpec.from(Mix.of(context));
-  }
-
   /// Creates a copy of this [AspectRatioModifierSpec] but with the given fields
   /// replaced with the new values.
   @override

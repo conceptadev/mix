@@ -7,28 +7,6 @@ part of 'flexible_widget_modifier.dart';
 // **************************************************************************
 
 mixin _$FlexibleModifierSpec on WidgetModifierSpec<FlexibleModifierSpec> {
-  static FlexibleModifierSpec from(MixData mix) {
-    return mix.attributeOf<FlexibleModifierSpecAttribute>()?.resolve(mix) ??
-        const FlexibleModifierSpec();
-  }
-
-  /// {@template flexible_modifier_spec_of}
-  /// Retrieves the [FlexibleModifierSpec] from the nearest [Mix] ancestor in the widget tree.
-  ///
-  /// This method uses [Mix.of] to obtain the [Mix] instance associated with the
-  /// given [BuildContext], and then retrieves the [FlexibleModifierSpec] from that [Mix].
-  /// If no ancestor [Mix] is found, this method returns an empty [FlexibleModifierSpec].
-  ///
-  /// Example:
-  ///
-  /// ```dart
-  /// final flexibleModifierSpec = FlexibleModifierSpec.of(context);
-  /// ```
-  /// {@endtemplate}
-  static FlexibleModifierSpec of(BuildContext context) {
-    return _$FlexibleModifierSpec.from(Mix.of(context));
-  }
-
   /// Creates a copy of this [FlexibleModifierSpec] but with the given fields
   /// replaced with the new values.
   @override

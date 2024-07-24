@@ -6,6 +6,7 @@ part of 'text_spec.dart';
 // MixableSpecGenerator
 // **************************************************************************
 
+// ignore_for_file: deprecated_member_use_from_same_package
 mixin _$TextSpec on Spec<TextSpec> {
   static TextSpec from(MixData mix) {
     return mix.attributeOf<TextSpecAttribute>()?.resolve(mix) ??

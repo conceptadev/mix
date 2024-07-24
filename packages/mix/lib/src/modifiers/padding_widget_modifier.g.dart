@@ -7,28 +7,6 @@ part of 'padding_widget_modifier.dart';
 // **************************************************************************
 
 mixin _$PaddingModifierSpec on WidgetModifierSpec<PaddingModifierSpec> {
-  static PaddingModifierSpec from(MixData mix) {
-    return mix.attributeOf<PaddingModifierSpecAttribute>()?.resolve(mix) ??
-        const PaddingModifierSpec();
-  }
-
-  /// {@template padding_modifier_spec_of}
-  /// Retrieves the [PaddingModifierSpec] from the nearest [Mix] ancestor in the widget tree.
-  ///
-  /// This method uses [Mix.of] to obtain the [Mix] instance associated with the
-  /// given [BuildContext], and then retrieves the [PaddingModifierSpec] from that [Mix].
-  /// If no ancestor [Mix] is found, this method returns an empty [PaddingModifierSpec].
-  ///
-  /// Example:
-  ///
-  /// ```dart
-  /// final paddingModifierSpec = PaddingModifierSpec.of(context);
-  /// ```
-  /// {@endtemplate}
-  static PaddingModifierSpec of(BuildContext context) {
-    return _$PaddingModifierSpec.from(Mix.of(context));
-  }
-
   /// Creates a copy of this [PaddingModifierSpec] but with the given fields
   /// replaced with the new values.
   @override

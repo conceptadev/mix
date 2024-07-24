@@ -7,28 +7,6 @@ part of 'align_widget_modifier.dart';
 // **************************************************************************
 
 mixin _$AlignModifierSpec on WidgetModifierSpec<AlignModifierSpec> {
-  static AlignModifierSpec from(MixData mix) {
-    return mix.attributeOf<AlignModifierSpecAttribute>()?.resolve(mix) ??
-        const AlignModifierSpec();
-  }
-
-  /// {@template align_modifier_spec_of}
-  /// Retrieves the [AlignModifierSpec] from the nearest [Mix] ancestor in the widget tree.
-  ///
-  /// This method uses [Mix.of] to obtain the [Mix] instance associated with the
-  /// given [BuildContext], and then retrieves the [AlignModifierSpec] from that [Mix].
-  /// If no ancestor [Mix] is found, this method returns an empty [AlignModifierSpec].
-  ///
-  /// Example:
-  ///
-  /// ```dart
-  /// final alignModifierSpec = AlignModifierSpec.of(context);
-  /// ```
-  /// {@endtemplate}
-  static AlignModifierSpec of(BuildContext context) {
-    return _$AlignModifierSpec.from(Mix.of(context));
-  }
-
   /// Creates a copy of this [AlignModifierSpec] but with the given fields
   /// replaced with the new values.
   @override
