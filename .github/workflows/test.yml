@@ -9,7 +9,7 @@ on:
       - 'assets/**'
       - 'tool/**'
 
-  pull_request_target:
+  pull_request:
     branches: [main]
     paths-ignore:
       - 'examples/**'
