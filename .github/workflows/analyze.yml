@@ -30,6 +30,11 @@ jobs:
       - name: Install DCM
         uses: CQLabs/setup-dcm@v1
         with:
+          github_token: ${{ inputs.token }}
+
+      - name: Run DCM
+        uses: CQLabs/dcm-action@v1
+        with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           folders: packages/*/lib
           ci_key: oss
@@ -39,7 +44,7 @@ jobs:
           fatal_warnings: true
 
       - name: dart analyze
-        run: melos run --no-select analyze
+        run: melos analyze
         shell: bash
       
       - name: Run custom_lint
