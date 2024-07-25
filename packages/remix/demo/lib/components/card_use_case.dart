@@ -43,7 +43,7 @@ Widget buildRadioUseCase(BuildContext context) {
           children: const [StyledText('Hi'), StyledText('This is a test')],
         ),
         const SizedBox(height: 10),
-        RxButton(
+        CustomButton(
           label: 'Click me',
           onPressed: () {},
         ),

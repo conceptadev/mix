@@ -1,11 +1,4 @@
-// ignore_for_file: library_private_types_in_public_api
-
-import 'package:flutter/material.dart';
-import 'package:mix/mix.dart';
-import 'package:remix/components/spinner/spinner.style.dart';
-import 'package:remix/components/spinner/spinner.variants.dart';
-import 'package:remix/components/spinner/spinner_painter.dart';
-import 'package:remix/components/spinner/spinner_spec.dart';
+part of 'spinner.dart';
 
 class RxSpinner extends StatelessWidget {
   const RxSpinner({

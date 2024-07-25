@@ -1,14 +1,12 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'card_spec.dart';
+part of 'card.dart';
 
 // **************************************************************************
 // MixableSpecGenerator
 // **************************************************************************
 
-// ignore_for_file: deprecated_member_use_from_same_package
-
-base mixin _$CardSpec on Spec<CardSpec> {
+mixin _$CardSpec on Spec<CardSpec> {
   static CardSpec from(MixData mix) {
     return mix.attributeOf<CardSpecAttribute>()?.resolve(mix) ??
         const CardSpec();
@@ -98,7 +96,7 @@ base mixin _$CardSpec on Spec<CardSpec> {
 ///
 /// Use this class to configure the attributes of a [CardSpec] and pass it to
 /// the [CardSpec] constructor.
-final class CardSpecAttribute extends SpecAttribute<CardSpec> {
+base class CardSpecAttribute extends SpecAttribute<CardSpec> {
   final BoxSpecAttribute? container;
   final FlexSpecAttribute? flex;
 
@@ -160,7 +158,7 @@ final class CardSpecAttribute extends SpecAttribute<CardSpec> {
 ///
 /// This class provides methods to set individual properties of a [CardSpecAttribute].
 /// Use the methods of this class to configure specific properties of a [CardSpecAttribute].
-base class CardSpecUtility<T extends Attribute>
+class CardSpecUtility<T extends Attribute>
     extends SpecUtility<T, CardSpecAttribute> {
   /// Utility for defining [CardSpecAttribute.container]
   late final container = BoxSpecUtility((v) => only(container: v));
@@ -202,8 +200,13 @@ class CardSpecTween extends Tween<CardSpec?> {
 
   @override
   CardSpec lerp(double t) {
-    if (begin == null && end == null) return const CardSpec();
-    if (begin == null) return end!;
+    if (begin == null && end == null) {
+      return const CardSpec();
+    }
+
+    if (begin == null) {
+      return end!;
+    }
 
     return begin!.lerp(end!, t);
   }

@@ -1,14 +1,12 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'radio_spec.dart';
+part of 'radio.dart';
 
 // **************************************************************************
 // MixableSpecGenerator
 // **************************************************************************
 
-// ignore_for_file: deprecated_member_use_from_same_package
-
-base mixin _$RadioSpec on Spec<RadioSpec> {
+mixin _$RadioSpec on Spec<RadioSpec> {
   static RadioSpec from(MixData mix) {
     return mix.attributeOf<RadioSpecAttribute>()?.resolve(mix) ??
         const RadioSpec();
@@ -97,7 +95,7 @@ base mixin _$RadioSpec on Spec<RadioSpec> {
 ///
 /// Use this class to configure the attributes of a [RadioSpec] and pass it to
 /// the [RadioSpec] constructor.
-final class RadioSpecAttribute extends SpecAttribute<RadioSpec> {
+base class RadioSpecAttribute extends SpecAttribute<RadioSpec> {
   final BoxSpecAttribute? container;
   final BoxSpecAttribute? indicator;
 
@@ -159,7 +157,7 @@ final class RadioSpecAttribute extends SpecAttribute<RadioSpec> {
 ///
 /// This class provides methods to set individual properties of a [RadioSpecAttribute].
 /// Use the methods of this class to configure specific properties of a [RadioSpecAttribute].
-base class RadioSpecUtility<T extends Attribute>
+class RadioSpecUtility<T extends Attribute>
     extends SpecUtility<T, RadioSpecAttribute> {
   /// Utility for defining [RadioSpecAttribute.container]
   late final container = BoxSpecUtility((v) => only(container: v));
@@ -201,8 +199,13 @@ class RadioSpecTween extends Tween<RadioSpec?> {
 
   @override
   RadioSpec lerp(double t) {
-    if (begin == null && end == null) return const RadioSpec();
-    if (begin == null) return end!;
+    if (begin == null && end == null) {
+      return const RadioSpec();
+    }
+
+    if (begin == null) {
+      return end!;
+    }
 
     return begin!.lerp(end!, t);
   }

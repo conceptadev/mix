@@ -1,14 +1,12 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'button_spec.dart';
+part of 'button.dart';
 
 // **************************************************************************
 // MixableSpecGenerator
 // **************************************************************************
 
-// ignore_for_file: deprecated_member_use_from_same_package
-
-base mixin _$ButtonSpec on Spec<ButtonSpec> {
+mixin _$ButtonSpec on Spec<ButtonSpec> {
   static ButtonSpec from(MixData mix) {
     return mix.attributeOf<ButtonSpecAttribute>()?.resolve(mix) ??
         const ButtonSpec();
@@ -83,7 +81,7 @@ base mixin _$ButtonSpec on Spec<ButtonSpec> {
       flex: _$this.flex.lerp(other.flex, t),
       icon: _$this.icon.lerp(other.icon, t),
       label: _$this.label.lerp(other.label, t),
-      spinner: t < 0.5 ? _$this.spinner : other.spinner,
+      spinner: _$this.spinner.lerp(other.spinner, t),
       animated: t < 0.5 ? _$this.animated : other.animated,
     );
   }
@@ -112,7 +110,7 @@ base mixin _$ButtonSpec on Spec<ButtonSpec> {
 ///
 /// Use this class to configure the attributes of a [ButtonSpec] and pass it to
 /// the [ButtonSpec] constructor.
-final class ButtonSpecAttribute extends SpecAttribute<ButtonSpec> {
+base class ButtonSpecAttribute extends SpecAttribute<ButtonSpec> {
   final BoxSpecAttribute? container;
   final FlexSpecAttribute? flex;
   final IconSpecAttribute? icon;
@@ -189,7 +187,7 @@ final class ButtonSpecAttribute extends SpecAttribute<ButtonSpec> {
 ///
 /// This class provides methods to set individual properties of a [ButtonSpecAttribute].
 /// Use the methods of this class to configure specific properties of a [ButtonSpecAttribute].
-base class ButtonSpecUtility<T extends Attribute>
+class ButtonSpecUtility<T extends Attribute>
     extends SpecUtility<T, ButtonSpecAttribute> {
   /// Utility for defining [ButtonSpecAttribute.container]
   late final container = BoxSpecUtility((v) => only(container: v));
@@ -246,8 +244,13 @@ class ButtonSpecTween extends Tween<ButtonSpec?> {
 
   @override
   ButtonSpec lerp(double t) {
-    if (begin == null && end == null) return const ButtonSpec();
-    if (begin == null) return end!;
+    if (begin == null && end == null) {
+      return const ButtonSpec();
+    }
+
+    if (begin == null) {
+      return end!;
+    }
 
     return begin!.lerp(end!, t);
   }

@@ -1,9 +1,4 @@
-// ignore_for_file: camel_case_types
-
-import 'package:mix/mix.dart';
-import 'package:remix/components/progress/progress_spec.dart';
-import 'package:remix/components/progress/progress_variants.dart';
-import 'package:remix/tokens/remix_tokens.dart';
+part of 'progress.dart';
 
 final _progress = ProgressSpecUtility.self;
 final _container = _progress.container;

@@ -1,8 +1,4 @@
-import 'package:flutter/widgets.dart';
-import 'package:mix/mix.dart';
-import 'package:remix/components/switch/switch_spec.dart';
-import 'package:remix/components/switch/switch_style.dart';
-import 'package:remix/components/switch/switch_variants.dart';
+part of 'switch.dart';
 
 class RxSwitch extends StatelessWidget {
   const RxSwitch({
@@ -28,7 +24,6 @@ class RxSwitch extends StatelessWidget {
     return buildSwitchStyle().merge(style).applyVariants([
       size,
       variant,
-      value ? SwitchStatus.on : SwitchStatus.off,
     ]).animate();
   }
 

@@ -6,9 +6,7 @@ part of 'callout_spec.dart';
 // MixableSpecGenerator
 // **************************************************************************
 
-// ignore_for_file: deprecated_member_use_from_same_package
-
-base mixin _$CalloutSpec on Spec<CalloutSpec> {
+mixin _$CalloutSpec on Spec<CalloutSpec> {
   static CalloutSpec from(MixData mix) {
     return mix.attributeOf<CalloutSpecAttribute>()?.resolve(mix) ??
         const CalloutSpec();
@@ -108,7 +106,7 @@ base mixin _$CalloutSpec on Spec<CalloutSpec> {
 ///
 /// Use this class to configure the attributes of a [CalloutSpec] and pass it to
 /// the [CalloutSpec] constructor.
-final class CalloutSpecAttribute extends SpecAttribute<CalloutSpec> {
+base class CalloutSpecAttribute extends SpecAttribute<CalloutSpec> {
   final BoxSpecAttribute? container;
   final FlexSpecAttribute? flex;
   final IconSpecAttribute? icon;
@@ -180,7 +178,7 @@ final class CalloutSpecAttribute extends SpecAttribute<CalloutSpec> {
 ///
 /// This class provides methods to set individual properties of a [CalloutSpecAttribute].
 /// Use the methods of this class to configure specific properties of a [CalloutSpecAttribute].
-base class CalloutSpecUtility<T extends Attribute>
+class CalloutSpecUtility<T extends Attribute>
     extends SpecUtility<T, CalloutSpecAttribute> {
   /// Utility for defining [CalloutSpecAttribute.container]
   late final container = BoxSpecUtility((v) => only(container: v));
@@ -232,8 +230,13 @@ class CalloutSpecTween extends Tween<CalloutSpec?> {
 
   @override
   CalloutSpec lerp(double t) {
-    if (begin == null && end == null) return const CalloutSpec();
-    if (begin == null) return end!;
+    if (begin == null && end == null) {
+      return const CalloutSpec();
+    }
+
+    if (begin == null) {
+      return end!;
+    }
 
     return begin!.lerp(end!, t);
   }

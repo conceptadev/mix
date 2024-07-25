@@ -1,11 +1,4 @@
-// ignore_for_file: camel_case_types
-
-import 'package:flutter/material.dart';
-import 'package:mix/mix.dart';
-import 'package:remix/components/radio/radio_spec.dart';
-import 'package:remix/components/radio/radio_variants.dart';
-import 'package:remix/helpers/utility_extension.dart';
-import 'package:remix/tokens/remix_tokens.dart';
+part of 'radio.dart';
 
 final _radio = RadioSpecUtility.self;
 final _container = _radio.container;
@@ -40,7 +33,7 @@ Style get _softVariant => Style(
     );
 
 Style get _outlineVariant => Style(
-      _container.color(Colors.transparent),
+      _container.color.transparent(),
       _container.border.color.ref($rx.color.accentAlpha(8)),
       _container.border.width(1.5),
       _indicator.color.ref($rx.color.accentAlpha(11)),
@@ -67,7 +60,7 @@ Style get _surfaceVariant => Style(
 
 Style get _ghostVariant => Style(
       _container.border.style.none(),
-      _container.color(Colors.transparent),
+      _container.color.transparent(),
       _indicator.color.ref($rx.color.accentAlpha(11)),
       $on.hover(
         _container.color.ref($rx.color.accentAlpha(3)),

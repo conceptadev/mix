@@ -1,8 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:mix/mix.dart';
-import 'package:remix/components/avatar/avatar_spec.dart';
-import 'package:remix/components/avatar/avatar_style.dart';
-import 'package:remix/components/avatar/avatar_variants.dart';
+part of 'avatar.dart';
 
 class RxAvatar extends StatelessWidget {
   const RxAvatar({

@@ -1,7 +1,4 @@
-import 'package:mix/mix.dart';
-import 'package:remix/components/spinner/spinner.variants.dart';
-import 'package:remix/components/spinner/spinner_spec.dart';
-import 'package:remix/tokens/remix_tokens.dart';
+part of 'spinner.dart';
 
 final _util = SpinnerSpecUtility.self;
 

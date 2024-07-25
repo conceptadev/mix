@@ -1,9 +1,15 @@
 import 'package:flutter/widgets.dart';
 import 'package:mix/mix.dart';
 import 'package:mix_annotations/mix_annotations.dart';
-import 'package:remix/components/spinner/spinner_spec.dart';
+import 'package:remix/components/spinner/spinner.dart';
 
-part 'button_spec.g.dart';
+import '../../helpers/variant.dart';
+import '../../tokens/remix_tokens.dart';
+
+part 'button.g.dart';
+part 'button_style.dart';
+part 'button_variants.dart';
+part 'button_widget.dart';
 
 @MixableSpec()
 base class ButtonSpec extends Spec<ButtonSpec> with _$ButtonSpec {

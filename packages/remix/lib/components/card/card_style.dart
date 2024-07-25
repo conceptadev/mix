@@ -1,7 +1,4 @@
-import 'package:mix/mix.dart';
-import 'package:remix/components/card/card_spec.dart';
-import 'package:remix/components/card/card_variants.dart';
-import 'package:remix/tokens/remix_tokens.dart';
+part of 'card.dart';
 
 final _util = CardSpecUtility.self;
 final _container = _util.container;

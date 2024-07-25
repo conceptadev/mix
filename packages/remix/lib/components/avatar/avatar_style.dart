@@ -1,11 +1,4 @@
-// ignore_for_file: camel_case_types
-
-import 'package:flutter/material.dart';
-import 'package:mix/mix.dart';
-import 'package:remix/components/avatar/avatar_spec.dart';
-import 'package:remix/components/avatar/avatar_variants.dart';
-import 'package:remix/helpers/utility_extension.dart';
-import 'package:remix/tokens/remix_tokens.dart';
+part of 'avatar.dart';
 
 final _avatar = AvatarSpecUtility.self;
 final _container = _avatar.container;

@@ -1,8 +1,4 @@
-import 'package:mix/mix.dart';
-import 'package:remix/components/switch/switch_spec.dart';
-import 'package:remix/components/switch/switch_variants.dart';
-import 'package:remix/helpers/utility_extension.dart';
-import 'package:remix/tokens/remix_tokens.dart';
+part of 'switch.dart';
 
 final _util = SwitchSpecUtility.self;
 
@@ -12,20 +8,20 @@ final _indicator = _util.indicator;
 Style get _baseStyle => Style(
       _container.borderRadius(99),
       _indicator.borderRadius(99),
-      SwitchStatus.on(
+      $on.selected(
         _container.alignment.centerRight(),
       ),
-      SwitchStatus.off(
+      $on.unselected(
         _container.alignment.centerLeft(),
       ),
     );
 
 Style get _solidVariant => Style(
       _indicator.color.ref($rx.color.white()),
-      SwitchStatus.on(
+      $on.selected(
         _container.color.ref($rx.color.accent()),
       ),
-      SwitchStatus.off(
+      $on.unselected(
         _container.color.ref($rx.color.neutral(3)),
       ),
       $on.disabled(
@@ -36,10 +32,10 @@ Style get _solidVariant => Style(
 
 Style get _softVariant => Style(
       _indicator.color.ref($rx.color.accentAlpha(11)),
-      SwitchStatus.on(
+      $on.selected(
         _container.color.ref($rx.color.accentAlpha(3)),
       ),
-      SwitchStatus.off(
+      $on.unselected(
         _container.color.ref($rx.color.neutral(4)),
       ),
       $on.disabled(
@@ -53,10 +49,10 @@ Style get _outlineVariant => Style(
       _container.border.width(1.5),
       _container.border.strokeAlign(1),
       _indicator.color.ref($rx.color.accentAlpha(11)),
-      SwitchStatus.on(
+      $on.selected(
         _container.border.color.ref($rx.color.accentAlpha(8)),
       ),
-      SwitchStatus.off(
+      $on.unselected(
         _container.border.color.ref($rx.color.neutral(4)),
       ),
       $on.disabled(
@@ -67,10 +63,10 @@ Style get _outlineVariant => Style(
 
 Style get _surfaceVariant => Style(
       _outlineVariant(),
-      SwitchStatus.on(
+      $on.selected(
         _container.color.ref($rx.color.accentAlpha(3)),
       ),
-      SwitchStatus.off(
+      $on.unselected(
         _container.color.ref($rx.color.neutralAlpha(3)),
         _container.border.color.ref($rx.color.neutral(4)),
       ),
@@ -84,7 +80,7 @@ Style get _smallVariant => Style(
       _container.padding.horizontal(2),
       _container.height(16),
       _indicator.size(12),
-      SwitchStatus.off(
+      $on.unselected(
         _indicator.size(8),
         _container.padding.horizontal(2),
       ),
@@ -95,7 +91,7 @@ Style get _mediumVariant => Style(
       _container.padding.horizontal(3),
       _container.height(20),
       _indicator.size(14),
-      SwitchStatus.off(
+      $on.unselected(
         _indicator.size(12),
       ),
     );
@@ -105,7 +101,7 @@ Style get _largeVariant => Style(
       _container.padding.horizontal(3),
       _container.height(24),
       _indicator.size(18),
-      SwitchStatus.off(_indicator.size(16)),
+      $on.unselected(_indicator.size(16)),
     );
 
 Style buildSwitchStyle() {

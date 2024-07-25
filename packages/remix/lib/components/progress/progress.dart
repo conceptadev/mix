@@ -1,8 +1,14 @@
 import 'package:flutter/widgets.dart';
 import 'package:mix/mix.dart';
 import 'package:mix_annotations/mix_annotations.dart';
+import 'package:remix/helpers/variant.dart';
 
-part 'progress_spec.g.dart';
+import '../../tokens/remix_tokens.dart';
+
+part 'progress.g.dart';
+part 'progress_style.dart';
+part 'progress_variants.dart';
+part 'progress_widget.dart';
 
 @MixableSpec()
 base class ProgressSpec extends Spec<ProgressSpec> with _$ProgressSpec {

@@ -1,14 +1,12 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'switch_spec.dart';
+part of 'switch.dart';
 
 // **************************************************************************
 // MixableSpecGenerator
 // **************************************************************************
 
-// ignore_for_file: deprecated_member_use_from_same_package
-
-base mixin _$SwitchSpec on Spec<SwitchSpec> {
+mixin _$SwitchSpec on Spec<SwitchSpec> {
   static SwitchSpec from(MixData mix) {
     return mix.attributeOf<SwitchSpecAttribute>()?.resolve(mix) ??
         const SwitchSpec();
@@ -97,7 +95,7 @@ base mixin _$SwitchSpec on Spec<SwitchSpec> {
 ///
 /// Use this class to configure the attributes of a [SwitchSpec] and pass it to
 /// the [SwitchSpec] constructor.
-final class SwitchSpecAttribute extends SpecAttribute<SwitchSpec> {
+base class SwitchSpecAttribute extends SpecAttribute<SwitchSpec> {
   final BoxSpecAttribute? container;
   final BoxSpecAttribute? indicator;
 
@@ -159,7 +157,7 @@ final class SwitchSpecAttribute extends SpecAttribute<SwitchSpec> {
 ///
 /// This class provides methods to set individual properties of a [SwitchSpecAttribute].
 /// Use the methods of this class to configure specific properties of a [SwitchSpecAttribute].
-base class SwitchSpecUtility<T extends Attribute>
+class SwitchSpecUtility<T extends Attribute>
     extends SpecUtility<T, SwitchSpecAttribute> {
   /// Utility for defining [SwitchSpecAttribute.container]
   late final container = BoxSpecUtility((v) => only(container: v));
@@ -201,8 +199,13 @@ class SwitchSpecTween extends Tween<SwitchSpec?> {
 
   @override
   SwitchSpec lerp(double t) {
-    if (begin == null && end == null) return const SwitchSpec();
-    if (begin == null) return end!;
+    if (begin == null && end == null) {
+      return const SwitchSpec();
+    }
+
+    if (begin == null) {
+      return end!;
+    }
 
     return begin!.lerp(end!, t);
   }

@@ -1,10 +1,6 @@
-import 'package:flutter/material.dart';
-import 'package:mix/mix.dart';
-import 'package:remix/components/checkbox/checkbox_spec.dart';
-import 'package:remix/components/checkbox/checkbox_style.dart';
-import 'package:remix/components/checkbox/checkbox_variants.dart';
+part of 'checkbox.dart';
 
-class RxCheckbox extends StatelessWidget {
+class RxCheckbox extends StatefulWidget {
   const RxCheckbox({
     super.key,
     this.disabled = false,
@@ -31,23 +27,54 @@ class RxCheckbox extends StatelessWidget {
   final CheckboxSize size;
   final CheckboxVariant variant;
 
-  void _handleOnPress() => onChanged?.call(!value);
+  @override
+  State<RxCheckbox> createState() => _RxCheckboxState();
+}
 
-  Style _buildStyle() {
-    return buildDefaultCheckboxStyle().merge(style).applyVariants([
-      size,
-      variant,
-      value ? CheckboxStatus.checked : CheckboxStatus.unchecked
-    ]).animate();
+class _RxCheckboxState extends State<RxCheckbox> {
+  late final MixWidgetStateController _controller;
+
+  void _handleOnPress() => widget.onChanged?.call(!widget.value);
+
+  @visibleForTesting
+  List<ICheckboxVariant> get variants => [widget.size, widget.variant];
+
+  @visibleForTesting
+  Style get style => _buildDefaultCheckboxStyle().merge(widget.style);
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = MixWidgetStateController();
+  }
+
+  @override
+  void didUpdateWidget(RxCheckbox oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    if (oldWidget.value != widget.value) {
+      _controller.selected = widget.value;
+    }
+
+    if (oldWidget.disabled != widget.disabled) {
+      _controller.disabled = widget.disabled;
+    }
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Pressable(
-      onPress: disabled ? null : _handleOnPress,
-      enabled: !disabled,
+      onPress: widget.disabled ? null : _handleOnPress,
+      enabled: !widget.disabled,
       child: SpecBuilder(
-        style: _buildStyle(),
+        controller: _controller,
+        style: style.applyVariants(variants),
         builder: (context) {
           final spec = CheckboxSpec.of(context);
 
@@ -56,7 +83,9 @@ class RxCheckbox extends StatelessWidget {
 
           return ContainerWidget(
             child: IconWidget(
-              value ? iconChecked : iconUnchecked,
+              widget.value
+                  ? widget.iconChecked
+                  : widget.iconUnchecked ?? widget.iconChecked,
             ),
           );
         },

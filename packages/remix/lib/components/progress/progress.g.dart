@@ -1,14 +1,12 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'progress_spec.dart';
+part of 'progress.dart';
 
 // **************************************************************************
 // MixableSpecGenerator
 // **************************************************************************
 
-// ignore_for_file: deprecated_member_use_from_same_package
-
-base mixin _$ProgressSpec on Spec<ProgressSpec> {
+mixin _$ProgressSpec on Spec<ProgressSpec> {
   static ProgressSpec from(MixData mix) {
     return mix.attributeOf<ProgressSpecAttribute>()?.resolve(mix) ??
         const ProgressSpec();
@@ -101,7 +99,7 @@ base mixin _$ProgressSpec on Spec<ProgressSpec> {
 ///
 /// Use this class to configure the attributes of a [ProgressSpec] and pass it to
 /// the [ProgressSpec] constructor.
-final class ProgressSpecAttribute extends SpecAttribute<ProgressSpec> {
+base class ProgressSpecAttribute extends SpecAttribute<ProgressSpec> {
   final BoxSpecAttribute? container;
   final BoxSpecAttribute? track;
   final BoxSpecAttribute? fill;
@@ -168,7 +166,7 @@ final class ProgressSpecAttribute extends SpecAttribute<ProgressSpec> {
 ///
 /// This class provides methods to set individual properties of a [ProgressSpecAttribute].
 /// Use the methods of this class to configure specific properties of a [ProgressSpecAttribute].
-base class ProgressSpecUtility<T extends Attribute>
+class ProgressSpecUtility<T extends Attribute>
     extends SpecUtility<T, ProgressSpecAttribute> {
   /// Utility for defining [ProgressSpecAttribute.container]
   late final container = BoxSpecUtility((v) => only(container: v));
@@ -215,8 +213,13 @@ class ProgressSpecTween extends Tween<ProgressSpec?> {
 
   @override
   ProgressSpec lerp(double t) {
-    if (begin == null && end == null) return const ProgressSpec();
-    if (begin == null) return end!;
+    if (begin == null && end == null) {
+      return const ProgressSpec();
+    }
+
+    if (begin == null) {
+      return end!;
+    }
 
     return begin!.lerp(end!, t);
   }

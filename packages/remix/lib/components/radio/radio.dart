@@ -1,8 +1,15 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/widgets.dart';
 import 'package:mix/mix.dart';
 import 'package:mix_annotations/mix_annotations.dart';
+import 'package:remix/helpers/utility_extension.dart';
 
-part 'radio_spec.g.dart';
+import '../../helpers/variant.dart';
+import '../../tokens/remix_tokens.dart';
+
+part 'radio.g.dart';
+part 'radio_style.dart';
+part 'radio_variants.dart';
+part 'radio_widget.dart';
 
 @MixableSpec()
 base class RadioSpec extends Spec<RadioSpec> with _$RadioSpec {

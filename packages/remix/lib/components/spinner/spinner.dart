@@ -1,9 +1,17 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:mix/mix.dart';
 import 'package:mix_annotations/mix_annotations.dart';
-import 'package:remix/components/spinner/spinner_widget.dart';
+import 'package:remix/helpers/variant.dart';
 
-part 'spinner_spec.g.dart';
+import '../../tokens/remix_tokens.dart';
+
+part 'spinner.g.dart';
+part 'spinner_painter.dart';
+part 'spinner_style.dart';
+part 'spinner_variants.dart';
+part 'spinner_widget.dart';
 
 enum SpinnerStyle {
   solid,

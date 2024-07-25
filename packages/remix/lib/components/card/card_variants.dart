@@ -1,4 +1,4 @@
-import 'package:remix/helpers/variant.dart';
+part of 'card.dart';
 
 interface class ICardVariant extends RemixVariant {
   const ICardVariant(String name) : super('card.$name');

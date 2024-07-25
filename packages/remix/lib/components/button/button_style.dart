@@ -1,10 +1,4 @@
-// ignore_for_file: camel_case_types
-
-import 'package:flutter/material.dart';
-import 'package:mix/mix.dart';
-import 'package:remix/components/button/button_spec.dart';
-import 'package:remix/components/button/button_variants.dart';
-import 'package:remix/tokens/remix_tokens.dart';
+part of 'button.dart';
 
 final _util = ButtonSpecUtility.self;
 final _label = _util.label;
@@ -60,7 +54,7 @@ Style get _softVariant => Style(
     );
 
 Style get _outlineVariant => Style(
-      _container.color(Colors.transparent),
+      _container.color.transparent(),
       _container.border.width(1.5),
       _container.border.strokeAlign(0),
       _container.border.color.ref($rx.color.accentAlpha(8)),
@@ -87,7 +81,7 @@ Style get _surfaceVariant => Style(
 
 Style get _ghostVariant => Style(
       _container.border.style.none(),
-      _container.color(Colors.transparent),
+      _container.color.transparent(),
       _items.color.ref($rx.color.accentAlpha(11)),
       $on.hover(
         _container.color.ref($rx.color.accentAlpha(3)),

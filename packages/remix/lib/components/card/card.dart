@@ -2,7 +2,13 @@ import 'package:flutter/widgets.dart';
 import 'package:mix/mix.dart';
 import 'package:mix_annotations/mix_annotations.dart';
 
-part 'card_spec.g.dart';
+import '../../helpers/variant.dart';
+import '../../tokens/remix_tokens.dart';
+
+part 'card.g.dart';
+part 'card_style.dart';
+part 'card_variants.dart';
+part 'card_widget.dart';
 
 @MixableSpec()
 base class CardSpec extends Spec<CardSpec> with _$CardSpec {

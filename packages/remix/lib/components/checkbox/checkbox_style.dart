@@ -1,11 +1,6 @@
 // ignore_for_file: camel_case_types
 
-import 'package:flutter/material.dart';
-import 'package:mix/mix.dart';
-import 'package:remix/components/checkbox/checkbox_spec.dart';
-import 'package:remix/components/checkbox/checkbox_variants.dart';
-import 'package:remix/helpers/utility_extension.dart';
-import 'package:remix/tokens/remix_tokens.dart';
+part of 'checkbox.dart';
 
 final _util = CheckboxSpecUtility.self;
 final _container = _util.container;
@@ -98,7 +93,7 @@ Style get _largeVariant => Style(
       _indicator.size(20),
     );
 
-Style buildDefaultCheckboxStyle() {
+Style _buildDefaultCheckboxStyle() {
   return Style(
     _baseStyle(),
 
@@ -117,4 +112,17 @@ Style buildDefaultCheckboxStyle() {
     CheckboxVariant.ghost(_ghostVariant()),
     $on.disabled(_disabledVariant()),
   );
+}
+
+class RxCheckboxStyle {
+  const RxCheckboxStyle();
+
+  Style apply(
+    Style? style,
+    List<Variant>? variants,
+  ) {
+    return _buildDefaultCheckboxStyle()
+        .merge(style)
+        .applyVariants(variants ?? []);
+  }
 }

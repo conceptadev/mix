@@ -1,8 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:mix/mix.dart';
-import 'package:remix/components/progress/progress_spec.dart';
-import 'package:remix/components/progress/progress_style.dart';
-import 'package:remix/components/progress/progress_variants.dart';
+part of 'progress.dart';
 
 class RxProgress extends StatelessWidget {
   const RxProgress({

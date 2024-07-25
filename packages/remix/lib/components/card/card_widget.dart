@@ -1,8 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:mix/mix.dart';
-import 'package:remix/components/card/card_spec.dart';
-import 'package:remix/components/card/card_style.dart';
-import 'package:remix/components/card/card_variants.dart';
+part of 'card.dart';
 
 class RxCard extends StatelessWidget {
   const RxCard({

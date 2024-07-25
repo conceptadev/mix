@@ -1,8 +1,15 @@
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 import 'package:mix/mix.dart';
 import 'package:mix_annotations/mix_annotations.dart';
+import 'package:remix/helpers/utility_extension.dart';
+import 'package:remix/helpers/variant.dart';
 
-part 'checkbox_spec.g.dart';
+import '../../tokens/remix_tokens.dart';
+
+part 'checkbox.g.dart';
+part 'checkbox_style.dart';
+part 'checkbox_variants.dart';
+part 'checkbox_widget.dart';
 
 @MixableSpec()
 base class CheckboxSpec extends Spec<CheckboxSpec> with _$CheckboxSpec {

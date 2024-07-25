@@ -1,14 +1,12 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'checkbox_spec.dart';
+part of 'checkbox.dart';
 
 // **************************************************************************
 // MixableSpecGenerator
 // **************************************************************************
 
-// ignore_for_file: deprecated_member_use_from_same_package
-
-base mixin _$CheckboxSpec on Spec<CheckboxSpec> {
+mixin _$CheckboxSpec on Spec<CheckboxSpec> {
   static CheckboxSpec from(MixData mix) {
     return mix.attributeOf<CheckboxSpecAttribute>()?.resolve(mix) ??
         const CheckboxSpec();
@@ -98,7 +96,7 @@ base mixin _$CheckboxSpec on Spec<CheckboxSpec> {
 ///
 /// Use this class to configure the attributes of a [CheckboxSpec] and pass it to
 /// the [CheckboxSpec] constructor.
-final class CheckboxSpecAttribute extends SpecAttribute<CheckboxSpec> {
+base class CheckboxSpecAttribute extends SpecAttribute<CheckboxSpec> {
   final BoxSpecAttribute? container;
   final IconSpecAttribute? indicator;
 
@@ -160,7 +158,7 @@ final class CheckboxSpecAttribute extends SpecAttribute<CheckboxSpec> {
 ///
 /// This class provides methods to set individual properties of a [CheckboxSpecAttribute].
 /// Use the methods of this class to configure specific properties of a [CheckboxSpecAttribute].
-base class CheckboxSpecUtility<T extends Attribute>
+class CheckboxSpecUtility<T extends Attribute>
     extends SpecUtility<T, CheckboxSpecAttribute> {
   /// Utility for defining [CheckboxSpecAttribute.container]
   late final container = BoxSpecUtility((v) => only(container: v));
@@ -202,8 +200,13 @@ class CheckboxSpecTween extends Tween<CheckboxSpec?> {
 
   @override
   CheckboxSpec lerp(double t) {
-    if (begin == null && end == null) return const CheckboxSpec();
-    if (begin == null) return end!;
+    if (begin == null && end == null) {
+      return const CheckboxSpec();
+    }
+
+    if (begin == null) {
+      return end!;
+    }
 
     return begin!.lerp(end!, t);
   }
