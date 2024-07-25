@@ -152,7 +152,7 @@ class Pressable extends StatefulWidget {
 
 @visibleForTesting
 class PressableWidgetState extends State<Pressable> {
-  final MixWidgetStateController _controller = MixWidgetStateController();
+  final _controller = MixWidgetStateController();
 
   @override
   void dispose() {

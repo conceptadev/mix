@@ -3,13 +3,11 @@ class MixableSpec {
   final bool withEquality;
   final bool withLerp;
   final bool skipUtility;
-  final bool withDiagnosticable;
 
   final String prefix;
 
   const MixableSpec({
     this.withCopyWith = true,
-    this.withDiagnosticable = true,
     this.withEquality = true,
     this.withLerp = true,
     this.skipUtility = false,
