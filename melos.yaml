@@ -73,7 +73,7 @@ scripts:
       dirExists: test
 
   test:coverage:
-    run: melos exec flutter test --coverage
+    run: melos exec -- flutter test --coverage
     description: Run flutter test with coverage
     packageFilters:
       dirExists: test
