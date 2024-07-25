@@ -289,11 +289,13 @@ final class StadiumBorderDto extends OutlinedBorderDto<StadiumBorder>
 extension ShapeBorderExt on ShapeBorder {
   ShapeBorderDto toDto() {
     final self = this;
-    if (self is RoundedRectangleBorder) return (self).toDto();
     if (self is BeveledRectangleBorder) return (self).toDto();
-    if (self is ContinuousRectangleBorder) return (self).toDto();
     if (self is CircleBorder) return (self).toDto();
+    if (self is ContinuousRectangleBorder) return (self).toDto();
+    if (self is LinearBorder) return (self).toDto();
+    if (self is RoundedRectangleBorder) return (self).toDto();
     if (self is StadiumBorder) return (self).toDto();
+    if (self is StarBorder) return (self).toDto();
 
     throw ArgumentError.value(
       this,
@@ -305,15 +307,19 @@ extension ShapeBorderExt on ShapeBorder {
 
 final class ShapeBorderUtility<T extends Attribute>
     extends MixUtility<T, ShapeBorderDto> {
-  late final roundedRectangle = RoundedRectangleBorderUtility(builder);
+  late final beveledRectangle = BeveledRectangleBorderUtility(builder);
 
   late final circle = CircleBorderUtility(builder);
 
-  late final beveledRectangle = BeveledRectangleBorderUtility(builder);
+  late final continuousRectangle = ContinuousRectangleBorderUtility(builder);
+
+  late final linear = LinearBorderUtility(builder);
+
+  late final roundedRectangle = RoundedRectangleBorderUtility(builder);
 
   late final stadium = StadiumBorderUtility(builder);
 
-  late final continuousRectangle = ContinuousRectangleBorderUtility(builder);
+  late final star = StarBorderUtility(builder);
 
   ShapeBorderUtility(super.builder);
 }
