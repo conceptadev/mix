@@ -20,6 +20,8 @@ scripts:
   lint:all:
     run: melos run lint:dart && melos run lint:dcm
     description: Run all static analysis checks.
+    exec:
+      failFast: true
 
   lint:fix:all:
     run: melos run lint:dart:fix && melos run lint:dcm:fix
@@ -70,8 +72,6 @@ scripts:
     description: Run flutter test
     packageFilters:
       dirExists: test
-    exec:
-      failFast: true
 
   test:coverage:
     run: melos exec flutter test --coverage
