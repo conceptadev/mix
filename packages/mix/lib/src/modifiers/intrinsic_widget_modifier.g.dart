@@ -6,39 +6,13 @@ part of 'intrinsic_widget_modifier.dart';
 // MixableSpecGenerator
 // **************************************************************************
 
-// ignore_for_file: deprecated_member_use_from_same_package
-
 mixin _$IntrinsicHeightModifierSpec
     on WidgetModifierSpec<IntrinsicHeightModifierSpec> {
-  static IntrinsicHeightModifierSpec from(MixData mix) {
-    return mix
-            .attributeOf<IntrinsicHeightModifierSpecAttribute>()
-            ?.resolve(mix) ??
-        const IntrinsicHeightModifierSpec();
-  }
-
-  /// {@template intrinsic_height_modifier_spec_of}
-  /// Retrieves the [IntrinsicHeightModifierSpec] from the nearest [Mix] ancestor in the widget tree.
-  ///
-  /// This method uses [Mix.of] to obtain the [Mix] instance associated with the
-  /// given [BuildContext], and then retrieves the [IntrinsicHeightModifierSpec] from that [Mix].
-  /// If no ancestor [Mix] is found, this method returns an empty [IntrinsicHeightModifierSpec].
-  ///
-  /// Example:
-  ///
-  /// ```dart
-  /// final intrinsicHeightModifierSpec = IntrinsicHeightModifierSpec.of(context);
-  /// ```
-  /// {@endtemplate}
-  static IntrinsicHeightModifierSpec of(BuildContext context) {
-    return _$IntrinsicHeightModifierSpec.from(Mix.of(context));
-  }
-
   /// Creates a copy of this [IntrinsicHeightModifierSpec] but with the given fields
   /// replaced with the new values.
   @override
   IntrinsicHeightModifierSpec copyWith() {
-    return IntrinsicHeightModifierSpec();
+    return const IntrinsicHeightModifierSpec();
   }
 
   /// Linearly interpolates between this [IntrinsicHeightModifierSpec] and another [IntrinsicHeightModifierSpec] based on the given parameter [t].
@@ -64,7 +38,7 @@ mixin _$IntrinsicHeightModifierSpec
       IntrinsicHeightModifierSpec? other, double t) {
     if (other == null) return _$this;
 
-    return IntrinsicHeightModifierSpec();
+    return const IntrinsicHeightModifierSpec();
   }
 
   /// The list of properties that constitute the state of this [IntrinsicHeightModifierSpec].
@@ -101,6 +75,7 @@ final class IntrinsicHeightModifierSpecAttribute
   /// ```
   @override
   IntrinsicHeightModifierSpec resolve(MixData mix) {
+    // ignore: prefer_const_constructors
     return IntrinsicHeightModifierSpec();
   }
 
@@ -146,47 +121,25 @@ class IntrinsicHeightModifierSpecTween
 
   @override
   IntrinsicHeightModifierSpec lerp(double t) {
-    if (begin == null && end == null)
+    if (begin == null && end == null) {
       return const IntrinsicHeightModifierSpec();
-    if (begin == null) return end!;
+    }
+
+    if (begin == null) {
+      return end!;
+    }
 
     return begin!.lerp(end!, t);
   }
 }
 
-// ignore_for_file: deprecated_member_use_from_same_package
-
 mixin _$IntrinsicWidthModifierSpec
     on WidgetModifierSpec<IntrinsicWidthModifierSpec> {
-  static IntrinsicWidthModifierSpec from(MixData mix) {
-    return mix
-            .attributeOf<IntrinsicWidthModifierSpecAttribute>()
-            ?.resolve(mix) ??
-        const IntrinsicWidthModifierSpec();
-  }
-
-  /// {@template intrinsic_width_modifier_spec_of}
-  /// Retrieves the [IntrinsicWidthModifierSpec] from the nearest [Mix] ancestor in the widget tree.
-  ///
-  /// This method uses [Mix.of] to obtain the [Mix] instance associated with the
-  /// given [BuildContext], and then retrieves the [IntrinsicWidthModifierSpec] from that [Mix].
-  /// If no ancestor [Mix] is found, this method returns an empty [IntrinsicWidthModifierSpec].
-  ///
-  /// Example:
-  ///
-  /// ```dart
-  /// final intrinsicWidthModifierSpec = IntrinsicWidthModifierSpec.of(context);
-  /// ```
-  /// {@endtemplate}
-  static IntrinsicWidthModifierSpec of(BuildContext context) {
-    return _$IntrinsicWidthModifierSpec.from(Mix.of(context));
-  }
-
   /// Creates a copy of this [IntrinsicWidthModifierSpec] but with the given fields
   /// replaced with the new values.
   @override
   IntrinsicWidthModifierSpec copyWith() {
-    return IntrinsicWidthModifierSpec();
+    return const IntrinsicWidthModifierSpec();
   }
 
   /// Linearly interpolates between this [IntrinsicWidthModifierSpec] and another [IntrinsicWidthModifierSpec] based on the given parameter [t].
@@ -211,7 +164,7 @@ mixin _$IntrinsicWidthModifierSpec
   IntrinsicWidthModifierSpec lerp(IntrinsicWidthModifierSpec? other, double t) {
     if (other == null) return _$this;
 
-    return IntrinsicWidthModifierSpec();
+    return const IntrinsicWidthModifierSpec();
   }
 
   /// The list of properties that constitute the state of this [IntrinsicWidthModifierSpec].
@@ -248,6 +201,7 @@ final class IntrinsicWidthModifierSpecAttribute
   /// ```
   @override
   IntrinsicWidthModifierSpec resolve(MixData mix) {
+    // ignore: prefer_const_constructors
     return IntrinsicWidthModifierSpec();
   }
 
@@ -293,8 +247,13 @@ class IntrinsicWidthModifierSpecTween
 
   @override
   IntrinsicWidthModifierSpec lerp(double t) {
-    if (begin == null && end == null) return const IntrinsicWidthModifierSpec();
-    if (begin == null) return end!;
+    if (begin == null && end == null) {
+      return const IntrinsicWidthModifierSpec();
+    }
+
+    if (begin == null) {
+      return end!;
+    }
 
     return begin!.lerp(end!, t);
   }

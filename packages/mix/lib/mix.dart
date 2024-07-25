@@ -67,6 +67,7 @@ export 'src/core/spec.dart';
 export 'src/core/styled_widget.dart';
 export 'src/core/utility.dart';
 export 'src/core/variant.dart';
+export 'src/core/widget_state/widget_state_controller.dart';
 /// MODIFIERS
 export 'src/modifiers/align_widget_modifier.dart';
 export 'src/modifiers/aspect_ratio_widget_modifier.dart';

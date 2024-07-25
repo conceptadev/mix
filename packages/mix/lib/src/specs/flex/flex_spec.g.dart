@@ -6,8 +6,6 @@ part of 'flex_spec.dart';
 // MixableSpecGenerator
 // **************************************************************************
 
-// ignore_for_file: deprecated_member_use_from_same_package
-
 mixin _$FlexSpec on Spec<FlexSpec> {
   static FlexSpec from(MixData mix) {
     return mix.attributeOf<FlexSpecAttribute>()?.resolve(mix) ??
@@ -360,8 +358,13 @@ class FlexSpecTween extends Tween<FlexSpec?> {
 
   @override
   FlexSpec lerp(double t) {
-    if (begin == null && end == null) return const FlexSpec();
-    if (begin == null) return end!;
+    if (begin == null && end == null) {
+      return const FlexSpec();
+    }
+
+    if (begin == null) {
+      return end!;
+    }
 
     return begin!.lerp(end!, t);
   }

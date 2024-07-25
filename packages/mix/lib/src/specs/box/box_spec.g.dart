@@ -6,8 +6,6 @@ part of 'box_spec.dart';
 // MixableSpecGenerator
 // **************************************************************************
 
-// ignore_for_file: deprecated_member_use_from_same_package
-
 mixin _$BoxSpec on Spec<BoxSpec> {
   static BoxSpec from(MixData mix) {
     return mix.attributeOf<BoxSpecAttribute>()?.resolve(mix) ?? const BoxSpec();
@@ -445,8 +443,13 @@ class BoxSpecTween extends Tween<BoxSpec?> {
 
   @override
   BoxSpec lerp(double t) {
-    if (begin == null && end == null) return const BoxSpec();
-    if (begin == null) return end!;
+    if (begin == null && end == null) {
+      return const BoxSpec();
+    }
+
+    if (begin == null) {
+      return end!;
+    }
 
     return begin!.lerp(end!, t);
   }

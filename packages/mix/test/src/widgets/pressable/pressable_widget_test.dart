@@ -136,6 +136,28 @@ void main() {
 
       expect(wasPressed, isTrue);
     });
+
+    testWidgets(
+      'should propagate the onTap when it doesn\'t receive null',
+      (tester) async {
+        bool onTapCalled = false;
+
+        await tester.pumpWidget(
+          GestureDetector(
+            onTap: () {
+              onTapCalled = true;
+            },
+            child: const Pressable(
+              child: Box(),
+            ),
+          ),
+        );
+
+        await tester.tap(find.byType(Pressable));
+
+        expect(onTapCalled, isTrue);
+      },
+    );
   });
 
   testWidgets('Pressable cancel timer on dispose', (WidgetTester tester) async {
@@ -471,6 +493,28 @@ void main() {
         },
       );
     });
+
+    testWidgets(
+      'should propagate the onTap when it doesn\'t receive null',
+      (tester) async {
+        bool onTapCalled = false;
+
+        await tester.pumpWidget(
+          GestureDetector(
+            onTap: () {
+              onTapCalled = true;
+            },
+            child: const PressableBox(
+              child: Box(),
+            ),
+          ),
+        );
+
+        await tester.tap(find.byType(PressableBox));
+
+        expect(onTapCalled, isTrue);
+      },
+    );
   });
 
   group('Mouse Cursor tests', () {

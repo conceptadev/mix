@@ -6,31 +6,7 @@ part of 'sized_box_widget_modifier.dart';
 // MixableSpecGenerator
 // **************************************************************************
 
-// ignore_for_file: deprecated_member_use_from_same_package
-
 mixin _$SizedBoxModifierSpec on WidgetModifierSpec<SizedBoxModifierSpec> {
-  static SizedBoxModifierSpec from(MixData mix) {
-    return mix.attributeOf<SizedBoxModifierSpecAttribute>()?.resolve(mix) ??
-        const SizedBoxModifierSpec();
-  }
-
-  /// {@template sized_box_modifier_spec_of}
-  /// Retrieves the [SizedBoxModifierSpec] from the nearest [Mix] ancestor in the widget tree.
-  ///
-  /// This method uses [Mix.of] to obtain the [Mix] instance associated with the
-  /// given [BuildContext], and then retrieves the [SizedBoxModifierSpec] from that [Mix].
-  /// If no ancestor [Mix] is found, this method returns an empty [SizedBoxModifierSpec].
-  ///
-  /// Example:
-  ///
-  /// ```dart
-  /// final sizedBoxModifierSpec = SizedBoxModifierSpec.of(context);
-  /// ```
-  /// {@endtemplate}
-  static SizedBoxModifierSpec of(BuildContext context) {
-    return _$SizedBoxModifierSpec.from(Mix.of(context));
-  }
-
   /// Creates a copy of this [SizedBoxModifierSpec] but with the given fields
   /// replaced with the new values.
   @override
@@ -173,8 +149,13 @@ class SizedBoxModifierSpecTween extends Tween<SizedBoxModifierSpec?> {
 
   @override
   SizedBoxModifierSpec lerp(double t) {
-    if (begin == null && end == null) return const SizedBoxModifierSpec();
-    if (begin == null) return end!;
+    if (begin == null && end == null) {
+      return const SizedBoxModifierSpec();
+    }
+
+    if (begin == null) {
+      return end!;
+    }
 
     return begin!.lerp(end!, t);
   }

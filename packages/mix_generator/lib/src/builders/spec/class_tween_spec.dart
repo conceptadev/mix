@@ -18,8 +18,13 @@ class ${className}Tween extends Tween<$className?> {
 
   @override
   $className lerp(double t) {
-    if (begin == null && end == null) return $constIndicator $className$constructorRef();
-    if (begin == null) return end!;
+    if (begin == null && end == null) {
+      return $constIndicator $className$constructorRef();
+    }
+    
+    if (begin == null) {
+      return end!;
+    }
     
     return begin!.lerp(end!, t);
   }
