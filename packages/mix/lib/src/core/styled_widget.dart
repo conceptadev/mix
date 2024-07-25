@@ -8,7 +8,6 @@ import 'factory/mix_data.dart';
 import 'factory/mix_provider.dart';
 import 'factory/style_mix.dart';
 import 'modifier.dart';
-import 'widget_state/internal/mouse_region_mix_state.dart';
 import 'widget_state/widget_state_controller.dart';
 
 /// An abstract widget for applying custom styles.
@@ -147,16 +146,8 @@ class SpecBuilder extends StatelessWidget {
     final needsWidgetState =
         _hasWidgetStateVariant && MixWidgetState.of(context) == null;
 
-    final needsListener =
-        _hasListenerVariant && MouseRegionMixWidgetState.of(context) == null;
-    // If widget state is needed or a controller is provided, wrap the child with InteractiveMixStateWidget
-
     if (needsWidgetState || controller != null) {
       current = Interactable(controller: controller, child: current);
-    }
-
-    if (needsListener) {
-      current = MouseRegionMixStateWidget(child: current);
     }
 
     // Otherwise, directly build the mixed child widget

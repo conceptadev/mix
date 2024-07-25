@@ -123,7 +123,7 @@ void main() {
       );
 
       testWidgets(
-        'When a SpecBuilder has a style with OnHoverVariant, it should wrap the child with PointerListenerMixStateWidget',
+        'When a SpecBuilder has a style with OnHoverVariant, it should wrap the child with MouseRegionMixStateWidget',
         (tester) async {
           await tester.pumpWidget(
             SpecBuilder(
