@@ -5,6 +5,7 @@ packages:
   - packages/*
   - packages/*/example
   - examples/*
+  - packages/*/demo
 
 command:
   bootstrap:
@@ -17,19 +18,25 @@ command:
 
 scripts:
   # ANALYSIS
-  lint:all:
-    run: melos run lint:dart && melos run lint:dcm
+  analyze:
+    run: melos run analyze:dart && melos run analyze:dcm
     description: Run all static analysis checks.
     exec:
       failFast: true
+      
+  analyze:dart:
+    run: melos exec -c 10 -- dart analyze --fatal-infos
+    description: Run Dart static analysis checks.
+
+  analyze:dcm:
+    run: melos exec -c 10 -- dcm analyze . --fatal-style --fatal-performance --fatal-warnings
+    description: Run DCM static analysis checks.
+    packageFilters:
+      dependsOn: "dart_code_metrics_presets"
 
   lint:fix:all:
     run: melos run lint:dart:fix && melos run lint:dcm:fix
     description: Run all static analysis checks and apply fixes.
-
-  lint:dart:
-    run: melos exec -c 10 -- dart analyze --fatal-infos
-    description: Run Dart static analysis checks.
 
   lint:dart:fix:
     run: melos exec -- dart fix --apply .
@@ -37,12 +44,6 @@ scripts:
 
   lint:dcm:fix:
     run: melos exec -- dcm fix .
-    description: Run DCM static analysis checks.
-    packageFilters:
-      dependsOn: "dart_code_metrics_presets"
-
-  lint:dcm:
-    run: melos exec -c 10 -- dcm analyze . --fatal-style --fatal-performance --fatal-warnings
     description: Run DCM static analysis checks.
     packageFilters:
       dependsOn: "dart_code_metrics_presets"
@@ -64,8 +65,6 @@ scripts:
     description: Clean generated code for all packages
     packageFilters:
       dependsOn: "build_runner"
-      
-
 
   test:
     run: melos exec -- flutter test
