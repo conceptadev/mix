@@ -49,19 +49,19 @@ scripts:
       dependsOn: "dart_code_metrics_presets"
 
   gen:watch:
-    run: melos exec -- dart run build_runner watch --delete-conflicting-outputs
+    run: melos exec --order-dependents -- dart run build_runner watch --delete-conflicting-outputs
     description: Generate code for all packages
     packageFilters:
       dependsOn: "build_runner"
 
   gen:build:
-    run: melos run gen:clean && melos exec -- dart run build_runner build --delete-conflicting-outputs
+    run: melos run gen:clean && melos exec --order-dependents -- dart run build_runner build --delete-conflicting-outputs
     description: Generate code for all packages
     packageFilters:
       dependsOn: "build_runner"
 
   gen:clean:
-    run: melos exec -- dart run build_runner clean
+    run: melos exec --order-dependents -- dart run build_runner clean
     description: Clean generated code for all packages
     packageFilters:
       dependsOn: "build_runner"
