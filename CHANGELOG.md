@@ -51,14 +51,14 @@ Packages with other changes:
 
 #### `mix_lint` - `v0.1.1`
 
- - **FEAT**: Improvements for the "extract attributes" assist  (#387).
+ - **FEAT**: Improvements for the "extract attributes" assist (#387).
  - **FEAT**: implement quick fix for mix_attributes_ordering rule (#381).
  - **FEAT**: ColorSwatchToken and other token improvements (#378).
 
 #### `remix` - `v0.0.2`
 
  - **FEAT**: Ability to pass MixWidgetStateController to SpecBuilder (#391).
- - **FEAT**: remix - Foundational components (#317).
+ - **FEAT**: Foundational components (#317).
 
 
 ## 2024-07-12
