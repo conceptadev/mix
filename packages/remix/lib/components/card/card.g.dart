@@ -87,6 +87,12 @@ mixin _$CardSpec on Spec<CardSpec> {
       ];
 
   CardSpec get _$this => this as CardSpec;
+
+  void _debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    properties.add(DiagnosticsProperty('container', _$this.container));
+    properties.add(DiagnosticsProperty('flex', _$this.flex));
+    properties.add(DiagnosticsProperty('animated', _$this.animated));
+  }
 }
 
 /// Represents the attributes of a [CardSpec].
@@ -96,7 +102,8 @@ mixin _$CardSpec on Spec<CardSpec> {
 ///
 /// Use this class to configure the attributes of a [CardSpec] and pass it to
 /// the [CardSpec] constructor.
-base class CardSpecAttribute extends SpecAttribute<CardSpec> {
+base class CardSpecAttribute extends SpecAttribute<CardSpec>
+    with Diagnosticable {
   final BoxSpecAttribute? container;
   final FlexSpecAttribute? flex;
 
@@ -152,6 +159,14 @@ base class CardSpecAttribute extends SpecAttribute<CardSpec> {
         flex,
         animated,
       ];
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(DiagnosticsProperty('container', container));
+    properties.add(DiagnosticsProperty('flex', flex));
+    properties.add(DiagnosticsProperty('animated', animated));
+  }
 }
 
 /// Utility class for configuring [CardSpecAttribute] properties.

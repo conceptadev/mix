@@ -101,6 +101,15 @@ mixin _$ButtonSpec on Spec<ButtonSpec> {
       ];
 
   ButtonSpec get _$this => this as ButtonSpec;
+
+  void _debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    properties.add(DiagnosticsProperty('container', _$this.container));
+    properties.add(DiagnosticsProperty('flex', _$this.flex));
+    properties.add(DiagnosticsProperty('icon', _$this.icon));
+    properties.add(DiagnosticsProperty('label', _$this.label));
+    properties.add(DiagnosticsProperty('spinner', _$this.spinner));
+    properties.add(DiagnosticsProperty('animated', _$this.animated));
+  }
 }
 
 /// Represents the attributes of a [ButtonSpec].
@@ -110,7 +119,8 @@ mixin _$ButtonSpec on Spec<ButtonSpec> {
 ///
 /// Use this class to configure the attributes of a [ButtonSpec] and pass it to
 /// the [ButtonSpec] constructor.
-base class ButtonSpecAttribute extends SpecAttribute<ButtonSpec> {
+base class ButtonSpecAttribute extends SpecAttribute<ButtonSpec>
+    with Diagnosticable {
   final BoxSpecAttribute? container;
   final FlexSpecAttribute? flex;
   final IconSpecAttribute? icon;
@@ -181,6 +191,17 @@ base class ButtonSpecAttribute extends SpecAttribute<ButtonSpec> {
         spinner,
         animated,
       ];
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(DiagnosticsProperty('container', container));
+    properties.add(DiagnosticsProperty('flex', flex));
+    properties.add(DiagnosticsProperty('icon', icon));
+    properties.add(DiagnosticsProperty('label', label));
+    properties.add(DiagnosticsProperty('spinner', spinner));
+    properties.add(DiagnosticsProperty('animated', animated));
+  }
 }
 
 /// Utility class for configuring [ButtonSpecAttribute] properties.

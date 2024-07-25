@@ -1,6 +1,6 @@
 part of 'switch.dart';
 
-class RxSwitch extends StatelessWidget {
+class RxSwitch extends StatefulWidget {
   const RxSwitch({
     super.key,
     required this.value,
@@ -18,22 +18,49 @@ class RxSwitch extends StatelessWidget {
   final Style? style;
   final bool disabled;
 
-  void _handleOnPress() => onChanged.call(!value);
+  @override
+  State<RxSwitch> createState() => _RxSwitchState();
+}
 
-  Style _buildStyle() {
-    return buildSwitchStyle().merge(style).applyVariants([
-      size,
-      variant,
-    ]).animate();
+class _RxSwitchState extends State<RxSwitch> {
+  late final MixWidgetStateController _controller;
+  void _handleOnPress() => widget.onChanged.call(!widget.value);
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = MixWidgetStateController();
+  }
+
+  @override
+  void didUpdateWidget(RxSwitch oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    if (oldWidget.value != widget.value) {
+      _controller.selected = widget.value;
+    }
+
+    if (oldWidget.disabled != widget.disabled) {
+      _controller.disabled = widget.disabled;
+    }
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Pressable(
-      onPress: disabled ? null : _handleOnPress,
-      enabled: !disabled,
+      onPress: widget.disabled ? null : _handleOnPress,
+      enabled: !widget.disabled,
       child: SpecBuilder(
-        style: _buildStyle(),
+        style: _buildSwitchStyle(widget.style, [
+          widget.size,
+          widget.variant,
+        ]),
         builder: (context) {
           final spec = SwitchSpec.of(context);
 

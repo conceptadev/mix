@@ -10,14 +10,10 @@ class RxSpinner extends StatelessWidget {
   final Style? style;
   final SpinnerSize size;
 
-  Style _buildStyle() {
-    return buildSpinnerStyle().merge(style).applyVariant(size).animate();
-  }
-
   @override
   Widget build(BuildContext context) {
     return SpecBuilder(
-      style: _buildStyle(),
+      style: _buildSpinnerStyle(style, [size]),
       builder: (context) {
         final SpinnerWidget = SpinnerSpec.of(context);
         return SpinnerWidget();

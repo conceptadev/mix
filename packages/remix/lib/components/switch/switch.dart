@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:mix/mix.dart';
 import 'package:mix_annotations/mix_annotations.dart';
@@ -12,7 +13,8 @@ part 'switch_variants.dart';
 part 'switch_widget.dart';
 
 @MixableSpec()
-base class SwitchSpec extends Spec<SwitchSpec> with _$SwitchSpec {
+base class SwitchSpec extends Spec<SwitchSpec>
+    with _$SwitchSpec, Diagnosticable {
   final BoxSpec container;
   final BoxSpec indicator;
 
@@ -26,4 +28,10 @@ base class SwitchSpec extends Spec<SwitchSpec> with _$SwitchSpec {
     super.animated,
   })  : container = container ?? const BoxSpec(),
         indicator = indicator ?? const BoxSpec();
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    _debugFillProperties(properties);
+  }
 }

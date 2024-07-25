@@ -1,5 +1,6 @@
 import 'package:demo/addons/icon_data_knob.dart';
 import 'package:flutter/material.dart';
+import 'package:remix/components/button/button.dart';
 import 'package:remix/remix.dart';
 import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
@@ -7,11 +8,11 @@ import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 final _key = GlobalKey();
 @widgetbook.UseCase(
   name: 'Button Component',
-  type: CustomButton,
+  type: RxButton,
 )
 Widget buildButtonUseCase(BuildContext context) {
   Widget buildButton(ButtonVariant type) {
-    return CustomButton(
+    return RxButton(
       label: context.knobs.string(
         label: 'Title',
         initialValue: 'Button',
@@ -21,11 +22,15 @@ Widget buildButtonUseCase(BuildContext context) {
         label: 'Disabled',
         initialValue: false,
       ),
-      icon: context.knobs.iconData(
+      iconLeft: context.knobs.iconData(
         label: 'Icon left',
         initialValue: null,
       ),
-      variant: type,
+      iconRight: context.knobs.iconData(
+        label: 'Icon right',
+        initialValue: null,
+      ),
+      type: type,
     );
   }
 

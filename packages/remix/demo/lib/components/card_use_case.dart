@@ -14,7 +14,7 @@ Widget buildCard(BuildContext context) {
         Text(variant.label),
         const SizedBox(height: 10),
         RxCard(
-          variant: variant,
+          type: variant,
           children: const [StyledText('Hi'), StyledText('This is a test')],
         ),
       ],
@@ -39,11 +39,11 @@ Widget buildRadioUseCase(BuildContext context) {
         Text(variant.label),
         const SizedBox(height: 10),
         RxCard(
-          variant: variant,
+          type: variant,
           children: const [StyledText('Hi'), StyledText('This is a test')],
         ),
         const SizedBox(height: 10),
-        CustomButton(
+        RxButton(
           label: 'Click me',
           onPressed: () {},
         ),

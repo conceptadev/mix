@@ -90,6 +90,13 @@ mixin _$ProgressSpec on Spec<ProgressSpec> {
       ];
 
   ProgressSpec get _$this => this as ProgressSpec;
+
+  void _debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    properties.add(DiagnosticsProperty('container', _$this.container));
+    properties.add(DiagnosticsProperty('track', _$this.track));
+    properties.add(DiagnosticsProperty('fill', _$this.fill));
+    properties.add(DiagnosticsProperty('animated', _$this.animated));
+  }
 }
 
 /// Represents the attributes of a [ProgressSpec].
@@ -99,7 +106,8 @@ mixin _$ProgressSpec on Spec<ProgressSpec> {
 ///
 /// Use this class to configure the attributes of a [ProgressSpec] and pass it to
 /// the [ProgressSpec] constructor.
-base class ProgressSpecAttribute extends SpecAttribute<ProgressSpec> {
+base class ProgressSpecAttribute extends SpecAttribute<ProgressSpec>
+    with Diagnosticable {
   final BoxSpecAttribute? container;
   final BoxSpecAttribute? track;
   final BoxSpecAttribute? fill;
@@ -160,6 +168,15 @@ base class ProgressSpecAttribute extends SpecAttribute<ProgressSpec> {
         fill,
         animated,
       ];
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(DiagnosticsProperty('container', container));
+    properties.add(DiagnosticsProperty('track', track));
+    properties.add(DiagnosticsProperty('fill', fill));
+    properties.add(DiagnosticsProperty('animated', animated));
+  }
 }
 
 /// Utility class for configuring [ProgressSpecAttribute] properties.

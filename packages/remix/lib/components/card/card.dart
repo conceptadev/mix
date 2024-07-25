@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:mix/mix.dart';
 import 'package:mix_annotations/mix_annotations.dart';
@@ -11,7 +12,7 @@ part 'card_variants.dart';
 part 'card_widget.dart';
 
 @MixableSpec()
-base class CardSpec extends Spec<CardSpec> with _$CardSpec {
+base class CardSpec extends Spec<CardSpec> with _$CardSpec, Diagnosticable {
   final BoxSpec container;
 
   final FlexSpec flex;
@@ -27,4 +28,9 @@ base class CardSpec extends Spec<CardSpec> with _$CardSpec {
     super.animated,
   })  : container = container ?? const BoxSpec(),
         flex = flex ?? const FlexSpec();
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    _debugFillProperties(properties);
+  }
 }

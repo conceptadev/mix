@@ -105,8 +105,7 @@ final class SpacingDirectionalUtility<T extends Attribute>
 }
 
 @immutable
-final class SpacingSideUtility<T extends Attribute>
-    extends MixUtility<T, double> {
+class SpacingSideUtility<T extends Attribute> extends MixUtility<T, double> {
   const SpacingSideUtility(super.builder);
 
   T call(double value) => builder(value);

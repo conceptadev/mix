@@ -1,7 +1,6 @@
 import 'package:demo/helpers/use_case_state.dart';
 import 'package:flutter/material.dart';
-import 'package:remix/components/radio/radio_variants.dart';
-import 'package:remix/components/radio/radio_widget.dart';
+import 'package:remix/components/radio/radio.dart';
 import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 

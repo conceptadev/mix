@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:mix/mix.dart';
 import 'package:mix_annotations/mix_annotations.dart';
@@ -19,7 +20,8 @@ enum SpinnerStyle {
 }
 
 @MixableSpec()
-final class SpinnerSpec extends Spec<SpinnerSpec> with _$SpinnerSpec {
+final class SpinnerSpec extends Spec<SpinnerSpec>
+    with _$SpinnerSpec, Diagnosticable {
   /// Size of the spinner
   final double size;
 
@@ -37,6 +39,12 @@ final class SpinnerSpec extends Spec<SpinnerSpec> with _$SpinnerSpec {
 
   static const of = _$SpinnerSpec.of;
   static const from = _$SpinnerSpec.from;
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    _debugFillProperties(properties);
+  }
 
   const SpinnerSpec({
     double? size,

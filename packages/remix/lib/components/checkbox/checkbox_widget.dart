@@ -36,12 +36,6 @@ class _RxCheckboxState extends State<RxCheckbox> {
 
   void _handleOnPress() => widget.onChanged?.call(!widget.value);
 
-  @visibleForTesting
-  List<ICheckboxVariant> get variants => [widget.size, widget.variant];
-
-  @visibleForTesting
-  Style get style => _buildDefaultCheckboxStyle().merge(widget.style);
-
   @override
   void initState() {
     super.initState();
@@ -69,12 +63,13 @@ class _RxCheckboxState extends State<RxCheckbox> {
 
   @override
   Widget build(BuildContext context) {
+    final variants = [widget.size, widget.variant];
     return Pressable(
       onPress: widget.disabled ? null : _handleOnPress,
       enabled: !widget.disabled,
       child: SpecBuilder(
         controller: _controller,
-        style: style.applyVariants(variants),
+        style: _buildCheckboxStyle(widget.style, variants),
         builder: (context) {
           final spec = CheckboxSpec.of(context);
 

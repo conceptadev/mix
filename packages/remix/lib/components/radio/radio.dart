@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:mix/mix.dart';
 import 'package:mix_annotations/mix_annotations.dart';
@@ -12,7 +13,7 @@ part 'radio_variants.dart';
 part 'radio_widget.dart';
 
 @MixableSpec()
-base class RadioSpec extends Spec<RadioSpec> with _$RadioSpec {
+base class RadioSpec extends Spec<RadioSpec> with _$RadioSpec, Diagnosticable {
   final BoxSpec container;
   final BoxSpec indicator;
 
@@ -27,4 +28,10 @@ base class RadioSpec extends Spec<RadioSpec> with _$RadioSpec {
     super.animated,
   })  : container = container ?? const BoxSpec(),
         indicator = indicator ?? const BoxSpec();
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    _debugFillProperties(properties);
+  }
 }

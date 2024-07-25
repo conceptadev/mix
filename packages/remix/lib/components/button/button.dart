@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:mix/mix.dart';
 import 'package:mix_annotations/mix_annotations.dart';
@@ -12,7 +13,8 @@ part 'button_variants.dart';
 part 'button_widget.dart';
 
 @MixableSpec()
-base class ButtonSpec extends Spec<ButtonSpec> with _$ButtonSpec {
+base class ButtonSpec extends Spec<ButtonSpec>
+    with _$ButtonSpec, Diagnosticable {
   final FlexSpec flex;
   final BoxSpec container;
   final IconSpec icon;
@@ -38,4 +40,10 @@ base class ButtonSpec extends Spec<ButtonSpec> with _$ButtonSpec {
         icon = icon ?? const IconSpec(),
         label = label ?? const TextSpec(),
         spinner = spinner ?? const SpinnerSpec();
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    _debugFillProperties(properties);
+  }
 }

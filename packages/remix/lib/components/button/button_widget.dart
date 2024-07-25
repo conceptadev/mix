@@ -66,12 +66,6 @@ class RxButton extends StatelessWidget {
 
   bool get _hasIcon => iconLeft != null || iconRight != null;
 
-  Style _buildStyle() {
-    return buildDefaultButtonStyle()
-        .merge(style)
-        .applyVariants([size, type]).animate();
-  }
-
   Widget _buildLoadingOverlay(ButtonSpec spec, Widget child) {
     return loading
         ? Stack(
@@ -105,14 +99,15 @@ class RxButton extends StatelessWidget {
       onPress: disabled || loading ? null : onPressed,
       enabled: !isDisabled,
       child: SpecBuilder(
-          style: _buildStyle(),
-          builder: (context) {
-            final spec = ButtonSpec.of(context);
+        style: _buildButtonStyle(style, [size, type]),
+        builder: (context) {
+          final spec = ButtonSpec.of(context);
 
-            return spec.container(
-              child: _buildChildren(spec),
-            );
-          }),
+          return spec.container(
+            child: _buildChildren(spec),
+          );
+        },
+      ),
     );
   }
 }

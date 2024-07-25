@@ -5,30 +5,24 @@ class RxProgress extends StatelessWidget {
     super.key,
     this.value = 0.0,
     this.size = ProgressSize.medium,
-    this.variant = ProgressVariant.surface,
-    this.highContrast = false,
+    this.type = ProgressVariant.surface,
     this.radius = ProgressRadius.none,
+    this.style,
     this.duration,
   });
 
   final double value;
   final ProgressSize size;
-  final ProgressVariant variant;
+  final ProgressVariant type;
+  final Style? style;
 
-  final bool highContrast;
   final ProgressRadius radius;
   final Duration? duration;
-
-  Style _buildStyle() {
-    return buildDefaultProgressStyle().applyVariants(
-      [size, variant, radius],
-    ).animate();
-  }
 
   @override
   Widget build(BuildContext context) {
     return SpecBuilder(
-      style: _buildStyle(),
+      style: _buildProgressStyle(style, [size, type, radius]),
       builder: (context) {
         final spec = ProgressSpec.of(context);
 

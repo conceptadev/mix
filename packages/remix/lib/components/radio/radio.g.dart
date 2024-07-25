@@ -86,6 +86,12 @@ mixin _$RadioSpec on Spec<RadioSpec> {
       ];
 
   RadioSpec get _$this => this as RadioSpec;
+
+  void _debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    properties.add(DiagnosticsProperty('container', _$this.container));
+    properties.add(DiagnosticsProperty('indicator', _$this.indicator));
+    properties.add(DiagnosticsProperty('animated', _$this.animated));
+  }
 }
 
 /// Represents the attributes of a [RadioSpec].
@@ -95,7 +101,8 @@ mixin _$RadioSpec on Spec<RadioSpec> {
 ///
 /// Use this class to configure the attributes of a [RadioSpec] and pass it to
 /// the [RadioSpec] constructor.
-base class RadioSpecAttribute extends SpecAttribute<RadioSpec> {
+base class RadioSpecAttribute extends SpecAttribute<RadioSpec>
+    with Diagnosticable {
   final BoxSpecAttribute? container;
   final BoxSpecAttribute? indicator;
 
@@ -151,6 +158,14 @@ base class RadioSpecAttribute extends SpecAttribute<RadioSpec> {
         indicator,
         animated,
       ];
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(DiagnosticsProperty('container', container));
+    properties.add(DiagnosticsProperty('indicator', indicator));
+    properties.add(DiagnosticsProperty('animated', animated));
+  }
 }
 
 /// Utility class for configuring [RadioSpecAttribute] properties.

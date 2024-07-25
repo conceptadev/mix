@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:mix/mix.dart';
 import 'package:mix_annotations/mix_annotations.dart';
@@ -11,7 +12,8 @@ part 'progress_variants.dart';
 part 'progress_widget.dart';
 
 @MixableSpec()
-base class ProgressSpec extends Spec<ProgressSpec> with _$ProgressSpec {
+base class ProgressSpec extends Spec<ProgressSpec>
+    with _$ProgressSpec, Diagnosticable {
   final BoxSpec container;
   final BoxSpec track;
   final BoxSpec fill;
@@ -29,4 +31,10 @@ base class ProgressSpec extends Spec<ProgressSpec> with _$ProgressSpec {
   })  : container = container ?? const BoxSpec(),
         track = track ?? const BoxSpec(),
         fill = fill ?? const BoxSpec();
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    _debugFillProperties(properties);
+  }
 }

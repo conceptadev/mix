@@ -4,88 +4,109 @@ final _radio = RadioSpecUtility.self;
 final _container = _radio.container;
 final _indicator = _radio.indicator;
 
-Style get _baseStyle => Style(
-      _container.borderRadius(99),
-      _container.alignment.center(),
-      _indicator.borderRadius(99),
-    );
+Style get _baseStyle {
+  return Style(
+    _container.borderRadius(99),
+    _container.alignment.center(),
+    _indicator.borderRadius(99),
+  );
+}
 
-Style get _solidVariant => Style(
-      _container.color.ref($rx.color.accent()),
-      _indicator.color.ref($rx.color.white()),
-      $on.hover(
-        _container.color.ref($rx.color.accent(10)),
-      ),
-      $on.disabled(
-        _container.color.ref($rx.color.neutralAlpha(3)),
-      ),
-    );
+Style get _solidVariant {
+  return Style(
+    _container.color.$accent(),
+    _indicator.color.white(),
+    $on.hover(
+      _container.color.$accent(10),
+    ),
+    $on.disabled(
+      _container.color.$neutralAlpha(3),
+    ),
+  );
+}
 
-Style get _softVariant => Style(
-      _container.color.ref($rx.color.accentAlpha(3)),
-      _indicator.color.ref($rx.color.accentAlpha(11)),
-      $on.hover(
-        _container.color.ref($rx.color.accentAlpha(4)),
-      ),
-      $on.disabled(
-        _container.color.ref($rx.color.neutralAlpha(3)),
-      ),
-    );
+Style get _softVariant {
+  return Style(
+    _container.color.$accentAlpha(3),
+    _indicator.color.$accentAlpha(11),
+    $on.hover(
+      _container.color.$accentAlpha(4),
+    ),
+    $on.disabled(
+      _container.color.$neutralAlpha(3),
+    ),
+  );
+}
 
-Style get _outlineVariant => Style(
+Style get _outlineVariant {
+  return Style(
+    _container.color.transparent(),
+    _container.border.color.$accentAlpha(8),
+    _container.border.width(1.5),
+    _indicator.color.$accentAlpha(11),
+    $on.hover(
+      _container.color.$accentAlpha(2),
+    ),
+    $on.disabled(
+      _container.border.color.$neutralAlpha(8),
       _container.color.transparent(),
-      _container.border.color.ref($rx.color.accentAlpha(8)),
-      _container.border.width(1.5),
-      _indicator.color.ref($rx.color.accentAlpha(11)),
-      $on.hover(
-        _container.color.ref($rx.color.accentAlpha(2)),
-      ),
-      $on.disabled(
-        _container.border.color.ref($rx.color.neutralAlpha(8)),
-        _container.color.transparent(),
-      ),
-    );
+    ),
+  );
+}
 
-Style get _surfaceVariant => Style(
-      _outlineVariant(),
-      _container.color.ref($rx.color.accentAlpha(3)),
-      $on.hover(
-        _container.color.ref($rx.color.accentAlpha(4)),
-        _container.border.color.ref($rx.color.accentAlpha(8)),
-      ),
-      $on.disabled(
-        _container.color.ref($rx.color.neutralAlpha(3)),
-      ),
-    );
+Style get _surfaceVariant {
+  return Style(
+    _outlineVariant(),
+    _container.color.$accentAlpha(3),
+    $on.hover(
+      _container.color.$accentAlpha(4),
+      _container.border.color.$accentAlpha(8),
+    ),
+    $on.disabled(
+      _container.color.$neutralAlpha(3),
+    ),
+  );
+}
 
-Style get _ghostVariant => Style(
-      _container.border.style.none(),
-      _container.color.transparent(),
-      _indicator.color.ref($rx.color.accentAlpha(11)),
-      $on.hover(
-        _container.color.ref($rx.color.accentAlpha(3)),
-      ),
-    );
-Style get _smallVariant => Style(
-      _container.size(16),
-      _indicator.size(8),
-    );
+Style get _ghostVariant {
+  return Style(
+    _container.border.style.none(),
+    _container.color.transparent(),
+    _indicator.color.$accentAlpha(11),
+    $on.hover(
+      _container.color.$accentAlpha(3),
+    ),
+  );
+}
 
-Style get _mediumVariant => Style(
-      _container.size(20),
-      _indicator.size(10),
-    );
+Style get _smallVariant {
+  return Style(
+    _container.size(16),
+    _indicator.size(8),
+  );
+}
 
-Style get _largeVariant => Style(
-      _container.size(24),
-      _indicator.size(12),
-    );
+Style get _mediumVariant {
+  return Style(
+    _container.size(20),
+    _indicator.size(10),
+  );
+}
 
-Style get _disabledVariant => Style(
-      _container.color.ref($rx.color.neutralAlpha(3)),
-      _container.border.color.ref($rx.color.neutralAlpha(5)),
-      _indicator.color.ref($rx.color.neutralAlpha(7)),
-    );
+Style get _largeVariant {
+  return Style(
+    _container.size(24),
+    _indicator.size(12),
+  );
+}
+
+Style get _disabledVariant {
+  return Style(
+    _container.color.$neutralAlpha(3),
+    _container.border.color.$neutralAlpha(5),
+    _indicator.color.$neutralAlpha(7),
+  );
+}
 
 Style buildDefaultRadioStyle() {
   return Style(

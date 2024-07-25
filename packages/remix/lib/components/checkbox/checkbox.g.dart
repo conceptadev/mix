@@ -87,6 +87,12 @@ mixin _$CheckboxSpec on Spec<CheckboxSpec> {
       ];
 
   CheckboxSpec get _$this => this as CheckboxSpec;
+
+  void _debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    properties.add(DiagnosticsProperty('container', _$this.container));
+    properties.add(DiagnosticsProperty('indicator', _$this.indicator));
+    properties.add(DiagnosticsProperty('animated', _$this.animated));
+  }
 }
 
 /// Represents the attributes of a [CheckboxSpec].
@@ -96,7 +102,8 @@ mixin _$CheckboxSpec on Spec<CheckboxSpec> {
 ///
 /// Use this class to configure the attributes of a [CheckboxSpec] and pass it to
 /// the [CheckboxSpec] constructor.
-base class CheckboxSpecAttribute extends SpecAttribute<CheckboxSpec> {
+base class CheckboxSpecAttribute extends SpecAttribute<CheckboxSpec>
+    with Diagnosticable {
   final BoxSpecAttribute? container;
   final IconSpecAttribute? indicator;
 
@@ -152,6 +159,14 @@ base class CheckboxSpecAttribute extends SpecAttribute<CheckboxSpec> {
         indicator,
         animated,
       ];
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(DiagnosticsProperty('container', container));
+    properties.add(DiagnosticsProperty('indicator', indicator));
+    properties.add(DiagnosticsProperty('animated', animated));
+  }
 }
 
 /// Utility class for configuring [CheckboxSpecAttribute] properties.

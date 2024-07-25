@@ -86,6 +86,12 @@ mixin _$SwitchSpec on Spec<SwitchSpec> {
       ];
 
   SwitchSpec get _$this => this as SwitchSpec;
+
+  void _debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    properties.add(DiagnosticsProperty('container', _$this.container));
+    properties.add(DiagnosticsProperty('indicator', _$this.indicator));
+    properties.add(DiagnosticsProperty('animated', _$this.animated));
+  }
 }
 
 /// Represents the attributes of a [SwitchSpec].
@@ -95,7 +101,8 @@ mixin _$SwitchSpec on Spec<SwitchSpec> {
 ///
 /// Use this class to configure the attributes of a [SwitchSpec] and pass it to
 /// the [SwitchSpec] constructor.
-base class SwitchSpecAttribute extends SpecAttribute<SwitchSpec> {
+base class SwitchSpecAttribute extends SpecAttribute<SwitchSpec>
+    with Diagnosticable {
   final BoxSpecAttribute? container;
   final BoxSpecAttribute? indicator;
 
@@ -151,6 +158,14 @@ base class SwitchSpecAttribute extends SpecAttribute<SwitchSpec> {
         indicator,
         animated,
       ];
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(DiagnosticsProperty('container', container));
+    properties.add(DiagnosticsProperty('indicator', indicator));
+    properties.add(DiagnosticsProperty('animated', animated));
+  }
 }
 
 /// Utility class for configuring [SwitchSpecAttribute] properties.

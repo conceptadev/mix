@@ -100,6 +100,15 @@ mixin _$SpinnerSpec on Spec<SpinnerSpec> {
       ];
 
   SpinnerSpec get _$this => this as SpinnerSpec;
+
+  void _debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    properties.add(DiagnosticsProperty('size', _$this.size));
+    properties.add(DiagnosticsProperty('strokeWidth', _$this.strokeWidth));
+    properties.add(DiagnosticsProperty('color', _$this.color));
+    properties.add(DiagnosticsProperty('duration', _$this.duration));
+    properties.add(DiagnosticsProperty('style', _$this.style));
+    properties.add(DiagnosticsProperty('animated', _$this.animated));
+  }
 }
 
 /// Represents the attributes of a [SpinnerSpec].
@@ -109,7 +118,8 @@ mixin _$SpinnerSpec on Spec<SpinnerSpec> {
 ///
 /// Use this class to configure the attributes of a [SpinnerSpec] and pass it to
 /// the [SpinnerSpec] constructor.
-final class SpinnerSpecAttribute extends SpecAttribute<SpinnerSpec> {
+final class SpinnerSpecAttribute extends SpecAttribute<SpinnerSpec>
+    with Diagnosticable {
   final double? size;
   final double? strokeWidth;
   final ColorDto? color;
@@ -180,6 +190,17 @@ final class SpinnerSpecAttribute extends SpecAttribute<SpinnerSpec> {
         style,
         animated,
       ];
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(DiagnosticsProperty('size', size));
+    properties.add(DiagnosticsProperty('strokeWidth', strokeWidth));
+    properties.add(DiagnosticsProperty('color', color));
+    properties.add(DiagnosticsProperty('duration', duration));
+    properties.add(DiagnosticsProperty('style', style, expandableValue: true));
+    properties.add(DiagnosticsProperty('animated', animated));
+  }
 }
 
 /// Utility class for configuring [SpinnerSpecAttribute] properties.

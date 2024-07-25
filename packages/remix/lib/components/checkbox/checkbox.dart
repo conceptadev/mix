@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:mix/mix.dart';
 import 'package:mix_annotations/mix_annotations.dart';
@@ -12,7 +13,8 @@ part 'checkbox_variants.dart';
 part 'checkbox_widget.dart';
 
 @MixableSpec()
-base class CheckboxSpec extends Spec<CheckboxSpec> with _$CheckboxSpec {
+base class CheckboxSpec extends Spec<CheckboxSpec>
+    with _$CheckboxSpec, Diagnosticable {
   final BoxSpec container;
   final IconSpec indicator;
 
@@ -27,4 +29,10 @@ base class CheckboxSpec extends Spec<CheckboxSpec> with _$CheckboxSpec {
     super.animated,
   })  : container = container ?? const BoxSpec(),
         indicator = indicator ?? const IconSpec();
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    _debugFillProperties(properties);
+  }
 }

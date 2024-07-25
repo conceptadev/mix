@@ -9,16 +9,16 @@ Style get _baseStyle => Style(
       _image.fit.cover(),
       _container.alignment.center(),
       _fallback.textAlign.center(),
-      _fallback.style.fontWeight(FontWeight.bold),
-      _fallback.style.color.ref($rx.color.neutral(1)),
+      _fallback.style.fontWeight.bold(),
+      _fallback.style.color.$neutral(1),
     );
 
 Style get _solidVariant => Style(
-      _container.color.ref($rx.color.accent()),
+      _container.color.$accent(),
     );
 
 Style get _softVariant => Style(
-      _container.color.ref($rx.color.accent(4)),
+      _container.color.$accent(4),
     );
 
 Style get _size1 => Style(
