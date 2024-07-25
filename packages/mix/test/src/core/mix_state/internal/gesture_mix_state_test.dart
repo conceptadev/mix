@@ -86,6 +86,7 @@ void main() {
         (tester) async {
       await tester.pumpWidget(
         buildGestureMixStateWidget(
+          onTap: () {},
           unpressDelay: const Duration(milliseconds: 100),
         ),
       );
@@ -122,6 +123,7 @@ void main() {
     testWidgets('should not update press state when disabled', (tester) async {
       await tester.pumpWidget(
         buildGestureMixStateWidget(
+          onTap: () {},
           unpressDelay: Duration.zero,
         ),
       );
