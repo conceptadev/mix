@@ -8,6 +8,32 @@ Modifiers in Mix extend functionality by defining the widget composition tree st
 
 You can find all available modifiers within the `$with` utility. This provides a single place to access all modifier functions.
 
+## Spec Modifiers
+You can also apply modifiers to specific widgets, thanks to the `wrap` property of each Attribute.
+
+```dart
+Box(
+  style: Style(
+    $box.wrap.scale(0.5),
+  ),
+);
+```
+
+It's a simple example of how to use SpecModifiers. In more complex cases, you may want to apply a modifier to a specific widget in the widget tree.
+
+```dart
+Box(
+  style: Style(
+    $icon.wrap.scale(2),
+  ),
+  child: StyledIcon(
+    Icons.abc,
+  ),
+);
+```
+
+The code above results in a Box without any Transform applied, but as its child a StyledIcon widget with a Transform over it. The reason this is possible is because the `$icon.wrap` property will only be applied to the `StyledIcon`s.
+
 ## Understanding the Mechanics
 
 Take the `scale` attribute, for instance. The Container widget doesn't inherently possess the ability to scale. But, by employing a Transform widget as a modifier, we can introduce this effect.
@@ -72,6 +98,7 @@ ScaleModifier scale(double scale, {Key? key}) => ScaleModifier(scale, key: key);
 ```dart {2}
 final style = Style(
   $with.scale(0.5),
+  // or $box.wrap.scale(0.5),
 );
 
 Box(
@@ -89,8 +116,12 @@ Mix comes with a set of built-in modifiers that can be used out of the box.
 Decorates a `Box` with a `Transform.scale` widget
 
 ```dart
-final style = Style(
+final modifier = Style(
   $with.scale(0.5),
+);
+
+final specModifier = Style(
+  $box.wrap.scale(0.5),
 );
 
 // Equivalent to
@@ -101,14 +132,17 @@ Transform.scale(
   ),
 );
 ```
-
-### Opacity
+### Opacity Modifier
 
 Decorates a `Box` with an `Opacity` widget
 
-```dart
-final style = Style(
+
+final modifier = Style(
   $with.opacity(0.5),
+);
+
+final specModifier = Style(
+  $box.wrap.opacity(0.5),
 );
 
 // Equivalent to
@@ -118,15 +152,19 @@ Opacity(
     child: const Text('Half transparent box'),
   ),
 );
-```
 
-### Rotate
+
+### Rotate Modifier
 
 Decorates a `Box` with a `Transform.rotate` widget. The parameter is quarter turns.
 
-```dart
-final style = Style(
+
+final modifier = Style(
   $with.rotate(1),
+);
+
+final specModifier = Style(
+  $box.wrap.rotate(1),
 );
 
 // Equivalent to
@@ -136,9 +174,10 @@ RotatedBox(
     child: const Text('Rotated box'),
   ),
 );
-```
+
 
 **Helper methods**
+All helpers are also available for SpecModifiers.
 
 - `$with.rotate(1)`: 90 degrees
 - `$with.rotate.d90()`: 90 degrees
@@ -147,13 +186,17 @@ RotatedBox(
 - `$with.rotate(3)`: 270 degrees
 - `$with.rotate.d270()`: 270 degrees
 
-### Aspect Ratio
+### Aspect Ratio Modifier
 
 Decorates a `Box` with an `AspectRatio` widget
 
-```dart
-final style = Style(
+
+final modifier = Style(
   $with.aspectRatio(6/9),
+);
+
+final specModifier = Style(
+  $box.wrap.aspectRatio(6/9),
 );
 
 // Equivalent to
@@ -163,19 +206,23 @@ AspectRatio(
     child: const Text('Aspect ratio box'),
   ),
 );
-```
 
-### Clip
+
+### Clip Modifier
 
 Decorates a `Box` with different types of `Clip` widgets
 
-```dart
-final style = Style(
+
+final modifier = Style(
   $with.clipOval(),
 );
 
+final specModifier = Style(
+  $box.wrap.clipOval(),
+);
+
 Box(
-  style: style,
+  style: modifier,
   child: const Text('Oval box'),
 );
 
@@ -185,9 +232,10 @@ ClipOval(
     child: const Text('Oval box'),
   ),
 );
-```
+
 
 **Helper methods**
+All helpers are also available for SpecModifiers.
 
 - `$with.clipOval()`: Wraps with a **ClipOval** widget
 - `$with.clipRrect()`: Wraps with a **ClipRRect** widget
@@ -195,13 +243,17 @@ ClipOval(
 - `$with.clipPath()`: Wraps with a **ClipPath** widget
 - `$with.clipTriangle()`: Wraps with a **ClipPath** widget that clips to a triangle
 
-### Visibility
+### Visibility Modifier
 
 Decorates a `Box` with a `Visibility` widget
 
-```dart
-final style = Style(
+
+final modifier = Style(
   $with.visibility(false),
+);
+
+final specModifier = Style(
+  $box.wrap.visibility(false),
 );
 
 // Equivalent to
@@ -211,15 +263,19 @@ Visibility(
     child: const Text('Invisible box'),
   ),
 );
-```
 
-### IntrinsicHeight and IntrinsicWidth
+
+### IntrinsicHeight and IntrinsicWidth Modifier
 
 Decorates a `Box` with a `IntrinsicHeight` or `IntrinsicWidth` widget
 
-```dart
-final style = Style(
+
+final modifier = Style(
   $with.intrinsicHeight(), // or intrinsicWidth()
+);
+
+final specModifier = Style(
+  $box.wrap.intrinsicHeight(), // or intrinsicWidth()
 );
 
 // Equivalent to
@@ -228,28 +284,34 @@ IntrinsicHeight( // or IntrinsicWidth
     child: const Text('Invisible box'),
   ),
 );
-```
+
 
 **Helper methods**
+All helpers are also available for SpecModifiers.
 
 - `$with.show()`: Wraps the **Box** with a **Visibility** widget that is visible
 - `$with.hide()`: Wraps the **Box** with a **Visibility** widget that is invisible
 - `$with.visibility.on()`: Wraps the **Box** with a **Visibility** widget that is visible
-- `$with.visibility.off()`: Wraps the **`**Box**`** with a **`**Visibility**`** widget that is invisible
+- `$with.visibility.off()`: Wraps the **Box** with a **Visibility** widget that is invisible
 
-### Flexible
+### Flexible Modifier
 
 Decorates a `Flex` Styled widget like `FlexBox`, `HBox`, `VBox`, with a `Flexible` widget
 
-```dart
-final style = Style(
+
+final modifier = Style(
   $with.flexible(flex:1, fit: FlexFit.tight),
 );
-```
+
+final specModifier = Style(
+  $box.wrap.flexible(flex:1, fit: FlexFit.tight),
+);
+
 
 - `$with.flexible(flex:1, fit: FlexFit.tight)`: Wraps the `Flex` Styled widget with a `Flexible` widget
 
 **Helper methods**
+All helpers are also available for SpecModifiers.
 
 - `$with.flexible.expanded()`: Equivalent to **Expanded** widget, or `flexible(fit: FlexFit.tight)`
 - `$with.flexible.loose()`: Equivalent to **Flexible** widget, or `flexible(fit: FlexFit.loose)`
@@ -258,14 +320,14 @@ final style = Style(
 
 This is equivalent to wrapping the `Flex` Styled widget with a `Flexible` widget.
 
-```dart
+
 Flexible(
   flex: 1,
   fit: FlexFit.tight,
   child: FlexBox(
     children: [
-       const Text('Flexible box'),
+        const Text('Flexible box'),
     ],
   ),
 );
-```
+
