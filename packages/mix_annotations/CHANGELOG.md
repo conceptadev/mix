@@ -1,7 +1,6 @@
 ## 0.2.1
 
- - **FEAT**: Code generation for Widget Modifiers (#396).
- - **FEAT**: ColorSwatchToken and other token improvements (#378).
+ - **FEAT**: MixableSpec now supports `withCopyWith`, `withEquality`, `withLerp`, and `skipUtility` (#396).
 
 ## 0.2.0+1
 

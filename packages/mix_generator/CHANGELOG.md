@@ -1,11 +1,10 @@
 ## 0.2.2
 
- - **REFACTOR**(mix_generator): fix lints (#395).
- - **FIX**: Code gen linting fixes (#399).
- - **FIX**: nullable merge expressions and updates debug properties #392.
  - **FEAT**: Code generation for Widget Modifiers (#396).
- - **FEAT**: Dto utility generation now adds constructor and static methods.
+ - **FEAT**: Dto utility generation now adds constructor and static methods (#377).
  - **FEAT**: ColorSwatchToken and other token improvements (#378).
+ - **REFACTOR**: Code gen more lint friendly dart code (#399) and (#395).
+ - **FIX**: Nullable merge expressions and updates debug properties (#392).
 
 ## 0.2.1
 

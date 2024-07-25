@@ -1,6 +1,6 @@
 ## 0.1.1
 
- - **FEAT**: Improvements for the "extract attributes" assist  (#387).
+ - **FEAT**: Improvements for the "extract attributes" assist (#387).
  - **FEAT**: implement quick fix for mix_attributes_ordering rule (#381).
  - **FEAT**: ColorSwatchToken and other token improvements (#378).
 

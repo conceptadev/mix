@@ -25,33 +25,29 @@ Packages with other changes:
 
 #### `mix` - `v1.4.0`
 
- - **REFACTOR**(mix_generator): fix lints (#395).
- - **FIX**: gestures propagation for GestureMixStateWidget (#394).
- - **FIX**: Code gen linting fixes (#399).
- - **FIX**: order modifier (#389).
- - **FIX**: animations of Stack and Flex.
- - **FIX**: add flexible as the first in the order of modifiers (#379).
  - **FEAT**: Code generation for Widget Modifiers (#396).
  - **FEAT**: Ability to pass MixWidgetStateController to SpecBuilder (#391).
- - **FEAT**: remix - Foundational components (#317).
- - **FEAT**: interactive widget state by default (#384).
+ - **FEAT**: Interactive widget state by default (#384).
  - **FEAT**: MixThemeData can alter default order of modifiers (#380).
- - **FEAT**: Dto utility generation now adds constructor and static methods.
+ - **FEAT**: Dto utility generation now adds constructor and static methods (#377).
  - **FEAT**: ColorSwatchToken and other token improvements (#378).
+ - **REFACTOR**: Code gen more lint friendly dart code (#399).
+ - **FIX**: Gestures propagation for GestureMixStateWidget (#394).
+ - **FIX**: Normalization of order of modifier when applied to a Styled Widget (#389).
+ - **FIX**: Animations of Stack and Flex (#388).
+ - **FIX**: Review the order of modifiers adding FlexibleModifier, PaddingModifier, and RotatedModifier (#379).
 
 #### `mix_annotations` - `v0.2.1`
 
- - **FEAT**: Code generation for Widget Modifiers (#396).
- - **FEAT**: ColorSwatchToken and other token improvements (#378).
+ - **FEAT**: MixableSpec now supports `withCopyWith`, `withEquality`, `withLerp`, and `skipUtility` (#396).
 
 #### `mix_generator` - `v0.2.2`
 
- - **REFACTOR**(mix_generator): fix lints (#395).
- - **FIX**: Code gen linting fixes (#399).
- - **FIX**: nullable merge expressions and updates debug properties #392.
  - **FEAT**: Code generation for Widget Modifiers (#396).
- - **FEAT**: Dto utility generation now adds constructor and static methods.
+ - **FEAT**: Dto utility generation now adds constructor and static methods (#377).
  - **FEAT**: ColorSwatchToken and other token improvements (#378).
+ - **REFACTOR**: Code gen more lint friendly dart code (#399) and (#395).
+ - **FIX**: Nullable merge expressions and updates debug properties (#392).
 
 #### `mix_lint` - `v0.1.1`
 
