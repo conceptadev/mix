@@ -614,6 +614,7 @@ Future<void> pumpTestCase({
     PressableBox(
       unpressDelay: duration,
       onPress: () {},
+      onLongPress: () {},
       enabled: true,
       style: Style(
         $with.opacity(0.5),
