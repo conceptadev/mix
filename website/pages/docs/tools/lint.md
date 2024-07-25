@@ -248,3 +248,24 @@ final mainStyle = Style(
 ##### max_number (int)
 
 The maximum number of attributes allowed per style. The default value is 10.
+
+## Assists
+
+### Extract Attributes
+
+It is a powerful refactoring tool designed to improve the structure and maintainability of your Mix code by extracting style attributes from a Style instance into a separate Style instance.
+
+#### Usage
+
+This assist automatically becomes available when you move your cursor into a Style's constructor scope. It will be suggested as an assist option.
+
+#### Supported Contexts
+The assist can extract attributes even when the Style is on differents code structures:
+- Field declarations
+- Method declarations (getters)
+- Top-level variable declarations
+- Function declarations (getters)
+
+![extract-attributes](./images/assist-extract-attributes.gif)
+![extract-attributes-2](./images/assist-extract-attributes-2.gif)
+![extract-attributes-3](./images/assist-extract-attributes-3.gif)
