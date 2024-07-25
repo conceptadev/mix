@@ -30,6 +30,14 @@ dev_dependencies:
 
 The `@MixableSpec()` annotation generates code for a mixable class. Here's an example:
 
+#### Options
+
+- `withCopyWith` - Defaults to true, generates a copyWith method.
+- `withEquality` - Defaults to true, generates equality methods.
+- `withLerp` - Defaults to true, generates a lerp method.
+- `skipUtility` - Defaults to false, skips the utility class.
+- `prefix` - Defaults to name of `Spec` class, adds a prefix to the generated class.
+
 ```dart
 import 'package:mix/mix.dart';
 import 'package:mix_annotations/mix_annotations.dart';

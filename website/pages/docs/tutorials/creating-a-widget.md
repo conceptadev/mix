@@ -5,7 +5,6 @@ When creating a design system in Flutter, building reusable components that main
 
 ![Button Example](./images/button-example.png)
 
-
 ## Component Overview
 
 ### Button Variants
@@ -45,19 +44,17 @@ While each button variant may have distinct visual characteristics, they should 
 
 By sharing these properties, the button component ensures a cohesive and consistent appearance throughout the application.
 
-
-
 ## Setup Mix
 
 1. Add the `mix` and `mix_annotations` packages to your Flutter project.
 
-```
+```bash
 flutter pub add mix mix_annotations
 ```
 
 2. Add the `mix_generator` and `build_runner` packages to your dev dependencies.
 
-```
+```bash
 flutter pub add --dev mix_generator build_runner
 ```
 
@@ -89,7 +86,6 @@ Here is a simple example structure for a button.
 - Flex: Arranges the icon and label horizontally within the button.
 - Icon (optional): Represents an icon or visual embellishment for the button.
 - Label: Displays the button's text content.
-
 
 ### Create a Button Spec
 
@@ -133,7 +129,7 @@ As you can see, we are passing all optional parameters, but we do define default
 
 To generate the `button_spec.g.dart` file, run the following command in your terminal:
 
-```
+```bash
 flutter pub run build_runner build
 ```
 
@@ -143,16 +139,16 @@ After running the command, you should see a new file named `button_spec.g.dart` 
 
 Note: After the `button_spec.g.dart` file is generated, you will notice that `mix_generator` has generated all the necessary extension methods, including:
 
--  `lerp`: Linearly interpolates between two `ButtonSpec` instances.
--  `copyWith`: Creates a new `ButtonSpec` instance with the specified properties replaced.
--  `equality`: Equality comparison and hash code generation for `ButtonSpec` instances.
--  `of` and `from` static methods: Helper methods for accessing and creating `ButtonSpec` instances.
+- `lerp`: Linearly interpolates between two `ButtonSpec` instances.
+- `copyWith`: Creates a new `ButtonSpec` instance with the specified properties replaced.
+- `equality`: Equality comparison and hash code generation for `ButtonSpec` instances.
+- `of` and `from` static methods: Helper methods for accessing and creating `ButtonSpec` instances.
   
 Additionally, you will find the following generated classes:
 
--  `ButtonSpecAttribute`: It is similar to `ButtonSpec`, but it has attribute equivalents, which allow values to be passed within Mix and merged before resolving to the spec.
--  `ButtonSpecTween`: It is generated so you can use it for animations involving `ButtonSpec` instances.
--  `ButtonSpecUtility`: This is the API utility class that you will be using to interact with your button. It provides convenient methods for applying the button's styling.
+- `ButtonSpecAttribute`: It is similar to `ButtonSpec`, but it has attribute equivalents, which allow values to be passed within Mix and merged before resolving to the spec.
+- `ButtonSpecTween`: It is generated so you can use it for animations involving `ButtonSpec` instances.
+- `ButtonSpecUtility`: This is the API utility class that you will be using to interact with your button. It provides convenient methods for applying the button's styling.
 
 Make sure to run the build runner whenever you make changes to the `ButtonSpec` class or any other classes with Mix annotations to keep the generated code up to date.
 
@@ -392,7 +388,7 @@ Create a function that brings all the button styles together:
 
 1. One thing that Mix allows us to do is to override the styles or the variants at any time, so it's always good for the function to allow another style in case you need to override something within the widget from outside the widget.
 2. You also want to accept a `ButtonVariant` as a parameter to the style in order to apply only the styles of that variant.
-   
+
 ```dart
 Style buttonStyle(Style? style, ButtonVariant? variant) {
   return Style(

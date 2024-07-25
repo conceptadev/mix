@@ -1,14 +1,9 @@
 
-
-import { Callout } from "nextra-theme-docs";
-
 # Building Custom Design System Component
 
 Mix is a powerful tool, and to make it even more powerful, we can add support for new widgets and increase its functionality for more and more use cases. Therefore, this guide will help you add support for new widgets.
 
 To make this tutorial more practical, we will add support for a widget from `Material`, the TextField. Specifically, we will add support for the `decoration` attribute, which defines most of the visual aspects of the TextField. As a result, we will be able to go from the default TextField, which looks like this:
-
-
 
 ## 1. Define the Spec
 

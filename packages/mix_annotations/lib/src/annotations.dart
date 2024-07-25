@@ -1,11 +1,31 @@
+/// A specification class defining the mixable behavior of a generated class.
+///
+/// Use `MixableSpec` to configure whether the generated class should include
+/// `copyWith`, equality, and `lerp` methods, and to specify a prefix for the
+/// generated code.
+///
+/// To use the default configuration, create an instance without any arguments:
+///
+/// ```dart
+/// const mixable = MixableSpec();
+/// ```
 class MixableSpec {
+  /// Whether to generate a `copyWith` method for the class.
   final bool withCopyWith;
+
+  /// Whether to generate equality methods (`==` and `hashCode`) for the class.
   final bool withEquality;
+
+  /// Whether to generate a `lerp` method for the class.
   final bool withLerp;
+
+  /// Whether to skip generating utility methods (`copyWith`, equality, `lerp`).
   final bool skipUtility;
 
+  /// The prefix to add to the generated code.
   final String prefix;
 
+  /// Creates a `MixableSpec` with the given configuration.
   const MixableSpec({
     this.withCopyWith = true,
     this.withEquality = true,

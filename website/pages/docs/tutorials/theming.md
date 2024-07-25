@@ -1,10 +1,3 @@
----
-id: theming
-title: "Theming"
----
-
-import { Bleed } from "nextra-theme-docs";
-
 # Theming
 
 ## Introduction
