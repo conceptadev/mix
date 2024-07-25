@@ -1,3 +1,17 @@
+## 1.4.0
+
+ - **FEAT**: Code generation for Widget Modifiers (#396).
+ - **FEAT**: Ability to pass MixWidgetStateController to SpecBuilder (#391).
+ - **FEAT**: Interactive widget state by default (#384).
+ - **FEAT**: MixThemeData can alter default order of modifiers (#380).
+ - **FEAT**: Dto utility generation now adds constructor and static methods (#377).
+ - **FEAT**: ColorSwatchToken and other token improvements (#378).
+ - **REFACTOR**: Code gen more lint friendly dart code (#399).
+ - **FIX**: Gestures propagation for GestureMixStateWidget (#394).
+ - **FIX**: Normalization of order of modifier when applied to a Styled Widget (#389).
+ - **FIX**: Animations of Stack and Flex (#388).
+ - **FIX**: Review the order of modifiers adding FlexibleModifier, PaddingModifier, and RotatedModifier (#379).
+
 ## 1.3.0
 
  - **REFACTOR**: unpressDelay uses timer instead of future<void> now (#374).
