@@ -9,9 +9,6 @@ import 'package:mix_generator/src/helpers/field_info.dart';
 import 'package:mix_generator/src/helpers/helpers.dart';
 
 String specMixin(ClassBuilderContext<MixableSpec> context) {
-  final hasDiagnosticable = context.hasDiagnosticable &&
-      context.classElement.mixins.any((element) =>
-          element.getDisplayString(withNullability: false) == 'Diagnosticable');
   final specClass =
       ClassInfo.ofElement(context.classElement, asInternalRef: true);
 
@@ -35,7 +32,7 @@ String specMixin(ClassBuilderContext<MixableSpec> context) {
   final selfGetter = getterSelfBuilder(specClass);
 
   final debugFillProperties =
-      hasDiagnosticable ? methodDebugFillProperties(specClass) : '';
+      context.hasDiagnosticable ? methodDebugFillProperties(specClass) : '';
 
   final staticMethodFrom =
       generateStaticMethods ? _staticMethodFromBuilder(context) : '';

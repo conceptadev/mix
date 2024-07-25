@@ -310,6 +310,9 @@ class ClassBuilderContext<T> {
         constructor.parameters.map(ParameterInfo.ofElement).toList();
   }
 
+  bool get hasDiagnosticable =>
+      classElement.allSupertypes.any((e) => e.element.name == 'Diagnosticable');
+
   ConstructorElement get constructor {
     final defaultContructor = classElement.constructors.firstWhereOrNull(
       (element) =>
@@ -354,8 +357,6 @@ extension ClassContextSpecX on ClassBuilderContext<MixableSpec> {
   String get tweenClassName => '${_prefix}Tween';
 
   String get attributeExtendsType => '${specType}Attribute<$name>';
-
-  bool get hasDiagnosticable => annotation.withDiagnosticable;
 }
 
 extension ClassContextDtoX on ClassBuilderContext<MixableDto> {
