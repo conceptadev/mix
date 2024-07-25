@@ -1,3 +1,9 @@
+## 0.1.1
+
+ - **FEAT**: Improvements for the "extract attributes" assist  (#387).
+ - **FEAT**: implement quick fix for mix_attributes_ordering rule (#381).
+ - **FEAT**: ColorSwatchToken and other token improvements (#378).
+
 ## 0.1.0+1
 
  - **REFACTOR**: bump flutter version to 3.19.0 (#365).

@@ -1,3 +1,19 @@
+## 1.4.0
+
+ - **REFACTOR**(mix_generator): fix lints (#395).
+ - **FIX**: gestures propagation for GestureMixStateWidget (#394).
+ - **FIX**: Code gen linting fixes (#399).
+ - **FIX**: order modifier (#389).
+ - **FIX**: animations of Stack and Flex.
+ - **FIX**: add flexible as the first in the order of modifiers (#379).
+ - **FEAT**: Code generation for Widget Modifiers (#396).
+ - **FEAT**: Ability to pass MixWidgetStateController to SpecBuilder (#391).
+ - **FEAT**: remix - Foundational components (#317).
+ - **FEAT**: interactive widget state by default (#384).
+ - **FEAT**: MixThemeData can alter default order of modifiers (#380).
+ - **FEAT**: Dto utility generation now adds constructor and static methods.
+ - **FEAT**: ColorSwatchToken and other token improvements (#378).
+
 ## 1.3.0
 
  - **REFACTOR**: unpressDelay uses timer instead of future<void> now (#374).
