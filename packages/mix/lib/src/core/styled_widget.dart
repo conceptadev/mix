@@ -1,7 +1,6 @@
 import 'package:flutter/widgets.dart';
 
 import '../modifiers/internal/render_widget_modifier.dart';
-import '../variants/context_variant.dart';
 import '../variants/widget_state_variant.dart';
 import '../widgets/pressable_widget.dart';
 import 'factory/mix_data.dart';
@@ -82,9 +81,6 @@ class SpecBuilder extends StatelessWidget {
 
   bool get _hasWidgetStateVariant => style.variants.values
       .any((attr) => attr.variant is MixWidgetStateVariant);
-
-  bool get _hasListenerVariant => style.variants.values.any((attr) =>
-      attr is ContextVariantBuilder && attr.variant is OnHoverVariant);
 
   // Required builder function
   final Widget Function(BuildContext) builder;
