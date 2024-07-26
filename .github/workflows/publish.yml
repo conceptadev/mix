@@ -74,7 +74,7 @@ jobs:
           
           if [[ -n "$PACKAGES" ]]; then
             echo "$PACKAGES"
-            melos publish --dry-run --no-private "$PACKAGES"
+            melos publish --dry-run --yes --no-private "$PACKAGES"
           else
             echo "No packages selected for publishing"
           fi
