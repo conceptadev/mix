@@ -123,7 +123,7 @@ jobs:
           echo "matrix=$(IFS=,; echo "[${matrix[*]}]")" >> $GITHUB_OUTPUT
 
   publish:
-    needs: [test-mincompat, test-stable, publish-dry-run, prepare-matrix]
+    needs: [prepare-matrix]
     environment: Production
     runs-on: ubuntu-latest
     strategy:
