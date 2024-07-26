@@ -55,29 +55,20 @@ jobs:
         
       - name: Run melos fix
         run: |
-          PACKAGES=""
           if [[ "${{ github.event.inputs.mix_lint }}" == "true" ]]; then
-            PACKAGES+=" --scope=packages/mix_lint"
+            cd packages/mix_lint && dart pub publish --dry-run && cd ../..
           fi
           if [[ "${{ github.event.inputs.mix_annotations }}" == "true" ]]; then
-            PACKAGES+=" --scope=packages/mix_annotations"
+            cd packages/mix_annotations && dart pub publish --dry-run && cd ../..
           fi
           if [[ "${{ github.event.inputs.mix_generator }}" == "true" ]]; then
-            PACKAGES+=" --scope=packages/mix_generator"
+            cd packages/mix_generator && dart pub publish --dry-run && cd ../..
           fi
           if [[ "${{ github.event.inputs.mix }}" == "true" ]]; then
-            PACKAGES+=" --scope=packages/mix"
+            cd packages/mix && dart pub publish --dry-run && cd ../..
           fi
           if [[ "${{ github.event.inputs.remix }}" == "true" ]]; then
-            PACKAGES+=" --scope=packages/remix"
-          fi
-          
-          if [[ -n "$PACKAGES" ]]; then
-            echo "$PACKAGES"
-            melos run gen:build
-            melos publish --dry-run --yes "$PACKAGES"
-          else
-            echo "No packages selected for publishing"
+            cd packages/remix && dart pub publish --dry-run && cd ../..
           fi
         shell: bash
 
