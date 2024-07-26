@@ -50,6 +50,7 @@ jobs:
   publish_mix_lint:
     needs: [mincompat, stable]
     if: ${{ github.event.inputs.mix_lint }}
+    environment: Production
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -70,6 +71,7 @@ jobs:
   publish_mix_annotations:
     needs: [mincompat, stable]
     if: ${{ github.event.inputs.mix_annotations }}
+    environment: Production
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -90,6 +92,7 @@ jobs:
   publish_mix_generator:
     needs: [mincompat, stable]
     if: ${{ github.event.inputs.mix_generator }}
+    environment: Production
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -110,6 +113,7 @@ jobs:
   publish_mix:
     needs: [mincompat, stable]
     if: ${{ github.event.inputs.mix }}
+    environment: Production
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@main
@@ -130,6 +134,7 @@ jobs:
   publish_remix:
     needs: [mincompat, stable]
     if: ${{ github.event.inputs.remix }}
+    environment: Production
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
