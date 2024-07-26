@@ -75,23 +75,23 @@ jobs:
         run: |
           PACKAGES=""
           if [[ "${{ github.event.inputs.mix_lint }}" == "true" ]]; then
-            PACKAGES+="--scope=packages/mix_lint"
+            PACKAGES+=" --scope=packages/mix_lint"
           fi
           if [[ "${{ github.event.inputs.mix_annotations }}" == "true" ]]; then
-            PACKAGES+="--scope=packages/mix_annotations"
+            PACKAGES+=" --scope=packages/mix_annotations"
           fi
           if [[ "${{ github.event.inputs.mix_generator }}" == "true" ]]; then
-            PACKAGES+="--scope=packages/mix_generator"
+            PACKAGES+=" --scope=packages/mix_generator"
           fi
           if [[ "${{ github.event.inputs.mix }}" == "true" ]]; then
-            PACKAGES+="--scope=packages/mix"
+            PACKAGES+=" --scope=packages/mix"
           fi
           if [[ "${{ github.event.inputs.remix }}" == "true" ]]; then
-            PACKAGES+="--scope=packages/remix"
+            PACKAGES+=" --scope=packages/remix"
           fi
           PACKAGES=${PACKAGES%,}
           if [[ -n "$PACKAGES" ]]; then
-            melos publish --dry-run --no-private --scope="$PACKAGES"
+            melos publish --dry-run --no-private "$PACKAGES"
           else
             echo "No packages selected for publishing"
           fi
