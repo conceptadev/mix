@@ -74,6 +74,7 @@ jobs:
           
           if [[ -n "$PACKAGES" ]]; then
             echo "$PACKAGES"
+            melos run gen:build
             melos publish --dry-run --yes "$PACKAGES"
           else
             echo "No packages selected for publishing"

@@ -12,9 +12,9 @@ command:
     environment:
       sdk: ">=3.3.0 <4.0.0"
       flutter: ">=3.19.0"
-  publish:
-    hooks:
-      pre: melos run gen:build
+  # publish:
+    # hooks:
+    #   pre: melos run gen:build
 
 scripts:
   # ANALYSIS
