@@ -133,19 +133,16 @@ jobs:
         package: ${{fromJSON(needs.prepare-matrix.outputs.matrix)}}
     steps:
       - uses: actions/checkout@v4
-      - name: Print packages
-        run: echo "${{ matrix.package.name }} and ${{ matrix.package.path }}"
-        shell: bash
-      # - name: '>> publish ${{ matrix.package.name }} package to pub.dev <<'
-      #   id: publish
-      #   uses: k-paxian/dart-package-publisher@master
-      #   with:
-      #     accessToken: ${{ secrets.OAUTH_ACCESS_TOKEN }}
-      #     refreshToken: ${{ secrets.OAUTH_REFRESH_TOKEN }}
-      #     relativePath: ${{ matrix.package.path }}
-      # - name: 'Commit release tag'
-      #   if: steps.publish.outputs.success
-      #   uses: hole19/git-tag-action@master
-      #   env:
-      #     TAG: ${{steps.publish.outputs.package}}-${{steps.publish.outputs.localVersion}}
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: '>> publish ${{ matrix.package.name }} package to pub.dev <<'
+        id: publish
+        uses: k-paxian/dart-package-publisher@master
+        with:
+          accessToken: ${{ secrets.OAUTH_ACCESS_TOKEN }}
+          refreshToken: ${{ secrets.OAUTH_REFRESH_TOKEN }}
+          relativePath: ${{ matrix.package.path }}
+      - name: 'Commit release tag'
+        if: steps.publish.outputs.success
+        uses: hole19/git-tag-action@master
+        env:
+          TAG: ${{steps.publish.outputs.package}}-${{steps.publish.outputs.localVersion}}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
