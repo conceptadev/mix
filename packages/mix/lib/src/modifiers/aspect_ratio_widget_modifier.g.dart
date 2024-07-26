@@ -58,7 +58,8 @@ mixin _$AspectRatioModifierSpec on WidgetModifierSpec<AspectRatioModifierSpec> {
   AspectRatioModifierSpec get _$this => this as AspectRatioModifierSpec;
 
   void _debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    properties.add(DiagnosticsProperty('aspectRatio', _$this.aspectRatio));
+    properties.add(DiagnosticsProperty('aspectRatio', _$this.aspectRatio,
+        defaultValue: null));
   }
 }
 
@@ -123,7 +124,8 @@ final class AspectRatioModifierSpecAttribute
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty('aspectRatio', aspectRatio));
+    properties.add(
+        DiagnosticsProperty('aspectRatio', aspectRatio, defaultValue: null));
   }
 }
 

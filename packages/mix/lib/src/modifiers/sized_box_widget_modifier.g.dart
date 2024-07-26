@@ -62,8 +62,10 @@ mixin _$SizedBoxModifierSpec on WidgetModifierSpec<SizedBoxModifierSpec> {
   SizedBoxModifierSpec get _$this => this as SizedBoxModifierSpec;
 
   void _debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    properties.add(DiagnosticsProperty('width', _$this.width));
-    properties.add(DiagnosticsProperty('height', _$this.height));
+    properties
+        .add(DiagnosticsProperty('width', _$this.width, defaultValue: null));
+    properties
+        .add(DiagnosticsProperty('height', _$this.height, defaultValue: null));
   }
 }
 
@@ -132,8 +134,8 @@ final class SizedBoxModifierSpecAttribute
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty('width', width));
-    properties.add(DiagnosticsProperty('height', height));
+    properties.add(DiagnosticsProperty('width', width, defaultValue: null));
+    properties.add(DiagnosticsProperty('height', height, defaultValue: null));
   }
 }
 

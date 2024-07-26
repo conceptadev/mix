@@ -135,21 +135,34 @@ mixin _$BoxSpec on Spec<BoxSpec> {
   BoxSpec get _$this => this as BoxSpec;
 
   void _debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    properties.add(DiagnosticsProperty('alignment', _$this.alignment));
-    properties.add(DiagnosticsProperty('padding', _$this.padding));
-    properties.add(DiagnosticsProperty('margin', _$this.margin));
-    properties.add(DiagnosticsProperty('constraints', _$this.constraints));
-    properties.add(DiagnosticsProperty('decoration', _$this.decoration));
-    properties.add(DiagnosticsProperty(
-        'foregroundDecoration', _$this.foregroundDecoration));
-    properties.add(DiagnosticsProperty('transform', _$this.transform));
     properties.add(
-        DiagnosticsProperty('transformAlignment', _$this.transformAlignment));
-    properties.add(DiagnosticsProperty('clipBehavior', _$this.clipBehavior));
-    properties.add(DiagnosticsProperty('width', _$this.width));
-    properties.add(DiagnosticsProperty('height', _$this.height));
-    properties.add(DiagnosticsProperty('modifiers', _$this.modifiers));
-    properties.add(DiagnosticsProperty('animated', _$this.animated));
+        DiagnosticsProperty('alignment', _$this.alignment, defaultValue: null));
+    properties.add(
+        DiagnosticsProperty('padding', _$this.padding, defaultValue: null));
+    properties
+        .add(DiagnosticsProperty('margin', _$this.margin, defaultValue: null));
+    properties.add(DiagnosticsProperty('constraints', _$this.constraints,
+        defaultValue: null));
+    properties.add(DiagnosticsProperty('decoration', _$this.decoration,
+        defaultValue: null));
+    properties.add(DiagnosticsProperty(
+        'foregroundDecoration', _$this.foregroundDecoration,
+        defaultValue: null));
+    properties.add(
+        DiagnosticsProperty('transform', _$this.transform, defaultValue: null));
+    properties.add(DiagnosticsProperty(
+        'transformAlignment', _$this.transformAlignment,
+        defaultValue: null));
+    properties.add(DiagnosticsProperty('clipBehavior', _$this.clipBehavior,
+        defaultValue: null));
+    properties
+        .add(DiagnosticsProperty('width', _$this.width, defaultValue: null));
+    properties
+        .add(DiagnosticsProperty('height', _$this.height, defaultValue: null));
+    properties.add(
+        DiagnosticsProperty('modifiers', _$this.modifiers, defaultValue: null));
+    properties.add(
+        DiagnosticsProperty('animated', _$this.animated, defaultValue: null));
   }
 }
 
@@ -271,22 +284,29 @@ final class BoxSpecAttribute extends SpecAttribute<BoxSpec>
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty('alignment', alignment));
-    properties.add(DiagnosticsProperty('padding', padding));
-    properties.add(DiagnosticsProperty('margin', margin));
-    properties.add(DiagnosticsProperty('constraints', constraints));
+    properties
+        .add(DiagnosticsProperty('alignment', alignment, defaultValue: null));
+    properties.add(DiagnosticsProperty('padding', padding, defaultValue: null));
+    properties.add(DiagnosticsProperty('margin', margin, defaultValue: null));
     properties.add(
-        DiagnosticsProperty('decoration', decoration, expandableValue: true));
+        DiagnosticsProperty('constraints', constraints, defaultValue: null));
+    properties.add(DiagnosticsProperty('decoration', decoration,
+        expandableValue: true, defaultValue: null));
+    properties.add(DiagnosticsProperty(
+        'foregroundDecoration', foregroundDecoration,
+        defaultValue: null));
     properties
-        .add(DiagnosticsProperty('foregroundDecoration', foregroundDecoration));
-    properties.add(DiagnosticsProperty('transform', transform));
+        .add(DiagnosticsProperty('transform', transform, defaultValue: null));
+    properties.add(DiagnosticsProperty('transformAlignment', transformAlignment,
+        defaultValue: null));
+    properties.add(
+        DiagnosticsProperty('clipBehavior', clipBehavior, defaultValue: null));
+    properties.add(DiagnosticsProperty('width', width, defaultValue: null));
+    properties.add(DiagnosticsProperty('height', height, defaultValue: null));
     properties
-        .add(DiagnosticsProperty('transformAlignment', transformAlignment));
-    properties.add(DiagnosticsProperty('clipBehavior', clipBehavior));
-    properties.add(DiagnosticsProperty('width', width));
-    properties.add(DiagnosticsProperty('height', height));
-    properties.add(DiagnosticsProperty('modifiers', modifiers));
-    properties.add(DiagnosticsProperty('animated', animated));
+        .add(DiagnosticsProperty('modifiers', modifiers, defaultValue: null));
+    properties
+        .add(DiagnosticsProperty('animated', animated, defaultValue: null));
   }
 }
 

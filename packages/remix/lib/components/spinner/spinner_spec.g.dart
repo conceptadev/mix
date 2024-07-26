@@ -6,9 +6,7 @@ part of 'spinner_spec.dart';
 // MixableSpecGenerator
 // **************************************************************************
 
-// ignore_for_file: deprecated_member_use_from_same_package
-
-base mixin _$SpinnerSpec on Spec<SpinnerSpec> {
+mixin _$SpinnerSpec on Spec<SpinnerSpec> {
   static SpinnerSpec from(MixData mix) {
     return mix.attributeOf<SpinnerSpecAttribute>()?.resolve(mix) ??
         const SpinnerSpec();
@@ -77,10 +75,10 @@ base mixin _$SpinnerSpec on Spec<SpinnerSpec> {
     if (other == null) return _$this;
 
     return SpinnerSpec(
-      size: MixHelpers.lerpDouble(_$this.size, other.size, t),
+      size: MixHelpers.lerpDouble(_$this.size, other.size, t)!,
       strokeWidth:
           MixHelpers.lerpDouble(_$this.strokeWidth, other.strokeWidth, t),
-      color: Color.lerp(_$this.color, other.color, t),
+      color: Color.lerp(_$this.color, other.color, t)!,
       duration: t < 0.5 ? _$this.duration : other.duration,
       style: t < 0.5 ? _$this.style : other.style,
       animated: t < 0.5 ? _$this.animated : other.animated,
@@ -188,7 +186,7 @@ final class SpinnerSpecAttribute extends SpecAttribute<SpinnerSpec> {
 ///
 /// This class provides methods to set individual properties of a [SpinnerSpecAttribute].
 /// Use the methods of this class to configure specific properties of a [SpinnerSpecAttribute].
-base class SpinnerSpecUtility<T extends Attribute>
+class SpinnerSpecUtility<T extends Attribute>
     extends SpecUtility<T, SpinnerSpecAttribute> {
   /// Utility for defining [SpinnerSpecAttribute.size]
   late final size = DoubleUtility((v) => only(size: v));
@@ -245,8 +243,13 @@ class SpinnerSpecTween extends Tween<SpinnerSpec?> {
 
   @override
   SpinnerSpec lerp(double t) {
-    if (begin == null && end == null) return const SpinnerSpec();
-    if (begin == null) return end!;
+    if (begin == null && end == null) {
+      return const SpinnerSpec();
+    }
+
+    if (begin == null) {
+      return end!;
+    }
 
     return begin!.lerp(end!, t);
   }

@@ -30,12 +30,28 @@ final docTheme = MixThemeData(
 
 ## MixTheme and MixThemeData
 
-In the same way we use `Theme` and `ThemeData` in Flutter, Mix has `MixTheme` and `MixThemeData`. `MixTheme` is a widget that wraps the application and provides the design tokens to all its child widgets. `MixThemeData` is a class that defines the values for the design tokens that will be used throughout the application.
+In the same way we use `Theme` and `ThemeData` in Flutter, Mix has `MixTheme` and `MixThemeData`. `MixTheme` is a widget that wraps the application and provides the design tokens to all its child widgets.
 
 ```dart {1,5}
 MixTheme(
   data: docTheme,
   child: ...
+);
+```
+
+### MixThemeData
+
+`MixThemeData` is a class that defines the values for the design tokens that will be used throughout the application. It has five properties related to Design Tokens: `colors`, `textStyles`, `spaces`, `radii`, and `breakpoints`. Each property is a map that contains the tokens and their values.
+
+Also, `MixThemeData` has an additional property called `defaultOrderOfModifiers`, which is used to override the default order of modifiers. Therefore, if you prefer to use a different order of modifiers, you can set it in the `defaultOrderOfModifiers` instead of using the `orderOfModifiers` property in each `StyledWidget`. To set your own order of modifiers, you just need to pass a list of types that extends `WidgetModifierSpec`. For instance:
+
+```dart {3-5}
+final overrideOrderTheme = MixThemeData(
+  defaultOrderOfModifiers: [
+    SizedBoxModifierSpec,
+    ClipRectModifierSpec,
+    TransformModifierSpec,
+  ],
 );
 ```
 

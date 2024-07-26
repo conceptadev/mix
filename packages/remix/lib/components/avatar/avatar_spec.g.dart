@@ -6,9 +6,7 @@ part of 'avatar_spec.dart';
 // MixableSpecGenerator
 // **************************************************************************
 
-// ignore_for_file: deprecated_member_use_from_same_package
-
-base mixin _$AvatarSpec on Spec<AvatarSpec> {
+mixin _$AvatarSpec on Spec<AvatarSpec> {
   static AvatarSpec from(MixData mix) {
     return mix.attributeOf<AvatarSpecAttribute>()?.resolve(mix) ??
         const AvatarSpec();
@@ -103,7 +101,7 @@ base mixin _$AvatarSpec on Spec<AvatarSpec> {
 ///
 /// Use this class to configure the attributes of a [AvatarSpec] and pass it to
 /// the [AvatarSpec] constructor.
-final class AvatarSpecAttribute extends SpecAttribute<AvatarSpec> {
+base class AvatarSpecAttribute extends SpecAttribute<AvatarSpec> {
   final BoxSpecAttribute? container;
   final ImageSpecAttribute? image;
   final TextSpecAttribute? fallback;
@@ -170,7 +168,7 @@ final class AvatarSpecAttribute extends SpecAttribute<AvatarSpec> {
 ///
 /// This class provides methods to set individual properties of a [AvatarSpecAttribute].
 /// Use the methods of this class to configure specific properties of a [AvatarSpecAttribute].
-base class AvatarSpecUtility<T extends Attribute>
+class AvatarSpecUtility<T extends Attribute>
     extends SpecUtility<T, AvatarSpecAttribute> {
   /// Utility for defining [AvatarSpecAttribute.container]
   late final container = BoxSpecUtility((v) => only(container: v));
@@ -217,8 +215,13 @@ class AvatarSpecTween extends Tween<AvatarSpec?> {
 
   @override
   AvatarSpec lerp(double t) {
-    if (begin == null && end == null) return const AvatarSpec();
-    if (begin == null) return end!;
+    if (begin == null && end == null) {
+      return const AvatarSpec();
+    }
+
+    if (begin == null) {
+      return end!;
+    }
 
     return begin!.lerp(end!, t);
   }

@@ -61,8 +61,10 @@ mixin _$ClipOvalModifierSpec on WidgetModifierSpec<ClipOvalModifierSpec> {
   ClipOvalModifierSpec get _$this => this as ClipOvalModifierSpec;
 
   void _debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    properties.add(DiagnosticsProperty('clipper', _$this.clipper));
-    properties.add(DiagnosticsProperty('clipBehavior', _$this.clipBehavior));
+    properties.add(
+        DiagnosticsProperty('clipper', _$this.clipper, defaultValue: null));
+    properties.add(DiagnosticsProperty('clipBehavior', _$this.clipBehavior,
+        defaultValue: null));
   }
 }
 
@@ -131,8 +133,9 @@ final class ClipOvalModifierSpecAttribute
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty('clipper', clipper));
-    properties.add(DiagnosticsProperty('clipBehavior', clipBehavior));
+    properties.add(DiagnosticsProperty('clipper', clipper, defaultValue: null));
+    properties.add(
+        DiagnosticsProperty('clipBehavior', clipBehavior, defaultValue: null));
   }
 }
 
@@ -215,8 +218,10 @@ mixin _$ClipRectModifierSpec on WidgetModifierSpec<ClipRectModifierSpec> {
   ClipRectModifierSpec get _$this => this as ClipRectModifierSpec;
 
   void _debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    properties.add(DiagnosticsProperty('clipper', _$this.clipper));
-    properties.add(DiagnosticsProperty('clipBehavior', _$this.clipBehavior));
+    properties.add(
+        DiagnosticsProperty('clipper', _$this.clipper, defaultValue: null));
+    properties.add(DiagnosticsProperty('clipBehavior', _$this.clipBehavior,
+        defaultValue: null));
   }
 }
 
@@ -285,8 +290,9 @@ final class ClipRectModifierSpecAttribute
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty('clipper', clipper));
-    properties.add(DiagnosticsProperty('clipBehavior', clipBehavior));
+    properties.add(DiagnosticsProperty('clipper', clipper, defaultValue: null));
+    properties.add(
+        DiagnosticsProperty('clipBehavior', clipBehavior, defaultValue: null));
   }
 }
 
@@ -375,9 +381,12 @@ mixin _$ClipRRectModifierSpec on WidgetModifierSpec<ClipRRectModifierSpec> {
   ClipRRectModifierSpec get _$this => this as ClipRRectModifierSpec;
 
   void _debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    properties.add(DiagnosticsProperty('borderRadius', _$this.borderRadius));
-    properties.add(DiagnosticsProperty('clipper', _$this.clipper));
-    properties.add(DiagnosticsProperty('clipBehavior', _$this.clipBehavior));
+    properties.add(DiagnosticsProperty('borderRadius', _$this.borderRadius,
+        defaultValue: null));
+    properties.add(
+        DiagnosticsProperty('clipper', _$this.clipper, defaultValue: null));
+    properties.add(DiagnosticsProperty('clipBehavior', _$this.clipBehavior,
+        defaultValue: null));
   }
 }
 
@@ -452,9 +461,11 @@ final class ClipRRectModifierSpecAttribute
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty('borderRadius', borderRadius));
-    properties.add(DiagnosticsProperty('clipper', clipper));
-    properties.add(DiagnosticsProperty('clipBehavior', clipBehavior));
+    properties.add(
+        DiagnosticsProperty('borderRadius', borderRadius, defaultValue: null));
+    properties.add(DiagnosticsProperty('clipper', clipper, defaultValue: null));
+    properties.add(
+        DiagnosticsProperty('clipBehavior', clipBehavior, defaultValue: null));
   }
 }
 
@@ -537,8 +548,10 @@ mixin _$ClipPathModifierSpec on WidgetModifierSpec<ClipPathModifierSpec> {
   ClipPathModifierSpec get _$this => this as ClipPathModifierSpec;
 
   void _debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    properties.add(DiagnosticsProperty('clipper', _$this.clipper));
-    properties.add(DiagnosticsProperty('clipBehavior', _$this.clipBehavior));
+    properties.add(
+        DiagnosticsProperty('clipper', _$this.clipper, defaultValue: null));
+    properties.add(DiagnosticsProperty('clipBehavior', _$this.clipBehavior,
+        defaultValue: null));
   }
 }
 
@@ -607,8 +620,9 @@ final class ClipPathModifierSpecAttribute
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty('clipper', clipper));
-    properties.add(DiagnosticsProperty('clipBehavior', clipBehavior));
+    properties.add(DiagnosticsProperty('clipper', clipper, defaultValue: null));
+    properties.add(
+        DiagnosticsProperty('clipBehavior', clipBehavior, defaultValue: null));
   }
 }
 
@@ -688,7 +702,8 @@ mixin _$ClipTriangleModifierSpec
   ClipTriangleModifierSpec get _$this => this as ClipTriangleModifierSpec;
 
   void _debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    properties.add(DiagnosticsProperty('clipBehavior', _$this.clipBehavior));
+    properties.add(DiagnosticsProperty('clipBehavior', _$this.clipBehavior,
+        defaultValue: null));
   }
 }
 
@@ -753,7 +768,8 @@ final class ClipTriangleModifierSpecAttribute
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty('clipBehavior', clipBehavior));
+    properties.add(
+        DiagnosticsProperty('clipBehavior', clipBehavior, defaultValue: null));
   }
 }
 
