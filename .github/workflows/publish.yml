@@ -48,7 +48,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
 
   publish_mix_lint:
-    needs: [mincompat, stable]
+    needs: [test-mincompat, test-stable]
     if: ${{ github.event.inputs.mix_lint }}
     environment: Production
     runs-on: ubuntu-latest
@@ -69,7 +69,7 @@ jobs:
           # GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   publish_mix_annotations:
-    needs: [mincompat, stable]
+    needs: [test-mincompat, test-stable]
     if: ${{ github.event.inputs.mix_annotations }}
     environment: Production
     runs-on: ubuntu-latest
@@ -90,7 +90,7 @@ jobs:
           # GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   publish_mix_generator:
-    needs: [mincompat, stable]
+    needs: [test-mincompat, test-stable]
     if: ${{ github.event.inputs.mix_generator }}
     environment: Production
     runs-on: ubuntu-latest
@@ -111,7 +111,7 @@ jobs:
           # GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   publish_mix:
-    needs: [mincompat, stable]
+    needs: [test-mincompat, test-stable]
     if: ${{ github.event.inputs.mix }}
     environment: Production
     runs-on: ubuntu-latest
@@ -132,7 +132,7 @@ jobs:
           # GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       
   publish_remix:
-    needs: [mincompat, stable]
+    needs: [test-mincompat, test-stable]
     if: ${{ github.event.inputs.remix }}
     environment: Production
     runs-on: ubuntu-latest
