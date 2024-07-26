@@ -8,7 +8,7 @@ import 'utility.dart';
 
 abstract class WidgetModifierSpec<Self extends WidgetModifierSpec<Self>>
     extends Spec<Self> {
-  const WidgetModifierSpec({super.animated});
+  const WidgetModifierSpec({super.animated}) : super(modifiers: null);
 
   static WidgetModifierSpec? lerpValue(
     WidgetModifierSpec? begin,
@@ -30,7 +30,7 @@ abstract class WidgetModifierSpec<Self extends WidgetModifierSpec<Self>>
   Widget build(Widget child);
 }
 
-abstract base class WidgetModifierSpecAttribute<
+abstract class WidgetModifierSpecAttribute<
         Value extends WidgetModifierSpec<Value>> extends SpecAttribute<Value>
     with Diagnosticable {
   const WidgetModifierSpecAttribute();
@@ -39,7 +39,7 @@ abstract base class WidgetModifierSpecAttribute<
   Value resolve(MixData mix);
 }
 
-abstract base class WidgetModifierUtility<
+abstract class WidgetModifierUtility<
     T extends Attribute,
     D extends WidgetModifierSpecAttribute<Value>,
     Value extends WidgetModifierSpec<Value>> extends MixUtility<T, D> {
