@@ -8,9 +8,9 @@ String methodDebugFillProperties(ClassInfo instance) {
   final fieldStatements = fields.map((field) {
     final fieldName = isInternalRef ? field.asInternalRef : field.name;
     if (_expandableFields.contains(fieldName)) {
-      return 'properties.add(DiagnosticsProperty(\'${field.name}\', $fieldName, expandableValue: true));';
+      return 'properties.add(DiagnosticsProperty(\'${field.name}\', $fieldName, expandableValue: true, defaultValue: null));';
     }
-    return 'properties.add(DiagnosticsProperty(\'${field.name}\', $fieldName));';
+    return 'properties.add(DiagnosticsProperty(\'${field.name}\', $fieldName, defaultValue: null));';
   }).join('\n');
 
   if (isInternalRef) {

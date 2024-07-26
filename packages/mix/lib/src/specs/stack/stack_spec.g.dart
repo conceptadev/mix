@@ -100,12 +100,17 @@ mixin _$StackSpec on Spec<StackSpec> {
   StackSpec get _$this => this as StackSpec;
 
   void _debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    properties.add(DiagnosticsProperty('alignment', _$this.alignment));
-    properties.add(DiagnosticsProperty('fit', _$this.fit));
-    properties.add(DiagnosticsProperty('textDirection', _$this.textDirection));
-    properties.add(DiagnosticsProperty('clipBehavior', _$this.clipBehavior));
-    properties.add(DiagnosticsProperty('animated', _$this.animated));
-    properties.add(DiagnosticsProperty('modifiers', _$this.modifiers));
+    properties.add(
+        DiagnosticsProperty('alignment', _$this.alignment, defaultValue: null));
+    properties.add(DiagnosticsProperty('fit', _$this.fit, defaultValue: null));
+    properties.add(DiagnosticsProperty('textDirection', _$this.textDirection,
+        defaultValue: null));
+    properties.add(DiagnosticsProperty('clipBehavior', _$this.clipBehavior,
+        defaultValue: null));
+    properties.add(
+        DiagnosticsProperty('animated', _$this.animated, defaultValue: null));
+    properties.add(
+        DiagnosticsProperty('modifiers', _$this.modifiers, defaultValue: null));
   }
 }
 
@@ -191,12 +196,17 @@ final class StackSpecAttribute extends SpecAttribute<StackSpec>
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty('alignment', alignment));
-    properties.add(DiagnosticsProperty('fit', fit));
-    properties.add(DiagnosticsProperty('textDirection', textDirection));
-    properties.add(DiagnosticsProperty('clipBehavior', clipBehavior));
-    properties.add(DiagnosticsProperty('animated', animated));
-    properties.add(DiagnosticsProperty('modifiers', modifiers));
+    properties
+        .add(DiagnosticsProperty('alignment', alignment, defaultValue: null));
+    properties.add(DiagnosticsProperty('fit', fit, defaultValue: null));
+    properties.add(DiagnosticsProperty('textDirection', textDirection,
+        defaultValue: null));
+    properties.add(
+        DiagnosticsProperty('clipBehavior', clipBehavior, defaultValue: null));
+    properties
+        .add(DiagnosticsProperty('animated', animated, defaultValue: null));
+    properties
+        .add(DiagnosticsProperty('modifiers', modifiers, defaultValue: null));
   }
 }
 

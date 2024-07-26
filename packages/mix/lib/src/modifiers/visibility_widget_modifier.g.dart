@@ -57,7 +57,8 @@ mixin _$VisibilityModifierSpec on WidgetModifierSpec<VisibilityModifierSpec> {
   VisibilityModifierSpec get _$this => this as VisibilityModifierSpec;
 
   void _debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    properties.add(DiagnosticsProperty('visible', _$this.visible));
+    properties.add(
+        DiagnosticsProperty('visible', _$this.visible, defaultValue: null));
   }
 }
 
@@ -122,7 +123,7 @@ final class VisibilityModifierSpecAttribute
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty('visible', visible));
+    properties.add(DiagnosticsProperty('visible', visible, defaultValue: null));
   }
 }
 

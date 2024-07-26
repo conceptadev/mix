@@ -58,7 +58,8 @@ mixin _$PaddingModifierSpec on WidgetModifierSpec<PaddingModifierSpec> {
   PaddingModifierSpec get _$this => this as PaddingModifierSpec;
 
   void _debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    properties.add(DiagnosticsProperty('padding', _$this.padding));
+    properties.add(
+        DiagnosticsProperty('padding', _$this.padding, defaultValue: null));
   }
 }
 
@@ -122,7 +123,7 @@ final class PaddingModifierSpecAttribute
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty('padding', padding));
+    properties.add(DiagnosticsProperty('padding', padding, defaultValue: null));
   }
 }
 

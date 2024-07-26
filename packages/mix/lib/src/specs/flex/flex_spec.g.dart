@@ -123,20 +123,30 @@ mixin _$FlexSpec on Spec<FlexSpec> {
   FlexSpec get _$this => this as FlexSpec;
 
   void _debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    properties.add(DiagnosticsProperty(
+        'crossAxisAlignment', _$this.crossAxisAlignment,
+        defaultValue: null));
+    properties.add(DiagnosticsProperty(
+        'mainAxisAlignment', _$this.mainAxisAlignment,
+        defaultValue: null));
+    properties.add(DiagnosticsProperty('mainAxisSize', _$this.mainAxisSize,
+        defaultValue: null));
+    properties.add(DiagnosticsProperty(
+        'verticalDirection', _$this.verticalDirection,
+        defaultValue: null));
     properties.add(
-        DiagnosticsProperty('crossAxisAlignment', _$this.crossAxisAlignment));
+        DiagnosticsProperty('direction', _$this.direction, defaultValue: null));
+    properties.add(DiagnosticsProperty('textDirection', _$this.textDirection,
+        defaultValue: null));
+    properties.add(DiagnosticsProperty('textBaseline', _$this.textBaseline,
+        defaultValue: null));
+    properties.add(DiagnosticsProperty('clipBehavior', _$this.clipBehavior,
+        defaultValue: null));
+    properties.add(DiagnosticsProperty('gap', _$this.gap, defaultValue: null));
     properties.add(
-        DiagnosticsProperty('mainAxisAlignment', _$this.mainAxisAlignment));
-    properties.add(DiagnosticsProperty('mainAxisSize', _$this.mainAxisSize));
+        DiagnosticsProperty('animated', _$this.animated, defaultValue: null));
     properties.add(
-        DiagnosticsProperty('verticalDirection', _$this.verticalDirection));
-    properties.add(DiagnosticsProperty('direction', _$this.direction));
-    properties.add(DiagnosticsProperty('textDirection', _$this.textDirection));
-    properties.add(DiagnosticsProperty('textBaseline', _$this.textBaseline));
-    properties.add(DiagnosticsProperty('clipBehavior', _$this.clipBehavior));
-    properties.add(DiagnosticsProperty('gap', _$this.gap));
-    properties.add(DiagnosticsProperty('animated', _$this.animated));
-    properties.add(DiagnosticsProperty('modifiers', _$this.modifiers));
+        DiagnosticsProperty('modifiers', _$this.modifiers, defaultValue: null));
   }
 }
 
@@ -247,18 +257,27 @@ final class FlexSpecAttribute extends SpecAttribute<FlexSpec>
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
+    properties.add(DiagnosticsProperty('crossAxisAlignment', crossAxisAlignment,
+        defaultValue: null));
+    properties.add(DiagnosticsProperty('mainAxisAlignment', mainAxisAlignment,
+        defaultValue: null));
+    properties.add(
+        DiagnosticsProperty('mainAxisSize', mainAxisSize, defaultValue: null));
+    properties.add(DiagnosticsProperty('verticalDirection', verticalDirection,
+        defaultValue: null));
     properties
-        .add(DiagnosticsProperty('crossAxisAlignment', crossAxisAlignment));
-    properties.add(DiagnosticsProperty('mainAxisAlignment', mainAxisAlignment));
-    properties.add(DiagnosticsProperty('mainAxisSize', mainAxisSize));
-    properties.add(DiagnosticsProperty('verticalDirection', verticalDirection));
-    properties.add(DiagnosticsProperty('direction', direction));
-    properties.add(DiagnosticsProperty('textDirection', textDirection));
-    properties.add(DiagnosticsProperty('textBaseline', textBaseline));
-    properties.add(DiagnosticsProperty('clipBehavior', clipBehavior));
-    properties.add(DiagnosticsProperty('gap', gap));
-    properties.add(DiagnosticsProperty('animated', animated));
-    properties.add(DiagnosticsProperty('modifiers', modifiers));
+        .add(DiagnosticsProperty('direction', direction, defaultValue: null));
+    properties.add(DiagnosticsProperty('textDirection', textDirection,
+        defaultValue: null));
+    properties.add(
+        DiagnosticsProperty('textBaseline', textBaseline, defaultValue: null));
+    properties.add(
+        DiagnosticsProperty('clipBehavior', clipBehavior, defaultValue: null));
+    properties.add(DiagnosticsProperty('gap', gap, defaultValue: null));
+    properties
+        .add(DiagnosticsProperty('animated', animated, defaultValue: null));
+    properties
+        .add(DiagnosticsProperty('modifiers', modifiers, defaultValue: null));
   }
 }
 
