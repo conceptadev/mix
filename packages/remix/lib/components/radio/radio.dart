@@ -25,6 +25,7 @@ base class RadioSpec extends Spec<RadioSpec> with _$RadioSpec, Diagnosticable {
   const RadioSpec({
     BoxSpec? container,
     BoxSpec? indicator,
+    super.modifiers,
     super.animated,
   })  : container = container ?? const BoxSpec(),
         indicator = indicator ?? const BoxSpec();

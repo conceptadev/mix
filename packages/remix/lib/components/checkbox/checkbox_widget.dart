@@ -33,6 +33,7 @@ class RxCheckbox extends StatefulWidget {
 
 class _RxCheckboxState extends State<RxCheckbox> {
   late final MixWidgetStateController _controller;
+  late Style _style;
 
   void _handleOnPress() => widget.onChanged?.call(!widget.value);
 
@@ -40,6 +41,7 @@ class _RxCheckboxState extends State<RxCheckbox> {
   void initState() {
     super.initState();
     _controller = MixWidgetStateController();
+    _style = _buildCheckboxStyle(widget.style, [widget.size, widget.variant]);
   }
 
   @override
@@ -53,6 +55,12 @@ class _RxCheckboxState extends State<RxCheckbox> {
     if (oldWidget.disabled != widget.disabled) {
       _controller.disabled = widget.disabled;
     }
+
+    if (oldWidget.style != widget.style ||
+        oldWidget.size != widget.size ||
+        oldWidget.variant != widget.variant) {
+      _style = _buildCheckboxStyle(widget.style, [widget.size, widget.variant]);
+    }
   }
 
   @override
@@ -63,13 +71,12 @@ class _RxCheckboxState extends State<RxCheckbox> {
 
   @override
   Widget build(BuildContext context) {
-    final variants = [widget.size, widget.variant];
     return Pressable(
       onPress: widget.disabled ? null : _handleOnPress,
       enabled: !widget.disabled,
       child: SpecBuilder(
         controller: _controller,
-        style: _buildCheckboxStyle(widget.style, variants),
+        style: _style,
         builder: (context) {
           final spec = CheckboxSpec.of(context);
 

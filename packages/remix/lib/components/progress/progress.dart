@@ -28,6 +28,7 @@ base class ProgressSpec extends Spec<ProgressSpec>
     BoxSpec? track,
     BoxSpec? fill,
     super.animated,
+    super.modifiers,
   })  : container = container ?? const BoxSpec(),
         track = track ?? const BoxSpec(),
         fill = fill ?? const BoxSpec();

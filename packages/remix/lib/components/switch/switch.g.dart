@@ -36,11 +36,13 @@ mixin _$SwitchSpec on Spec<SwitchSpec> {
     BoxSpec? container,
     BoxSpec? indicator,
     AnimatedData? animated,
+    WidgetModifiersData? modifiers,
   }) {
     return SwitchSpec(
       container: container ?? _$this.container,
       indicator: indicator ?? _$this.indicator,
       animated: animated ?? _$this.animated,
+      modifiers: modifiers ?? _$this.modifiers,
     );
   }
 
@@ -57,7 +59,7 @@ mixin _$SwitchSpec on Spec<SwitchSpec> {
   ///
   /// - [BoxSpec.lerp] for [container] and [indicator].
 
-  /// For [animated], the interpolation is performed using a step function.
+  /// For [animated] and [modifiers], the interpolation is performed using a step function.
   /// If [t] is less than 0.5, the value from the current [SwitchSpec] is used. Otherwise, the value
   /// from the [other] [SwitchSpec] is used.
   ///
@@ -71,6 +73,7 @@ mixin _$SwitchSpec on Spec<SwitchSpec> {
       container: _$this.container.lerp(other.container, t),
       indicator: _$this.indicator.lerp(other.indicator, t),
       animated: t < 0.5 ? _$this.animated : other.animated,
+      modifiers: t < 0.5 ? _$this.modifiers : other.modifiers,
     );
   }
 
@@ -83,6 +86,7 @@ mixin _$SwitchSpec on Spec<SwitchSpec> {
         _$this.container,
         _$this.indicator,
         _$this.animated,
+        _$this.modifiers,
       ];
 
   SwitchSpec get _$this => this as SwitchSpec;
@@ -91,6 +95,7 @@ mixin _$SwitchSpec on Spec<SwitchSpec> {
     properties.add(DiagnosticsProperty('container', _$this.container));
     properties.add(DiagnosticsProperty('indicator', _$this.indicator));
     properties.add(DiagnosticsProperty('animated', _$this.animated));
+    properties.add(DiagnosticsProperty('modifiers', _$this.modifiers));
   }
 }
 
@@ -110,6 +115,7 @@ base class SwitchSpecAttribute extends SpecAttribute<SwitchSpec>
     this.container,
     this.indicator,
     super.animated,
+    super.modifiers,
   });
 
   /// Resolves to [SwitchSpec] using the provided [MixData].
@@ -126,6 +132,7 @@ base class SwitchSpecAttribute extends SpecAttribute<SwitchSpec>
       container: container?.resolve(mix),
       indicator: indicator?.resolve(mix),
       animated: animated?.resolve(mix) ?? mix.animation,
+      modifiers: modifiers?.resolve(mix),
     );
   }
 
@@ -145,6 +152,7 @@ base class SwitchSpecAttribute extends SpecAttribute<SwitchSpec>
       container: container?.merge(other.container) ?? other.container,
       indicator: indicator?.merge(other.indicator) ?? other.indicator,
       animated: animated?.merge(other.animated) ?? other.animated,
+      modifiers: modifiers?.merge(other.modifiers) ?? other.modifiers,
     );
   }
 
@@ -157,6 +165,7 @@ base class SwitchSpecAttribute extends SpecAttribute<SwitchSpec>
         container,
         indicator,
         animated,
+        modifiers,
       ];
 
   @override
@@ -165,6 +174,7 @@ base class SwitchSpecAttribute extends SpecAttribute<SwitchSpec>
     properties.add(DiagnosticsProperty('container', container));
     properties.add(DiagnosticsProperty('indicator', indicator));
     properties.add(DiagnosticsProperty('animated', animated));
+    properties.add(DiagnosticsProperty('modifiers', modifiers));
   }
 }
 
@@ -183,6 +193,9 @@ class SwitchSpecUtility<T extends Attribute>
   /// Utility for defining [SwitchSpecAttribute.animated]
   late final animated = AnimatedUtility((v) => only(animated: v));
 
+  /// Utility for defining [SwitchSpecAttribute.modifiers]
+  late final wrap = SpecModifierUtility((v) => only(modifiers: v));
+
   SwitchSpecUtility(super.builder);
 
   static final self = SwitchSpecUtility((v) => v);
@@ -193,11 +206,13 @@ class SwitchSpecUtility<T extends Attribute>
     BoxSpecAttribute? container,
     BoxSpecAttribute? indicator,
     AnimatedDataDto? animated,
+    WidgetModifiersDataDto? modifiers,
   }) {
     return builder(SwitchSpecAttribute(
       container: container,
       indicator: indicator,
       animated: animated,
+      modifiers: modifiers,
     ));
   }
 }

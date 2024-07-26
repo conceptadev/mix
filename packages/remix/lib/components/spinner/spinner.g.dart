@@ -38,6 +38,7 @@ mixin _$SpinnerSpec on Spec<SpinnerSpec> {
     Color? color,
     Duration? duration,
     SpinnerStyle? style,
+    WidgetModifiersData? modifiers,
     AnimatedData? animated,
   }) {
     return SpinnerSpec(
@@ -46,6 +47,7 @@ mixin _$SpinnerSpec on Spec<SpinnerSpec> {
       color: color ?? _$this.color,
       duration: duration ?? _$this.duration,
       style: style ?? _$this.style,
+      modifiers: modifiers ?? _$this.modifiers,
       animated: animated ?? _$this.animated,
     );
   }
@@ -64,7 +66,7 @@ mixin _$SpinnerSpec on Spec<SpinnerSpec> {
   /// - [MixHelpers.lerpDouble] for [size] and [strokeWidth].
   /// - [Color.lerp] for [color].
 
-  /// For [duration] and [style] and [animated], the interpolation is performed using a step function.
+  /// For [duration] and [style] and [modifiers] and [animated], the interpolation is performed using a step function.
   /// If [t] is less than 0.5, the value from the current [SpinnerSpec] is used. Otherwise, the value
   /// from the [other] [SpinnerSpec] is used.
   ///
@@ -81,6 +83,7 @@ mixin _$SpinnerSpec on Spec<SpinnerSpec> {
       color: Color.lerp(_$this.color, other.color, t)!,
       duration: t < 0.5 ? _$this.duration : other.duration,
       style: t < 0.5 ? _$this.style : other.style,
+      modifiers: t < 0.5 ? _$this.modifiers : other.modifiers,
       animated: t < 0.5 ? _$this.animated : other.animated,
     );
   }
@@ -96,6 +99,7 @@ mixin _$SpinnerSpec on Spec<SpinnerSpec> {
         _$this.color,
         _$this.duration,
         _$this.style,
+        _$this.modifiers,
         _$this.animated,
       ];
 
@@ -107,6 +111,7 @@ mixin _$SpinnerSpec on Spec<SpinnerSpec> {
     properties.add(DiagnosticsProperty('color', _$this.color));
     properties.add(DiagnosticsProperty('duration', _$this.duration));
     properties.add(DiagnosticsProperty('style', _$this.style));
+    properties.add(DiagnosticsProperty('modifiers', _$this.modifiers));
     properties.add(DiagnosticsProperty('animated', _$this.animated));
   }
 }
@@ -132,6 +137,7 @@ final class SpinnerSpecAttribute extends SpecAttribute<SpinnerSpec>
     this.color,
     this.duration,
     this.style,
+    super.modifiers,
     super.animated,
   });
 
@@ -151,6 +157,7 @@ final class SpinnerSpecAttribute extends SpecAttribute<SpinnerSpec>
       color: color?.resolve(mix),
       duration: duration,
       style: style,
+      modifiers: modifiers?.resolve(mix),
       animated: animated?.resolve(mix) ?? mix.animation,
     );
   }
@@ -173,6 +180,7 @@ final class SpinnerSpecAttribute extends SpecAttribute<SpinnerSpec>
       color: color?.merge(other.color) ?? other.color,
       duration: other.duration ?? duration,
       style: other.style ?? style,
+      modifiers: modifiers?.merge(other.modifiers) ?? other.modifiers,
       animated: animated?.merge(other.animated) ?? other.animated,
     );
   }
@@ -188,6 +196,7 @@ final class SpinnerSpecAttribute extends SpecAttribute<SpinnerSpec>
         color,
         duration,
         style,
+        modifiers,
         animated,
       ];
 
@@ -199,6 +208,7 @@ final class SpinnerSpecAttribute extends SpecAttribute<SpinnerSpec>
     properties.add(DiagnosticsProperty('color', color));
     properties.add(DiagnosticsProperty('duration', duration));
     properties.add(DiagnosticsProperty('style', style, expandableValue: true));
+    properties.add(DiagnosticsProperty('modifiers', modifiers));
     properties.add(DiagnosticsProperty('animated', animated));
   }
 }
@@ -224,6 +234,9 @@ class SpinnerSpecUtility<T extends Attribute>
   /// Utility for defining [SpinnerSpecAttribute.style]
   late final style = SpinnerStyleUtility((v) => only(style: v));
 
+  /// Utility for defining [SpinnerSpecAttribute.modifiers]
+  late final wrap = SpecModifierUtility((v) => only(modifiers: v));
+
   /// Utility for defining [SpinnerSpecAttribute.animated]
   late final animated = AnimatedUtility((v) => only(animated: v));
 
@@ -239,6 +252,7 @@ class SpinnerSpecUtility<T extends Attribute>
     ColorDto? color,
     Duration? duration,
     SpinnerStyle? style,
+    WidgetModifiersDataDto? modifiers,
     AnimatedDataDto? animated,
   }) {
     return builder(SpinnerSpecAttribute(
@@ -247,6 +261,7 @@ class SpinnerSpecUtility<T extends Attribute>
       color: color,
       duration: duration,
       style: style,
+      modifiers: modifiers,
       animated: animated,
     ));
   }

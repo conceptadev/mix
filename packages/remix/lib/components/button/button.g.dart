@@ -37,6 +37,7 @@ mixin _$ButtonSpec on Spec<ButtonSpec> {
     FlexSpec? flex,
     IconSpec? icon,
     TextSpec? label,
+    WidgetModifiersData? modifiers,
     SpinnerSpec? spinner,
     AnimatedData? animated,
   }) {
@@ -45,6 +46,7 @@ mixin _$ButtonSpec on Spec<ButtonSpec> {
       flex: flex ?? _$this.flex,
       icon: icon ?? _$this.icon,
       label: label ?? _$this.label,
+      modifiers: modifiers ?? _$this.modifiers,
       spinner: spinner ?? _$this.spinner,
       animated: animated ?? _$this.animated,
     );
@@ -66,7 +68,7 @@ mixin _$ButtonSpec on Spec<ButtonSpec> {
   /// - [IconSpec.lerp] for [icon].
   /// - [TextSpec.lerp] for [label].
 
-  /// For [spinner] and [animated], the interpolation is performed using a step function.
+  /// For [modifiers] and [spinner] and [animated], the interpolation is performed using a step function.
   /// If [t] is less than 0.5, the value from the current [ButtonSpec] is used. Otherwise, the value
   /// from the [other] [ButtonSpec] is used.
   ///
@@ -81,6 +83,7 @@ mixin _$ButtonSpec on Spec<ButtonSpec> {
       flex: _$this.flex.lerp(other.flex, t),
       icon: _$this.icon.lerp(other.icon, t),
       label: _$this.label.lerp(other.label, t),
+      modifiers: t < 0.5 ? _$this.modifiers : other.modifiers,
       spinner: _$this.spinner.lerp(other.spinner, t),
       animated: t < 0.5 ? _$this.animated : other.animated,
     );
@@ -96,6 +99,7 @@ mixin _$ButtonSpec on Spec<ButtonSpec> {
         _$this.flex,
         _$this.icon,
         _$this.label,
+        _$this.modifiers,
         _$this.spinner,
         _$this.animated,
       ];
@@ -107,6 +111,7 @@ mixin _$ButtonSpec on Spec<ButtonSpec> {
     properties.add(DiagnosticsProperty('flex', _$this.flex));
     properties.add(DiagnosticsProperty('icon', _$this.icon));
     properties.add(DiagnosticsProperty('label', _$this.label));
+    properties.add(DiagnosticsProperty('modifiers', _$this.modifiers));
     properties.add(DiagnosticsProperty('spinner', _$this.spinner));
     properties.add(DiagnosticsProperty('animated', _$this.animated));
   }
@@ -119,7 +124,7 @@ mixin _$ButtonSpec on Spec<ButtonSpec> {
 ///
 /// Use this class to configure the attributes of a [ButtonSpec] and pass it to
 /// the [ButtonSpec] constructor.
-base class ButtonSpecAttribute extends SpecAttribute<ButtonSpec>
+class ButtonSpecAttribute extends SpecAttribute<ButtonSpec>
     with Diagnosticable {
   final BoxSpecAttribute? container;
   final FlexSpecAttribute? flex;
@@ -132,6 +137,7 @@ base class ButtonSpecAttribute extends SpecAttribute<ButtonSpec>
     this.flex,
     this.icon,
     this.label,
+    super.modifiers,
     this.spinner,
     super.animated,
   });
@@ -151,6 +157,7 @@ base class ButtonSpecAttribute extends SpecAttribute<ButtonSpec>
       flex: flex?.resolve(mix),
       icon: icon?.resolve(mix),
       label: label?.resolve(mix),
+      modifiers: modifiers?.resolve(mix),
       spinner: spinner?.resolve(mix),
       animated: animated?.resolve(mix) ?? mix.animation,
     );
@@ -173,6 +180,7 @@ base class ButtonSpecAttribute extends SpecAttribute<ButtonSpec>
       flex: flex?.merge(other.flex) ?? other.flex,
       icon: icon?.merge(other.icon) ?? other.icon,
       label: label?.merge(other.label) ?? other.label,
+      modifiers: modifiers?.merge(other.modifiers) ?? other.modifiers,
       spinner: spinner?.merge(other.spinner) ?? other.spinner,
       animated: animated?.merge(other.animated) ?? other.animated,
     );
@@ -188,6 +196,7 @@ base class ButtonSpecAttribute extends SpecAttribute<ButtonSpec>
         flex,
         icon,
         label,
+        modifiers,
         spinner,
         animated,
       ];
@@ -199,6 +208,7 @@ base class ButtonSpecAttribute extends SpecAttribute<ButtonSpec>
     properties.add(DiagnosticsProperty('flex', flex));
     properties.add(DiagnosticsProperty('icon', icon));
     properties.add(DiagnosticsProperty('label', label));
+    properties.add(DiagnosticsProperty('modifiers', modifiers));
     properties.add(DiagnosticsProperty('spinner', spinner));
     properties.add(DiagnosticsProperty('animated', animated));
   }
@@ -222,6 +232,9 @@ class ButtonSpecUtility<T extends Attribute>
   /// Utility for defining [ButtonSpecAttribute.label]
   late final label = TextSpecUtility((v) => only(label: v));
 
+  /// Utility for defining [ButtonSpecAttribute.modifiers]
+  late final wrap = SpecModifierUtility((v) => only(modifiers: v));
+
   /// Utility for defining [ButtonSpecAttribute.spinner]
   late final spinner = SpinnerSpecUtility((v) => only(spinner: v));
 
@@ -239,6 +252,7 @@ class ButtonSpecUtility<T extends Attribute>
     FlexSpecAttribute? flex,
     IconSpecAttribute? icon,
     TextSpecAttribute? label,
+    WidgetModifiersDataDto? modifiers,
     SpinnerSpecAttribute? spinner,
     AnimatedDataDto? animated,
   }) {
@@ -247,6 +261,7 @@ class ButtonSpecUtility<T extends Attribute>
       flex: flex,
       icon: icon,
       label: label,
+      modifiers: modifiers,
       spinner: spinner,
       animated: animated,
     ));

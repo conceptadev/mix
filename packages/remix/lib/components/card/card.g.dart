@@ -35,11 +35,13 @@ mixin _$CardSpec on Spec<CardSpec> {
   CardSpec copyWith({
     BoxSpec? container,
     FlexSpec? flex,
+    WidgetModifiersData? modifiers,
     AnimatedData? animated,
   }) {
     return CardSpec(
       container: container ?? _$this.container,
       flex: flex ?? _$this.flex,
+      modifiers: modifiers ?? _$this.modifiers,
       animated: animated ?? _$this.animated,
     );
   }
@@ -58,7 +60,7 @@ mixin _$CardSpec on Spec<CardSpec> {
   /// - [BoxSpec.lerp] for [container].
   /// - [FlexSpec.lerp] for [flex].
 
-  /// For [animated], the interpolation is performed using a step function.
+  /// For [modifiers] and [animated], the interpolation is performed using a step function.
   /// If [t] is less than 0.5, the value from the current [CardSpec] is used. Otherwise, the value
   /// from the [other] [CardSpec] is used.
   ///
@@ -71,6 +73,7 @@ mixin _$CardSpec on Spec<CardSpec> {
     return CardSpec(
       container: _$this.container.lerp(other.container, t),
       flex: _$this.flex.lerp(other.flex, t),
+      modifiers: t < 0.5 ? _$this.modifiers : other.modifiers,
       animated: t < 0.5 ? _$this.animated : other.animated,
     );
   }
@@ -83,6 +86,7 @@ mixin _$CardSpec on Spec<CardSpec> {
   List<Object?> get props => [
         _$this.container,
         _$this.flex,
+        _$this.modifiers,
         _$this.animated,
       ];
 
@@ -91,6 +95,7 @@ mixin _$CardSpec on Spec<CardSpec> {
   void _debugFillProperties(DiagnosticPropertiesBuilder properties) {
     properties.add(DiagnosticsProperty('container', _$this.container));
     properties.add(DiagnosticsProperty('flex', _$this.flex));
+    properties.add(DiagnosticsProperty('modifiers', _$this.modifiers));
     properties.add(DiagnosticsProperty('animated', _$this.animated));
   }
 }
@@ -110,6 +115,7 @@ base class CardSpecAttribute extends SpecAttribute<CardSpec>
   const CardSpecAttribute({
     this.container,
     this.flex,
+    super.modifiers,
     super.animated,
   });
 
@@ -126,6 +132,7 @@ base class CardSpecAttribute extends SpecAttribute<CardSpec>
     return CardSpec(
       container: container?.resolve(mix),
       flex: flex?.resolve(mix),
+      modifiers: modifiers?.resolve(mix),
       animated: animated?.resolve(mix) ?? mix.animation,
     );
   }
@@ -145,6 +152,7 @@ base class CardSpecAttribute extends SpecAttribute<CardSpec>
     return CardSpecAttribute(
       container: container?.merge(other.container) ?? other.container,
       flex: flex?.merge(other.flex) ?? other.flex,
+      modifiers: modifiers?.merge(other.modifiers) ?? other.modifiers,
       animated: animated?.merge(other.animated) ?? other.animated,
     );
   }
@@ -157,6 +165,7 @@ base class CardSpecAttribute extends SpecAttribute<CardSpec>
   List<Object?> get props => [
         container,
         flex,
+        modifiers,
         animated,
       ];
 
@@ -165,6 +174,7 @@ base class CardSpecAttribute extends SpecAttribute<CardSpec>
     super.debugFillProperties(properties);
     properties.add(DiagnosticsProperty('container', container));
     properties.add(DiagnosticsProperty('flex', flex));
+    properties.add(DiagnosticsProperty('modifiers', modifiers));
     properties.add(DiagnosticsProperty('animated', animated));
   }
 }
@@ -181,6 +191,9 @@ class CardSpecUtility<T extends Attribute>
   /// Utility for defining [CardSpecAttribute.flex]
   late final flex = FlexSpecUtility((v) => only(flex: v));
 
+  /// Utility for defining [CardSpecAttribute.modifiers]
+  late final wrap = SpecModifierUtility((v) => only(modifiers: v));
+
   /// Utility for defining [CardSpecAttribute.animated]
   late final animated = AnimatedUtility((v) => only(animated: v));
 
@@ -193,11 +206,13 @@ class CardSpecUtility<T extends Attribute>
   T only({
     BoxSpecAttribute? container,
     FlexSpecAttribute? flex,
+    WidgetModifiersDataDto? modifiers,
     AnimatedDataDto? animated,
   }) {
     return builder(CardSpecAttribute(
       container: container,
       flex: flex,
+      modifiers: modifiers,
       animated: animated,
     ));
   }

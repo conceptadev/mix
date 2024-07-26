@@ -52,6 +52,7 @@ final class SpinnerSpec extends Spec<SpinnerSpec>
     Color? color,
     Duration? duration,
     SpinnerStyle? style,
+    super.modifiers,
     super.animated,
   })  : size = size ?? 24,
         color = color ?? Colors.white,

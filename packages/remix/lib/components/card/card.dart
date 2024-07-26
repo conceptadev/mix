@@ -25,6 +25,7 @@ base class CardSpec extends Spec<CardSpec> with _$CardSpec, Diagnosticable {
   const CardSpec({
     BoxSpec? container,
     FlexSpec? flex,
+    super.modifiers,
     super.animated,
   })  : container = container ?? const BoxSpec(),
         flex = flex ?? const FlexSpec();

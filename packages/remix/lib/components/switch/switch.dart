@@ -26,6 +26,7 @@ base class SwitchSpec extends Spec<SwitchSpec>
     BoxSpec? container,
     BoxSpec? indicator,
     super.animated,
+    super.modifiers,
   })  : container = container ?? const BoxSpec(),
         indicator = indicator ?? const BoxSpec();
 

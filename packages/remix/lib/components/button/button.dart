@@ -1,8 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:mix/mix.dart';
 import 'package:mix_annotations/mix_annotations.dart';
 import 'package:remix/components/spinner/spinner.dart';
+import 'package:remix/modifiers/flutter_animate.dart';
 
 import '../../helpers/variant.dart';
 import '../../tokens/remix_tokens.dart';
@@ -13,8 +15,7 @@ part 'button_variants.dart';
 part 'button_widget.dart';
 
 @MixableSpec()
-base class ButtonSpec extends Spec<ButtonSpec>
-    with _$ButtonSpec, Diagnosticable {
+class ButtonSpec extends Spec<ButtonSpec> with _$ButtonSpec, Diagnosticable {
   final FlexSpec flex;
   final BoxSpec container;
   final IconSpec icon;
@@ -33,6 +34,7 @@ base class ButtonSpec extends Spec<ButtonSpec>
     FlexSpec? flex,
     IconSpec? icon,
     TextSpec? label,
+    super.modifiers,
     SpinnerSpec? spinner,
     super.animated,
   })  : flex = flex ?? const FlexSpec(),

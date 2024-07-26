@@ -37,12 +37,14 @@ mixin _$ProgressSpec on Spec<ProgressSpec> {
     BoxSpec? track,
     BoxSpec? fill,
     AnimatedData? animated,
+    WidgetModifiersData? modifiers,
   }) {
     return ProgressSpec(
       container: container ?? _$this.container,
       track: track ?? _$this.track,
       fill: fill ?? _$this.fill,
       animated: animated ?? _$this.animated,
+      modifiers: modifiers ?? _$this.modifiers,
     );
   }
 
@@ -59,7 +61,7 @@ mixin _$ProgressSpec on Spec<ProgressSpec> {
   ///
   /// - [BoxSpec.lerp] for [container] and [track] and [fill].
 
-  /// For [animated], the interpolation is performed using a step function.
+  /// For [animated] and [modifiers], the interpolation is performed using a step function.
   /// If [t] is less than 0.5, the value from the current [ProgressSpec] is used. Otherwise, the value
   /// from the [other] [ProgressSpec] is used.
   ///
@@ -74,6 +76,7 @@ mixin _$ProgressSpec on Spec<ProgressSpec> {
       track: _$this.track.lerp(other.track, t),
       fill: _$this.fill.lerp(other.fill, t),
       animated: t < 0.5 ? _$this.animated : other.animated,
+      modifiers: t < 0.5 ? _$this.modifiers : other.modifiers,
     );
   }
 
@@ -87,6 +90,7 @@ mixin _$ProgressSpec on Spec<ProgressSpec> {
         _$this.track,
         _$this.fill,
         _$this.animated,
+        _$this.modifiers,
       ];
 
   ProgressSpec get _$this => this as ProgressSpec;
@@ -96,6 +100,7 @@ mixin _$ProgressSpec on Spec<ProgressSpec> {
     properties.add(DiagnosticsProperty('track', _$this.track));
     properties.add(DiagnosticsProperty('fill', _$this.fill));
     properties.add(DiagnosticsProperty('animated', _$this.animated));
+    properties.add(DiagnosticsProperty('modifiers', _$this.modifiers));
   }
 }
 
@@ -117,6 +122,7 @@ base class ProgressSpecAttribute extends SpecAttribute<ProgressSpec>
     this.track,
     this.fill,
     super.animated,
+    super.modifiers,
   });
 
   /// Resolves to [ProgressSpec] using the provided [MixData].
@@ -134,6 +140,7 @@ base class ProgressSpecAttribute extends SpecAttribute<ProgressSpec>
       track: track?.resolve(mix),
       fill: fill?.resolve(mix),
       animated: animated?.resolve(mix) ?? mix.animation,
+      modifiers: modifiers?.resolve(mix),
     );
   }
 
@@ -154,6 +161,7 @@ base class ProgressSpecAttribute extends SpecAttribute<ProgressSpec>
       track: track?.merge(other.track) ?? other.track,
       fill: fill?.merge(other.fill) ?? other.fill,
       animated: animated?.merge(other.animated) ?? other.animated,
+      modifiers: modifiers?.merge(other.modifiers) ?? other.modifiers,
     );
   }
 
@@ -167,6 +175,7 @@ base class ProgressSpecAttribute extends SpecAttribute<ProgressSpec>
         track,
         fill,
         animated,
+        modifiers,
       ];
 
   @override
@@ -176,6 +185,7 @@ base class ProgressSpecAttribute extends SpecAttribute<ProgressSpec>
     properties.add(DiagnosticsProperty('track', track));
     properties.add(DiagnosticsProperty('fill', fill));
     properties.add(DiagnosticsProperty('animated', animated));
+    properties.add(DiagnosticsProperty('modifiers', modifiers));
   }
 }
 
@@ -197,6 +207,9 @@ class ProgressSpecUtility<T extends Attribute>
   /// Utility for defining [ProgressSpecAttribute.animated]
   late final animated = AnimatedUtility((v) => only(animated: v));
 
+  /// Utility for defining [ProgressSpecAttribute.modifiers]
+  late final wrap = SpecModifierUtility((v) => only(modifiers: v));
+
   ProgressSpecUtility(super.builder);
 
   static final self = ProgressSpecUtility((v) => v);
@@ -208,12 +221,14 @@ class ProgressSpecUtility<T extends Attribute>
     BoxSpecAttribute? track,
     BoxSpecAttribute? fill,
     AnimatedDataDto? animated,
+    WidgetModifiersDataDto? modifiers,
   }) {
     return builder(ProgressSpecAttribute(
       container: container,
       track: track,
       fill: fill,
       animated: animated,
+      modifiers: modifiers,
     ));
   }
 }

@@ -26,6 +26,7 @@ base class CheckboxSpec extends Spec<CheckboxSpec>
   const CheckboxSpec({
     BoxSpec? container,
     IconSpec? indicator,
+    super.modifiers,
     super.animated,
   })  : container = container ?? const BoxSpec(),
         indicator = indicator ?? const IconSpec();
