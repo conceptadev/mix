@@ -2,13 +2,33 @@ name: Publish to pub.dev
 
 on:
   workflow_dispatch:
-
+    inputs:
+      mix:
+        type: boolean
+        description: publish mix 
+        default: false
+      mix_lint:
+        type: boolean
+        description: publish mix_lint
+        default: false
+      mix_annotations:
+        type: boolean
+        description: publish mix_annotations
+        default: false
+      mix_generator:
+        type: boolean
+        description: publish mix_generator
+        default: false
+      remix:
+        type: boolean
+        description: publish remix
+        default: false
 jobs:
   test-mincompat:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout mix repo
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Run Tests
         uses: ./.github/actions/test/
@@ -20,24 +40,114 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout mix repo
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Run Tests
         uses: ./.github/actions/test/
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 
-  publish:
-    needs: [test-mincompat, test-stable]
+  publish_mix_lint:
+    needs: [mincompat, stable]
+    if: ${{ github.event.inputs.mix_lint }}
     environment: Production
-    permissions:
-      contents: write
-      id-token: write
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: subosito/flutter-action@v2
-      - uses: bluefireteam/melos-action@v3
+      - uses: actions/checkout@v4
+      - name: '>> publish Mix Lint package to pub.dev <<'
+        id: publish_mix_lint
+        uses: k-paxian/dart-package-publisher@master
         with:
-          publish: true
+          accessToken: ${{ secrets.OAUTH_ACCESS_TOKEN }}
+          refreshToken: ${{ secrets.OAUTH_REFRESH_TOKEN }}
+          relativePath: packages/mix
+      # - name: 'Commit release tag'
+        # if: steps.publish_mix_lint.outputs.success
+        # uses: hole19/git-tag-action@master
+        # env:
+          # TAG: ${{steps.publish_mix_lint.outputs.package}}-${{steps.publish_mix_lint.outputs.localVersion}}
+          # GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  publish_mix_annotations:
+    needs: [mincompat, stable]
+    if: ${{ github.event.inputs.mix_annotations }}
+    environment: Production
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: '>> publish Mix Annotations package to pub.dev <<'
+        id: publish_mix_annotations
+        uses: k-paxian/dart-package-publisher@master
+        with:
+          accessToken: ${{ secrets.OAUTH_ACCESS_TOKEN }}
+          refreshToken: ${{ secrets.OAUTH_REFRESH_TOKEN }}
+          relativePath: packages/mix_annotations
+      # - name: 'Commit release tag'
+        # if: steps.publish_mix_annotations.outputs.success
+        # uses: hole19/git-tag-action@master
+        # env:
+          # TAG: ${{steps.publish_mix_annotations.outputs.package}}-${{steps.publish_mix_annotations.outputs.localVersion}}
+          # GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  publish_mix_generator:
+    needs: [mincompat, stable]
+    if: ${{ github.event.inputs.mix_generator }}
+    environment: Production
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: '>> publish Mix Generator package to pub.dev <<'
+        id: publish_mix_generator
+        uses: k-paxian/dart-package-publisher@master
+        with:
+          accessToken: ${{ secrets.OAUTH_ACCESS_TOKEN }}
+          refreshToken: ${{ secrets.OAUTH_REFRESH_TOKEN }}
+          relativePath: packages/mix_generator
+      # - name: 'Commit release tag'
+        # if: steps.publish_mix_generator.outputs.success
+        # uses: hole19/git-tag-action@master
+        # env:
+          # TAG: ${{steps.publish_mix_generator.outputs.package}}-${{steps.publish_mix_generator.outputs.localVersion}}
+          # GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  publish_mix:
+    needs: [mincompat, stable]
+    if: ${{ github.event.inputs.mix }}
+    environment: Production
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@main
+      - name: '>> publish Mix package to pub.dev <<'
+        id: publish_mix
+        uses: k-paxian/dart-package-publisher@master
+        with:
+          accessToken: ${{ secrets.OAUTH_ACCESS_TOKEN }}
+          refreshToken: ${{ secrets.OAUTH_REFRESH_TOKEN }}
+          relativePath: packages/mix
+      # - name: 'Commit release tag'
+        # if: steps.publish_mix.outputs.success
+        # uses: hole19/git-tag-action@master
+        # env:
+          # TAG: ${{steps.publish_mix.outputs.package}}-${{steps.publish_mix.outputs.localVersion}}
+          # GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       
+  publish_remix:
+    needs: [mincompat, stable]
+    if: ${{ github.event.inputs.remix }}
+    environment: Production
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: '>> publish Remix package to pub.dev <<'
+        id: publish_remix
+        uses: k-paxian/dart-package-publisher@master
+        with:
+          accessToken: ${{ secrets.OAUTH_ACCESS_TOKEN }}
+          refreshToken: ${{ secrets.OAUTH_REFRESH_TOKEN }}
+          relativePath: packages/remix
+      # - name: 'Commit release tag'
+        # if: steps.publish_remix.outputs.success
+        # uses: hole19/git-tag-action@master
+        # env:
+          # TAG: ${{steps.publish_remix.outputs.package}}-${{steps.publish_remix.outputs.localVersion}}
+          # GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

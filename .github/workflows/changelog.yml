@@ -79,7 +79,7 @@ jobs:
           packages_with_versions="$packages_with_versions -V mix_generator:${{ github.event.inputs.mix_generator }}"
         fi
 
-        melos version --yes $packages_with_versions
+        melos version --yes --no-git-tag-version $packages_with_versions
 
         git push --follow-tags
         gh pr create --title "chore: version packages" --body "This PR was opened by the changelog GitHub Actions workflow" --reviewer leoafarias
