@@ -67,9 +67,14 @@ jobs:
         with:
           flutter-version: ${{ steps.fvm-config-action.outputs.FLUTTER_VERSION }}
           channel: ${{ steps.fvm-config-action.outputs.FLUTTER_CHANNEL }}
+          
+      - name: Setup Melos
+        uses: bluefireteam/melos-action@v3
+        with:
+          publish-dry-run: true
 
   publish:
-    needs: [test-mincompat, test-stable]
+    needs: [test-mincompat, test-stable, publish-dry-run]
     environment: Production
     runs-on: ubuntu-latest
     strategy:
@@ -78,7 +83,7 @@ jobs:
         package: [mix_lint, mix_annotations, mix_generator, mix, remix]
         include:
           - package: mix_lint
-            path: packages/mix
+            path: packages/mix_lint
             condition: ${{ github.event.inputs.mix_lint == 'true' }}
           - package: mix_annotations
             path: packages/mix_annotations
