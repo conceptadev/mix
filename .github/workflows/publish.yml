@@ -56,19 +56,19 @@ jobs:
       - name: Run melos fix
         run: |
           PACKAGES=""
-          if [[ "${{ github.event.inputs.mix_lint }}" == "true" ]]; then
+          if [[ "${{ github.event.inputs.mix_lint }}" == "false" ]]; then
             PACKAGES+=" --ignore=packages/mix_lint"
           fi
-          if [[ "${{ github.event.inputs.mix_annotations }}" == "true" ]]; then
+          if [[ "${{ github.event.inputs.mix_annotations }}" == "false" ]]; then
             PACKAGES+=" --ignore=packages/mix_annotations"
           fi
-          if [[ "${{ github.event.inputs.mix_generator }}" == "true" ]]; then
+          if [[ "${{ github.event.inputs.mix_generator }}" == "false" ]]; then
             PACKAGES+=" --ignore=packages/mix_generator"
           fi
-          if [[ "${{ github.event.inputs.mix }}" == "true" ]]; then
+          if [[ "${{ github.event.inputs.mix }}" == "false" ]]; then
             PACKAGES+=" --ignore=packages/mix"
           fi
-          if [[ "${{ github.event.inputs.remix }}" == "true" ]]; then
+          if [[ "${{ github.event.inputs.remix }}" == "false" ]]; then
             PACKAGES+=" --ignore=packages/remix"
           fi
           
