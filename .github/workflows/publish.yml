@@ -81,6 +81,7 @@ jobs:
         shell: bash
 
   test-mincompat:
+    needs: [publish-dry-run]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout mix repo
@@ -93,6 +94,7 @@ jobs:
           flutter-version: 'mincompat'
 
   test-stable:
+    needs: [publish-dry-run]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout mix repo
