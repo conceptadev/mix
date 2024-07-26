@@ -52,29 +52,29 @@ jobs:
           
       - name: Setup Melos
         uses: bluefireteam/melos-action@v3
-
+        
       - name: Run melos fix
         run: |
           PACKAGES=""
-          if [[ "${{ github.event.inputs.mix_lint }}" == "false" ]]; then
-            PACKAGES+=" --ignore=packages/mix_lint"
+          if [[ "${{ github.event.inputs.mix_lint }}" == "true" ]]; then
+            PACKAGES+=" --scope=packages/mix_lint"
           fi
-          if [[ "${{ github.event.inputs.mix_annotations }}" == "false" ]]; then
-            PACKAGES+=" --ignore=packages/mix_annotations"
+          if [[ "${{ github.event.inputs.mix_annotations }}" == "true" ]]; then
+            PACKAGES+=" --scope=packages/mix_annotations"
           fi
-          if [[ "${{ github.event.inputs.mix_generator }}" == "false" ]]; then
-            PACKAGES+=" --ignore=packages/mix_generator"
+          if [[ "${{ github.event.inputs.mix_generator }}" == "true" ]]; then
+            PACKAGES+=" --scope=packages/mix_generator"
           fi
-          if [[ "${{ github.event.inputs.mix }}" == "false" ]]; then
-            PACKAGES+=" --ignore=packages/mix"
+          if [[ "${{ github.event.inputs.mix }}" == "true" ]]; then
+            PACKAGES+=" --scope=packages/mix"
           fi
-          if [[ "${{ github.event.inputs.remix }}" == "false" ]]; then
-            PACKAGES+=" --ignore=packages/remix"
+          if [[ "${{ github.event.inputs.remix }}" == "true" ]]; then
+            PACKAGES+=" --scope=packages/remix"
           fi
           
           if [[ -n "$PACKAGES" ]]; then
             echo "$PACKAGES"
-            melos publish --dry-run --yes --no-private "$PACKAGES"
+            melos publish --dry-run --yes "$PACKAGES"
           else
             echo "No packages selected for publishing"
           fi
