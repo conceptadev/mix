@@ -106,13 +106,20 @@ mixin _$SpinnerSpec on Spec<SpinnerSpec> {
   SpinnerSpec get _$this => this as SpinnerSpec;
 
   void _debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    properties.add(DiagnosticsProperty('size', _$this.size));
-    properties.add(DiagnosticsProperty('strokeWidth', _$this.strokeWidth));
-    properties.add(DiagnosticsProperty('color', _$this.color));
-    properties.add(DiagnosticsProperty('duration', _$this.duration));
-    properties.add(DiagnosticsProperty('style', _$this.style));
-    properties.add(DiagnosticsProperty('modifiers', _$this.modifiers));
-    properties.add(DiagnosticsProperty('animated', _$this.animated));
+    properties
+        .add(DiagnosticsProperty('size', _$this.size, defaultValue: null));
+    properties.add(DiagnosticsProperty('strokeWidth', _$this.strokeWidth,
+        defaultValue: null));
+    properties
+        .add(DiagnosticsProperty('color', _$this.color, defaultValue: null));
+    properties.add(
+        DiagnosticsProperty('duration', _$this.duration, defaultValue: null));
+    properties
+        .add(DiagnosticsProperty('style', _$this.style, defaultValue: null));
+    properties.add(
+        DiagnosticsProperty('modifiers', _$this.modifiers, defaultValue: null));
+    properties.add(
+        DiagnosticsProperty('animated', _$this.animated, defaultValue: null));
   }
 }
 
@@ -203,13 +210,18 @@ final class SpinnerSpecAttribute extends SpecAttribute<SpinnerSpec>
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty('size', size));
-    properties.add(DiagnosticsProperty('strokeWidth', strokeWidth));
-    properties.add(DiagnosticsProperty('color', color));
-    properties.add(DiagnosticsProperty('duration', duration));
-    properties.add(DiagnosticsProperty('style', style, expandableValue: true));
-    properties.add(DiagnosticsProperty('modifiers', modifiers));
-    properties.add(DiagnosticsProperty('animated', animated));
+    properties.add(DiagnosticsProperty('size', size, defaultValue: null));
+    properties.add(
+        DiagnosticsProperty('strokeWidth', strokeWidth, defaultValue: null));
+    properties.add(DiagnosticsProperty('color', color, defaultValue: null));
+    properties
+        .add(DiagnosticsProperty('duration', duration, defaultValue: null));
+    properties.add(DiagnosticsProperty('style', style,
+        expandableValue: true, defaultValue: null));
+    properties
+        .add(DiagnosticsProperty('modifiers', modifiers, defaultValue: null));
+    properties
+        .add(DiagnosticsProperty('animated', animated, defaultValue: null));
   }
 }
 

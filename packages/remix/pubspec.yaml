@@ -9,6 +9,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_animate: ^4.5.0
   mix: ^1.4.0
   mix_annotations: ^0.2.1
 
@@ -16,7 +17,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  flutter_lints: ^2.0.0
+  flutter_lints: ^4.0.0
   mix_generator: ^0.2.2
   build_runner: ^2.4.9
   dart_code_metrics_presets: ^2.14.0

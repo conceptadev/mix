@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'radio_spec.dart';
+part of 'radio.dart';
 
 // **************************************************************************
 // MixableSpecGenerator
@@ -35,11 +35,13 @@ mixin _$RadioSpec on Spec<RadioSpec> {
   RadioSpec copyWith({
     BoxSpec? container,
     BoxSpec? indicator,
+    WidgetModifiersData? modifiers,
     AnimatedData? animated,
   }) {
     return RadioSpec(
       container: container ?? _$this.container,
       indicator: indicator ?? _$this.indicator,
+      modifiers: modifiers ?? _$this.modifiers,
       animated: animated ?? _$this.animated,
     );
   }
@@ -57,7 +59,7 @@ mixin _$RadioSpec on Spec<RadioSpec> {
   ///
   /// - [BoxSpec.lerp] for [container] and [indicator].
 
-  /// For [animated], the interpolation is performed using a step function.
+  /// For [modifiers] and [animated], the interpolation is performed using a step function.
   /// If [t] is less than 0.5, the value from the current [RadioSpec] is used. Otherwise, the value
   /// from the [other] [RadioSpec] is used.
   ///
@@ -70,6 +72,7 @@ mixin _$RadioSpec on Spec<RadioSpec> {
     return RadioSpec(
       container: _$this.container.lerp(other.container, t),
       indicator: _$this.indicator.lerp(other.indicator, t),
+      modifiers: t < 0.5 ? _$this.modifiers : other.modifiers,
       animated: t < 0.5 ? _$this.animated : other.animated,
     );
   }
@@ -82,10 +85,22 @@ mixin _$RadioSpec on Spec<RadioSpec> {
   List<Object?> get props => [
         _$this.container,
         _$this.indicator,
+        _$this.modifiers,
         _$this.animated,
       ];
 
   RadioSpec get _$this => this as RadioSpec;
+
+  void _debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    properties.add(
+        DiagnosticsProperty('container', _$this.container, defaultValue: null));
+    properties.add(
+        DiagnosticsProperty('indicator', _$this.indicator, defaultValue: null));
+    properties.add(
+        DiagnosticsProperty('modifiers', _$this.modifiers, defaultValue: null));
+    properties.add(
+        DiagnosticsProperty('animated', _$this.animated, defaultValue: null));
+  }
 }
 
 /// Represents the attributes of a [RadioSpec].
@@ -95,13 +110,15 @@ mixin _$RadioSpec on Spec<RadioSpec> {
 ///
 /// Use this class to configure the attributes of a [RadioSpec] and pass it to
 /// the [RadioSpec] constructor.
-base class RadioSpecAttribute extends SpecAttribute<RadioSpec> {
+base class RadioSpecAttribute extends SpecAttribute<RadioSpec>
+    with Diagnosticable {
   final BoxSpecAttribute? container;
   final BoxSpecAttribute? indicator;
 
   const RadioSpecAttribute({
     this.container,
     this.indicator,
+    super.modifiers,
     super.animated,
   });
 
@@ -118,6 +135,7 @@ base class RadioSpecAttribute extends SpecAttribute<RadioSpec> {
     return RadioSpec(
       container: container?.resolve(mix),
       indicator: indicator?.resolve(mix),
+      modifiers: modifiers?.resolve(mix),
       animated: animated?.resolve(mix) ?? mix.animation,
     );
   }
@@ -137,6 +155,7 @@ base class RadioSpecAttribute extends SpecAttribute<RadioSpec> {
     return RadioSpecAttribute(
       container: container?.merge(other.container) ?? other.container,
       indicator: indicator?.merge(other.indicator) ?? other.indicator,
+      modifiers: modifiers?.merge(other.modifiers) ?? other.modifiers,
       animated: animated?.merge(other.animated) ?? other.animated,
     );
   }
@@ -149,8 +168,22 @@ base class RadioSpecAttribute extends SpecAttribute<RadioSpec> {
   List<Object?> get props => [
         container,
         indicator,
+        modifiers,
         animated,
       ];
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+        .add(DiagnosticsProperty('container', container, defaultValue: null));
+    properties
+        .add(DiagnosticsProperty('indicator', indicator, defaultValue: null));
+    properties
+        .add(DiagnosticsProperty('modifiers', modifiers, defaultValue: null));
+    properties
+        .add(DiagnosticsProperty('animated', animated, defaultValue: null));
+  }
 }
 
 /// Utility class for configuring [RadioSpecAttribute] properties.
@@ -165,6 +198,9 @@ class RadioSpecUtility<T extends Attribute>
   /// Utility for defining [RadioSpecAttribute.indicator]
   late final indicator = BoxSpecUtility((v) => only(indicator: v));
 
+  /// Utility for defining [RadioSpecAttribute.modifiers]
+  late final wrap = SpecModifierUtility((v) => only(modifiers: v));
+
   /// Utility for defining [RadioSpecAttribute.animated]
   late final animated = AnimatedUtility((v) => only(animated: v));
 
@@ -177,11 +213,13 @@ class RadioSpecUtility<T extends Attribute>
   T only({
     BoxSpecAttribute? container,
     BoxSpecAttribute? indicator,
+    WidgetModifiersDataDto? modifiers,
     AnimatedDataDto? animated,
   }) {
     return builder(RadioSpecAttribute(
       container: container,
       indicator: indicator,
+      modifiers: modifiers,
       animated: animated,
     ));
   }

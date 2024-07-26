@@ -5,7 +5,7 @@ import 'package:mix_annotations/mix_annotations.dart';
 
 part 'flutter_animate.g.dart';
 
-@MixableSpec(prefix: '_FlutterAnimate')
+@MixableSpec(prefix: '_FlutterAnimateModifierSpec')
 class FlutterAnimateModifierSpec
     extends WidgetModifierSpec<FlutterAnimateModifierSpec>
     with _$FlutterAnimateModifierSpec {
@@ -29,13 +29,10 @@ class FlutterAnimateModifierSpec
   }
 }
 
-class FlutterAnimateAttribute extends _FlutterAnimateAttribute
+class FlutterAnimateAttribute extends _FlutterAnimateModifierSpecAttribute
     implements AnimateManager<FlutterAnimateAttribute> {
   @override
-  FlutterAnimateAttribute addEffect(Effect effect) {
-    return addEffects([effect]);
-  }
-
+  FlutterAnimateAttribute addEffect(Effect effect) => addEffects([effect]);
   @override
   FlutterAnimateAttribute addEffects(List<Effect> effects) {
     return FlutterAnimateAttribute(
@@ -81,4 +78,10 @@ class FlutterAnimateUtility<T extends Attribute>
   }
 
   const FlutterAnimateUtility(super.builder);
+}
+
+extension TextSpecUtilityX<T extends Attribute> on TextSpecUtility<T> {
+  FlutterAnimateUtility<T> get animate => FlutterAnimateUtility((v) {
+        return only(modifiers: WidgetModifiersDataDto([v]));
+      });
 }

@@ -82,7 +82,7 @@ mixin _$FlutterAnimateModifierSpec
 ///
 /// Use this class to configure the attributes of a [FlutterAnimateModifierSpec] and pass it to
 /// the [FlutterAnimateModifierSpec] constructor.
-class _FlutterAnimateAttribute
+class _FlutterAnimateModifierSpecAttribute
     extends WidgetModifierSpecAttribute<FlutterAnimateModifierSpec> {
   final List<Effect<dynamic>>? effects;
   final bool? autoPlay;
@@ -90,7 +90,7 @@ class _FlutterAnimateAttribute
   final double? value;
   final double? target;
 
-  const _FlutterAnimateAttribute({
+  const _FlutterAnimateModifierSpecAttribute({
     this.effects,
     this.autoPlay,
     this.delay,
@@ -104,7 +104,7 @@ class _FlutterAnimateAttribute
   /// default value defined in the `defaultValue` for that property.
   ///
   /// ```dart
-  /// final flutterAnimateModifierSpec = _FlutterAnimateAttribute(...).resolve(mix);
+  /// final flutterAnimateModifierSpec = _FlutterAnimateModifierSpecAttribute(...).resolve(mix);
   /// ```
   @override
   FlutterAnimateModifierSpec resolve(MixData mix) {
@@ -117,19 +117,20 @@ class _FlutterAnimateAttribute
     );
   }
 
-  /// Merges the properties of this [_FlutterAnimateAttribute] with the properties of [other].
+  /// Merges the properties of this [_FlutterAnimateModifierSpecAttribute] with the properties of [other].
   ///
   /// If [other] is null, returns this instance unchanged. Otherwise, returns a new
-  /// [_FlutterAnimateAttribute] with the properties of [other] taking precedence over
+  /// [_FlutterAnimateModifierSpecAttribute] with the properties of [other] taking precedence over
   /// the corresponding properties of this instance.
   ///
   /// Properties from [other] that are null will fall back
   /// to the values from this instance.
   @override
-  _FlutterAnimateAttribute merge(covariant _FlutterAnimateAttribute? other) {
+  _FlutterAnimateModifierSpecAttribute merge(
+      covariant _FlutterAnimateModifierSpecAttribute? other) {
     if (other == null) return this;
 
-    return _FlutterAnimateAttribute(
+    return _FlutterAnimateModifierSpecAttribute(
       effects: MixHelpers.mergeList(effects, other.effects),
       autoPlay: other.autoPlay ?? autoPlay,
       delay: other.delay ?? delay,
@@ -138,10 +139,10 @@ class _FlutterAnimateAttribute
     );
   }
 
-  /// The list of properties that constitute the state of this [_FlutterAnimateAttribute].
+  /// The list of properties that constitute the state of this [_FlutterAnimateModifierSpecAttribute].
   ///
   /// This property is used by the [==] operator and the [hashCode] getter to
-  /// compare two [_FlutterAnimateAttribute] instances for equality.
+  /// compare two [_FlutterAnimateModifierSpecAttribute] instances for equality.
   @override
   List<Object?> get props => [
         effects,
@@ -152,32 +153,32 @@ class _FlutterAnimateAttribute
       ];
 }
 
-/// Utility class for configuring [_FlutterAnimateAttribute] properties.
+/// Utility class for configuring [_FlutterAnimateModifierSpecAttribute] properties.
 ///
-/// This class provides methods to set individual properties of a [_FlutterAnimateAttribute].
-/// Use the methods of this class to configure specific properties of a [_FlutterAnimateAttribute].
-class _FlutterAnimateUtility<T extends Attribute>
-    extends SpecUtility<T, _FlutterAnimateAttribute> {
-  /// Utility for defining [_FlutterAnimateAttribute.effects]
+/// This class provides methods to set individual properties of a [_FlutterAnimateModifierSpecAttribute].
+/// Use the methods of this class to configure specific properties of a [_FlutterAnimateModifierSpecAttribute].
+class _FlutterAnimateModifierSpecUtility<T extends Attribute>
+    extends SpecUtility<T, _FlutterAnimateModifierSpecAttribute> {
+  /// Utility for defining [_FlutterAnimateModifierSpecAttribute.effects]
   late final effects = ListUtility<T, Effect<dynamic>>((v) => only(effects: v));
 
-  /// Utility for defining [_FlutterAnimateAttribute.autoPlay]
+  /// Utility for defining [_FlutterAnimateModifierSpecAttribute.autoPlay]
   late final autoPlay = BoolUtility((v) => only(autoPlay: v));
 
-  /// Utility for defining [_FlutterAnimateAttribute.delay]
+  /// Utility for defining [_FlutterAnimateModifierSpecAttribute.delay]
   late final delay = DurationUtility((v) => only(delay: v));
 
-  /// Utility for defining [_FlutterAnimateAttribute.value]
+  /// Utility for defining [_FlutterAnimateModifierSpecAttribute.value]
   late final value = DoubleUtility((v) => only(value: v));
 
-  /// Utility for defining [_FlutterAnimateAttribute.target]
+  /// Utility for defining [_FlutterAnimateModifierSpecAttribute.target]
   late final target = DoubleUtility((v) => only(target: v));
 
-  _FlutterAnimateUtility(super.builder);
+  _FlutterAnimateModifierSpecUtility(super.builder);
 
-  static final self = _FlutterAnimateUtility((v) => v);
+  static final self = _FlutterAnimateModifierSpecUtility((v) => v);
 
-  /// Returns a new [_FlutterAnimateAttribute] with the specified properties.
+  /// Returns a new [_FlutterAnimateModifierSpecAttribute] with the specified properties.
   @override
   T only({
     List<Effect<dynamic>>? effects,
@@ -186,7 +187,7 @@ class _FlutterAnimateUtility<T extends Attribute>
     double? value,
     double? target,
   }) {
-    return builder(_FlutterAnimateAttribute(
+    return builder(_FlutterAnimateModifierSpecAttribute(
       effects: effects,
       autoPlay: autoPlay,
       delay: delay,
