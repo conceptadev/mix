@@ -23,30 +23,12 @@ on:
         type: boolean
         description: publish remix
         default: false
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
 jobs:
-  test-mincompat:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout mix repo
-        uses: actions/checkout@v4
-
-      - name: Run Tests
-        uses: ./.github/actions/test/
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          flutter-version: 'mincompat'
-
-  test-stable:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout mix repo
-        uses: actions/checkout@v4
-
-      - name: Run Tests
-        uses: ./.github/actions/test/
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-
   publish-dry-run:
     runs-on: ubuntu-latest
     steps:
@@ -89,13 +71,37 @@ jobs:
           if [[ "${{ github.event.inputs.remix }}" == "true" ]]; then
             PACKAGES+=" --scope=packages/remix"
           fi
-          PACKAGES=${PACKAGES%,}
+          
           if [[ -n "$PACKAGES" ]]; then
+            echo "$PACKAGES"
             melos publish --dry-run --no-private "$PACKAGES"
           else
             echo "No packages selected for publishing"
           fi
         shell: bash
+
+  test-mincompat:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout mix repo
+        uses: actions/checkout@v4
+
+      - name: Run Tests
+        uses: ./.github/actions/test/
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          flutter-version: 'mincompat'
+
+  test-stable:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout mix repo
+        uses: actions/checkout@v4
+
+      - name: Run Tests
+        uses: ./.github/actions/test/
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
 
   publish:
     needs: [test-mincompat, test-stable, publish-dry-run]
