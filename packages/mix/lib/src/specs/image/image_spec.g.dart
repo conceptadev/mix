@@ -123,18 +123,27 @@ mixin _$ImageSpec on Spec<ImageSpec> {
   ImageSpec get _$this => this as ImageSpec;
 
   void _debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    properties.add(DiagnosticsProperty('width', _$this.width));
-    properties.add(DiagnosticsProperty('height', _$this.height));
-    properties.add(DiagnosticsProperty('color', _$this.color));
-    properties.add(DiagnosticsProperty('repeat', _$this.repeat));
-    properties.add(DiagnosticsProperty('fit', _$this.fit));
-    properties.add(DiagnosticsProperty('alignment', _$this.alignment));
-    properties.add(DiagnosticsProperty('centerSlice', _$this.centerSlice));
-    properties.add(DiagnosticsProperty('filterQuality', _$this.filterQuality));
     properties
-        .add(DiagnosticsProperty('colorBlendMode', _$this.colorBlendMode));
-    properties.add(DiagnosticsProperty('animated', _$this.animated));
-    properties.add(DiagnosticsProperty('modifiers', _$this.modifiers));
+        .add(DiagnosticsProperty('width', _$this.width, defaultValue: null));
+    properties
+        .add(DiagnosticsProperty('height', _$this.height, defaultValue: null));
+    properties
+        .add(DiagnosticsProperty('color', _$this.color, defaultValue: null));
+    properties
+        .add(DiagnosticsProperty('repeat', _$this.repeat, defaultValue: null));
+    properties.add(DiagnosticsProperty('fit', _$this.fit, defaultValue: null));
+    properties.add(
+        DiagnosticsProperty('alignment', _$this.alignment, defaultValue: null));
+    properties.add(DiagnosticsProperty('centerSlice', _$this.centerSlice,
+        defaultValue: null));
+    properties.add(DiagnosticsProperty('filterQuality', _$this.filterQuality,
+        defaultValue: null));
+    properties.add(DiagnosticsProperty('colorBlendMode', _$this.colorBlendMode,
+        defaultValue: null));
+    properties.add(
+        DiagnosticsProperty('animated', _$this.animated, defaultValue: null));
+    properties.add(
+        DiagnosticsProperty('modifiers', _$this.modifiers, defaultValue: null));
   }
 }
 
@@ -245,17 +254,23 @@ final class ImageSpecAttribute extends SpecAttribute<ImageSpec>
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty('width', width));
-    properties.add(DiagnosticsProperty('height', height));
-    properties.add(DiagnosticsProperty('color', color));
-    properties.add(DiagnosticsProperty('repeat', repeat));
-    properties.add(DiagnosticsProperty('fit', fit));
-    properties.add(DiagnosticsProperty('alignment', alignment));
-    properties.add(DiagnosticsProperty('centerSlice', centerSlice));
-    properties.add(DiagnosticsProperty('filterQuality', filterQuality));
-    properties.add(DiagnosticsProperty('colorBlendMode', colorBlendMode));
-    properties.add(DiagnosticsProperty('animated', animated));
-    properties.add(DiagnosticsProperty('modifiers', modifiers));
+    properties.add(DiagnosticsProperty('width', width, defaultValue: null));
+    properties.add(DiagnosticsProperty('height', height, defaultValue: null));
+    properties.add(DiagnosticsProperty('color', color, defaultValue: null));
+    properties.add(DiagnosticsProperty('repeat', repeat, defaultValue: null));
+    properties.add(DiagnosticsProperty('fit', fit, defaultValue: null));
+    properties
+        .add(DiagnosticsProperty('alignment', alignment, defaultValue: null));
+    properties.add(
+        DiagnosticsProperty('centerSlice', centerSlice, defaultValue: null));
+    properties.add(DiagnosticsProperty('filterQuality', filterQuality,
+        defaultValue: null));
+    properties.add(DiagnosticsProperty('colorBlendMode', colorBlendMode,
+        defaultValue: null));
+    properties
+        .add(DiagnosticsProperty('animated', animated, defaultValue: null));
+    properties
+        .add(DiagnosticsProperty('modifiers', modifiers, defaultValue: null));
   }
 }
 

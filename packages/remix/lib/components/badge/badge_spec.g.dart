@@ -6,9 +6,7 @@ part of 'badge_spec.dart';
 // MixableSpecGenerator
 // **************************************************************************
 
-// ignore_for_file: deprecated_member_use_from_same_package
-
-base mixin _$BadgeSpec on Spec<BadgeSpec> {
+mixin _$BadgeSpec on Spec<BadgeSpec> {
   static BadgeSpec from(MixData mix) {
     return mix.attributeOf<BadgeSpecAttribute>()?.resolve(mix) ??
         const BadgeSpec();
@@ -98,7 +96,7 @@ base mixin _$BadgeSpec on Spec<BadgeSpec> {
 ///
 /// Use this class to configure the attributes of a [BadgeSpec] and pass it to
 /// the [BadgeSpec] constructor.
-final class BadgeSpecAttribute extends SpecAttribute<BadgeSpec> {
+base class BadgeSpecAttribute extends SpecAttribute<BadgeSpec> {
   final BoxSpecAttribute? container;
   final TextSpecAttribute? label;
 
@@ -160,7 +158,7 @@ final class BadgeSpecAttribute extends SpecAttribute<BadgeSpec> {
 ///
 /// This class provides methods to set individual properties of a [BadgeSpecAttribute].
 /// Use the methods of this class to configure specific properties of a [BadgeSpecAttribute].
-base class BadgeSpecUtility<T extends Attribute>
+class BadgeSpecUtility<T extends Attribute>
     extends SpecUtility<T, BadgeSpecAttribute> {
   /// Utility for defining [BadgeSpecAttribute.container]
   late final container = BoxSpecUtility((v) => only(container: v));
@@ -202,8 +200,13 @@ class BadgeSpecTween extends Tween<BadgeSpec?> {
 
   @override
   BadgeSpec lerp(double t) {
-    if (begin == null && end == null) return const BadgeSpec();
-    if (begin == null) return end!;
+    if (begin == null && end == null) {
+      return const BadgeSpec();
+    }
+
+    if (begin == null) {
+      return end!;
+    }
 
     return begin!.lerp(end!, t);
   }

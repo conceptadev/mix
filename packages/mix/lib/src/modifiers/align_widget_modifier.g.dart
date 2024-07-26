@@ -69,9 +69,12 @@ mixin _$AlignModifierSpec on WidgetModifierSpec<AlignModifierSpec> {
   AlignModifierSpec get _$this => this as AlignModifierSpec;
 
   void _debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    properties.add(DiagnosticsProperty('alignment', _$this.alignment));
-    properties.add(DiagnosticsProperty('widthFactor', _$this.widthFactor));
-    properties.add(DiagnosticsProperty('heightFactor', _$this.heightFactor));
+    properties.add(
+        DiagnosticsProperty('alignment', _$this.alignment, defaultValue: null));
+    properties.add(DiagnosticsProperty('widthFactor', _$this.widthFactor,
+        defaultValue: null));
+    properties.add(DiagnosticsProperty('heightFactor', _$this.heightFactor,
+        defaultValue: null));
   }
 }
 
@@ -144,9 +147,12 @@ final class AlignModifierSpecAttribute
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty('alignment', alignment));
-    properties.add(DiagnosticsProperty('widthFactor', widthFactor));
-    properties.add(DiagnosticsProperty('heightFactor', heightFactor));
+    properties
+        .add(DiagnosticsProperty('alignment', alignment, defaultValue: null));
+    properties.add(
+        DiagnosticsProperty('widthFactor', widthFactor, defaultValue: null));
+    properties.add(
+        DiagnosticsProperty('heightFactor', heightFactor, defaultValue: null));
   }
 }
 

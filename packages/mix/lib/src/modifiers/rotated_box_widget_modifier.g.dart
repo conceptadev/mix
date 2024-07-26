@@ -30,7 +30,8 @@ mixin _$RotatedBoxModifierSpec on WidgetModifierSpec<RotatedBoxModifierSpec> {
   RotatedBoxModifierSpec get _$this => this as RotatedBoxModifierSpec;
 
   void _debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    properties.add(DiagnosticsProperty('quarterTurns', _$this.quarterTurns));
+    properties.add(DiagnosticsProperty('quarterTurns', _$this.quarterTurns,
+        defaultValue: null));
   }
 }
 
@@ -95,7 +96,8 @@ final class RotatedBoxModifierSpecAttribute
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty('quarterTurns', quarterTurns));
+    properties.add(
+        DiagnosticsProperty('quarterTurns', quarterTurns, defaultValue: null));
   }
 }
 

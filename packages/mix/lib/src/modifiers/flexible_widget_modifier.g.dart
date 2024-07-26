@@ -61,8 +61,9 @@ mixin _$FlexibleModifierSpec on WidgetModifierSpec<FlexibleModifierSpec> {
   FlexibleModifierSpec get _$this => this as FlexibleModifierSpec;
 
   void _debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    properties.add(DiagnosticsProperty('flex', _$this.flex));
-    properties.add(DiagnosticsProperty('fit', _$this.fit));
+    properties
+        .add(DiagnosticsProperty('flex', _$this.flex, defaultValue: null));
+    properties.add(DiagnosticsProperty('fit', _$this.fit, defaultValue: null));
   }
 }
 
@@ -131,8 +132,8 @@ final class FlexibleModifierSpecAttribute
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty('flex', flex));
-    properties.add(DiagnosticsProperty('fit', fit));
+    properties.add(DiagnosticsProperty('flex', flex, defaultValue: null));
+    properties.add(DiagnosticsProperty('fit', fit, defaultValue: null));
   }
 }
 

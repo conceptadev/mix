@@ -63,8 +63,10 @@ mixin _$TransformModifierSpec on WidgetModifierSpec<TransformModifierSpec> {
   TransformModifierSpec get _$this => this as TransformModifierSpec;
 
   void _debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    properties.add(DiagnosticsProperty('transform', _$this.transform));
-    properties.add(DiagnosticsProperty('alignment', _$this.alignment));
+    properties.add(
+        DiagnosticsProperty('transform', _$this.transform, defaultValue: null));
+    properties.add(
+        DiagnosticsProperty('alignment', _$this.alignment, defaultValue: null));
   }
 }
 
@@ -133,8 +135,10 @@ final class TransformModifierSpecAttribute
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty('transform', transform));
-    properties.add(DiagnosticsProperty('alignment', alignment));
+    properties
+        .add(DiagnosticsProperty('transform', transform, defaultValue: null));
+    properties
+        .add(DiagnosticsProperty('alignment', alignment, defaultValue: null));
   }
 }
 
