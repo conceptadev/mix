@@ -3,6 +3,64 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2024-07-25
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`mix` - `v1.4.0`](#mix---v140)
+ - [`mix_annotations` - `v0.2.1`](#mix_annotations---v021)
+ - [`mix_generator` - `v0.2.2`](#mix_generator---v022)
+ - [`mix_lint` - `v0.1.1`](#mix_lint---v011)
+ - [`remix` - `v0.0.2`](#remix---v002)
+
+---
+
+#### `mix` - `v1.4.0`
+
+ - **FEAT**: Code generation for Widget Modifiers (#396).
+ - **FEAT**: Ability to pass MixWidgetStateController to SpecBuilder (#391).
+ - **FEAT**: Interactive widget state by default (#384).
+ - **FEAT**: MixThemeData can alter default order of modifiers (#380).
+ - **FEAT**: Dto utility generation now adds constructor and static methods (#377).
+ - **FEAT**: ColorSwatchToken and other token improvements (#378).
+ - **REFACTOR**: Code gen more lint friendly dart code (#399).
+ - **FIX**: Gestures propagation for GestureMixStateWidget (#394).
+ - **FIX**: Normalization of order of modifier when applied to a Styled Widget (#389).
+ - **FIX**: Animations of Stack and Flex (#388).
+ - **FIX**: Review the order of modifiers adding FlexibleModifier, PaddingModifier, and RotatedModifier (#379).
+
+#### `mix_annotations` - `v0.2.1`
+
+ - **FEAT**: MixableSpec now supports `withCopyWith`, `withEquality`, `withLerp`, and `skipUtility` (#396).
+
+#### `mix_generator` - `v0.2.2`
+
+ - **FEAT**: Code generation for Widget Modifiers (#396).
+ - **FEAT**: Dto utility generation now adds constructor and static methods (#377).
+ - **FEAT**: ColorSwatchToken and other token improvements (#378).
+ - **REFACTOR**: Code gen more lint friendly dart code (#399) and (#395).
+ - **FIX**: Nullable merge expressions and updates debug properties (#392).
+
+#### `mix_lint` - `v0.1.1`
+
+ - **FEAT**: Improvements for the "extract attributes" assist (#387).
+ - **FEAT**: implement quick fix for mix_attributes_ordering rule (#381).
+ - **FEAT**: ColorSwatchToken and other token improvements (#378).
+
+#### `remix` - `v0.0.2`
+
+ - **FEAT**: Ability to pass MixWidgetStateController to SpecBuilder (#391).
+ - **FEAT**: Foundational components (#317).
+
+
 ## 2024-07-12
 
 ### Changes

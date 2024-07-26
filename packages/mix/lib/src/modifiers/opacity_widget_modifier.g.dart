@@ -58,7 +58,8 @@ mixin _$OpacityModifierSpec on WidgetModifierSpec<OpacityModifierSpec> {
   OpacityModifierSpec get _$this => this as OpacityModifierSpec;
 
   void _debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    properties.add(DiagnosticsProperty('opacity', _$this.opacity));
+    properties.add(
+        DiagnosticsProperty('opacity', _$this.opacity, defaultValue: null));
   }
 }
 
@@ -122,7 +123,7 @@ final class OpacityModifierSpecAttribute
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty('opacity', opacity));
+    properties.add(DiagnosticsProperty('opacity', opacity, defaultValue: null));
   }
 }
 

@@ -72,9 +72,12 @@ mixin _$FractionallySizedBoxModifierSpec
       this as FractionallySizedBoxModifierSpec;
 
   void _debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    properties.add(DiagnosticsProperty('widthFactor', _$this.widthFactor));
-    properties.add(DiagnosticsProperty('heightFactor', _$this.heightFactor));
-    properties.add(DiagnosticsProperty('alignment', _$this.alignment));
+    properties.add(DiagnosticsProperty('widthFactor', _$this.widthFactor,
+        defaultValue: null));
+    properties.add(DiagnosticsProperty('heightFactor', _$this.heightFactor,
+        defaultValue: null));
+    properties.add(
+        DiagnosticsProperty('alignment', _$this.alignment, defaultValue: null));
   }
 }
 
@@ -149,9 +152,12 @@ final class FractionallySizedBoxModifierSpecAttribute
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty('widthFactor', widthFactor));
-    properties.add(DiagnosticsProperty('heightFactor', heightFactor));
-    properties.add(DiagnosticsProperty('alignment', alignment));
+    properties.add(
+        DiagnosticsProperty('widthFactor', widthFactor, defaultValue: null));
+    properties.add(
+        DiagnosticsProperty('heightFactor', heightFactor, defaultValue: null));
+    properties
+        .add(DiagnosticsProperty('alignment', alignment, defaultValue: null));
   }
 }
 

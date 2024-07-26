@@ -139,23 +139,36 @@ mixin _$TextSpec on Spec<TextSpec> {
   TextSpec get _$this => this as TextSpec;
 
   void _debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    properties.add(DiagnosticsProperty('overflow', _$this.overflow));
-    properties.add(DiagnosticsProperty('strutStyle', _$this.strutStyle));
-    properties.add(DiagnosticsProperty('textAlign', _$this.textAlign));
-    properties
-        .add(DiagnosticsProperty('textScaleFactor', _$this.textScaleFactor));
-    properties.add(DiagnosticsProperty('textScaler', _$this.textScaler));
-    properties.add(DiagnosticsProperty('maxLines', _$this.maxLines));
-    properties.add(DiagnosticsProperty('style', _$this.style));
-    properties
-        .add(DiagnosticsProperty('textWidthBasis', _$this.textWidthBasis));
     properties.add(
-        DiagnosticsProperty('textHeightBehavior', _$this.textHeightBehavior));
-    properties.add(DiagnosticsProperty('textDirection', _$this.textDirection));
-    properties.add(DiagnosticsProperty('softWrap', _$this.softWrap));
-    properties.add(DiagnosticsProperty('directive', _$this.directive));
-    properties.add(DiagnosticsProperty('animated', _$this.animated));
-    properties.add(DiagnosticsProperty('modifiers', _$this.modifiers));
+        DiagnosticsProperty('overflow', _$this.overflow, defaultValue: null));
+    properties.add(DiagnosticsProperty('strutStyle', _$this.strutStyle,
+        defaultValue: null));
+    properties.add(
+        DiagnosticsProperty('textAlign', _$this.textAlign, defaultValue: null));
+    properties.add(DiagnosticsProperty(
+        'textScaleFactor', _$this.textScaleFactor,
+        defaultValue: null));
+    properties.add(DiagnosticsProperty('textScaler', _$this.textScaler,
+        defaultValue: null));
+    properties.add(
+        DiagnosticsProperty('maxLines', _$this.maxLines, defaultValue: null));
+    properties
+        .add(DiagnosticsProperty('style', _$this.style, defaultValue: null));
+    properties.add(DiagnosticsProperty('textWidthBasis', _$this.textWidthBasis,
+        defaultValue: null));
+    properties.add(DiagnosticsProperty(
+        'textHeightBehavior', _$this.textHeightBehavior,
+        defaultValue: null));
+    properties.add(DiagnosticsProperty('textDirection', _$this.textDirection,
+        defaultValue: null));
+    properties.add(
+        DiagnosticsProperty('softWrap', _$this.softWrap, defaultValue: null));
+    properties.add(
+        DiagnosticsProperty('directive', _$this.directive, defaultValue: null));
+    properties.add(
+        DiagnosticsProperty('animated', _$this.animated, defaultValue: null));
+    properties.add(
+        DiagnosticsProperty('modifiers', _$this.modifiers, defaultValue: null));
   }
 }
 
@@ -281,21 +294,34 @@ final class TextSpecAttribute extends SpecAttribute<TextSpec>
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty('overflow', overflow));
-    properties.add(DiagnosticsProperty('strutStyle', strutStyle));
-    properties.add(DiagnosticsProperty('textAlign', textAlign));
-    properties.add(DiagnosticsProperty('textScaleFactor', textScaleFactor));
-    properties.add(DiagnosticsProperty('textScaler', textScaler));
-    properties.add(DiagnosticsProperty('maxLines', maxLines));
-    properties.add(DiagnosticsProperty('style', style, expandableValue: true));
-    properties.add(DiagnosticsProperty('textWidthBasis', textWidthBasis));
     properties
-        .add(DiagnosticsProperty('textHeightBehavior', textHeightBehavior));
-    properties.add(DiagnosticsProperty('textDirection', textDirection));
-    properties.add(DiagnosticsProperty('softWrap', softWrap));
-    properties.add(DiagnosticsProperty('directive', directive));
-    properties.add(DiagnosticsProperty('animated', animated));
-    properties.add(DiagnosticsProperty('modifiers', modifiers));
+        .add(DiagnosticsProperty('overflow', overflow, defaultValue: null));
+    properties
+        .add(DiagnosticsProperty('strutStyle', strutStyle, defaultValue: null));
+    properties
+        .add(DiagnosticsProperty('textAlign', textAlign, defaultValue: null));
+    properties.add(DiagnosticsProperty('textScaleFactor', textScaleFactor,
+        defaultValue: null));
+    properties
+        .add(DiagnosticsProperty('textScaler', textScaler, defaultValue: null));
+    properties
+        .add(DiagnosticsProperty('maxLines', maxLines, defaultValue: null));
+    properties.add(DiagnosticsProperty('style', style,
+        expandableValue: true, defaultValue: null));
+    properties.add(DiagnosticsProperty('textWidthBasis', textWidthBasis,
+        defaultValue: null));
+    properties.add(DiagnosticsProperty('textHeightBehavior', textHeightBehavior,
+        defaultValue: null));
+    properties.add(DiagnosticsProperty('textDirection', textDirection,
+        defaultValue: null));
+    properties
+        .add(DiagnosticsProperty('softWrap', softWrap, defaultValue: null));
+    properties
+        .add(DiagnosticsProperty('directive', directive, defaultValue: null));
+    properties
+        .add(DiagnosticsProperty('animated', animated, defaultValue: null));
+    properties
+        .add(DiagnosticsProperty('modifiers', modifiers, defaultValue: null));
   }
 }
 

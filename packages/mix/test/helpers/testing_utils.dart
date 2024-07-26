@@ -228,7 +228,7 @@ final class MockBooleanScalarAttribute
   const MockBooleanScalarAttribute(super.value);
 }
 
-abstract base class _MockSpecAttribute<T> extends SpecAttribute<T> {
+abstract class _MockSpecAttribute<T> extends SpecAttribute<T> {
   final T _value;
   const _MockSpecAttribute(this._value);
 
@@ -379,7 +379,7 @@ class WidgetWithTestableBuild extends StyledWidget {
   }
 }
 
-abstract base class TestScalarAttribute<
+abstract class TestScalarAttribute<
     Self extends TestScalarAttribute<Self, Value>,
     Value> extends StyledAttribute {
   final Value value;

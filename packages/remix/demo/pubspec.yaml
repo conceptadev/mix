@@ -18,7 +18,7 @@ dependencies:
   remix: 
     path: ../
     
-  mix: ^1.1.2
+  mix: ^1.4.0
 
 dev_dependencies:
   flutter_test:
