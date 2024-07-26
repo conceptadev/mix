@@ -70,8 +70,32 @@ jobs:
           
       - name: Setup Melos
         uses: bluefireteam/melos-action@v3
-        with:
-          publish-dry-run: true
+        
+      - name: Run melos fix
+        run: |
+          PACKAGES=""
+          if [[ "${{ github.event.inputs.mix_lint }}" == "true" ]]; then
+            PACKAGES+="packages/mix_lint,"
+          fi
+          if [[ "${{ github.event.inputs.mix_annotations }}" == "true" ]]; then
+            PACKAGES+="packages/mix_annotations,"
+          fi
+          if [[ "${{ github.event.inputs.mix_generator }}" == "true" ]]; then
+            PACKAGES+="packages/mix_generator,"
+          fi
+          if [[ "${{ github.event.inputs.mix }}" == "true" ]]; then
+            PACKAGES+="packages/mix,"
+          fi
+          if [[ "${{ github.event.inputs.remix }}" == "true" ]]; then
+            PACKAGES+="packages/remix,"
+          fi
+          PACKAGES=${PACKAGES%,}
+          if [[ -n "$PACKAGES" ]]; then
+            melos publish --dry-run --no-private --scope="$PACKAGES"
+          else
+            echo "No packages selected for publishing"
+          fi
+        shell: bash
 
   publish:
     needs: [test-mincompat, test-stable, publish-dry-run]
