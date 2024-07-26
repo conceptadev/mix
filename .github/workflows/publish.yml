@@ -61,12 +61,12 @@ jobs:
           accessToken: ${{ secrets.OAUTH_ACCESS_TOKEN }}
           refreshToken: ${{ secrets.OAUTH_REFRESH_TOKEN }}
           relativePath: packages/mix
-      - name: 'Commit release tag'
-        if: steps.publish_mix_lint.outputs.success
-        uses: hole19/git-tag-action@master
-        env:
-          TAG: ${{steps.publish_mix_lint.outputs.package}}-${{steps.publish_mix_lint.outputs.localVersion}}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # - name: 'Commit release tag'
+        # if: steps.publish_mix_lint.outputs.success
+        # uses: hole19/git-tag-action@master
+        # env:
+          # TAG: ${{steps.publish_mix_lint.outputs.package}}-${{steps.publish_mix_lint.outputs.localVersion}}
+          # GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   publish_mix_annotations:
     needs: [mincompat, stable]
@@ -82,12 +82,12 @@ jobs:
           accessToken: ${{ secrets.OAUTH_ACCESS_TOKEN }}
           refreshToken: ${{ secrets.OAUTH_REFRESH_TOKEN }}
           relativePath: packages/mix_annotations
-      - name: 'Commit release tag'
-        if: steps.publish_mix_annotations.outputs.success
-        uses: hole19/git-tag-action@master
-        env:
-          TAG: ${{steps.publish_mix_annotations.outputs.package}}-${{steps.publish_mix_annotations.outputs.localVersion}}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # - name: 'Commit release tag'
+        # if: steps.publish_mix_annotations.outputs.success
+        # uses: hole19/git-tag-action@master
+        # env:
+          # TAG: ${{steps.publish_mix_annotations.outputs.package}}-${{steps.publish_mix_annotations.outputs.localVersion}}
+          # GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   publish_mix_generator:
     needs: [mincompat, stable]
@@ -103,12 +103,12 @@ jobs:
           accessToken: ${{ secrets.OAUTH_ACCESS_TOKEN }}
           refreshToken: ${{ secrets.OAUTH_REFRESH_TOKEN }}
           relativePath: packages/mix_generator
-      - name: 'Commit release tag'
-        if: steps.publish_mix_generator.outputs.success
-        uses: hole19/git-tag-action@master
-        env:
-          TAG: ${{steps.publish_mix_generator.outputs.package}}-${{steps.publish_mix_generator.outputs.localVersion}}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # - name: 'Commit release tag'
+        # if: steps.publish_mix_generator.outputs.success
+        # uses: hole19/git-tag-action@master
+        # env:
+          # TAG: ${{steps.publish_mix_generator.outputs.package}}-${{steps.publish_mix_generator.outputs.localVersion}}
+          # GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   publish_mix:
     needs: [mincompat, stable]
@@ -124,12 +124,12 @@ jobs:
           accessToken: ${{ secrets.OAUTH_ACCESS_TOKEN }}
           refreshToken: ${{ secrets.OAUTH_REFRESH_TOKEN }}
           relativePath: packages/mix
-      - name: 'Commit release tag'
-        if: steps.publish_mix.outputs.success
-        uses: hole19/git-tag-action@master
-        env:
-          TAG: ${{steps.publish_mix.outputs.package}}-${{steps.publish_mix.outputs.localVersion}}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # - name: 'Commit release tag'
+        # if: steps.publish_mix.outputs.success
+        # uses: hole19/git-tag-action@master
+        # env:
+          # TAG: ${{steps.publish_mix.outputs.package}}-${{steps.publish_mix.outputs.localVersion}}
+          # GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       
   publish_remix:
     needs: [mincompat, stable]
@@ -145,9 +145,9 @@ jobs:
           accessToken: ${{ secrets.OAUTH_ACCESS_TOKEN }}
           refreshToken: ${{ secrets.OAUTH_REFRESH_TOKEN }}
           relativePath: packages/remix
-      - name: 'Commit release tag'
-        if: steps.publish_remix.outputs.success
-        uses: hole19/git-tag-action@master
-        env:
-          TAG: ${{steps.publish_remix.outputs.package}}-${{steps.publish_remix.outputs.localVersion}}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # - name: 'Commit release tag'
+        # if: steps.publish_remix.outputs.success
+        # uses: hole19/git-tag-action@master
+        # env:
+          # TAG: ${{steps.publish_remix.outputs.package}}-${{steps.publish_remix.outputs.localVersion}}
+          # GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
