@@ -1,3 +1,5 @@
+import { Video } from "@/components/Video";
+
 # mix_lint
 
 Mix Lint is a powerful tool that helps you enforce coding standards and best practices in your Flutter apps using Mix.
@@ -248,3 +250,22 @@ final mainStyle = Style(
 ##### max_number (int)
 
 The maximum number of attributes allowed per style. The default value is 10.
+
+## Assists
+
+### Extract Attributes
+
+It is a powerful refactoring tool designed to improve the structure and maintainability of your Mix code by extracting style attributes from a Style instance into a separate Style instance.
+
+#### Usage
+
+This assist automatically becomes available when you move your cursor into a Style's constructor scope. It will be suggested as an assist option.
+
+The assistant can extract attributes even when the style is in different code structures.
+- Field declarations
+- Method declarations (getters)
+- Top-level variable declarations
+- Function declarations (getters)
+
+<Video src="https://jtmo7uveygl6pnag.public.blob.vercel-storage.com/mix_lint_extract_attributes.mp4" />
+
