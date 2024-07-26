@@ -46,7 +46,7 @@ class OnEnabledVariant extends OnDisabledVariant {
 typedef WidgetModifier<T extends WidgetModifierSpec<T>> = WidgetModifierSpec<T>;
 
 @Deprecated('Use `WidgetModifierSpecAttribute` instead.')
-abstract base class WidgetModifierAttribute<
+abstract class WidgetModifierAttribute<
         Self extends WidgetModifierSpecAttribute<Value>,
         Value extends WidgetModifierSpec<Value>>
     extends WidgetModifierSpecAttribute<Value> {

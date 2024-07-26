@@ -4,7 +4,7 @@ import '../internal/compare_mixin.dart';
 import 'dto.dart';
 
 @immutable
-abstract base class Attribute with MergeableMixin, EqualityMixin {
+abstract class Attribute with MergeableMixin, EqualityMixin {
   const Attribute();
 
   // Used as the key to determine how
@@ -27,7 +27,7 @@ mixin MergeableMixin<T> {
 }
 
 @immutable
-abstract base class StyledAttribute extends Attribute {
+abstract class StyledAttribute extends Attribute {
   const StyledAttribute();
 
   @override
