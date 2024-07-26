@@ -75,19 +75,19 @@ jobs:
         run: |
           PACKAGES=""
           if [[ "${{ github.event.inputs.mix_lint }}" == "true" ]]; then
-            PACKAGES+="packages/mix_lint,"
+            PACKAGES+="--scope=packages/mix_lint"
           fi
           if [[ "${{ github.event.inputs.mix_annotations }}" == "true" ]]; then
-            PACKAGES+="packages/mix_annotations,"
+            PACKAGES+="--scope=packages/mix_annotations"
           fi
           if [[ "${{ github.event.inputs.mix_generator }}" == "true" ]]; then
-            PACKAGES+="packages/mix_generator,"
+            PACKAGES+="--scope=packages/mix_generator"
           fi
           if [[ "${{ github.event.inputs.mix }}" == "true" ]]; then
-            PACKAGES+="packages/mix,"
+            PACKAGES+="--scope=packages/mix"
           fi
           if [[ "${{ github.event.inputs.remix }}" == "true" ]]; then
-            PACKAGES+="packages/remix,"
+            PACKAGES+="--scope=packages/remix"
           fi
           PACKAGES=${PACKAGES%,}
           if [[ -n "$PACKAGES" ]]; then
