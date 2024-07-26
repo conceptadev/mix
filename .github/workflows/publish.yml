@@ -29,73 +29,73 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  # publish-dry-run:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Checkout mix repo
-  #       uses: actions/checkout@v4
+  publish-dry-run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout mix repo
+        uses: actions/checkout@v4
     
-  #     - name: Install FVM
-  #       shell: bash
-  #       run: |
-  #         curl -fsSL https://fvm.app/install.sh | bash
-  #         fvm use ${{ inputs.flutter-version }} --force
+      - name: Install FVM
+        shell: bash
+        run: |
+          curl -fsSL https://fvm.app/install.sh | bash
+          fvm use ${{ inputs.flutter-version }} --force
 
 
-  #     - uses: kuhnroyal/flutter-fvm-config-action@v2
-  #       id: fvm-config-action
+      - uses: kuhnroyal/flutter-fvm-config-action@v2
+        id: fvm-config-action
 
-  #     - uses: subosito/flutter-action@v2
-  #       with:
-  #         flutter-version: ${{ steps.fvm-config-action.outputs.FLUTTER_VERSION }}
-  #         channel: ${{ steps.fvm-config-action.outputs.FLUTTER_CHANNEL }}
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ steps.fvm-config-action.outputs.FLUTTER_VERSION }}
+          channel: ${{ steps.fvm-config-action.outputs.FLUTTER_CHANNEL }}
           
-  #     - name: Setup Melos
-  #       uses: bluefireteam/melos-action@v3
+      - name: Setup Melos
+        uses: bluefireteam/melos-action@v3
         
-  #     - name: Run melos fix
-  #       run: |
-  #         if [[ "${{ github.event.inputs.mix_lint }}" == "true" ]]; then
-  #           cd packages/mix_lint && dart pub publish --dry-run && cd ../..
-  #         fi
-  #         if [[ "${{ github.event.inputs.mix_annotations }}" == "true" ]]; then
-  #           cd packages/mix_annotations && dart pub publish --dry-run && cd ../..
-  #         fi
-  #         if [[ "${{ github.event.inputs.mix_generator }}" == "true" ]]; then
-  #           cd packages/mix_generator && dart pub publish --dry-run && cd ../..
-  #         fi
-  #         if [[ "${{ github.event.inputs.mix }}" == "true" ]]; then
-  #           cd packages/mix && dart pub publish --dry-run && cd ../..
-  #         fi
-  #         if [[ "${{ github.event.inputs.remix }}" == "true" ]]; then
-  #           cd packages/remix && dart pub publish --dry-run && cd ../..
-  #         fi
-  #       shell: bash
+      - name: Run melos fix
+        run: |
+          if [[ "${{ github.event.inputs.mix_lint }}" == "true" ]]; then
+            cd packages/mix_lint && dart pub publish --dry-run && cd ../..
+          fi
+          if [[ "${{ github.event.inputs.mix_annotations }}" == "true" ]]; then
+            cd packages/mix_annotations && dart pub publish --dry-run && cd ../..
+          fi
+          if [[ "${{ github.event.inputs.mix_generator }}" == "true" ]]; then
+            cd packages/mix_generator && dart pub publish --dry-run && cd ../..
+          fi
+          if [[ "${{ github.event.inputs.mix }}" == "true" ]]; then
+            cd packages/mix && dart pub publish --dry-run && cd ../..
+          fi
+          if [[ "${{ github.event.inputs.remix }}" == "true" ]]; then
+            cd packages/remix && dart pub publish --dry-run && cd ../..
+          fi
+        shell: bash
 
-  # test-mincompat:
-  #   needs: [publish-dry-run]
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Checkout mix repo
-  #       uses: actions/checkout@v4
+  test-mincompat:
+    needs: [publish-dry-run]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout mix repo
+        uses: actions/checkout@v4
 
-  #     - name: Run Tests
-  #       uses: ./.github/actions/test/
-  #       with:
-  #         token: ${{ secrets.GITHUB_TOKEN }}
-  #         flutter-version: 'mincompat'
+      - name: Run Tests
+        uses: ./.github/actions/test/
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          flutter-version: 'mincompat'
 
-  # test-stable:
-  #   needs: [publish-dry-run]
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Checkout mix repo
-  #       uses: actions/checkout@v4
+  test-stable:
+    needs: [publish-dry-run]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout mix repo
+        uses: actions/checkout@v4
 
-  #     - name: Run Tests
-  #       uses: ./.github/actions/test/
-  #       with:
-  #         token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Run Tests
+        uses: ./.github/actions/test/
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
 
   publish:
     needs: [test-mincompat, test-stable, publish-dry-run]
