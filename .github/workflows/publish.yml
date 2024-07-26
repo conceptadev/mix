@@ -121,21 +121,16 @@ jobs:
           - package: remix
             path: packages/remix
             condition: ${{ github.event.inputs.remix == 'true' }}
-    if: ${{ github.event.inputs[matrix.package] == 'true' }}
     steps:
       - uses: actions/checkout@v4
-      - name: Print packages
-        shell: bash
-        run: |
-          echo ${{ matrix.package }}
-      # - name: '>> publish ${{ matrix.package }} package to pub.dev <<'
-      #   if: ${{ matrix.condition }}
-      #   id: publish
-      #   uses: k-paxian/dart-package-publisher@master
-      #   with:
-      #     accessToken: ${{ secrets.OAUTH_ACCESS_TOKEN }}
-      #     refreshToken: ${{ secrets.OAUTH_REFRESH_TOKEN }}
-      #     relativePath: ${{ matrix.path }}
+      - name: '>> publish ${{ matrix.package }} package to pub.dev <<'
+        if: ${{ matrix.condition }}
+        id: publish
+        uses: k-paxian/dart-package-publisher@master
+        with:
+          accessToken: ${{ secrets.OAUTH_ACCESS_TOKEN }}
+          refreshToken: ${{ secrets.OAUTH_REFRESH_TOKEN }}
+          relativePath: ${{ matrix.path }}
       # - name: 'Commit release tag'
         # if: steps.publish.outputs.success
         # uses: hole19/git-tag-action@master
