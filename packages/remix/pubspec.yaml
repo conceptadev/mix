@@ -9,7 +9,6 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  flutter_animate: ^4.5.0
   mix: ^1.4.0
   mix_annotations: ^0.2.1
 

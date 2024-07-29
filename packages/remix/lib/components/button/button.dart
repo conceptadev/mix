@@ -1,10 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_animate/flutter_animate.dart';
+
 import 'package:mix/mix.dart';
 import 'package:mix_annotations/mix_annotations.dart';
 import 'package:remix/components/spinner/spinner.dart';
-import 'package:remix/modifiers/flutter_animate.dart';
 
 import '../../helpers/variant.dart';
 import '../../tokens/remix_tokens.dart';

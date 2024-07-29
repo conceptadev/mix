@@ -5,20 +5,12 @@ final _label = _util.label;
 final _spinner = _util.spinner;
 final _container = _util.container;
 final _flex = _util.flex;
-final $animate = FlutterAnimateUtility.self;
 
 /// This applies to the icon, label, and spinner
 final _items = _util.items;
 
 Style get _baseStyle {
   return Style(
-    $animate()
-        .fadeIn(duration: 600.ms)
-        .then(
-          delay: 200.ms,
-        )
-        .slide(),
-    $on.press($animate().scale()),
     _flex.mainAxisAlignment.center(),
     _flex.crossAxisAlignment.center(),
     _flex.mainAxisSize.min(),
