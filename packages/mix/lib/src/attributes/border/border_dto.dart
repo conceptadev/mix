@@ -83,7 +83,7 @@ final class BorderDto extends BoxBorderDto<Border> with _$BorderDto {
   bool get isUniform => top == bottom && top == left && top == right;
 
   @override
-  Border get defaultValue => Border.all();
+  Border get defaultValue => const Border();
 }
 
 @MixableDto(generateUtility: false)
