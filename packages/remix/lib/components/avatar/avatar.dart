@@ -10,6 +10,7 @@ part 'avatar.g.dart';
 part 'avatar_style.dart';
 part 'avatar_variants.dart';
 part 'avatar_widget.dart';
+part 'avatar_blank.dart';
 
 @MixableSpec()
 base class AvatarSpec extends Spec<AvatarSpec> with _$AvatarSpec {
