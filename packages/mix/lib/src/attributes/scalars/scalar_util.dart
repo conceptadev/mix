@@ -166,3 +166,15 @@ final class TextScalerUtility<T extends Attribute>
     extends MixUtility<T, TextScaler> with _$TextScalerUtility {
   const TextScalerUtility(super.builder);
 }
+
+@MixableClassUtility()
+final class TableColumnWidthUtility<T extends Attribute>
+    extends MixUtility<T, TableColumnWidth> with _$TableColumnWidthUtility {
+  const TableColumnWidthUtility(super.builder);
+}
+
+@MixableClassUtility()
+class TableBorderUtility<T extends Attribute> extends MixUtility<T, TableBorder>
+    with _$TableBorderUtility<T> {
+  const TableBorderUtility(super.builder);
+}

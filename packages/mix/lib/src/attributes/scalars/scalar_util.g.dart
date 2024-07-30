@@ -617,3 +617,43 @@ mixin _$TextScalerUtility<T extends Attribute> on MixUtility<T, TextScaler> {
   /// Creates an [Attribute] instance with the specified TextScaler value.
   T call(TextScaler value) => builder(value);
 }
+
+/// {@template table_column_width_utility}
+/// A utility class for creating [Attribute] instances from [TableColumnWidth] values.
+///
+/// This class extends [MixUtility] and provides methods to create [Attribute] instances
+/// from predefined [TableColumnWidth] values.
+/// {@endtemplate}
+mixin _$TableColumnWidthUtility<T extends Attribute>
+    on MixUtility<T, TableColumnWidth> {
+  /// Creates an [Attribute] instance with the specified TableColumnWidth value.
+  T call(TableColumnWidth value) => builder(value);
+}
+
+/// {@template table_border_utility}
+/// A utility class for creating [Attribute] instances from [TableBorder] values.
+///
+/// This class extends [MixUtility] and provides methods to create [Attribute] instances
+/// from predefined [TableBorder] values.
+/// {@endtemplate}
+mixin _$TableBorderUtility<T extends Attribute> on MixUtility<T, TableBorder> {
+  /// Creates an [Attribute] instance using the [TableBorder.all] constructor.
+  T all(
+      {Color color = const Color(0xFF000000),
+      double width = 1.0,
+      BorderStyle style = BorderStyle.solid,
+      BorderRadius borderRadius = BorderRadius.zero}) {
+    return builder(TableBorder.all(
+        color: color, width: width, style: style, borderRadius: borderRadius));
+  }
+
+  /// Creates an [Attribute] instance using the [TableBorder.symmetric] constructor.
+  T symmetric(
+      {BorderSide inside = BorderSide.none,
+      BorderSide outside = BorderSide.none}) {
+    return builder(TableBorder.symmetric(inside: inside, outside: outside));
+  }
+
+  /// Creates an [Attribute] instance with the specified TableBorder value.
+  T call(TableBorder value) => builder(value);
+}
