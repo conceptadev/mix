@@ -77,6 +77,7 @@ class MixWidgetStateController extends ChangeNotifier {
   ///
   /// If [add] is true, the [key] state is added to [value]. If false, it is
   /// removed. Listeners are notified if the state has changed.
+  // ignore: prefer-named-boolean-parameters
   void update(MixWidgetState key, bool add) {
     final valueHasChanged = add ? value.add(key) : value.remove(key);
 
