@@ -35,6 +35,9 @@ class OnContextVariantUtility {
   late final enabled = const OnNotVariant(OnDisabledVariant());
   late final disabled = const OnDisabledVariant();
   late final longPress = const OnLongPressVariant();
+  late final selected = const OnSelectedVariant();
+  late final unselected = const OnNotVariant(OnSelectedVariant());
+  late final dragged = const OnDraggedVariant();
 
   /// Creates an [OnNotVariant] with the specified [variant].
   ///
