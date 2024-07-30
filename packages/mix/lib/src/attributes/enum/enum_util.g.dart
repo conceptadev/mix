@@ -557,3 +557,63 @@ mixin _$FilterQualityUtility<T extends Attribute>
   /// Creates an [Attribute] instance with the specified FilterQuality value.
   T call(FilterQuality value) => builder(value);
 }
+
+/// {@template wrap_alignment_utility}
+/// A utility class for creating [Attribute] instances from [WrapAlignment] values.
+///
+/// This class extends [MixUtility] and provides methods to create [Attribute] instances
+/// from predefined [WrapAlignment] values.
+/// {@endtemplate}
+mixin _$WrapAlignmentUtility<T extends Attribute>
+    on MixUtility<T, WrapAlignment> {
+  /// Creates an [Attribute] instance with [WrapAlignment.start] value.
+  T start() => builder(WrapAlignment.start);
+
+  /// Creates an [Attribute] instance with [WrapAlignment.end] value.
+  T end() => builder(WrapAlignment.end);
+
+  /// Creates an [Attribute] instance with [WrapAlignment.center] value.
+  T center() => builder(WrapAlignment.center);
+
+  /// Creates an [Attribute] instance with [WrapAlignment.spaceBetween] value.
+  T spaceBetween() => builder(WrapAlignment.spaceBetween);
+
+  /// Creates an [Attribute] instance with [WrapAlignment.spaceAround] value.
+  T spaceAround() => builder(WrapAlignment.spaceAround);
+
+  /// Creates an [Attribute] instance with [WrapAlignment.spaceEvenly] value.
+  T spaceEvenly() => builder(WrapAlignment.spaceEvenly);
+
+  /// Creates an [Attribute] instance with the specified WrapAlignment value.
+  T call(WrapAlignment value) => builder(value);
+}
+
+/// {@template table_cell_vertical_alignment_utility}
+/// A utility class for creating [Attribute] instances from [TableCellVerticalAlignment] values.
+///
+/// This class extends [MixUtility] and provides methods to create [Attribute] instances
+/// from predefined [TableCellVerticalAlignment] values.
+/// {@endtemplate}
+mixin _$TableCellVerticalAlignmentUtility<T extends Attribute>
+    on MixUtility<T, TableCellVerticalAlignment> {
+  /// Creates an [Attribute] instance with [TableCellVerticalAlignment.top] value.
+  T top() => builder(TableCellVerticalAlignment.top);
+
+  /// Creates an [Attribute] instance with [TableCellVerticalAlignment.middle] value.
+  T middle() => builder(TableCellVerticalAlignment.middle);
+
+  /// Creates an [Attribute] instance with [TableCellVerticalAlignment.bottom] value.
+  T bottom() => builder(TableCellVerticalAlignment.bottom);
+
+  /// Creates an [Attribute] instance with [TableCellVerticalAlignment.baseline] value.
+  T baseline() => builder(TableCellVerticalAlignment.baseline);
+
+  /// Creates an [Attribute] instance with [TableCellVerticalAlignment.fill] value.
+  T fill() => builder(TableCellVerticalAlignment.fill);
+
+  /// Creates an [Attribute] instance with [TableCellVerticalAlignment.intrinsicHeight] value.
+  T intrinsicHeight() => builder(TableCellVerticalAlignment.intrinsicHeight);
+
+  /// Creates an [Attribute] instance with the specified TableCellVerticalAlignment value.
+  T call(TableCellVerticalAlignment value) => builder(value);
+}

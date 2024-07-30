@@ -164,3 +164,17 @@ final class FilterQualityUtility<T extends Attribute>
     extends MixUtility<T, FilterQuality> with _$FilterQualityUtility<T> {
   const FilterQualityUtility(super.builder);
 }
+
+/// {@macro wrap_alignment_utility}
+@MixableEnumUtility()
+final class WrapAlignmentUtility<T extends Attribute>
+    extends MixUtility<T, WrapAlignment> with _$WrapAlignmentUtility {
+  const WrapAlignmentUtility(super.builder);
+}
+
+@MixableEnumUtility()
+class TableCellVerticalAlignmentUtility<T extends Attribute>
+    extends MixUtility<T, TableCellVerticalAlignment>
+    with _$TableCellVerticalAlignmentUtility<T> {
+  const TableCellVerticalAlignmentUtility(super.builder);
+}
