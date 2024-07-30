@@ -66,6 +66,20 @@ void main() {
       expect(resolvedBorder.right, const BorderSide(width: 20.0));
     });
 
+    test('resolve() Border with default value', () {
+      const borderDto = BorderDto(
+        top: BorderSideDto(width: 5.0),
+        left: BorderSideDto(width: 15.0),
+      );
+
+      final resolvedBorder = borderDto.resolve(EmptyMixData);
+
+      expect(resolvedBorder.top, const BorderSide(width: 5.0));
+      expect(resolvedBorder.bottom, BorderSide.none);
+      expect(resolvedBorder.left, const BorderSide(width: 15.0));
+      expect(resolvedBorder.right, BorderSide.none);
+    });
+
     test('resolve() BorderDirectional', () {
       const borderDto = BorderDirectionalDto(
         top: BorderSideDto(width: 5.0),

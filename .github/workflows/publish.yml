@@ -97,43 +97,52 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 
+  prepare-matrix:
+    name: Selecting packages to publish
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+    steps:
+      - id: set-matrix
+        run: |
+          matrix=()
+          if [[ "${{ github.event.inputs.mix_lint }}" == "true" ]]; then
+            matrix+=('{"name": "mix_lint", "path": "packages/mix_lint"}')
+          fi
+          if [[ "${{ github.event.inputs.mix_annotations }}" == "true" ]]; then
+            matrix+=('{"name": "mix_annotations", "path": "packages/mix_annotations"}')
+          fi
+          if [[ "${{ github.event.inputs.mix_generator }}" == "true" ]]; then
+            matrix+=('{"name": "mix_generator", "path": "packages/mix_generator"}')
+          fi
+          if [[ "${{ github.event.inputs.mix }}" == "true" ]]; then
+            matrix+=('{"name": "mix", "path": "packages/mix"}')
+          fi
+          if [[ "${{ github.event.inputs.remix }}" == "true" ]]; then
+            matrix+=('{"name": "remix", "path": "packages/remix"}')
+          fi
+          echo "matrix=$(IFS=,; echo "[${matrix[*]}]")" >> $GITHUB_OUTPUT
+
   publish:
-    needs: [test-mincompat, test-stable, publish-dry-run]
+    needs: [test-mincompat, test-stable, publish-dry-run, prepare-matrix]
     environment: Production
     runs-on: ubuntu-latest
     strategy:
       max-parallel: 1
       matrix:
-        package: [mix_lint, mix_annotations, mix_generator, mix, remix]
-        include:
-          - package: mix_lint
-            path: packages/mix_lint
-            condition: ${{ github.event.inputs.mix_lint == 'true' }}
-          - package: mix_annotations
-            path: packages/mix_annotations
-            condition: ${{ github.event.inputs.mix_annotations == 'true' }}
-          - package: mix_generator
-            path: packages/mix_generator
-            condition: ${{ github.event.inputs.mix_generator == 'true' }}
-          - package: mix
-            path: packages/mix
-            condition: ${{ github.event.inputs.mix == 'true' }}
-          - package: remix
-            path: packages/remix
-            condition: ${{ github.event.inputs.remix == 'true' }}
+        package: ${{fromJSON(needs.prepare-matrix.outputs.matrix)}}
     steps:
       - uses: actions/checkout@v4
-      - name: '>> publish ${{ matrix.package }} package to pub.dev <<'
-        if: ${{ matrix.condition }}
+      - name: '>> publish ${{ matrix.package.name }} package to pub.dev <<'
         id: publish
         uses: k-paxian/dart-package-publisher@master
         with:
           accessToken: ${{ secrets.OAUTH_ACCESS_TOKEN }}
           refreshToken: ${{ secrets.OAUTH_REFRESH_TOKEN }}
-          relativePath: ${{ matrix.path }}
-      # - name: 'Commit release tag'
-        # if: steps.publish.outputs.success
-        # uses: hole19/git-tag-action@master
-        # env:
-          # TAG: ${{steps.publish.outputs.package}}-${{steps.publish.outputs.localVersion}}
-          # GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          relativePath: ${{ matrix.package.path }}
+      - name: 'Commit release tag'
+        if: steps.publish.outputs.success
+        uses: hole19/git-tag-action@master
+        env:
+          TAG: ${{steps.publish.outputs.package}}-${{steps.publish.outputs.localVersion}}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
