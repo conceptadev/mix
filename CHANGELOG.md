@@ -3,6 +3,39 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2024-07-30
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`mix` - `v1.4.1`](#mix---v141)
+ - [`mix_generator` - `v0.2.2+1`](#mix_generator---v0221)
+ - [`remix` - `v0.0.2+1`](#remix---v0021)
+
+---
+
+#### `mix` - `v1.4.1`
+
+ - **FIX**: Added missing widget state utilities (#411).
+ - **FIX**: Correct handling of individual border sides (#408).
+ - **DOCS**: improve mix theme data features explanations (#404).
+
+#### `mix_generator` - `v0.2.2+1`
+
+ - **DOCS**: improve mix theme data features explanations (#404).
+
+#### `remix` - `v0.0.2+1`
+
+ - **DOCS**: improve mix theme data features explanations (#404).
+
+
 ## 2024-07-25
 
 ### Changes
