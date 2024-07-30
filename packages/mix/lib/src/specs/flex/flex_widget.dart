@@ -62,6 +62,8 @@ class FlexSpecWidget extends StatelessWidget {
   final FlexSpec? spec;
   final List<Type> orderOfModifiers;
 
+  Axis get _definitiveDirection => spec?.direction ?? direction;
+
   List<Widget> _buildChildren(double? gap) {
     if (gap == null) return children;
 
@@ -70,7 +72,7 @@ class FlexSpecWidget extends StatelessWidget {
     return List.generate(children.length + children.length - 1, (index) {
       if (index.isEven) return children[index ~/ 2];
 
-      return direction == Axis.horizontal
+      return _definitiveDirection == Axis.horizontal
           ? SizedBox(width: gap)
           : SizedBox(height: gap);
     });
@@ -80,7 +82,7 @@ class FlexSpecWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final gap = spec?.gap;
     final flexWidget = Flex(
-      direction: direction,
+      direction: _definitiveDirection,
       mainAxisAlignment:
           spec?.mainAxisAlignment ?? _defaultFlex.mainAxisAlignment,
       mainAxisSize: spec?.mainAxisSize ?? _defaultFlex.mainAxisSize,

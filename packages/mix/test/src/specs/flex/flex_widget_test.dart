@@ -6,6 +6,47 @@ import '../../../helpers/override_modifiers_order.dart';
 import '../../../helpers/testing_utils.dart';
 
 void main() {
+  group('FlexSpecWidget', () {
+    testWidgets('prioritizes the direction in spec', (tester) async {
+      await tester.pumpMaterialApp(
+        const Center(
+          child: FlexSpecWidget(
+            direction: Axis.horizontal,
+            spec: FlexSpec(
+              direction: Axis.vertical,
+            ),
+            children: [
+              StyledText('test'),
+              StyledText('case'),
+            ],
+          ),
+        ),
+      );
+
+      final flex = tester.widget<Flex>(find.byType(Flex));
+      expect(flex.direction, Axis.vertical);
+    });
+
+    testWidgets('changes its gap direction when direction is modified',
+        (tester) async {
+      await tester.pumpMaterialApp(
+        const Center(
+          child: FlexSpecWidget(
+            direction: Axis.horizontal,
+            spec: FlexSpec(direction: Axis.vertical, gap: 16),
+            children: [
+              StyledText('test'),
+              StyledText('case'),
+            ],
+          ),
+        ),
+      );
+
+      final sizedBox = tester.widget<SizedBox>(find.byType(SizedBox));
+      expect(sizedBox.height, 16);
+    });
+  });
+
   testWidgets(
     'HBox with gap() rendered correctly in complex widget tree',
     (tester) async {
