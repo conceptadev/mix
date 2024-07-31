@@ -3,23 +3,39 @@ name: Changelog
 on:
   workflow_dispatch:
     inputs:
+      update_mix:
+        type: boolean
+        description: whether to update mix
+        default: true
       mix:
         type: string
         description: set specific version for mix
         default: ""
+      update_mix_lint:
+        type: boolean
+        description: whether to update mix_lint
+        default: true
       mix_lint:
         type: string
         description: set specific version for mix_lint
         default: ""
+      update_mix_annotations:
+        type: boolean
+        description: whether to update mix_annotations
+        default: true
       mix_annotations:
         type: string
         description: set specific version for mix_annotations
         default: ""
+      update_mix_generator:
+        type: boolean
+        description: whether to update mix_generator
+        default: true
       mix_generator:
         type: string
         description: set specific version for mix_generator
         default: ""
-
+      
 jobs:
   version:
     runs-on: ubuntu-latest
@@ -64,6 +80,21 @@ jobs:
         git checkout -b release/package-versions
         git push --set-upstream origin release/package-versions
 
+        ignored_packages=""
+
+        if [ "${{ github.event.inputs.update_mix }}" == "false" ]; then
+          ignored_packages="$ignored_packages --ignore=mix"
+        fi
+        if [ "${{ github.event.inputs.update_mix_lint }}" == "false" ]; then
+          ignored_packages="$ignored_packages --ignore=mix_lint"
+        fi
+        if [ "${{ github.event.inputs.update_mix_annotations }}" == "false" ]; then
+          ignored_packages="$ignored_packages --ignore=mix_annotations"
+        fi
+        if [ "${{ github.event.inputs.update_mix_generator }}" == "false" ]; then
+          ignored_packages="$ignored_packages --ignore=mix_generator"
+        fi
+
         packages_with_versions=""
 
         if [ "${{ github.event.inputs.mix }}" != "" ]; then
@@ -79,7 +110,7 @@ jobs:
           packages_with_versions="$packages_with_versions -V mix_generator:${{ github.event.inputs.mix_generator }}"
         fi
 
-        melos version --yes --no-git-tag-version $packages_with_versions
+        melos version $ignored_packages --yes --no-git-tag-version $packages_with_versions
 
         git push --follow-tags
         gh pr create --title "chore: version packages" --body "This PR was opened by the changelog GitHub Actions workflow" --reviewer leoafarias
