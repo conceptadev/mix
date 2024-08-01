@@ -7,8 +7,10 @@ environment:
   sdk: ">=3.3.0 <4.0.0"
 
 dependencies:
+  code_viewer: ^0.0.2
   flutter:
     sdk: flutter
+  flutter_syntax_view: ^4.0.0
   mix: ^1.4.0
   mix_annotations: ^0.2.1
 

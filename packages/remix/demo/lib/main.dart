@@ -1,12 +1,34 @@
+import 'package:demo/utils/components/code_view.dart';
 import 'package:flutter/material.dart';
 import 'package:remix/remix.dart';
+import 'package:syntax_highlight/syntax_highlight.dart';
 import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
 import 'main.directories.g.dart';
 
+late final Highlighter dartLightHighlighter;
+
+class LiveCode extends ValueNotifier<String> {
+  LiveCode() : super('');
+}
+
+final $code = LiveCode();
+
 @widgetbook.App()
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await Highlighter.initialize([
+    'dart',
+  ]);
+
+  var lightTheme = await HighlighterTheme.loadDarkTheme();
+
+  dartLightHighlighter = Highlighter(
+    language: 'dart',
+    theme: lightTheme,
+  );
   runApp(const HotReload());
 }
 
@@ -50,7 +72,25 @@ class HotReload extends StatelessWidget {
       ],
       appBuilder: (context, child) => MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: Scaffold(body: Center(child: child)),
+        home: RemixTokens(
+          data: RemixTokens.light,
+          child: Scaffold(
+            body: Center(child: child),
+            floatingActionButtonLocation:
+                FloatingActionButtonLocation.centerFloat,
+            floatingActionButton: $code.value == ''
+                ? const RxButton(
+                    label: '',
+                    onPressed: null,
+                    disabled: true,
+                    iconLeft: Icons.code_rounded,
+                    size: ButtonSize.large,
+                  )
+                : CodeView(
+                    code: $code.value,
+                  ),
+          ),
+        ),
       ),
       directories: directories,
     );

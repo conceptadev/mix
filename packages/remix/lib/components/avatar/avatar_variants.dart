@@ -5,16 +5,23 @@ abstract interface class IAvatarVariant extends RemixVariant {
 }
 
 class AvatarVariant extends IAvatarVariant {
-  const AvatarVariant(String name) : super('variant.$name');
+  const AvatarVariant(this._name) : super('variant.$_name');
+  final String _name;
 
   static const solid = AvatarVariant('solid');
   static const soft = AvatarVariant('soft');
 
   static List<AvatarVariant> get values => [solid, soft];
+
+  @override
+  String toString() {
+    return 'AvatarVariant(\'$_name\')';
+  }
 }
 
 class AvatarSize extends IAvatarVariant {
-  const AvatarSize(String name) : super('size.$name');
+  const AvatarSize(this._name) : super('size.$_name');
+  final String _name;
 
   static const size1 = AvatarSize('size1');
   static const size2 = AvatarSize('size2');
@@ -35,10 +42,16 @@ class AvatarSize extends IAvatarVariant {
         size7,
         size8,
       ];
+
+  @override
+  String toString() {
+    return 'AvatarSize(\'$_name\')';
+  }
 }
 
 class AvatarRadius extends IAvatarVariant {
-  const AvatarRadius(String name) : super('radius.$name');
+  const AvatarRadius(this._name) : super('radius.$_name');
+  final String _name;
 
   static const none = AvatarRadius('none');
   static const small = AvatarRadius('small');
@@ -47,4 +60,9 @@ class AvatarRadius extends IAvatarVariant {
   static const full = AvatarRadius('full');
 
   static List<AvatarRadius> get values => [none, small, medium, large, full];
+
+  @override
+  String toString() {
+    return 'AvatarRadius(\'$_name\')';
+  }
 }
