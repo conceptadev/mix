@@ -93,6 +93,22 @@ void main() {
 
       addTearDown(tester.view.resetPhysicalSize);
     });
+
+    // Test merge
+    test('OnBreakpointTokenVariant mergeKey', () {
+      final style = Style(
+        VariantAttribute<OnBreakpointTokenVariant>(
+          const OnBreakpointTokenVariant(BreakpointToken.small),
+          Style(),
+        ),
+        VariantAttribute<OnBreakpointTokenVariant>(
+          const OnBreakpointTokenVariant(BreakpointToken.medium),
+          Style(),
+        ),
+      );
+
+      expect(style.values.length, 2);
+    });
   });
   group('OnBreakpoint Variant', () {
     testWidgets('OnBreakPointVariant', (tester) async {

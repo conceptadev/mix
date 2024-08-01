@@ -60,7 +60,7 @@ class OnBreakpointTokenVariant extends MediaQueryContextVariant {
   }
 
   @override
-  Object get mergeKey => '$runtimeType.$token';
+  Object get mergeKey => '$runtimeType.${token.name}';
 
   /// The properties used for equality comparison.
   ///
