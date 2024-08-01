@@ -19,6 +19,8 @@ dependencies:
     path: ../
     
   mix: ^1.4.0
+  syntax_highlight: ^0.4.0
+  google_fonts: ^6.2.0
 
 dev_dependencies:
   flutter_test:

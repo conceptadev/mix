@@ -42,4 +42,16 @@ class RxAvatar extends StatelessWidget {
       },
     );
   }
+
+  String toStringComponent() {
+    return '''
+RxAvatar(
+  image: $image,
+  fallback: '$fallback',
+  size: $size,
+  variant: $variant,
+  radius: $radius,
+)
+''';
+  }
 }
