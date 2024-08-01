@@ -1,3 +1,12 @@
+## 1.5.0
+
+ - **FIX**: breakpoint utility merge exception (#421).
+ - **FIX**: FlexSpecWidget prioritizes the direction in spec (#414).
+ - **FIX**: Added missing widget state utilities (#411).
+ - **FIX**: Correct handling of individual border sides (#408).
+ - **FEAT**: Remix improvements and further improvements (#410).
+ - **DOCS**: improve mix theme data features explanations (#404).
+
 ## 1.4.2
 
  - **FIX**: FlexSpecWidget prioritizes the direction in spec (#414).
