@@ -1,7 +1,7 @@
 name: remix
 description: Completely unstyled, widgets designed to integrate with Mix
 
-version: 0.0.2+2
+version: 0.0.2+3
 
 environment:
   sdk: ">=3.3.0 <4.0.0"
@@ -9,7 +9,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  mix: ^1.4.2
+  mix: ^1.4.3
   mix_annotations: ^0.2.1
 
 dev_dependencies:

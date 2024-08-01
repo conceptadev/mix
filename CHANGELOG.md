@@ -3,6 +3,39 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2024-08-01
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`mix` - `v1.4.3`](#mix---v143)
+ - [`remix` - `v0.0.2+3`](#remix---v0023)
+
+Packages with dependency updates only:
+
+> Packages listed below depend on other packages in this workspace that have had changes. Their versions have been incremented to bump the minimum dependency versions of the packages they depend upon in this project.
+
+ - `remix` - `v0.0.2+3`
+
+---
+
+#### `mix` - `v1.4.3`
+
+ - **FIX**: breakpoint utility merge exception (#421).
+ - **FIX**: FlexSpecWidget prioritizes the direction in spec (#414).
+ - **FIX**: Added missing widget state utilities (#411).
+ - **FIX**: Correct handling of individual border sides (#408).
+ - **FEAT**: Remix improvements and further improvements (#410).
+ - **DOCS**: improve mix theme data features explanations (#404).
+
+
 ## 2024-07-31
 
 ### Changes
