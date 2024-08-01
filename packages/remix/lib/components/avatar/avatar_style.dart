@@ -5,11 +5,10 @@ final _container = _avatar.container;
 final _image = _avatar.image;
 final _fallback = _avatar.fallback;
 Style get _baseStyle => Style(
-      _container.borderRadius(99),
       _image.fit.cover(),
       _container.alignment.center(),
       _fallback.textAlign.center(),
-      _fallback.style.fontWeight.bold(),
+      _fallback.style.fontWeight.w500(),
       _fallback.style.color.$neutral(1),
     );
 
