@@ -1,3 +1,7 @@
+## 1.4.3
+
+ - **FIX**: Breakpoint utility merge exception (#421).
+
 ## 1.4.2
 
  - **FIX**: FlexSpecWidget prioritizes the direction in spec (#414).
