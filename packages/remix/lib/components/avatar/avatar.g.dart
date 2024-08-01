@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'avatar_spec.dart';
+part of 'avatar.dart';
 
 // **************************************************************************
 // MixableSpecGenerator

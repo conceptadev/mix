@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mix/mix.dart';
-import 'package:remix/components/spinner/spinner.variants.dart';
-import 'package:remix/components/spinner/spinner_spec.dart';
-import 'package:remix/components/spinner/spinner_widget.dart';
+import 'package:remix/components/spinner/spinner.dart';
 import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 

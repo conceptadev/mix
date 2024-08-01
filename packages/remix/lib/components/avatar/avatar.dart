@@ -1,8 +1,15 @@
 import 'package:flutter/widgets.dart';
 import 'package:mix/mix.dart';
 import 'package:mix_annotations/mix_annotations.dart';
+import 'package:remix/helpers/utility_extension.dart';
 
-part 'avatar_spec.g.dart';
+import '../../helpers/variant.dart';
+import '../../tokens/remix_tokens.dart';
+
+part 'avatar.g.dart';
+part 'avatar_style.dart';
+part 'avatar_variants.dart';
+part 'avatar_widget.dart';
 
 @MixableSpec()
 base class AvatarSpec extends Spec<AvatarSpec> with _$AvatarSpec {

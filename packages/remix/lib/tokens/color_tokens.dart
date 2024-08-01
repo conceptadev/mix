@@ -1,6 +1,4 @@
-import 'package:flutter/rendering.dart';
-import 'package:mix/mix.dart';
-import 'package:remix/helpers/color_palette.dart';
+part of 'remix_tokens.dart';
 
 class RemixColor {
   const RemixColor(this.value);

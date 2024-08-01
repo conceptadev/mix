@@ -1,11 +1,4 @@
-// ignore_for_file: library_private_types_in_public_api
-
-import 'package:flutter/material.dart';
-import 'package:mix/mix.dart';
-import 'package:remix/components/spinner/spinner.style.dart';
-import 'package:remix/components/spinner/spinner.variants.dart';
-import 'package:remix/components/spinner/spinner_painter.dart';
-import 'package:remix/components/spinner/spinner_spec.dart';
+part of 'spinner.dart';
 
 class RxSpinner extends StatelessWidget {
   const RxSpinner({
@@ -17,14 +10,10 @@ class RxSpinner extends StatelessWidget {
   final Style? style;
   final SpinnerSize size;
 
-  Style _buildStyle() {
-    return buildSpinnerStyle().merge(style).applyVariant(size).animate();
-  }
-
   @override
   Widget build(BuildContext context) {
     return SpecBuilder(
-      style: _buildStyle(),
+      style: _buildSpinnerStyle(style, [size]),
       builder: (context) {
         final SpinnerWidget = SpinnerSpec.of(context);
         return SpinnerWidget();

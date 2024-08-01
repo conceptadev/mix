@@ -3,7 +3,7 @@ targets:
     builders:
       mix_generator|spec:
         generate_for:
-          - lib/**/*_spec.dart
+          - lib/**/*.dart
       mix_generator|dto:
         generate_for:
-          - lib/**/*_dto.dart
+          - lib/components/**/*.dart

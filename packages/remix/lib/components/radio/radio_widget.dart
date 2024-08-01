@@ -1,8 +1,4 @@
-import 'package:flutter/widgets.dart';
-import 'package:mix/mix.dart';
-import 'package:remix/components/radio/radio_spec.dart';
-import 'package:remix/components/radio/radio_style.dart';
-import 'package:remix/components/radio/radio_variants.dart';
+part of 'radio.dart';
 
 class RxRadio extends StatelessWidget {
   const RxRadio({

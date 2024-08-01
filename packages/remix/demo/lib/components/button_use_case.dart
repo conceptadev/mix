@@ -1,9 +1,11 @@
 import 'package:demo/addons/icon_data_knob.dart';
 import 'package:flutter/material.dart';
+import 'package:remix/components/button/button.dart';
 import 'package:remix/remix.dart';
 import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
+final _key = GlobalKey();
 @widgetbook.UseCase(
   name: 'Button Component',
   type: RxButton,
@@ -16,16 +18,6 @@ Widget buildButtonUseCase(BuildContext context) {
         initialValue: 'Button',
       ),
       onPressed: () {},
-      size: context.knobs.list(
-        label: 'Size',
-        options: ButtonSize.values,
-        initialOption: ButtonSize.medium,
-        labelBuilder: (value) => value.name.split('.').last,
-      ),
-      loading: context.knobs.boolean(
-        label: 'Is loading',
-        initialValue: false,
-      ),
       disabled: context.knobs.boolean(
         label: 'Disabled',
         initialValue: false,
@@ -42,8 +34,11 @@ Widget buildButtonUseCase(BuildContext context) {
     );
   }
 
-  return Wrap(
-    spacing: 12,
-    children: ButtonVariant.values.map(buildButton).toList(),
+  return KeyedSubtree(
+    key: _key,
+    child: Wrap(
+      spacing: 12,
+      children: ButtonVariant.values.map(buildButton).toList(),
+    ),
   );
 }

@@ -1,5 +1,4 @@
-import 'package:flutter/rendering.dart';
-import 'package:mix/mix.dart';
+part of 'remix_tokens.dart';
 
 class RemixRadius {
   RemixRadius();

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:remix/components/avatar/avatar_variants.dart';
-import 'package:remix/components/avatar/avatar_widget.dart';
+import 'package:remix/components/avatar/avatar.dart';
 import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 

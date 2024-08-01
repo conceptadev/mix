@@ -87,6 +87,7 @@ class Pressable extends StatefulWidget {
     this.semanticButtonLabel,
     this.onKeyEvent,
     this.unpressDelay = kDefaultAnimationDuration,
+    this.controller,
     this.actions,
   });
 
@@ -143,6 +144,8 @@ class Pressable extends StatefulWidget {
   /// Actions to be bound to the widget
   final Map<Type, Action<Intent>>? actions;
 
+  final MixWidgetStateController? controller;
+
   /// The duration to wait after the press is released before the state of pressed is removed
   final Duration unpressDelay;
 
@@ -152,7 +155,13 @@ class Pressable extends StatefulWidget {
 
 @visibleForTesting
 class PressableWidgetState extends State<Pressable> {
-  final _controller = MixWidgetStateController();
+  late final MixWidgetStateController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = widget.controller ?? MixWidgetStateController();
+  }
 
   @override
   void dispose() {

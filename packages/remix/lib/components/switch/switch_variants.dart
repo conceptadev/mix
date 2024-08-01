@@ -1,16 +1,7 @@
-import 'package:remix/helpers/variant.dart';
+part of 'switch.dart';
 
 interface class ISwitchVariant extends RemixVariant {
   const ISwitchVariant(String name) : super('switch.$name');
-}
-
-class SwitchStatus extends ISwitchVariant {
-  const SwitchStatus(String name) : super('status.$name');
-
-  static const on = SwitchStatus('on');
-  static const off = SwitchStatus('off');
-
-  static List<SwitchStatus> get values => [on, off];
 }
 
 class SwitchSize extends ISwitchVariant {

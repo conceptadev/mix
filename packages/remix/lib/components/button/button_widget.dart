@@ -1,8 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:mix/mix.dart';
-import 'package:remix/components/button/button_spec.dart';
-import 'package:remix/components/button/button_style.dart';
-import 'package:remix/components/button/button_variants.dart';
+part of 'button.dart';
 
 /// A customizable button component with various styling options.
 ///
@@ -70,12 +66,6 @@ class RxButton extends StatelessWidget {
 
   bool get _hasIcon => iconLeft != null || iconRight != null;
 
-  Style _buildStyle() {
-    return buildDefaultButtonStyle()
-        .merge(style)
-        .applyVariants([size, type]).animate();
-  }
-
   Widget _buildLoadingOverlay(ButtonSpec spec, Widget child) {
     return loading
         ? Stack(
@@ -109,14 +99,15 @@ class RxButton extends StatelessWidget {
       onPress: disabled || loading ? null : onPressed,
       enabled: !isDisabled,
       child: SpecBuilder(
-          style: _buildStyle(),
-          builder: (context) {
-            final spec = ButtonSpec.of(context);
+        style: _buildButtonStyle(style, [size, type]),
+        builder: (context) {
+          final spec = ButtonSpec.of(context);
 
-            return spec.container(
-              child: _buildChildren(spec),
-            );
-          }),
+          return spec.container(
+            child: _buildChildren(spec),
+          );
+        },
+      ),
     );
   }
 }

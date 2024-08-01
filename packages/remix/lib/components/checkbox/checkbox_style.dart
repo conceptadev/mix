@@ -1,104 +1,120 @@
 // ignore_for_file: camel_case_types
 
-import 'package:flutter/material.dart';
-import 'package:mix/mix.dart';
-import 'package:remix/components/checkbox/checkbox_spec.dart';
-import 'package:remix/components/checkbox/checkbox_variants.dart';
-import 'package:remix/helpers/utility_extension.dart';
-import 'package:remix/tokens/remix_tokens.dart';
+part of 'checkbox.dart';
 
 final _util = CheckboxSpecUtility.self;
 final _container = _util.container;
 final _indicator = _util.indicator;
 
-Style get _baseStyle => Style(
-      _container.borderRadius(4),
-    );
+Style get _baseStyle {
+  return Style(
+    _container.borderRadius(4),
+  );
+}
 
-Style get _onDisabledForeground => Style(
-      $on.disabled(
-        _indicator.color.ref($rx.color.neutralAlpha(7)),
-      ),
-    );
+Style get _onDisabledForeground {
+  return Style(
+    $on.disabled(
+      _indicator.color.$neutralAlpha(7),
+    ),
+  );
+}
 
-Style get _solidVariant => Style(
-      _container.color.ref($rx.color.accent()),
-      _indicator.color.ref($rx.color.white()),
-      $on.hover(
-        _container.color.ref($rx.color.accent(10)),
-      ),
-      $on.disabled(
-        _container.color.ref($rx.color.neutralAlpha(3)),
-      ),
-    );
+Style get _solidVariant {
+  return Style(
+    _container.color.$accent(),
+    _indicator.color.white(),
+    $on.hover(
+      _container.color.$accent(10),
+    ),
+    $on.disabled(
+      _container.color.$neutralAlpha(3),
+    ),
+  );
+}
 
-Style get _softVariant => Style(
-      _container.color.ref($rx.color.accentAlpha(3)),
-      _indicator.color.ref($rx.color.accentAlpha(11)),
-      $on.hover(
-        _container.color.ref($rx.color.accentAlpha(4)),
-      ),
-      $on.disabled(
-        _container.color.ref($rx.color.neutralAlpha(3)),
-      ),
-    );
-Style get _outlineVariant => Style(
-      _container.color(Colors.transparent),
-      _container.border.color.ref($rx.color.accentAlpha(8)),
-      _container.border.width(1.5),
-      _indicator.color.ref($rx.color.accentAlpha(11)),
-      $on.hover(
-        _container.color.ref($rx.color.accentAlpha(2)),
-      ),
-      $on.disabled(
-        _container.border.color.ref($rx.color.neutralAlpha(8)),
-        _container.color.transparent(),
-      ),
-    );
+Style get _softVariant {
+  return Style(
+    _container.color.$accentAlpha(3),
+    _indicator.color.$accentAlpha(11),
+    $on.hover(
+      _container.color.$accentAlpha(4),
+    ),
+    $on.disabled(
+      _container.color.$neutralAlpha(3),
+    ),
+  );
+}
 
-Style get _surfaceVariant => Style(
-      _outlineVariant(),
-      _container.color.ref($rx.color.accentAlpha(3)),
-      $on.hover(
-        _container.color.ref($rx.color.accentAlpha(4)),
-        _container.border.color.ref($rx.color.accentAlpha(8)),
-      ),
-      $on.disabled(
-        _container.color.ref($rx.color.neutralAlpha(2)),
-      ),
-    );
+Style get _outlineVariant {
+  return Style(
+    _container.color.transparent(),
+    _container.border.color.$accentAlpha(8),
+    _container.border.width(1.5),
+    _indicator.color.$accentAlpha(11),
+    $on.hover(
+      _container.color.$accentAlpha(2),
+    ),
+    $on.disabled(
+      _container.border.color.$neutralAlpha(8),
+      _container.color.transparent(),
+    ),
+  );
+}
+
+Style get _surfaceVariant {
+  return Style(
+    _outlineVariant(),
+    _container.color.$accentAlpha(3),
+    $on.hover(
+      _container.color.$accentAlpha(4),
+      _container.border.color.$accentAlpha(8),
+    ),
+    $on.disabled(
+      _container.color.$neutralAlpha(2),
+    ),
+  );
+}
 
 final _ghostVariant = Style(
   _container.border.style.none(),
-  _container.color(Colors.transparent),
-  _indicator.color.ref($rx.color.accentAlpha(11)),
+  _container.color.transparent(),
+  _indicator.color.$accentAlpha(11),
   $on.hover(
-    _container.color.ref($rx.color.accentAlpha(3)),
+    _container.color.$accentAlpha(3),
   ),
 );
 
-Style get _disabledVariant => Style(
-      _container.color.ref($rx.color.neutralAlpha(3)),
-      _container.border.color.ref($rx.color.neutralAlpha(5)),
-      _indicator.color.ref($rx.color.neutralAlpha(7)),
-    );
+Style get _disabledVariant {
+  return Style(
+    _container.color.$neutralAlpha(3),
+    _container.border.color.$neutralAlpha(5),
+    _indicator.color.$neutralAlpha(7),
+  );
+}
 
-Style get _smallVariant => Style(
-      _container.size(16),
-      _indicator.size(12),
-    );
+Style get _smallVariant {
+  return Style(
+    _container.size(16),
+    _indicator.size(12),
+  );
+}
 
-Style get _mediumVariant => Style(
-      _container.size(20),
-      _indicator.size(16),
-    );
+Style get _mediumVariant {
+  return Style(
+    _container.size(20),
+    _indicator.size(16),
+  );
+}
 
-Style get _largeVariant => Style(
-      _container.size(24),
-      _indicator.size(20),
-    );
+Style get _largeVariant {
+  return Style(
+    _container.size(24),
+    _indicator.size(20),
+  );
+}
 
-Style buildDefaultCheckboxStyle() {
+Style _buildCheckboxStyle(Style? style, List<ICheckboxVariant> variants) {
   return Style(
     _baseStyle(),
 
@@ -116,5 +132,5 @@ Style buildDefaultCheckboxStyle() {
     CheckboxVariant.outline(_outlineVariant()),
     CheckboxVariant.ghost(_ghostVariant()),
     $on.disabled(_disabledVariant()),
-  );
+  ).merge(style).applyVariants(variants);
 }

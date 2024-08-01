@@ -1,31 +1,23 @@
-// ignore_for_file: camel_case_types
-
-import 'package:flutter/material.dart';
-import 'package:mix/mix.dart';
-import 'package:remix/components/avatar/avatar_spec.dart';
-import 'package:remix/components/avatar/avatar_variants.dart';
-import 'package:remix/helpers/utility_extension.dart';
-import 'package:remix/tokens/remix_tokens.dart';
+part of 'avatar.dart';
 
 final _avatar = AvatarSpecUtility.self;
 final _container = _avatar.container;
 final _image = _avatar.image;
 final _fallback = _avatar.fallback;
 Style get _baseStyle => Style(
-      _container.borderRadius(99),
       _image.fit.cover(),
       _container.alignment.center(),
       _fallback.textAlign.center(),
-      _fallback.style.fontWeight(FontWeight.bold),
-      _fallback.style.color.ref($rx.color.neutral(1)),
+      _fallback.style.fontWeight.w500(),
+      _fallback.style.color.$neutral(1),
     );
 
 Style get _solidVariant => Style(
-      _container.color.ref($rx.color.accent()),
+      _container.color.$accent(),
     );
 
 Style get _softVariant => Style(
-      _container.color.ref($rx.color.accent(4)),
+      _container.color.$accent(4),
     );
 
 Style get _size1 => Style(
