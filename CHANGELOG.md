@@ -29,7 +29,6 @@ Packages with dependency updates only:
 #### `mix` - `v1.4.3`
 
  - **FIX**: Breakpoint utility merge exception (#421).
- - **CHORE**: Improve analysis (#410).
 
 
 ## 2024-07-31

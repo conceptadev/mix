@@ -1,7 +1,6 @@
 ## 1.4.3
 
  - **FIX**: Breakpoint utility merge exception (#421).
- - **CHORE**: Improve analysis (#410).
 
 ## 1.4.2
 
