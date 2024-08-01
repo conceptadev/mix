@@ -3,6 +3,8 @@ import 'package:remix/components/avatar/avatar.dart';
 import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
+import '../helpers/label_variant_builder.dart';
+
 final _key = GlobalKey();
 
 @widgetbook.UseCase(
@@ -31,13 +33,13 @@ Widget buildAvatarUseCase(BuildContext context) {
             label: 'Size',
             options: AvatarSize.values,
             initialOption: AvatarSize.size4,
-            labelBuilder: (value) => value.name.split('.').last,
+            labelBuilder: variantLabelBuilder,
           ),
           radius: context.knobs.list(
             label: 'Radius',
             options: AvatarRadius.values,
             initialOption: AvatarRadius.full,
-            labelBuilder: (value) => value.name.split('.').last,
+            labelBuilder: variantLabelBuilder,
           ),
         ),
       ],

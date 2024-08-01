@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'badge_spec.dart';
+part of 'badge.dart';
 
 // **************************************************************************
 // MixableSpecGenerator
