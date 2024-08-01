@@ -70,5 +70,22 @@ void main() {
         expect(appliedVariantStillInStyle, false);
       }
     });
+
+    testWidgets('applies different card sizes', (WidgetTester tester) async {
+      for (final size in CardSize.values) {
+        await tester.pumpRxComponent(
+          RxCard(
+            size: size,
+            children: [Text('Variant Test')],
+          ),
+        );
+
+        final card = tester.widget<RxBlankCard>(find.byType(RxBlankCard));
+        final appliedVariantStillInStyle =
+            card.style.variants.values.any((e) => e.variant == size);
+
+        expect(appliedVariantStillInStyle, false);
+      }
+    });
   });
 }
