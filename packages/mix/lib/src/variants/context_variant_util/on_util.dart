@@ -19,6 +19,7 @@ class OnContextVariantUtility {
   late final large = const OnBreakpointTokenVariant(BreakpointToken.large);
 
   late final breakpoint = OnBreakPointVariant.new;
+  late final breakpointToken = OnBreakpointTokenVariant.new;
 
   late final light = const OnBrightnessVariant(Brightness.light);
   late final dark = const OnBrightnessVariant(Brightness.dark);
