@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mix/mix.dart';
 import 'package:remix/components/avatar/avatar.dart';
 import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
@@ -8,7 +7,7 @@ final _key = GlobalKey();
 
 @widgetbook.UseCase(
   name: 'Avatar Component',
-  type: RxBlankAvatar,
+  type: RxAvatar,
 )
 Widget buildAvatarUseCase(BuildContext context) {
   final imageUrl = context.knobs.string(
@@ -21,7 +20,7 @@ Widget buildAvatarUseCase(BuildContext context) {
       children: [
         Text(variant.name.split('.').last),
         const SizedBox(height: 10),
-        RxBlankAvatar(
+        RxAvatar(
           image: NetworkImage(imageUrl),
           fallback: context.knobs.string(
             label: 'Fallback',
@@ -33,9 +32,6 @@ Widget buildAvatarUseCase(BuildContext context) {
             options: AvatarSize.values,
             initialOption: AvatarSize.size4,
             labelBuilder: (value) => value.name.split('.').last,
-          ),
-          style: Style(
-            AvatarSpecUtility.self.container.color.redAccent(),
           ),
           radius: context.knobs.list(
             label: 'Radius',
