@@ -1,6 +1,8 @@
+import 'package:demo/helpers/label_variant_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:mix/mix.dart';
 import 'package:remix/remix.dart';
+import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
 @widgetbook.UseCase(
@@ -14,7 +16,13 @@ Widget buildCard(BuildContext context) {
         Text(variant.label),
         const SizedBox(height: 10),
         RxCard(
-          type: variant,
+          variant: variant,
+          size: context.knobs.list(
+            label: 'Size',
+            options: CardSize.values,
+            initialOption: CardSize.size2,
+            labelBuilder: variantLabelBuilder,
+          ),
           children: const [StyledText('Hi'), StyledText('This is a test')],
         ),
       ],
@@ -39,8 +47,17 @@ Widget buildRadioUseCase(BuildContext context) {
         Text(variant.label),
         const SizedBox(height: 10),
         RxCard(
-          type: variant,
-          children: const [StyledText('Hi'), StyledText('This is a test')],
+          variant: variant,
+          size: context.knobs.list(
+            label: 'Size',
+            options: CardSize.values,
+            initialOption: CardSize.size2,
+            labelBuilder: variantLabelBuilder,
+          ),
+          children: const [
+            StyledText('Hi'),
+            StyledText('This is a test'),
+          ],
         ),
         const SizedBox(height: 10),
         RxButton(

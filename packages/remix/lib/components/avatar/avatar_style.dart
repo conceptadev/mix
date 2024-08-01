@@ -70,27 +70,35 @@ Style get _radiusLarge =>
     Style($with.clipRRect(borderRadius: BorderRadius.circular(12)));
 Style get _radiusFull => Style($with.clipOval());
 
+final avatarSizes = Style(
+  AvatarSize.size1(_size1()),
+  AvatarSize.size2(_size2()),
+  AvatarSize.size3(_size3()),
+  AvatarSize.size4(_size4()),
+  AvatarSize.size5(_size5()),
+  AvatarSize.size6(_size6()),
+  AvatarSize.size7(_size7()),
+  AvatarSize.size8(_size8()),
+);
+
+final avatarVariants = Style(
+  AvatarVariant.solid(_solidVariant()),
+  AvatarVariant.soft(_softVariant()),
+);
+
+final avatarRadii = Style(
+  AvatarRadius.none(_radiusNone()),
+  AvatarRadius.small(_radiusSmall()),
+  AvatarRadius.medium(_radiusMedium()),
+  AvatarRadius.large(_radiusLarge()),
+  AvatarRadius.full(_radiusFull()),
+);
+
 Style avatarStyle(Style? style, List<IAvatarVariant> variants) {
   return Style(
     _baseStyle(),
-    AvatarVariant.solid(_solidVariant()),
-    AvatarVariant.soft(_softVariant()),
-
-    // Sizes
-    AvatarSize.size1(_size1()),
-    AvatarSize.size2(_size2()),
-    AvatarSize.size3(_size3()),
-    AvatarSize.size4(_size4()),
-    AvatarSize.size5(_size5()),
-    AvatarSize.size6(_size6()),
-    AvatarSize.size7(_size7()),
-    AvatarSize.size8(_size8()),
-
-    // Radius
-    AvatarRadius.none(_radiusNone()),
-    AvatarRadius.small(_radiusSmall()),
-    AvatarRadius.medium(_radiusMedium()),
-    AvatarRadius.large(_radiusLarge()),
-    AvatarRadius.full(_radiusFull()),
+    avatarSizes(),
+    avatarVariants(),
+    avatarRadii(),
   ).merge(style).applyVariants(variants);
 }
