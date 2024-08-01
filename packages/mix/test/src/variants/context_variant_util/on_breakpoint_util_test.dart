@@ -171,6 +171,26 @@ void main() {
       addTearDown(tester.view.resetPhysicalSize);
     });
 
+    // Test merge
+    test('OnBreakPointVariant mergeKey', () {
+      final style = Style(
+        VariantAttribute<OnBreakPointVariant>(
+          const OnBreakPointVariant(
+            Breakpoint(maxWidth: 100, minWidth: 50),
+          ),
+          Style(),
+        ),
+        VariantAttribute<OnBreakPointVariant>(
+          const OnBreakPointVariant(
+            Breakpoint(maxWidth: 200, minWidth: 50),
+          ),
+          Style(),
+        ),
+      );
+
+      expect(style.values.length, 2);
+    });
+
     test('OnBreakPoint equality', () {
       const breakpoint1 = OnBreakPointVariant(
         Breakpoint(maxWidth: 100, minWidth: 50),
