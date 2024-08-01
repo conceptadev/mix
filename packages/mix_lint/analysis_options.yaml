@@ -1,3 +1,0 @@
-includes:
-  - ../../lints.yaml
-  - package:lints/recommended.yaml
