@@ -8,12 +8,12 @@ void main() {
     goldenTest(
       tester,
       {
-        'content': ['1', 'new'],
+        'label': ['1', 'new'],
         'size': BadgeSize.values,
         'variant': BadgeVariant.values,
       },
       builder: (params) => RxBadge(
-        label: params['content'],
+        label: params['label'],
         size: params['size'],
         variant: params['variant'],
       ),
