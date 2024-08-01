@@ -1,9 +1,6 @@
 // ignore_for_file: camel_case_types
 
-import 'package:mix/mix.dart';
-import 'package:remix/components/callout/callout_spec.dart';
-import 'package:remix/components/callout/callout_variants.dart';
-import 'package:remix/tokens/remix_tokens.dart';
+part of 'callout.dart';
 
 final _callout = CalloutSpecUtility.self;
 final _container = _callout.container;
@@ -13,13 +10,14 @@ final _text = _callout.text;
 
 Style get _baseStyle {
   return Style(
+    _flex.gap(16),
     _container.borderRadius(8),
     _container.padding(16),
-    _flex.gap(16),
-    _icon.size(24),
     _icon.color.$accentAlpha(11),
-    _text.style.color.$accentAlpha(11),
+    _icon.size(24),
     _icon.size(20),
+    _text.style.color.$accentAlpha(11),
+    _text.wrap.flexible(),
   );
 }
 

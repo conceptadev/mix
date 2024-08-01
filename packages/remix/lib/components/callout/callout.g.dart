@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'callout_spec.dart';
+part of 'callout.dart';
 
 // **************************************************************************
 // MixableSpecGenerator

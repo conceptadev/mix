@@ -23,6 +23,10 @@ Widget buildButtonUseCase(BuildContext context) {
         label: 'Disabled',
         initialValue: false,
       ),
+      loading: context.knobs.boolean(
+        label: 'loading',
+        initialValue: false,
+      ),
       iconLeft: context.knobs.iconData(
         label: 'Icon left',
         initialValue: null,
@@ -36,10 +40,6 @@ Widget buildButtonUseCase(BuildContext context) {
         options: ButtonSize.values,
         initialOption: ButtonSize.medium,
         labelBuilder: variantLabelBuilder,
-      ),
-      loading: context.knobs.boolean(
-        label: 'loading',
-        initialValue: false,
       ),
       variant: type,
     );

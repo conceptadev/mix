@@ -888,8 +888,9 @@
 /Users/lucasoliveira/Developer/Concepta/open_source/mix_ecosystem/mix/packages/remix/lib/components/button/button_style.dart
 /Users/lucasoliveira/Developer/Concepta/open_source/mix_ecosystem/mix/packages/remix/lib/components/button/button_variants.dart
 /Users/lucasoliveira/Developer/Concepta/open_source/mix_ecosystem/mix/packages/remix/lib/components/button/button_widget.dart
-/Users/lucasoliveira/Developer/Concepta/open_source/mix_ecosystem/mix/packages/remix/lib/components/callout/callout_spec.dart
-/Users/lucasoliveira/Developer/Concepta/open_source/mix_ecosystem/mix/packages/remix/lib/components/callout/callout_spec.g.dart
+/Users/lucasoliveira/Developer/Concepta/open_source/mix_ecosystem/mix/packages/remix/lib/components/callout/callout.dart
+/Users/lucasoliveira/Developer/Concepta/open_source/mix_ecosystem/mix/packages/remix/lib/components/callout/callout.g.dart
+/Users/lucasoliveira/Developer/Concepta/open_source/mix_ecosystem/mix/packages/remix/lib/components/callout/callout_blank.dart
 /Users/lucasoliveira/Developer/Concepta/open_source/mix_ecosystem/mix/packages/remix/lib/components/callout/callout_style.dart
 /Users/lucasoliveira/Developer/Concepta/open_source/mix_ecosystem/mix/packages/remix/lib/components/callout/callout_variants.dart
 /Users/lucasoliveira/Developer/Concepta/open_source/mix_ecosystem/mix/packages/remix/lib/components/callout/callout_widget.dart

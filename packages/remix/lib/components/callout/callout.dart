@@ -1,8 +1,14 @@
 import 'package:flutter/widgets.dart';
 import 'package:mix/mix.dart';
 import 'package:mix_annotations/mix_annotations.dart';
+import '../../tokens/remix_tokens.dart';
+import '../../helpers/variant.dart';
 
-part 'callout_spec.g.dart';
+part 'callout.g.dart';
+part 'callout_blank.dart';
+part 'callout_widget.dart';
+part 'callout_variants.dart';
+part 'callout_style.dart';
 
 @MixableSpec()
 base class CalloutSpec extends Spec<CalloutSpec> with _$CalloutSpec {
