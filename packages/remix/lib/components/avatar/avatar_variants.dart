@@ -1,4 +1,4 @@
-import 'package:remix/helpers/variant.dart';
+part of 'avatar.dart';
 
 abstract interface class IAvatarVariant extends RemixVariant {
   const IAvatarVariant(String name) : super('avatar.$name');

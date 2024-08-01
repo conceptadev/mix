@@ -1,4 +1,4 @@
-import 'package:mix/mix.dart';
+part of 'remix_tokens.dart';
 
 class RemixSpace {
   RemixSpace();
@@ -18,30 +18,18 @@ class RemixSpace {
   }
 
   SpaceToken call(int step) {
-    switch (step) {
-      case 1:
-        return space1;
-      case 2:
-        return space2;
-      case 3:
-        return space3;
-      case 4:
-        return space4;
-      case 5:
-        return space5;
-      case 6:
-        return space6;
-      case 7:
-        return space7;
-      case 8:
-        return space8;
-      case 9:
-        return space9;
-      default:
-        throw Exception(
-          'Invalid space step: $step found. Space step should be between 1 and 9.',
-        );
-    }
+    return switch (step) {
+      1 => space1,
+      2 => space2,
+      3 => space3,
+      4 => space4,
+      5 => space5,
+      6 => space6,
+      7 => space7,
+      8 => space8,
+      9 => space9,
+      _ => throw ArgumentError('Invalid space step: $step'),
+    };
   }
 }
 

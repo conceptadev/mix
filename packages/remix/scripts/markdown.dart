@@ -1,3 +1,5 @@
+#!/usr/bin/env dart
+
 import 'dart:developer';
 import 'dart:io';
 
@@ -5,11 +7,18 @@ void main() {
   final rootDirectory = Directory.current;
   final contextFile = File('context.md');
 
+  contextFile.exists().then((exists) {
+    if (exists) {
+      contextFile.deleteSync();
+    }
+  });
+
   void processDirectory(Directory directory) {
     for (var fileOrDir in directory.listSync()) {
       if (fileOrDir is File &&
           fileOrDir.path.endsWith('.dart') &&
-          !fileOrDir.path.endsWith('.g.dart')) {
+          !fileOrDir.path.endsWith('.g.dart') &&
+          fileOrDir.path.contains('components')) {
         final fileName = fileOrDir.path.split('/').last;
         final fileContent = fileOrDir.readAsStringSync();
 

@@ -1,12 +1,20 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
+
 import 'package:mix/mix.dart';
 import 'package:mix_annotations/mix_annotations.dart';
-import 'package:remix/components/spinner/spinner_spec.dart';
+import 'package:remix/components/spinner/spinner.dart';
 
-part 'button_spec.g.dart';
+import '../../helpers/variant.dart';
+import '../../tokens/remix_tokens.dart';
+
+part 'button.g.dart';
+part 'button_style.dart';
+part 'button_variants.dart';
+part 'button_widget.dart';
 
 @MixableSpec()
-base class ButtonSpec extends Spec<ButtonSpec> with _$ButtonSpec {
+class ButtonSpec extends Spec<ButtonSpec> with _$ButtonSpec, Diagnosticable {
   final FlexSpec flex;
   final BoxSpec container;
   final IconSpec icon;
@@ -25,6 +33,7 @@ base class ButtonSpec extends Spec<ButtonSpec> with _$ButtonSpec {
     FlexSpec? flex,
     IconSpec? icon,
     TextSpec? label,
+    super.modifiers,
     SpinnerSpec? spinner,
     super.animated,
   })  : flex = flex ?? const FlexSpec(),
@@ -32,4 +41,10 @@ base class ButtonSpec extends Spec<ButtonSpec> with _$ButtonSpec {
         icon = icon ?? const IconSpec(),
         label = label ?? const TextSpec(),
         spinner = spinner ?? const SpinnerSpec();
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    _debugFillProperties(properties);
+  }
 }

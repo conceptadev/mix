@@ -1,9 +1,18 @@
+import 'dart:math';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:mix/mix.dart';
 import 'package:mix_annotations/mix_annotations.dart';
-import 'package:remix/components/spinner/spinner_widget.dart';
+import 'package:remix/helpers/variant.dart';
 
-part 'spinner_spec.g.dart';
+import '../../tokens/remix_tokens.dart';
+
+part 'spinner.g.dart';
+part 'spinner_painter.dart';
+part 'spinner_style.dart';
+part 'spinner_variants.dart';
+part 'spinner_widget.dart';
 
 enum SpinnerStyle {
   solid,
@@ -11,7 +20,8 @@ enum SpinnerStyle {
 }
 
 @MixableSpec()
-final class SpinnerSpec extends Spec<SpinnerSpec> with _$SpinnerSpec {
+final class SpinnerSpec extends Spec<SpinnerSpec>
+    with _$SpinnerSpec, Diagnosticable {
   /// Size of the spinner
   final double size;
 
@@ -30,12 +40,19 @@ final class SpinnerSpec extends Spec<SpinnerSpec> with _$SpinnerSpec {
   static const of = _$SpinnerSpec.of;
   static const from = _$SpinnerSpec.from;
 
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    _debugFillProperties(properties);
+  }
+
   const SpinnerSpec({
     double? size,
     this.strokeWidth,
     Color? color,
     Duration? duration,
     SpinnerStyle? style,
+    super.modifiers,
     super.animated,
   })  : size = size ?? 24,
         color = color ?? Colors.white,

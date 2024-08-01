@@ -1,8 +1,22 @@
-import 'package:flutter/widgets.dart';
-import 'package:mix/mix.dart';
+part of 'remix_tokens.dart';
 
 class RemixTypography {
   RemixTypography();
+
+  TextStyleToken call(int level) {
+    return switch (level) {
+      1 => text1,
+      2 => text2,
+      3 => text3,
+      4 => text4,
+      5 => text5,
+      6 => text6,
+      7 => text7,
+      8 => text8,
+      9 => text9,
+      _ => throw ArgumentError('Invalid text level: $level'),
+    };
+  }
 
   final text1 = const TextStyleToken('--text-1');
   final text2 = const TextStyleToken('--text-2');

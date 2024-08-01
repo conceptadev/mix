@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:mix/mix.dart';
-import 'package:remix/tokens/color_tokens.dart';
-import 'package:remix/tokens/radius_tokens.dart';
-import 'package:remix/tokens/space_tokens.dart';
-import 'package:remix/tokens/text_style_tokens.dart';
+
+import '../helpers/color_palette.dart';
+
+part 'color_tokens.dart';
+part 'radius_tokens.dart';
+part 'space_tokens.dart';
+part 'text_style_tokens.dart';
 
 final $rx = _RemixTokenRef();
 
@@ -47,4 +50,25 @@ class RemixTokens extends StatelessWidget {
       child: child,
     );
   }
+}
+
+extension ColorUtilityX<T extends Attribute> on ColorUtility<T> {
+  T $black() => ref($rx.color.black());
+  T $white() => ref($rx.color.white());
+  T $neutral([int? step]) => ref($rx.color.neutral(step));
+  T $neutralAlpha([int? step]) => ref($rx.color.neutralAlpha(step));
+  T $accent([int? step]) => ref($rx.color.accent(step));
+  T $accentAlpha([int? step]) => ref($rx.color.accentAlpha(step));
+}
+
+extension SpacingSideUtilityX<T extends Attribute> on SpacingSideUtility<T> {
+  T $space(int step) => ref($rx.space(step));
+}
+
+extension GapUtilityX<T extends Attribute> on GapUtility<T> {
+  T $space(int step) => ref($rx.space(step));
+}
+
+extension TextStyleUtilityX<T extends Attribute> on TextStyleUtility<T> {
+  T $text(int level) => ref($rx.text(level));
 }

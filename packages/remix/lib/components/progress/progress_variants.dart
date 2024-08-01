@@ -1,6 +1,6 @@
-import 'package:mix/mix.dart';
+part of 'progress.dart';
 
-abstract interface class IProgressVariant extends Variant {
+abstract interface class IProgressVariant extends RemixVariant {
   const IProgressVariant(super.name);
 }
 

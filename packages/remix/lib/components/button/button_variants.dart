@@ -1,4 +1,4 @@
-import 'package:remix/helpers/variant.dart';
+part of 'button.dart';
 
 interface class IButtonVariant extends RemixVariant {
   const IButtonVariant(String name) : super('button.$name');

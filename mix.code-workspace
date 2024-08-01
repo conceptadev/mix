@@ -19,6 +19,10 @@
 		{
 			"name": "remix",
 			"path": "packages/remix"
+		},
+		{
+			"name": "mix_animate",
+			"path": "packages/mix_animate"
 		}
 	],
   "settings": {
@@ -33,5 +37,6 @@
 	  "files.exclude": {
 		".fvm/**": true,
 		"website":true,
-	  },}
+	},
+}
 }

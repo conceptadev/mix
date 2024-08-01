@@ -37,6 +37,7 @@ mixin _$CalloutSpec on Spec<CalloutSpec> {
     FlexSpec? flex,
     IconSpec? icon,
     TextSpec? text,
+    WidgetModifiersData? modifiers,
     AnimatedData? animated,
   }) {
     return CalloutSpec(
@@ -44,6 +45,7 @@ mixin _$CalloutSpec on Spec<CalloutSpec> {
       flex: flex ?? _$this.flex,
       icon: icon ?? _$this.icon,
       text: text ?? _$this.text,
+      modifiers: modifiers ?? _$this.modifiers,
       animated: animated ?? _$this.animated,
     );
   }
@@ -64,7 +66,7 @@ mixin _$CalloutSpec on Spec<CalloutSpec> {
   /// - [IconSpec.lerp] for [icon].
   /// - [TextSpec.lerp] for [text].
 
-  /// For [animated], the interpolation is performed using a step function.
+  /// For [modifiers] and [animated], the interpolation is performed using a step function.
   /// If [t] is less than 0.5, the value from the current [CalloutSpec] is used. Otherwise, the value
   /// from the [other] [CalloutSpec] is used.
   ///
@@ -79,6 +81,7 @@ mixin _$CalloutSpec on Spec<CalloutSpec> {
       flex: _$this.flex.lerp(other.flex, t),
       icon: _$this.icon.lerp(other.icon, t),
       text: _$this.text.lerp(other.text, t),
+      modifiers: t < 0.5 ? _$this.modifiers : other.modifiers,
       animated: t < 0.5 ? _$this.animated : other.animated,
     );
   }
@@ -93,6 +96,7 @@ mixin _$CalloutSpec on Spec<CalloutSpec> {
         _$this.flex,
         _$this.icon,
         _$this.text,
+        _$this.modifiers,
         _$this.animated,
       ];
 
@@ -117,6 +121,7 @@ base class CalloutSpecAttribute extends SpecAttribute<CalloutSpec> {
     this.flex,
     this.icon,
     this.text,
+    super.modifiers,
     super.animated,
   });
 
@@ -135,6 +140,7 @@ base class CalloutSpecAttribute extends SpecAttribute<CalloutSpec> {
       flex: flex?.resolve(mix),
       icon: icon?.resolve(mix),
       text: text?.resolve(mix),
+      modifiers: modifiers?.resolve(mix),
       animated: animated?.resolve(mix) ?? mix.animation,
     );
   }
@@ -156,6 +162,7 @@ base class CalloutSpecAttribute extends SpecAttribute<CalloutSpec> {
       flex: flex?.merge(other.flex) ?? other.flex,
       icon: icon?.merge(other.icon) ?? other.icon,
       text: text?.merge(other.text) ?? other.text,
+      modifiers: modifiers?.merge(other.modifiers) ?? other.modifiers,
       animated: animated?.merge(other.animated) ?? other.animated,
     );
   }
@@ -170,6 +177,7 @@ base class CalloutSpecAttribute extends SpecAttribute<CalloutSpec> {
         flex,
         icon,
         text,
+        modifiers,
         animated,
       ];
 }
@@ -192,6 +200,9 @@ class CalloutSpecUtility<T extends Attribute>
   /// Utility for defining [CalloutSpecAttribute.text]
   late final text = TextSpecUtility((v) => only(text: v));
 
+  /// Utility for defining [CalloutSpecAttribute.modifiers]
+  late final wrap = SpecModifierUtility((v) => only(modifiers: v));
+
   /// Utility for defining [CalloutSpecAttribute.animated]
   late final animated = AnimatedUtility((v) => only(animated: v));
 
@@ -206,6 +217,7 @@ class CalloutSpecUtility<T extends Attribute>
     FlexSpecAttribute? flex,
     IconSpecAttribute? icon,
     TextSpecAttribute? text,
+    WidgetModifiersDataDto? modifiers,
     AnimatedDataDto? animated,
   }) {
     return builder(CalloutSpecAttribute(
@@ -213,6 +225,7 @@ class CalloutSpecUtility<T extends Attribute>
       flex: flex,
       icon: icon,
       text: text,
+      modifiers: modifiers,
       animated: animated,
     ));
   }

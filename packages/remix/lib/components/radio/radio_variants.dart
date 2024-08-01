@@ -1,4 +1,4 @@
-import 'package:remix/helpers/variant.dart';
+part of 'radio.dart';
 
 abstract interface class IRadioVariant extends RemixVariant {
   const IRadioVariant(String name) : super('radio.$name');

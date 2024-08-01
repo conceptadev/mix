@@ -1,4 +1,4 @@
-import 'package:remix/helpers/variant.dart';
+part of 'spinner.dart';
 
 interface class ISpinnerVariant extends RemixVariant {
   const ISpinnerVariant(String name) : super('spinner.$name');

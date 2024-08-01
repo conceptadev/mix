@@ -1,6 +1,5 @@
 // ignore_for_file: camel_case_types
 
-import 'package:flutter/material.dart';
 import 'package:mix/mix.dart';
 import 'package:remix/components/badge/badge_spec.dart';
 import 'package:remix/components/badge/badge_variants.dart';
@@ -10,50 +9,66 @@ final _badge = BadgeSpecUtility.self;
 final _container = _badge.container;
 final _label = _badge.label;
 
-Style get _baseStyle => Style(
-      _container.borderRadius(99),
-      _label.style.fontWeight(FontWeight.w500),
-    );
+Style get _baseStyle {
+  return Style(
+    _container.borderRadius(99),
+    _label.style.fontWeight.w500(),
+  );
+}
 
-Style get _solidVariant => Style(
-      _container.color.ref($rx.color.accent()),
-      _label.style.color.ref($rx.color.neutral(1)),
-    );
+Style get _solidVariant {
+  return Style(
+    _container.color.$accent(),
+    _label.style.color.$neutral(1),
+  );
+}
 
-Style get _softVariant => Style(
-      _container.color.ref($rx.color.accentAlpha(3)),
-      _label.style.color.ref($rx.color.accentAlpha(11)),
-    );
+Style get _softVariant {
+  return Style(
+    _container.color.$accentAlpha(3),
+    _label.style.color.$accentAlpha(11),
+  );
+}
 
-Style get _surfaceVariant => Style(
-      _container.color.ref($rx.color.accentAlpha(2)),
-      _label.style.color.ref($rx.color.accentAlpha(11)),
-    );
+Style get _surfaceVariant {
+  return Style(
+    _container.color.$accentAlpha(2),
+    _label.style.color.$accentAlpha(11),
+  );
+}
 
-Style get _outlineVariant => Style(
-      _container.color(Colors.transparent),
-      _container.border.width(1),
-      _container.border.color.ref($rx.color.accentAlpha(8)),
-      _label.style.color.ref($rx.color.accentAlpha(11)),
-    );
+Style get _outlineVariant {
+  return Style(
+    _container.color.transparent(),
+    _container.border.width(1),
+    _container.border.color.$accentAlpha(8),
+    _label.style.color.$accentAlpha(11),
+  );
+}
 
-final _smallVariant = Style(
-  _container.padding.vertical.ref($rx.space.space1),
-  _container.padding.horizontal.ref($rx.space.space2),
-  _label.style.as($rx.text.text1()),
-);
+Style get _smallVariant {
+  return Style(
+    _container.padding.vertical.$space(1),
+    _container.padding.horizontal.$space(2),
+    _label.style.$text(1),
+  );
+}
 
-final _mediumVariant = Style(
-  _container.padding.vertical.ref($rx.space.space1),
-  _container.padding.horizontal.ref($rx.space.space3),
-  _label.style.as($rx.text.text2()),
-);
+Style get _mediumVariant {
+  return Style(
+    _container.padding.vertical.$space(1),
+    _container.padding.horizontal.$space(3),
+    _label.style.$text(2),
+  );
+}
 
-final _largeVariant = Style(
-  _container.padding.vertical.ref($rx.space.space2),
-  _container.padding.horizontal.ref($rx.space.space4),
-  _label.style.as($rx.text.text3()),
-);
+Style get _largeVariant {
+  return Style(
+    _container.padding.vertical.$space(2),
+    _container.padding.horizontal.$space(4),
+    _label.style.$text(3),
+  );
+}
 
 Style badgeStyle(Style? style, List<IBadgeVariant> variants) {
   return Style(

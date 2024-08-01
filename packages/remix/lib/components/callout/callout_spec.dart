@@ -21,6 +21,7 @@ base class CalloutSpec extends Spec<CalloutSpec> with _$CalloutSpec {
     FlexSpec? flex,
     IconSpec? icon,
     TextSpec? text,
+    super.modifiers,
     super.animated,
   })  : container = container ?? const BoxSpec(),
         flex = flex ?? const FlexSpec(),

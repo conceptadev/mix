@@ -1,6 +1,4 @@
-import 'dart:math';
-
-import 'package:flutter/material.dart';
+part of 'spinner.dart';
 
 abstract interface class SpinnerPainter extends CustomPainter {
   final Animation<double> animation;

@@ -15,10 +15,10 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
-  flutter_lints: ^2.0.0
+  flutter_lints: ^4.0.0
   mix_generator: ^0.2.2+1
   build_runner: ^2.4.9
-
+  dart_code_metrics_presets: ^2.14.0
+  
 flutter:
   uses-material-design: true
