@@ -63,6 +63,10 @@ void main() {
           reason: 'Third Pressable should not have disabled state');
     });
 
+    testWidgets('is disposing the controller correcly', (widgetTester) async {
+      await widgetTester.pumpWidget(_DisposalPressable());
+    });
+
     testWidgets(
       'must be clickable when enabled is setted to true',
       (tester) async {
@@ -641,4 +645,35 @@ Future<void> pumpTestCase({
   expect(newValue, finalExpectedOpacity);
 
   await tester.pumpAndSettle(const Duration(milliseconds: 250));
+}
+
+class _DisposalPressable extends StatefulWidget {
+  const _DisposalPressable({Key? key}) : super(key: key);
+
+  @override
+  _DisposalPressableState createState() => _DisposalPressableState();
+}
+
+class _DisposalPressableState extends State<_DisposalPressable> {
+  late final MixWidgetStateController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = MixWidgetStateController();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Pressable(
+      controller: _controller,
+      child: Box(),
+    );
+  }
 }
