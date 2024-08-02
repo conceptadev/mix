@@ -1,3 +1,7 @@
+## 1.4.4
+
+ - **FIX**: Pressable disposes controller only if it creates it (#424).
+
 ## 1.4.3
 
  - **FIX**: Breakpoint utility merge exception (#421).
