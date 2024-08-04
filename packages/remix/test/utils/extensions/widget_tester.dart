@@ -4,7 +4,11 @@ import 'package:mix/mix.dart';
 import 'package:remix/remix.dart';
 
 extension WidgetTesterExt on WidgetTester {
-  Future<void> pumpRxComponent(Widget widget, {MixThemeData? data}) async {
+  Future<void> pumpRxComponent(
+    Widget widget, {
+    MixThemeData? data,
+    Duration? duration,
+  }) async {
     await pumpWidget(
       MaterialApp(
         home: RemixTokens(
@@ -12,6 +16,7 @@ extension WidgetTesterExt on WidgetTester {
           child: widget,
         ),
       ),
+      duration,
     );
   }
 }
