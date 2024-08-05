@@ -36,6 +36,7 @@ mixin _$ProgressSpec on Spec<ProgressSpec> {
     BoxSpec? container,
     BoxSpec? track,
     BoxSpec? fill,
+    BoxSpec? outer,
     AnimatedData? animated,
     WidgetModifiersData? modifiers,
   }) {
@@ -43,6 +44,7 @@ mixin _$ProgressSpec on Spec<ProgressSpec> {
       container: container ?? _$this.container,
       track: track ?? _$this.track,
       fill: fill ?? _$this.fill,
+      outer: outer ?? _$this.outer,
       animated: animated ?? _$this.animated,
       modifiers: modifiers ?? _$this.modifiers,
     );
@@ -59,7 +61,7 @@ mixin _$ProgressSpec on Spec<ProgressSpec> {
   /// The interpolation is performed on each property of the [ProgressSpec] using the appropriate
   /// interpolation method:
   ///
-  /// - [BoxSpec.lerp] for [container] and [track] and [fill].
+  /// - [BoxSpec.lerp] for [container] and [track] and [fill] and [outer].
 
   /// For [animated] and [modifiers], the interpolation is performed using a step function.
   /// If [t] is less than 0.5, the value from the current [ProgressSpec] is used. Otherwise, the value
@@ -75,6 +77,7 @@ mixin _$ProgressSpec on Spec<ProgressSpec> {
       container: _$this.container.lerp(other.container, t),
       track: _$this.track.lerp(other.track, t),
       fill: _$this.fill.lerp(other.fill, t),
+      outer: _$this.outer.lerp(other.outer, t),
       animated: t < 0.5 ? _$this.animated : other.animated,
       modifiers: t < 0.5 ? _$this.modifiers : other.modifiers,
     );
@@ -89,6 +92,7 @@ mixin _$ProgressSpec on Spec<ProgressSpec> {
         _$this.container,
         _$this.track,
         _$this.fill,
+        _$this.outer,
         _$this.animated,
         _$this.modifiers,
       ];
@@ -102,6 +106,8 @@ mixin _$ProgressSpec on Spec<ProgressSpec> {
         .add(DiagnosticsProperty('track', _$this.track, defaultValue: null));
     properties
         .add(DiagnosticsProperty('fill', _$this.fill, defaultValue: null));
+    properties
+        .add(DiagnosticsProperty('outer', _$this.outer, defaultValue: null));
     properties.add(
         DiagnosticsProperty('animated', _$this.animated, defaultValue: null));
     properties.add(
@@ -121,11 +127,13 @@ base class ProgressSpecAttribute extends SpecAttribute<ProgressSpec>
   final BoxSpecAttribute? container;
   final BoxSpecAttribute? track;
   final BoxSpecAttribute? fill;
+  final BoxSpecAttribute? outer;
 
   const ProgressSpecAttribute({
     this.container,
     this.track,
     this.fill,
+    this.outer,
     super.animated,
     super.modifiers,
   });
@@ -144,6 +152,7 @@ base class ProgressSpecAttribute extends SpecAttribute<ProgressSpec>
       container: container?.resolve(mix),
       track: track?.resolve(mix),
       fill: fill?.resolve(mix),
+      outer: outer?.resolve(mix),
       animated: animated?.resolve(mix) ?? mix.animation,
       modifiers: modifiers?.resolve(mix),
     );
@@ -165,6 +174,7 @@ base class ProgressSpecAttribute extends SpecAttribute<ProgressSpec>
       container: container?.merge(other.container) ?? other.container,
       track: track?.merge(other.track) ?? other.track,
       fill: fill?.merge(other.fill) ?? other.fill,
+      outer: outer?.merge(other.outer) ?? other.outer,
       animated: animated?.merge(other.animated) ?? other.animated,
       modifiers: modifiers?.merge(other.modifiers) ?? other.modifiers,
     );
@@ -179,6 +189,7 @@ base class ProgressSpecAttribute extends SpecAttribute<ProgressSpec>
         container,
         track,
         fill,
+        outer,
         animated,
         modifiers,
       ];
@@ -190,6 +201,7 @@ base class ProgressSpecAttribute extends SpecAttribute<ProgressSpec>
         .add(DiagnosticsProperty('container', container, defaultValue: null));
     properties.add(DiagnosticsProperty('track', track, defaultValue: null));
     properties.add(DiagnosticsProperty('fill', fill, defaultValue: null));
+    properties.add(DiagnosticsProperty('outer', outer, defaultValue: null));
     properties
         .add(DiagnosticsProperty('animated', animated, defaultValue: null));
     properties
@@ -212,6 +224,9 @@ class ProgressSpecUtility<T extends Attribute>
   /// Utility for defining [ProgressSpecAttribute.fill]
   late final fill = BoxSpecUtility((v) => only(fill: v));
 
+  /// Utility for defining [ProgressSpecAttribute.outer]
+  late final outer = BoxSpecUtility((v) => only(outer: v));
+
   /// Utility for defining [ProgressSpecAttribute.animated]
   late final animated = AnimatedUtility((v) => only(animated: v));
 
@@ -228,6 +243,7 @@ class ProgressSpecUtility<T extends Attribute>
     BoxSpecAttribute? container,
     BoxSpecAttribute? track,
     BoxSpecAttribute? fill,
+    BoxSpecAttribute? outer,
     AnimatedDataDto? animated,
     WidgetModifiersDataDto? modifiers,
   }) {
@@ -235,6 +251,7 @@ class ProgressSpecUtility<T extends Attribute>
       container: container,
       track: track,
       fill: fill,
+      outer: outer,
       animated: animated,
       modifiers: modifiers,
     ));
