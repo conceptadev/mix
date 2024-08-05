@@ -68,17 +68,6 @@ Style get _surfaceVariant {
   );
 }
 
-Style get _ghostVariant {
-  return Style(
-    _container.border.style.none(),
-    _container.color.transparent(),
-    _indicator.color.$accentAlpha(11),
-    $on.hover(
-      _container.color.$accentAlpha(3),
-    ),
-  );
-}
-
 Style get _smallVariant {
   return Style(
     _container.size(16),
@@ -122,7 +111,6 @@ Style buildDefaultRadioStyle() {
     RadioVariant.soft(_softVariant()),
     RadioVariant.outline(_outlineVariant()),
     RadioVariant.surface(_surfaceVariant()),
-    RadioVariant.ghost(_ghostVariant()),
     $on.disabled(_disabledVariant()),
   );
 }

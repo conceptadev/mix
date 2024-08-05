@@ -11,6 +11,7 @@ part 'radio.g.dart';
 part 'radio_style.dart';
 part 'radio_variants.dart';
 part 'radio_widget.dart';
+part 'radio_blank.dart';
 
 @MixableSpec()
 base class RadioSpec extends Spec<RadioSpec> with _$RadioSpec, Diagnosticable {

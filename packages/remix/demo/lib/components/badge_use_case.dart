@@ -5,8 +5,6 @@ import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
 import '../helpers/label_variant_builder.dart';
 
-final _key = GlobalKey();
-
 @widgetbook.UseCase(
   name: 'Badge Component',
   type: RxBadge,
