@@ -47,7 +47,8 @@ void main() {
         ),
       );
 
-      final rxBlankRadio = tester.widget<Container>(find.byType(Container));
+      final rxBlankRadio =
+          tester.firstWidget<Container>(find.byType(Container));
       expect(
         (rxBlankRadio.decoration as BoxDecoration).color,
         equals(Colors.red),

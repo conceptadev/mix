@@ -1,6 +1,6 @@
 part of 'radio.dart';
 
-class RxBlankRadio extends StatelessWidget {
+class RxBlankRadio extends StatefulWidget {
   const RxBlankRadio({
     super.key,
     required this.value,
@@ -14,15 +14,49 @@ class RxBlankRadio extends StatelessWidget {
   final Style style;
   final bool disabled;
 
-  void _handleOnPress() => onChanged.call(!value);
+  @override
+  State<RxBlankRadio> createState() => _RxBlankRadioState();
+}
+
+class _RxBlankRadioState extends State<RxBlankRadio> {
+  late final MixWidgetStateController _controller;
+  void _handleOnPress() => widget.onChanged.call(!widget.value);
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = MixWidgetStateController()
+      ..selected = widget.value
+      ..disabled = widget.disabled;
+  }
+
+  @override
+  void didUpdateWidget(RxBlankRadio oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    if (oldWidget.value != widget.value) {
+      _controller.selected = widget.value;
+    }
+
+    if (oldWidget.disabled != widget.disabled) {
+      _controller.disabled = widget.disabled;
+    }
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Pressable(
-      onPress: disabled ? null : _handleOnPress,
-      enabled: !disabled,
+      onPress: widget.disabled ? null : _handleOnPress,
+      enabled: !widget.disabled,
+      controller: _controller,
       child: SpecBuilder(
-        style: style,
+        style: widget.style,
         builder: (context) {
           final spec = RadioSpec.of(context);
 
@@ -30,7 +64,7 @@ class RxBlankRadio extends StatelessWidget {
           final IndicatorWidget = spec.indicator;
 
           return ContainerWidget(
-            child: value ? IndicatorWidget() : null,
+            child: IndicatorWidget(),
           );
         },
       ),

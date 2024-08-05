@@ -9,6 +9,12 @@ Style get _baseStyle {
     _container.borderRadius(99),
     _container.alignment.center(),
     _indicator.borderRadius(99),
+    _indicator.wrap.opacity(0),
+    _indicator.wrap.scale(0.5),
+    $on.selected(
+      _indicator.wrap.opacity(1),
+      _indicator.wrap.scale(1),
+    ),
   );
 }
 
@@ -97,7 +103,7 @@ Style get _disabledVariant {
   );
 }
 
-Style buildDefaultRadioStyle() {
+Style _buildDefaultRadioStyle(Style? style, List<IRadioVariant> variants) {
   return Style(
     _baseStyle(),
 
@@ -112,5 +118,8 @@ Style buildDefaultRadioStyle() {
     RadioVariant.outline(_outlineVariant()),
     RadioVariant.surface(_surfaceVariant()),
     $on.disabled(_disabledVariant()),
-  );
+  ).merge(style).applyVariants(variants).animate(
+        duration: Duration(milliseconds: 150),
+        curve: Curves.easeInOut,
+      );
 }

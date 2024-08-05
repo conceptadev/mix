@@ -10,25 +10,33 @@ import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
   type: RxProgress,
 )
 Widget buildProgressUseCase(BuildContext context) {
-  return RxProgress(
-    radius: context.knobs.list(
-      label: 'Radius',
-      options: ProgressRadius.values,
-      initialOption: ProgressRadius.medium,
-      labelBuilder: variantLabelBuilder,
+  return SizedBox(
+    width: 200,
+    child: RxProgress(
+      radius: context.knobs.list(
+        label: 'Radius',
+        options: ProgressRadius.values,
+        initialOption: ProgressRadius.medium,
+        labelBuilder: variantLabelBuilder,
+      ),
+      size: context.knobs.list(
+        label: 'Size',
+        options: ProgressSize.values,
+        initialOption: ProgressSize.size2,
+        labelBuilder: variantLabelBuilder,
+      ),
+      variant: context.knobs.list(
+        label: 'Type',
+        options: ProgressVariant.values,
+        initialOption: ProgressVariant.surface,
+        labelBuilder: variantLabelBuilder,
+      ),
+      value: context.knobs.double.slider(
+        label: 'value',
+        min: 0,
+        max: 1,
+        initialValue: 0.5,
+      ),
     ),
-    size: context.knobs.list(
-      label: 'Size',
-      options: ProgressSize.values,
-      initialOption: ProgressSize.size2,
-      labelBuilder: variantLabelBuilder,
-    ),
-    variant: context.knobs.list(
-      label: 'Type',
-      options: ProgressVariant.values,
-      initialOption: ProgressVariant.surface,
-      labelBuilder: variantLabelBuilder,
-    ),
-    value: 0.5,
   );
 }

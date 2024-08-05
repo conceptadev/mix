@@ -18,17 +18,13 @@ class RxRadio extends StatelessWidget {
   final Style? style;
   final bool disabled;
 
-  Style _buildStyle() {
-    return buildDefaultRadioStyle().merge(style).applyVariants([size, variant]);
-  }
-
   @override
   Widget build(BuildContext context) {
     return RxBlankRadio(
       value: value,
       onChanged: onChanged,
       disabled: disabled,
-      style: _buildStyle(),
+      style: _buildDefaultRadioStyle(style, [size, variant]),
     );
   }
 }

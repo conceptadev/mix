@@ -10,8 +10,10 @@ Style get _baseStyle {
   return Style(
     _container.borderRadius(4),
     _indicator.wrap.opacity(0),
+    _indicator.wrap.scale(0.5),
     $on.selected(
       _indicator.wrap.opacity(1),
+      _indicator.wrap.scale(1),
     ),
   );
 }
@@ -100,10 +102,7 @@ Style _buildCheckboxStyle(Style? style, List<ICheckboxVariant> variants) {
     CheckboxVariant.surface(_surfaceVariant()),
     $on.disabled(_disabledVariant()),
   )
-      .merge(
-        style,
-      )
-      .applyVariants(
-        variants,
-      );
+      .merge(style)
+      .applyVariants(variants)
+      .animate(duration: Duration(milliseconds: 150), curve: Curves.easeInOut);
 }

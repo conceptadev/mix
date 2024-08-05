@@ -135,5 +135,6 @@ Style _buildSwitchStyle(Style? style, List<ISwitchVariant> variants) {
     SwitchVariant.soft(_softVariant()),
     SwitchVariant.outline(_outlineVariant()),
     SwitchVariant.surface(_surfaceVariant()),
-  ).merge(style).applyVariants(variants);
+  ).merge(style).applyVariants(variants).animate(
+      duration: Duration(milliseconds: 150), curve: Curves.easeInCubic);
 }
