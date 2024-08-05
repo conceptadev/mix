@@ -1,4 +1,3 @@
-
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -43,6 +42,7 @@ Future<void> goldenTest(
         child: widget,
       ),
     );
+    await tester.pumpAndSettle();
 
     final fileName = widget.toStringShort().toLowerCase();
     await expectLater(
