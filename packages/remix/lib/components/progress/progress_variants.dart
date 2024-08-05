@@ -1,37 +1,36 @@
 part of 'progress.dart';
 
 abstract interface class IProgressVariant extends RemixVariant {
-  const IProgressVariant(super.name);
+  const IProgressVariant(String name) : super('progress.$name');
 }
 
 class ProgressVariant extends IProgressVariant {
-  const ProgressVariant(super.name);
+  const ProgressVariant(String name) : super('variant.$name');
 
-  static const classic = ProgressVariant('remix.progress.classic');
-  static const surface = ProgressVariant('remix.progress.surface');
-  static const soft = ProgressVariant('remix.progress.soft');
+  static const surface = ProgressVariant('surface');
+  static const soft = ProgressVariant('soft');
 
-  static List<ProgressVariant> get values => [classic, surface, soft];
+  static List<ProgressVariant> get values => [surface, soft];
 }
 
 class ProgressSize extends IProgressVariant {
-  const ProgressSize(super.name);
+  const ProgressSize(String name) : super('size.$name');
 
-  static const small = ProgressSize('remix.progress.small');
-  static const medium = ProgressSize('remix.progress.medium');
-  static const large = ProgressSize('remix.progress.large');
+  static const size1 = ProgressSize('size1');
+  static const size2 = ProgressSize('size2');
+  static const size3 = ProgressSize('size3');
 
-  static List<ProgressSize> get values => [small, medium, large];
+  static List<ProgressSize> get values => [size1, size2, size3];
 }
 
 class ProgressRadius extends IProgressVariant {
-  const ProgressRadius(super.name);
+  const ProgressRadius(String name) : super('radius.$name');
 
-  static const none = ProgressRadius('remix.progress.none');
-  static const small = ProgressRadius('remix.progress.small');
-  static const medium = ProgressRadius('remix.progress.medium');
-  static const large = ProgressRadius('remix.progress.large');
-  static const full = ProgressRadius('remix.progress.full');
+  static const none = ProgressRadius('none');
+  static const small = ProgressRadius('small');
+  static const medium = ProgressRadius('medium');
+  static const large = ProgressRadius('large');
+  static const full = ProgressRadius('full');
 
   static List<ProgressRadius> get values => [none, small, medium, large, full];
 }

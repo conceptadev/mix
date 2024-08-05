@@ -30,7 +30,7 @@ class AttributesOrdering extends DartLintRule {
     context.registry.addInstanceCreationExpression((node) {
       if (node.staticType == null ||
           !styleChecker.isAssignableFromType(node.staticType!)) return;
-      print(node);
+
       final arguments = node.argumentList.arguments;
 
       if (_hasAnyAttributeOutOfOrder(arguments)) {

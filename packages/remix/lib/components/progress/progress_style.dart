@@ -7,8 +7,7 @@ final _fill = _progress.fill;
 
 Style get _baseStyle {
   return Style(
-    _container.borderRadius(99),
-    _track.color.$neutralAlpha(3),
+    _track.color.$neutral(6),
     _fill.color.$accent(),
   );
 }
@@ -21,33 +20,31 @@ Style get _smallVariant {
 
 Style get _mediumVariant {
   return Style(
-    _container.height(8),
+    _container.height(6),
   );
 }
 
 Style get _largeVariant {
   return Style(
-    _container.height(12),
-  );
-}
-
-Style get _classicVariant {
-  return Style(
-    _track.color.$neutralAlpha(3),
-    _fill.color.$accent(),
+    _container.height(8),
   );
 }
 
 Style get _surfaceVariant {
   return Style(
-    _track.color.$neutralAlpha(2),
-    _fill.color.$accent(),
+    _track.color.$neutral(4),
+    _track.border.color.$neutral(7),
+    _track.border.width(1),
+    _fill.border.width(1),
+    _fill.border.right.width.zero(),
+    _fill.border.right.style.none(),
+    _fill.border.color.$accentAlpha(9),
+    _fill.color.$accent(8),
   );
 }
 
 Style get _softVariant {
   return Style(
-    _track.color.$accentAlpha(3),
     _fill.color.$accent(),
   );
 }
@@ -55,30 +52,44 @@ Style get _softVariant {
 Style get _noneRadiusVariant {
   return Style(
     _container.borderRadius(0),
+    _fill.borderRadius(0),
+    _track.borderRadius(0),
   );
 }
 
 Style get _smallRadiusVariant {
   return Style(
-    _container.borderRadius(4),
+    _container.borderRadius(1),
+    _track.borderRadius(1),
+    _fill.borderRadius(1),
+    _fill.borderRadius.right(0),
   );
 }
 
 Style get _mediumRadiusVariant {
   return Style(
-    _container.borderRadius(8),
+    _container.borderRadius(2),
+    _track.borderRadius(2),
+    _fill.borderRadius(2),
+    _fill.borderRadius.right(0),
   );
 }
 
 Style get _largeRadiusVariant {
   return Style(
-    _container.borderRadius(12),
+    _container.borderRadius(3),
+    _track.borderRadius(3),
+    _fill.borderRadius(3),
+    _fill.borderRadius.right(0),
   );
 }
 
 Style get _fullRadiusVariant {
   return Style(
     _container.borderRadius(99),
+    _track.borderRadius(99),
+    _fill.borderRadius(99),
+    _fill.borderRadius.right(0),
   );
 }
 
@@ -87,12 +98,11 @@ Style _buildProgressStyle(Style? style, List<IProgressVariant> variants) {
     _baseStyle(),
 
     /// Size Variants
-    ProgressSize.small(_smallVariant()),
-    ProgressSize.medium(_mediumVariant()),
-    ProgressSize.large(_largeVariant()),
+    ProgressSize.size1(_smallVariant()),
+    ProgressSize.size2(_mediumVariant()),
+    ProgressSize.size3(_largeVariant()),
 
     // Type variants
-    ProgressVariant.classic(_classicVariant()),
     ProgressVariant.surface(_surfaceVariant()),
     ProgressVariant.soft(_softVariant()),
 

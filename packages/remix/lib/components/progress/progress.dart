@@ -1,5 +1,5 @@
 import 'package:flutter/foundation.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 import 'package:mix/mix.dart';
 import 'package:mix_annotations/mix_annotations.dart';
 import 'package:remix/helpers/variant.dart';
@@ -10,6 +10,7 @@ part 'progress.g.dart';
 part 'progress_style.dart';
 part 'progress_variants.dart';
 part 'progress_widget.dart';
+part 'progress_blank.dart';
 
 @MixableSpec()
 base class ProgressSpec extends Spec<ProgressSpec>

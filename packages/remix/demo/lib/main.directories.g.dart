@@ -15,9 +15,10 @@ import 'package:demo/components/button_use_case.dart' as _i4;
 import 'package:demo/components/callout_use_case.dart' as _i5;
 import 'package:demo/components/card_use_case.dart' as _i6;
 import 'package:demo/components/checkbox_use_case.dart' as _i7;
-import 'package:demo/components/radio_use_case.dart' as _i8;
-import 'package:demo/components/spinner_use_case.dart' as _i9;
-import 'package:demo/components/switch_use_case.dart' as _i10;
+import 'package:demo/components/progress_use_case.dart' as _i8;
+import 'package:demo/components/radio_use_case.dart' as _i9;
+import 'package:demo/components/spinner_use_case.dart' as _i10;
+import 'package:demo/components/switch_use_case.dart' as _i11;
 import 'package:widgetbook/widgetbook.dart' as _i1;
 
 final directories = <_i1.WidgetbookNode>[
@@ -103,13 +104,25 @@ final directories = <_i1.WidgetbookNode>[
         ],
       ),
       _i1.WidgetbookFolder(
+        name: 'progress',
+        children: [
+          _i1.WidgetbookLeafComponent(
+            name: 'RxProgress',
+            useCase: _i1.WidgetbookUseCase(
+              name: 'Progress Component',
+              builder: _i8.buildProgressUseCase,
+            ),
+          )
+        ],
+      ),
+      _i1.WidgetbookFolder(
         name: 'radio',
         children: [
           _i1.WidgetbookLeafComponent(
             name: 'RxRadio',
             useCase: _i1.WidgetbookUseCase(
               name: 'Radio Component',
-              builder: _i8.buildRadioUseCase,
+              builder: _i9.buildRadioUseCase,
             ),
           )
         ],
@@ -121,7 +134,7 @@ final directories = <_i1.WidgetbookNode>[
             name: 'RxSpinner',
             useCase: _i1.WidgetbookUseCase(
               name: 'Spinner Component',
-              builder: _i9.buildSpinnerUseCase,
+              builder: _i10.buildSpinnerUseCase,
             ),
           )
         ],
@@ -133,7 +146,7 @@ final directories = <_i1.WidgetbookNode>[
             name: 'RxSwitch',
             useCase: _i1.WidgetbookUseCase(
               name: 'Switch Component',
-              builder: _i10.buildSwitchUseCase,
+              builder: _i11.buildSwitchUseCase,
             ),
           )
         ],

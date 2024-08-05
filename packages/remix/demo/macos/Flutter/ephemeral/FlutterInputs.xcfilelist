@@ -862,6 +862,7 @@
 /Users/lucasoliveira/Developer/Concepta/open_source/mix_ecosystem/mix/packages/remix/demo/lib/components/callout_use_case.dart
 /Users/lucasoliveira/Developer/Concepta/open_source/mix_ecosystem/mix/packages/remix/demo/lib/components/card_use_case.dart
 /Users/lucasoliveira/Developer/Concepta/open_source/mix_ecosystem/mix/packages/remix/demo/lib/components/checkbox_use_case.dart
+/Users/lucasoliveira/Developer/Concepta/open_source/mix_ecosystem/mix/packages/remix/demo/lib/components/progress_use_case.dart
 /Users/lucasoliveira/Developer/Concepta/open_source/mix_ecosystem/mix/packages/remix/demo/lib/components/radio_use_case.dart
 /Users/lucasoliveira/Developer/Concepta/open_source/mix_ecosystem/mix/packages/remix/demo/lib/components/spinner_use_case.dart
 /Users/lucasoliveira/Developer/Concepta/open_source/mix_ecosystem/mix/packages/remix/demo/lib/components/switch_use_case.dart
@@ -906,6 +907,11 @@
 /Users/lucasoliveira/Developer/Concepta/open_source/mix_ecosystem/mix/packages/remix/lib/components/checkbox/checkbox_style.dart
 /Users/lucasoliveira/Developer/Concepta/open_source/mix_ecosystem/mix/packages/remix/lib/components/checkbox/checkbox_variants.dart
 /Users/lucasoliveira/Developer/Concepta/open_source/mix_ecosystem/mix/packages/remix/lib/components/checkbox/checkbox_widget.dart
+/Users/lucasoliveira/Developer/Concepta/open_source/mix_ecosystem/mix/packages/remix/lib/components/progress/progress.dart
+/Users/lucasoliveira/Developer/Concepta/open_source/mix_ecosystem/mix/packages/remix/lib/components/progress/progress.g.dart
+/Users/lucasoliveira/Developer/Concepta/open_source/mix_ecosystem/mix/packages/remix/lib/components/progress/progress_style.dart
+/Users/lucasoliveira/Developer/Concepta/open_source/mix_ecosystem/mix/packages/remix/lib/components/progress/progress_variants.dart
+/Users/lucasoliveira/Developer/Concepta/open_source/mix_ecosystem/mix/packages/remix/lib/components/progress/progress_widget.dart
 /Users/lucasoliveira/Developer/Concepta/open_source/mix_ecosystem/mix/packages/remix/lib/components/radio/radio.dart
 /Users/lucasoliveira/Developer/Concepta/open_source/mix_ecosystem/mix/packages/remix/lib/components/radio/radio.g.dart
 /Users/lucasoliveira/Developer/Concepta/open_source/mix_ecosystem/mix/packages/remix/lib/components/radio/radio_style.dart

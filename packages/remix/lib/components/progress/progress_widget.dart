@@ -4,8 +4,8 @@ class RxProgress extends StatelessWidget {
   const RxProgress({
     super.key,
     this.value = 0.0,
-    this.size = ProgressSize.medium,
-    this.type = ProgressVariant.surface,
+    this.size = ProgressSize.size2,
+    this.variant = ProgressVariant.surface,
     this.radius = ProgressRadius.none,
     this.style,
     this.duration,
@@ -13,7 +13,7 @@ class RxProgress extends StatelessWidget {
 
   final double value;
   final ProgressSize size;
-  final ProgressVariant type;
+  final ProgressVariant variant;
   final Style? style;
 
   final ProgressRadius radius;
@@ -21,25 +21,12 @@ class RxProgress extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SpecBuilder(
-      style: _buildProgressStyle(style, [size, type, radius]),
-      builder: (context) {
-        final spec = ProgressSpec.of(context);
-
-        final FillWidget = spec.fill.copyWith(
-          width: value * 100,
-        );
-
-        return spec.container(
-          child: Stack(
-            fit: StackFit.expand,
-            children: [
-              spec.track(),
-              FillWidget(),
-            ],
-          ),
-        );
-      },
+    return RxBlankProgress(
+      style: _buildProgressStyle(
+        style,
+        [size, variant, radius],
+      ),
+      value: value,
     );
   }
 }
