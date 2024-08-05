@@ -1,3 +1,21 @@
+## 1.4.4
+
+ - **FIX**: Pressable disposes controller only if it creates it (#424).
+
+## 1.4.3
+
+ - **FIX**: Breakpoint utility merge exception (#421).
+
+## 1.4.2
+
+ - **FIX**: FlexSpecWidget prioritizes the direction in spec (#414).
+
+## 1.4.1
+
+ - **FIX**: Added missing widget state utilities (#411).
+ - **FIX**: Correct handling of individual border sides (#408).
+ - **DOCS**: improve mix theme data features explanations (#404).
+
 ## 1.4.0
 
  - **FEAT**: Code generation for Widget Modifiers (#396).

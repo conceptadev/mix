@@ -93,6 +93,22 @@ void main() {
 
       addTearDown(tester.view.resetPhysicalSize);
     });
+
+    // Test merge
+    test('OnBreakpointTokenVariant mergeKey', () {
+      final style = Style(
+        VariantAttribute<OnBreakpointTokenVariant>(
+          const OnBreakpointTokenVariant(BreakpointToken.small),
+          Style(),
+        ),
+        VariantAttribute<OnBreakpointTokenVariant>(
+          const OnBreakpointTokenVariant(BreakpointToken.medium),
+          Style(),
+        ),
+      );
+
+      expect(style.values.length, 2);
+    });
   });
   group('OnBreakpoint Variant', () {
     testWidgets('OnBreakPointVariant', (tester) async {
@@ -153,6 +169,26 @@ void main() {
       expect(breakpoint2.when(context), false, reason: 'size4 breakpoint2');
       expect(breakpoint3.when(context), false, reason: 'size4 breakpoint3');
       addTearDown(tester.view.resetPhysicalSize);
+    });
+
+    // Test merge
+    test('OnBreakPointVariant mergeKey', () {
+      final style = Style(
+        VariantAttribute<OnBreakPointVariant>(
+          const OnBreakPointVariant(
+            Breakpoint(maxWidth: 100, minWidth: 50),
+          ),
+          Style(),
+        ),
+        VariantAttribute<OnBreakPointVariant>(
+          const OnBreakPointVariant(
+            Breakpoint(maxWidth: 200, minWidth: 50),
+          ),
+          Style(),
+        ),
+      );
+
+      expect(style.values.length, 2);
     });
 
     test('OnBreakPoint equality', () {

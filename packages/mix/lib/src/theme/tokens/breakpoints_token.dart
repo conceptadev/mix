@@ -31,6 +31,9 @@ class Breakpoint {
   bool matches(Size size) {
     return size.width >= minWidth && size.width <= maxWidth;
   }
+
+  @override
+  String toString() => 'breakpoint_${minWidth}_$maxWidth)';
 }
 
 /// A token representing a breakpoint.

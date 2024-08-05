@@ -1,3 +1,7 @@
+## 0.2.2+1
+
+ - **DOCS**: improve mix theme data features explanations (#404).
+
 ## 0.2.2
 
  - **FEAT**: Code generation for Widget Modifiers (#396).
