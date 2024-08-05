@@ -1,4 +1,4 @@
-import 'package:remix/helpers/variant.dart';
+part of 'badge.dart';
 
 abstract interface class IBadgeVariant extends RemixVariant {
   const IBadgeVariant(String name) : super('badge.$name');
@@ -23,4 +23,16 @@ class BadgeSize extends IBadgeVariant {
   static const large = BadgeSize('large');
 
   static List<BadgeSize> get values => [small, medium, large];
+}
+
+class BadgeRadius extends IBadgeVariant {
+  const BadgeRadius(String name) : super('radius.$name');
+
+  static const none = BadgeRadius('none');
+  static const small = BadgeRadius('small');
+  static const medium = BadgeRadius('medium');
+  static const large = BadgeRadius('large');
+  static const full = BadgeRadius('full');
+
+  static List<BadgeRadius> get values => [none, small, medium, large, full];
 }

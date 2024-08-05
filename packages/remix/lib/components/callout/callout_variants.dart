@@ -1,4 +1,4 @@
-import 'package:remix/helpers/variant.dart';
+part of 'callout.dart';
 
 abstract interface class ICalloutVariant extends RemixVariant {
   const ICalloutVariant(String name) : super('callout.$name');

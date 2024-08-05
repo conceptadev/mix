@@ -11,6 +11,7 @@ part 'checkbox.g.dart';
 part 'checkbox_style.dart';
 part 'checkbox_variants.dart';
 part 'checkbox_widget.dart';
+part 'checkbox_blank.dart';
 
 @MixableSpec()
 base class CheckboxSpec extends Spec<CheckboxSpec>

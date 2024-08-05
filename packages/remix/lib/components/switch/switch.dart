@@ -11,6 +11,7 @@ part 'switch.g.dart';
 part 'switch_style.dart';
 part 'switch_variants.dart';
 part 'switch_widget.dart';
+part 'switch_blank.dart';
 
 @MixableSpec()
 base class SwitchSpec extends Spec<SwitchSpec>

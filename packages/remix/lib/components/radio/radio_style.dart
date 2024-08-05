@@ -9,6 +9,12 @@ Style get _baseStyle {
     _container.borderRadius(99),
     _container.alignment.center(),
     _indicator.borderRadius(99),
+    _indicator.wrap.opacity(0),
+    _indicator.wrap.scale(0.5),
+    $on.selected(
+      _indicator.wrap.opacity(1),
+      _indicator.wrap.scale(1),
+    ),
   );
 }
 
@@ -68,17 +74,6 @@ Style get _surfaceVariant {
   );
 }
 
-Style get _ghostVariant {
-  return Style(
-    _container.border.style.none(),
-    _container.color.transparent(),
-    _indicator.color.$accentAlpha(11),
-    $on.hover(
-      _container.color.$accentAlpha(3),
-    ),
-  );
-}
-
 Style get _smallVariant {
   return Style(
     _container.size(16),
@@ -108,7 +103,7 @@ Style get _disabledVariant {
   );
 }
 
-Style buildDefaultRadioStyle() {
+Style _buildDefaultRadioStyle(Style? style, List<IRadioVariant> variants) {
   return Style(
     _baseStyle(),
 
@@ -122,7 +117,9 @@ Style buildDefaultRadioStyle() {
     RadioVariant.soft(_softVariant()),
     RadioVariant.outline(_outlineVariant()),
     RadioVariant.surface(_surfaceVariant()),
-    RadioVariant.ghost(_ghostVariant()),
     $on.disabled(_disabledVariant()),
-  );
+  ).merge(style).applyVariants(variants).animate(
+        duration: Duration(milliseconds: 150),
+        curve: Curves.easeInOut,
+      );
 }

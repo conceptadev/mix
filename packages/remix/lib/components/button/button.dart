@@ -12,6 +12,7 @@ part 'button.g.dart';
 part 'button_style.dart';
 part 'button_variants.dart';
 part 'button_widget.dart';
+part 'button_blank.dart';
 
 @MixableSpec()
 class ButtonSpec extends Spec<ButtonSpec> with _$ButtonSpec, Diagnosticable {

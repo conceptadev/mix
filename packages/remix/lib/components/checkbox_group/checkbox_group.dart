@@ -9,7 +9,7 @@ class RxCheckboxGroup extends StatefulWidget {
     this.defaultValue = const [],
     this.onValueChange,
     this.size = CheckboxSize.medium,
-    this.variant = CheckboxVariant.solid,
+    this.variant = CheckboxVariant.soft,
   });
 
   final List<RxCheckboxItem> items;

@@ -10,6 +10,7 @@ part 'card.g.dart';
 part 'card_style.dart';
 part 'card_variants.dart';
 part 'card_widget.dart';
+part 'card_blank.dart';
 
 @MixableSpec()
 base class CardSpec extends Spec<CardSpec> with _$CardSpec, Diagnosticable {

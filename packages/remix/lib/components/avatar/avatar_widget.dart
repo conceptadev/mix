@@ -20,26 +20,10 @@ class RxAvatar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SpecBuilder(
+    return RxBlankAvatar(
       style: avatarStyle(style, [size, variant, radius]),
-      builder: (context) {
-        final spec = AvatarSpec.of(context);
-
-        final ContainerWidget = spec.container;
-        final ImageWidget = spec.image;
-        final FallbackWidget = spec.fallback;
-
-        return ContainerWidget(
-          child: image != null
-              ? ImageWidget(
-                  image: image!,
-                  errorBuilder: (context, error, stackTrace) {
-                    return FallbackWidget(fallback ?? '');
-                  },
-                )
-              : FallbackWidget(fallback ?? ''),
-        );
-      },
+      image: image,
+      fallback: fallback,
     );
   }
 }

@@ -4,6 +4,8 @@ import 'package:remix/components/radio/radio.dart';
 import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
+final _key = GlobalKey();
+
 @widgetbook.UseCase(
   name: 'Radio Component',
   type: RxRadio,
@@ -36,6 +38,7 @@ Widget buildRadioUseCase(BuildContext context) {
   }
 
   return Wrap(
+    key: _key,
     spacing: 12,
     runSpacing: 12,
     children: RadioVariant.values.map(buildRadio).toList(),

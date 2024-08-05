@@ -7,18 +7,12 @@ abstract interface class ICheckboxVariant extends RemixVariant {
 class CheckboxVariant extends ICheckboxVariant {
   const CheckboxVariant(String name) : super('variant.$name');
 
-  static const solid = CheckboxVariant('solid');
   static const soft = CheckboxVariant('soft');
   static const surface = CheckboxVariant('surface');
-  static const outline = CheckboxVariant('outline');
-  static const ghost = CheckboxVariant('ghost');
 
   static List<CheckboxVariant> get values => [
-        solid,
         soft,
         surface,
-        outline,
-        ghost,
       ];
 }
 
