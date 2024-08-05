@@ -1,6 +1,6 @@
 part of 'checkbox.dart';
 
-class RxCheckbox extends StatefulWidget {
+class RxCheckbox extends StatelessWidget {
   const RxCheckbox({
     super.key,
     this.disabled = false,
