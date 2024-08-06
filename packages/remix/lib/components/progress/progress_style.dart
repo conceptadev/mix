@@ -4,15 +4,15 @@ final _progress = ProgressSpecUtility.self;
 final _container = _progress.container;
 final _track = _progress.track;
 final _fill = _progress.fill;
-final _outer = _progress.outerContainer;
+final _outerContainer = _progress.outerContainer;
 
 Style get _baseStyle {
   return Style(
     _track.color.$neutral(6),
     _fill.color.$accent(),
     _container.clipBehavior.hardEdge(),
-    _outer.clipBehavior.hardEdge(),
-    _outer.shapeDecoration.shape.roundedRectangle(),
+    _outerContainer.clipBehavior.hardEdge(),
+    _outerContainer.shapeDecoration.shape.roundedRectangle(),
   );
 }
 
@@ -38,8 +38,8 @@ Style get _surfaceVariant {
   return Style(
     _track.color.$neutral(4),
     _fill.color.$accent(8),
-    _outer.border.width(1),
-    _outer.border.color.$neutralAlpha(6),
+    _outerContainer.border.width(1),
+    _outerContainer.border.color.$neutralAlpha(6),
   );
 }
 
@@ -51,35 +51,35 @@ Style get _softVariant {
 
 Style get _noneRadiusVariant {
   return Style(
-    _outer.shapeDecoration.shape.roundedRectangle.borderRadius(0),
+    _outerContainer.shapeDecoration.shape.roundedRectangle.borderRadius(0),
     _container.borderRadius(0),
   );
 }
 
 Style get _smallRadiusVariant {
   return Style(
-    _outer.shapeDecoration.shape.roundedRectangle.borderRadius(1),
+    _outerContainer.shapeDecoration.shape.roundedRectangle.borderRadius(1),
     _container.borderRadius(1),
   );
 }
 
 Style get _mediumRadiusVariant {
   return Style(
-    _outer.shapeDecoration.shape.roundedRectangle.borderRadius(2),
+    _outerContainer.shapeDecoration.shape.roundedRectangle.borderRadius(2),
     _container.borderRadius(2),
   );
 }
 
 Style get _largeRadiusVariant {
   return Style(
-    _outer.shapeDecoration.shape.roundedRectangle.borderRadius(3),
+    _outerContainer.shapeDecoration.shape.roundedRectangle.borderRadius(3),
     _container.borderRadius(3),
   );
 }
 
 Style get _fullRadiusVariant {
   return Style(
-    _outer.shapeDecoration.shape.roundedRectangle.borderRadius(99),
+    _outerContainer.shapeDecoration.shape.roundedRectangle.borderRadius(99),
     _container.borderRadius(99),
   );
 }
