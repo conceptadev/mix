@@ -19,7 +19,7 @@ base class ProgressSpec extends Spec<ProgressSpec>
   final BoxSpec container;
   final BoxSpec track;
   final BoxSpec fill;
-  final BoxSpec outer;
+  final BoxSpec outerContainer;
 
   /// {@macro progress_spec_of}
   static const of = _$ProgressSpec.of;
@@ -30,13 +30,13 @@ base class ProgressSpec extends Spec<ProgressSpec>
     BoxSpec? container,
     BoxSpec? track,
     BoxSpec? fill,
-    BoxSpec? outer,
+    BoxSpec? outerContainer,
     super.animated,
     super.modifiers,
   })  : container = container ?? const BoxSpec(),
         track = track ?? const BoxSpec(),
         fill = fill ?? const BoxSpec(),
-        outer = outer ?? const BoxSpec();
+        outerContainer = outerContainer ?? const BoxSpec();
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {

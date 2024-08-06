@@ -31,7 +31,7 @@ class RxBlankProgress extends StatelessWidget {
                   child: spec.fill(),
                 );
               }),
-              spec.outer(),
+              spec.outerContainer(),
             ],
           ),
         );

@@ -4,7 +4,7 @@ final _progress = ProgressSpecUtility.self;
 final _container = _progress.container;
 final _track = _progress.track;
 final _fill = _progress.fill;
-final _outer = _progress.outer;
+final _outer = _progress.outerContainer;
 
 Style get _baseStyle {
   return Style(
