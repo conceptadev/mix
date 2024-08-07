@@ -1,4 +1,4 @@
 
 includes:
-  - package:flutter_lints/flutter.yaml
   - ../../lints.yaml
+  - package:flutter_lints/flutter.yaml
