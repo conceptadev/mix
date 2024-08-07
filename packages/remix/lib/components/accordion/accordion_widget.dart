@@ -1,29 +1,35 @@
 part of 'accordion.dart';
 
-// class RxAccordion extends StatelessWidget {
-//   const RxAccordion({
-//     super.key,
-//     this.image,
-//     this.fallback,
-//     this.size = AvatarSize.size4,
-//     this.variant = AvatarVariant.solid,
-//     this.radius = AvatarRadius.full,
-//     this.style,
-//   });
+class RxAccordion extends StatelessWidget {
+  const RxAccordion({
+    super.key,
+    required this.title,
+    this.leadingIcon,
+    this.trailingIcon = Icons.keyboard_arrow_down_rounded,
+    required this.content,
+    this.initiallyExpanded = false,
+    this.style,
+  });
 
-//   final ImageProvider<Object>? image;
-//   final String? fallback;
-//   final AvatarSize size;
-//   final AvatarVariant variant;
-//   final AvatarRadius radius;
-//   final Style? style;
+  final String title;
+  final IconData? leadingIcon;
+  final IconData? trailingIcon;
+  final Widget content;
+  final Style? style;
+  final bool initiallyExpanded;
 
-//   @override
-//   Widget build(BuildContext context) {
-//     return RxBlankAccordion(
-//       style: _buildAccordionStyle(style, [size, variant, radius]),
-//       image: image,
-//       fallback: fallback,
-//     );
-//   }
-// }
+  @override
+  Widget build(BuildContext context) {
+    return RxBlankAccordion(
+      header: (context, spec) => RxAccordionHeaderSpecWidget(
+        title: title,
+        leadingIcon: leadingIcon,
+        trailingIcon: trailingIcon,
+        spec: spec,
+      ),
+      content: content,
+      initiallyExpanded: initiallyExpanded,
+      style: _buildAccordionStyle(style),
+    );
+  }
+}

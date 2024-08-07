@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:mix/mix.dart';
 import 'package:mix_annotations/mix_annotations.dart';
 import 'package:remix/components/accordion/header/accordion_header.dart';
+import 'package:remix/tokens/remix_tokens.dart';
+import 'dart:math' as math;
 
 import '../../helpers/variant.dart';
 
@@ -15,10 +17,9 @@ part 'accordion_blank.dart';
 base class AccordionSpec extends Spec<AccordionSpec> with _$AccordionSpec {
   final BoxSpec container;
   @MixableProperty(dto: MixableFieldDto(type: 'AccordionHeaderSpecAttribute'))
-  final AccordionHeaderSpec headerContainer;
+  final AccordionHeaderSpec header;
   final BoxSpec contentContainer;
   final FlexSpec flex;
-  final IconSpec icon;
 
   /// {@macro avatar_spec_of}
   static const of = _$AccordionSpec.of;
@@ -27,14 +28,12 @@ base class AccordionSpec extends Spec<AccordionSpec> with _$AccordionSpec {
 
   const AccordionSpec({
     BoxSpec? container,
-    AccordionHeaderSpec? headerContainer,
+    AccordionHeaderSpec? header,
     BoxSpec? contentContainer,
     FlexSpec? flex,
-    IconSpec? icon,
     super.animated,
   })  : container = container ?? const BoxSpec(),
-        headerContainer = headerContainer ?? const AccordionHeaderSpec(),
+        header = header ?? const AccordionHeaderSpec(),
         contentContainer = contentContainer ?? const BoxSpec(),
-        flex = flex ?? const FlexSpec(),
-        icon = icon ?? const IconSpec();
+        flex = flex ?? const FlexSpec();
 }

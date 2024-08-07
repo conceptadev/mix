@@ -50,7 +50,6 @@ class _RxBlankAccordionState extends State<RxBlankAccordion>
   void _handleTap() {
     setState(() {
       _isExpanded = !_isExpanded;
-      print('_state Updated: ${_stateController!.value}');
       _stateController!.selected = _isExpanded;
 
       if (_isExpanded) {
@@ -58,10 +57,7 @@ class _RxBlankAccordionState extends State<RxBlankAccordion>
       } else {
         _animationController!.reverse();
       }
-      // PageStorage.maybeOf(context)?.writeState(context, _isExpanded);
     });
-
-    // widget.onExpansionChanged?.call(_isExpanded ? widget.identityValue : null);
   }
 
   @override
@@ -76,13 +72,12 @@ class _RxBlankAccordionState extends State<RxBlankAccordion>
   Widget build(BuildContext context) {
     return RepaintBoundary(
       child: SpecBuilder(
+        controller: _stateController,
         style: widget.style,
-        // autoHandleWidgetStates: false,
         builder: (context) {
           final spec = AccordionSpec.of(context);
 
           final ContainerWidget = spec.container;
-          final HeaderContainerWidget = spec.headerContainer;
           final ContentContainerWidget = spec.contentContainer;
           final FlexWidget = spec.flex;
 
@@ -94,8 +89,7 @@ class _RxBlankAccordionState extends State<RxBlankAccordion>
               children: [
                 Pressable(
                   onPress: _handleTap,
-                  controller: _stateController,
-                  child: widget.header(context, spec.headerContainer),
+                  child: widget.header(context, spec.header),
                 ),
                 AnimatedBuilder(
                   animation: _animationController!.view,
@@ -108,7 +102,10 @@ class _RxBlankAccordionState extends State<RxBlankAccordion>
                       ),
                     );
                   },
-                  child: content,
+                  child: Offstage(
+                    child: content,
+                    offstage: !_isExpanded && _curvedAnimation!.isCompleted,
+                  ),
                 ),
               ],
             ),
