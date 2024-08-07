@@ -159,6 +159,11 @@ extension WidgetTesterExt on WidgetTester {
     await pumpWidget(MaterialApp(home: widget));
   }
 
+  Future<BuildContext> pumpAndGetContext(Widget widget, [Type? type]) async {
+    await pumpWidget(widget);
+    return element(find.byType(type ?? widget.runtimeType)) as BuildContext;
+  }
+
   Future<void> pumpStyledWidget(
     StyledWidget widget, {
     MixThemeData theme = const MixThemeData.empty(),

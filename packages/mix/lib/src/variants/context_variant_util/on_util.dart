@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
+import 'package:mix/src/variants/context_variant_util/on_platform_util.dart';
 
 import '../../theme/tokens/breakpoints_token.dart';
 import '../widget_state_variant.dart';
@@ -10,35 +11,45 @@ import 'on_not_util.dart';
 import 'on_orientation_util.dart';
 
 class OnContextVariantUtility {
-  late final small = const OnBreakpointTokenVariant(BreakpointToken.small);
+  // Platform variants
+  final macos = const OnPlatformVariant(TargetPlatform.macOS);
+  final android = const OnPlatformVariant(TargetPlatform.android);
+  final fuchsia = const OnPlatformVariant(TargetPlatform.fuchsia);
+  final ios = const OnPlatformVariant(TargetPlatform.iOS);
+  final linux = const OnPlatformVariant(TargetPlatform.linux);
+  final windows = const OnPlatformVariant(TargetPlatform.windows);
+  final web = const OnWebVariant();
 
-  late final xsmall = const OnBreakpointTokenVariant(BreakpointToken.xsmall);
+  // Breakpoint variants
+  final small = const OnBreakpointTokenVariant(BreakpointToken.small);
+  final xsmall = const OnBreakpointTokenVariant(BreakpointToken.xsmall);
+  final medium = const OnBreakpointTokenVariant(BreakpointToken.medium);
+  final large = const OnBreakpointTokenVariant(BreakpointToken.large);
+  final breakpoint = OnBreakPointVariant.new;
+  final breakpointToken = OnBreakpointTokenVariant.new;
 
-  late final medium = const OnBreakpointTokenVariant(BreakpointToken.medium);
+  // Brightness variants
+  final light = const OnBrightnessVariant(Brightness.light);
+  final dark = const OnBrightnessVariant(Brightness.dark);
 
-  late final large = const OnBreakpointTokenVariant(BreakpointToken.large);
+  // Directionality variants
+  final ltr = const OnDirectionalityVariant(TextDirection.ltr);
+  final rtl = const OnDirectionalityVariant(TextDirection.rtl);
 
-  late final breakpoint = OnBreakPointVariant.new;
-  late final breakpointToken = OnBreakpointTokenVariant.new;
+  // Orientation variants
+  final landscape = const OnOrientationVariant(Orientation.landscape);
+  final portrait = const OnOrientationVariant(Orientation.portrait);
 
-  late final light = const OnBrightnessVariant(Brightness.light);
-  late final dark = const OnBrightnessVariant(Brightness.dark);
-
-  late final ltr = const OnDirectionalityVariant(TextDirection.ltr);
-  late final rtl = const OnDirectionalityVariant(TextDirection.rtl);
-
-  late final landscape = const OnOrientationVariant(Orientation.landscape);
-  late final portrait = const OnOrientationVariant(Orientation.portrait);
-
-  late final press = const OnPressVariant();
-  late final hover = const OnHoverVariant();
-  late final focus = const OnFocusedVariant();
-  late final enabled = const OnNotVariant(OnDisabledVariant());
-  late final disabled = const OnDisabledVariant();
-  late final longPress = const OnLongPressVariant();
-  late final selected = const OnSelectedVariant();
-  late final unselected = const OnNotVariant(OnSelectedVariant());
-  late final dragged = const OnDraggedVariant();
+  // Widget state variants
+  final press = const OnPressVariant();
+  final hover = const OnHoverVariant();
+  final focus = const OnFocusedVariant();
+  final enabled = const OnNotVariant(OnDisabledVariant());
+  final disabled = const OnDisabledVariant();
+  final longPress = const OnLongPressVariant();
+  final selected = const OnSelectedVariant();
+  final unselected = const OnNotVariant(OnSelectedVariant());
+  final dragged = const OnDraggedVariant();
 
   /// Creates an [OnNotVariant] with the specified [variant].
   ///
@@ -46,7 +57,7 @@ class OnContextVariantUtility {
   ///
   /// For example, if the specified [variant] evaluates to `true`,
   /// the [OnNotVariant] with that variant will evaluate to `false`, and vice versa.
-  late final not = OnNotVariant.new;
+  final not = OnNotVariant.new;
   static final self = OnContextVariantUtility._();
 
   OnContextVariantUtility._();
