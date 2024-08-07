@@ -2,7 +2,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
-import 'package:mix/src/variants/context_variant_util/on_platform_util.dart';
 
 import '../../helpers/testing_utils.dart';
 
