@@ -3,13 +3,8 @@ import 'package:flutter/widgets.dart';
 import 'package:mix/mix.dart';
 import 'package:mix_annotations/mix_annotations.dart';
 
-import '../accordion.dart';
-
 part 'accordion_header.g.dart';
-// part 'accordion_style.dart';
-// part 'accordion_variants.dart';
-// part 'accordion_widget.dart';
-part 'accordion_header_blank.dart';
+part 'accordion_header_spec_widget.dart';
 
 @MixableSpec()
 base class AccordionHeaderSpec extends Spec<AccordionHeaderSpec>
