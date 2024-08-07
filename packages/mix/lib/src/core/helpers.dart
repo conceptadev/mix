@@ -1,6 +1,7 @@
 import 'dart:math' as math;
 import 'dart:ui' as ui;
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart' as r;
 import 'package:flutter/widgets.dart' as w;
@@ -11,6 +12,13 @@ import 'dto.dart';
 /// Class to provide some helpers without conflicting
 /// name space with other libraries.
 class MixHelpers {
+  // This should only be used for testing
+  @visibleForTesting
+  static TargetPlatform? targetPlatformOverride;
+
+  // This should only be used for testing
+  @visibleForTesting
+  static bool? isWebOverride;
   static const deepEquality = DeepCollectionEquality();
 
   static const lerpDouble = ui.lerpDouble;
@@ -26,6 +34,10 @@ class MixHelpers {
   static const lerpInt = _lerpInt;
 
   static const lerpSnap = _lerpSnap;
+
+  static bool get isWeb => isWebOverride ?? kIsWeb;
+  static TargetPlatform get targetPlatform =>
+      targetPlatformOverride ?? defaultTargetPlatform;
 
   const MixHelpers._();
 }
