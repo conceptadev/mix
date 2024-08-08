@@ -37,6 +37,7 @@ mixin _$AccordionSpec on Spec<AccordionSpec> {
     AccordionHeaderSpec? header,
     BoxSpec? contentContainer,
     FlexSpec? flex,
+    TextSpec? textContent,
     AnimatedData? animated,
   }) {
     return AccordionSpec(
@@ -44,6 +45,7 @@ mixin _$AccordionSpec on Spec<AccordionSpec> {
       header: header ?? _$this.header,
       contentContainer: contentContainer ?? _$this.contentContainer,
       flex: flex ?? _$this.flex,
+      textContent: textContent ?? _$this.textContent,
       animated: animated ?? _$this.animated,
     );
   }
@@ -61,6 +63,7 @@ mixin _$AccordionSpec on Spec<AccordionSpec> {
   ///
   /// - [BoxSpec.lerp] for [container] and [contentContainer].
   /// - [FlexSpec.lerp] for [flex].
+  /// - [TextSpec.lerp] for [textContent].
 
   /// For [header] and [animated], the interpolation is performed using a step function.
   /// If [t] is less than 0.5, the value from the current [AccordionSpec] is used. Otherwise, the value
@@ -77,6 +80,7 @@ mixin _$AccordionSpec on Spec<AccordionSpec> {
       header: _$this.header.lerp(other.header, t),
       contentContainer: _$this.contentContainer.lerp(other.contentContainer, t),
       flex: _$this.flex.lerp(other.flex, t),
+      textContent: _$this.textContent.lerp(other.textContent, t),
       animated: t < 0.5 ? _$this.animated : other.animated,
     );
   }
@@ -91,6 +95,7 @@ mixin _$AccordionSpec on Spec<AccordionSpec> {
         _$this.header,
         _$this.contentContainer,
         _$this.flex,
+        _$this.textContent,
         _$this.animated,
       ];
 
@@ -109,12 +114,14 @@ base class AccordionSpecAttribute extends SpecAttribute<AccordionSpec> {
   final AccordionHeaderSpecAttribute? header;
   final BoxSpecAttribute? contentContainer;
   final FlexSpecAttribute? flex;
+  final TextSpecAttribute? textContent;
 
   const AccordionSpecAttribute({
     this.container,
     this.header,
     this.contentContainer,
     this.flex,
+    this.textContent,
     super.animated,
   });
 
@@ -133,6 +140,7 @@ base class AccordionSpecAttribute extends SpecAttribute<AccordionSpec> {
       header: header?.resolve(mix),
       contentContainer: contentContainer?.resolve(mix),
       flex: flex?.resolve(mix),
+      textContent: textContent?.resolve(mix),
       animated: animated?.resolve(mix) ?? mix.animation,
     );
   }
@@ -155,6 +163,7 @@ base class AccordionSpecAttribute extends SpecAttribute<AccordionSpec> {
       contentContainer: contentContainer?.merge(other.contentContainer) ??
           other.contentContainer,
       flex: flex?.merge(other.flex) ?? other.flex,
+      textContent: textContent?.merge(other.textContent) ?? other.textContent,
       animated: animated?.merge(other.animated) ?? other.animated,
     );
   }
@@ -169,6 +178,7 @@ base class AccordionSpecAttribute extends SpecAttribute<AccordionSpec> {
         header,
         contentContainer,
         flex,
+        textContent,
         animated,
       ];
 }
@@ -192,6 +202,9 @@ class AccordionSpecUtility<T extends Attribute>
   /// Utility for defining [AccordionSpecAttribute.flex]
   late final flex = FlexSpecUtility((v) => only(flex: v));
 
+  /// Utility for defining [AccordionSpecAttribute.textContent]
+  late final textContent = TextSpecUtility((v) => only(textContent: v));
+
   /// Utility for defining [AccordionSpecAttribute.animated]
   late final animated = AnimatedUtility((v) => only(animated: v));
 
@@ -206,6 +219,7 @@ class AccordionSpecUtility<T extends Attribute>
     AccordionHeaderSpecAttribute? header,
     BoxSpecAttribute? contentContainer,
     FlexSpecAttribute? flex,
+    TextSpecAttribute? textContent,
     AnimatedDataDto? animated,
   }) {
     return builder(AccordionSpecAttribute(
@@ -213,6 +227,7 @@ class AccordionSpecUtility<T extends Attribute>
       header: header,
       contentContainer: contentContainer,
       flex: flex,
+      textContent: textContent,
       animated: animated,
     ));
   }

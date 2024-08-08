@@ -2,7 +2,12 @@ part of 'accordion.dart';
 
 typedef RxAccordionHeaderBuilder = Widget Function(
   BuildContext context,
-  AccordionHeaderSpec headerSpec,
+  AccordionHeaderSpec spec,
+);
+
+typedef RxAccordionContentBuilder = Widget Function(
+  BuildContext context,
+  TextSpec spec,
 );
 
 class RxBlankAccordion extends StatefulWidget {
@@ -15,7 +20,7 @@ class RxBlankAccordion extends StatefulWidget {
   });
 
   final RxAccordionHeaderBuilder header;
-  final Widget content;
+  final RxAccordionContentBuilder content;
   final Style style;
   final bool initiallyExpanded;
 
@@ -81,7 +86,12 @@ class _RxBlankAccordionState extends State<RxBlankAccordion>
           final ContentContainerWidget = spec.contentContainer;
           final FlexWidget = spec.flex;
 
-          final content = ContentContainerWidget(child: widget.content);
+          final content = ContentContainerWidget(
+            child: widget.content(
+              context,
+              spec.textContent,
+            ),
+          );
 
           return ContainerWidget(
             child: FlexWidget(
