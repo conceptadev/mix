@@ -31,12 +31,14 @@ Future<void> goldenTest(
   WidgetTester tester,
   Map<String, List<dynamic>> values, {
   required Widget Function(Map<String, dynamic>) builder,
+  String? fileName,
 }) async {
   final allCombinations = generateCombinations(values);
   int number = 0;
   for (final parameters in allCombinations) {
     final widget = builder(parameters);
     number += 1;
+
     await tester.pumpRxComponent(
       Center(
         child: widget,
@@ -44,10 +46,10 @@ Future<void> goldenTest(
     );
     await tester.pumpAndSettle();
 
-    final fileName = widget.toStringShort().toLowerCase();
+    final definitiveFileName = fileName ?? widget.toStringShort().toLowerCase();
     await expectLater(
       find.byType(widget.runtimeType),
-      matchesGoldenFile('golden_tests/$fileName.$number.png'),
+      matchesGoldenFile('golden_tests/$definitiveFileName.$number.png'),
     );
   }
 }

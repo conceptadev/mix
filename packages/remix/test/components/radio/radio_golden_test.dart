@@ -13,8 +13,10 @@ void main() {
         'variant': RadioVariant.values,
         'disabled': [true, false],
       },
+      fileName: 'rxradio',
       builder: (params) => RxRadio(
         value: params['value'],
+        groupValue: true,
         size: params['size'],
         variant: params['variant'],
         disabled: params['disabled'],
