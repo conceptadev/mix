@@ -12,7 +12,7 @@ void main() {
         AspectRatioModifierSpecUtility(UtilityTestAttribute.new);
     const flexible = FlexibleModifierSpecUtility(UtilityTestAttribute.new);
     const visibility = VisibilityModifierSpecUtility(UtilityTestAttribute.new);
-    const transform = TransformModifierSpecUtility(UtilityTestAttribute.new);
+    final transform = TransformModifierSpecUtility(UtilityTestAttribute.new);
 
     const opacity = OpacityModifierSpecUtility(UtilityTestAttribute.new);
     const rotate = RotatedBoxModifierSpecUtility(UtilityTestAttribute.new);
