@@ -16,6 +16,7 @@ void main() {
         RxRadio(
           value: value,
           onChanged: (v) => changedValue = v,
+          groupValue: true,
           variant: RadioVariant.outline,
           size: RadioSize.small,
           disabled: true,
@@ -23,11 +24,12 @@ void main() {
       );
 
       final rxBlankRadio =
-          tester.widget<RxBlankRadio>(find.byType(RxBlankRadio));
+          tester.widget<RxBlankRadio<bool>>(find.byType(RxBlankRadio<bool>));
       expect(rxBlankRadio.value, equals(true));
+      expect(rxBlankRadio.groupValue, equals(true));
       expect(rxBlankRadio.disabled, equals(true));
 
-      await tester.tap(find.byType(RxBlankRadio));
+      await tester.tap(find.byType(RxBlankRadio<bool>));
       expect(changedValue, isNull);
     });
 
@@ -37,6 +39,7 @@ void main() {
       await tester.pumpRxComponent(
         RxRadio(
           value: false,
+          groupValue: true,
           disabled: false,
           onChanged: (_) {},
           style: Style(
@@ -62,12 +65,13 @@ void main() {
       await tester.pumpRxComponent(
         RxRadio(
           value: value,
+          groupValue: true,
           onChanged: (v) => changedValue = v,
         ),
       );
 
-      await tester.tap(find.byType(RxBlankRadio));
-      expect(changedValue, isTrue);
+      await tester.tap(find.byType(RxBlankRadio<bool>));
+      expect(changedValue, isFalse);
     });
 
     testWidgets('applies different variants', (WidgetTester tester) async {
@@ -75,12 +79,14 @@ void main() {
         await tester.pumpRxComponent(
           RxRadio(
             value: true,
+            groupValue: false,
             onChanged: (_) {},
             variant: variant,
           ),
         );
 
-        final radio = tester.widget<RxBlankRadio>(find.byType(RxBlankRadio));
+        final radio =
+            tester.widget<RxBlankRadio<bool>>(find.byType(RxBlankRadio<bool>));
         final appliedVariantStillInStyle =
             radio.style.variants.values.any((e) => e.variant == variant);
 
@@ -93,12 +99,14 @@ void main() {
         await tester.pumpRxComponent(
           RxRadio(
             value: true,
+            groupValue: false,
             onChanged: (_) {},
             size: size,
           ),
         );
 
-        final radio = tester.widget<RxBlankRadio>(find.byType(RxBlankRadio));
+        final radio =
+            tester.widget<RxBlankRadio<bool>>(find.byType(RxBlankRadio<bool>));
         final appliedVariantStillInStyle =
             radio.style.variants.values.any((e) => e.variant == size);
 

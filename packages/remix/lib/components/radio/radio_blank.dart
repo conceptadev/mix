@@ -1,41 +1,45 @@
 part of 'radio.dart';
 
-class RxBlankRadio extends StatefulWidget {
+class RxBlankRadio<T> extends StatefulWidget {
   const RxBlankRadio({
     super.key,
-    required this.value,
-    required this.onChanged,
     this.disabled = false,
     required this.style,
+    required this.value,
+    required this.onChanged,
+    required this.groupValue,
   });
 
-  final bool value;
-  final ValueChanged<bool> onChanged;
+  final T value;
+  final ValueChanged<T?> onChanged;
+  final T? groupValue;
   final Style style;
   final bool disabled;
 
+  bool get _selected => value == groupValue;
+
   @override
-  State<RxBlankRadio> createState() => _RxBlankRadioState();
+  State<RxBlankRadio<T>> createState() => _RxBlankRadioState<T>();
 }
 
-class _RxBlankRadioState extends State<RxBlankRadio> {
+class _RxBlankRadioState<T> extends State<RxBlankRadio<T>> {
   late final MixWidgetStateController _controller;
   @override
   void initState() {
     super.initState();
     _controller = MixWidgetStateController()
-      ..selected = widget.value
+      ..selected = widget._selected
       ..disabled = widget.disabled;
   }
 
   void _handleOnPress() => widget.onChanged(!widget.value);
 
   @override
-  void didUpdateWidget(RxBlankRadio oldWidget) {
+  void didUpdateWidget(RxBlankRadio<T> oldWidget) {
     super.didUpdateWidget(oldWidget);
 
-    if (oldWidget.value != widget.value) {
-      _controller.selected = widget.value;
+    if (oldWidget._selected != widget._selected) {
+      _controller.selected = widget._selected;
     }
 
     if (oldWidget.disabled != widget.disabled) {

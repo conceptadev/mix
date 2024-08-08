@@ -96,6 +96,6 @@ Style _buildDefaultRadioStyle(Style? style, List<IRadioVariant> variants) {
     $on.disabled(_disabledVariant()),
   ).merge(style).applyVariants(variants).animate(
         duration: Duration(milliseconds: 150),
-        curve: Curves.easeInOut,
+        curve: Curves.easeInOutQuad,
       );
 }
