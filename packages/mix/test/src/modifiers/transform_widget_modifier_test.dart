@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -136,9 +138,57 @@ void main() {
       final utility =
           TransformModifierSpecUtility<TransformModifierSpecAttribute>(
               (attr) => attr);
-      final result = utility.rotate(0.5);
-      expect(result.transform, Matrix4.rotationZ(0.5));
+      final result = utility.rotate.d90();
+
+      expect(result.transform, Matrix4.rotationZ(math.pi / 2));
       expect(result.alignment, Alignment.center);
+
+      final spec = result.resolve(EmptyMixData);
+      expect(spec.transform, Matrix4.rotationZ(math.pi / 2));
+    });
+  });
+
+  group('TransformRotateModifierSpecUtility', () {
+    late TransformRotateModifierSpecUtility<TransformModifierSpecAttribute>
+        utility;
+
+    setUp(() {
+      utility = TransformRotateModifierSpecUtility(
+        (value) => TransformModifierSpecAttribute(
+          transform: value,
+          alignment: Alignment.center,
+        ),
+      );
+    });
+
+    test('d90 returns correct rotation', () {
+      final result = utility.d90();
+      expect(result.transform, Matrix4.rotationZ(math.pi / 2));
+    });
+
+    test('d180 returns correct rotation', () {
+      final result = utility.d180();
+      expect(result.transform, Matrix4.rotationZ(math.pi));
+    });
+
+    test('d270 returns correct rotation', () {
+      final result = utility.d270();
+      expect(result.transform, Matrix4.rotationZ(3 * math.pi / 2));
+    });
+
+    test('call with custom value returns correct rotation', () {
+      final result = utility.call(math.pi / 4);
+      expect(result.transform, Matrix4.rotationZ(math.pi / 4));
+    });
+
+    test('call with zero returns identity matrix', () {
+      final result = utility.call(0);
+      expect(result.transform, Matrix4.identity());
+    });
+
+    test('call with negative value returns correct rotation', () {
+      final result = utility.call(-math.pi / 2);
+      expect(result.transform, Matrix4.rotationZ(-math.pi / 2));
     });
   });
 }

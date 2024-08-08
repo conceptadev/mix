@@ -3,6 +3,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:mix_annotations/mix_annotations.dart';
+import 'dart:math' as math;
 
 import '../core/attribute.dart';
 import '../core/factory/mix_data.dart';
@@ -39,7 +40,7 @@ final class TransformModifierSpec
 
 final class TransformModifierSpecUtility<T extends Attribute>
     extends MixUtility<T, TransformModifierSpecAttribute> {
-  const TransformModifierSpecUtility(super.builder);
+  TransformModifierSpecUtility(super.builder);
 
   T _flip(bool x, bool y) => builder(
         TransformModifierSpecAttribute(
@@ -65,10 +66,20 @@ final class TransformModifierSpecUtility<T extends Attribute>
         ),
       );
 
-  T rotate(double value) => builder(
-        TransformModifierSpecAttribute(
-          transform: Matrix4.rotationZ(value),
-          alignment: Alignment.center,
-        ),
-      );
+  late final rotate = TransformRotateModifierSpecUtility(
+    (value) => TransformModifierSpecAttribute(
+      transform: value,
+      alignment: Alignment.center,
+    ),
+  );
+}
+
+final class TransformRotateModifierSpecUtility<T extends Attribute>
+    extends MixUtility<T, Matrix4> {
+  const TransformRotateModifierSpecUtility(super.builder);
+  T d90() => call(math.pi / 2);
+  T d180() => call(math.pi);
+  T d270() => call(3 * math.pi / 2);
+
+  T call(double value) => builder(Matrix4.rotationZ(value));
 }
