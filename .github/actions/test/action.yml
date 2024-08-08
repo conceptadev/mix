@@ -8,7 +8,7 @@ inputs:
   flutter-version:
     description: 'Flutter version'
     required: false
-    default: ""
+    default: "stable"
   run-dcm:
     description: 'Should run DCM'
     required: false
