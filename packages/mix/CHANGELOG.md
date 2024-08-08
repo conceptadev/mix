@@ -1,3 +1,9 @@
+## 1.4.5
+
+ - **FIX**: HitTestBehavior when there is an Interectable in the tree (#437).
+ - **FEAT**: Create a specific utility to Transform.rotate (#434).
+ - **FEAT**: TargetPlatform and web variants (#431).
+
 ## 1.4.4
 
  - **FIX**: Pressable disposes controller only if it creates it (#424).
