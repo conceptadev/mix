@@ -162,6 +162,32 @@ void main() {
         expect(onTapCalled, isTrue);
       },
     );
+
+    testWidgets('GestureDetector as parent should not affected by Pressable',
+        (tester) async {
+      bool onTapCalled = false;
+
+      await tester.pumpWidget(
+        GestureDetector(
+          onTap: () {
+            onTapCalled = true;
+          },
+          child: PressableBox(
+            style: Style(
+              $box.color.red(),
+              $on.hover(
+                $box.color.blue(),
+              ),
+            ),
+            child: Box(),
+          ),
+        ),
+      );
+      expect(find.byType(Pressable), findsOneWidget);
+      await tester.tap(find.byType(GestureDetector).first);
+
+      expect(onTapCalled, isTrue);
+    });
   });
 
   testWidgets('Pressable cancel timer on dispose', (WidgetTester tester) async {
@@ -583,6 +609,35 @@ void main() {
 
       final pressableState = tester.state<PressableWidgetState>(finder);
       expect(pressableState.mouseCursor, equals(MouseCursor.defer));
+    });
+  });
+
+  group('Interactable', () {
+    testWidgets('GestureDetector as parent should not affected by Interactable',
+        (tester) async {
+      bool onTapCalled = false;
+
+      await tester.pumpWidget(
+        GestureDetector(
+          onTap: () {
+            onTapCalled = true;
+          },
+          child: Box(
+            style: Style(
+              $box.color.red(),
+              $on.hover(
+                $box.color.blue(),
+              ),
+            ),
+          ),
+        ),
+      );
+
+      expect(find.byType(Interactable), findsOneWidget);
+
+      await tester.tap(find.byType(GestureDetector));
+
+      expect(onTapCalled, isTrue);
     });
   });
 }
