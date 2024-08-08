@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
+import 'package:remix/components/accordion/header/accordion_header.dart';
 import 'package:remix/remix.dart';
 
 import '../../utils/extensions/widget_tester.dart';
@@ -11,8 +12,14 @@ void main() {
         (WidgetTester tester) async {
       await tester.pumpRxComponent(
         RxAccordion(
-          title: 'Test Accordion',
-          content: Text('Accordion Content'),
+          headerBuilder: (context, spec) => RxAccordionHeaderSpecWidget(
+            title: 'Test Accordion',
+            spec: spec,
+          ),
+          contentBuilder: (context, spec) => TextSpecWidget(
+            'Accordion Content',
+            spec: spec,
+          ),
         ),
       );
 
@@ -23,10 +30,16 @@ void main() {
     testWidgets('renders with custom icons', (WidgetTester tester) async {
       await tester.pumpRxComponent(
         RxAccordion(
-          title: 'Custom Icons',
-          leadingIcon: Icons.star,
-          trailingIcon: Icons.arrow_drop_down,
-          content: Text('Content'),
+          headerBuilder: (context, spec) => RxAccordionHeaderSpecWidget(
+            title: 'Custom Icons',
+            spec: spec,
+            leadingIcon: Icons.star,
+            trailingIcon: Icons.arrow_drop_down,
+          ),
+          contentBuilder: (context, spec) => TextSpecWidget(
+            'Content',
+            spec: spec,
+          ),
         ),
       );
 
@@ -56,9 +69,15 @@ void main() {
 
       await tester.pumpRxComponent(
         RxAccordion(
-          title: 'Styled Accordion',
-          content: Text('Styled Content'),
-          trailingIcon: Icons.rocket_launch,
+          headerBuilder: (context, spec) => RxAccordionHeaderSpecWidget(
+            spec: spec,
+            title: 'Styled Accordion',
+            trailingIcon: Icons.rocket_launch,
+          ),
+          contentBuilder: (context, spec) => TextSpecWidget(
+            'Styled Content',
+            spec: spec,
+          ),
           style: Style(
             _accordion.header.trailingIcon.color(color),
           ),

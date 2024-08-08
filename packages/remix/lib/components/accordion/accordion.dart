@@ -20,6 +20,7 @@ base class AccordionSpec extends Spec<AccordionSpec> with _$AccordionSpec {
   final AccordionHeaderSpec header;
   final BoxSpec contentContainer;
   final FlexSpec flex;
+  final TextSpec textContent;
 
   /// {@macro avatar_spec_of}
   static const of = _$AccordionSpec.of;
@@ -31,9 +32,11 @@ base class AccordionSpec extends Spec<AccordionSpec> with _$AccordionSpec {
     AccordionHeaderSpec? header,
     BoxSpec? contentContainer,
     FlexSpec? flex,
+    TextSpec? textContent,
     super.animated,
   })  : container = container ?? const BoxSpec(),
         header = header ?? const AccordionHeaderSpec(),
         contentContainer = contentContainer ?? const BoxSpec(),
-        flex = flex ?? const FlexSpec();
+        flex = flex ?? const FlexSpec(),
+        textContent = textContent ?? const TextSpec();
 }

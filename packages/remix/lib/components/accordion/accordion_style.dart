@@ -5,6 +5,7 @@ final _container = _accordion.container;
 final _header = _accordion.header;
 final _contentContainer = _accordion.contentContainer;
 final _flex = _accordion.flex;
+final _textContent = _accordion.textContent;
 
 get _iconAnimation => Style(
       _header.trailingIcon.wrap.transform.rotate(0),
@@ -51,12 +52,18 @@ Style get _containerStyle => Style(
       _container.clipBehavior.antiAlias(),
     );
 
+Style get _textContainerStyle => Style(
+      _textContent.style.color.$neutral(1),
+      _textContent.style.fontSize(14),
+    );
+
 Style _buildAccordionStyle(Style? style) {
   return Style(
     _flexStyle(),
     _containerStyle(),
     _headerStyle(),
     _contentStyle(),
+    _textContainerStyle(),
   ).merge(style).animate(
         curve: Curves.decelerate,
         duration: const Duration(milliseconds: 150),
