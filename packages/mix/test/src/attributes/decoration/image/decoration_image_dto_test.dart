@@ -73,11 +73,11 @@ void main() {
       final result = dto.resolve(EmptyMixData);
 
       expect(result.image, equals(imageProvider));
-      expect(result.alignment, equals(Alignment.center));
-      expect(result.repeat, equals(ImageRepeat.noRepeat));
-      expect(result.filterQuality, equals(FilterQuality.low));
-      expect(result.invertColors, equals(false));
-      expect(result.isAntiAlias, equals(false));
+      expect(result.alignment, equals(dto.defaultValue.alignment));
+      expect(result.repeat, equals(dto.defaultValue.repeat));
+      expect(result.filterQuality, equals(dto.defaultValue.filterQuality));
+      expect(result.invertColors, equals(dto.defaultValue.invertColors));
+      expect(result.isAntiAlias, equals(dto.defaultValue.isAntiAlias));
     });
 
     test('resolve with custom values', () {

@@ -76,6 +76,7 @@ scripts:
     description: Run flutter test
     packageFilters:
       dirExists: test
+      ignore: "remix"
 
   test:coverage:
     run: melos exec -- flutter test --coverage

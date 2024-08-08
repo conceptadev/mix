@@ -1,4 +1,4 @@
-import 'package:analyzer/error/error.dart';
+import 'package:analyzer/error/error.dart' hide LintCode;
 import 'package:custom_lint_builder/custom_lint_builder.dart';
 
 typedef RuleParameterParser<T> = T Function(Map<String, Object?> json);

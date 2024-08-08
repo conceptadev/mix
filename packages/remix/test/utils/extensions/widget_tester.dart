@@ -16,7 +16,7 @@ extension WidgetTesterExt on WidgetTester {
           child: widget,
         ),
       ),
-      duration,
+      duration: duration,
     );
   }
 }
