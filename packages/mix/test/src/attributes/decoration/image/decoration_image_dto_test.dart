@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/src/attributes/decoration/image/decoration_image_dto.dart';
@@ -72,12 +73,16 @@ void main() {
       const dto = DecorationImageDto(image: imageProvider);
       final result = dto.resolve(EmptyMixData);
 
-      expect(result.image, equals(imageProvider));
-      expect(result.alignment, equals(Alignment.center));
-      expect(result.repeat, equals(ImageRepeat.noRepeat));
-      expect(result.filterQuality, equals(FilterQuality.low));
-      expect(result.invertColors, equals(false));
-      expect(result.isAntiAlias, equals(false));
+      final expectedValues = DecorationImage(
+        image: AssetImage('assets/images/test.png'),
+      );
+
+      expect(result.image, equals(expectedValues.image));
+      expect(result.alignment, equals(expectedValues.alignment));
+      expect(result.repeat, equals(expectedValues.repeat));
+      expect(result.filterQuality, equals(expectedValues.filterQuality));
+      expect(result.invertColors, equals(expectedValues.invertColors));
+      expect(result.isAntiAlias, equals(expectedValues.isAntiAlias));
     });
 
     test('resolve with custom values', () {
