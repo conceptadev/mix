@@ -3,6 +3,43 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2024-08-08
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`mix` - `v1.4.5`](#mix---v145)
+ - [`remix` - `v0.0.2+5`](#remix---v0025)
+
+Packages with dependency updates only:
+
+> Packages listed below depend on other packages in this workspace that have had changes. Their versions have been incremented to bump the minimum dependency versions of the packages they depend upon in this project.
+
+ - `remix` - `v0.0.2+5`
+
+---
+
+#### `mix` - `v1.4.5`
+
+ - **FIX**: HitTestBehavior when there is a Interectable in the tree (#437).
+ - **FIX**: Pressable disposes controller only if it creates it (#424).
+ - **FIX**: breakpoint utility merge exception (#421).
+ - **FIX**: FlexSpecWidget prioritizes the direction in spec (#414).
+ - **FIX**: Added missing widget state utilities (#411).
+ - **FIX**: Correct handling of individual border sides (#408).
+ - **FEAT**: Create a specific utility to Transform.rotate (#434).
+ - **FEAT**: TargetPlatform and web variants (#431).
+ - **FEAT**: Remix improvements and further improvements (#410).
+ - **DOCS**: improve mix theme data features explanations (#404).
+
+
 ## 2024-08-02
 
 ### Changes
