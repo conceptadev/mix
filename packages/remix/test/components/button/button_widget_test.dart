@@ -102,6 +102,35 @@ void main() {
       expect(find.byIcon(Icons.arrow_forward), findsOneWidget);
     });
 
+    testWidgets('uses custom spinner builder when provided',
+        (WidgetTester tester) async {
+      final key = Key('key');
+
+      await tester.pumpRxComponent(
+        MaterialApp(
+          home: RxButton(
+            label: 'Test Button',
+            onPressed: () {},
+            loading: true,
+            spinnerBuilder: (_, __) {
+              return Container(
+                key: key,
+                width: 20,
+                height: 20,
+                color: Colors.red,
+              );
+            },
+          ),
+        ),
+      );
+
+      final container = tester.widget<Container>(find.byKey(key));
+
+      expect(container.constraints?.maxWidth, 20);
+      expect(container.constraints?.maxHeight, 20);
+      expect(container.color, Colors.red);
+    });
+
     // testWidgets('applies custom style', (WidgetTester tester) async {
     //   // final customStyle = Style(
     //   //   $box.color.purple(),
