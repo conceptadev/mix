@@ -10,8 +10,8 @@ void main() {
       tester,
       {
         'color': [
-          $box.color.$accentAlpha(8),
-          $box.color.$neutralAlpha(3),
+          $box.color.red(),
+          $box.color.$accent(),
         ],
       },
       builder: (params) => Box(
