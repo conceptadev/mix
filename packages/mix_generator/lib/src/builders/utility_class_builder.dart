@@ -57,7 +57,7 @@ String generateUtilityForConstructor(
 
   parameters.forEach((param) {
     final paramName = param.name;
-    final paramType = param.type.getDisplayString();
+    final paramType = param.type.getDisplayString(withNullability: true);
     final defaultValue =
         param.defaultValueCode != null ? ' = ${param.defaultValueCode}' : '';
 
