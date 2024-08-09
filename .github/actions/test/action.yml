@@ -82,9 +82,9 @@ runs:
       run: melos run --no-select analyze
       shell: bash
       
-    # - name: Run custom_lint
-    #   run: melos run custom_lint_analyze
-    #   shell: bash
+    - name: Run custom_lint
+      run: melos run custom_lint_analyze
+      shell: bash
       
     # Others
     - name: Verify if mix_lint_test is up to date with mix_lint
