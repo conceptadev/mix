@@ -9,13 +9,17 @@ void main() {
     goldenTest(
       tester,
       {
-        'color': [$box.color.$accentAlpha(8)],
+        'color': [
+          $box.color.$accentAlpha(8),
+          $box.color.$neutralAlpha(3),
+        ],
       },
       builder: (params) => Box(
         style: Style(
           params['color'],
           $box.height(200),
           $box.width(200),
+          $box.borderRadius(40),
         ),
       ),
     );
