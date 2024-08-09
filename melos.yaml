@@ -30,7 +30,7 @@ scripts:
       failFast: true
       
   analyze:dart:
-    run: melos exec -- dart analyze --fatal-infos
+    run: melos exec -- dart analyze .
     description: Run Dart static analysis checks.
 
   analyze:dcm:

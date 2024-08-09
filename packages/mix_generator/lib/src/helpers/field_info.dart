@@ -121,7 +121,7 @@ class ParameterInfo extends FieldInfo {
       hasDeprecated:
           (fieldInfo?.hasDeprecated ?? false) || element.hasDeprecated,
       dartType: element.type,
-      type: element.type.getDisplayString(),
+      type: element.type.getDisplayString(withNullability: false),
       nullable: fieldInfo?.nullable ?? isNullable,
       isSuper: element.isSuperFormal,
       isRequiredNamed: element.isRequiredNamed,
@@ -239,7 +239,9 @@ class ClassInfo {
       isInternalRef: asInternalRef,
       constructorName: constructor.name,
       methods: element.methods.map((e) => e.name).toSet(),
-      mixinTypes: element.mixins.map((e) => e.getDisplayString()).toSet(),
+      mixinTypes: element.mixins
+          .map((e) => e.getDisplayString(withNullability: false))
+          .toSet(),
       fields: constructor.parameters.map(ParameterInfo.ofElement).toList(),
     );
   }
@@ -281,7 +283,7 @@ FieldInfo? getFieldInfoFromParameter(
 
   return FieldInfo(
     name: field.name,
-    type: field.type.getDisplayString(),
+    type: field.type.getDisplayString(withNullability: false),
     dartType: field.type,
     nullable: field.type.isNullableType,
     hasDeprecated: field.hasDeprecated,

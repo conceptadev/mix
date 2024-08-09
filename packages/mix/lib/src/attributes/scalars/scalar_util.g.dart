@@ -650,10 +650,8 @@ mixin _$TableBorderUtility<T extends Attribute> on MixUtility<T, TableBorder> {
   /// Creates an [Attribute] instance using the [TableBorder.symmetric] constructor.
   T symmetric(
       {BorderSide inside = BorderSide.none,
-      BorderSide outside = BorderSide.none,
-      BorderRadius borderRadius = BorderRadius.zero}) {
-    return builder(TableBorder.symmetric(
-        inside: inside, outside: outside, borderRadius: borderRadius));
+      BorderSide outside = BorderSide.none}) {
+    return builder(TableBorder.symmetric(inside: inside, outside: outside));
   }
 
   /// Creates an [Attribute] instance with the specified TableBorder value.
