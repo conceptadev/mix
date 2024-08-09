@@ -30,11 +30,11 @@ scripts:
       failFast: true
       
   analyze:dart:
-    run: melos exec -c 10 -- dart analyze --fatal-infos
+    run: melos exec -- dart analyze --fatal-infos
     description: Run Dart static analysis checks.
 
   analyze:dcm:
-    run: melos exec -c 10 -- dcm analyze . --fatal-style --fatal-performance --fatal-warnings
+    run: melos exec -- dcm analyze . --fatal-style --fatal-performance --fatal-warnings
     description: Run DCM static analysis checks.
     packageFilters:
       dependsOn: "dart_code_metrics_presets"

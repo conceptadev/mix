@@ -1,4 +1,5 @@
 import 'package:analyzer/dart/ast/ast.dart';
+// ignore: undefined_hidden_name
 import 'package:analyzer/error/error.dart' hide LintCode;
 import 'package:analyzer/error/listener.dart';
 import 'package:custom_lint_builder/custom_lint_builder.dart';
