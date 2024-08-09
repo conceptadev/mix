@@ -4,6 +4,9 @@ import 'package:todo_list/pages/controller/task_controller.dart';
 import 'package:todo_list/style/components/list_tile.dart';
 import 'package:todo_list/style/design_tokens.dart';
 
+import '../style/components/icon_button.dart';
+import 'add_task_page.dart';
+
 const _colors = ColorTokens();
 const _textStyles = TextStyleTokens();
 
@@ -58,26 +61,26 @@ class _TodoListPageState extends State<TodoListPage> {
           );
         },
       ),
-      // floatingActionButton: TodoIconButton(
-      //   icon: Icons.edit_rounded,
-      //   onPressed: () {
-      //     final currentContext = context;
-      //     Future.delayed(
-      //       const Duration(milliseconds: 200),
-      //       () {
-      //         if (!mounted) return;
-      //         Navigator.push(
-      //           currentContext,
-      //           MaterialPageRoute(
-      //             builder: (context) => AddTaskPage(
-      //               controller: _controller,
-      //             ),
-      //           ),
-      //         );
-      //       },
-      //     );
-      //   },
-      // ),
+      floatingActionButton: TodoIconButton(
+        icon: Icons.edit_rounded,
+        onPressed: () {
+          final currentContext = context;
+          Future.delayed(
+            const Duration(milliseconds: 200),
+            () {
+              if (!mounted) return;
+              Navigator.push(
+                currentContext,
+                MaterialPageRoute(
+                  builder: (context) => AddTaskPage(
+                    controller: _controller,
+                  ),
+                ),
+              );
+            },
+          );
+        },
+      ),
     );
   }
 }

@@ -30,11 +30,11 @@ scripts:
       failFast: true
       
   analyze:dart:
-    run: melos exec -- dart analyze .
+    run: melos exec -c 10 -- dart analyze .
     description: Run Dart static analysis checks.
 
   analyze:dcm:
-    run: melos exec -- dcm analyze . --fatal-style --fatal-performance --fatal-warnings
+    run: melos exec -c 10 -- dcm analyze . --fatal-style --fatal-performance --fatal-warnings
     description: Run DCM static analysis checks.
     packageFilters:
       dependsOn: "dart_code_metrics_presets"
@@ -76,7 +76,6 @@ scripts:
     description: Run flutter test
     packageFilters:
       dirExists: test
-      ignore: "remix"
 
   test:coverage:
     run: melos exec -- flutter test --coverage
