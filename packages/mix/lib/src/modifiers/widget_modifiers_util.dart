@@ -1,3 +1,5 @@
+import 'package:mix/src/modifiers/mouse_cursor_modifier.dart';
+
 import '../core/attribute.dart';
 import '../core/modifier.dart';
 import '../core/utility.dart';
@@ -38,6 +40,7 @@ abstract class ModifierUtility<T extends Attribute, Value>
   late final fractionallySizedBox =
       FractionallySizedBoxModifierSpecUtility(only);
   late final sizedBox = SizedBoxModifierSpecUtility(only);
+  late final cursor = MouseCursorModifierSpecUtility(only);
   late final padding = PaddingModifierSpecUtility(only).padding;
 
   ModifierUtility(super.builder);
