@@ -10,7 +10,7 @@ import 'package:mix_generator/src/helpers/field_info.dart';
 String typeParametersString(ClassElement classElement, bool nameOnly) {
   final names = classElement.typeParameters
       .map(
-        (e) => nameOnly ? e.name : e.getDisplayString(withNullability: true),
+        (e) => nameOnly ? e.name : e.getDisplayString(),
       )
       .join(',');
   if (names.isNotEmpty) {

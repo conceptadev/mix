@@ -238,7 +238,7 @@ extension DartTypeX on DartType {
         !isDartCoreObject) {
       return thisElement.name;
     }
-    return getDisplayString(withNullability: false);
+    return getDisplayString();
   }
 
   ClassElement? get classElement {
