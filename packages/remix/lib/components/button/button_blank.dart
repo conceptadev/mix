@@ -1,11 +1,14 @@
 part of 'button.dart';
 
+typedef RxButtonSpinnerBuilder = RxComponentBuilder<SpinnerSpec>;
+
 class RxBlankButton extends StatelessWidget {
   const RxBlankButton({
     super.key,
     required this.label,
     this.disabled = false,
     this.loading = false,
+    this.spinnerBuilder,
     this.iconLeft,
     this.iconRight,
     required this.onPressed,
@@ -26,6 +29,8 @@ class RxBlankButton extends StatelessWidget {
   /// will not respond to user interactions.
   final bool loading;
 
+  final RxButtonSpinnerBuilder? spinnerBuilder;
+
   /// An optional icon to display on the left side of the label.
   final IconData? iconLeft;
 
@@ -41,19 +46,26 @@ class RxBlankButton extends StatelessWidget {
 
   bool get _hasIcon => iconLeft != null || iconRight != null;
 
-  Widget _buildLoadingOverlay(ButtonSpec spec, Widget child) {
+  Widget _buildLoadingOverlay(
+    ButtonSpec spec,
+    BuildContext context,
+    Widget child,
+  ) {
+    final Widget spinner =
+        spinnerBuilder?.call(context, spec.spinner) ?? spec.spinner();
+
     return loading
         ? Stack(
             alignment: Alignment.center,
             children: [
-              spec.spinner(),
+              spinner,
               Opacity(opacity: 0.0, child: child),
             ],
           )
         : child;
   }
 
-  Widget _buildChildren(ButtonSpec spec) {
+  Widget _buildChildren(ButtonSpec spec, BuildContext context) {
     final flexWidget = spec.flex(
       direction: Axis.horizontal,
       children: [
@@ -64,7 +76,9 @@ class RxBlankButton extends StatelessWidget {
       ],
     );
 
-    return loading ? _buildLoadingOverlay(spec, flexWidget) : flexWidget;
+    return loading
+        ? _buildLoadingOverlay(spec, context, flexWidget)
+        : flexWidget;
   }
 
   @override
@@ -79,7 +93,7 @@ class RxBlankButton extends StatelessWidget {
           final spec = ButtonSpec.of(context);
 
           return spec.container(
-            child: _buildChildren(spec),
+            child: _buildChildren(spec, context),
           );
         },
       ),

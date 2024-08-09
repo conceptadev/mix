@@ -24,6 +24,7 @@ class RxButton extends StatelessWidget {
     this.iconRight,
     this.variant = ButtonVariant.solid,
     this.size = ButtonSize.medium,
+    this.spinnerBuilder,
     required this.onPressed,
     this.style,
   });
@@ -36,6 +37,7 @@ class RxButton extends StatelessWidget {
   final ButtonVariant variant;
   final ButtonSize size;
   final VoidCallback? onPressed;
+  final RxButtonSpinnerBuilder? spinnerBuilder;
 
   /// Additional custom styling for the button.
   ///
@@ -50,6 +52,7 @@ class RxButton extends StatelessWidget {
       disabled: disabled,
       loading: loading,
       label: label,
+      spinnerBuilder: spinnerBuilder,
       onPressed: onPressed,
       style: _buildButtonStyle(style, [size, variant]),
     );
