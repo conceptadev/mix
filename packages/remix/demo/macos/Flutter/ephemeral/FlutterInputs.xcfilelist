@@ -856,6 +856,7 @@
 /Users/lucasoliveira/Developer/Concepta/open_source/mix_ecosystem/mix/packages/mix_annotations/lib/src/annotations.dart
 /Users/lucasoliveira/Developer/Concepta/open_source/mix_ecosystem/mix/packages/remix/LICENSE
 /Users/lucasoliveira/Developer/Concepta/open_source/mix_ecosystem/mix/packages/remix/demo/lib/addons/icon_data_knob.dart
+/Users/lucasoliveira/Developer/Concepta/open_source/mix_ecosystem/mix/packages/remix/demo/lib/components/accordion_use_case.dart
 /Users/lucasoliveira/Developer/Concepta/open_source/mix_ecosystem/mix/packages/remix/demo/lib/components/avatar_use_case.dart
 /Users/lucasoliveira/Developer/Concepta/open_source/mix_ecosystem/mix/packages/remix/demo/lib/components/badge_use_case.dart
 /Users/lucasoliveira/Developer/Concepta/open_source/mix_ecosystem/mix/packages/remix/demo/lib/components/button_use_case.dart
@@ -871,6 +872,15 @@
 /Users/lucasoliveira/Developer/Concepta/open_source/mix_ecosystem/mix/packages/remix/demo/lib/main.dart
 /Users/lucasoliveira/Developer/Concepta/open_source/mix_ecosystem/mix/packages/remix/demo/lib/main.directories.g.dart
 /Users/lucasoliveira/Developer/Concepta/open_source/mix_ecosystem/mix/packages/remix/demo/pubspec.yaml
+/Users/lucasoliveira/Developer/Concepta/open_source/mix_ecosystem/mix/packages/remix/lib/components/accordion/accordion.dart
+/Users/lucasoliveira/Developer/Concepta/open_source/mix_ecosystem/mix/packages/remix/lib/components/accordion/accordion.g.dart
+/Users/lucasoliveira/Developer/Concepta/open_source/mix_ecosystem/mix/packages/remix/lib/components/accordion/accordion_blank.dart
+/Users/lucasoliveira/Developer/Concepta/open_source/mix_ecosystem/mix/packages/remix/lib/components/accordion/accordion_style.dart
+/Users/lucasoliveira/Developer/Concepta/open_source/mix_ecosystem/mix/packages/remix/lib/components/accordion/accordion_variants.dart
+/Users/lucasoliveira/Developer/Concepta/open_source/mix_ecosystem/mix/packages/remix/lib/components/accordion/accordion_widget.dart
+/Users/lucasoliveira/Developer/Concepta/open_source/mix_ecosystem/mix/packages/remix/lib/components/accordion/header/accordion_header.dart
+/Users/lucasoliveira/Developer/Concepta/open_source/mix_ecosystem/mix/packages/remix/lib/components/accordion/header/accordion_header.g.dart
+/Users/lucasoliveira/Developer/Concepta/open_source/mix_ecosystem/mix/packages/remix/lib/components/accordion/header/accordion_header_spec_widget.dart
 /Users/lucasoliveira/Developer/Concepta/open_source/mix_ecosystem/mix/packages/remix/lib/components/avatar/avatar.dart
 /Users/lucasoliveira/Developer/Concepta/open_source/mix_ecosystem/mix/packages/remix/lib/components/avatar/avatar.g.dart
 /Users/lucasoliveira/Developer/Concepta/open_source/mix_ecosystem/mix/packages/remix/lib/components/avatar/avatar_blank.dart

@@ -7,4 +7,5 @@ export 'components/checkbox/checkbox.dart';
 export 'components/radio/radio.dart';
 export 'components/spinner/spinner.dart';
 export 'components/switch/switch.dart';
+export 'components/accordion/accordion.dart';
 export 'tokens/remix_tokens.dart';
