@@ -10,6 +10,7 @@ import 'intrinsic_widget_modifier.dart';
 import 'opacity_widget_modifier.dart';
 import 'padding_widget_modifier.dart';
 import 'rotated_box_widget_modifier.dart';
+import 'scroll_view_widget_modifier.dart';
 import 'sized_box_widget_modifier.dart';
 import 'transform_widget_modifier.dart';
 import 'visibility_widget_modifier.dart';
@@ -39,6 +40,9 @@ abstract class ModifierUtility<T extends Attribute, Value>
       FractionallySizedBoxModifierSpecUtility(only);
   late final sizedBox = SizedBoxModifierSpecUtility(only);
   late final padding = PaddingModifierSpecUtility(only).padding;
+
+  /// This modifier wraps the widget with a [SingleChildScrollView].
+  late final scrollView = ScrollViewModifierSpecUtility(only);
 
   ModifierUtility(super.builder);
 
