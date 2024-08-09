@@ -64,20 +64,16 @@ class _TodoListPageState extends State<TodoListPage> {
       floatingActionButton: TodoIconButton(
         icon: Icons.edit_rounded,
         onPressed: () {
-          final currentContext = context;
           Future.delayed(
             const Duration(milliseconds: 200),
-            () {
-              if (!mounted) return;
-              Navigator.push(
-                currentContext,
-                MaterialPageRoute(
-                  builder: (context) => AddTaskPage(
-                    controller: _controller,
-                  ),
+            () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => AddTaskPage(
+                  controller: _controller,
                 ),
-              );
-            },
+              ),
+            ),
           );
         },
       ),
