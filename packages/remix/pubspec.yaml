@@ -9,13 +9,13 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  mix: ^1.4.5
+  mix: ^1.4.4
   mix_annotations: ^0.2.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  custom_lint: ^0.6.0
+  custom_lint: ^0.6.4
   mix_lint: ^0.1.1
   flutter_lints: ^4.0.0
   mix_generator: ^0.2.2+1

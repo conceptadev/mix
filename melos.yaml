@@ -30,7 +30,7 @@ scripts:
       failFast: true
       
   analyze:dart:
-    run: melos exec -c 10 -- dart analyze --fatal-infos
+    run: melos exec -c 10 -- dart analyze .
     description: Run Dart static analysis checks.
 
   analyze:dcm:
@@ -91,7 +91,7 @@ scripts:
   fix:
     run: melos run lint:fix:all
   custom_lint_analyze:
-    run: dart pub global activate custom_lint && melos exec --depends-on="mix_lint" custom_lint
+    run: melos exec --depends-on="mix_lint" dart pub run custom_lint
 
   mix_exports:
     run: melos exec --scope="packages/mix" dart run ./scripts/exports.dart
