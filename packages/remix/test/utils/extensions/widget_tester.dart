@@ -7,7 +7,6 @@ extension WidgetTesterExt on WidgetTester {
   Future<void> pumpRxComponent(
     Widget widget, {
     MixThemeData? data,
-    Duration? duration,
   }) async {
     await pumpWidget(
       MaterialApp(
@@ -16,7 +15,6 @@ extension WidgetTesterExt on WidgetTester {
           child: widget,
         ),
       ),
-      duration,
     );
   }
 }
