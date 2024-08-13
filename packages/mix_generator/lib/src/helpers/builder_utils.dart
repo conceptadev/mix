@@ -27,6 +27,8 @@ class MixHelperRef {
   static String get lerpTextStyle => '$_refName.lerpTextStyle';
 
   static String get lerpInt => '$_refName.lerpInt';
+
+  static String get lerpShadowList => '$_refName.lerpShadowList';
 }
 
 Future<List<ClassElement>> getAnnotatedClasses(

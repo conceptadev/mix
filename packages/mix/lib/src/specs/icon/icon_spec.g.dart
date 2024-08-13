@@ -73,8 +73,9 @@ mixin _$IconSpec on Spec<IconSpec> {
   ///
   /// - [Color.lerp] for [color].
   /// - [MixHelpers.lerpDouble] for [size] and [weight] and [grade] and [opticalSize] and [fill].
+  /// - [MixHelpers.lerpShadowList] for [shadows].
 
-  /// For [shadows] and [textDirection] and [applyTextScaling] and [animated] and [modifiers], the interpolation is performed using a step function.
+  /// For [textDirection] and [applyTextScaling] and [animated] and [modifiers], the interpolation is performed using a step function.
   /// If [t] is less than 0.5, the value from the current [IconSpec] is used. Otherwise, the value
   /// from the [other] [IconSpec] is used.
   ///
@@ -91,7 +92,7 @@ mixin _$IconSpec on Spec<IconSpec> {
       grade: MixHelpers.lerpDouble(_$this.grade, other.grade, t),
       opticalSize:
           MixHelpers.lerpDouble(_$this.opticalSize, other.opticalSize, t),
-      shadows: t < 0.5 ? _$this.shadows : other.shadows,
+      shadows: MixHelpers.lerpShadowList(_$this.shadows, other.shadows, t),
       textDirection: t < 0.5 ? _$this.textDirection : other.textDirection,
       applyTextScaling:
           t < 0.5 ? _$this.applyTextScaling : other.applyTextScaling,
