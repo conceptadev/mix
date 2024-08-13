@@ -81,7 +81,8 @@ String? _getLerpMethod(
       return MixHelperRef.lerpMatrix4;
     case 'StrutStyle':
       return MixHelperRef.lerpStrutStyle;
-
+    case 'List<Shadow>':
+      return MixHelperRef.lerpShadowList;
     case 'TextStyle':
       return MixHelperRef.lerpTextStyle;
     default:
