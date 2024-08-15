@@ -105,7 +105,7 @@ class XButton extends StatelessWidget {
         style: _blank
             ? style
             : XButtonStyle.base.animate(
-                duration: Duration(milliseconds: 100),
+                duration: const Duration(milliseconds: 100),
                 curve: Curves.easeOut,
               ),
       ),
