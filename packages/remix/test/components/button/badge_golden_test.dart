@@ -10,18 +10,14 @@ void main() {
       tester,
       {
         'label': ['click'],
-        'size': ButtonSize.values,
-        'variant': ButtonVariant.values,
         'disabled': [true, false],
         'loading': [false],
         'iconLeft': [null, Icons.add],
         'iconRight': [null, Icons.arrow_forward],
       },
-      builder: (params) => RxButton(
+      builder: (params) => XButton(
         onPressed: () {},
         label: params['label'],
-        size: params['size'],
-        variant: params['variant'],
         disabled: params['disabled'],
         loading: params['loading'],
         iconLeft: params['iconLeft'],
