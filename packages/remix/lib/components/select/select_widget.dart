@@ -3,21 +3,36 @@ part of 'select.dart';
 typedef XSelectButtonBuilder = XComponentBuilder<SelectButtonSpec>;
 typedef XSelectMenuBuilder = XComponentBuilder<SelectMenuSpec>;
 
-class XSelect extends StatefulWidget {
-  const XSelect({
-    super.key,
-    required this.menu,
-    required this.button,
+class XSelectMenuItem<T> {
+  const XSelectMenuItem({
+    required this.value,
+    required this.child,
   });
 
-  final XSelectButtonBuilder button;
-  final XSelectMenuBuilder menu;
-
-  @override
-  State<XSelect> createState() => XSelectState();
+  final T value;
+  final Widget child;
 }
 
-class XSelectState extends State<XSelect> with SingleTickerProviderStateMixin {
+class XSelect<T> extends StatefulWidget {
+  const XSelect({
+    super.key,
+    required this.value,
+    required this.onChanged,
+    required this.button,
+    required this.items,
+  });
+
+  final T value;
+  final ValueChanged<T> onChanged;
+  final XSelectButtonBuilder button;
+  final XSelectMenuItemBuilder<T> items;
+
+  @override
+  State<XSelect> createState() => XSelectState<T>();
+}
+
+class XSelectState<T> extends State<XSelect<T>>
+    with SingleTickerProviderStateMixin {
   final OverlayPortalController _tooltipController = OverlayPortalController();
   late final AnimationController _animationController;
   late final CurvedAnimation _curvedController;
@@ -82,9 +97,27 @@ class XSelectState extends State<XSelect> with SingleTickerProviderStateMixin {
                           child: SpecBuilder(
                             style: XSelectStyle.menu(_link.leaderSize!.width),
                             builder: (context) {
-                              return widget.menu(
-                                context,
-                                SelectSpec.of(context).menu,
+                              final menu = SelectSpec.of(context).menu;
+                              final item = SelectSpec.of(context).item;
+
+                              final container = menu.container;
+                              final flex = menu.flex;
+
+                              return container(
+                                child: flex(
+                                  direction: Axis.vertical,
+                                  children: widget.items(context, item).map(
+                                    (item) {
+                                      return Pressable(
+                                        onPress: () {
+                                          widget.onChanged(item.value);
+                                          hide();
+                                        },
+                                        child: item.child,
+                                      );
+                                    },
+                                  ).toList(),
+                                ),
                               );
                             },
                           ),

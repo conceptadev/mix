@@ -70,31 +70,47 @@ Widget buildRadioUseCase(BuildContext context) {
     );
   }
 
-  return Center(
-    child: SizedBox(
-      width: 200,
-      child: XSelect(
-        button: (context, spec) => XSelectButtonSpecWidget(
-          spec: spec,
-          text: 'Select a fruit',
-          trailingIcon: Icons.keyboard_arrow_down_rounded,
-        ),
-        menu: (context, spec) => XSelectMenuSpecWidget(
-            spec: spec,
-            children: (context, spec) {
+  return const NewWidget();
+}
+
+class NewWidget extends StatefulWidget {
+  const NewWidget({
+    super.key,
+  });
+
+  @override
+  State<NewWidget> createState() => _NewWidgetState();
+}
+
+class _NewWidgetState extends State<NewWidget> {
+  String selectedValue = 'Apple';
+  final List<String> items = ['Apple', 'Banana', 'Orange'];
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: SizedBox(
+        width: 200,
+        child: XSelect<String>(
+            value: selectedValue,
+            onChanged: (value) => setState(() => selectedValue = value),
+            button: (context, spec) => spec(
+                  text: selectedValue,
+                  trailingIcon: Icons.keyboard_arrow_down_rounded,
+                ),
+            items: (context, spec) {
               return List.generate(
-                4,
-                (index) => XSelectMenuItemSpecWidget(
-                  spec: spec,
-                  icon: Icons.apple_rounded,
-                  text: 'Apple',
-                  onPress: () {
-                    print(index);
-                  },
+                items.length,
+                (index) => XSelectMenuItem<String>(
+                  value: items[index],
+                  child: XSelectMenuItemSpecWidget(
+                    spec: spec,
+                    text: items[index],
+                  ),
                 ),
               );
             }),
       ),
-    ),
-  );
+    );
+  }
 }

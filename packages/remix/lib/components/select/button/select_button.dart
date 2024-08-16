@@ -24,10 +24,10 @@ class SelectButtonSpec extends Spec<SelectButtonSpec>
         icon = icon ?? const IconSpec(),
         label = label ?? const TextSpec();
 
-  Widget call(
-    String text,
-    IconData trailingIcon,
-  ) =>
+  Widget call({
+    required String text,
+    required IconData trailingIcon,
+  }) =>
       XSelectButtonSpecWidget(
         spec: this,
         text: text,

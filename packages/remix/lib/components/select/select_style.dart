@@ -36,7 +36,8 @@ class XSelectStyle {
         _item.text.style.fontSize(14),
         _item.icon.size(20),
         _item.flex.gap(6),
-        _item.container.padding.all(4),
+        _item.container.padding.vertical(8),
+        _item.container.padding.horizontal(6),
         _item.container.width.infinity(),
         _item.container.color.black.withOpacity(0),
         $on.hover(

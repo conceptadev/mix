@@ -18,11 +18,6 @@ base class SelectMenuSpec extends Spec<SelectMenuSpec>
   })  : container = container ?? const BoxSpec(),
         flex = flex ?? const FlexSpec();
 
-  Widget call(XSelectMenuItemBuilder children) => XSelectMenuSpecWidget(
-        spec: this,
-        children: children,
-      );
-
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
