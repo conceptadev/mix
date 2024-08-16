@@ -20,7 +20,7 @@ class XSelectMenuItemSpecWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SpecBuilder(
-      style: XSelectStyle.item,
+      style: XSelectStyle.item.animate(duration: Duration(milliseconds: 100)),
       builder: (context) {
         final item = SelectSpec.of(context).item;
 

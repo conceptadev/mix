@@ -111,7 +111,7 @@ class XSelectState<T> extends State<XSelect<T>>
                                       return Pressable(
                                         onPress: () {
                                           widget.onChanged(item.value);
-                                          hide();
+                                          _tooltipController.hide();
                                         },
                                         child: item.child,
                                       );
