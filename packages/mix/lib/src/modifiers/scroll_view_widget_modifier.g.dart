@@ -14,7 +14,6 @@ mixin _$ScrollViewModifierSpec on WidgetModifierSpec<ScrollViewModifierSpec> {
     Axis? scrollDirection,
     bool? reverse,
     EdgeInsetsGeometry? padding,
-    bool? primary,
     ScrollPhysics? physics,
     Clip? clipBehavior,
   }) {
@@ -22,7 +21,6 @@ mixin _$ScrollViewModifierSpec on WidgetModifierSpec<ScrollViewModifierSpec> {
       scrollDirection: scrollDirection ?? _$this.scrollDirection,
       reverse: reverse ?? _$this.reverse,
       padding: padding ?? _$this.padding,
-      primary: primary ?? _$this.primary,
       physics: physics ?? _$this.physics,
       clipBehavior: clipBehavior ?? _$this.clipBehavior,
     );
@@ -41,7 +39,7 @@ mixin _$ScrollViewModifierSpec on WidgetModifierSpec<ScrollViewModifierSpec> {
   ///
   /// - [EdgeInsetsGeometry.lerp] for [padding].
 
-  /// For [scrollDirection] and [reverse] and [primary] and [physics] and [clipBehavior], the interpolation is performed using a step function.
+  /// For [scrollDirection] and [reverse] and [physics] and [clipBehavior], the interpolation is performed using a step function.
   /// If [t] is less than 0.5, the value from the current [ScrollViewModifierSpec] is used. Otherwise, the value
   /// from the [other] [ScrollViewModifierSpec] is used.
   ///
@@ -55,7 +53,6 @@ mixin _$ScrollViewModifierSpec on WidgetModifierSpec<ScrollViewModifierSpec> {
       scrollDirection: t < 0.5 ? _$this.scrollDirection : other.scrollDirection,
       reverse: t < 0.5 ? _$this.reverse : other.reverse,
       padding: EdgeInsetsGeometry.lerp(_$this.padding, other.padding, t),
-      primary: t < 0.5 ? _$this.primary : other.primary,
       physics: t < 0.5 ? _$this.physics : other.physics,
       clipBehavior: t < 0.5 ? _$this.clipBehavior : other.clipBehavior,
     );
@@ -70,7 +67,6 @@ mixin _$ScrollViewModifierSpec on WidgetModifierSpec<ScrollViewModifierSpec> {
         _$this.scrollDirection,
         _$this.reverse,
         _$this.padding,
-        _$this.primary,
         _$this.physics,
         _$this.clipBehavior,
       ];
@@ -85,8 +81,6 @@ mixin _$ScrollViewModifierSpec on WidgetModifierSpec<ScrollViewModifierSpec> {
         DiagnosticsProperty('reverse', _$this.reverse, defaultValue: null));
     properties.add(
         DiagnosticsProperty('padding', _$this.padding, defaultValue: null));
-    properties.add(
-        DiagnosticsProperty('primary', _$this.primary, defaultValue: null));
     properties.add(
         DiagnosticsProperty('physics', _$this.physics, defaultValue: null));
     properties.add(DiagnosticsProperty('clipBehavior', _$this.clipBehavior,
@@ -107,7 +101,6 @@ final class ScrollViewModifierSpecAttribute
   final Axis? scrollDirection;
   final bool? reverse;
   final SpacingDto? padding;
-  final bool? primary;
   final ScrollPhysics? physics;
   final Clip? clipBehavior;
 
@@ -115,7 +108,6 @@ final class ScrollViewModifierSpecAttribute
     this.scrollDirection,
     this.reverse,
     this.padding,
-    this.primary,
     this.physics,
     this.clipBehavior,
   });
@@ -134,7 +126,6 @@ final class ScrollViewModifierSpecAttribute
       scrollDirection: scrollDirection,
       reverse: reverse,
       padding: padding?.resolve(mix),
-      primary: primary,
       physics: physics,
       clipBehavior: clipBehavior,
     );
@@ -157,7 +148,6 @@ final class ScrollViewModifierSpecAttribute
       scrollDirection: other.scrollDirection ?? scrollDirection,
       reverse: other.reverse ?? reverse,
       padding: padding?.merge(other.padding) ?? other.padding,
-      primary: other.primary ?? primary,
       physics: other.physics ?? physics,
       clipBehavior: other.clipBehavior ?? clipBehavior,
     );
@@ -172,7 +162,6 @@ final class ScrollViewModifierSpecAttribute
         scrollDirection,
         reverse,
         padding,
-        primary,
         physics,
         clipBehavior,
       ];
@@ -184,7 +173,6 @@ final class ScrollViewModifierSpecAttribute
         defaultValue: null));
     properties.add(DiagnosticsProperty('reverse', reverse, defaultValue: null));
     properties.add(DiagnosticsProperty('padding', padding, defaultValue: null));
-    properties.add(DiagnosticsProperty('primary', primary, defaultValue: null));
     properties.add(DiagnosticsProperty('physics', physics, defaultValue: null));
     properties.add(
         DiagnosticsProperty('clipBehavior', clipBehavior, defaultValue: null));

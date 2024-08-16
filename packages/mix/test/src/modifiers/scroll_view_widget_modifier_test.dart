@@ -13,7 +13,6 @@ void main() {
         const padding = EdgeInsets.all(8.0);
         final axis = Axis.horizontal;
         final reverse = true;
-        final primary = false;
         final clip = Clip.antiAlias;
         final physics = const AlwaysScrollableScrollPhysics();
 
@@ -21,7 +20,6 @@ void main() {
           scrollDirection: axis,
           reverse: reverse,
           padding: padding,
-          primary: primary,
           clipBehavior: clip,
           physics: physics,
         );
@@ -35,7 +33,6 @@ void main() {
         expect(scrollViewWidget.padding, padding);
         expect(scrollViewWidget.scrollDirection, axis);
         expect(scrollViewWidget.reverse, reverse);
-        expect(scrollViewWidget.primary, primary);
         expect(scrollViewWidget.clipBehavior, clip);
         expect(scrollViewWidget.physics, physics);
         expect(scrollViewWidget.child, isA<Container>());
@@ -80,7 +77,6 @@ void main() {
         const axis = Axis.horizontal;
         const reverse = true;
         const padding = EdgeInsetsDto.all(8.0);
-        const primary = false;
         const clip = Clip.antiAlias;
         const physics = AlwaysScrollableScrollPhysics();
 
@@ -88,7 +84,6 @@ void main() {
           scrollDirection: axis,
           reverse: reverse,
           padding: padding,
-          primary: primary,
           clipBehavior: clip,
           physics: physics,
         );
@@ -96,7 +91,6 @@ void main() {
         expect(attribute.scrollDirection, axis);
         expect(attribute.reverse, reverse);
         expect(attribute.padding, padding);
-        expect(attribute.primary, primary);
         expect(attribute.clipBehavior, clip);
         expect(attribute.physics, physics);
       },
@@ -115,11 +109,7 @@ void main() {
       expect(utility.vertical().scrollDirection, Axis.vertical);
       expect(utility.reverse(false).reverse, isFalse);
       expect(utility.reverse(true).reverse, isTrue);
-      expect(utility.reverse().reverse, isTrue);
       expect(utility.padding.all(8.0).padding, padding);
-      expect(utility.primary(false).primary, isFalse);
-      expect(utility.primary(true).primary, isTrue);
-      expect(utility.primary().primary, isTrue);
       expect(utility.physics(physics).physics, physics);
       expect(
         utility.neverScrollableScrollPhysics().physics,

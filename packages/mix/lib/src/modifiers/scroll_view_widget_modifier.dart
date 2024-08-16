@@ -12,7 +12,6 @@ final class ScrollViewModifierSpec
   final Axis? scrollDirection;
   final bool? reverse;
   final EdgeInsetsGeometry? padding;
-  final bool? primary;
   final ScrollPhysics? physics;
   final Clip? clipBehavior;
 
@@ -20,7 +19,6 @@ final class ScrollViewModifierSpec
     this.scrollDirection,
     this.reverse,
     this.padding,
-    this.primary,
     this.physics,
     this.clipBehavior,
   });
@@ -37,7 +35,6 @@ final class ScrollViewModifierSpec
       scrollDirection: scrollDirection ?? Axis.vertical,
       reverse: reverse ?? false,
       padding: padding,
-      primary: primary,
       physics: physics,
       clipBehavior: clipBehavior ?? Clip.hardEdge,
       child: child,
@@ -59,14 +56,10 @@ final class ScrollViewModifierSpecUtility<T extends Attribute>
   T vertical() => call(scrollDirection: Axis.vertical);
 
   /// Make the scroll view reverse or not.
-  T reverse([bool reverse = true]) => call(reverse: reverse);
+  late final reverse = BoolUtility((reverse) => call(reverse: reverse));
 
   /// Set the padding of the scroll view.
-  SpacingUtility<T> get padding =>
-      SpacingUtility((padding) => call(padding: padding));
-
-  /// Mark the scroll view as primary or not.
-  T primary([bool primary = true]) => call(primary: primary);
+  late final padding = SpacingUtility((padding) => call(padding: padding));
 
   /// Set the physics of the scroll view.
   T physics(ScrollPhysics physics) => call(physics: physics);
@@ -87,7 +80,6 @@ final class ScrollViewModifierSpecUtility<T extends Attribute>
     Axis? scrollDirection,
     bool? reverse,
     SpacingDto? padding,
-    bool? primary,
     ScrollPhysics? physics,
     Clip? clipBehavior,
   }) =>
@@ -96,7 +88,6 @@ final class ScrollViewModifierSpecUtility<T extends Attribute>
           scrollDirection: scrollDirection,
           reverse: reverse,
           padding: padding,
-          primary: primary,
           physics: physics,
           clipBehavior: clipBehavior,
         ),
