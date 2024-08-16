@@ -917,6 +917,14 @@
 /Users/lucasoliveira/Developer/Concepta/open_source/mix_ecosystem/mix/packages/remix/lib/components/radio/radio_style.dart
 /Users/lucasoliveira/Developer/Concepta/open_source/mix_ecosystem/mix/packages/remix/lib/components/radio/radio_variants.dart
 /Users/lucasoliveira/Developer/Concepta/open_source/mix_ecosystem/mix/packages/remix/lib/components/radio/radio_widget.dart
+/Users/lucasoliveira/Developer/Concepta/open_source/mix_ecosystem/mix/packages/remix/lib/components/select/button/select_button.dart
+/Users/lucasoliveira/Developer/Concepta/open_source/mix_ecosystem/mix/packages/remix/lib/components/select/button/select_button_widget.dart
+/Users/lucasoliveira/Developer/Concepta/open_source/mix_ecosystem/mix/packages/remix/lib/components/select/menu/select_menu.dart
+/Users/lucasoliveira/Developer/Concepta/open_source/mix_ecosystem/mix/packages/remix/lib/components/select/menu/select_menu_widget.dart
+/Users/lucasoliveira/Developer/Concepta/open_source/mix_ecosystem/mix/packages/remix/lib/components/select/select.dart
+/Users/lucasoliveira/Developer/Concepta/open_source/mix_ecosystem/mix/packages/remix/lib/components/select/select.g.dart
+/Users/lucasoliveira/Developer/Concepta/open_source/mix_ecosystem/mix/packages/remix/lib/components/select/select_style.dart
+/Users/lucasoliveira/Developer/Concepta/open_source/mix_ecosystem/mix/packages/remix/lib/components/select/select_widget.dart
 /Users/lucasoliveira/Developer/Concepta/open_source/mix_ecosystem/mix/packages/remix/lib/components/spinner/spinner.dart
 /Users/lucasoliveira/Developer/Concepta/open_source/mix_ecosystem/mix/packages/remix/lib/components/spinner/spinner.g.dart
 /Users/lucasoliveira/Developer/Concepta/open_source/mix_ecosystem/mix/packages/remix/lib/components/spinner/spinner_painter.dart
