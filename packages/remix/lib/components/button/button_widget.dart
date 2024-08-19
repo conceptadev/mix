@@ -62,8 +62,7 @@ class XButton extends StatelessWidget {
     BuildContext context,
     Widget child,
   ) {
-    final Widget spinner =
-        spinnerBuilder?.call(context, spec.spinner) ?? spec.spinner();
+    final Widget spinner = spinnerBuilder?.call(spec.spinner) ?? spec.spinner();
 
     return loading
         ? Stack(

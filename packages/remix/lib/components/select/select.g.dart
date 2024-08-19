@@ -36,6 +36,7 @@ mixin _$SelectSpec on Spec<SelectSpec> {
     SelectButtonSpec? button,
     SelectMenuSpec? menu,
     SelectMenuItemSpec? item,
+    CompositedTransformFollowerSpec? position,
     WidgetModifiersData? modifiers,
     AnimatedData? animated,
   }) {
@@ -43,6 +44,7 @@ mixin _$SelectSpec on Spec<SelectSpec> {
       button: button ?? _$this.button,
       menu: menu ?? _$this.menu,
       item: item ?? _$this.item,
+      position: position ?? _$this.position,
       modifiers: modifiers ?? _$this.modifiers,
       animated: animated ?? _$this.animated,
     );
@@ -60,7 +62,7 @@ mixin _$SelectSpec on Spec<SelectSpec> {
   /// interpolation method:
   ///
 
-  /// For [button] and [menu] and [item] and [modifiers] and [animated], the interpolation is performed using a step function.
+  /// For [button] and [menu] and [item] and [position] and [modifiers] and [animated], the interpolation is performed using a step function.
   /// If [t] is less than 0.5, the value from the current [SelectSpec] is used. Otherwise, the value
   /// from the [other] [SelectSpec] is used.
   ///
@@ -74,6 +76,7 @@ mixin _$SelectSpec on Spec<SelectSpec> {
       button: _$this.button.lerp(other.button, t),
       menu: _$this.menu.lerp(other.menu, t),
       item: _$this.item.lerp(other.item, t),
+      position: _$this.position.lerp(other.position, t),
       modifiers: t < 0.5 ? _$this.modifiers : other.modifiers,
       animated: t < 0.5 ? _$this.animated : other.animated,
     );
@@ -88,6 +91,7 @@ mixin _$SelectSpec on Spec<SelectSpec> {
         _$this.button,
         _$this.menu,
         _$this.item,
+        _$this.position,
         _$this.modifiers,
         _$this.animated,
       ];
@@ -101,6 +105,8 @@ mixin _$SelectSpec on Spec<SelectSpec> {
         .add(DiagnosticsProperty('menu', _$this.menu, defaultValue: null));
     properties
         .add(DiagnosticsProperty('item', _$this.item, defaultValue: null));
+    properties.add(
+        DiagnosticsProperty('position', _$this.position, defaultValue: null));
     properties.add(
         DiagnosticsProperty('modifiers', _$this.modifiers, defaultValue: null));
     properties.add(
@@ -120,11 +126,13 @@ class SelectSpecAttribute extends SpecAttribute<SelectSpec>
   final SelectButtonSpecAttribute? button;
   final SelectMenuSpecAttribute? menu;
   final SelectMenuItemSpecAttribute? item;
+  final CompositedTransformFollowerSpecAttribute? position;
 
   const SelectSpecAttribute({
     this.button,
     this.menu,
     this.item,
+    this.position,
     super.modifiers,
     super.animated,
   });
@@ -143,6 +151,7 @@ class SelectSpecAttribute extends SpecAttribute<SelectSpec>
       button: button?.resolve(mix),
       menu: menu?.resolve(mix),
       item: item?.resolve(mix),
+      position: position?.resolve(mix),
       modifiers: modifiers?.resolve(mix),
       animated: animated?.resolve(mix) ?? mix.animation,
     );
@@ -164,6 +173,7 @@ class SelectSpecAttribute extends SpecAttribute<SelectSpec>
       button: button?.merge(other.button) ?? other.button,
       menu: menu?.merge(other.menu) ?? other.menu,
       item: item?.merge(other.item) ?? other.item,
+      position: position?.merge(other.position) ?? other.position,
       modifiers: modifiers?.merge(other.modifiers) ?? other.modifiers,
       animated: animated?.merge(other.animated) ?? other.animated,
     );
@@ -178,6 +188,7 @@ class SelectSpecAttribute extends SpecAttribute<SelectSpec>
         button,
         menu,
         item,
+        position,
         modifiers,
         animated,
       ];
@@ -188,6 +199,8 @@ class SelectSpecAttribute extends SpecAttribute<SelectSpec>
     properties.add(DiagnosticsProperty('button', button, defaultValue: null));
     properties.add(DiagnosticsProperty('menu', menu, defaultValue: null));
     properties.add(DiagnosticsProperty('item', item, defaultValue: null));
+    properties
+        .add(DiagnosticsProperty('position', position, defaultValue: null));
     properties
         .add(DiagnosticsProperty('modifiers', modifiers, defaultValue: null));
     properties
@@ -210,6 +223,10 @@ class SelectSpecUtility<T extends Attribute>
   /// Utility for defining [SelectSpecAttribute.item]
   late final item = SelectMenuItemSpecUtility((v) => only(item: v));
 
+  /// Utility for defining [SelectSpecAttribute.position]
+  late final position =
+      CompositedTransformFollowerSpecUtility((v) => only(position: v));
+
   /// Utility for defining [SelectSpecAttribute.modifiers]
   late final wrap = SpecModifierUtility((v) => only(modifiers: v));
 
@@ -226,6 +243,7 @@ class SelectSpecUtility<T extends Attribute>
     SelectButtonSpecAttribute? button,
     SelectMenuSpecAttribute? menu,
     SelectMenuItemSpecAttribute? item,
+    CompositedTransformFollowerSpecAttribute? position,
     WidgetModifiersDataDto? modifiers,
     AnimatedDataDto? animated,
   }) {
@@ -233,6 +251,7 @@ class SelectSpecUtility<T extends Attribute>
       button: button,
       menu: menu,
       item: item,
+      position: position,
       modifiers: modifiers,
       animated: animated,
     ));

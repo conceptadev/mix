@@ -4,8 +4,15 @@ final _util = SelectSpecUtility.self;
 final _button = _util.button;
 final _menu = _util.menu;
 final _item = _util.item;
+final _position = _util.position;
 
 class XSelectStyle {
+  static Style get position => Style(
+        _position.targetAnchor.bottomLeft(),
+        _position.followerAnchor.topLeft(),
+        _position.offset(0, 4),
+      );
+
   static Style get button => Style(
         _button.container.color.white(),
         _button.container.padding.all(10),
@@ -16,9 +23,11 @@ class XSelectStyle {
         _button.flex.mainAxisAlignment.spaceBetween(),
         _button.label.style.fontSize(14),
         _button.label.style.color.black(),
+        position(),
       );
 
   static Style menu(double width) => Style(
+        XSelectStyle.base(),
         _menu.container.borderRadius(6),
         _menu.container.shadow.color(Colors.black.withOpacity(0.07)),
         _menu.container.shadow.blurRadius(5),
@@ -43,5 +52,11 @@ class XSelectStyle {
         $on.hover(
           _item.container.color.black.withOpacity(0.08),
         ),
+      );
+
+  static Style get base => Style(
+        item(),
+        button(),
+        position(),
       );
 }

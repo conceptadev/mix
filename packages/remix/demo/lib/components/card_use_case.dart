@@ -84,33 +84,40 @@ class NewWidget extends StatefulWidget {
 
 class _NewWidgetState extends State<NewWidget> {
   String selectedValue = 'Apple';
+  String selectedValue2 = 'Apple';
+  String selectedValue3 = 'Apple';
   final List<String> items = ['Apple', 'Banana', 'Orange'];
 
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: SizedBox(
-        width: 200,
-        child: XSelect<String>(
-            value: selectedValue,
-            onChanged: (value) => setState(() => selectedValue = value),
-            button: (context, spec) => spec(
-                  text: selectedValue,
-                  trailingIcon: Icons.keyboard_arrow_down_rounded,
-                ),
-            items: (context, spec) {
-              return List.generate(
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          SizedBox(
+            width: 200,
+            child: XSelect<String>(
+              value: selectedValue,
+              onChanged: (value) => setState(() => selectedValue = value),
+              button: (spec) => spec(
+                text: selectedValue,
+                trailingIcon: Icons.keyboard_arrow_down_rounded,
+              ),
+              items: List.generate(
                 items.length,
                 (index) => XSelectMenuItem<String>(
                   value: items[index],
-                  child: XSelectMenuItemSpecWidget(
-                    spec: spec,
+                  child: XSelectMenuItemWidget(
                     text: items[index],
                   ),
                 ),
-              );
-            }),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
 }
+
+final _select = SelectSpecUtility.self;

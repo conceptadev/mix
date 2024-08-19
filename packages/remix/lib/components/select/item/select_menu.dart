@@ -1,31 +1,6 @@
 part of '../select.dart';
 
 @MixableSpec()
-base class SelectMenuSpec extends Spec<SelectMenuSpec>
-    with _$SelectMenuSpec, Diagnosticable {
-  final BoxSpec container;
-  final FlexSpec flex;
-
-  static const of = _$SelectMenuSpec.of;
-
-  static const from = _$SelectMenuSpec.from;
-
-  const SelectMenuSpec({
-    BoxSpec? container,
-    FlexSpec? flex,
-    super.modifiers,
-    super.animated,
-  })  : container = container ?? const BoxSpec(),
-        flex = flex ?? const FlexSpec();
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    _debugFillProperties(properties);
-  }
-}
-
-@MixableSpec()
 base class SelectMenuItemSpec extends Spec<SelectMenuItemSpec>
     with _$SelectMenuItemSpec, Diagnosticable {
   final IconSpec icon;
@@ -48,12 +23,6 @@ base class SelectMenuItemSpec extends Spec<SelectMenuItemSpec>
         text = text ?? const TextSpec(),
         container = container ?? const BoxSpec(),
         flex = flex ?? const FlexSpec();
-
-  Widget call(IconData icon, String text) => XSelectMenuItemSpecWidget(
-        spec: this,
-        icon: icon,
-        text: text,
-      );
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {

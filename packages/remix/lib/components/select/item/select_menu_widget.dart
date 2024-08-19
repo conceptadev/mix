@@ -1,26 +1,19 @@
 part of '../select.dart';
 
-typedef XSelectMenuItemBuilder<T> = List<XSelectMenuItem<T>> Function(
-  BuildContext context,
-  SelectMenuItemSpec spec,
-);
-
-class XSelectMenuItemSpecWidget extends StatelessWidget {
-  const XSelectMenuItemSpecWidget({
+class XSelectMenuItemWidget extends StatelessWidget {
+  const XSelectMenuItemWidget({
     super.key,
     IconData? icon,
-    required this.spec,
     required this.text,
   }) : iconData = icon;
 
-  final SelectMenuItemSpec spec;
   final IconData? iconData;
   final String text;
 
   @override
   Widget build(BuildContext context) {
     return SpecBuilder(
-      style: XSelectStyle.item.animate(duration: Duration(milliseconds: 100)),
+      inherit: true,
       builder: (context) {
         final item = SelectSpec.of(context).item;
 
