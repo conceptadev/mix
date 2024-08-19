@@ -46,10 +46,21 @@ The next crucial step is creating a `MixThemeData` instance. But before we do th
 const primary = ColorToken('primary');
 ```
 
-To create any other token, you can use the same pattern, just use the class that best represents the token you want to create. To make it easier to use the tokens, we have created a set of `TokenUtil` classes that can be extended. This way, you can create your own tokens and use them in a straightforward manner.
+To create any other token, you can use the same pattern, just use the class that best represents the token you want to create. Following we create an example of how you can declare it.
 
 ```dart
-extension ColorTokenUtilExt on ColorTokenUtil {
+const $token = MyThemeToken();
+
+class MyThemeToken {
+  const MyThemeToken();
+
+  final color = const MyThemeColorToken();
+  final textStyle = const MyThemeTextStyleToken();
+}
+
+class MyThemeColorToken {
+  const MyThemeColorToken();
+
   ColorToken get primary => const ColorToken('primary-color');
   ColorToken get onPrimary => const ColorToken('on-primary-color');
   ColorToken get surface => const ColorToken('surface-color');
@@ -58,7 +69,9 @@ extension ColorTokenUtilExt on ColorTokenUtil {
       const ColorToken('on-surface-variant-color');
 }
 
-extension TextStyleTokenUtilExt on TextStyleTokenUtil {
+class MyThemeTextStyleToken {
+  const MyThemeTextStyleToken();
+
   TextStyleToken get headline1 => const TextStyleToken('headline1');
   TextStyleToken get headline2 => const TextStyleToken('headline2');
   TextStyleToken get headline3 => const TextStyleToken('headline3');

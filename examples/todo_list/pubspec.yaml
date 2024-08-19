@@ -14,8 +14,8 @@ dependencies:
     sdk: flutter
   mix: 
     path: ../../packages/mix
-  custom_lint:
-  google_fonts: ^6.0.0 
+  custom_lint: ^0.6.4
+  google_fonts: ^6.2.1 
 
   cupertino_icons: ^1.0.6
 

@@ -22,92 +22,39 @@ class RxButton extends StatelessWidget {
     this.loading = false,
     this.iconLeft,
     this.iconRight,
-    this.type = ButtonVariant.solid,
+    this.variant = ButtonVariant.solid,
     this.size = ButtonSize.medium,
+    this.spinnerBuilder,
     required this.onPressed,
     this.style,
   });
 
-  /// The text label displayed on the button.
   final String label;
-
-  /// Whether the button is disabled.
-  ///
-  /// When disabled, the button will not respond to user interactions.
   final bool disabled;
-
-  /// Whether the button is in a loading state.
-  ///
-  /// When loading, the button will display a loading indicator and
-  /// will not respond to user interactions.
   final bool loading;
-
-  /// An optional icon to display on the left side of the label.
   final IconData? iconLeft;
-
-  /// An optional icon to display on the right side of the label.
   final IconData? iconRight;
-
-  /// The button variant.
-  final ButtonVariant type;
-
-  /// The button size.
+  final ButtonVariant variant;
   final ButtonSize size;
-
-  /// The callback function called when the button is pressed.
-  ///
-  /// This callback will not be called if the button is disabled or in a loading state.
   final VoidCallback? onPressed;
+  final RxButtonSpinnerBuilder? spinnerBuilder;
 
   /// Additional custom styling for the button.
   ///
   /// This allows you to override or extend the default button styling.
   final Style? style;
 
-  bool get _hasIcon => iconLeft != null || iconRight != null;
-
-  Widget _buildLoadingOverlay(ButtonSpec spec, Widget child) {
-    return loading
-        ? Stack(
-            alignment: Alignment.center,
-            children: [
-              spec.spinner(),
-              Opacity(opacity: 0.0, child: child),
-            ],
-          )
-        : child;
-  }
-
-  Widget _buildChildren(ButtonSpec spec) {
-    final flexWidget = spec.flex(
-      direction: Axis.horizontal,
-      children: [
-        if (iconLeft != null) spec.icon(iconLeft),
-        // If there is no icon always render the label
-        if (label.isNotEmpty || !_hasIcon) spec.label(label),
-        if (iconRight != null) spec.icon(iconRight),
-      ],
-    );
-
-    return loading ? _buildLoadingOverlay(spec, flexWidget) : flexWidget;
-  }
-
   @override
   Widget build(BuildContext context) {
-    final isDisabled = disabled || loading;
-    return Pressable(
-      onPress: disabled || loading ? null : onPressed,
-      enabled: !isDisabled,
-      child: SpecBuilder(
-        style: _buildButtonStyle(style, [size, type]),
-        builder: (context) {
-          final spec = ButtonSpec.of(context);
-
-          return spec.container(
-            child: _buildChildren(spec),
-          );
-        },
-      ),
+    return RxBlankButton(
+      iconLeft: iconLeft,
+      iconRight: iconRight,
+      disabled: disabled,
+      loading: loading,
+      label: label,
+      spinnerBuilder: spinnerBuilder,
+      onPressed: onPressed,
+      style: _buildButtonStyle(style, [size, variant]),
     );
   }
 }

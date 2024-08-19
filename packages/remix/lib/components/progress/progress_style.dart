@@ -4,12 +4,15 @@ final _progress = ProgressSpecUtility.self;
 final _container = _progress.container;
 final _track = _progress.track;
 final _fill = _progress.fill;
+final _outerContainer = _progress.outerContainer;
 
 Style get _baseStyle {
   return Style(
-    _container.borderRadius(99),
-    _track.color.$neutralAlpha(3),
+    _track.color.$neutral(6),
     _fill.color.$accent(),
+    _container.clipBehavior.hardEdge(),
+    _outerContainer.clipBehavior.hardEdge(),
+    _outerContainer.shapeDecoration.shape.roundedRectangle(),
   );
 }
 
@@ -21,63 +24,62 @@ Style get _smallVariant {
 
 Style get _mediumVariant {
   return Style(
-    _container.height(8),
+    _container.height(6),
   );
 }
 
 Style get _largeVariant {
   return Style(
-    _container.height(12),
-  );
-}
-
-Style get _classicVariant {
-  return Style(
-    _track.color.$neutralAlpha(3),
-    _fill.color.$accent(),
+    _container.height(8),
   );
 }
 
 Style get _surfaceVariant {
   return Style(
-    _track.color.$neutralAlpha(2),
-    _fill.color.$accent(),
+    _track.color.$neutral(4),
+    _fill.color.$accent(8),
+    _outerContainer.border.width(1),
+    _outerContainer.border.color.$neutralAlpha(6),
   );
 }
 
 Style get _softVariant {
   return Style(
-    _track.color.$accentAlpha(3),
     _fill.color.$accent(),
   );
 }
 
 Style get _noneRadiusVariant {
   return Style(
+    _outerContainer.shapeDecoration.shape.roundedRectangle.borderRadius(0),
     _container.borderRadius(0),
   );
 }
 
 Style get _smallRadiusVariant {
   return Style(
-    _container.borderRadius(4),
+    _outerContainer.shapeDecoration.shape.roundedRectangle.borderRadius(1),
+    _container.borderRadius(1),
   );
 }
 
 Style get _mediumRadiusVariant {
   return Style(
-    _container.borderRadius(8),
+    _outerContainer.shapeDecoration.shape.roundedRectangle.borderRadius(2),
+    _container.borderRadius(2),
   );
 }
 
 Style get _largeRadiusVariant {
   return Style(
-    _container.borderRadius(12),
+    _outerContainer.shapeDecoration.shape.roundedRectangle.borderRadius(3),
+    _container.borderRadius(3),
   );
 }
 
 Style get _fullRadiusVariant {
   return Style(
+    _outerContainer.shapeDecoration.shape.roundedRectangle.borderRadius(99),
     _container.borderRadius(99),
   );
 }
@@ -87,12 +89,11 @@ Style _buildProgressStyle(Style? style, List<IProgressVariant> variants) {
     _baseStyle(),
 
     /// Size Variants
-    ProgressSize.small(_smallVariant()),
-    ProgressSize.medium(_mediumVariant()),
-    ProgressSize.large(_largeVariant()),
+    ProgressSize.size1(_smallVariant()),
+    ProgressSize.size2(_mediumVariant()),
+    ProgressSize.size3(_largeVariant()),
 
     // Type variants
-    ProgressVariant.classic(_classicVariant()),
     ProgressVariant.surface(_surfaceVariant()),
     ProgressVariant.soft(_softVariant()),
 

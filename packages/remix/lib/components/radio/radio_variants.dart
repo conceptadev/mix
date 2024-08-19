@@ -18,14 +18,12 @@ class RadioVariant extends IRadioVariant {
   static const soft = RadioVariant('soft');
   static const surface = RadioVariant('surface');
   static const outline = RadioVariant('outline');
-  static const ghost = RadioVariant('ghost');
 
   static List<RadioVariant> get values => [
         solid,
         soft,
         surface,
         outline,
-        ghost,
       ];
 }
 

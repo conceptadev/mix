@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:mix/mix.dart';
-import 'package:todo_list/pages/add_task_page.dart';
 import 'package:todo_list/pages/controller/task_controller.dart';
-import 'package:todo_list/style/components/icon_button.dart';
 import 'package:todo_list/style/components/list_tile.dart';
 import 'package:todo_list/style/design_tokens.dart';
+
+import '../style/components/icon_button.dart';
+import 'add_task_page.dart';
 
 const _colors = ColorTokens();
 const _textStyles = TextStyleTokens();

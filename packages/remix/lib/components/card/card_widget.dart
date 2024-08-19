@@ -3,15 +3,17 @@ part of 'card.dart';
 class RxCard extends StatelessWidget {
   const RxCard({
     super.key,
-    required this.children,
-    this.type = CardVariant.solid,
+    this.variant = CardVariant.outline,
+    this.size = CardSize.size2,
     this.style,
+    required this.children,
   });
 
   /// The list of child widgets to be displayed inside the card.
   final List<Widget> children;
 
-  final CardVariant type;
+  final CardVariant variant;
+  final CardSize size;
 
   /// Additional custom styling for the card.
   ///
@@ -20,18 +22,9 @@ class RxCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SpecBuilder(
-      style: _buildCustomCardStyle(style, [type]),
-      builder: (context) {
-        final spec = CardSpec.of(context);
-
-        return spec.container(
-          child: spec.flex(
-            direction: Axis.vertical,
-            children: children,
-          ),
-        );
-      },
+    return RxBlankCard(
+      style: _buildCustomCardStyle(style, [variant, size]),
+      children: children,
     );
   }
 }

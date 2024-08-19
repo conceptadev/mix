@@ -142,24 +142,31 @@ Style get _xLargeVariant {
   );
 }
 
-Style _buildButtonStyle(Style? style, List<IButtonVariant> variants) {
+Style get _buttonSize {
   return Style(
-    _baseStyle(),
-
-    /// Size Variants
     ButtonSize.small(_smallVariant()),
     ButtonSize.medium(_mediumVariant()),
     ButtonSize.large(_largeVariant()),
     ButtonSize.xlarge(_xLargeVariant()),
+  );
+}
 
-    _onDisabledForeground(),
-
-    // Type variants
+Style get _buttonVariant {
+  return Style(
     ButtonVariant.solid(_solidVariant()),
     ButtonVariant.surface(_surfaceVariant()),
     ButtonVariant.soft(_softVariant()),
     ButtonVariant.outline(_outlineVariant()),
     ButtonVariant.ghost(_ghostVariant()),
+  );
+}
+
+Style _buildButtonStyle(Style? style, List<IButtonVariant> variants) {
+  return Style(
+    _baseStyle(),
+    _buttonSize(),
+    _onDisabledForeground(),
+    _buttonVariant(),
   ).merge(style).applyVariants(variants);
 }
 

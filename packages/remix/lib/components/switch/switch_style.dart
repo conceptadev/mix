@@ -116,7 +116,9 @@ Style get _largeVariant {
     _container.padding.horizontal(3),
     _container.height(24),
     _indicator.size(18),
-    $on.unselected(_indicator.size(16)),
+    $on.unselected(
+      _indicator.size(16),
+    ),
   );
 }
 
@@ -127,9 +129,12 @@ Style _buildSwitchStyle(Style? style, List<ISwitchVariant> variants) {
     SwitchSize.small(_smallVariant()),
     SwitchSize.medium(_mediumVariant()),
     SwitchSize.large(_largeVariant()),
+
+    // Variant
     SwitchVariant.solid(_solidVariant()),
     SwitchVariant.soft(_softVariant()),
     SwitchVariant.outline(_outlineVariant()),
     SwitchVariant.surface(_surfaceVariant()),
-  ).merge(style).applyVariants(variants);
+  ).merge(style).applyVariants(variants).animate(
+      duration: Duration(milliseconds: 150), curve: Curves.easeInCubic);
 }

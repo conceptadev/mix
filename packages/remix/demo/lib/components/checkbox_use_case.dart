@@ -30,7 +30,7 @@ Widget buildCheckboxUseCase(BuildContext context) {
           ),
           disabled: context.knobs.boolean(
             label: 'Disabled',
-            initialValue: false,
+            initialValue: true,
           ),
         ),
       ],

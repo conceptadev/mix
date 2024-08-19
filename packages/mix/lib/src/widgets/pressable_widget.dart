@@ -204,18 +204,18 @@ class PressableWidgetState extends State<Pressable> {
       excludeFromSemantics: widget.excludeFromSemantics,
       hitTestBehavior: widget.hitTestBehavior,
       unpressDelay: widget.unpressDelay,
-      child: MouseRegionMixStateWidget(
-        child: InteractiveMixStateWidget(
-          enabled: widget.enabled,
-          onFocusChange: widget.onFocusChange,
-          autofocus: widget.autofocus,
-          focusNode: widget.focusNode,
-          onKey: widget.onKey,
-          onKeyEvent: widget.onKeyEvent,
-          canRequestFocus: widget.canRequestFocus,
-          mouseCursor: mouseCursor,
-          controller: _controller,
-          actions: actions,
+      child: InteractiveMixStateWidget(
+        enabled: widget.enabled,
+        onFocusChange: widget.onFocusChange,
+        autofocus: widget.autofocus,
+        focusNode: widget.focusNode,
+        onKey: widget.onKey,
+        onKeyEvent: widget.onKeyEvent,
+        canRequestFocus: widget.canRequestFocus,
+        mouseCursor: mouseCursor,
+        controller: _controller,
+        actions: actions,
+        child: MouseRegionMixStateWidget(
           child: MixWidgetStateBuilder(
             controller: _controller,
             builder: (_) => widget.child,
@@ -307,21 +307,21 @@ class _InteractableState extends State<Interactable> {
 
   @override
   Widget build(BuildContext context) {
-    return MouseRegionMixStateWidget(
-      child: InteractiveMixStateWidget(
-        enabled: widget.enabled,
-        onFocusChange: widget.onFocusChange,
-        autofocus: widget.autofocus,
-        focusNode: widget.focusNode,
-        onKey: widget.onKey,
-        onShowFocusHighlight: widget.onShowFocusHighlight,
-        onShowHoverHighlight: widget.onShowHoverHighlight,
-        onKeyEvent: widget.onKeyEvent,
-        canRequestFocus: widget.canRequestFocus,
-        mouseCursor: widget.mouseCursor,
-        shortcuts: widget.shortcuts,
-        controller: _controller,
-        actions: widget.actions,
+    return InteractiveMixStateWidget(
+      enabled: widget.enabled,
+      onFocusChange: widget.onFocusChange,
+      autofocus: widget.autofocus,
+      focusNode: widget.focusNode,
+      onKey: widget.onKey,
+      onShowFocusHighlight: widget.onShowFocusHighlight,
+      onShowHoverHighlight: widget.onShowHoverHighlight,
+      onKeyEvent: widget.onKeyEvent,
+      canRequestFocus: widget.canRequestFocus,
+      mouseCursor: widget.mouseCursor,
+      shortcuts: widget.shortcuts,
+      controller: _controller,
+      actions: widget.actions,
+      child: MouseRegionMixStateWidget(
         child: MixWidgetStateBuilder(
           controller: _controller,
           builder: (context) => widget.child,

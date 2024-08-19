@@ -1,8 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:mix/mix.dart';
-import 'package:remix/components/callout/callout_spec.dart';
-import 'package:remix/components/callout/callout_style.dart';
-import 'package:remix/components/callout/callout_variants.dart';
+part of 'callout.dart';
 
 class RxCallout extends StatelessWidget {
   const RxCallout({
@@ -25,21 +21,10 @@ class RxCallout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SpecBuilder(
+    return RxBlankCallout(
+      text: text,
+      icon: icon,
       style: calloutStyle(style, [variant]),
-      builder: (context) {
-        final spec = CalloutSpec.of(context);
-
-        return spec.container(
-          child: spec.flex(
-            direction: Axis.horizontal,
-            children: [
-              if (icon != null) spec.icon(icon!),
-              spec.text(text),
-            ],
-          ),
-        );
-      },
     );
   }
 }
