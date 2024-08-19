@@ -1,3 +1,4 @@
+import 'package:demo/helpers/string.dart';
 import 'package:flutter/material.dart';
 import 'package:remix/components/radio/radio.dart';
 import 'package:widgetbook/widgetbook.dart';
@@ -5,29 +6,15 @@ import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
 final _key = GlobalKey();
 
-enum RadioType {
-  solid,
-  outline,
-  soft,
-  surface;
-
-  RadioVariant get variant {
-    switch (this) {
-      case RadioType.solid:
-        return RadioVariant.solid;
-      case RadioType.outline:
-        return RadioVariant.outline;
-      case RadioType.soft:
-        return RadioVariant.soft;
-      case RadioType.surface:
-        return RadioVariant.surface;
-    }
-  }
+enum Theme {
+  dark,
+  light,
+  system,
 }
 
 @widgetbook.UseCase(
   name: 'Radio Component',
-  type: RxRadio,
+  type: XRadio,
 )
 Widget buildRadioUseCase(BuildContext context) {
   return const RadioExample();
@@ -41,7 +28,7 @@ class RadioExample extends StatefulWidget {
 }
 
 class _RadioExampleState extends State<RadioExample> {
-  RadioType? _type = RadioType.outline;
+  Theme _theme = Theme.dark;
 
   @override
   Widget build(BuildContext context) {
@@ -51,38 +38,27 @@ class _RadioExampleState extends State<RadioExample> {
         mainAxisSize: MainAxisSize.min,
         key: _key,
         children: <Widget>[
-          for (var type in RadioType.values)
+          for (var theme in Theme.values) ...[
             Row(
               children: [
-                RxRadio<RadioType>(
-                  value: type,
-                  groupValue: _type,
-                  variant: type.variant,
-                  onChanged: (RadioType? value) {
+                XRadio<Theme>(
+                  value: theme,
+                  groupValue: _theme,
+                  onChanged: (Theme? value) {
                     setState(() {
-                      _type = value;
+                      _theme = value!;
                     });
                   },
-                  size: context.knobs.list(
-                    label: 'Size',
-                    options: RadioSize.values,
-                    initialOption: RadioSize.medium,
-                    labelBuilder: (value) => value.label,
-                  ),
                   disabled: context.knobs.boolean(
                     label: 'Disabled',
                     initialValue: false,
                   ),
-                ),
-                const SizedBox(width: 16, height: 30),
-                Text(
-                  type.name,
-                  style: const TextStyle(
-                    fontSize: 16,
-                  ),
+                  text: theme.name.capitalize(),
                 ),
               ],
             ),
+            const SizedBox(height: 8),
+          ]
         ],
       ),
     );
