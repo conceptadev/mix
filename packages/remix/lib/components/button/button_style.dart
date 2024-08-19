@@ -13,6 +13,8 @@ class XButtonStyle {
         _flex.crossAxisAlignment.center(),
         _flex.mainAxisSize.min(),
         _flex.gap(8),
+        _flex.wrap.padding.vertical(8),
+        _flex.wrap.padding.horizontal(16),
       );
 
   static Style get icon => Style(
@@ -30,10 +32,9 @@ class XButtonStyle {
             applyHeightToLastDescent: true,
           ),
         ),
-        _label.style.fontWeight.w500(),
-        _label.style.$text(2),
+        _label.style.fontSize(14),
+        _label.style.height(1.5),
         _label.style.color.white(),
-        _label.style.fontSize(18),
         _label.style.fontWeight.w400(),
         $on.dark(
           _label.style.color.black(),
@@ -41,33 +42,33 @@ class XButtonStyle {
       );
 
   static Style get spinner => Style(
-      _spinner.strokeWidth(1.5),
-      _spinner.color.white(),
-      $on.dark(
-        _spinner.color.black(),
-      ));
+        _spinner.strokeWidth(0.9),
+        _spinner.size(15),
+        _spinner.color.white(),
+        $on.dark(
+          _spinner.color.black(),
+        ),
+      );
 
   static Style get container => Style(
-        _container.borderRadius(16),
+        _container.borderRadius(6),
         _container.color.black(),
-        _container.padding.vertical(16),
-        _container.padding.horizontal(24),
         $on.hover(
-          _container.color.black87(),
+          _container.color.brighten(20),
         ),
         $on.press(
-          _container.color.black54(),
+          _container.color.brighten(10),
         ),
         $on.disabled(
-          _container.color.grey.shade300(),
+          _container.color.grey.shade400(),
         ),
         $on.dark(
           _container.color.white(),
           $on.hover(
-            _container.color.white70(),
+            _container.color.darken(10),
           ),
           $on.press(
-            _container.color.white54(),
+            _container.color.darken(10),
           ),
           $on.disabled(
             _container.color.grey.shade600(),
