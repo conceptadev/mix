@@ -5,7 +5,6 @@ sdkPath: .fvm/flutter_sdk
 packages:
   - packages/*
   - packages/*/example
-  - examples/*
   - packages/*/demo
 
 command:
