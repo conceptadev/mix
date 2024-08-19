@@ -11,32 +11,6 @@ final _key = GlobalKey();
   type: XButton,
 )
 Widget buildButtonUseCase(BuildContext context) {
-  Widget buildButton() {
-    return XButton(
-      label: context.knobs.string(
-        label: 'Title',
-        initialValue: 'Button',
-      ),
-      onPressed: () {},
-      disabled: context.knobs.boolean(
-        label: 'Disabled',
-        initialValue: false,
-      ),
-      loading: context.knobs.boolean(
-        label: 'loading',
-        initialValue: false,
-      ),
-      iconLeft: context.knobs.iconData(
-        label: 'Icon left',
-        initialValue: null,
-      ),
-      iconRight: context.knobs.iconData(
-        label: 'Icon right',
-        initialValue: null,
-      ),
-    );
-  }
-
   return KeyedSubtree(
     key: _key,
     child: Wrap(
