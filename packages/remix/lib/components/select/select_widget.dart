@@ -48,7 +48,7 @@ class XSelectState<T> extends State<XSelect<T>>
     with SingleTickerProviderStateMixin {
   final OverlayPortalController _tooltipController = OverlayPortalController();
   late final AnimationController _animationController;
-  late final CurvedAnimation _curvedController;
+  late final MixWidgetStateController _stateController;
 
   @override
   void initState() {
@@ -59,17 +59,15 @@ class XSelectState<T> extends State<XSelect<T>>
       duration: const Duration(milliseconds: 100),
     );
 
-    _curvedController = CurvedAnimation(
-      parent: _animationController,
-      curve: Curves.decelerate,
-    );
+    _stateController = MixWidgetStateController();
+    _stateController.selected = false;
   }
 
   @override
   void dispose() {
     super.dispose();
     _animationController.dispose();
-    _curvedController.dispose();
+    _stateController.dispose();
   }
 
   final _link = LayerLink();
@@ -87,7 +85,6 @@ class XSelectState<T> extends State<XSelect<T>>
           child: OverlayPortal(
             controller: _tooltipController,
             overlayChildBuilder: (BuildContext context) {
-              _animationController.forward();
               return Stack(children: [
                 GestureDetector(
                   onTap: () => hide(),
@@ -101,62 +98,53 @@ class XSelectState<T> extends State<XSelect<T>>
                       position.targetAnchor.resolve(TextDirection.ltr),
                   followerAnchor:
                       position.followerAnchor.resolve(TextDirection.ltr),
-                  child: AnimatedBuilder(
-                      animation: _curvedController,
-                      builder: (context, child) {
-                        return Transform.scale(
-                          alignment: Alignment.topCenter,
-                          scale: lerpDouble(0.95, 1, _curvedController.value),
-                          child: Transform.translate(
-                            offset: Offset.lerp(
-                              Offset.zero,
-                              position.offset,
-                              _curvedController.value,
-                            )!,
-                            child: Opacity(
-                              opacity: _curvedController.value * 1,
-                              child: SpecBuilder(
-                                style: widget._blank
-                                    ? widget.style
-                                    : XSelectStyle.menu(
-                                        _link.leaderSize!.width,
-                                      ).merge(widget.style),
-                                builder: (context) {
-                                  final menu = SelectSpec.of(context).menu;
-
-                                  final container = menu.container;
-                                  final flex = menu.flex;
-
-                                  return container(
-                                    child: flex(
-                                      direction: Axis.vertical,
-                                      children: widget.items.map(
-                                        (item) {
-                                          return Pressable(
-                                            onPress: () {
-                                              widget.onChanged(item.value);
-                                              _tooltipController.hide();
-                                            },
-                                            child: SpecBuilder(
-                                              style: widget._blank
-                                                  ? widget.style
-                                                  : XSelectStyle.base
-                                                      .merge(widget.style),
-                                              builder: (context) {
-                                                return item.child;
-                                              },
-                                            ),
-                                          );
-                                        },
-                                      ).toList(),
-                                    ),
-                                  );
-                                },
-                              ),
+                  child: SpecBuilder(
+                    controller: _stateController,
+                    style: widget._blank
+                        ? widget.style
+                        : XSelectStyle.menu(
+                            _link.leaderSize!.width,
+                          ).merge(widget.style).animate(
+                              curve: Curves.decelerate,
+                              duration: Duration(milliseconds: 100),
                             ),
-                          ),
-                        );
-                      }),
+                    builder: (context) {
+                      final select = SelectSpec.of(context);
+
+                      _animationController.duration =
+                          select.animated?.duration ??
+                              const Duration(milliseconds: 100);
+
+                      final menu = select.menu;
+
+                      final container = menu.container;
+                      final flex = menu.flex;
+
+                      return container(
+                        child: flex(
+                          direction: Axis.vertical,
+                          children: widget.items.map(
+                            (item) {
+                              return Pressable(
+                                onPress: () {
+                                  widget.onChanged(item.value);
+                                  hide();
+                                },
+                                child: SpecBuilder(
+                                  style: widget._blank
+                                      ? widget.style
+                                      : XSelectStyle.base.merge(widget.style),
+                                  builder: (context) {
+                                    return item.child;
+                                  },
+                                ),
+                              );
+                            },
+                          ).toList(),
+                        ),
+                      );
+                    },
+                  ),
                 ),
               ]);
             },
@@ -174,12 +162,18 @@ class XSelectState<T> extends State<XSelect<T>>
     if (!_tooltipController.isShowing) {
       _tooltipController.show();
     }
+
+    _animationController.forward(from: 0.99).whenComplete(() {
+      _stateController.selected = true;
+    });
   }
 
   void hide() {
-    _animationController.reverse().whenComplete(
-          () => _tooltipController.hide(),
-        );
+    _stateController.selected = false;
+
+    _animationController.forward(from: 0).whenComplete(() {
+      _tooltipController.hide();
+    });
   }
 
   void onTap() {

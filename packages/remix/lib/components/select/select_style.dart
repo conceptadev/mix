@@ -37,6 +37,16 @@ class XSelectStyle {
         _menu.container.width(width),
         _menu.flex.mainAxisSize.min(),
         _menu.flex.crossAxisAlignment.start(),
+        _menu.wrap.transform.scale(1.5),
+        // animation
+        _menu.container.wrap.transform.scale(0.95),
+        _menu.container.wrap.opacity(0),
+        _menu.container.wrap.padding.top(0),
+        $on.selected(
+          _menu.container.wrap.transform.scale(1),
+          _menu.container.wrap.opacity(1),
+          _menu.container.wrap.padding.top(4),
+        ),
       );
 
   static Style get item => Style(
