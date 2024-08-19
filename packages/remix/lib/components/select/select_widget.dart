@@ -50,13 +50,18 @@ class XSelectState<T> extends State<XSelect<T>>
   late final AnimationController _animationController;
   late final MixWidgetStateController _stateController;
 
+  final baseStyle = XSelectStyle.base.animate(
+    curve: Curves.decelerate,
+    duration: Durations.short2,
+  );
+
   @override
   void initState() {
     super.initState();
 
     _animationController = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 100),
+      duration: const Duration(),
     );
 
     _stateController = MixWidgetStateController();
@@ -75,8 +80,7 @@ class XSelectState<T> extends State<XSelect<T>>
   @override
   Widget build(BuildContext context) {
     return SpecBuilder(
-      style:
-          widget._blank ? widget.style : XSelectStyle.base.merge(widget.style),
+      style: widget._blank ? widget.style : baseStyle.merge(widget.style),
       builder: (context) {
         final button = SelectSpec.of(context).button;
         final position = SelectSpec.of(context).position;
@@ -100,28 +104,24 @@ class XSelectState<T> extends State<XSelect<T>>
                       position.followerAnchor.resolve(TextDirection.ltr),
                   child: SpecBuilder(
                     controller: _stateController,
-                    style: widget._blank
-                        ? widget.style
-                        : XSelectStyle.menu(
-                            _link.leaderSize!.width,
-                          ).merge(widget.style).animate(
-                              curve: Curves.decelerate,
-                              duration: Duration(milliseconds: 100),
-                            ),
+                    style: widget._blank ? widget.style : baseStyle,
                     builder: (context) {
                       final select = SelectSpec.of(context);
 
                       _animationController.duration =
                           select.animated?.duration ??
-                              const Duration(milliseconds: 100);
+                              _animationController.duration;
 
                       final menu = select.menu;
 
-                      final container = menu.container;
-                      final flex = menu.flex;
+                      final Container = menu.container.copyWith(
+                        width: menu.autoWidth ? _link.leaderSize!.width : null,
+                      );
 
-                      return container(
-                        child: flex(
+                      final Flex = menu.flex;
+
+                      return Container(
+                        child: Flex(
                           direction: Axis.vertical,
                           children: widget.items.map(
                             (item) {
@@ -133,7 +133,7 @@ class XSelectState<T> extends State<XSelect<T>>
                                 child: SpecBuilder(
                                   style: widget._blank
                                       ? widget.style
-                                      : XSelectStyle.base.merge(widget.style),
+                                      : baseStyle.merge(widget.style),
                                   builder: (context) {
                                     return item.child;
                                   },
@@ -163,7 +163,7 @@ class XSelectState<T> extends State<XSelect<T>>
       _tooltipController.show();
     }
 
-    _animationController.forward(from: 0.99).whenComplete(() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       _stateController.selected = true;
     });
   }

@@ -1,4 +1,3 @@
-import 'dart:ui';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -61,6 +60,7 @@ base class SelectMenuSpec extends Spec<SelectMenuSpec>
     with _$SelectMenuSpec, Diagnosticable {
   final BoxSpec container;
   final FlexSpec flex;
+  final bool autoWidth;
 
   static const of = _$SelectMenuSpec.of;
 
@@ -69,10 +69,12 @@ base class SelectMenuSpec extends Spec<SelectMenuSpec>
   const SelectMenuSpec({
     BoxSpec? container,
     FlexSpec? flex,
+    bool? autoWidth,
     super.modifiers,
     super.animated,
   })  : container = container ?? const BoxSpec(),
-        flex = flex ?? const FlexSpec();
+        flex = flex ?? const FlexSpec(),
+        autoWidth = autoWidth ?? true;
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {

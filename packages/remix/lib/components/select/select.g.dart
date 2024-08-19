@@ -282,6 +282,267 @@ class SelectSpecTween extends Tween<SelectSpec?> {
   }
 }
 
+mixin _$SelectMenuSpec on Spec<SelectMenuSpec> {
+  static SelectMenuSpec from(MixData mix) {
+    return mix.attributeOf<SelectMenuSpecAttribute>()?.resolve(mix) ??
+        const SelectMenuSpec();
+  }
+
+  /// {@template select_menu_spec_of}
+  /// Retrieves the [SelectMenuSpec] from the nearest [Mix] ancestor in the widget tree.
+  ///
+  /// This method uses [Mix.of] to obtain the [Mix] instance associated with the
+  /// given [BuildContext], and then retrieves the [SelectMenuSpec] from that [Mix].
+  /// If no ancestor [Mix] is found, this method returns an empty [SelectMenuSpec].
+  ///
+  /// Example:
+  ///
+  /// ```dart
+  /// final selectMenuSpec = SelectMenuSpec.of(context);
+  /// ```
+  /// {@endtemplate}
+  static SelectMenuSpec of(BuildContext context) {
+    return _$SelectMenuSpec.from(Mix.of(context));
+  }
+
+  /// Creates a copy of this [SelectMenuSpec] but with the given fields
+  /// replaced with the new values.
+  @override
+  SelectMenuSpec copyWith({
+    BoxSpec? container,
+    FlexSpec? flex,
+    bool? autoWidth,
+    WidgetModifiersData? modifiers,
+    AnimatedData? animated,
+  }) {
+    return SelectMenuSpec(
+      container: container ?? _$this.container,
+      flex: flex ?? _$this.flex,
+      autoWidth: autoWidth ?? _$this.autoWidth,
+      modifiers: modifiers ?? _$this.modifiers,
+      animated: animated ?? _$this.animated,
+    );
+  }
+
+  /// Linearly interpolates between this [SelectMenuSpec] and another [SelectMenuSpec] based on the given parameter [t].
+  ///
+  /// The parameter [t] represents the interpolation factor, typically ranging from 0.0 to 1.0.
+  /// When [t] is 0.0, the current [SelectMenuSpec] is returned. When [t] is 1.0, the [other] [SelectMenuSpec] is returned.
+  /// For values of [t] between 0.0 and 1.0, an interpolated [SelectMenuSpec] is returned.
+  ///
+  /// If [other] is null, this method returns the current [SelectMenuSpec] instance.
+  ///
+  /// The interpolation is performed on each property of the [SelectMenuSpec] using the appropriate
+  /// interpolation method:
+  ///
+  /// - [BoxSpec.lerp] for [container].
+  /// - [FlexSpec.lerp] for [flex].
+
+  /// For [autoWidth] and [modifiers] and [animated], the interpolation is performed using a step function.
+  /// If [t] is less than 0.5, the value from the current [SelectMenuSpec] is used. Otherwise, the value
+  /// from the [other] [SelectMenuSpec] is used.
+  ///
+  /// This method is typically used in animations to smoothly transition between
+  /// different [SelectMenuSpec] configurations.
+  @override
+  SelectMenuSpec lerp(SelectMenuSpec? other, double t) {
+    if (other == null) return _$this;
+
+    return SelectMenuSpec(
+      container: _$this.container.lerp(other.container, t),
+      flex: _$this.flex.lerp(other.flex, t),
+      autoWidth: t < 0.5 ? _$this.autoWidth : other.autoWidth,
+      modifiers: t < 0.5 ? _$this.modifiers : other.modifiers,
+      animated: t < 0.5 ? _$this.animated : other.animated,
+    );
+  }
+
+  /// The list of properties that constitute the state of this [SelectMenuSpec].
+  ///
+  /// This property is used by the [==] operator and the [hashCode] getter to
+  /// compare two [SelectMenuSpec] instances for equality.
+  @override
+  List<Object?> get props => [
+        _$this.container,
+        _$this.flex,
+        _$this.autoWidth,
+        _$this.modifiers,
+        _$this.animated,
+      ];
+
+  SelectMenuSpec get _$this => this as SelectMenuSpec;
+
+  void _debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    properties.add(
+        DiagnosticsProperty('container', _$this.container, defaultValue: null));
+    properties
+        .add(DiagnosticsProperty('flex', _$this.flex, defaultValue: null));
+    properties.add(
+        DiagnosticsProperty('autoWidth', _$this.autoWidth, defaultValue: null));
+    properties.add(
+        DiagnosticsProperty('modifiers', _$this.modifiers, defaultValue: null));
+    properties.add(
+        DiagnosticsProperty('animated', _$this.animated, defaultValue: null));
+  }
+}
+
+/// Represents the attributes of a [SelectMenuSpec].
+///
+/// This class encapsulates properties defining the layout and
+/// appearance of a [SelectMenuSpec].
+///
+/// Use this class to configure the attributes of a [SelectMenuSpec] and pass it to
+/// the [SelectMenuSpec] constructor.
+base class SelectMenuSpecAttribute extends SpecAttribute<SelectMenuSpec>
+    with Diagnosticable {
+  final BoxSpecAttribute? container;
+  final FlexSpecAttribute? flex;
+  final bool? autoWidth;
+
+  const SelectMenuSpecAttribute({
+    this.container,
+    this.flex,
+    this.autoWidth,
+    super.modifiers,
+    super.animated,
+  });
+
+  /// Resolves to [SelectMenuSpec] using the provided [MixData].
+  ///
+  /// If a property is null in the [MixData], it falls back to the
+  /// default value defined in the `defaultValue` for that property.
+  ///
+  /// ```dart
+  /// final selectMenuSpec = SelectMenuSpecAttribute(...).resolve(mix);
+  /// ```
+  @override
+  SelectMenuSpec resolve(MixData mix) {
+    return SelectMenuSpec(
+      container: container?.resolve(mix),
+      flex: flex?.resolve(mix),
+      autoWidth: autoWidth,
+      modifiers: modifiers?.resolve(mix),
+      animated: animated?.resolve(mix) ?? mix.animation,
+    );
+  }
+
+  /// Merges the properties of this [SelectMenuSpecAttribute] with the properties of [other].
+  ///
+  /// If [other] is null, returns this instance unchanged. Otherwise, returns a new
+  /// [SelectMenuSpecAttribute] with the properties of [other] taking precedence over
+  /// the corresponding properties of this instance.
+  ///
+  /// Properties from [other] that are null will fall back
+  /// to the values from this instance.
+  @override
+  SelectMenuSpecAttribute merge(covariant SelectMenuSpecAttribute? other) {
+    if (other == null) return this;
+
+    return SelectMenuSpecAttribute(
+      container: container?.merge(other.container) ?? other.container,
+      flex: flex?.merge(other.flex) ?? other.flex,
+      autoWidth: other.autoWidth ?? autoWidth,
+      modifiers: modifiers?.merge(other.modifiers) ?? other.modifiers,
+      animated: animated?.merge(other.animated) ?? other.animated,
+    );
+  }
+
+  /// The list of properties that constitute the state of this [SelectMenuSpecAttribute].
+  ///
+  /// This property is used by the [==] operator and the [hashCode] getter to
+  /// compare two [SelectMenuSpecAttribute] instances for equality.
+  @override
+  List<Object?> get props => [
+        container,
+        flex,
+        autoWidth,
+        modifiers,
+        animated,
+      ];
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+        .add(DiagnosticsProperty('container', container, defaultValue: null));
+    properties.add(DiagnosticsProperty('flex', flex, defaultValue: null));
+    properties
+        .add(DiagnosticsProperty('autoWidth', autoWidth, defaultValue: null));
+    properties
+        .add(DiagnosticsProperty('modifiers', modifiers, defaultValue: null));
+    properties
+        .add(DiagnosticsProperty('animated', animated, defaultValue: null));
+  }
+}
+
+/// Utility class for configuring [SelectMenuSpecAttribute] properties.
+///
+/// This class provides methods to set individual properties of a [SelectMenuSpecAttribute].
+/// Use the methods of this class to configure specific properties of a [SelectMenuSpecAttribute].
+class SelectMenuSpecUtility<T extends Attribute>
+    extends SpecUtility<T, SelectMenuSpecAttribute> {
+  /// Utility for defining [SelectMenuSpecAttribute.container]
+  late final container = BoxSpecUtility((v) => only(container: v));
+
+  /// Utility for defining [SelectMenuSpecAttribute.flex]
+  late final flex = FlexSpecUtility((v) => only(flex: v));
+
+  /// Utility for defining [SelectMenuSpecAttribute.autoWidth]
+  late final autoWidth = BoolUtility((v) => only(autoWidth: v));
+
+  /// Utility for defining [SelectMenuSpecAttribute.modifiers]
+  late final wrap = SpecModifierUtility((v) => only(modifiers: v));
+
+  /// Utility for defining [SelectMenuSpecAttribute.animated]
+  late final animated = AnimatedUtility((v) => only(animated: v));
+
+  SelectMenuSpecUtility(super.builder);
+
+  static final self = SelectMenuSpecUtility((v) => v);
+
+  /// Returns a new [SelectMenuSpecAttribute] with the specified properties.
+  @override
+  T only({
+    BoxSpecAttribute? container,
+    FlexSpecAttribute? flex,
+    bool? autoWidth,
+    WidgetModifiersDataDto? modifiers,
+    AnimatedDataDto? animated,
+  }) {
+    return builder(SelectMenuSpecAttribute(
+      container: container,
+      flex: flex,
+      autoWidth: autoWidth,
+      modifiers: modifiers,
+      animated: animated,
+    ));
+  }
+}
+
+/// A tween that interpolates between two [SelectMenuSpec] instances.
+///
+/// This class can be used in animations to smoothly transition between
+/// different [SelectMenuSpec] specifications.
+class SelectMenuSpecTween extends Tween<SelectMenuSpec?> {
+  SelectMenuSpecTween({
+    super.begin,
+    super.end,
+  });
+
+  @override
+  SelectMenuSpec lerp(double t) {
+    if (begin == null && end == null) {
+      return const SelectMenuSpec();
+    }
+
+    if (begin == null) {
+      return end!;
+    }
+
+    return begin!.lerp(end!, t);
+  }
+}
+
 mixin _$SelectButtonSpec on Spec<SelectButtonSpec> {
   static SelectButtonSpec from(MixData mix) {
     return mix.attributeOf<SelectButtonSpecAttribute>()?.resolve(mix) ??
@@ -551,249 +812,6 @@ class SelectButtonSpecTween extends Tween<SelectButtonSpec?> {
   SelectButtonSpec lerp(double t) {
     if (begin == null && end == null) {
       return const SelectButtonSpec();
-    }
-
-    if (begin == null) {
-      return end!;
-    }
-
-    return begin!.lerp(end!, t);
-  }
-}
-
-mixin _$SelectMenuSpec on Spec<SelectMenuSpec> {
-  static SelectMenuSpec from(MixData mix) {
-    return mix.attributeOf<SelectMenuSpecAttribute>()?.resolve(mix) ??
-        const SelectMenuSpec();
-  }
-
-  /// {@template select_menu_spec_of}
-  /// Retrieves the [SelectMenuSpec] from the nearest [Mix] ancestor in the widget tree.
-  ///
-  /// This method uses [Mix.of] to obtain the [Mix] instance associated with the
-  /// given [BuildContext], and then retrieves the [SelectMenuSpec] from that [Mix].
-  /// If no ancestor [Mix] is found, this method returns an empty [SelectMenuSpec].
-  ///
-  /// Example:
-  ///
-  /// ```dart
-  /// final selectMenuSpec = SelectMenuSpec.of(context);
-  /// ```
-  /// {@endtemplate}
-  static SelectMenuSpec of(BuildContext context) {
-    return _$SelectMenuSpec.from(Mix.of(context));
-  }
-
-  /// Creates a copy of this [SelectMenuSpec] but with the given fields
-  /// replaced with the new values.
-  @override
-  SelectMenuSpec copyWith({
-    BoxSpec? container,
-    FlexSpec? flex,
-    WidgetModifiersData? modifiers,
-    AnimatedData? animated,
-  }) {
-    return SelectMenuSpec(
-      container: container ?? _$this.container,
-      flex: flex ?? _$this.flex,
-      modifiers: modifiers ?? _$this.modifiers,
-      animated: animated ?? _$this.animated,
-    );
-  }
-
-  /// Linearly interpolates between this [SelectMenuSpec] and another [SelectMenuSpec] based on the given parameter [t].
-  ///
-  /// The parameter [t] represents the interpolation factor, typically ranging from 0.0 to 1.0.
-  /// When [t] is 0.0, the current [SelectMenuSpec] is returned. When [t] is 1.0, the [other] [SelectMenuSpec] is returned.
-  /// For values of [t] between 0.0 and 1.0, an interpolated [SelectMenuSpec] is returned.
-  ///
-  /// If [other] is null, this method returns the current [SelectMenuSpec] instance.
-  ///
-  /// The interpolation is performed on each property of the [SelectMenuSpec] using the appropriate
-  /// interpolation method:
-  ///
-  /// - [BoxSpec.lerp] for [container].
-  /// - [FlexSpec.lerp] for [flex].
-
-  /// For [modifiers] and [animated], the interpolation is performed using a step function.
-  /// If [t] is less than 0.5, the value from the current [SelectMenuSpec] is used. Otherwise, the value
-  /// from the [other] [SelectMenuSpec] is used.
-  ///
-  /// This method is typically used in animations to smoothly transition between
-  /// different [SelectMenuSpec] configurations.
-  @override
-  SelectMenuSpec lerp(SelectMenuSpec? other, double t) {
-    if (other == null) return _$this;
-
-    return SelectMenuSpec(
-      container: _$this.container.lerp(other.container, t),
-      flex: _$this.flex.lerp(other.flex, t),
-      modifiers: t < 0.5 ? _$this.modifiers : other.modifiers,
-      animated: t < 0.5 ? _$this.animated : other.animated,
-    );
-  }
-
-  /// The list of properties that constitute the state of this [SelectMenuSpec].
-  ///
-  /// This property is used by the [==] operator and the [hashCode] getter to
-  /// compare two [SelectMenuSpec] instances for equality.
-  @override
-  List<Object?> get props => [
-        _$this.container,
-        _$this.flex,
-        _$this.modifiers,
-        _$this.animated,
-      ];
-
-  SelectMenuSpec get _$this => this as SelectMenuSpec;
-
-  void _debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    properties.add(
-        DiagnosticsProperty('container', _$this.container, defaultValue: null));
-    properties
-        .add(DiagnosticsProperty('flex', _$this.flex, defaultValue: null));
-    properties.add(
-        DiagnosticsProperty('modifiers', _$this.modifiers, defaultValue: null));
-    properties.add(
-        DiagnosticsProperty('animated', _$this.animated, defaultValue: null));
-  }
-}
-
-/// Represents the attributes of a [SelectMenuSpec].
-///
-/// This class encapsulates properties defining the layout and
-/// appearance of a [SelectMenuSpec].
-///
-/// Use this class to configure the attributes of a [SelectMenuSpec] and pass it to
-/// the [SelectMenuSpec] constructor.
-base class SelectMenuSpecAttribute extends SpecAttribute<SelectMenuSpec>
-    with Diagnosticable {
-  final BoxSpecAttribute? container;
-  final FlexSpecAttribute? flex;
-
-  const SelectMenuSpecAttribute({
-    this.container,
-    this.flex,
-    super.modifiers,
-    super.animated,
-  });
-
-  /// Resolves to [SelectMenuSpec] using the provided [MixData].
-  ///
-  /// If a property is null in the [MixData], it falls back to the
-  /// default value defined in the `defaultValue` for that property.
-  ///
-  /// ```dart
-  /// final selectMenuSpec = SelectMenuSpecAttribute(...).resolve(mix);
-  /// ```
-  @override
-  SelectMenuSpec resolve(MixData mix) {
-    return SelectMenuSpec(
-      container: container?.resolve(mix),
-      flex: flex?.resolve(mix),
-      modifiers: modifiers?.resolve(mix),
-      animated: animated?.resolve(mix) ?? mix.animation,
-    );
-  }
-
-  /// Merges the properties of this [SelectMenuSpecAttribute] with the properties of [other].
-  ///
-  /// If [other] is null, returns this instance unchanged. Otherwise, returns a new
-  /// [SelectMenuSpecAttribute] with the properties of [other] taking precedence over
-  /// the corresponding properties of this instance.
-  ///
-  /// Properties from [other] that are null will fall back
-  /// to the values from this instance.
-  @override
-  SelectMenuSpecAttribute merge(covariant SelectMenuSpecAttribute? other) {
-    if (other == null) return this;
-
-    return SelectMenuSpecAttribute(
-      container: container?.merge(other.container) ?? other.container,
-      flex: flex?.merge(other.flex) ?? other.flex,
-      modifiers: modifiers?.merge(other.modifiers) ?? other.modifiers,
-      animated: animated?.merge(other.animated) ?? other.animated,
-    );
-  }
-
-  /// The list of properties that constitute the state of this [SelectMenuSpecAttribute].
-  ///
-  /// This property is used by the [==] operator and the [hashCode] getter to
-  /// compare two [SelectMenuSpecAttribute] instances for equality.
-  @override
-  List<Object?> get props => [
-        container,
-        flex,
-        modifiers,
-        animated,
-      ];
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-        .add(DiagnosticsProperty('container', container, defaultValue: null));
-    properties.add(DiagnosticsProperty('flex', flex, defaultValue: null));
-    properties
-        .add(DiagnosticsProperty('modifiers', modifiers, defaultValue: null));
-    properties
-        .add(DiagnosticsProperty('animated', animated, defaultValue: null));
-  }
-}
-
-/// Utility class for configuring [SelectMenuSpecAttribute] properties.
-///
-/// This class provides methods to set individual properties of a [SelectMenuSpecAttribute].
-/// Use the methods of this class to configure specific properties of a [SelectMenuSpecAttribute].
-class SelectMenuSpecUtility<T extends Attribute>
-    extends SpecUtility<T, SelectMenuSpecAttribute> {
-  /// Utility for defining [SelectMenuSpecAttribute.container]
-  late final container = BoxSpecUtility((v) => only(container: v));
-
-  /// Utility for defining [SelectMenuSpecAttribute.flex]
-  late final flex = FlexSpecUtility((v) => only(flex: v));
-
-  /// Utility for defining [SelectMenuSpecAttribute.modifiers]
-  late final wrap = SpecModifierUtility((v) => only(modifiers: v));
-
-  /// Utility for defining [SelectMenuSpecAttribute.animated]
-  late final animated = AnimatedUtility((v) => only(animated: v));
-
-  SelectMenuSpecUtility(super.builder);
-
-  static final self = SelectMenuSpecUtility((v) => v);
-
-  /// Returns a new [SelectMenuSpecAttribute] with the specified properties.
-  @override
-  T only({
-    BoxSpecAttribute? container,
-    FlexSpecAttribute? flex,
-    WidgetModifiersDataDto? modifiers,
-    AnimatedDataDto? animated,
-  }) {
-    return builder(SelectMenuSpecAttribute(
-      container: container,
-      flex: flex,
-      modifiers: modifiers,
-      animated: animated,
-    ));
-  }
-}
-
-/// A tween that interpolates between two [SelectMenuSpec] instances.
-///
-/// This class can be used in animations to smoothly transition between
-/// different [SelectMenuSpec] specifications.
-class SelectMenuSpecTween extends Tween<SelectMenuSpec?> {
-  SelectMenuSpecTween({
-    super.begin,
-    super.end,
-  });
-
-  @override
-  SelectMenuSpec lerp(double t) {
-    if (begin == null && end == null) {
-      return const SelectMenuSpec();
     }
 
     if (begin == null) {

@@ -1,8 +1,6 @@
 import 'package:demo/helpers/label_variant_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:mix/mix.dart';
-import 'package:remix/components/select/select.dart';
-// import 'package:remix/components/dropdown/dropdown_widget.dart';
 import 'package:remix/remix.dart';
 import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
@@ -62,62 +60,17 @@ Widget buildRadioUseCase(BuildContext context) {
           ],
         ),
         const SizedBox(height: 10),
-        // XButton(
-        //   label: 'Click me',
-        //   onPressed: () {},
-        // ),
+        XButton(
+          label: 'Click me',
+          onPressed: () {},
+        ),
       ],
     );
   }
 
-  return const NewWidget();
+  return Wrap(
+    spacing: 12,
+    runSpacing: 12,
+    children: CardVariant.values.map(buildCard).toList(),
+  );
 }
-
-class NewWidget extends StatefulWidget {
-  const NewWidget({
-    super.key,
-  });
-
-  @override
-  State<NewWidget> createState() => _NewWidgetState();
-}
-
-class _NewWidgetState extends State<NewWidget> {
-  String selectedValue = 'Apple';
-  String selectedValue2 = 'Apple';
-  String selectedValue3 = 'Apple';
-  final List<String> items = ['Apple', 'Banana', 'Orange'];
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          SizedBox(
-            width: 200,
-            child: XSelect<String>(
-              value: selectedValue,
-              onChanged: (value) => setState(() => selectedValue = value),
-              button: (spec) => spec(
-                text: selectedValue,
-                trailingIcon: Icons.keyboard_arrow_down_rounded,
-              ),
-              items: List.generate(
-                items.length,
-                (index) => XSelectMenuItem<String>(
-                  value: items[index],
-                  child: XSelectMenuItemWidget(
-                    text: items[index],
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-final _select = SelectSpecUtility.self;

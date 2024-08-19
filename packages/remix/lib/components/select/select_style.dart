@@ -26,15 +26,14 @@ class XSelectStyle {
         position(),
       );
 
-  static Style menu(double width) => Style(
-        XSelectStyle.base(),
+  static Style get menu => Style(
         _menu.container.borderRadius(6),
         _menu.container.shadow.color(Colors.black.withOpacity(0.07)),
         _menu.container.shadow.blurRadius(5),
         _menu.container.color.white(),
         _menu.container.border.color.black12(),
         _menu.container.padding.all(4),
-        _menu.container.width(width),
+
         _menu.flex.mainAxisSize.min(),
         _menu.flex.crossAxisAlignment.start(),
         _menu.wrap.transform.scale(1.5),
@@ -67,6 +66,7 @@ class XSelectStyle {
   static Style get base => Style(
         item(),
         button(),
+        menu(),
         position(),
       );
 }
