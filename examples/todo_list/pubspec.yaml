@@ -1,0 +1,31 @@
+name: todo_list
+description: "A new Flutter project."
+
+publish_to: "none"
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=3.3.0 <4.0.0"
+  flutter: ">=3.19.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  mix: 
+    path: ../../packages/mix
+  custom_lint: ^0.6.4
+  google_fonts: ^6.0.0 
+
+  cupertino_icons: ^1.0.6
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  mix_lint: 
+    path: ../../packages/mix_lint
+
+  flutter_lints: ^4.0.0
+
+flutter:
+  uses-material-design: true
