@@ -35,13 +35,13 @@ class RemixSpace {
 
 final _s = RemixSpace();
 final remixSpaceTokens = {
-  _s.space1: 4,
-  _s.space2: 8,
-  _s.space3: 12,
-  _s.space4: 16,
-  _s.space5: 24,
-  _s.space6: 32,
-  _s.space7: 40,
-  _s.space8: 48,
-  _s.space9: 64,
+  _s.space1: 4.0,
+  _s.space2: 8.0,
+  _s.space3: 12.0,
+  _s.space4: 16.0,
+  _s.space5: 24.0,
+  _s.space6: 32.0,
+  _s.space7: 40.0,
+  _s.space8: 48.0,
+  _s.space9: 64.0,
 };
