@@ -43,6 +43,44 @@ void main() {
     },
   );
 
+  testWidgets('IconSpec handles onEnd', (WidgetTester tester) async {
+    var countPressTime = 0;
+    var countOnEnd = 0;
+
+    await tester.pumpMaterialApp(
+      PressableBox(
+        onPress: () {
+          countPressTime++;
+        },
+        child: SpecBuilder(
+          style: Style(
+            $icon.wrap.transform.scale(1),
+            $on.press(
+              $icon.wrap.transform.scale(1.5),
+            ),
+          ).animate(),
+          builder: (context) {
+            final spec = IconSpec.of(context);
+
+            return IconSpecWidget(
+              Icons.abc,
+              spec: spec,
+              onEndSpecModifiersAnimation: () => countOnEnd++,
+            );
+          },
+        ),
+      ),
+    );
+
+    final containerFinder = find.byType(Pressable);
+    await tester.tap(containerFinder);
+
+    await tester.pumpAndSettle();
+
+    expect(countPressTime, 1);
+    expect(countOnEnd, 1);
+  });
+
   testWidgets('StyledIcon should apply IconSpec properties', (tester) async {
     await tester.pumpMaterialApp(
       StyledIcon(
