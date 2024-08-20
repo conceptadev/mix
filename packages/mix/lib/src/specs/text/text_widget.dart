@@ -79,6 +79,7 @@ class TextSpecWidget extends StatelessWidget {
     this.semanticsLabel,
     this.locale,
     this.orderOfModifiers = const [],
+    this.onEndSpecModifiersAnimation,
     super.key,
   });
 
@@ -88,12 +89,16 @@ class TextSpecWidget extends StatelessWidget {
   final TextSpec? spec;
   final List<Type> orderOfModifiers;
 
+  /// Called when spec modifiers are animated and the animation is complete.
+  final void Function()? onEndSpecModifiersAnimation;
+
   @override
   Widget build(BuildContext context) {
     // The Text widget is used here, applying the resolved styles and properties from TextSpec.
     return RenderSpecModifiers(
       orderOfModifiers: const [],
       spec: spec ?? const TextSpec(),
+      onEndWhenAnimated: onEndSpecModifiersAnimation,
       child: Text(
         spec?.directive?.apply(text) ?? text,
         style: spec?.style,
@@ -121,6 +126,7 @@ class AnimatedTextSpecWidget extends ImplicitlyAnimatedWidget {
     this.spec,
     this.semanticsLabel,
     this.locale,
+    this.onEndSpecModifiersAnimation,
     super.key,
     required super.duration,
     super.curve = Curves.linear,
@@ -131,6 +137,9 @@ class AnimatedTextSpecWidget extends ImplicitlyAnimatedWidget {
   final String? semanticsLabel;
   final Locale? locale;
   final TextSpec? spec;
+
+  /// Called when spec modifiers are animated and the animation is complete.
+  final void Function()? onEndSpecModifiersAnimation;
 
   @override
   AnimatedWidgetBaseState<AnimatedTextSpecWidget> createState() =>
@@ -161,6 +170,7 @@ class _AnimatedTextSpecWidgetState
       spec: spec,
       semanticsLabel: widget.semanticsLabel,
       locale: widget.locale,
+      onEndSpecModifiersAnimation: widget.onEndSpecModifiersAnimation,
     );
   }
 }

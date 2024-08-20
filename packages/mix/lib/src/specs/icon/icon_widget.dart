@@ -58,6 +58,7 @@ class IconSpecWidget extends StatelessWidget {
     this.semanticLabel,
     super.key,
     this.textDirection,
+    this.onEndSpecModifiersAnimation,
     @Deprecated('Use orderOfModifiers parameter instead')
     List<Type> modifierOrder = const <Type>[],
     List<Type> orderOfModifiers = const <Type>[],
@@ -72,11 +73,15 @@ class IconSpecWidget extends StatelessWidget {
   final TextDirection? textDirection;
   final List<Type> orderOfModifiers;
 
+  /// Called when spec modifiers are animated and the animation is complete.
+  final void Function()? onEndSpecModifiersAnimation;
+
   @override
   Widget build(BuildContext context) {
     return RenderSpecModifiers(
       orderOfModifiers: orderOfModifiers,
       spec: spec ?? const IconSpec(),
+      onEndWhenAnimated: onEndSpecModifiersAnimation,
       child: Icon(
         icon,
         size: spec?.size,
@@ -145,6 +150,7 @@ class AnimatedIconSpecWidget extends ImplicitlyAnimatedWidget {
     super.curve,
     required super.duration,
     super.onEnd,
+    this.onEndSpecModifiersAnimation,
     @Deprecated('Use orderOfModifiers parameter instead')
     List<Type> modifierOrder = const <Type>[],
     List<Type> orderOfModifiers = const <Type>[],
@@ -159,6 +165,9 @@ class AnimatedIconSpecWidget extends ImplicitlyAnimatedWidget {
   final String? semanticLabel;
   final TextDirection? textDirection;
   final List<Type> orderOfModifiers;
+
+  /// Called when spec modifiers are animated and the animation is complete.
+  final void Function()? onEndSpecModifiersAnimation;
 
   @override
   // ignore: library_private_types_in_public_api
@@ -189,6 +198,7 @@ class _AnimatedIconSpecState
       spec: spec,
       semanticLabel: widget.semanticLabel,
       textDirection: widget.textDirection,
+      onEndSpecModifiersAnimation: widget.onEndSpecModifiersAnimation,
       orderOfModifiers: widget.orderOfModifiers,
     );
   }

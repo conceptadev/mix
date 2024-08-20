@@ -87,6 +87,7 @@ class ImageSpecWidget extends StatelessWidget {
     this.isAntiAlias = false,
     this.opacity,
     this.matchTextDirection = false,
+    this.onEndSpecModifiersAnimation,
   });
 
   final ImageSpec? spec;
@@ -102,11 +103,15 @@ class ImageSpecWidget extends StatelessWidget {
   final bool matchTextDirection;
   final Animation<double>? opacity;
 
+  /// Called when spec modifiers are animated and the animation is complete.
+  final void Function()? onEndSpecModifiersAnimation;
+
   @override
   Widget build(BuildContext context) {
     return RenderSpecModifiers(
       orderOfModifiers: orderOfModifiers,
       spec: spec ?? const ImageSpec(),
+      onEndWhenAnimated: onEndSpecModifiersAnimation,
       child: Image(
         image: image,
         frameBuilder: frameBuilder,
@@ -149,6 +154,7 @@ class AnimatedImageSpecWidget extends ImplicitlyAnimatedWidget {
     this.isAntiAlias = false,
     this.matchTextDirection = false,
     this.opacity,
+    this.onEndSpecModifiersAnimation,
   });
 
   final ImageSpec? spec;
@@ -162,6 +168,9 @@ class AnimatedImageSpecWidget extends ImplicitlyAnimatedWidget {
   final bool isAntiAlias;
   final bool matchTextDirection;
   final Animation<double>? opacity;
+
+  /// Called when spec modifiers are animated and the animation is complete.
+  final void Function()? onEndSpecModifiersAnimation;
 
   @override
   AnimatedWidgetBaseState<AnimatedImageSpecWidget> createState() =>
@@ -200,6 +209,7 @@ class _AnimateImageSpecState
       isAntiAlias: widget.isAntiAlias,
       opacity: widget.opacity,
       matchTextDirection: widget.matchTextDirection,
+      onEndSpecModifiersAnimation: widget.onEndSpecModifiersAnimation,
     );
   }
 }
