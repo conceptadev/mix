@@ -47,7 +47,6 @@ class XSelect<T> extends StatefulWidget {
 class XSelectState<T> extends State<XSelect<T>>
     with SingleTickerProviderStateMixin {
   final OverlayPortalController _tooltipController = OverlayPortalController();
-  late final AnimationController _animationController;
   late final MixWidgetStateController _stateController;
 
   final baseStyle = XSelectStyle.base.animate(
@@ -59,11 +58,6 @@ class XSelectState<T> extends State<XSelect<T>>
   void initState() {
     super.initState();
 
-    _animationController = AnimationController(
-      vsync: this,
-      duration: const Duration(),
-    );
-
     _stateController = MixWidgetStateController();
     _stateController.selected = false;
   }
@@ -71,7 +65,6 @@ class XSelectState<T> extends State<XSelect<T>>
   @override
   void dispose() {
     super.dispose();
-    _animationController.dispose();
     _stateController.dispose();
   }
 
@@ -108,19 +101,21 @@ class XSelectState<T> extends State<XSelect<T>>
                     builder: (context) {
                       final select = SelectSpec.of(context);
 
-                      _animationController.duration =
-                          select.animated?.duration ??
-                              _animationController.duration;
-
                       final menu = select.menu;
 
-                      final Container = menu.container.copyWith(
+                      final boxSpec = menu.container.copyWith(
                         width: menu.autoWidth ? _link.leaderSize!.width : null,
                       );
 
                       final Flex = menu.flex;
 
-                      return Container(
+                      return BoxSpecWidget(
+                        spec: boxSpec,
+                        onEndSpecModifiersAnimation: () {
+                          if (_stateController.selected == false) {
+                            _tooltipController.hide();
+                          }
+                        },
                         child: Flex(
                           direction: Axis.vertical,
                           children: widget.items.map(
@@ -170,10 +165,6 @@ class XSelectState<T> extends State<XSelect<T>>
 
   void hide() {
     _stateController.selected = false;
-
-    _animationController.forward(from: 0).whenComplete(() {
-      _tooltipController.hide();
-    });
   }
 
   void onTap() {
