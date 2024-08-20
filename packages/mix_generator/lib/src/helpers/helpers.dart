@@ -1,5 +1,6 @@
 import 'package:analyzer/dart/element/element.dart' show ClassElement;
 import 'package:dart_style/dart_style.dart';
+
 import 'field_info.dart';
 
 /// Returns parameter names or full parameters declaration declared by this class or an empty string.
@@ -7,7 +8,10 @@ import 'field_info.dart';
 /// If `nameOnly` is `true`: `class MyClass<T extends String, Y>` returns `<T, Y>`.
 ///
 /// If `nameOnly` is `false`: `class MyClass<T extends String, Y>` returns `<T extends String, Y>`.
-String typeParametersString(ClassElement classElement, bool nameOnly) {
+String typeParametersString(
+  ClassElement classElement, {
+  required bool nameOnly,
+}) {
   final names = classElement.typeParameters
       .map(
         (e) => nameOnly ? e.name : e.getDisplayString(withNullability: true),
