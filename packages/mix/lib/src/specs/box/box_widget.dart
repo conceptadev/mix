@@ -143,8 +143,8 @@ class _AnimatedBoxSpecWidgetState
     final spec = _boxSpec?.evaluate(animation);
 
     return BoxSpecWidget(
-      spec: spec,imation: widget.onEndSpecModifiersAnimation,
-      child: widget.child,
+      spec: spec,
+      onEndSpecModifiersAnimation: widget.onEndSpecModifiersAnimation,
       child: widget.child,
     );
   }
