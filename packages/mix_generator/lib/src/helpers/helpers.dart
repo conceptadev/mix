@@ -15,9 +15,9 @@ String typeParametersString(ClassElement classElement, bool nameOnly) {
       .join(',');
   if (names.isNotEmpty) {
     return '<$names>';
-  } else {
-    return '';
   }
+
+  return '';
 }
 
 /// Returns constructor for the given type and optional named constructor name. E.g. "TestConstructor" or "TestConstructor._private" when "_private" constructor name is provided.
@@ -30,6 +30,7 @@ extension StringX on String {
     if (isEmpty) {
       return this;
     }
+
     return this[0].toUpperCase() + substring(1);
   }
 
@@ -37,6 +38,7 @@ extension StringX on String {
     if (isEmpty) {
       return this;
     }
+
     return this[0].toLowerCase() + substring(1);
   }
 

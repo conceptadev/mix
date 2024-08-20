@@ -66,6 +66,7 @@ String _staticMethodFromBuilder(ClassBuilderContext<MixableSpec> context) {
   final attributeName = context.attributeName;
   final constructorRef = context.constructorRef;
   final constDef = context.isConst ? 'const ' : '';
+
   return '''
 static $specName from(MixData mix) {
    return mix.attributeOf<$attributeName>()?.resolve(mix) ?? $constDef$specName$constructorRef();
@@ -73,9 +74,7 @@ static $specName from(MixData mix) {
 ''';
 }
 
-String _staticMethodOfBuilder(
-  ClassBuilderContext<MixableSpec> context,
-) {
+String _staticMethodOfBuilder(ClassBuilderContext<MixableSpec> context) {
   final specName = context.name;
 
   final generatedName = context.generatedName;

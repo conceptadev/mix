@@ -81,14 +81,14 @@ String generateUtilityForConstructor(
     ...signatureRequiredParams,
     if (signatureOptionalParams.isNotEmpty)
       '[${signatureOptionalParams.join(', ')}]',
-    if (signatureNamedParams.isNotEmpty) '{${signatureNamedParams.join(', ')}}'
+    if (signatureNamedParams.isNotEmpty) '{${signatureNamedParams.join(', ')}}',
   ].join(', ');
 
   final invocationParams = [
     ...invocationRequiredParams,
     if (invocationOptionalParams.isNotEmpty)
       invocationOptionalParams.join(', '),
-    if (invocationNamedParams.isNotEmpty) invocationNamedParams.join(', ')
+    if (invocationNamedParams.isNotEmpty) invocationNamedParams.join(', '),
   ].join(', ');
 
   final signature = 'T $methodName($signatureParams)';
@@ -110,10 +110,7 @@ $signatureLine
 }
 
 /// Generates utility fields for the given attribute class and fields.
-String generateUtilityFields(
-  String className,
-  List<ParameterInfo> fields,
-) {
+String generateUtilityFields(String className, List<ParameterInfo> fields) {
   final expressions = <String>[];
 
   for (final field in fields) {
@@ -198,11 +195,13 @@ String utilityMethodOnlyBuilder({
 }) {
   final fieldStatements = fields.map((e) {
     final fieldName = e.name;
+
     return '$fieldName: $fieldName,';
   }).join('\n');
 
   final optionalParameters = fields.map((e) {
     final fieldType = e.dtoType ?? e.type;
+
     return '$fieldType? ${e.name},';
   }).join('\n');
 
@@ -224,6 +223,7 @@ String utilityMethodCallBuilder(List<ParameterInfo> fields) {
     final fieldType = field.hasDto
         ? typeRefs.getResolvedTypeFromDto(field.dartType)
         : field.type;
+
     return '$fieldType? ${field.name},';
   }).join('\n');
 
@@ -234,8 +234,10 @@ String utilityMethodCallBuilder(List<ParameterInfo> fields) {
       if (field.isListType) {
         return '$fieldName: $fieldName?.map((e) => e.toDto()).toList(),';
       }
+
       return '$fieldName: $fieldName?.toDto(),';
     }
+
     return '$fieldName: $fieldName,';
   }).join('\n');
 

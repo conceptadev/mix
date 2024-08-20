@@ -5,9 +5,7 @@ import '../helpers/builder_utils.dart';
 import '../helpers/field_info.dart';
 import '../helpers/helpers.dart';
 
-String lerpMethodBuilder(
-  ClassInfo instance,
-) {
+String lerpMethodBuilder(ClassInfo instance) {
   final lerpMethods = <String, List<String>>{};
   final stepMethod = <String>[];
 
@@ -62,9 +60,7 @@ ${lerpMethods.entries.map((entry) => '/// - [${entry.key}] for ${entry.value.map
 ''';
 }
 
-String? _getLerpMethod(
-  ParameterInfo field,
-) {
+String? _getLerpMethod(ParameterInfo field) {
   final typeName = field.type;
   final hasLerp = _checkIfFieldHasLerp(field.dartType.element!);
 
@@ -90,17 +86,12 @@ String? _getLerpMethod(
   }
 }
 
-String _getLerpExpression(
-  ParameterInfo field,
-  bool isInternalRef,
-) {
+String _getLerpExpression(ParameterInfo field, bool isInternalRef) {
   final thisFieldName = isInternalRef ? field.asInternalRef : field.name;
   final otherFieldName = 'other.${field.name}';
   final force = field.nullable ? '' : '!';
 
   final defaultExpression = 't < 0.5 ? $thisFieldName : $otherFieldName';
-
-  final nullable = field.nullable ? '?' : '';
 
   if (field.dartType.element == null) {
     return defaultExpression;
@@ -109,6 +100,8 @@ String _getLerpExpression(
   final hasLerpMethod = _checkIfInstanceHasLerp(field.dartType.element!);
 
   if (hasLerpMethod || field.isSpec) {
+    final nullable = field.nullable ? '?' : '';
+
     return '$thisFieldName$nullable.lerp($otherFieldName, t) ${field.nullable ? '?? $otherFieldName' : ''}';
   }
 
@@ -187,5 +180,6 @@ bool _hasLerpMethod(InterfaceElement classElement) {
       }
     }
   }
+
   return false;
 }

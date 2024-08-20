@@ -7,14 +7,14 @@ import '../utils/type_checker.dart';
 import '../utils/visitors.dart';
 
 class AvoidVariantInsideContextVariant extends DartLintRule {
-  const AvoidVariantInsideContextVariant() : super(code: _code);
-
   static const _code = LintCode(
     name: 'mix_avoid_variant_inside_context_variant',
     problemMessage:
         'Ensure that Variants are not applied inside the ContextVariant scope but rather combined using the & operator.',
     errorSeverity: ErrorSeverity.ERROR,
   );
+
+  const AvoidVariantInsideContextVariant() : super(code: _code);
 
   @override
   void run(
@@ -41,17 +41,14 @@ class AvoidVariantInsideContextVariant extends DartLintRule {
 
       final types = simpleIdentifiers.where((i) {
         if (i.staticType == null) return false;
+
         return variantChecker.isAssignableFromType(i.staticType!);
       }).toList();
 
       if (types.isEmpty) return;
 
       for (final type in types) {
-        reporter.reportErrorForOffset(
-          _code,
-          type.offset,
-          type.length,
-        );
+        reporter.reportErrorForOffset(_code, type.offset, type.length);
       }
     });
   }

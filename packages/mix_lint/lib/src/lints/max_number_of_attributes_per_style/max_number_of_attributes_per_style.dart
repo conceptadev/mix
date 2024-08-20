@@ -8,18 +8,18 @@ import '../../utils/type_checker.dart';
 import '../../utils/rule_config.dart';
 
 class MaxNumberOfAttributesPerStyle extends DartLintRule {
-  const MaxNumberOfAttributesPerStyle._(this.parameters, {required super.code});
-
   final MaxNumberOfAttributesPerStyleParameters parameters;
+
+  const MaxNumberOfAttributesPerStyle._(this.parameters, {required super.code});
 
   factory MaxNumberOfAttributesPerStyle.fromConfig(CustomLintConfigs configs) {
     final rule = RuleConfig<MaxNumberOfAttributesPerStyleParameters>(
-      configs: configs,
       name: 'mix_max_number_of_attributes_per_style',
-      errorSeverity: ErrorSeverity.WARNING,
-      paramsParser: MaxNumberOfAttributesPerStyleParameters.fromJson,
+      configs: configs,
       problemMessage: (value) =>
           'The maximum allowed attributes of a function is ${value.maxNumber}.',
+      errorSeverity: ErrorSeverity.WARNING,
+      paramsParser: MaxNumberOfAttributesPerStyleParameters.fromJson,
     );
 
     return MaxNumberOfAttributesPerStyle._(

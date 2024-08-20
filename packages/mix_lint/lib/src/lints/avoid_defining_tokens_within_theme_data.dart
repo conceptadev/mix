@@ -4,8 +4,6 @@ import '../utils/extensions/instance_creation_expression.dart';
 import '../utils/type_checker.dart';
 
 class AvoidDefiningTokensWithinThemeData extends DartLintRule {
-  const AvoidDefiningTokensWithinThemeData() : super(code: _code);
-
   static const _code = LintCode(
     name: 'mix_avoid_defining_tokens_within_theme_data',
     problemMessage:
@@ -13,6 +11,8 @@ class AvoidDefiningTokensWithinThemeData extends DartLintRule {
     correctionMessage:
         'Instantiate Tokens outside of MixThemeData constructors.',
   );
+
+  const AvoidDefiningTokensWithinThemeData() : super(code: _code);
 
   @override
   void run(
@@ -27,11 +27,7 @@ class AvoidDefiningTokensWithinThemeData extends DartLintRule {
 
       if (!node.isDecendentOf(mixThemeDataChecker)) return;
 
-      reporter.reportErrorForOffset(
-        _code,
-        node.offset,
-        node.length,
-      );
+      reporter.reportErrorForOffset(_code, node.offset, node.length);
     });
   }
 }

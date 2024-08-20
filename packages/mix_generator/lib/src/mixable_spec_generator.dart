@@ -15,6 +15,20 @@ import 'package:source_gen/source_gen.dart';
 class MixableSpecGenerator extends GeneratorForAnnotation<MixableSpec> {
   const MixableSpecGenerator();
 
+  ClassBuilderContext<MixableSpec> _loadContext(Element element) {
+    if (element is! ClassElement) {
+      throw InvalidGenerationSourceError(
+        'The annotation can only be applied to a class.',
+        element: element,
+      );
+    }
+
+    return ClassBuilderContext(
+      classElement: element,
+      annotation: readMixableSpec(element),
+    );
+  }
+
   @override
   Future<String> generateForAnnotatedElement(
     Element element,
@@ -40,19 +54,5 @@ class MixableSpecGenerator extends GeneratorForAnnotation<MixableSpec> {
     ''';
 
     return dartFormat(output);
-  }
-
-  ClassBuilderContext<MixableSpec> _loadContext(Element element) {
-    if (element is! ClassElement) {
-      throw InvalidGenerationSourceError(
-        'The annotation can only be applied to a class.',
-        element: element,
-      );
-    }
-
-    return ClassBuilderContext(
-      annotation: readMixableSpec(element),
-      classElement: element,
-    );
   }
 }

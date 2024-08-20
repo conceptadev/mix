@@ -5,13 +5,7 @@ import 'helpers.dart';
 final typeRefs = TypeRefRepository.instance;
 
 class TypeRefRepository {
-  static TypeRefRepository instance = TypeRefRepository._();
-
-  TypeRefRepository._();
-
-  void addUtilityOverride(String typeName, String utilityName) {
-    _utilityOverrides[typeName] = utilityName;
-  }
+  static TypeRefRepository instance = const TypeRefRepository._();
 
   static final Map<String, String> _utilityOverrides = {
     'EdgeInsetsGeometry': 'SpacingUtility',
@@ -53,6 +47,22 @@ class TypeRefRepository {
     'StackSpec': 'StackSpecAttribute',
   };
 
+  const TypeRefRepository._();
+
+  String _sanitizeUtilityName(String typeName, bool isList) {
+    typeName = typeName.capitalize;
+
+    if (isList) {
+      typeName = '${typeName}List';
+    }
+
+    return '${typeName}Utility';
+  }
+
+  void addUtilityOverride(String typeName, String utilityName) {
+    _utilityOverrides[typeName] = utilityName;
+  }
+
   String? getDto(DartType type) {
     final isList = type.isDartCoreList;
     if (isList) {
@@ -70,6 +80,7 @@ class TypeRefRepository {
     if (isList && typeName != null) {
       return 'List<$typeName>';
     }
+
     return typeName;
   }
 
@@ -86,6 +97,7 @@ class TypeRefRepository {
     if (isList) {
       return 'List<${type.getTypeAsString()}>';
     }
+
     return type.getTypeAsString();
   }
 
@@ -116,16 +128,6 @@ class TypeRefRepository {
     return _sanitizeUtilityName(refType.getTypeAsString(), isList);
   }
 
-  String _sanitizeUtilityName(String typeName, bool isList) {
-    typeName = typeName.capitalize;
-
-    if (isList) {
-      typeName = '${typeName}List';
-    }
-
-    return '${typeName}Utility';
-  }
-
   String getUtilityNameFromTypeName(String typeName) {
     // check if typeName ends with Utility
     // If not then add utility to it
@@ -151,6 +153,7 @@ class TypeRefRepository {
     if (!typeName.endsWith(utilityPostfix)) {
       return '$typeName$utilityPostfix';
     }
+
     return typeName;
   }
 }

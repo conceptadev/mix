@@ -20,15 +20,15 @@ void main() {
 
     testWidgets('renders fallback when image fails to load',
         (WidgetTester tester) async {
-      final image = NetworkImage('https://example.com/invalid.jpg');
-      await tester.pumpRxComponent(RxAvatar(image: image, fallback: 'AB'));
+      const image = NetworkImage('https://example.com/invalid.jpg');
+      await tester.pumpRxComponent(const RxAvatar(image: image, fallback: 'AB'));
 
       await tester.pumpAndSettle();
       expect(find.text('AB'), findsOneWidget);
     });
 
     testWidgets('renders with non-standard size', (WidgetTester tester) async {
-      await tester.pumpRxComponent(RxAvatar(size: AvatarSize.size6));
+      await tester.pumpRxComponent(const RxAvatar(size: AvatarSize.size6));
 
       final avatarWidget = tester.widget<RxAvatar>(find.byType(RxAvatar));
       expect(avatarWidget.size, equals(AvatarSize.size6));
@@ -36,7 +36,7 @@ void main() {
 
     testWidgets('renders with non-standard radius',
         (WidgetTester tester) async {
-      await tester.pumpRxComponent(RxAvatar(radius: AvatarRadius.none));
+      await tester.pumpRxComponent(const RxAvatar(radius: AvatarRadius.none));
 
       final avatarWidget = tester.widget<RxAvatar>(find.byType(RxAvatar));
       expect(avatarWidget.radius, equals(AvatarRadius.none));
@@ -44,7 +44,7 @@ void main() {
 
     testWidgets('renders with non-standard variant',
         (WidgetTester tester) async {
-      await tester.pumpRxComponent(RxAvatar(
+      await tester.pumpRxComponent(const RxAvatar(
         variant: AvatarVariant.soft,
       ));
 

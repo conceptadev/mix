@@ -5,26 +5,26 @@ import 'src/mixable_enum_utility_generator.dart';
 import 'src/mixable_spec_generator.dart';
 import 'package:source_gen/source_gen.dart';
 
-Builder specDefinition(BuilderOptions options) => SharedPartBuilder(
+Builder specDefinition() => SharedPartBuilder(
       [const MixableSpecGenerator()],
       'spec',
       allowSyntaxErrors: true,
     );
 
-Builder dtoDefinition(BuilderOptions options) => SharedPartBuilder(
-      [MixableDtoGenerator()],
+Builder dtoDefinition() => SharedPartBuilder(
+      [const MixableDtoGenerator()],
       'dto',
       allowSyntaxErrors: true,
     );
 
-Builder classUtilityDefinition(BuilderOptions options) => SharedPartBuilder(
-      [MixableClassUtilityGenerator()],
+Builder classUtilityDefinition() => SharedPartBuilder(
+      [const MixableClassUtilityGenerator()],
       'class_utility',
       allowSyntaxErrors: true,
     );
 
-Builder enumUtilityDefinition(BuilderOptions options) => SharedPartBuilder(
-      [MixableEnumUtilityGenerator()],
+Builder enumUtilityDefinition() => SharedPartBuilder(
+      [const MixableEnumUtilityGenerator()],
       'enum_utility',
       allowSyntaxErrors: true,
     );

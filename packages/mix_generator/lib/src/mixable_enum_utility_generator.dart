@@ -12,7 +12,7 @@ import 'helpers/builder_utils.dart';
 
 class MixableEnumUtilityGenerator
     extends GeneratorForAnnotation<MixableEnumUtility> {
-  MixableEnumUtilityGenerator();
+  const MixableEnumUtilityGenerator();
 
   EnumUtilityAnnotationContext _readContext(ClassElement classElement) {
     final annotation = typeChecker.firstAnnotationOfExact(classElement);

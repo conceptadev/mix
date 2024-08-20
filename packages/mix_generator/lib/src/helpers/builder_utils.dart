@@ -10,7 +10,7 @@ import 'field_info.dart';
 import 'package:source_gen/source_gen.dart';
 
 class MixHelperRef {
-  MixHelperRef._();
+  const MixHelperRef._();
 
   static String get _refName => 'MixHelpers';
 
@@ -119,11 +119,13 @@ extension EnumElementX on EnumElement {
           .toListValue()!
           .map((obj) {
             final enumField = obj.getField('_name');
+
             return enumField?.toStringValue();
           })
           .whereType<String>()
           .toList();
     }
+
     return [];
   }
 }
@@ -151,6 +153,7 @@ extension ClassElementX on ClassElement {
     if (supertype != null) {
       return supertype.typeArguments.firstOrNull;
     }
+
     return null;
   }
 
@@ -179,6 +182,7 @@ extension ClassElementX on ClassElement {
           return supertype.element.name == className;
         });
       }
+
       return false;
     });
   }
@@ -240,6 +244,7 @@ extension DartTypeX on DartType {
         !isDartCoreObject) {
       return thisElement.name;
     }
+
     return getDisplayString(withNullability: false);
   }
 
@@ -262,6 +267,7 @@ extension DartTypeX on DartType {
         return type.typeArguments.firstOrNull;
       }
     }
+
     return null;
   }
 
@@ -278,6 +284,7 @@ DartType? extractDtoTypeArgument(ClassElement classElement) {
   // Check if the class itself is Dto<T>
   if (classElement.name == 'Dto' && classElement.typeParameters.length == 1) {
     DartType typeArgument = classElement.thisType.typeArguments.first;
+
     return resolveTypeArgument(typeArgument);
   }
 
@@ -287,6 +294,7 @@ DartType? extractDtoTypeArgument(ClassElement classElement) {
       List<DartType> typeArguments = interface.typeArguments;
       if (typeArguments.length == 1) {
         DartType typeArgument = typeArguments.first;
+
         return resolveTypeArgument(typeArgument);
       }
     }

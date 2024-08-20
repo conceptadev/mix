@@ -13,9 +13,9 @@ String specAttributeClass(ClassBuilderContext<MixableSpec> context) {
 
   final attributeInstance = ClassInfo(
     name: context.attributeName,
+    fields: context.fields,
     isBase: specInstance.isBase,
     isFinal: specInstance.isFinal,
-    fields: context.fields,
     mixinTypes: hasDiagnosticable ? {'Diagnosticable'} : {},
     extendsType: context.attributeExtendsType,
   );
@@ -25,6 +25,7 @@ String specAttributeClass(ClassBuilderContext<MixableSpec> context) {
 
   final fieldDeclarations = nonSuperFields.map((field) {
     final fieldType = field.dtoType ?? field.type;
+
     return 'final $fieldType? ${field.name};';
   }).join('\n  ');
 

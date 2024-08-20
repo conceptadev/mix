@@ -10,6 +10,7 @@ String copyWithMethodBuilder(ClassInfo instance) {
   final fieldStatements = buildConstructorParams(fields, (field) {
     final fieldName =
         isInternalRef ? field.asInternalRef : 'this.${field.name}';
+
     return '${field.name} ?? $fieldName';
   });
 

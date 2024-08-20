@@ -10,6 +10,7 @@ String methodDebugFillProperties(ClassInfo instance) {
     if (_expandableFields.contains(fieldName)) {
       return 'properties.add(DiagnosticsProperty(\'${field.name}\', $fieldName, expandableValue: true, defaultValue: null));';
     }
+
     return 'properties.add(DiagnosticsProperty(\'${field.name}\', $fieldName, defaultValue: null));';
   }).join('\n');
 

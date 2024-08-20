@@ -13,25 +13,7 @@ import 'helpers/builder_utils.dart';
 
 class MixableClassUtilityGenerator
     extends GeneratorForAnnotation<MixableClassUtility> {
-  MixableClassUtilityGenerator();
-
-  @override
-  Future<String> generateForAnnotatedElement(
-    Element element,
-    ConstantReader reader,
-    BuildStep buildStep,
-  ) async {
-    if (element is! ClassElement) {
-      throw InvalidGenerationSourceError(
-        'The annotation can only be applied to a class.',
-        element: element,
-      );
-    }
-
-    final context = _readContext(element);
-
-    return dartFormat(_generateUtilityMixin(context));
-  }
+  const MixableClassUtilityGenerator();
 
   /// Reads the annotation context for the given [element].
   ///
@@ -66,6 +48,24 @@ class MixableClassUtilityGenerator
       mappingElement: mappingEl as ClassElement?,
       generateCallMethod: generateCallMethod,
     );
+  }
+
+  @override
+  Future<String> generateForAnnotatedElement(
+    Element element,
+    ConstantReader reader,
+    BuildStep buildStep,
+  ) async {
+    if (element is! ClassElement) {
+      throw InvalidGenerationSourceError(
+        'The annotation can only be applied to a class.',
+        element: element,
+      );
+    }
+
+    final context = _readContext(element);
+
+    return dartFormat(_generateUtilityMixin(context));
   }
 }
 
@@ -143,6 +143,7 @@ String _generateUtilityFields(ClassUtilityAnnotationContext context) {
   ''');
     }
   }
+
   return fieldStatements.join('\n');
 }
 
@@ -195,13 +196,12 @@ String generateUtilityConstructors(ClassUtilityAnnotationContext context) {
   return fieldStatements.join('\n');
 }
 
-bool isValidConstructor(
-  ConstructorElement constructor,
-) {
+bool isValidConstructor(ConstructorElement constructor) {
   final isPublic = constructor.isPublic;
 
   final hasUndefinedParamTypes = constructor.parameters.any((param) {
     final library = param.type.element?.library;
+
     return library != null && !library.isFlutterOrDart;
   });
 

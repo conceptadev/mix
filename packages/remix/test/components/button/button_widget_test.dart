@@ -104,7 +104,7 @@ void main() {
 
     testWidgets('uses custom spinner builder when provided',
         (WidgetTester tester) async {
-      final key = Key('key');
+      const key = Key('key');
 
       await tester.pumpRxComponent(
         MaterialApp(

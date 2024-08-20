@@ -6,6 +6,7 @@ String getterPropsBuilder(ClassInfo instance) {
   final isInternalRef = instance.isInternalRef;
   final fieldStatements = fields.map((field) {
     final fieldName = isInternalRef ? field.asInternalRef : field.name;
+
     return '$fieldName,';
   }).join('\n');
 
@@ -24,7 +25,6 @@ String getterPropsBuilder(ClassInfo instance) {
 String methodEqualityOperatorBuilder({
   required String className,
   required List<FieldInfo> fields,
-  bool isInternalRef = false,
 }) {
   final equalityChecks = fields.map((field) {
     if (field.isListType) {
@@ -54,6 +54,7 @@ String getterHashcodeBuilder({
 }) {
   final fieldStatements = fields.map((field) {
     final fieldName = isInternalRef ? field.asInternalRef : field.name;
+
     return '$fieldName.hashCode';
   }).join(' ^ ');
 
