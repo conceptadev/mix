@@ -21,9 +21,9 @@ class RxAvatar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RxBlankAvatar(
-      style: avatarStyle(style, [size, variant, radius]),
       image: image,
       fallback: fallback,
+      style: avatarStyle(style, [size, variant, radius]),
     );
   }
 }

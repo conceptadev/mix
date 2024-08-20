@@ -7,8 +7,6 @@ import 'package:flutter/painting.dart';
 class RadixColors {
   final ColorSwatch<int> swatch;
   final ColorSwatch<int> alphaSwatch;
-  const RadixColors(this.swatch, this.alphaSwatch);
-
   static const amber = RadixColors(_amber, _amberAlpha);
   static const amberDark = RadixColors(_amberDark, _amberDarkAlpha);
   static const blackAlpha = RadixColors(_blackAlpha, _blackAlpha);
@@ -67,11 +65,12 @@ class RadixColors {
   static const whiteAlpha = RadixColors(_whiteAlpha, _whiteAlpha);
   static const sage = RadixColors(_sage, _sageAlpha);
   static const sageDark = RadixColors(_sageDark, _sageDarkAlpha);
+  const RadixColors(this.swatch, this.alphaSwatch);
 }
 
 const _amber = ColorSwatch(
   0xffee9d2b,
-  <int, Color>{
+  {
     1: Color(0xfffefdfb),
     2: Color(0xfffff9ed),
     3: Color(0xfffff4d5),
@@ -83,13 +82,13 @@ const _amber = ColorSwatch(
     9: Color(0xffffb224),
     10: Color(0xffffa01c),
     11: Color(0xffad5700),
-    12: Color(0xff4e2009)
+    12: Color(0xff4e2009),
   },
 );
 
 const _amberAlpha = ColorSwatch(
   0xd4ea8900,
-  <int, Color>{
+  {
     1: Color(0x04c08205),
     2: Color(0x12ffab02),
     3: Color(0x2affbb01),
@@ -101,13 +100,13 @@ const _amberAlpha = ColorSwatch(
     9: Color(0xdbffa600),
     10: Color(0xe3ff9500),
     11: Color(0xfaab5300),
-    12: Color(0xf6481800)
+    12: Color(0xf6481800),
   },
 );
 
 const _amberDark = ColorSwatch(
   0xffffb224,
-  <int, Color>{
+  {
     1: Color(0xff1f1300),
     2: Color(0xff271700),
     3: Color(0xff341c00),
@@ -119,13 +118,13 @@ const _amberDark = ColorSwatch(
     9: Color(0xffffb224),
     10: Color(0xffffcb47),
     11: Color(0xfff1a10d),
-    12: Color(0xfffef3dd)
+    12: Color(0xfffef3dd),
   },
 );
 
 const _amberDarkAlpha = ColorSwatch(
   0xfaffb625,
-  <int, Color>{
+  {
     1: Color(0x00000000),
     2: Color(0x09fd8300),
     3: Color(0x18fe7300),
@@ -137,13 +136,13 @@ const _amberDarkAlpha = ColorSwatch(
     9: Color(0xfaffb625),
     10: Color(0xfaffce48),
     11: Color(0xefffab0e),
-    12: Color(0xfafff8e1)
+    12: Color(0xfafff8e1),
   },
 );
 
 const _blackAlpha = ColorSwatch(
   0xe8000000,
-  <int, Color>{
+  {
     1: Color(0x03000000),
     2: Color(0x07000000),
     3: Color(0x0c000000),
@@ -155,13 +154,13 @@ const _blackAlpha = ColorSwatch(
     9: Color(0x70000000),
     10: Color(0x7a000000),
     11: Color(0x90000000),
-    12: Color(0xe8000000)
+    12: Color(0xe8000000),
   },
 );
 
 const _blue = ColorSwatch(
   0xff0091ff,
-  <int, Color>{
+  {
     1: Color(0xfffbfdff),
     2: Color(0xfff5faff),
     3: Color(0xffedf6ff),
@@ -173,13 +172,13 @@ const _blue = ColorSwatch(
     9: Color(0xff0091ff),
     10: Color(0xff0081f1),
     11: Color(0xff006adc),
-    12: Color(0xff00254d)
+    12: Color(0xff00254d),
   },
 );
 
 const _blueAlpha = ColorSwatch(
   0xfa0091ff,
-  <int, Color>{
+  {
     1: Color(0x040582ff),
     2: Color(0x0a0582ff),
     3: Color(0x120280ff),
@@ -191,13 +190,13 @@ const _blueAlpha = ColorSwatch(
     9: Color(0xfa0091ff),
     10: Color(0xfa0080f1),
     11: Color(0xfa0066db),
-    12: Color(0xfa002149)
+    12: Color(0xfa002149),
   },
 );
 
 const _blueDark = ColorSwatch(
   0xff0091ff,
-  <int, Color>{
+  {
     1: Color(0xff0f1720),
     2: Color(0xff0f1b2d),
     3: Color(0xff10243e),
@@ -209,13 +208,13 @@ const _blueDark = ColorSwatch(
     9: Color(0xff0091ff),
     10: Color(0xff369eff),
     11: Color(0xff52a9ff),
-    12: Color(0xffeaf6ff)
+    12: Color(0xffeaf6ff),
   },
 );
 
 const _blueDarkAlpha = ColorSwatch(
   0xfa0095ff,
-  <int, Color>{
+  {
     1: Color(0x00000000),
     2: Color(0x0f0f5afc),
     3: Color(0x221677fe),
@@ -227,13 +226,13 @@ const _blueDarkAlpha = ColorSwatch(
     9: Color(0xfa0095ff),
     10: Color(0xfa37a1ff),
     11: Color(0xfa53acff),
-    12: Color(0xfaeffbff)
+    12: Color(0xfaeffbff),
   },
 );
 
 const _bronze = ColorSwatch(
   0xffa18072,
-  <int, Color>{
+  {
     1: Color(0xfffdfcfc),
     2: Color(0xfffdf8f6),
     3: Color(0xfff8f1ee),
@@ -245,13 +244,13 @@ const _bronze = ColorSwatch(
     9: Color(0xffa18072),
     10: Color(0xff977669),
     11: Color(0xff846358),
-    12: Color(0xff43302b)
+    12: Color(0xff43302b),
   },
 );
 
 const _bronzeAlpha = ColorSwatch(
   0x8d551a00,
-  <int, Color>{
+  {
     1: Color(0x03580505),
     2: Color(0x09c73c05),
     3: Color(0x11972e01),
@@ -263,13 +262,13 @@ const _bronzeAlpha = ColorSwatch(
     9: Color(0x8d551a00),
     10: Color(0x964e1600),
     11: Color(0xa7431100),
-    12: Color(0xd41d0600)
+    12: Color(0xd41d0600),
   },
 );
 
 const _bronzeDark = ColorSwatch(
   0xffa18072,
-  <int, Color>{
+  {
     1: Color(0xff191514),
     2: Color(0xff1f1917),
     3: Color(0xff2a211f),
@@ -281,13 +280,13 @@ const _bronzeDark = ColorSwatch(
     9: Color(0xffa18072),
     10: Color(0xffb08c7d),
     11: Color(0xffcba393),
-    12: Color(0xfff9ede7)
+    12: Color(0xfff9ede7),
   },
 );
 
 const _bronzeDarkAlpha = ColorSwatch(
   0x97ffcab3,
-  <int, Color>{
+  {
     1: Color(0x00000000),
     2: Color(0x07f7aa83),
     3: Color(0x13ffb7a9),
@@ -299,13 +298,13 @@ const _bronzeDarkAlpha = ColorSwatch(
     9: Color(0x97ffcab3),
     10: Color(0xa8ffcab4),
     11: Color(0xc5ffccb8),
-    12: Color(0xf8fff3ed)
+    12: Color(0xf8fff3ed),
   },
 );
 
 const _brown = ColorSwatch(
   0xffad7f58,
-  <int, Color>{
+  {
     1: Color(0xfffefdfc),
     2: Color(0xfffcf9f6),
     3: Color(0xfff8f1ea),
@@ -317,13 +316,13 @@ const _brown = ColorSwatch(
     9: Color(0xffad7f58),
     10: Color(0xffa07653),
     11: Color(0xff886349),
-    12: Color(0xff3f2c22)
+    12: Color(0xff3f2c22),
   },
 );
 
 const _brownAlpha = ColorSwatch(
   0xa7823d00,
-  <int, Color>{
+  {
     1: Color(0x03ab5805),
     2: Color(0x09ab5805),
     3: Color(0x15ab5602),
@@ -335,13 +334,13 @@ const _brownAlpha = ColorSwatch(
     9: Color(0xa7823d00),
     10: Color(0xac723300),
     11: Color(0xb6582500),
-    12: Color(0xdd220c00)
+    12: Color(0xdd220c00),
   },
 );
 
 const _brownDark = ColorSwatch(
   0xffad7f58,
-  <int, Color>{
+  {
     1: Color(0xff191513),
     2: Color(0xff221813),
     3: Color(0xff2e201a),
@@ -353,13 +352,13 @@ const _brownDark = ColorSwatch(
     9: Color(0xffad7f58),
     10: Color(0xffbd8b60),
     11: Color(0xffdba16e),
-    12: Color(0xfffaf0e5)
+    12: Color(0xfffaf0e5),
   },
 );
 
 const _brownDarkAlpha = ColorSwatch(
   0xa4ffba7e,
-  <int, Color>{
+  {
     1: Color(0x00000000),
     2: Color(0x09ff6913),
     3: Color(0x16fd9163),
@@ -371,13 +370,13 @@ const _brownDarkAlpha = ColorSwatch(
     9: Color(0xa4ffba7e),
     10: Color(0xb6ffbb7f),
     11: Color(0xd7ffbb7f),
-    12: Color(0xfafff5e9)
+    12: Color(0xfafff5e9),
   },
 );
 
 const _crimson = ColorSwatch(
   0xffe93d82,
-  <int, Color>{
+  {
     1: Color(0xfffffcfd),
     2: Color(0xfffff7fb),
     3: Color(0xfffeeff6),
@@ -389,13 +388,13 @@ const _crimson = ColorSwatch(
     9: Color(0xffe93d82),
     10: Color(0xffe03177),
     11: Color(0xffd31e66),
-    12: Color(0xff3d0d1d)
+    12: Color(0xff3d0d1d),
   },
 );
 
 const _crimsonAlpha = ColorSwatch(
   0xc2e2005a,
-  <int, Color>{
+  {
     1: Color(0x03ff0558),
     2: Color(0x08ff0582),
     3: Color(0x10ef0170),
@@ -407,13 +406,13 @@ const _crimsonAlpha = ColorSwatch(
     9: Color(0xc2e2005a),
     10: Color(0xced90057),
     11: Color(0xe1cd0052),
-    12: Color(0xf2330011)
+    12: Color(0xf2330011),
   },
 );
 
 const _crimsonDark = ColorSwatch(
   0xffe93d82,
-  <int, Color>{
+  {
     1: Color(0xff1d1418),
     2: Color(0xff27141c),
     3: Color(0xff3c1827),
@@ -425,13 +424,13 @@ const _crimsonDark = ColorSwatch(
     9: Color(0xffe93d82),
     10: Color(0xfff04f88),
     11: Color(0xfff76190),
-    12: Color(0xfffeecf4)
+    12: Color(0xfffeecf4),
   },
 );
 
 const _crimsonDarkAlpha = ColorSwatch(
   0xe6ff418d,
-  <int, Color>{
+  {
     1: Color(0x00000000),
     2: Color(0x0bfb1471),
     3: Color(0x23fe3186),
@@ -443,13 +442,13 @@ const _crimsonDarkAlpha = ColorSwatch(
     9: Color(0xe6ff418d),
     10: Color(0xeeff538f),
     11: Color(0xf6ff6495),
-    12: Color(0xfafff0f8)
+    12: Color(0xfafff0f8),
   },
 );
 
 const _cyan = ColorSwatch(
   0xff05a2c2,
-  <int, Color>{
+  {
     1: Color(0xfffafdfe),
     2: Color(0xfff2fcfd),
     3: Color(0xffe7f9fb),
@@ -461,13 +460,13 @@ const _cyan = ColorSwatch(
     9: Color(0xff05a2c2),
     10: Color(0xff0894b3),
     11: Color(0xff0c7792),
-    12: Color(0xff04313c)
+    12: Color(0xff04313c),
   },
 );
 
 const _cyanAlpha = ColorSwatch(
   0xfa00a1c1,
-  <int, Color>{
+  {
     1: Color(0x05059bcd),
     2: Color(0x0d00c6d8),
     3: Color(0x1802c0d5),
@@ -479,13 +478,13 @@ const _cyanAlpha = ColorSwatch(
     9: Color(0xfa00a1c1),
     10: Color(0xf70090b0),
     11: Color(0xf300718d),
-    12: Color(0xfa002d38)
+    12: Color(0xfa002d38),
   },
 );
 
 const _cyanDark = ColorSwatch(
   0xff05a2c2,
-  <int, Color>{
+  {
     1: Color(0xff07191d),
     2: Color(0xff061e24),
     3: Color(0xff072830),
@@ -497,13 +496,13 @@ const _cyanDark = ColorSwatch(
     9: Color(0xff05a2c2),
     10: Color(0xff00b1cc),
     11: Color(0xff00c2d7),
-    12: Color(0xffe1f8fa)
+    12: Color(0xffe1f8fa),
   },
 );
 
 const _cyanDarkAlpha = ColorSwatch(
   0xba04d5ff,
-  <int, Color>{
+  {
     1: Color(0x00000000),
     2: Color(0x0800bbff),
     3: Color(0x1607cbfc),
@@ -515,13 +514,13 @@ const _cyanDarkAlpha = ColorSwatch(
     9: Color(0xba04d5ff),
     10: Color(0xc600ddff),
     11: Color(0xd200e5fe),
-    12: Color(0xf9e6fdff)
+    12: Color(0xf9e6fdff),
   },
 );
 
 const _gold = ColorSwatch(
   0xff978365,
-  <int, Color>{
+  {
     1: Color(0xfffdfdfc),
     2: Color(0xfffbf9f2),
     3: Color(0xfff5f2e9),
@@ -533,13 +532,13 @@ const _gold = ColorSwatch(
     9: Color(0xff978365),
     10: Color(0xff8c795d),
     11: Color(0xff776750),
-    12: Color(0xff3b352b)
+    12: Color(0xff3b352b),
   },
 );
 
 const _goldAlpha = ColorSwatch(
   0x9a533200,
-  <int, Color>{
+  {
     1: Color(0x03585805),
     2: Color(0x0db08a00),
     3: Color(0x168c6a02),
@@ -551,13 +550,13 @@ const _goldAlpha = ColorSwatch(
     9: Color(0x9a533200),
     10: Color(0xa24a2d00),
     11: Color(0xaf392100),
-    12: Color(0xd4130c00)
+    12: Color(0xd4130c00),
   },
 );
 
 const _goldDark = ColorSwatch(
   0xff978365,
-  <int, Color>{
+  {
     1: Color(0xff171613),
     2: Color(0xff1c1a15),
     3: Color(0xff26231c),
@@ -569,13 +568,13 @@ const _goldDark = ColorSwatch(
     9: Color(0xff978365),
     10: Color(0xffa59071),
     11: Color(0xffbfa888),
-    12: Color(0xfff7f4e7)
+    12: Color(0xfff7f4e7),
   },
 );
 
 const _goldDarkAlpha = ColorSwatch(
   0x8dffdca7,
-  <int, Color>{
+  {
     1: Color(0x00000000),
     2: Color(0x06facb6e),
     3: Color(0x11fede9d),
@@ -587,13 +586,13 @@ const _goldDarkAlpha = ColorSwatch(
     9: Color(0x8dffdca7),
     10: Color(0x9cffdcac),
     11: Color(0xb9ffe0b4),
-    12: Color(0xf6fffcee)
+    12: Color(0xf6fffcee),
   },
 );
 
 const _grass = ColorSwatch(
   0xff46a758,
-  <int, Color>{
+  {
     1: Color(0xfffbfefb),
     2: Color(0xfff3fcf3),
     3: Color(0xffebf9eb),
@@ -605,13 +604,13 @@ const _grass = ColorSwatch(
     9: Color(0xff46a758),
     10: Color(0xff3d9a50),
     11: Color(0xff297c3b),
-    12: Color(0xff1b311e)
+    12: Color(0xff1b311e),
   },
 );
 
 const _grassAlpha = ColorSwatch(
   0xb9008619,
-  <int, Color>{
+  {
     1: Color(0x0405c005),
     2: Color(0x0c05c005),
     3: Color(0x1402b302),
@@ -623,13 +622,13 @@ const _grassAlpha = ColorSwatch(
     9: Color(0xb9008619),
     10: Color(0xc2007a19),
     11: Color(0xd6006316),
-    12: Color(0xe4001904)
+    12: Color(0xe4001904),
   },
 );
 
 const _grassDark = ColorSwatch(
   0xff46a758,
-  <int, Color>{
+  {
     1: Color(0xff0d1912),
     2: Color(0xff0f1e13),
     3: Color(0xff132819),
@@ -641,13 +640,13 @@ const _grassDark = ColorSwatch(
     9: Color(0xff46a758),
     10: Color(0xff55b467),
     11: Color(0xff63c174),
-    12: Color(0xffe5fbeb)
+    12: Color(0xffe5fbeb),
   },
 );
 
 const _grassDarkAlpha = ColorSwatch(
   0x9e69ff82,
-  <int, Color>{
+  {
     1: Color(0x00000000),
     2: Color(0x0668fc3f),
     3: Color(0x1168fc7b),
@@ -659,13 +658,13 @@ const _grassDarkAlpha = ColorSwatch(
     9: Color(0x9e69ff82),
     10: Color(0xac78ff91),
     11: Color(0xba83ff97),
-    12: Color(0xfaeafff0)
+    12: Color(0xfaeafff0),
   },
 );
 
 const _gray = ColorSwatch(
   0xff8f8f8f,
-  <int, Color>{
+  {
     1: Color(0xfffcfcfc),
     2: Color(0xfff8f8f8),
     3: Color(0xfff3f3f3),
@@ -677,13 +676,13 @@ const _gray = ColorSwatch(
     9: Color(0xff8f8f8f),
     10: Color(0xff858585),
     11: Color(0xff6f6f6f),
-    12: Color(0xff171717)
+    12: Color(0xff171717),
   },
 );
 
 const _grayAlpha = ColorSwatch(
   0x70000000,
-  <int, Color>{
+  {
     1: Color(0x03000000),
     2: Color(0x07000000),
     3: Color(0x0c000000),
@@ -695,13 +694,13 @@ const _grayAlpha = ColorSwatch(
     9: Color(0x70000000),
     10: Color(0x7a000000),
     11: Color(0x90000000),
-    12: Color(0xe8000000)
+    12: Color(0xe8000000),
   },
 );
 
 const _grayDark = ColorSwatch(
   0xff707070,
-  <int, Color>{
+  {
     1: Color(0xff161616),
     2: Color(0xff1c1c1c),
     3: Color(0xff232323),
@@ -713,13 +712,13 @@ const _grayDark = ColorSwatch(
     9: Color(0xff707070),
     10: Color(0xff7e7e7e),
     11: Color(0xffa0a0a0),
-    12: Color(0xffededed)
+    12: Color(0xffededed),
   },
 );
 
 const _grayDarkAlpha = ColorSwatch(
   0x62ffffff,
-  <int, Color>{
+  {
     1: Color(0x00ffffff),
     2: Color(0x07ffffff),
     3: Color(0x0effffff),
@@ -731,13 +730,13 @@ const _grayDarkAlpha = ColorSwatch(
     9: Color(0x62ffffff),
     10: Color(0x72ffffff),
     11: Color(0x97ffffff),
-    12: Color(0xebffffff)
+    12: Color(0xebffffff),
   },
 );
 
 const _green = ColorSwatch(
   0xff30a46c,
-  <int, Color>{
+  {
     1: Color(0xfffbfefc),
     2: Color(0xfff2fcf5),
     3: Color(0xffe9f9ee),
@@ -749,13 +748,13 @@ const _green = ColorSwatch(
     9: Color(0xff30a46c),
     10: Color(0xff299764),
     11: Color(0xff18794e),
-    12: Color(0xff153226)
+    12: Color(0xff153226),
   },
 );
 
 const _greenAlpha = ColorSwatch(
   0xcf008f4a,
-  <int, Color>{
+  {
     1: Color(0x0405c043),
     2: Color(0x0d00c43b),
     3: Color(0x1602ba3c),
@@ -767,13 +766,13 @@ const _greenAlpha = ColorSwatch(
     9: Color(0xcf008f4a),
     10: Color(0xd6008346),
     11: Color(0xe7006b3b),
-    12: Color(0xea002012)
+    12: Color(0xea002012),
   },
 );
 
 const _greenDark = ColorSwatch(
   0xff30a46c,
-  <int, Color>{
+  {
     1: Color(0xff0d1912),
     2: Color(0xff0c1f17),
     3: Color(0xff0f291e),
@@ -785,13 +784,13 @@ const _greenDark = ColorSwatch(
     9: Color(0xff30a46c),
     10: Color(0xff3cb179),
     11: Color(0xff4cc38a),
-    12: Color(0xffe5fbeb)
+    12: Color(0xffe5fbeb),
   },
 );
 
 const _greenDarkAlpha = ColorSwatch(
   0x9a47ffa6,
-  <int, Color>{
+  {
     1: Color(0x00000000),
     2: Color(0x0700f7ca),
     3: Color(0x122afebe),
@@ -803,13 +802,13 @@ const _greenDarkAlpha = ColorSwatch(
     9: Color(0x9a47ffa6),
     10: Color(0xa954ffaf),
     11: Color(0xbd62ffb3),
-    12: Color(0xfaeafff0)
+    12: Color(0xfaeafff0),
   },
 );
 
 const _indigo = ColorSwatch(
   0xff3e63dd,
-  <int, Color>{
+  {
     1: Color(0xfffdfdfe),
     2: Color(0xfff8faff),
     3: Color(0xfff0f4ff),
@@ -821,13 +820,13 @@ const _indigo = ColorSwatch(
     9: Color(0xff3e63dd),
     10: Color(0xff3a5ccc),
     11: Color(0xff3451b2),
-    12: Color(0xff101d46)
+    12: Color(0xff101d46),
   },
 );
 
 const _indigoAlpha = ColorSwatch(
   0xc10031d2,
-  <int, Color>{
+  {
     1: Color(0x02050582),
     2: Color(0x07054cff),
     3: Color(0x0f0144ff),
@@ -839,13 +838,13 @@ const _indigoAlpha = ColorSwatch(
     9: Color(0xc10031d2),
     10: Color(0xc5002cbd),
     11: Color(0xcb00259e),
-    12: Color(0xef000e3a)
+    12: Color(0xef000e3a),
   },
 );
 
 const _indigoDark = ColorSwatch(
   0xff3e63dd,
-  <int, Color>{
+  {
     1: Color(0xff131620),
     2: Color(0xff15192d),
     3: Color(0xff192140),
@@ -857,13 +856,13 @@ const _indigoDark = ColorSwatch(
     9: Color(0xff3e63dd),
     10: Color(0xff5373e7),
     11: Color(0xff849dff),
-    12: Color(0xffeef1fd)
+    12: Color(0xffeef1fd),
   },
 );
 
 const _indigoDarkAlpha = ColorSwatch(
   0xd84571ff,
-  <int, Color>{
+  {
     1: Color(0x00000000),
     2: Color(0x0f3549fc),
     3: Color(0x253c63fe),
@@ -875,13 +874,13 @@ const _indigoDarkAlpha = ColorSwatch(
     9: Color(0xd84571ff),
     10: Color(0xe45a7eff),
     11: Color(0xfa86a0ff),
-    12: Color(0xfaf2f5ff)
+    12: Color(0xfaf2f5ff),
   },
 );
 
 const _lime = ColorSwatch(
   0xff94ba2c,
-  <int, Color>{
+  {
     1: Color(0xfffcfdfa),
     2: Color(0xfff7fcf0),
     3: Color(0xffeefadc),
@@ -893,13 +892,13 @@ const _lime = ColorSwatch(
     9: Color(0xff99d52a),
     10: Color(0xff93c926),
     11: Color(0xff5d770d),
-    12: Color(0xff263209)
+    12: Color(0xff263209),
   },
 );
 
 const _limeAlpha = ColorSwatch(
   0xd37eac00,
-  <int, Color>{
+  {
     1: Color(0x05699b05),
     2: Color(0x0f77cc01),
     3: Color(0x2384db01),
@@ -911,13 +910,13 @@ const _limeAlpha = ColorSwatch(
     9: Color(0xd585cd00),
     10: Color(0xd980c000),
     11: Color(0xf2547000),
-    12: Color(0xf61e2b00)
+    12: Color(0xf61e2b00),
   },
 );
 
 const _limeDark = ColorSwatch(
   0xff99d52a,
-  <int, Color>{
+  {
     1: Color(0xff141807),
     2: Color(0xff181d08),
     3: Color(0xff1e260d),
@@ -929,13 +928,13 @@ const _limeDark = ColorSwatch(
     9: Color(0xff99d52a),
     10: Color(0xffc4f042),
     11: Color(0xff87be22),
-    12: Color(0xffeffbdd)
+    12: Color(0xffeffbdd),
   },
 );
 
 const _limeDarkAlpha = ColorSwatch(
   0xd1b7ff32,
-  <int, Color>{
+  {
     1: Color(0x00000000),
     2: Color(0x06cafb35),
     3: Color(0x10b8fd6a),
@@ -947,13 +946,13 @@ const _limeDarkAlpha = ColorSwatch(
     9: Color(0xd1b7ff32),
     10: Color(0xefd1ff46),
     11: Color(0xb7b5ff2c),
-    12: Color(0xfaf4ffe1)
+    12: Color(0xfaf4ffe1),
   },
 );
 
 const _mauve = ColorSwatch(
   0xff908e96,
-  <int, Color>{
+  {
     1: Color(0xfffdfcfd),
     2: Color(0xfff9f8f9),
     3: Color(0xfff4f2f4),
@@ -965,13 +964,13 @@ const _mauve = ColorSwatch(
     9: Color(0xff908e96),
     10: Color(0xff86848d),
     11: Color(0xff6f6e77),
-    12: Color(0xff1a1523)
+    12: Color(0xff1a1523),
   },
 );
 
 const _mauveAlpha = ColorSwatch(
   0x71050012,
-  <int, Color>{
+  {
     1: Color(0x03580558),
     2: Color(0x07290529),
     3: Color(0x0d270027),
@@ -983,13 +982,13 @@ const _mauveAlpha = ColorSwatch(
     9: Color(0x71050012),
     10: Color(0x7b040013),
     11: Color(0x91020010),
-    12: Color(0xea05000f)
+    12: Color(0xea05000f),
   },
 );
 
 const _mauveDark = ColorSwatch(
   0xff706f78,
-  <int, Color>{
+  {
     1: Color(0xff161618),
     2: Color(0xff1c1c1f),
     3: Color(0xff232326),
@@ -1001,13 +1000,13 @@ const _mauveDark = ColorSwatch(
     9: Color(0xff706f78),
     10: Color(0xff7e7d86),
     11: Color(0xffa09fa6),
-    12: Color(0xffededef)
+    12: Color(0xffededef),
   },
 );
 
 const _mauveDarkAlpha = ColorSwatch(
   0x6aeeecff,
-  <int, Color>{
+  {
     1: Color(0x00000000),
     2: Color(0x08d7d7fa),
     3: Color(0x10ebebfe),
@@ -1019,13 +1018,13 @@ const _mauveDarkAlpha = ColorSwatch(
     9: Color(0x6aeeecff),
     10: Color(0x7af0eeff),
     11: Color(0x9df7f5ff),
-    12: Color(0xedfdfdff)
+    12: Color(0xedfdfdff),
   },
 );
 
 const _mint = ColorSwatch(
   0xff40c4aa,
-  <int, Color>{
+  {
     1: Color(0xfff9fefd),
     2: Color(0xffeffefa),
     3: Color(0xffe1fbf4),
@@ -1037,13 +1036,13 @@ const _mint = ColorSwatch(
     9: Color(0xff70e1c8),
     10: Color(0xff69d9c1),
     11: Color(0xff147d6f),
-    12: Color(0xff09342e)
+    12: Color(0xff09342e),
   },
 );
 
 const _mintAlpha = ColorSwatch(
   0xbf00b08d,
-  <int, Color>{
+  {
     1: Color(0x0605d5ac),
     2: Color(0x1001efb0),
     3: Color(0x1e01dda2),
@@ -1055,13 +1054,13 @@ const _mintAlpha = ColorSwatch(
     9: Color(0x8f00c99e),
     10: Color(0x9600be95),
     11: Color(0xeb007263),
-    12: Color(0xf6002d27)
+    12: Color(0xf6002d27),
   },
 );
 
 const _mintDark = ColorSwatch(
   0xff70e1c8,
-  <int, Color>{
+  {
     1: Color(0xff081917),
     2: Color(0xff05201e),
     3: Color(0xff052926),
@@ -1073,13 +1072,13 @@ const _mintDark = ColorSwatch(
     9: Color(0xff70e1c8),
     10: Color(0xff95f3d9),
     11: Color(0xff25d0ab),
-    12: Color(0xffe7fcf7)
+    12: Color(0xffe7fcf7),
   },
 );
 
 const _mintDarkAlpha = ColorSwatch(
   0xde80ffe3,
-  <int, Color>{
+  {
     1: Color(0x00000000),
     2: Color(0x0800fbfb),
     3: Color(0x1200fded),
@@ -1091,13 +1090,13 @@ const _mintDarkAlpha = ColorSwatch(
     9: Color(0xde80ffe3),
     10: Color(0xf29dffe3),
     11: Color(0xcb2cffd1),
-    12: Color(0xfaecfffb)
+    12: Color(0xfaecfffb),
   },
 );
 
 const _olive = ColorSwatch(
   0xff8b918a,
-  <int, Color>{
+  {
     1: Color(0xfffcfdfc),
     2: Color(0xfff8faf8),
     3: Color(0xfff2f4f2),
@@ -1109,13 +1108,13 @@ const _olive = ColorSwatch(
     9: Color(0xff8b918a),
     10: Color(0xff818780),
     11: Color(0xff6b716a),
-    12: Color(0xff141e12)
+    12: Color(0xff141e12),
   },
 );
 
 const _oliveAlpha = ColorSwatch(
   0x75020f00,
-  <int, Color>{
+  {
     1: Color(0x03055805),
     2: Color(0x07054d05),
     3: Color(0x0d002700),
@@ -1127,13 +1126,13 @@ const _oliveAlpha = ColorSwatch(
     9: Color(0x75020f00),
     10: Color(0x7f030e00),
     11: Color(0x95020c00),
-    12: Color(0xed020d00)
+    12: Color(0xed020d00),
   },
 );
 
 const _oliveDark = ColorSwatch(
   0xff687366,
-  <int, Color>{
+  {
     1: Color(0xff151715),
     2: Color(0xff1a1d19),
     3: Color(0xff20241f),
@@ -1145,13 +1144,13 @@ const _oliveDark = ColorSwatch(
     9: Color(0xff687366),
     10: Color(0xff778175),
     11: Color(0xff9aa299),
-    12: Color(0xffeceeec)
+    12: Color(0xffeceeec),
   },
 );
 
 const _oliveDarkAlpha = ColorSwatch(
   0x65e6ffe1,
-  <int, Color>{
+  {
     1: Color(0x00000000),
     2: Color(0x07d5feaf),
     3: Color(0x0fd6fbc4),
@@ -1163,13 +1162,13 @@ const _oliveDarkAlpha = ColorSwatch(
     9: Color(0x65e6ffe1),
     10: Color(0x75ebffe7),
     11: Color(0x99f3fff1),
-    12: Color(0xecfdfffd)
+    12: Color(0xecfdfffd),
   },
 );
 
 const _orange = ColorSwatch(
   0xfff76808,
-  <int, Color>{
+  {
     1: Color(0xfffefcfb),
     2: Color(0xfffef8f4),
     3: Color(0xfffff1e7),
@@ -1181,13 +1180,13 @@ const _orange = ColorSwatch(
     9: Color(0xfff76808),
     10: Color(0xffed5f00),
     11: Color(0xffbd4b00),
-    12: Color(0xff451e11)
+    12: Color(0xff451e11),
   },
 );
 
 const _orangeAlpha = ColorSwatch(
   0xf7f76300,
-  <int, Color>{
+  {
     1: Color(0x04c04305),
     2: Color(0x0be86005),
     3: Color(0x18ff6c03),
@@ -1199,13 +1198,13 @@ const _orangeAlpha = ColorSwatch(
     9: Color(0xf7f76300),
     10: Color(0xfaed5b00),
     11: Color(0xfabc4800),
-    12: Color(0xee380e00)
+    12: Color(0xee380e00),
   },
 );
 
 const _orangeDark = ColorSwatch(
   0xfff76808,
-  <int, Color>{
+  {
     1: Color(0xff1f1206),
     2: Color(0xff2b1400),
     3: Color(0xff391a03),
@@ -1217,13 +1216,13 @@ const _orangeDark = ColorSwatch(
     9: Color(0xfff76808),
     10: Color(0xffff802b),
     11: Color(0xffff8b3e),
-    12: Color(0xfffeeadd)
+    12: Color(0xfffeeadd),
   },
 );
 
 const _orangeDarkAlpha = ColorSwatch(
   0xf6ff6b08,
-  <int, Color>{
+  {
     1: Color(0x00000000),
     2: Color(0x0efd3700),
     3: Color(0x1efd5400),
@@ -1235,13 +1234,13 @@ const _orangeDarkAlpha = ColorSwatch(
     9: Color(0xf6ff6b08),
     10: Color(0xfaff842c),
     11: Color(0xfaff8c3f),
-    12: Color(0xfaffeee1)
+    12: Color(0xfaffeee1),
   },
 );
 
 const _pink = ColorSwatch(
   0xffd6409f,
-  <int, Color>{
+  {
     1: Color(0xfffffcfe),
     2: Color(0xfffff7fc),
     3: Color(0xfffeeef8),
@@ -1253,13 +1252,13 @@ const _pink = ColorSwatch(
     9: Color(0xffd6409f),
     10: Color(0xffd23197),
     11: Color(0xffcd1d8d),
-    12: Color(0xff3b0a2a)
+    12: Color(0xff3b0a2a),
   },
 );
 
 const _pinkAlpha = ColorSwatch(
   0xbfc8007f,
-  <int, Color>{
+  {
     1: Color(0x03ff05ac),
     2: Color(0x08ff059f),
     3: Color(0x11f00194),
@@ -1271,13 +1270,13 @@ const _pinkAlpha = ColorSwatch(
     9: Color(0xbfc8007f),
     10: Color(0xcec7007e),
     11: Color(0xe2c7007e),
-    12: Color(0xf5330021)
+    12: Color(0xf5330021),
   },
 );
 
 const _pinkDark = ColorSwatch(
   0xffd6409f,
-  <int, Color>{
+  {
     1: Color(0xff1f121b),
     2: Color(0xff271421),
     3: Color(0xff3a182f),
@@ -1289,13 +1288,13 @@ const _pinkDark = ColorSwatch(
     9: Color(0xffd6409f),
     10: Color(0xffe34ba9),
     11: Color(0xfff65cb6),
-    12: Color(0xfffeebf7)
+    12: Color(0xfffeebf7),
   },
 );
 
 const _pinkDarkAlpha = ColorSwatch(
   0xd0ff4abd,
-  <int, Color>{
+  {
     1: Color(0x00000000),
     2: Color(0x09fd4ac1),
     3: Color(0x1ffe44c0),
@@ -1307,13 +1306,13 @@ const _pinkDarkAlpha = ColorSwatch(
     9: Color(0xd0ff4abd),
     10: Color(0xdfff53bd),
     11: Color(0xf5ff5fbc),
-    12: Color(0xfaffeffb)
+    12: Color(0xfaffeffb),
   },
 );
 
 const _plum = ColorSwatch(
   0xffab4aba,
-  <int, Color>{
+  {
     1: Color(0xfffefcff),
     2: Color(0xfffff8ff),
     3: Color(0xfffceffc),
@@ -1325,13 +1324,13 @@ const _plum = ColorSwatch(
     9: Color(0xffab4aba),
     10: Color(0xffa43cb4),
     11: Color(0xff9c2bad),
-    12: Color(0xff340c3b)
+    12: Color(0xff340c3b),
   },
 );
 
 const _plumAlpha = ColorSwatch(
   0xb589009e,
-  <int, Color>{
+  {
     1: Color(0x03ac05ff),
     2: Color(0x07ff05ff),
     3: Color(0x10d001d0),
@@ -1343,13 +1342,13 @@ const _plumAlpha = ColorSwatch(
     9: Color(0xb589009e),
     10: Color(0xc388009d),
     11: Color(0xd488009c),
-    12: Color(0xf32a0031)
+    12: Color(0xf32a0031),
   },
 );
 
 const _plumDark = ColorSwatch(
   0xffab4aba,
-  <int, Color>{
+  {
     1: Color(0xff1d131d),
     2: Color(0xff251425),
     3: Color(0xff341a34),
@@ -1361,13 +1360,13 @@ const _plumDark = ColorSwatch(
     9: Color(0xffab4aba),
     10: Color(0xffbd54c6),
     11: Color(0xffd864d8),
-    12: Color(0xfffbecfc)
+    12: Color(0xfffbecfc),
   },
 );
 
 const _plumDarkAlpha = ColorSwatch(
   0xb1ea62ff,
-  <int, Color>{
+  {
     1: Color(0x00000000),
     2: Color(0x09fb2ffb),
     3: Color(0x1afe58fe),
@@ -1379,13 +1378,13 @@ const _plumDarkAlpha = ColorSwatch(
     9: Color(0xb1ea62ff),
     10: Color(0xbff36aff),
     11: Color(0xd3ff75ff),
-    12: Color(0xfafff0ff)
+    12: Color(0xfafff0ff),
   },
 );
 
 const _purple = ColorSwatch(
   0xff8e4ec6,
-  <int, Color>{
+  {
     1: Color(0xfffefcfe),
     2: Color(0xfffdfaff),
     3: Color(0xfff9f1fe),
@@ -1397,13 +1396,13 @@ const _purple = ColorSwatch(
     9: Color(0xff8e4ec6),
     10: Color(0xff8445bc),
     11: Color(0xff793aaf),
-    12: Color(0xff2b0e44)
+    12: Color(0xff2b0e44),
   },
 );
 
 const _purpleAlpha = ColorSwatch(
   0xb15c00ad,
-  <int, Color>{
+  {
     1: Color(0x03ab05ab),
     2: Color(0x059b05ff),
     3: Color(0x0e9200ed),
@@ -1415,13 +1414,13 @@ const _purpleAlpha = ColorSwatch(
     9: Color(0xb15c00ad),
     10: Color(0xba5700a3),
     11: Color(0xc5510097),
-    12: Color(0xf11f0039)
+    12: Color(0xf11f0039),
   },
 );
 
 const _purpleDark = ColorSwatch(
   0xff8e4ec6,
-  <int, Color>{
+  {
     1: Color(0xff1b141d),
     2: Color(0xff221527),
     3: Color(0xff301a3a),
@@ -1433,13 +1432,13 @@ const _purpleDark = ColorSwatch(
     9: Color(0xff8e4ec6),
     10: Color(0xff9d5bd2),
     11: Color(0xffbf7af0),
-    12: Color(0xfff7ecfc)
+    12: Color(0xfff7ecfc),
   },
 );
 
 const _purpleDarkAlpha = ColorSwatch(
   0xbfb561ff,
-  <int, Color>{
+  {
     1: Color(0x00000000),
     2: Color(0x0bb52afb),
     3: Color(0x21bc43fe),
@@ -1451,13 +1450,13 @@ const _purpleDarkAlpha = ColorSwatch(
     9: Color(0xbfb561ff),
     10: Color(0xccbd6dff),
     11: Color(0xeecb81ff),
-    12: Color(0xfafcf0ff)
+    12: Color(0xfafcf0ff),
   },
 );
 
 const _red = ColorSwatch(
   0xffe5484d,
-  <int, Color>{
+  {
     1: Color(0xfffffcfc),
     2: Color(0xfffff8f8),
     3: Color(0xffffefef),
@@ -1469,13 +1468,13 @@ const _red = ColorSwatch(
     9: Color(0xffe5484d),
     10: Color(0xffdc3d43),
     11: Color(0xffcd2b31),
-    12: Color(0xff381316)
+    12: Color(0xff381316),
   },
 );
 
 const _redAlpha = ColorSwatch(
   0xb7db0007,
-  <int, Color>{
+  {
     1: Color(0x03ff0505),
     2: Color(0x08ff0505),
     3: Color(0x10ff0101),
@@ -1487,13 +1486,13 @@ const _redAlpha = ColorSwatch(
     9: Color(0xb7db0007),
     10: Color(0xc2d10007),
     11: Color(0xd4c30007),
-    12: Color(0xec280003)
+    12: Color(0xec280003),
   },
 );
 
 const _redDark = ColorSwatch(
   0xffe5484d,
-  <int, Color>{
+  {
     1: Color(0xff1f1315),
     2: Color(0xff291415),
     3: Color(0xff3c181a),
@@ -1505,13 +1504,13 @@ const _redDark = ColorSwatch(
     9: Color(0xffe5484d),
     10: Color(0xfff2555a),
     11: Color(0xffff6369),
-    12: Color(0xfffeecee)
+    12: Color(0xfffeecee),
   },
 );
 
 const _redDarkAlpha = ColorSwatch(
   0xe1ff4f55,
-  <int, Color>{
+  {
     1: Color(0x00000000),
     2: Color(0x0bfd2815),
     3: Color(0x21fe3a3d),
@@ -1523,13 +1522,13 @@ const _redDarkAlpha = ColorSwatch(
     9: Color(0xe1ff4f55),
     10: Color(0xf0ff595f),
     11: Color(0xfaff646a),
-    12: Color(0xfafff0f2)
+    12: Color(0xfafff0f2),
   },
 );
 
 const _sage = ColorSwatch(
   0xff8a918e,
-  <int, Color>{
+  {
     1: Color(0xfffbfdfc),
     2: Color(0xfff8faf9),
     3: Color(0xfff1f4f3),
@@ -1541,13 +1540,13 @@ const _sage = ColorSwatch(
     9: Color(0xff8a918e),
     10: Color(0xff808784),
     11: Color(0xff6a716e),
-    12: Color(0xff111c18)
+    12: Color(0xff111c18),
   },
 );
 
 const _sageAlpha = ColorSwatch(
   0x75000f09,
-  <int, Color>{
+  {
     1: Color(0x04058244),
     2: Color(0x07054d29),
     3: Color(0x0e003725),
@@ -1559,13 +1558,13 @@ const _sageAlpha = ColorSwatch(
     9: Color(0x75000f09),
     10: Color(0x7f000e08),
     11: Color(0x95000c07),
-    12: Color(0xee000c08)
+    12: Color(0xee000c08),
   },
 );
 
 const _sageDark = ColorSwatch(
   0xff66736d,
-  <int, Color>{
+  {
     1: Color(0xff141716),
     2: Color(0xff191d1b),
     3: Color(0xff1f2421),
@@ -1577,13 +1576,13 @@ const _sageDark = ColorSwatch(
     9: Color(0xff66736d),
     10: Color(0xff75817b),
     11: Color(0xff99a29e),
-    12: Color(0xffeceeed)
+    12: Color(0xffeceeed),
   },
 );
 
 const _sageDarkAlpha = ColorSwatch(
   0x65e3fff1,
-  <int, Color>{
+  {
     1: Color(0x00000000),
     2: Color(0x07d4fed6),
     3: Color(0x0fd5fbd7),
@@ -1595,13 +1594,13 @@ const _sageDarkAlpha = ColorSwatch(
     9: Color(0x65e3fff1),
     10: Color(0x75e8fff3),
     11: Color(0x99f2fff9),
-    12: Color(0xecfdfffe)
+    12: Color(0xecfdfffe),
   },
 );
 
 const _sand = ColorSwatch(
   0xff90908c,
-  <int, Color>{
+  {
     1: Color(0xfffdfdfc),
     2: Color(0xfff9f9f8),
     3: Color(0xfff3f3f2),
@@ -1613,13 +1612,13 @@ const _sand = ColorSwatch(
     9: Color(0xff90908c),
     10: Color(0xff868682),
     11: Color(0xff706f6c),
-    12: Color(0xff1b1b18)
+    12: Color(0xff1b1b18),
   },
 );
 
 const _sandAlpha = ColorSwatch(
   0x73090900,
-  <int, Color>{
+  {
     1: Color(0x03585805),
     2: Color(0x07292905),
     3: Color(0x0d141400),
@@ -1631,13 +1630,13 @@ const _sandAlpha = ColorSwatch(
     9: Color(0x73090900),
     10: Color(0x7d090900),
     11: Color(0x93070600),
-    12: Color(0xe7040400)
+    12: Color(0xe7040400),
   },
 );
 
 const _sandDark = ColorSwatch(
   0xff717069,
-  <int, Color>{
+  {
     1: Color(0xff161615),
     2: Color(0xff1c1c1a),
     3: Color(0xff232320),
@@ -1649,13 +1648,13 @@ const _sandDark = ColorSwatch(
     9: Color(0xff717069),
     10: Color(0xff7f7e77),
     11: Color(0xffa1a09a),
-    12: Color(0xffededec)
+    12: Color(0xffededec),
   },
 );
 
 const _sandDarkAlpha = ColorSwatch(
   0x64fffcec,
-  <int, Color>{
+  {
     1: Color(0x00000000),
     2: Color(0x07fdfdd5),
     3: Color(0x0efefeda),
@@ -1667,13 +1666,13 @@ const _sandDarkAlpha = ColorSwatch(
     9: Color(0x64fffcec),
     10: Color(0x73fffdee),
     11: Color(0x98fffdf4),
-    12: Color(0xebfffffe)
+    12: Color(0xebfffffe),
   },
 );
 
 const _sky = ColorSwatch(
   0xff2ebde5,
-  <int, Color>{
+  {
     1: Color(0xfff9feff),
     2: Color(0xfff1fcff),
     3: Color(0xffe4f9ff),
@@ -1685,13 +1684,13 @@ const _sky = ColorSwatch(
     9: Color(0xff68ddfd),
     10: Color(0xff5fd4f4),
     11: Color(0xff0078a1),
-    12: Color(0xff003242)
+    12: Color(0xff003242),
   },
 );
 
 const _skyAlpha = ColorSwatch(
   0xd100afdf,
-  <int, Color>{
+  {
     1: Color(0x0605d5ff),
     2: Color(0x0e01c8ff),
     3: Color(0x1b01c8ff),
@@ -1703,13 +1702,13 @@ const _skyAlpha = ColorSwatch(
     9: Color(0x9700c5fc),
     10: Color(0xa000baed),
     11: Color(0xfa00759f),
-    12: Color(0xfa002e3e)
+    12: Color(0xfa002e3e),
   },
 );
 
 const _skyDark = ColorSwatch(
   0xff68ddfd,
-  <int, Color>{
+  {
     1: Color(0xff0c1820),
     2: Color(0xff071d2a),
     3: Color(0xff082636),
@@ -1721,13 +1720,13 @@ const _skyDark = ColorSwatch(
     9: Color(0xff68ddfd),
     10: Color(0xff8ae8ff),
     11: Color(0xff2ec8ee),
-    12: Color(0xffeaf8ff)
+    12: Color(0xffeaf8ff),
   },
 );
 
 const _skyDarkAlpha = ColorSwatch(
   0xfa6ae1ff,
-  <int, Color>{
+  {
     1: Color(0x00000000),
     2: Color(0x0b0087fe),
     3: Color(0x1900a5fe),
@@ -1739,13 +1738,13 @@ const _skyDarkAlpha = ColorSwatch(
     9: Color(0xfa6ae1ff),
     10: Color(0xfa8decff),
     11: Color(0xec31d6ff),
-    12: Color(0xfaeffdff)
+    12: Color(0xfaeffdff),
   },
 );
 
 const _slate = ColorSwatch(
   0xff889096,
-  <int, Color>{
+  {
     1: Color(0xfffbfcfd),
     2: Color(0xfff8f9fa),
     3: Color(0xfff1f3f5),
@@ -1757,13 +1756,13 @@ const _slate = ColorSwatch(
     9: Color(0xff889096),
     10: Color(0xff7e868c),
     11: Color(0xff687076),
-    12: Color(0xff11181c)
+    12: Color(0xff11181c),
   },
 );
 
 const _slateAlpha = ColorSwatch(
   0x7700111e,
-  <int, Color>{
+  {
     1: Color(0x04054482),
     2: Color(0x0705294d),
     3: Color(0x0e002549),
@@ -1775,13 +1774,13 @@ const _slateAlpha = ColorSwatch(
     9: Color(0x7700111e),
     10: Color(0x8100101b),
     11: Color(0x97000e18),
-    12: Color(0xee00080c)
+    12: Color(0xee00080c),
   },
 );
 
 const _slateDark = ColorSwatch(
   0xff697177,
-  <int, Color>{
+  {
     1: Color(0xff151718),
     2: Color(0xff1a1d1e),
     3: Color(0xff202425),
@@ -1793,13 +1792,13 @@ const _slateDark = ColorSwatch(
     9: Color(0xff697177),
     10: Color(0xff787f85),
     11: Color(0xff9ba1a6),
-    12: Color(0xffecedee)
+    12: Color(0xffecedee),
   },
 );
 
 const _slateDarkAlpha = ColorSwatch(
   0x69e1f1ff,
-  <int, Color>{
+  {
     1: Color(0x00000000),
     2: Color(0x07d5feff),
     3: Color(0x0fd6fbfc),
@@ -1811,13 +1810,13 @@ const _slateDarkAlpha = ColorSwatch(
     9: Color(0x69e1f1ff),
     10: Color(0x78e7f3ff),
     11: Color(0x9deff7ff),
-    12: Color(0xecfdfeff)
+    12: Color(0xecfdfeff),
   },
 );
 
 const _teal = ColorSwatch(
   0xff12a594,
-  <int, Color>{
+  {
     1: Color(0xfffafefd),
     2: Color(0xfff1fcfa),
     3: Color(0xffe7f9f5),
@@ -1829,13 +1828,13 @@ const _teal = ColorSwatch(
     9: Color(0xff12a594),
     10: Color(0xff0e9888),
     11: Color(0xff067a6f),
-    12: Color(0xff10302b)
+    12: Color(0xff10302b),
   },
 );
 
 const _tealAlpha = ColorSwatch(
   0xed009e8c,
-  <int, Color>{
+  {
     1: Color(0x0505cd9b),
     2: Color(0x0e01c8a4),
     3: Color(0x1802c097),
@@ -1847,13 +1846,13 @@ const _tealAlpha = ColorSwatch(
     9: Color(0xed009e8c),
     10: Color(0xf1009281),
     11: Color(0xf900776b),
-    12: Color(0xef00221d)
+    12: Color(0xef00221d),
   },
 );
 
 const _tealDark = ColorSwatch(
   0xff12a594,
-  <int, Color>{
+  {
     1: Color(0xff091915),
     2: Color(0xff04201b),
     3: Color(0xff062923),
@@ -1865,13 +1864,13 @@ const _tealDark = ColorSwatch(
     9: Color(0xff12a594),
     10: Color(0xff10b3a3),
     11: Color(0xff0ac5b3),
-    12: Color(0xffe1faf4)
+    12: Color(0xffe1faf4),
   },
 );
 
 const _tealDarkAlpha = ColorSwatch(
   0x9b18ffe4,
-  <int, Color>{
+  {
     1: Color(0x00000000),
     2: Color(0x0800fbd5),
     3: Color(0x1200fddc),
@@ -1883,13 +1882,13 @@ const _tealDarkAlpha = ColorSwatch(
     9: Color(0x9b18ffe4),
     10: Color(0xab13ffe7),
     11: Color(0xbf0affe7),
-    12: Color(0xfae6fff9)
+    12: Color(0xfae6fff9),
   },
 );
 
 const _tomato = ColorSwatch(
   0xffe54d2e,
-  <int, Color>{
+  {
     1: Color(0xfffffcfc),
     2: Color(0xfffff8f7),
     3: Color(0xfffff0ee),
@@ -1901,13 +1900,13 @@ const _tomato = ColorSwatch(
     9: Color(0xffe54d2e),
     10: Color(0xffdb4324),
     11: Color(0xffca3214),
-    12: Color(0xff341711)
+    12: Color(0xff341711),
   },
 );
 
 const _tomatoAlpha = ColorSwatch(
   0xd1df2500,
-  <int, Color>{
+  {
     1: Color(0x03ff0505),
     2: Color(0x08ff2605),
     3: Color(0x11ff1f01),
@@ -1919,13 +1918,13 @@ const _tomatoAlpha = ColorSwatch(
     9: Color(0xd1df2500),
     10: Color(0xdbd52400),
     11: Color(0xebc62100),
-    12: Color(0xee260600)
+    12: Color(0xee260600),
   },
 );
 
 const _tomatoDark = ColorSwatch(
   0xffe54d2e,
-  <int, Color>{
+  {
     1: Color(0xff1d1412),
     2: Color(0xff2a1410),
     3: Color(0xff3b1813),
@@ -1937,13 +1936,13 @@ const _tomatoDark = ColorSwatch(
     9: Color(0xffe54d2e),
     10: Color(0xffec5e41),
     11: Color(0xfff16a50),
-    12: Color(0xfffeefec)
+    12: Color(0xfffeefec),
   },
 );
 
 const _tomatoDarkAlpha = ColorSwatch(
   0xe2ff5431,
-  <int, Color>{
+  {
     1: Color(0x00000000),
     2: Color(0x0ffd1500),
     3: Color(0x22ff3019),
@@ -1955,13 +1954,13 @@ const _tomatoDarkAlpha = ColorSwatch(
     9: Color(0xe2ff5431),
     10: Color(0xeaff6445),
     11: Color(0xefff7054),
-    12: Color(0xfafff3f0)
+    12: Color(0xfafff3f0),
   },
 );
 
 const _violet = ColorSwatch(
   0xff6e56cf,
-  <int, Color>{
+  {
     1: Color(0xfffdfcfe),
     2: Color(0xfffbfaff),
     3: Color(0xfff5f2ff),
@@ -1973,13 +1972,13 @@ const _violet = ColorSwatch(
     9: Color(0xff6e56cf),
     10: Color(0xff644fc1),
     11: Color(0xff5746af),
-    12: Color(0xff20134b)
+    12: Color(0xff20134b),
   },
 );
 
 const _violetAlpha = ColorSwatch(
   0xa92500b6,
-  <int, Color>{
+  {
     1: Color(0x035805ab),
     2: Color(0x053705ff),
     3: Color(0x0d3c00ff),
@@ -1991,13 +1990,13 @@ const _violetAlpha = ColorSwatch(
     9: Color(0xa92500b6),
     10: Color(0xb01f00a5),
     11: Color(0xb9180091),
-    12: Color(0xec0e003d)
+    12: Color(0xec0e003d),
   },
 );
 
 const _violetDark = ColorSwatch(
   0xff6e56cf,
-  <int, Color>{
+  {
     1: Color(0xff17151f),
     2: Color(0xff1c172b),
     3: Color(0xff251e40),
@@ -2009,13 +2008,13 @@ const _violetDark = ColorSwatch(
     9: Color(0xff6e56cf),
     10: Color(0xff7c66dc),
     11: Color(0xff9e8cfc),
-    12: Color(0xfff1eefe)
+    12: Color(0xfff1eefe),
   },
 );
 
 const _violetDarkAlpha = ColorSwatch(
   0xc88668ff,
-  <int, Color>{
+  {
     1: Color(0x00000000),
     2: Color(0x0e743afd),
     3: Color(0x267452fe),
@@ -2027,13 +2026,13 @@ const _violetDarkAlpha = ColorSwatch(
     9: Color(0xc88668ff),
     10: Color(0xd78e75ff),
     11: Color(0xfaa18eff),
-    12: Color(0xfaf5f2ff)
+    12: Color(0xfaf5f2ff),
   },
 );
 
 const _whiteAlpha = ColorSwatch(
   0xebffffff,
-  <int, Color>{
+  {
     1: Color(0x00ffffff),
     2: Color(0x03ffffff),
     3: Color(0x09ffffff),
@@ -2045,13 +2044,13 @@ const _whiteAlpha = ColorSwatch(
     9: Color(0x62ffffff),
     10: Color(0x72ffffff),
     11: Color(0x97ffffff),
-    12: Color(0xebffffff)
+    12: Color(0xebffffff),
   },
 );
 
 const _yellow = ColorSwatch(
   0xffebbc00,
-  <int, Color>{
+  {
     1: Color(0xfffdfdf9),
     2: Color(0xfffffce8),
     3: Color(0xfffffbd1),
@@ -2063,13 +2062,13 @@ const _yellow = ColorSwatch(
     9: Color(0xfff5d90a),
     10: Color(0xfff7ce00),
     11: Color(0xff946800),
-    12: Color(0xff35290f)
+    12: Color(0xff35290f),
   },
 );
 
 const _yellowAlpha = ColorSwatch(
   0xfaebbc00,
-  <int, Color>{
+  {
     1: Color(0x06abab05),
     2: Color(0x17ffdd02),
     3: Color(0x2effea01),
@@ -2081,13 +2080,13 @@ const _yellowAlpha = ColorSwatch(
     9: Color(0xf5f5d800),
     10: Color(0xfaf7ce00),
     11: Color(0xfa926600),
-    12: Color(0xf0291c00)
+    12: Color(0xf0291c00),
   },
 );
 
 const _yellowDark = ColorSwatch(
   0xfff5d90a,
-  <int, Color>{
+  {
     1: Color(0xff1c1500),
     2: Color(0xff221a00),
     3: Color(0xff2c2100),
@@ -2099,13 +2098,13 @@ const _yellowDark = ColorSwatch(
     9: Color(0xfff5d90a),
     10: Color(0xffffef5c),
     11: Color(0xfff0c000),
-    12: Color(0xfffffad1)
+    12: Color(0xfffffad1),
   },
 );
 
 const _yellowDarkAlpha = ColorSwatch(
   0xf4ffe20a,
-  <int, Color>{
+  {
     1: Color(0x00000000),
     2: Color(0x07facd00),
     3: Color(0x12fdbe00),
@@ -2117,6 +2116,6 @@ const _yellowDarkAlpha = ColorSwatch(
     9: Color(0xf4ffe20a),
     10: Color(0xfafff45e),
     11: Color(0xeeffcc00),
-    12: Color(0xfaffffd5)
+    12: Color(0xfaffffd5),
   },
 );

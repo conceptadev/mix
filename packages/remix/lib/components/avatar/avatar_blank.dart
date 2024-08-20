@@ -15,7 +15,6 @@ class RxBlankAvatar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SpecBuilder(
-      style: style,
       builder: (context) {
         final spec = AvatarSpec.of(context);
 
@@ -34,6 +33,7 @@ class RxBlankAvatar extends StatelessWidget {
               : FallbackWidget(fallback ?? ''),
         );
       },
+      style: style,
     );
   }
 }

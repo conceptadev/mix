@@ -10,7 +10,7 @@ void main() {
     testWidgets('renders label correctly', (WidgetTester tester) async {
       await tester.pumpRxComponent(
         MaterialApp(
-          home: RxButton(
+          home: XButton(
             label: 'Test Button',
             onPressed: () {},
           ),
@@ -24,7 +24,7 @@ void main() {
       bool wasTapped = false;
       await tester.pumpRxComponent(
         MaterialApp(
-          home: RxButton(
+          home: XButton(
             label: 'Test Button',
             onPressed: () {
               wasTapped = true;
@@ -33,7 +33,7 @@ void main() {
         ),
       );
 
-      await tester.tap(find.byType(RxButton));
+      await tester.tap(find.byType(XButton));
       expect(wasTapped, isTrue);
     });
 
@@ -42,7 +42,7 @@ void main() {
       bool wasTapped = false;
       await tester.pumpRxComponent(
         MaterialApp(
-          home: RxButton(
+          home: XButton(
             label: 'Test Button',
             onPressed: () {
               wasTapped = true;
@@ -52,7 +52,7 @@ void main() {
         ),
       );
 
-      await tester.tap(find.byType(RxButton));
+      await tester.tap(find.byType(XButton));
       expect(wasTapped, isFalse);
     });
 
@@ -60,7 +60,7 @@ void main() {
         (WidgetTester tester) async {
       await tester.pumpRxComponent(
         MaterialApp(
-          home: RxButton(
+          home: XButton(
             label: 'Test Button',
             onPressed: () {},
             loading: true,
@@ -77,7 +77,7 @@ void main() {
     testWidgets('renders left icon correctly', (WidgetTester tester) async {
       await tester.pumpRxComponent(
         MaterialApp(
-          home: RxButton(
+          home: XButton(
             label: 'Test Button',
             onPressed: () {},
             iconLeft: Icons.add,
@@ -91,7 +91,7 @@ void main() {
     testWidgets('renders right icon correctly', (WidgetTester tester) async {
       await tester.pumpRxComponent(
         MaterialApp(
-          home: RxButton(
+          home: XButton(
             label: 'Test Button',
             onPressed: () {},
             iconRight: Icons.arrow_forward,
@@ -104,11 +104,11 @@ void main() {
 
     testWidgets('uses custom spinner builder when provided',
         (WidgetTester tester) async {
-      final key = Key('key');
+      const key = Key('key');
 
       await tester.pumpRxComponent(
         MaterialApp(
-          home: RxButton(
+          home: XButton(
             label: 'Test Button',
             onPressed: () {},
             loading: true,

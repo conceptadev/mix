@@ -4,23 +4,21 @@ import 'package:analyzer/error/error.dart' hide LintCode;
 import 'package:analyzer/error/listener.dart';
 import 'package:analyzer/source/source_range.dart';
 import 'package:custom_lint_builder/custom_lint_builder.dart';
-import 'package:mix_lint/src/utils/type_checker.dart';
+import '../utils/type_checker.dart';
 
 const _whiteList = ['Style.asAttribute'];
 
 class AttributesOrdering extends DartLintRule {
-  AttributesOrdering() : super(code: _code);
-
   static const _code = LintCode(
     name: 'mix_attributes_ordering',
     problemMessage:
         'Ensure that the attributes are ordered on groups of the same category in the Style constructor',
   );
 
+  const AttributesOrdering() : super(code: _code);
+
   @override
-  List<Fix> getFixes() => [
-        _AttributesOrderingFix(),
-      ];
+  List<Fix> getFixes() => [_AttributesOrderingFix()];
 
   @override
   void run(
@@ -35,10 +33,7 @@ class AttributesOrdering extends DartLintRule {
       final arguments = node.argumentList.arguments;
 
       if (_hasAnyAttributeOutOfOrder(arguments)) {
-        reporter.reportErrorForNode(
-          _code,
-          node,
-        );
+        reporter.reportErrorForNode(_code, node);
       }
     });
 
@@ -48,10 +43,7 @@ class AttributesOrdering extends DartLintRule {
         final arguments = expression.argumentList.arguments;
 
         if (_hasAnyAttributeOutOfOrder(arguments)) {
-          reporter.reportErrorForNode(
-            _code,
-            expression,
-          );
+          reporter.reportErrorForNode(_code, expression);
         }
       }
 
@@ -69,6 +61,27 @@ class AttributesOrdering extends DartLintRule {
 }
 
 class _AttributesOrderingFix extends DartFix {
+  String fixParentheses(String input) {
+    return input.replaceAllMapped(RegExp(r'\)(?!,)'), (match) => '),');
+  }
+
+  void sortArgument(List<Expression> arguments) {
+    final currentOrder =
+        arguments.map((e) => e.staticType!.toString()).toSet().toList();
+
+    final mapWithOthers = Map.fromIterables(
+      currentOrder,
+      List.generate(currentOrder.length, (i) => i + 1),
+    );
+
+    arguments.sort((a, b) {
+      final weightA = mapWithOthers[a.staticType!.toString()] ?? 0;
+      final weightB = mapWithOthers[b.staticType!.toString()] ?? 0;
+
+      return weightA.compareTo(weightB);
+    });
+  }
+
   @override
   void run(
     CustomLintResolver resolver,
@@ -105,11 +118,7 @@ class _AttributesOrderingFix extends DartFix {
       final copiedList = arguments.map((e) => e).toList();
       sortArgument(copiedList);
 
-      addReplacement(
-        createChangeBuilder(),
-        sourceRange,
-        copiedList,
-      );
+      addReplacement(createChangeBuilder(), sourceRange, copiedList);
     }
 
     context.registry.addInstanceCreationExpression((node) {
@@ -134,9 +143,7 @@ class _AttributesOrderingFix extends DartFix {
         );
       }
 
-      if (_whiteList.contains(
-        expression.childEntities.first.toString(),
-      )) {
+      if (_whiteList.contains(expression.childEntities.first.toString())) {
         suggestReplacementIfNeeded(
           arguments: expression.argumentList.arguments,
           sourceRange: expression.argumentList.sourceRange,
@@ -144,37 +151,14 @@ class _AttributesOrderingFix extends DartFix {
       }
     });
   }
-
-  String fixParentheses(String input) {
-    return input.replaceAllMapped(RegExp(r'\)(?!,)'), (match) => '),');
-  }
-
-  void sortArgument(List<Expression> arguments) {
-    final currentOrder =
-        arguments.map((e) => e.staticType!.toString()).toSet().toList();
-
-    final mapWithOthers = Map.fromIterables(
-      currentOrder,
-      List<int>.generate(currentOrder.length, (i) => i + 1),
-    );
-
-    arguments.sort(
-      (a, b) {
-        final weightA = mapWithOthers[a.staticType!.toString()] ?? 0;
-        final weightB = mapWithOthers[b.staticType!.toString()] ?? 0;
-        return weightA.compareTo(weightB);
-      },
-    );
-  }
 }
 
 bool _hasAnyAttributeOutOfOrder(List<Expression> listOfUsedTokens) {
   for (var i = 0; i < listOfUsedTokens.length; i++) {
-    final currentToken = listOfUsedTokens[i];
-
     if (i + 1 < listOfUsedTokens.length) {
       final nextToken = listOfUsedTokens[i + 1];
 
+      final currentToken = listOfUsedTokens[i];
       if (currentToken.staticType != nextToken.staticType) {
         final result = listOfUsedTokens
             .sublist(i + 1)

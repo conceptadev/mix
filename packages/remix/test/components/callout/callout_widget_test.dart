@@ -11,7 +11,7 @@ void main() {
 
     testWidgets('renders with custom label', (WidgetTester tester) async {
       await tester.pumpRxComponent(
-        RxCallout(text: 'Test Callout'),
+        const RxCallout(text: 'Test Callout'),
       );
 
       expect(find.text('Test Callout'), findsOneWidget);
@@ -20,7 +20,7 @@ void main() {
 
     testWidgets('renders with custom icon', (WidgetTester tester) async {
       await tester.pumpRxComponent(
-        RxCallout(
+        const RxCallout(
           text: 'Test Callout',
           icon: Icons.info,
         ),
@@ -30,7 +30,7 @@ void main() {
     });
 
     testWidgets('applies custom style', (WidgetTester tester) async {
-      final color = Colors.red;
+      const color = Colors.red;
 
       final customStyle = Style(
         CalloutVariant.surface(

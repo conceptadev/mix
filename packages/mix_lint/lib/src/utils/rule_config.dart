@@ -7,6 +7,15 @@ typedef RuleParameterParser<T> = T Function(Map<String, Object?> json);
 typedef RuleProblemFactory<T> = String Function(T value);
 
 class RuleConfig<T extends Object?> {
+  final String name;
+  final ErrorSeverity errorSeverity;
+  final String? correctionMessage;
+  final String? url;
+
+  final T parameters;
+
+  final RuleProblemFactory<T> _problemMessageFactory;
+
   RuleConfig({
     required this.name,
     required CustomLintConfigs configs,
@@ -18,20 +27,11 @@ class RuleConfig<T extends Object?> {
   })  : parameters = paramsParser?.call(configs.rules[name]?.json ?? {}) as T,
         _problemMessageFactory = problemMessage;
 
-  final String name;
-  final ErrorSeverity errorSeverity;
-  final String? correctionMessage;
-  final String? url;
-
-  final T parameters;
-
-  final RuleProblemFactory<T> _problemMessageFactory;
-
   LintCode get lintCode => LintCode(
         name: name,
         problemMessage: _problemMessageFactory(parameters),
-        url: url,
         correctionMessage: correctionMessage,
+        url: url,
         errorSeverity: errorSeverity,
       );
 }

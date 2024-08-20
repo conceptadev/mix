@@ -12,53 +12,25 @@ Style get _baseStyle => Style(
       _fallback.style.color.$neutral(1),
     );
 
-Style get _solidVariant => Style(
-      _container.color.$accent(),
-    );
+Style get _solidVariant => Style(_container.color.$accent());
 
-Style get _softVariant => Style(
-      _container.color.$accent(4),
-    );
+Style get _softVariant => Style(_container.color.$accent(4));
 
-Style get _size1 => Style(
-      _container.size(16),
-      _fallback.style.fontSize(10),
-    );
+Style get _size1 => Style(_container.size(16), _fallback.style.fontSize(10));
 
-Style get _size2 => Style(
-      _container.size(20),
-      _fallback.style.fontSize(12),
-    );
+Style get _size2 => Style(_container.size(20), _fallback.style.fontSize(12));
 
-Style get _size3 => Style(
-      _container.size(24),
-      _fallback.style.fontSize(14),
-    );
+Style get _size3 => Style(_container.size(24), _fallback.style.fontSize(14));
 
-Style get _size4 => Style(
-      _container.size(32),
-      _fallback.style.fontSize(16),
-    );
+Style get _size4 => Style(_container.size(32), _fallback.style.fontSize(16));
 
-Style get _size5 => Style(
-      _container.size(40),
-      _fallback.style.fontSize(20),
-    );
+Style get _size5 => Style(_container.size(40), _fallback.style.fontSize(20));
 
-Style get _size6 => Style(
-      _container.size(48),
-      _fallback.style.fontSize(24),
-    );
+Style get _size6 => Style(_container.size(48), _fallback.style.fontSize(24));
 
-Style get _size7 => Style(
-      _container.size(56),
-      _fallback.style.fontSize(28),
-    );
+Style get _size7 => Style(_container.size(56), _fallback.style.fontSize(28));
 
-Style get _size8 => Style(
-      _container.size(64),
-      _fallback.style.fontSize(32),
-    );
+Style get _size8 => Style(_container.size(64), _fallback.style.fontSize(32));
 
 Style get _radiusNone =>
     Style($with.clipRRect(borderRadius: BorderRadius.zero));
@@ -95,10 +67,7 @@ final avatarRadii = Style(
 );
 
 Style avatarStyle(Style? style, List<IAvatarVariant> variants) {
-  return Style(
-    _baseStyle(),
-    avatarSizes(),
-    avatarVariants(),
-    avatarRadii(),
-  ).merge(style).applyVariants(variants);
+  return Style(_baseStyle(), avatarSizes(), avatarVariants(), avatarRadii())
+      .merge(style)
+      .applyVariants(variants);
 }

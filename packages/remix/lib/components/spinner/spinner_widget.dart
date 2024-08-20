@@ -1,11 +1,7 @@
 part of 'spinner.dart';
 
 class RxSpinner extends StatelessWidget {
-  const RxSpinner({
-    this.style,
-    super.key,
-    this.size = SpinnerSize.medium,
-  });
+  const RxSpinner({this.style, super.key, this.size = SpinnerSize.medium});
 
   final Style? style;
   final SpinnerSize size;
@@ -13,20 +9,18 @@ class RxSpinner extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SpecBuilder(
-      style: _buildSpinnerStyle(style, [size]),
       builder: (context) {
         final SpinnerWidget = SpinnerSpec.of(context);
+
         return SpinnerWidget();
       },
+      style: _buildSpinnerStyle(style, [size]),
     );
   }
 }
 
 class RxSpinnerSpecWidget extends StatefulWidget {
-  const RxSpinnerSpecWidget({
-    this.spec = const SpinnerSpec(),
-    super.key,
-  });
+  const RxSpinnerSpecWidget({this.spec = const SpinnerSpec(), super.key});
 
   final SpinnerSpec spec;
 
@@ -71,22 +65,19 @@ class _RxSpinnerSpecWidgetState extends State<RxSpinnerSpecWidget>
     final painter = spec.style == SpinnerStyle.dotted
         ? DottedSpinnerPainter(
             animation: controller,
-            color: color,
             strokeWidth: strokeWidth,
+            color: color,
           )
         : SolidSpinnerPainter(
             animation: controller,
-            color: color,
             strokeWidth: strokeWidth,
+            color: color,
           );
 
     return AnimatedBuilder(
       animation: controller,
       builder: (context, child) {
-        return CustomPaint(
-          size: Size(size, size),
-          painter: painter,
-        );
+        return CustomPaint(painter: painter, size: Size(size, size));
       },
     );
   }

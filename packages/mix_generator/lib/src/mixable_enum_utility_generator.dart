@@ -4,15 +4,15 @@ import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:build/build.dart';
 import 'package:mix_annotations/mix_annotations.dart';
-import 'package:mix_generator/src/helpers/dart_type_ext.dart';
-import 'package:mix_generator/src/helpers/helpers.dart';
+import 'helpers/dart_type_ext.dart';
+import 'helpers/helpers.dart';
 import 'package:source_gen/source_gen.dart';
 
 import 'helpers/builder_utils.dart';
 
 class MixableEnumUtilityGenerator
     extends GeneratorForAnnotation<MixableEnumUtility> {
-  MixableEnumUtilityGenerator();
+  const MixableEnumUtilityGenerator();
 
   EnumUtilityAnnotationContext _readContext(ClassElement classElement) {
     final annotation = typeChecker.firstAnnotationOfExact(classElement);

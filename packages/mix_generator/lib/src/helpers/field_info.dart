@@ -4,25 +4,15 @@ import 'package:analyzer/dart/element/nullability_suffix.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:collection/collection.dart';
 import 'package:mix_annotations/mix_annotations.dart';
-import 'package:mix_generator/src/helpers/annotation_helpers.dart';
-import 'package:mix_generator/src/helpers/builder_utils.dart';
-import 'package:mix_generator/src/helpers/dart_type_ext.dart';
-import 'package:mix_generator/src/helpers/type_ref_repository.dart';
+import 'annotation_helpers.dart';
+import 'builder_utils.dart';
+import 'dart_type_ext.dart';
+import 'type_ref_repository.dart';
 
 typedef MixTypeReferences = ({String utility, String lerp, String dto});
 
 /// Class field info relevant for code generation.
 class FieldInfo {
-  FieldInfo({
-    required this.name,
-    required this.type,
-    required this.dartType,
-    required this.documentationComment,
-    required this.annotation,
-    required this.nullable,
-    required this.hasDeprecated,
-  });
-
   /// Parameter / field type.
   final String name;
 
@@ -37,9 +27,30 @@ class FieldInfo {
   /// Dart type of the field
   final String type;
 
-  String get typeWithNullability => type + (nullable ? '?' : '');
-
   final bool nullable;
+
+  const FieldInfo({
+    required this.name,
+    required this.type,
+    required this.dartType,
+    required this.documentationComment,
+    required this.annotation,
+    required this.nullable,
+    required this.hasDeprecated,
+  });
+
+  factory FieldInfo.ofElement(FieldElement element) {
+    return FieldInfo(
+      name: element.name,
+      type: element.type.getTypeAsString(),
+      dartType: element.type,
+      documentationComment: element.documentationComment,
+      annotation: readMixableProperty(element),
+      nullable: element.type.isNullableType,
+      hasDeprecated: element.hasDeprecated,
+    );
+  }
+  String get typeWithNullability => type + (nullable ? '?' : '');
 
   /// Returns whether the field has a DTO type associated with it.
   bool get hasDto => dtoType != null;
@@ -69,23 +80,19 @@ class FieldInfo {
   /// True if the type is `dynamic`.
   bool get isDynamic => type == 'dynamic';
 
+  @override
   String toString() => 'FieldInfo(name: $name, type: $type)';
-
-  factory FieldInfo.ofElement(FieldElement element) {
-    return FieldInfo(
-      name: element.name,
-      dartType: element.type,
-      type: element.type.getTypeAsString(),
-      nullable: element.type.isNullableType,
-      hasDeprecated: element.hasDeprecated,
-      annotation: readMixableProperty(element),
-      documentationComment: element.documentationComment,
-    );
-  }
 }
 
 class ParameterInfo extends FieldInfo {
-  ParameterInfo({
+  static const internalRefPrefix = '_\$this';
+
+  final bool isSuper;
+  final bool isPositional;
+  final bool isRequiredNamed;
+  final bool isRequiredPositional;
+
+  const ParameterInfo({
     required super.name,
     required super.type,
     required super.nullable,
@@ -99,17 +106,6 @@ class ParameterInfo extends FieldInfo {
     required this.isRequiredPositional,
   });
 
-  static const internalRefPrefix = '_\$this';
-
-  String get asInternalRef => '$internalRefPrefix.$name';
-
-  final bool isSuper;
-  final bool isPositional;
-  final bool isRequiredNamed;
-  final bool isRequiredPositional;
-
-  bool get isRequired => isRequiredNamed || isRequiredPositional;
-
   factory ParameterInfo.ofElement(ParameterElement element) {
     final fieldInfo = getFieldInfoFromParameter(element);
 
@@ -118,23 +114,39 @@ class ParameterInfo extends FieldInfo {
 
     return ParameterInfo(
       name: element.name,
-      hasDeprecated:
-          (fieldInfo?.hasDeprecated ?? false) || element.hasDeprecated,
-      dartType: element.type,
       type: element.type.getDisplayString(withNullability: false),
       nullable: fieldInfo?.nullable ?? isNullable,
       isSuper: element.isSuperFormal,
+      isPositional: element.isPositional,
+      dartType: element.type,
+      annotation: fieldInfo?.annotation ?? const MixableProperty(),
+      documentationComment: fieldInfo?.documentationComment,
+      hasDeprecated:
+          (fieldInfo?.hasDeprecated ?? false) || element.hasDeprecated,
       isRequiredNamed: element.isRequiredNamed,
       isRequiredPositional: element.isRequiredPositional,
-      isPositional: element.isPositional,
-      documentationComment: fieldInfo?.documentationComment,
-      annotation: fieldInfo?.annotation ?? MixableProperty(),
     );
   }
+  String get asInternalRef => '$internalRefPrefix.$name';
+
+  bool get isRequired => isRequiredNamed || isRequiredPositional;
 }
 
 class ClassInfo {
-  ClassInfo({
+  final String name;
+  final List<ParameterInfo> fields;
+  final bool isBase;
+  final bool isFinal;
+  final bool isInternalRef;
+  final Set<String> mixinTypes;
+  final String extendsType;
+  final Set<String> methods;
+  final Set<String> genericTypes;
+
+  final bool isConst;
+  final String constructorName;
+
+  const ClassInfo({
     required this.name,
     required this.fields,
     this.isBase = false,
@@ -148,18 +160,28 @@ class ClassInfo {
     this.methods = const {},
   });
 
-  final String name;
-  final List<ParameterInfo> fields;
-  final bool isBase;
-  final bool isFinal;
-  final bool isInternalRef;
-  final Set<String> mixinTypes;
-  final String extendsType;
-  final Set<String> methods;
-  final Set<String> genericTypes;
+  factory ClassInfo.ofElement(
+    ClassElement element, {
+    bool asInternalRef = false,
+  }) {
+    final constructor = element.defaultConstructor;
 
-  final bool isConst;
-  final String constructorName;
+    return ClassInfo(
+      name: element.name,
+      fields: constructor.parameters.map(ParameterInfo.ofElement).toList(),
+      isBase: element.isBase,
+      isFinal: element.isFinal,
+      isConst: element.isConst,
+      isInternalRef: asInternalRef,
+      constructorName: constructor.name,
+      mixinTypes: element.mixins
+          .map((e) => e.getDisplayString(withNullability: false))
+          .toSet(),
+      methods: element.methods.map((e) => e.name).toSet(),
+    );
+  }
+  String get constructorRef =>
+      constructorName.isEmpty ? '' : '.$constructorName';
 
   ClassInfo copyWith({
     String? name,
@@ -222,34 +244,9 @@ class ClassInfo {
 
     return bufferString.toString();
   }
-
-  String get constructorRef =>
-      constructorName.isEmpty ? '' : '.$constructorName';
-
-  factory ClassInfo.ofElement(
-    ClassElement element, {
-    bool asInternalRef = false,
-  }) {
-    final constructor = element.defaultConstructor;
-    return ClassInfo(
-      name: element.name,
-      isFinal: element.isFinal,
-      isBase: element.isBase,
-      isConst: element.isConst,
-      isInternalRef: asInternalRef,
-      constructorName: constructor.name,
-      methods: element.methods.map((e) => e.name).toSet(),
-      mixinTypes: element.mixins
-          .map((e) => e.getDisplayString(withNullability: false))
-          .toSet(),
-      fields: constructor.parameters.map(ParameterInfo.ofElement).toList(),
-    );
-  }
 }
 
-FieldInfo? getFieldInfoFromParameter(
-  ParameterElement parameter,
-) {
+FieldInfo? getFieldInfoFromParameter(ParameterElement parameter) {
   final element = parameter.enclosingElement;
 
   if (element is! ConstructorElement) {
@@ -285,23 +282,23 @@ FieldInfo? getFieldInfoFromParameter(
     name: field.name,
     type: field.type.getDisplayString(withNullability: false),
     dartType: field.type,
+    documentationComment: field.documentationComment,
+    annotation: annotation,
     nullable: field.type.isNullableType,
     hasDeprecated: field.hasDeprecated,
-    annotation: annotation,
-    documentationComment: field.documentationComment,
   );
 }
 
 class ClassBuilderContext<T> {
+  final ClassElement classElement;
+  final T annotation;
+
   List<ParameterInfo>? _fieldsCache;
 
   ClassBuilderContext({
     required this.classElement,
     required this.annotation,
   });
-
-  final ClassElement classElement;
-  final T annotation;
 
   List<ParameterInfo> get fields {
     if (_fieldsCache != null) return _fieldsCache!;
@@ -335,7 +332,7 @@ class ClassBuilderContext<T> {
 
   String get dtoName => '${name}Dto';
 
-  String get generatedName => '_\$${name}';
+  String get generatedName => '_\$$name';
 
   String get constructorRef =>
       constructor.name.isEmpty ? '' : '.${constructor.name}';
@@ -350,8 +347,7 @@ extension ClassContextSpecX on ClassBuilderContext<MixableSpec> {
       ? MixType.widgetModifierSpec.name
       : MixType.spec.name;
 
-  String get _prefix =>
-      annotation.prefix.isEmpty ? name : '${annotation.prefix}';
+  String get _prefix => annotation.prefix.isEmpty ? name : annotation.prefix;
   String get attributeName => '${_prefix}Attribute';
   String get utilityName => '${_prefix}Utility';
   String get tweenClassName => '${_prefix}Tween';

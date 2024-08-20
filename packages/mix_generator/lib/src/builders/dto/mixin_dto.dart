@@ -1,9 +1,9 @@
 import 'package:mix_annotations/mix_annotations.dart';
-import 'package:mix_generator/src/builders/getter_self_reference.dart';
-import 'package:mix_generator/src/builders/method_equality.dart';
-import 'package:mix_generator/src/builders/method_merge.dart';
-import 'package:mix_generator/src/builders/method_resolve.dart';
-import 'package:mix_generator/src/helpers/field_info.dart';
+import '../getter_self_reference.dart';
+import '../method_equality.dart';
+import '../method_merge.dart';
+import '../method_resolve.dart';
+import '../../helpers/field_info.dart';
 
 String dtoMixin(ClassBuilderContext<MixableDto> context) {
   final mixinName = context.generatedName;

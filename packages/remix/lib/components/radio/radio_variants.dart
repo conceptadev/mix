@@ -5,34 +5,28 @@ abstract interface class IRadioVariant extends RemixVariant {
 }
 
 class RadioStatus extends IRadioVariant {
-  const RadioStatus(String name) : super('status.$name');
-
   static const checked = RadioStatus('checked');
   static const unchecked = RadioStatus('unchecked');
+  const RadioStatus(String name) : super('status.$name');
 }
 
 class RadioVariant extends IRadioVariant {
-  const RadioVariant(String name) : super('variant.$name');
-
   static const solid = RadioVariant('solid');
   static const soft = RadioVariant('soft');
   static const surface = RadioVariant('surface');
   static const outline = RadioVariant('outline');
 
-  static List<RadioVariant> get values => [
-        solid,
-        soft,
-        surface,
-        outline,
-      ];
+  const RadioVariant(String name) : super('variant.$name');
+
+  static List<RadioVariant> get values => [solid, soft, surface, outline];
 }
 
 class RadioSize extends IRadioVariant {
-  const RadioSize(String name) : super('size.$name');
-
   static const small = RadioSize('small');
   static const medium = RadioSize('medium');
   static const large = RadioSize('large');
+
+  const RadioSize(String name) : super('size.$name');
 
   static List<RadioSize> get values => [small, medium, large];
 }

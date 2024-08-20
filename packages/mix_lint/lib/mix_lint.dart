@@ -1,5 +1,5 @@
 import 'package:custom_lint_builder/custom_lint_builder.dart';
-import 'package:mix_lint/src/lints/max_number_of_attributes_per_style/max_number_of_attributes_per_style.dart';
+import 'src/lints/max_number_of_attributes_per_style/max_number_of_attributes_per_style.dart';
 
 import 'src/assists/extract_attributes.dart';
 import 'src/lints/attributes_ordering.dart';

@@ -11,7 +11,7 @@ void main() {
 
     testWidgets('renders with default type', (WidgetTester tester) async {
       await tester.pumpRxComponent(
-        RxCard(
+        const RxCard(
           children: [Text('Test')],
         ),
       );
@@ -21,7 +21,7 @@ void main() {
     });
 
     testWidgets('applies custom style', (WidgetTester tester) async {
-      final color = Colors.red;
+      const color = Colors.red;
 
       final customStyle = Style(
         $card.container.color(color),
@@ -30,7 +30,7 @@ void main() {
       await tester.pumpRxComponent(
         RxCard(
           style: customStyle,
-          children: [Text('Custom Style')],
+          children: const [Text('Custom Style')],
         ),
       );
 
@@ -40,7 +40,7 @@ void main() {
 
     testWidgets('renders multiple children', (WidgetTester tester) async {
       await tester.pumpRxComponent(
-        RxCard(
+        const RxCard(
           children: [
             Text('Child 1'),
             Text('Child 2'),
@@ -59,7 +59,7 @@ void main() {
         await tester.pumpRxComponent(
           RxCard(
             variant: variant,
-            children: [Text('Variant Test')],
+            children: const [Text('Variant Test')],
           ),
         );
 
@@ -76,7 +76,7 @@ void main() {
         await tester.pumpRxComponent(
           RxCard(
             size: size,
-            children: [Text('Variant Test')],
+            children: const [Text('Variant Test')],
           ),
         );
 

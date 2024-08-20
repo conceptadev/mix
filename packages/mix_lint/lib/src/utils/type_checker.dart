@@ -5,10 +5,7 @@ const mixThemeDataChecker = TypeChecker.fromName(
   packageName: 'mix',
 );
 
-const mixTokenChecker = TypeChecker.fromName(
-  'MixToken',
-  packageName: 'mix',
-);
+const mixTokenChecker = TypeChecker.fromName('MixToken', packageName: 'mix');
 
 const radiusTokenChecker = TypeChecker.fromName(
   'RadiusToken',
@@ -34,20 +31,14 @@ const spaceTokenChecker = TypeChecker.fromName(
   packageName: 'mix',
 );
 
-const variantChecker = TypeChecker.fromName(
-  'Variant',
-  packageName: 'mix',
-);
+const variantChecker = TypeChecker.fromName('Variant', packageName: 'mix');
 
 const contextVariantChecker = TypeChecker.fromName(
   'ContextVariant',
   packageName: 'mix',
 );
 
-const iVariantChecker = TypeChecker.fromName(
-  'IVariant',
-  packageName: 'mix',
-);
+const iVariantChecker = TypeChecker.fromName('IVariant', packageName: 'mix');
 
 const variantAttributeChecker = TypeChecker.fromName(
   'VariantAttribute',
@@ -64,7 +55,4 @@ const specAttributeChecker = TypeChecker.fromName(
   packageName: 'mix',
 );
 
-const styleChecker = TypeChecker.fromName(
-  'Style',
-  packageName: 'mix',
-);
+const styleChecker = TypeChecker.fromName('Style', packageName: 'mix');

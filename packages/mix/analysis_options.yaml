@@ -1,4 +1,1 @@
-
-includes:
-  - ../../lints.yaml
-  - package:flutter_lints/flutter.yaml
+include: ../../lints_with_dcm.yaml

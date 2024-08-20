@@ -4,34 +4,16 @@ import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:build/build.dart';
 import 'package:mix_annotations/mix_annotations.dart';
-import 'package:mix_generator/src/builders/utility_class_builder.dart';
-import 'package:mix_generator/src/helpers/dart_type_ext.dart';
-import 'package:mix_generator/src/helpers/helpers.dart';
+import 'builders/utility_class_builder.dart';
+import 'helpers/dart_type_ext.dart';
+import 'helpers/helpers.dart';
 import 'package:source_gen/source_gen.dart';
 
 import 'helpers/builder_utils.dart';
 
 class MixableClassUtilityGenerator
     extends GeneratorForAnnotation<MixableClassUtility> {
-  MixableClassUtilityGenerator();
-
-  @override
-  Future<String> generateForAnnotatedElement(
-    Element element,
-    ConstantReader reader,
-    BuildStep buildStep,
-  ) async {
-    if (element is! ClassElement) {
-      throw InvalidGenerationSourceError(
-        'The annotation can only be applied to a class.',
-        element: element,
-      );
-    }
-
-    final context = _readContext(element);
-
-    return dartFormat(_generateUtilityMixin(context));
-  }
+  const MixableClassUtilityGenerator();
 
   /// Reads the annotation context for the given [element].
   ///
@@ -66,6 +48,24 @@ class MixableClassUtilityGenerator
       mappingElement: mappingEl as ClassElement?,
       generateCallMethod: generateCallMethod,
     );
+  }
+
+  @override
+  Future<String> generateForAnnotatedElement(
+    Element element,
+    ConstantReader reader,
+    BuildStep buildStep,
+  ) async {
+    if (element is! ClassElement) {
+      throw InvalidGenerationSourceError(
+        'The annotation can only be applied to a class.',
+        element: element,
+      );
+    }
+
+    final context = _readContext(element);
+
+    return dartFormat(_generateUtilityMixin(context));
   }
 }
 
@@ -131,7 +131,7 @@ String _generateUtilityFields(ClassUtilityAnnotationContext context) {
   final valueEl = context.valueElement;
   final fieldStatements = <String>[];
 
-  mappedEl.fields.forEach((field) {
+  for (var field in mappedEl.fields) {
     final isSameType = field.type.isAssignableTo(valueEl.thisType);
 
     if (field.isStatic && field.isConst && isSameType) {
@@ -142,7 +142,8 @@ String _generateUtilityFields(ClassUtilityAnnotationContext context) {
   T $name() => builder($type.$name);
   ''');
     }
-  });
+  }
+
   return fieldStatements.join('\n');
 }
 
@@ -159,7 +160,7 @@ String _generateCallMethod(ClassUtilityAnnotationContext context) {
   final valueName = valueEl.name;
 
   return '''
-/// Creates an [Attribute] instance with the specified ${valueName} value.
+/// Creates an [Attribute] instance with the specified $valueName value.
 T call($valueName value) => builder(value);
 ''';
 }
@@ -178,7 +179,7 @@ String generateUtilityConstructors(ClassUtilityAnnotationContext context) {
     return isValidConstructor(constructor);
   });
 
-  constructors.forEach((constructor) {
+  for (var constructor in constructors) {
     // Do not genrate for  unamed constructors
 
     final statement = generateUtilityForConstructor(
@@ -190,18 +191,17 @@ String generateUtilityConstructors(ClassUtilityAnnotationContext context) {
     if (statement.isNotEmpty) {
       fieldStatements.add(statement);
     }
-  });
+  }
 
   return fieldStatements.join('\n');
 }
 
-bool isValidConstructor(
-  ConstructorElement constructor,
-) {
+bool isValidConstructor(ConstructorElement constructor) {
   final isPublic = constructor.isPublic;
 
   final hasUndefinedParamTypes = constructor.parameters.any((param) {
     final library = param.type.element?.library;
+
     return library != null && !library.isFlutterOrDart;
   });
 
