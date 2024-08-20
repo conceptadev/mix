@@ -65,6 +65,46 @@ void main() {
       expect(find.byType(Align), findsOneWidget);
     },
   );
+
+  testWidgets('BoxSpec handles onEnd', (WidgetTester tester) async {
+    var countPressTime = 0;
+    var countOnEnd = 0;
+
+    await tester.pumpWidget(
+      PressableBox(
+        onPress: () {
+          countPressTime++;
+        },
+        child: SpecBuilder(
+          style: Style(
+            $box.height(50),
+            $box.width(50),
+            $box.wrap.transform.scale(1),
+            $on.press(
+              $box.wrap.transform.scale(1.5),
+            ),
+          ).animate(),
+          builder: (context) {
+            final spec = BoxSpec.of(context);
+
+            return BoxSpecWidget(
+              spec: spec,
+              onEndSpecModifiersAnimation: () => countOnEnd++,
+            );
+          },
+        ),
+      ),
+    );
+
+    final containerFinder = find.byType(Pressable);
+    await tester.tap(containerFinder);
+
+    await tester.pumpAndSettle();
+
+    expect(countPressTime, 1);
+    expect(countOnEnd, 1);
+  });
+
   testWidgets('BoxSpec properties should match Container properties',
       (WidgetTester tester) async {
     final boxSpec = BoxSpec(

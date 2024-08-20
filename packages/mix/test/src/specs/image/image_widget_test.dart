@@ -68,6 +68,44 @@ void main() {
       expect(opacityWidget.opacity, 0.5);
     });
 
+    testWidgets('ImageSpec handles onEnd', (WidgetTester tester) async {
+      var countPressTime = 0;
+      var countOnEnd = 0;
+
+      await tester.pumpMaterialApp(
+        PressableBox(
+          onPress: () {
+            countPressTime++;
+          },
+          child: SpecBuilder(
+            style: Style(
+              $image.wrap.transform.scale(1),
+              $on.press(
+                $image.wrap.transform.scale(1.5),
+              ),
+            ).animate(),
+            builder: (context) {
+              final spec = ImageSpec.of(context);
+
+              return ImageSpecWidget(
+                image: FileImage(File('test_resources/logo.png')),
+                spec: spec,
+                onEndSpecModifiersAnimation: () => countOnEnd++,
+              );
+            },
+          ),
+        ),
+      );
+
+      final containerFinder = find.byType(Pressable);
+      await tester.tap(containerFinder);
+
+      await tester.pumpAndSettle();
+
+      expect(countPressTime, 1);
+      expect(countOnEnd, 1);
+    });
+
     testWidgets(
       'can inherit style from the parent StyledWidget',
       (WidgetTester tester) async {
