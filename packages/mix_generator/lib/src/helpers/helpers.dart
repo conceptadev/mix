@@ -1,13 +1,17 @@
 import 'package:analyzer/dart/element/element.dart' show ClassElement;
 import 'package:dart_style/dart_style.dart';
-import 'package:mix_generator/src/helpers/field_info.dart';
+
+import 'field_info.dart';
 
 /// Returns parameter names or full parameters declaration declared by this class or an empty string.
 ///
 /// If `nameOnly` is `true`: `class MyClass<T extends String, Y>` returns `<T, Y>`.
 ///
 /// If `nameOnly` is `false`: `class MyClass<T extends String, Y>` returns `<T extends String, Y>`.
-String typeParametersString(ClassElement classElement, bool nameOnly) {
+String typeParametersString(
+  ClassElement classElement, {
+  required bool nameOnly,
+}) {
   final names = classElement.typeParameters
       .map(
         (e) => nameOnly ? e.name : e.getDisplayString(withNullability: true),
@@ -15,9 +19,9 @@ String typeParametersString(ClassElement classElement, bool nameOnly) {
       .join(',');
   if (names.isNotEmpty) {
     return '<$names>';
-  } else {
-    return '';
   }
+
+  return '';
 }
 
 /// Returns constructor for the given type and optional named constructor name. E.g. "TestConstructor" or "TestConstructor._private" when "_private" constructor name is provided.
@@ -30,6 +34,7 @@ extension StringX on String {
     if (isEmpty) {
       return this;
     }
+
     return this[0].toUpperCase() + substring(1);
   }
 
@@ -37,11 +42,12 @@ extension StringX on String {
     if (isEmpty) {
       return this;
     }
+
     return this[0].toLowerCase() + substring(1);
   }
 
   String get snakecase {
-    return this.replaceAll(RegExp(r'(?<!^)(?=[A-Z])'), '_').toLowerCase();
+    return replaceAll(RegExp(r'(?<!^)(?=[A-Z])'), '_').toLowerCase();
   }
 }
 
@@ -94,7 +100,7 @@ String buildConstructorParamsAsNamed(
   return buffer.toString();
 }
 
-late final _formatter = DartFormatter(pageWidth: 80, fixes: StyleFix.all);
+final _formatter = DartFormatter(pageWidth: 80, fixes: StyleFix.all);
 
 String dartFormat(String contents) {
   try {

@@ -5,17 +5,15 @@ abstract interface class IAvatarVariant extends RemixVariant {
 }
 
 class AvatarVariant extends IAvatarVariant {
-  const AvatarVariant(String name) : super('variant.$name');
-
   static const solid = AvatarVariant('solid');
   static const soft = AvatarVariant('soft');
+
+  const AvatarVariant(String name) : super('variant.$name');
 
   static List<AvatarVariant> get values => [solid, soft];
 }
 
 class AvatarSize extends IAvatarVariant {
-  const AvatarSize(String name) : super('size.$name');
-
   static const size1 = AvatarSize('size1');
   static const size2 = AvatarSize('size2');
   static const size3 = AvatarSize('size3');
@@ -24,6 +22,8 @@ class AvatarSize extends IAvatarVariant {
   static const size6 = AvatarSize('size6');
   static const size7 = AvatarSize('size7');
   static const size8 = AvatarSize('size8');
+
+  const AvatarSize(String name) : super('size.$name');
 
   static List<AvatarSize> get values => [
         size1,
@@ -38,13 +38,13 @@ class AvatarSize extends IAvatarVariant {
 }
 
 class AvatarRadius extends IAvatarVariant {
-  const AvatarRadius(String name) : super('radius.$name');
-
   static const none = AvatarRadius('none');
   static const small = AvatarRadius('small');
   static const medium = AvatarRadius('medium');
   static const large = AvatarRadius('large');
   static const full = AvatarRadius('full');
+
+  const AvatarRadius(String name) : super('radius.$name');
 
   static List<AvatarRadius> get values => [none, small, medium, large, full];
 }

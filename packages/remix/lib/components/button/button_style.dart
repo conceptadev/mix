@@ -20,9 +20,7 @@ class XButtonStyle {
   static Style get icon => Style(
         _icon.size(24),
         _icon.color.white(),
-        $on.dark(
-          _icon.color.black(),
-        ),
+        $on.dark(_icon.color.black()),
       );
 
   static Style get label => Style(
@@ -36,43 +34,27 @@ class XButtonStyle {
         _label.style.height(1.5),
         _label.style.color.white(),
         _label.style.fontWeight.w400(),
-        $on.dark(
-          _label.style.color.black(),
-        ),
+        $on.dark(_label.style.color.black()),
       );
 
   static Style get spinner => Style(
         _spinner.strokeWidth(0.9),
         _spinner.size(15),
         _spinner.color.white(),
-        $on.dark(
-          _spinner.color.black(),
-        ),
+        $on.dark(_spinner.color.black()),
       );
 
   static Style get container => Style(
         _container.borderRadius(6),
         _container.color.black(),
-        $on.hover(
-          _container.color.brighten(20),
-        ),
-        $on.press(
-          _container.color.brighten(10),
-        ),
-        $on.disabled(
-          _container.color.grey.shade400(),
-        ),
+        $on.hover(_container.color.brighten(20)),
+        $on.press(_container.color.brighten(10)),
+        $on.disabled(_container.color.grey.shade400()),
         $on.dark(
           _container.color.white(),
-          $on.hover(
-            _container.color.darken(10),
-          ),
-          $on.press(
-            _container.color.darken(10),
-          ),
-          $on.disabled(
-            _container.color.grey.shade600(),
-          ),
+          $on.hover(_container.color.darken(10)),
+          $on.press(_container.color.darken(10)),
+          $on.disabled(_container.color.grey.shade600()),
         ),
       );
 

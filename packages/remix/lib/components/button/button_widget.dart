@@ -68,10 +68,7 @@ class XButton extends StatelessWidget {
     return loading
         ? Stack(
             alignment: Alignment.center,
-            children: [
-              spinner,
-              Opacity(opacity: 0.0, child: child),
-            ],
+            children: [spinner, Opacity(opacity: 0.0, child: child)],
           )
         : child;
   }
@@ -95,23 +92,22 @@ class XButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDisabled = disabled || loading;
+
     return Pressable(
-      onPress: disabled || loading ? null : onPressed,
       enabled: !isDisabled,
+      onPress: disabled || loading ? null : onPressed,
       child: SpecBuilder(
+        builder: (context) {
+          final spec = ButtonSpec.of(context);
+
+          return spec.container(child: _buildChildren(spec, context));
+        },
         style: _blank
             ? style
             : XButtonStyle.base.animate(
                 duration: Duration(milliseconds: 100),
                 curve: Curves.easeOut,
               ),
-        builder: (context) {
-          final spec = ButtonSpec.of(context);
-
-          return spec.container(
-            child: _buildChildren(spec, context),
-          );
-        },
       ),
     );
   }

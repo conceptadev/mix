@@ -1,7 +1,7 @@
 import 'package:analyzer/dart/element/element.dart';
-import 'package:mix_generator/src/helpers/builder_utils.dart';
-import 'package:mix_generator/src/helpers/field_info.dart';
-import 'package:mix_generator/src/helpers/helpers.dart';
+import '../helpers/builder_utils.dart';
+import '../helpers/field_info.dart';
+import '../helpers/helpers.dart';
 
 String mergeMethodBuilder(
   ClassInfo instance, {
@@ -18,20 +18,19 @@ String mergeMethodBuilder(
   final fieldStatements = buildConstructorParamsAsNamed(fields, (field) {
     final propName = field.name;
     final thisName = isInternalRef ? field.asInternalRef : field.name;
-    final nullable = '?';
 
     if (field.isListType) {
       final listNullable = field.nullable ? '?' : '';
       if (shouldMergeLists) {
         return '${MixHelperRef.mergeList}($thisName, other.$propName)';
-      } else {
-        return '[...$listNullable$thisName,...${listNullable}other.$propName]';
       }
+
+      return '[...$listNullable$thisName,...${listNullable}other.$propName]';
     }
     if (field.hasDto) {
       final hasTryToMerge = _checkIfHasTryToMerge(field.dartType.element!);
       final tryToMergeExpression =
-          '${field.dtoType}.tryToMerge($thisName, other.$propName)';
+          '${field.dtoType!}.tryToMerge($thisName, other.$propName)';
 
       // I have a type name that I want to see if I can get an element
       // to check if it has a tryToMerge method. How can I get that?
@@ -46,10 +45,10 @@ String mergeMethodBuilder(
         return tryToMergeExpression;
       }
 
-      return '$thisName$nullable.merge(other.$propName) ?? other.$propName';
-    } else {
-      return 'other.$propName ?? $thisName';
+      return '$thisName?.merge(other.$propName) ?? other.$propName';
     }
+
+    return 'other.$propName ?? $thisName';
   });
 
   final covariantKey = isFinal ? '' : 'covariant';

@@ -2,11 +2,11 @@ import 'package:analyzer/dart/ast/ast.dart';
 import 'package:analyzer/dart/ast/visitor.dart';
 
 class RecursiveSimpleIdentifierVisitor extends RecursiveAstVisitor<void> {
+  final void Function(SimpleIdentifier node) onVisitSimpleIdentifier;
+
   const RecursiveSimpleIdentifierVisitor({
     required this.onVisitSimpleIdentifier,
   });
-
-  final void Function(SimpleIdentifier node) onVisitSimpleIdentifier;
 
   @override
   void visitSimpleIdentifier(SimpleIdentifier node) {
@@ -17,12 +17,12 @@ class RecursiveSimpleIdentifierVisitor extends RecursiveAstVisitor<void> {
 
 class RecursiveFunctionExpressionInvocationVisitor
     extends RecursiveAstVisitor<void> {
+  final void Function(FunctionExpressionInvocation node)
+      onVisitFunctionExpressionInvocation;
+
   const RecursiveFunctionExpressionInvocationVisitor({
     required this.onVisitFunctionExpressionInvocation,
   });
-
-  final void Function(FunctionExpressionInvocation node)
-      onVisitFunctionExpressionInvocation;
 
   @override
   void visitFunctionExpressionInvocation(FunctionExpressionInvocation node) {

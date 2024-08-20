@@ -1,5 +1,5 @@
-import 'package:mix_generator/src/helpers/field_info.dart';
-import 'package:mix_generator/src/helpers/helpers.dart';
+import '../helpers/field_info.dart';
+import '../helpers/helpers.dart';
 
 String copyWithMethodBuilder(ClassInfo instance) {
   final fields = instance.fields;
@@ -10,11 +10,12 @@ String copyWithMethodBuilder(ClassInfo instance) {
   final fieldStatements = buildConstructorParams(fields, (field) {
     final fieldName =
         isInternalRef ? field.asInternalRef : 'this.${field.name}';
+
     return '${field.name} ?? $fieldName';
   });
 
   final optionalParams =
-      '${fields.map((field) => '${field.type}? ${field.name},').join('\n')}';
+      fields.map((field) => '${field.type}? ${field.name},').join('\n');
 
   final copyWithParams = fields.isEmpty ? '' : '{$optionalParams}';
 

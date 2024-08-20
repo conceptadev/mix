@@ -24,13 +24,16 @@ extension DartTypeExtension on DartType {
 
     if (self is InterfaceType) {
       final library = self.element.library;
+
       return library.typeSystem.isAssignableTo(this, other);
     }
+
     return true;
   }
 
   bool get isEnum {
     final self = this;
+
     return self is InterfaceType && self.element is EnumElement;
   }
 
@@ -80,6 +83,7 @@ extension ElementX on Element {
         if (lib == null) {
           return false;
         }
+
         return !lib.isDartAsync && //
             !lib.isDartCore &&
             !lib.isInSdk;

@@ -11,7 +11,6 @@ part 'text_style_tokens.dart';
 final $rx = _RemixTokenRef();
 
 class _RemixTokenRef {
-  _RemixTokenRef();
   final color = RemixColors();
 
   final space = RemixSpace();
@@ -19,12 +18,13 @@ class _RemixTokenRef {
   final radii = RemixRadius();
 
   final text = RemixTypography();
+  _RemixTokenRef();
 }
 
 final _baseRemixTokens = MixThemeData(
   colors: remixColorTokens,
-  textStyles: remixTextTokens,
   spaces: remixSpaceTokens,
+  textStyles: remixTextTokens,
   radii: remixRadiusTokens,
 );
 
@@ -45,10 +45,7 @@ class RemixTokens extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MixTheme(
-      data: data,
-      child: child,
-    );
+    return MixTheme(data: data, child: child);
   }
 }
 

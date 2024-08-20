@@ -1,6 +1,15 @@
 part of 'remix_tokens.dart';
 
 class RemixTypography {
+  final text1 = const TextStyleToken('--text-1');
+  final text2 = const TextStyleToken('--text-2');
+  final text3 = const TextStyleToken('--text-3');
+  final text4 = const TextStyleToken('--text-4');
+  final text5 = const TextStyleToken('--text-5');
+  final text6 = const TextStyleToken('--text-6');
+  final text7 = const TextStyleToken('--text-7');
+  final text8 = const TextStyleToken('--text-8');
+  final text9 = const TextStyleToken('--text-9');
   RemixTypography();
 
   TextStyleToken call(int level) {
@@ -17,35 +26,17 @@ class RemixTypography {
       _ => throw ArgumentError('Invalid text level: $level'),
     };
   }
-
-  final text1 = const TextStyleToken('--text-1');
-  final text2 = const TextStyleToken('--text-2');
-  final text3 = const TextStyleToken('--text-3');
-  final text4 = const TextStyleToken('--text-4');
-  final text5 = const TextStyleToken('--text-5');
-  final text6 = const TextStyleToken('--text-6');
-  final text7 = const TextStyleToken('--text-7');
-  final text8 = const TextStyleToken('--text-8');
-  final text9 = const TextStyleToken('--text-9');
 }
 
 final _t = RemixTypography();
-final remixTextTokens = <TextStyleToken, TextStyle>{
+final remixTextTokens = {
   _t.text1: const TextStyle(
     fontSize: 12,
     letterSpacing: 0.0025,
     height: 1.33,
   ),
-  _t.text2: const TextStyle(
-    fontSize: 14,
-    letterSpacing: 0,
-    height: 1.43,
-  ),
-  _t.text3: const TextStyle(
-    fontSize: 16,
-    letterSpacing: 0,
-    height: 1.50,
-  ),
+  _t.text2: const TextStyle(fontSize: 14, letterSpacing: 0, height: 1.43),
+  _t.text3: const TextStyle(fontSize: 16, letterSpacing: 0, height: 1.50),
   _t.text4: const TextStyle(
     fontSize: 18,
     letterSpacing: -0.0025,

@@ -10,14 +10,14 @@ void main() {
     final $badge = BadgeSpecUtility.self;
 
     testWidgets('renders the label', (WidgetTester tester) async {
-      await tester.pumpRxComponent(RxBadge(label: 'Test'));
+      await tester.pumpRxComponent(const RxBadge(label: 'Test'));
 
       expect(find.text('Test'), findsOneWidget);
       expect(find.byType(RxBadge), findsOneWidget);
     });
 
     testWidgets('applies custom style', (WidgetTester tester) async {
-      final color = Colors.red;
+      const color = Colors.red;
 
       final customStyle = Style(
         BadgeVariant.solid(
@@ -47,12 +47,12 @@ void main() {
     });
 
     testWidgets('renders with different sizes', (WidgetTester tester) async {
-      final key1 = Key('1');
-      final key2 = Key('2');
-      final key3 = Key('3');
+      const key1 = Key('1');
+      const key2 = Key('2');
+      const key3 = Key('3');
 
       await tester.pumpRxComponent(
-        Column(
+        const Column(
           children: [
             RxBadge(key: key1, label: 'Small', size: BadgeSize.small),
             RxBadge(key: key2, label: 'Medium', size: BadgeSize.medium),
@@ -76,11 +76,11 @@ void main() {
     });
 
     testWidgets('renders with different variants', (WidgetTester tester) async {
-      final key1 = Key('1');
-      final key2 = Key('2');
+      const key1 = Key('1');
+      const key2 = Key('2');
 
       await tester.pumpRxComponent(
-        Column(
+        const Column(
           children: [
             RxBadge(key: key1, label: 'Soft', variant: BadgeVariant.soft),
             RxBadge(key: key2, label: 'Solid', variant: BadgeVariant.solid),
@@ -99,12 +99,12 @@ void main() {
     });
 
     testWidgets('renders with different radii', (WidgetTester tester) async {
-      final key1 = Key('1');
-      final key2 = Key('2');
-      final key3 = Key('3');
+      const key1 = Key('1');
+      const key2 = Key('2');
+      const key3 = Key('3');
 
       await tester.pumpRxComponent(
-        Column(
+        const Column(
           children: [
             RxBadge(
                 key: key1, label: 'Small Radius', radius: BadgeRadius.small),

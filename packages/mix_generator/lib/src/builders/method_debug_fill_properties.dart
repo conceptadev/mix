@@ -1,4 +1,4 @@
-import 'package:mix_generator/src/helpers/field_info.dart';
+import '../helpers/field_info.dart';
 
 const _expandableFields = ['decoration', 'style'];
 
@@ -10,6 +10,7 @@ String methodDebugFillProperties(ClassInfo instance) {
     if (_expandableFields.contains(fieldName)) {
       return 'properties.add(DiagnosticsProperty(\'${field.name}\', $fieldName, expandableValue: true, defaultValue: null));';
     }
+
     return 'properties.add(DiagnosticsProperty(\'${field.name}\', $fieldName, defaultValue: null));';
   }).join('\n');
 

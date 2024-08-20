@@ -4,7 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:mix/mix.dart';
 import 'package:mix_annotations/mix_annotations.dart';
-import 'package:remix/helpers/variant.dart';
+import '../../helpers/variant.dart';
 
 import '../../tokens/remix_tokens.dart';
 
@@ -40,12 +40,6 @@ final class SpinnerSpec extends Spec<SpinnerSpec>
   static const of = _$SpinnerSpec.of;
   static const from = _$SpinnerSpec.from;
 
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    _debugFillProperties(properties);
-  }
-
   const SpinnerSpec({
     double? size,
     this.strokeWidth,
@@ -60,11 +54,16 @@ final class SpinnerSpec extends Spec<SpinnerSpec>
         duration = duration ?? const Duration(milliseconds: 500);
 
   Widget call() => RxSpinnerSpecWidget(spec: this);
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    _debugFillProperties(properties);
+  }
 }
 
 final class SpinnerStyleUtility<T extends Attribute>
     extends ScalarUtility<T, SpinnerStyle> {
-  SpinnerStyleUtility(super.builder);
+  const SpinnerStyleUtility(super.builder);
 
   T dotted() => call(SpinnerStyle.dotted);
   T solid() => call(SpinnerStyle.solid);

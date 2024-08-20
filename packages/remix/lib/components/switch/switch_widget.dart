@@ -21,9 +21,9 @@ class RxSwitch extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RxBlankSwitch(
+      disabled: disabled,
       value: value,
       onChanged: onChanged,
-      disabled: disabled,
       style: _buildSwitchStyle(style, [size, variant]),
     );
   }
