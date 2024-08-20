@@ -19,20 +19,17 @@ class RxBlankCallout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SpecBuilder(
-      style: style,
       builder: (context) {
         final spec = CalloutSpec.of(context);
 
         return spec.container(
           child: spec.flex(
             direction: Axis.horizontal,
-            children: [
-              if (icon != null) spec.icon(icon!),
-              spec.text(text),
-            ],
+            children: [if (icon != null) spec.icon(icon!), spec.text(text)],
           ),
         );
       },
+      style: style,
     );
   }
 }

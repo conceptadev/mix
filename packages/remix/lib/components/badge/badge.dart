@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:mix/mix.dart';
 import 'package:mix_annotations/mix_annotations.dart';
-import 'package:remix/remix.dart';
+import '../../remix.dart';
 
 import '../../helpers/variant.dart';
 import '../../tokens/remix_tokens.dart';
@@ -22,10 +22,7 @@ base class BadgeSpec extends Spec<BadgeSpec> with _$BadgeSpec {
 
   static const from = _$BadgeSpec.from;
 
-  const BadgeSpec({
-    BoxSpec? container,
-    TextSpec? label,
-    super.animated,
-  })  : container = container ?? const BoxSpec(),
+  const BadgeSpec({BoxSpec? container, TextSpec? label, super.animated})
+      : container = container ?? const BoxSpec(),
         label = label ?? const TextSpec();
 }

@@ -17,21 +17,15 @@ Style get _baseStyle {
 }
 
 Style get _smallVariant {
-  return Style(
-    _container.height(4),
-  );
+  return Style(_container.height(4));
 }
 
 Style get _mediumVariant {
-  return Style(
-    _container.height(6),
-  );
+  return Style(_container.height(6));
 }
 
 Style get _largeVariant {
-  return Style(
-    _container.height(8),
-  );
+  return Style(_container.height(8));
 }
 
 Style get _surfaceVariant {
@@ -44,9 +38,7 @@ Style get _surfaceVariant {
 }
 
 Style get _softVariant {
-  return Style(
-    _fill.color.$accent(),
-  );
+  return Style(_fill.color.$accent());
 }
 
 Style get _noneRadiusVariant {

@@ -17,8 +17,8 @@ void main() {
     });
 
     testWidgets('applies custom size', (WidgetTester tester) async {
-      final size = ProgressSize.size3;
-      await tester.pumpRxComponent(RxProgress(size: size));
+      const size = ProgressSize.size3;
+      await tester.pumpRxComponent(const RxProgress(size: size));
 
       final progressFinder = find.byType(RxProgress);
       final RxProgress progress = tester.widget(progressFinder);
@@ -26,8 +26,8 @@ void main() {
     });
 
     testWidgets('applies custom type', (WidgetTester tester) async {
-      final type = ProgressVariant.soft;
-      await tester.pumpRxComponent(RxProgress(variant: type));
+      const type = ProgressVariant.soft;
+      await tester.pumpRxComponent(const RxProgress(variant: type));
 
       final progressFinder = find.byType(RxProgress);
       final RxProgress progress = tester.widget(progressFinder);
@@ -35,8 +35,8 @@ void main() {
     });
 
     testWidgets('applies custom radius', (WidgetTester tester) async {
-      final radius = ProgressRadius.full;
-      await tester.pumpRxComponent(RxProgress(radius: radius));
+      const radius = ProgressRadius.full;
+      await tester.pumpRxComponent(const RxProgress(radius: radius));
 
       final progressFinder = find.byType(RxProgress);
       final RxProgress progress = tester.widget(progressFinder);
@@ -44,7 +44,7 @@ void main() {
     });
 
     testWidgets('applies custom value', (WidgetTester tester) async {
-      await tester.pumpRxComponent(RxProgress(value: 0.5));
+      await tester.pumpRxComponent(const RxProgress(value: 0.5));
 
       final progressFinder = find.byType(RxBlankProgress);
       final RxBlankProgress progress = tester.widget(progressFinder);

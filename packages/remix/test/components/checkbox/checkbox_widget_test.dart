@@ -8,14 +8,14 @@ import '../../utils/extensions/widget_tester.dart';
 void main() {
   group('RxCheckbox', () {
     testWidgets('renders with default properties', (WidgetTester tester) async {
-      await tester.pumpRxComponent(RxCheckbox());
+      await tester.pumpRxComponent(const RxCheckbox());
 
       expect(find.byType(RxBlankCheckbox), findsOneWidget);
       expect(find.byIcon(Icons.check_rounded), findsOneWidget);
     });
 
     testWidgets('respects disabled state', (WidgetTester tester) async {
-      await tester.pumpRxComponent(RxCheckbox(disabled: true));
+      await tester.pumpRxComponent(const RxCheckbox(disabled: true));
 
       final Pressable pressable = tester.widget(find.byType(Pressable));
 
@@ -23,7 +23,7 @@ void main() {
     });
 
     testWidgets('respects value state', (WidgetTester tester) async {
-      await tester.pumpRxComponent(RxCheckbox(value: true));
+      await tester.pumpRxComponent(const RxCheckbox(value: true));
 
       final Pressable pressable = tester.widget(find.byType(Pressable));
 
@@ -32,7 +32,7 @@ void main() {
 
     testWidgets('uses custom icons when provided', (WidgetTester tester) async {
       await tester.pumpRxComponent(
-        RxCheckbox(
+        const RxCheckbox(
           iconChecked: Icons.done,
           iconUnchecked: Icons.close,
         ),
@@ -57,7 +57,7 @@ void main() {
 
     testWidgets('applies custom style', (WidgetTester tester) async {
       final $checkbox = CheckboxSpecUtility.self;
-      final color = Colors.red;
+      const color = Colors.red;
 
       await tester.pumpRxComponent(RxCheckbox(
         value: true,
@@ -71,7 +71,7 @@ void main() {
           ),
         ),
       ));
-      await tester.pumpAndSettle(Duration(milliseconds: 150));
+      await tester.pumpAndSettle(const Duration(milliseconds: 150));
 
       final Container container = tester.widget(find.byType(Container));
       expect((container.decoration as BoxDecoration).color, color);

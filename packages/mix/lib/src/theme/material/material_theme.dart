@@ -18,14 +18,14 @@ final materialMixTheme = MixThemeData(
     _md.colorScheme.secondary: ColorResolver((c) => c.color.secondary),
     _md.colorScheme.tertiary: ColorResolver((c) => c.color.tertiary),
     _md.colorScheme.surface: ColorResolver((c) => c.color.surface),
-    _md.colorScheme.background: ColorResolver((c) => c.color.background),
+    _md.colorScheme.background: ColorResolver((c) => c.color.surface),
     _md.colorScheme.error: ColorResolver((c) => c.color.error),
     _md.colorScheme.onPrimary: ColorResolver((c) => c.color.onPrimary),
     _md.colorScheme.onSecondary: ColorResolver((c) => c.color.onSecondary),
     _md.colorScheme.onTertiary: ColorResolver((c) => c.color.onTertiary),
     _md.colorScheme.onSurface: ColorResolver((c) => c.color.onSurface),
     _md.colorScheme.onBackground:
-        ColorResolver((context) => context.color.onBackground),
+        ColorResolver((context) => context.color.onSurface),
     _md.colorScheme.onError: ColorResolver((context) => context.color.onError),
   },
   textStyles: {

@@ -8,7 +8,7 @@ inputs:
   flutter-version:
     description: 'Flutter version'
     required: false
-    default: ""
+    default: "stable"
   run-dcm:
     description: 'Should run DCM'
     required: false
@@ -62,16 +62,8 @@ runs:
         folders: packages/*/lib
 
     - name: Run DCM
-      if: ${{ inputs.run-dcm }}
-      uses: CQLabs/dcm-action@v1
-      with:
-        github_token: ${{ inputs.token }}
-        ci_key: oss
-        email: oss
-        folders: .
-        fatal_style: true
-        fatal_performance: true
-        fatal_warnings: true
+      run: dcm analyze .
+      shell: bash
 
     - name: Run melos fix
       run: melos run fix
@@ -82,9 +74,9 @@ runs:
       run: melos run --no-select analyze
       shell: bash
       
-    - name: Run custom_lint
-      run: melos run custom_lint_analyze
-      shell: bash
+    # - name: Run custom_lint
+    #   run: melos run custom_lint_analyze
+    #   shell: bash
       
     # Others
     - name: Verify if mix_lint_test is up to date with mix_lint

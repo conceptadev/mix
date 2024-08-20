@@ -22,8 +22,8 @@ class RxCallout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RxBlankCallout(
-      text: text,
       icon: icon,
+      text: text,
       style: calloutStyle(style, [variant]),
     );
   }

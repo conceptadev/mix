@@ -4,11 +4,108 @@ import 'package:analyzer/dart/ast/ast.dart';
 import 'package:analyzer/source/source_range.dart';
 import 'package:analyzer_plugin/utilities/change_builder/change_builder_dart.dart';
 import 'package:custom_lint_builder/custom_lint_builder.dart';
-import 'package:mix_lint/src/utils/extensions/dart_file_edit_builder.dart';
-import 'package:mix_lint/src/utils/type_checker.dart';
-import 'package:mix_lint/src/utils/visitors.dart';
+import '../utils/extensions/dart_file_edit_builder.dart';
+import '../utils/type_checker.dart';
+import '../utils/visitors.dart';
 
 class ExtractAttributes extends DartAssist {
+  _AttributesExtractor? _getExtractionInfo(
+    InstanceCreationExpression node,
+    SourceRange target,
+  ) {
+    AstNode? ancestorNode;
+
+    ancestorNode = node.thisOrAncestorMatching<Block>((node) {
+      print('node ${node.runtimeType}');
+
+      return node is Block;
+    });
+
+    if (ancestorNode is Block) {
+      return _BlockExtractor(
+        target: target,
+        node: ancestorNode,
+        extractedCodeName: _getNameForExtractedCode(node, target),
+      );
+    }
+
+    ancestorNode = node.thisOrAncestorMatching<FieldDeclaration>((node) {
+      return node is FieldDeclaration;
+    });
+
+    if (ancestorNode is FieldDeclaration) {
+      return _FieldDeclarationExtractor(
+        target: target,
+        node: ancestorNode,
+        extractedCodeName: _getNameForExtractedCode(node, target),
+      );
+    }
+
+    ancestorNode = node.thisOrAncestorMatching<MethodDeclaration>((node) {
+      return node is MethodDeclaration && node.isGetter;
+    });
+
+    if (ancestorNode is MethodDeclaration) {
+      return _MethodDeclarationExtractor(
+        target: target,
+        node: ancestorNode,
+        extractedCodeName: _getNameForExtractedCode(node, target),
+      );
+    }
+
+    ancestorNode =
+        node.thisOrAncestorMatching<TopLevelVariableDeclaration>((node) {
+      print(node);
+
+      return node is TopLevelVariableDeclaration;
+    });
+
+    if (ancestorNode is TopLevelVariableDeclaration) {
+      return _TopLevelVariableDeclarationExtractor(
+        target: target,
+        node: ancestorNode,
+        extractedCodeName: _getNameForExtractedCode(node, target),
+      );
+    }
+
+    ancestorNode = node.thisOrAncestorMatching<FunctionDeclaration>((node) {
+      return node is FunctionDeclaration && node.isGetter;
+    });
+
+    if (ancestorNode is FunctionDeclaration) {
+      return _FunctionDeclarationExtractor(
+        target: target,
+        node: ancestorNode,
+        extractedCodeName: _getNameForExtractedCode(node, target),
+      );
+    }
+
+    return null;
+  }
+
+  String _getNameForExtractedCode(
+    InstanceCreationExpression node,
+    SourceRange target,
+  ) {
+    final functionExpression = <FunctionExpressionInvocation>[];
+    final visitor = RecursiveFunctionExpressionInvocationVisitor(
+      onVisitFunctionExpressionInvocation: functionExpression.add,
+    );
+    node.argumentList.accept(visitor);
+
+    final variants = functionExpression
+        .where(
+          (e) =>
+              variantAttributeChecker.isAssignableFromType(e.staticType!) &&
+              e.sourceRange.covers(target),
+        )
+        .map((e) => e.function.endToken);
+
+    if (variants.isEmpty) return 'extractedAttributes';
+
+    return '${variants.last}Variant';
+  }
+
   @override
   Future<void> run(
     CustomLintResolver resolver,
@@ -36,100 +133,9 @@ class ExtractAttributes extends DartAssist {
 
         try {
           extractor.applyRefactor(unit.content);
-        } catch (e) {
-          return;
-        }
+        } catch (e) {}
       });
     });
-  }
-
-  _AttributesExtractor? _getExtractionInfo(
-    InstanceCreationExpression node,
-    SourceRange target,
-  ) {
-    AstNode? ancestorNode;
-
-    ancestorNode = node.thisOrAncestorMatching<Block>((node) {
-      print('node ${node.runtimeType}');
-      return node is Block;
-    });
-
-    if (ancestorNode != null && ancestorNode is Block)
-      return _BlockExtractor(
-        target: target,
-        node: ancestorNode,
-        extractedCodeName: _getNameForExtractedCode(node, target),
-      );
-
-    ancestorNode = node.thisOrAncestorMatching<FieldDeclaration>((node) {
-      return node is FieldDeclaration;
-    });
-
-    if (ancestorNode != null && ancestorNode is FieldDeclaration)
-      return _FieldDeclarationExtractor(
-        target: target,
-        node: ancestorNode,
-        extractedCodeName: _getNameForExtractedCode(node, target),
-      );
-
-    ancestorNode = node.thisOrAncestorMatching<MethodDeclaration>((node) {
-      return node is MethodDeclaration && node.isGetter;
-    });
-
-    if (ancestorNode != null && ancestorNode is MethodDeclaration)
-      return _MethodDeclarationExtractor(
-        target: target,
-        node: ancestorNode,
-        extractedCodeName: _getNameForExtractedCode(node, target),
-      );
-
-    ancestorNode =
-        node.thisOrAncestorMatching<TopLevelVariableDeclaration>((node) {
-      print(node);
-      return node is TopLevelVariableDeclaration;
-    });
-
-    if (ancestorNode != null && ancestorNode is TopLevelVariableDeclaration)
-      return _TopLevelVariableDeclarationExtractor(
-        target: target,
-        node: ancestorNode,
-        extractedCodeName: _getNameForExtractedCode(node, target),
-      );
-
-    ancestorNode = node.thisOrAncestorMatching<FunctionDeclaration>((node) {
-      return node is FunctionDeclaration && node.isGetter;
-    });
-
-    if (ancestorNode != null && ancestorNode is FunctionDeclaration)
-      return _FunctionDeclarationExtractor(
-        target: target,
-        node: ancestorNode,
-        extractedCodeName: _getNameForExtractedCode(node, target),
-      );
-
-    return null;
-  }
-
-  String _getNameForExtractedCode(
-      InstanceCreationExpression node, SourceRange target) {
-    final functionExpression = <FunctionExpressionInvocation>[];
-    final visitor = RecursiveFunctionExpressionInvocationVisitor(
-      onVisitFunctionExpressionInvocation: functionExpression.add,
-    );
-    node.argumentList.accept(visitor);
-
-    final variants = functionExpression
-        .where(
-          (e) =>
-              variantAttributeChecker.isAssignableFromType(e.staticType!) &&
-              e.sourceRange.covers(target),
-        )
-        .map((e) => e.function.endToken);
-
-    if (variants.isEmpty) return 'extractedAttributes';
-    ;
-
-    return '${variants.last}Variant';
   }
 }
 
@@ -137,7 +143,7 @@ abstract class _AttributesExtractor<T extends AstNode> {
   final SourceRange target;
   final T node;
   final String extractedCodeName;
-  DartFileEditBuilder? builder = null;
+  DartFileEditBuilder? builder;
 
   _AttributesExtractor({
     required this.target,
@@ -155,11 +161,9 @@ class _BlockExtractor extends _AttributesExtractor<Block> {
     required super.extractedCodeName,
   });
 
+  @override
   void applyRefactor(String content) {
-    builder?.addSimpleReplacement(
-      target,
-      '$extractedCodeName(),',
-    );
+    builder?.addSimpleReplacement(target, '$extractedCodeName(),');
 
     builder?.addSimpleInsertion(
       node.offset + 1,
@@ -186,28 +190,27 @@ class _FieldDeclarationExtractor
         );
   }
 
+  @override
   void applyRefactor(String content) {
     final newFieldCode = reformatCode(content);
 
-    builder?.addReplacement(
-      node.sourceRange,
-      (builder) {
-        builder.writeFieldDeclaration(
-          extractedCodeName,
-          isFinal: true,
-          initializerWriter: () {
-            builder.write(
-                'Style(${content.substring(target.offset, target.end)})');
-          },
-        );
+    builder?.addReplacement(node.sourceRange, (builder) {
+      builder.writeFieldDeclaration(
+        extractedCodeName,
+        initializerWriter: () {
+          builder.write(
+            'Style(${content.substring(target.offset, target.end)})',
+          );
+        },
+        isFinal: true,
+      );
 
-        if (node.beginToken.toString() != 'late') {
-          builder.write('late ${newFieldCode}');
-        } else {
-          builder.write(newFieldCode);
-        }
-      },
-    );
+      if (node.beginToken.toString() != 'late') {
+        builder.write('late $newFieldCode');
+      } else {
+        builder.write(newFieldCode);
+      }
+    });
 
     builder?.formatBasedOnAncestor<ClassDeclaration>(node);
   }
@@ -221,25 +224,20 @@ class _MethodDeclarationExtractor
     required super.extractedCodeName,
   });
 
+  @override
   void applyRefactor(String content) {
-    builder?.addSimpleReplacement(
-      target,
-      '$extractedCodeName(),',
-    );
+    builder?.addSimpleReplacement(target, '$extractedCodeName(),');
 
-    builder?.addInsertion(
-      node.offset,
-      (builder) {
-        builder.writeGetterDeclaration(
-          extractedCodeName,
-          bodyWriter: () {
-            builder.write(
-              '=> Style(${content.substring(target.offset, target.end)});',
-            );
-          },
-        );
-      },
-    );
+    builder?.addInsertion(node.offset, (builder) {
+      builder.writeGetterDeclaration(
+        extractedCodeName,
+        bodyWriter: () {
+          builder.write(
+            '=> Style(${content.substring(target.offset, target.end)});',
+          );
+        },
+      );
+    });
 
     builder?.formatBasedOnAncestor<ClassDeclaration>(node);
   }
@@ -263,24 +261,23 @@ class _TopLevelVariableDeclarationExtractor
         );
   }
 
+  @override
   void applyRefactor(String content) {
     final newFieldCode = reformatCode(content);
 
-    builder?.addReplacement(
-      node.sourceRange,
-      (builder) {
-        builder.writeFieldDeclaration(
-          privateExtractedCodeName,
-          isFinal: true,
-          initializerWriter: () {
-            builder.write(
-                'Style(${content.substring(target.offset, target.end)})');
-          },
-        );
+    builder?.addReplacement(node.sourceRange, (builder) {
+      builder.writeFieldDeclaration(
+        privateExtractedCodeName,
+        initializerWriter: () {
+          builder.write(
+            'Style(${content.substring(target.offset, target.end)})',
+          );
+        },
+        isFinal: true,
+      );
 
-        builder.write(newFieldCode);
-      },
-    );
+      builder.write(newFieldCode);
+    });
 
     builder?.format(node.sourceRange);
   }
@@ -296,25 +293,20 @@ class _FunctionDeclarationExtractor
 
   String get privateExtractedCodeName => '_$extractedCodeName';
 
+  @override
   void applyRefactor(String content) {
-    builder?.addSimpleReplacement(
-      target,
-      '$privateExtractedCodeName(),',
-    );
+    builder?.addSimpleReplacement(target, '$privateExtractedCodeName(),');
 
-    builder?.addInsertion(
-      node.offset,
-      (builder) {
-        builder.writeGetterDeclaration(
-          privateExtractedCodeName,
-          bodyWriter: () {
-            builder.write(
-              '=> Style(${content.substring(target.offset, target.end)});',
-            );
-          },
-        );
-      },
-    );
+    builder?.addInsertion(node.offset, (builder) {
+      builder.writeGetterDeclaration(
+        privateExtractedCodeName,
+        bodyWriter: () {
+          builder.write(
+            '=> Style(${content.substring(target.offset, target.end)});',
+          );
+        },
+      );
+    });
 
     builder?.format(node.sourceRange);
   }

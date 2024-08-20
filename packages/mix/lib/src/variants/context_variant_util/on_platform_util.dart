@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:mix/mix.dart';
+
+import '../../core/helpers.dart';
+import '../context_variant.dart';
 
 class OnPlatformVariant extends ContextVariant {
   final TargetPlatform platform;
@@ -22,5 +24,5 @@ class OnWebVariant extends ContextVariant {
   const OnWebVariant();
 
   @override
-  bool when(_) => MixHelpers.isWeb;
+  bool when(BuildContext context) => MixHelpers.isWeb;
 }

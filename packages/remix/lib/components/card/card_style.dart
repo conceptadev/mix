@@ -14,15 +14,11 @@ Style get _baseStyle {
 }
 
 Style get _outlineVariant {
-  return Style(
-    _container.border.color.$neutral(4),
-  );
+  return Style(_container.border.color.$neutral(4));
 }
 
 Style get _softVariant {
-  return Style(
-    _container.color.$neutralAlpha(3),
-  );
+  return Style(_container.color.$neutralAlpha(3));
 }
 
 Style get _surfaceVariant {
@@ -37,17 +33,11 @@ Style get _ghostVariant {
   return Style();
 }
 
-Style get _size1 => Style(
-      _container.padding.all.$space(2),
-    );
+Style get _size1 => Style(_container.padding.all.$space(2));
 
-Style get _size2 => Style(
-      _container.padding.all.$space(3),
-    );
+Style get _size2 => Style(_container.padding.all.$space(3));
 
-Style get _size3 => Style(
-      _container.padding.all.$space(4),
-    );
+Style get _size3 => Style(_container.padding.all.$space(4));
 
 Style _buildCustomCardStyle(Style? style, List<ICardVariant> variants) {
   return Style(

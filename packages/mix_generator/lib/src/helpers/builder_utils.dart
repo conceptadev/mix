@@ -5,12 +5,12 @@ import 'package:analyzer/dart/element/type.dart';
 import 'package:build/build.dart';
 import 'package:collection/collection.dart';
 import 'package:mix_annotations/mix_annotations.dart';
-import 'package:mix_generator/src/helpers/dart_type_ext.dart';
-import 'package:mix_generator/src/helpers/field_info.dart';
+import 'dart_type_ext.dart';
+import 'field_info.dart';
 import 'package:source_gen/source_gen.dart';
 
 class MixHelperRef {
-  MixHelperRef._();
+  const MixHelperRef._();
 
   static String get _refName => 'MixHelpers';
 
@@ -18,7 +18,7 @@ class MixHelperRef {
 
   static String get lerpDouble => '$_refName.lerpDouble';
 
-  static String get mergeList => '${_refName}.mergeList';
+  static String get mergeList => '$_refName.mergeList';
 
   static String get lerpStrutStyle => '$_refName.lerpStrutStyle';
 
@@ -27,6 +27,8 @@ class MixHelperRef {
   static String get lerpTextStyle => '$_refName.lerpTextStyle';
 
   static String get lerpInt => '$_refName.lerpInt';
+
+  static String get lerpShadowList => '$_refName.lerpShadowList';
 }
 
 Future<List<ClassElement>> getAnnotatedClasses(
@@ -117,11 +119,13 @@ extension EnumElementX on EnumElement {
           .toListValue()!
           .map((obj) {
             final enumField = obj.getField('_name');
+
             return enumField?.toStringValue();
           })
           .whereType<String>()
           .toList();
     }
+
     return [];
   }
 }
@@ -149,6 +153,7 @@ extension ClassElementX on ClassElement {
     if (supertype != null) {
       return supertype.typeArguments.firstOrNull;
     }
+
     return null;
   }
 
@@ -177,6 +182,7 @@ extension ClassElementX on ClassElement {
           return supertype.element.name == className;
         });
       }
+
       return false;
     });
   }
@@ -228,7 +234,7 @@ extension InterfaceTypeX on InterfaceType {
 
 extension DartTypeX on DartType {
   String getTypeAsString() {
-    final thisElement = this.element;
+    final thisElement = element;
 
     // Check if element is a list
     if (thisElement is ClassElement &&
@@ -238,11 +244,12 @@ extension DartTypeX on DartType {
         !isDartCoreObject) {
       return thisElement.name;
     }
+
     return getDisplayString(withNullability: false);
   }
 
   ClassElement? get classElement {
-    return this.element is ClassElement ? this.element as ClassElement : null;
+    return element is ClassElement ? element as ClassElement : null;
   }
 
   InterfaceType? get interfaceType {
@@ -260,6 +267,7 @@ extension DartTypeX on DartType {
         return type.typeArguments.firstOrNull;
       }
     }
+
     return null;
   }
 
@@ -268,7 +276,7 @@ extension DartTypeX on DartType {
     if (type != null) {
       return type;
     }
-    throw Exception(type?.getTypeAsString() ?? '' + 'has no type generic');
+    throw Exception(type?.getTypeAsString() ?? '' 'has no type generic');
   }
 }
 
@@ -276,6 +284,7 @@ DartType? extractDtoTypeArgument(ClassElement classElement) {
   // Check if the class itself is Dto<T>
   if (classElement.name == 'Dto' && classElement.typeParameters.length == 1) {
     DartType typeArgument = classElement.thisType.typeArguments.first;
+
     return resolveTypeArgument(typeArgument);
   }
 
@@ -285,6 +294,7 @@ DartType? extractDtoTypeArgument(ClassElement classElement) {
       List<DartType> typeArguments = interface.typeArguments;
       if (typeArguments.length == 1) {
         DartType typeArgument = typeArguments.first;
+
         return resolveTypeArgument(typeArgument);
       }
     }

@@ -1,7 +1,4 @@
+include: ../../lints_with_dcm.yaml
 analyzer:
-  plugins:
-    - custom_lint
-
-includes:
-  - ../../lints.yaml
-  - package:flutter_lints/flutter.yaml
+  errors:
+    non_constant_identifier_names: ignore

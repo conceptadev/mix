@@ -35,11 +35,12 @@ class MixHelpers {
 
   static const lerpSnap = _lerpSnap;
 
+  static const lerpShadowList = ui.Shadow.lerpList;
+
+  const MixHelpers._();
   static bool get isWeb => isWebOverride ?? kIsWeb;
   static TargetPlatform get targetPlatform =>
       targetPlatformOverride ?? defaultTargetPlatform;
-
-  const MixHelpers._();
 }
 
 P? _lerpSnap<P>(P? from, P? to, double t) {

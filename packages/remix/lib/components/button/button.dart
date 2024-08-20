@@ -1,18 +1,15 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 import 'package:mix/mix.dart';
 import 'package:mix_annotations/mix_annotations.dart';
-import 'package:remix/components/spinner/spinner.dart';
-
-import '../../helpers/variant.dart';
-import '../../tokens/remix_tokens.dart';
+import '../spinner/spinner.dart';
+import '../../helpers/component_builder.dart';
 
 part 'button.g.dart';
 part 'button_style.dart';
-part 'button_variants.dart';
 part 'button_widget.dart';
-part 'button_blank.dart';
 
 @MixableSpec()
 class ButtonSpec extends Spec<ButtonSpec> with _$ButtonSpec, Diagnosticable {

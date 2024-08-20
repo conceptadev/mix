@@ -7,16 +7,11 @@ final _container = _badge.container;
 final _label = _badge.label;
 
 Style get _baseStyle {
-  return Style(
-    _label.style.fontWeight.w500(),
-  );
+  return Style(_label.style.fontWeight.w500());
 }
 
 Style get _solidVariant {
-  return Style(
-    _container.color.$accent(),
-    _label.style.color.$neutral(1),
-  );
+  return Style(_container.color.$accent(), _label.style.color.$neutral(1));
 }
 
 Style get _softVariant {

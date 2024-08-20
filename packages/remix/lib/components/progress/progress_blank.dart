@@ -16,7 +16,6 @@ class RxBlankProgress extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SpecBuilder(
-      style: style,
       builder: (context) {
         final spec = ProgressSpec.of(context);
 
@@ -26,6 +25,7 @@ class RxBlankProgress extends StatelessWidget {
               spec.track(),
               LayoutBuilder(builder: (context, constraints) {
                 final biggestSize = constraints.biggest;
+
                 return SizedBox(
                   width: biggestSize.width * value,
                   child: spec.fill(),
@@ -36,6 +36,7 @@ class RxBlankProgress extends StatelessWidget {
           ),
         );
       },
+      style: style,
     );
   }
 }
