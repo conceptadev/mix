@@ -4,9 +4,9 @@ import 'package:analyzer/dart/ast/ast.dart';
 import 'package:analyzer/source/source_range.dart';
 import 'package:analyzer_plugin/utilities/change_builder/change_builder_dart.dart';
 import 'package:custom_lint_builder/custom_lint_builder.dart';
-import 'package:mix_lint/src/utils/extensions/dart_file_edit_builder.dart';
-import 'package:mix_lint/src/utils/type_checker.dart';
-import 'package:mix_lint/src/utils/visitors.dart';
+import '../utils/extensions/dart_file_edit_builder.dart';
+import '../utils/type_checker.dart';
+import '../utils/visitors.dart';
 
 class ExtractAttributes extends DartAssist {
   @override
@@ -54,34 +54,37 @@ class ExtractAttributes extends DartAssist {
       return node is Block;
     });
 
-    if (ancestorNode != null && ancestorNode is Block)
+    if (ancestorNode != null && ancestorNode is Block) {
       return _BlockExtractor(
         target: target,
         node: ancestorNode,
         extractedCodeName: _getNameForExtractedCode(node, target),
       );
+    }
 
     ancestorNode = node.thisOrAncestorMatching<FieldDeclaration>((node) {
       return node is FieldDeclaration;
     });
 
-    if (ancestorNode != null && ancestorNode is FieldDeclaration)
+    if (ancestorNode != null && ancestorNode is FieldDeclaration) {
       return _FieldDeclarationExtractor(
         target: target,
         node: ancestorNode,
         extractedCodeName: _getNameForExtractedCode(node, target),
       );
+    }
 
     ancestorNode = node.thisOrAncestorMatching<MethodDeclaration>((node) {
       return node is MethodDeclaration && node.isGetter;
     });
 
-    if (ancestorNode != null && ancestorNode is MethodDeclaration)
+    if (ancestorNode != null && ancestorNode is MethodDeclaration) {
       return _MethodDeclarationExtractor(
         target: target,
         node: ancestorNode,
         extractedCodeName: _getNameForExtractedCode(node, target),
       );
+    }
 
     ancestorNode =
         node.thisOrAncestorMatching<TopLevelVariableDeclaration>((node) {
@@ -89,23 +92,25 @@ class ExtractAttributes extends DartAssist {
       return node is TopLevelVariableDeclaration;
     });
 
-    if (ancestorNode != null && ancestorNode is TopLevelVariableDeclaration)
+    if (ancestorNode != null && ancestorNode is TopLevelVariableDeclaration) {
       return _TopLevelVariableDeclarationExtractor(
         target: target,
         node: ancestorNode,
         extractedCodeName: _getNameForExtractedCode(node, target),
       );
+    }
 
     ancestorNode = node.thisOrAncestorMatching<FunctionDeclaration>((node) {
       return node is FunctionDeclaration && node.isGetter;
     });
 
-    if (ancestorNode != null && ancestorNode is FunctionDeclaration)
+    if (ancestorNode != null && ancestorNode is FunctionDeclaration) {
       return _FunctionDeclarationExtractor(
         target: target,
         node: ancestorNode,
         extractedCodeName: _getNameForExtractedCode(node, target),
       );
+    }
 
     return null;
   }
@@ -127,7 +132,6 @@ class ExtractAttributes extends DartAssist {
         .map((e) => e.function.endToken);
 
     if (variants.isEmpty) return 'extractedAttributes';
-    ;
 
     return '${variants.last}Variant';
   }
@@ -137,7 +141,7 @@ abstract class _AttributesExtractor<T extends AstNode> {
   final SourceRange target;
   final T node;
   final String extractedCodeName;
-  DartFileEditBuilder? builder = null;
+  DartFileEditBuilder? builder;
 
   _AttributesExtractor({
     required this.target,
@@ -155,6 +159,7 @@ class _BlockExtractor extends _AttributesExtractor<Block> {
     required super.extractedCodeName,
   });
 
+  @override
   void applyRefactor(String content) {
     builder?.addSimpleReplacement(
       target,
@@ -186,6 +191,7 @@ class _FieldDeclarationExtractor
         );
   }
 
+  @override
   void applyRefactor(String content) {
     final newFieldCode = reformatCode(content);
 
@@ -202,7 +208,7 @@ class _FieldDeclarationExtractor
         );
 
         if (node.beginToken.toString() != 'late') {
-          builder.write('late ${newFieldCode}');
+          builder.write('late $newFieldCode');
         } else {
           builder.write(newFieldCode);
         }
@@ -221,6 +227,7 @@ class _MethodDeclarationExtractor
     required super.extractedCodeName,
   });
 
+  @override
   void applyRefactor(String content) {
     builder?.addSimpleReplacement(
       target,
@@ -263,6 +270,7 @@ class _TopLevelVariableDeclarationExtractor
         );
   }
 
+  @override
   void applyRefactor(String content) {
     final newFieldCode = reformatCode(content);
 
@@ -296,6 +304,7 @@ class _FunctionDeclarationExtractor
 
   String get privateExtractedCodeName => '_$extractedCodeName';
 
+  @override
   void applyRefactor(String content) {
     builder?.addSimpleReplacement(
       target,

@@ -1,11 +1,11 @@
 import 'package:analyzer/dart/constant/value.dart';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:mix_annotations/mix_annotations.dart';
-import 'package:mix_generator/src/helpers/dart_type_ext.dart';
+import 'dart_type_ext.dart';
 import 'package:source_gen/source_gen.dart';
 
-final _specChecker = TypeChecker.fromRuntime(MixableSpec);
-final _utilityChecker = TypeChecker.fromRuntime(MixableUtility);
+const _specChecker = TypeChecker.fromRuntime(MixableSpec);
+const _utilityChecker = TypeChecker.fromRuntime(MixableUtility);
 
 MixableSpec readMixableSpec(
   ClassElement classElement,

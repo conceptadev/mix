@@ -1,7 +1,7 @@
 import 'package:analyzer/dart/element/element.dart';
-import 'package:mix_generator/src/helpers/field_info.dart';
-import 'package:mix_generator/src/helpers/type_ref_repository.dart';
-import 'package:mix_generator/src/mixable_class_utility_generator.dart';
+import '../helpers/field_info.dart';
+import '../helpers/type_ref_repository.dart';
+import '../mixable_class_utility_generator.dart';
 
 /// Generates the utility statements for public consts
 /// static methods of `mappingElement` in the context
@@ -15,7 +15,7 @@ String generateUtilityFieldsFromClass(ClassElement element) {
     return isValidConstructor(constructor);
   });
 
-  constructors.forEach((constructor) {
+  for (var constructor in constructors) {
     final utilityConstructor = generateUtilityForConstructor(
       constructor,
       skipCallMethod: true,
@@ -23,7 +23,7 @@ String generateUtilityFieldsFromClass(ClassElement element) {
     if (utilityConstructor.isNotEmpty) {
       fieldStatements.add(utilityConstructor);
     }
-  });
+  }
 
   return fieldStatements.join('\n');
 }
@@ -41,7 +41,7 @@ String generateUtilityForConstructor(
   if (isUnamed && skipCallMethod) return '';
 
   final name = constructor.name.isEmpty ? '' : '.${constructor.name}';
-  final methodName = constructor.name.isEmpty ? 'call' : '${constructor.name}';
+  final methodName = constructor.name.isEmpty ? 'call' : constructor.name;
   final type = mappedEl.name;
 
   final parameters = constructor.parameters;
@@ -55,7 +55,7 @@ String generateUtilityForConstructor(
   final signatureNamedParams = <String>[];
   final invocationNamedParams = <String>[];
 
-  parameters.forEach((param) {
+  for (var param in parameters) {
     final paramName = param.name;
     final paramType = param.type.getDisplayString(withNullability: true);
     final defaultValue =
@@ -75,7 +75,7 @@ String generateUtilityForConstructor(
           .add('$requiredParam $paramType $paramName$defaultValue');
       invocationNamedParams.add('$paramName: $paramName');
     }
-  });
+  }
 
   final signatureParams = [
     ...signatureRequiredParams,
@@ -87,8 +87,8 @@ String generateUtilityForConstructor(
   final invocationParams = [
     ...invocationRequiredParams,
     if (invocationOptionalParams.isNotEmpty)
-      '${invocationOptionalParams.join(', ')}',
-    if (invocationNamedParams.isNotEmpty) '${invocationNamedParams.join(', ')}'
+      invocationOptionalParams.join(', '),
+    if (invocationNamedParams.isNotEmpty) invocationNamedParams.join(', ')
   ].join(', ');
 
   final signature = 'T $methodName($signatureParams)';
@@ -189,7 +189,7 @@ String _utilityExpression({
   required String fieldName,
   required String utilityName,
 }) {
-  return '${utilityName}((v) => only(${fieldName}: v))';
+  return '$utilityName((v) => only($fieldName: v))';
 }
 
 String utilityMethodOnlyBuilder({
@@ -198,7 +198,7 @@ String utilityMethodOnlyBuilder({
 }) {
   final fieldStatements = fields.map((e) {
     final fieldName = e.name;
-    return '${fieldName}: $fieldName,';
+    return '$fieldName: $fieldName,';
   }).join('\n');
 
   final optionalParameters = fields.map((e) {
@@ -206,7 +206,7 @@ String utilityMethodOnlyBuilder({
     return '$fieldType? ${e.name},';
   }).join('\n');
 
-  final onlyParams = fields.isEmpty ? '' : '{${optionalParameters}}';
+  final onlyParams = fields.isEmpty ? '' : '{$optionalParameters}';
 
   return '''
   /// Returns a new [$utilityType] with the specified properties.
@@ -224,7 +224,7 @@ String utilityMethodCallBuilder(List<ParameterInfo> fields) {
     final fieldType = field.hasDto
         ? typeRefs.getResolvedTypeFromDto(field.dartType)
         : field.type;
-    return '${fieldType}? ${field.name},';
+    return '$fieldType? ${field.name},';
   }).join('\n');
 
   final fieldStatements = fields.map((field) {

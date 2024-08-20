@@ -1,9 +1,9 @@
 // ignore_for_file: non_constant_identifier_names
 
 import 'package:analyzer/dart/element/element.dart';
-import 'package:mix_generator/src/helpers/builder_utils.dart';
-import 'package:mix_generator/src/helpers/field_info.dart';
-import 'package:mix_generator/src/helpers/helpers.dart';
+import '../helpers/builder_utils.dart';
+import '../helpers/field_info.dart';
+import '../helpers/helpers.dart';
 
 String lerpMethodBuilder(
   ClassInfo instance,

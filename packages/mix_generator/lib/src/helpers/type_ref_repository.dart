@@ -1,6 +1,6 @@
 import 'package:analyzer/dart/element/type.dart';
-import 'package:mix_generator/src/helpers/builder_utils.dart';
-import 'package:mix_generator/src/helpers/helpers.dart';
+import 'builder_utils.dart';
+import 'helpers.dart';
 
 final typeRefs = TypeRefRepository.instance;
 
@@ -13,7 +13,7 @@ class TypeRefRepository {
     _utilityOverrides[typeName] = utilityName;
   }
 
-  static Map<String, String> _utilityOverrides = {
+  static final Map<String, String> _utilityOverrides = {
     'EdgeInsetsGeometry': 'SpacingUtility',
     'AnimatedData': 'AnimatedUtility',
     'WidgetModifiersData': 'SpecModifierUtility',
@@ -120,20 +120,20 @@ class TypeRefRepository {
     typeName = typeName.capitalize;
 
     if (isList) {
-      typeName = typeName + 'List';
+      typeName = '${typeName}List';
     }
 
-    return typeName + 'Utility';
+    return '${typeName}Utility';
   }
 
   String getUtilityNameFromTypeName(String typeName) {
     // check if typeName ends with Utility
     // If not then add utility to it
-    final utilityPostfix = 'Utility';
-    final dtoPostfix = 'Dto';
+    const utilityPostfix = 'Utility';
+    const dtoPostfix = 'Dto';
     // TODO: improve this in the feature as
     // it can cause conflict
-    final dtoList = 'DtoList';
+    const dtoList = 'DtoList';
 
     // if typename ends with Dto, remove it
     if (typeName.endsWith(dtoPostfix)) {
@@ -143,13 +143,13 @@ class TypeRefRepository {
     // if typename ends with DtoList, remove it
     if (typeName.endsWith(dtoList)) {
       typeName =
-          typeName.substring(0, typeName.length - dtoList.length) + 'List';
+          '${typeName.substring(0, typeName.length - dtoList.length)}List';
     }
 
     typeName = typeName.capitalize;
 
     if (!typeName.endsWith(utilityPostfix)) {
-      return '${typeName}${utilityPostfix}';
+      return '$typeName$utilityPostfix';
     }
     return typeName;
   }

@@ -1,5 +1,5 @@
 import 'package:mix_annotations/mix_annotations.dart';
-import 'package:mix_generator/src/helpers/field_info.dart';
+import '../../helpers/field_info.dart';
 
 String toDtoExtension(ClassBuilderContext<MixableDto> context) {
   final resolvedType = context.referenceClass;

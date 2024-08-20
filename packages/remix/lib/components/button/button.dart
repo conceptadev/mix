@@ -4,8 +4,8 @@ import 'package:flutter/widgets.dart';
 
 import 'package:mix/mix.dart';
 import 'package:mix_annotations/mix_annotations.dart';
-import 'package:remix/components/spinner/spinner.dart';
-import 'package:remix/helpers/component_builder.dart';
+import '../spinner/spinner.dart';
+import '../../helpers/component_builder.dart';
 
 part 'button.g.dart';
 part 'button_style.dart';

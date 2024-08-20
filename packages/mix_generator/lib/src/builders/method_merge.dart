@@ -1,7 +1,7 @@
 import 'package:analyzer/dart/element/element.dart';
-import 'package:mix_generator/src/helpers/builder_utils.dart';
-import 'package:mix_generator/src/helpers/field_info.dart';
-import 'package:mix_generator/src/helpers/helpers.dart';
+import '../helpers/builder_utils.dart';
+import '../helpers/field_info.dart';
+import '../helpers/helpers.dart';
 
 String mergeMethodBuilder(
   ClassInfo instance, {
@@ -18,7 +18,7 @@ String mergeMethodBuilder(
   final fieldStatements = buildConstructorParamsAsNamed(fields, (field) {
     final propName = field.name;
     final thisName = isInternalRef ? field.asInternalRef : field.name;
-    final nullable = '?';
+    const nullable = '?';
 
     if (field.isListType) {
       final listNullable = field.nullable ? '?' : '';

@@ -17,9 +17,10 @@ dev_dependencies:
     sdk: flutter
   custom_lint: ^0.6.4
   mix_lint: ^0.1.1
-  flutter_lints: ^4.0.0
   mix_generator: ^0.2.2+1
   build_runner: ^2.4.9
+  #lint
+  flutter_lints: ^4.0.0
   dart_code_metrics_presets: ^2.14.0
   
 

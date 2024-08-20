@@ -2,7 +2,7 @@ import 'package:analyzer/dart/ast/ast.dart';
 import 'package:analyzer/error/error.dart';
 import 'package:analyzer/error/listener.dart';
 import 'package:custom_lint_builder/custom_lint_builder.dart';
-import 'package:mix_lint/src/utils/extensions/instance_creation_expression.dart';
+import 'instance_creation_expression.dart';
 
 extension LintRuleNodeRegistryExt on LintRuleNodeRegistry {
   void addInstanceCreationExpressionFor(

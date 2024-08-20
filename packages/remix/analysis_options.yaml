@@ -1,7 +1,1 @@
-analyzer:
-  plugins:
-    - custom_lint
-
-includes:
-  - ../../lints.yaml
-  - package:flutter_lints/flutter.yaml
+include: ../../lints.yaml

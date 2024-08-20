@@ -1,4 +1,4 @@
-import 'package:mix_generator/src/helpers/field_info.dart';
+import '../helpers/field_info.dart';
 
 String getterPropsBuilder(ClassInfo instance) {
   final className = instance.name;

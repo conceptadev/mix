@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:mix/mix.dart';
 import 'package:mix_annotations/mix_annotations.dart';
-import 'package:remix/helpers/utility_extension.dart';
+import '../../helpers/utility_extension.dart';
 
 import '../../helpers/variant.dart';
 import '../../tokens/remix_tokens.dart';

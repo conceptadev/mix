@@ -4,12 +4,12 @@ import 'package:analyzer/error/error.dart' hide LintCode;
 import 'package:analyzer/error/listener.dart';
 import 'package:analyzer/source/source_range.dart';
 import 'package:custom_lint_builder/custom_lint_builder.dart';
-import 'package:mix_lint/src/utils/type_checker.dart';
+import '../utils/type_checker.dart';
 
 const _whiteList = ['Style.asAttribute'];
 
 class AttributesOrdering extends DartLintRule {
-  AttributesOrdering() : super(code: _code);
+  const AttributesOrdering() : super(code: _code);
 
   static const _code = LintCode(
     name: 'mix_attributes_ordering',

@@ -1,10 +1,10 @@
 import 'package:analyzer/error/listener.dart';
 import 'package:custom_lint_builder/custom_lint_builder.dart';
-import 'package:mix_lint/src/utils/extensions/instance_creation_expression.dart';
-import 'package:mix_lint/src/utils/type_checker.dart';
+import '../utils/extensions/instance_creation_expression.dart';
+import '../utils/type_checker.dart';
 
 class AvoidDefiningTokensWithinThemeData extends DartLintRule {
-  AvoidDefiningTokensWithinThemeData() : super(code: _code);
+  const AvoidDefiningTokensWithinThemeData() : super(code: _code);
 
   static const _code = LintCode(
     name: 'mix_avoid_defining_tokens_within_theme_data',

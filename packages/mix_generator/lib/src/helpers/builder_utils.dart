@@ -5,8 +5,8 @@ import 'package:analyzer/dart/element/type.dart';
 import 'package:build/build.dart';
 import 'package:collection/collection.dart';
 import 'package:mix_annotations/mix_annotations.dart';
-import 'package:mix_generator/src/helpers/dart_type_ext.dart';
-import 'package:mix_generator/src/helpers/field_info.dart';
+import 'dart_type_ext.dart';
+import 'field_info.dart';
 import 'package:source_gen/source_gen.dart';
 
 class MixHelperRef {
@@ -18,7 +18,7 @@ class MixHelperRef {
 
   static String get lerpDouble => '$_refName.lerpDouble';
 
-  static String get mergeList => '${_refName}.mergeList';
+  static String get mergeList => '$_refName.mergeList';
 
   static String get lerpStrutStyle => '$_refName.lerpStrutStyle';
 
@@ -230,7 +230,7 @@ extension InterfaceTypeX on InterfaceType {
 
 extension DartTypeX on DartType {
   String getTypeAsString() {
-    final thisElement = this.element;
+    final thisElement = element;
 
     // Check if element is a list
     if (thisElement is ClassElement &&
@@ -244,7 +244,7 @@ extension DartTypeX on DartType {
   }
 
   ClassElement? get classElement {
-    return this.element is ClassElement ? this.element as ClassElement : null;
+    return element is ClassElement ? element as ClassElement : null;
   }
 
   InterfaceType? get interfaceType {
@@ -270,7 +270,7 @@ extension DartTypeX on DartType {
     if (type != null) {
       return type;
     }
-    throw Exception(type?.getTypeAsString() ?? '' + 'has no type generic');
+    throw Exception(type?.getTypeAsString() ?? '' 'has no type generic');
   }
 }
 

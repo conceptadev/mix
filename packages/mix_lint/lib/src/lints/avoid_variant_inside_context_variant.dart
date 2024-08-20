@@ -3,11 +3,11 @@ import 'package:analyzer/dart/ast/ast.dart';
 import 'package:analyzer/error/error.dart' hide LintCode;
 import 'package:analyzer/error/listener.dart';
 import 'package:custom_lint_builder/custom_lint_builder.dart';
-import 'package:mix_lint/src/utils/type_checker.dart';
-import 'package:mix_lint/src/utils/visitors.dart';
+import '../utils/type_checker.dart';
+import '../utils/visitors.dart';
 
 class AvoidVariantInsideContextVariant extends DartLintRule {
-  AvoidVariantInsideContextVariant() : super(code: _code);
+  const AvoidVariantInsideContextVariant() : super(code: _code);
 
   static const _code = LintCode(
     name: 'mix_avoid_variant_inside_context_variant',

@@ -7,5 +7,6 @@ environment:
   sdk: ">=3.3.0 <4.0.0"
 
 dev_dependencies:
-  lints: ^3.0.0
   test: ^1.21.0
+  dart_code_metrics_presets: ^2.14.0
+  flutter_lints: ^4.0.0

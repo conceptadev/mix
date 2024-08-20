@@ -3,13 +3,13 @@
 import 'package:analyzer/dart/element/element.dart';
 import 'package:build/build.dart';
 import 'package:mix_annotations/mix_annotations.dart';
-import 'package:mix_generator/src/builders/spec/class_attribute_spec.dart';
-import 'package:mix_generator/src/builders/spec/class_spec_utility.dart';
-import 'package:mix_generator/src/builders/spec/class_tween_spec.dart';
-import 'package:mix_generator/src/builders/spec/mixin_spec.dart';
-import 'package:mix_generator/src/helpers/annotation_helpers.dart';
-import 'package:mix_generator/src/helpers/field_info.dart';
-import 'package:mix_generator/src/helpers/helpers.dart';
+import 'builders/spec/class_attribute_spec.dart';
+import 'builders/spec/class_spec_utility.dart';
+import 'builders/spec/class_tween_spec.dart';
+import 'builders/spec/mixin_spec.dart';
+import 'helpers/annotation_helpers.dart';
+import 'helpers/field_info.dart';
+import 'helpers/helpers.dart';
 import 'package:source_gen/source_gen.dart';
 
 class MixableSpecGenerator extends GeneratorForAnnotation<MixableSpec> {
@@ -21,7 +21,7 @@ class MixableSpecGenerator extends GeneratorForAnnotation<MixableSpec> {
     ConstantReader reader,
     BuildStep buildStep,
   ) async {
-    final context = await _loadContext(element);
+    final context = _loadContext(element);
 
     final deprecatedRule = context.fields.any((e) => e.hasDeprecated)
         ? '// ignore_for_file: deprecated_member_use_from_same_package'

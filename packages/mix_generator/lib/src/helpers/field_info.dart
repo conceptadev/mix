@@ -4,10 +4,10 @@ import 'package:analyzer/dart/element/nullability_suffix.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:collection/collection.dart';
 import 'package:mix_annotations/mix_annotations.dart';
-import 'package:mix_generator/src/helpers/annotation_helpers.dart';
-import 'package:mix_generator/src/helpers/builder_utils.dart';
-import 'package:mix_generator/src/helpers/dart_type_ext.dart';
-import 'package:mix_generator/src/helpers/type_ref_repository.dart';
+import 'annotation_helpers.dart';
+import 'builder_utils.dart';
+import 'dart_type_ext.dart';
+import 'type_ref_repository.dart';
 
 typedef MixTypeReferences = ({String utility, String lerp, String dto});
 
@@ -69,6 +69,7 @@ class FieldInfo {
   /// True if the type is `dynamic`.
   bool get isDynamic => type == 'dynamic';
 
+  @override
   String toString() => 'FieldInfo(name: $name, type: $type)';
 
   factory FieldInfo.ofElement(FieldElement element) {
@@ -128,7 +129,7 @@ class ParameterInfo extends FieldInfo {
       isRequiredPositional: element.isRequiredPositional,
       isPositional: element.isPositional,
       documentationComment: fieldInfo?.documentationComment,
-      annotation: fieldInfo?.annotation ?? MixableProperty(),
+      annotation: fieldInfo?.annotation ?? const MixableProperty(),
     );
   }
 }
@@ -335,7 +336,7 @@ class ClassBuilderContext<T> {
 
   String get dtoName => '${name}Dto';
 
-  String get generatedName => '_\$${name}';
+  String get generatedName => '_\$$name';
 
   String get constructorRef =>
       constructor.name.isEmpty ? '' : '.${constructor.name}';
@@ -351,7 +352,7 @@ extension ClassContextSpecX on ClassBuilderContext<MixableSpec> {
       : MixType.spec.name;
 
   String get _prefix =>
-      annotation.prefix.isEmpty ? name : '${annotation.prefix}';
+      annotation.prefix.isEmpty ? name : annotation.prefix;
   String get attributeName => '${_prefix}Attribute';
   String get utilityName => '${_prefix}Utility';
   String get tweenClassName => '${_prefix}Tween';

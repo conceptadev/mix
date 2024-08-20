@@ -1,14 +1,14 @@
 import 'package:analyzer/error/error.dart';
 import 'package:analyzer/error/listener.dart';
 import 'package:custom_lint_builder/custom_lint_builder.dart';
-import 'package:mix_lint/src/lints/max_number_of_attributes_per_style/max_number_of_attributes_per_style_parameters.dart';
-import 'package:mix_lint/src/utils/extensions/lint_rule_node_registry.dart';
-import 'package:mix_lint/src/utils/type_checker.dart';
+import 'max_number_of_attributes_per_style_parameters.dart';
+import '../../utils/extensions/lint_rule_node_registry.dart';
+import '../../utils/type_checker.dart';
 
 import '../../utils/rule_config.dart';
 
 class MaxNumberOfAttributesPerStyle extends DartLintRule {
-  MaxNumberOfAttributesPerStyle._(this.parameters, {required super.code});
+  const MaxNumberOfAttributesPerStyle._(this.parameters, {required super.code});
 
   final MaxNumberOfAttributesPerStyleParameters parameters;
 

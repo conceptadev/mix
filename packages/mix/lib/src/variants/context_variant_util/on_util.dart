@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
-import 'package:mix/src/variants/context_variant_util/on_platform_util.dart';
+import 'on_platform_util.dart';
 
 import '../../theme/tokens/breakpoints_token.dart';
 import '../widget_state_variant.dart';

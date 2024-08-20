@@ -1,11 +1,11 @@
 import 'package:analyzer/error/listener.dart';
 import 'package:custom_lint_builder/custom_lint_builder.dart';
-import 'package:mix_lint/src/utils/type_checker.dart';
+import '../utils/type_checker.dart';
 
 import '../utils/extensions/lint_rule_node_registry.dart';
 
 class AvoidDefiningTokensOrVariantsWithinStyle extends DartLintRule {
-  AvoidDefiningTokensOrVariantsWithinStyle() : super(code: _code);
+  const AvoidDefiningTokensOrVariantsWithinStyle() : super(code: _code);
 
   static const _code = LintCode(
     name: 'mix_avoid_defining_tokens_or_variants_within_style',

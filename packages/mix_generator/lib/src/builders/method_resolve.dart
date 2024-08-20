@@ -1,6 +1,6 @@
-import 'package:mix_generator/src/helpers/builder_utils.dart';
-import 'package:mix_generator/src/helpers/field_info.dart';
-import 'package:mix_generator/src/helpers/helpers.dart';
+import '../helpers/builder_utils.dart';
+import '../helpers/field_info.dart';
+import '../helpers/helpers.dart';
 
 String resolveMethodBuilder(
   ClassInfo instance, {

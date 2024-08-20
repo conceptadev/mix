@@ -1,6 +1,6 @@
 import 'package:analyzer/dart/element/element.dart' show ClassElement;
 import 'package:dart_style/dart_style.dart';
-import 'package:mix_generator/src/helpers/field_info.dart';
+import 'field_info.dart';
 
 /// Returns parameter names or full parameters declaration declared by this class or an empty string.
 ///
@@ -41,7 +41,7 @@ extension StringX on String {
   }
 
   String get snakecase {
-    return this.replaceAll(RegExp(r'(?<!^)(?=[A-Z])'), '_').toLowerCase();
+    return replaceAll(RegExp(r'(?<!^)(?=[A-Z])'), '_').toLowerCase();
   }
 }
 
@@ -94,7 +94,7 @@ String buildConstructorParamsAsNamed(
   return buffer.toString();
 }
 
-late final _formatter = DartFormatter(pageWidth: 80, fixes: StyleFix.all);
+final _formatter = DartFormatter(pageWidth: 80, fixes: StyleFix.all);
 
 String dartFormat(String contents) {
   try {

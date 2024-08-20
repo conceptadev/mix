@@ -3,12 +3,12 @@
 import 'package:analyzer/dart/element/element.dart';
 import 'package:build/build.dart';
 import 'package:mix_annotations/mix_annotations.dart';
-import 'package:mix_generator/src/builders/dto/class_utility_dto.dart';
-import 'package:mix_generator/src/builders/dto/extension_value.dart';
-import 'package:mix_generator/src/builders/dto/mixin_dto.dart';
-import 'package:mix_generator/src/helpers/builder_utils.dart';
-import 'package:mix_generator/src/helpers/field_info.dart';
-import 'package:mix_generator/src/helpers/helpers.dart';
+import 'builders/dto/class_utility_dto.dart';
+import 'builders/dto/extension_value.dart';
+import 'builders/dto/mixin_dto.dart';
+import 'helpers/builder_utils.dart';
+import 'helpers/field_info.dart';
+import 'helpers/helpers.dart';
 import 'package:source_gen/source_gen.dart';
 
 class MixableDtoGenerator extends GeneratorForAnnotation<MixableDto> {
@@ -20,7 +20,7 @@ class MixableDtoGenerator extends GeneratorForAnnotation<MixableDto> {
     ConstantReader reader,
     BuildStep buildStep,
   ) async {
-    final context = await _loadContext(element);
+    final context = _loadContext(element);
 
     final generateUtility = context.annotation.generateUtility;
     final generateValueExtension = context.annotation.generateValueExtension;
