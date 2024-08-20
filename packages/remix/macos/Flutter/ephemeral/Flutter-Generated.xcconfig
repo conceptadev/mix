@@ -1,10 +1,10 @@
 // This is a generated file; do not edit or check into version control.
-FLUTTER_ROOT=/Users/leofarias/fvm/versions/3.19.0
-FLUTTER_APPLICATION_PATH=/Users/leofarias/Projects/mix/packages/remix
+FLUTTER_ROOT=/Users/lucasoliveira/fvm/versions/stable
+FLUTTER_APPLICATION_PATH=/Users/lucasoliveira/Developer/Concepta/open_source/mix_ecosystem/mix/packages/remix
 COCOAPODS_PARALLEL_CODE_SIGN=true
 FLUTTER_BUILD_DIR=build
-FLUTTER_BUILD_NAME=0.0.1
-FLUTTER_BUILD_NUMBER=0.0.1
+FLUTTER_BUILD_NAME=0.0.2
+FLUTTER_BUILD_NUMBER=5
 DART_OBFUSCATION=false
 TRACK_WIDGET_CREATION=true
 TREE_SHAKE_ICONS=false
