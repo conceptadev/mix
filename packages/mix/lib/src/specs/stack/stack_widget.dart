@@ -45,6 +45,7 @@ class StackSpecWidget extends StatelessWidget {
     this.spec,
     this.children,
     this.orderOfModifiers = const [],
+    this.onEndSpecModifiersAnimation,
     super.key,
   });
 
@@ -52,12 +53,16 @@ class StackSpecWidget extends StatelessWidget {
   final StackSpec? spec;
   final List<Type> orderOfModifiers;
 
+  /// Called when spec modifiers are animated and the animation is complete.
+  final void Function()? onEndSpecModifiersAnimation;
+
   @override
   Widget build(BuildContext context) {
     // The Stack widget is used here, applying the resolved styles from StackSpec.
     return RenderSpecModifiers(
       orderOfModifiers: orderOfModifiers,
       spec: spec ?? const StackSpec(),
+      onEndWhenAnimated: onEndSpecModifiersAnimation,
       child: Stack(
         alignment: spec?.alignment ?? _defaultStack.alignment,
         textDirection: spec?.textDirection,
@@ -75,6 +80,7 @@ class AnimatedStackSpecWidget extends ImplicitlyAnimatedWidget {
     required this.spec,
     required this.children,
     this.orderOfModifiers = const [],
+    this.onEndSpecModifiersAnimation,
     super.curve,
     required super.duration,
     super.onEnd,
@@ -83,6 +89,9 @@ class AnimatedStackSpecWidget extends ImplicitlyAnimatedWidget {
   final StackSpec spec;
   final List<Widget> children;
   final List<Type> orderOfModifiers;
+
+  /// Called when spec modifiers are animated and the animation is complete.
+  final void Function()? onEndSpecModifiersAnimation;
 
   @override
   AnimatedStackSpecWidgetState createState() => AnimatedStackSpecWidgetState();
@@ -110,6 +119,7 @@ class AnimatedStackSpecWidgetState
     return StackSpecWidget(
       spec: spec,
       orderOfModifiers: widget.orderOfModifiers,
+      onEndSpecModifiersAnimation: widget.onEndSpecModifiersAnimation,
       children: widget.children,
     );
   }
