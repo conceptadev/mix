@@ -279,8 +279,8 @@ class RenderSpecModifiers extends StatelessWidget {
             modifiers: modifiers,
             duration: spec.animated!.duration,
             orderOfModifiers: orderOfModifiers,
-            curve: spec.animated!.curve,henAnimated,
-            child: child,
+            curve: spec.animated!.curve,
+            onEnd: onEndWhenAnimated,
             child: child,
           )
         : RenderModifiers(
