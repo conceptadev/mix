@@ -22,10 +22,7 @@ class RxProgress extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RxBlankProgress(
-      style: _buildProgressStyle(
-        style,
-        [size, variant, radius],
-      ),
+      style: _buildProgressStyle(style, [size, variant, radius]),
       value: value,
     );
   }

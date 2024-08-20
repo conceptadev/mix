@@ -28,7 +28,7 @@ class _RxCheckboxGroupState extends State<RxCheckboxGroup> {
   @override
   void initState() {
     super.initState();
-    _selectedValues = List<String>.from(widget.defaultValue);
+    _selectedValues = List<String>.of(widget.defaultValue);
   }
 
   void _handleValueChange(String value, bool isSelected) {
@@ -48,12 +48,13 @@ class _RxCheckboxGroupState extends State<RxCheckboxGroup> {
     return Column(
       children: widget.items.map((item) {
         final isSelected = _selectedValues.contains(item.value);
+
         return RxCheckbox(
           value: isSelected,
           onChanged: (isSelected) => _handleValueChange(item.value, isSelected),
+          style: item.style,
           size: widget.size,
           variant: widget.variant,
-          style: item.style,
         );
       }).toList(),
     );
@@ -61,11 +62,7 @@ class _RxCheckboxGroupState extends State<RxCheckboxGroup> {
 }
 
 class RxCheckboxItem {
-  const RxCheckboxItem({
-    required this.value,
-    this.style,
-  });
-
   final String value;
   final Style? style;
+  const RxCheckboxItem({required this.value, this.style});
 }

@@ -30,11 +30,11 @@ class RxCheckbox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RxBlankCheckbox(
+      disabled: disabled,
       value: value,
       onChanged: onChanged,
       iconChecked: iconChecked,
       iconUnchecked: iconUnchecked,
-      disabled: disabled,
       style: _buildCheckboxStyle(style, [size, variant]),
     );
   }

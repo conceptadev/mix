@@ -22,9 +22,7 @@ Style get _baseStyle {
 }
 
 Style get _softVariant {
-  return Style(
-    _container.color.$accentAlpha(3),
-  );
+  return Style(_container.color.$accentAlpha(3));
 }
 
 Style get _surfaceVariant {

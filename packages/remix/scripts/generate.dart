@@ -4,6 +4,7 @@ import 'dart:io';
 void main(List<String> arguments) {
   if (arguments.isEmpty) {
     log('Please provide a component name as an argument.');
+
     return;
   }
 

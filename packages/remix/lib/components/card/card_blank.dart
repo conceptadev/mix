@@ -18,17 +18,14 @@ class RxBlankCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SpecBuilder(
-      style: style,
       builder: (context) {
         final spec = CardSpec.of(context);
 
         return spec.container(
-          child: spec.flex(
-            direction: Axis.vertical,
-            children: children,
-          ),
+          child: spec.flex(direction: Axis.vertical, children: children),
         );
       },
+      style: style,
     );
   }
 }

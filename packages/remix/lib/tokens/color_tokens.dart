@@ -1,14 +1,11 @@
 part of 'remix_tokens.dart';
 
 class RemixColor {
-  const RemixColor(this.value);
-
   final Color value;
+  const RemixColor(this.value);
 }
 
 class RemixColors {
-  RemixColors();
-
   final _blackColor = const ColorToken('--black');
   final _whiteColor = const ColorToken('--white');
   final _accentSwatch = ColorSwatchToken.scale('--accent', 12);
@@ -16,6 +13,8 @@ class RemixColors {
 
   final _neutralSwatch = ColorSwatchToken.scale('--neutral', 12);
   final _neutralAlphaSwatch = ColorSwatchToken.scale('--neutral-alpha', 12);
+
+  RemixColors();
 
   ColorToken black() => _blackColor;
   ColorToken white() => _whiteColor;

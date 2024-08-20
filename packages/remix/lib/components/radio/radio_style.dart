@@ -11,10 +11,7 @@ Style get _baseStyle {
     _indicator.borderRadius(99),
     _indicator.wrap.opacity(0),
     _indicator.wrap.scale(0.5),
-    $on.selected(
-      _indicator.wrap.opacity(1),
-      _indicator.wrap.scale(1),
-    ),
+    $on.selected(_indicator.wrap.opacity(1), _indicator.wrap.scale(1)),
   );
 }
 
@@ -22,12 +19,8 @@ Style get _solidVariant {
   return Style(
     _container.color.$accent(),
     _indicator.color.white(),
-    $on.hover(
-      _container.color.$accent(10),
-    ),
-    $on.disabled(
-      _container.color.$neutralAlpha(3),
-    ),
+    $on.hover(_container.color.$accent(10)),
+    $on.disabled(_container.color.$neutralAlpha(3)),
   );
 }
 
@@ -35,12 +28,8 @@ Style get _softVariant {
   return Style(
     _container.color.$accentAlpha(3),
     _indicator.color.$accentAlpha(11),
-    $on.hover(
-      _container.color.$accentAlpha(4),
-    ),
-    $on.disabled(
-      _container.color.$neutralAlpha(3),
-    ),
+    $on.hover(_container.color.$accentAlpha(4)),
+    $on.disabled(_container.color.$neutralAlpha(3)),
   );
 }
 
@@ -50,9 +39,7 @@ Style get _outlineVariant {
     _container.border.color.$accentAlpha(8),
     _container.border.width(1.5),
     _indicator.color.$accentAlpha(11),
-    $on.hover(
-      _container.color.$accentAlpha(2),
-    ),
+    $on.hover(_container.color.$accentAlpha(2)),
     $on.disabled(
       _container.border.color.$neutralAlpha(8),
       _container.color.transparent(),
@@ -68,31 +55,20 @@ Style get _surfaceVariant {
       _container.color.$accentAlpha(4),
       _container.border.color.$accentAlpha(8),
     ),
-    $on.disabled(
-      _container.color.$neutralAlpha(3),
-    ),
+    $on.disabled(_container.color.$neutralAlpha(3)),
   );
 }
 
 Style get _smallVariant {
-  return Style(
-    _container.size(16),
-    _indicator.size(8),
-  );
+  return Style(_container.size(16), _indicator.size(8));
 }
 
 Style get _mediumVariant {
-  return Style(
-    _container.size(20),
-    _indicator.size(10),
-  );
+  return Style(_container.size(20), _indicator.size(10));
 }
 
 Style get _largeVariant {
-  return Style(
-    _container.size(24),
-    _indicator.size(12),
-  );
+  return Style(_container.size(24), _indicator.size(12));
 }
 
 Style get _disabledVariant {

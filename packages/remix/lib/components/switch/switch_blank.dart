@@ -20,8 +20,6 @@ class RxBlankSwitch extends StatefulWidget {
 
 class _RxBlankSwitchState extends State<RxBlankSwitch> {
   late final MixWidgetStateController _controller;
-  void _handleOnPress() => widget.onChanged.call(!widget.value);
-
   @override
   void initState() {
     super.initState();
@@ -29,6 +27,8 @@ class _RxBlankSwitchState extends State<RxBlankSwitch> {
       ..selected = widget.value
       ..disabled = widget.disabled;
   }
+
+  void _handleOnPress() => widget.onChanged(!widget.value);
 
   @override
   void didUpdateWidget(RxBlankSwitch oldWidget) {
@@ -52,21 +52,19 @@ class _RxBlankSwitchState extends State<RxBlankSwitch> {
   @override
   Widget build(BuildContext context) {
     return Pressable(
-      onPress: widget.disabled ? null : _handleOnPress,
       enabled: !widget.disabled,
+      onPress: widget.disabled ? null : _handleOnPress,
       controller: _controller,
       child: SpecBuilder(
-        style: widget.style,
         builder: (context) {
           final spec = SwitchSpec.of(context);
 
           final ContainerWidget = spec.container;
           final IndicatorWidget = spec.indicator;
 
-          return ContainerWidget(
-            child: IndicatorWidget(),
-          );
+          return ContainerWidget(child: IndicatorWidget());
         },
+        style: widget.style,
       ),
     );
   }

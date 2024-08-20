@@ -20,10 +20,7 @@ class RxBadge extends StatelessWidget {
   Widget build(BuildContext context) {
     return RxBlankBadge(
       label: label,
-      style: badgeStyle(
-        style,
-        [size, variant, radius],
-      ),
+      style: badgeStyle(style, [size, variant, radius]),
     );
   }
 }

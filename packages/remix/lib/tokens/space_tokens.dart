@@ -1,8 +1,6 @@
 part of 'remix_tokens.dart';
 
 class RemixSpace {
-  RemixSpace();
-
   final space1 = const SpaceToken('--space-1');
   final space2 = const SpaceToken('--space-2');
   final space3 = const SpaceToken('--space-3');
@@ -12,6 +10,8 @@ class RemixSpace {
   final space7 = const SpaceToken('--space-7');
   final space8 = const SpaceToken('--space-8');
   final space9 = const SpaceToken('--space-9');
+
+  RemixSpace();
 
   operator [](int index) {
     return call(index);
@@ -34,7 +34,7 @@ class RemixSpace {
 }
 
 final _s = RemixSpace();
-final remixSpaceTokens = <SpaceToken, double>{
+final remixSpaceTokens = {
   _s.space1: 4,
   _s.space2: 8,
   _s.space3: 12,

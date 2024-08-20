@@ -1,1 +1,1 @@
-include: ../../lints.yaml
+include: ../../lints_with_dcm.yaml

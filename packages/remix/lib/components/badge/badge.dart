@@ -22,10 +22,7 @@ base class BadgeSpec extends Spec<BadgeSpec> with _$BadgeSpec {
 
   static const from = _$BadgeSpec.from;
 
-  const BadgeSpec({
-    BoxSpec? container,
-    TextSpec? label,
-    super.animated,
-  })  : container = container ?? const BoxSpec(),
+  const BadgeSpec({BoxSpec? container, TextSpec? label, super.animated})
+      : container = container ?? const BoxSpec(),
         label = label ?? const TextSpec();
 }

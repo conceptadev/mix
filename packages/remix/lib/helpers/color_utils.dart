@@ -94,12 +94,8 @@ Color getTextColor(Color background) {
 
     final adjustedLightness = lightness < 0.5 ? 0.95 : 0.05;
 
-    return HSLColor.fromAHSL(
-      1.0,
-      hue,
-      saturation * 0.08,
-      adjustedLightness,
-    ).toColor();
+    return HSLColor.fromAHSL(1.0, hue, saturation * 0.08, adjustedLightness)
+        .toColor();
   }
 
   return white;

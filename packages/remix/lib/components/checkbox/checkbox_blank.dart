@@ -33,6 +33,8 @@ class _RxBlankCheckboxState extends State<RxBlankCheckbox> {
     _controller.disabled = widget.disabled;
   }
 
+  void _handleOnPress() => widget.onChanged?.call(!widget.value);
+
   @override
   void didUpdateWidget(RxBlankCheckbox oldWidget) {
     super.didUpdateWidget(oldWidget);
@@ -54,16 +56,13 @@ class _RxBlankCheckboxState extends State<RxBlankCheckbox> {
     super.dispose();
   }
 
-  void _handleOnPress() => widget.onChanged?.call(!widget.value);
-
   @override
   Widget build(BuildContext context) {
     return Pressable(
-      onPress: widget.disabled ? null : _handleOnPress,
       enabled: !widget.disabled,
+      onPress: widget.disabled ? null : _handleOnPress,
       controller: _controller,
       child: SpecBuilder(
-        style: widget.style,
         builder: (context) {
           final spec = CheckboxSpec.of(context);
 
@@ -78,6 +77,7 @@ class _RxBlankCheckboxState extends State<RxBlankCheckbox> {
             ),
           );
         },
+        style: widget.style,
       ),
     );
   }
