@@ -108,6 +108,19 @@ class MixWidgetStateController extends ChangeNotifier {
     }
   }
 
+  // disposed flag
+  bool _disposed = false;
+
+  /// Disposes the controller.
+  @override
+  void dispose() {
+    super.dispose();
+    _disposed = true;
+  }
+
+  /// Checks if the controller has been disposed.
+  bool get disposed => _disposed;
+
   /// Checks if the widget is currently in the given state [key].
   bool has(MixWidgetState key) => value.contains(key);
 }

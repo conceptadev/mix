@@ -24,6 +24,22 @@ class GestureMixStateWidget extends StatefulWidget {
     this.onPanStart,
     this.excludeFromSemantics = false,
     this.hitTestBehavior = HitTestBehavior.opaque,
+    this.onDoubleTapDown,
+    this.onDoubleTapCancel,
+    this.onScaleStart,
+    this.onScaleUpdate,
+    this.onScaleEnd,
+    this.onForcePressStart,
+    this.onForcePressPeak,
+    this.onForcePressUpdate,
+    this.onForcePressEnd,
+    this.onSecondaryTap,
+    this.onSecondaryTapDown,
+    this.onSecondaryTapUp,
+    this.onSecondaryTapCancel,
+    this.onTertiaryTapDown,
+    this.onTertiaryTapUp,
+    this.onTertiaryTapCancel,
     required this.unpressDelay,
   });
 
@@ -78,6 +94,54 @@ class GestureMixStateWidget extends StatefulWidget {
 
   /// The duration to wait after the press is released before updating the press state.
   final Duration unpressDelay;
+
+  /// The callback that is called when the user starts a double tap gesture.
+  final GestureTapDownCallback? onDoubleTapDown;
+
+  /// The callback that is called when the user cancels a double tap gesture.
+  final GestureTapCancelCallback? onDoubleTapCancel;
+
+  /// The callback that is called when the user starts a scale gesture.
+  final GestureScaleStartCallback? onScaleStart;
+
+  /// The callback that is called when the user updates a scale gesture.
+  final GestureScaleUpdateCallback? onScaleUpdate;
+
+  /// The callback that is called when the user ends a scale gesture.
+  final GestureScaleEndCallback? onScaleEnd;
+
+  /// The callback that is called when the user starts a force press gesture.
+  final GestureForcePressStartCallback? onForcePressStart;
+
+  /// The callback that is called when the force press gesture reaches its peak force.
+  final GestureForcePressPeakCallback? onForcePressPeak;
+
+  /// The callback that is called when the force press gesture is updated.
+  final GestureForcePressUpdateCallback? onForcePressUpdate;
+
+  /// The callback that is called when the force press gesture ends.
+  final GestureForcePressEndCallback? onForcePressEnd;
+
+  /// The callback that is called when the user performs a secondary tap gesture.
+  final GestureTapCallback? onSecondaryTap;
+
+  /// The callback that is called when the user starts a secondary tap gesture.
+  final GestureTapDownCallback? onSecondaryTapDown;
+
+  /// The callback that is called when the user ends a secondary tap gesture.
+  final GestureTapUpCallback? onSecondaryTapUp;
+
+  /// The callback that is called when the user cancels a secondary tap gesture.
+  final GestureTapCancelCallback? onSecondaryTapCancel;
+
+  /// The callback that is called when the user starts a tertiary tap gesture.
+  final GestureTapDownCallback? onTertiaryTapDown;
+
+  /// The callback that is called when the user ends a tertiary tap gesture.
+  final GestureTapUpCallback? onTertiaryTapUp;
+
+  /// The callback that is called when the user cancels a tertiary tap gesture.
+  final GestureTapCancelCallback? onTertiaryTapCancel;
 
   @override
   State createState() => _GestureMixStateWidgetState();
@@ -178,10 +242,74 @@ class _GestureMixStateWidgetState extends State<GestureMixStateWidget> {
     if (widget.enableFeedback) Feedback.forLongPress(context);
   }
 
+  void _onDoubleTapDown(TapDownDetails details) {
+    widget.onDoubleTapDown?.call(details);
+  }
+
+  void _onDoubleTapCancel() {
+    widget.onDoubleTapCancel?.call();
+  }
+
+  void _onScaleStart(ScaleStartDetails details) {
+    widget.onScaleStart?.call(details);
+  }
+
+  void _onScaleUpdate(ScaleUpdateDetails details) {
+    widget.onScaleUpdate?.call(details);
+  }
+
+  void _onScaleEnd(ScaleEndDetails details) {
+    widget.onScaleEnd?.call(details);
+  }
+
+  void _onForcePressStart(ForcePressDetails details) {
+    widget.onForcePressStart?.call(details);
+  }
+
+  void _onForcePressPeak(ForcePressDetails details) {
+    widget.onForcePressPeak?.call(details);
+  }
+
+  void _onForcePressUpdate(ForcePressDetails details) {
+    widget.onForcePressUpdate?.call(details);
+  }
+
+  void _onForcePressEnd(ForcePressDetails details) {
+    widget.onForcePressEnd?.call(details);
+  }
+
+  void _onSecondaryTap() {
+    widget.onSecondaryTap?.call();
+  }
+
+  void _onSecondaryTapDown(TapDownDetails details) {
+    widget.onSecondaryTapDown?.call(details);
+  }
+
+  void _onSecondaryTapUp(TapUpDetails details) {
+    widget.onSecondaryTapUp?.call(details);
+  }
+
+  void _onSecondaryTapCancel() {
+    widget.onSecondaryTapCancel?.call();
+  }
+
+  void _onTertiaryTapDown(TapDownDetails details) {
+    widget.onTertiaryTapDown?.call(details);
+  }
+
+  void _onTertiaryTapUp(TapUpDetails details) {
+    widget.onTertiaryTapUp?.call(details);
+  }
+
+  void _onTertiaryTapCancel() {
+    widget.onTertiaryTapCancel?.call();
+  }
+
   @override
   void dispose() {
     _timer?.cancel();
-    // Dispose if  being managed internally
+    // Dispose if being managed internally
     if (widget.controller == null) _controller.dispose();
     super.dispose();
   }
@@ -201,6 +329,31 @@ class _GestureMixStateWidgetState extends State<GestureMixStateWidget> {
       onPanUpdate: widget.onPanUpdate != null ? _onPanUpdate : null,
       onPanEnd: widget.onPanEnd != null ? _onPanEnd : null,
       onPanCancel: widget.onPanCancel != null ? _onPanCancel : null,
+      onDoubleTapDown: widget.onDoubleTapDown != null ? _onDoubleTapDown : null,
+      onDoubleTapCancel:
+          widget.onDoubleTapCancel != null ? _onDoubleTapCancel : null,
+      onScaleStart: widget.onScaleStart != null ? _onScaleStart : null,
+      onScaleUpdate: widget.onScaleUpdate != null ? _onScaleUpdate : null,
+      onScaleEnd: widget.onScaleEnd != null ? _onScaleEnd : null,
+      onForcePressStart:
+          widget.onForcePressStart != null ? _onForcePressStart : null,
+      onForcePressPeak:
+          widget.onForcePressPeak != null ? _onForcePressPeak : null,
+      onForcePressUpdate:
+          widget.onForcePressUpdate != null ? _onForcePressUpdate : null,
+      onForcePressEnd: widget.onForcePressEnd != null ? _onForcePressEnd : null,
+      onSecondaryTap: widget.onSecondaryTap != null ? _onSecondaryTap : null,
+      onSecondaryTapDown:
+          widget.onSecondaryTapDown != null ? _onSecondaryTapDown : null,
+      onSecondaryTapUp:
+          widget.onSecondaryTapUp != null ? _onSecondaryTapUp : null,
+      onSecondaryTapCancel:
+          widget.onSecondaryTapCancel != null ? _onSecondaryTapCancel : null,
+      onTertiaryTapDown:
+          widget.onTertiaryTapDown != null ? _onTertiaryTapDown : null,
+      onTertiaryTapUp: widget.onTertiaryTapUp != null ? _onTertiaryTapUp : null,
+      onTertiaryTapCancel:
+          widget.onTertiaryTapCancel != null ? _onTertiaryTapCancel : null,
       behavior: widget.hitTestBehavior,
       excludeFromSemantics: widget.excludeFromSemantics,
       child: widget.child,
