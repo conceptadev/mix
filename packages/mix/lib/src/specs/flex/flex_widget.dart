@@ -101,8 +101,8 @@ class FlexSpecWidget extends StatelessWidget {
         ? flexWidget
         : RenderSpecModifiers(
             orderOfModifiers: orderOfModifiers,
-            spec: spec!,
-            onEndWhenAnimated: onEndSpecModifiersAnimation,
+            spec: spec!, onEndSpecModifiersAnimation,
+            child: flexWidget,
             child: flexWidget,
           );
   }
@@ -153,8 +153,8 @@ class AnimatedFlexSpecWidgetState
     return FlexSpecWidget(
       spec: _specTween?.evaluate(animation),
       direction: widget.direction,
-      orderOfModifiers: widget.orderOfModifiers,
-      onEndSpecModifiersAnimation: widget.onEndSpecModifiersAnimation,
+      orderOfModifiers: widget.orderOfModifiers,n: widget.onEndSpecModifiersAnimation,
+      children: widget.children,
       children: widget.children,
     );
   }
