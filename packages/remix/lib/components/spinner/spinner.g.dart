@@ -83,7 +83,7 @@ mixin _$SpinnerSpec on Spec<SpinnerSpec> {
       color: Color.lerp(_$this.color, other.color, t)!,
       duration: t < 0.5 ? _$this.duration : other.duration,
       style: t < 0.5 ? _$this.style : other.style,
-      modifiers: t < 0.5 ? _$this.modifiers : other.modifiers,
+      modifiers: other.modifiers,
       animated: t < 0.5 ? _$this.animated : other.animated,
     );
   }

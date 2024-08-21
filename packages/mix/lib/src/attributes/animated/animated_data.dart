@@ -1,18 +1,25 @@
 import 'package:flutter/animation.dart';
+import 'package:flutter/widgets.dart';
 
 import '../../internal/constants.dart';
 import 'animated_data_dto.dart';
 
 class AnimatedData {
+  final VoidCallback? _onEnd;
   final Curve? _curve;
   final Duration? _duration;
-  const AnimatedData({required Duration? duration, required Curve? curve})
-      : _curve = curve,
-        _duration = duration;
+  const AnimatedData({
+    required Duration? duration,
+    required Curve? curve,
+    VoidCallback? onEnd,
+  })  : _curve = curve,
+        _duration = duration,
+        _onEnd = onEnd;
 
   const AnimatedData.withDefaults()
       : _duration = kDefaultAnimationDuration,
-        _curve = Curves.linear;
+        _curve = Curves.linear,
+        _onEnd = null;
 
   // Se default in case is not set
   Duration get duration => _duration ?? kDefaultAnimationDuration;
@@ -20,8 +27,10 @@ class AnimatedData {
   // set default in case its not set
   Curve get curve => _curve ?? Curves.linear;
 
+  VoidCallback? get onEnd => _onEnd;
+
   AnimatedDataDto toDto() {
-    return AnimatedDataDto(duration: duration, curve: curve);
+    return AnimatedDataDto(duration: duration, curve: curve, onEnd: _onEnd);
   }
 
   @override
