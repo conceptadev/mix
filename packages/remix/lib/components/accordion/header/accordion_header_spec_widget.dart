@@ -1,4 +1,4 @@
-part of 'accordion_header.dart';
+part of '../accordion.dart';
 
 class RxAccordionHeaderSpecWidget extends StatelessWidget {
   const RxAccordionHeaderSpecWidget({
@@ -28,7 +28,7 @@ class RxAccordionHeaderSpecWidget extends StatelessWidget {
         children: [
           if (leadingIcon != null) LeadingIconWidget(leadingIcon),
           TitleWidget(title),
-          Spacer(),
+          const Spacer(),
           TrailingIconWidget(trailingIcon),
         ],
       ),

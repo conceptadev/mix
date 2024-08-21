@@ -1,17 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:mix/mix.dart';
 import 'package:mix_annotations/mix_annotations.dart';
-import 'package:remix/components/accordion/header/accordion_header.dart';
-import 'package:remix/tokens/remix_tokens.dart';
-import 'dart:math' as math;
-
-import '../../helpers/variant.dart';
 
 part 'accordion.g.dart';
 part 'accordion_style.dart';
-part 'accordion_variants.dart';
+part 'header/accordion_header.dart';
+part 'header/accordion_header_spec_widget.dart';
+
 part 'accordion_widget.dart';
-part 'accordion_blank.dart';
 
 @MixableSpec()
 base class AccordionSpec extends Spec<AccordionSpec> with _$AccordionSpec {

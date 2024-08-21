@@ -30,7 +30,7 @@ final directories = <_i1.WidgetbookNode>[
         name: 'accordion',
         children: [
           _i1.WidgetbookLeafComponent(
-            name: 'RxAccordion',
+            name: 'XAccordion',
             useCase: _i1.WidgetbookUseCase(
               name: 'Accordion Component',
               builder: _i2.buildAccordionUseCase,

@@ -1,7 +1,7 @@
 import 'package:demo/addons/icon_data_knob.dart';
 import 'package:flutter/material.dart';
 import 'package:mix/mix.dart';
-import 'package:remix/components/accordion/header/accordion_header.dart';
+
 import 'package:remix/remix.dart';
 import 'package:widgetbook/widgetbook.dart';
 
@@ -9,14 +9,14 @@ import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
 @widgetbook.UseCase(
   name: 'Accordion Component',
-  type: RxAccordion,
+  type: XAccordion,
 )
 Widget buildAccordionUseCase(BuildContext context) {
   return Center(
     child: SizedBox(
       width: 300,
-      child: RxAccordion(
-        headerBuilder: (context, spec) => RxAccordionHeaderSpecWidget(
+      child: XAccordion(
+        header: (context, spec) => RxAccordionHeaderSpecWidget(
           title: context.knobs.string(
             label: 'Title',
             initialValue: 'Title',
@@ -34,7 +34,7 @@ Widget buildAccordionUseCase(BuildContext context) {
           spec: spec,
         ),
         initiallyExpanded: true,
-        contentBuilder: (_, spec) => TextSpecWidget(
+        content: (_, spec) => TextSpecWidget(
           'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s',
           spec: spec,
         ),

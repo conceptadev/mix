@@ -1,10 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:mix/mix.dart';
-import 'package:mix_annotations/mix_annotations.dart';
-
-part 'accordion_header.g.dart';
-part 'accordion_header_spec_widget.dart';
+part of '../accordion.dart';
 
 @MixableSpec()
 base class AccordionHeaderSpec extends Spec<AccordionHeaderSpec>
