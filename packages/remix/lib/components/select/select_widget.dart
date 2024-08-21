@@ -44,11 +44,10 @@ class XSelect<T> extends StatefulWidget {
 class XSelectState<T> extends State<XSelect<T>>
     with SingleTickerProviderStateMixin {
   final OverlayPortalController _tooltipController = OverlayPortalController();
-  late final AnimationController _animationController;
   late final MixWidgetStateController _stateController;
 
-  final baseStyle = XSelectStyle.base.animate(
-    duration: Durations.short2,
+  final _baseAnimation = (
+    duration: const Duration(milliseconds: 100),
     curve: Curves.decelerate,
   );
 
@@ -57,11 +56,6 @@ class XSelectState<T> extends State<XSelect<T>>
   @override
   void initState() {
     super.initState();
-
-    _animationController = AnimationController(
-      duration: const Duration(),
-      vsync: this,
-    );
 
     _stateController = MixWidgetStateController();
     _stateController.selected = false;
@@ -76,6 +70,8 @@ class XSelectState<T> extends State<XSelect<T>>
   @override
   Widget build(BuildContext context) {
     return SpecBuilder(
+      style:
+          widget._blank ? widget.style : XSelectStyle.base.merge(widget.style),
       builder: (context) {
         final button = SelectSpec.of(context).button;
         final position = SelectSpec.of(context).position;
@@ -97,12 +93,20 @@ class XSelectState<T> extends State<XSelect<T>>
                   followerAnchor:
                       position.followerAnchor.resolve(TextDirection.ltr),
                   child: SpecBuilder(
+                    controller: _stateController,
+                    style: widget._blank
+                        ? widget.style
+                        : XSelectStyle.base.animate(
+                            duration: _baseAnimation.duration,
+                            curve: _baseAnimation.curve,
+                            onEnd: () {
+                              if (_stateController.selected == false) {
+                                _tooltipController.hide();
+                              }
+                            },
+                          ),
                     builder: (context) {
                       final select = SelectSpec.of(context);
-
-                      _animationController.duration =
-                          select.animated?.duration ??
-                              _animationController.duration;
 
                       final menu = select.menu;
 
@@ -122,20 +126,23 @@ class XSelectState<T> extends State<XSelect<T>>
                                 hide();
                               },
                               child: SpecBuilder(
+                                style: widget._blank
+                                    ? widget.style
+                                    : XSelectStyle.base
+                                        .merge(widget.style)
+                                        .animate(
+                                          duration: _baseAnimation.duration,
+                                          curve: _baseAnimation.curve,
+                                        ),
                                 builder: (context) {
                                   return item.child;
                                 },
-                                style: widget._blank
-                                    ? widget.style
-                                    : baseStyle.merge(widget.style),
                               ),
                             );
                           }).toList(),
                         ),
                       );
                     },
-                    controller: _stateController,
-                    style: widget._blank ? widget.style : baseStyle,
                   ),
                 ),
               ]);
@@ -144,7 +151,6 @@ class XSelectState<T> extends State<XSelect<T>>
           ),
         );
       },
-      style: widget._blank ? widget.style : baseStyle.merge(widget.style),
     );
   }
 
@@ -160,10 +166,6 @@ class XSelectState<T> extends State<XSelect<T>>
 
   void hide() {
     _stateController.selected = false;
-
-    _animationController.forward(from: 0).whenComplete(() {
-      _tooltipController.hide();
-    });
   }
 
   void onTap() {
