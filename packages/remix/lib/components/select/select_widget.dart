@@ -4,13 +4,10 @@ typedef XSelectButtonBuilder = XComponentBuilder<SelectButtonSpec>;
 typedef XSelectMenuBuilder = XComponentBuilder<SelectMenuSpec>;
 
 class XSelectMenuItem<T> {
-  const XSelectMenuItem({
-    required this.value,
-    required this.child,
-  });
-
   final T value;
   final Widget child;
+
+  const XSelectMenuItem({required this.value, required this.child});
 }
 
 class XSelect<T> extends StatefulWidget {
@@ -50,9 +47,11 @@ class XSelectState<T> extends State<XSelect<T>>
   late final MixWidgetStateController _stateController;
 
   final baseStyle = XSelectStyle.base.animate(
-    curve: Curves.decelerate,
     duration: Durations.short2,
+    curve: Curves.decelerate,
   );
+
+  final _link = LayerLink();
 
   @override
   void initState() {
@@ -64,19 +63,17 @@ class XSelectState<T> extends State<XSelect<T>>
 
   @override
   void dispose() {
-    super.dispose();
     _stateController.dispose();
+    super.dispose();
   }
-
-  final _link = LayerLink();
 
   @override
   Widget build(BuildContext context) {
     return SpecBuilder(
-      style: widget._blank ? widget.style : baseStyle.merge(widget.style),
       builder: (context) {
         final button = SelectSpec.of(context).button;
         final position = SelectSpec.of(context).position;
+
         return CompositedTransformTarget(
           link: _link,
           child: OverlayPortal(
@@ -85,9 +82,7 @@ class XSelectState<T> extends State<XSelect<T>>
               return Stack(children: [
                 GestureDetector(
                   onTap: () => hide(),
-                  child: Container(
-                    color: Colors.transparent,
-                  ),
+                  child: Container(color: Colors.transparent),
                 ),
                 CompositedTransformFollower(
                   link: _link,
@@ -96,8 +91,6 @@ class XSelectState<T> extends State<XSelect<T>>
                   followerAnchor:
                       position.followerAnchor.resolve(TextDirection.ltr),
                   child: SpecBuilder(
-                    controller: _stateController,
-                    style: widget._blank ? widget.style : baseStyle,
                     builder: (context) {
                       final select = SelectSpec.of(context);
 
@@ -118,38 +111,36 @@ class XSelectState<T> extends State<XSelect<T>>
                         },
                         child: Flex(
                           direction: Axis.vertical,
-                          children: widget.items.map(
-                            (item) {
-                              return Pressable(
-                                onPress: () {
-                                  widget.onChanged(item.value);
-                                  hide();
+                          children: widget.items.map((item) {
+                            return Pressable(
+                              onPress: () {
+                                widget.onChanged(item.value);
+                                hide();
+                              },
+                              child: SpecBuilder(
+                                builder: (context) {
+                                  return item.child;
                                 },
-                                child: SpecBuilder(
-                                  style: widget._blank
-                                      ? widget.style
-                                      : baseStyle.merge(widget.style),
-                                  builder: (context) {
-                                    return item.child;
-                                  },
-                                ),
-                              );
-                            },
-                          ).toList(),
+                                style: widget._blank
+                                    ? widget.style
+                                    : baseStyle.merge(widget.style),
+                              ),
+                            );
+                          }).toList(),
                         ),
                       );
                     },
+                    controller: _stateController,
+                    style: widget._blank ? widget.style : baseStyle,
                   ),
                 ),
               ]);
             },
-            child: Pressable(
-              onPress: onTap,
-              child: widget.button(button),
-            ),
+            child: Pressable(onPress: onTap, child: widget.button(button)),
           ),
         );
       },
+      style: widget._blank ? widget.style : baseStyle.merge(widget.style),
     );
   }
 

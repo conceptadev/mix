@@ -57,11 +57,7 @@ class XButton extends StatelessWidget {
 
   bool get _hasIcon => iconLeft != null || iconRight != null;
 
-  Widget _buildLoadingOverlay(
-    ButtonSpec spec,
-    BuildContext context,
-    Widget child,
-  ) {
+  Widget _buildLoadingOverlay(ButtonSpec spec, Widget child) {
     final Widget spinner = spinnerBuilder?.call(spec.spinner) ?? spec.spinner();
 
     return loading
@@ -72,7 +68,7 @@ class XButton extends StatelessWidget {
         : child;
   }
 
-  Widget _buildChildren(ButtonSpec spec, BuildContext context) {
+  Widget _buildChildren(ButtonSpec spec) {
     final flexWidget = spec.flex(
       direction: Axis.horizontal,
       children: [
@@ -83,9 +79,7 @@ class XButton extends StatelessWidget {
       ],
     );
 
-    return loading
-        ? _buildLoadingOverlay(spec, context, flexWidget)
-        : flexWidget;
+    return loading ? _buildLoadingOverlay(spec, flexWidget) : flexWidget;
   }
 
   @override
@@ -99,7 +93,7 @@ class XButton extends StatelessWidget {
         builder: (context) {
           final spec = ButtonSpec.of(context);
 
-          return spec.container(child: _buildChildren(spec, context));
+          return spec.container(child: _buildChildren(spec));
         },
         style: _blank
             ? style
