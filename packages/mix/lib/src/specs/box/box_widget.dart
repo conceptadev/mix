@@ -65,20 +65,16 @@ class BoxSpecWidget extends StatelessWidget {
     super.key,
     this.child,
     this.orderOfModifiers = const [],
-    this.onEndSpecModifiersAnimation,
   });
 
   final Widget? child;
   final BoxSpec? spec;
   final List<Type> orderOfModifiers;
 
-  /// Called when spec modifiers are animated and the animation is complete.
-  final void Function()? onEndSpecModifiersAnimation;
   @override
   Widget build(BuildContext context) {
     return RenderSpecModifiers(
       orderOfModifiers: orderOfModifiers,
-      onEnd: onEndSpecModifiersAnimation,
       spec: spec ?? const BoxSpec(),
       child: Container(
         alignment: spec?.alignment,
