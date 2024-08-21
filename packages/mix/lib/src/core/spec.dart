@@ -14,7 +14,10 @@ import 'utility.dart';
 abstract class Spec<T extends Spec<T>> with EqualityMixin {
   final AnimatedData? animated;
 
-  @MixableProperty(utilities: [MixableUtility(alias: 'wrap')])
+  @MixableProperty(
+    utilities: [MixableUtility(alias: 'wrap')],
+    isLerpable: false,
+  )
   final WidgetModifiersData? modifiers;
 
   const Spec({this.animated, this.modifiers});

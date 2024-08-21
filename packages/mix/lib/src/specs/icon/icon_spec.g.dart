@@ -98,7 +98,7 @@ mixin _$IconSpec on Spec<IconSpec> {
           t < 0.5 ? _$this.applyTextScaling : other.applyTextScaling,
       fill: MixHelpers.lerpDouble(_$this.fill, other.fill, t),
       animated: t < 0.5 ? _$this.animated : other.animated,
-      modifiers: t < 0.5 ? _$this.modifiers : other.modifiers,
+      modifiers: other.modifiers,
     );
   }
 
