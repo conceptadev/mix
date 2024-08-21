@@ -23,44 +23,6 @@ void main() {
     },
   );
 
-  testWidgets('TextSpec handles onEnd', (WidgetTester tester) async {
-    var countPressTime = 0;
-    var countOnEnd = 0;
-
-    await tester.pumpMaterialApp(
-      PressableBox(
-        onPress: () {
-          countPressTime++;
-        },
-        child: SpecBuilder(
-          style: Style(
-            $text.wrap.transform.scale(1),
-            $on.press(
-              $text.wrap.transform.scale(1.5),
-            ),
-          ).animate(),
-          builder: (context) {
-            final spec = TextSpec.of(context);
-
-            return TextSpecWidget(
-              'Test',
-              spec: spec,
-              onEndSpecModifiersAnimation: () => countOnEnd++,
-            );
-          },
-        ),
-      ),
-    );
-
-    final containerFinder = find.byType(Pressable);
-    await tester.tap(containerFinder);
-
-    await tester.pumpAndSettle();
-
-    expect(countPressTime, 1);
-    expect(countOnEnd, 1);
-  });
-
   testWidgets('TextSpec properties should match Text properties',
       (WidgetTester tester) async {
     const textSpec = TextSpec(

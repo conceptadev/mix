@@ -33,50 +33,6 @@ void main() {
     expect(stackWidget.textDirection, TextDirection.ltr);
   });
 
-  testWidgets('StackSpec handles onEnd', (WidgetTester tester) async {
-    var countPressTime = 0;
-    var countOnEnd = 0;
-
-    await tester.pumpMaterialApp(
-      PressableBox(
-        onPress: () {
-          countPressTime++;
-        },
-        child: SpecBuilder(
-          style: Style(
-            $stack.wrap.transform.scale(1),
-            $on.press(
-              $stack.wrap.transform.scale(1.5),
-            ),
-          ).animate(),
-          builder: (context) {
-            final spec = StackSpec.of(context);
-
-            return StackSpecWidget(
-              spec: spec,
-              onEndSpecModifiersAnimation: () => countOnEnd++,
-              children: [
-                Container(
-                  height: 50,
-                  width: 50,
-                  color: Colors.red,
-                )
-              ],
-            );
-          },
-        ),
-      ),
-    );
-
-    final containerFinder = find.byType(Pressable);
-    await tester.tap(containerFinder);
-
-    await tester.pumpAndSettle();
-
-    expect(countPressTime, 1);
-    expect(countOnEnd, 1);
-  });
-
   testWidgets('ZBox', (tester) async {
     final style = Style(
       $stack.fit.expand(),

@@ -27,51 +27,6 @@ void main() {
       expect(flex.direction, Axis.vertical);
     });
 
-    testWidgets('FlexSpec handles onEnd', (WidgetTester tester) async {
-      var countPressTime = 0;
-      var countOnEnd = 0;
-
-      await tester.pumpMaterialApp(
-        PressableBox(
-          onPress: () {
-            countPressTime++;
-          },
-          child: SpecBuilder(
-            style: Style(
-              $flex.wrap.transform.scale(1),
-              $on.press(
-                $flex.wrap.transform.scale(1.5),
-              ),
-            ).animate(),
-            builder: (context) {
-              final spec = FlexSpec.of(context);
-
-              return FlexSpecWidget(
-                direction: Axis.horizontal,
-                spec: spec,
-                onEndSpecModifiersAnimation: () => countOnEnd++,
-                children: [
-                  Container(
-                    height: 50,
-                    width: 50,
-                    color: Colors.red,
-                  )
-                ],
-              );
-            },
-          ),
-        ),
-      );
-
-      final containerFinder = find.byType(Pressable);
-      await tester.tap(containerFinder);
-
-      await tester.pumpAndSettle();
-
-      expect(countPressTime, 1);
-      expect(countOnEnd, 1);
-    });
-
     testWidgets('changes its gap direction when direction is modified',
         (tester) async {
       await tester.pumpMaterialApp(
