@@ -87,6 +87,8 @@ String? _getLerpMethod(ParameterInfo field) {
 }
 
 String _getLerpExpression(ParameterInfo field, bool isInternalRef) {
+  if (!field.annotation.isLerpable) return 'other.${field.name}';
+
   final thisFieldName = isInternalRef ? field.asInternalRef : field.name;
   final otherFieldName = 'other.${field.name}';
   final force = field.nullable ? '' : '!';

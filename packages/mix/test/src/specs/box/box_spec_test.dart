@@ -116,6 +116,10 @@ void main() {
         clipBehavior: Clip.none,
         width: 300,
         height: 200,
+        modifiers: const WidgetModifiersData([
+          OpacityModifierSpec(0.5),
+          SizedBoxModifierSpec(height: 10, width: 10),
+        ]),
       );
 
       final spec2 = BoxSpec(
@@ -130,6 +134,10 @@ void main() {
         transformAlignment: Alignment.center,
         width: 400,
         height: 300,
+        modifiers: const WidgetModifiersData([
+          OpacityModifierSpec(1),
+          SizedBoxModifierSpec(height: 100, width: 100),
+        ]),
       );
 
       const t = 0.5;
@@ -188,6 +196,52 @@ void main() {
             .lerp(t),
       );
       expect(lerpedSpec.clipBehavior, t < 0.5 ? Clip.none : Clip.antiAlias);
+    });
+
+    test('lerp modifiers', () {
+      const spec1 = BoxSpec(
+        modifiers: WidgetModifiersData([
+          OpacityModifierSpec(0.5),
+          SizedBoxModifierSpec(height: 10, width: 10),
+        ]),
+      );
+
+      const spec2 = BoxSpec(
+        modifiers: WidgetModifiersData([
+          OpacityModifierSpec(1),
+          SizedBoxModifierSpec(height: 100, width: 100),
+        ]),
+      );
+
+      final lerpedSpecStart = spec1.lerp(spec2, 0.0);
+
+      expect(
+        lerpedSpecStart.modifiers,
+        const WidgetModifiersData([
+          OpacityModifierSpec(1),
+          SizedBoxModifierSpec(height: 100, width: 100),
+        ]),
+      );
+
+      final lerpedSpecMid = spec1.lerp(spec2, 0.5);
+
+      expect(
+        lerpedSpecMid.modifiers,
+        const WidgetModifiersData([
+          OpacityModifierSpec(1),
+          SizedBoxModifierSpec(height: 100, width: 100),
+        ]),
+      );
+
+      final lerpedSpecEnd = spec1.lerp(spec2, 0.5);
+
+      expect(
+        lerpedSpecEnd.modifiers,
+        const WidgetModifiersData([
+          OpacityModifierSpec(1),
+          SizedBoxModifierSpec(height: 100, width: 100),
+        ]),
+      );
     });
 
     // equality

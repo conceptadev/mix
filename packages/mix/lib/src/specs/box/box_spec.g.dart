@@ -106,7 +106,7 @@ mixin _$BoxSpec on Spec<BoxSpec> {
       clipBehavior: t < 0.5 ? _$this.clipBehavior : other.clipBehavior,
       width: MixHelpers.lerpDouble(_$this.width, other.width, t),
       height: MixHelpers.lerpDouble(_$this.height, other.height, t),
-      modifiers: t < 0.5 ? _$this.modifiers : other.modifiers,
+      modifiers: other.modifiers,
       animated: t < 0.5 ? _$this.animated : other.animated,
     );
   }

@@ -97,7 +97,7 @@ mixin _$ImageSpec on Spec<ImageSpec> {
       filterQuality: t < 0.5 ? _$this.filterQuality : other.filterQuality,
       colorBlendMode: t < 0.5 ? _$this.colorBlendMode : other.colorBlendMode,
       animated: t < 0.5 ? _$this.animated : other.animated,
-      modifiers: t < 0.5 ? _$this.modifiers : other.modifiers,
+      modifiers: other.modifiers,
     );
   }
 
