@@ -42,9 +42,11 @@ final class TransformModifierSpec
 final class TransformModifierSpecUtility<T extends Attribute>
     extends MixUtility<T, TransformModifierSpecAttribute> {
   late final rotate = TransformRotateModifierSpecUtility(
-    (value) => TransformModifierSpecAttribute(
-      transform: value,
-      alignment: Alignment.center,
+    (value) => builder(
+      TransformModifierSpecAttribute(
+        transform: value,
+        alignment: Alignment.center,
+      ),
     ),
   );
 

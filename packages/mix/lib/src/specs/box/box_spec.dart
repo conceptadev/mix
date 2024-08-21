@@ -125,6 +125,7 @@ final class BoxSpec extends Spec<BoxSpec> with _$BoxSpec, Diagnosticable {
             spec: this,
             duration: animated!.duration,
             curve: animated!.curve,
+            onEnd: animated?.onEnd,
             orderOfModifiers: orderOfModifiers,
             child: child,
           )

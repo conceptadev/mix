@@ -95,9 +95,12 @@ MixableProperty _getMixableProperty(ConstantReader reader) {
       .map((e) => _readMixableUtility(e))
       .toList();
 
+  final isLerpable = reader.peek('isLerpable')?.boolValue ?? true;
+
   return MixableProperty(
     dto: dto == null ? null : _getMixableDto(dto),
     utilities: utilities,
+    isLerpable: isLerpable,
   );
 }
 

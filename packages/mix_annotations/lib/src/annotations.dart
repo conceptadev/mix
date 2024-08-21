@@ -104,9 +104,36 @@ class MixableProperty {
   /// corresponding paths and aliases.
   final List<MixableUtility>? utilities;
 
+  /// Determines whether the property can be linearly interpolated (lerped).
+  ///
+  /// If set to `false`, the property will be excluded from the lerp method,
+  /// and the generated code will not include this property in the lerp implementation.
+  /// If set to `true`, the property will be included in the lerp method.
+  ///
+  /// This flag affects the behavior of the generated `lerp` method:
+  ///
+  ///
+  /// @override
+  /// ExampleSpec lerp(ExampleSpec? other, double t) {
+  ///   if (other == null) return _$this;
+  ///
+  ///   return ExampleSpec(
+  ///     // When isLerpable is false:
+  ///     nonLerpableParameter: other.nonLerpableParameter,
+  ///     // When isLerpable is true:
+  ///     lerpableParameter: lerpableParameter.lerp(other.lerpableParameter, t),
+  ///   );
+  /// }
+  ///
+  ///
+  /// Setting `isLerpable` to `true` is particularly useful for properties
+  /// that represent continuous values (e.g., numbers, colors, or sizes)
+  /// which can be smoothly interpolated between two states.
+  final bool isLerpable;
+
   /// Creates a new instance of `MixableProperty` with the specified [dto] and
   /// [utilities].
-  const MixableProperty({this.dto, this.utilities});
+  const MixableProperty({this.dto, this.utilities, this.isLerpable = true});
 }
 
 /// An annotation class used to specify a mixable field DTO for code generation.
