@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
-import 'package:remix/components/accordion/header/accordion_header.dart';
 import 'package:remix/remix.dart';
 
 import '../../utils/extensions/widget_tester.dart';
@@ -11,12 +10,12 @@ void main() {
     testWidgets('renders with required properties',
         (WidgetTester tester) async {
       await tester.pumpRxComponent(
-        RxAccordion(
-          headerBuilder: (context, spec) => RxAccordionHeaderSpecWidget(
+        XAccordion(
+          header: (context, spec) => RxAccordionHeaderSpecWidget(
             title: 'Test Accordion',
             spec: spec,
           ),
-          contentBuilder: (context, spec) => TextSpecWidget(
+          content: (context, spec) => TextSpecWidget(
             'Accordion Content',
             spec: spec,
           ),
@@ -29,14 +28,14 @@ void main() {
 
     testWidgets('renders with custom icons', (WidgetTester tester) async {
       await tester.pumpRxComponent(
-        RxAccordion(
-          headerBuilder: (context, spec) => RxAccordionHeaderSpecWidget(
+        XAccordion(
+          header: (context, spec) => RxAccordionHeaderSpecWidget(
             title: 'Custom Icons',
             spec: spec,
             leadingIcon: Icons.star,
             trailingIcon: Icons.arrow_drop_down,
           ),
-          contentBuilder: (context, spec) => TextSpecWidget(
+          content: (context, spec) => TextSpecWidget(
             'Content',
             spec: spec,
           ),
@@ -64,22 +63,22 @@ void main() {
     // });
 
     testWidgets('applies custom style', (WidgetTester tester) async {
-      final _accordion = AccordionSpecUtility.self;
-      final color = Colors.purpleAccent;
+      final accordion = AccordionSpecUtility.self;
+      const color = Colors.purpleAccent;
 
       await tester.pumpRxComponent(
-        RxAccordion(
-          headerBuilder: (context, spec) => RxAccordionHeaderSpecWidget(
+        XAccordion(
+          header: (context, spec) => RxAccordionHeaderSpecWidget(
             spec: spec,
             title: 'Styled Accordion',
             trailingIcon: Icons.rocket_launch,
           ),
-          contentBuilder: (context, spec) => TextSpecWidget(
+          content: (context, spec) => TextSpecWidget(
             'Styled Content',
             spec: spec,
           ),
           style: Style(
-            _accordion.header.trailingIcon.color(color),
+            accordion.header.trailingIcon.color(color),
           ),
         ),
       );
