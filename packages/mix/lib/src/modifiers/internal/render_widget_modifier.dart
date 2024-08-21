@@ -261,14 +261,12 @@ class RenderSpecModifiers extends StatelessWidget {
     required this.orderOfModifiers,
     required this.child,
     required this.spec,
-    this.onEndWhenAnimated,
     super.key,
   });
 
   final Widget child;
   final List<Type> orderOfModifiers;
   final Spec spec;
-  final void Function()? onEndWhenAnimated;
 
   @override
   Widget build(BuildContext context) {
@@ -279,8 +277,7 @@ class RenderSpecModifiers extends StatelessWidget {
             modifiers: modifiers,
             duration: spec.animated!.duration,
             orderOfModifiers: orderOfModifiers,
-            curve: spec.animated!.curve,henAnimated,
-            child: child,
+            curve: spec.animated!.curve,
             child: child,
           )
         : RenderModifiers(

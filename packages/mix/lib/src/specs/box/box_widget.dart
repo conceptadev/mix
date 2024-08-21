@@ -65,22 +65,17 @@ class BoxSpecWidget extends StatelessWidget {
     super.key,
     this.child,
     this.orderOfModifiers = const [],
-    this.onEndSpecModifiersAnimation,
   });
 
   final Widget? child;
   final BoxSpec? spec;
   final List<Type> orderOfModifiers;
 
-  /// Called when spec modifiers are animated and the animation is complete.
-  final void Function()? onEndSpecModifiersAnimation;
-
   @override
   Widget build(BuildContext context) {
     return RenderSpecModifiers(
       orderOfModifiers: orderOfModifiers,
       spec: spec ?? const BoxSpec(),
-      onEndWhenAnimated: onEndSpecModifiersAnimation,
       child: Container(
         alignment: spec?.alignment,
         padding: spec?.padding,
@@ -108,15 +103,11 @@ class AnimatedBoxSpecWidget extends ImplicitlyAnimatedWidget {
     super.curve = Curves.linear,
     super.onEnd,
     this.orderOfModifiers = const [],
-    this.onEndSpecModifiersAnimation,
   });
 
   final Widget? child;
   final BoxSpec spec;
   final List<Type> orderOfModifiers;
-
-  /// Called when spec modifiers are animated and the animation is complete.
-  final void Function()? onEndSpecModifiersAnimation;
 
   @override
   AnimatedWidgetBaseState<AnimatedBoxSpecWidget> createState() =>
@@ -142,10 +133,6 @@ class _AnimatedBoxSpecWidgetState
   Widget build(BuildContext context) {
     final spec = _boxSpec?.evaluate(animation);
 
-    return BoxSpecWidget(
-      spec: spec,imation: widget.onEndSpecModifiersAnimation,
-      child: widget.child,
-      child: widget.child,
-    );
+    return BoxSpecWidget(spec: spec, child: widget.child);
   }
 }

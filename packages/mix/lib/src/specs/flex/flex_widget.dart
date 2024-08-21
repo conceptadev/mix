@@ -55,16 +55,12 @@ class FlexSpecWidget extends StatelessWidget {
     required this.children,
     required this.direction,
     this.orderOfModifiers = const [],
-    this.onEndSpecModifiersAnimation,
   });
 
   final List<Widget> children;
   final Axis direction;
   final FlexSpec? spec;
   final List<Type> orderOfModifiers;
-
-  /// Called when spec modifiers are animated and the animation is complete.
-  final void Function()? onEndSpecModifiersAnimation;
 
   Axis get _definitiveDirection => spec?.direction ?? direction;
 
@@ -101,8 +97,7 @@ class FlexSpecWidget extends StatelessWidget {
         ? flexWidget
         : RenderSpecModifiers(
             orderOfModifiers: orderOfModifiers,
-            spec: spec!, onEndSpecModifiersAnimation,
-            child: flexWidget,
+            spec: spec!,
             child: flexWidget,
           );
   }
@@ -115,7 +110,6 @@ class AnimatedFlexSpecWidget extends ImplicitlyAnimatedWidget {
     required this.children,
     required this.direction,
     this.orderOfModifiers = const [],
-    this.onEndSpecModifiersAnimation,
     super.curve,
     required super.duration,
     super.onEnd,
@@ -125,9 +119,6 @@ class AnimatedFlexSpecWidget extends ImplicitlyAnimatedWidget {
   final List<Widget> children;
   final Axis direction;
   final List<Type> orderOfModifiers;
-
-  /// Called when spec modifiers are animated and the animation is complete.
-  final void Function()? onEndSpecModifiersAnimation;
 
   @override
   AnimatedFlexSpecWidgetState createState() => AnimatedFlexSpecWidgetState();
@@ -153,8 +144,7 @@ class AnimatedFlexSpecWidgetState
     return FlexSpecWidget(
       spec: _specTween?.evaluate(animation),
       direction: widget.direction,
-      orderOfModifiers: widget.orderOfModifiers,n: widget.onEndSpecModifiersAnimation,
-      children: widget.children,
+      orderOfModifiers: widget.orderOfModifiers,
       children: widget.children,
     );
   }
