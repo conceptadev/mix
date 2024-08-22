@@ -222,6 +222,7 @@ class Style with EqualityMixin {
   /// Otherwise, the method merges the attributes of the selected variants into a new `Style` instance.
   ///
   /// Example:
+  /// ```dart
   /// final outlinedVariant = Variant('outlined');
   /// final smallVariant = Variant('small');
   /// final style = Style(

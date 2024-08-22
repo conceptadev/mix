@@ -112,7 +112,7 @@ void main() {
             label: 'Test Button',
             onPressed: () {},
             loading: true,
-            spinnerBuilder: (_, __) {
+            spinnerBuilder: (_) {
               return Container(
                 key: key,
                 width: 20,

@@ -17,8 +17,9 @@ import 'package:demo/components/card_use_case.dart' as _i6;
 import 'package:demo/components/checkbox_use_case.dart' as _i7;
 import 'package:demo/components/progress_use_case.dart' as _i8;
 import 'package:demo/components/radio_use_case.dart' as _i9;
-import 'package:demo/components/spinner_use_case.dart' as _i10;
-import 'package:demo/components/switch_use_case.dart' as _i11;
+import 'package:demo/components/select_use_case.dart' as _i10;
+import 'package:demo/components/spinner_use_case.dart' as _i11;
+import 'package:demo/components/switch_use_case.dart' as _i12;
 import 'package:widgetbook/widgetbook.dart' as _i1;
 
 final directories = <_i1.WidgetbookNode>[
@@ -128,13 +129,25 @@ final directories = <_i1.WidgetbookNode>[
         ],
       ),
       _i1.WidgetbookFolder(
+        name: 'select',
+        children: [
+          _i1.WidgetbookLeafComponent(
+            name: 'XSelect',
+            useCase: _i1.WidgetbookUseCase(
+              name: 'Select Component',
+              builder: _i10.buildSelect,
+            ),
+          )
+        ],
+      ),
+      _i1.WidgetbookFolder(
         name: 'spinner',
         children: [
           _i1.WidgetbookLeafComponent(
             name: 'RxSpinner',
             useCase: _i1.WidgetbookUseCase(
               name: 'Spinner Component',
-              builder: _i10.buildSpinnerUseCase,
+              builder: _i11.buildSpinnerUseCase,
             ),
           )
         ],
@@ -146,7 +159,7 @@ final directories = <_i1.WidgetbookNode>[
             name: 'RxSwitch',
             useCase: _i1.WidgetbookUseCase(
               name: 'Switch Component',
-              builder: _i11.buildSwitchUseCase,
+              builder: _i12.buildSwitchUseCase,
             ),
           )
         ],
