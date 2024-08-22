@@ -1,3 +1,7 @@
+## 0.3.0
+
+ - **FIX**: SpecModifiers were taking a long time to animate. (#457).
+
 ## 0.2.1
 
  - **FEAT**: MixableSpec now supports `withCopyWith`, `withEquality`, `withLerp`, and `skipUtility` (#396).

@@ -1,3 +1,8 @@
+## 0.3.0
+
+ - **FIX**: SpecModifiers were taking a long time to animate. (#457).
+ - **FIX**: Shadow list animation (#445).
+
 ## 0.2.2+1
 
  - **DOCS**: improve mix theme data features explanations (#404).
