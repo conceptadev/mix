@@ -1,3 +1,9 @@
+## 0.2.3
+
+ - **FIX**: Shadow list animation (#445).
+ - **FEAT**: Remix improvements and further improvements (#410).
+ - **DOCS**: improve mix theme data features explanations (#404).
+
 ## 0.2.2+1
 
  - **DOCS**: improve mix theme data features explanations (#404).
