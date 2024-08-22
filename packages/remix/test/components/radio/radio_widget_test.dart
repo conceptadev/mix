@@ -6,28 +6,29 @@ import 'package:remix/components/radio/radio.dart';
 import '../../utils/extensions/widget_tester.dart';
 
 void main() {
-  group('RxRadio', () {
+  group('xRadio', () {
     testWidgets('renders RxBlankRadio with correct properties',
         (WidgetTester tester) async {
       bool value = true;
       bool? changedValue;
 
       await tester.pumpRxComponent(
-        RxRadio(
+        XRadio(
           value: value,
           onChanged: (v) => changedValue = v,
-          variant: RadioVariant.outline,
-          size: RadioSize.small,
+          groupValue: true,
           disabled: true,
+          text: '',
         ),
       );
 
       final rxBlankRadio =
-          tester.widget<RxBlankRadio>(find.byType(RxBlankRadio));
+          tester.widget<XRadio<bool>>(find.byType(XRadio<bool>));
       expect(rxBlankRadio.value, equals(true));
+      expect(rxBlankRadio.groupValue, equals(true));
       expect(rxBlankRadio.disabled, equals(true));
 
-      await tester.tap(find.byType(RxBlankRadio));
+      await tester.tap(find.byType(XRadio<bool>));
       expect(changedValue, isNull);
     });
 
@@ -35,22 +36,21 @@ void main() {
       final $radio = RadioSpecUtility.self;
 
       await tester.pumpRxComponent(
-        RxRadio(
+        XRadio(
           value: false,
+          groupValue: true,
           disabled: false,
           onChanged: (_) {},
           style: Style(
-            RadioVariant.solid(
-              $radio.container.color.red(),
-            ),
+            $radio.container.color.red(),
           ),
+          text: '',
         ),
       );
 
-      final rxBlankRadio =
-          tester.firstWidget<Container>(find.byType(Container));
+      final container = tester.firstWidget<Container>(find.byType(Container));
       expect(
-        (rxBlankRadio.decoration as BoxDecoration).color,
+        (container.decoration as BoxDecoration).color,
         equals(Colors.red),
       );
     });
@@ -60,50 +60,31 @@ void main() {
       bool? changedValue;
 
       await tester.pumpRxComponent(
-        RxRadio(
+        XRadio(
           value: value,
+          groupValue: true,
           onChanged: (v) => changedValue = v,
+          text: '',
         ),
       );
 
-      await tester.tap(find.byType(RxBlankRadio));
-      expect(changedValue, isTrue);
+      await tester.tap(find.byType(XRadio<bool>));
+      expect(changedValue, isFalse);
     });
 
-    testWidgets('applies different variants', (WidgetTester tester) async {
-      for (final variant in RadioVariant.values) {
-        await tester.pumpRxComponent(
-          RxRadio(
-            value: true,
-            onChanged: (_) {},
-            variant: variant,
-          ),
-        );
+    testWidgets('displays correct text', (WidgetTester tester) async {
+      const testText = 'Test Radio';
 
-        final radio = tester.widget<RxBlankRadio>(find.byType(RxBlankRadio));
-        final appliedVariantStillInStyle =
-            radio.style.variants.values.any((e) => e.variant == variant);
+      await tester.pumpRxComponent(
+        XRadio(
+          value: false,
+          groupValue: true,
+          onChanged: (_) {},
+          text: testText,
+        ),
+      );
 
-        expect(appliedVariantStillInStyle, false);
-      }
-    });
-
-    testWidgets('applies different sizes', (WidgetTester tester) async {
-      for (final size in RadioSize.values) {
-        await tester.pumpRxComponent(
-          RxRadio(
-            value: true,
-            onChanged: (_) {},
-            size: size,
-          ),
-        );
-
-        final radio = tester.widget<RxBlankRadio>(find.byType(RxBlankRadio));
-        final appliedVariantStillInStyle =
-            radio.style.variants.values.any((e) => e.variant == size);
-
-        expect(appliedVariantStillInStyle, false);
-      }
+      expect(find.text(testText), findsOneWidget);
     });
   });
 }

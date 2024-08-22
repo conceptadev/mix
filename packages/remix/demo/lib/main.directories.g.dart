@@ -120,7 +120,7 @@ final directories = <_i1.WidgetbookNode>[
         name: 'radio',
         children: [
           _i1.WidgetbookLeafComponent(
-            name: 'RxRadio',
+            name: 'XRadio',
             useCase: _i1.WidgetbookUseCase(
               name: 'Radio Component',
               builder: _i9.buildRadioUseCase,

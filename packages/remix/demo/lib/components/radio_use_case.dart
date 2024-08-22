@@ -1,4 +1,4 @@
-import 'package:demo/helpers/use_case_state.dart';
+import 'package:demo/helpers/string.dart';
 import 'package:flutter/material.dart';
 import 'package:remix/components/radio/radio.dart';
 import 'package:widgetbook/widgetbook.dart';
@@ -6,41 +6,61 @@ import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
 final _key = GlobalKey();
 
+enum Theme {
+  dark,
+  light,
+  system,
+}
+
 @widgetbook.UseCase(
   name: 'Radio Component',
-  type: RxRadio,
+  type: XRadio,
 )
 Widget buildRadioUseCase(BuildContext context) {
-  final knobState = WidgetbookState.of(context);
+  return const RadioExample();
+}
 
-  Widget buildRadio(RadioVariant variant) {
-    return Column(
-      children: [
-        Text(variant.label),
-        const SizedBox(height: 10),
-        RxRadio(
-          value: context.knobs.boolean(label: 'Selected', initialValue: true),
-          onChanged: (value) => knobState.updateKnob('Selected', value),
-          variant: variant,
-          size: context.knobs.list(
-            label: 'Size',
-            options: RadioSize.values,
-            initialOption: RadioSize.medium,
-            labelBuilder: (value) => value.label,
-          ),
-          disabled: context.knobs.boolean(
-            label: 'Disabled',
-            initialValue: false,
-          ),
-        ),
-      ],
+class RadioExample extends StatefulWidget {
+  const RadioExample({super.key});
+
+  @override
+  State<RadioExample> createState() => _RadioExampleState();
+}
+
+class _RadioExampleState extends State<RadioExample> {
+  Theme _theme = Theme.dark;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: 200,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        key: _key,
+        children: <Widget>[
+          for (var theme in Theme.values) ...[
+            Row(
+              children: [
+                XRadio<Theme>(
+                  value: theme,
+                  groupValue: _theme,
+                  onChanged: (Theme? value) {
+                    setState(() {
+                      _theme = value!;
+                    });
+                  },
+                  disabled: context.knobs.boolean(
+                    label: 'Disabled',
+                    initialValue: false,
+                  ),
+                  text: theme.name.capitalize(),
+                ),
+              ],
+            ),
+            const SizedBox(height: 8),
+          ]
+        ],
+      ),
     );
   }
-
-  return Wrap(
-    key: _key,
-    spacing: 12,
-    runSpacing: 12,
-    children: RadioVariant.values.map(buildRadio).toList(),
-  );
 }

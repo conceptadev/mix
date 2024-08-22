@@ -876,6 +876,7 @@
 /Users/lucasoliveira/Developer/Concepta/open_source/mix_ecosystem/mix/packages/remix/demo/lib/components/spinner_use_case.dart
 /Users/lucasoliveira/Developer/Concepta/open_source/mix_ecosystem/mix/packages/remix/demo/lib/components/switch_use_case.dart
 /Users/lucasoliveira/Developer/Concepta/open_source/mix_ecosystem/mix/packages/remix/demo/lib/helpers/label_variant_builder.dart
+/Users/lucasoliveira/Developer/Concepta/open_source/mix_ecosystem/mix/packages/remix/demo/lib/helpers/string.dart
 /Users/lucasoliveira/Developer/Concepta/open_source/mix_ecosystem/mix/packages/remix/demo/lib/helpers/use_case_state.dart
 /Users/lucasoliveira/Developer/Concepta/open_source/mix_ecosystem/mix/packages/remix/demo/lib/main.dart
 /Users/lucasoliveira/Developer/Concepta/open_source/mix_ecosystem/mix/packages/remix/demo/lib/main.directories.g.dart
@@ -922,9 +923,7 @@
 /Users/lucasoliveira/Developer/Concepta/open_source/mix_ecosystem/mix/packages/remix/lib/components/progress/progress_widget.dart
 /Users/lucasoliveira/Developer/Concepta/open_source/mix_ecosystem/mix/packages/remix/lib/components/radio/radio.dart
 /Users/lucasoliveira/Developer/Concepta/open_source/mix_ecosystem/mix/packages/remix/lib/components/radio/radio.g.dart
-/Users/lucasoliveira/Developer/Concepta/open_source/mix_ecosystem/mix/packages/remix/lib/components/radio/radio_blank.dart
 /Users/lucasoliveira/Developer/Concepta/open_source/mix_ecosystem/mix/packages/remix/lib/components/radio/radio_style.dart
-/Users/lucasoliveira/Developer/Concepta/open_source/mix_ecosystem/mix/packages/remix/lib/components/radio/radio_variants.dart
 /Users/lucasoliveira/Developer/Concepta/open_source/mix_ecosystem/mix/packages/remix/lib/components/radio/radio_widget.dart
 /Users/lucasoliveira/Developer/Concepta/open_source/mix_ecosystem/mix/packages/remix/lib/components/select/button/select_button.dart
 /Users/lucasoliveira/Developer/Concepta/open_source/mix_ecosystem/mix/packages/remix/lib/components/select/button/select_button_widget.dart
