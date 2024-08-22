@@ -1,11 +1,11 @@
 #!/bin/sh
 # This is a generated file; do not edit or check into version control.
-export "FLUTTER_ROOT=/Users/leofarias/fvm/versions/3.19.0"
-export "FLUTTER_APPLICATION_PATH=/Users/leofarias/Projects/mix/packages/remix"
+export "FLUTTER_ROOT=/Users/lucasoliveira/fvm/versions/stable"
+export "FLUTTER_APPLICATION_PATH=/Users/lucasoliveira/Developer/Concepta/open_source/mix_ecosystem/mix/packages/remix"
 export "COCOAPODS_PARALLEL_CODE_SIGN=true"
 export "FLUTTER_BUILD_DIR=build"
-export "FLUTTER_BUILD_NAME=0.0.1"
-export "FLUTTER_BUILD_NUMBER=0.0.1"
+export "FLUTTER_BUILD_NAME=0.0.2"
+export "FLUTTER_BUILD_NUMBER=5"
 export "DART_OBFUSCATION=false"
 export "TRACK_WIDGET_CREATION=true"
 export "TREE_SHAKE_ICONS=false"

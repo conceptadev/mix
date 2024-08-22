@@ -29,8 +29,8 @@ class HotReload extends StatelessWidget {
             ),
           ],
           initialTheme: WidgetbookTheme(
-            name: 'Dark',
-            data: ThemeData.dark(),
+            name: 'Light',
+            data: ThemeData.light(),
           ),
         ),
         BuilderAddon(

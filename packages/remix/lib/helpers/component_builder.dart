@@ -1,3 +1,3 @@
 import 'package:flutter/widgets.dart';
 
-typedef XComponentBuilder<T> = Widget Function(BuildContext context, T spec);
+typedef XComponentBuilder<T> = Widget Function(T spec);
