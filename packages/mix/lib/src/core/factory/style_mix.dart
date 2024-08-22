@@ -176,11 +176,15 @@ class Style with EqualityMixin {
   MixData of(BuildContext context) => MixData.create(context, this);
 
   /// Returns a `AnimatedStyle` from this `Style` with the provided [duration] and [curve].
-  AnimatedStyle animate({Duration? duration, Curve? curve}) {
+  AnimatedStyle animate({
+    Duration? duration,
+    Curve? curve,
+    VoidCallback? onEnd,
+  }) {
     return AnimatedStyle._(
       styles: styles,
       variants: variants,
-      animated: AnimatedData(duration: duration, curve: curve),
+      animated: AnimatedData(duration: duration, curve: curve, onEnd: onEnd),
     );
   }
 
@@ -352,11 +356,12 @@ class AnimatedStyle extends Style {
     Style style, {
     required Duration duration,
     required Curve curve,
+    VoidCallback? onEnd,
   }) {
     return AnimatedStyle._(
       styles: style.styles,
       variants: style.variants,
-      animated: AnimatedData(duration: duration, curve: curve),
+      animated: AnimatedData(duration: duration, curve: curve, onEnd: onEnd),
     );
   }
 

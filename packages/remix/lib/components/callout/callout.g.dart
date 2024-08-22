@@ -81,7 +81,7 @@ mixin _$CalloutSpec on Spec<CalloutSpec> {
       flex: _$this.flex.lerp(other.flex, t),
       icon: _$this.icon.lerp(other.icon, t),
       text: _$this.text.lerp(other.text, t),
-      modifiers: t < 0.5 ? _$this.modifiers : other.modifiers,
+      modifiers: other.modifiers,
       animated: t < 0.5 ? _$this.animated : other.animated,
     );
   }
