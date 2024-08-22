@@ -32,28 +32,20 @@ Packages with dependency updates only:
 
  - **FIX**(docs): fix fn level docs for Style::applyVariants (#460).
  - **FIX**: Shadow list animation (#445).
- - **FIX**: HitTestBehavior when there is a Interectable in the tree (#437).
- - **FIX**: Pressable disposes controller only if it creates it (#424).
- - **FIX**: breakpoint utility merge exception (#421).
- - **FIX**: FlexSpecWidget prioritizes the direction in spec (#414).
- - **FIX**: Added missing widget state utilities (#411).
- - **FIX**: Correct handling of individual border sides (#408).
+ - **FIX**: SpecModifiers were taking a long time to animate. (#457).
  - **FEAT**: Create mouse cursor Decorator (#263).
- - **FEAT**: Create Select component (#448).
  - **FEAT**: Add parameter onEnd for AnimatedStyle (#458).
  - **FEAT**: `SingleChildScrollView` widget modifier (#427).
- - **FEAT**: Create a specific utility to Transform.rotate (#434).
- - **FEAT**: TargetPlatform and web variants (#431).
  - **FEAT**: Remix improvements and further improvements (#410).
- - **DOCS**: improve mix theme data features explanations (#404).
 
 #### `mix_annotations` - `v0.3.0`
 
+ - **FIX**: SpecModifiers were taking a long time to animate. (#457).
+
 #### `mix_generator` - `v0.3.0`
 
+ - **FIX**: SpecModifiers were taking a long time to animate. (#457).
  - **FIX**: Shadow list animation (#445).
- - **FEAT**: Remix improvements and further improvements (#410).
- - **DOCS**: improve mix theme data features explanations (#404).
 
 
 ## 2024-08-08
