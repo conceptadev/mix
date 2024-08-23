@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mix/mix.dart';
-import 'package:remix/components/spinner/spinner.dart';
-import 'package:widgetbook/widgetbook.dart';
+import 'package:remix/remix.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
 @widgetbook.UseCase(
@@ -17,12 +16,6 @@ Widget buildSpinnerUseCase(BuildContext context) {
         RxSpinner(
           style: Style(
             SpinnerSpecUtility.self.style(style),
-          ),
-          size: context.knobs.list(
-            label: 'Size',
-            options: SpinnerSize.values,
-            initialOption: SpinnerSize.medium,
-            labelBuilder: (value) => value.label,
           ),
         ),
       ],

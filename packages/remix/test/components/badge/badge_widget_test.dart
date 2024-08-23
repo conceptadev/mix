@@ -3,37 +3,38 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
 import 'package:remix/remix.dart';
 
-import '../../utils/extensions/widget_tester.dart';
-
 void main() {
-  group('RxBadge', () {
+  group('XBadge', () {
     final $badge = BadgeSpecUtility.self;
 
     testWidgets('renders the label', (WidgetTester tester) async {
-      await tester.pumpRxComponent(const RxBadge(label: 'Test'));
+      await tester.pumpWidget(
+        const MaterialApp(
+          home: XBadge(label: 'Test'),
+        ),
+      );
 
       expect(find.text('Test'), findsOneWidget);
-      expect(find.byType(RxBadge), findsOneWidget);
+      expect(find.byType(XBadge), findsOneWidget);
     });
 
     testWidgets('applies custom style', (WidgetTester tester) async {
       const color = Colors.red;
 
       final customStyle = Style(
-        BadgeVariant.solid(
-          $badge.container.color(color),
+        $badge.container.color(color),
+      );
+
+      await tester.pumpWidget(
+        MaterialApp(
+          home: XBadge(
+            label: 'Custom',
+            style: customStyle,
+          ),
         ),
       );
 
-      await tester.pumpRxComponent(
-        RxBadge(
-          label: 'Custom',
-          style: customStyle,
-          variant: BadgeVariant.solid,
-        ),
-      );
-
-      final badgeFinder = find.byType(RxBadge);
+      final badgeFinder = find.byType(XBadge);
       expect(badgeFinder, findsOneWidget);
 
       final container = find.descendant(
@@ -44,90 +45,6 @@ void main() {
 
       final containerWidget = tester.widget<Container>(container);
       expect((containerWidget.decoration! as BoxDecoration).color, color);
-    });
-
-    testWidgets('renders with different sizes', (WidgetTester tester) async {
-      const key1 = Key('1');
-      const key2 = Key('2');
-      const key3 = Key('3');
-
-      await tester.pumpRxComponent(
-        const Column(
-          children: [
-            RxBadge(key: key1, label: 'Small', size: BadgeSize.small),
-            RxBadge(key: key2, label: 'Medium', size: BadgeSize.medium),
-            RxBadge(key: key3, label: 'Large', size: BadgeSize.large),
-          ],
-        ),
-      );
-
-      expect(find.byKey(key1), findsOneWidget);
-      expect(find.byKey(key2), findsOneWidget);
-      expect(find.byKey(key3), findsOneWidget);
-
-      final avatar1 = tester.widget<RxBadge>(find.byKey(key1));
-      expect(avatar1.size, equals(BadgeSize.small));
-
-      final avatar2 = tester.widget<RxBadge>(find.byKey(key2));
-      expect(avatar2.size, equals(BadgeSize.medium));
-
-      final avatar3 = tester.widget<RxBadge>(find.byKey(key3));
-      expect(avatar3.size, equals(BadgeSize.large));
-    });
-
-    testWidgets('renders with different variants', (WidgetTester tester) async {
-      const key1 = Key('1');
-      const key2 = Key('2');
-
-      await tester.pumpRxComponent(
-        const Column(
-          children: [
-            RxBadge(key: key1, label: 'Soft', variant: BadgeVariant.soft),
-            RxBadge(key: key2, label: 'Solid', variant: BadgeVariant.solid),
-          ],
-        ),
-      );
-
-      expect(find.byKey(key1), findsOneWidget);
-      expect(find.byKey(key2), findsOneWidget);
-
-      final badge1 = tester.widget<RxBadge>(find.byKey(key1));
-      expect(badge1.variant, equals(BadgeVariant.soft));
-
-      final badge2 = tester.widget<RxBadge>(find.byKey(key2));
-      expect(badge2.variant, equals(BadgeVariant.solid));
-    });
-
-    testWidgets('renders with different radii', (WidgetTester tester) async {
-      const key1 = Key('1');
-      const key2 = Key('2');
-      const key3 = Key('3');
-
-      await tester.pumpRxComponent(
-        const Column(
-          children: [
-            RxBadge(
-                key: key1, label: 'Small Radius', radius: BadgeRadius.small),
-            RxBadge(
-                key: key2, label: 'Medium Radius', radius: BadgeRadius.medium),
-            RxBadge(
-                key: key3, label: 'Large Radius', radius: BadgeRadius.large),
-          ],
-        ),
-      );
-
-      expect(find.byKey(key1), findsOneWidget);
-      expect(find.byKey(key2), findsOneWidget);
-      expect(find.byKey(key3), findsOneWidget);
-
-      final badge1 = tester.widget<RxBadge>(find.byKey(key1));
-      expect(badge1.radius, equals(BadgeRadius.small));
-
-      final badge2 = tester.widget<RxBadge>(find.byKey(key2));
-      expect(badge2.radius, equals(BadgeRadius.medium));
-
-      final badge3 = tester.widget<RxBadge>(find.byKey(key3));
-      expect(badge3.radius, equals(BadgeRadius.large));
     });
   });
 }

@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
-import 'package:remix/components/card/card.dart';
-
-import '../../utils/extensions/widget_tester.dart';
+import 'package:remix/src/components/card/card.dart';
 
 void main() {
-  group('RxCard', () {
+  group('XCard', () {
     final $card = CardSpecUtility.self;
 
     testWidgets('renders with default type', (WidgetTester tester) async {
-      await tester.pumpRxComponent(
-        const RxCard(
-          children: [Text('Test')],
+      await tester.pumpWidget(
+        const MaterialApp(
+          home: XCard(
+            children: [Text('Test')],
+          ),
         ),
       );
 
-      expect(find.byType(RxBlankCard), findsOneWidget);
+      expect(find.byType(XCard), findsOneWidget);
       expect(find.text('Test'), findsOneWidget);
     });
 
@@ -27,10 +27,12 @@ void main() {
         $card.container.color(color),
       );
 
-      await tester.pumpRxComponent(
-        RxCard(
-          style: customStyle,
-          children: const [Text('Custom Style')],
+      await tester.pumpWidget(
+        MaterialApp(
+          home: XCard(
+            style: customStyle,
+            children: const [Text('Custom Style')],
+          ),
         ),
       );
 
@@ -39,53 +41,21 @@ void main() {
     });
 
     testWidgets('renders multiple children', (WidgetTester tester) async {
-      await tester.pumpRxComponent(
-        const RxCard(
-          children: [
-            Text('Child 1'),
-            Text('Child 2'),
-            Text('Child 3'),
-          ],
+      await tester.pumpWidget(
+        const MaterialApp(
+          home: XCard(
+            children: [
+              Text('Child 1'),
+              Text('Child 2'),
+              Text('Child 3'),
+            ],
+          ),
         ),
       );
 
       expect(find.text('Child 1'), findsOneWidget);
       expect(find.text('Child 2'), findsOneWidget);
       expect(find.text('Child 3'), findsOneWidget);
-    });
-
-    testWidgets('applies different card variants', (WidgetTester tester) async {
-      for (final variant in CardVariant.values) {
-        await tester.pumpRxComponent(
-          RxCard(
-            variant: variant,
-            children: const [Text('Variant Test')],
-          ),
-        );
-
-        final card = tester.widget<RxBlankCard>(find.byType(RxBlankCard));
-        final appliedVariantStillInStyle =
-            card.style.variants.values.any((e) => e.variant == variant);
-
-        expect(appliedVariantStillInStyle, false);
-      }
-    });
-
-    testWidgets('applies different card sizes', (WidgetTester tester) async {
-      for (final size in CardSize.values) {
-        await tester.pumpRxComponent(
-          RxCard(
-            size: size,
-            children: const [Text('Variant Test')],
-          ),
-        );
-
-        final card = tester.widget<RxBlankCard>(find.byType(RxBlankCard));
-        final appliedVariantStillInStyle =
-            card.style.variants.values.any((e) => e.variant == size);
-
-        expect(appliedVariantStillInStyle, false);
-      }
     });
   });
 }
