@@ -3,8 +3,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
 import 'package:remix/src/components/radio/radio.dart';
 
-import '../../utils/extensions/widget_tester.dart';
-
 void main() {
   group('xRadio', () {
     testWidgets('renders RxBlankRadio with correct properties',
@@ -12,13 +10,15 @@ void main() {
       bool value = true;
       bool? changedValue;
 
-      await tester.pumpRxComponent(
-        XRadio(
-          value: value,
-          onChanged: (v) => changedValue = v,
-          groupValue: true,
-          disabled: true,
-          text: '',
+      await tester.pumpWidget(
+        MaterialApp(
+          home: XRadio(
+            value: value,
+            onChanged: (v) => changedValue = v,
+            groupValue: true,
+            disabled: true,
+            text: '',
+          ),
         ),
       );
 
@@ -35,16 +35,18 @@ void main() {
     testWidgets('applies custom style', (WidgetTester tester) async {
       final $radio = RadioSpecUtility.self;
 
-      await tester.pumpRxComponent(
-        XRadio(
-          value: false,
-          groupValue: true,
-          disabled: false,
-          onChanged: (_) {},
-          style: Style(
-            $radio.container.color.red(),
+      await tester.pumpWidget(
+        MaterialApp(
+          home: XRadio(
+            value: false,
+            groupValue: true,
+            disabled: false,
+            onChanged: (_) {},
+            style: Style(
+              $radio.container.color.red(),
+            ),
+            text: '',
           ),
-          text: '',
         ),
       );
 
@@ -59,12 +61,14 @@ void main() {
       bool value = false;
       bool? changedValue;
 
-      await tester.pumpRxComponent(
-        XRadio(
-          value: value,
-          groupValue: true,
-          onChanged: (v) => changedValue = v,
-          text: '',
+      await tester.pumpWidget(
+        MaterialApp(
+          home: XRadio(
+            value: value,
+            groupValue: true,
+            onChanged: (v) => changedValue = v,
+            text: '',
+          ),
         ),
       );
 
@@ -75,12 +79,14 @@ void main() {
     testWidgets('displays correct text', (WidgetTester tester) async {
       const testText = 'Test Radio';
 
-      await tester.pumpRxComponent(
-        XRadio(
-          value: false,
-          groupValue: true,
-          onChanged: (_) {},
-          text: testText,
+      await tester.pumpWidget(
+        MaterialApp(
+          home: XRadio(
+            value: false,
+            groupValue: true,
+            onChanged: (_) {},
+            text: testText,
+          ),
         ),
       );
 

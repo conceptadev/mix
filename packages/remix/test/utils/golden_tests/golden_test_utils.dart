@@ -1,8 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import '../extensions/widget_tester.dart';
-
 List<Map<String, dynamic>> generateCombinations(
     Map<String, List<dynamic>> values) {
   List<Map<String, dynamic>> combinations = [{}];
@@ -39,7 +37,7 @@ Future<void> goldenTest(
     final widget = builder(parameters);
     number += 1;
 
-    await tester.pumpRxComponent(
+    await tester.pumpWidget(
       Center(
         child: widget,
       ),
