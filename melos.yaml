@@ -93,12 +93,8 @@ scripts:
   custom_lint_analyze:
     run: melos exec --depends-on="mix_lint" dart pub run custom_lint
 
-  mix_exports:
-    run: melos exec --scope="packages/mix" dart run ./scripts/exports.dart
-    description: Generate exports for the mix package
-
-  remix_exports:
-    run: melos exec --scope="packages/remix" dart run ./scripts/exports.dart
+  exports:
+    run: melos exec --scope="mix" --scope="remix" dart run ../../scripts/exports.dart .
     description: Generate exports for the mix package
   
   verify_version_pubspec_changelog:

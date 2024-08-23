@@ -3,33 +3,52 @@
 import 'dart:developer';
 import 'dart:io';
 
-final _libDirectory = Directory('lib');
-final _srcDirectory = Directory(_joinPaths(_libDirectory.path, 'src'));
-final _mixFile = File(_joinPaths(_libDirectory.path, 'remix.dart'));
-
-void main() {
-  if (!_libDirectory.existsSync()) {
-    throw Exception('The lib directory was not found.');
+void main(List<String> args) {
+  if (args.isEmpty) {
+    throw Exception('Please provide the directory path as an argument.');
   }
 
-  _libraryExport();
+  final rootDirectory = Directory(args[0]);
+  final libDirectory = Directory(_joinPaths(rootDirectory.path, 'lib'));
+  final srcDirectory = Directory(_joinPaths(libDirectory.path, 'src'));
+
+  final packageName = rootDirectory.absolute.parent.path.split('/').last;
+  final mixFile = File(_joinPaths(libDirectory.path, '$packageName.dart'));
+
+  if (!libDirectory.existsSync()) {
+    throw Exception(
+      'The lib directory (${libDirectory.path}) was not found.',
+    );
+  }
+
+  _libraryExport(
+    src: srcDirectory,
+    lib: libDirectory,
+    mixFile: mixFile,
+    packageName: packageName,
+  );
 }
 
-Future<void> _libraryExport() async {
-  if (_mixFile.existsSync()) {
-    _mixFile.deleteSync();
+Future<void> _libraryExport({
+  required Directory src,
+  required Directory lib,
+  required File mixFile,
+  required String packageName,
+}) async {
+  if (mixFile.existsSync()) {
+    mixFile.deleteSync();
   }
   final libOutputString = StringBuffer();
   libOutputString.write(_libAsci);
 
-  libOutputString.writeln('library mix;\n');
+  libOutputString.writeln('library $packageName;\n');
 
-  final fileMap = await _getImportedFilesByDirectory();
+  final fileMap = await _getImportedFilesByDirectory(src: src, lib: lib);
 
   // Traverse the /lib/ directory
   for (final key in fileMap.keys) {
     final importList = fileMap[key]!;
-    final barrelDir = Directory(_joinPaths(_srcDirectory.path, key));
+    final barrelDir = Directory(_joinPaths(src.path, key));
     final barreFile = File(_joinPaths(barrelDir.path, '$key.dart'));
     if (barreFile.existsSync()) {
       barreFile.deleteSync();
@@ -43,7 +62,7 @@ Future<void> _libraryExport() async {
     }
   }
 
-  _mixFile.writeAsStringSync(libOutputString.toString());
+  mixFile.writeAsStringSync(libOutputString.toString());
 
   log('Exports file updated with ${libOutputString.length} exports.');
 }
@@ -97,10 +116,13 @@ String _getRelativePath(String filePath, String fromPath) {
   return relativePath.join('/');
 }
 
-Future<Map<String, List<String>>> _getImportedFilesByDirectory() async {
+Future<Map<String, List<String>>> _getImportedFilesByDirectory({
+  required Directory src,
+  required Directory lib,
+}) async {
   final result = <String, List<String>>{};
 
-  final filesList = await _getFilesInDirectory(_srcDirectory);
+  final filesList = await _getFilesInDirectory(src);
 
   // Order the files alphabetically
   filesList.sort((a, b) => a.compareTo(b));
@@ -117,7 +139,7 @@ Future<Map<String, List<String>>> _getImportedFilesByDirectory() async {
       continue;
     }
 
-    final relativePath = _getRelativePath(filePath, _libDirectory.path);
+    final relativePath = _getRelativePath(filePath, lib.path);
     // file path will like this src/theme/mix_theme.dart, or src/sub1/**/*/*.dart
     // I would like to get sub1 and or the first direcotry and save as a variable
     // so I can use it in the export file.

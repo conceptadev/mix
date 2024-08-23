@@ -16,7 +16,7 @@
 ///               \/\             Generated with barrel script        \ \
 ///                \/////////////////////////////////////////////////////
 
-library mix;
+library remix;
 
 /// COMPONENTS
 export 'src/components/avatar/avatar.dart';
