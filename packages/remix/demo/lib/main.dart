@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:remix/remix.dart';
+
 import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
@@ -34,25 +34,37 @@ class HotReload extends StatelessWidget {
           ),
         ),
         BuilderAddon(
-          name: 'Remix Tokens',
+          name: 'brightness',
           builder: (context, child) {
             final isDarkTheme = Theme.of(context).brightness == Brightness.dark;
-            return RemixTokens(
-              data: isDarkTheme ? RemixTokens.dark : RemixTokens.light,
-              child: Container(
-                color: isDarkTheme ? Colors.black87 : Colors.white,
-                child: Center(child: child),
-              ),
+            return Container(
+              color: isDarkTheme ? Colors.black87 : Colors.white,
+              child: Center(child: child),
             );
           },
         ),
         InspectorAddon(),
       ],
-      appBuilder: (context, child) => MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: Scaffold(body: Center(child: child)),
-      ),
+      appBuilder: (context, child) => App(child: child),
       directories: directories,
+    );
+  }
+}
+
+class App extends StatelessWidget {
+  const App({
+    super.key,
+    required this.child,
+  });
+
+  final Widget child;
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+        body: Center(child: child),
+      ),
     );
   }
 }

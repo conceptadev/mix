@@ -30,7 +30,7 @@ final directories = <_i1.WidgetbookNode>[
         name: 'avatar',
         children: [
           _i1.WidgetbookLeafComponent(
-            name: 'RxAvatar',
+            name: 'XAvatar',
             useCase: _i1.WidgetbookUseCase(
               name: 'Avatar Component',
               builder: _i2.buildAvatarUseCase,
@@ -66,7 +66,7 @@ final directories = <_i1.WidgetbookNode>[
         name: 'callout',
         children: [
           _i1.WidgetbookLeafComponent(
-            name: 'RxCallout',
+            name: 'XCallout',
             useCase: _i1.WidgetbookUseCase(
               name: 'Callout Component',
               builder: _i5.buildCalloutUseCase,
@@ -84,10 +84,10 @@ final directories = <_i1.WidgetbookNode>[
                 name: 'Card Component',
                 builder: _i6.buildCard,
               ),
-              _i1.WidgetbookUseCase(
-                name: 'With button',
-                builder: _i6.buildRadioUseCase,
-              ),
+              // _i1.WidgetbookUseCase(
+              //   name: 'With button',
+              //   builder: _i6.buildRadioUseCase,
+              // ),
             ],
           )
         ],
