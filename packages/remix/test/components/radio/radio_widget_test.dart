@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
-import 'package:remix/components/radio/radio.dart';
+import 'package:remix/src/components/radio/radio.dart';
 
 import '../../utils/extensions/widget_tester.dart';
 

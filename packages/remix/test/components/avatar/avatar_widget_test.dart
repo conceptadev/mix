@@ -3,7 +3,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
-import 'package:remix/components/avatar/avatar.dart';
+import 'package:remix/src/components/avatar/avatar.dart';
 
 import '../../utils/extensions/widget_tester.dart';
 
@@ -13,7 +13,7 @@ void main() {
   group('RxAvatar', () {
     testWidgets('renders with custom image', (WidgetTester tester) async {
       final image = MemoryImage(Uint8List.fromList([1, 2, 3]));
-      await tester.pumpRxComponent(RxAvatar(image: image));
+      await tester.pumpRxComponent(XAvatar(image: image, fallbackBuilder: ( spec) =>  spec(),),);
 
       expect(find.byType(Image), findsOneWidget);
     });
@@ -21,7 +21,8 @@ void main() {
     testWidgets('renders fallback when image fails to load',
         (WidgetTester tester) async {
       const image = NetworkImage('https://example.com/invalid.jpg');
-      await tester.pumpRxComponent(const RxAvatar(image: image, fallback: 'AB'));
+      await tester
+          .pumpRxComponent(const RxAvatar(image: image, fallback: 'AB'));
 
       await tester.pumpAndSettle();
       expect(find.text('AB'), findsOneWidget);

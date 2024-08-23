@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:remix/components/switch/switch.dart';
+import 'package:remix/src/components/switch/switch.dart';
 
 import '../../utils/extensions/widget_tester.dart';
 
@@ -10,7 +10,7 @@ void main() {
         (WidgetTester tester) async {
       bool value = false;
       await tester.pumpRxComponent(
-        RxSwitch(
+        XSwitch(
           value: value,
           onChanged: (bool newValue) {
             value = newValue;
@@ -26,7 +26,7 @@ void main() {
       await tester.pumpRxComponent(
         StatefulBuilder(
           builder: (BuildContext context, StateSetter setState) {
-            return RxSwitch(
+            return XSwitch(
               value: value,
               onChanged: (bool newValue) {
                 setState(() {
@@ -47,7 +47,7 @@ void main() {
     testWidgets('applies correct style based on variant and size',
         (WidgetTester tester) async {
       await tester.pumpRxComponent(
-        RxSwitch(
+        XSwitch(
           value: true,
           onChanged: (_) {},
           variant: SwitchVariant.outline,
@@ -65,7 +65,7 @@ void main() {
       bool value = false;
 
       await tester.pumpRxComponent(
-        RxSwitch(
+        XSwitch(
           value: value,
           onChanged: (newValue) {
             value = newValue;
@@ -83,7 +83,7 @@ void main() {
     testWidgets('verifies the alignment of the switch when value is true',
         (WidgetTester tester) async {
       await tester.pumpRxComponent(
-        RxSwitch(
+        XSwitch(
           value: true,
           onChanged: (_) {},
         ),
@@ -97,7 +97,7 @@ void main() {
     testWidgets('verifies the alignment of the switch when value is false',
         (WidgetTester tester) async {
       await tester.pumpRxComponent(
-        RxSwitch(
+        XSwitch(
           value: false,
           onChanged: (_) {},
         ),

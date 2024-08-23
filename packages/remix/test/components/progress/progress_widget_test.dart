@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
-import 'package:remix/components/progress/progress.dart';
+import 'package:remix/src/components/progress/progress.dart';
 
 import '../../utils/extensions/widget_tester.dart';
 

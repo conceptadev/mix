@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:remix/components/button/button.dart';
-import 'package:remix/components/spinner/spinner.dart';
+import 'package:remix/src/components/button/button.dart';
+import 'package:remix/src/components/spinner/spinner.dart';
 
 import '../../utils/extensions/widget_tester.dart';
 
