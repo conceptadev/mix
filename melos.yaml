@@ -96,6 +96,10 @@ scripts:
   mix_exports:
     run: melos exec --scope="packages/mix" dart run ./scripts/exports.dart
     description: Generate exports for the mix package
+
+  remix_exports:
+    run: melos exec --scope="packages/remix" dart run ./scripts/exports.dart
+    description: Generate exports for the mix package
   
   verify_version_pubspec_changelog:
     run: ./scripts/verify_changelogs.sh packages
