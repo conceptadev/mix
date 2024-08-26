@@ -25,6 +25,7 @@ class XButton extends StatelessWidget {
     this.iconLeft,
     this.iconRight,
     this.spinnerBuilder,
+    this.variants = const [],
     required this.onPressed,
     this.style = const Style.empty(),
   }) : _blank = false;
@@ -35,6 +36,7 @@ class XButton extends StatelessWidget {
     this.disabled = false,
     this.loading = false,
     this.iconLeft,
+    this.variants = const [],
     this.iconRight,
     this.spinnerBuilder,
     required this.onPressed,
@@ -49,6 +51,8 @@ class XButton extends StatelessWidget {
   final VoidCallback? onPressed;
   final XButtonSpinnerBuilder? spinnerBuilder;
   final bool _blank;
+
+  final List<Variant> variants;
 
   /// Additional custom styling for the button.
   ///
@@ -91,8 +95,8 @@ class XButton extends StatelessWidget {
       onPress: disabled || loading ? null : onPressed,
       child: SpecBuilder(
         style: _blank
-            ? style
-            : XButtonStyle.base.animate(
+            ? XButtonStyle.blank(style, variants)
+            : XButtonStyle.light(style, variants).animate(
                 duration: const Duration(milliseconds: 100),
                 curve: Curves.easeOut,
               ),

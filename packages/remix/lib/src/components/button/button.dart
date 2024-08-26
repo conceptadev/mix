@@ -1,14 +1,17 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
-
 import 'package:mix/mix.dart';
 import 'package:mix_annotations/mix_annotations.dart';
-import '../spinner/spinner.dart';
+
 import '../../helpers/component_builder.dart';
+import '../../theme/remix_theme.dart';
+import '../spinner/spinner.dart';
 
 part 'button.g.dart';
 part 'button_style.dart';
+part 'button_theme.dart';
 part 'button_widget.dart';
 
 @MixableSpec()
