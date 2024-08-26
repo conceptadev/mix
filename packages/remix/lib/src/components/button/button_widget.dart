@@ -89,13 +89,14 @@ class XButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDisabled = disabled || loading;
-    final themeStyle = RemixThemeProvider.maybeOf(context)?.components.button;
+    final styleFromTheme = RemixThemeProvider.maybeOf(context)?.button;
 
     return Pressable(
       enabled: !isDisabled,
       onPress: disabled || loading ? null : onPressed,
       child: SpecBuilder(
-        style: themeStyle?.call(style) ?? XButtonStyle.blank(style, variants),
+        style:
+            styleFromTheme?.call(style) ?? XButtonStyle.blank(style, variants),
         builder: (context) {
           final spec = ButtonSpec.of(context);
 

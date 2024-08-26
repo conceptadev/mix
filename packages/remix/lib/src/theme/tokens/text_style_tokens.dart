@@ -1,6 +1,18 @@
-part of 'remix_theme.dart';
+// ignore_for_file: unnecessary-trailing-comma
+
+part of '../remix_theme.dart';
 
 class RemixTypography {
+  final text1 = const TextStyleToken('--text-1');
+  final text2 = const TextStyleToken('--text-2');
+  final text3 = const TextStyleToken('--text-3');
+  final text4 = const TextStyleToken('--text-4');
+  final text5 = const TextStyleToken('--text-5');
+  final text6 = const TextStyleToken('--text-6');
+  final text7 = const TextStyleToken('--text-7');
+  final text8 = const TextStyleToken('--text-8');
+  final text9 = const TextStyleToken('--text-9');
+
   RemixTypography();
 
   TextStyleToken call(int level) {
@@ -17,20 +29,10 @@ class RemixTypography {
       _ => throw ArgumentError('Invalid text level: $level'),
     };
   }
-
-  final text1 = const TextStyleToken('--text-1');
-  final text2 = const TextStyleToken('--text-2');
-  final text3 = const TextStyleToken('--text-3');
-  final text4 = const TextStyleToken('--text-4');
-  final text5 = const TextStyleToken('--text-5');
-  final text6 = const TextStyleToken('--text-6');
-  final text7 = const TextStyleToken('--text-7');
-  final text8 = const TextStyleToken('--text-8');
-  final text9 = const TextStyleToken('--text-9');
 }
 
 final _t = RemixTypography();
-final remixTextTokens = <TextStyleToken, TextStyle>{
+final remixTextTokens = {
   _t.text1: const TextStyle(
     fontSize: 12,
     letterSpacing: 0.0025,
