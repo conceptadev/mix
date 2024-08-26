@@ -12,7 +12,6 @@ part 'text_style_tokens.dart';
 final $rx = _RemixTokenRef();
 
 class _RemixTokenRef {
-  _RemixTokenRef();
   final color = RemixColors();
 
   final space = RemixSpace();
@@ -20,12 +19,14 @@ class _RemixTokenRef {
   final radii = RemixRadius();
 
   final text = RemixTypography();
+
+  _RemixTokenRef();
 }
 
 final _baseRemixTokens = MixThemeData(
   colors: remixColorTokens,
-  textStyles: remixTextTokens,
   spaces: remixSpaceTokens,
+  textStyles: remixTextTokens,
   radii: remixRadiusTokens,
 );
 
@@ -35,24 +36,22 @@ final _darkRemixTokens = _baseRemixTokens.copyWith(
 );
 
 class RemixTokens {
+  final Map<ColorToken, Color> colors;
+  final Map<TextStyleToken, TextStyle> textStyles;
+  final Map<SpaceToken, double> spaces;
+  final Map<RadiusToken, Radius> radii;
+
   const RemixTokens({
     required this.colors,
     required this.textStyles,
     required this.spaces,
     required this.radii,
   });
-
-  final Map<ColorToken, Color> colors;
-  final Map<TextStyleToken, TextStyle> textStyles;
-  final Map<SpaceToken, double> spaces;
-  final Map<RadiusToken, Radius> radii;
 }
 
 class RemixComponentTheme {
-  final XButtonStyle buttonStyle;
-  const RemixComponentTheme({
-    required this.buttonStyle,
-  });
+  final XButtonStyle button;
+  const RemixComponentTheme({required this.button});
 }
 
 class RemixTheme extends StatelessWidget {
@@ -76,8 +75,8 @@ class RemixTheme extends StatelessWidget {
     return MixTheme(
       data: MixThemeData(
         colors: tokens.colors,
-        textStyles: tokens.textStyles,
         spaces: tokens.spaces,
+        textStyles: tokens.textStyles,
         radii: tokens.radii,
       ),
       child: child,
@@ -92,13 +91,14 @@ class RemixThemeProvider extends InheritedWidget {
     required this.theme,
   });
 
-  final RemixTheme theme;
-
   static RemixTheme? maybeOf(BuildContext context) {
     final RemixThemeProvider? provider =
         context.dependOnInheritedWidgetOfExactType<RemixThemeProvider>();
-    return provider!.theme;
+
+    return provider?.theme;
   }
+
+  final RemixTheme theme;
 
   @override
   bool updateShouldNotify(RemixThemeProvider oldWidget) {

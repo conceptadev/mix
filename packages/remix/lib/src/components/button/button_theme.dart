@@ -1,13 +1,12 @@
 part of 'button.dart';
 
 class ButtonThemeVariant extends Variant {
-  const ButtonThemeVariant(super.value);
-
   static const solid = ButtonThemeVariant('solid');
   static const soft = ButtonThemeVariant('soft');
   static const outline = ButtonThemeVariant('outline');
   static const surface = ButtonThemeVariant('surface');
   static const ghost = ButtonThemeVariant('ghost');
+  const ButtonThemeVariant(super.value);
 }
 
 class XButtonThemeStyle extends XButtonStyle {
@@ -16,6 +15,7 @@ class XButtonThemeStyle extends XButtonStyle {
   @override
   Style call([Style? styleOverride, List<Variant>? variants]) {
     final baseStyle = XButtonStyle.light();
+
     return Style(
       baseStyle(),
       _tokenOverrides(),
@@ -58,12 +58,8 @@ Style get _solidVariant {
     _label.style.color.white(),
     _spinner.color.white(),
     _icon.color.white(),
-    $on.hover(
-      _container.color.$accent(10),
-    ),
-    $on.disabled(
-      _container.color.$neutralAlpha(3),
-    ),
+    $on.hover(_container.color.$accent(10)),
+    $on.disabled(_container.color.$neutralAlpha(3)),
   );
 }
 
@@ -73,12 +69,8 @@ Style get _softVariant {
     _label.style.color.$accentAlpha(11),
     _spinner.color.$accentAlpha(11),
     _icon.color.$accentAlpha(11),
-    $on.hover(
-      _container.color.$accentAlpha(4),
-    ),
-    $on.disabled(
-      _container.color.$neutralAlpha(3),
-    ),
+    $on.hover(_container.color.$accentAlpha(4)),
+    $on.disabled(_container.color.$neutralAlpha(3)),
   );
 }
 
@@ -91,9 +83,7 @@ Style get _outlineVariant {
     _spinner.color.$accentAlpha(11),
     _icon.color.$accentAlpha(11),
     _label.style.color.$accentAlpha(11),
-    $on.hover(
-      _container.color.$accentAlpha(2),
-    ),
+    $on.hover(_container.color.$accentAlpha(2)),
     $on.disabled(
       _container.border.color.$neutralAlpha(8),
       _container.color.transparent(),
@@ -109,9 +99,7 @@ Style get _surfaceVariant {
       _container.color.$accentAlpha(4),
       _container.border.color.$accentAlpha(8),
     ),
-    $on.disabled(
-      _container.color.$neutralAlpha(2),
-    ),
+    $on.disabled(_container.color.$neutralAlpha(2)),
   );
 }
 
@@ -122,8 +110,6 @@ Style get _ghostVariant {
     _spinner.color.$accentAlpha(11),
     _icon.color.$accentAlpha(11),
     _label.style.color.$accentAlpha(11),
-    $on.hover(
-      _container.color.$accentAlpha(3),
-    ),
+    $on.hover(_container.color.$accentAlpha(3)),
   );
 }
