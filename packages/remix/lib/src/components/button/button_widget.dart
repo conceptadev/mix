@@ -28,20 +28,7 @@ class XButton extends StatelessWidget {
     this.variants = const [],
     required this.onPressed,
     this.style = const Style.empty(),
-  }) : _blank = false;
-
-  const XButton.blank({
-    super.key,
-    required this.label,
-    this.disabled = false,
-    this.loading = false,
-    this.iconLeft,
-    this.variants = const [],
-    this.iconRight,
-    this.spinnerBuilder,
-    required this.onPressed,
-    required this.style,
-  }) : _blank = true;
+  });
 
   final String label;
   final bool disabled;
@@ -50,7 +37,6 @@ class XButton extends StatelessWidget {
   final IconData? iconRight;
   final VoidCallback? onPressed;
   final XButtonSpinnerBuilder? spinnerBuilder;
-  final bool _blank;
 
   final List<Variant> variants;
 
@@ -95,8 +81,9 @@ class XButton extends StatelessWidget {
       enabled: !isDisabled,
       onPress: disabled || loading ? null : onPressed,
       child: SpecBuilder(
-        style:
-            styleFromTheme?.call(style) ?? XButtonStyle.blank(style, variants),
+        style: (styleFromTheme ?? XButtonStyle.base)
+            .merge(style)
+            .applyVariants(variants),
         builder: (context) {
           final spec = ButtonSpec.of(context);
 

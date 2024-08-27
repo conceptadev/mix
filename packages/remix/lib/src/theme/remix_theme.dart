@@ -1,17 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:mix/mix.dart';
 
-import '../components/button/button.dart';
-import '../helpers/color_palette.dart';
 import 'remix_tokens.dart';
 
-part 'tokens/color_tokens.dart';
-part 'tokens/radius_tokens.dart';
-part 'tokens/space_tokens.dart';
-part 'tokens/text_style_tokens.dart';
-
 class RemixComponentTheme {
-  final XButtonStyle button;
+  final Style button;
 
   const RemixComponentTheme({required this.button});
 }

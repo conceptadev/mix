@@ -1,7 +1,12 @@
 import 'package:flutter/widgets.dart';
 import 'package:mix/mix.dart';
 
-import 'remix_theme.dart';
+import '../helpers/color_palette.dart';
+
+part 'tokens/color_tokens.dart';
+part 'tokens/radius_tokens.dart';
+part 'tokens/space_tokens.dart';
+part 'tokens/text_style_tokens.dart';
 
 final $rx = _RemixTokenRef();
 
@@ -14,12 +19,12 @@ class _RemixTokenRef {
   _RemixTokenRef();
 }
 
-// final _baseRemixTokens = MixThemeData(
-//   colors: remixColorTokens,
-//   spaces: remixSpaceTokens,
-//   textStyles: remixTextTokens,
-//   radii: remixRadiusTokens,
-// );
+final light = RemixTokens(
+  colors: remixColorTokens,
+  textStyles: remixTextTokens,
+  spaces: remixSpaceTokens,
+  radii: remixRadiusTokens,
+);
 
 // final _lightRemixTokens = _baseRemixTokens;
 // final _darkRemixTokens = _baseRemixTokens.copyWith(
@@ -47,25 +52,4 @@ class RemixTokens {
       radii: radii,
     );
   }
-}
-
-extension ColorUtilityX<T extends Attribute> on ColorUtility<T> {
-  T $black() => ref($rx.color.black());
-  T $white() => ref($rx.color.white());
-  T $neutral([int? step]) => ref($rx.color.neutral(step));
-  T $neutralAlpha([int? step]) => ref($rx.color.neutralAlpha(step));
-  T $accent([int? step]) => ref($rx.color.accent(step));
-  T $accentAlpha([int? step]) => ref($rx.color.accentAlpha(step));
-}
-
-extension SpacingSideUtilityX<T extends Attribute> on SpacingSideUtility<T> {
-  T $space(int step) => ref($rx.space(step));
-}
-
-extension GapUtilityX<T extends Attribute> on GapUtility<T> {
-  T $space(int step) => ref($rx.space(step));
-}
-
-extension TextStyleUtilityX<T extends Attribute> on TextStyleUtility<T> {
-  T $text(int level) => ref($rx.text(level));
 }

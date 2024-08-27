@@ -8,26 +8,20 @@ final _flex = _util.flex;
 final _icon = _util.icon;
 
 class XButtonStyle {
-  final Style _style;
-
-  const XButtonStyle._(
-    Style style,
-  ) : _style = style;
-  static const blank = XButtonStyle._(Style.empty());
-
-  static final light = XButtonStyle._(Style(
+  static final base = Style(
     _flexStyle(),
     _iconStyle(),
     _labelStyle(),
     _containerStyle(),
     _spinnerStyle(),
-  ));
+  );
 
-  static final dark = XButtonStyle._(light._style.merge(_darkStyle));
+  // const XButtonStyle();
+  // static final dark = XButtonStyle._(light._style.merge(_darkStyle));
 
-  Style call([Style? styleOverride, List<Variant>? variants]) {
-    return _style.merge(styleOverride).applyVariants(variants ?? []);
-  }
+  // Style call([Style? styleOverride, List<Variant>? variants]) {
+  //   return _style.merge(styleOverride).applyVariants(variants ?? []);
+  // }
 }
 
 final _flexStyle = Style(
@@ -37,10 +31,7 @@ final _flexStyle = Style(
   _flex.gap(8),
 );
 
-final _iconStyle = Style(
-  _icon.size(24),
-  _icon.color.white(),
-);
+final _iconStyle = Style(_icon.size(24), _icon.color.white());
 
 final _labelStyle = Style(
   _label.textHeightBehavior(
@@ -77,7 +68,5 @@ final _darkStyle = Style(
   _container.color.white(),
   $on.hover(_container.color.darken(10)),
   $on.press(_container.color.darken(10)),
-  $on.disabled(
-    _container.color.grey.shade600(),
-  ),
+  $on.disabled(_container.color.grey.shade600()),
 );

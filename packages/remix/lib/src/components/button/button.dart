@@ -7,6 +7,7 @@ import 'package:mix_annotations/mix_annotations.dart';
 
 import '../../helpers/component_builder.dart';
 import '../../theme/remix_theme.dart';
+import '../../theme/remix_tokens.dart';
 import '../spinner/spinner.dart';
 
 part 'button.g.dart';

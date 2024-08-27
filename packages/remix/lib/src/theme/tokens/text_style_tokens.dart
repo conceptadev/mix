@@ -1,6 +1,6 @@
 // ignore_for_file: unnecessary-trailing-comma
 
-part of '../remix_theme.dart';
+part of '../remix_tokens.dart';
 
 class RemixTypography {
   final text1 = const TextStyleToken('--text-1');
@@ -79,3 +79,7 @@ final remixTextTokens = {
     height: 1.00,
   ),
 };
+
+extension TextStyleUtilityX<T extends Attribute> on TextStyleUtility<T> {
+  T $text(int level) => ref($rx.text(level));
+}

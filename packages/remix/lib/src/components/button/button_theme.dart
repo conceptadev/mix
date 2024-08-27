@@ -6,29 +6,25 @@ class ButtonThemeVariant extends Variant {
   static const outline = ButtonThemeVariant('outline');
   static const surface = ButtonThemeVariant('surface');
   static const ghost = ButtonThemeVariant('ghost');
-  const ButtonThemeVariant(super.value);
+
+  static const values = [solid, soft, outline, surface, ghost];
+
+  const ButtonThemeVariant(String value) : super('button.$value');
 }
 
 class XButtonThemeStyle extends XButtonStyle {
-  const XButtonThemeStyle(super.style) : super._();
+  static Style get light => Style(
+        XButtonStyle.base(),
+        _tokenOverrides(),
+        _onDisabledForeground(),
 
-  @override
-  Style call([Style? styleOverride, List<Variant>? variants]) {
-    final baseStyle = XButtonStyle.light();
-
-    return Style(
-      baseStyle(),
-      _tokenOverrides(),
-      _onDisabledForeground(),
-
-      // Type variants
-      ButtonThemeVariant.solid(_solidVariant()),
-      ButtonThemeVariant.surface(_surfaceVariant()),
-      ButtonThemeVariant.soft(_softVariant()),
-      ButtonThemeVariant.outline(_outlineVariant()),
-      ButtonThemeVariant.ghost(_ghostVariant()),
-    ).merge(styleOverride).applyVariants(variants ?? []);
-  }
+        // Type variants
+        ButtonThemeVariant.solid(_solidVariant()),
+        ButtonThemeVariant.surface(_surfaceVariant()),
+        ButtonThemeVariant.soft(_softVariant()),
+        ButtonThemeVariant.outline(_outlineVariant()),
+        ButtonThemeVariant.ghost(_ghostVariant()),
+      );
 }
 
 Style get _onDisabledForeground {

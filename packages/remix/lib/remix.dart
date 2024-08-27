@@ -39,3 +39,7 @@ export 'src/helpers/component_builder.dart';
 export 'src/helpers/context_ext.dart';
 export 'src/helpers/spec/composited_transform_follower_spec.dart';
 export 'src/helpers/utility_extension.dart';
+
+/// THEME
+export 'src/theme/remix_theme.dart';
+export 'src/theme/remix_tokens.dart';

@@ -1,4 +1,4 @@
-part of 'remix_theme.dart';
+part of '../remix_tokens.dart';
 
 class RemixRadius {
   final radius1 = const RadiusToken('--radius-1');

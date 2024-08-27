@@ -1,4 +1,4 @@
-part of '../remix_theme.dart';
+part of '../remix_tokens.dart';
 
 class RemixColors {
   final _blackColor = const ColorToken('--black');
@@ -47,7 +47,7 @@ Map<ColorToken, Color> _mapColorRadixTokens({
   };
 }
 
-final _remixColorTokens = _mapColorRadixTokens(
+final remixColorTokens = _mapColorRadixTokens(
   accent: RadixColors.indigo,
   neutral: RadixColors.slate,
 );
@@ -55,3 +55,12 @@ final remixDarkColorTokens = _mapColorRadixTokens(
   accent: RadixColors.indigoDark,
   neutral: RadixColors.slateDark,
 );
+
+extension ColorUtilityX<T extends Attribute> on ColorUtility<T> {
+  T $black() => ref($rx.color.black());
+  T $white() => ref($rx.color.white());
+  T $neutral([int? step]) => ref($rx.color.neutral(step));
+  T $neutralAlpha([int? step]) => ref($rx.color.neutralAlpha(step));
+  T $accent([int? step]) => ref($rx.color.accent(step));
+  T $accentAlpha([int? step]) => ref($rx.color.accentAlpha(step));
+}

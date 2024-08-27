@@ -1,4 +1,4 @@
-part of '../remix_theme.dart';
+part of '../remix_tokens.dart';
 
 class RemixSpace {
   final space1 = const SpaceToken('--space-1');
@@ -45,3 +45,11 @@ final remixSpaceTokens = {
   _s.space8: 48.0,
   _s.space9: 64.0,
 };
+
+extension SpacingSideUtilityX<T extends Attribute> on SpacingSideUtility<T> {
+  T $space(int step) => ref($rx.space(step));
+}
+
+extension GapUtilityX<T extends Attribute> on GapUtility<T> {
+  T $space(int step) => ref($rx.space(step));
+}
