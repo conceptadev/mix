@@ -10,6 +10,7 @@ class RemixComponentTheme {
   final Style? callout;
   final Style? checkbox;
   final Style? progress;
+  final Style? radio;
 
   const RemixComponentTheme({
     this.button,
@@ -18,6 +19,7 @@ class RemixComponentTheme {
     this.callout,
     this.checkbox,
     this.progress,
+    this.radio,
   });
 }
 

@@ -68,6 +68,7 @@ class App extends StatelessWidget {
         callout: XCalloutThemeStyle.value,
         checkbox: XCheckboxThemeStyle.value,
         progress: XProgressThemeStyle.value,
+        radio: XRadioThemeStyle.value,
       ),
       tokens: light,
       child: MaterialApp(

@@ -1,3 +1,4 @@
+import 'package:demo/helpers/knob_builder.dart';
 import 'package:demo/helpers/string.dart';
 import 'package:flutter/material.dart';
 import 'package:remix/remix.dart';
@@ -42,6 +43,7 @@ class _RadioExampleState extends State<RadioExample> {
             Row(
               children: [
                 XRadio<Theme>(
+                  variants: [context.knobs.variant(XRadioThemeVariant.values)],
                   value: theme,
                   groupValue: _theme,
                   onChanged: (Theme? value) {
@@ -54,6 +56,28 @@ class _RadioExampleState extends State<RadioExample> {
                     initialValue: false,
                   ),
                   text: theme.name.capitalize(),
+                ),
+                const SizedBox(width: 12),
+                RemixTheme(
+                  tokens: light,
+                  components: const RemixComponentTheme(),
+                  child: XRadio<Theme>(
+                    variants: [
+                      context.knobs.variant(XRadioThemeVariant.values)
+                    ],
+                    value: theme,
+                    groupValue: _theme,
+                    onChanged: (Theme? value) {
+                      setState(() {
+                        _theme = value!;
+                      });
+                    },
+                    disabled: context.knobs.boolean(
+                      label: 'Disabled',
+                      initialValue: false,
+                    ),
+                    text: theme.name.capitalize(),
+                  ),
                 ),
               ],
             ),
