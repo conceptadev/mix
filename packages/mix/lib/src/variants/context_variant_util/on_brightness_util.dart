@@ -21,7 +21,7 @@ class OnBrightnessVariant extends MediaQueryContextVariant {
   /// [brightness] associated with this variant, and `false` otherwise.
   @override
   bool when(BuildContext context) {
-    return Theme.of(context).brightness == brightness;
+    return MediaQuery.of(context).platformBrightness == brightness;
   }
 
   /// The properties used for equality comparison.
