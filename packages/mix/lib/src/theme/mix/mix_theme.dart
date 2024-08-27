@@ -132,6 +132,13 @@ class MixThemeData {
     );
   }
 
+  /// Combine all [themes] into a single [MixThemeData] root.
+  static MixThemeData combine(Iterable<MixThemeData> themes) {
+    if (themes.isEmpty) return const MixThemeData.empty();
+    return themes.fold(
+        const MixThemeData.empty(), (previous, theme) => previous.merge(theme));
+  }
+
   @override
   operator ==(Object other) {
     if (identical(this, other)) return true;
