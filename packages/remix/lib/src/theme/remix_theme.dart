@@ -8,12 +8,14 @@ class RemixComponentTheme {
   final Style? avatar;
   final Style? badge;
   final Style? callout;
+  final Style? checkbox;
 
   const RemixComponentTheme({
     this.button,
     this.avatar,
     this.badge,
     this.callout,
+    this.checkbox,
   });
 }
 

@@ -6,17 +6,21 @@ final _track = _progress.track;
 final _fill = _progress.fill;
 
 class XProgressStyle {
-  static Style get container => Style(
-        _container.height(6),
-        _container.clipBehavior.antiAlias(),
-        _container.borderRadius(99),
+  static Style get base => Style(
+        _containerStyle(),
+        _trackStyle(),
+        _fillStyle(),
       );
-  static Style get track => Style(
-        _track.color.black(),
-        _track.color.black.brighten(90),
-      );
-
-  static Style get fill => Style(_fill.color.black());
-
-  static Style get base => Style(container(), track(), fill());
 }
+
+Style get _containerStyle => Style(
+      _container.height(6),
+      _container.clipBehavior.antiAlias(),
+      _container.borderRadius(99),
+    );
+Style get _trackStyle => Style(
+      _track.color.black(),
+      _track.color.black.brighten(90),
+    );
+
+Style get _fillStyle => Style(_fill.color.black());

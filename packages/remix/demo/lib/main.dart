@@ -66,6 +66,7 @@ class App extends StatelessWidget {
         avatar: XAvatarThemeStyle.value,
         badge: XBadgeThemeStyle.value,
         callout: XCalloutThemeStyle.value,
+        checkbox: XCheckboxThemeStyle.value,
       ),
       tokens: light,
       child: MaterialApp(
