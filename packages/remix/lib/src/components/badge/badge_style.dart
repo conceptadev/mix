@@ -2,24 +2,23 @@
 
 part of 'badge.dart';
 
-final _badge = BadgeSpecUtility.self;
-final _container = _badge.container;
-final _label = _badge.label;
+final _container = $badge.container;
+final _label = $badge.label;
 
 class XBadgeStyle {
-  static Style get container => Style(
-        _container.color.black(),
-        _container.borderRadius.all(10),
-        _container.padding.horizontal(10),
-        _container.padding.vertical(2),
-      );
-
-  static Style get label => Style(
-        _label.textAlign.center(),
-        _label.style.fontWeight.w500(),
-        _label.style.fontSize(12),
-        _label.style.color.white(),
-      );
-
-  static Style get base => Style(container(), label());
+  static final Style base = Style(_containerStyle(), _labelStyle());
 }
+
+Style get _containerStyle => Style(
+      _container.color.black(),
+      _container.borderRadius.all(10),
+      _container.padding.horizontal(10),
+      _container.padding.vertical(2),
+    );
+
+Style get _labelStyle => Style(
+      _label.textAlign.center(),
+      _label.style.fontWeight.w400(),
+      _label.style.fontSize(12),
+      _label.style.color.white(),
+    );

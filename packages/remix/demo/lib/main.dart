@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:remix/remix.dart';
 import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
@@ -60,10 +60,18 @@ class App extends StatelessWidget {
   final Widget child;
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        body: Center(child: child),
+    return RemixTheme(
+      components: RemixComponentTheme(
+        button: XButtonThemeStyle.value,
+        avatar: XAvatarThemeStyle.value,
+        badge: XBadgeThemeStyle.value,
+      ),
+      tokens: light,
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: Scaffold(
+          body: Center(child: child),
+        ),
       ),
     );
   }

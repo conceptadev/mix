@@ -6,8 +6,9 @@ import 'remix_tokens.dart';
 class RemixComponentTheme {
   final Style? button;
   final Style? avatar;
+  final Style? badge;
 
-  const RemixComponentTheme({this.button, this.avatar});
+  const RemixComponentTheme({this.button, this.avatar, this.badge});
 }
 
 class RemixTheme extends StatelessWidget {

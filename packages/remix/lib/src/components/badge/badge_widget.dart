@@ -5,19 +5,21 @@ class XBadge extends StatelessWidget {
     super.key,
     required this.label,
     this.style = const Style.empty(),
-  }) : _blank = false;
-
-  const XBadge.blank({super.key, required this.label, required this.style})
-      : _blank = true;
+    this.variants = const [],
+  });
 
   final String label;
   final Style style;
-  final bool _blank;
+  final List<Variant> variants;
 
   @override
   Widget build(BuildContext context) {
+    final styleFromTheme = RemixThemeProvider.maybeOf(context)?.badge;
+
     return SpecBuilder(
-      style: _blank ? style : XBadgeStyle.base.merge(style),
+      style: (styleFromTheme ?? XBadgeStyle.base)
+          .merge(style)
+          .applyVariants(variants),
       builder: (context) {
         final spec = BadgeSpec.of(context);
 
