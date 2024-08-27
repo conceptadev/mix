@@ -1,9 +1,9 @@
 part of 'progress.dart';
 
-final _progress = ProgressSpecUtility.self;
-final _container = _progress.container;
-final _track = _progress.track;
-final _fill = _progress.fill;
+final _container = $progress.container;
+final _track = $progress.track;
+final _fill = $progress.fill;
+final _outerContainer = $progress.outerContainer;
 
 class XProgressStyle {
   static Style get base => Style(
@@ -18,9 +18,6 @@ Style get _containerStyle => Style(
       _container.clipBehavior.antiAlias(),
       _container.borderRadius(99),
     );
-Style get _trackStyle => Style(
-      _track.color.black(),
-      _track.color.black.brighten(90),
-    );
+Style get _trackStyle => Style(_track.color.black12());
 
 Style get _fillStyle => Style(_fill.color.black());

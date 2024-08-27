@@ -9,6 +9,7 @@ class RemixComponentTheme {
   final Style? badge;
   final Style? callout;
   final Style? checkbox;
+  final Style? progress;
 
   const RemixComponentTheme({
     this.button,
@@ -16,6 +17,7 @@ class RemixComponentTheme {
     this.badge,
     this.callout,
     this.checkbox,
+    this.progress,
   });
 }
 
