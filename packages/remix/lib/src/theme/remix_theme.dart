@@ -7,8 +7,14 @@ class RemixComponentTheme {
   final Style? button;
   final Style? avatar;
   final Style? badge;
+  final Style? callout;
 
-  const RemixComponentTheme({this.button, this.avatar, this.badge});
+  const RemixComponentTheme({
+    this.button,
+    this.avatar,
+    this.badge,
+    this.callout,
+  });
 }
 
 class RemixTheme extends StatelessWidget {

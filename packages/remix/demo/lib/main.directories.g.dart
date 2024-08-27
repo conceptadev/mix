@@ -42,7 +42,7 @@ final directories = <_i1.WidgetbookNode>[
         name: 'badge',
         children: [
           _i1.WidgetbookLeafComponent(
-            name: 'RxBadge',
+            name: 'XBadge',
             useCase: _i1.WidgetbookUseCase(
               name: 'Badge Component',
               builder: _i3.buildAvatarUseCase,

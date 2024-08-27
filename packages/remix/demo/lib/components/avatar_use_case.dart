@@ -19,23 +19,17 @@ Widget buildAvatarUseCase(BuildContext context) {
   return KeyedSubtree(
     key: _key,
     child: Center(
-      child: RemixTheme(
-        tokens: light,
-        components: RemixComponentTheme(
-          avatar: XAvatarThemeStyle.value,
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            XAvatar(
-              variants: [
-                context.knobs.variant(AvatarThemeVariant.values),
-              ],
-              image: imageUrl.isNotEmpty ? NetworkImage(imageUrl) : null,
-              fallbackBuilder: (spec) => spec('CA'),
-            ),
-          ],
-        ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          XAvatar(
+            variants: [
+              context.knobs.variant(AvatarThemeVariant.values),
+            ],
+            image: imageUrl.isNotEmpty ? NetworkImage(imageUrl) : null,
+            fallbackBuilder: (spec) => spec('CA'),
+          ),
+        ],
       ),
     ),
   );

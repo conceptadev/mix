@@ -5,30 +5,27 @@ class XCallout extends StatelessWidget {
     super.key,
     this.icon,
     required this.text,
+    this.variants = const [],
     this.style = const Style.empty(),
-  }) : _blank = false;
-
-  const XCallout.blank({
-    super.key,
-    this.icon,
-    required this.text,
-    required this.style,
-  }) : _blank = true;
+  });
 
   final String text;
   final IconData? icon;
+  final List<Variant> variants;
 
   /// Additional custom styling for the callout.
   ///
   /// This allows you to override or extend the default callout styling.
   final Style style;
 
-  final bool _blank;
-
   @override
   Widget build(BuildContext context) {
+    final styleFromTheme = RemixThemeProvider.maybeOf(context)?.callout;
+
     return SpecBuilder(
-      style: _blank ? style : XCalloutStyle.base.merge(style),
+      style: (styleFromTheme ?? XCalloutStyle.base)
+          .merge(style)
+          .applyVariants(variants),
       builder: (context) {
         final spec = CalloutSpec.of(context);
 

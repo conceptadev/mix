@@ -11,7 +11,7 @@ class XBadgeThemeVariant extends Variant {
   const XBadgeThemeVariant(String value) : super('badge.$value');
 }
 
-class XBadgeThemeStyle extends XBadgeStyle {
+class XBadgeThemeStyle {
   static Style get value => Style(
         XBadgeStyle.base(),
         XBadgeThemeVariant.solid(_solidVariant()),

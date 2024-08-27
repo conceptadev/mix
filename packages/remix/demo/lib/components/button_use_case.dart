@@ -14,42 +14,36 @@ final _key = GlobalKey();
 Widget buildButtonUseCase(BuildContext context) {
   return KeyedSubtree(
     key: _key,
-    child: RemixTheme(
-      tokens: light,
-      components: RemixComponentTheme(
-        button: XButtonThemeStyle.value,
-      ),
-      child: Wrap(
-        spacing: 12,
-        children: [
-          XButton(
-            variants: [
-              context.knobs.variant(ButtonThemeVariant.values),
-            ],
-            label: context.knobs.string(
-              label: 'Title',
-              initialValue: 'Button',
-            ),
-            onPressed: () {},
-            disabled: context.knobs.boolean(
-              label: 'Disabled',
-              initialValue: false,
-            ),
-            loading: context.knobs.boolean(
-              label: 'loading',
-              initialValue: false,
-            ),
-            iconLeft: context.knobs.iconData(
-              label: 'Icon left',
-              initialValue: null,
-            ),
-            iconRight: context.knobs.iconData(
-              label: 'Icon right',
-              initialValue: null,
-            ),
-          )
-        ],
-      ),
+    child: Wrap(
+      spacing: 12,
+      children: [
+        XButton(
+          variants: [
+            context.knobs.variant(ButtonThemeVariant.values),
+          ],
+          label: context.knobs.string(
+            label: 'Title',
+            initialValue: 'Button',
+          ),
+          onPressed: () {},
+          disabled: context.knobs.boolean(
+            label: 'Disabled',
+            initialValue: false,
+          ),
+          loading: context.knobs.boolean(
+            label: 'loading',
+            initialValue: false,
+          ),
+          iconLeft: context.knobs.iconData(
+            label: 'Icon left',
+            initialValue: null,
+          ),
+          iconRight: context.knobs.iconData(
+            label: 'Icon right',
+            initialValue: null,
+          ),
+        )
+      ],
     ),
   );
 }
