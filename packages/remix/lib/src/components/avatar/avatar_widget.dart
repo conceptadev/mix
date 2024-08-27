@@ -7,25 +7,23 @@ class XAvatar extends StatelessWidget {
     super.key,
     this.image,
     required this.fallbackBuilder,
+    this.variants = const [],
     this.style = const Style.empty(),
-  }) : _blank = false;
-
-  const XAvatar.blank({
-    super.key,
-    this.image,
-    required this.fallbackBuilder,
-    required this.style,
-  }) : _blank = true;
+  });
 
   final XAvatarFallbackBuilder fallbackBuilder;
   final ImageProvider<Object>? image;
+  final List<Variant> variants;
   final Style style;
-  final bool _blank;
 
   @override
   Widget build(BuildContext context) {
+    final styleFromTheme = RemixThemeProvider.maybeOf(context)?.avatar;
+
     return SpecBuilder(
-      style: _blank ? style : XAvatarStyle.base.merge(style),
+      style: (styleFromTheme ?? XAvatarStyle.base)
+          .merge(style)
+          .applyVariants(variants),
       builder: (context) {
         final spec = AvatarSpec.of(context);
 
@@ -40,7 +38,8 @@ class XAvatar extends StatelessWidget {
               if (image != null)
                 ImageWidget(
                   image: image!,
-                  errorBuilder: (context, error, stackTrace) => SizedBox(),
+                  errorBuilder: (context, error, stackTrace) =>
+                      const SizedBox(),
                 ),
             ],
           ),

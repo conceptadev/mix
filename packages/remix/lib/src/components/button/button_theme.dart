@@ -13,7 +13,7 @@ class ButtonThemeVariant extends Variant {
 }
 
 class XButtonThemeStyle extends XButtonStyle {
-  static Style get light => Style(
+  static Style get value => Style(
         XButtonStyle.base(),
         _tokenOverrides(),
         _onDisabledForeground(),

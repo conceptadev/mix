@@ -1,11 +1,10 @@
 part of 'button.dart';
 
-final _util = ButtonSpecUtility.self;
-final _label = _util.label;
-final _spinner = _util.spinner;
-final _container = _util.container;
-final _flex = _util.flex;
-final _icon = _util.icon;
+final _label = $button.label;
+final _spinner = $button.spinner;
+final _container = $button.container;
+final _flex = $button.flex;
+final _icon = $button.icon;
 
 class XButtonStyle {
   static final base = Style(

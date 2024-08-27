@@ -4,9 +4,10 @@ import 'package:mix/mix.dart';
 import 'remix_tokens.dart';
 
 class RemixComponentTheme {
-  final Style button;
+  final Style? button;
+  final Style? avatar;
 
-  const RemixComponentTheme({required this.button});
+  const RemixComponentTheme({this.button, this.avatar});
 }
 
 class RemixTheme extends StatelessWidget {

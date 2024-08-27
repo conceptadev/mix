@@ -1,11 +1,12 @@
 import 'package:demo/addons/icon_data_knob.dart';
+import 'package:demo/helpers/knob_builder.dart';
 import 'package:flutter/material.dart';
-import 'package:mix/mix.dart';
 import 'package:remix/remix.dart';
 import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
 final _key = GlobalKey();
+
 @widgetbook.UseCase(
   name: 'Button Component',
   type: XButton,
@@ -16,18 +17,14 @@ Widget buildButtonUseCase(BuildContext context) {
     child: RemixTheme(
       tokens: light,
       components: RemixComponentTheme(
-        button: XButtonThemeStyle.light,
+        button: XButtonThemeStyle.value,
       ),
       child: Wrap(
         spacing: 12,
         children: [
           XButton(
             variants: [
-              context.knobs.list<Variant>(
-                label: 'Variants',
-                options: ButtonThemeVariant.values,
-                labelBuilder: (value) => value.name.split('.').last,
-              )
+              context.knobs.variant(ButtonThemeVariant.values),
             ],
             label: context.knobs.string(
               label: 'Title',
