@@ -24,6 +24,7 @@ Widget buildCard(BuildContext context) {
       children: [
         XAvatar(
           fallbackBuilder: (spec) => spec('LF'),
+          variants: const [AvatarThemeVariant.soft],
         ),
         Column(
           mainAxisSize: MainAxisSize.min,

@@ -33,6 +33,6 @@ Style get _iconStyle => Style(_icon.color.black(), _icon.size(16));
 
 Style get _textStyle => Style(
       _text.style.color.black(),
-      _text.style.fontSize(16),
+      _text.style.fontSize(14),
       _text.style.fontWeight.w500(),
     );

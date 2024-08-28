@@ -34,9 +34,17 @@ Style get _surfaceVariant {
     _fill.color.$accent(9),
     _outerContainer.border.width(1),
     _outerContainer.border.color.$neutralAlpha(6),
+    $on.dark(
+      $progress.track.color.$neutral(12),
+      _outerContainer.border.color.$white(),
+      _outerContainer.border.color.withOpacity(0.1),
+    ),
   );
 }
 
 Style get _softVariant {
-  return Style($progress.track.color.$neutral(4));
+  return Style(
+    $progress.track.color.$neutral(4),
+    $on.dark($progress.track.color.$neutral(12)),
+  );
 }

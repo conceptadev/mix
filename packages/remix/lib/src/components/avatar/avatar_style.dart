@@ -18,7 +18,7 @@ class XAvatarStyle {
 Style get _fallbackStyle => Style(
       _fallback.textAlign.center(),
       _fallback.style.fontWeight.w400(),
-      _fallback.style.fontSize(20),
+      _fallback.style.fontSize(16),
       _fallback.style.color.black(),
     );
 

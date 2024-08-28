@@ -32,13 +32,21 @@ Style get _baseThemeStyle => Style(
     );
 
 Style get _ghost => Style(
-      XSelectThemeVariant.ghost(
+      _button.container.color.transparent(),
+      _button.container.border.none(),
+      $on.hover(
+        _button.container.color.$accent(4),
+        _item.container.color.$accent(4),
+      ),
+      $on.dark(
         _button.container.color.transparent(),
-        _button.container.border.none(),
+        _button.icon.color.$accent(5),
+        _button.label.style.color.$accent(5),
         $on.hover(
-          _button.container.color.$accent(4),
-          _item.container.color.$accent(4),
+          _button.container.color.$accent(12),
+          _item.container.color.$accent(11),
         ),
+        _menuOnDark(),
       ),
     );
 
@@ -51,6 +59,20 @@ Style get _soft => Style(
         _button.container.color.$accent(4),
         _item.container.color.$accent(4),
       ),
+      $on.dark(_softOnDark()),
+    );
+
+Style get _softOnDark => Style(
+      $on.dark(
+        _button.container.color.$accent(12),
+        _button.label.style.color.$accent(6),
+        _button.icon.color.$accent(6),
+        _menuOnDark(),
+        $on.hover(
+          _button.container.color.$accent(11),
+          _item.container.color.$accent(11),
+        ),
+      ),
     );
 
 Style get _surface => Style(
@@ -59,4 +81,17 @@ Style get _surface => Style(
         _item.container.color.$accent(9),
         _item.text.style.color.$white(),
       ),
+      $on.dark(
+        _button.container.color.black(),
+        _button.container.border.color.$neutral(11),
+        _button.label.style.color.$neutral(4),
+        _button.icon.color.$neutral(4),
+        _menuOnDark(),
+        $on.hover(_button.container.border.color.$neutral(10)),
+      ),
+    );
+
+Style get _menuOnDark => Style(
+      _menu.container.color.$neutral(12),
+      _item.text.style.color.$neutral(7),
     );

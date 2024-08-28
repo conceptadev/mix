@@ -16,11 +16,7 @@ Style get _containerStyle => Style(
       $on.selected(_container.color.black()),
       $on.disabled(
         _container.border.all.color.black(),
-        _container.border.all.color.brighten(50),
-        $on.selected(
-          _container.color.black(),
-          _container.color.brighten(50),
-        ),
+        $on.selected(_container.color.black()),
       ),
     );
 

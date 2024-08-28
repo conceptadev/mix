@@ -17,8 +17,15 @@ Style get _containerStyle => Style(
     );
 
 Style get _labelStyle => Style(
+      _label.textHeightBehavior(
+        const TextHeightBehavior(
+          applyHeightToFirstAscent: false,
+          applyHeightToLastDescent: true,
+        ),
+      ),
       _label.textAlign.center(),
-      _label.style.fontWeight.w400(),
+      _label.style.height(1.5),
+      _label.style.fontWeight.w500(),
       _label.style.fontSize(12),
       _label.style.color.white(),
     );

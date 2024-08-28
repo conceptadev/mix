@@ -30,6 +30,17 @@ Style get _softVariant {
       _container.border.color.black26(),
       _indicator.color.$neutral(8),
     ),
+    $on.dark(_softOnDark()),
+  );
+}
+
+Style get _softOnDark {
+  return Style(
+    _container.color.$neutral(3),
+    _container.color.$accent(11),
+    _indicator.color.$accent(4),
+    $on.hover(_container.color.$accent(10)),
+    $on.disabled(_container.color.$neutral(12)),
   );
 }
 
@@ -48,6 +59,24 @@ Style get _surfaceVariant {
     ($on.disabled & $on.selected)(
       _container.color.$neutral(3),
       _container.border.style.solid(),
+    ),
+    $on.dark(_surfaceOnDark()),
+  );
+}
+
+Style get _surfaceOnDark {
+  return Style(
+    _container.color.transparent(),
+    _container.border.color.$neutral(11),
+    $on.hover(
+      _container.color.transparent(),
+      _container.border.color.$accent(11),
+      $on.selected(_container.color.$accent(11)),
+    ),
+    $on.disabled(
+      _container.color.$neutral(12),
+      _indicator.color.$neutral(11),
+      _container.border.color.$neutral(11),
     ),
   );
 }

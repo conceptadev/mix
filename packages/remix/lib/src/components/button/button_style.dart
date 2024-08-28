@@ -35,7 +35,7 @@ final _labelStyle = Style(
   _label.style.fontSize(14),
   _label.style.height(1.5),
   _label.style.color.white(),
-  _label.style.fontWeight.w400(),
+  _label.style.fontWeight.w500(),
 );
 
 final _spinnerStyle = Style(
@@ -49,8 +49,8 @@ final _containerStyle = Style(
   _container.color.black(),
   _container.padding.vertical(8),
   _container.padding.horizontal(12),
-  $on.hover(_container.color.brighten(20)),
-  $on.press(_container.color.brighten(10)),
+  // $on.hover(_container.color.brighten(20)),
+  // $on.press(_container.color.brighten(10)),
   $on.disabled(_container.color.grey.shade400()),
 );
 
@@ -60,7 +60,7 @@ final _darkStyle = Style(
   _container.color.white(),
   _spinner.color.black(),
   _container.color.white(),
-  $on.hover(_container.color.darken(10)),
-  $on.press(_container.color.darken(10)),
+  // $on.hover(_container.color.darken(10)),
+  // $on.press(_container.color.darken(10)),
   $on.disabled(_container.color.grey.shade600()),
 );

@@ -55,7 +55,8 @@ Style get _solidVariant {
     _spinner.color.white(),
     _icon.color.white(),
     $on.hover(_container.color.$accent(10)),
-    $on.disabled(_container.color.$neutralAlpha(3)),
+    $on.disabled(_container.color.$neutralAlpha(3), _spinnerDisable()),
+    $on.dark(_softOnDark()),
   );
 }
 
@@ -67,13 +68,29 @@ Style get _softVariant {
     _icon.color.$accentAlpha(11),
     $on.hover(_container.color.$accentAlpha(4)),
     $on.disabled(_container.color.$neutralAlpha(3)),
+    $on.dark(_softOnDark()),
+  );
+}
+
+Style get _softOnDark {
+  return Style(
+    _container.color.$accent(12),
+    _label.style.color.$accent(8),
+    _icon.color.$accent(8),
+    $on.hover(_container.color.$accentAlpha(12)),
+    $on.disabled(
+      _container.color.$neutral(12),
+      _icon.color.$neutral(10),
+      _label.style.color.$neutral(10),
+      _spinner.color.$neutral(11),
+    ),
   );
 }
 
 Style get _outlineVariant {
   return Style(
     _container.color.transparent(),
-    _container.border.width(1.5),
+    _container.border.width(1),
     _container.border.strokeAlign(0),
     _container.border.color.$accentAlpha(8),
     _spinner.color.$accentAlpha(11),
@@ -83,6 +100,22 @@ Style get _outlineVariant {
     $on.disabled(
       _container.border.color.$neutralAlpha(8),
       _container.color.transparent(),
+    ),
+    $on.dark(_outlineOnDark()),
+  );
+}
+
+Style get _outlineOnDark {
+  return Style(
+    _label.style.color.$accent(8),
+    _icon.color.$accent(8),
+    _container.border.color.$accent(11),
+    $on.hover(_container.color.$accentAlpha(12)),
+    $on.disabled(
+      _container.border.color.$neutral(11),
+      _icon.color.$neutral(10),
+      _label.style.color.$neutral(10),
+      _spinnerDisable(),
     ),
   );
 }
@@ -96,6 +129,19 @@ Style get _surfaceVariant {
       _container.border.color.$accentAlpha(8),
     ),
     $on.disabled(_container.color.$neutralAlpha(2)),
+    $on.dark(_surfaceOnDark()),
+  );
+}
+
+Style get _surfaceOnDark {
+  return Style(
+    _outlineOnDark(),
+    _container.color.$accent(12),
+    $on.hover(
+      _container.color.$accent(12),
+      _container.border.color.$accent(11),
+    ),
+    $on.disabled(_container.color.$neutral(12), _spinnerDisable()),
   );
 }
 
@@ -107,5 +153,24 @@ Style get _ghostVariant {
     _icon.color.$accentAlpha(11),
     _label.style.color.$accentAlpha(11),
     $on.hover(_container.color.$accentAlpha(3)),
+    $on.dark(_ghostOnDark()),
   );
+}
+
+Style get _ghostOnDark {
+  return Style(
+    _container.color.transparent(),
+    _label.style.color.$accent(8),
+    _icon.color.$accent(8),
+    $on.disabled(
+      _container.color.transparent(),
+      _label.style.color.$neutral(11),
+      _icon.color.$neutral(11),
+      _spinnerDisable(),
+    ),
+  );
+}
+
+Style get _spinnerDisable {
+  return Style(_spinner.color.$neutral(11));
 }

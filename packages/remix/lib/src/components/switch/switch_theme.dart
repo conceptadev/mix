@@ -12,9 +12,6 @@ class XSwitchThemeVariant extends Variant {
 class XSwitchThemeStyle {
   static Style get value => Style(
         XSwitchStyle.base(),
-
-        // Variant
-
         XSwitchThemeVariant.soft(_softVariant()),
         XSwitchThemeVariant.surface(_surfaceVariant()),
       );
@@ -26,15 +23,20 @@ Style get _softVariant {
     _container.color.$neutral(6),
     $on.selected(_container.color.$accent(8)),
     $on.disabled(_container.color.$neutral(6), _indicator.color.$neutral(4)),
+    $on.dark(
+      _container.color.$neutral(11),
+      _indicator.color.$neutral(1),
+      $on.selected(_container.color.$accent(11)),
+    ),
   );
 }
 
 Style get _surfaceVariant {
   return Style(
     _indicator.color.$neutral(1),
-    _container.padding.all(0),
+    _container.padding.all(1),
     _container.color.$neutral(4),
-    _container.border.all.width(1.5),
+    _container.border.all.width(1),
     _container.border.all.color.$neutral(7),
     $on.disabled(
       _container.color.$neutral(4),
@@ -45,5 +47,19 @@ Style get _surfaceVariant {
       _container.color.$accent(9),
       _container.border.all.color.$accent(10),
     ),
+    $on.dark(_surfaceOnDark()),
   );
 }
+
+Style get _surfaceOnDark => Style(
+      $on.selected(_container.border.all.color.$accent(9)),
+      $on.disabled(
+        _container.color.$neutral(12),
+        _indicator.color.$neutral(11),
+        _indicator.color.withOpacity(0.4),
+        _container.border.all.color.$neutral(11),
+        _container.border.all.color.withOpacity(0.4),
+      ),
+      _container.border.all.color.$neutral(11),
+      _container.color.$neutral(12),
+    );
