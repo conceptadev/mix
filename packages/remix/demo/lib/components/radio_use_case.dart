@@ -57,28 +57,6 @@ class _RadioExampleState extends State<RadioExample> {
                   ),
                   text: theme.name.capitalize(),
                 ),
-                const SizedBox(width: 12),
-                RemixTheme(
-                  tokens: light,
-                  components: const RemixComponentTheme(),
-                  child: XRadio<Theme>(
-                    variants: [
-                      context.knobs.variant(XRadioThemeVariant.values)
-                    ],
-                    value: theme,
-                    groupValue: _theme,
-                    onChanged: (Theme? value) {
-                      setState(() {
-                        _theme = value!;
-                      });
-                    },
-                    disabled: context.knobs.boolean(
-                      label: 'Disabled',
-                      initialValue: false,
-                    ),
-                    text: theme.name.capitalize(),
-                  ),
-                ),
               ],
             ),
             const SizedBox(height: 8),

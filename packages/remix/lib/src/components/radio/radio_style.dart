@@ -29,6 +29,7 @@ Style get _containerStyle => Style(
         $on.disabled(_container.border.color.white60()),
       ),
     );
+
 Style get _indicatorStyle => Style(
       _indicator.borderRadius(99),
       _indicator.color.black(),

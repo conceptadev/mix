@@ -11,6 +11,7 @@ class RemixComponentTheme {
   final Style? checkbox;
   final Style? progress;
   final Style? radio;
+  final Style? select;
 
   const RemixComponentTheme({
     this.button,
@@ -20,6 +21,7 @@ class RemixComponentTheme {
     this.checkbox,
     this.progress,
     this.radio,
+    this.select,
   });
 }
 
