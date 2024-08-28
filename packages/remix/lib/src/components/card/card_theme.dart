@@ -12,7 +12,7 @@ class CardThemeVariant extends Variant {
 class XCardThemeStyle {
   static Style get value => Style(
         XCardStyle.base(),
-        _flex.wrap.padding.all.$space(3),
+        _container.padding.all.$space(3),
         CardThemeVariant.surface(_surface()),
         CardThemeVariant.ghost(_ghost()),
       );
