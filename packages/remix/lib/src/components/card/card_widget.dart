@@ -5,13 +5,8 @@ class XCard extends StatelessWidget {
     super.key,
     required this.children,
     this.style = const Style.empty(),
-  }) : _blank = false;
-
-  const XCard.blank({
-    super.key,
-    required this.children,
-    required this.style,
-  }) : _blank = true;
+    this.variants = const [],
+  });
 
   /// The list of child widgets to be displayed inside the card.
   final List<Widget> children;
@@ -20,12 +15,16 @@ class XCard extends StatelessWidget {
   ///
   /// This allows you to override or extend the default card styling.
   final Style style;
-  final bool _blank;
+  final List<Variant> variants;
 
   @override
   Widget build(BuildContext context) {
+    final styleFromTheme = RemixThemeProvider.maybeOf(context)?.card;
+
     return SpecBuilder(
-      style: _blank ? style : XCardStyle.base.merge(style),
+      style: (styleFromTheme ?? XCardStyle.base)
+          .merge(style)
+          .applyVariants(variants),
       builder: (context) {
         final spec = CardSpec.of(context);
 

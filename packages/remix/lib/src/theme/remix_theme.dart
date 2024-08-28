@@ -1,6 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:mix/mix.dart';
 
+import '../components/avatar/avatar.dart';
+import '../components/badge/badge.dart';
+import '../components/button/button.dart';
+import '../components/callout/callout.dart';
+import '../components/card/card.dart';
+import '../components/checkbox/checkbox.dart';
+import '../components/progress/progress.dart';
+import '../components/radio/radio.dart';
+import '../components/select/select.dart';
+import '../components/spinner/spinner.dart';
+import '../components/switch/switch.dart';
 import 'remix_tokens.dart';
 
 class RemixComponentTheme {
@@ -8,6 +19,7 @@ class RemixComponentTheme {
   final Style? avatar;
   final Style? badge;
   final Style? callout;
+  final Style? card;
   final Style? checkbox;
   final Style? progress;
   final Style? radio;
@@ -20,6 +32,7 @@ class RemixComponentTheme {
     this.avatar,
     this.badge,
     this.callout,
+    this.card,
     this.checkbox,
     this.progress,
     this.radio,
@@ -27,6 +40,51 @@ class RemixComponentTheme {
     this.spinner,
     this.switchComponent,
   });
+
+  const RemixComponentTheme.blank()
+      : button = const Style.empty(),
+        avatar = const Style.empty(),
+        badge = const Style.empty(),
+        callout = const Style.empty(),
+        card = const Style.empty(),
+        checkbox = const Style.empty(),
+        progress = const Style.empty(),
+        radio = const Style.empty(),
+        select = const Style.empty(),
+        spinner = const Style.empty(),
+        switchComponent = const Style.empty();
+
+  factory RemixComponentTheme.base() {
+    return RemixComponentTheme(
+      button: XButtonStyle.base,
+      avatar: XAvatarStyle.base,
+      badge: XBadgeStyle.base,
+      callout: XCalloutStyle.base,
+      card: XCardStyle.base,
+      checkbox: XCheckboxStyle.base,
+      progress: XProgressStyle.base,
+      radio: XRadioStyle.base,
+      select: XSelectStyle.base,
+      spinner: XSpinnerStyle.base,
+      switchComponent: XSwitchStyle.base,
+    );
+  }
+
+  factory RemixComponentTheme.remix() {
+    return RemixComponentTheme(
+      button: XButtonThemeStyle.value,
+      avatar: XAvatarThemeStyle.value,
+      badge: XBadgeThemeStyle.value,
+      callout: XCalloutThemeStyle.value,
+      card: XCardThemeStyle.value,
+      checkbox: XCheckboxThemeStyle.value,
+      progress: XProgressThemeStyle.value,
+      radio: XRadioThemeStyle.value,
+      select: XSelectThemeStyle.value,
+      spinner: XSpinnerThemeStyle.value,
+      switchComponent: XSwitchThemeStyle.value,
+    );
+  }
 }
 
 class RemixTheme extends StatelessWidget {

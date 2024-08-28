@@ -14,13 +14,6 @@ class XButtonStyle {
     _containerStyle(),
     _spinnerStyle(),
   );
-
-  // const XButtonStyle();
-  // static final dark = XButtonStyle._(light._style.merge(_darkStyle));
-
-  // Style call([Style? styleOverride, List<Variant>? variants]) {
-  //   return _style.merge(styleOverride).applyVariants(variants ?? []);
-  // }
 }
 
 final _flexStyle = Style(
@@ -54,6 +47,8 @@ final _spinnerStyle = Style(
 final _containerStyle = Style(
   _container.borderRadius(6),
   _container.color.black(),
+  _container.padding.vertical(8),
+  _container.padding.horizontal(12),
   $on.hover(_container.color.brighten(20)),
   $on.press(_container.color.brighten(10)),
   $on.disabled(_container.color.grey.shade400()),

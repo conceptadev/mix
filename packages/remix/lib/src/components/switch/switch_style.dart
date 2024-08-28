@@ -15,11 +15,12 @@ Style get _containerStyle => Style(
       _container.borderRadius(99),
       _container.padding.all(2),
       _container.alignment.centerLeft(),
-      _container.color.black87(),
+      _container.color.grey.shade300(),
       $on.selected(
         _container.alignment.centerRight(),
         _container.color.black(),
       ),
+      ($on.disabled & $on.selected)(_container.color.grey.shade500()),
     );
 
 Style get _indicatorStyle => Style(
@@ -30,4 +31,5 @@ Style get _indicatorStyle => Style(
       _indicator.shadow.offset(0, 2),
       _indicator.shadow.blurRadius(4),
       _indicator.shadow.spreadRadius(1),
+      $on.disabled(_indicator.color.grey.shade100()),
     );

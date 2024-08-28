@@ -9,6 +9,14 @@ class RemixRadius {
   final radius6 = const RadiusToken('--radius-6');
 
   RemixRadius();
+
+  RadiusToken call([int step = 1]) {
+    if (step < 1 || step > 6) {
+      throw ArgumentError('Invalid space step: $step');
+    }
+
+    return RadiusToken('--radius-$step');
+  }
 }
 
 final _r = RemixRadius();
@@ -20,3 +28,7 @@ final remixRadiusTokens = {
   _r.radius5: const Radius.circular(24),
   _r.radius6: const Radius.circular(32),
 };
+
+extension RadiusUtilityX<T extends Attribute> on RadiusUtility<T> {
+  T $radius(int step) => ref($rx.radii(step));
+}

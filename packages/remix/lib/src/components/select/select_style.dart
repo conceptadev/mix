@@ -15,8 +15,8 @@ class XSelectStyle {
 }
 
 Style get _positionStyle => Style(
-      _position.targetAnchor.bottomLeft(),
-      _position.followerAnchor.topLeft(),
+      _position.targetAnchor.bottomCenter(),
+      _position.followerAnchor.topCenter(),
       _position.offset(0, 4),
     );
 
@@ -47,6 +47,8 @@ Style get _menuStyle => Style(
       _menu.container.wrap.transform.scale(0.95),
       _menu.container.wrap.opacity(0),
       _menu.container.wrap.padding.top(0),
+      _menu.autoWidth.off(),
+      _menu.container.wrap.intrinsicWidth(),
       $on.selected(
         _menu.container.wrap.transform.scale(1),
         _menu.container.wrap.opacity(1),
@@ -63,5 +65,5 @@ Style get _itemStyle => Style(
       _item.container.padding.vertical(8),
       _item.container.padding.horizontal(6),
       _item.container.width.infinity(),
-      $on.hover(_item.container.color.black()),
+      $on.hover(_item.container.color.black12()),
     );

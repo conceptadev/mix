@@ -138,7 +138,7 @@ final directories = <_i1.WidgetbookNode>[
         name: 'spinner',
         children: [
           _i1.WidgetbookLeafComponent(
-            name: 'RxSpinner',
+            name: 'XSpinner',
             useCase: _i1.WidgetbookUseCase(
               name: 'Spinner Component',
               builder: _i11.buildSpinnerUseCase,

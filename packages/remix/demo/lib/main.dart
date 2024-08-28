@@ -1,3 +1,4 @@
+import 'package:demo/helpers/theme_addon.dart';
 import 'package:flutter/material.dart';
 import 'package:remix/remix.dart';
 import 'package:widgetbook/widgetbook.dart';
@@ -43,6 +44,22 @@ class HotReload extends StatelessWidget {
             );
           },
         ),
+        RemixComponentThemeAddon(
+          themes: [
+            WidgetbookTheme(
+              name: 'Remix',
+              data: RemixComponentTheme.remix(),
+            ),
+            WidgetbookTheme(
+              name: 'Base',
+              data: RemixComponentTheme.base(),
+            ),
+            const WidgetbookTheme(
+              name: 'Blank',
+              data: RemixComponentTheme.blank(),
+            ),
+          ],
+        ),
         InspectorAddon(),
       ],
       appBuilder: (context, child) => App(child: child),
@@ -60,25 +77,10 @@ class App extends StatelessWidget {
   final Widget child;
   @override
   Widget build(BuildContext context) {
-    return RemixTheme(
-      components: RemixComponentTheme(
-        button: XButtonThemeStyle.value,
-        avatar: XAvatarThemeStyle.value,
-        badge: XBadgeThemeStyle.value,
-        callout: XCalloutThemeStyle.value,
-        checkbox: XCheckboxThemeStyle.value,
-        progress: XProgressThemeStyle.value,
-        radio: XRadioThemeStyle.value,
-        select: XSelectThemeStyle.value,
-        spinner: XSpinnerThemeStyle.value,
-        switchComponent: XSwitchThemeStyle.value,
-      ),
-      tokens: light,
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: Scaffold(
-          body: Center(child: child),
-        ),
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+        body: Center(child: child),
       ),
     );
   }

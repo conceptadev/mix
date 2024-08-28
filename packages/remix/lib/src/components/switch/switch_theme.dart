@@ -36,14 +36,14 @@ Style get _surfaceVariant {
     _container.color.$neutral(4),
     _container.border.all.width(1.5),
     _container.border.all.color.$neutral(7),
-    $on.selected(
-      _container.color.$accent(8),
-      _container.border.color.$accent(8),
-    ),
     $on.disabled(
       _container.color.$neutral(4),
       _indicator.color.$neutral(3),
       _container.border.all.color.$neutral(7),
+    ),
+    $on.selected(
+      _container.color.$accent(9),
+      _container.border.all.color.$accent(10),
     ),
   );
 }
