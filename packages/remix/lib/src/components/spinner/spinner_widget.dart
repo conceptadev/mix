@@ -15,7 +15,7 @@ class XSpinner extends StatelessWidget {
     final styleFromTheme = RemixThemeProvider.maybeOf(context)?.spinner;
 
     return SpecBuilder(
-      style: (styleFromTheme ?? XSpinnerThemeStyle.value)
+      style: (styleFromTheme ?? XSpinnerStyle.base)
           .merge(style)
           .applyVariants(variants),
       builder: (context) {

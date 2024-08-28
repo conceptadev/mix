@@ -70,6 +70,8 @@ class App extends StatelessWidget {
         progress: XProgressThemeStyle.value,
         radio: XRadioThemeStyle.value,
         select: XSelectThemeStyle.value,
+        spinner: XSpinnerThemeStyle.value,
+        switchComponent: XSwitchThemeStyle.value,
       ),
       tokens: light,
       child: MaterialApp(
