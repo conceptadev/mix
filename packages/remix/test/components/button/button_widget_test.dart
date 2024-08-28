@@ -66,7 +66,7 @@ void main() {
         ),
       );
 
-      expect(find.byType(RxSpinnerSpecWidget), findsOneWidget);
+      expect(find.byType(XSpinnerSpecWidget), findsOneWidget);
 
       final opacityWidget = tester.widget<Opacity>(find.byType(Opacity));
       expect(opacityWidget.opacity, 0);

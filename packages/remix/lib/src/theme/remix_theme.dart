@@ -12,6 +12,7 @@ class RemixComponentTheme {
   final Style? progress;
   final Style? radio;
   final Style? select;
+  final Style? spinner;
 
   const RemixComponentTheme({
     this.button,
@@ -22,6 +23,7 @@ class RemixComponentTheme {
     this.progress,
     this.radio,
     this.select,
+    this.spinner,
   });
 }
 
