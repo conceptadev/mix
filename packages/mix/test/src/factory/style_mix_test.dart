@@ -546,4 +546,52 @@ void main() {
       expect(sut, expectedStyle);
     });
   });
+
+  group('Style.merge', () {
+    test('Style + AnimatedStyle', () {
+      final animatedData = AnimatedData(
+        curve: Curves.linear,
+        duration: Durations.medium1,
+      );
+
+      final style = Style(
+        attribute1,
+        Style.asAttribute(attribute2),
+      );
+
+      final animatedStyle = AnimatedStyle(
+        Style(),
+        duration: animatedData.duration,
+        curve: animatedData.curve,
+      );
+
+      final result = style.merge(animatedStyle);
+
+      expect(result, isA<AnimatedStyle>());
+      expect((result as AnimatedStyle).animated, animatedData);
+    });
+
+    test('AnimatedStyle + Style', () {
+      final animatedData = AnimatedData(
+        curve: Curves.linear,
+        duration: Durations.medium1,
+      );
+
+      final animatedStyle = AnimatedStyle(
+        Style(),
+        duration: animatedData.duration,
+        curve: animatedData.curve,
+      );
+
+      final style = Style(
+        attribute1,
+        Style.asAttribute(attribute2),
+      );
+
+      final result = animatedStyle.merge(style);
+
+      expect(result, isA<AnimatedStyle>());
+      expect((result as AnimatedStyle).animated, animatedData);
+    });
+  });
 }

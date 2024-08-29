@@ -213,6 +213,14 @@ class Style with EqualityMixin {
     final mergedStyles = styles.merge(style.styles);
     final mergedVariants = variants.merge(style.variants);
 
+    if (style is AnimatedStyle) {
+      return AnimatedStyle._(
+        styles: mergedStyles,
+        variants: mergedVariants,
+        animated: style.animated,
+      );
+    }
+
     return copyWith(styles: mergedStyles, variants: mergedVariants);
   }
 
