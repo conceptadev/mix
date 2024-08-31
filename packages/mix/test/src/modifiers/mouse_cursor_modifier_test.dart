@@ -5,7 +5,7 @@ import 'package:mix/mix.dart';
 void main() {
   testWidgets('uses custom mouseCursor when provided',
       (WidgetTester tester) async {
-    final cursor = SystemMouseCursors.resizeUpRight;
+    const cursor = SystemMouseCursors.resizeUpRight;
     await tester.pumpWidget(
       Box(
         style: Style(

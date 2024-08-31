@@ -68,7 +68,7 @@ void main() {
       (WidgetTester tester) async {
         final context = await tester.pumpAndGetContext(Container());
 
-        final variant = OnPlatformVariant(TargetPlatform.macOS);
+        const variant = OnPlatformVariant(TargetPlatform.macOS);
 
         expect(variant.when(context), isTrue);
       },
@@ -80,7 +80,7 @@ void main() {
       (WidgetTester tester) async {
         final context = await tester.pumpAndGetContext(Container());
 
-        final variant = OnPlatformVariant(TargetPlatform.windows);
+        const variant = OnPlatformVariant(TargetPlatform.windows);
 
         expect(variant.when(context), isTrue);
       },
@@ -92,7 +92,7 @@ void main() {
       (WidgetTester tester) async {
         final context = await tester.pumpAndGetContext(Container());
 
-        final variant = OnPlatformVariant(TargetPlatform.linux);
+        const variant = OnPlatformVariant(TargetPlatform.linux);
 
         expect(variant.when(context), isTrue);
       },
@@ -107,7 +107,7 @@ void main() {
       MixHelpers.isWebOverride = true;
       final context = await tester.pumpAndGetContext(Container());
 
-      final variant = OnWebVariant();
+      const variant = OnWebVariant();
 
       expect(variant.when(context), isTrue);
       MixHelpers.isWebOverride = null;
