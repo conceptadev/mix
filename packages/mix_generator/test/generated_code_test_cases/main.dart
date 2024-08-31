@@ -21,11 +21,11 @@ Future<void> main() async {
 
   testAnnotatedElements<MixableSpec>(
     readerForSpecCase,
-    MixableSpecGenerator(),
+    const MixableSpecGenerator(),
   );
 
   testAnnotatedElements<MixableDto>(
     readerForDtoCase,
-    MixableDtoGenerator(),
+    const MixableDtoGenerator(),
   );
 }
