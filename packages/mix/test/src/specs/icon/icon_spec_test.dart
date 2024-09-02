@@ -111,4 +111,108 @@ void main() {
       expect(lerpedSpec.size, lerpDouble(20.0, 30.0, 0.5));
     });
   });
+
+  group('IconSpecUtility fluent', () {
+    test('fluent behavior', () {
+      final icon = IconSpecUtility.self;
+
+      final util = icon.build
+        ..color.red()
+        ..size(24)
+        ..weight(500)
+        ..grade(200)
+        ..opticalSize(48)
+        ..textDirection.rtl()
+        ..applyTextScaling(true)
+        ..fill(0.5);
+
+      final attr = util.attributeValue!;
+
+      expect(util, isA<Attribute>());
+      expect(attr.color, Colors.red.toDto());
+      expect(attr.size, 24);
+      expect(attr.weight, 500);
+      expect(attr.grade, 200);
+      expect(attr.opticalSize, 48);
+      expect(attr.textDirection, TextDirection.rtl);
+      expect(attr.applyTextScaling, true);
+      expect(attr.fill, 0.5);
+
+      final style = Style(util);
+
+      final iconAttribute = style.styles.attributeOfType<IconSpecAttribute>();
+
+      expect(iconAttribute?.color, Colors.red.toDto());
+      expect(iconAttribute?.size, 24);
+      expect(iconAttribute?.weight, 500);
+      expect(iconAttribute?.grade, 200);
+      expect(iconAttribute?.opticalSize, 48);
+      expect(iconAttribute?.textDirection, TextDirection.rtl);
+      expect(iconAttribute?.applyTextScaling, true);
+      expect(iconAttribute?.fill, 0.5);
+
+      final mixData = style.of(MockBuildContext());
+      final iconSpec = IconSpec.from(mixData);
+
+      expect(iconSpec.color, Colors.red);
+      expect(iconSpec.size, 24);
+      expect(iconSpec.weight, 500);
+      expect(iconSpec.grade, 200);
+      expect(iconSpec.opticalSize, 48);
+      expect(iconSpec.textDirection, TextDirection.rtl);
+      expect(iconSpec.applyTextScaling, true);
+      expect(iconSpec.fill, 0.5);
+    });
+
+    test('Immutable behavior when having multiple icons', () {
+      final iconUtil = IconSpecUtility.self;
+      final icon1 = iconUtil.build..size(24);
+      final icon2 = iconUtil.build..size(48);
+
+      final attr1 = icon1.attributeValue!;
+      final attr2 = icon2.attributeValue!;
+
+      expect(attr1.size, 24);
+      expect(attr2.size, 48);
+
+      final style1 = Style(icon1);
+      final style2 = Style(icon2);
+
+      final iconAttribute1 = style1.styles.attributeOfType<IconSpecAttribute>();
+      final iconAttribute2 = style2.styles.attributeOfType<IconSpecAttribute>();
+
+      expect(iconAttribute1?.size, 24);
+      expect(iconAttribute2?.size, 48);
+
+      final mixData1 = style1.of(MockBuildContext());
+      final mixData2 = style2.of(MockBuildContext());
+
+      final iconSpec1 = IconSpec.from(mixData1);
+      final iconSpec2 = IconSpec.from(mixData2);
+
+      expect(iconSpec1.size, 24);
+      expect(iconSpec2.size, 48);
+    });
+
+    test('Mutate behavior and not on same utility', () {
+      final icon = IconSpecUtility.self;
+
+      final iconValue = icon.build;
+      iconValue
+        ..size(24)
+        ..color.red()
+        ..weight(500);
+
+      final iconAttribute = iconValue.attributeValue!;
+      final iconAttribute2 = icon.size(48);
+
+      expect(iconAttribute.size, 24);
+      expect(iconAttribute.color, Colors.red.toDto());
+      expect(iconAttribute.weight, 500);
+
+      expect(iconAttribute2.size, 48);
+      expect(iconAttribute2.color, isNull);
+      expect(iconAttribute2.weight, isNull);
+    });
+  });
 }

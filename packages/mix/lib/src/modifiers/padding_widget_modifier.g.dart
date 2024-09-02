@@ -136,9 +136,13 @@ class PaddingModifierSpecUtility<T extends Attribute>
   /// Utility for defining [PaddingModifierSpecAttribute.padding]
   late final padding = SpacingUtility((v) => only(padding: v));
 
-  PaddingModifierSpecUtility(super.builder);
+  PaddingModifierSpecUtility(super.builder, [super.mutable]);
 
-  static final self = PaddingModifierSpecUtility((v) => v);
+  PaddingModifierSpecUtility<T> get build =>
+      PaddingModifierSpecUtility(attributeBuilder, true);
+
+  static PaddingModifierSpecUtility<PaddingModifierSpecAttribute> get self =>
+      PaddingModifierSpecUtility((v) => v);
 
   /// Returns a new [PaddingModifierSpecAttribute] with the specified properties.
   @override

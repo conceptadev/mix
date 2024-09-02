@@ -1,6 +1,7 @@
 import 'package:mix_annotations/mix_annotations.dart';
-import '../utility_class_builder.dart';
+
 import '../../helpers/field_info.dart';
+import '../utility_class_builder.dart';
 
 String specUtilityClass(ClassBuilderContext<MixableSpec> context) {
   if (context.annotation.skipUtility) {
@@ -33,9 +34,11 @@ String specUtilityClass(ClassBuilderContext<MixableSpec> context) {
  ${instance.writeDefinition()} {
   $fields
 
-  ${instance.writeConstructor()}(super.builder);
+  ${instance.writeConstructor()}(super.builder, [super.mutable]);
 
-  static final self = $className((v) => v);
+  $className<T> get build => ${instance.writeConstructor()}(attributeBuilder, true);
+
+  static $className<$attributeName> get self => $className((v) => v);
 
   $onlyMethod
 }

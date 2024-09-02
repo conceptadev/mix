@@ -412,9 +412,11 @@ class BoxSpecUtility<T extends Attribute>
   /// Utility for defining [BoxSpecAttribute.animated]
   late final animated = AnimatedUtility((v) => only(animated: v));
 
-  BoxSpecUtility(super.builder);
+  BoxSpecUtility(super.builder, [super.mutable]);
 
-  static final self = BoxSpecUtility((v) => v);
+  BoxSpecUtility<T> get build => BoxSpecUtility(attributeBuilder, true);
+
+  static BoxSpecUtility<BoxSpecAttribute> get self => BoxSpecUtility((v) => v);
 
   /// Returns a new [BoxSpecAttribute] with the specified properties.
   @override

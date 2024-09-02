@@ -391,9 +391,12 @@ class TextSpecUtility<T extends Attribute>
   /// Utility for defining [TextSpecAttribute.modifiers]
   late final wrap = SpecModifierUtility((v) => only(modifiers: v));
 
-  TextSpecUtility(super.builder);
+  TextSpecUtility(super.builder, [super.mutable]);
 
-  static final self = TextSpecUtility((v) => v);
+  TextSpecUtility<T> get build => TextSpecUtility(attributeBuilder, true);
+
+  static TextSpecUtility<TextSpecAttribute> get self =>
+      TextSpecUtility((v) => v);
 
   /// Returns a new [TextSpecAttribute] with the specified properties.
   @override

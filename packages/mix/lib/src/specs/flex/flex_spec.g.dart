@@ -330,9 +330,12 @@ class FlexSpecUtility<T extends Attribute>
   /// Utility for defining [FlexSpecAttribute.modifiers]
   late final wrap = SpecModifierUtility((v) => only(modifiers: v));
 
-  FlexSpecUtility(super.builder);
+  FlexSpecUtility(super.builder, [super.mutable]);
 
-  static final self = FlexSpecUtility((v) => v);
+  FlexSpecUtility<T> get build => FlexSpecUtility(attributeBuilder, true);
+
+  static FlexSpecUtility<FlexSpecAttribute> get self =>
+      FlexSpecUtility((v) => v);
 
   /// Returns a new [FlexSpecAttribute] with the specified properties.
   @override

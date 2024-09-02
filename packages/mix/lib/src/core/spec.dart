@@ -8,7 +8,6 @@ import '../attributes/modifiers/widget_modifiers_data_dto.dart';
 import '../internal/compare_mixin.dart';
 import 'attribute.dart';
 import 'factory/mix_data.dart';
-import 'utility.dart';
 
 @immutable
 abstract class Spec<T extends Spec<T>> with EqualityMixin {
@@ -49,11 +48,36 @@ abstract class SpecAttribute<Value> extends StyledAttribute {
   SpecAttribute<Value> merge(covariant SpecAttribute<Value>? other);
 }
 
-abstract class SpecUtility<Attr extends Attribute, Value extends SpecAttribute>
-    implements MixUtility<Attr, Value> {
-  @override
-  final Attr Function(Value) builder;
-  const SpecUtility(this.builder);
+abstract class SpecUtility<T extends Attribute, V> extends Attribute {
+  T? attributeValue;
 
-  Attr only();
+  @protected
+  @visibleForTesting
+  final T Function(V) attributeBuilder;
+
+  final bool _mutable;
+
+  SpecUtility(this.attributeBuilder, [this._mutable = false]);
+
+  static T selfBuilder<T>(T value) => value;
+  T builder(V v) {
+    final attribute = attributeBuilder(v);
+    if (_mutable) {
+      attributeValue = (attributeValue?.merge(attribute) ?? attribute) as T;
+    }
+
+    return attribute;
+  }
+
+  T only();
+  @override
+  SpecUtility<T, V> merge(covariant SpecUtility<T, V> other) {
+    attributeValue = (attributeValue?.merge(other.attributeValue) ??
+        other.attributeValue) as T;
+
+    return this;
+  }
+
+  @override
+  get props => [attributeValue];
 }

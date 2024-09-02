@@ -235,9 +235,12 @@ class StackSpecUtility<T extends Attribute>
   /// Utility for defining [StackSpecAttribute.modifiers]
   late final wrap = SpecModifierUtility((v) => only(modifiers: v));
 
-  StackSpecUtility(super.builder);
+  StackSpecUtility(super.builder, [super.mutable]);
 
-  static final self = StackSpecUtility((v) => v);
+  StackSpecUtility<T> get build => StackSpecUtility(attributeBuilder, true);
+
+  static StackSpecUtility<StackSpecAttribute> get self =>
+      StackSpecUtility((v) => v);
 
   /// Returns a new [StackSpecAttribute] with the specified properties.
   @override

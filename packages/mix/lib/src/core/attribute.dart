@@ -3,7 +3,6 @@ import 'package:flutter/widgets.dart';
 import '../internal/compare_mixin.dart';
 import 'dto.dart';
 
-@immutable
 abstract class Attribute with MergeableMixin, EqualityMixin {
   const Attribute();
 
