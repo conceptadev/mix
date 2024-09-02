@@ -97,3 +97,4 @@ pubspec.lock
 # FVM Version Cache
 .fvm/
 packages/remix/context.md
+packages/mix/.cody/ignore
