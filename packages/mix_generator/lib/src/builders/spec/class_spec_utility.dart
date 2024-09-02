@@ -36,7 +36,7 @@ String specUtilityClass(ClassBuilderContext<MixableSpec> context) {
 
   ${instance.writeConstructor()}(super.builder, [super.mutable]);
 
-  $className<T> get build => ${instance.writeConstructor()}(attributeBuilder, true);
+  $className<T> get builder => ${instance.writeConstructor()}(attributeBuilder, true);
 
   static $className<$attributeName> get self => $className((v) => v);
 

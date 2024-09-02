@@ -393,7 +393,7 @@ class TextSpecUtility<T extends Attribute>
 
   TextSpecUtility(super.builder, [super.mutable]);
 
-  TextSpecUtility<T> get build => TextSpecUtility(attributeBuilder, true);
+  TextSpecUtility<T> get builder => TextSpecUtility(attributeBuilder, true);
 
   static TextSpecUtility<TextSpecAttribute> get self =>
       TextSpecUtility((v) => v);
@@ -416,7 +416,7 @@ class TextSpecUtility<T extends Attribute>
     AnimatedDataDto? animated,
     WidgetModifiersDataDto? modifiers,
   }) {
-    return builder(TextSpecAttribute(
+    return build(TextSpecAttribute(
       overflow: overflow,
       strutStyle: strutStyle,
       textAlign: textAlign,

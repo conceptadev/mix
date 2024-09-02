@@ -10,14 +10,14 @@ import 'shadow_dto.dart';
 /// instances by transforming a list of [BoxShadow] objects into a list of [ShadowDto] objects.
 final class ShadowListUtility<T extends Attribute>
     extends MixUtility<T, List<ShadowDto>> {
-  const ShadowListUtility(super.builder);
+  const ShadowListUtility(super.build);
 
   /// Creates an [Attribute] instance from a list of [BoxShadow] objects.
   ///
   /// This method maps each [BoxShadow] object to a [ShadowDto] object and passes the
-  /// resulting list to the [builder] function to create the [Attribute] instance.
+  /// resulting list to the [build] function to create the [Attribute] instance.
   T call(List<Shadow> shadows) {
-    return builder(shadows.map((e) => e.toDto()).toList());
+    return build(shadows.map((e) => e.toDto()).toList());
   }
 }
 
@@ -27,16 +27,16 @@ final class ShadowListUtility<T extends Attribute>
 /// instances by transforming a list of [BoxShadow] objects into a list of [BoxShadowDto] objects.
 final class BoxShadowListUtility<T extends Attribute>
     extends MixUtility<T, List<BoxShadowDto>> {
-  late final add = BoxShadowUtility((v) => builder([v]));
+  late final add = BoxShadowUtility((v) => build([v]));
 
-  BoxShadowListUtility(super.builder);
+  BoxShadowListUtility(super.build);
 
   /// Creates an [Attribute] instance from a list of [BoxShadow] objects.
   ///
   /// This method maps each [BoxShadow] object to a [BoxShadowDto] object and passes the
-  /// resulting list to the [builder] function to create the [Attribute] instance.
+  /// resulting list to the [build] function to create the [Attribute] instance.
   T call(List<BoxShadow> shadows) {
-    return builder(shadows.map((e) => e.toDto()).toList());
+    return build(shadows.map((e) => e.toDto()).toList());
   }
 }
 
@@ -77,13 +77,13 @@ final class ElevationUtility<T extends Attribute>
   /// Creates an [T] instance with an elevation of 24.
   late final e24 = twentyFour;
 
-  ElevationUtility(super.builder);
+  ElevationUtility(super.build);
 
   /// Creates an [Attribute] instance from an elevation value.
   ///
   /// Retrieves the corresponding list of [BoxShadow] objects from the [kElevationToShadow]
   /// map, maps each [BoxShadow] to a [BoxShadowDto], and passes the resulting list to
-  /// the [builder] function to create the [Attribute] instance.
+  /// the [build] function to create the [Attribute] instance.
   ///
   /// Throws an [AssertionError] if the provided [value] is not a valid elevation value.
   T call(int value) {
@@ -91,7 +91,7 @@ final class ElevationUtility<T extends Attribute>
 
     final boxShadows = kElevationToShadow[value]!.map((e) => e.toDto());
 
-    return builder(boxShadows.toList());
+    return build(boxShadows.toList());
   }
 
   /// Creates an [T] instance with no elevation.

@@ -88,7 +88,7 @@ class BoxConstraintsUtility<T extends Attribute>
     double? minHeight,
     double? maxHeight,
   }) {
-    return builder(BoxConstraintsDto(
+    return build(BoxConstraintsDto(
       minWidth: minWidth,
       maxWidth: maxWidth,
       minHeight: minHeight,

@@ -78,7 +78,7 @@ class RoundedRectangleBorderUtility<T extends Attribute>
     BorderRadiusGeometryDto? borderRadius,
     BorderSideDto? side,
   }) {
-    return builder(RoundedRectangleBorderDto(
+    return build(RoundedRectangleBorderDto(
       borderRadius: borderRadius,
       side: side,
     ));
@@ -182,7 +182,7 @@ class BeveledRectangleBorderUtility<T extends Attribute>
     BorderRadiusGeometryDto? borderRadius,
     BorderSideDto? side,
   }) {
-    return builder(BeveledRectangleBorderDto(
+    return build(BeveledRectangleBorderDto(
       borderRadius: borderRadius,
       side: side,
     ));
@@ -287,7 +287,7 @@ class ContinuousRectangleBorderUtility<T extends Attribute> extends DtoUtility<
     BorderRadiusGeometryDto? borderRadius,
     BorderSideDto? side,
   }) {
-    return builder(ContinuousRectangleBorderDto(
+    return build(ContinuousRectangleBorderDto(
       borderRadius: borderRadius,
       side: side,
     ));
@@ -388,7 +388,7 @@ class CircleBorderUtility<T extends Attribute>
     BorderSideDto? side,
     double? eccentricity,
   }) {
-    return builder(CircleBorderDto(
+    return build(CircleBorderDto(
       side: side,
       eccentricity: eccentricity,
     ));
@@ -524,7 +524,7 @@ class StarBorderUtility<T extends Attribute>
     double? rotation,
     double? squash,
   }) {
-    return builder(StarBorderDto(
+    return build(StarBorderDto(
       side: side,
       points: points,
       innerRadiusRatio: innerRadiusRatio,
@@ -665,7 +665,7 @@ class LinearBorderUtility<T extends Attribute>
     LinearBorderEdgeDto? top,
     LinearBorderEdgeDto? bottom,
   }) {
-    return builder(LinearBorderDto(
+    return build(LinearBorderDto(
       side: side,
       start: start,
       end: end,
@@ -777,7 +777,7 @@ class LinearBorderEdgeUtility<T extends Attribute>
     double? size,
     double? alignment,
   }) {
-    return builder(LinearBorderEdgeDto(
+    return build(LinearBorderEdgeDto(
       size: size,
       alignment: alignment,
     ));
@@ -870,7 +870,7 @@ class StadiumBorderUtility<T extends Attribute>
   T only({
     BorderSideDto? side,
   }) {
-    return builder(StadiumBorderDto(
+    return build(StadiumBorderDto(
       side: side,
     ));
   }

@@ -9,7 +9,7 @@ import 'edge_insets_dto.dart';
 @immutable
 final class SpacingUtility<T extends Attribute>
     extends DtoUtility<T, EdgeInsetsGeometryDto, EdgeInsetsGeometry> {
-  late final directional = SpacingDirectionalUtility(builder);
+  late final directional = SpacingDirectionalUtility(build);
 
   late final horizontal = SpacingSideUtility((v) => only(left: v, right: v));
 
@@ -47,7 +47,7 @@ final class SpacingUtility<T extends Attribute>
     double? start,
     double? end,
   }) {
-    return builder(
+    return build(
       EdgeInsetsGeometryDto.only(
         top: top,
         bottom: bottom,
@@ -93,7 +93,7 @@ final class SpacingDirectionalUtility<T extends Attribute>
 
   @override
   T only({double? top, double? bottom, double? start, double? end}) {
-    return builder(
+    return build(
       EdgeInsetsGeometryDto.only(
         top: top,
         bottom: bottom,
@@ -106,9 +106,9 @@ final class SpacingDirectionalUtility<T extends Attribute>
 
 @immutable
 class SpacingSideUtility<T extends Attribute> extends MixUtility<T, double> {
-  const SpacingSideUtility(super.builder);
+  const SpacingSideUtility(super.build);
 
-  T call(double value) => builder(value);
+  T call(double value) => build(value);
 
-  T ref(SpaceToken ref) => builder(ref());
+  T ref(SpaceToken ref) => build(ref());
 }

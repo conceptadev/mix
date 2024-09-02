@@ -318,7 +318,7 @@ class IconSpecUtility<T extends Attribute>
 
   IconSpecUtility(super.builder, [super.mutable]);
 
-  IconSpecUtility<T> get build => IconSpecUtility(attributeBuilder, true);
+  IconSpecUtility<T> get builder => IconSpecUtility(attributeBuilder, true);
 
   static IconSpecUtility<IconSpecAttribute> get self =>
       IconSpecUtility((v) => v);
@@ -338,7 +338,7 @@ class IconSpecUtility<T extends Attribute>
     AnimatedDataDto? animated,
     WidgetModifiersDataDto? modifiers,
   }) {
-    return builder(IconSpecAttribute(
+    return build(IconSpecAttribute(
       color: color,
       size: size,
       weight: weight,

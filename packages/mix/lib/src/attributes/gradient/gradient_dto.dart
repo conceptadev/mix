@@ -163,14 +163,14 @@ extension GradientExt on Gradient {
 /// such as radial gradients, linear gradients, and sweep gradients.
 /// It also provides a method for converting a generic [Gradient] object to a specific type [T].
 ///
-/// Accepts a [builder] function that takes a [GradientDto] and returns an object of type [T].
+/// Accepts a [build] function that takes a [GradientDto] and returns an object of type [T].
 final class GradientUtility<T extends Attribute>
     extends MixUtility<T, GradientDto> {
-  late final radial = RadialGradientUtility(builder);
-  late final linear = LinearGradientUtility(builder);
-  late final sweep = SweepGradientUtility(builder);
+  late final radial = RadialGradientUtility(build);
+  late final linear = LinearGradientUtility(build);
+  late final sweep = SweepGradientUtility(build);
 
-  GradientUtility(super.builder);
+  GradientUtility(super.build);
 
   /// Converts a [Gradient] object to the specific type [T].
   ///

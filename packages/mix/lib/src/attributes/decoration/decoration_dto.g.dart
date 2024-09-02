@@ -135,7 +135,7 @@ class BoxDecorationUtility<T extends Attribute>
     GradientDto? gradient,
     List<BoxShadowDto>? boxShadow,
   }) {
-    return builder(BoxDecorationDto(
+    return build(BoxDecorationDto(
       border: border,
       borderRadius: borderRadius,
       shape: shape,
@@ -281,7 +281,7 @@ class ShapeDecorationUtility<T extends Attribute>
     GradientDto? gradient,
     List<BoxShadowDto>? shadows,
   }) {
-    return builder(ShapeDecorationDto(
+    return build(ShapeDecorationDto(
       shape: shape,
       color: color,
       image: image,

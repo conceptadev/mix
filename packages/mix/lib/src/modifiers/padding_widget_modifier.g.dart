@@ -138,7 +138,7 @@ class PaddingModifierSpecUtility<T extends Attribute>
 
   PaddingModifierSpecUtility(super.builder, [super.mutable]);
 
-  PaddingModifierSpecUtility<T> get build =>
+  PaddingModifierSpecUtility<T> get builder =>
       PaddingModifierSpecUtility(attributeBuilder, true);
 
   static PaddingModifierSpecUtility<PaddingModifierSpecAttribute> get self =>
@@ -149,7 +149,7 @@ class PaddingModifierSpecUtility<T extends Attribute>
   T only({
     SpacingDto? padding,
   }) {
-    return builder(PaddingModifierSpecAttribute(
+    return build(PaddingModifierSpecAttribute(
       padding: padding,
     ));
   }

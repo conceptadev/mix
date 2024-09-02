@@ -1,4 +1,5 @@
 import 'package:analyzer/dart/element/element.dart';
+
 import '../helpers/field_info.dart';
 import '../helpers/type_ref_repository.dart';
 import '../mixable_class_utility_generator.dart';
@@ -7,7 +8,7 @@ import '../mixable_class_utility_generator.dart';
 /// static methods of `mappingElement` in the context
 ///
 /// For example:
-/// T staticValue() => builder(ClassElement.staticValue);
+/// T staticValue() => build(ClassElement.staticValue);
 String generateUtilityFieldsFromClass(ClassElement element) {
   final fieldStatements = <String>[];
 
@@ -92,7 +93,7 @@ String generateUtilityForConstructor(
   ].join(', ');
 
   final signature = 'T $methodName($signatureParams)';
-  final invocation = 'builder($constStatement $type$name($invocationParams))';
+  final invocation = 'build($constStatement $type$name($invocationParams))';
 
   final totalCharacters = signature.length + invocation.length;
   String signatureLine;
@@ -211,7 +212,7 @@ String utilityMethodOnlyBuilder({
   /// Returns a new [$utilityType] with the specified properties.
   @override
   T only($onlyParams) {
-    return builder($utilityType(
+    return build($utilityType(
       $fieldStatements
     ));
   }

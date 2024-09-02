@@ -307,19 +307,19 @@ extension ShapeBorderExt on ShapeBorder {
 
 final class ShapeBorderUtility<T extends Attribute>
     extends MixUtility<T, ShapeBorderDto> {
-  late final beveledRectangle = BeveledRectangleBorderUtility(builder);
+  late final beveledRectangle = BeveledRectangleBorderUtility(build);
 
-  late final circle = CircleBorderUtility(builder);
+  late final circle = CircleBorderUtility(build);
 
-  late final continuousRectangle = ContinuousRectangleBorderUtility(builder);
+  late final continuousRectangle = ContinuousRectangleBorderUtility(build);
 
-  late final linear = LinearBorderUtility(builder);
+  late final linear = LinearBorderUtility(build);
 
-  late final roundedRectangle = RoundedRectangleBorderUtility(builder);
+  late final roundedRectangle = RoundedRectangleBorderUtility(build);
 
-  late final stadium = StadiumBorderUtility(builder);
+  late final stadium = StadiumBorderUtility(build);
 
-  late final star = StarBorderUtility(builder);
+  late final star = StarBorderUtility(build);
 
-  ShapeBorderUtility(super.builder);
+  ShapeBorderUtility(super.build);
 }

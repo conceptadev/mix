@@ -1,7 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
-import '../../mix.dart';
 import 'package:mix_annotations/mix_annotations.dart';
+
+import '../../mix.dart';
 
 part 'scroll_view_widget_modifier.g.dart';
 
@@ -53,7 +54,7 @@ final class ScrollViewModifierSpecUtility<T extends Attribute>
   /// Set the clip behavior of the scroll view.
   late final clipBehavior = ClipUtility((clip) => call(clipBehavior: clip));
 
-  ScrollViewModifierSpecUtility(super.builder);
+  ScrollViewModifierSpecUtility(super.build);
 
   /// Set the scroll direction of the scroll view.
   T direction(Axis axis) => call(scrollDirection: axis);
@@ -84,7 +85,7 @@ final class ScrollViewModifierSpecUtility<T extends Attribute>
     ScrollPhysics? physics,
     Clip? clipBehavior,
   }) =>
-      builder(
+      build(
         ScrollViewModifierSpecAttribute(
           scrollDirection: scrollDirection,
           reverse: reverse,

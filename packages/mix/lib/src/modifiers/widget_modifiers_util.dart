@@ -1,5 +1,3 @@
-import 'mouse_cursor_modifier.dart';
-
 import '../core/attribute.dart';
 import '../core/modifier.dart';
 import '../core/utility.dart';
@@ -9,6 +7,7 @@ import 'clip_widget_modifier.dart';
 import 'flexible_widget_modifier.dart';
 import 'fractionally_sized_box_widget_modifier.dart';
 import 'intrinsic_widget_modifier.dart';
+import 'mouse_cursor_modifier.dart';
 import 'opacity_widget_modifier.dart';
 import 'padding_widget_modifier.dart';
 import 'rotated_box_widget_modifier.dart';
@@ -47,7 +46,7 @@ abstract class ModifierUtility<T extends Attribute, Value>
   /// This modifier wraps the widget with a [SingleChildScrollView].
   late final scrollView = ScrollViewModifierSpecUtility(only);
 
-  ModifierUtility(super.builder);
+  ModifierUtility(super.build);
 
   T only(WidgetModifierSpecAttribute attribute);
 }
@@ -60,6 +59,6 @@ class WithModifierUtility<T extends Attribute>
 
   @override
   T only(WidgetModifierSpecAttribute attribute) {
-    return builder(attribute);
+    return build(attribute);
   }
 }

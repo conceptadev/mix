@@ -290,7 +290,7 @@ void main() {
     test('fluent behavior', () {
       final text = TextSpecUtility.self;
 
-      final util = text.build
+      final util = text.builder
         ..overflow.ellipsis()
         ..textAlign.center()
         ..textScaleFactor(1.5)
@@ -340,8 +340,8 @@ void main() {
 
     test('Immutable behavior when having multiple texts', () {
       final textUtil = TextSpecUtility.self;
-      final text1 = textUtil.build..maxLines(3);
-      final text2 = textUtil.build..maxLines(5);
+      final text1 = textUtil.builder..maxLines(3);
+      final text2 = textUtil.builder..maxLines(5);
 
       final attr1 = text1.attributeValue!;
       final attr2 = text2.attributeValue!;
@@ -371,7 +371,7 @@ void main() {
     test('Mutate behavior and not on same utility', () {
       final text = TextSpecUtility.self;
 
-      final textValue = text.build;
+      final textValue = text.builder;
       textValue
         ..maxLines(3)
         ..style.color.red()

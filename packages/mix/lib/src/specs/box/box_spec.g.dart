@@ -414,7 +414,7 @@ class BoxSpecUtility<T extends Attribute>
 
   BoxSpecUtility(super.builder, [super.mutable]);
 
-  BoxSpecUtility<T> get build => BoxSpecUtility(attributeBuilder, true);
+  BoxSpecUtility<T> get builder => BoxSpecUtility(attributeBuilder, true);
 
   static BoxSpecUtility<BoxSpecAttribute> get self => BoxSpecUtility((v) => v);
 
@@ -435,7 +435,7 @@ class BoxSpecUtility<T extends Attribute>
     WidgetModifiersDataDto? modifiers,
     AnimatedDataDto? animated,
   }) {
-    return builder(BoxSpecAttribute(
+    return build(BoxSpecAttribute(
       alignment: alignment,
       padding: padding,
       margin: margin,

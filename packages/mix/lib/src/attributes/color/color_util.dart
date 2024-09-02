@@ -12,9 +12,9 @@ import 'material_colors_util.dart';
 @immutable
 abstract base class BaseColorUtility<T extends Attribute>
     extends MixUtility<T, ColorDto> {
-  const BaseColorUtility(super.builder);
+  const BaseColorUtility(super.build);
 
-  T _buildColor(Color color) => builder(ColorDto(color));
+  T _buildColor(Color color) => build(ColorDto(color));
 }
 
 @immutable
@@ -26,7 +26,7 @@ base class FoundationColorUtility<T extends Attribute, C extends Color>
   T call() => _buildColor(color);
   @override
   T directive(ColorDirective directive) =>
-      builder(ColorDto.raw(value: color, directives: [directive]));
+      build(ColorDto.raw(value: color, directives: [directive]));
 }
 
 /// A utility class for building [Attribute] instances from a list of [ColorDto] objects.
@@ -35,14 +35,14 @@ base class FoundationColorUtility<T extends Attribute, C extends Color>
 /// instances by transforming a list of [Color] objects into a list of [ColorDto] objects.
 final class ColorListUtility<T extends Attribute>
     extends MixUtility<T, List<ColorDto>> {
-  const ColorListUtility(super.builder);
+  const ColorListUtility(super.build);
 
   /// Creates an [Attribute] instance from a list of [Color] objects.
   ///
   /// This method maps each [Color] object to a [ColorDto] object and passes the
-  /// resulting list to the [builder] function to create the [Attribute] instance.
+  /// resulting list to the [build] function to create the [Attribute] instance.
   T call(List<Color> colors) {
-    return builder(colors.map((e) => e.toDto()).toList());
+    return build(colors.map((e) => e.toDto()).toList());
   }
 }
 
@@ -59,44 +59,43 @@ final class ColorUtility<T extends Attribute> extends BaseColorUtility<T>
 typedef ColorModifier = Color Function(Color);
 
 base mixin BasicColorsMixin<T extends Attribute> on BaseColorUtility<T> {
-  late final transparent = FoundationColorUtility(builder, Colors.transparent);
+  late final transparent = FoundationColorUtility(build, Colors.transparent);
 
-  late final black = FoundationColorUtility(builder, Colors.black);
+  late final black = FoundationColorUtility(build, Colors.black);
 
-  late final black87 = FoundationColorUtility(builder, Colors.black87);
+  late final black87 = FoundationColorUtility(build, Colors.black87);
 
-  late final black54 = FoundationColorUtility(builder, Colors.black54);
+  late final black54 = FoundationColorUtility(build, Colors.black54);
 
-  late final black45 = FoundationColorUtility(builder, Colors.black45);
+  late final black45 = FoundationColorUtility(build, Colors.black45);
 
-  late final black38 = FoundationColorUtility(builder, Colors.black38);
+  late final black38 = FoundationColorUtility(build, Colors.black38);
 
-  late final black26 = FoundationColorUtility(builder, Colors.black26);
+  late final black26 = FoundationColorUtility(build, Colors.black26);
 
-  late final black12 = FoundationColorUtility(builder, Colors.black12);
+  late final black12 = FoundationColorUtility(build, Colors.black12);
 
-  late final white = FoundationColorUtility(builder, Colors.white);
+  late final white = FoundationColorUtility(build, Colors.white);
 
-  late final white70 = FoundationColorUtility(builder, Colors.white70);
+  late final white70 = FoundationColorUtility(build, Colors.white70);
 
-  late final white60 = FoundationColorUtility(builder, Colors.white60);
+  late final white60 = FoundationColorUtility(build, Colors.white60);
 
-  late final white54 = FoundationColorUtility(builder, Colors.white54);
+  late final white54 = FoundationColorUtility(build, Colors.white54);
 
-  late final white38 = FoundationColorUtility(builder, Colors.white38);
+  late final white38 = FoundationColorUtility(build, Colors.white38);
 
-  late final white30 = FoundationColorUtility(builder, Colors.white30);
+  late final white30 = FoundationColorUtility(build, Colors.white30);
 
-  late final white24 = FoundationColorUtility(builder, Colors.white24);
+  late final white24 = FoundationColorUtility(build, Colors.white24);
 
-  late final white12 = FoundationColorUtility(builder, Colors.white12);
+  late final white12 = FoundationColorUtility(build, Colors.white12);
 
-  late final white10 = FoundationColorUtility(builder, Colors.white10);
+  late final white10 = FoundationColorUtility(build, Colors.white10);
 }
 
 base mixin ColorDirectiveMixin<T extends Attribute> on BaseColorUtility<T> {
-  T directive(ColorDirective directive) =>
-      builder(ColorDto.directive(directive));
+  T directive(ColorDirective directive) => build(ColorDto.directive(directive));
   T withOpacity(double opacity) => directive(OpacityColorDirective(opacity));
   T withAlpha(int alpha) => directive(AlphaColorDirective(alpha));
   T darken(int percentage) => directive(DarkenColorDirective(percentage));

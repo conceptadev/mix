@@ -4,24 +4,24 @@ import 'attribute.dart';
 
 abstract class MixUtility<Attr extends Attribute, Value> {
   @protected
-  final Attr Function(Value) builder;
+  final Attr Function(Value) build;
 
-  const MixUtility(this.builder);
+  const MixUtility(this.build);
 
   static T selfBuilder<T>(T value) => value;
 }
 
 abstract class ScalarUtility<Return extends Attribute, V>
     extends MixUtility<Return, V> {
-  const ScalarUtility(super.builder);
+  const ScalarUtility(super.build);
 
-  Return call(V value) => builder(value);
+  Return call(V value) => build(value);
 }
 
 base class ListUtility<T extends Attribute, V> extends MixUtility<T, List<V>> {
-  const ListUtility(super.builder);
+  const ListUtility(super.build);
 
-  T call(List<V> values) => builder(values);
+  T call(List<V> values) => build(values);
 }
 
 final class StringUtility<T extends Attribute>
@@ -38,10 +38,10 @@ final class DoubleUtility<T extends Attribute>
   const DoubleUtility(super.builder);
 
   /// Creates an [Attribute] instance with a value of 0.
-  T zero() => builder(0);
+  T zero() => build(0);
 
   /// Creates an [Attribute] instance with a value of [double.infinity].
-  T infinity() => builder(double.infinity);
+  T infinity() => build(double.infinity);
 }
 
 /// A utility class for creating [Attribute] instances from [int] values.
@@ -52,11 +52,11 @@ final class IntUtility<T extends Attribute> extends ScalarUtility<T, int> {
   const IntUtility(super.builder);
 
   /// Creates an [Attribute] instance with a value of 0.
-  T zero() => builder(0);
+  T zero() => build(0);
 
   /// Creates an [Attribute] instance from a custom [int] value.
   @override
-  T call(int value) => builder(value);
+  T call(int value) => build(value);
 }
 
 /// A utility class for creating [Attribute] instances from [bool] values.
@@ -67,10 +67,10 @@ final class BoolUtility<T extends Attribute> extends ScalarUtility<T, bool> {
   const BoolUtility(super.builder);
 
   /// Creates an [Attribute] instance with a value of `true`.
-  T on() => builder(true);
+  T on() => build(true);
 
   /// Creates an [Attribute] instance with a value of `false`.
-  T off() => builder(false);
+  T off() => build(false);
 }
 
 /// An abstract utility class for creating [Attribute] instances from [double] values representing sizes.

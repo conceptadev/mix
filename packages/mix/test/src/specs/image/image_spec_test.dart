@@ -124,7 +124,7 @@ void main() {
     test('fluent behavior', () {
       final image = ImageSpecUtility.self;
 
-      final util = image.build
+      final util = image.builder
         ..width(100)
         ..height(200)
         ..color.red()
@@ -158,8 +158,8 @@ void main() {
 
     test('Immutable behavior when having multiple images', () {
       final imageUtil = ImageSpecUtility.self;
-      final image1 = imageUtil.build..width(100);
-      final image2 = imageUtil.build..width(200);
+      final image1 = imageUtil.builder..width(100);
+      final image2 = imageUtil.builder..width(200);
 
       final attr1 = image1.attributeValue!;
       final attr2 = image2.attributeValue!;
@@ -191,7 +191,7 @@ void main() {
     test('Mutate behavior and not on same utility', () {
       final image = ImageSpecUtility.self;
 
-      final imageValue = image.build;
+      final imageValue = image.builder;
       imageValue
         ..width(100)
         ..color.red()

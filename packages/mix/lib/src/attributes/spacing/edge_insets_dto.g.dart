@@ -61,10 +61,10 @@ class EdgeInsetsUtility<T extends Attribute>
   late final right = DoubleUtility((v) => only(right: v));
 
   /// Creates an [Attribute] instance using the [EdgeInsetsDto.all] constructor.
-  T all(double value) => builder(EdgeInsetsDto.all(value));
+  T all(double value) => build(EdgeInsetsDto.all(value));
 
   /// Creates an [Attribute] instance using the [EdgeInsetsDto.none] constructor.
-  T none() => builder(const EdgeInsetsDto.none());
+  T none() => build(const EdgeInsetsDto.none());
 
   EdgeInsetsUtility(super.builder) : super(valueToDto: (v) => v.toDto());
 
@@ -76,7 +76,7 @@ class EdgeInsetsUtility<T extends Attribute>
     double? left,
     double? right,
   }) {
-    return builder(EdgeInsetsDto(
+    return build(EdgeInsetsDto(
       top: top,
       bottom: bottom,
       left: left,
@@ -171,10 +171,10 @@ class EdgeInsetsDirectionalUtility<T extends Attribute>
   late final end = DoubleUtility((v) => only(end: v));
 
   /// Creates an [Attribute] instance using the [EdgeInsetsDirectionalDto.all] constructor.
-  T all(double value) => builder(EdgeInsetsDirectionalDto.all(value));
+  T all(double value) => build(EdgeInsetsDirectionalDto.all(value));
 
   /// Creates an [Attribute] instance using the [EdgeInsetsDirectionalDto.none] constructor.
-  T none() => builder(const EdgeInsetsDirectionalDto.none());
+  T none() => build(const EdgeInsetsDirectionalDto.none());
 
   EdgeInsetsDirectionalUtility(super.builder)
       : super(valueToDto: (v) => v.toDto());
@@ -187,7 +187,7 @@ class EdgeInsetsDirectionalUtility<T extends Attribute>
     double? start,
     double? end,
   }) {
-    return builder(EdgeInsetsDirectionalDto(
+    return build(EdgeInsetsDirectionalDto(
       top: top,
       bottom: bottom,
       start: start,

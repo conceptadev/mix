@@ -60,7 +60,7 @@ abstract class SpecUtility<T extends Attribute, V> extends Attribute {
   SpecUtility(this.attributeBuilder, [this._mutable = false]);
 
   static T selfBuilder<T>(T value) => value;
-  T builder(V v) {
+  T build(V v) {
     final attribute = attributeBuilder(v);
     if (_mutable) {
       attributeValue = (attributeValue?.merge(attribute) ?? attribute) as T;

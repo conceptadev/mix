@@ -221,7 +221,7 @@ class BorderSideUtility<T extends Attribute>
   late final width = DoubleUtility((v) => only(width: v));
 
   /// Creates an [Attribute] instance using the [BorderSideDto.none] constructor.
-  T none() => builder(const BorderSideDto.none());
+  T none() => build(const BorderSideDto.none());
 
   BorderSideUtility(super.builder) : super(valueToDto: (v) => v.toDto());
 
@@ -233,7 +233,7 @@ class BorderSideUtility<T extends Attribute>
     BorderStyle? style,
     double? width,
   }) {
-    return builder(BorderSideDto(
+    return build(BorderSideDto(
       color: color,
       strokeAlign: strokeAlign,
       style: style,

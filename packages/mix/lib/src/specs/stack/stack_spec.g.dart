@@ -237,7 +237,7 @@ class StackSpecUtility<T extends Attribute>
 
   StackSpecUtility(super.builder, [super.mutable]);
 
-  StackSpecUtility<T> get build => StackSpecUtility(attributeBuilder, true);
+  StackSpecUtility<T> get builder => StackSpecUtility(attributeBuilder, true);
 
   static StackSpecUtility<StackSpecAttribute> get self =>
       StackSpecUtility((v) => v);
@@ -252,7 +252,7 @@ class StackSpecUtility<T extends Attribute>
     AnimatedDataDto? animated,
     WidgetModifiersDataDto? modifiers,
   }) {
-    return builder(StackSpecAttribute(
+    return build(StackSpecAttribute(
       alignment: alignment,
       fit: fit,
       textDirection: textDirection,

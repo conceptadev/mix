@@ -81,7 +81,7 @@ class ShadowUtility<T extends Attribute>
     ColorDto? color,
     Offset? offset,
   }) {
-    return builder(ShadowDto(
+    return build(ShadowDto(
       blurRadius: blurRadius,
       color: color,
       offset: offset,
@@ -199,7 +199,7 @@ class BoxShadowUtility<T extends Attribute>
     double? blurRadius,
     double? spreadRadius,
   }) {
-    return builder(BoxShadowDto(
+    return build(BoxShadowDto(
       color: color,
       offset: offset,
       blurRadius: blurRadius,

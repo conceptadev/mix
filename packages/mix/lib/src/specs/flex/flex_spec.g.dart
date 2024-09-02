@@ -332,7 +332,7 @@ class FlexSpecUtility<T extends Attribute>
 
   FlexSpecUtility(super.builder, [super.mutable]);
 
-  FlexSpecUtility<T> get build => FlexSpecUtility(attributeBuilder, true);
+  FlexSpecUtility<T> get builder => FlexSpecUtility(attributeBuilder, true);
 
   static FlexSpecUtility<FlexSpecAttribute> get self =>
       FlexSpecUtility((v) => v);
@@ -352,7 +352,7 @@ class FlexSpecUtility<T extends Attribute>
     AnimatedDataDto? animated,
     WidgetModifiersDataDto? modifiers,
   }) {
-    return builder(FlexSpecAttribute(
+    return build(FlexSpecAttribute(
       crossAxisAlignment: crossAxisAlignment,
       mainAxisAlignment: mainAxisAlignment,
       mainAxisSize: mainAxisSize,

@@ -316,7 +316,7 @@ class ImageSpecUtility<T extends Attribute>
 
   ImageSpecUtility(super.builder, [super.mutable]);
 
-  ImageSpecUtility<T> get build => ImageSpecUtility(attributeBuilder, true);
+  ImageSpecUtility<T> get builder => ImageSpecUtility(attributeBuilder, true);
 
   static ImageSpecUtility<ImageSpecAttribute> get self =>
       ImageSpecUtility((v) => v);
@@ -336,7 +336,7 @@ class ImageSpecUtility<T extends Attribute>
     AnimatedDataDto? animated,
     WidgetModifiersDataDto? modifiers,
   }) {
-    return builder(ImageSpecAttribute(
+    return build(ImageSpecAttribute(
       width: width,
       height: height,
       color: color,
