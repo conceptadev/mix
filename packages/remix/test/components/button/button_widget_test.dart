@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:remix/components/button/button.dart';
-import 'package:remix/components/spinner/spinner.dart';
-
-import '../../utils/extensions/widget_tester.dart';
+import 'package:remix/src/components/button/button.dart';
+import 'package:remix/src/components/spinner/spinner.dart';
 
 void main() {
   group('RxButton', () {
     testWidgets('renders label correctly', (WidgetTester tester) async {
-      await tester.pumpRxComponent(
+      await tester.pumpWidget(
         MaterialApp(
           home: XButton(
             label: 'Test Button',
@@ -22,7 +20,7 @@ void main() {
 
     testWidgets('calls onPressed when tapped', (WidgetTester tester) async {
       bool wasTapped = false;
-      await tester.pumpRxComponent(
+      await tester.pumpWidget(
         MaterialApp(
           home: XButton(
             label: 'Test Button',
@@ -40,7 +38,7 @@ void main() {
     testWidgets('does not call onPressed when disabled',
         (WidgetTester tester) async {
       bool wasTapped = false;
-      await tester.pumpRxComponent(
+      await tester.pumpWidget(
         MaterialApp(
           home: XButton(
             label: 'Test Button',
@@ -58,7 +56,7 @@ void main() {
 
     testWidgets('shows loading indicator when loading',
         (WidgetTester tester) async {
-      await tester.pumpRxComponent(
+      await tester.pumpWidget(
         MaterialApp(
           home: XButton(
             label: 'Test Button',
@@ -68,14 +66,14 @@ void main() {
         ),
       );
 
-      expect(find.byType(RxSpinnerSpecWidget), findsOneWidget);
+      expect(find.byType(XSpinnerSpecWidget), findsOneWidget);
 
       final opacityWidget = tester.widget<Opacity>(find.byType(Opacity));
       expect(opacityWidget.opacity, 0);
     });
 
     testWidgets('renders left icon correctly', (WidgetTester tester) async {
-      await tester.pumpRxComponent(
+      await tester.pumpWidget(
         MaterialApp(
           home: XButton(
             label: 'Test Button',
@@ -89,7 +87,7 @@ void main() {
     });
 
     testWidgets('renders right icon correctly', (WidgetTester tester) async {
-      await tester.pumpRxComponent(
+      await tester.pumpWidget(
         MaterialApp(
           home: XButton(
             label: 'Test Button',
@@ -104,15 +102,15 @@ void main() {
 
     testWidgets('uses custom spinner builder when provided',
         (WidgetTester tester) async {
-      final key = Key('key');
+      const key = Key('key');
 
-      await tester.pumpRxComponent(
+      await tester.pumpWidget(
         MaterialApp(
           home: XButton(
             label: 'Test Button',
             onPressed: () {},
             loading: true,
-            spinnerBuilder: (_, __) {
+            spinnerBuilder: (_) {
               return Container(
                 key: key,
                 width: 20,
@@ -137,7 +135,7 @@ void main() {
     //   //   textStyle: TextStyle(color: Colors.white),
     //   // );
 
-    //   await tester.pumpRxComponent(
+    //   await tester.pumpWidget(
     //     MaterialApp(
     //       home: RxButton(
     //         label: 'Test Button',

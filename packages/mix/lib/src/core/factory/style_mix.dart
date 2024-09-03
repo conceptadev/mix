@@ -176,11 +176,15 @@ class Style with EqualityMixin {
   MixData of(BuildContext context) => MixData.create(context, this);
 
   /// Returns a `AnimatedStyle` from this `Style` with the provided [duration] and [curve].
-  AnimatedStyle animate({Duration? duration, Curve? curve}) {
+  AnimatedStyle animate({
+    Duration? duration,
+    Curve? curve,
+    VoidCallback? onEnd,
+  }) {
     return AnimatedStyle._(
       styles: styles,
       variants: variants,
-      animated: AnimatedData(duration: duration, curve: curve),
+      animated: AnimatedData(duration: duration, curve: curve, onEnd: onEnd),
     );
   }
 
@@ -209,6 +213,14 @@ class Style with EqualityMixin {
     final mergedStyles = styles.merge(style.styles);
     final mergedVariants = variants.merge(style.variants);
 
+    if (style is AnimatedStyle) {
+      return AnimatedStyle._(
+        styles: mergedStyles,
+        variants: mergedVariants,
+        animated: style.animated,
+      );
+    }
+
     return copyWith(styles: mergedStyles, variants: mergedVariants);
   }
 
@@ -218,6 +230,7 @@ class Style with EqualityMixin {
   /// Otherwise, the method merges the attributes of the selected variants into a new `Style` instance.
   ///
   /// Example:
+  /// ```dart
   /// final outlinedVariant = Variant('outlined');
   /// final smallVariant = Variant('small');
   /// final style = Style(
@@ -352,11 +365,12 @@ class AnimatedStyle extends Style {
     Style style, {
     required Duration duration,
     required Curve curve,
+    VoidCallback? onEnd,
   }) {
     return AnimatedStyle._(
       styles: style.styles,
       variants: style.variants,
-      animated: AnimatedData(duration: duration, curve: curve),
+      animated: AnimatedData(duration: duration, curve: curve, onEnd: onEnd),
     );
   }
 

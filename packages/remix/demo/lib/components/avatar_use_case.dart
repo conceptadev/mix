@@ -1,15 +1,14 @@
+import 'package:demo/helpers/knob_builder.dart';
 import 'package:flutter/material.dart';
-import 'package:remix/components/avatar/avatar.dart';
+import 'package:remix/remix.dart';
 import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
-
-import '../helpers/label_variant_builder.dart';
 
 final _key = GlobalKey();
 
 @widgetbook.UseCase(
   name: 'Avatar Component',
-  type: RxAvatar,
+  type: XAvatar,
 )
 Widget buildAvatarUseCase(BuildContext context) {
   final imageUrl = context.knobs.string(
@@ -17,41 +16,21 @@ Widget buildAvatarUseCase(BuildContext context) {
     initialValue: 'https://i.pravatar.cc/150?img=48',
   );
 
-  Widget buildAvatar(AvatarVariant variant) {
-    return Column(
-      children: [
-        Text(variant.name.split('.').last),
-        const SizedBox(height: 10),
-        RxAvatar(
-          image: NetworkImage(imageUrl),
-          fallback: context.knobs.string(
-            label: 'Fallback',
-            initialValue: 'AB',
-          ),
-          variant: variant,
-          size: context.knobs.list(
-            label: 'Size',
-            options: AvatarSize.values,
-            initialOption: AvatarSize.size4,
-            labelBuilder: variantLabelBuilder,
-          ),
-          radius: context.knobs.list(
-            label: 'Radius',
-            options: AvatarRadius.values,
-            initialOption: AvatarRadius.full,
-            labelBuilder: variantLabelBuilder,
-          ),
-        ),
-      ],
-    );
-  }
-
   return KeyedSubtree(
     key: _key,
-    child: Wrap(
-      spacing: 12,
-      runSpacing: 12,
-      children: AvatarVariant.values.map(buildAvatar).toList(),
+    child: Center(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          XAvatar(
+            variants: [
+              context.knobs.variant(AvatarThemeVariant.values),
+            ],
+            image: imageUrl.isNotEmpty ? NetworkImage(imageUrl) : null,
+            fallbackBuilder: (spec) => spec('CA'),
+          ),
+        ],
+      ),
     ),
   );
 }

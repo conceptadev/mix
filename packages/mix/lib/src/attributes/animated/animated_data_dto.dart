@@ -8,16 +8,22 @@ import 'animated_data.dart';
 class AnimatedDataDto extends Dto<AnimatedData> {
   final Duration? duration;
   final Curve? curve;
+  final VoidCallback? onEnd;
 
-  const AnimatedDataDto({required this.duration, required this.curve});
+  const AnimatedDataDto({
+    required this.duration,
+    required this.curve,
+    this.onEnd,
+  });
 
   const AnimatedDataDto.withDefaults()
       : duration = kDefaultAnimationDuration,
-        curve = Curves.linear;
+        curve = Curves.linear,
+        onEnd = null;
 
   @override
   AnimatedData resolve(MixData mix) {
-    return AnimatedData(duration: duration, curve: curve);
+    return AnimatedData(duration: duration, curve: curve, onEnd: onEnd);
   }
 
   @override

@@ -1,30 +1,30 @@
 {
   "folders": [
-		{
-			"name": "mix",
-			"path": "packages/mix"
-		},
-		{
-			"name": "root",
-			"path": "."
-		},
-		{
-			"name": "mix_generator",
-			"path": "packages/mix_generator"
-		},
-		{
-			"name": "mix_annotations",
-			"path": "packages/mix_annotations"
-		},
-		{
-			"name": "remix",
-			"path": "packages/remix"
-		},
-		{
-			"name": "mix_animate",
-			"path": "packages/mix_animate"
-		}
-	],
+	{
+		"name": "root",
+		"path": "."
+	},
+	{
+		"name": "mix",
+		"path": "packages/mix"
+	},
+	{
+		"name": "mix_generator",
+		"path": "packages/mix_generator"
+	},
+	{
+		"name": "mix_annotations",
+		"path": "packages/mix_annotations"
+	},
+	{
+		"name": "remix",
+		"path": "packages/remix"
+	},
+	{
+		"name": "mix_animate",
+		"path": "packages/mix_animate"
+	}
+],
   "settings": {
 	"search.exclude": {
 		".fvm/**": true,

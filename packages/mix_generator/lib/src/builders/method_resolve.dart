@@ -1,6 +1,6 @@
-import 'package:mix_generator/src/helpers/builder_utils.dart';
-import 'package:mix_generator/src/helpers/field_info.dart';
-import 'package:mix_generator/src/helpers/helpers.dart';
+import '../helpers/builder_utils.dart';
+import '../helpers/field_info.dart';
+import '../helpers/helpers.dart';
 
 String resolveMethodBuilder(
   ClassInfo instance, {
@@ -14,20 +14,21 @@ String resolveMethodBuilder(
   final resolveStatements = buildConstructorParams(fields, (field) {
     final propName = field.name;
     var fieldName = isInternalRef ? field.asInternalRef : field.name;
-    var nullableSign = '?';
 
     final fallbackExpression =
         field.nullable && withDefaults ? '?? $kDefaultValueRef.$propName' : '';
 
     if (field.hasDto) {
+      const nullableSign = '?';
+
       if (field.isListType) {
         return '$fieldName$nullableSign.map((e) => e.resolve(mix)).toList() $fallbackExpression';
-      } else {
-        if (field.dtoType == 'AnimatedDataDto') {
-          return '$fieldName$nullableSign.resolve(mix) ?? mix.animation';
-        }
-        return '$fieldName$nullableSign.resolve(mix) $fallbackExpression';
       }
+      if (field.dtoType == 'AnimatedDataDto') {
+        return '$fieldName$nullableSign.resolve(mix) ?? mix.animation';
+      }
+
+      return '$fieldName$nullableSign.resolve(mix) $fallbackExpression';
     }
 
     return '$fieldName $fallbackExpression';

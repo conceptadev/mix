@@ -3,6 +3,51 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2024-08-22
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`mix` - `v1.4.6`](#mix---v146)
+ - [`mix_annotations` - `v0.3.0`](#mix_annotations---v030)
+ - [`mix_generator` - `v0.3.0`](#mix_generator---v030)
+ - [`remix` - `v0.0.2+6`](#remix---v0026)
+
+Packages with dependency updates only:
+
+> Packages listed below depend on other packages in this workspace that have had changes. Their versions have been incremented to bump the minimum dependency versions of the packages they depend upon in this project.
+
+ - `remix` - `v0.0.2+6`
+
+---
+
+#### `mix` - `v1.4.6`
+
+ - **FIX**(docs): fix fn level docs for Style::applyVariants (#460).
+ - **FIX**: Shadow list animation (#445).
+ - **FIX**: SpecModifiers were taking a long time to animate. (#457).
+ - **FEAT**: Create mouse cursor Decorator (#263).
+ - **FEAT**: Add parameter onEnd for AnimatedStyle (#458).
+ - **FEAT**: `SingleChildScrollView` widget modifier (#427).
+ - **FEAT**: Remix improvements and further improvements (#410).
+
+#### `mix_annotations` - `v0.3.0`
+
+ - **FIX**: SpecModifiers were taking a long time to animate. (#457).
+
+#### `mix_generator` - `v0.3.0`
+
+ - **FIX**: SpecModifiers were taking a long time to animate. (#457).
+ - **FIX**: Shadow list animation (#445).
+
+
 ## 2024-08-08
 
 ### Changes

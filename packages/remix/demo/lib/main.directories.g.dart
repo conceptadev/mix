@@ -17,8 +17,9 @@ import 'package:demo/components/card_use_case.dart' as _i6;
 import 'package:demo/components/checkbox_use_case.dart' as _i7;
 import 'package:demo/components/progress_use_case.dart' as _i8;
 import 'package:demo/components/radio_use_case.dart' as _i9;
-import 'package:demo/components/spinner_use_case.dart' as _i10;
-import 'package:demo/components/switch_use_case.dart' as _i11;
+import 'package:demo/components/select_use_case.dart' as _i10;
+import 'package:demo/components/spinner_use_case.dart' as _i11;
+import 'package:demo/components/switch_use_case.dart' as _i12;
 import 'package:widgetbook/widgetbook.dart' as _i1;
 
 final directories = <_i1.WidgetbookNode>[
@@ -29,7 +30,7 @@ final directories = <_i1.WidgetbookNode>[
         name: 'avatar',
         children: [
           _i1.WidgetbookLeafComponent(
-            name: 'RxAvatar',
+            name: 'XAvatar',
             useCase: _i1.WidgetbookUseCase(
               name: 'Avatar Component',
               builder: _i2.buildAvatarUseCase,
@@ -41,7 +42,7 @@ final directories = <_i1.WidgetbookNode>[
         name: 'badge',
         children: [
           _i1.WidgetbookLeafComponent(
-            name: 'RxBadge',
+            name: 'XBadge',
             useCase: _i1.WidgetbookUseCase(
               name: 'Badge Component',
               builder: _i3.buildAvatarUseCase,
@@ -53,7 +54,7 @@ final directories = <_i1.WidgetbookNode>[
         name: 'button',
         children: [
           _i1.WidgetbookLeafComponent(
-            name: 'RxButton',
+            name: 'XButton',
             useCase: _i1.WidgetbookUseCase(
               name: 'Button Component',
               builder: _i4.buildButtonUseCase,
@@ -65,7 +66,7 @@ final directories = <_i1.WidgetbookNode>[
         name: 'callout',
         children: [
           _i1.WidgetbookLeafComponent(
-            name: 'RxCallout',
+            name: 'XCallout',
             useCase: _i1.WidgetbookUseCase(
               name: 'Callout Component',
               builder: _i5.buildCalloutUseCase,
@@ -76,18 +77,12 @@ final directories = <_i1.WidgetbookNode>[
       _i1.WidgetbookFolder(
         name: 'card',
         children: [
-          _i1.WidgetbookComponent(
-            name: 'RxCard',
-            useCases: [
-              _i1.WidgetbookUseCase(
-                name: 'Card Component',
-                builder: _i6.buildCard,
-              ),
-              _i1.WidgetbookUseCase(
-                name: 'With button',
-                builder: _i6.buildRadioUseCase,
-              ),
-            ],
+          _i1.WidgetbookLeafComponent(
+            name: 'XCard',
+            useCase: _i1.WidgetbookUseCase(
+              name: 'Card Component',
+              builder: _i6.buildCard,
+            ),
           )
         ],
       ),
@@ -95,7 +90,7 @@ final directories = <_i1.WidgetbookNode>[
         name: 'checkbox',
         children: [
           _i1.WidgetbookLeafComponent(
-            name: 'RxCheckbox',
+            name: 'XCheckbox',
             useCase: _i1.WidgetbookUseCase(
               name: 'Checkbox Component',
               builder: _i7.buildCheckboxUseCase,
@@ -107,7 +102,7 @@ final directories = <_i1.WidgetbookNode>[
         name: 'progress',
         children: [
           _i1.WidgetbookLeafComponent(
-            name: 'RxProgress',
+            name: 'XProgress',
             useCase: _i1.WidgetbookUseCase(
               name: 'Progress Component',
               builder: _i8.buildProgressUseCase,
@@ -119,7 +114,7 @@ final directories = <_i1.WidgetbookNode>[
         name: 'radio',
         children: [
           _i1.WidgetbookLeafComponent(
-            name: 'RxRadio',
+            name: 'XRadio',
             useCase: _i1.WidgetbookUseCase(
               name: 'Radio Component',
               builder: _i9.buildRadioUseCase,
@@ -128,13 +123,25 @@ final directories = <_i1.WidgetbookNode>[
         ],
       ),
       _i1.WidgetbookFolder(
+        name: 'select',
+        children: [
+          _i1.WidgetbookLeafComponent(
+            name: 'XSelect',
+            useCase: _i1.WidgetbookUseCase(
+              name: 'Select Component',
+              builder: _i10.buildSelect,
+            ),
+          )
+        ],
+      ),
+      _i1.WidgetbookFolder(
         name: 'spinner',
         children: [
           _i1.WidgetbookLeafComponent(
-            name: 'RxSpinner',
+            name: 'XSpinner',
             useCase: _i1.WidgetbookUseCase(
               name: 'Spinner Component',
-              builder: _i10.buildSpinnerUseCase,
+              builder: _i11.buildSpinnerUseCase,
             ),
           )
         ],
@@ -143,10 +150,10 @@ final directories = <_i1.WidgetbookNode>[
         name: 'switch',
         children: [
           _i1.WidgetbookLeafComponent(
-            name: 'RxSwitch',
+            name: 'XSwitch',
             useCase: _i1.WidgetbookUseCase(
               name: 'Switch Component',
-              builder: _i11.buildSwitchUseCase,
+              builder: _i12.buildSwitchUseCase,
             ),
           )
         ],

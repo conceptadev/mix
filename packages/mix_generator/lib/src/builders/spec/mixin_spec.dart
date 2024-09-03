@@ -1,12 +1,12 @@
 import 'package:mix_annotations/mix_annotations.dart';
-import 'package:mix_generator/src/builders/getter_self_reference.dart';
-import 'package:mix_generator/src/builders/method_copy_with.dart';
-import 'package:mix_generator/src/builders/method_debug_fill_properties.dart';
-import 'package:mix_generator/src/builders/method_equality.dart';
-import 'package:mix_generator/src/builders/method_lerp_builder.dart';
-import 'package:mix_generator/src/helpers/builder_utils.dart';
-import 'package:mix_generator/src/helpers/field_info.dart';
-import 'package:mix_generator/src/helpers/helpers.dart';
+import '../getter_self_reference.dart';
+import '../method_copy_with.dart';
+import '../method_debug_fill_properties.dart';
+import '../method_equality.dart';
+import '../method_lerp_builder.dart';
+import '../../helpers/builder_utils.dart';
+import '../../helpers/field_info.dart';
+import '../../helpers/helpers.dart';
 
 String specMixin(ClassBuilderContext<MixableSpec> context) {
   final specClass =
@@ -66,6 +66,7 @@ String _staticMethodFromBuilder(ClassBuilderContext<MixableSpec> context) {
   final attributeName = context.attributeName;
   final constructorRef = context.constructorRef;
   final constDef = context.isConst ? 'const ' : '';
+
   return '''
 static $specName from(MixData mix) {
    return mix.attributeOf<$attributeName>()?.resolve(mix) ?? $constDef$specName$constructorRef();
@@ -73,9 +74,7 @@ static $specName from(MixData mix) {
 ''';
 }
 
-String _staticMethodOfBuilder(
-  ClassBuilderContext<MixableSpec> context,
-) {
+String _staticMethodOfBuilder(ClassBuilderContext<MixableSpec> context) {
   final specName = context.name;
 
   final generatedName = context.generatedName;

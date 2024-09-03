@@ -1,52 +1,52 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
-import 'package:remix/components/callout/callout.dart';
-
-import '../../utils/extensions/widget_tester.dart';
+import 'package:remix/src/components/callout/callout.dart';
 
 void main() {
-  group('RxCallout', () {
+  group('XCallout', () {
     final $callout = CalloutSpecUtility.self;
 
     testWidgets('renders with custom label', (WidgetTester tester) async {
-      await tester.pumpRxComponent(
-        RxCallout(text: 'Test Callout'),
+      await tester.pumpWidget(
+        const MaterialApp(home: XCallout(text: 'Test Callout')),
       );
 
       expect(find.text('Test Callout'), findsOneWidget);
-      expect(find.byType(RxBlankCallout), findsOneWidget);
+      expect(find.byType(XCallout), findsOneWidget);
     });
 
     testWidgets('renders with custom icon', (WidgetTester tester) async {
-      await tester.pumpRxComponent(
-        RxCallout(
-          text: 'Test Callout',
-          icon: Icons.info,
+      const icon = Icons.abc_rounded;
+      await tester.pumpWidget(
+        const MaterialApp(
+          home: XCallout(
+            text: 'Test Callout',
+            icon: icon,
+          ),
         ),
       );
 
-      expect(find.byIcon(Icons.info), findsOneWidget);
+      expect(find.byIcon(icon), findsOneWidget);
     });
 
     testWidgets('applies custom style', (WidgetTester tester) async {
-      final color = Colors.red;
+      const color = Colors.red;
 
       final customStyle = Style(
-        CalloutVariant.surface(
-          $callout.container.color(color),
+        $callout.container.color(color),
+      );
+
+      await tester.pumpWidget(
+        MaterialApp(
+          home: XCallout(
+            text: 'Test Callout',
+            style: customStyle,
+          ),
         ),
       );
 
-      await tester.pumpRxComponent(
-        RxCallout(
-          text: 'Test Callout',
-          variant: CalloutVariant.surface,
-          style: customStyle,
-        ),
-      );
-
-      final badgeFinder = find.byType(RxCallout);
+      final badgeFinder = find.byType(XCallout);
       expect(badgeFinder, findsOneWidget);
 
       final container = find.descendant(
@@ -57,20 +57,6 @@ void main() {
 
       final containerWidget = tester.widget<Container>(container);
       expect((containerWidget.decoration! as BoxDecoration).color, color);
-    });
-
-    testWidgets('uses different variants', (WidgetTester tester) async {
-      for (final variant in CalloutVariant.values) {
-        await tester.pumpRxComponent(
-          RxCallout(
-            text: 'Test Callout',
-            variant: variant,
-          ),
-        );
-
-        final callout = tester.widget<RxCallout>(find.byType(RxCallout));
-        expect(callout.variant, variant);
-      }
     });
   });
 }

@@ -29,30 +29,62 @@ class HotReload extends StatelessWidget {
             ),
           ],
           initialTheme: WidgetbookTheme(
-            name: 'Dark',
-            data: ThemeData.dark(),
+            name: 'Light',
+            data: ThemeData.light(),
           ),
         ),
         BuilderAddon(
-          name: 'Remix Tokens',
+          name: 'brightness',
           builder: (context, child) {
             final isDarkTheme = Theme.of(context).brightness == Brightness.dark;
-            return RemixTokens(
-              data: isDarkTheme ? RemixTokens.dark : RemixTokens.light,
-              child: Container(
-                color: isDarkTheme ? Colors.black87 : Colors.white,
-                child: Center(child: child),
-              ),
+            return Container(
+              color: isDarkTheme ? Colors.black87 : Colors.white,
+              child: Center(child: child),
             );
           },
         ),
+        // RemixComponentThemeAddon(
+        //   themes: [
+        //     WidgetbookTheme(
+        //       name: 'Remix',
+        //       data: RemixComponentTheme.remix(),
+        //     ),
+        //     WidgetbookTheme(
+        //       name: 'Base',
+        //       data: RemixComponentTheme.base(),
+        //     ),
+        //     const WidgetbookTheme(
+        //       name: 'Blank',
+        //       data: RemixComponentTheme.blank(),
+        //     ),
+        //   ],
+        // ),
         InspectorAddon(),
       ],
-      appBuilder: (context, child) => MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: Scaffold(body: Center(child: child)),
-      ),
+      appBuilder: (context, child) => App(child: child),
       directories: directories,
+    );
+  }
+}
+
+class App extends StatelessWidget {
+  const App({
+    super.key,
+    required this.child,
+  });
+
+  final Widget child;
+  @override
+  Widget build(BuildContext context) {
+    return RemixTheme(
+      tokens: light,
+      components: RemixComponentTheme.remix(),
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: Scaffold(
+          body: Center(child: child),
+        ),
+      ),
     );
   }
 }

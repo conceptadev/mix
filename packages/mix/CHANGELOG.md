@@ -1,3 +1,13 @@
+## 1.4.6
+
+ - **FIX**(docs): fix fn level docs for Style::applyVariants (#460).
+ - **FIX**: Shadow list animation (#445).
+ - **FIX**: SpecModifiers were taking a long time to animate. (#457).
+ - **FEAT**: Create mouse cursor Decorator (#263).
+ - **FEAT**: Add parameter onEnd for AnimatedStyle (#458).
+ - **FEAT**: `SingleChildScrollView` widget modifier (#427).
+ - **FEAT**: Remix improvements and further improvements (#410).
+
 ## 1.4.5
 
  - **FIX**: HitTestBehavior when there is an Interectable in the tree (#437).

@@ -8,9 +8,8 @@ class LocalFileComparatorWithThreshold extends LocalFileComparator {
   /// Ranges from 0 to 1, both inclusive.
   final double threshold;
 
-  LocalFileComparatorWithThreshold(Uri testFile, this.threshold)
-      : assert(threshold >= 0 && threshold <= 1),
-        super(testFile);
+  LocalFileComparatorWithThreshold(super.testFile, this.threshold)
+      : assert(threshold >= 0 && threshold <= 1);
 
   /// Copy of [LocalFileComparator]'s [compare] method, except for the fact that
   /// it checks if the [ComparisonResult.diffPercent] is not greater than

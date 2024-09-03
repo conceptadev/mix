@@ -4,9 +4,9 @@
 Utility for setting `TextOverflow` values.
 
 ```dart
-text.overflow.clip();
-text.overflow.ellipsis();
-text.overflow.fade();
+$text.overflow.clip();
+$text.overflow.ellipsis();
+$text.overflow.fade();
 ```
 
 ## $text.strutStyle

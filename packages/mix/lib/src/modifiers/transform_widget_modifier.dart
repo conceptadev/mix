@@ -1,9 +1,10 @@
 // ignore_for_file: prefer-named-boolean-parameters
 
+import 'dart:math' as math;
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:mix_annotations/mix_annotations.dart';
-import 'dart:math' as math;
 
 import '../core/attribute.dart';
 import '../core/factory/mix_data.dart';
@@ -40,6 +41,15 @@ final class TransformModifierSpec
 
 final class TransformModifierSpecUtility<T extends Attribute>
     extends MixUtility<T, TransformModifierSpecAttribute> {
+  late final rotate = TransformRotateModifierSpecUtility(
+    (value) => builder(
+      TransformModifierSpecAttribute(
+        transform: value,
+        alignment: Alignment.center,
+      ),
+    ),
+  );
+
   TransformModifierSpecUtility(super.builder);
 
   T _flip(bool x, bool y) => builder(
@@ -65,13 +75,6 @@ final class TransformModifierSpecUtility<T extends Attribute>
           alignment: Alignment.center,
         ),
       );
-
-  late final rotate = TransformRotateModifierSpecUtility(
-    (value) => TransformModifierSpecAttribute(
-      transform: value,
-      alignment: Alignment.center,
-    ),
-  );
 }
 
 final class TransformRotateModifierSpecUtility<T extends Attribute>

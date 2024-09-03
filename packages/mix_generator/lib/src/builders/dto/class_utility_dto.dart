@@ -1,6 +1,6 @@
 import 'package:mix_annotations/mix_annotations.dart';
-import 'package:mix_generator/src/builders/utility_class_builder.dart';
-import 'package:mix_generator/src/helpers/field_info.dart';
+import '../utility_class_builder.dart';
+import '../../helpers/field_info.dart';
 
 String dtoUtilityClass(ClassBuilderContext<MixableDto> context) {
   final className = context.name;
