@@ -233,9 +233,13 @@ class SelectSpecUtility<T extends Attribute>
   /// Utility for defining [SelectSpecAttribute.animated]
   late final animated = AnimatedUtility((v) => only(animated: v));
 
-  SelectSpecUtility(super.builder);
+  SelectSpecUtility(super.builder, {super.mutable});
 
-  static final self = SelectSpecUtility((v) => v);
+  SelectSpecUtility<T> get chain =>
+      SelectSpecUtility(attributeBuilder, mutable: true);
+
+  static SelectSpecUtility<SelectSpecAttribute> get self =>
+      SelectSpecUtility((v) => v);
 
   /// Returns a new [SelectSpecAttribute] with the specified properties.
   @override
@@ -496,9 +500,13 @@ class SelectMenuSpecUtility<T extends Attribute>
   /// Utility for defining [SelectMenuSpecAttribute.animated]
   late final animated = AnimatedUtility((v) => only(animated: v));
 
-  SelectMenuSpecUtility(super.builder);
+  SelectMenuSpecUtility(super.builder, {super.mutable});
 
-  static final self = SelectMenuSpecUtility((v) => v);
+  SelectMenuSpecUtility<T> get chain =>
+      SelectMenuSpecUtility(attributeBuilder, mutable: true);
+
+  static SelectMenuSpecUtility<SelectMenuSpecAttribute> get self =>
+      SelectMenuSpecUtility((v) => v);
 
   /// Returns a new [SelectMenuSpecAttribute] with the specified properties.
   @override
@@ -773,9 +781,13 @@ class SelectButtonSpecUtility<T extends Attribute>
   /// Utility for defining [SelectButtonSpecAttribute.animated]
   late final animated = AnimatedUtility((v) => only(animated: v));
 
-  SelectButtonSpecUtility(super.builder);
+  SelectButtonSpecUtility(super.builder, {super.mutable});
 
-  static final self = SelectButtonSpecUtility((v) => v);
+  SelectButtonSpecUtility<T> get chain =>
+      SelectButtonSpecUtility(attributeBuilder, mutable: true);
+
+  static SelectButtonSpecUtility<SelectButtonSpecAttribute> get self =>
+      SelectButtonSpecUtility((v) => v);
 
   /// Returns a new [SelectButtonSpecAttribute] with the specified properties.
   @override
@@ -1053,9 +1065,13 @@ class SelectMenuItemSpecUtility<T extends Attribute>
   /// Utility for defining [SelectMenuItemSpecAttribute.animated]
   late final animated = AnimatedUtility((v) => only(animated: v));
 
-  SelectMenuItemSpecUtility(super.builder);
+  SelectMenuItemSpecUtility(super.builder, {super.mutable});
 
-  static final self = SelectMenuItemSpecUtility((v) => v);
+  SelectMenuItemSpecUtility<T> get chain =>
+      SelectMenuItemSpecUtility(attributeBuilder, mutable: true);
+
+  static SelectMenuItemSpecUtility<SelectMenuItemSpecAttribute> get self =>
+      SelectMenuItemSpecUtility((v) => v);
 
   /// Returns a new [SelectMenuItemSpecAttribute] with the specified properties.
   @override

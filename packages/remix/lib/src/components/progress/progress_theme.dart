@@ -32,12 +32,14 @@ Style get _surfaceVariant {
   return Style(
     _track.color.$neutral(3),
     _fill.color.$accent(9),
-    _outerContainer.border.width(1),
-    _outerContainer.border.color.$neutralAlpha(6),
+    _outerContainer.chain
+      ..border.width(1)
+      ..border.color.$neutralAlpha(6),
     $on.dark(
-      $progress.track.color.$neutral(12),
-      _outerContainer.border.color.$white(),
-      _outerContainer.border.color.withOpacity(0.1),
+      _track.color.$neutral(12),
+      _outerContainer.chain
+        ..border.color.$white()
+        ..border.color.withOpacity(0.1),
     ),
   );
 }

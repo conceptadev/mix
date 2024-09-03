@@ -204,9 +204,13 @@ class SwitchSpecUtility<T extends Attribute>
   /// Utility for defining [SwitchSpecAttribute.modifiers]
   late final wrap = SpecModifierUtility((v) => only(modifiers: v));
 
-  SwitchSpecUtility(super.builder);
+  SwitchSpecUtility(super.builder, {super.mutable});
 
-  static final self = SwitchSpecUtility((v) => v);
+  SwitchSpecUtility<T> get chain =>
+      SwitchSpecUtility(attributeBuilder, mutable: true);
+
+  static SwitchSpecUtility<SwitchSpecAttribute> get self =>
+      SwitchSpecUtility((v) => v);
 
   /// Returns a new [SwitchSpecAttribute] with the specified properties.
   @override
