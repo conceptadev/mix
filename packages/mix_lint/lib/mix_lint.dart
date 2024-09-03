@@ -18,11 +18,11 @@ class _MixLint extends PluginBase {
 
   @override
   List<LintRule> getLintRules(CustomLintConfigs configs) => [
-        AttributesOrdering(),
-        AvoidDefiningTokensOrVariantsWithinStyle(),
-        AvoidDefiningTokensWithinThemeData(),
-        AvoidVariantInsideContextVariant(),
-        AvoidEmptyVariants(),
+        const AttributesOrdering(),
+        const AvoidDefiningTokensOrVariantsWithinStyle(),
+        const AvoidDefiningTokensWithinThemeData(),
+        const AvoidVariantInsideContextVariant(),
+        const AvoidEmptyVariants(),
         MaxNumberOfAttributesPerStyle.fromConfig(configs),
       ];
 }
