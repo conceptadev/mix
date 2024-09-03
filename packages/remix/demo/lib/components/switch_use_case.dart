@@ -1,3 +1,4 @@
+import 'package:demo/helpers/knob_builder.dart';
 import 'package:demo/helpers/use_case_state.dart';
 import 'package:flutter/material.dart';
 import 'package:remix/remix.dart';
@@ -17,6 +18,7 @@ Widget buildSwitchUseCase(BuildContext context) {
     key: _key,
     child: Center(
       child: XSwitch(
+        variants: [context.knobs.variant(XSwitchThemeVariant.values)],
         value: context.knobs.boolean(label: 'Toggle', initialValue: true),
         disabled: context.knobs.boolean(label: 'Disabled', initialValue: false),
         onChanged: (value) => knobState.updateKnob('Toggle', value),

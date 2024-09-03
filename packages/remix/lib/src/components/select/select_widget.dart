@@ -17,25 +17,17 @@ class XSelect<T> extends StatefulWidget {
     required this.onChanged,
     required this.button,
     required this.items,
+    this.variants = const [],
     this.style = const Style.empty(),
-  }) : _blank = false;
-
-  const XSelect.blank({
-    super.key,
-    required this.value,
-    required this.onChanged,
-    required this.button,
-    required this.items,
-    required this.style,
-  }) : _blank = true;
+  });
 
   final T value;
   final Style style;
+  final List<Variant> variants;
   final ValueChanged<T> onChanged;
   final XSelectButtonBuilder button;
 
   final List<XSelectMenuItem<T>> items;
-  final bool _blank;
 
   @override
   State<XSelect> createState() => XSelectState<T>();
@@ -69,9 +61,12 @@ class XSelectState<T> extends State<XSelect<T>>
 
   @override
   Widget build(BuildContext context) {
+    final styleFromTheme = RemixThemeProvider.maybeOf(context)?.select;
+
     return SpecBuilder(
-      style:
-          widget._blank ? widget.style : XSelectStyle.base.merge(widget.style),
+      style: (styleFromTheme ?? XSelectStyle.base)
+          .merge(widget.style)
+          .applyVariants(widget.variants),
       builder: (context) {
         final button = SelectSpec.of(context).button;
         final position = SelectSpec.of(context).position;
@@ -94,17 +89,18 @@ class XSelectState<T> extends State<XSelect<T>>
                       position.followerAnchor.resolve(TextDirection.ltr),
                   child: SpecBuilder(
                     controller: _stateController,
-                    style: widget._blank
-                        ? widget.style
-                        : XSelectStyle.base.animate(
-                            duration: _baseAnimation.duration,
-                            curve: _baseAnimation.curve,
-                            onEnd: () {
-                              if (_stateController.selected == false) {
-                                _tooltipController.hide();
-                              }
-                            },
-                          ),
+                    style: (styleFromTheme ?? XSelectStyle.base)
+                        .merge(widget.style)
+                        .applyVariants(widget.variants)
+                        .animate(
+                          duration: _baseAnimation.duration,
+                          curve: _baseAnimation.curve,
+                          onEnd: () {
+                            if (_stateController.selected == false) {
+                              _tooltipController.hide();
+                            }
+                          },
+                        ),
                     builder: (context) {
                       final select = SelectSpec.of(context);
 
@@ -126,14 +122,13 @@ class XSelectState<T> extends State<XSelect<T>>
                                 hide();
                               },
                               child: SpecBuilder(
-                                style: widget._blank
-                                    ? widget.style
-                                    : XSelectStyle.base
-                                        .merge(widget.style)
-                                        .animate(
-                                          duration: _baseAnimation.duration,
-                                          curve: _baseAnimation.curve,
-                                        ),
+                                style: (styleFromTheme ?? XSelectStyle.base)
+                                    .merge(widget.style)
+                                    .applyVariants(widget.variants)
+                                    .animate(
+                                      duration: _baseAnimation.duration,
+                                      curve: _baseAnimation.curve,
+                                    ),
                                 builder: (context) {
                                   return item.child;
                                 },

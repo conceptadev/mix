@@ -3,9 +3,12 @@ import 'package:flutter/widgets.dart';
 import 'package:mix/mix.dart';
 import 'package:mix_annotations/mix_annotations.dart';
 
+import '../../theme/remix_theme.dart';
+import '../../theme/remix_tokens.dart';
+
 part 'switch.g.dart';
 part 'switch_style.dart';
-
+part 'switch_theme.dart';
 part 'switch_widget.dart';
 
 @MixableSpec()

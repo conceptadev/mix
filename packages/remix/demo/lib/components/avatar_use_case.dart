@@ -1,5 +1,5 @@
+import 'package:demo/helpers/knob_builder.dart';
 import 'package:flutter/material.dart';
-
 import 'package:remix/remix.dart';
 import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
@@ -19,9 +19,17 @@ Widget buildAvatarUseCase(BuildContext context) {
   return KeyedSubtree(
     key: _key,
     child: Center(
-      child: XAvatar(
-        image: imageUrl.isNotEmpty ? NetworkImage(imageUrl) : null,
-        fallbackBuilder: (spec) => spec('CA'),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          XAvatar(
+            variants: [
+              context.knobs.variant(AvatarThemeVariant.values),
+            ],
+            image: imageUrl.isNotEmpty ? NetworkImage(imageUrl) : null,
+            fallbackBuilder: (spec) => spec('CA'),
+          ),
+        ],
       ),
     ),
   );

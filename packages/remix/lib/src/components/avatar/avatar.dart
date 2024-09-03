@@ -4,10 +4,15 @@ import 'package:mix_annotations/mix_annotations.dart';
 
 import '../../helpers/component_builder.dart';
 import '../../helpers/utility_extension.dart';
+import '../../theme/remix_theme.dart';
+import '../../theme/remix_tokens.dart';
 
 part 'avatar.g.dart';
 part 'avatar_style.dart';
+part 'avatar_theme.dart';
 part 'avatar_widget.dart';
+
+final $avatar = AvatarSpecUtility.self;
 
 @MixableSpec()
 base class AvatarSpec extends Spec<AvatarSpec> with _$AvatarSpec {
