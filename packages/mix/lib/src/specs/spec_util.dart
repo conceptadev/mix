@@ -1,3 +1,4 @@
+import '../core/modifier.dart';
 import '../modifiers/widget_modifiers_util.dart';
 import '../variants/context_variant_util/on_util.dart';
 import 'box/box_spec.dart';
@@ -7,25 +8,26 @@ import 'image/image_spec.dart';
 import 'stack/stack_spec.dart';
 import 'text/text_spec.dart';
 
-final _mixUtilities = MixUtilities();
+const _mixUtility = MixUtilities();
 
-final $box = _mixUtilities.box;
-final $flex = _mixUtilities.flex;
-final $image = _mixUtilities.image;
-final $icon = _mixUtilities.icon;
-final $text = _mixUtilities.text;
-final $stack = _mixUtilities.stack;
-final $with = _mixUtilities.mod;
-final $on = _mixUtilities.on;
+BoxSpecUtility<BoxSpecAttribute> get $box => _mixUtility.box;
+FlexSpecUtility<FlexSpecAttribute> get $flex => _mixUtility.flex;
+ImageSpecUtility<ImageSpecAttribute> get $image => _mixUtility.image;
+IconSpecUtility<IconSpecAttribute> get $icon => _mixUtility.icon;
+TextSpecUtility<TextSpecAttribute> get $text => _mixUtility.text;
+StackSpecUtility<StackSpecAttribute> get $stack => _mixUtility.stack;
+OnContextVariantUtility get $on => _mixUtility.on;
+WithModifierUtility<WidgetModifierSpecAttribute> get $with => _mixUtility.mod;
 
 class MixUtilities {
-  final box = BoxSpecUtility.self;
-  final flex = FlexSpecUtility.self;
-  final image = ImageSpecUtility.self;
-  final icon = IconSpecUtility.self;
-  final text = TextSpecUtility.self;
-  final stack = StackSpecUtility.self;
-  final on = OnContextVariantUtility.self;
-  final mod = WithModifierUtility.self;
-  MixUtilities();
+  const MixUtilities();
+  BoxSpecUtility<BoxSpecAttribute> get box => BoxSpecUtility.self;
+  FlexSpecUtility<FlexSpecAttribute> get flex => FlexSpecUtility.self;
+  ImageSpecUtility<ImageSpecAttribute> get image => ImageSpecUtility.self;
+  IconSpecUtility<IconSpecAttribute> get icon => IconSpecUtility.self;
+  TextSpecUtility<TextSpecAttribute> get text => TextSpecUtility.self;
+  StackSpecUtility<StackSpecAttribute> get stack => StackSpecUtility.self;
+  OnContextVariantUtility get on => OnContextVariantUtility.self;
+  WithModifierUtility<WidgetModifierSpecAttribute> get mod =>
+      WithModifierUtility.self;
 }

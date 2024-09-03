@@ -10,6 +10,7 @@ import '../../specs/spec_util.dart';
 import '../../variants/variant_attribute.dart';
 import '../attribute.dart';
 import '../attributes_map.dart';
+import '../spec.dart';
 import '../variant.dart';
 import 'mix_data.dart';
 
@@ -107,6 +108,12 @@ class Style with EqualityMixin {
       } else if (attribute is NestedStyleAttribute) {
         applyVariants.addAll(attribute.value.variants.values);
         styleList.addAll(attribute.value.styles.values);
+      } else if (attribute is SpecUtility) {
+        if (attribute.attributeValue != null) {
+          final nestedStyle = Style.create([attribute.attributeValue!]);
+          styleList.addAll(nestedStyle.styles.values);
+          applyVariants.addAll(nestedStyle.variants.values);
+        }
       } else {
         throw UnsupportedError('Unsupported attribute type: $attribute');
       }
@@ -134,7 +141,7 @@ class Style with EqualityMixin {
   }
 
   /// Returns all utilities, allowing you to use your own namespace
-  static MixUtilities utilities() => MixUtilities();
+  static MixUtilities utilities() => const MixUtilities();
 
   static get asAttribute => const SpreadFunctionParams<Attribute, Attribute>(
         NestedStyleAttribute.fromList,
