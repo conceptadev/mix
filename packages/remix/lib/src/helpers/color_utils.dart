@@ -3,7 +3,7 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:mix/mix.dart';
 
-extension ColorUtilityX<T extends Attribute> on ColorUtility<T> {
+extension ColorUtilityExt<T extends Attribute> on ColorUtility<T> {
   T alphaBlend(Color foreground, Color background) =>
       call(Color.alphaBlend(foreground, background));
 }

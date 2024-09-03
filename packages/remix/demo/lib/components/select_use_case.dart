@@ -1,5 +1,7 @@
+import 'package:demo/helpers/knob_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:remix/remix.dart';
+import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
 final _select = SelectSpecUtility.self;
@@ -24,7 +26,7 @@ class SelectDemo extends StatefulWidget {
 class _SelectDemoState extends State<SelectDemo> {
   String selectedValue = 'Apple';
 
-  final List<String> items = ['Apple', 'Banana', 'Orange'];
+  final List<String> items = ['Apple Fiji', 'Banana', 'Orange'];
 
   @override
   Widget build(BuildContext context) {
@@ -32,22 +34,20 @@ class _SelectDemoState extends State<SelectDemo> {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          SizedBox(
-            width: 200,
-            child: XSelect<String>(
-              value: selectedValue,
-              onChanged: (value) => setState(() => selectedValue = value),
-              button: (spec) => spec(
-                text: selectedValue,
-                trailingIcon: Icons.keyboard_arrow_down_rounded,
-              ),
-              items: List.generate(
-                items.length,
-                (index) => XSelectMenuItem<String>(
-                  value: items[index],
-                  child: XSelectMenuItemWidget(
-                    text: items[index],
-                  ),
+          XSelect<String>(
+            variants: [context.knobs.variant(XSelectThemeVariant.values)],
+            value: selectedValue,
+            onChanged: (value) => setState(() => selectedValue = value),
+            button: (spec) => spec(
+              text: selectedValue,
+              trailingIcon: Icons.keyboard_arrow_down_rounded,
+            ),
+            items: List.generate(
+              items.length,
+              (index) => XSelectMenuItem<String>(
+                value: items[index],
+                child: XSelectMenuItemWidget(
+                  text: items[index],
                 ),
               ),
             ),

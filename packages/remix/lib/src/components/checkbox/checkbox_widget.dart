@@ -9,19 +9,8 @@ class XCheckbox extends StatefulWidget {
     this.iconChecked = Icons.check_rounded,
     this.iconUnchecked,
     this.style = const Style.empty(),
-  }) : _blank = false;
-
-  const XCheckbox.blank({
-    super.key,
-    this.disabled = false,
-    this.value = false,
-    this.onChanged,
-    this.iconChecked = Icons.check_rounded,
-    this.iconUnchecked,
-    required this.style,
-  }) : _blank = true;
-
-  final bool _blank;
+    this.variants = const [],
+  });
 
   final bool disabled;
   final bool value;
@@ -29,6 +18,7 @@ class XCheckbox extends StatefulWidget {
   final IconData? iconUnchecked;
   final ValueChanged<bool>? onChanged;
   final Style style;
+  final List<Variant> variants;
 
   @override
   State<XCheckbox> createState() => _XCheckboxState();
@@ -70,14 +60,17 @@ class _XCheckboxState extends State<XCheckbox> {
 
   @override
   Widget build(BuildContext context) {
+    final styleFromTheme = RemixThemeProvider.maybeOf(context)?.checkbox;
+
     return Pressable(
       enabled: !widget.disabled,
       onPress: widget.disabled ? null : _handleOnPress,
       controller: _controller,
       child: SpecBuilder(
-        style: widget._blank
-            ? widget.style
-            : CheckboxStyle.base.merge(widget.style).animate(),
+        style: (styleFromTheme ?? XCheckboxStyle.base)
+            .merge(widget.style)
+            .applyVariants(widget.variants)
+            .animate(),
         builder: (context) {
           final spec = CheckboxSpec.of(context);
 

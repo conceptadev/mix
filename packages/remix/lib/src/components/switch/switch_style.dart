@@ -6,140 +6,30 @@ final _container = _util.container;
 final _indicator = _util.indicator;
 
 class XSwitchStyle {
-  static Style get container => Style(
-        _container.height(24),
-        _container.width(44),
-        _container.borderRadius(99),
-        _container.padding.all(2),
-        $on.selected(
-          _container.alignment.centerRight(),
-          _container.color.black(),
-        ),
-        $on.unselected(
-          _container.alignment.centerLeft(),
-          _container.color.black(),
-          _container.color.brighten(90),
-        ),
-      );
-
-  static Style get indicator => Style(
-        _indicator.color.white(),
-        _indicator.shape.circle(),
-        _indicator.width(20),
-        _indicator.shadow.color.black12(),
-        _indicator.shadow.offset(0, 2),
-        _indicator.shadow.blurRadius(4),
-        _indicator.shadow.spreadRadius(1),
-      );
-
-  static Style get base => Style(container(), indicator());
+  static Style get base => Style(_containerStyle(), _indicatorStyle());
 }
 
-// Style get _baseStyle {
-//   return Style(
-//     _container.borderRadius(99),
-//     _indicator.borderRadius(99),
-//     $on.selected(_container.alignment.centerRight()),
-//     $on.unselected(_container.alignment.centerLeft()),
-//   );
-// }
+Style get _containerStyle => Style(
+      _container.height(24),
+      _container.width(44),
+      _container.borderRadius(99),
+      _container.padding.all(2),
+      _container.alignment.centerLeft(),
+      _container.color.grey.shade300(),
+      $on.selected(
+        _container.alignment.centerRight(),
+        _container.color.black(),
+      ),
+      ($on.disabled & $on.selected)(_container.color.grey.shade500()),
+    );
 
-// Style get _solidVariant {
-//   return Style(
-//     _indicator.color.white(),
-//     // $on.selected(_container.color.$accent()),
-//     // $on.unselected(_container.color.$neutral(3)),
-//     $on.disabled(
-//         // _container.color.$neutralAlpha(3),
-//         // _indicator.color.$neutralAlpha(7),
-//         ),
-//   );
-// }
-
-// Style get _softVariant {
-//   return Style(
-//       // _indicator.color.$accentAlpha(11),
-//       // $on.selected(_container.color.$accentAlpha(3)),
-//       // $on.unselected(_container.color.$neutral(4)),
-//       // $on.disabled(
-//       // _container.color.$neutralAlpha(3),
-//       // _indicator.color.$neutralAlpha(7),
-//       // ),
-//       );
-// }
-
-// Style get _outlineVariant {
-//   return Style(
-//     _container.color.transparent(),
-//     _container.border.width(1.5),
-//     _container.border.strokeAlign(1),
-//     // _indicator.color.$accentAlpha(11),
-//     // $on.selected(_container.border.color.$accentAlpha(8)),
-//     // $on.unselected(_container.border.color.$neutral(4)),
-//     $on.disabled(
-//         // _container.border.color.$neutralAlpha(8),
-//         // _indicator.color.$neutralAlpha(7),
-//         ),
-//   );
-// }
-
-// Style get _surfaceVariant {
-//   return Style(
-//     _outlineVariant(),
-//     // $on.selected(_container.color.$accentAlpha(3)),
-//     $on.unselected(
-//         // _container.color.$neutralAlpha(3),
-//         // _container.border.color.$neutral(4),
-//         ),
-//     // $on.disabled(_container.color.$neutralAlpha(2)),
-//   );
-// }
-
-// Style get _smallVariant {
-//   return Style(
-//     _container.width(24),
-//     _container.padding.horizontal(2),
-//     _container.height(16),
-//     _indicator.size(12),
-//     $on.unselected(_indicator.size(8), _container.padding.horizontal(2)),
-//   );
-// }
-
-// Style get _mediumVariant {
-//   return Style(
-//     _container.width(32),
-//     _container.padding.horizontal(3),
-//     _container.height(20),
-//     _indicator.size(14),
-//     $on.unselected(_indicator.size(12)),
-//   );
-// }
-
-// Style get _largeVariant {
-//   return Style(
-//     _container.width(40),
-//     _container.padding.horizontal(3),
-//     _container.height(24),
-//     _indicator.size(18),
-//     $on.unselected(_indicator.size(16)),
-//   );
-// }
-
-// Style _buildSwitchStyle(Style? style, List<ISwitchVariant> variants) {
-//   return Style(
-//     _baseStyle(),
-//     // Sizes
-//     SwitchSize.small(_smallVariant()),
-//     SwitchSize.medium(_mediumVariant()),
-//     SwitchSize.large(_largeVariant()),
-
-//     // Variant
-//     SwitchVariant.solid(_solidVariant()),
-//     SwitchVariant.soft(_softVariant()),
-//     SwitchVariant.outline(_outlineVariant()),
-//     SwitchVariant.surface(_surfaceVariant()),
-//   ).merge(style).applyVariants(variants).animate(
-//         duration: Duration(milliseconds: 150),
-//         curve: Curves.easeInCubic,
-//       );
-// }
+Style get _indicatorStyle => Style(
+      _indicator.color.white(),
+      _indicator.shape.circle(),
+      _indicator.width(20),
+      _indicator.shadow.color.black12(),
+      _indicator.shadow.offset(0, 2),
+      _indicator.shadow.blurRadius(4),
+      _indicator.shadow.spreadRadius(1),
+      $on.disabled(_indicator.color.grey.shade100()),
+    );

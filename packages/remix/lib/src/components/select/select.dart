@@ -2,16 +2,22 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:mix/mix.dart';
 import 'package:mix_annotations/mix_annotations.dart';
+
 import '../../helpers/component_builder.dart';
 import '../../helpers/spec/composited_transform_follower_spec.dart';
+import '../../theme/remix_theme.dart';
+import '../../theme/remix_tokens.dart';
 
-part 'select.g.dart';
-part 'select_widget.dart';
-part 'select_style.dart';
 part 'button/select_button.dart';
 part 'button/select_button_widget.dart';
 part 'item/select_menu.dart';
 part 'item/select_menu_widget.dart';
+part 'select.g.dart';
+part 'select_style.dart';
+part 'select_theme.dart';
+part 'select_widget.dart';
+
+final $select = SelectSpecUtility.self;
 
 @MixableSpec()
 class SelectSpec extends Spec<SelectSpec> with _$SelectSpec, Diagnosticable {

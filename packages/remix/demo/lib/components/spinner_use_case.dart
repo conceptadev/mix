@@ -1,11 +1,13 @@
+import 'package:demo/helpers/knob_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:mix/mix.dart';
 import 'package:remix/remix.dart';
+import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
 @widgetbook.UseCase(
   name: 'Spinner Component',
-  type: RxSpinner,
+  type: XSpinner,
 )
 Widget buildSpinnerUseCase(BuildContext context) {
   Widget buildSpinner(SpinnerStyle style) {
@@ -13,7 +15,8 @@ Widget buildSpinnerUseCase(BuildContext context) {
       children: [
         Text(style.name),
         const SizedBox(height: 10),
-        RxSpinner(
+        XSpinner(
+          variants: [context.knobs.variant(XSpinnerThemeVariant.values)],
           style: Style(
             SpinnerSpecUtility.self.style(style),
           ),

@@ -5,16 +5,21 @@ import 'package:flutter/material.dart';
 import 'package:mix/mix.dart';
 import 'package:mix_annotations/mix_annotations.dart';
 
+import '../../theme/remix_theme.dart';
+import '../../theme/remix_tokens.dart';
+
 part 'spinner.g.dart';
 part 'spinner_painter.dart';
 part 'spinner_style.dart';
-
+part 'spinner_theme.dart';
 part 'spinner_widget.dart';
 
 enum SpinnerStyle {
   solid,
   dotted,
 }
+
+final $spinner = SpinnerSpecUtility.self;
 
 @MixableSpec()
 final class SpinnerSpec extends Spec<SpinnerSpec>
@@ -50,7 +55,7 @@ final class SpinnerSpec extends Spec<SpinnerSpec>
         style = style ?? SpinnerStyle.solid,
         duration = duration ?? const Duration(milliseconds: 500);
 
-  Widget call() => RxSpinnerSpecWidget(spec: this);
+  Widget call() => XSpinnerSpecWidget(spec: this);
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);

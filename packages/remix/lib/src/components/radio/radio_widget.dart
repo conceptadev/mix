@@ -8,18 +8,9 @@ class XRadio<T> extends StatefulWidget {
     required this.groupValue,
     this.disabled = false,
     this.style = const Style.empty(),
+    this.variants = const [],
     required this.text,
-  }) : _blank = false;
-
-  const XRadio.blank({
-    super.key,
-    required this.value,
-    required this.onChanged,
-    required this.groupValue,
-    this.disabled = false,
-    required this.style,
-    required this.text,
-  }) : _blank = true;
+  });
 
   final T value;
   final ValueChanged<T?> onChanged;
@@ -27,8 +18,7 @@ class XRadio<T> extends StatefulWidget {
   final String text;
   final bool disabled;
   final Style style;
-
-  final bool _blank;
+  final List<Variant> variants;
 
   bool get _selected => value == groupValue;
 
@@ -71,13 +61,16 @@ class _XRadioState<T> extends State<XRadio<T>> {
 
   @override
   Widget build(BuildContext context) {
+    final styleFromTheme = RemixThemeProvider.maybeOf(context)?.radio;
+
     return Pressable(
       enabled: !widget.disabled,
       onPress: widget.disabled ? null : _handleOnPress,
       controller: _controller,
       child: SpecBuilder(
-        style:
-            widget._blank ? widget.style : XRadioStyle.base.merge(widget.style),
+        style: (styleFromTheme ?? XRadioStyle.base)
+            .merge(widget.style)
+            .applyVariants(widget.variants),
         builder: (context) {
           final spec = RadioSpec.of(context);
 
