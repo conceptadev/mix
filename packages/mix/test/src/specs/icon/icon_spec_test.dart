@@ -116,7 +116,7 @@ void main() {
     test('fluent behavior', () {
       final icon = IconSpecUtility.self;
 
-      final util = icon.builder
+      final util = icon.chain
         ..color.red()
         ..size(24)
         ..weight(500)
@@ -166,8 +166,8 @@ void main() {
 
     test('Immutable behavior when having multiple icons', () {
       final iconUtil = IconSpecUtility.self;
-      final icon1 = iconUtil.builder..size(24);
-      final icon2 = iconUtil.builder..size(48);
+      final icon1 = iconUtil.chain..size(24);
+      final icon2 = iconUtil.chain..size(48);
 
       final attr1 = icon1.attributeValue!;
       final attr2 = icon2.attributeValue!;
@@ -197,7 +197,7 @@ void main() {
     test('Mutate behavior and not on same utility', () {
       final icon = IconSpecUtility.self;
 
-      final iconValue = icon.builder;
+      final iconValue = icon.chain;
       iconValue
         ..size(24)
         ..color.red()

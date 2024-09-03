@@ -113,7 +113,7 @@ void main() {
     test('fluent behavior', () {
       final flex = FlexSpecUtility.self;
 
-      final util = flex.builder
+      final util = flex.chain
         ..crossAxisAlignment.center()
         ..mainAxisAlignment.spaceBetween()
         ..mainAxisSize.min()
@@ -176,8 +176,8 @@ void main() {
 
     test('Immutable behavior when having multiple flex', () {
       final flexUtil = FlexSpecUtility.self;
-      final flex1 = flexUtil.builder..crossAxisAlignment.start();
-      final flex2 = flexUtil.builder..crossAxisAlignment.end();
+      final flex1 = flexUtil.chain..crossAxisAlignment.start();
+      final flex2 = flexUtil.chain..crossAxisAlignment.end();
 
       final attr1 = flex1.attributeValue!;
       final attr2 = flex2.attributeValue!;
@@ -207,7 +207,7 @@ void main() {
     test('Mutate behavior and not on same utility', () {
       final flex = FlexSpecUtility.self;
 
-      final flexValue = flex.builder;
+      final flexValue = flex.chain;
       flexValue
         ..crossAxisAlignment.center()
         ..mainAxisAlignment.spaceBetween()

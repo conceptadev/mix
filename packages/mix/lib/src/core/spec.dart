@@ -57,9 +57,20 @@ abstract class SpecUtility<T extends Attribute, V> extends Attribute {
 
   final bool _mutable;
 
-  SpecUtility(this.attributeBuilder, [this._mutable = false]);
+  SpecUtility(this.attributeBuilder, {bool mutable = false})
+      : _mutable = mutable;
 
   static T selfBuilder<T>(T value) => value;
+
+  T builder(V v) {
+    final attribute = attributeBuilder(v);
+    if (_mutable) {
+      attributeValue = (attributeValue?.merge(attribute) ?? attribute) as T;
+    }
+
+    return attribute;
+  }
+
   T only();
   @override
   SpecUtility<T, V> merge(covariant SpecUtility<T, V> other) {
@@ -71,12 +82,4 @@ abstract class SpecUtility<T extends Attribute, V> extends Attribute {
 
   @override
   get props => [attributeValue];
-  T build(V v) {
-    final attribute = attributeBuilder(v);
-    if (_mutable) {
-      attributeValue = (attributeValue?.merge(attribute) ?? attribute) as T;
-    }
-
-    return attribute;
-  }
 }

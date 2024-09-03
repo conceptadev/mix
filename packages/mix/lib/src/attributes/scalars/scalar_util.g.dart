@@ -15,34 +15,34 @@ part of 'scalar_util.dart';
 mixin _$AlignmentUtility<T extends Attribute>
     on MixUtility<T, AlignmentGeometry> {
   /// Creates an [Attribute] instance with [Alignment.topLeft] value.
-  T topLeft() => build(Alignment.topLeft);
+  T topLeft() => builder(Alignment.topLeft);
 
   /// Creates an [Attribute] instance with [Alignment.topCenter] value.
-  T topCenter() => build(Alignment.topCenter);
+  T topCenter() => builder(Alignment.topCenter);
 
   /// Creates an [Attribute] instance with [Alignment.topRight] value.
-  T topRight() => build(Alignment.topRight);
+  T topRight() => builder(Alignment.topRight);
 
   /// Creates an [Attribute] instance with [Alignment.centerLeft] value.
-  T centerLeft() => build(Alignment.centerLeft);
+  T centerLeft() => builder(Alignment.centerLeft);
 
   /// Creates an [Attribute] instance with [Alignment.center] value.
-  T center() => build(Alignment.center);
+  T center() => builder(Alignment.center);
 
   /// Creates an [Attribute] instance with [Alignment.centerRight] value.
-  T centerRight() => build(Alignment.centerRight);
+  T centerRight() => builder(Alignment.centerRight);
 
   /// Creates an [Attribute] instance with [Alignment.bottomLeft] value.
-  T bottomLeft() => build(Alignment.bottomLeft);
+  T bottomLeft() => builder(Alignment.bottomLeft);
 
   /// Creates an [Attribute] instance with [Alignment.bottomCenter] value.
-  T bottomCenter() => build(Alignment.bottomCenter);
+  T bottomCenter() => builder(Alignment.bottomCenter);
 
   /// Creates an [Attribute] instance with [Alignment.bottomRight] value.
-  T bottomRight() => build(Alignment.bottomRight);
+  T bottomRight() => builder(Alignment.bottomRight);
 
   /// Creates an [Attribute] instance with the specified AlignmentGeometry value.
-  T call(AlignmentGeometry value) => build(value);
+  T call(AlignmentGeometry value) => builder(value);
 }
 
 /// {@template alignment_directional_utility}
@@ -54,34 +54,34 @@ mixin _$AlignmentUtility<T extends Attribute>
 mixin _$AlignmentDirectionalUtility<T extends Attribute>
     on MixUtility<T, AlignmentDirectional> {
   /// Creates an [Attribute] instance with [AlignmentDirectional.topStart] value.
-  T topStart() => build(AlignmentDirectional.topStart);
+  T topStart() => builder(AlignmentDirectional.topStart);
 
   /// Creates an [Attribute] instance with [AlignmentDirectional.topCenter] value.
-  T topCenter() => build(AlignmentDirectional.topCenter);
+  T topCenter() => builder(AlignmentDirectional.topCenter);
 
   /// Creates an [Attribute] instance with [AlignmentDirectional.topEnd] value.
-  T topEnd() => build(AlignmentDirectional.topEnd);
+  T topEnd() => builder(AlignmentDirectional.topEnd);
 
   /// Creates an [Attribute] instance with [AlignmentDirectional.centerStart] value.
-  T centerStart() => build(AlignmentDirectional.centerStart);
+  T centerStart() => builder(AlignmentDirectional.centerStart);
 
   /// Creates an [Attribute] instance with [AlignmentDirectional.center] value.
-  T center() => build(AlignmentDirectional.center);
+  T center() => builder(AlignmentDirectional.center);
 
   /// Creates an [Attribute] instance with [AlignmentDirectional.centerEnd] value.
-  T centerEnd() => build(AlignmentDirectional.centerEnd);
+  T centerEnd() => builder(AlignmentDirectional.centerEnd);
 
   /// Creates an [Attribute] instance with [AlignmentDirectional.bottomStart] value.
-  T bottomStart() => build(AlignmentDirectional.bottomStart);
+  T bottomStart() => builder(AlignmentDirectional.bottomStart);
 
   /// Creates an [Attribute] instance with [AlignmentDirectional.bottomCenter] value.
-  T bottomCenter() => build(AlignmentDirectional.bottomCenter);
+  T bottomCenter() => builder(AlignmentDirectional.bottomCenter);
 
   /// Creates an [Attribute] instance with [AlignmentDirectional.bottomEnd] value.
-  T bottomEnd() => build(AlignmentDirectional.bottomEnd);
+  T bottomEnd() => builder(AlignmentDirectional.bottomEnd);
 
   /// Creates an [Attribute] instance with the specified AlignmentDirectional value.
-  T call(AlignmentDirectional value) => build(value);
+  T call(AlignmentDirectional value) => builder(value);
 }
 
 /// {@template font_feature_utility}
@@ -92,91 +92,91 @@ mixin _$AlignmentDirectionalUtility<T extends Attribute>
 /// {@endtemplate}
 mixin _$FontFeatureUtility<T extends Attribute> on MixUtility<T, FontFeature> {
   /// Creates an [Attribute] instance using the [FontFeature.enable] constructor.
-  T enable(String feature) => build(FontFeature.enable(feature));
+  T enable(String feature) => builder(FontFeature.enable(feature));
 
   /// Creates an [Attribute] instance using the [FontFeature.disable] constructor.
-  T disable(String feature) => build(FontFeature.disable(feature));
+  T disable(String feature) => builder(FontFeature.disable(feature));
 
   /// Creates an [Attribute] instance using the [FontFeature.alternative] constructor.
-  T alternative(int value) => build(FontFeature.alternative(value));
+  T alternative(int value) => builder(FontFeature.alternative(value));
 
   /// Creates an [Attribute] instance using the [FontFeature.alternativeFractions] constructor.
-  T alternativeFractions() => build(const FontFeature.alternativeFractions());
+  T alternativeFractions() => builder(const FontFeature.alternativeFractions());
 
   /// Creates an [Attribute] instance using the [FontFeature.contextualAlternates] constructor.
-  T contextualAlternates() => build(const FontFeature.contextualAlternates());
+  T contextualAlternates() => builder(const FontFeature.contextualAlternates());
 
   /// Creates an [Attribute] instance using the [FontFeature.caseSensitiveForms] constructor.
-  T caseSensitiveForms() => build(const FontFeature.caseSensitiveForms());
+  T caseSensitiveForms() => builder(const FontFeature.caseSensitiveForms());
 
   /// Creates an [Attribute] instance using the [FontFeature.characterVariant] constructor.
-  T characterVariant(int value) => build(FontFeature.characterVariant(value));
+  T characterVariant(int value) => builder(FontFeature.characterVariant(value));
 
   /// Creates an [Attribute] instance using the [FontFeature.denominator] constructor.
-  T denominator() => build(const FontFeature.denominator());
+  T denominator() => builder(const FontFeature.denominator());
 
   /// Creates an [Attribute] instance using the [FontFeature.fractions] constructor.
-  T fractions() => build(const FontFeature.fractions());
+  T fractions() => builder(const FontFeature.fractions());
 
   /// Creates an [Attribute] instance using the [FontFeature.historicalForms] constructor.
-  T historicalForms() => build(const FontFeature.historicalForms());
+  T historicalForms() => builder(const FontFeature.historicalForms());
 
   /// Creates an [Attribute] instance using the [FontFeature.historicalLigatures] constructor.
-  T historicalLigatures() => build(const FontFeature.historicalLigatures());
+  T historicalLigatures() => builder(const FontFeature.historicalLigatures());
 
   /// Creates an [Attribute] instance using the [FontFeature.liningFigures] constructor.
-  T liningFigures() => build(const FontFeature.liningFigures());
+  T liningFigures() => builder(const FontFeature.liningFigures());
 
   /// Creates an [Attribute] instance using the [FontFeature.localeAware] constructor.
   T localeAware({bool enable = true}) {
-    return build(FontFeature.localeAware(enable: enable));
+    return builder(FontFeature.localeAware(enable: enable));
   }
 
   /// Creates an [Attribute] instance using the [FontFeature.notationalForms] constructor.
   T notationalForms([int value = 1]) =>
-      build(FontFeature.notationalForms(value));
+      builder(FontFeature.notationalForms(value));
 
   /// Creates an [Attribute] instance using the [FontFeature.numerators] constructor.
-  T numerators() => build(const FontFeature.numerators());
+  T numerators() => builder(const FontFeature.numerators());
 
   /// Creates an [Attribute] instance using the [FontFeature.oldstyleFigures] constructor.
-  T oldstyleFigures() => build(const FontFeature.oldstyleFigures());
+  T oldstyleFigures() => builder(const FontFeature.oldstyleFigures());
 
   /// Creates an [Attribute] instance using the [FontFeature.ordinalForms] constructor.
-  T ordinalForms() => build(const FontFeature.ordinalForms());
+  T ordinalForms() => builder(const FontFeature.ordinalForms());
 
   /// Creates an [Attribute] instance using the [FontFeature.proportionalFigures] constructor.
-  T proportionalFigures() => build(const FontFeature.proportionalFigures());
+  T proportionalFigures() => builder(const FontFeature.proportionalFigures());
 
   /// Creates an [Attribute] instance using the [FontFeature.randomize] constructor.
-  T randomize() => build(const FontFeature.randomize());
+  T randomize() => builder(const FontFeature.randomize());
 
   /// Creates an [Attribute] instance using the [FontFeature.stylisticAlternates] constructor.
-  T stylisticAlternates() => build(const FontFeature.stylisticAlternates());
+  T stylisticAlternates() => builder(const FontFeature.stylisticAlternates());
 
   /// Creates an [Attribute] instance using the [FontFeature.scientificInferiors] constructor.
-  T scientificInferiors() => build(const FontFeature.scientificInferiors());
+  T scientificInferiors() => builder(const FontFeature.scientificInferiors());
 
   /// Creates an [Attribute] instance using the [FontFeature.stylisticSet] constructor.
-  T stylisticSet(int value) => build(FontFeature.stylisticSet(value));
+  T stylisticSet(int value) => builder(FontFeature.stylisticSet(value));
 
   /// Creates an [Attribute] instance using the [FontFeature.subscripts] constructor.
-  T subscripts() => build(const FontFeature.subscripts());
+  T subscripts() => builder(const FontFeature.subscripts());
 
   /// Creates an [Attribute] instance using the [FontFeature.superscripts] constructor.
-  T superscripts() => build(const FontFeature.superscripts());
+  T superscripts() => builder(const FontFeature.superscripts());
 
   /// Creates an [Attribute] instance using the [FontFeature.swash] constructor.
-  T swash([int value = 1]) => build(FontFeature.swash(value));
+  T swash([int value = 1]) => builder(FontFeature.swash(value));
 
   /// Creates an [Attribute] instance using the [FontFeature.tabularFigures] constructor.
-  T tabularFigures() => build(const FontFeature.tabularFigures());
+  T tabularFigures() => builder(const FontFeature.tabularFigures());
 
   /// Creates an [Attribute] instance using the [FontFeature.slashedZero] constructor.
-  T slashedZero() => build(const FontFeature.slashedZero());
+  T slashedZero() => builder(const FontFeature.slashedZero());
 
   /// Creates an [Attribute] instance with the specified FontFeature value.
-  T call(FontFeature value) => build(value);
+  T call(FontFeature value) => builder(value);
 }
 
 /// {@template duration_utility}
@@ -187,10 +187,10 @@ mixin _$FontFeatureUtility<T extends Attribute> on MixUtility<T, FontFeature> {
 /// {@endtemplate}
 mixin _$DurationUtility<T extends Attribute> on MixUtility<T, Duration> {
   /// Creates an [Attribute] instance with [Duration.zero] value.
-  T zero() => build(Duration.zero);
+  T zero() => builder(Duration.zero);
 
   /// Creates an [Attribute] instance with the specified Duration value.
-  T call(Duration value) => build(value);
+  T call(Duration value) => builder(value);
 }
 
 /// {@template font_weight_utility}
@@ -201,40 +201,40 @@ mixin _$DurationUtility<T extends Attribute> on MixUtility<T, Duration> {
 /// {@endtemplate}
 mixin _$FontWeightUtility<T extends Attribute> on MixUtility<T, FontWeight> {
   /// Creates an [Attribute] instance with [FontWeight.w100] value.
-  T w100() => build(FontWeight.w100);
+  T w100() => builder(FontWeight.w100);
 
   /// Creates an [Attribute] instance with [FontWeight.w200] value.
-  T w200() => build(FontWeight.w200);
+  T w200() => builder(FontWeight.w200);
 
   /// Creates an [Attribute] instance with [FontWeight.w300] value.
-  T w300() => build(FontWeight.w300);
+  T w300() => builder(FontWeight.w300);
 
   /// Creates an [Attribute] instance with [FontWeight.w400] value.
-  T w400() => build(FontWeight.w400);
+  T w400() => builder(FontWeight.w400);
 
   /// Creates an [Attribute] instance with [FontWeight.w500] value.
-  T w500() => build(FontWeight.w500);
+  T w500() => builder(FontWeight.w500);
 
   /// Creates an [Attribute] instance with [FontWeight.w600] value.
-  T w600() => build(FontWeight.w600);
+  T w600() => builder(FontWeight.w600);
 
   /// Creates an [Attribute] instance with [FontWeight.w700] value.
-  T w700() => build(FontWeight.w700);
+  T w700() => builder(FontWeight.w700);
 
   /// Creates an [Attribute] instance with [FontWeight.w800] value.
-  T w800() => build(FontWeight.w800);
+  T w800() => builder(FontWeight.w800);
 
   /// Creates an [Attribute] instance with [FontWeight.w900] value.
-  T w900() => build(FontWeight.w900);
+  T w900() => builder(FontWeight.w900);
 
   /// Creates an [Attribute] instance with [FontWeight.normal] value.
-  T normal() => build(FontWeight.normal);
+  T normal() => builder(FontWeight.normal);
 
   /// Creates an [Attribute] instance with [FontWeight.bold] value.
-  T bold() => build(FontWeight.bold);
+  T bold() => builder(FontWeight.bold);
 
   /// Creates an [Attribute] instance with the specified FontWeight value.
-  T call(FontWeight value) => build(value);
+  T call(FontWeight value) => builder(value);
 }
 
 /// {@template text_decoration_utility}
@@ -246,24 +246,24 @@ mixin _$FontWeightUtility<T extends Attribute> on MixUtility<T, FontWeight> {
 mixin _$TextDecorationUtility<T extends Attribute>
     on MixUtility<T, TextDecoration> {
   /// Creates an [Attribute] instance with [TextDecoration.none] value.
-  T none() => build(TextDecoration.none);
+  T none() => builder(TextDecoration.none);
 
   /// Creates an [Attribute] instance with [TextDecoration.underline] value.
-  T underline() => build(TextDecoration.underline);
+  T underline() => builder(TextDecoration.underline);
 
   /// Creates an [Attribute] instance with [TextDecoration.overline] value.
-  T overline() => build(TextDecoration.overline);
+  T overline() => builder(TextDecoration.overline);
 
   /// Creates an [Attribute] instance with [TextDecoration.lineThrough] value.
-  T lineThrough() => build(TextDecoration.lineThrough);
+  T lineThrough() => builder(TextDecoration.lineThrough);
 
   /// Creates an [Attribute] instance using the [TextDecoration.combine] constructor.
   T combine(List<TextDecoration> decorations) {
-    return build(TextDecoration.combine(decorations));
+    return builder(TextDecoration.combine(decorations));
   }
 
   /// Creates an [Attribute] instance with the specified TextDecoration value.
-  T call(TextDecoration value) => build(value);
+  T call(TextDecoration value) => builder(value);
 }
 
 /// {@template curve_utility}
@@ -274,136 +274,136 @@ mixin _$TextDecorationUtility<T extends Attribute>
 /// {@endtemplate}
 mixin _$CurveUtility<T extends Attribute> on MixUtility<T, Curve> {
   /// Creates an [Attribute] instance with [Curves.linear] value.
-  T linear() => build(Curves.linear);
+  T linear() => builder(Curves.linear);
 
   /// Creates an [Attribute] instance with [Curves.decelerate] value.
-  T decelerate() => build(Curves.decelerate);
+  T decelerate() => builder(Curves.decelerate);
 
   /// Creates an [Attribute] instance with [Curves.fastLinearToSlowEaseIn] value.
-  T fastLinearToSlowEaseIn() => build(Curves.fastLinearToSlowEaseIn);
+  T fastLinearToSlowEaseIn() => builder(Curves.fastLinearToSlowEaseIn);
 
   /// Creates an [Attribute] instance with [Curves.fastEaseInToSlowEaseOut] value.
-  T fastEaseInToSlowEaseOut() => build(Curves.fastEaseInToSlowEaseOut);
+  T fastEaseInToSlowEaseOut() => builder(Curves.fastEaseInToSlowEaseOut);
 
   /// Creates an [Attribute] instance with [Curves.ease] value.
-  T ease() => build(Curves.ease);
+  T ease() => builder(Curves.ease);
 
   /// Creates an [Attribute] instance with [Curves.easeIn] value.
-  T easeIn() => build(Curves.easeIn);
+  T easeIn() => builder(Curves.easeIn);
 
   /// Creates an [Attribute] instance with [Curves.easeInToLinear] value.
-  T easeInToLinear() => build(Curves.easeInToLinear);
+  T easeInToLinear() => builder(Curves.easeInToLinear);
 
   /// Creates an [Attribute] instance with [Curves.easeInSine] value.
-  T easeInSine() => build(Curves.easeInSine);
+  T easeInSine() => builder(Curves.easeInSine);
 
   /// Creates an [Attribute] instance with [Curves.easeInQuad] value.
-  T easeInQuad() => build(Curves.easeInQuad);
+  T easeInQuad() => builder(Curves.easeInQuad);
 
   /// Creates an [Attribute] instance with [Curves.easeInCubic] value.
-  T easeInCubic() => build(Curves.easeInCubic);
+  T easeInCubic() => builder(Curves.easeInCubic);
 
   /// Creates an [Attribute] instance with [Curves.easeInQuart] value.
-  T easeInQuart() => build(Curves.easeInQuart);
+  T easeInQuart() => builder(Curves.easeInQuart);
 
   /// Creates an [Attribute] instance with [Curves.easeInQuint] value.
-  T easeInQuint() => build(Curves.easeInQuint);
+  T easeInQuint() => builder(Curves.easeInQuint);
 
   /// Creates an [Attribute] instance with [Curves.easeInExpo] value.
-  T easeInExpo() => build(Curves.easeInExpo);
+  T easeInExpo() => builder(Curves.easeInExpo);
 
   /// Creates an [Attribute] instance with [Curves.easeInCirc] value.
-  T easeInCirc() => build(Curves.easeInCirc);
+  T easeInCirc() => builder(Curves.easeInCirc);
 
   /// Creates an [Attribute] instance with [Curves.easeInBack] value.
-  T easeInBack() => build(Curves.easeInBack);
+  T easeInBack() => builder(Curves.easeInBack);
 
   /// Creates an [Attribute] instance with [Curves.easeOut] value.
-  T easeOut() => build(Curves.easeOut);
+  T easeOut() => builder(Curves.easeOut);
 
   /// Creates an [Attribute] instance with [Curves.linearToEaseOut] value.
-  T linearToEaseOut() => build(Curves.linearToEaseOut);
+  T linearToEaseOut() => builder(Curves.linearToEaseOut);
 
   /// Creates an [Attribute] instance with [Curves.easeOutSine] value.
-  T easeOutSine() => build(Curves.easeOutSine);
+  T easeOutSine() => builder(Curves.easeOutSine);
 
   /// Creates an [Attribute] instance with [Curves.easeOutQuad] value.
-  T easeOutQuad() => build(Curves.easeOutQuad);
+  T easeOutQuad() => builder(Curves.easeOutQuad);
 
   /// Creates an [Attribute] instance with [Curves.easeOutCubic] value.
-  T easeOutCubic() => build(Curves.easeOutCubic);
+  T easeOutCubic() => builder(Curves.easeOutCubic);
 
   /// Creates an [Attribute] instance with [Curves.easeOutQuart] value.
-  T easeOutQuart() => build(Curves.easeOutQuart);
+  T easeOutQuart() => builder(Curves.easeOutQuart);
 
   /// Creates an [Attribute] instance with [Curves.easeOutQuint] value.
-  T easeOutQuint() => build(Curves.easeOutQuint);
+  T easeOutQuint() => builder(Curves.easeOutQuint);
 
   /// Creates an [Attribute] instance with [Curves.easeOutExpo] value.
-  T easeOutExpo() => build(Curves.easeOutExpo);
+  T easeOutExpo() => builder(Curves.easeOutExpo);
 
   /// Creates an [Attribute] instance with [Curves.easeOutCirc] value.
-  T easeOutCirc() => build(Curves.easeOutCirc);
+  T easeOutCirc() => builder(Curves.easeOutCirc);
 
   /// Creates an [Attribute] instance with [Curves.easeOutBack] value.
-  T easeOutBack() => build(Curves.easeOutBack);
+  T easeOutBack() => builder(Curves.easeOutBack);
 
   /// Creates an [Attribute] instance with [Curves.easeInOut] value.
-  T easeInOut() => build(Curves.easeInOut);
+  T easeInOut() => builder(Curves.easeInOut);
 
   /// Creates an [Attribute] instance with [Curves.easeInOutSine] value.
-  T easeInOutSine() => build(Curves.easeInOutSine);
+  T easeInOutSine() => builder(Curves.easeInOutSine);
 
   /// Creates an [Attribute] instance with [Curves.easeInOutQuad] value.
-  T easeInOutQuad() => build(Curves.easeInOutQuad);
+  T easeInOutQuad() => builder(Curves.easeInOutQuad);
 
   /// Creates an [Attribute] instance with [Curves.easeInOutCubic] value.
-  T easeInOutCubic() => build(Curves.easeInOutCubic);
+  T easeInOutCubic() => builder(Curves.easeInOutCubic);
 
   /// Creates an [Attribute] instance with [Curves.easeInOutCubicEmphasized] value.
-  T easeInOutCubicEmphasized() => build(Curves.easeInOutCubicEmphasized);
+  T easeInOutCubicEmphasized() => builder(Curves.easeInOutCubicEmphasized);
 
   /// Creates an [Attribute] instance with [Curves.easeInOutQuart] value.
-  T easeInOutQuart() => build(Curves.easeInOutQuart);
+  T easeInOutQuart() => builder(Curves.easeInOutQuart);
 
   /// Creates an [Attribute] instance with [Curves.easeInOutQuint] value.
-  T easeInOutQuint() => build(Curves.easeInOutQuint);
+  T easeInOutQuint() => builder(Curves.easeInOutQuint);
 
   /// Creates an [Attribute] instance with [Curves.easeInOutExpo] value.
-  T easeInOutExpo() => build(Curves.easeInOutExpo);
+  T easeInOutExpo() => builder(Curves.easeInOutExpo);
 
   /// Creates an [Attribute] instance with [Curves.easeInOutCirc] value.
-  T easeInOutCirc() => build(Curves.easeInOutCirc);
+  T easeInOutCirc() => builder(Curves.easeInOutCirc);
 
   /// Creates an [Attribute] instance with [Curves.easeInOutBack] value.
-  T easeInOutBack() => build(Curves.easeInOutBack);
+  T easeInOutBack() => builder(Curves.easeInOutBack);
 
   /// Creates an [Attribute] instance with [Curves.fastOutSlowIn] value.
-  T fastOutSlowIn() => build(Curves.fastOutSlowIn);
+  T fastOutSlowIn() => builder(Curves.fastOutSlowIn);
 
   /// Creates an [Attribute] instance with [Curves.slowMiddle] value.
-  T slowMiddle() => build(Curves.slowMiddle);
+  T slowMiddle() => builder(Curves.slowMiddle);
 
   /// Creates an [Attribute] instance with [Curves.bounceIn] value.
-  T bounceIn() => build(Curves.bounceIn);
+  T bounceIn() => builder(Curves.bounceIn);
 
   /// Creates an [Attribute] instance with [Curves.bounceOut] value.
-  T bounceOut() => build(Curves.bounceOut);
+  T bounceOut() => builder(Curves.bounceOut);
 
   /// Creates an [Attribute] instance with [Curves.bounceInOut] value.
-  T bounceInOut() => build(Curves.bounceInOut);
+  T bounceInOut() => builder(Curves.bounceInOut);
 
   /// Creates an [Attribute] instance with [Curves.elasticIn] value.
-  T elasticIn() => build(Curves.elasticIn);
+  T elasticIn() => builder(Curves.elasticIn);
 
   /// Creates an [Attribute] instance with [Curves.elasticOut] value.
-  T elasticOut() => build(Curves.elasticOut);
+  T elasticOut() => builder(Curves.elasticOut);
 
   /// Creates an [Attribute] instance with [Curves.elasticInOut] value.
-  T elasticInOut() => build(Curves.elasticInOut);
+  T elasticInOut() => builder(Curves.elasticInOut);
 
   /// Creates an [Attribute] instance with the specified Curve value.
-  T call(Curve value) => build(value);
+  T call(Curve value) => builder(value);
 }
 
 /// {@template offset_utility}
@@ -414,17 +414,17 @@ mixin _$CurveUtility<T extends Attribute> on MixUtility<T, Curve> {
 /// {@endtemplate}
 mixin _$OffsetUtility<T extends Attribute> on MixUtility<T, Offset> {
   /// Creates an [Attribute] instance with [Offset.zero] value.
-  T zero() => build(Offset.zero);
+  T zero() => builder(Offset.zero);
 
   /// Creates an [Attribute] instance with [Offset.infinite] value.
-  T infinite() => build(Offset.infinite);
+  T infinite() => builder(Offset.infinite);
 
   /// Creates an [Attribute] instance using the [Offset] constructor.
-  T call(double dx, double dy) => build(Offset(dx, dy));
+  T call(double dx, double dy) => builder(Offset(dx, dy));
 
   /// Creates an [Attribute] instance using the [Offset.fromDirection] constructor.
   T fromDirection(double direction, [double distance = 1.0]) {
-    return build(Offset.fromDirection(direction, distance));
+    return builder(Offset.fromDirection(direction, distance));
   }
 }
 
@@ -436,13 +436,13 @@ mixin _$OffsetUtility<T extends Attribute> on MixUtility<T, Offset> {
 /// {@endtemplate}
 mixin _$RadiusUtility<T extends Attribute> on MixUtility<T, Radius> {
   /// Creates an [Attribute] instance with [Radius.zero] value.
-  T zero() => build(Radius.zero);
+  T zero() => builder(Radius.zero);
 
   /// Creates an [Attribute] instance using the [Radius.circular] constructor.
-  T circular(double radius) => build(Radius.circular(radius));
+  T circular(double radius) => builder(Radius.circular(radius));
 
   /// Creates an [Attribute] instance using the [Radius.elliptical] constructor.
-  T elliptical(double x, double y) => build(Radius.elliptical(x, y));
+  T elliptical(double x, double y) => builder(Radius.elliptical(x, y));
 }
 
 /// {@template rect_utility}
@@ -453,37 +453,38 @@ mixin _$RadiusUtility<T extends Attribute> on MixUtility<T, Radius> {
 /// {@endtemplate}
 mixin _$RectUtility<T extends Attribute> on MixUtility<T, Rect> {
   /// Creates an [Attribute] instance with [Rect.zero] value.
-  T zero() => build(Rect.zero);
+  T zero() => builder(Rect.zero);
 
   /// Creates an [Attribute] instance with [Rect.largest] value.
-  T largest() => build(Rect.largest);
+  T largest() => builder(Rect.largest);
 
   /// Creates an [Attribute] instance using the [Rect.fromLTRB] constructor.
   T fromLTRB(double left, double top, double right, double bottom) {
-    return build(Rect.fromLTRB(left, top, right, bottom));
+    return builder(Rect.fromLTRB(left, top, right, bottom));
   }
 
   /// Creates an [Attribute] instance using the [Rect.fromLTWH] constructor.
   T fromLTWH(double left, double top, double width, double height) {
-    return build(Rect.fromLTWH(left, top, width, height));
+    return builder(Rect.fromLTWH(left, top, width, height));
   }
 
   /// Creates an [Attribute] instance using the [Rect.fromCircle] constructor.
   T fromCircle({required Offset center, required double radius}) {
-    return build(Rect.fromCircle(center: center, radius: radius));
+    return builder(Rect.fromCircle(center: center, radius: radius));
   }
 
   /// Creates an [Attribute] instance using the [Rect.fromCenter] constructor.
   T fromCenter(
       {required Offset center, required double width, required double height}) {
-    return build(Rect.fromCenter(center: center, width: width, height: height));
+    return builder(
+        Rect.fromCenter(center: center, width: width, height: height));
   }
 
   /// Creates an [Attribute] instance using the [Rect.fromPoints] constructor.
-  T fromPoints(Offset a, Offset b) => build(Rect.fromPoints(a, b));
+  T fromPoints(Offset a, Offset b) => builder(Rect.fromPoints(a, b));
 
   /// Creates an [Attribute] instance with the specified Rect value.
-  T call(Rect value) => build(value);
+  T call(Rect value) => builder(value);
 }
 
 /// {@template image_provider_utility}
@@ -495,7 +496,7 @@ mixin _$RectUtility<T extends Attribute> on MixUtility<T, Rect> {
 mixin _$ImageProviderUtility<T extends Attribute>
     on MixUtility<T, ImageProvider> {
   /// Creates an [Attribute] instance with the specified ImageProvider value.
-  T call(ImageProvider value) => build(value);
+  T call(ImageProvider value) => builder(value);
 }
 
 /// {@template text_height_behavior_utility}
@@ -507,7 +508,7 @@ mixin _$ImageProviderUtility<T extends Attribute>
 mixin _$TextHeightBehaviorUtility<T extends Attribute>
     on MixUtility<T, TextHeightBehavior> {
   /// Creates an [Attribute] instance with the specified TextHeightBehavior value.
-  T call(TextHeightBehavior value) => build(value);
+  T call(TextHeightBehavior value) => builder(value);
 }
 
 /// {@template gradient_transform_utility}
@@ -519,7 +520,7 @@ mixin _$TextHeightBehaviorUtility<T extends Attribute>
 mixin _$GradientTransformUtility<T extends Attribute>
     on MixUtility<T, GradientTransform> {
   /// Creates an [Attribute] instance with the specified GradientTransform value.
-  T call(GradientTransform value) => build(value);
+  T call(GradientTransform value) => builder(value);
 }
 
 /// {@template matrix4_utility}
@@ -530,49 +531,49 @@ mixin _$GradientTransformUtility<T extends Attribute>
 /// {@endtemplate}
 mixin _$Matrix4Utility<T extends Attribute> on MixUtility<T, Matrix4> {
   /// Creates an [Attribute] instance using the [Matrix4.fromList] constructor.
-  T fromList(List<double> values) => build(Matrix4.fromList(values));
+  T fromList(List<double> values) => builder(Matrix4.fromList(values));
 
   /// Creates an [Attribute] instance using the [Matrix4.zero] constructor.
-  T zero() => build(Matrix4.zero());
+  T zero() => builder(Matrix4.zero());
 
   /// Creates an [Attribute] instance using the [Matrix4.identity] constructor.
-  T identity() => build(Matrix4.identity());
+  T identity() => builder(Matrix4.identity());
 
   /// Creates an [Attribute] instance using the [Matrix4.rotationX] constructor.
-  T rotationX(double radians) => build(Matrix4.rotationX(radians));
+  T rotationX(double radians) => builder(Matrix4.rotationX(radians));
 
   /// Creates an [Attribute] instance using the [Matrix4.rotationY] constructor.
-  T rotationY(double radians) => build(Matrix4.rotationY(radians));
+  T rotationY(double radians) => builder(Matrix4.rotationY(radians));
 
   /// Creates an [Attribute] instance using the [Matrix4.rotationZ] constructor.
-  T rotationZ(double radians) => build(Matrix4.rotationZ(radians));
+  T rotationZ(double radians) => builder(Matrix4.rotationZ(radians));
 
   /// Creates an [Attribute] instance using the [Matrix4.translationValues] constructor.
   T translationValues(double x, double y, double z) {
-    return build(Matrix4.translationValues(x, y, z));
+    return builder(Matrix4.translationValues(x, y, z));
   }
 
   /// Creates an [Attribute] instance using the [Matrix4.diagonal3Values] constructor.
   T diagonal3Values(double x, double y, double z) {
-    return build(Matrix4.diagonal3Values(x, y, z));
+    return builder(Matrix4.diagonal3Values(x, y, z));
   }
 
   /// Creates an [Attribute] instance using the [Matrix4.skewX] constructor.
-  T skewX(double alpha) => build(Matrix4.skewX(alpha));
+  T skewX(double alpha) => builder(Matrix4.skewX(alpha));
 
   /// Creates an [Attribute] instance using the [Matrix4.skewY] constructor.
-  T skewY(double beta) => build(Matrix4.skewY(beta));
+  T skewY(double beta) => builder(Matrix4.skewY(beta));
 
   /// Creates an [Attribute] instance using the [Matrix4.skew] constructor.
-  T skew(double alpha, double beta) => build(Matrix4.skew(alpha, beta));
+  T skew(double alpha, double beta) => builder(Matrix4.skew(alpha, beta));
 
   /// Creates an [Attribute] instance using the [Matrix4.fromBuffer] constructor.
   T fromBuffer(ByteBuffer buffer, int offset) {
-    return build(Matrix4.fromBuffer(buffer, offset));
+    return builder(Matrix4.fromBuffer(buffer, offset));
   }
 
   /// Creates an [Attribute] instance with the specified Matrix4 value.
-  T call(Matrix4 value) => build(value);
+  T call(Matrix4 value) => builder(value);
 }
 
 /// {@template font_family_utility}
@@ -584,19 +585,19 @@ mixin _$Matrix4Utility<T extends Attribute> on MixUtility<T, Matrix4> {
 mixin _$FontFamilyUtility<T extends Attribute> on MixUtility<T, String> {
   /// Creates an [Attribute] instance using the [String.fromCharCodes] constructor.
   T fromCharCodes(Iterable<int> charCodes, [int start = 0, int? end]) {
-    return build(String.fromCharCodes(charCodes, start, end));
+    return builder(String.fromCharCodes(charCodes, start, end));
   }
 
   /// Creates an [Attribute] instance using the [String.fromCharCode] constructor.
-  T fromCharCode(int charCode) => build(String.fromCharCode(charCode));
+  T fromCharCode(int charCode) => builder(String.fromCharCode(charCode));
 
   /// Creates an [Attribute] instance using the [String.fromEnvironment] constructor.
   T fromEnvironment(String name, {String defaultValue = ""}) {
-    return build(String.fromEnvironment(name, defaultValue: defaultValue));
+    return builder(String.fromEnvironment(name, defaultValue: defaultValue));
   }
 
   /// Creates an [Attribute] instance with the specified String value.
-  T call(String value) => build(value);
+  T call(String value) => builder(value);
 }
 
 /// {@template text_scaler_utility}
@@ -607,13 +608,14 @@ mixin _$FontFamilyUtility<T extends Attribute> on MixUtility<T, String> {
 /// {@endtemplate}
 mixin _$TextScalerUtility<T extends Attribute> on MixUtility<T, TextScaler> {
   /// Creates an [Attribute] instance with [TextScaler.noScaling] value.
-  T noScaling() => build(TextScaler.noScaling);
+  T noScaling() => builder(TextScaler.noScaling);
 
   /// Creates an [Attribute] instance using the [TextScaler.linear] constructor.
-  T linear(double textScaleFactor) => build(TextScaler.linear(textScaleFactor));
+  T linear(double textScaleFactor) =>
+      builder(TextScaler.linear(textScaleFactor));
 
   /// Creates an [Attribute] instance with the specified TextScaler value.
-  T call(TextScaler value) => build(value);
+  T call(TextScaler value) => builder(value);
 }
 
 /// {@template table_column_width_utility}
@@ -625,7 +627,7 @@ mixin _$TextScalerUtility<T extends Attribute> on MixUtility<T, TextScaler> {
 mixin _$TableColumnWidthUtility<T extends Attribute>
     on MixUtility<T, TableColumnWidth> {
   /// Creates an [Attribute] instance with the specified TableColumnWidth value.
-  T call(TableColumnWidth value) => build(value);
+  T call(TableColumnWidth value) => builder(value);
 }
 
 /// {@template table_border_utility}
@@ -641,7 +643,7 @@ mixin _$TableBorderUtility<T extends Attribute> on MixUtility<T, TableBorder> {
       double width = 1.0,
       BorderStyle style = BorderStyle.solid,
       BorderRadius borderRadius = BorderRadius.zero}) {
-    return build(TableBorder.all(
+    return builder(TableBorder.all(
         color: color, width: width, style: style, borderRadius: borderRadius));
   }
 
@@ -650,10 +652,10 @@ mixin _$TableBorderUtility<T extends Attribute> on MixUtility<T, TableBorder> {
       {BorderSide inside = BorderSide.none,
       BorderSide outside = BorderSide.none,
       BorderRadius borderRadius = BorderRadius.zero}) {
-    return build(TableBorder.symmetric(
+    return builder(TableBorder.symmetric(
         inside: inside, outside: outside, borderRadius: borderRadius));
   }
 
   /// Creates an [Attribute] instance with the specified TableBorder value.
-  T call(TableBorder value) => build(value);
+  T call(TableBorder value) => builder(value);
 }

@@ -46,10 +46,10 @@ final class SizedBoxModifierSpecUtility<T extends Attribute>
   late final square =
       DoubleUtility((value) => call(width: value, height: value));
 
-  SizedBoxModifierSpecUtility(super.build);
+  SizedBoxModifierSpecUtility(super.builder);
 
   T call({double? width, double? height}) {
-    return build(SizedBoxModifierSpecAttribute(width: width, height: height));
+    return builder(SizedBoxModifierSpecAttribute(width: width, height: height));
   }
 
   /// Utility for defining [SizedBoxModifierSpecAttribute.width] and [SizedBoxModifierSpecAttribute.height]

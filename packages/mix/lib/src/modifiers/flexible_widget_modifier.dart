@@ -38,16 +38,16 @@ final class FlexibleModifierSpec
 
 final class FlexibleModifierSpecUtility<T extends Attribute>
     extends MixUtility<T, FlexibleModifierSpecAttribute> {
-  const FlexibleModifierSpecUtility(super.build);
+  const FlexibleModifierSpecUtility(super.builder);
   FlexFitUtility<T> get fit => FlexFitUtility((fit) => call(fit: fit));
   IntUtility<T> get flex => IntUtility((flex) => call(flex: flex));
   T tight({int? flex}) =>
-      build(FlexibleModifierSpecAttribute(flex: flex, fit: FlexFit.tight));
+      builder(FlexibleModifierSpecAttribute(flex: flex, fit: FlexFit.tight));
   T loose({int? flex}) =>
-      build(FlexibleModifierSpecAttribute(flex: flex, fit: FlexFit.loose));
+      builder(FlexibleModifierSpecAttribute(flex: flex, fit: FlexFit.loose));
   T expanded({int? flex}) => tight(flex: flex);
 
   T call({int? flex, FlexFit? fit}) {
-    return build(FlexibleModifierSpecAttribute(flex: flex, fit: fit));
+    return builder(FlexibleModifierSpecAttribute(flex: flex, fit: fit));
   }
 }

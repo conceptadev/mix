@@ -136,10 +136,10 @@ class PaddingModifierSpecUtility<T extends Attribute>
   /// Utility for defining [PaddingModifierSpecAttribute.padding]
   late final padding = SpacingUtility((v) => only(padding: v));
 
-  PaddingModifierSpecUtility(super.builder, [super.mutable]);
+  PaddingModifierSpecUtility(super.builder, {super.mutable});
 
-  PaddingModifierSpecUtility<T> get builder =>
-      PaddingModifierSpecUtility(attributeBuilder, true);
+  PaddingModifierSpecUtility<T> get chain =>
+      PaddingModifierSpecUtility(attributeBuilder, mutable: true);
 
   static PaddingModifierSpecUtility<PaddingModifierSpecAttribute> get self =>
       PaddingModifierSpecUtility((v) => v);
@@ -149,7 +149,7 @@ class PaddingModifierSpecUtility<T extends Attribute>
   T only({
     SpacingDto? padding,
   }) {
-    return build(PaddingModifierSpecAttribute(
+    return builder(PaddingModifierSpecAttribute(
       padding: padding,
     ));
   }

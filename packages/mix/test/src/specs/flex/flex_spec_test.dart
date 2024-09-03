@@ -165,7 +165,7 @@ void main() {
     test('fluent behavior', () {
       final flex = FlexSpecUtility.self;
 
-      final util = flex.builder
+      final util = flex.chain
         ..direction.horizontal()
         ..mainAxisAlignment.center()
         ..crossAxisAlignment.center()
@@ -215,8 +215,8 @@ void main() {
 
     test('Immutable behavior when having multiple flexes', () {
       final flexUtil = FlexSpecUtility.self;
-      final flex1 = flexUtil.builder..gap(10);
-      final flex2 = flexUtil.builder..gap(20);
+      final flex1 = flexUtil.chain..gap(10);
+      final flex2 = flexUtil.chain..gap(20);
 
       final attr1 = flex1.attributeValue!;
       final attr2 = flex2.attributeValue!;
@@ -246,7 +246,7 @@ void main() {
     test('Mutate behavior and not on same utility', () {
       final flex = FlexSpecUtility.self;
 
-      final flexValue = flex.builder;
+      final flexValue = flex.chain;
       flexValue
         ..gap(10)
         ..direction.horizontal()

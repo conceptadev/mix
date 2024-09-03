@@ -77,7 +77,7 @@ void main() {
     test('fluent behavior', () {
       final stack = StackSpecUtility.self;
 
-      final util = stack.builder
+      final util = stack.chain
         ..alignment.topLeft()
         ..fit.expand()
         ..textDirection.rtl()
@@ -111,8 +111,8 @@ void main() {
 
     test('Immutable behavior when having multiple stacks', () {
       final stackUtil = StackSpecUtility.self;
-      final stack1 = stackUtil.builder..alignment.topLeft();
-      final stack2 = stackUtil.builder..alignment.bottomRight();
+      final stack1 = stackUtil.chain..alignment.topLeft();
+      final stack2 = stackUtil.chain..alignment.bottomRight();
 
       final attr1 = stack1.attributeValue!;
       final attr2 = stack2.attributeValue!;
@@ -144,7 +144,7 @@ void main() {
     test('Mutate behavior and not on same utility', () {
       final stack = StackSpecUtility.self;
 
-      final stackValue = stack.builder;
+      final stackValue = stack.chain;
       stackValue
         ..alignment.topLeft()
         ..fit.expand()

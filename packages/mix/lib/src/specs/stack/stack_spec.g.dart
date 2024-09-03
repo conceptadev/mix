@@ -235,9 +235,10 @@ class StackSpecUtility<T extends Attribute>
   /// Utility for defining [StackSpecAttribute.modifiers]
   late final wrap = SpecModifierUtility((v) => only(modifiers: v));
 
-  StackSpecUtility(super.builder, [super.mutable]);
+  StackSpecUtility(super.builder, {super.mutable});
 
-  StackSpecUtility<T> get builder => StackSpecUtility(attributeBuilder, true);
+  StackSpecUtility<T> get chain =>
+      StackSpecUtility(attributeBuilder, mutable: true);
 
   static StackSpecUtility<StackSpecAttribute> get self =>
       StackSpecUtility((v) => v);
@@ -252,7 +253,7 @@ class StackSpecUtility<T extends Attribute>
     AnimatedDataDto? animated,
     WidgetModifiersDataDto? modifiers,
   }) {
-    return build(StackSpecAttribute(
+    return builder(StackSpecAttribute(
       alignment: alignment,
       fit: fit,
       textDirection: textDirection,

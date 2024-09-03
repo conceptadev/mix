@@ -44,13 +44,13 @@ final class AlignModifierSpec extends WidgetModifierSpec<AlignModifierSpec>
 
 final class AlignModifierSpecUtility<T extends Attribute>
     extends MixUtility<T, AlignModifierSpecAttribute> {
-  const AlignModifierSpecUtility(super.build);
+  const AlignModifierSpecUtility(super.builder);
   T call({
     AlignmentGeometry? alignment,
     double? widthFactor,
     double? heightFactor,
   }) {
-    return build(
+    return builder(
       AlignModifierSpecAttribute(
         alignment: alignment,
         widthFactor: widthFactor,

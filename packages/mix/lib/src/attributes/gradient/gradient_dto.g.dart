@@ -103,7 +103,7 @@ class LinearGradientUtility<T extends Attribute>
     List<ColorDto>? colors,
     List<double>? stops,
   }) {
-    return build(LinearGradientDto(
+    return builder(LinearGradientDto(
       begin: begin,
       end: end,
       tileMode: tileMode,
@@ -262,7 +262,7 @@ class RadialGradientUtility<T extends Attribute>
     List<ColorDto>? colors,
     List<double>? stops,
   }) {
-    return build(RadialGradientDto(
+    return builder(RadialGradientDto(
       center: center,
       radius: radius,
       tileMode: tileMode,
@@ -422,7 +422,7 @@ class SweepGradientUtility<T extends Attribute>
     List<ColorDto>? colors,
     List<double>? stops,
   }) {
-    return build(SweepGradientDto(
+    return builder(SweepGradientDto(
       center: center,
       startAngle: startAngle,
       endAngle: endAngle,

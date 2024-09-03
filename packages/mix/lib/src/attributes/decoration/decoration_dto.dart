@@ -298,9 +298,9 @@ ShapeBorderDto? _fromBoxShape({
 
 class DecorationUtility<T extends Attribute>
     extends MixUtility<T, DecorationDto> {
-  const DecorationUtility(super.build);
+  const DecorationUtility(super.builder);
 
-  BoxDecorationUtility<T> get box => BoxDecorationUtility(build);
+  BoxDecorationUtility<T> get box => BoxDecorationUtility(builder);
 
-  ShapeDecorationUtility<T> get shape => ShapeDecorationUtility(build);
+  ShapeDecorationUtility<T> get shape => ShapeDecorationUtility(builder);
 }

@@ -120,7 +120,7 @@ class StrutStyleUtility<T extends Attribute>
     double? leading,
     bool? forceStrutHeight,
   }) {
-    return build(StrutStyleDto(
+    return builder(StrutStyleDto(
       fontFamily: fontFamily,
       fontFamilyFallback: fontFamilyFallback,
       fontSize: fontSize,

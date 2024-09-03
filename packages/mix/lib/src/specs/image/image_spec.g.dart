@@ -314,9 +314,10 @@ class ImageSpecUtility<T extends Attribute>
   /// Utility for defining [ImageSpecAttribute.modifiers]
   late final wrap = SpecModifierUtility((v) => only(modifiers: v));
 
-  ImageSpecUtility(super.builder, [super.mutable]);
+  ImageSpecUtility(super.builder, {super.mutable});
 
-  ImageSpecUtility<T> get builder => ImageSpecUtility(attributeBuilder, true);
+  ImageSpecUtility<T> get chain =>
+      ImageSpecUtility(attributeBuilder, mutable: true);
 
   static ImageSpecUtility<ImageSpecAttribute> get self =>
       ImageSpecUtility((v) => v);
@@ -336,7 +337,7 @@ class ImageSpecUtility<T extends Attribute>
     AnimatedDataDto? animated,
     WidgetModifiersDataDto? modifiers,
   }) {
-    return build(ImageSpecAttribute(
+    return builder(ImageSpecAttribute(
       width: width,
       height: height,
       color: color,

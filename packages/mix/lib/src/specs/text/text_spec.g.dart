@@ -391,9 +391,10 @@ class TextSpecUtility<T extends Attribute>
   /// Utility for defining [TextSpecAttribute.modifiers]
   late final wrap = SpecModifierUtility((v) => only(modifiers: v));
 
-  TextSpecUtility(super.builder, [super.mutable]);
+  TextSpecUtility(super.builder, {super.mutable});
 
-  TextSpecUtility<T> get builder => TextSpecUtility(attributeBuilder, true);
+  TextSpecUtility<T> get chain =>
+      TextSpecUtility(attributeBuilder, mutable: true);
 
   static TextSpecUtility<TextSpecAttribute> get self =>
       TextSpecUtility((v) => v);
@@ -416,7 +417,7 @@ class TextSpecUtility<T extends Attribute>
     AnimatedDataDto? animated,
     WidgetModifiersDataDto? modifiers,
   }) {
-    return build(TextSpecAttribute(
+    return builder(TextSpecAttribute(
       overflow: overflow,
       strutStyle: strutStyle,
       textAlign: textAlign,

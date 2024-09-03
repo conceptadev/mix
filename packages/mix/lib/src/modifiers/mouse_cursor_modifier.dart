@@ -29,9 +29,9 @@ class MouseCursorDecoratorSpec
 
 class MouseCursorModifierSpecUtility<T extends Attribute>
     extends MixUtility<T, MouseCursorDecoratorSpecAttribute> {
-  const MouseCursorModifierSpecUtility(super.build);
+  const MouseCursorModifierSpecUtility(super.builder);
   T call(MouseCursor? mouseCursor) {
-    return build(MouseCursorDecoratorSpecAttribute(mouseCursor: mouseCursor));
+    return builder(MouseCursorDecoratorSpecAttribute(mouseCursor: mouseCursor));
   }
 
   T defer() => call(MouseCursor.defer);

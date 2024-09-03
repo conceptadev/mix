@@ -316,9 +316,10 @@ class IconSpecUtility<T extends Attribute>
   /// Utility for defining [IconSpecAttribute.modifiers]
   late final wrap = SpecModifierUtility((v) => only(modifiers: v));
 
-  IconSpecUtility(super.builder, [super.mutable]);
+  IconSpecUtility(super.builder, {super.mutable});
 
-  IconSpecUtility<T> get builder => IconSpecUtility(attributeBuilder, true);
+  IconSpecUtility<T> get chain =>
+      IconSpecUtility(attributeBuilder, mutable: true);
 
   static IconSpecUtility<IconSpecAttribute> get self =>
       IconSpecUtility((v) => v);
@@ -338,7 +339,7 @@ class IconSpecUtility<T extends Attribute>
     AnimatedDataDto? animated,
     WidgetModifiersDataDto? modifiers,
   }) {
-    return build(IconSpecAttribute(
+    return builder(IconSpecAttribute(
       color: color,
       size: size,
       weight: weight,

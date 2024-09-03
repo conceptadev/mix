@@ -15,13 +15,13 @@ part of 'enum_util.dart';
 mixin _$VerticalDirectionUtility<T extends Attribute>
     on MixUtility<T, VerticalDirection> {
   /// Creates an [Attribute] instance with [VerticalDirection.up] value.
-  T up() => build(VerticalDirection.up);
+  T up() => builder(VerticalDirection.up);
 
   /// Creates an [Attribute] instance with [VerticalDirection.down] value.
-  T down() => build(VerticalDirection.down);
+  T down() => builder(VerticalDirection.down);
 
   /// Creates an [Attribute] instance with the specified VerticalDirection value.
-  T call(VerticalDirection value) => build(value);
+  T call(VerticalDirection value) => builder(value);
 }
 
 /// {@template border_style_utility}
@@ -32,13 +32,13 @@ mixin _$VerticalDirectionUtility<T extends Attribute>
 /// {@endtemplate}
 mixin _$BorderStyleUtility<T extends Attribute> on MixUtility<T, BorderStyle> {
   /// Creates an [Attribute] instance with [BorderStyle.none] value.
-  T none() => build(BorderStyle.none);
+  T none() => builder(BorderStyle.none);
 
   /// Creates an [Attribute] instance with [BorderStyle.solid] value.
-  T solid() => build(BorderStyle.solid);
+  T solid() => builder(BorderStyle.solid);
 
   /// Creates an [Attribute] instance with the specified BorderStyle value.
-  T call(BorderStyle value) => build(value);
+  T call(BorderStyle value) => builder(value);
 }
 
 /// {@template clip_utility}
@@ -49,19 +49,19 @@ mixin _$BorderStyleUtility<T extends Attribute> on MixUtility<T, BorderStyle> {
 /// {@endtemplate}
 mixin _$ClipUtility<T extends Attribute> on MixUtility<T, Clip> {
   /// Creates an [Attribute] instance with [Clip.none] value.
-  T none() => build(Clip.none);
+  T none() => builder(Clip.none);
 
   /// Creates an [Attribute] instance with [Clip.hardEdge] value.
-  T hardEdge() => build(Clip.hardEdge);
+  T hardEdge() => builder(Clip.hardEdge);
 
   /// Creates an [Attribute] instance with [Clip.antiAlias] value.
-  T antiAlias() => build(Clip.antiAlias);
+  T antiAlias() => builder(Clip.antiAlias);
 
   /// Creates an [Attribute] instance with [Clip.antiAliasWithSaveLayer] value.
-  T antiAliasWithSaveLayer() => build(Clip.antiAliasWithSaveLayer);
+  T antiAliasWithSaveLayer() => builder(Clip.antiAliasWithSaveLayer);
 
   /// Creates an [Attribute] instance with the specified Clip value.
-  T call(Clip value) => build(value);
+  T call(Clip value) => builder(value);
 }
 
 /// {@template axis_utility}
@@ -72,13 +72,13 @@ mixin _$ClipUtility<T extends Attribute> on MixUtility<T, Clip> {
 /// {@endtemplate}
 mixin _$AxisUtility<T extends Attribute> on MixUtility<T, Axis> {
   /// Creates an [Attribute] instance with [Axis.horizontal] value.
-  T horizontal() => build(Axis.horizontal);
+  T horizontal() => builder(Axis.horizontal);
 
   /// Creates an [Attribute] instance with [Axis.vertical] value.
-  T vertical() => build(Axis.vertical);
+  T vertical() => builder(Axis.vertical);
 
   /// Creates an [Attribute] instance with the specified Axis value.
-  T call(Axis value) => build(value);
+  T call(Axis value) => builder(value);
 }
 
 /// {@template flex_fit_utility}
@@ -89,13 +89,13 @@ mixin _$AxisUtility<T extends Attribute> on MixUtility<T, Axis> {
 /// {@endtemplate}
 mixin _$FlexFitUtility<T extends Attribute> on MixUtility<T, FlexFit> {
   /// Creates an [Attribute] instance with [FlexFit.tight] value.
-  T tight() => build(FlexFit.tight);
+  T tight() => builder(FlexFit.tight);
 
   /// Creates an [Attribute] instance with [FlexFit.loose] value.
-  T loose() => build(FlexFit.loose);
+  T loose() => builder(FlexFit.loose);
 
   /// Creates an [Attribute] instance with the specified FlexFit value.
-  T call(FlexFit value) => build(value);
+  T call(FlexFit value) => builder(value);
 }
 
 /// {@template stack_fit_utility}
@@ -106,16 +106,16 @@ mixin _$FlexFitUtility<T extends Attribute> on MixUtility<T, FlexFit> {
 /// {@endtemplate}
 mixin _$StackFitUtility<T extends Attribute> on MixUtility<T, StackFit> {
   /// Creates an [Attribute] instance with [StackFit.loose] value.
-  T loose() => build(StackFit.loose);
+  T loose() => builder(StackFit.loose);
 
   /// Creates an [Attribute] instance with [StackFit.expand] value.
-  T expand() => build(StackFit.expand);
+  T expand() => builder(StackFit.expand);
 
   /// Creates an [Attribute] instance with [StackFit.passthrough] value.
-  T passthrough() => build(StackFit.passthrough);
+  T passthrough() => builder(StackFit.passthrough);
 
   /// Creates an [Attribute] instance with the specified StackFit value.
-  T call(StackFit value) => build(value);
+  T call(StackFit value) => builder(value);
 }
 
 /// {@template image_repeat_utility}
@@ -126,16 +126,16 @@ mixin _$StackFitUtility<T extends Attribute> on MixUtility<T, StackFit> {
 /// {@endtemplate}
 mixin _$ImageRepeatUtility<T extends Attribute> on MixUtility<T, ImageRepeat> {
   /// Creates an [Attribute] instance with [ImageRepeat.repeat] value.
-  T repeat() => build(ImageRepeat.repeat);
+  T repeat() => builder(ImageRepeat.repeat);
 
   /// Creates an [Attribute] instance with [ImageRepeat.repeatX] value.
-  T repeatX() => build(ImageRepeat.repeatX);
+  T repeatX() => builder(ImageRepeat.repeatX);
 
   /// Creates an [Attribute] instance with [ImageRepeat.repeatY] value.
-  T repeatY() => build(ImageRepeat.repeatY);
+  T repeatY() => builder(ImageRepeat.repeatY);
 
   /// Creates an [Attribute] instance with [ImageRepeat.noRepeat] value.
-  T noRepeat() => build(ImageRepeat.noRepeat);
+  T noRepeat() => builder(ImageRepeat.noRepeat);
 }
 
 /// {@template text_direction_utility}
@@ -147,13 +147,13 @@ mixin _$ImageRepeatUtility<T extends Attribute> on MixUtility<T, ImageRepeat> {
 mixin _$TextDirectionUtility<T extends Attribute>
     on MixUtility<T, TextDirection> {
   /// Creates an [Attribute] instance with [TextDirection.rtl] value.
-  T rtl() => build(TextDirection.rtl);
+  T rtl() => builder(TextDirection.rtl);
 
   /// Creates an [Attribute] instance with [TextDirection.ltr] value.
-  T ltr() => build(TextDirection.ltr);
+  T ltr() => builder(TextDirection.ltr);
 
   /// Creates an [Attribute] instance with the specified TextDirection value.
-  T call(TextDirection value) => build(value);
+  T call(TextDirection value) => builder(value);
 }
 
 /// {@template tile_mode_utility}
@@ -164,19 +164,19 @@ mixin _$TextDirectionUtility<T extends Attribute>
 /// {@endtemplate}
 mixin _$TileModeUtility<T extends Attribute> on MixUtility<T, TileMode> {
   /// Creates an [Attribute] instance with [TileMode.clamp] value.
-  T clamp() => build(TileMode.clamp);
+  T clamp() => builder(TileMode.clamp);
 
   /// Creates an [Attribute] instance with [TileMode.repeated] value.
-  T repeated() => build(TileMode.repeated);
+  T repeated() => builder(TileMode.repeated);
 
   /// Creates an [Attribute] instance with [TileMode.mirror] value.
-  T mirror() => build(TileMode.mirror);
+  T mirror() => builder(TileMode.mirror);
 
   /// Creates an [Attribute] instance with [TileMode.decal] value.
-  T decal() => build(TileMode.decal);
+  T decal() => builder(TileMode.decal);
 
   /// Creates an [Attribute] instance with the specified TileMode value.
-  T call(TileMode value) => build(value);
+  T call(TileMode value) => builder(value);
 }
 
 /// {@template main_axis_alignment_utility}
@@ -188,25 +188,25 @@ mixin _$TileModeUtility<T extends Attribute> on MixUtility<T, TileMode> {
 mixin _$MainAxisAlignmentUtility<T extends Attribute>
     on MixUtility<T, MainAxisAlignment> {
   /// Creates an [Attribute] instance with [MainAxisAlignment.start] value.
-  T start() => build(MainAxisAlignment.start);
+  T start() => builder(MainAxisAlignment.start);
 
   /// Creates an [Attribute] instance with [MainAxisAlignment.end] value.
-  T end() => build(MainAxisAlignment.end);
+  T end() => builder(MainAxisAlignment.end);
 
   /// Creates an [Attribute] instance with [MainAxisAlignment.center] value.
-  T center() => build(MainAxisAlignment.center);
+  T center() => builder(MainAxisAlignment.center);
 
   /// Creates an [Attribute] instance with [MainAxisAlignment.spaceBetween] value.
-  T spaceBetween() => build(MainAxisAlignment.spaceBetween);
+  T spaceBetween() => builder(MainAxisAlignment.spaceBetween);
 
   /// Creates an [Attribute] instance with [MainAxisAlignment.spaceAround] value.
-  T spaceAround() => build(MainAxisAlignment.spaceAround);
+  T spaceAround() => builder(MainAxisAlignment.spaceAround);
 
   /// Creates an [Attribute] instance with [MainAxisAlignment.spaceEvenly] value.
-  T spaceEvenly() => build(MainAxisAlignment.spaceEvenly);
+  T spaceEvenly() => builder(MainAxisAlignment.spaceEvenly);
 
   /// Creates an [Attribute] instance with the specified MainAxisAlignment value.
-  T call(MainAxisAlignment value) => build(value);
+  T call(MainAxisAlignment value) => builder(value);
 }
 
 /// {@template cross_axis_alignment_utility}
@@ -218,22 +218,22 @@ mixin _$MainAxisAlignmentUtility<T extends Attribute>
 mixin _$CrossAxisAlignmentUtility<T extends Attribute>
     on MixUtility<T, CrossAxisAlignment> {
   /// Creates an [Attribute] instance with [CrossAxisAlignment.start] value.
-  T start() => build(CrossAxisAlignment.start);
+  T start() => builder(CrossAxisAlignment.start);
 
   /// Creates an [Attribute] instance with [CrossAxisAlignment.end] value.
-  T end() => build(CrossAxisAlignment.end);
+  T end() => builder(CrossAxisAlignment.end);
 
   /// Creates an [Attribute] instance with [CrossAxisAlignment.center] value.
-  T center() => build(CrossAxisAlignment.center);
+  T center() => builder(CrossAxisAlignment.center);
 
   /// Creates an [Attribute] instance with [CrossAxisAlignment.stretch] value.
-  T stretch() => build(CrossAxisAlignment.stretch);
+  T stretch() => builder(CrossAxisAlignment.stretch);
 
   /// Creates an [Attribute] instance with [CrossAxisAlignment.baseline] value.
-  T baseline() => build(CrossAxisAlignment.baseline);
+  T baseline() => builder(CrossAxisAlignment.baseline);
 
   /// Creates an [Attribute] instance with the specified CrossAxisAlignment value.
-  T call(CrossAxisAlignment value) => build(value);
+  T call(CrossAxisAlignment value) => builder(value);
 }
 
 /// {@template main_axis_size_utility}
@@ -245,13 +245,13 @@ mixin _$CrossAxisAlignmentUtility<T extends Attribute>
 mixin _$MainAxisSizeUtility<T extends Attribute>
     on MixUtility<T, MainAxisSize> {
   /// Creates an [Attribute] instance with [MainAxisSize.min] value.
-  T min() => build(MainAxisSize.min);
+  T min() => builder(MainAxisSize.min);
 
   /// Creates an [Attribute] instance with [MainAxisSize.max] value.
-  T max() => build(MainAxisSize.max);
+  T max() => builder(MainAxisSize.max);
 
   /// Creates an [Attribute] instance with the specified MainAxisSize value.
-  T call(MainAxisSize value) => build(value);
+  T call(MainAxisSize value) => builder(value);
 }
 
 /// {@template box_fit_utility}
@@ -262,28 +262,28 @@ mixin _$MainAxisSizeUtility<T extends Attribute>
 /// {@endtemplate}
 mixin _$BoxFitUtility<T extends Attribute> on MixUtility<T, BoxFit> {
   /// Creates an [Attribute] instance with [BoxFit.fill] value.
-  T fill() => build(BoxFit.fill);
+  T fill() => builder(BoxFit.fill);
 
   /// Creates an [Attribute] instance with [BoxFit.contain] value.
-  T contain() => build(BoxFit.contain);
+  T contain() => builder(BoxFit.contain);
 
   /// Creates an [Attribute] instance with [BoxFit.cover] value.
-  T cover() => build(BoxFit.cover);
+  T cover() => builder(BoxFit.cover);
 
   /// Creates an [Attribute] instance with [BoxFit.fitWidth] value.
-  T fitWidth() => build(BoxFit.fitWidth);
+  T fitWidth() => builder(BoxFit.fitWidth);
 
   /// Creates an [Attribute] instance with [BoxFit.fitHeight] value.
-  T fitHeight() => build(BoxFit.fitHeight);
+  T fitHeight() => builder(BoxFit.fitHeight);
 
   /// Creates an [Attribute] instance with [BoxFit.none] value.
-  T none() => build(BoxFit.none);
+  T none() => builder(BoxFit.none);
 
   /// Creates an [Attribute] instance with [BoxFit.scaleDown] value.
-  T scaleDown() => build(BoxFit.scaleDown);
+  T scaleDown() => builder(BoxFit.scaleDown);
 
   /// Creates an [Attribute] instance with the specified BoxFit value.
-  T call(BoxFit value) => build(value);
+  T call(BoxFit value) => builder(value);
 }
 
 /// {@template blend_mode_utility}
@@ -294,94 +294,94 @@ mixin _$BoxFitUtility<T extends Attribute> on MixUtility<T, BoxFit> {
 /// {@endtemplate}
 mixin _$BlendModeUtility<T extends Attribute> on MixUtility<T, BlendMode> {
   /// Creates an [Attribute] instance with [BlendMode.clear] value.
-  T clear() => build(BlendMode.clear);
+  T clear() => builder(BlendMode.clear);
 
   /// Creates an [Attribute] instance with [BlendMode.src] value.
-  T src() => build(BlendMode.src);
+  T src() => builder(BlendMode.src);
 
   /// Creates an [Attribute] instance with [BlendMode.dst] value.
-  T dst() => build(BlendMode.dst);
+  T dst() => builder(BlendMode.dst);
 
   /// Creates an [Attribute] instance with [BlendMode.srcOver] value.
-  T srcOver() => build(BlendMode.srcOver);
+  T srcOver() => builder(BlendMode.srcOver);
 
   /// Creates an [Attribute] instance with [BlendMode.dstOver] value.
-  T dstOver() => build(BlendMode.dstOver);
+  T dstOver() => builder(BlendMode.dstOver);
 
   /// Creates an [Attribute] instance with [BlendMode.srcIn] value.
-  T srcIn() => build(BlendMode.srcIn);
+  T srcIn() => builder(BlendMode.srcIn);
 
   /// Creates an [Attribute] instance with [BlendMode.dstIn] value.
-  T dstIn() => build(BlendMode.dstIn);
+  T dstIn() => builder(BlendMode.dstIn);
 
   /// Creates an [Attribute] instance with [BlendMode.srcOut] value.
-  T srcOut() => build(BlendMode.srcOut);
+  T srcOut() => builder(BlendMode.srcOut);
 
   /// Creates an [Attribute] instance with [BlendMode.dstOut] value.
-  T dstOut() => build(BlendMode.dstOut);
+  T dstOut() => builder(BlendMode.dstOut);
 
   /// Creates an [Attribute] instance with [BlendMode.srcATop] value.
-  T srcATop() => build(BlendMode.srcATop);
+  T srcATop() => builder(BlendMode.srcATop);
 
   /// Creates an [Attribute] instance with [BlendMode.dstATop] value.
-  T dstATop() => build(BlendMode.dstATop);
+  T dstATop() => builder(BlendMode.dstATop);
 
   /// Creates an [Attribute] instance with [BlendMode.xor] value.
-  T xor() => build(BlendMode.xor);
+  T xor() => builder(BlendMode.xor);
 
   /// Creates an [Attribute] instance with [BlendMode.plus] value.
-  T plus() => build(BlendMode.plus);
+  T plus() => builder(BlendMode.plus);
 
   /// Creates an [Attribute] instance with [BlendMode.modulate] value.
-  T modulate() => build(BlendMode.modulate);
+  T modulate() => builder(BlendMode.modulate);
 
   /// Creates an [Attribute] instance with [BlendMode.screen] value.
-  T screen() => build(BlendMode.screen);
+  T screen() => builder(BlendMode.screen);
 
   /// Creates an [Attribute] instance with [BlendMode.overlay] value.
-  T overlay() => build(BlendMode.overlay);
+  T overlay() => builder(BlendMode.overlay);
 
   /// Creates an [Attribute] instance with [BlendMode.darken] value.
-  T darken() => build(BlendMode.darken);
+  T darken() => builder(BlendMode.darken);
 
   /// Creates an [Attribute] instance with [BlendMode.lighten] value.
-  T lighten() => build(BlendMode.lighten);
+  T lighten() => builder(BlendMode.lighten);
 
   /// Creates an [Attribute] instance with [BlendMode.colorDodge] value.
-  T colorDodge() => build(BlendMode.colorDodge);
+  T colorDodge() => builder(BlendMode.colorDodge);
 
   /// Creates an [Attribute] instance with [BlendMode.colorBurn] value.
-  T colorBurn() => build(BlendMode.colorBurn);
+  T colorBurn() => builder(BlendMode.colorBurn);
 
   /// Creates an [Attribute] instance with [BlendMode.hardLight] value.
-  T hardLight() => build(BlendMode.hardLight);
+  T hardLight() => builder(BlendMode.hardLight);
 
   /// Creates an [Attribute] instance with [BlendMode.softLight] value.
-  T softLight() => build(BlendMode.softLight);
+  T softLight() => builder(BlendMode.softLight);
 
   /// Creates an [Attribute] instance with [BlendMode.difference] value.
-  T difference() => build(BlendMode.difference);
+  T difference() => builder(BlendMode.difference);
 
   /// Creates an [Attribute] instance with [BlendMode.exclusion] value.
-  T exclusion() => build(BlendMode.exclusion);
+  T exclusion() => builder(BlendMode.exclusion);
 
   /// Creates an [Attribute] instance with [BlendMode.multiply] value.
-  T multiply() => build(BlendMode.multiply);
+  T multiply() => builder(BlendMode.multiply);
 
   /// Creates an [Attribute] instance with [BlendMode.hue] value.
-  T hue() => build(BlendMode.hue);
+  T hue() => builder(BlendMode.hue);
 
   /// Creates an [Attribute] instance with [BlendMode.saturation] value.
-  T saturation() => build(BlendMode.saturation);
+  T saturation() => builder(BlendMode.saturation);
 
   /// Creates an [Attribute] instance with [BlendMode.color] value.
-  T color() => build(BlendMode.color);
+  T color() => builder(BlendMode.color);
 
   /// Creates an [Attribute] instance with [BlendMode.luminosity] value.
-  T luminosity() => build(BlendMode.luminosity);
+  T luminosity() => builder(BlendMode.luminosity);
 
   /// Creates an [Attribute] instance with the specified BlendMode value.
-  T call(BlendMode value) => build(value);
+  T call(BlendMode value) => builder(value);
 }
 
 /// {@template box_shape_utility}
@@ -392,13 +392,13 @@ mixin _$BlendModeUtility<T extends Attribute> on MixUtility<T, BlendMode> {
 /// {@endtemplate}
 mixin _$BoxShapeUtility<T extends Attribute> on MixUtility<T, BoxShape> {
   /// Creates an [Attribute] instance with [BoxShape.rectangle] value.
-  T rectangle() => build(BoxShape.rectangle);
+  T rectangle() => builder(BoxShape.rectangle);
 
   /// Creates an [Attribute] instance with [BoxShape.circle] value.
-  T circle() => build(BoxShape.circle);
+  T circle() => builder(BoxShape.circle);
 
   /// Creates an [Attribute] instance with the specified BoxShape value.
-  T call(BoxShape value) => build(value);
+  T call(BoxShape value) => builder(value);
 }
 
 /// {@template font_style_utility}
@@ -409,13 +409,13 @@ mixin _$BoxShapeUtility<T extends Attribute> on MixUtility<T, BoxShape> {
 /// {@endtemplate}
 mixin _$FontStyleUtility<T extends Attribute> on MixUtility<T, FontStyle> {
   /// Creates an [Attribute] instance with [FontStyle.normal] value.
-  T normal() => build(FontStyle.normal);
+  T normal() => builder(FontStyle.normal);
 
   /// Creates an [Attribute] instance with [FontStyle.italic] value.
-  T italic() => build(FontStyle.italic);
+  T italic() => builder(FontStyle.italic);
 
   /// Creates an [Attribute] instance with the specified FontStyle value.
-  T call(FontStyle value) => build(value);
+  T call(FontStyle value) => builder(value);
 }
 
 /// {@template text_decoration_style_utility}
@@ -427,22 +427,22 @@ mixin _$FontStyleUtility<T extends Attribute> on MixUtility<T, FontStyle> {
 mixin _$TextDecorationStyleUtility<T extends Attribute>
     on MixUtility<T, TextDecorationStyle> {
   /// Creates an [Attribute] instance with [TextDecorationStyle.solid] value.
-  T solid() => build(TextDecorationStyle.solid);
+  T solid() => builder(TextDecorationStyle.solid);
 
   /// Creates an [Attribute] instance with [TextDecorationStyle.double] value.
-  T double() => build(TextDecorationStyle.double);
+  T double() => builder(TextDecorationStyle.double);
 
   /// Creates an [Attribute] instance with [TextDecorationStyle.dotted] value.
-  T dotted() => build(TextDecorationStyle.dotted);
+  T dotted() => builder(TextDecorationStyle.dotted);
 
   /// Creates an [Attribute] instance with [TextDecorationStyle.dashed] value.
-  T dashed() => build(TextDecorationStyle.dashed);
+  T dashed() => builder(TextDecorationStyle.dashed);
 
   /// Creates an [Attribute] instance with [TextDecorationStyle.wavy] value.
-  T wavy() => build(TextDecorationStyle.wavy);
+  T wavy() => builder(TextDecorationStyle.wavy);
 
   /// Creates an [Attribute] instance with the specified TextDecorationStyle value.
-  T call(TextDecorationStyle value) => build(value);
+  T call(TextDecorationStyle value) => builder(value);
 }
 
 /// {@template text_baseline_utility}
@@ -454,13 +454,13 @@ mixin _$TextDecorationStyleUtility<T extends Attribute>
 mixin _$TextBaselineUtility<T extends Attribute>
     on MixUtility<T, TextBaseline> {
   /// Creates an [Attribute] instance with [TextBaseline.alphabetic] value.
-  T alphabetic() => build(TextBaseline.alphabetic);
+  T alphabetic() => builder(TextBaseline.alphabetic);
 
   /// Creates an [Attribute] instance with [TextBaseline.ideographic] value.
-  T ideographic() => build(TextBaseline.ideographic);
+  T ideographic() => builder(TextBaseline.ideographic);
 
   /// Creates an [Attribute] instance with the specified TextBaseline value.
-  T call(TextBaseline value) => build(value);
+  T call(TextBaseline value) => builder(value);
 }
 
 /// {@template text_overflow_utility}
@@ -472,19 +472,19 @@ mixin _$TextBaselineUtility<T extends Attribute>
 mixin _$TextOverflowUtility<T extends Attribute>
     on MixUtility<T, TextOverflow> {
   /// Creates an [Attribute] instance with [TextOverflow.clip] value.
-  T clip() => build(TextOverflow.clip);
+  T clip() => builder(TextOverflow.clip);
 
   /// Creates an [Attribute] instance with [TextOverflow.fade] value.
-  T fade() => build(TextOverflow.fade);
+  T fade() => builder(TextOverflow.fade);
 
   /// Creates an [Attribute] instance with [TextOverflow.ellipsis] value.
-  T ellipsis() => build(TextOverflow.ellipsis);
+  T ellipsis() => builder(TextOverflow.ellipsis);
 
   /// Creates an [Attribute] instance with [TextOverflow.visible] value.
-  T visible() => build(TextOverflow.visible);
+  T visible() => builder(TextOverflow.visible);
 
   /// Creates an [Attribute] instance with the specified TextOverflow value.
-  T call(TextOverflow value) => build(value);
+  T call(TextOverflow value) => builder(value);
 }
 
 /// {@template text_width_basis_utility}
@@ -496,13 +496,13 @@ mixin _$TextOverflowUtility<T extends Attribute>
 mixin _$TextWidthBasisUtility<T extends Attribute>
     on MixUtility<T, TextWidthBasis> {
   /// Creates an [Attribute] instance with [TextWidthBasis.parent] value.
-  T parent() => build(TextWidthBasis.parent);
+  T parent() => builder(TextWidthBasis.parent);
 
   /// Creates an [Attribute] instance with [TextWidthBasis.longestLine] value.
-  T longestLine() => build(TextWidthBasis.longestLine);
+  T longestLine() => builder(TextWidthBasis.longestLine);
 
   /// Creates an [Attribute] instance with the specified TextWidthBasis value.
-  T call(TextWidthBasis value) => build(value);
+  T call(TextWidthBasis value) => builder(value);
 }
 
 /// {@template text_align_utility}
@@ -513,25 +513,25 @@ mixin _$TextWidthBasisUtility<T extends Attribute>
 /// {@endtemplate}
 mixin _$TextAlignUtility<T extends Attribute> on MixUtility<T, TextAlign> {
   /// Creates an [Attribute] instance with [TextAlign.left] value.
-  T left() => build(TextAlign.left);
+  T left() => builder(TextAlign.left);
 
   /// Creates an [Attribute] instance with [TextAlign.right] value.
-  T right() => build(TextAlign.right);
+  T right() => builder(TextAlign.right);
 
   /// Creates an [Attribute] instance with [TextAlign.center] value.
-  T center() => build(TextAlign.center);
+  T center() => builder(TextAlign.center);
 
   /// Creates an [Attribute] instance with [TextAlign.justify] value.
-  T justify() => build(TextAlign.justify);
+  T justify() => builder(TextAlign.justify);
 
   /// Creates an [Attribute] instance with [TextAlign.start] value.
-  T start() => build(TextAlign.start);
+  T start() => builder(TextAlign.start);
 
   /// Creates an [Attribute] instance with [TextAlign.end] value.
-  T end() => build(TextAlign.end);
+  T end() => builder(TextAlign.end);
 
   /// Creates an [Attribute] instance with the specified TextAlign value.
-  T call(TextAlign value) => build(value);
+  T call(TextAlign value) => builder(value);
 }
 
 /// {@template filter_quality_utility}
@@ -543,19 +543,19 @@ mixin _$TextAlignUtility<T extends Attribute> on MixUtility<T, TextAlign> {
 mixin _$FilterQualityUtility<T extends Attribute>
     on MixUtility<T, FilterQuality> {
   /// Creates an [Attribute] instance with [FilterQuality.none] value.
-  T none() => build(FilterQuality.none);
+  T none() => builder(FilterQuality.none);
 
   /// Creates an [Attribute] instance with [FilterQuality.low] value.
-  T low() => build(FilterQuality.low);
+  T low() => builder(FilterQuality.low);
 
   /// Creates an [Attribute] instance with [FilterQuality.medium] value.
-  T medium() => build(FilterQuality.medium);
+  T medium() => builder(FilterQuality.medium);
 
   /// Creates an [Attribute] instance with [FilterQuality.high] value.
-  T high() => build(FilterQuality.high);
+  T high() => builder(FilterQuality.high);
 
   /// Creates an [Attribute] instance with the specified FilterQuality value.
-  T call(FilterQuality value) => build(value);
+  T call(FilterQuality value) => builder(value);
 }
 
 /// {@template wrap_alignment_utility}
@@ -567,25 +567,25 @@ mixin _$FilterQualityUtility<T extends Attribute>
 mixin _$WrapAlignmentUtility<T extends Attribute>
     on MixUtility<T, WrapAlignment> {
   /// Creates an [Attribute] instance with [WrapAlignment.start] value.
-  T start() => build(WrapAlignment.start);
+  T start() => builder(WrapAlignment.start);
 
   /// Creates an [Attribute] instance with [WrapAlignment.end] value.
-  T end() => build(WrapAlignment.end);
+  T end() => builder(WrapAlignment.end);
 
   /// Creates an [Attribute] instance with [WrapAlignment.center] value.
-  T center() => build(WrapAlignment.center);
+  T center() => builder(WrapAlignment.center);
 
   /// Creates an [Attribute] instance with [WrapAlignment.spaceBetween] value.
-  T spaceBetween() => build(WrapAlignment.spaceBetween);
+  T spaceBetween() => builder(WrapAlignment.spaceBetween);
 
   /// Creates an [Attribute] instance with [WrapAlignment.spaceAround] value.
-  T spaceAround() => build(WrapAlignment.spaceAround);
+  T spaceAround() => builder(WrapAlignment.spaceAround);
 
   /// Creates an [Attribute] instance with [WrapAlignment.spaceEvenly] value.
-  T spaceEvenly() => build(WrapAlignment.spaceEvenly);
+  T spaceEvenly() => builder(WrapAlignment.spaceEvenly);
 
   /// Creates an [Attribute] instance with the specified WrapAlignment value.
-  T call(WrapAlignment value) => build(value);
+  T call(WrapAlignment value) => builder(value);
 }
 
 /// {@template table_cell_vertical_alignment_utility}
@@ -597,23 +597,23 @@ mixin _$WrapAlignmentUtility<T extends Attribute>
 mixin _$TableCellVerticalAlignmentUtility<T extends Attribute>
     on MixUtility<T, TableCellVerticalAlignment> {
   /// Creates an [Attribute] instance with [TableCellVerticalAlignment.top] value.
-  T top() => build(TableCellVerticalAlignment.top);
+  T top() => builder(TableCellVerticalAlignment.top);
 
   /// Creates an [Attribute] instance with [TableCellVerticalAlignment.middle] value.
-  T middle() => build(TableCellVerticalAlignment.middle);
+  T middle() => builder(TableCellVerticalAlignment.middle);
 
   /// Creates an [Attribute] instance with [TableCellVerticalAlignment.bottom] value.
-  T bottom() => build(TableCellVerticalAlignment.bottom);
+  T bottom() => builder(TableCellVerticalAlignment.bottom);
 
   /// Creates an [Attribute] instance with [TableCellVerticalAlignment.baseline] value.
-  T baseline() => build(TableCellVerticalAlignment.baseline);
+  T baseline() => builder(TableCellVerticalAlignment.baseline);
 
   /// Creates an [Attribute] instance with [TableCellVerticalAlignment.fill] value.
-  T fill() => build(TableCellVerticalAlignment.fill);
+  T fill() => builder(TableCellVerticalAlignment.fill);
 
   /// Creates an [Attribute] instance with [TableCellVerticalAlignment.intrinsicHeight] value.
-  T intrinsicHeight() => build(TableCellVerticalAlignment.intrinsicHeight);
+  T intrinsicHeight() => builder(TableCellVerticalAlignment.intrinsicHeight);
 
   /// Creates an [Attribute] instance with the specified TableCellVerticalAlignment value.
-  T call(TableCellVerticalAlignment value) => build(value);
+  T call(TableCellVerticalAlignment value) => builder(value);
 }

@@ -44,11 +44,11 @@ final class RotatedBoxModifierSpec
 
 final class RotatedBoxModifierSpecUtility<T extends Attribute>
     extends MixUtility<T, RotatedBoxModifierSpecAttribute> {
-  const RotatedBoxModifierSpecUtility(super.build);
+  const RotatedBoxModifierSpecUtility(super.builder);
   T d90() => call(1);
   T d180() => call(2);
   T d270() => call(3);
 
   T call(int value) =>
-      build(RotatedBoxModifierSpecAttribute(quarterTurns: value));
+      builder(RotatedBoxModifierSpecAttribute(quarterTurns: value));
 }

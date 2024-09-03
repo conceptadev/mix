@@ -49,12 +49,12 @@ final class IntrinsicWidthModifierSpec
 
 final class IntrinsicHeightModifierSpecUtility<T extends Attribute>
     extends MixUtility<T, IntrinsicHeightModifierSpecAttribute> {
-  const IntrinsicHeightModifierSpecUtility(super.build);
-  T call() => build(const IntrinsicHeightModifierSpecAttribute());
+  const IntrinsicHeightModifierSpecUtility(super.builder);
+  T call() => builder(const IntrinsicHeightModifierSpecAttribute());
 }
 
 final class IntrinsicWidthModifierSpecUtility<T extends Attribute>
     extends MixUtility<T, IntrinsicWidthModifierSpecAttribute> {
-  const IntrinsicWidthModifierSpecUtility(super.build);
-  T call() => build(const IntrinsicWidthModifierSpecAttribute());
+  const IntrinsicWidthModifierSpecUtility(super.builder);
+  T call() => builder(const IntrinsicWidthModifierSpecAttribute());
 }

@@ -4,12 +4,12 @@ import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:build/build.dart';
 import 'package:mix_annotations/mix_annotations.dart';
-import 'package:source_gen/source_gen.dart';
-
 import 'builders/utility_class_builder.dart';
-import 'helpers/builder_utils.dart';
 import 'helpers/dart_type_ext.dart';
 import 'helpers/helpers.dart';
+import 'package:source_gen/source_gen.dart';
+
+import 'helpers/builder_utils.dart';
 
 class MixableClassUtilityGenerator
     extends GeneratorForAnnotation<MixableClassUtility> {
@@ -125,7 +125,7 @@ $callMethod
 /// static methods of `mappingElement` in the context
 ///
 /// For example:
-/// T staticValue() => build(ClassElement.staticValue);
+/// T staticValue() => builder(ClassElement.staticValue);
 String _generateUtilityFields(ClassUtilityAnnotationContext context) {
   final mappedEl = context.mappingElement ?? context.valueElement;
   final valueEl = context.valueElement;
@@ -139,7 +139,7 @@ String _generateUtilityFields(ClassUtilityAnnotationContext context) {
       final type = mappedEl.name;
       fieldStatements.add('''
   /// Creates an [Attribute] instance with [${mappedEl.name}.$name] value.
-  T $name() => build($type.$name);
+  T $name() => builder($type.$name);
   ''');
     }
   }
@@ -153,7 +153,7 @@ String _generateUtilityFields(ClassUtilityAnnotationContext context) {
 /// If `generateCallMethod` is false, an empty string is returned.
 ///
 /// For example:
-/// T call(ClassElement value) => build(value);
+/// T call(ClassElement value) => builder(value);
 String _generateCallMethod(ClassUtilityAnnotationContext context) {
   if (!context.generateCallMethod) return '';
   final valueEl = context.valueElement;
@@ -161,7 +161,7 @@ String _generateCallMethod(ClassUtilityAnnotationContext context) {
 
   return '''
 /// Creates an [Attribute] instance with the specified $valueName value.
-T call($valueName value) => build(value);
+T call($valueName value) => builder(value);
 ''';
 }
 
@@ -169,7 +169,7 @@ T call($valueName value) => build(value);
 /// of `valueElement` in the context
 ///
 /// For example:
-/// T constructor(params) => build(ClassElement.constructor(params));
+/// T constructor(params) => builder(ClassElement.constructor(params));
 String generateUtilityConstructors(ClassUtilityAnnotationContext context) {
   final mappedEl = context.mappingElement ?? context.valueElement;
 

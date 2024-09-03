@@ -412,9 +412,10 @@ class BoxSpecUtility<T extends Attribute>
   /// Utility for defining [BoxSpecAttribute.animated]
   late final animated = AnimatedUtility((v) => only(animated: v));
 
-  BoxSpecUtility(super.builder, [super.mutable]);
+  BoxSpecUtility(super.builder, {super.mutable});
 
-  BoxSpecUtility<T> get builder => BoxSpecUtility(attributeBuilder, true);
+  BoxSpecUtility<T> get chain =>
+      BoxSpecUtility(attributeBuilder, mutable: true);
 
   static BoxSpecUtility<BoxSpecAttribute> get self => BoxSpecUtility((v) => v);
 
@@ -435,7 +436,7 @@ class BoxSpecUtility<T extends Attribute>
     WidgetModifiersDataDto? modifiers,
     AnimatedDataDto? animated,
   }) {
-    return build(BoxSpecAttribute(
+    return builder(BoxSpecAttribute(
       alignment: alignment,
       padding: padding,
       margin: margin,

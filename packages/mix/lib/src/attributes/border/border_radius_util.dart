@@ -12,7 +12,7 @@ import 'border_radius_dto.dart';
 final class BorderRadiusGeometryUtility<T extends Attribute>
     extends DtoUtility<T, BorderRadiusGeometryDto, BorderRadiusGeometry> {
   /// Returns a directional utility for creating and manipulating attributes with [BorderRadiusDirectional]
-  late final directional = BorderRadiusDirectionalUtility(build);
+  late final directional = BorderRadiusDirectionalUtility(builder);
 
   /// Returns a [RadiusUtility] to manipulate [Radius] for all corners.
   late final all = _bordeRadius.all;
@@ -50,7 +50,7 @@ final class BorderRadiusGeometryUtility<T extends Attribute>
   /// Sets a zero [Radius] for all corn
   late final zero = _bordeRadius.zero;
 
-  late final _bordeRadius = BorderRadiusUtility(build);
+  late final _bordeRadius = BorderRadiusUtility(builder);
 
   BorderRadiusGeometryUtility(super.builder)
       : super(valueToDto: (v) => v.toDto());
@@ -173,7 +173,7 @@ final class BorderRadiusUtility<T extends Attribute>
     Radius? bottomLeft,
     Radius? bottomRight,
   }) {
-    return build(
+    return builder(
       BorderRadiusDto(
         topLeft: topLeft,
         topRight: topRight,
@@ -282,7 +282,7 @@ final class BorderRadiusDirectionalUtility<T extends Attribute>
       bottomEnd = p4;
     }
 
-    return build(
+    return builder(
       BorderRadiusDirectionalDto(
         topStart: Radius.circular(topStart),
         topEnd: Radius.circular(topEnd),
@@ -307,7 +307,7 @@ final class BorderRadiusDirectionalUtility<T extends Attribute>
     Radius? bottomStart,
     Radius? bottomEnd,
   }) {
-    return build(
+    return builder(
       BorderRadiusDirectionalDto(
         topStart: topStart,
         topEnd: topEnd,

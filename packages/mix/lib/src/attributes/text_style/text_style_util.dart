@@ -67,7 +67,7 @@ final class TextStyleUtility<T extends Attribute>
 
   T fontFamilyFallback(List<String> v) => call(fontFamilyFallback: v);
 
-  T ref(TextStyleToken token) => build(TextStyleDto.ref(token));
+  T ref(TextStyleToken token) => builder(TextStyleDto.ref(token));
 
   T call({
     String? fontFamily,
@@ -169,6 +169,6 @@ final class TextStyleUtility<T extends Attribute>
       fontFamilyFallback: fontFamilyFallback,
     );
 
-    return build(textStyle);
+    return builder(textStyle);
   }
 }

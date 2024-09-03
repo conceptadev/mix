@@ -330,9 +330,10 @@ class FlexSpecUtility<T extends Attribute>
   /// Utility for defining [FlexSpecAttribute.modifiers]
   late final wrap = SpecModifierUtility((v) => only(modifiers: v));
 
-  FlexSpecUtility(super.builder, [super.mutable]);
+  FlexSpecUtility(super.builder, {super.mutable});
 
-  FlexSpecUtility<T> get builder => FlexSpecUtility(attributeBuilder, true);
+  FlexSpecUtility<T> get chain =>
+      FlexSpecUtility(attributeBuilder, mutable: true);
 
   static FlexSpecUtility<FlexSpecAttribute> get self =>
       FlexSpecUtility((v) => v);
@@ -352,7 +353,7 @@ class FlexSpecUtility<T extends Attribute>
     AnimatedDataDto? animated,
     WidgetModifiersDataDto? modifiers,
   }) {
-    return build(FlexSpecAttribute(
+    return builder(FlexSpecAttribute(
       crossAxisAlignment: crossAxisAlignment,
       mainAxisAlignment: mainAxisAlignment,
       mainAxisSize: mainAxisSize,

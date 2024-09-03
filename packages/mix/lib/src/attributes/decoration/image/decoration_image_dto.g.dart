@@ -117,7 +117,7 @@ class DecorationImageUtility<T extends Attribute>
     bool? invertColors,
     bool? isAntiAlias,
   }) {
-    return build(DecorationImageDto(
+    return builder(DecorationImageDto(
       image: image,
       fit: fit,
       alignment: alignment,

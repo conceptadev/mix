@@ -9,6 +9,6 @@ final class SpecModifierUtility<T extends Attribute>
 
   @override
   T only(WidgetModifierSpecAttribute attribute) {
-    return build(WidgetModifiersDataDto([attribute]));
+    return builder(WidgetModifiersDataDto([attribute]));
   }
 }
