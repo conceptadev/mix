@@ -372,12 +372,9 @@ void main() {
       final text = TextSpecUtility.self;
 
       final textValue = text.chain;
-
-      text.chain
+      textValue
         ..maxLines(3)
         ..style.color.red()
-        ..style.fontSize(20)
-        ..style.fontWeight.bold()
         ..textAlign.center();
 
       final textAttribute = textValue.attributeValue!;
