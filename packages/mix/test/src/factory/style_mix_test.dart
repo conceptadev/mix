@@ -549,7 +549,7 @@ void main() {
 
   group('Style.merge', () {
     test('Style + AnimatedStyle', () {
-      final animatedData = AnimatedData(
+      const animatedData = AnimatedData(
         curve: Curves.linear,
         duration: Durations.medium1,
       );
@@ -572,7 +572,7 @@ void main() {
     });
 
     test('AnimatedStyle + Style', () {
-      final animatedData = AnimatedData(
+      const animatedData = AnimatedData(
         curve: Curves.linear,
         duration: Durations.medium1,
       );
