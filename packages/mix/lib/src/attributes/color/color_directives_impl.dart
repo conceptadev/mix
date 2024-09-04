@@ -7,12 +7,12 @@ class OpacityColorDirective extends NumberBasedColorDirective<double> {
   const OpacityColorDirective(super.value);
 
   @override
-  Color modify(Color color) => color.withOpacity(super.value);
+  Color modify(Color color) => color.withOpacity(value);
 }
 
 @immutable
 class ColorDirectiveCleaner extends ColorDirective {
-  const ColorDirectiveCleaner() : super();
+  const ColorDirectiveCleaner();
 
   @override
   Color modify(Color color) {
