@@ -169,9 +169,13 @@ class BadgeSpecUtility<T extends Attribute>
   /// Utility for defining [BadgeSpecAttribute.animated]
   late final animated = AnimatedUtility((v) => only(animated: v));
 
-  BadgeSpecUtility(super.builder);
+  BadgeSpecUtility(super.builder, {super.mutable});
 
-  static final self = BadgeSpecUtility((v) => v);
+  BadgeSpecUtility<T> get chain =>
+      BadgeSpecUtility(attributeBuilder, mutable: true);
+
+  static BadgeSpecUtility<BadgeSpecAttribute> get self =>
+      BadgeSpecUtility((v) => v);
 
   /// Returns a new [BadgeSpecAttribute] with the specified properties.
   @override

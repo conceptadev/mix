@@ -236,9 +236,13 @@ class RadioSpecUtility<T extends Attribute>
   /// Utility for defining [RadioSpecAttribute.animated]
   late final animated = AnimatedUtility((v) => only(animated: v));
 
-  RadioSpecUtility(super.builder);
+  RadioSpecUtility(super.builder, {super.mutable});
 
-  static final self = RadioSpecUtility((v) => v);
+  RadioSpecUtility<T> get chain =>
+      RadioSpecUtility(attributeBuilder, mutable: true);
+
+  static RadioSpecUtility<RadioSpecAttribute> get self =>
+      RadioSpecUtility((v) => v);
 
   /// Returns a new [RadioSpecAttribute] with the specified properties.
   @override

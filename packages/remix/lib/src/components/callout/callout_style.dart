@@ -17,22 +17,25 @@ class XCalloutStyle {
 }
 
 Style get _containerStyle => Style(
-      _container.borderRadius(6),
-      _container.color.white(),
-      _container.border.all.color.black12(),
+      _container.chain
+        ..borderRadius(6)
+        ..color.white()
+        ..border.all.color.black12(),
     );
 
 Style get _flexStyle => Style(
-      _flex.wrap.padding(12),
-      _flex.gap(8),
-      _flex.mainAxisSize.min(),
-      _flex.direction.horizontal(),
+      _flex.chain
+        ..wrap.padding(12)
+        ..gap(8)
+        ..mainAxisSize.min()
+        ..direction.horizontal(),
     );
 
 Style get _iconStyle => Style(_icon.color.black(), _icon.size(16));
 
 Style get _textStyle => Style(
-      _text.style.color.black(),
-      _text.style.fontSize(14),
-      _text.style.fontWeight.w500(),
+      _text.chain
+        ..style.color.black()
+        ..style.fontSize(14)
+        ..style.fontWeight.w500(),
     );

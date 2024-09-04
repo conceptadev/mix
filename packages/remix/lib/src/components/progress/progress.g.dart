@@ -235,9 +235,13 @@ class ProgressSpecUtility<T extends Attribute>
   /// Utility for defining [ProgressSpecAttribute.modifiers]
   late final wrap = SpecModifierUtility((v) => only(modifiers: v));
 
-  ProgressSpecUtility(super.builder);
+  ProgressSpecUtility(super.builder, {super.mutable});
 
-  static final self = ProgressSpecUtility((v) => v);
+  ProgressSpecUtility<T> get chain =>
+      ProgressSpecUtility(attributeBuilder, mutable: true);
+
+  static ProgressSpecUtility<ProgressSpecAttribute> get self =>
+      ProgressSpecUtility((v) => v);
 
   /// Returns a new [ProgressSpecAttribute] with the specified properties.
   @override

@@ -16,17 +16,19 @@ class XAvatarStyle {
 }
 
 Style get _fallbackStyle => Style(
-      _fallback.textAlign.center(),
-      _fallback.style.fontWeight.w400(),
-      _fallback.style.fontSize(16),
-      _fallback.style.color.black(),
+      _fallback.chain
+        ..textAlign.center()
+        ..style.fontWeight.w400()
+        ..style.fontSize(16)
+        ..style.color.black(),
     );
 
 Style get _containerStyle => Style(
-      _container.color.black12(),
-      _container.alignment.center(),
-      _container.size(40),
-      _container.wrap.clipOval(),
+      _container.chain
+        ..color.black12()
+        ..alignment.center()
+        ..size(40)
+        ..wrap.clipOval(),
     );
 
 Style get _stackStyle => Style(_stack.alignment.center());

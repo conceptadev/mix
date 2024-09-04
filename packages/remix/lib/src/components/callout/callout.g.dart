@@ -206,9 +206,13 @@ class CalloutSpecUtility<T extends Attribute>
   /// Utility for defining [CalloutSpecAttribute.animated]
   late final animated = AnimatedUtility((v) => only(animated: v));
 
-  CalloutSpecUtility(super.builder);
+  CalloutSpecUtility(super.builder, {super.mutable});
 
-  static final self = CalloutSpecUtility((v) => v);
+  CalloutSpecUtility<T> get chain =>
+      CalloutSpecUtility(attributeBuilder, mutable: true);
+
+  static CalloutSpecUtility<CalloutSpecAttribute> get self =>
+      CalloutSpecUtility((v) => v);
 
   /// Returns a new [CalloutSpecAttribute] with the specified properties.
   @override

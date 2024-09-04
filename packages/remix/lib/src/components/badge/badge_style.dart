@@ -10,22 +10,24 @@ class XBadgeStyle {
 }
 
 Style get _containerStyle => Style(
-      _container.color.black(),
-      _container.borderRadius.all(10),
-      _container.padding.horizontal(10),
-      _container.padding.vertical(2),
+      _container.chain
+        ..color.black()
+        ..borderRadius.all(10)
+        ..padding.horizontal(10)
+        ..padding.vertical(2),
     );
 
 Style get _labelStyle => Style(
-      _label.textHeightBehavior(
-        const TextHeightBehavior(
-          applyHeightToFirstAscent: false,
-          applyHeightToLastDescent: true,
-        ),
-      ),
-      _label.textAlign.center(),
-      _label.style.height(1.5),
-      _label.style.fontWeight.w500(),
-      _label.style.fontSize(12),
-      _label.style.color.white(),
+      _label.chain
+        ..textHeightBehavior(
+          const TextHeightBehavior(
+            applyHeightToFirstAscent: false,
+            applyHeightToLastDescent: false,
+          ),
+        )
+        ..textAlign.center()
+        ..style.height(1.5)
+        ..style.fontWeight.w500()
+        ..style.fontSize(12)
+        ..style.color.white(),
     );
