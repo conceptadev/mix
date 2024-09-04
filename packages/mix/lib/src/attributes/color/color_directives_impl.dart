@@ -11,19 +11,6 @@ class OpacityColorDirective extends NumberBasedColorDirective<double> {
 }
 
 @immutable
-class ColorDirectiveCleaner extends ColorDirective {
-  const ColorDirectiveCleaner();
-
-  @override
-  Color modify(Color color) {
-    return color;
-  }
-
-  @override
-  List<Object?> get props => [];
-}
-
-@immutable
 class ValueColorDirective extends NumberBasedColorDirective<double> {
   const ValueColorDirective(super.value);
 

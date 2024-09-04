@@ -22,25 +22,12 @@ class ColorDto extends Dto<Color> with Diagnosticable {
   final List<ColorDirective> directives;
 
   const ColorDto.raw({this.value, this.directives = const []});
-
   const ColorDto(Color value) : this.raw(value: value);
+
+  factory ColorDto.cleaner() => const _ColorDtoCleaner();
 
   ColorDto.directive(ColorDirective directive)
       : this.raw(directives: [directive]);
-
-  List<ColorDirective> _cleanDirectivesIfNeeded(ColorDto other) {
-    var resultDirectives = [...directives, ...other.directives];
-
-    final indexCleaner =
-        resultDirectives.indexWhere((e) => e is ColorDirectiveCleaner);
-
-    if (indexCleaner != -1) {
-      resultDirectives = resultDirectives.sublist(indexCleaner);
-      resultDirectives.removeAt(0);
-    }
-
-    return resultDirectives;
-  }
 
   @override
   Color resolve(MixData mix) {
@@ -59,13 +46,12 @@ class ColorDto extends Dto<Color> with Diagnosticable {
 
   @override
   ColorDto merge(ColorDto? other) {
-    if (other == null) {
-      return this;
-    }
+    if (other == null) return this;
+    if (other is _ColorDtoCleaner) return ColorDto.raw(value: value);
 
     return ColorDto.raw(
       value: other.value ?? value,
-      directives: _cleanDirectivesIfNeeded(other),
+      directives: [...directives, ...other.directives],
     );
   }
 
@@ -91,4 +77,8 @@ class ColorDto extends Dto<Color> with Diagnosticable {
 
 extension ColorExt on Color {
   ColorDto toDto() => ColorDto(this);
+}
+
+class _ColorDtoCleaner extends ColorDto {
+  const _ColorDtoCleaner() : super.raw();
 }

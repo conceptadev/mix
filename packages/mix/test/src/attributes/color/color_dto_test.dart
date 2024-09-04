@@ -74,8 +74,18 @@ void main() {
         DarkenColorDirective(10),
       ]);
 
+      colorDto = colorDto.merge(ColorDto.cleaner());
+      expect(
+        Colors.red,
+        colorDto.resolve(
+          MixData.create(
+            MockBuildContext(),
+            Style(),
+          ),
+        ),
+      );
+
       colorDto = colorDto.merge(ColorDto.raw(value: Colors.red, directives: [
-        ColorDirectiveCleaner(),
         DarkenColorDirective(20),
       ]));
 
@@ -89,10 +99,7 @@ void main() {
         ),
       );
 
-      colorDto = colorDto.merge(ColorDto.raw(
-        value: Colors.red,
-        directives: [ColorDirectiveCleaner()],
-      ));
+      colorDto = colorDto.merge(ColorDto.cleaner());
 
       colorDto = colorDto.merge(ColorDto.directive(
         SaturateColorDirective(20),

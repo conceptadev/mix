@@ -12,12 +12,6 @@ void main() {
       expect(directive.modify(color), equals(const Color(0x80FF0000)));
     });
 
-    test('ColorDirectiveCleaner returns the same color', () {
-      const color = Color(0xFF00FF00);
-      const directive = ColorDirectiveCleaner();
-      expect(directive.modify(color), equals(color));
-    });
-
     test('ValueColorDirective modifies color value', () {
       const color = Color(0xFFFF0000);
       const directive = ValueColorDirective(0.5);
