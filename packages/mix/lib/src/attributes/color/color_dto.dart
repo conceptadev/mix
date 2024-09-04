@@ -21,8 +21,9 @@ class ColorDto extends Dto<Color> with Diagnosticable {
   final List<ColorDirective> directives;
 
   const ColorDto.raw({this.value, this.directives = const []});
-
   const ColorDto(Color value) : this.raw(value: value);
+
+  factory ColorDto.cleaner() => const _ColorDtoCleaner();
 
   ColorDto.directive(ColorDirective directive)
       : this.raw(directives: [directive]);
@@ -44,12 +45,13 @@ class ColorDto extends Dto<Color> with Diagnosticable {
 
   @override
   ColorDto merge(ColorDto? other) {
-    return other == null
-        ? this
-        : ColorDto.raw(
-            value: other.value ?? value,
-            directives: [...directives, ...other.directives],
-          );
+    if (other == null) return this;
+    if (other is _ColorDtoCleaner) return ColorDto.raw(value: value);
+
+    return ColorDto.raw(
+      value: other.value ?? value,
+      directives: [...directives, ...other.directives],
+    );
   }
 
   @override
@@ -74,4 +76,8 @@ class ColorDto extends Dto<Color> with Diagnosticable {
 
 extension ColorExt on Color {
   ColorDto toDto() => ColorDto(this);
+}
+
+class _ColorDtoCleaner extends ColorDto {
+  const _ColorDtoCleaner() : super.raw();
 }
