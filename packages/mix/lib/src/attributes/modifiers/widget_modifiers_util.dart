@@ -7,6 +7,8 @@ final class SpecModifierUtility<T extends Attribute>
     extends ModifierUtility<T, WidgetModifiersDataDto> {
   SpecModifierUtility(super.builder);
 
+  T clearModifiers() => builder(WidgetModifiersDataDto.cleaner());
+
   @override
   T only(WidgetModifierSpecAttribute attribute) {
     return builder(WidgetModifiersDataDto([attribute]));
