@@ -22,26 +22,32 @@ class XSelectThemeStyle {
 
 Style get _baseThemeStyle => Style(
       _menu.autoWidth.off(),
-      _menu.container.wrap.intrinsicWidth(),
-      _menu.container.elevation.e2(),
-      _item.container.padding.horizontal.$space(2),
-      _menu.container.padding.all.$space(2),
-      _button.flex.gap.$space(1),
-      _button.flex.mainAxisSize.min(),
+      // Icon
       _button.icon.color.$accentAlpha(12),
+      // Container
+      _menu.container.chain
+        ..wrap.intrinsicWidth()
+        ..elevation.e2()
+        ..padding.all.$space(2),
+      // Flex
+      _button.flex.chain
+        ..gap.$space(1)
+        ..mainAxisSize.min(),
     );
 
 Style get _ghost => Style(
-      _button.container.color.transparent(),
-      _button.container.border.none(),
+      _button.container.chain
+        ..color.transparent()
+        ..border.none(),
       $on.hover(
         _button.container.color.$accent(4),
         _item.container.color.$accent(4),
       ),
       $on.dark(
-        _button.container.color.transparent(),
-        _button.icon.color.$accent(5),
-        _button.label.style.color.$accent(5),
+        _button.chain
+          ..container.color.transparent()
+          ..icon.color.$accent(5)
+          ..label.style.color.$accent(5),
         $on.hover(
           _button.container.color.$accent(12),
           _item.container.color.$accent(11),
@@ -51,8 +57,9 @@ Style get _ghost => Style(
     );
 
 Style get _soft => Style(
-      _button.container.color.$accent(3),
-      _button.container.border.none(),
+      _button.container.chain
+        ..color.$accent(3)
+        ..border.none(),
       _button.label.style.color.$accent(12),
       _item.text.style.color.$accent(12),
       $on.hover(
@@ -64,9 +71,10 @@ Style get _soft => Style(
 
 Style get _softOnDark => Style(
       $on.dark(
-        _button.container.color.$accent(12),
-        _button.label.style.color.$accent(6),
-        _button.icon.color.$accent(6),
+        _button.chain
+          ..container.color.$accent(12)
+          ..label.style.color.$accent(6)
+          ..icon.color.$accent(6),
         _menuOnDark(),
         $on.hover(
           _button.container.color.$accent(11),
@@ -82,10 +90,11 @@ Style get _surface => Style(
         _item.text.style.color.$white(),
       ),
       $on.dark(
-        _button.container.color.black(),
-        _button.container.border.color.$neutral(11),
-        _button.label.style.color.$neutral(4),
-        _button.icon.color.$neutral(4),
+        _button.chain
+          ..container.color.black()
+          ..container.border.color.$neutral(11)
+          ..label.style.color.$neutral(4)
+          ..icon.color.$neutral(4),
         _menuOnDark(),
         $on.hover(_button.container.border.color.$neutral(10)),
       ),

@@ -1,9 +1,12 @@
+// ignore_for_file: avoid-unnecessary-call
+
 part of 'spinner.dart';
 
 class XSpinnerStyle {
   static Style get base => Style(
-        $spinner.size(24),
-        $spinner.strokeWidth(1.5),
-        $spinner.color.black(),
+        $spinner.chain
+          ..size.call(24)
+          ..strokeWidth.call(1.5)
+          ..color.black(),
       );
 }

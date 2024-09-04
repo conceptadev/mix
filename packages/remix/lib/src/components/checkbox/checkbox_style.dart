@@ -11,8 +11,9 @@ class XCheckboxStyle {
 }
 
 Style get _containerStyle => Style(
-      _container.borderRadius(4),
-      _container.border.all.color.black(),
+      _container.chain
+        ..borderRadius(4)
+        ..border.all.color.black(),
       $on.selected(_container.color.black()),
       $on.disabled(
         _container.border.all.color.black(),
@@ -21,8 +22,9 @@ Style get _containerStyle => Style(
     );
 
 Style get _indicatorStyle => Style(
-      _indicator.size(16),
-      _indicator.color.white(),
-      _indicator.wrap.opacity(0),
+      _indicator.chain
+        ..size(16)
+        ..color.white()
+        ..wrap.opacity(0),
       $on.selected(_indicator.wrap.opacity(1), _indicator.color.white()),
     );

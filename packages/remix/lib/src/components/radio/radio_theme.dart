@@ -46,19 +46,26 @@ Style get _softOnDark {
 
 Style get _surfaceVariant {
   return Style(
-    _container.color.$white(),
-    _container.border.width(1),
-    _container.border.color.$neutral(8),
-    _indicator.color.$white(),
+    _container.chain
+      ..color.$white()
+      ..border.width(1)
+      ..border.color.$neutral(8),
+    _indicator.chain..color.$white(),
     $on.hover(
-      _container.color.$accentAlpha(4),
-      _container.border.color.$accentAlpha(8),
+      _container.chain
+        ..color.$accentAlpha(4)
+        ..border.color.$accentAlpha(8),
     ),
-    $on.selected(_container.border.none(), _container.color.$accent(9)),
+    $on.selected(
+      _container.chain
+        ..border.none()
+        ..color.$accent(9),
+    ),
     ($on.selected & $on.hover)(_container.color.$accent(11)),
     ($on.disabled & $on.selected)(
-      _container.color.$neutral(3),
-      _container.border.style.solid(),
+      _container.chain
+        ..color.$neutral(3)
+        ..border.style.solid(),
     ),
     $on.dark(_surfaceOnDark()),
   );
@@ -66,25 +73,29 @@ Style get _surfaceVariant {
 
 Style get _surfaceOnDark {
   return Style(
-    _container.color.transparent(),
-    _container.border.color.$neutral(11),
+    _container.chain
+      ..color.transparent()
+      ..border.color.$neutral(11),
     $on.hover(
-      _container.color.transparent(),
-      _container.border.color.$accent(11),
+      _container.chain
+        ..color.transparent()
+        ..border.color.$accent(11),
       $on.selected(_container.color.$accent(11)),
     ),
     $on.disabled(
-      _container.color.$neutral(12),
+      _container.chain
+        ..color.$neutral(12)
+        ..border.color.$neutral(11),
       _indicator.color.$neutral(11),
-      _container.border.color.$neutral(11),
     ),
   );
 }
 
 Style get _disabledVariant {
   return Style(
-    _container.color.$neutral(3),
-    _container.border.color.$neutral(5),
+    _container.chain
+      ..color.$neutral(3)
+      ..border.color.$neutral(5),
     _indicator.color.$neutral(7),
   );
 }
