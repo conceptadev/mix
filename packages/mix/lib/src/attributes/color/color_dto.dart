@@ -5,7 +5,6 @@ import '../../core/dto.dart';
 import '../../core/factory/mix_data.dart';
 import '../../theme/tokens/color_token.dart';
 import 'color_directives.dart';
-import 'color_directives_impl.dart';
 
 /// A Data transfer object that represents a [Color] value.
 ///
