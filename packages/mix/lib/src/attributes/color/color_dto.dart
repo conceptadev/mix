@@ -5,6 +5,7 @@ import '../../core/dto.dart';
 import '../../core/factory/mix_data.dart';
 import '../../theme/tokens/color_token.dart';
 import 'color_directives.dart';
+import 'color_directives_impl.dart';
 
 /// A Data transfer object that represents a [Color] value.
 ///
@@ -44,12 +45,27 @@ class ColorDto extends Dto<Color> with Diagnosticable {
 
   @override
   ColorDto merge(ColorDto? other) {
-    return other == null
-        ? this
-        : ColorDto.raw(
-            value: other.value ?? value,
-            directives: [...directives, ...other.directives],
-          );
+    if (other == null) {
+      return this;
+    }
+
+    return ColorDto.raw(
+      value: other.value ?? value,
+      directives: cleanDirectivesIfNeeded(other),
+    );
+  }
+
+  List<ColorDirective> cleanDirectivesIfNeeded(ColorDto other) {
+    var resultDirectives = [...directives, ...other.directives];
+
+    final indexCleaner =
+        resultDirectives.indexWhere((e) => e is ColorDirectiveCleaner);
+
+    if (indexCleaner != -1) {
+      resultDirectives = resultDirectives.sublist(indexCleaner);
+      resultDirectives.removeAt(0);
+    }
+    return resultDirectives;
   }
 
   @override

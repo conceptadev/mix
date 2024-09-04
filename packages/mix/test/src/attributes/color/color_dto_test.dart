@@ -69,6 +69,50 @@ void main() {
       expect(merged, same(colorDto));
     });
 
+    test('ColorDirectiveCleaner', () {
+      var colorDto = ColorDto.raw(value: Colors.red, directives: [
+        DarkenColorDirective(10),
+      ]);
+
+      colorDto = colorDto.merge(ColorDto.raw(value: Colors.red, directives: [
+        ColorDirectiveCleaner(),
+        DarkenColorDirective(20),
+      ]));
+
+      expect(
+        Colors.red.darken(20),
+        colorDto.resolve(
+          MixData.create(
+            MockBuildContext(),
+            Style(),
+          ),
+        ),
+      );
+
+      colorDto = colorDto.merge(ColorDto.raw(
+        value: Colors.red,
+        directives: [ColorDirectiveCleaner()],
+      ));
+
+      colorDto = colorDto.merge(ColorDto.directive(
+        SaturateColorDirective(20),
+      ));
+
+      colorDto = colorDto.merge(ColorDto.directive(
+        DarkenColorDirective(20),
+      ));
+
+      expect(
+        Colors.red.saturate(20).darken(20),
+        colorDto.resolve(
+          MixData.create(
+            MockBuildContext(),
+            Style(),
+          ),
+        ),
+      );
+    });
+
     // Test equality
     test('ColorDto.equals should return true for equal instances', () {
       const colorDto1 = ColorDto.raw(
