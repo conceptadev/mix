@@ -1,3 +1,4 @@
+import 'package:demo/helpers/knob_builder.dart';
 import 'package:demo/helpers/use_case_state.dart';
 import 'package:flutter/material.dart';
 import 'package:remix/remix.dart';
@@ -17,6 +18,7 @@ Widget buildCheckboxUseCase(BuildContext context) {
     key: _key,
     child: Center(
       child: XCheckbox(
+        variants: [context.knobs.variant(XCheckboxThemeVariant.values)],
         disabled: context.knobs.boolean(label: 'Disabled', initialValue: false),
         value: context.knobs.boolean(label: 'Checked', initialValue: true),
         onChanged: (value) => knobState.updateKnob('Checked', value),

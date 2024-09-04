@@ -285,4 +285,108 @@ void main() {
       expect(lerpedSpec.softWrap, false);
     });
   });
+
+  group('TextSpecUtility fluent', () {
+    test('fluent behavior', () {
+      final text = TextSpecUtility.self;
+
+      final util = text.chain
+        ..overflow.ellipsis()
+        ..textAlign.center()
+        ..textScaleFactor(1.5)
+        ..maxLines(3)
+        ..style.color.blue()
+        ..textWidthBasis.longestLine()
+        ..textDirection.rtl()
+        ..softWrap(false);
+
+      final attr = util.attributeValue!;
+
+      expect(util, isA<Attribute>());
+      expect(attr.overflow, TextOverflow.ellipsis);
+      expect(attr.textAlign, TextAlign.center);
+      expect(attr.textScaleFactor, 1.5);
+      expect(attr.maxLines, 3);
+      expect(attr.style?.value.first.color, Colors.blue.toDto());
+      expect(attr.textWidthBasis, TextWidthBasis.longestLine);
+      expect(attr.textDirection, TextDirection.rtl);
+      expect(attr.softWrap, false);
+
+      final style = Style(util);
+
+      final textAttribute = style.styles.attributeOfType<TextSpecAttribute>();
+
+      expect(textAttribute?.overflow, TextOverflow.ellipsis);
+      expect(textAttribute?.textAlign, TextAlign.center);
+      expect(textAttribute?.textScaleFactor, 1.5);
+      expect(textAttribute?.maxLines, 3);
+      expect(textAttribute?.style?.value.first.color, Colors.blue.toDto());
+      expect(textAttribute?.textWidthBasis, TextWidthBasis.longestLine);
+      expect(textAttribute?.textDirection, TextDirection.rtl);
+      expect(textAttribute?.softWrap, false);
+
+      final mixData = style.of(MockBuildContext());
+      final textSpec = TextSpec.from(mixData);
+
+      expect(textSpec.overflow, TextOverflow.ellipsis);
+      expect(textSpec.textAlign, TextAlign.center);
+      expect(textSpec.textScaleFactor, 1.5);
+      expect(textSpec.maxLines, 3);
+      expect(textSpec.style?.color, Colors.blue);
+      expect(textSpec.textWidthBasis, TextWidthBasis.longestLine);
+      expect(textSpec.textDirection, TextDirection.rtl);
+      expect(textSpec.softWrap, false);
+    });
+
+    test('Immutable behavior when having multiple texts', () {
+      final textUtil = TextSpecUtility.self;
+      final text1 = textUtil.chain..maxLines(3);
+      final text2 = textUtil.chain..maxLines(5);
+
+      final attr1 = text1.attributeValue!;
+      final attr2 = text2.attributeValue!;
+
+      expect(attr1.maxLines, 3);
+      expect(attr2.maxLines, 5);
+
+      final style1 = Style(text1);
+      final style2 = Style(text2);
+
+      final textAttribute1 = style1.styles.attributeOfType<TextSpecAttribute>();
+      final textAttribute2 = style2.styles.attributeOfType<TextSpecAttribute>();
+
+      expect(textAttribute1?.maxLines, 3);
+      expect(textAttribute2?.maxLines, 5);
+
+      final mixData1 = style1.of(MockBuildContext());
+      final mixData2 = style2.of(MockBuildContext());
+
+      final textSpec1 = TextSpec.from(mixData1);
+      final textSpec2 = TextSpec.from(mixData2);
+
+      expect(textSpec1.maxLines, 3);
+      expect(textSpec2.maxLines, 5);
+    });
+
+    test('Mutate behavior and not on same utility', () {
+      final text = TextSpecUtility.self;
+
+      final textValue = text.chain;
+      textValue
+        ..maxLines(3)
+        ..style.color.red()
+        ..textAlign.center();
+
+      final textAttribute = textValue.attributeValue!;
+      final textAttribute2 = text.maxLines(5);
+
+      expect(textAttribute.maxLines, 3);
+      expect(textAttribute.style?.value.first.color, Colors.red.toDto());
+      expect(textAttribute.textAlign, TextAlign.center);
+
+      expect(textAttribute2.maxLines, 5);
+      expect(textAttribute2.style, isNull);
+      expect(textAttribute2.textAlign, isNull);
+    });
+  });
 }

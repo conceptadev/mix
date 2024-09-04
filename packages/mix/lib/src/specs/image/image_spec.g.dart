@@ -314,9 +314,13 @@ class ImageSpecUtility<T extends Attribute>
   /// Utility for defining [ImageSpecAttribute.modifiers]
   late final wrap = SpecModifierUtility((v) => only(modifiers: v));
 
-  ImageSpecUtility(super.builder);
+  ImageSpecUtility(super.builder, {super.mutable});
 
-  static final self = ImageSpecUtility((v) => v);
+  ImageSpecUtility<T> get chain =>
+      ImageSpecUtility(attributeBuilder, mutable: true);
+
+  static ImageSpecUtility<ImageSpecAttribute> get self =>
+      ImageSpecUtility((v) => v);
 
   /// Returns a new [ImageSpecAttribute] with the specified properties.
   @override

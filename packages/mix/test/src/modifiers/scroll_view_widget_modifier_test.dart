@@ -1,7 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
-import 'package:mix/src/modifiers/scroll_view_widget_modifier.dart';
 
 import '../../helpers/testing_utils.dart';
 
@@ -11,10 +10,10 @@ void main() {
       'Build method creates SingleChildScrollView with correct parameters',
       (tester) async {
         const padding = EdgeInsets.all(8.0);
-        final axis = Axis.horizontal;
-        final reverse = true;
-        final clip = Clip.antiAlias;
-        final physics = const AlwaysScrollableScrollPhysics();
+        const axis = Axis.horizontal;
+        const reverse = true;
+        const clip = Clip.antiAlias;
+        const physics = AlwaysScrollableScrollPhysics();
 
         final modifier = ScrollViewModifierSpec(
           scrollDirection: axis,

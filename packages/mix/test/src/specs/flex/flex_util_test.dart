@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
 
+import '../../../helpers/testing_utils.dart';
+
 void main() {
   group('FlexUtility', () {
     final flexUtility = FlexSpecUtility(MixUtility.selfBuilder);
@@ -104,6 +106,123 @@ void main() {
       final flex = flexUtility.column();
 
       expect(flex.direction, Axis.vertical);
+    });
+  });
+
+  group('FlexSpecUtility fluent', () {
+    test('fluent behavior', () {
+      final flex = FlexSpecUtility.self;
+
+      final util = flex.chain
+        ..crossAxisAlignment.center()
+        ..mainAxisAlignment.spaceBetween()
+        ..mainAxisSize.min()
+        ..verticalDirection.down()
+        ..direction.horizontal()
+        ..textDirection.ltr()
+        ..textBaseline.alphabetic()
+        ..clipBehavior.antiAlias()
+        ..gap(10)
+        ..wrap.opacity(0.5);
+
+      final attr = util.attributeValue!;
+
+      expect(util, isA<Attribute>());
+      expect(attr.crossAxisAlignment, CrossAxisAlignment.center);
+      expect(attr.mainAxisAlignment, MainAxisAlignment.spaceBetween);
+      expect(attr.mainAxisSize, MainAxisSize.min);
+      expect(attr.verticalDirection, VerticalDirection.down);
+      expect(attr.direction, Axis.horizontal);
+      expect(attr.textDirection, TextDirection.ltr);
+      expect(attr.textBaseline, TextBaseline.alphabetic);
+      expect(attr.clipBehavior, Clip.antiAlias);
+      expect(attr.gap, const SpacingSideDto(10));
+
+      expect(attr.modifiers?.value.first,
+          const OpacityModifierSpecAttribute(opacity: 0.5));
+
+      final style = Style(util);
+
+      final flexAttribute = style.styles.attributeOfType<FlexSpecAttribute>();
+
+      expect(flexAttribute?.crossAxisAlignment, CrossAxisAlignment.center);
+      expect(flexAttribute?.mainAxisAlignment, MainAxisAlignment.spaceBetween);
+      expect(flexAttribute?.mainAxisSize, MainAxisSize.min);
+      expect(flexAttribute?.verticalDirection, VerticalDirection.down);
+      expect(flexAttribute?.direction, Axis.horizontal);
+      expect(flexAttribute?.textDirection, TextDirection.ltr);
+      expect(flexAttribute?.textBaseline, TextBaseline.alphabetic);
+      expect(flexAttribute?.clipBehavior, Clip.antiAlias);
+      expect(flexAttribute?.gap, const SpacingSideDto(10));
+
+      expect(flexAttribute?.modifiers?.value.first,
+          const OpacityModifierSpecAttribute(opacity: 0.5));
+
+      final mixData = style.of(MockBuildContext());
+      final flexSpec = FlexSpec.from(mixData);
+
+      expect(flexSpec.crossAxisAlignment, CrossAxisAlignment.center);
+      expect(flexSpec.mainAxisAlignment, MainAxisAlignment.spaceBetween);
+      expect(flexSpec.mainAxisSize, MainAxisSize.min);
+      expect(flexSpec.verticalDirection, VerticalDirection.down);
+      expect(flexSpec.direction, Axis.horizontal);
+      expect(flexSpec.textDirection, TextDirection.ltr);
+      expect(flexSpec.textBaseline, TextBaseline.alphabetic);
+      expect(flexSpec.clipBehavior, Clip.antiAlias);
+      expect(flexSpec.gap, 10);
+
+      expect(flexSpec.modifiers?.value.first, const OpacityModifierSpec(0.5));
+    });
+
+    test('Immutable behavior when having multiple flex', () {
+      final flexUtil = FlexSpecUtility.self;
+      final flex1 = flexUtil.chain..crossAxisAlignment.start();
+      final flex2 = flexUtil.chain..crossAxisAlignment.end();
+
+      final attr1 = flex1.attributeValue!;
+      final attr2 = flex2.attributeValue!;
+
+      expect(attr1.crossAxisAlignment, CrossAxisAlignment.start);
+      expect(attr2.crossAxisAlignment, CrossAxisAlignment.end);
+
+      final style1 = Style(flex1);
+      final style2 = Style(flex2);
+
+      final flexAttribute1 = style1.styles.attributeOfType<FlexSpecAttribute>();
+      final flexAttribute2 = style2.styles.attributeOfType<FlexSpecAttribute>();
+
+      expect(flexAttribute1?.crossAxisAlignment, CrossAxisAlignment.start);
+      expect(flexAttribute2?.crossAxisAlignment, CrossAxisAlignment.end);
+
+      final mixData1 = style1.of(MockBuildContext());
+      final mixData2 = style2.of(MockBuildContext());
+
+      final flexSpec1 = FlexSpec.from(mixData1);
+      final flexSpec2 = FlexSpec.from(mixData2);
+
+      expect(flexSpec1.crossAxisAlignment, CrossAxisAlignment.start);
+      expect(flexSpec2.crossAxisAlignment, CrossAxisAlignment.end);
+    });
+
+    test('Mutate behavior and not on same utility', () {
+      final flex = FlexSpecUtility.self;
+
+      final flexValue = flex.chain;
+      flexValue
+        ..crossAxisAlignment.center()
+        ..mainAxisAlignment.spaceBetween()
+        ..mainAxisSize.min();
+
+      final flexAttribute = flexValue.attributeValue!;
+      final flexAttribute2 = flex.crossAxisAlignment.end();
+
+      expect(flexAttribute.crossAxisAlignment, CrossAxisAlignment.center);
+      expect(flexAttribute.mainAxisAlignment, MainAxisAlignment.spaceBetween);
+      expect(flexAttribute.mainAxisSize, MainAxisSize.min);
+
+      expect(flexAttribute2.crossAxisAlignment, CrossAxisAlignment.end);
+      expect(flexAttribute2.mainAxisAlignment, isNull);
+      expect(flexAttribute2.mainAxisSize, isNull);
     });
   });
 }

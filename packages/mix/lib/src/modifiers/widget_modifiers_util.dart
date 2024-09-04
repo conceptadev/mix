@@ -1,4 +1,4 @@
-import 'package:mix/src/modifiers/mouse_cursor_modifier.dart';
+import 'mouse_cursor_modifier.dart';
 
 import '../core/attribute.dart';
 import '../core/modifier.dart';

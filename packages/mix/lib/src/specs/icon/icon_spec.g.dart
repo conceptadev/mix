@@ -316,9 +316,13 @@ class IconSpecUtility<T extends Attribute>
   /// Utility for defining [IconSpecAttribute.modifiers]
   late final wrap = SpecModifierUtility((v) => only(modifiers: v));
 
-  IconSpecUtility(super.builder);
+  IconSpecUtility(super.builder, {super.mutable});
 
-  static final self = IconSpecUtility((v) => v);
+  IconSpecUtility<T> get chain =>
+      IconSpecUtility(attributeBuilder, mutable: true);
+
+  static IconSpecUtility<IconSpecAttribute> get self =>
+      IconSpecUtility((v) => v);
 
   /// Returns a new [IconSpecAttribute] with the specified properties.
   @override

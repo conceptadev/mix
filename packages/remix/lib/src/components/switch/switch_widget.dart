@@ -7,22 +7,14 @@ class XSwitch extends StatefulWidget {
     required this.value,
     required this.onChanged,
     this.style = const Style.empty(),
-  }) : _blank = false;
-
-  const XSwitch.blank({
-    super.key,
-    this.disabled = false,
-    required this.value,
-    required this.onChanged,
-    required this.style,
-  }) : _blank = true;
+    this.variants = const [],
+  });
 
   final bool value;
   final ValueChanged<bool> onChanged;
   final Style style;
   final bool disabled;
-
-  final bool _blank;
+  final List<Variant> variants;
 
   @override
   State<XSwitch> createState() => _RxBlankSwitchState();
@@ -61,17 +53,20 @@ class _RxBlankSwitchState extends State<XSwitch> {
 
   @override
   Widget build(BuildContext context) {
+    final styleFromTheme = RemixThemeProvider.maybeOf(context)?.switchComponent;
+
     return Pressable(
       enabled: !widget.disabled,
       onPress: widget.disabled ? null : _handleOnPress,
       controller: _controller,
       child: SpecBuilder(
-        style: widget._blank
-            ? widget.style
-            : XSwitchStyle.base.merge(widget.style).animate(
-                  duration: Duration(milliseconds: 100),
-                  curve: Curves.linear,
-                ),
+        style: (styleFromTheme ?? XSwitchStyle.base)
+            .merge(widget.style)
+            .applyVariants(widget.variants)
+            .animate(
+              duration: Duration(milliseconds: 100),
+              curve: Curves.linear,
+            ),
         builder: (context) {
           final spec = SwitchSpec.of(context);
 

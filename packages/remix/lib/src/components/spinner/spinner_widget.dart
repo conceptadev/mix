@@ -1,18 +1,23 @@
 part of 'spinner.dart';
 
-class RxSpinner extends StatelessWidget {
-  const RxSpinner({super.key, this.style = const Style.empty()})
-      : _blank = false;
-
-  const RxSpinner.blank({super.key, required this.style}) : _blank = true;
+class XSpinner extends StatelessWidget {
+  const XSpinner({
+    super.key,
+    this.style = const Style.empty(),
+    this.variants = const [],
+  });
 
   final Style style;
-  final bool _blank;
+  final List<Variant> variants;
 
   @override
   Widget build(BuildContext context) {
+    final styleFromTheme = RemixThemeProvider.maybeOf(context)?.spinner;
+
     return SpecBuilder(
-      style: _blank ? style : XSpinnerStyle.base.merge(style),
+      style: (styleFromTheme ?? XSpinnerStyle.base)
+          .merge(style)
+          .applyVariants(variants),
       builder: (context) {
         final SpinnerWidget = SpinnerSpec.of(context);
 
@@ -22,16 +27,16 @@ class RxSpinner extends StatelessWidget {
   }
 }
 
-class RxSpinnerSpecWidget extends StatefulWidget {
-  const RxSpinnerSpecWidget({this.spec = const SpinnerSpec(), super.key});
+class XSpinnerSpecWidget extends StatefulWidget {
+  const XSpinnerSpecWidget({this.spec = const SpinnerSpec(), super.key});
 
   final SpinnerSpec spec;
 
   @override
-  _RxSpinnerSpecWidgetState createState() => _RxSpinnerSpecWidgetState();
+  _XSpinnerSpecWidgetState createState() => _XSpinnerSpecWidgetState();
 }
 
-class _RxSpinnerSpecWidgetState extends State<RxSpinnerSpecWidget>
+class _XSpinnerSpecWidgetState extends State<XSpinnerSpecWidget>
     with SingleTickerProviderStateMixin {
   late AnimationController controller;
 
@@ -45,7 +50,7 @@ class _RxSpinnerSpecWidgetState extends State<RxSpinnerSpecWidget>
   }
 
   @override
-  void didUpdateWidget(covariant RxSpinnerSpecWidget oldWidget) {
+  void didUpdateWidget(covariant XSpinnerSpecWidget oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.spec.duration != widget.spec.duration) {
       controller.duration = widget.spec.duration;

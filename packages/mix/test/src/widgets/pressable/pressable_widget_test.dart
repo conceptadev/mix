@@ -64,7 +64,7 @@ void main() {
     });
 
     testWidgets('is disposing the controller correcly', (widgetTester) async {
-      await widgetTester.pumpWidget(_DisposalPressable());
+      await widgetTester.pumpWidget(const _DisposalPressable());
     });
 
     testWidgets(
@@ -179,7 +179,7 @@ void main() {
                 $box.color.blue(),
               ),
             ),
-            child: Box(),
+            child: const Box(),
           ),
         ),
       );
@@ -703,7 +703,7 @@ Future<void> pumpTestCase({
 }
 
 class _DisposalPressable extends StatefulWidget {
-  const _DisposalPressable({Key? key}) : super(key: key);
+  const _DisposalPressable();
 
   @override
   _DisposalPressableState createState() => _DisposalPressableState();
@@ -728,7 +728,7 @@ class _DisposalPressableState extends State<_DisposalPressable> {
   Widget build(BuildContext context) {
     return Pressable(
       controller: _controller,
-      child: Box(),
+      child: const Box(),
     );
   }
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
-import 'package:mix/mix.dart';
+import '../../mix.dart';
 import 'package:mix_annotations/mix_annotations.dart';
 
 part 'scroll_view_widget_modifier.g.dart';
@@ -44,6 +44,15 @@ final class ScrollViewModifierSpec
 
 final class ScrollViewModifierSpecUtility<T extends Attribute>
     extends MixUtility<T, ScrollViewModifierSpecAttribute> {
+  /// Make the scroll view reverse or not.
+  late final reverse = BoolUtility((reverse) => call(reverse: reverse));
+
+  /// Set the padding of the scroll view.
+  late final padding = SpacingUtility((padding) => call(padding: padding));
+
+  /// Set the clip behavior of the scroll view.
+  late final clipBehavior = ClipUtility((clip) => call(clipBehavior: clip));
+
   ScrollViewModifierSpecUtility(super.builder);
 
   /// Set the scroll direction of the scroll view.
@@ -55,26 +64,18 @@ final class ScrollViewModifierSpecUtility<T extends Attribute>
   /// Set the scroll direction of the scroll view to vertical.
   T vertical() => call(scrollDirection: Axis.vertical);
 
-  /// Make the scroll view reverse or not.
-  late final reverse = BoolUtility((reverse) => call(reverse: reverse));
-
-  /// Set the padding of the scroll view.
-  late final padding = SpacingUtility((padding) => call(padding: padding));
-
   /// Set the physics of the scroll view.
   T physics(ScrollPhysics physics) => call(physics: physics);
 
   /// Disable the scroll physics of the scroll view.
-  T neverScrollableScrollPhysics() => physics(NeverScrollableScrollPhysics());
+  T neverScrollableScrollPhysics() =>
+      physics(const NeverScrollableScrollPhysics());
 
   /// Set the iOS-style scroll physics of the scroll view.
-  T bouncingScrollPhysics() => physics(BouncingScrollPhysics());
+  T bouncingScrollPhysics() => physics(const BouncingScrollPhysics());
 
   /// Set the Android-style scroll physics of the scroll view.
-  T clampingScrollPhysics() => physics(ClampingScrollPhysics());
-
-  /// Set the clip behavior of the scroll view.
-  late final clipBehavior = ClipUtility((clip) => call(clipBehavior: clip));
+  T clampingScrollPhysics() => physics(const ClampingScrollPhysics());
 
   T call({
     Axis? scrollDirection,

@@ -160,4 +160,108 @@ void main() {
       expect(spec1, isNot(spec3));
     });
   });
+
+  group('FlexSpecUtility fluent', () {
+    test('fluent behavior', () {
+      final flex = FlexSpecUtility.self;
+
+      final util = flex.chain
+        ..direction.horizontal()
+        ..mainAxisAlignment.center()
+        ..crossAxisAlignment.center()
+        ..mainAxisSize.min()
+        ..verticalDirection.down()
+        ..textDirection.ltr()
+        ..textBaseline.alphabetic()
+        ..clipBehavior.antiAlias()
+        ..gap(10);
+
+      final attr = util.attributeValue!;
+      expect(util, isA<Attribute>());
+      expect(attr.direction, Axis.horizontal);
+      expect(attr.mainAxisAlignment, MainAxisAlignment.center);
+      expect(attr.crossAxisAlignment, CrossAxisAlignment.center);
+      expect(attr.mainAxisSize, MainAxisSize.min);
+      expect(attr.verticalDirection, VerticalDirection.down);
+      expect(attr.textDirection, TextDirection.ltr);
+      expect(attr.textBaseline, TextBaseline.alphabetic);
+      expect(attr.clipBehavior, Clip.antiAlias);
+      expect(attr.gap, const SpacingSideDto(10));
+
+      final style = Style(util);
+      final flexAttribute = style.styles.attributeOfType<FlexSpecAttribute>();
+      expect(flexAttribute?.direction, Axis.horizontal);
+      expect(flexAttribute?.mainAxisAlignment, MainAxisAlignment.center);
+      expect(flexAttribute?.crossAxisAlignment, CrossAxisAlignment.center);
+      expect(flexAttribute?.mainAxisSize, MainAxisSize.min);
+      expect(flexAttribute?.verticalDirection, VerticalDirection.down);
+      expect(flexAttribute?.textDirection, TextDirection.ltr);
+      expect(flexAttribute?.textBaseline, TextBaseline.alphabetic);
+      expect(flexAttribute?.clipBehavior, Clip.antiAlias);
+      expect(flexAttribute?.gap, const SpacingSideDto(10));
+
+      final mixData = style.of(MockBuildContext());
+      final flexSpec = FlexSpec.from(mixData);
+      expect(flexSpec.direction, Axis.horizontal);
+      expect(flexSpec.mainAxisAlignment, MainAxisAlignment.center);
+      expect(flexSpec.crossAxisAlignment, CrossAxisAlignment.center);
+      expect(flexSpec.mainAxisSize, MainAxisSize.min);
+      expect(flexSpec.verticalDirection, VerticalDirection.down);
+      expect(flexSpec.textDirection, TextDirection.ltr);
+      expect(flexSpec.textBaseline, TextBaseline.alphabetic);
+      expect(flexSpec.clipBehavior, Clip.antiAlias);
+      expect(flexSpec.gap, 10);
+    });
+
+    test('Immutable behavior when having multiple flexes', () {
+      final flexUtil = FlexSpecUtility.self;
+      final flex1 = flexUtil.chain..gap(10);
+      final flex2 = flexUtil.chain..gap(20);
+
+      final attr1 = flex1.attributeValue!;
+      final attr2 = flex2.attributeValue!;
+
+      expect(attr1.gap, const SpacingSideDto(10));
+      expect(attr2.gap, const SpacingSideDto(20));
+
+      final style1 = Style(flex1);
+      final style2 = Style(flex2);
+
+      final flexAttribute1 = style1.styles.attributeOfType<FlexSpecAttribute>();
+      final flexAttribute2 = style2.styles.attributeOfType<FlexSpecAttribute>();
+
+      expect(flexAttribute1?.gap, const SpacingSideDto(10));
+      expect(flexAttribute2?.gap, const SpacingSideDto(20));
+
+      final mixData1 = style1.of(MockBuildContext());
+      final mixData2 = style2.of(MockBuildContext());
+
+      final flexSpec1 = FlexSpec.from(mixData1);
+      final flexSpec2 = FlexSpec.from(mixData2);
+
+      expect(flexSpec1.gap, 10);
+      expect(flexSpec2.gap, 20);
+    });
+
+    test('Mutate behavior and not on same utility', () {
+      final flex = FlexSpecUtility.self;
+
+      final flexValue = flex.chain;
+      flexValue
+        ..gap(10)
+        ..direction.horizontal()
+        ..mainAxisAlignment.center();
+
+      final flexAttribute = flexValue.attributeValue!;
+      final flexAttribute2 = flex.gap(20);
+
+      expect(flexAttribute.gap, const SpacingSideDto(10));
+      expect(flexAttribute.direction, Axis.horizontal);
+      expect(flexAttribute.mainAxisAlignment, MainAxisAlignment.center);
+
+      expect(flexAttribute2.gap, const SpacingSideDto(20));
+      expect(flexAttribute2.direction, isNull);
+      expect(flexAttribute2.mainAxisAlignment, isNull);
+    });
+  });
 }

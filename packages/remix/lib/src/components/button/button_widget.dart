@@ -25,21 +25,10 @@ class XButton extends StatelessWidget {
     this.iconLeft,
     this.iconRight,
     this.spinnerBuilder,
+    this.variants = const [],
     required this.onPressed,
     this.style = const Style.empty(),
-  }) : _blank = false;
-
-  const XButton.blank({
-    super.key,
-    required this.label,
-    this.disabled = false,
-    this.loading = false,
-    this.iconLeft,
-    this.iconRight,
-    this.spinnerBuilder,
-    required this.onPressed,
-    required this.style,
-  }) : _blank = true;
+  });
 
   final String label;
   final bool disabled;
@@ -48,7 +37,8 @@ class XButton extends StatelessWidget {
   final IconData? iconRight;
   final VoidCallback? onPressed;
   final XButtonSpinnerBuilder? spinnerBuilder;
-  final bool _blank;
+
+  final List<Variant> variants;
 
   /// Additional custom styling for the button.
   ///
@@ -85,17 +75,15 @@ class XButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDisabled = disabled || loading;
+    final styleFromTheme = RemixThemeProvider.maybeOf(context)?.button;
 
     return Pressable(
       enabled: !isDisabled,
       onPress: disabled || loading ? null : onPressed,
       child: SpecBuilder(
-        style: _blank
-            ? style
-            : XButtonStyle.base.animate(
-                duration: const Duration(milliseconds: 100),
-                curve: Curves.easeOut,
-              ),
+        style: (styleFromTheme ?? XButtonStyle.base)
+            .merge(style)
+            .applyVariants(variants),
         builder: (context) {
           final spec = ButtonSpec.of(context);
 

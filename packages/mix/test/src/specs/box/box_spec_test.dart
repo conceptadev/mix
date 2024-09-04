@@ -369,4 +369,97 @@ void main() {
       );
     });
   });
+
+  group('BoxSpecUtility fluent', () {
+    test('fluent behavior', () {
+      final box = BoxSpecUtility.self;
+
+      final util = box.chain
+        ..alignment.center()
+        ..padding(8);
+
+      final attr = util.attributeValue!;
+
+      expect(util, isA<Attribute>());
+      expect(attr.alignment, Alignment.center);
+      expect(attr.padding, const EdgeInsets.all(8.0).toDto());
+      expect(attr.margin, null);
+
+      final style = Style(util);
+
+      final boxAttribute = style.styles.attributeOfType<BoxSpecAttribute>();
+
+      expect(boxAttribute?.alignment, Alignment.center);
+      expect(boxAttribute?.padding, const EdgeInsets.all(8.0).toDto());
+      expect(boxAttribute?.margin, null);
+
+      final mixData = style.of(MockBuildContext());
+      final boxSpec = BoxSpec.from(mixData);
+
+      expect(boxSpec.alignment, Alignment.center);
+      expect(boxSpec.padding, const EdgeInsets.all(8.0));
+      expect(boxSpec.margin, null);
+    });
+
+    // Test mutable behavior for multiple boxes
+    test('Immutable behavior when having multiple boxes', () {
+      final boxUtil = BoxSpecUtility.self;
+      final box1 = boxUtil.chain..padding(10);
+      final box2 = boxUtil.chain..padding(20);
+
+      final attr1 = box1.attributeValue!;
+      final attr2 = box2.attributeValue!;
+
+      expect(attr1.padding, const EdgeInsets.all(10.0).toDto());
+      expect(attr2.padding, const EdgeInsets.all(20.0).toDto());
+
+      final style1 = Style(box1);
+      final style2 = Style(box2);
+
+      final boxAttribute1 = style1.styles.attributeOfType<BoxSpecAttribute>();
+      final boxAttribute2 = style2.styles.attributeOfType<BoxSpecAttribute>();
+
+      expect(boxAttribute1?.padding, const EdgeInsets.all(10.0).toDto());
+      expect(boxAttribute2?.padding, const EdgeInsets.all(20.0).toDto());
+
+      final mixData1 = style1.of(MockBuildContext());
+      final mixData2 = style2.of(MockBuildContext());
+
+      final boxSpec1 = BoxSpec.from(mixData1);
+      final boxSpec2 = BoxSpec.from(mixData2);
+
+      expect(boxSpec1.padding, const EdgeInsets.all(10.0));
+      expect(boxSpec2.padding, const EdgeInsets.all(20.0));
+    });
+
+    test('Mutate behavior and not on same utility', () {
+      final box = BoxSpecUtility.self;
+
+      final boxValue = box.chain;
+      boxValue
+        ..padding(10)
+        ..color.red()
+        ..alignment.center();
+
+      final boxAttribute = boxValue.attributeValue!;
+      final boxAttribute2 = box.padding(20);
+
+      expect(boxAttribute.padding, const EdgeInsets.all(10.0).toDto());
+      expect(
+        (boxAttribute.decoration as BoxDecorationDto).color,
+        const ColorDto(
+          Colors.red,
+        ),
+      );
+      expect(boxAttribute.alignment, Alignment.center);
+
+      expect(boxAttribute2.padding, const EdgeInsets.all(20.0).toDto());
+      expect((boxAttribute2.decoration as BoxDecorationDto?)?.color, isNull);
+
+      expect(
+        boxAttribute2.alignment,
+        isNull,
+      );
+    });
+  });
 }
