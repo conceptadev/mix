@@ -1,3 +1,5 @@
+// ignore_for_file: avoid-unnecessary-call
+
 part of 'spinner.dart';
 
 class XSpinnerStyle {
