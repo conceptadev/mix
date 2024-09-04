@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
@@ -11,7 +10,7 @@ void main() {
       final dto1 = WidgetModifiersDataDto([
         TransformModifierSpecAttribute(transform: Matrix4.identity()),
       ]);
-      final dto2 = WidgetModifiersDataDto([
+      const dto2 = WidgetModifiersDataDto([
         OpacityModifierSpecAttribute(opacity: 0.5),
       ]);
 
@@ -24,7 +23,7 @@ void main() {
       );
       expect(
         merged.value[1].resolve(EmptyMixData),
-        OpacityModifierSpec(0.5),
+        const OpacityModifierSpec(0.5),
       );
     });
 
@@ -35,7 +34,7 @@ void main() {
 
       final cleaner = WidgetModifiersDataDto.cleaner();
 
-      final dto2 = WidgetModifiersDataDto([
+      const dto2 = WidgetModifiersDataDto([
         OpacityModifierSpecAttribute(opacity: 0.5),
       ]);
 
@@ -45,7 +44,7 @@ void main() {
 
       expect(
         merged.value[0].resolve(EmptyMixData),
-        OpacityModifierSpec(0.5),
+        const OpacityModifierSpec(0.5),
       );
     });
 
@@ -62,7 +61,7 @@ void main() {
     test('resolve creates WidgetModifiersData with resolved modifiers', () {
       final dto = WidgetModifiersDataDto([
         TransformModifierSpecAttribute(transform: Matrix4.identity()),
-        OpacityModifierSpecAttribute(opacity: 0.5),
+        const OpacityModifierSpecAttribute(opacity: 0.5),
       ]);
 
       final resolved = dto.resolve(EmptyMixData);
@@ -74,12 +73,12 @@ void main() {
       );
       expect(
         resolved.value[1],
-        OpacityModifierSpec(0.5),
+        const OpacityModifierSpec(0.5),
       );
     });
 
     test('defaultValue returns empty WidgetModifiersData', () {
-      final dto = WidgetModifiersDataDto([]);
+      const dto = WidgetModifiersDataDto([]);
 
       expect(dto.defaultValue.value, isEmpty);
     });
@@ -87,7 +86,7 @@ void main() {
     test('props returns list containing value', () {
       final List<WidgetModifierSpecAttribute> modifiers = [
         TransformModifierSpecAttribute(transform: Matrix4.identity()),
-        OpacityModifierSpecAttribute(opacity: 0.5),
+        const OpacityModifierSpecAttribute(opacity: 0.5),
       ];
       final dto = WidgetModifiersDataDto(modifiers);
 

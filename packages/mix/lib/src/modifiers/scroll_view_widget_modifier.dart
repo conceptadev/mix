@@ -4,6 +4,7 @@ import '../attributes/enum/enum_util.dart';
 import '../attributes/spacing/edge_insets_dto.dart';
 import '../attributes/spacing/spacing_util.dart';
 import '../core/attribute.dart';
+import '../core/factory/mix_data.dart';
 import '../core/modifier.dart';
 import 'package:mix_annotations/mix_annotations.dart';
 
