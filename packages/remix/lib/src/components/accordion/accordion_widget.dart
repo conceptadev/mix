@@ -1,74 +1,51 @@
 part of 'accordion.dart';
 
-typedef RxAccordionHeaderBuilder = Widget Function(
-  BuildContext context,
-  AccordionHeaderSpec spec,
-);
+typedef XAccordionHeaderBuilder = XComponentBuilder<AccordionHeaderSpec>;
+typedef XAccordionContentBuilder = XComponentBuilder<TextSpec>;
 
-typedef RxAccordionContentBuilder = Widget Function(
-  BuildContext context,
-  TextSpec spec,
-);
+final Variant openedVariant = const Variant('accordion.opened');
 
 class XAccordion extends StatefulWidget {
   const XAccordion({
     super.key,
     required this.header,
     required this.content,
+    this.variants = const [],
     this.initiallyExpanded = false,
     this.style = const Style.empty(),
-  }) : _blank = false;
+  });
 
-  const XAccordion.blank({
-    super.key,
-    required this.header,
-    required this.content,
-    this.initiallyExpanded = false,
-    required this.style,
-  }) : _blank = true;
-
-  final RxAccordionHeaderBuilder header;
-  final RxAccordionContentBuilder content;
+  final XAccordionHeaderBuilder header;
+  final XAccordionContentBuilder content;
   final Style style;
   final bool initiallyExpanded;
-
-  final bool _blank;
+  final List<Variant> variants;
 
   @override
   State<XAccordion> createState() => _XAccordionState();
 }
 
 class _XAccordionState extends State<XAccordion> with TickerProviderStateMixin {
-  late final MixWidgetStateController _stateController;
-
-  @override
-  void initState() {
-    super.initState();
-
-    _stateController = MixWidgetStateController()
-      ..selected = widget.initiallyExpanded;
-  }
+  late bool opened = widget.initiallyExpanded;
 
   void _handleTap() {
-    _stateController.selected = !_stateController.selected;
-  }
-
-  @override
-  void dispose() {
-    _stateController.dispose();
-    super.dispose();
+    setState(() {
+      opened = !opened;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
+    final styleFromTheme = RemixThemeProvider.maybeOf(context)?.accordion;
+
+    final style = (styleFromTheme ?? XAccordionStyle.base)
+        .merge(widget.style)
+        .applyVariant(opened ? openedVariant : null)
+        .applyVariants(widget.variants);
+
     return RepaintBoundary(
       child: SpecBuilder(
-        controller: _stateController,
-        style: widget._blank
-            ? widget.style
-            : AccordionStyle.base
-                .merge(widget.style)
-                .animate(curve: Curves.decelerate),
+        style: style,
         builder: (context) {
           final spec = AccordionSpec.of(context);
 
@@ -78,7 +55,7 @@ class _XAccordionState extends State<XAccordion> with TickerProviderStateMixin {
 
           final content = BoxSpecWidget(
             spec: specContentContainer,
-            child: widget.content(context, spec.textContent),
+            child: widget.content(spec.textContent),
           );
 
           return ContainerWidget(
@@ -87,7 +64,14 @@ class _XAccordionState extends State<XAccordion> with TickerProviderStateMixin {
               children: [
                 Pressable(
                   onPress: _handleTap,
-                  child: widget.header(context, spec.header),
+                  child: SpecBuilder(
+                    style: style,
+                    builder: (context) {
+                      final spec = AccordionSpec.of(context);
+
+                      return widget.header(spec.header);
+                    },
+                  ),
                 ),
                 content,
               ],

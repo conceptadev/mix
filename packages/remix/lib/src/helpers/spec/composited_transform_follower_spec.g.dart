@@ -230,9 +230,14 @@ class CompositedTransformFollowerSpecUtility<T extends Attribute>
   /// Utility for defining [CompositedTransformFollowerSpecAttribute.animated]
   late final animated = AnimatedUtility((v) => only(animated: v));
 
-  CompositedTransformFollowerSpecUtility(super.builder);
+  CompositedTransformFollowerSpecUtility(super.builder, {super.mutable});
 
-  static final self = CompositedTransformFollowerSpecUtility((v) => v);
+  CompositedTransformFollowerSpecUtility<T> get chain =>
+      CompositedTransformFollowerSpecUtility(attributeBuilder, mutable: true);
+
+  static CompositedTransformFollowerSpecUtility<
+          CompositedTransformFollowerSpecAttribute>
+      get self => CompositedTransformFollowerSpecUtility((v) => v);
 
   /// Returns a new [CompositedTransformFollowerSpecAttribute] with the specified properties.
   @override

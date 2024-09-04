@@ -204,9 +204,13 @@ class CardSpecUtility<T extends Attribute>
   /// Utility for defining [CardSpecAttribute.animated]
   late final animated = AnimatedUtility((v) => only(animated: v));
 
-  CardSpecUtility(super.builder);
+  CardSpecUtility(super.builder, {super.mutable});
 
-  static final self = CardSpecUtility((v) => v);
+  CardSpecUtility<T> get chain =>
+      CardSpecUtility(attributeBuilder, mutable: true);
+
+  static CardSpecUtility<CardSpecAttribute> get self =>
+      CardSpecUtility((v) => v);
 
   /// Returns a new [CardSpecAttribute] with the specified properties.
   @override

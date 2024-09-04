@@ -3,21 +3,21 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
 import 'package:remix/remix.dart';
 
-import '../../utils/extensions/widget_tester.dart';
-
 void main() {
   group('RxAccordion', () {
     testWidgets('renders with required properties',
         (WidgetTester tester) async {
-      await tester.pumpRxComponent(
-        XAccordion(
-          header: (context, spec) => RxAccordionHeaderSpecWidget(
-            title: 'Test Accordion',
-            spec: spec,
-          ),
-          content: (context, spec) => TextSpecWidget(
-            'Accordion Content',
-            spec: spec,
+      await tester.pumpWidget(
+        MaterialApp(
+          home: XAccordion(
+            header: (spec) => XAccordionHeaderSpecWidget(
+              title: 'Test Accordion',
+              spec: spec,
+            ),
+            content: (spec) => TextSpecWidget(
+              'Accordion Content',
+              spec: spec,
+            ),
           ),
         ),
       );
@@ -27,17 +27,19 @@ void main() {
     });
 
     testWidgets('renders with custom icons', (WidgetTester tester) async {
-      await tester.pumpRxComponent(
-        XAccordion(
-          header: (context, spec) => RxAccordionHeaderSpecWidget(
-            title: 'Custom Icons',
-            spec: spec,
-            leadingIcon: Icons.star,
-            trailingIcon: Icons.arrow_drop_down,
-          ),
-          content: (context, spec) => TextSpecWidget(
-            'Content',
-            spec: spec,
+      await tester.pumpWidget(
+        MaterialApp(
+          home: XAccordion(
+            header: (spec) => XAccordionHeaderSpecWidget(
+              title: 'Custom Icons',
+              spec: spec,
+              leadingIcon: Icons.star,
+              trailingIcon: Icons.arrow_drop_down,
+            ),
+            content: (spec) => TextSpecWidget(
+              'Content',
+              spec: spec,
+            ),
           ),
         ),
       );
@@ -66,19 +68,21 @@ void main() {
       final accordion = AccordionSpecUtility.self;
       const color = Colors.purpleAccent;
 
-      await tester.pumpRxComponent(
-        XAccordion(
-          header: (context, spec) => RxAccordionHeaderSpecWidget(
-            spec: spec,
-            title: 'Styled Accordion',
-            trailingIcon: Icons.rocket_launch,
-          ),
-          content: (context, spec) => TextSpecWidget(
-            'Styled Content',
-            spec: spec,
-          ),
-          style: Style(
-            accordion.header.trailingIcon.color(color),
+      await tester.pumpWidget(
+        MaterialApp(
+          home: XAccordion(
+            header: (spec) => XAccordionHeaderSpecWidget(
+              spec: spec,
+              title: 'Styled Accordion',
+              trailingIcon: Icons.rocket_launch,
+            ),
+            content: (spec) => TextSpecWidget(
+              'Styled Content',
+              spec: spec,
+            ),
+            style: Style(
+              accordion.header.trailingIcon.color(color),
+            ),
           ),
         ),
       );

@@ -208,9 +208,13 @@ class AccordionSpecUtility<T extends Attribute>
   /// Utility for defining [AccordionSpecAttribute.animated]
   late final animated = AnimatedUtility((v) => only(animated: v));
 
-  AccordionSpecUtility(super.builder);
+  AccordionSpecUtility(super.builder, {super.mutable});
 
-  static final self = AccordionSpecUtility((v) => v);
+  AccordionSpecUtility<T> get chain =>
+      AccordionSpecUtility(attributeBuilder, mutable: true);
+
+  static AccordionSpecUtility<AccordionSpecAttribute> get self =>
+      AccordionSpecUtility((v) => v);
 
   /// Returns a new [AccordionSpecAttribute] with the specified properties.
   @override
@@ -461,9 +465,13 @@ class AccordionHeaderSpecUtility<T extends Attribute>
   /// Utility for defining [AccordionHeaderSpecAttribute.animated]
   late final animated = AnimatedUtility((v) => only(animated: v));
 
-  AccordionHeaderSpecUtility(super.builder);
+  AccordionHeaderSpecUtility(super.builder, {super.mutable});
 
-  static final self = AccordionHeaderSpecUtility((v) => v);
+  AccordionHeaderSpecUtility<T> get chain =>
+      AccordionHeaderSpecUtility(attributeBuilder, mutable: true);
+
+  static AccordionHeaderSpecUtility<AccordionHeaderSpecAttribute> get self =>
+      AccordionHeaderSpecUtility((v) => v);
 
   /// Returns a new [AccordionHeaderSpecAttribute] with the specified properties.
   @override

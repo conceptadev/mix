@@ -205,9 +205,13 @@ class CheckboxSpecUtility<T extends Attribute>
   /// Utility for defining [CheckboxSpecAttribute.animated]
   late final animated = AnimatedUtility((v) => only(animated: v));
 
-  CheckboxSpecUtility(super.builder);
+  CheckboxSpecUtility(super.builder, {super.mutable});
 
-  static final self = CheckboxSpecUtility((v) => v);
+  CheckboxSpecUtility<T> get chain =>
+      CheckboxSpecUtility(attributeBuilder, mutable: true);
+
+  static CheckboxSpecUtility<CheckboxSpecAttribute> get self =>
+      CheckboxSpecUtility((v) => v);
 
   /// Returns a new [CheckboxSpecAttribute] with the specified properties.
   @override

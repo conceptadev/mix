@@ -251,9 +251,13 @@ class ButtonSpecUtility<T extends Attribute>
   /// Utility for defining [ButtonSpecAttribute.animated]
   late final animated = AnimatedUtility((v) => only(animated: v));
 
-  ButtonSpecUtility(super.builder);
+  ButtonSpecUtility(super.builder, {super.mutable});
 
-  static final self = ButtonSpecUtility((v) => v);
+  ButtonSpecUtility<T> get chain =>
+      ButtonSpecUtility(attributeBuilder, mutable: true);
+
+  static ButtonSpecUtility<ButtonSpecAttribute> get self =>
+      ButtonSpecUtility((v) => v);
 
   /// Returns a new [ButtonSpecAttribute] with the specified properties.
   @override

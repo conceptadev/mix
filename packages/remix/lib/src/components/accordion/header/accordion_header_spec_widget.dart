@@ -1,7 +1,7 @@
 part of '../accordion.dart';
 
-class RxAccordionHeaderSpecWidget extends StatelessWidget {
-  const RxAccordionHeaderSpecWidget({
+class XAccordionHeaderSpecWidget extends StatelessWidget {
+  const XAccordionHeaderSpecWidget({
     super.key,
     this.leadingIcon,
     required this.title,
