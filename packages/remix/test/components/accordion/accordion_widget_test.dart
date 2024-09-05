@@ -4,7 +4,7 @@ import 'package:mix/mix.dart';
 import 'package:remix/remix.dart';
 
 void main() {
-  group('RxAccordion', () {
+  group('XAccordion', () {
     testWidgets('renders with required properties',
         (WidgetTester tester) async {
       await tester.pumpWidget(

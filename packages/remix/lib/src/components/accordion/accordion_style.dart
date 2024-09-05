@@ -49,7 +49,7 @@ Style get _contentStyle => Style(
 Style get _containerStyle => Style(
       _container.chain
         ..clipBehavior.antiAlias()
-        ..border.bottom.color.$black()
+        ..border.bottom.color.black()
         ..border.bottom.color.withOpacity(0.2),
     );
 

@@ -3,7 +3,7 @@ part of 'accordion.dart';
 typedef XAccordionHeaderBuilder = XComponentBuilder<AccordionHeaderSpec>;
 typedef XAccordionContentBuilder = XComponentBuilder<TextSpec>;
 
-final Variant openedVariant = const Variant('accordion.opened');
+const Variant openedVariant = Variant('accordion.opened');
 
 class XAccordion extends StatefulWidget {
   const XAccordion({
