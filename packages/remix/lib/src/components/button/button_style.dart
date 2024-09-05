@@ -17,25 +17,27 @@ class XButtonStyle {
 }
 
 final _flexStyle = Style(
-  _flex.mainAxisAlignment.center(),
-  _flex.crossAxisAlignment.center(),
-  _flex.mainAxisSize.min(),
-  _flex.gap(8),
+  _flex.chain
+    ..mainAxisAlignment.center()
+    ..crossAxisAlignment.center()
+    ..mainAxisSize.min()
+    ..gap(8),
 );
 
 final _iconStyle = Style(_icon.size(24), _icon.color.white());
 
 final _labelStyle = Style(
-  _label.textHeightBehavior(
-    const TextHeightBehavior(
-      applyHeightToFirstAscent: false,
-      applyHeightToLastDescent: true,
-    ),
-  ),
-  _label.style.fontSize(14),
-  _label.style.height(1.5),
-  _label.style.color.white(),
-  _label.style.fontWeight.w500(),
+  _label.chain
+    ..textHeightBehavior(
+      const TextHeightBehavior(
+        applyHeightToFirstAscent: false,
+        applyHeightToLastDescent: true,
+      ),
+    )
+    ..style.fontSize(14)
+    ..style.height(1.5)
+    ..style.color.white()
+    ..style.fontWeight.w500(),
 );
 
 final _spinnerStyle = Style(
@@ -45,22 +47,10 @@ final _spinnerStyle = Style(
 );
 
 final _containerStyle = Style(
-  _container.borderRadius(6),
-  _container.color.black(),
-  _container.padding.vertical(8),
-  _container.padding.horizontal(12),
-  // $on.hover(_container.color.brighten(20)),
-  // $on.press(_container.color.brighten(10)),
+  _container.chain
+    ..borderRadius(6)
+    ..color.black()
+    ..padding.vertical(8)
+    ..padding.horizontal(12),
   $on.disabled(_container.color.grey.shade400()),
-);
-
-final _darkStyle = Style(
-  _icon.color.black(),
-  _label.style.color.black(),
-  _container.color.white(),
-  _spinner.color.black(),
-  _container.color.white(),
-  // $on.hover(_container.color.darken(10)),
-  // $on.press(_container.color.darken(10)),
-  $on.disabled(_container.color.grey.shade600()),
 );

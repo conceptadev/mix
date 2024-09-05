@@ -39,8 +39,9 @@ Style get _onDisabledForeground {
 
 Style get _tokenOverrides {
   return Style(
-    _container.padding.vertical.$space(2),
-    _container.padding.horizontal.$space(3),
+    _container.chain
+      ..padding.vertical.$space(2)
+      ..padding.horizontal.$space(3),
     _flex.gap.$space(2),
     _label.style.$text(2),
     _icon.size(14),
@@ -56,7 +57,6 @@ Style get _solidVariant {
     _icon.color.white(),
     $on.hover(_container.color.$accent(10)),
     $on.disabled(_container.color.$neutralAlpha(3), _spinnerDisable()),
-    $on.dark(_softOnDark()),
   );
 }
 
@@ -89,17 +89,19 @@ Style get _softOnDark {
 
 Style get _outlineVariant {
   return Style(
-    _container.color.transparent(),
-    _container.border.width(1),
-    _container.border.strokeAlign(0),
-    _container.border.color.$accentAlpha(8),
+    _container.chain
+      ..color.transparent()
+      ..border.width(1)
+      ..border.strokeAlign(0)
+      ..border.color.$accentAlpha(8),
     _spinner.color.$accentAlpha(11),
     _icon.color.$accentAlpha(11),
     _label.style.color.$accentAlpha(11),
     $on.hover(_container.color.$accentAlpha(2)),
     $on.disabled(
-      _container.border.color.$neutralAlpha(8),
-      _container.color.transparent(),
+      _container.chain
+        ..border.color.$neutralAlpha(8)
+        ..color.transparent(),
     ),
     $on.dark(_outlineOnDark()),
   );

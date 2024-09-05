@@ -34,18 +34,21 @@ Style get _softVariant {
 Style get _surfaceVariant {
   return Style(
     _indicator.color.$neutral(1),
-    _container.padding.all(1),
-    _container.color.$neutral(4),
-    _container.border.all.width(1),
-    _container.border.all.color.$neutral(7),
+    _container.chain
+      ..padding.all(1)
+      ..color.$neutral(4)
+      ..border.all.width(1)
+      ..border.all.color.$neutral(7),
     $on.disabled(
-      _container.color.$neutral(4),
+      _container.chain
+        ..color.$neutral(4)
+        ..border.all.color.$neutral(7),
       _indicator.color.$neutral(3),
-      _container.border.all.color.$neutral(7),
     ),
     $on.selected(
-      _container.color.$accent(9),
-      _container.border.all.color.$accent(10),
+      _container.chain
+        ..color.$accent(9)
+        ..border.all.color.$accent(10),
     ),
     $on.dark(_surfaceOnDark()),
   );
@@ -54,12 +57,15 @@ Style get _surfaceVariant {
 Style get _surfaceOnDark => Style(
       $on.selected(_container.border.all.color.$accent(9)),
       $on.disabled(
-        _container.color.$neutral(12),
-        _indicator.color.$neutral(11),
-        _indicator.color.withOpacity(0.4),
-        _container.border.all.color.$neutral(11),
-        _container.border.all.color.withOpacity(0.4),
+        _container.chain
+          ..color.$neutral(12)
+          ..border.all.color.$neutral(11)
+          ..border.all.color.withOpacity(0.4),
+        _indicator.chain
+          ..color.$neutral(11)
+          ..color.withOpacity(0.4),
       ),
-      _container.border.all.color.$neutral(11),
-      _container.color.$neutral(12),
+      _container.chain
+        ..border.all.color.$neutral(11)
+        ..color.$neutral(12),
     );

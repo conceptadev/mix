@@ -38,13 +38,15 @@ Style get _softVariant {
 
 Style get _surfaceVariant {
   return Style(
-    _container.color.$accentAlpha(2),
-    _container.border.all.width(1),
-    _container.border.all.color.$accentAlpha(6),
+    _container.chain
+      ..color.$accentAlpha(2)
+      ..border.all.width(1)
+      ..border.all.color.$accentAlpha(6),
     _label.style.color.$accentAlpha(11),
     $on.dark(
-      _container.border.all.color.$accent(9),
-      _container.color.$accentAlpha(12),
+      _container.chain
+        ..border.all.color.$accent(9)
+        ..color.$accentAlpha(12),
       _label.style.color.$accent(7),
     ),
   );
@@ -52,9 +54,10 @@ Style get _surfaceVariant {
 
 Style get _outlineVariant {
   return Style(
-    _container.color.transparent(),
-    _container.border.width(1),
-    _container.border.color.$accentAlpha(8),
+    _container.chain
+      ..color.transparent()
+      ..border.width(1)
+      ..border.color.$accentAlpha(8),
     _label.style.color.$accentAlpha(11),
     $on.dark(
       _container.border.all.color.$accent(9),
