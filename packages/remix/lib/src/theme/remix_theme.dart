@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mix/mix.dart';
 
+import '../components/accordion/accordion.dart';
 import '../components/avatar/avatar.dart';
 import '../components/badge/badge.dart';
 import '../components/button/button.dart';
@@ -25,9 +26,11 @@ class RemixComponentTheme {
   final Style? radio;
   final Style? select;
   final Style? spinner;
+  final Style? accordion;
   final Style? switchComponent;
 
   const RemixComponentTheme({
+    this.accordion,
     this.button,
     this.avatar,
     this.badge,
@@ -43,6 +46,7 @@ class RemixComponentTheme {
 
   const RemixComponentTheme.blank()
       : button = const Style.empty(),
+        accordion = const Style.empty(),
         avatar = const Style.empty(),
         badge = const Style.empty(),
         callout = const Style.empty(),
@@ -56,6 +60,7 @@ class RemixComponentTheme {
 
   factory RemixComponentTheme.base() {
     return RemixComponentTheme(
+      accordion: XAccordionStyle.base,
       button: XButtonStyle.base,
       avatar: XAvatarStyle.base,
       badge: XBadgeStyle.base,
@@ -72,6 +77,7 @@ class RemixComponentTheme {
 
   factory RemixComponentTheme.remix() {
     return RemixComponentTheme(
+      accordion: XAccordionThemeStyle.value,
       button: XButtonThemeStyle.value,
       avatar: XAvatarThemeStyle.value,
       badge: XBadgeThemeStyle.value,
