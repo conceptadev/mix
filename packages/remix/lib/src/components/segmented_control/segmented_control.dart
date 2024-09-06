@@ -6,9 +6,11 @@ import 'package:mix/mix.dart';
 import 'package:mix_annotations/mix_annotations.dart';
 
 import '../../helpers/component_builder.dart';
+import '../../theme/remix_theme.dart';
 
 part 'segmented_control.g.dart';
 part 'segmented_control_widget.dart';
+part 'segmented_control_style.dart';
 part 'item/segmented_control_button.dart';
 part 'item/segmented_control_button_widget.dart';
 // part 'segmented_control_style.dart';

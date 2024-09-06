@@ -10,6 +10,7 @@ import '../components/card/card.dart';
 import '../components/checkbox/checkbox.dart';
 import '../components/progress/progress.dart';
 import '../components/radio/radio.dart';
+import '../components/segmented_control/segmented_control.dart';
 import '../components/select/select.dart';
 import '../components/spinner/spinner.dart';
 import '../components/switch/switch.dart';
@@ -25,6 +26,7 @@ class RemixComponentTheme {
   final Style? progress;
   final Style? radio;
   final Style? select;
+  final Style? segmentedControl;
   final Style? spinner;
   final Style? accordion;
   final Style? switchComponent;
@@ -40,6 +42,7 @@ class RemixComponentTheme {
     this.progress,
     this.radio,
     this.select,
+    this.segmentedControl,
     this.spinner,
     this.switchComponent,
   });
@@ -55,6 +58,7 @@ class RemixComponentTheme {
         progress = const Style.empty(),
         radio = const Style.empty(),
         select = const Style.empty(),
+        segmentedControl = const Style.empty(),
         spinner = const Style.empty(),
         switchComponent = const Style.empty();
 
@@ -70,6 +74,7 @@ class RemixComponentTheme {
       progress: XProgressStyle.base,
       radio: XRadioStyle.base,
       select: XSelectStyle.base,
+      segmentedControl: XSegmentedControlStyle.base,
       spinner: XSpinnerStyle.base,
       switchComponent: XSwitchStyle.base,
     );

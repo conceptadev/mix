@@ -30,45 +30,20 @@ class _WidgetDemoState extends State<_WidgetDemo> {
   Widget build(BuildContext context) {
     return XSegmentedControl(
       index: index,
-      style: Style(
-        $segmentedControl.chain
-          ..flex.row()
-          ..flex.mainAxisSize.min()
-          ..container.color.white.withAlpha(30)
-          ..container.padding.all(4)
-          ..container.borderRadius.all(8),
-        $segmentedControl.item.chain
-          ..label.style.color.white()
-          ..label.style.fontSize(12)
-          ..icon.color.white()
-          ..icon.size(20)
-          ..container.padding.vertical(6)
-          ..container.padding.horizontal(12)
-          ..container.borderRadius.all(6),
-        // $on.hover(
-        //   $segmentedControl.item.chain
-        //     ..container.color.black.withAlpha(180)
-        //     ..label.style.color.white()
-        //     ..icon.color.white(),
-        // ),
-        selectedItem(
-          $segmentedControl.item.chain
-            ..container.color.black()
-            ..label.style.color.white(),
-        ),
-      ),
+      style: XSegmentedControlStyle.base,
       buttons: const [
         SegmentedControlItemWidget(
-          icon: CupertinoIcons.bold,
+          text: 'Apple',
         ),
         SegmentedControlItemWidget(
-          icon: CupertinoIcons.italic,
+          text: 'Pear',
         ),
         SegmentedControlItemWidget(
-          icon: CupertinoIcons.underline,
+          text: 'Banana',
         ),
       ],
       onIndexChanged: (i) {
+        print(i);
         setState(() {
           index = i;
         });

@@ -1,0 +1,53 @@
+// ignore_for_file: camel_case_types
+
+part of 'segmented_control.dart';
+
+final _container = $segmentedControl.container;
+final _flex = $segmentedControl.flex;
+final _item = $segmentedControl.item;
+
+class XSegmentedControlStyle {
+  static final Style base = Style(
+    _containerStyle(),
+    _flexStyle(),
+    _segmentStyle(),
+    $on.selected(_onSelectSegmentStyle()),
+  );
+}
+
+Style get _containerStyle => Style(
+      _container.chain
+        ..padding.all(4)
+        ..borderRadius.all(8)
+        ..color.black.withAlpha(20),
+    );
+
+Style get _flexStyle => Style(
+      _flex.chain
+        ..row()
+        ..mainAxisSize.min(),
+    );
+
+Style get _segmentStyle => Style(
+      _item.label.chain
+        ..style.color.black.withOpacity(0.6)
+        ..style.fontSize(14),
+      _item.icon.chain
+        ..size(20)
+        ..color.black.withOpacity(0.6),
+      _item.container.chain
+        ..padding.vertical(6)
+        ..padding.horizontal(12)
+        ..borderRadius.all(6),
+    );
+Style get _onSelectSegmentStyle => Style(
+      $segmentedControl.item.container.chain
+        ..color.white()
+        ..shadow.color.black.withOpacity(0.1)
+        ..shadow.offset(0, 2)
+        ..shadow.spreadRadius(1)
+        ..shadow.blurRadius(4),
+      $segmentedControl.item.chain
+        ..icon.color.black.withOpacity(1)
+        ..label.style.color.black.withOpacity(1),
+    );
