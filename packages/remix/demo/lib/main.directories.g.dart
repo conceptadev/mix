@@ -18,9 +18,10 @@ import 'package:demo/components/card_use_case.dart' as _i7;
 import 'package:demo/components/checkbox_use_case.dart' as _i8;
 import 'package:demo/components/progress_use_case.dart' as _i9;
 import 'package:demo/components/radio_use_case.dart' as _i10;
-import 'package:demo/components/select_use_case.dart' as _i11;
-import 'package:demo/components/spinner_use_case.dart' as _i12;
-import 'package:demo/components/switch_use_case.dart' as _i13;
+import 'package:demo/components/segmented_control_use_case.dart' as _i11;
+import 'package:demo/components/select_use_case.dart' as _i12;
+import 'package:demo/components/spinner_use_case.dart' as _i13;
+import 'package:demo/components/switch_use_case.dart' as _i14;
 import 'package:widgetbook/widgetbook.dart' as _i1;
 
 final directories = <_i1.WidgetbookNode>[
@@ -136,13 +137,25 @@ final directories = <_i1.WidgetbookNode>[
         ],
       ),
       _i1.WidgetbookFolder(
+        name: 'segmented_control',
+        children: [
+          _i1.WidgetbookLeafComponent(
+            name: 'XSegmentedControl',
+            useCase: _i1.WidgetbookUseCase(
+              name: 'SegmentedControl Component',
+              builder: _i11.buildAccordionUseCase,
+            ),
+          )
+        ],
+      ),
+      _i1.WidgetbookFolder(
         name: 'select',
         children: [
           _i1.WidgetbookLeafComponent(
             name: 'XSelect',
             useCase: _i1.WidgetbookUseCase(
               name: 'Select Component',
-              builder: _i11.buildSelect,
+              builder: _i12.buildSelect,
             ),
           )
         ],
@@ -154,7 +167,7 @@ final directories = <_i1.WidgetbookNode>[
             name: 'XSpinner',
             useCase: _i1.WidgetbookUseCase(
               name: 'Spinner Component',
-              builder: _i12.buildSpinnerUseCase,
+              builder: _i13.buildSpinnerUseCase,
             ),
           )
         ],
@@ -166,7 +179,7 @@ final directories = <_i1.WidgetbookNode>[
             name: 'XSwitch',
             useCase: _i1.WidgetbookUseCase(
               name: 'Switch Component',
-              builder: _i13.buildSwitchUseCase,
+              builder: _i14.buildSwitchUseCase,
             ),
           )
         ],

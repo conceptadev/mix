@@ -29,6 +29,7 @@ export 'src/components/checkbox/checkbox.dart';
 export 'src/components/checkbox_group/checkbox_group.dart';
 export 'src/components/progress/progress.dart';
 export 'src/components/radio/radio.dart';
+export 'src/components/segmented_control/segmented_control.dart';
 export 'src/components/select/select.dart';
 export 'src/components/spinner/spinner.dart';
 export 'src/components/switch/switch.dart';
