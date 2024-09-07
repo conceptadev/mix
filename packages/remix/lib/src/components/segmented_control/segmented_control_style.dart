@@ -19,7 +19,7 @@ Style get _containerStyle => Style(
       _container.chain
         ..padding.all(4)
         ..borderRadius.all(8)
-        ..color.black.withAlpha(20),
+        ..color(Colors.black.withOpacity(0.07)),
     );
 
 Style get _flexStyle => Style(
@@ -30,11 +30,11 @@ Style get _flexStyle => Style(
 
 Style get _segmentStyle => Style(
       _item.label.chain
-        ..style.color.black.withOpacity(0.6)
+        ..style.color(Colors.black.withOpacity(0.6))
         ..style.fontSize(14),
       _item.icon.chain
         ..size(20)
-        ..color.black.withOpacity(0.6),
+        ..color(Colors.black.withOpacity(0.6)),
       _item.container.chain
         ..padding.vertical(6)
         ..padding.horizontal(12)
@@ -43,11 +43,11 @@ Style get _segmentStyle => Style(
 Style get _onSelectSegmentStyle => Style(
       $segmentedControl.item.container.chain
         ..color.white()
-        ..shadow.color.black.withOpacity(0.1)
+        ..shadow.color(Colors.black.withOpacity(0.1))
         ..shadow.offset(0, 2)
         ..shadow.spreadRadius(1)
         ..shadow.blurRadius(4),
       $segmentedControl.item.chain
-        ..icon.color.black.withOpacity(1)
-        ..label.style.color.black.withOpacity(1),
+        ..icon.color(Colors.black.withOpacity(1))
+        ..label.style.color(Colors.black.withOpacity(1)),
     );

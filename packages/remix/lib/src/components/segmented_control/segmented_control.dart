@@ -1,20 +1,15 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:mix/mix.dart';
 import 'package:mix_annotations/mix_annotations.dart';
 
-import '../../helpers/component_builder.dart';
 import '../../theme/remix_theme.dart';
 
+part 'button/segmented_control_button.dart';
+part 'button/segmented_control_button_widget.dart';
 part 'segmented_control.g.dart';
-part 'segmented_control_widget.dart';
 part 'segmented_control_style.dart';
-part 'item/segmented_control_button.dart';
-part 'item/segmented_control_button_widget.dart';
-// part 'segmented_control_style.dart';
-// part 'segmented_control_theme.dart';
+part 'segmented_control_widget.dart';
 
 final $segmentedControl = SegmentedControlSpecUtility.self;
 
@@ -24,10 +19,8 @@ class SegmentedControlSpec extends Spec<SegmentedControlSpec>
   final BoxSpec container;
   final FlexSpec flex;
 
-  @MixableProperty(
-    dto: MixableFieldDto(type: 'SegmentedControlButtonSpecAttribute'),
-  )
-  final SegmentedControlButtonSpec item;
+  @MixableProperty(dto: MixableFieldDto(type: 'SegmentButtonSpecAttribute'))
+  final SegmentButtonSpec item;
 
   static const of = _$SegmentedControlSpec.of;
 
@@ -36,12 +29,12 @@ class SegmentedControlSpec extends Spec<SegmentedControlSpec>
   const SegmentedControlSpec({
     BoxSpec? container,
     FlexSpec? flex,
-    SegmentedControlButtonSpec? item,
+    SegmentButtonSpec? item,
     super.modifiers,
     super.animated,
   })  : flex = flex ?? const FlexSpec(),
         container = container ?? const BoxSpec(),
-        item = item ?? const SegmentedControlButtonSpec();
+        item = item ?? const SegmentButtonSpec();
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {

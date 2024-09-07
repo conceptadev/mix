@@ -1,19 +1,19 @@
 part of '../segmented_control.dart';
 
 @MixableSpec()
-class SegmentedControlButtonSpec extends Spec<SegmentedControlButtonSpec>
-    with _$SegmentedControlButtonSpec, Diagnosticable {
+class SegmentButtonSpec extends Spec<SegmentButtonSpec>
+    with _$SegmentButtonSpec, Diagnosticable {
   final FlexSpec flex;
   final BoxSpec container;
   final IconSpec icon;
   final TextSpec label;
 
   /// {@macro button_spec_of}
-  static const of = _$SegmentedControlButtonSpec.of;
+  static const of = _$SegmentButtonSpec.of;
 
-  static const from = _$SegmentedControlButtonSpec.from;
+  static const from = _$SegmentButtonSpec.from;
 
-  const SegmentedControlButtonSpec({
+  const SegmentButtonSpec({
     BoxSpec? container,
     FlexSpec? flex,
     IconSpec? icon,

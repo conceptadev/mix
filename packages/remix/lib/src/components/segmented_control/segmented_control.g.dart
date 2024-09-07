@@ -35,7 +35,7 @@ mixin _$SegmentedControlSpec on Spec<SegmentedControlSpec> {
   SegmentedControlSpec copyWith({
     BoxSpec? container,
     FlexSpec? flex,
-    SegmentedControlButtonSpec? item,
+    SegmentButtonSpec? item,
     WidgetModifiersData? modifiers,
     AnimatedData? animated,
   }) {
@@ -121,7 +121,7 @@ class SegmentedControlSpecAttribute extends SpecAttribute<SegmentedControlSpec>
     with Diagnosticable {
   final BoxSpecAttribute? container;
   final FlexSpecAttribute? flex;
-  final SegmentedControlButtonSpecAttribute? item;
+  final SegmentButtonSpecAttribute? item;
 
   const SegmentedControlSpecAttribute({
     this.container,
@@ -212,7 +212,7 @@ class SegmentedControlSpecUtility<T extends Attribute>
   late final flex = FlexSpecUtility((v) => only(flex: v));
 
   /// Utility for defining [SegmentedControlSpecAttribute.item]
-  late final item = SegmentedControlButtonSpecUtility((v) => only(item: v));
+  late final item = SegmentButtonSpecUtility((v) => only(item: v));
 
   /// Utility for defining [SegmentedControlSpecAttribute.modifiers]
   late final wrap = SpecModifierUtility((v) => only(modifiers: v));
@@ -233,7 +233,7 @@ class SegmentedControlSpecUtility<T extends Attribute>
   T only({
     BoxSpecAttribute? container,
     FlexSpecAttribute? flex,
-    SegmentedControlButtonSpecAttribute? item,
+    SegmentButtonSpecAttribute? item,
     WidgetModifiersDataDto? modifiers,
     AnimatedDataDto? animated,
   }) {
@@ -271,35 +271,33 @@ class SegmentedControlSpecTween extends Tween<SegmentedControlSpec?> {
   }
 }
 
-mixin _$SegmentedControlButtonSpec on Spec<SegmentedControlButtonSpec> {
-  static SegmentedControlButtonSpec from(MixData mix) {
-    return mix
-            .attributeOf<SegmentedControlButtonSpecAttribute>()
-            ?.resolve(mix) ??
-        const SegmentedControlButtonSpec();
+mixin _$SegmentButtonSpec on Spec<SegmentButtonSpec> {
+  static SegmentButtonSpec from(MixData mix) {
+    return mix.attributeOf<SegmentButtonSpecAttribute>()?.resolve(mix) ??
+        const SegmentButtonSpec();
   }
 
-  /// {@template segmented_control_button_spec_of}
-  /// Retrieves the [SegmentedControlButtonSpec] from the nearest [Mix] ancestor in the widget tree.
+  /// {@template segment_button_spec_of}
+  /// Retrieves the [SegmentButtonSpec] from the nearest [Mix] ancestor in the widget tree.
   ///
   /// This method uses [Mix.of] to obtain the [Mix] instance associated with the
-  /// given [BuildContext], and then retrieves the [SegmentedControlButtonSpec] from that [Mix].
-  /// If no ancestor [Mix] is found, this method returns an empty [SegmentedControlButtonSpec].
+  /// given [BuildContext], and then retrieves the [SegmentButtonSpec] from that [Mix].
+  /// If no ancestor [Mix] is found, this method returns an empty [SegmentButtonSpec].
   ///
   /// Example:
   ///
   /// ```dart
-  /// final segmentedControlButtonSpec = SegmentedControlButtonSpec.of(context);
+  /// final segmentButtonSpec = SegmentButtonSpec.of(context);
   /// ```
   /// {@endtemplate}
-  static SegmentedControlButtonSpec of(BuildContext context) {
-    return _$SegmentedControlButtonSpec.from(Mix.of(context));
+  static SegmentButtonSpec of(BuildContext context) {
+    return _$SegmentButtonSpec.from(Mix.of(context));
   }
 
-  /// Creates a copy of this [SegmentedControlButtonSpec] but with the given fields
+  /// Creates a copy of this [SegmentButtonSpec] but with the given fields
   /// replaced with the new values.
   @override
-  SegmentedControlButtonSpec copyWith({
+  SegmentButtonSpec copyWith({
     BoxSpec? container,
     FlexSpec? flex,
     IconSpec? icon,
@@ -307,7 +305,7 @@ mixin _$SegmentedControlButtonSpec on Spec<SegmentedControlButtonSpec> {
     WidgetModifiersData? modifiers,
     AnimatedData? animated,
   }) {
-    return SegmentedControlButtonSpec(
+    return SegmentButtonSpec(
       container: container ?? _$this.container,
       flex: flex ?? _$this.flex,
       icon: icon ?? _$this.icon,
@@ -317,15 +315,15 @@ mixin _$SegmentedControlButtonSpec on Spec<SegmentedControlButtonSpec> {
     );
   }
 
-  /// Linearly interpolates between this [SegmentedControlButtonSpec] and another [SegmentedControlButtonSpec] based on the given parameter [t].
+  /// Linearly interpolates between this [SegmentButtonSpec] and another [SegmentButtonSpec] based on the given parameter [t].
   ///
   /// The parameter [t] represents the interpolation factor, typically ranging from 0.0 to 1.0.
-  /// When [t] is 0.0, the current [SegmentedControlButtonSpec] is returned. When [t] is 1.0, the [other] [SegmentedControlButtonSpec] is returned.
-  /// For values of [t] between 0.0 and 1.0, an interpolated [SegmentedControlButtonSpec] is returned.
+  /// When [t] is 0.0, the current [SegmentButtonSpec] is returned. When [t] is 1.0, the [other] [SegmentButtonSpec] is returned.
+  /// For values of [t] between 0.0 and 1.0, an interpolated [SegmentButtonSpec] is returned.
   ///
-  /// If [other] is null, this method returns the current [SegmentedControlButtonSpec] instance.
+  /// If [other] is null, this method returns the current [SegmentButtonSpec] instance.
   ///
-  /// The interpolation is performed on each property of the [SegmentedControlButtonSpec] using the appropriate
+  /// The interpolation is performed on each property of the [SegmentButtonSpec] using the appropriate
   /// interpolation method:
   ///
   /// - [BoxSpec.lerp] for [container].
@@ -334,16 +332,16 @@ mixin _$SegmentedControlButtonSpec on Spec<SegmentedControlButtonSpec> {
   /// - [TextSpec.lerp] for [label].
 
   /// For [modifiers] and [animated], the interpolation is performed using a step function.
-  /// If [t] is less than 0.5, the value from the current [SegmentedControlButtonSpec] is used. Otherwise, the value
-  /// from the [other] [SegmentedControlButtonSpec] is used.
+  /// If [t] is less than 0.5, the value from the current [SegmentButtonSpec] is used. Otherwise, the value
+  /// from the [other] [SegmentButtonSpec] is used.
   ///
   /// This method is typically used in animations to smoothly transition between
-  /// different [SegmentedControlButtonSpec] configurations.
+  /// different [SegmentButtonSpec] configurations.
   @override
-  SegmentedControlButtonSpec lerp(SegmentedControlButtonSpec? other, double t) {
+  SegmentButtonSpec lerp(SegmentButtonSpec? other, double t) {
     if (other == null) return _$this;
 
-    return SegmentedControlButtonSpec(
+    return SegmentButtonSpec(
       container: _$this.container.lerp(other.container, t),
       flex: _$this.flex.lerp(other.flex, t),
       icon: _$this.icon.lerp(other.icon, t),
@@ -353,10 +351,10 @@ mixin _$SegmentedControlButtonSpec on Spec<SegmentedControlButtonSpec> {
     );
   }
 
-  /// The list of properties that constitute the state of this [SegmentedControlButtonSpec].
+  /// The list of properties that constitute the state of this [SegmentButtonSpec].
   ///
   /// This property is used by the [==] operator and the [hashCode] getter to
-  /// compare two [SegmentedControlButtonSpec] instances for equality.
+  /// compare two [SegmentButtonSpec] instances for equality.
   @override
   List<Object?> get props => [
         _$this.container,
@@ -367,7 +365,7 @@ mixin _$SegmentedControlButtonSpec on Spec<SegmentedControlButtonSpec> {
         _$this.animated,
       ];
 
-  SegmentedControlButtonSpec get _$this => this as SegmentedControlButtonSpec;
+  SegmentButtonSpec get _$this => this as SegmentButtonSpec;
 
   void _debugFillProperties(DiagnosticPropertiesBuilder properties) {
     properties.add(
@@ -385,21 +383,21 @@ mixin _$SegmentedControlButtonSpec on Spec<SegmentedControlButtonSpec> {
   }
 }
 
-/// Represents the attributes of a [SegmentedControlButtonSpec].
+/// Represents the attributes of a [SegmentButtonSpec].
 ///
 /// This class encapsulates properties defining the layout and
-/// appearance of a [SegmentedControlButtonSpec].
+/// appearance of a [SegmentButtonSpec].
 ///
-/// Use this class to configure the attributes of a [SegmentedControlButtonSpec] and pass it to
-/// the [SegmentedControlButtonSpec] constructor.
-class SegmentedControlButtonSpecAttribute
-    extends SpecAttribute<SegmentedControlButtonSpec> with Diagnosticable {
+/// Use this class to configure the attributes of a [SegmentButtonSpec] and pass it to
+/// the [SegmentButtonSpec] constructor.
+class SegmentButtonSpecAttribute extends SpecAttribute<SegmentButtonSpec>
+    with Diagnosticable {
   final BoxSpecAttribute? container;
   final FlexSpecAttribute? flex;
   final IconSpecAttribute? icon;
   final TextSpecAttribute? label;
 
-  const SegmentedControlButtonSpecAttribute({
+  const SegmentButtonSpecAttribute({
     this.container,
     this.flex,
     this.icon,
@@ -408,17 +406,17 @@ class SegmentedControlButtonSpecAttribute
     super.animated,
   });
 
-  /// Resolves to [SegmentedControlButtonSpec] using the provided [MixData].
+  /// Resolves to [SegmentButtonSpec] using the provided [MixData].
   ///
   /// If a property is null in the [MixData], it falls back to the
   /// default value defined in the `defaultValue` for that property.
   ///
   /// ```dart
-  /// final segmentedControlButtonSpec = SegmentedControlButtonSpecAttribute(...).resolve(mix);
+  /// final segmentButtonSpec = SegmentButtonSpecAttribute(...).resolve(mix);
   /// ```
   @override
-  SegmentedControlButtonSpec resolve(MixData mix) {
-    return SegmentedControlButtonSpec(
+  SegmentButtonSpec resolve(MixData mix) {
+    return SegmentButtonSpec(
       container: container?.resolve(mix),
       flex: flex?.resolve(mix),
       icon: icon?.resolve(mix),
@@ -428,20 +426,20 @@ class SegmentedControlButtonSpecAttribute
     );
   }
 
-  /// Merges the properties of this [SegmentedControlButtonSpecAttribute] with the properties of [other].
+  /// Merges the properties of this [SegmentButtonSpecAttribute] with the properties of [other].
   ///
   /// If [other] is null, returns this instance unchanged. Otherwise, returns a new
-  /// [SegmentedControlButtonSpecAttribute] with the properties of [other] taking precedence over
+  /// [SegmentButtonSpecAttribute] with the properties of [other] taking precedence over
   /// the corresponding properties of this instance.
   ///
   /// Properties from [other] that are null will fall back
   /// to the values from this instance.
   @override
-  SegmentedControlButtonSpecAttribute merge(
-      covariant SegmentedControlButtonSpecAttribute? other) {
+  SegmentButtonSpecAttribute merge(
+      covariant SegmentButtonSpecAttribute? other) {
     if (other == null) return this;
 
-    return SegmentedControlButtonSpecAttribute(
+    return SegmentButtonSpecAttribute(
       container: container?.merge(other.container) ?? other.container,
       flex: flex?.merge(other.flex) ?? other.flex,
       icon: icon?.merge(other.icon) ?? other.icon,
@@ -451,10 +449,10 @@ class SegmentedControlButtonSpecAttribute
     );
   }
 
-  /// The list of properties that constitute the state of this [SegmentedControlButtonSpecAttribute].
+  /// The list of properties that constitute the state of this [SegmentButtonSpecAttribute].
   ///
   /// This property is used by the [==] operator and the [hashCode] getter to
-  /// compare two [SegmentedControlButtonSpecAttribute] instances for equality.
+  /// compare two [SegmentButtonSpecAttribute] instances for equality.
   @override
   List<Object?> get props => [
         container,
@@ -480,39 +478,39 @@ class SegmentedControlButtonSpecAttribute
   }
 }
 
-/// Utility class for configuring [SegmentedControlButtonSpecAttribute] properties.
+/// Utility class for configuring [SegmentButtonSpecAttribute] properties.
 ///
-/// This class provides methods to set individual properties of a [SegmentedControlButtonSpecAttribute].
-/// Use the methods of this class to configure specific properties of a [SegmentedControlButtonSpecAttribute].
-class SegmentedControlButtonSpecUtility<T extends Attribute>
-    extends SpecUtility<T, SegmentedControlButtonSpecAttribute> {
-  /// Utility for defining [SegmentedControlButtonSpecAttribute.container]
+/// This class provides methods to set individual properties of a [SegmentButtonSpecAttribute].
+/// Use the methods of this class to configure specific properties of a [SegmentButtonSpecAttribute].
+class SegmentButtonSpecUtility<T extends Attribute>
+    extends SpecUtility<T, SegmentButtonSpecAttribute> {
+  /// Utility for defining [SegmentButtonSpecAttribute.container]
   late final container = BoxSpecUtility((v) => only(container: v));
 
-  /// Utility for defining [SegmentedControlButtonSpecAttribute.flex]
+  /// Utility for defining [SegmentButtonSpecAttribute.flex]
   late final flex = FlexSpecUtility((v) => only(flex: v));
 
-  /// Utility for defining [SegmentedControlButtonSpecAttribute.icon]
+  /// Utility for defining [SegmentButtonSpecAttribute.icon]
   late final icon = IconSpecUtility((v) => only(icon: v));
 
-  /// Utility for defining [SegmentedControlButtonSpecAttribute.label]
+  /// Utility for defining [SegmentButtonSpecAttribute.label]
   late final label = TextSpecUtility((v) => only(label: v));
 
-  /// Utility for defining [SegmentedControlButtonSpecAttribute.modifiers]
+  /// Utility for defining [SegmentButtonSpecAttribute.modifiers]
   late final wrap = SpecModifierUtility((v) => only(modifiers: v));
 
-  /// Utility for defining [SegmentedControlButtonSpecAttribute.animated]
+  /// Utility for defining [SegmentButtonSpecAttribute.animated]
   late final animated = AnimatedUtility((v) => only(animated: v));
 
-  SegmentedControlButtonSpecUtility(super.builder, {super.mutable});
+  SegmentButtonSpecUtility(super.builder, {super.mutable});
 
-  SegmentedControlButtonSpecUtility<T> get chain =>
-      SegmentedControlButtonSpecUtility(attributeBuilder, mutable: true);
+  SegmentButtonSpecUtility<T> get chain =>
+      SegmentButtonSpecUtility(attributeBuilder, mutable: true);
 
-  static SegmentedControlButtonSpecUtility<SegmentedControlButtonSpecAttribute>
-      get self => SegmentedControlButtonSpecUtility((v) => v);
+  static SegmentButtonSpecUtility<SegmentButtonSpecAttribute> get self =>
+      SegmentButtonSpecUtility((v) => v);
 
-  /// Returns a new [SegmentedControlButtonSpecAttribute] with the specified properties.
+  /// Returns a new [SegmentButtonSpecAttribute] with the specified properties.
   @override
   T only({
     BoxSpecAttribute? container,
@@ -522,7 +520,7 @@ class SegmentedControlButtonSpecUtility<T extends Attribute>
     WidgetModifiersDataDto? modifiers,
     AnimatedDataDto? animated,
   }) {
-    return builder(SegmentedControlButtonSpecAttribute(
+    return builder(SegmentButtonSpecAttribute(
       container: container,
       flex: flex,
       icon: icon,
@@ -533,21 +531,20 @@ class SegmentedControlButtonSpecUtility<T extends Attribute>
   }
 }
 
-/// A tween that interpolates between two [SegmentedControlButtonSpec] instances.
+/// A tween that interpolates between two [SegmentButtonSpec] instances.
 ///
 /// This class can be used in animations to smoothly transition between
-/// different [SegmentedControlButtonSpec] specifications.
-class SegmentedControlButtonSpecTween
-    extends Tween<SegmentedControlButtonSpec?> {
-  SegmentedControlButtonSpecTween({
+/// different [SegmentButtonSpec] specifications.
+class SegmentButtonSpecTween extends Tween<SegmentButtonSpec?> {
+  SegmentButtonSpecTween({
     super.begin,
     super.end,
   });
 
   @override
-  SegmentedControlButtonSpec lerp(double t) {
+  SegmentButtonSpec lerp(double t) {
     if (begin == null && end == null) {
-      return const SegmentedControlButtonSpec();
+      return const SegmentButtonSpec();
     }
 
     if (begin == null) {

@@ -1,8 +1,5 @@
 part of 'segmented_control.dart';
 
-typedef XSegmentedControlButtonBuilder
-    = XComponentBuilder<SegmentedControlButtonSpec>;
-
 const selectedItem = Variant('selectedItem');
 
 class XSegmentedControl extends StatefulWidget {
