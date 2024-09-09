@@ -39,6 +39,9 @@
 build/
 coverage/
 
+# MacOs related
+**/macos/Flutter/ephemeral
+
 # Android related
 **/android/**/gradle-wrapper.jar
 **/android/.gradle
@@ -98,3 +101,4 @@ pubspec.lock
 .fvm/
 packages/remix/context.md
 packages/mix/.cody/ignore
+
