@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:mix/mix.dart';
 import 'package:remix/remix.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
@@ -32,13 +31,13 @@ class _WidgetDemoState extends State<_WidgetDemo> {
       index: index,
       style: XSegmentedControlStyle.base,
       buttons: const [
-        SegmentedControlItemWidget(
+        XSegmentButton(
           text: 'Apple',
         ),
-        SegmentedControlItemWidget(
+        XSegmentButton(
           text: 'Pear',
         ),
-        SegmentedControlItemWidget(
+        XSegmentButton(
           text: 'Banana',
         ),
       ],
