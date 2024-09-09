@@ -210,10 +210,10 @@ final class StackSpecAttribute extends SpecAttribute<StackSpec>
   }
 }
 
-/// Utility class for configuring [StackSpecAttribute] properties.
+/// Utility class for configuring [StackSpec] properties.
 ///
-/// This class provides methods to set individual properties of a [StackSpecAttribute].
-/// Use the methods of this class to configure specific properties of a [StackSpecAttribute].
+/// This class provides methods to set individual properties of a [StackSpec].
+/// Use the methods of this class to configure specific properties of a [StackSpec].
 class StackSpecUtility<T extends Attribute>
     extends SpecUtility<T, StackSpecAttribute> {
   /// Utility for defining [StackSpecAttribute.alignment]

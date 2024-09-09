@@ -6,7 +6,7 @@ part of 'decoration_image_dto.dart';
 // MixableDtoGenerator
 // **************************************************************************
 
-base mixin _$DecorationImageDto on Dto<DecorationImage> {
+mixin _$DecorationImageDto on Dto<DecorationImage> {
   /// Resolves to [DecorationImage] using the provided [MixData].
   ///
   /// If a property is null in the [MixData], it falls back to the
@@ -72,10 +72,10 @@ base mixin _$DecorationImageDto on Dto<DecorationImage> {
   DecorationImageDto get _$this => this as DecorationImageDto;
 }
 
-/// Utility class for configuring [DecorationImageDto] properties.
+/// Utility class for configuring [DecorationImage] properties.
 ///
-/// This class provides methods to set individual properties of a [DecorationImageDto].
-/// Use the methods of this class to configure specific properties of a [DecorationImageDto].
+/// This class provides methods to set individual properties of a [DecorationImage].
+/// Use the methods of this class to configure specific properties of a [DecorationImage].
 class DecorationImageUtility<T extends Attribute>
     extends DtoUtility<T, DecorationImageDto, DecorationImage> {
   /// Utility for defining [DecorationImageDto.image]

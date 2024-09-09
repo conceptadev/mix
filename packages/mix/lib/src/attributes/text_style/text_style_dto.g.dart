@@ -6,7 +6,7 @@ part of 'text_style_dto.dart';
 // MixableDtoGenerator
 // **************************************************************************
 
-base mixin _$TextStyleData on Dto<TextStyle> {
+mixin _$TextStyleData on Dto<TextStyle> {
   /// Resolves to [TextStyle] using the provided [MixData].
   ///
   /// If a property is null in the [MixData], it falls back to the
@@ -125,7 +125,7 @@ base mixin _$TextStyleData on Dto<TextStyle> {
   TextStyleData get _$this => this as TextStyleData;
 }
 
-base mixin _$TextStyleDto on Dto<TextStyle> {
+mixin _$TextStyleDto on Dto<TextStyle> {
   /// Merges the properties of this [TextStyleDto] with the properties of [other].
   ///
   /// If [other] is null, returns this instance unchanged. Otherwise, returns a new

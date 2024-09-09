@@ -6,7 +6,7 @@ part of 'strut_style_dto.dart';
 // MixableDtoGenerator
 // **************************************************************************
 
-base mixin _$StrutStyleDto on Dto<StrutStyle> {
+mixin _$StrutStyleDto on Dto<StrutStyle> {
   /// Resolves to [StrutStyle] using the provided [MixData].
   ///
   /// If a property is null in the [MixData], it falls back to the
@@ -75,10 +75,10 @@ base mixin _$StrutStyleDto on Dto<StrutStyle> {
   StrutStyleDto get _$this => this as StrutStyleDto;
 }
 
-/// Utility class for configuring [StrutStyleDto] properties.
+/// Utility class for configuring [StrutStyle] properties.
 ///
-/// This class provides methods to set individual properties of a [StrutStyleDto].
-/// Use the methods of this class to configure specific properties of a [StrutStyleDto].
+/// This class provides methods to set individual properties of a [StrutStyle].
+/// Use the methods of this class to configure specific properties of a [StrutStyle].
 class StrutStyleUtility<T extends Attribute>
     extends DtoUtility<T, StrutStyleDto, StrutStyle> {
   /// Utility for defining [StrutStyleDto.fontFamily]

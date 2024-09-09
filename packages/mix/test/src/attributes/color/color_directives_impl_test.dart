@@ -187,7 +187,7 @@ void main() {
         ),
       );
 
-      expect(Color(0xff983131), color);
+      expect(const Color(0xff983131), color);
     });
 
     test('ShadeColorDirective', () {
@@ -203,7 +203,7 @@ void main() {
         ),
       );
 
-      expect(Color(0xffc6362c), color);
+      expect(const Color(0xffc6362c), color);
     });
 
     test('DesaturateColorDirective', () {
@@ -219,7 +219,7 @@ void main() {
         ),
       );
 
-      expect(Color(0xffde554c), color);
+      expect(const Color(0xffde554c), color);
     });
 
     test('SaturateColorDirective', () {
@@ -235,7 +235,7 @@ void main() {
         ),
       );
 
-      expect(Color(0xffe61919), color);
+      expect(const Color(0xffe61919), color);
     });
 
     test('DarkenColorDirective', () {
@@ -251,7 +251,7 @@ void main() {
         ),
       );
 
-      expect(Color(0xffba160a), color);
+      expect(const Color(0xffba160a), color);
     });
 
     test('BrightenColorDirective', () {
@@ -267,7 +267,7 @@ void main() {
         ),
       );
 
-      expect(Color(0xffff776a), color);
+      expect(const Color(0xffff776a), color);
     });
 
     test('LightenColorDirective', () {
@@ -283,7 +283,7 @@ void main() {
         ),
       );
 
-      expect(Color(0xfffa9d96), color);
+      expect(const Color(0xfffa9d96), color);
     });
   });
 }

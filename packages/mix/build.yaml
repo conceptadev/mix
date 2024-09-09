@@ -8,6 +8,7 @@ targets:
       mix_generator|dto:
         generate_for:
           - lib/**/*_dto.dart
+          
       mix_generator|enum_utility:
         generate_for:
           - lib/**/*_util.dart

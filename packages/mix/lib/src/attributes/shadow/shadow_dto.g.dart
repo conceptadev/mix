@@ -6,7 +6,7 @@ part of 'shadow_dto.dart';
 // MixableDtoGenerator
 // **************************************************************************
 
-base mixin _$ShadowDto on Dto<Shadow> {
+mixin _$ShadowDto on Dto<Shadow> {
   /// Resolves to [Shadow] using the provided [MixData].
   ///
   /// If a property is null in the [MixData], it falls back to the
@@ -57,10 +57,10 @@ base mixin _$ShadowDto on Dto<Shadow> {
   ShadowDto get _$this => this as ShadowDto;
 }
 
-/// Utility class for configuring [ShadowDto] properties.
+/// Utility class for configuring [Shadow] properties.
 ///
-/// This class provides methods to set individual properties of a [ShadowDto].
-/// Use the methods of this class to configure specific properties of a [ShadowDto].
+/// This class provides methods to set individual properties of a [Shadow].
+/// Use the methods of this class to configure specific properties of a [Shadow].
 class ShadowUtility<T extends Attribute>
     extends DtoUtility<T, ShadowDto, Shadow> {
   /// Utility for defining [ShadowDto.blurRadius]
@@ -117,7 +117,7 @@ extension ListShadowMixExt on List<Shadow> {
   }
 }
 
-base mixin _$BoxShadowDto on Dto<BoxShadow> {
+mixin _$BoxShadowDto on Dto<BoxShadow> {
   /// Resolves to [BoxShadow] using the provided [MixData].
   ///
   /// If a property is null in the [MixData], it falls back to the
@@ -171,10 +171,10 @@ base mixin _$BoxShadowDto on Dto<BoxShadow> {
   BoxShadowDto get _$this => this as BoxShadowDto;
 }
 
-/// Utility class for configuring [BoxShadowDto] properties.
+/// Utility class for configuring [BoxShadow] properties.
 ///
-/// This class provides methods to set individual properties of a [BoxShadowDto].
-/// Use the methods of this class to configure specific properties of a [BoxShadowDto].
+/// This class provides methods to set individual properties of a [BoxShadow].
+/// Use the methods of this class to configure specific properties of a [BoxShadow].
 class BoxShadowUtility<T extends Attribute>
     extends DtoUtility<T, BoxShadowDto, BoxShadow> {
   /// Utility for defining [BoxShadowDto.color]

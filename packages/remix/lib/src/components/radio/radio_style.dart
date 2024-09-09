@@ -12,7 +12,7 @@ class XRadioStyle {
         _textStyle(),
         _flexStyle(),
       ).animate(
-        duration: Duration(milliseconds: 100),
+        duration: const Duration(milliseconds: 100),
         curve: Curves.easeInOutQuad,
       );
 }
@@ -52,7 +52,7 @@ Style get _textStyle => Style(
         ..style.height(1)
         ..style.fontWeight.w500()
         ..textHeightBehavior(
-          TextHeightBehavior(
+          const TextHeightBehavior(
             applyHeightToFirstAscent: false,
             applyHeightToLastDescent: false,
           ),

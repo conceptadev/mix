@@ -13,7 +13,6 @@ class XSelectMenuItemWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SpecBuilder(
-      inherit: true,
       builder: (context) {
         final item = SelectSpec.of(context).item;
 

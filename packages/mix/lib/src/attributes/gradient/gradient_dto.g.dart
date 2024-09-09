@@ -6,7 +6,7 @@ part of 'gradient_dto.dart';
 // MixableDtoGenerator
 // **************************************************************************
 
-base mixin _$LinearGradientDto on Dto<LinearGradient> {
+mixin _$LinearGradientDto on Dto<LinearGradient> {
   /// Resolves to [LinearGradient] using the provided [MixData].
   ///
   /// If a property is null in the [MixData], it falls back to the
@@ -67,10 +67,10 @@ base mixin _$LinearGradientDto on Dto<LinearGradient> {
   LinearGradientDto get _$this => this as LinearGradientDto;
 }
 
-/// Utility class for configuring [LinearGradientDto] properties.
+/// Utility class for configuring [LinearGradient] properties.
 ///
-/// This class provides methods to set individual properties of a [LinearGradientDto].
-/// Use the methods of this class to configure specific properties of a [LinearGradientDto].
+/// This class provides methods to set individual properties of a [LinearGradient].
+/// Use the methods of this class to configure specific properties of a [LinearGradient].
 class LinearGradientUtility<T extends Attribute>
     extends DtoUtility<T, LinearGradientDto, LinearGradient> {
   /// Utility for defining [LinearGradientDto.begin]
@@ -151,7 +151,7 @@ extension ListLinearGradientMixExt on List<LinearGradient> {
   }
 }
 
-base mixin _$RadialGradientDto on Dto<RadialGradient> {
+mixin _$RadialGradientDto on Dto<RadialGradient> {
   /// Resolves to [RadialGradient] using the provided [MixData].
   ///
   /// If a property is null in the [MixData], it falls back to the
@@ -218,10 +218,10 @@ base mixin _$RadialGradientDto on Dto<RadialGradient> {
   RadialGradientDto get _$this => this as RadialGradientDto;
 }
 
-/// Utility class for configuring [RadialGradientDto] properties.
+/// Utility class for configuring [RadialGradient] properties.
 ///
-/// This class provides methods to set individual properties of a [RadialGradientDto].
-/// Use the methods of this class to configure specific properties of a [RadialGradientDto].
+/// This class provides methods to set individual properties of a [RadialGradient].
+/// Use the methods of this class to configure specific properties of a [RadialGradient].
 class RadialGradientUtility<T extends Attribute>
     extends DtoUtility<T, RadialGradientDto, RadialGradient> {
   /// Utility for defining [RadialGradientDto.center]
@@ -318,7 +318,7 @@ extension ListRadialGradientMixExt on List<RadialGradient> {
   }
 }
 
-base mixin _$SweepGradientDto on Dto<SweepGradient> {
+mixin _$SweepGradientDto on Dto<SweepGradient> {
   /// Resolves to [SweepGradient] using the provided [MixData].
   ///
   /// If a property is null in the [MixData], it falls back to the
@@ -382,10 +382,10 @@ base mixin _$SweepGradientDto on Dto<SweepGradient> {
   SweepGradientDto get _$this => this as SweepGradientDto;
 }
 
-/// Utility class for configuring [SweepGradientDto] properties.
+/// Utility class for configuring [SweepGradient] properties.
 ///
-/// This class provides methods to set individual properties of a [SweepGradientDto].
-/// Use the methods of this class to configure specific properties of a [SweepGradientDto].
+/// This class provides methods to set individual properties of a [SweepGradient].
+/// Use the methods of this class to configure specific properties of a [SweepGradient].
 class SweepGradientUtility<T extends Attribute>
     extends DtoUtility<T, SweepGradientDto, SweepGradient> {
   /// Utility for defining [SweepGradientDto.center]

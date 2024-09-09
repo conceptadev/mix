@@ -6,7 +6,7 @@ part of 'border_dto.dart';
 // MixableDtoGenerator
 // **************************************************************************
 
-base mixin _$BorderDto on Dto<Border> {
+mixin _$BorderDto on Dto<Border> {
   /// Resolves to [Border] using the provided [MixData].
   ///
   /// If a property is null in the [MixData], it falls back to the
@@ -77,7 +77,7 @@ extension ListBorderMixExt on List<Border> {
   }
 }
 
-base mixin _$BorderDirectionalDto on Dto<BorderDirectional> {
+mixin _$BorderDirectionalDto on Dto<BorderDirectional> {
   /// Resolves to [BorderDirectional] using the provided [MixData].
   ///
   /// If a property is null in the [MixData], it falls back to the
@@ -148,7 +148,7 @@ extension ListBorderDirectionalMixExt on List<BorderDirectional> {
   }
 }
 
-base mixin _$BorderSideDto on Dto<BorderSide> {
+mixin _$BorderSideDto on Dto<BorderSide> {
   /// Resolves to [BorderSide] using the provided [MixData].
   ///
   /// If a property is null in the [MixData], it falls back to the
@@ -202,10 +202,10 @@ base mixin _$BorderSideDto on Dto<BorderSide> {
   BorderSideDto get _$this => this as BorderSideDto;
 }
 
-/// Utility class for configuring [BorderSideDto] properties.
+/// Utility class for configuring [BorderSide] properties.
 ///
-/// This class provides methods to set individual properties of a [BorderSideDto].
-/// Use the methods of this class to configure specific properties of a [BorderSideDto].
+/// This class provides methods to set individual properties of a [BorderSide].
+/// Use the methods of this class to configure specific properties of a [BorderSide].
 class BorderSideUtility<T extends Attribute>
     extends DtoUtility<T, BorderSideDto, BorderSide> {
   /// Utility for defining [BorderSideDto.color]

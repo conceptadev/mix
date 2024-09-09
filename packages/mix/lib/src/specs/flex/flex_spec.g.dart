@@ -281,10 +281,10 @@ final class FlexSpecAttribute extends SpecAttribute<FlexSpec>
   }
 }
 
-/// Utility class for configuring [FlexSpecAttribute] properties.
+/// Utility class for configuring [FlexSpec] properties.
 ///
-/// This class provides methods to set individual properties of a [FlexSpecAttribute].
-/// Use the methods of this class to configure specific properties of a [FlexSpecAttribute].
+/// This class provides methods to set individual properties of a [FlexSpec].
+/// Use the methods of this class to configure specific properties of a [FlexSpec].
 class FlexSpecUtility<T extends Attribute>
     extends SpecUtility<T, FlexSpecAttribute> {
   /// Utility for defining [FlexSpecAttribute.crossAxisAlignment]

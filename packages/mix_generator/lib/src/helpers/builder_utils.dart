@@ -5,9 +5,10 @@ import 'package:analyzer/dart/element/type.dart';
 import 'package:build/build.dart';
 import 'package:collection/collection.dart';
 import 'package:mix_annotations/mix_annotations.dart';
+import 'package:source_gen/source_gen.dart';
+
 import 'dart_type_ext.dart';
 import 'field_info.dart';
-import 'package:source_gen/source_gen.dart';
 
 class MixHelperRef {
   const MixHelperRef._();
@@ -135,6 +136,9 @@ extension ClassElementX on ClassElement {
 
   bool get hasUnamedConstructor => unnamedConstructor != null;
 
+  ClassElement get genericType =>
+      getGenericTypeOfSuperclass()!.element as ClassElement;
+
   ConstructorElement get defaultConstructor {
     final selectedConstructor = constructors.firstWhereOrNull((element) {
       return element.isDefaultConstructor ||
@@ -162,6 +166,8 @@ extension ClassElementX on ClassElement {
   bool get isDto => _isMixType('Dto');
 
   bool get isSpec => _isMixType('Spec');
+
+  bool get isSpecAttribute => _isMixType('SpecAttribute');
 
   bool get isWidgetModifier => _isMixType('WidgetModifierSpec');
 
@@ -245,7 +251,13 @@ extension DartTypeX on DartType {
       return thisElement.name;
     }
 
-    return getDisplayString(withNullability: false);
+    final type = getDisplayString();
+
+    if (isNullableType) {
+      return type.replaceAll('?', '');
+    }
+
+    return type;
   }
 
   ClassElement? get classElement {
