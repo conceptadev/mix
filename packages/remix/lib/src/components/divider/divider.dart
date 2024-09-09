@@ -9,7 +9,6 @@ import '../../theme/remix_theme.dart';
 part 'divider.g.dart';
 part 'divider_style.dart';
 part 'divider_widget.dart';
-// part 'progress_theme.dart';
 
 final $divider = DividerSpecUtility.self;
 
