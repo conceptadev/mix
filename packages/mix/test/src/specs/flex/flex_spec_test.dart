@@ -224,23 +224,31 @@ void main() {
       expect(attr1.gap, const SpacingSideDto(10));
       expect(attr2.gap, const SpacingSideDto(20));
 
+      final attr3 = attr1.merge(attr2);
+
       final style1 = Style(flex1);
       final style2 = Style(flex2);
+      final style3 = Style(attr3);
 
       final flexAttribute1 = style1.styles.attributeOfType<FlexSpecAttribute>();
       final flexAttribute2 = style2.styles.attributeOfType<FlexSpecAttribute>();
+      final flexAttribute3 = style3.styles.attributeOfType<FlexSpecAttribute>();
 
       expect(flexAttribute1?.gap, const SpacingSideDto(10));
       expect(flexAttribute2?.gap, const SpacingSideDto(20));
+      expect(flexAttribute3?.gap, const SpacingSideDto(20));
 
       final mixData1 = style1.of(MockBuildContext());
       final mixData2 = style2.of(MockBuildContext());
+      final mixData3 = style3.of(MockBuildContext());
 
       final flexSpec1 = FlexSpec.from(mixData1);
       final flexSpec2 = FlexSpec.from(mixData2);
+      final flexSpec3 = FlexSpec.from(mixData3);
 
       expect(flexSpec1.gap, 10);
       expect(flexSpec2.gap, 20);
+      expect(flexSpec3.gap, 20);
     });
 
     test('Mutate behavior and not on same utility', () {
