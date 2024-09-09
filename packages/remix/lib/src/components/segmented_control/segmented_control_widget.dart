@@ -48,26 +48,48 @@ class _XSegmentedControlState extends State<XSegmentedControl> {
         .merge(widget.style)
         .applyVariants(widget.variants);
 
+    final lastIndex = widget.buttons.length - 1;
+
     return SpecBuilder(
       style: style,
       builder: (context) {
         final spec = SegmentedControlSpec.of(context);
 
         return spec.container(
-          child: spec.flex(
-            direction: Axis.vertical,
+          child: Stack(
+            alignment: Alignment.centerLeft,
             children: [
-              for (int i = 0; i < widget.buttons.length; i++)
-                Pressable(
-                  onPress: () => widget.onIndexChanged(i),
-                  child: SpecBuilder(
-                    controller: i == widget.index ? controller : null,
-                    style: style,
-                    builder: (_) {
-                      return widget.buttons[i];
-                    },
-                  ),
-                ),
+              spec.flex(
+                direction: Axis.vertical,
+                children: [
+                  for (int i = 0; i < widget.buttons.length; i++) ...[
+                    Stack(
+                      alignment: Alignment.centerRight,
+                      children: [
+                        Pressable(
+                          onPress: () => widget.onIndexChanged(i),
+                          child: SpecBuilder(
+                            controller: i == widget.index ? controller : null,
+                            style: style,
+                            builder: (_) {
+                              return widget.buttons[i];
+                            },
+                          ),
+                        ),
+                        if (i < lastIndex &&
+                            spec.showDivider &&
+                            widget.index != i &&
+                            widget.index - 1 != i)
+                          spec.divider(),
+                      ],
+                    ),
+                    // if (i < lastIndex &&
+                    //     spec.showDivider &&
+                    //     (widget.index > i + 1 || widget.index < i - 1))
+                    //   spec.divider(),
+                  ]
+                ],
+              ),
             ],
           ),
         );

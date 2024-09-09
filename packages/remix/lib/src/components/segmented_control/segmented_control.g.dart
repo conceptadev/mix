@@ -35,6 +35,8 @@ mixin _$SegmentedControlSpec on Spec<SegmentedControlSpec> {
   SegmentedControlSpec copyWith({
     BoxSpec? container,
     FlexSpec? flex,
+    bool? showDivider,
+    BoxSpec? divider,
     SegmentButtonSpec? item,
     WidgetModifiersData? modifiers,
     AnimatedData? animated,
@@ -42,6 +44,8 @@ mixin _$SegmentedControlSpec on Spec<SegmentedControlSpec> {
     return SegmentedControlSpec(
       container: container ?? _$this.container,
       flex: flex ?? _$this.flex,
+      showDivider: showDivider ?? _$this.showDivider,
+      divider: divider ?? _$this.divider,
       item: item ?? _$this.item,
       modifiers: modifiers ?? _$this.modifiers,
       animated: animated ?? _$this.animated,
@@ -59,10 +63,10 @@ mixin _$SegmentedControlSpec on Spec<SegmentedControlSpec> {
   /// The interpolation is performed on each property of the [SegmentedControlSpec] using the appropriate
   /// interpolation method:
   ///
-  /// - [BoxSpec.lerp] for [container].
+  /// - [BoxSpec.lerp] for [container] and [divider].
   /// - [FlexSpec.lerp] for [flex].
 
-  /// For [item] and [modifiers] and [animated], the interpolation is performed using a step function.
+  /// For [showDivider] and [item] and [modifiers] and [animated], the interpolation is performed using a step function.
   /// If [t] is less than 0.5, the value from the current [SegmentedControlSpec] is used. Otherwise, the value
   /// from the [other] [SegmentedControlSpec] is used.
   ///
@@ -75,6 +79,8 @@ mixin _$SegmentedControlSpec on Spec<SegmentedControlSpec> {
     return SegmentedControlSpec(
       container: _$this.container.lerp(other.container, t),
       flex: _$this.flex.lerp(other.flex, t),
+      showDivider: t < 0.5 ? _$this.showDivider : other.showDivider,
+      divider: _$this.divider.lerp(other.divider, t),
       item: _$this.item.lerp(other.item, t),
       modifiers: other.modifiers,
       animated: t < 0.5 ? _$this.animated : other.animated,
@@ -89,6 +95,8 @@ mixin _$SegmentedControlSpec on Spec<SegmentedControlSpec> {
   List<Object?> get props => [
         _$this.container,
         _$this.flex,
+        _$this.showDivider,
+        _$this.divider,
         _$this.item,
         _$this.modifiers,
         _$this.animated,
@@ -101,6 +109,10 @@ mixin _$SegmentedControlSpec on Spec<SegmentedControlSpec> {
         DiagnosticsProperty('container', _$this.container, defaultValue: null));
     properties
         .add(DiagnosticsProperty('flex', _$this.flex, defaultValue: null));
+    properties.add(DiagnosticsProperty('showDivider', _$this.showDivider,
+        defaultValue: null));
+    properties.add(
+        DiagnosticsProperty('divider', _$this.divider, defaultValue: null));
     properties
         .add(DiagnosticsProperty('item', _$this.item, defaultValue: null));
     properties.add(
@@ -121,11 +133,15 @@ class SegmentedControlSpecAttribute extends SpecAttribute<SegmentedControlSpec>
     with Diagnosticable {
   final BoxSpecAttribute? container;
   final FlexSpecAttribute? flex;
+  final bool? showDivider;
+  final BoxSpecAttribute? divider;
   final SegmentButtonSpecAttribute? item;
 
   const SegmentedControlSpecAttribute({
     this.container,
     this.flex,
+    this.showDivider,
+    this.divider,
     this.item,
     super.modifiers,
     super.animated,
@@ -144,6 +160,8 @@ class SegmentedControlSpecAttribute extends SpecAttribute<SegmentedControlSpec>
     return SegmentedControlSpec(
       container: container?.resolve(mix),
       flex: flex?.resolve(mix),
+      showDivider: showDivider,
+      divider: divider?.resolve(mix),
       item: item?.resolve(mix),
       modifiers: modifiers?.resolve(mix),
       animated: animated?.resolve(mix) ?? mix.animation,
@@ -166,6 +184,8 @@ class SegmentedControlSpecAttribute extends SpecAttribute<SegmentedControlSpec>
     return SegmentedControlSpecAttribute(
       container: container?.merge(other.container) ?? other.container,
       flex: flex?.merge(other.flex) ?? other.flex,
+      showDivider: other.showDivider ?? showDivider,
+      divider: divider?.merge(other.divider) ?? other.divider,
       item: item?.merge(other.item) ?? other.item,
       modifiers: modifiers?.merge(other.modifiers) ?? other.modifiers,
       animated: animated?.merge(other.animated) ?? other.animated,
@@ -180,6 +200,8 @@ class SegmentedControlSpecAttribute extends SpecAttribute<SegmentedControlSpec>
   List<Object?> get props => [
         container,
         flex,
+        showDivider,
+        divider,
         item,
         modifiers,
         animated,
@@ -191,6 +213,9 @@ class SegmentedControlSpecAttribute extends SpecAttribute<SegmentedControlSpec>
     properties
         .add(DiagnosticsProperty('container', container, defaultValue: null));
     properties.add(DiagnosticsProperty('flex', flex, defaultValue: null));
+    properties.add(
+        DiagnosticsProperty('showDivider', showDivider, defaultValue: null));
+    properties.add(DiagnosticsProperty('divider', divider, defaultValue: null));
     properties.add(DiagnosticsProperty('item', item, defaultValue: null));
     properties
         .add(DiagnosticsProperty('modifiers', modifiers, defaultValue: null));
@@ -210,6 +235,12 @@ class SegmentedControlSpecUtility<T extends Attribute>
 
   /// Utility for defining [SegmentedControlSpecAttribute.flex]
   late final flex = FlexSpecUtility((v) => only(flex: v));
+
+  /// Utility for defining [SegmentedControlSpecAttribute.showDivider]
+  late final showDivider = BoolUtility((v) => only(showDivider: v));
+
+  /// Utility for defining [SegmentedControlSpecAttribute.divider]
+  late final divider = BoxSpecUtility((v) => only(divider: v));
 
   /// Utility for defining [SegmentedControlSpecAttribute.item]
   late final item = SegmentButtonSpecUtility((v) => only(item: v));
@@ -233,6 +264,8 @@ class SegmentedControlSpecUtility<T extends Attribute>
   T only({
     BoxSpecAttribute? container,
     FlexSpecAttribute? flex,
+    bool? showDivider,
+    BoxSpecAttribute? divider,
     SegmentButtonSpecAttribute? item,
     WidgetModifiersDataDto? modifiers,
     AnimatedDataDto? animated,
@@ -240,6 +273,8 @@ class SegmentedControlSpecUtility<T extends Attribute>
     return builder(SegmentedControlSpecAttribute(
       container: container,
       flex: flex,
+      showDivider: showDivider,
+      divider: divider,
       item: item,
       modifiers: modifiers,
       animated: animated,

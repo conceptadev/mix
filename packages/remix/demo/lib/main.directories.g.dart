@@ -16,12 +16,13 @@ import 'package:demo/components/button_use_case.dart' as _i5;
 import 'package:demo/components/callout_use_case.dart' as _i6;
 import 'package:demo/components/card_use_case.dart' as _i7;
 import 'package:demo/components/checkbox_use_case.dart' as _i8;
-import 'package:demo/components/progress_use_case.dart' as _i9;
-import 'package:demo/components/radio_use_case.dart' as _i10;
-import 'package:demo/components/segmented_control_use_case.dart' as _i11;
-import 'package:demo/components/select_use_case.dart' as _i12;
-import 'package:demo/components/spinner_use_case.dart' as _i13;
-import 'package:demo/components/switch_use_case.dart' as _i14;
+import 'package:demo/components/divider_use_case.dart' as _i9;
+import 'package:demo/components/progress_use_case.dart' as _i10;
+import 'package:demo/components/radio_use_case.dart' as _i11;
+import 'package:demo/components/segmented_control_use_case.dart' as _i12;
+import 'package:demo/components/select_use_case.dart' as _i13;
+import 'package:demo/components/spinner_use_case.dart' as _i14;
+import 'package:demo/components/switch_use_case.dart' as _i15;
 import 'package:widgetbook/widgetbook.dart' as _i1;
 
 final directories = <_i1.WidgetbookNode>[
@@ -113,13 +114,25 @@ final directories = <_i1.WidgetbookNode>[
         ],
       ),
       _i1.WidgetbookFolder(
+        name: 'divider',
+        children: [
+          _i1.WidgetbookLeafComponent(
+            name: 'XDivider',
+            useCase: _i1.WidgetbookUseCase(
+              name: 'Divider Component',
+              builder: _i9.buildDivider,
+            ),
+          )
+        ],
+      ),
+      _i1.WidgetbookFolder(
         name: 'progress',
         children: [
           _i1.WidgetbookLeafComponent(
             name: 'XProgress',
             useCase: _i1.WidgetbookUseCase(
               name: 'Progress Component',
-              builder: _i9.buildProgressUseCase,
+              builder: _i10.buildProgressUseCase,
             ),
           )
         ],
@@ -131,7 +144,7 @@ final directories = <_i1.WidgetbookNode>[
             name: 'XRadio',
             useCase: _i1.WidgetbookUseCase(
               name: 'Radio Component',
-              builder: _i10.buildRadioUseCase,
+              builder: _i11.buildRadioUseCase,
             ),
           )
         ],
@@ -143,7 +156,7 @@ final directories = <_i1.WidgetbookNode>[
             name: 'XSegmentedControl',
             useCase: _i1.WidgetbookUseCase(
               name: 'SegmentedControl Component',
-              builder: _i11.buildAccordionUseCase,
+              builder: _i12.buildAccordionUseCase,
             ),
           )
         ],
@@ -155,7 +168,7 @@ final directories = <_i1.WidgetbookNode>[
             name: 'XSelect',
             useCase: _i1.WidgetbookUseCase(
               name: 'Select Component',
-              builder: _i12.buildSelect,
+              builder: _i13.buildSelect,
             ),
           )
         ],
@@ -167,7 +180,7 @@ final directories = <_i1.WidgetbookNode>[
             name: 'XSpinner',
             useCase: _i1.WidgetbookUseCase(
               name: 'Spinner Component',
-              builder: _i13.buildSpinnerUseCase,
+              builder: _i14.buildSpinnerUseCase,
             ),
           )
         ],
@@ -179,7 +192,7 @@ final directories = <_i1.WidgetbookNode>[
             name: 'XSwitch',
             useCase: _i1.WidgetbookUseCase(
               name: 'Switch Component',
-              builder: _i14.buildSwitchUseCase,
+              builder: _i15.buildSwitchUseCase,
             ),
           )
         ],

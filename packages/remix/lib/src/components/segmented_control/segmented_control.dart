@@ -4,10 +4,12 @@ import 'package:mix/mix.dart';
 import 'package:mix_annotations/mix_annotations.dart';
 
 import '../../theme/remix_theme.dart';
+import '../../theme/remix_tokens.dart';
 
 part 'button/segmented_control_button.dart';
 part 'button/segmented_control_button_widget.dart';
 part 'segmented_control.g.dart';
+part 'segmented_control_theme.dart';
 part 'segmented_control_style.dart';
 part 'segmented_control_widget.dart';
 
@@ -18,6 +20,8 @@ class SegmentedControlSpec extends Spec<SegmentedControlSpec>
     with _$SegmentedControlSpec, Diagnosticable {
   final BoxSpec container;
   final FlexSpec flex;
+  final bool showDivider;
+  final BoxSpec divider;
 
   @MixableProperty(dto: MixableFieldDto(type: 'SegmentButtonSpecAttribute'))
   final SegmentButtonSpec item;
@@ -29,12 +33,16 @@ class SegmentedControlSpec extends Spec<SegmentedControlSpec>
   const SegmentedControlSpec({
     BoxSpec? container,
     FlexSpec? flex,
+    bool? showDivider,
+    BoxSpec? divider,
     SegmentButtonSpec? item,
     super.modifiers,
     super.animated,
   })  : flex = flex ?? const FlexSpec(),
         container = container ?? const BoxSpec(),
-        item = item ?? const SegmentButtonSpec();
+        showDivider = showDivider ?? false,
+        item = item ?? const SegmentButtonSpec(),
+        divider = divider ?? const BoxSpec();
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {

@@ -3,6 +3,7 @@
 part of 'segmented_control.dart';
 
 final _container = $segmentedControl.container;
+final _divider = $segmentedControl.divider;
 final _flex = $segmentedControl.flex;
 final _item = $segmentedControl.item;
 
@@ -11,15 +12,25 @@ class XSegmentedControlStyle {
     _containerStyle(),
     _flexStyle(),
     _segmentStyle(),
+    _dividerStyle(),
+    $segmentedControl.showDivider.off(),
     $on.selected(_onSelectSegmentStyle()),
   );
 }
 
 Style get _containerStyle => Style(
       _container.chain
+        ..wrap.intrinsicHeight()
         ..padding.all(4)
         ..borderRadius.all(8)
         ..color(Colors.black.withOpacity(0.07)),
+    );
+
+Style get _dividerStyle => Style(
+      _divider.chain
+        ..width(1)
+        ..margin.vertical(4)
+        ..color.black26(),
     );
 
 Style get _flexStyle => Style(
