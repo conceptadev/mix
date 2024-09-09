@@ -62,7 +62,7 @@ class _XSegmentedControlState extends State<XSegmentedControl> {
               spec.flex(
                 direction: Axis.vertical,
                 children: [
-                  for (int i = 0; i < widget.buttons.length; i++) ...[
+                  for (int i = 0; i < widget.buttons.length; i++)
                     Stack(
                       alignment: Alignment.centerRight,
                       children: [
@@ -83,11 +83,6 @@ class _XSegmentedControlState extends State<XSegmentedControl> {
                           spec.divider(),
                       ],
                     ),
-                    // if (i < lastIndex &&
-                    //     spec.showDivider &&
-                    //     (widget.index > i + 1 || widget.index < i - 1))
-                    //   spec.divider(),
-                  ]
                 ],
               ),
             ],

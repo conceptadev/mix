@@ -6,9 +6,7 @@ class XSegmentedControlThemeStyle {
     _container.padding(0),
     _item.container.padding.vertical.$space(2),
     _themedLight(),
-    $on.dark(
-      _themedDark(),
-    ),
+    $on.dark(_themedDark()),
   );
 }
 

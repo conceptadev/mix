@@ -23,11 +23,8 @@ base class DividerSpec extends Spec<DividerSpec>
 
   static const from = _$DividerSpec.from;
 
-  const DividerSpec({
-    BoxSpec? container,
-    super.animated,
-    super.modifiers,
-  }) : container = container ?? const BoxSpec();
+  const DividerSpec({BoxSpec? container, super.animated, super.modifiers})
+      : container = container ?? const BoxSpec();
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
