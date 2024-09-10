@@ -8,7 +8,6 @@ import '../../core/attribute.dart';
 import '../../core/factory/mix_data.dart';
 import '../../core/modifier.dart';
 import '../../core/utility.dart';
-import '../aspect_ratio_widget_modifier.dart';
 
 part 'cleaner_modifier.g.dart';
 
@@ -33,6 +32,6 @@ final class CleanerModifierSpecUtility<T extends Attribute>
     extends MixUtility<T, CleanerModifierSpecAttribute> {
   const CleanerModifierSpecUtility(super.builder);
   T call() {
-    return builder(CleanerModifierSpecAttribute());
+    return builder(const CleanerModifierSpecAttribute());
   }
 }

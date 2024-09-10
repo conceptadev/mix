@@ -33,7 +33,7 @@ void main() {
         TransformModifierSpecAttribute(transform: Matrix4.identity()),
       ]);
 
-      final cleaner = WidgetModifiersDataDto([
+      const cleaner = WidgetModifiersDataDto([
         CleanerModifierSpecAttribute(),
       ]);
 
