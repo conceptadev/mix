@@ -57,7 +57,6 @@ final remixDarkColorTokens = _mapColorRadixTokens(
 );
 
 extension ColorUtilityX<T extends Attribute> on ColorUtility<T> {
-  T $primaryForeground() => ref($rx.color.neutral(12));
   T $black() => ref($rx.color.black());
   T $white() => ref($rx.color.white());
   T $neutral([int? step]) => ref($rx.color.neutral(step));
