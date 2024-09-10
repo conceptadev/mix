@@ -274,10 +274,10 @@ final class ImageSpecAttribute extends SpecAttribute<ImageSpec>
   }
 }
 
-/// Utility class for configuring [ImageSpecAttribute] properties.
+/// Utility class for configuring [ImageSpec] properties.
 ///
-/// This class provides methods to set individual properties of a [ImageSpecAttribute].
-/// Use the methods of this class to configure specific properties of a [ImageSpecAttribute].
+/// This class provides methods to set individual properties of a [ImageSpec].
+/// Use the methods of this class to configure specific properties of a [ImageSpec].
 class ImageSpecUtility<T extends Attribute>
     extends SpecUtility<T, ImageSpecAttribute> {
   /// Utility for defining [ImageSpecAttribute.width]

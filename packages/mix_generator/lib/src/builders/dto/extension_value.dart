@@ -1,7 +1,8 @@
 import 'package:mix_annotations/mix_annotations.dart';
+
 import '../../helpers/field_info.dart';
 
-String toDtoExtension(ClassBuilderContext<MixableDto> context) {
+String toRefTypeExtension(ClassBuilderContext<MixableDto> context) {
   final resolvedType = context.referenceClass;
 
   final className = context.name;

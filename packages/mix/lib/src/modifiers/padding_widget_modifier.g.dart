@@ -127,10 +127,10 @@ final class PaddingModifierSpecAttribute
   }
 }
 
-/// Utility class for configuring [PaddingModifierSpecAttribute] properties.
+/// Utility class for configuring [PaddingModifierSpec] properties.
 ///
-/// This class provides methods to set individual properties of a [PaddingModifierSpecAttribute].
-/// Use the methods of this class to configure specific properties of a [PaddingModifierSpecAttribute].
+/// This class provides methods to set individual properties of a [PaddingModifierSpec].
+/// Use the methods of this class to configure specific properties of a [PaddingModifierSpec].
 class PaddingModifierSpecUtility<T extends Attribute>
     extends SpecUtility<T, PaddingModifierSpecAttribute> {
   /// Utility for defining [PaddingModifierSpecAttribute.padding]

@@ -6,7 +6,7 @@ part of 'edge_insets_dto.dart';
 // MixableDtoGenerator
 // **************************************************************************
 
-base mixin _$EdgeInsetsDto on Dto<EdgeInsets> {
+mixin _$EdgeInsetsDto on Dto<EdgeInsets> {
   /// Merges the properties of this [EdgeInsetsDto] with the properties of [other].
   ///
   /// If [other] is null, returns this instance unchanged. Otherwise, returns a new
@@ -42,10 +42,10 @@ base mixin _$EdgeInsetsDto on Dto<EdgeInsets> {
   EdgeInsetsDto get _$this => this as EdgeInsetsDto;
 }
 
-/// Utility class for configuring [EdgeInsetsDto] properties.
+/// Utility class for configuring [EdgeInsets] properties.
 ///
-/// This class provides methods to set individual properties of a [EdgeInsetsDto].
-/// Use the methods of this class to configure specific properties of a [EdgeInsetsDto].
+/// This class provides methods to set individual properties of a [EdgeInsets].
+/// Use the methods of this class to configure specific properties of a [EdgeInsets].
 class EdgeInsetsUtility<T extends Attribute>
     extends DtoUtility<T, EdgeInsetsDto, EdgeInsets> {
   /// Utility for defining [EdgeInsetsDto.top]
@@ -116,7 +116,7 @@ extension ListEdgeInsetsMixExt on List<EdgeInsets> {
   }
 }
 
-base mixin _$EdgeInsetsDirectionalDto on Dto<EdgeInsetsDirectional> {
+mixin _$EdgeInsetsDirectionalDto on Dto<EdgeInsetsDirectional> {
   /// Merges the properties of this [EdgeInsetsDirectionalDto] with the properties of [other].
   ///
   /// If [other] is null, returns this instance unchanged. Otherwise, returns a new
@@ -152,10 +152,10 @@ base mixin _$EdgeInsetsDirectionalDto on Dto<EdgeInsetsDirectional> {
   EdgeInsetsDirectionalDto get _$this => this as EdgeInsetsDirectionalDto;
 }
 
-/// Utility class for configuring [EdgeInsetsDirectionalDto] properties.
+/// Utility class for configuring [EdgeInsetsDirectional] properties.
 ///
-/// This class provides methods to set individual properties of a [EdgeInsetsDirectionalDto].
-/// Use the methods of this class to configure specific properties of a [EdgeInsetsDirectionalDto].
+/// This class provides methods to set individual properties of a [EdgeInsetsDirectional].
+/// Use the methods of this class to configure specific properties of a [EdgeInsetsDirectional].
 class EdgeInsetsDirectionalUtility<T extends Attribute>
     extends DtoUtility<T, EdgeInsetsDirectionalDto, EdgeInsetsDirectional> {
   /// Utility for defining [EdgeInsetsDirectionalDto.top]

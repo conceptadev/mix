@@ -276,10 +276,10 @@ final class IconSpecAttribute extends SpecAttribute<IconSpec>
   }
 }
 
-/// Utility class for configuring [IconSpecAttribute] properties.
+/// Utility class for configuring [IconSpec] properties.
 ///
-/// This class provides methods to set individual properties of a [IconSpecAttribute].
-/// Use the methods of this class to configure specific properties of a [IconSpecAttribute].
+/// This class provides methods to set individual properties of a [IconSpec].
+/// Use the methods of this class to configure specific properties of a [IconSpec].
 class IconSpecUtility<T extends Attribute>
     extends SpecUtility<T, IconSpecAttribute> {
   /// Utility for defining [IconSpecAttribute.color]

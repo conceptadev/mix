@@ -1,11 +1,11 @@
-import 'package:mix_annotations/mix_annotations.dart';
+import '../../helpers/builder_utils.dart';
+import '../../helpers/field_info.dart';
 import '../getter_self_reference.dart';
 import '../method_equality.dart';
 import '../method_merge.dart';
 import '../method_resolve.dart';
-import '../../helpers/field_info.dart';
 
-String dtoMixin(ClassBuilderContext<MixableDto> context) {
+String classMixin(ClassBuilderContext context) {
   final mixinName = context.generatedName;
   final el = context.classElement;
 
@@ -14,19 +14,19 @@ String dtoMixin(ClassBuilderContext<MixableDto> context) {
   final hasResolve = el.methods.any((method) => method.name == 'resolve');
   final hasMerge = el.methods.any((method) => method.name == 'merge');
 
-  // Get the generic type argument of Dto
+  final extendType = el.isDto ? 'Dto' : 'SpecAttribute';
 
   final instance =
       ClassInfo.ofElement(context.classElement, asInternalRef: true);
 
-  final referenceName = context.referenceClass.name;
+  final referenceName = context.classElement.genericType.name;
 
   final resolveMethod = !hasResolve
       ? resolveMethodBuilder(
           instance,
           resolvedName: referenceName,
           resolvedConstructor: '',
-          withDefaults: true,
+          withDefaults: el.isDto,
         )
       : '';
 
@@ -42,7 +42,7 @@ String dtoMixin(ClassBuilderContext<MixableDto> context) {
   final selfGetter = getterSelfBuilder(instance);
 
   return '''
-base mixin $mixinName on Dto<$referenceName> {
+mixin $mixinName on $extendType<$referenceName> {
   $resolveMethod
 
   $mergeMethod
@@ -50,6 +50,7 @@ base mixin $mixinName on Dto<$referenceName> {
   $propsGetter
 
   $selfGetter
+
 }
 ''';
 }

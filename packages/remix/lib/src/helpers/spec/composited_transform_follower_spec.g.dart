@@ -207,10 +207,10 @@ class CompositedTransformFollowerSpecAttribute
   }
 }
 
-/// Utility class for configuring [CompositedTransformFollowerSpecAttribute] properties.
+/// Utility class for configuring [CompositedTransformFollowerSpec] properties.
 ///
-/// This class provides methods to set individual properties of a [CompositedTransformFollowerSpecAttribute].
-/// Use the methods of this class to configure specific properties of a [CompositedTransformFollowerSpecAttribute].
+/// This class provides methods to set individual properties of a [CompositedTransformFollowerSpec].
+/// Use the methods of this class to configure specific properties of a [CompositedTransformFollowerSpec].
 class CompositedTransformFollowerSpecUtility<T extends Attribute>
     extends SpecUtility<T, CompositedTransformFollowerSpecAttribute> {
   /// Utility for defining [CompositedTransformFollowerSpecAttribute.offset]

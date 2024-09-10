@@ -186,10 +186,10 @@ base class SwitchSpecAttribute extends SpecAttribute<SwitchSpec>
   }
 }
 
-/// Utility class for configuring [SwitchSpecAttribute] properties.
+/// Utility class for configuring [SwitchSpec] properties.
 ///
-/// This class provides methods to set individual properties of a [SwitchSpecAttribute].
-/// Use the methods of this class to configure specific properties of a [SwitchSpecAttribute].
+/// This class provides methods to set individual properties of a [SwitchSpec].
+/// Use the methods of this class to configure specific properties of a [SwitchSpec].
 class SwitchSpecUtility<T extends Attribute>
     extends SpecUtility<T, SwitchSpecAttribute> {
   /// Utility for defining [SwitchSpecAttribute.container]

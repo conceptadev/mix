@@ -64,7 +64,7 @@ class _RxBlankSwitchState extends State<XSwitch> {
             .merge(widget.style)
             .applyVariants(widget.variants)
             .animate(
-              duration: Duration(milliseconds: 100),
+              duration: const Duration(milliseconds: 100),
               curve: Curves.linear,
             ),
         builder: (context) {

@@ -6,7 +6,7 @@ part of 'constraints_dto.dart';
 // MixableDtoGenerator
 // **************************************************************************
 
-base mixin _$BoxConstraintsDto on Dto<BoxConstraints> {
+mixin _$BoxConstraintsDto on Dto<BoxConstraints> {
   /// Resolves to [BoxConstraints] using the provided [MixData].
   ///
   /// If a property is null in the [MixData], it falls back to the
@@ -60,10 +60,10 @@ base mixin _$BoxConstraintsDto on Dto<BoxConstraints> {
   BoxConstraintsDto get _$this => this as BoxConstraintsDto;
 }
 
-/// Utility class for configuring [BoxConstraintsDto] properties.
+/// Utility class for configuring [BoxConstraints] properties.
 ///
-/// This class provides methods to set individual properties of a [BoxConstraintsDto].
-/// Use the methods of this class to configure specific properties of a [BoxConstraintsDto].
+/// This class provides methods to set individual properties of a [BoxConstraints].
+/// Use the methods of this class to configure specific properties of a [BoxConstraints].
 class BoxConstraintsUtility<T extends Attribute>
     extends DtoUtility<T, BoxConstraintsDto, BoxConstraints> {
   /// Utility for defining [BoxConstraintsDto.minWidth]

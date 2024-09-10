@@ -6,7 +6,7 @@ part of 'decoration_dto.dart';
 // MixableDtoGenerator
 // **************************************************************************
 
-base mixin _$BoxDecorationDto on Dto<BoxDecoration> {
+mixin _$BoxDecorationDto on Dto<BoxDecoration> {
   /// Resolves to [BoxDecoration] using the provided [MixData].
   ///
   /// If a property is null in the [MixData], it falls back to the
@@ -77,10 +77,10 @@ base mixin _$BoxDecorationDto on Dto<BoxDecoration> {
   BoxDecorationDto get _$this => this as BoxDecorationDto;
 }
 
-/// Utility class for configuring [BoxDecorationDto] properties.
+/// Utility class for configuring [BoxDecoration] properties.
 ///
-/// This class provides methods to set individual properties of a [BoxDecorationDto].
-/// Use the methods of this class to configure specific properties of a [BoxDecorationDto].
+/// This class provides methods to set individual properties of a [BoxDecoration].
+/// Use the methods of this class to configure specific properties of a [BoxDecoration].
 class BoxDecorationUtility<T extends Attribute>
     extends DtoUtility<T, BoxDecorationDto, BoxDecoration> {
   /// Utility for defining [BoxDecorationDto.border]
@@ -191,7 +191,7 @@ extension ListBoxDecorationMixExt on List<BoxDecoration> {
   }
 }
 
-base mixin _$ShapeDecorationDto on Dto<ShapeDecoration> {
+mixin _$ShapeDecorationDto on Dto<ShapeDecoration> {
   /// Resolves to [ShapeDecoration] using the provided [MixData].
   ///
   /// If a property is null in the [MixData], it falls back to the
@@ -249,10 +249,10 @@ base mixin _$ShapeDecorationDto on Dto<ShapeDecoration> {
   ShapeDecorationDto get _$this => this as ShapeDecorationDto;
 }
 
-/// Utility class for configuring [ShapeDecorationDto] properties.
+/// Utility class for configuring [ShapeDecoration] properties.
 ///
-/// This class provides methods to set individual properties of a [ShapeDecorationDto].
-/// Use the methods of this class to configure specific properties of a [ShapeDecorationDto].
+/// This class provides methods to set individual properties of a [ShapeDecoration].
+/// Use the methods of this class to configure specific properties of a [ShapeDecoration].
 class ShapeDecorationUtility<T extends Attribute>
     extends DtoUtility<T, ShapeDecorationDto, ShapeDecoration> {
   /// Utility for defining [ShapeDecorationDto.shape]

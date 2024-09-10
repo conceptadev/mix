@@ -208,10 +208,10 @@ class SelectSpecAttribute extends SpecAttribute<SelectSpec>
   }
 }
 
-/// Utility class for configuring [SelectSpecAttribute] properties.
+/// Utility class for configuring [SelectSpec] properties.
 ///
-/// This class provides methods to set individual properties of a [SelectSpecAttribute].
-/// Use the methods of this class to configure specific properties of a [SelectSpecAttribute].
+/// This class provides methods to set individual properties of a [SelectSpec].
+/// Use the methods of this class to configure specific properties of a [SelectSpec].
 class SelectSpecUtility<T extends Attribute>
     extends SpecUtility<T, SelectSpecAttribute> {
   /// Utility for defining [SelectSpecAttribute.button]
@@ -479,10 +479,10 @@ base class SelectMenuSpecAttribute extends SpecAttribute<SelectMenuSpec>
   }
 }
 
-/// Utility class for configuring [SelectMenuSpecAttribute] properties.
+/// Utility class for configuring [SelectMenuSpec] properties.
 ///
-/// This class provides methods to set individual properties of a [SelectMenuSpecAttribute].
-/// Use the methods of this class to configure specific properties of a [SelectMenuSpecAttribute].
+/// This class provides methods to set individual properties of a [SelectMenuSpec].
+/// Use the methods of this class to configure specific properties of a [SelectMenuSpec].
 class SelectMenuSpecUtility<T extends Attribute>
     extends SpecUtility<T, SelectMenuSpecAttribute> {
   /// Utility for defining [SelectMenuSpecAttribute.container]
@@ -757,10 +757,10 @@ class SelectButtonSpecAttribute extends SpecAttribute<SelectButtonSpec>
   }
 }
 
-/// Utility class for configuring [SelectButtonSpecAttribute] properties.
+/// Utility class for configuring [SelectButtonSpec] properties.
 ///
-/// This class provides methods to set individual properties of a [SelectButtonSpecAttribute].
-/// Use the methods of this class to configure specific properties of a [SelectButtonSpecAttribute].
+/// This class provides methods to set individual properties of a [SelectButtonSpec].
+/// Use the methods of this class to configure specific properties of a [SelectButtonSpec].
 class SelectButtonSpecUtility<T extends Attribute>
     extends SpecUtility<T, SelectButtonSpecAttribute> {
   /// Utility for defining [SelectButtonSpecAttribute.container]
@@ -1041,10 +1041,10 @@ base class SelectMenuItemSpecAttribute extends SpecAttribute<SelectMenuItemSpec>
   }
 }
 
-/// Utility class for configuring [SelectMenuItemSpecAttribute] properties.
+/// Utility class for configuring [SelectMenuItemSpec] properties.
 ///
-/// This class provides methods to set individual properties of a [SelectMenuItemSpecAttribute].
-/// Use the methods of this class to configure specific properties of a [SelectMenuItemSpecAttribute].
+/// This class provides methods to set individual properties of a [SelectMenuItemSpec].
+/// Use the methods of this class to configure specific properties of a [SelectMenuItemSpec].
 class SelectMenuItemSpecUtility<T extends Attribute>
     extends SpecUtility<T, SelectMenuItemSpecAttribute> {
   /// Utility for defining [SelectMenuItemSpecAttribute.icon]

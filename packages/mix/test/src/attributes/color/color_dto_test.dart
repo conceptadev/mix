@@ -70,7 +70,7 @@ void main() {
     });
 
     test('ColorDirectiveCleaner', () {
-      var colorDto = ColorDto.raw(value: Colors.red, directives: [
+      var colorDto = const ColorDto.raw(value: Colors.red, directives: [
         DarkenColorDirective(10),
       ]);
 
@@ -85,7 +85,7 @@ void main() {
         ),
       );
 
-      colorDto = colorDto.merge(ColorDto.raw(value: Colors.red, directives: [
+      colorDto = colorDto.merge(const ColorDto.raw(value: Colors.red, directives: [
         DarkenColorDirective(20),
       ]));
 
@@ -102,11 +102,11 @@ void main() {
       colorDto = colorDto.merge(ColorDto.cleaner());
 
       colorDto = colorDto.merge(ColorDto.directive(
-        SaturateColorDirective(20),
+        const SaturateColorDirective(20),
       ));
 
       colorDto = colorDto.merge(ColorDto.directive(
-        DarkenColorDirective(20),
+        const DarkenColorDirective(20),
       ));
 
       expect(

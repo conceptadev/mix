@@ -4,6 +4,7 @@ import 'package:analyzer/dart/element/nullability_suffix.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:collection/collection.dart';
 import 'package:mix_annotations/mix_annotations.dart';
+
 import 'annotation_helpers.dart';
 import 'builder_utils.dart';
 import 'dart_type_ext.dart';
@@ -280,7 +281,7 @@ FieldInfo? getFieldInfoFromParameter(ParameterElement parameter) {
 
   return FieldInfo(
     name: field.name,
-    type: field.type.getDisplayString(withNullability: false),
+    type: field.type.getTypeAsString(),
     dartType: field.type,
     documentationComment: field.documentationComment,
     annotation: annotation,

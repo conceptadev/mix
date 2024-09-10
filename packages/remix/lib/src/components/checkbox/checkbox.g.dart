@@ -187,10 +187,10 @@ base class CheckboxSpecAttribute extends SpecAttribute<CheckboxSpec>
   }
 }
 
-/// Utility class for configuring [CheckboxSpecAttribute] properties.
+/// Utility class for configuring [CheckboxSpec] properties.
 ///
-/// This class provides methods to set individual properties of a [CheckboxSpecAttribute].
-/// Use the methods of this class to configure specific properties of a [CheckboxSpecAttribute].
+/// This class provides methods to set individual properties of a [CheckboxSpec].
+/// Use the methods of this class to configure specific properties of a [CheckboxSpec].
 class CheckboxSpecUtility<T extends Attribute>
     extends SpecUtility<T, CheckboxSpecAttribute> {
   /// Utility for defining [CheckboxSpecAttribute.container]

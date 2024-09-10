@@ -310,10 +310,10 @@ final class BoxSpecAttribute extends SpecAttribute<BoxSpec>
   }
 }
 
-/// Utility class for configuring [BoxSpecAttribute] properties.
+/// Utility class for configuring [BoxSpec] properties.
 ///
-/// This class provides methods to set individual properties of a [BoxSpecAttribute].
-/// Use the methods of this class to configure specific properties of a [BoxSpecAttribute].
+/// This class provides methods to set individual properties of a [BoxSpec].
+/// Use the methods of this class to configure specific properties of a [BoxSpec].
 class BoxSpecUtility<T extends Attribute>
     extends SpecUtility<T, BoxSpecAttribute> {
   /// Utility for defining [BoxSpecAttribute.alignment]

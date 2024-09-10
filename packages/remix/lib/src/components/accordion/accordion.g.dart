@@ -183,10 +183,10 @@ base class AccordionSpecAttribute extends SpecAttribute<AccordionSpec> {
       ];
 }
 
-/// Utility class for configuring [AccordionSpecAttribute] properties.
+/// Utility class for configuring [AccordionSpec] properties.
 ///
-/// This class provides methods to set individual properties of a [AccordionSpecAttribute].
-/// Use the methods of this class to configure specific properties of a [AccordionSpecAttribute].
+/// This class provides methods to set individual properties of a [AccordionSpec].
+/// Use the methods of this class to configure specific properties of a [AccordionSpec].
 class AccordionSpecUtility<T extends Attribute>
     extends SpecUtility<T, AccordionSpecAttribute> {
   /// Utility for defining [AccordionSpecAttribute.container]
@@ -441,10 +441,10 @@ base class AccordionHeaderSpecAttribute
       ];
 }
 
-/// Utility class for configuring [AccordionHeaderSpecAttribute] properties.
+/// Utility class for configuring [AccordionHeaderSpec] properties.
 ///
-/// This class provides methods to set individual properties of a [AccordionHeaderSpecAttribute].
-/// Use the methods of this class to configure specific properties of a [AccordionHeaderSpecAttribute].
+/// This class provides methods to set individual properties of a [AccordionHeaderSpec].
+/// Use the methods of this class to configure specific properties of a [AccordionHeaderSpec].
 class AccordionHeaderSpecUtility<T extends Attribute>
     extends SpecUtility<T, AccordionHeaderSpecAttribute> {
   /// Utility for defining [AccordionHeaderSpecAttribute.container]

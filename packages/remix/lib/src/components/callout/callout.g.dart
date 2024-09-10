@@ -182,10 +182,10 @@ base class CalloutSpecAttribute extends SpecAttribute<CalloutSpec> {
       ];
 }
 
-/// Utility class for configuring [CalloutSpecAttribute] properties.
+/// Utility class for configuring [CalloutSpec] properties.
 ///
-/// This class provides methods to set individual properties of a [CalloutSpecAttribute].
-/// Use the methods of this class to configure specific properties of a [CalloutSpecAttribute].
+/// This class provides methods to set individual properties of a [CalloutSpec].
+/// Use the methods of this class to configure specific properties of a [CalloutSpec].
 class CalloutSpecUtility<T extends Attribute>
     extends SpecUtility<T, CalloutSpecAttribute> {
   /// Utility for defining [CalloutSpecAttribute.container]

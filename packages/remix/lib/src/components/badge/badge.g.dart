@@ -154,10 +154,10 @@ base class BadgeSpecAttribute extends SpecAttribute<BadgeSpec> {
       ];
 }
 
-/// Utility class for configuring [BadgeSpecAttribute] properties.
+/// Utility class for configuring [BadgeSpec] properties.
 ///
-/// This class provides methods to set individual properties of a [BadgeSpecAttribute].
-/// Use the methods of this class to configure specific properties of a [BadgeSpecAttribute].
+/// This class provides methods to set individual properties of a [BadgeSpec].
+/// Use the methods of this class to configure specific properties of a [BadgeSpec].
 class BadgeSpecUtility<T extends Attribute>
     extends SpecUtility<T, BadgeSpecAttribute> {
   /// Utility for defining [BadgeSpecAttribute.container]

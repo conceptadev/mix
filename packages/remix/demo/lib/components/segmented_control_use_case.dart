@@ -14,10 +14,7 @@ Widget buildAccordionUseCase(BuildContext context) {
 }
 
 class _WidgetDemo extends StatefulWidget {
-  const _WidgetDemo({
-    super.key,
-  });
-
+  const _WidgetDemo();
   @override
   State<_WidgetDemo> createState() => _WidgetDemoState();
 }
@@ -29,6 +26,7 @@ class _WidgetDemoState extends State<_WidgetDemo> {
   Widget build(BuildContext context) {
     return XSegmentedControl(
       index: index,
+      style: XSegmentedControlStyle.base,
       buttons: const [
         XSegmentButton(
           text: 'Apple',

@@ -224,10 +224,10 @@ class ButtonSpecAttribute extends SpecAttribute<ButtonSpec>
   }
 }
 
-/// Utility class for configuring [ButtonSpecAttribute] properties.
+/// Utility class for configuring [ButtonSpec] properties.
 ///
-/// This class provides methods to set individual properties of a [ButtonSpecAttribute].
-/// Use the methods of this class to configure specific properties of a [ButtonSpecAttribute].
+/// This class provides methods to set individual properties of a [ButtonSpec].
+/// Use the methods of this class to configure specific properties of a [ButtonSpec].
 class ButtonSpecUtility<T extends Attribute>
     extends SpecUtility<T, ButtonSpecAttribute> {
   /// Utility for defining [ButtonSpecAttribute.container]

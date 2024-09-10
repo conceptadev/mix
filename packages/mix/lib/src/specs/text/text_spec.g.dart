@@ -325,10 +325,10 @@ final class TextSpecAttribute extends SpecAttribute<TextSpec>
   }
 }
 
-/// Utility class for configuring [TextSpecAttribute] properties.
+/// Utility class for configuring [TextSpec] properties.
 ///
-/// This class provides methods to set individual properties of a [TextSpecAttribute].
-/// Use the methods of this class to configure specific properties of a [TextSpecAttribute].
+/// This class provides methods to set individual properties of a [TextSpec].
+/// Use the methods of this class to configure specific properties of a [TextSpec].
 class TextSpecUtility<T extends Attribute>
     extends SpecUtility<T, TextSpecAttribute> {
   /// Utility for defining [TextSpecAttribute.overflow]

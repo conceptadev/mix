@@ -225,10 +225,10 @@ final class SpinnerSpecAttribute extends SpecAttribute<SpinnerSpec>
   }
 }
 
-/// Utility class for configuring [SpinnerSpecAttribute] properties.
+/// Utility class for configuring [SpinnerSpec] properties.
 ///
-/// This class provides methods to set individual properties of a [SpinnerSpecAttribute].
-/// Use the methods of this class to configure specific properties of a [SpinnerSpecAttribute].
+/// This class provides methods to set individual properties of a [SpinnerSpec].
+/// Use the methods of this class to configure specific properties of a [SpinnerSpec].
 class SpinnerSpecUtility<T extends Attribute>
     extends SpecUtility<T, SpinnerSpecAttribute> {
   /// Utility for defining [SpinnerSpecAttribute.size]

@@ -6,7 +6,7 @@ part of 'shape_border_dto.dart';
 // MixableDtoGenerator
 // **************************************************************************
 
-base mixin _$RoundedRectangleBorderDto on Dto<RoundedRectangleBorder> {
+mixin _$RoundedRectangleBorderDto on Dto<RoundedRectangleBorder> {
   /// Resolves to [RoundedRectangleBorder] using the provided [MixData].
   ///
   /// If a property is null in the [MixData], it falls back to the
@@ -56,10 +56,10 @@ base mixin _$RoundedRectangleBorderDto on Dto<RoundedRectangleBorder> {
   RoundedRectangleBorderDto get _$this => this as RoundedRectangleBorderDto;
 }
 
-/// Utility class for configuring [RoundedRectangleBorderDto] properties.
+/// Utility class for configuring [RoundedRectangleBorder] properties.
 ///
-/// This class provides methods to set individual properties of a [RoundedRectangleBorderDto].
-/// Use the methods of this class to configure specific properties of a [RoundedRectangleBorderDto].
+/// This class provides methods to set individual properties of a [RoundedRectangleBorder].
+/// Use the methods of this class to configure specific properties of a [RoundedRectangleBorder].
 class RoundedRectangleBorderUtility<T extends Attribute>
     extends DtoUtility<T, RoundedRectangleBorderDto, RoundedRectangleBorder> {
   /// Utility for defining [RoundedRectangleBorderDto.borderRadius]
@@ -110,7 +110,7 @@ extension ListRoundedRectangleBorderMixExt on List<RoundedRectangleBorder> {
   }
 }
 
-base mixin _$BeveledRectangleBorderDto on Dto<BeveledRectangleBorder> {
+mixin _$BeveledRectangleBorderDto on Dto<BeveledRectangleBorder> {
   /// Resolves to [BeveledRectangleBorder] using the provided [MixData].
   ///
   /// If a property is null in the [MixData], it falls back to the
@@ -160,10 +160,10 @@ base mixin _$BeveledRectangleBorderDto on Dto<BeveledRectangleBorder> {
   BeveledRectangleBorderDto get _$this => this as BeveledRectangleBorderDto;
 }
 
-/// Utility class for configuring [BeveledRectangleBorderDto] properties.
+/// Utility class for configuring [BeveledRectangleBorder] properties.
 ///
-/// This class provides methods to set individual properties of a [BeveledRectangleBorderDto].
-/// Use the methods of this class to configure specific properties of a [BeveledRectangleBorderDto].
+/// This class provides methods to set individual properties of a [BeveledRectangleBorder].
+/// Use the methods of this class to configure specific properties of a [BeveledRectangleBorder].
 class BeveledRectangleBorderUtility<T extends Attribute>
     extends DtoUtility<T, BeveledRectangleBorderDto, BeveledRectangleBorder> {
   /// Utility for defining [BeveledRectangleBorderDto.borderRadius]
@@ -214,7 +214,7 @@ extension ListBeveledRectangleBorderMixExt on List<BeveledRectangleBorder> {
   }
 }
 
-base mixin _$ContinuousRectangleBorderDto on Dto<ContinuousRectangleBorder> {
+mixin _$ContinuousRectangleBorderDto on Dto<ContinuousRectangleBorder> {
   /// Resolves to [ContinuousRectangleBorder] using the provided [MixData].
   ///
   /// If a property is null in the [MixData], it falls back to the
@@ -265,10 +265,10 @@ base mixin _$ContinuousRectangleBorderDto on Dto<ContinuousRectangleBorder> {
       this as ContinuousRectangleBorderDto;
 }
 
-/// Utility class for configuring [ContinuousRectangleBorderDto] properties.
+/// Utility class for configuring [ContinuousRectangleBorder] properties.
 ///
-/// This class provides methods to set individual properties of a [ContinuousRectangleBorderDto].
-/// Use the methods of this class to configure specific properties of a [ContinuousRectangleBorderDto].
+/// This class provides methods to set individual properties of a [ContinuousRectangleBorder].
+/// Use the methods of this class to configure specific properties of a [ContinuousRectangleBorder].
 class ContinuousRectangleBorderUtility<T extends Attribute> extends DtoUtility<
     T, ContinuousRectangleBorderDto, ContinuousRectangleBorder> {
   /// Utility for defining [ContinuousRectangleBorderDto.borderRadius]
@@ -320,7 +320,7 @@ extension ListContinuousRectangleBorderMixExt
   }
 }
 
-base mixin _$CircleBorderDto on Dto<CircleBorder> {
+mixin _$CircleBorderDto on Dto<CircleBorder> {
   /// Resolves to [CircleBorder] using the provided [MixData].
   ///
   /// If a property is null in the [MixData], it falls back to the
@@ -368,10 +368,10 @@ base mixin _$CircleBorderDto on Dto<CircleBorder> {
   CircleBorderDto get _$this => this as CircleBorderDto;
 }
 
-/// Utility class for configuring [CircleBorderDto] properties.
+/// Utility class for configuring [CircleBorder] properties.
 ///
-/// This class provides methods to set individual properties of a [CircleBorderDto].
-/// Use the methods of this class to configure specific properties of a [CircleBorderDto].
+/// This class provides methods to set individual properties of a [CircleBorder].
+/// Use the methods of this class to configure specific properties of a [CircleBorder].
 class CircleBorderUtility<T extends Attribute>
     extends DtoUtility<T, CircleBorderDto, CircleBorder> {
   /// Utility for defining [CircleBorderDto.side]
@@ -420,7 +420,7 @@ extension ListCircleBorderMixExt on List<CircleBorder> {
   }
 }
 
-base mixin _$StarBorderDto on Dto<StarBorder> {
+mixin _$StarBorderDto on Dto<StarBorder> {
   /// Resolves to [StarBorder] using the provided [MixData].
   ///
   /// If a property is null in the [MixData], it falls back to the
@@ -484,10 +484,10 @@ base mixin _$StarBorderDto on Dto<StarBorder> {
   StarBorderDto get _$this => this as StarBorderDto;
 }
 
-/// Utility class for configuring [StarBorderDto] properties.
+/// Utility class for configuring [StarBorder] properties.
 ///
-/// This class provides methods to set individual properties of a [StarBorderDto].
-/// Use the methods of this class to configure specific properties of a [StarBorderDto].
+/// This class provides methods to set individual properties of a [StarBorder].
+/// Use the methods of this class to configure specific properties of a [StarBorder].
 class StarBorderUtility<T extends Attribute>
     extends DtoUtility<T, StarBorderDto, StarBorder> {
   /// Utility for defining [StarBorderDto.side]
@@ -576,7 +576,7 @@ extension ListStarBorderMixExt on List<StarBorder> {
   }
 }
 
-base mixin _$LinearBorderDto on Dto<LinearBorder> {
+mixin _$LinearBorderDto on Dto<LinearBorder> {
   /// Resolves to [LinearBorder] using the provided [MixData].
   ///
   /// If a property is null in the [MixData], it falls back to the
@@ -633,10 +633,10 @@ base mixin _$LinearBorderDto on Dto<LinearBorder> {
   LinearBorderDto get _$this => this as LinearBorderDto;
 }
 
-/// Utility class for configuring [LinearBorderDto] properties.
+/// Utility class for configuring [LinearBorder] properties.
 ///
-/// This class provides methods to set individual properties of a [LinearBorderDto].
-/// Use the methods of this class to configure specific properties of a [LinearBorderDto].
+/// This class provides methods to set individual properties of a [LinearBorder].
+/// Use the methods of this class to configure specific properties of a [LinearBorder].
 class LinearBorderUtility<T extends Attribute>
     extends DtoUtility<T, LinearBorderDto, LinearBorder> {
   /// Utility for defining [LinearBorderDto.side]
@@ -709,7 +709,7 @@ extension ListLinearBorderMixExt on List<LinearBorder> {
   }
 }
 
-base mixin _$LinearBorderEdgeDto on Dto<LinearBorderEdge> {
+mixin _$LinearBorderEdgeDto on Dto<LinearBorderEdge> {
   /// Resolves to [LinearBorderEdge] using the provided [MixData].
   ///
   /// If a property is null in the [MixData], it falls back to the
@@ -757,10 +757,10 @@ base mixin _$LinearBorderEdgeDto on Dto<LinearBorderEdge> {
   LinearBorderEdgeDto get _$this => this as LinearBorderEdgeDto;
 }
 
-/// Utility class for configuring [LinearBorderEdgeDto] properties.
+/// Utility class for configuring [LinearBorderEdge] properties.
 ///
-/// This class provides methods to set individual properties of a [LinearBorderEdgeDto].
-/// Use the methods of this class to configure specific properties of a [LinearBorderEdgeDto].
+/// This class provides methods to set individual properties of a [LinearBorderEdge].
+/// Use the methods of this class to configure specific properties of a [LinearBorderEdge].
 class LinearBorderEdgeUtility<T extends Attribute>
     extends DtoUtility<T, LinearBorderEdgeDto, LinearBorderEdge> {
   /// Utility for defining [LinearBorderEdgeDto.size]
@@ -809,7 +809,7 @@ extension ListLinearBorderEdgeMixExt on List<LinearBorderEdge> {
   }
 }
 
-base mixin _$StadiumBorderDto on Dto<StadiumBorder> {
+mixin _$StadiumBorderDto on Dto<StadiumBorder> {
   /// Resolves to [StadiumBorder] using the provided [MixData].
   ///
   /// If a property is null in the [MixData], it falls back to the
@@ -854,10 +854,10 @@ base mixin _$StadiumBorderDto on Dto<StadiumBorder> {
   StadiumBorderDto get _$this => this as StadiumBorderDto;
 }
 
-/// Utility class for configuring [StadiumBorderDto] properties.
+/// Utility class for configuring [StadiumBorder] properties.
 ///
-/// This class provides methods to set individual properties of a [StadiumBorderDto].
-/// Use the methods of this class to configure specific properties of a [StadiumBorderDto].
+/// This class provides methods to set individual properties of a [StadiumBorder].
+/// Use the methods of this class to configure specific properties of a [StadiumBorder].
 class StadiumBorderUtility<T extends Attribute>
     extends DtoUtility<T, StadiumBorderDto, StadiumBorder> {
   /// Utility for defining [StadiumBorderDto.side]
