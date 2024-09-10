@@ -14,9 +14,10 @@ class XProgressStyle {
 }
 
 Style get _containerStyle => Style(
-      _container.height(6),
-      _container.clipBehavior.antiAlias(),
-      _container.borderRadius(99),
+      _container.chain
+        ..height(6)
+        ..clipBehavior.antiAlias()
+        ..borderRadius(99),
     );
 Style get _trackStyle => Style(_track.color.black12());
 

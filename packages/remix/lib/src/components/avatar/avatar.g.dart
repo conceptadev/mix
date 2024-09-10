@@ -195,9 +195,13 @@ class AvatarSpecUtility<T extends Attribute>
   /// Utility for defining [AvatarSpecAttribute.animated]
   late final animated = AnimatedUtility((v) => only(animated: v));
 
-  AvatarSpecUtility(super.builder);
+  AvatarSpecUtility(super.builder, {super.mutable});
 
-  static final self = AvatarSpecUtility((v) => v);
+  AvatarSpecUtility<T> get chain =>
+      AvatarSpecUtility(attributeBuilder, mutable: true);
+
+  static AvatarSpecUtility<AvatarSpecAttribute> get self =>
+      AvatarSpecUtility((v) => v);
 
   /// Returns a new [AvatarSpecAttribute] with the specified properties.
   @override

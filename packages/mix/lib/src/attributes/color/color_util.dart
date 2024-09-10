@@ -1,10 +1,9 @@
-import 'dart:math' as math;
-
 import 'package:flutter/material.dart';
 
 import '../../core/attribute.dart';
 import '../../core/utility.dart';
 import '../../theme/tokens/color_token.dart';
+import 'color_directives_impl.dart';
 import 'color_directives.dart';
 import 'color_dto.dart';
 import 'material_colors_util.dart';
@@ -107,197 +106,15 @@ base mixin ColorDirectiveMixin<T extends Attribute> on BaseColorUtility<T> {
   T tint(int percentage) => directive(TintColorDirective(percentage));
   T shade(int percentage) => directive(ShadeColorDirective(percentage));
   T brighten(int percentage) => directive(BrightenColorDirective(percentage));
-}
+  T clearDirectives() => builder(ColorDto.cleaner());
 
-@immutable
-class OpacityColorDirective extends ColorDirective {
-  final double opacity;
-  const OpacityColorDirective(this.opacity);
-
-  @override
-  Color modify(Color color) => color.withOpacity(opacity);
-
-  @override
-  get props => [opacity];
-}
-
-@immutable
-class AlphaColorDirective extends ColorDirective {
-  final int alpha;
-  const AlphaColorDirective(this.alpha);
-
-  @override
-  Color modify(Color color) => color.withAlpha(alpha);
-
-  @override
-  get props => [alpha];
-}
-
-@immutable
-class DarkenColorDirective extends ColorDirective {
-  final int percentage;
-  const DarkenColorDirective(this.percentage);
-
-  @override
-  Color modify(Color color) => color.darken(percentage);
-
-  @override
-  get props => [percentage];
-}
-
-@immutable
-class LightenColorDirective extends ColorDirective {
-  final int percentage;
-  const LightenColorDirective(this.percentage);
-
-  @override
-  Color modify(Color color) => color.lighten(percentage);
-
-  @override
-  get props => [percentage];
-}
-
-@immutable
-class SaturateColorDirective extends ColorDirective {
-  final int percentage;
-  const SaturateColorDirective(this.percentage);
-
-  @override
-  Color modify(Color color) => color.saturate(percentage);
-
-  @override
-  get props => [percentage];
-}
-
-@immutable
-class DesaturateColorDirective extends ColorDirective {
-  final int percentage;
-  const DesaturateColorDirective(this.percentage);
-
-  @override
-  Color modify(Color color) => color.desaturate(percentage);
-
-  @override
-  get props => [percentage];
-}
-
-@immutable
-class TintColorDirective extends ColorDirective {
-  final int percentage;
-  const TintColorDirective(this.percentage);
-
-  @override
-  Color modify(Color color) => color.tint(percentage);
-
-  @override
-  get props => [percentage];
-}
-
-@immutable
-class ShadeColorDirective extends ColorDirective {
-  final int percentage;
-  const ShadeColorDirective(this.percentage);
-
-  @override
-  Color modify(Color color) => color.shade(percentage);
-
-  @override
-  get props => [percentage];
-}
-
-@immutable
-class BrightenColorDirective extends ColorDirective {
-  final int percentage;
-  const BrightenColorDirective(this.percentage);
-
-  @override
-  Color modify(Color color) => color.brighten(percentage);
-
-  @override
-  get props => [percentage];
-}
-
-extension ColorExtUtilities on Color {
-  Color mix(Color toColor, [int amount = 50]) {
-    final p = RangeError.checkValueInInterval(amount, 0, 100, 'amount') / 100;
-
-    return Color.fromARGB(
-      ((toColor.alpha - alpha) * p + alpha).round(),
-      ((toColor.red - red) * p + red).round(),
-      ((toColor.green - green) * p + green).round(),
-      ((toColor.blue - blue) * p + blue).round(),
-    );
-  }
-
-  Color lighten([int amount = 10]) {
-    final p = RangeError.checkValueInInterval(amount, 0, 100, 'amount') / 100;
-    final hsl = HSLColor.fromColor(this);
-    final lightness = _clamp(hsl.lightness + p);
-
-    return hsl.withLightness(lightness).toColor();
-  }
-
-  Color brighten([int amount = 10]) {
-    final p = RangeError.checkValueInInterval(amount, 0, 100, 'amount') / 100;
-
-    return Color.fromARGB(
-      alpha,
-      math.max(0, math.min(255, red - (255 * -p).round())),
-      math.max(0, math.min(255, green - (255 * -p).round())),
-      math.max(0, math.min(255, blue - (255 * -p).round())),
-    );
-  }
-
-  Color contrast([int amount = 100]) {
-    final p = RangeError.checkValueInInterval(amount, 0, 100, 'amount') / 100;
-
-    final luminance = computeLuminance();
-
-    return luminance > 0.5 ? darken((p).round()) : brighten((p).round());
-  }
-
-  Color darken([int amount = 10]) {
-    final p = RangeError.checkValueInInterval(amount, 0, 100, 'amount') / 100;
-    final hsl = HSLColor.fromColor(this);
-    final lightness = _clamp(hsl.lightness - p);
-
-    return hsl.withLightness(lightness).toColor();
-  }
-
-  Color tint([int amount = 10]) => mix(
-        const Color.fromRGBO(255, 255, 255, 1.0),
-        amount,
+  T withSaturation(double saturation) => directive(
+        SaturationColorDirective(saturation),
       );
 
-  Color shade([int amount = 10]) => mix(
-        const Color.fromRGBO(0, 0, 0, 1.0),
-        amount,
+  T withLightness(double lightness) => directive(
+        LightnessColorDirective(lightness),
       );
-
-  Color desaturate([int amount = 10]) {
-    final p = RangeError.checkValueInInterval(amount, 0, 100, 'amount') / 100;
-    final hsl = HSLColor.fromColor(this);
-    final saturation = _clamp(hsl.saturation - p);
-
-    return hsl.withSaturation(saturation).toColor();
-  }
-
-  Color saturate([int amount = 10]) {
-    final p = RangeError.checkValueInInterval(amount, 0, 100, 'amount') / 100;
-    final hsl = HSLColor.fromColor(this);
-    final saturation = _clamp(hsl.saturation + p);
-
-    return hsl.withSaturation(saturation).toColor();
-  }
-
-  Color greyscale() => desaturate(100);
-
-  Color complement() {
-    final hsl = HSLColor.fromColor(this);
-    final hue = (hsl.hue + 180) % 360;
-
-    return hsl.withHue(hue).toColor();
-  }
+  T withHue(double hue) => directive(HueColorDirective(hue));
+  T withValue(double value) => directive(ValueColorDirective(value));
 }
-
-double _clamp(double val) => math.min(1.0, math.max(0.0, val));

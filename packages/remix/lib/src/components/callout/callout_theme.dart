@@ -22,23 +22,27 @@ class XCalloutThemeStyle {
 
 Style get _baseStyle {
   return Style(
-    _flex.gap(12),
-    _flex.crossAxisAlignment.center(),
-    _flex.mainAxisAlignment.start(),
-    _flex.wrap.padding(16),
+    _flex.chain
+      ..gap(12)
+      ..crossAxisAlignment.center()
+      ..mainAxisAlignment.start()
+      ..wrap.padding(16),
     _container.borderRadius(8),
-    _icon.color.$accentAlpha(11),
-    _icon.size(20),
-    _text.style.color.$accentAlpha(11),
-    _text.style.fontWeight.w400(),
+    _icon.chain
+      ..color.$accentAlpha(11)
+      ..size(20),
+    _text.chain
+      ..style.color.$accentAlpha(11)
+      ..style.fontWeight.w400(),
   );
 }
 
 Style get _softVariant {
   return Style(
-    _container.color.$accentAlpha(3),
-    _container.border.all.width(0),
-    _container.border.all.style.none(),
+    _container.chain
+      ..color.$accentAlpha(3)
+      ..border.all.width(0)
+      ..border.all.style.none(),
     $on.dark(
       _container.color.$accent(12),
       _text.style.color.$accent(8),
@@ -49,9 +53,10 @@ Style get _softVariant {
 
 Style get _surfaceVariant {
   return Style(
-    _container.color.$accentAlpha(2),
-    _container.border.width(1),
-    _container.border.color.$accentAlpha(5),
+    _container.chain
+      ..color.$accentAlpha(2)
+      ..border.width(1)
+      ..border.color.$accentAlpha(5),
     $on.dark(
       _container.color.$accentAlpha(6),
       _container.border.color.$accent(11),
@@ -63,12 +68,14 @@ Style get _surfaceVariant {
 
 Style get _outlineVariant {
   return Style(
-    _container.color.transparent(),
-    _container.border.width(1),
-    _container.border.color.$accentAlpha(8),
+    _container.chain
+      ..color.transparent()
+      ..border.width(1)
+      ..border.color.$accentAlpha(8),
     $on.dark(
-      _container.color.transparent(),
-      _container.border.color.$accent(11),
+      _container.chain
+        ..color.transparent()
+        ..border.color.$accent(11),
       _text.style.color.$accent(8),
       _icon.color.$accent(8),
     ),

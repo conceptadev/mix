@@ -28,6 +28,7 @@ export 'src/attributes/border/border_radius_util.dart';
 export 'src/attributes/border/border_util.dart';
 export 'src/attributes/border/shape_border_dto.dart';
 export 'src/attributes/color/color_directives.dart';
+export 'src/attributes/color/color_directives_impl.dart';
 export 'src/attributes/color/color_dto.dart';
 export 'src/attributes/color/color_util.dart';
 export 'src/attributes/color/material_colors_util.dart';

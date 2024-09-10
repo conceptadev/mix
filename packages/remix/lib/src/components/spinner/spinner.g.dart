@@ -252,9 +252,13 @@ class SpinnerSpecUtility<T extends Attribute>
   /// Utility for defining [SpinnerSpecAttribute.animated]
   late final animated = AnimatedUtility((v) => only(animated: v));
 
-  SpinnerSpecUtility(super.builder);
+  SpinnerSpecUtility(super.builder, {super.mutable});
 
-  static final self = SpinnerSpecUtility((v) => v);
+  SpinnerSpecUtility<T> get chain =>
+      SpinnerSpecUtility(attributeBuilder, mutable: true);
+
+  static SpinnerSpecUtility<SpinnerSpecAttribute> get self =>
+      SpinnerSpecUtility((v) => v);
 
   /// Returns a new [SpinnerSpecAttribute] with the specified properties.
   @override
