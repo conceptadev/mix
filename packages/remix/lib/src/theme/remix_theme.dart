@@ -8,8 +8,10 @@ import '../components/button/button.dart';
 import '../components/callout/callout.dart';
 import '../components/card/card.dart';
 import '../components/checkbox/checkbox.dart';
+import '../components/divider/divider.dart';
 import '../components/progress/progress.dart';
 import '../components/radio/radio.dart';
+import '../components/segmented_control/segmented_control.dart';
 import '../components/select/select.dart';
 import '../components/spinner/spinner.dart';
 import '../components/switch/switch.dart';
@@ -19,12 +21,14 @@ class RemixComponentTheme {
   final Style? button;
   final Style? avatar;
   final Style? badge;
+  final Style? divider;
   final Style? callout;
   final Style? card;
   final Style? checkbox;
   final Style? progress;
   final Style? radio;
   final Style? select;
+  final Style? segmentedControl;
   final Style? spinner;
   final Style? accordion;
   final Style? switchComponent;
@@ -33,6 +37,7 @@ class RemixComponentTheme {
     this.accordion,
     this.button,
     this.avatar,
+    this.divider,
     this.badge,
     this.callout,
     this.card,
@@ -40,6 +45,7 @@ class RemixComponentTheme {
     this.progress,
     this.radio,
     this.select,
+    this.segmentedControl,
     this.spinner,
     this.switchComponent,
   });
@@ -51,10 +57,12 @@ class RemixComponentTheme {
         badge = const Style.empty(),
         callout = const Style.empty(),
         card = const Style.empty(),
+        divider = const Style.empty(),
         checkbox = const Style.empty(),
         progress = const Style.empty(),
         radio = const Style.empty(),
         select = const Style.empty(),
+        segmentedControl = const Style.empty(),
         spinner = const Style.empty(),
         switchComponent = const Style.empty();
 
@@ -63,6 +71,7 @@ class RemixComponentTheme {
       accordion: XAccordionStyle.base,
       button: XButtonStyle.base,
       avatar: XAvatarStyle.base,
+      divider: XDividerStyle.base,
       badge: XBadgeStyle.base,
       callout: XCalloutStyle.base,
       card: XCardStyle.base,
@@ -70,6 +79,7 @@ class RemixComponentTheme {
       progress: XProgressStyle.base,
       radio: XRadioStyle.base,
       select: XSelectStyle.base,
+      segmentedControl: XSegmentedControlStyle.base,
       spinner: XSpinnerStyle.base,
       switchComponent: XSwitchStyle.base,
     );
@@ -87,6 +97,7 @@ class RemixComponentTheme {
       progress: XProgressThemeStyle.value,
       radio: XRadioThemeStyle.value,
       select: XSelectThemeStyle.value,
+      segmentedControl: XSegmentedControlThemeStyle.value,
       spinner: XSpinnerThemeStyle.value,
       switchComponent: XSwitchThemeStyle.value,
     );

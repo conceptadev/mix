@@ -1,32 +1,30 @@
-part of '../select.dart';
+part of '../segmented_control.dart';
 
-class XSelectMenuItemWidget extends StatelessWidget {
-  const XSelectMenuItemWidget({
-    super.key,
-    IconData? icon,
-    required this.text,
-  }) : iconData = icon;
+class XSegmentButton extends StatelessWidget {
+  const XSegmentButton({super.key, IconData? icon, this.text})
+      : iconData = icon;
 
   final IconData? iconData;
-  final String text;
+  final String? text;
 
   @override
   Widget build(BuildContext context) {
     return SpecBuilder(
+      inherit: true,
       builder: (context) {
-        final item = SelectSpec.of(context).item;
+        final item = SegmentedControlSpec.of(context).item;
 
         final container = item.container;
         final flex = item.flex;
         final icon = item.icon;
-        final text = item.text;
+        final label = item.label;
 
         return container(
           child: flex(
             direction: Axis.horizontal,
             children: [
               if (iconData != null) icon(iconData),
-              text(this.text),
+              if (text != null) label(text!),
             ],
           ),
         );

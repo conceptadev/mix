@@ -15,7 +15,6 @@ Widget buildAccordionUseCase(BuildContext context) {
 
 class _WidgetDemo extends StatefulWidget {
   const _WidgetDemo();
-
   @override
   State<_WidgetDemo> createState() => _WidgetDemoState();
 }
@@ -40,7 +39,6 @@ class _WidgetDemoState extends State<_WidgetDemo> {
         ),
       ],
       onIndexChanged: (i) {
-        print(i);
         setState(() {
           index = i;
         });
