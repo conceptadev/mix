@@ -4,6 +4,7 @@ import '../getter_self_reference.dart';
 import '../method_equality.dart';
 import '../method_merge.dart';
 import '../method_resolve.dart';
+import '../method_to_map.dart';
 
 String classMixin(ClassBuilderContext context) {
   final mixinName = context.generatedName;
@@ -41,6 +42,8 @@ String classMixin(ClassBuilderContext context) {
 
   final selfGetter = getterSelfBuilder(instance);
 
+  final toMapMethod = methodToMapBuilder(instance);
+
   return '''
 mixin $mixinName on $extendType<$referenceName> {
   $resolveMethod
@@ -50,6 +53,8 @@ mixin $mixinName on $extendType<$referenceName> {
   $propsGetter
 
   $selfGetter
+
+  $toMapMethod
 }
 ''';
 }

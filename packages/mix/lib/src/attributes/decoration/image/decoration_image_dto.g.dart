@@ -70,6 +70,22 @@ mixin _$DecorationImageDto on Dto<DecorationImage> {
       ];
 
   DecorationImageDto get _$this => this as DecorationImageDto;
+
+  /// Converts this [DecorationImageDto] to a map.
+  ///
+  /// The map contains all the fields of this [DecorationImageDto].
+  Map<String, dynamic> toMap() {
+    return {
+      "image": _$this.image,
+      "fit": _$this.fit,
+      "alignment": _$this.alignment,
+      "centerSlice": _$this.centerSlice,
+      "repeat": _$this.repeat,
+      "filterQuality": _$this.filterQuality,
+      "invertColors": _$this.invertColors,
+      "isAntiAlias": _$this.isAntiAlias,
+    };
+  }
 }
 
 /// Utility class for configuring [DecorationImage] properties.

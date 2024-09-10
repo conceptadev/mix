@@ -54,6 +54,16 @@ mixin _$RoundedRectangleBorderDto on Dto<RoundedRectangleBorder> {
       ];
 
   RoundedRectangleBorderDto get _$this => this as RoundedRectangleBorderDto;
+
+  /// Converts this [RoundedRectangleBorderDto] to a map.
+  ///
+  /// The map contains all the fields of this [RoundedRectangleBorderDto].
+  Map<String, dynamic> toMap() {
+    return {
+      "borderRadius": _$this.borderRadius,
+      "side": _$this.side,
+    };
+  }
 }
 
 /// Utility class for configuring [RoundedRectangleBorder] properties.
@@ -158,6 +168,16 @@ mixin _$BeveledRectangleBorderDto on Dto<BeveledRectangleBorder> {
       ];
 
   BeveledRectangleBorderDto get _$this => this as BeveledRectangleBorderDto;
+
+  /// Converts this [BeveledRectangleBorderDto] to a map.
+  ///
+  /// The map contains all the fields of this [BeveledRectangleBorderDto].
+  Map<String, dynamic> toMap() {
+    return {
+      "borderRadius": _$this.borderRadius,
+      "side": _$this.side,
+    };
+  }
 }
 
 /// Utility class for configuring [BeveledRectangleBorder] properties.
@@ -263,6 +283,16 @@ mixin _$ContinuousRectangleBorderDto on Dto<ContinuousRectangleBorder> {
 
   ContinuousRectangleBorderDto get _$this =>
       this as ContinuousRectangleBorderDto;
+
+  /// Converts this [ContinuousRectangleBorderDto] to a map.
+  ///
+  /// The map contains all the fields of this [ContinuousRectangleBorderDto].
+  Map<String, dynamic> toMap() {
+    return {
+      "borderRadius": _$this.borderRadius,
+      "side": _$this.side,
+    };
+  }
 }
 
 /// Utility class for configuring [ContinuousRectangleBorder] properties.
@@ -366,6 +396,16 @@ mixin _$CircleBorderDto on Dto<CircleBorder> {
       ];
 
   CircleBorderDto get _$this => this as CircleBorderDto;
+
+  /// Converts this [CircleBorderDto] to a map.
+  ///
+  /// The map contains all the fields of this [CircleBorderDto].
+  Map<String, dynamic> toMap() {
+    return {
+      "side": _$this.side,
+      "eccentricity": _$this.eccentricity,
+    };
+  }
 }
 
 /// Utility class for configuring [CircleBorder] properties.
@@ -482,6 +522,21 @@ mixin _$StarBorderDto on Dto<StarBorder> {
       ];
 
   StarBorderDto get _$this => this as StarBorderDto;
+
+  /// Converts this [StarBorderDto] to a map.
+  ///
+  /// The map contains all the fields of this [StarBorderDto].
+  Map<String, dynamic> toMap() {
+    return {
+      "side": _$this.side,
+      "points": _$this.points,
+      "innerRadiusRatio": _$this.innerRadiusRatio,
+      "pointRounding": _$this.pointRounding,
+      "valleyRounding": _$this.valleyRounding,
+      "rotation": _$this.rotation,
+      "squash": _$this.squash,
+    };
+  }
 }
 
 /// Utility class for configuring [StarBorder] properties.
@@ -631,6 +686,19 @@ mixin _$LinearBorderDto on Dto<LinearBorder> {
       ];
 
   LinearBorderDto get _$this => this as LinearBorderDto;
+
+  /// Converts this [LinearBorderDto] to a map.
+  ///
+  /// The map contains all the fields of this [LinearBorderDto].
+  Map<String, dynamic> toMap() {
+    return {
+      "side": _$this.side,
+      "start": _$this.start,
+      "end": _$this.end,
+      "top": _$this.top,
+      "bottom": _$this.bottom,
+    };
+  }
 }
 
 /// Utility class for configuring [LinearBorder] properties.
@@ -755,6 +823,16 @@ mixin _$LinearBorderEdgeDto on Dto<LinearBorderEdge> {
       ];
 
   LinearBorderEdgeDto get _$this => this as LinearBorderEdgeDto;
+
+  /// Converts this [LinearBorderEdgeDto] to a map.
+  ///
+  /// The map contains all the fields of this [LinearBorderEdgeDto].
+  Map<String, dynamic> toMap() {
+    return {
+      "size": _$this.size,
+      "alignment": _$this.alignment,
+    };
+  }
 }
 
 /// Utility class for configuring [LinearBorderEdge] properties.
@@ -852,6 +930,15 @@ mixin _$StadiumBorderDto on Dto<StadiumBorder> {
       ];
 
   StadiumBorderDto get _$this => this as StadiumBorderDto;
+
+  /// Converts this [StadiumBorderDto] to a map.
+  ///
+  /// The map contains all the fields of this [StadiumBorderDto].
+  Map<String, dynamic> toMap() {
+    return {
+      "side": _$this.side,
+    };
+  }
 }
 
 /// Utility class for configuring [StadiumBorder] properties.

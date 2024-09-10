@@ -40,6 +40,18 @@ mixin _$EdgeInsetsDto on Dto<EdgeInsets> {
       ];
 
   EdgeInsetsDto get _$this => this as EdgeInsetsDto;
+
+  /// Converts this [EdgeInsetsDto] to a map.
+  ///
+  /// The map contains all the fields of this [EdgeInsetsDto].
+  Map<String, dynamic> toMap() {
+    return {
+      "top": _$this.top,
+      "bottom": _$this.bottom,
+      "left": _$this.left,
+      "right": _$this.right,
+    };
+  }
 }
 
 /// Utility class for configuring [EdgeInsets] properties.
@@ -150,6 +162,18 @@ mixin _$EdgeInsetsDirectionalDto on Dto<EdgeInsetsDirectional> {
       ];
 
   EdgeInsetsDirectionalDto get _$this => this as EdgeInsetsDirectionalDto;
+
+  /// Converts this [EdgeInsetsDirectionalDto] to a map.
+  ///
+  /// The map contains all the fields of this [EdgeInsetsDirectionalDto].
+  Map<String, dynamic> toMap() {
+    return {
+      "top": _$this.top,
+      "bottom": _$this.bottom,
+      "start": _$this.start,
+      "end": _$this.end,
+    };
+  }
 }
 
 /// Utility class for configuring [EdgeInsetsDirectional] properties.

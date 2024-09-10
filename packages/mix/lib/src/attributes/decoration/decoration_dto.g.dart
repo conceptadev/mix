@@ -75,6 +75,22 @@ mixin _$BoxDecorationDto on Dto<BoxDecoration> {
       ];
 
   BoxDecorationDto get _$this => this as BoxDecorationDto;
+
+  /// Converts this [BoxDecorationDto] to a map.
+  ///
+  /// The map contains all the fields of this [BoxDecorationDto].
+  Map<String, dynamic> toMap() {
+    return {
+      "border": _$this.border,
+      "borderRadius": _$this.borderRadius,
+      "shape": _$this.shape,
+      "backgroundBlendMode": _$this.backgroundBlendMode,
+      "color": _$this.color,
+      "image": _$this.image,
+      "gradient": _$this.gradient,
+      "boxShadow": _$this.boxShadow,
+    };
+  }
 }
 
 /// Utility class for configuring [BoxDecoration] properties.
@@ -247,6 +263,19 @@ mixin _$ShapeDecorationDto on Dto<ShapeDecoration> {
       ];
 
   ShapeDecorationDto get _$this => this as ShapeDecorationDto;
+
+  /// Converts this [ShapeDecorationDto] to a map.
+  ///
+  /// The map contains all the fields of this [ShapeDecorationDto].
+  Map<String, dynamic> toMap() {
+    return {
+      "shape": _$this.shape,
+      "color": _$this.color,
+      "image": _$this.image,
+      "gradient": _$this.gradient,
+      "shadows": _$this.shadows,
+    };
+  }
 }
 
 /// Utility class for configuring [ShapeDecoration] properties.
