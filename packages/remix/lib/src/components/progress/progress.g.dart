@@ -211,10 +211,10 @@ base class ProgressSpecAttribute extends SpecAttribute<ProgressSpec>
   }
 }
 
-/// Utility class for configuring [ProgressSpecAttribute] properties.
+/// Utility class for configuring [ProgressSpec] properties.
 ///
-/// This class provides methods to set individual properties of a [ProgressSpecAttribute].
-/// Use the methods of this class to configure specific properties of a [ProgressSpecAttribute].
+/// This class provides methods to set individual properties of a [ProgressSpec].
+/// Use the methods of this class to configure specific properties of a [ProgressSpec].
 class ProgressSpecUtility<T extends Attribute>
     extends SpecUtility<T, ProgressSpecAttribute> {
   /// Utility for defining [ProgressSpecAttribute.container]

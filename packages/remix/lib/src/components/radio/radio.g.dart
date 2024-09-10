@@ -212,10 +212,10 @@ base class RadioSpecAttribute extends SpecAttribute<RadioSpec>
   }
 }
 
-/// Utility class for configuring [RadioSpecAttribute] properties.
+/// Utility class for configuring [RadioSpec] properties.
 ///
-/// This class provides methods to set individual properties of a [RadioSpecAttribute].
-/// Use the methods of this class to configure specific properties of a [RadioSpecAttribute].
+/// This class provides methods to set individual properties of a [RadioSpec].
+/// Use the methods of this class to configure specific properties of a [RadioSpec].
 class RadioSpecUtility<T extends Attribute>
     extends SpecUtility<T, RadioSpecAttribute> {
   /// Utility for defining [RadioSpecAttribute.container]

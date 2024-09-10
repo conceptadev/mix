@@ -58,18 +58,6 @@ mixin _$BoxConstraintsDto on Dto<BoxConstraints> {
       ];
 
   BoxConstraintsDto get _$this => this as BoxConstraintsDto;
-
-  /// Converts this [BoxConstraintsDto] to a map.
-  ///
-  /// The map contains all the fields of this [BoxConstraintsDto].
-  Map<String, dynamic> toMap() {
-    return {
-      "minWidth": _$this.minWidth,
-      "maxWidth": _$this.maxWidth,
-      "minHeight": _$this.minHeight,
-      "maxHeight": _$this.maxHeight,
-    };
-  }
 }
 
 /// Utility class for configuring [BoxConstraints] properties.

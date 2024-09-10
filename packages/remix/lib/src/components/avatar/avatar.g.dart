@@ -174,10 +174,10 @@ base class AvatarSpecAttribute extends SpecAttribute<AvatarSpec> {
       ];
 }
 
-/// Utility class for configuring [AvatarSpecAttribute] properties.
+/// Utility class for configuring [AvatarSpec] properties.
 ///
-/// This class provides methods to set individual properties of a [AvatarSpecAttribute].
-/// Use the methods of this class to configure specific properties of a [AvatarSpecAttribute].
+/// This class provides methods to set individual properties of a [AvatarSpec].
+/// Use the methods of this class to configure specific properties of a [AvatarSpec].
 class AvatarSpecUtility<T extends Attribute>
     extends SpecUtility<T, AvatarSpecAttribute> {
   /// Utility for defining [AvatarSpecAttribute.container]

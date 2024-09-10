@@ -55,17 +55,6 @@ mixin _$ShadowDto on Dto<Shadow> {
       ];
 
   ShadowDto get _$this => this as ShadowDto;
-
-  /// Converts this [ShadowDto] to a map.
-  ///
-  /// The map contains all the fields of this [ShadowDto].
-  Map<String, dynamic> toMap() {
-    return {
-      "blurRadius": _$this.blurRadius,
-      "color": _$this.color,
-      "offset": _$this.offset,
-    };
-  }
 }
 
 /// Utility class for configuring [Shadow] properties.
@@ -180,18 +169,6 @@ mixin _$BoxShadowDto on Dto<BoxShadow> {
       ];
 
   BoxShadowDto get _$this => this as BoxShadowDto;
-
-  /// Converts this [BoxShadowDto] to a map.
-  ///
-  /// The map contains all the fields of this [BoxShadowDto].
-  Map<String, dynamic> toMap() {
-    return {
-      "color": _$this.color,
-      "offset": _$this.offset,
-      "blurRadius": _$this.blurRadius,
-      "spreadRadius": _$this.spreadRadius,
-    };
-  }
 }
 
 /// Utility class for configuring [BoxShadow] properties.

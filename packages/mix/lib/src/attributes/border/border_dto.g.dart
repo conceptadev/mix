@@ -58,18 +58,6 @@ mixin _$BorderDto on Dto<Border> {
       ];
 
   BorderDto get _$this => this as BorderDto;
-
-  /// Converts this [BorderDto] to a map.
-  ///
-  /// The map contains all the fields of this [BorderDto].
-  Map<String, dynamic> toMap() {
-    return {
-      "top": _$this.top,
-      "bottom": _$this.bottom,
-      "left": _$this.left,
-      "right": _$this.right,
-    };
-  }
 }
 
 extension BorderMixExt on Border {
@@ -141,18 +129,6 @@ mixin _$BorderDirectionalDto on Dto<BorderDirectional> {
       ];
 
   BorderDirectionalDto get _$this => this as BorderDirectionalDto;
-
-  /// Converts this [BorderDirectionalDto] to a map.
-  ///
-  /// The map contains all the fields of this [BorderDirectionalDto].
-  Map<String, dynamic> toMap() {
-    return {
-      "top": _$this.top,
-      "bottom": _$this.bottom,
-      "start": _$this.start,
-      "end": _$this.end,
-    };
-  }
 }
 
 extension BorderDirectionalMixExt on BorderDirectional {
@@ -224,18 +200,6 @@ mixin _$BorderSideDto on Dto<BorderSide> {
       ];
 
   BorderSideDto get _$this => this as BorderSideDto;
-
-  /// Converts this [BorderSideDto] to a map.
-  ///
-  /// The map contains all the fields of this [BorderSideDto].
-  Map<String, dynamic> toMap() {
-    return {
-      "color": _$this.color,
-      "strokeAlign": _$this.strokeAlign,
-      "style": _$this.style,
-      "width": _$this.width,
-    };
-  }
 }
 
 /// Utility class for configuring [BorderSide] properties.

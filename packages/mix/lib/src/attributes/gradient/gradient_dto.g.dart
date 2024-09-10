@@ -65,20 +65,6 @@ mixin _$LinearGradientDto on Dto<LinearGradient> {
       ];
 
   LinearGradientDto get _$this => this as LinearGradientDto;
-
-  /// Converts this [LinearGradientDto] to a map.
-  ///
-  /// The map contains all the fields of this [LinearGradientDto].
-  Map<String, dynamic> toMap() {
-    return {
-      "begin": _$this.begin,
-      "end": _$this.end,
-      "tileMode": _$this.tileMode,
-      "transform": _$this.transform,
-      "colors": _$this.colors,
-      "stops": _$this.stops,
-    };
-  }
 }
 
 /// Utility class for configuring [LinearGradient] properties.
@@ -230,22 +216,6 @@ mixin _$RadialGradientDto on Dto<RadialGradient> {
       ];
 
   RadialGradientDto get _$this => this as RadialGradientDto;
-
-  /// Converts this [RadialGradientDto] to a map.
-  ///
-  /// The map contains all the fields of this [RadialGradientDto].
-  Map<String, dynamic> toMap() {
-    return {
-      "center": _$this.center,
-      "radius": _$this.radius,
-      "tileMode": _$this.tileMode,
-      "focal": _$this.focal,
-      "focalRadius": _$this.focalRadius,
-      "transform": _$this.transform,
-      "colors": _$this.colors,
-      "stops": _$this.stops,
-    };
-  }
 }
 
 /// Utility class for configuring [RadialGradient] properties.
@@ -410,21 +380,6 @@ mixin _$SweepGradientDto on Dto<SweepGradient> {
       ];
 
   SweepGradientDto get _$this => this as SweepGradientDto;
-
-  /// Converts this [SweepGradientDto] to a map.
-  ///
-  /// The map contains all the fields of this [SweepGradientDto].
-  Map<String, dynamic> toMap() {
-    return {
-      "center": _$this.center,
-      "startAngle": _$this.startAngle,
-      "endAngle": _$this.endAngle,
-      "tileMode": _$this.tileMode,
-      "transform": _$this.transform,
-      "colors": _$this.colors,
-      "stops": _$this.stops,
-    };
-  }
 }
 
 /// Utility class for configuring [SweepGradient] properties.

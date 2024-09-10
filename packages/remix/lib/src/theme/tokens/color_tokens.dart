@@ -57,6 +57,7 @@ final remixDarkColorTokens = _mapColorRadixTokens(
 );
 
 extension ColorUtilityX<T extends Attribute> on ColorUtility<T> {
+  T $primaryForeground() => ref($rx.color.neutral(12));
   T $black() => ref($rx.color.black());
   T $white() => ref($rx.color.white());
   T $neutral([int? step]) => ref($rx.color.neutral(step));
@@ -64,3 +65,27 @@ extension ColorUtilityX<T extends Attribute> on ColorUtility<T> {
   T $accent([int? step]) => ref($rx.color.accent(step));
   T $accentAlpha([int? step]) => ref($rx.color.accentAlpha(step));
 }
+
+
+// child: PressableBox (
+// style: Style(
+// $box.borderRadius.all.ref(CoreRadiiDesignTokens.defaultRadius),
+// $box.padding.all.ref(CoreSpacesDesignTokens.p8),
+// $on. condition (isSelected) (
+// $box.color.ref(CoreColorDesignTokens.border),
+// ),
+// ). animate(), // Style
+// onPress: onPress,
+// child: StyledIcon (
+// iconData,
+// style: Style(
+// $icon.color.ref(CoreColorDesignTokens-secondaryForeground),
+// $icon.size(18),
+// Son. hover(
+// $icon.color. ref(CoreColorDesignTokens-primaryForeground),
+// ),
+// Son. condition (isSelected) (
+// §icon.color. ref(CoreColorDesignTokens-primaryForeground),
+// ) -animate(), // Style
+// ), // StyledIcon
+// ), // PressableBox

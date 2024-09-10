@@ -40,18 +40,6 @@ mixin _$BorderRadiusDto on Dto<BorderRadius> {
       ];
 
   BorderRadiusDto get _$this => this as BorderRadiusDto;
-
-  /// Converts this [BorderRadiusDto] to a map.
-  ///
-  /// The map contains all the fields of this [BorderRadiusDto].
-  Map<String, dynamic> toMap() {
-    return {
-      "topLeft": _$this.topLeft,
-      "topRight": _$this.topRight,
-      "bottomLeft": _$this.bottomLeft,
-      "bottomRight": _$this.bottomRight,
-    };
-  }
 }
 
 extension BorderRadiusMixExt on BorderRadius {
@@ -105,18 +93,6 @@ mixin _$BorderRadiusDirectionalDto on Dto<BorderRadiusDirectional> {
       ];
 
   BorderRadiusDirectionalDto get _$this => this as BorderRadiusDirectionalDto;
-
-  /// Converts this [BorderRadiusDirectionalDto] to a map.
-  ///
-  /// The map contains all the fields of this [BorderRadiusDirectionalDto].
-  Map<String, dynamic> toMap() {
-    return {
-      "topStart": _$this.topStart,
-      "topEnd": _$this.topEnd,
-      "bottomStart": _$this.bottomStart,
-      "bottomEnd": _$this.bottomEnd,
-    };
-  }
 }
 
 extension BorderRadiusDirectionalMixExt on BorderRadiusDirectional {

@@ -123,36 +123,6 @@ mixin _$TextStyleData on Dto<TextStyle> {
       ];
 
   TextStyleData get _$this => this as TextStyleData;
-
-  /// Converts this [TextStyleData] to a map.
-  ///
-  /// The map contains all the fields of this [TextStyleData].
-  Map<String, dynamic> toMap() {
-    return {
-      "background": _$this.background,
-      "backgroundColor": _$this.backgroundColor,
-      "color": _$this.color,
-      "debugLabel": _$this.debugLabel,
-      "decoration": _$this.decoration,
-      "decorationColor": _$this.decorationColor,
-      "decorationStyle": _$this.decorationStyle,
-      "decorationThickness": _$this.decorationThickness,
-      "fontFamily": _$this.fontFamily,
-      "fontFamilyFallback": _$this.fontFamilyFallback,
-      "fontVariations": _$this.fontVariations,
-      "fontFeatures": _$this.fontFeatures,
-      "fontSize": _$this.fontSize,
-      "fontStyle": _$this.fontStyle,
-      "fontWeight": _$this.fontWeight,
-      "foreground": _$this.foreground,
-      "height": _$this.height,
-      "letterSpacing": _$this.letterSpacing,
-      "locale": _$this.locale,
-      "shadows": _$this.shadows,
-      "textBaseline": _$this.textBaseline,
-      "wordSpacing": _$this.wordSpacing,
-    };
-  }
 }
 
 mixin _$TextStyleDto on Dto<TextStyle> {
@@ -183,13 +153,4 @@ mixin _$TextStyleDto on Dto<TextStyle> {
       ];
 
   TextStyleDto get _$this => this as TextStyleDto;
-
-  /// Converts this [TextStyleDto] to a map.
-  ///
-  /// The map contains all the fields of this [TextStyleDto].
-  Map<String, dynamic> toMap() {
-    return {
-      "value": _$this.value,
-    };
-  }
 }

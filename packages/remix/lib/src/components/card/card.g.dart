@@ -186,10 +186,10 @@ base class CardSpecAttribute extends SpecAttribute<CardSpec>
   }
 }
 
-/// Utility class for configuring [CardSpecAttribute] properties.
+/// Utility class for configuring [CardSpec] properties.
 ///
-/// This class provides methods to set individual properties of a [CardSpecAttribute].
-/// Use the methods of this class to configure specific properties of a [CardSpecAttribute].
+/// This class provides methods to set individual properties of a [CardSpec].
+/// Use the methods of this class to configure specific properties of a [CardSpec].
 class CardSpecUtility<T extends Attribute>
     extends SpecUtility<T, CardSpecAttribute> {
   /// Utility for defining [CardSpecAttribute.container]

@@ -73,22 +73,6 @@ mixin _$StrutStyleDto on Dto<StrutStyle> {
       ];
 
   StrutStyleDto get _$this => this as StrutStyleDto;
-
-  /// Converts this [StrutStyleDto] to a map.
-  ///
-  /// The map contains all the fields of this [StrutStyleDto].
-  Map<String, dynamic> toMap() {
-    return {
-      "fontFamily": _$this.fontFamily,
-      "fontFamilyFallback": _$this.fontFamilyFallback,
-      "fontSize": _$this.fontSize,
-      "fontWeight": _$this.fontWeight,
-      "fontStyle": _$this.fontStyle,
-      "height": _$this.height,
-      "leading": _$this.leading,
-      "forceStrutHeight": _$this.forceStrutHeight,
-    };
-  }
 }
 
 /// Utility class for configuring [StrutStyle] properties.

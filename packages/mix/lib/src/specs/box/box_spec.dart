@@ -60,7 +60,7 @@ const _shapeDecor = MixableUtility(
 );
 
 @MixableSpec()
-class BoxSpec extends Spec<BoxSpec> with _$BoxSpec, Diagnosticable {
+final class BoxSpec extends Spec<BoxSpec> with _$BoxSpec, Diagnosticable {
   /// {@macro box_spec_of}
   static const of = _$BoxSpec.of;
 
