@@ -1,6 +1,18 @@
 import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
+
 import 'color_directives.dart';
+
+class CleanerDirective extends ColorDirective {
+  const CleanerDirective();
+
+  @override
+  Color modify(Color color) => color;
+
+  @override
+  List<Object?> get props => [];
+}
 
 @immutable
 class OpacityColorDirective extends NumberBasedColorDirective<double> {

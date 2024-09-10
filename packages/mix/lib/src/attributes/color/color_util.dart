@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import '../../core/attribute.dart';
 import '../../core/utility.dart';
 import '../../theme/tokens/color_token.dart';
-import 'color_directives_impl.dart';
 import 'color_directives.dart';
+import 'color_directives_impl.dart';
 import 'color_dto.dart';
 import 'material_colors_util.dart';
 
@@ -106,7 +106,7 @@ base mixin ColorDirectiveMixin<T extends Attribute> on BaseColorUtility<T> {
   T tint(int percentage) => directive(TintColorDirective(percentage));
   T shade(int percentage) => directive(ShadeColorDirective(percentage));
   T brighten(int percentage) => directive(BrightenColorDirective(percentage));
-  T clearDirectives() => builder(ColorDto.cleaner());
+  T clearDirectives() => directive(CleanerDirective());
 
   T withSaturation(double saturation) => directive(
         SaturationColorDirective(saturation),

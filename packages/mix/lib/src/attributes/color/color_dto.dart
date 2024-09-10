@@ -5,6 +5,7 @@ import '../../core/dto.dart';
 import '../../core/factory/mix_data.dart';
 import '../../theme/tokens/color_token.dart';
 import 'color_directives.dart';
+import 'color_directives_impl.dart';
 
 /// A Data transfer object that represents a [Color] value.
 ///
@@ -23,10 +24,17 @@ class ColorDto extends Dto<Color> with Diagnosticable {
   const ColorDto.raw({this.value, this.directives = const []});
   const ColorDto(Color value) : this.raw(value: value);
 
-  factory ColorDto.cleaner() => const _ColorDtoCleaner();
-
   ColorDto.directive(ColorDirective directive)
       : this.raw(directives: [directive]);
+
+  List<ColorDirective> _applyCleaner(List<ColorDirective> directives) {
+    final lastCleanerIndex =
+        directives.lastIndexWhere((e) => e is CleanerDirective);
+
+    return lastCleanerIndex == -1
+        ? directives
+        : directives.sublist(lastCleanerIndex);
+  }
 
   @override
   Color resolve(MixData mix) {
@@ -36,7 +44,7 @@ class ColorDto extends Dto<Color> with Diagnosticable {
       color = mix.tokens.colorRef(color);
     }
 
-    for (final directive in directives) {
+    for (final directive in _applyCleaner(directives)) {
       color = directive.modify(color);
     }
 
@@ -46,7 +54,6 @@ class ColorDto extends Dto<Color> with Diagnosticable {
   @override
   ColorDto merge(ColorDto? other) {
     if (other == null) return this;
-    if (other is _ColorDtoCleaner) return ColorDto.raw(value: value);
 
     return ColorDto.raw(
       value: other.value ?? value,
@@ -76,8 +83,4 @@ class ColorDto extends Dto<Color> with Diagnosticable {
 
 extension ColorExt on Color {
   ColorDto toDto() => ColorDto(this);
-}
-
-class _ColorDtoCleaner extends ColorDto {
-  const _ColorDtoCleaner() : super.raw();
 }

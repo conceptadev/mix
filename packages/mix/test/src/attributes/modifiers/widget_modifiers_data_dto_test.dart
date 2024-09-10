@@ -1,6 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
+import 'package:mix/src/modifiers/internal/cleaner_modifier.dart';
 
 import '../../../helpers/testing_utils.dart';
 
@@ -32,7 +33,9 @@ void main() {
         TransformModifierSpecAttribute(transform: Matrix4.identity()),
       ]);
 
-      final cleaner = WidgetModifiersDataDto.cleaner();
+      final cleaner = WidgetModifiersDataDto([
+        CleanerModifierSpecAttribute(),
+      ]);
 
       const dto2 = WidgetModifiersDataDto([
         OpacityModifierSpecAttribute(opacity: 0.5),
@@ -40,10 +43,14 @@ void main() {
 
       final merged = dto1.merge(cleaner).merge(dto2);
 
-      expect(merged.value.length, 1);
+      expect(merged.value.length, 2);
 
       expect(
         merged.value[0].resolve(EmptyMixData),
+        const CleanerModifierSpec(),
+      );
+      expect(
+        merged.value[1].resolve(EmptyMixData),
         const OpacityModifierSpec(0.5),
       );
     });

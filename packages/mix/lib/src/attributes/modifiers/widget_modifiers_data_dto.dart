@@ -4,26 +4,27 @@ import '../../core/attributes_map.dart';
 import '../../core/dto.dart';
 import '../../core/factory/mix_data.dart';
 import '../../core/modifier.dart';
+import '../../modifiers/internal/cleaner_modifier.dart';
 import 'widget_modifiers_data.dart';
-
-class _WidgetModifiersDataDtoCleaner extends WidgetModifiersDataDto {
-  const _WidgetModifiersDataDtoCleaner() : super(const []);
-}
 
 class WidgetModifiersDataDto extends Dto<WidgetModifiersData>
     with Diagnosticable {
   final List<WidgetModifierSpecAttribute> value;
 
   const WidgetModifiersDataDto(this.value);
-  factory WidgetModifiersDataDto.cleaner() {
-    return const _WidgetModifiersDataDtoCleaner();
-  }
 
   @override
   WidgetModifiersDataDto merge(WidgetModifiersDataDto? other) {
     if (other == null) return this;
-    if (other is _WidgetModifiersDataDtoCleaner) return other;
     final thisMap = AttributeMap(value);
+
+    final cleanerIndex =
+        other.value.lastIndexWhere((e) => e is CleanerModifierSpecAttribute);
+
+    if (cleanerIndex != -1) {
+      return WidgetModifiersDataDto(other.value.sublist(cleanerIndex));
+    }
+
     final otherMap = AttributeMap(other.value);
     final mergedMap = thisMap.merge(otherMap).values;
 
