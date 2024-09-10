@@ -6,7 +6,6 @@ import 'aspect_ratio_widget_modifier.dart';
 import 'clip_widget_modifier.dart';
 import 'flexible_widget_modifier.dart';
 import 'fractionally_sized_box_widget_modifier.dart';
-import 'internal/cleaner_modifier.dart';
 import 'intrinsic_widget_modifier.dart';
 import 'mouse_cursor_modifier.dart';
 import 'opacity_widget_modifier.dart';
@@ -31,7 +30,6 @@ abstract class ModifierUtility<T extends Attribute, Value>
   late final visibility = VisibilityModifierSpecUtility(only);
   late final show = visibility.on;
   late final hide = visibility.off;
-  late final clearModifiers = CleanerModifierSpecUtility(only);
   late final aspectRatio = AspectRatioModifierSpecUtility(only);
   late final flexible = FlexibleModifierSpecUtility(only);
   late final expanded = flexible.expanded;
