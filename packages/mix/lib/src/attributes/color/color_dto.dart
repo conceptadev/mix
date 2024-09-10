@@ -44,7 +44,7 @@ class ColorDto extends Dto<Color> with Diagnosticable {
       color = mix.tokens.colorRef(color);
     }
 
-    for (final directive in _applyCleaner(directives)) {
+    for (final directive in directives) {
       color = directive.modify(color);
     }
 
@@ -57,7 +57,7 @@ class ColorDto extends Dto<Color> with Diagnosticable {
 
     return ColorDto.raw(
       value: other.value ?? value,
-      directives: [...directives, ...other.directives],
+      directives: _applyCleaner([...directives, ...other.directives]),
     );
   }
 
