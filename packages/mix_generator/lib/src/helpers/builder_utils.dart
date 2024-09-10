@@ -251,13 +251,7 @@ extension DartTypeX on DartType {
       return thisElement.name;
     }
 
-    final type = getDisplayString();
-
-    if (isNullableType) {
-      return type.replaceAll('?', '');
-    }
-
-    return type;
+    return getDisplayString(withNullability: false);
   }
 
   ClassElement? get classElement {
