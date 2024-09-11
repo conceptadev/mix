@@ -106,7 +106,7 @@ base mixin ColorDirectiveMixin<T extends Attribute> on BaseColorUtility<T> {
   T tint(int percentage) => directive(TintColorDirective(percentage));
   T shade(int percentage) => directive(ShadeColorDirective(percentage));
   T brighten(int percentage) => directive(BrightenColorDirective(percentage));
-  T clearDirectives() => directive(const CleanerDirective());
+  T resetDirectives() => directive(const ResetColorDirective());
 
   T withSaturation(double saturation) => directive(
         SaturationColorDirective(saturation),

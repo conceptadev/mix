@@ -9,12 +9,12 @@ import '../../core/factory/mix_data.dart';
 import '../../core/modifier.dart';
 import '../../core/utility.dart';
 
-part 'cleaner_modifier.g.dart';
+part 'reset_modifier.g.dart';
 
 @MixableSpec(skipUtility: true)
-final class CleanerModifierSpec extends WidgetModifierSpec<CleanerModifierSpec>
-    with _$CleanerModifierSpec, Diagnosticable {
-  const CleanerModifierSpec();
+final class ResetModifierSpec extends WidgetModifierSpec<ResetModifierSpec>
+    with _$ResetModifierSpec, Diagnosticable {
+  const ResetModifierSpec();
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
@@ -28,10 +28,10 @@ final class CleanerModifierSpec extends WidgetModifierSpec<CleanerModifierSpec>
   }
 }
 
-final class CleanerModifierSpecUtility<T extends Attribute>
-    extends MixUtility<T, CleanerModifierSpecAttribute> {
-  const CleanerModifierSpecUtility(super.builder);
+final class ResetModifierSpecUtility<T extends Attribute>
+    extends MixUtility<T, ResetModifierSpecAttribute> {
+  const ResetModifierSpecUtility(super.builder);
   T call() {
-    return builder(const CleanerModifierSpecAttribute());
+    return builder(const ResetModifierSpecAttribute());
   }
 }

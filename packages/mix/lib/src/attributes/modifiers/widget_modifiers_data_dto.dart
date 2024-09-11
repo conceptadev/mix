@@ -4,7 +4,7 @@ import '../../core/attributes_map.dart';
 import '../../core/dto.dart';
 import '../../core/factory/mix_data.dart';
 import '../../core/modifier.dart';
-import '../../modifiers/internal/cleaner_modifier.dart';
+import '../../modifiers/internal/reset_modifier.dart';
 import 'widget_modifiers_data.dart';
 
 class WidgetModifiersDataDto extends Dto<WidgetModifiersData>
@@ -18,11 +18,11 @@ class WidgetModifiersDataDto extends Dto<WidgetModifiersData>
     if (other == null) return this;
     final thisMap = AttributeMap(value);
 
-    final cleanerIndex =
-        other.value.lastIndexWhere((e) => e is CleanerModifierSpecAttribute);
+    final resetIndex =
+        other.value.lastIndexWhere((e) => e is ResetModifierSpecAttribute);
 
-    if (cleanerIndex != -1) {
-      return WidgetModifiersDataDto(other.value.sublist(cleanerIndex));
+    if (resetIndex != -1) {
+      return WidgetModifiersDataDto(other.value.sublist(resetIndex));
     }
 
     final otherMap = AttributeMap(other.value);

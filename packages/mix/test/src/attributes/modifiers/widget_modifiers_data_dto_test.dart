@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
-import 'package:mix/src/modifiers/internal/cleaner_modifier.dart';
+import 'package:mix/src/modifiers/internal/reset_modifier.dart';
 
 import '../../../helpers/testing_utils.dart';
 
@@ -34,7 +34,7 @@ void main() {
       ]);
 
       const cleaner = WidgetModifiersDataDto([
-        CleanerModifierSpecAttribute(),
+        ResetModifierSpecAttribute(),
       ]);
 
       const dto2 = WidgetModifiersDataDto([
@@ -47,7 +47,7 @@ void main() {
 
       expect(
         merged.value[0].resolve(EmptyMixData),
-        const CleanerModifierSpec(),
+        const ResetModifierSpec(),
       );
       expect(
         merged.value[1].resolve(EmptyMixData),

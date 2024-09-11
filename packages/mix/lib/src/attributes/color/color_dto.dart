@@ -27,13 +27,13 @@ class ColorDto extends Dto<Color> with Diagnosticable {
   ColorDto.directive(ColorDirective directive)
       : this.raw(directives: [directive]);
 
-  List<ColorDirective> _applyCleaner(List<ColorDirective> directives) {
-    final lastCleanerIndex =
-        directives.lastIndexWhere((e) => e is CleanerDirective);
+  List<ColorDirective> _applyResetIfNeeded(List<ColorDirective> directives) {
+    final lastResetIndex =
+        directives.lastIndexWhere((e) => e is ResetColorDirective);
 
-    return lastCleanerIndex == -1
+    return lastResetIndex == -1
         ? directives
-        : directives.sublist(lastCleanerIndex);
+        : directives.sublist(lastResetIndex);
   }
 
   @override
@@ -57,7 +57,7 @@ class ColorDto extends Dto<Color> with Diagnosticable {
 
     return ColorDto.raw(
       value: other.value ?? value,
-      directives: _applyCleaner([...directives, ...other.directives]),
+      directives: _applyResetIfNeeded([...directives, ...other.directives]),
     );
   }
 

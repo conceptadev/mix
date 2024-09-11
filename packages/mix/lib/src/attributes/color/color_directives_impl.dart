@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 
 import 'color_directives.dart';
 
-class CleanerDirective extends ColorDirective {
-  const CleanerDirective();
+class ResetColorDirective extends ColorDirective {
+  const ResetColorDirective();
 
   @override
   Color modify(Color color) => color;
