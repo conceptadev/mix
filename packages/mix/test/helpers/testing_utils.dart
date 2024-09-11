@@ -30,9 +30,15 @@ MixData MockMixData(Style style) {
 
 final EmptyMixData = MixData.create(MockBuildContext(), const Style.empty());
 
-MediaQuery createMediaQuery(Size size) {
+MediaQuery createMediaQuery({
+  Size? size,
+  Brightness? brightness,
+}) {
   return MediaQuery(
-    data: MediaQueryData(size: size),
+    data: MediaQueryData(
+      size: size ?? const Size.square(500),
+      platformBrightness: brightness ?? Brightness.light,
+    ),
     child: MixTheme(
       data: MixThemeData(),
       child: MaterialApp(
@@ -44,24 +50,6 @@ MediaQuery createMediaQuery(Size size) {
           ),
         ),
       ),
-    ),
-  );
-}
-
-Widget createBrightnessTheme(Brightness brightness, {Widget? child}) {
-  return MixTheme(
-    data: MixThemeData(),
-    child: MaterialApp(
-      home: Scaffold(
-        body: Builder(
-          builder: (BuildContext context) {
-            return Container(
-              child: child,
-            );
-          },
-        ),
-      ),
-      theme: ThemeData(brightness: brightness),
     ),
   );
 }
