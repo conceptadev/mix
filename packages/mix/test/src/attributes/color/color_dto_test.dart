@@ -74,7 +74,8 @@ void main() {
         DarkenColorDirective(10),
       ]);
 
-      colorDto = colorDto.merge(ColorDto.cleaner());
+      colorDto =
+          colorDto.merge(ColorDto.directive(const ResetColorDirective()));
       expect(
         Colors.red,
         colorDto.resolve(
@@ -85,7 +86,8 @@ void main() {
         ),
       );
 
-      colorDto = colorDto.merge(const ColorDto.raw(value: Colors.red, directives: [
+      colorDto =
+          colorDto.merge(const ColorDto.raw(value: Colors.red, directives: [
         DarkenColorDirective(20),
       ]));
 
@@ -99,7 +101,8 @@ void main() {
         ),
       );
 
-      colorDto = colorDto.merge(ColorDto.cleaner());
+      colorDto =
+          colorDto.merge(ColorDto.directive(const ResetColorDirective()));
 
       colorDto = colorDto.merge(ColorDto.directive(
         const SaturateColorDirective(20),
