@@ -23,7 +23,7 @@ void main() {
     const onLight = OnBrightnessVariant(Brightness.light);
     const onDark = OnBrightnessVariant(Brightness.dark);
     testWidgets('reverts when of context variant', (tester) async {
-      await tester.pumpWidget(createBrightnessTheme(Brightness.light));
+      await tester.pumpWidget(createMediaQuery(brightness: Brightness.light));
       var context = tester.element(find.byType(Container));
 
       expect(onLight.when(context), true, reason: 'light');

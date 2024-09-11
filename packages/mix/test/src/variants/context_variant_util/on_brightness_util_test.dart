@@ -9,7 +9,7 @@ void main() {
     const onLight = OnBrightnessVariant(Brightness.light);
     const onDark = OnBrightnessVariant(Brightness.dark);
     testWidgets('onLight context variant', (tester) async {
-      await tester.pumpWidget(createBrightnessTheme(Brightness.light));
+      await tester.pumpWidget(createMediaQuery(brightness: Brightness.light));
       var context = tester.element(find.byType(Container));
 
       expect(onLight.when(context), true, reason: 'light');
@@ -17,7 +17,8 @@ void main() {
     });
 
     testWidgets('onDark context variant', (widgetTester) async {
-      await widgetTester.pumpWidget(createBrightnessTheme(Brightness.dark));
+      await widgetTester
+          .pumpWidget(createMediaQuery(brightness: Brightness.dark));
       var context = widgetTester.element(find.byType(Container));
 
       expect(onLight.when(context), false, reason: 'light');
