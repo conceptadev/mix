@@ -1,10 +1,10 @@
 part of 'button.dart';
 
-typedef XButtonSpinnerBuilder = XComponentBuilder<SpinnerSpec>;
+typedef ButtonSpinnerBuilder = WidgetSpecBuilder<SpinnerSpec>;
 
 /// A customizable button component with various styling options.
 ///
-/// The [XButton] allows you to create buttons with different variants, sizes,
+/// The [Button] allows you to create buttons with different variants, sizes,
 /// and icons. You can also disable the button or show a loading state.
 ///
 /// Example usage:
@@ -16,8 +16,8 @@ typedef XButtonSpinnerBuilder = XComponentBuilder<SpinnerSpec>;
 ///   iconLeft: Icons.add,
 /// )
 /// ```
-class XButton extends StatelessWidget {
-  const XButton({
+class Button extends StatelessWidget {
+  const Button({
     super.key,
     required this.label,
     this.disabled = false,
@@ -27,7 +27,7 @@ class XButton extends StatelessWidget {
     this.spinnerBuilder,
     this.variants = const [],
     required this.onPressed,
-    this.style = const Style.empty(),
+    this.style,
   });
 
   final String label;
@@ -36,14 +36,65 @@ class XButton extends StatelessWidget {
   final IconData? iconLeft;
   final IconData? iconRight;
   final VoidCallback? onPressed;
-  final XButtonSpinnerBuilder? spinnerBuilder;
+  final ButtonSpinnerBuilder? spinnerBuilder;
 
   final List<Variant> variants;
 
   /// Additional custom styling for the button.
   ///
   /// This allows you to override or extend the default button styling.
-  final Style style;
+  final ButtonStyle? style;
+
+  @override
+  Widget build(BuildContext context) {
+    final isDisabled = disabled || loading;
+
+    final style = this.style ?? context.remix.components.button;
+    final configuration = SpecConfiguration(context, ButtonSpecUtility.self);
+
+    return Pressable(
+      enabled: !isDisabled,
+      onPress: disabled || loading ? null : onPressed,
+      child: SpecBuilder(
+        style: style.makeStyle(configuration).applyVariants(variants),
+        builder: (context) {
+          return ButtonSpecWidget(
+            label: label,
+            disabled: disabled,
+            loading: loading,
+            iconLeft: iconLeft,
+            iconRight: iconRight,
+            spinnerBuilder: spinnerBuilder,
+            onPressed: onPressed,
+            spec: ButtonSpec.of(context),
+          );
+        },
+      ),
+    );
+  }
+}
+
+class ButtonSpecWidget extends StatelessWidget {
+  const ButtonSpecWidget({
+    super.key,
+    required this.label,
+    this.disabled = false,
+    this.loading = false,
+    this.iconLeft,
+    this.iconRight,
+    this.spinnerBuilder,
+    required this.onPressed,
+    this.spec,
+  });
+
+  final String label;
+  final bool disabled;
+  final bool loading;
+  final IconData? iconLeft;
+  final IconData? iconRight;
+  final VoidCallback? onPressed;
+  final ButtonSpinnerBuilder? spinnerBuilder;
+  final ButtonSpec? spec;
 
   bool get _hasIcon => iconLeft != null || iconRight != null;
 
@@ -74,22 +125,8 @@ class XButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDisabled = disabled || loading;
-    final styleFromTheme = RemixThemeProvider.maybeOf(context)?.button;
+    final spec = this.spec ?? const ButtonSpec();
 
-    return Pressable(
-      enabled: !isDisabled,
-      onPress: disabled || loading ? null : onPressed,
-      child: SpecBuilder(
-        style: (styleFromTheme ?? XButtonStyle.base)
-            .merge(style)
-            .applyVariants(variants),
-        builder: (context) {
-          final spec = ButtonSpec.of(context);
-
-          return spec.container(child: _buildChildren(spec));
-        },
-      ),
-    );
+    return spec.container(child: _buildChildren(spec));
   }
 }

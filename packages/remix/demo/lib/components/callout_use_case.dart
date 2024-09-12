@@ -8,7 +8,7 @@ final _key = GlobalKey();
 
 @widgetbook.UseCase(
   name: 'Callout Component',
-  type: XCallout,
+  type: Callout,
 )
 Widget buildCalloutUseCase(BuildContext context) {
   return KeyedSubtree(
@@ -16,7 +16,7 @@ Widget buildCalloutUseCase(BuildContext context) {
     child: Center(
       child: SizedBox(
         width: 300,
-        child: XCallout(
+        child: Callout(
           variants: [
             context.knobs.variant(XCalloutThemeVariant.values),
           ],

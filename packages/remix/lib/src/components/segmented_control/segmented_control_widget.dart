@@ -42,7 +42,7 @@ class _XSegmentedControlState extends State<XSegmentedControl> {
   @override
   Widget build(BuildContext context) {
     final styleFromTheme =
-        RemixThemeProvider.maybeOf(context)?.segmentedControl;
+        _RemixThemeProvider.maybeOf(context)?.segmentedControl;
 
     final style = (styleFromTheme ?? XSegmentedControlStyle.base)
         .merge(widget.style)

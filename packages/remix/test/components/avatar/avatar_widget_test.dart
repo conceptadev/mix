@@ -13,7 +13,7 @@ void main() {
       final image = MemoryImage(Uint8List.fromList([1, 2, 3]));
       await tester.pumpWidget(
         MaterialApp(
-          home: XAvatar(
+          home: Avatar(
             image: image,
             fallbackBuilder: (spec) => spec(''),
           ),
@@ -28,7 +28,7 @@ void main() {
       const image = NetworkImage('https://example.com/invalid.jpg');
       await tester.pumpWidget(
         MaterialApp(
-          home: XAvatar(
+          home: Avatar(
             image: image,
             fallbackBuilder: (spec) => spec('AB'),
           ),
@@ -50,7 +50,7 @@ void main() {
 
       await tester.pumpWidget(
         MaterialApp(
-          home: XAvatar(
+          home: Avatar(
             style: style,
             fallbackBuilder: (TextSpec spec) => spec(''),
           ),

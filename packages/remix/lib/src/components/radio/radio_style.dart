@@ -1,53 +1,43 @@
 part of 'radio.dart';
 
-final _container = $radio.container;
-final _indicator = $radio.indicator;
-final _flex = $radio.flex;
-final _text = $radio.text;
+class RadioStyle extends SpecStyle<RadioSpecUtility> {
+  const RadioStyle();
 
-class XRadioStyle {
-  static Style get base => Style(
-        _containerStyle(),
-        _indicatorStyle(),
-        _textStyle(),
-        _flexStyle(),
-      ).animate(
-        duration: const Duration(milliseconds: 100),
-        curve: Curves.easeInOutQuad,
-      );
-}
+  @override
+  Style makeStyle(SpecConfiguration<RadioSpecUtility> spec) {
+    final $ = spec.utilities;
 
-Style get _containerStyle => Style(
-      _container.chain
+    final containerStyle = [
+      $.container.chain
         ..borderRadius(99)
         ..alignment.center()
         ..size(14)
         ..border.all.width(1)
         ..border.all.color.black(),
-      $on.disabled(_container.border.color.black45()),
-      $on.dark(
-        _container.border.all.color.white(),
-        $on.disabled(_container.border.color.white60()),
+      spec.on.disabled($.container.border.color.black45()),
+      spec.on.dark(
+        $.container.border.all.color.white(),
+        spec.on.disabled($.container.border.color.white60()),
       ),
-    );
+    ];
 
-Style get _indicatorStyle => Style(
-      _indicator.chain
+    final indicatorStyle = [
+      $.indicator.chain
         ..borderRadius(99)
         ..color.black()
         ..wrap.padding.all(2)
         ..wrap.opacity(0)
         ..wrap.scale(0.5),
-      $on.selected(_indicator.wrap.opacity(1), _indicator.wrap.scale(1)),
-      $on.disabled(_indicator.color.black45()),
-      $on.dark(
-        _indicator.color.white(),
-        $on.disabled(_indicator.color.white54()),
+      spec.on.selected($.indicator.wrap.opacity(1), $.indicator.wrap.scale(1)),
+      spec.on.disabled($.indicator.color.black45()),
+      spec.on.dark(
+        $.indicator.color.white(),
+        spec.on.disabled($.indicator.color.white54()),
       ),
-    );
+    ];
 
-Style get _textStyle => Style(
-      _text.chain
+    final textStyle = [
+      $.text.chain
         ..style.fontSize(14)
         ..style.height(1)
         ..style.fontWeight.w500()
@@ -57,12 +47,24 @@ Style get _textStyle => Style(
             applyHeightToLastDescent: false,
           ),
         ),
-    );
+    ];
 
-Style get _flexStyle => Style(
-      _flex.chain
+    final flexStyle = [
+      $.flex.chain
         ..row()
         ..mainAxisAlignment.start()
         ..crossAxisAlignment.center()
         ..gap(8),
+    ];
+
+    return Style.create([
+      ...containerStyle,
+      ...indicatorStyle,
+      ...textStyle,
+      ...flexStyle,
+    ]).animate(
+      duration: const Duration(milliseconds: 100),
+      curve: Curves.easeInOutQuad,
     );
+  }
+}

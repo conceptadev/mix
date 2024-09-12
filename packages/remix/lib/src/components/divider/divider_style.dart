@@ -1,25 +1,25 @@
 part of 'divider.dart';
 
-class XProgressVariants extends Variant {
-  static const horizontal = XProgressVariants._('horizontal');
-  static const vertical = XProgressVariants._('vertical');
-  static const values = [horizontal, vertical];
+class DividerStyle extends SpecStyle<DividerSpecUtility> {
+  const DividerStyle();
 
-  const XProgressVariants._(super.name);
-}
+  static const vertical = Variant('divider.vertical');
+  static const horizontal = Variant('divider.horizontal');
 
-final _container = $divider.container;
-final _whenHorizontal = XProgressVariants.horizontal;
-final _whenVertical = XProgressVariants.vertical;
+  @override
+  Style makeStyle(SpecConfiguration<DividerSpecUtility> spec) {
+    final $ = spec.utilities;
 
-class XDividerStyle {
-  static Style get base => Style(_containerStyle());
-}
-
-Style get _containerStyle => Style(
-      _container.chain
+    final containerStyle = [
+      $.container.chain
         ..color.black12()
         ..borderRadius(99),
-      _whenHorizontal(_container.height(1)),
-      _whenVertical(_container.width(1)),
-    );
+      horizontal($.container.height(1)),
+      vertical($.container.width(1)),
+    ];
+
+    return Style.create([
+      ...containerStyle,
+    ]);
+  }
+}

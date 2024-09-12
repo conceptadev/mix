@@ -9,18 +9,18 @@ void main() {
 
     testWidgets('renders with custom label', (WidgetTester tester) async {
       await tester.pumpWidget(
-        const MaterialApp(home: XCallout(text: 'Test Callout')),
+        const MaterialApp(home: Callout(text: 'Test Callout')),
       );
 
       expect(find.text('Test Callout'), findsOneWidget);
-      expect(find.byType(XCallout), findsOneWidget);
+      expect(find.byType(Callout), findsOneWidget);
     });
 
     testWidgets('renders with custom icon', (WidgetTester tester) async {
       const icon = Icons.abc_rounded;
       await tester.pumpWidget(
         const MaterialApp(
-          home: XCallout(
+          home: Callout(
             text: 'Test Callout',
             icon: icon,
           ),
@@ -39,14 +39,14 @@ void main() {
 
       await tester.pumpWidget(
         MaterialApp(
-          home: XCallout(
+          home: Callout(
             text: 'Test Callout',
             style: customStyle,
           ),
         ),
       );
 
-      final badgeFinder = find.byType(XCallout);
+      final badgeFinder = find.byType(Callout);
       expect(badgeFinder, findsOneWidget);
 
       final container = find.descendant(

@@ -1,24 +1,31 @@
 part of 'progress.dart';
 
-final _container = $progress.container;
-final _track = $progress.track;
-final _fill = $progress.fill;
-final _outerContainer = $progress.outerContainer;
+class ProgressStyle extends SpecStyle<ProgressSpecUtility> {
+  const ProgressStyle();
 
-class XProgressStyle {
-  static Style get base => Style(
-        _containerStyle(),
-        _trackStyle(),
-        _fillStyle(),
-      );
-}
+  @override
+  Style makeStyle(SpecConfiguration<ProgressSpecUtility> spec) {
+    final $ = spec.utilities;
 
-Style get _containerStyle => Style(
-      _container.chain
+    final containerStyle = [
+      $.container.chain
         ..height(6)
         ..clipBehavior.antiAlias()
         ..borderRadius(99),
-    );
-Style get _trackStyle => Style(_track.color.black12());
+    ];
 
-Style get _fillStyle => Style(_fill.color.black());
+    final trackStyle = [
+      $.track.color.black12(),
+    ];
+
+    final fillStyle = [
+      $.fill.color.black(),
+    ];
+
+    return Style.create([
+      ...containerStyle,
+      ...trackStyle,
+      ...fillStyle,
+    ]);
+  }
+}

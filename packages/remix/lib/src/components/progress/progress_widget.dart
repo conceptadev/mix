@@ -17,7 +17,7 @@ class XProgress extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final styleFromTheme = RemixThemeProvider.maybeOf(context)?.progress;
+    final styleFromTheme = _RemixThemeProvider.maybeOf(context)?.progress;
 
     return SpecBuilder(
       style: (styleFromTheme ?? XProgressStyle.base)

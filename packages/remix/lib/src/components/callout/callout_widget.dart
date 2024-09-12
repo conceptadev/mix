@@ -1,12 +1,12 @@
 part of 'callout.dart';
 
-class XCallout extends StatelessWidget {
-  const XCallout({
+class Callout extends StatelessWidget {
+  const Callout({
     super.key,
     this.icon,
     required this.text,
     this.variants = const [],
-    this.style = const Style.empty(),
+    this.style,
   });
 
   final String text;
@@ -16,16 +16,16 @@ class XCallout extends StatelessWidget {
   /// Additional custom styling for the callout.
   ///
   /// This allows you to override or extend the default callout styling.
-  final Style style;
+  final CalloutStyle? style;
 
   @override
   Widget build(BuildContext context) {
-    final styleFromTheme = RemixThemeProvider.maybeOf(context)?.callout;
+    final style = this.style ?? context.remix.components.callout;
+
+    final configuration = SpecConfiguration(context, CalloutSpecUtility.self);
 
     return SpecBuilder(
-      style: (styleFromTheme ?? XCalloutStyle.base)
-          .merge(style)
-          .applyVariants(variants),
+      style: style.makeStyle(configuration).applyVariants(variants),
       builder: (context) {
         final spec = CalloutSpec.of(context);
 

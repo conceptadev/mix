@@ -6,11 +6,11 @@ import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
 @widgetbook.UseCase(
   name: 'Badge Component',
-  type: XBadge,
+  type: Badge,
 )
 Widget buildAvatarUseCase(BuildContext context) {
   return Center(
-    child: XBadge(
+    child: Badge(
       variants: [
         context.knobs.variant(XBadgeThemeVariant.values),
       ],

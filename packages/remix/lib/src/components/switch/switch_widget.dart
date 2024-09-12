@@ -53,7 +53,8 @@ class _RxBlankSwitchState extends State<XSwitch> {
 
   @override
   Widget build(BuildContext context) {
-    final styleFromTheme = RemixThemeProvider.maybeOf(context)?.switchComponent;
+    final styleFromTheme =
+        _RemixThemeProvider.maybeOf(context)?.switchComponent;
 
     return Pressable(
       enabled: !widget.disabled,

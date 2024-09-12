@@ -8,7 +8,7 @@ void main() {
     testWidgets('renders label correctly', (WidgetTester tester) async {
       await tester.pumpWidget(
         MaterialApp(
-          home: XButton(
+          home: Button(
             label: 'Test Button',
             onPressed: () {},
           ),
@@ -22,7 +22,7 @@ void main() {
       bool wasTapped = false;
       await tester.pumpWidget(
         MaterialApp(
-          home: XButton(
+          home: Button(
             label: 'Test Button',
             onPressed: () {
               wasTapped = true;
@@ -31,7 +31,7 @@ void main() {
         ),
       );
 
-      await tester.tap(find.byType(XButton));
+      await tester.tap(find.byType(Button));
       expect(wasTapped, isTrue);
     });
 
@@ -40,7 +40,7 @@ void main() {
       bool wasTapped = false;
       await tester.pumpWidget(
         MaterialApp(
-          home: XButton(
+          home: Button(
             label: 'Test Button',
             onPressed: () {
               wasTapped = true;
@@ -50,7 +50,7 @@ void main() {
         ),
       );
 
-      await tester.tap(find.byType(XButton));
+      await tester.tap(find.byType(Button));
       expect(wasTapped, isFalse);
     });
 
@@ -58,7 +58,7 @@ void main() {
         (WidgetTester tester) async {
       await tester.pumpWidget(
         MaterialApp(
-          home: XButton(
+          home: Button(
             label: 'Test Button',
             onPressed: () {},
             loading: true,
@@ -75,7 +75,7 @@ void main() {
     testWidgets('renders left icon correctly', (WidgetTester tester) async {
       await tester.pumpWidget(
         MaterialApp(
-          home: XButton(
+          home: Button(
             label: 'Test Button',
             onPressed: () {},
             iconLeft: Icons.add,
@@ -89,7 +89,7 @@ void main() {
     testWidgets('renders right icon correctly', (WidgetTester tester) async {
       await tester.pumpWidget(
         MaterialApp(
-          home: XButton(
+          home: Button(
             label: 'Test Button',
             onPressed: () {},
             iconRight: Icons.arrow_forward,
@@ -106,7 +106,7 @@ void main() {
 
       await tester.pumpWidget(
         MaterialApp(
-          home: XButton(
+          home: Button(
             label: 'Test Button',
             onPressed: () {},
             loading: true,

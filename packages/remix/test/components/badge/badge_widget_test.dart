@@ -10,12 +10,12 @@ void main() {
     testWidgets('renders the label', (WidgetTester tester) async {
       await tester.pumpWidget(
         const MaterialApp(
-          home: XBadge(label: 'Test'),
+          home: Badge(label: 'Test'),
         ),
       );
 
       expect(find.text('Test'), findsOneWidget);
-      expect(find.byType(XBadge), findsOneWidget);
+      expect(find.byType(Badge), findsOneWidget);
     });
 
     testWidgets('applies custom style', (WidgetTester tester) async {
@@ -27,14 +27,14 @@ void main() {
 
       await tester.pumpWidget(
         MaterialApp(
-          home: XBadge(
+          home: Badge(
             label: 'Custom',
             style: customStyle,
           ),
         ),
       );
 
-      final badgeFinder = find.byType(XBadge);
+      final badgeFinder = find.byType(Badge);
       expect(badgeFinder, findsOneWidget);
 
       final container = find.descendant(

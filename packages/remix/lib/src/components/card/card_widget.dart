@@ -19,7 +19,7 @@ class XCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final styleFromTheme = RemixThemeProvider.maybeOf(context)?.card;
+    final styleFromTheme = _RemixThemeProvider.maybeOf(context)?.card;
 
     return SpecBuilder(
       style: (styleFromTheme ?? XCardStyle.base)
@@ -28,10 +28,26 @@ class XCard extends StatelessWidget {
       builder: (context) {
         final spec = CardSpec.of(context);
 
-        return spec.container(
-          child: spec.flex(direction: Axis.vertical, children: children),
-        );
+        return CardSpecWidget(spec: spec, children: children);
       },
+    );
+  }
+}
+
+class CardSpecWidget extends StatelessWidget {
+  const CardSpecWidget({
+    super.key,
+    required this.spec,
+    required this.children,
+  });
+
+  final CardSpec? spec;
+  final List<Widget> children;
+
+  @override
+  Widget build(BuildContext context) {
+    return spec!.container(
+      child: spec!.flex(direction: Axis.vertical, children: children),
     );
   }
 }

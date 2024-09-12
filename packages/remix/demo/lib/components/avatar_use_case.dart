@@ -8,7 +8,7 @@ final _key = GlobalKey();
 
 @widgetbook.UseCase(
   name: 'Avatar Component',
-  type: XAvatar,
+  type: Avatar,
 )
 Widget buildAvatarUseCase(BuildContext context) {
   final imageUrl = context.knobs.string(
@@ -22,7 +22,7 @@ Widget buildAvatarUseCase(BuildContext context) {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          XAvatar(
+          Avatar(
             variants: [
               context.knobs.variant(AvatarThemeVariant.values),
             ],

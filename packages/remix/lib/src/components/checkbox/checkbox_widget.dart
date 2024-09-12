@@ -60,7 +60,7 @@ class _XCheckboxState extends State<XCheckbox> {
 
   @override
   Widget build(BuildContext context) {
-    final styleFromTheme = RemixThemeProvider.maybeOf(context)?.checkbox;
+    final styleFromTheme = _RemixThemeProvider.maybeOf(context)?.checkbox;
 
     return Pressable(
       enabled: !widget.disabled,

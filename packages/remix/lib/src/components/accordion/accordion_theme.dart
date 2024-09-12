@@ -1,16 +1,17 @@
 part of 'accordion.dart';
 
-class XAccordionThemeStyle extends XAccordionStyle {
-  static Style get value => Style(
-        XAccordionStyle.base(),
-        _lightVariant(),
-        $on.dark(_darkVariant()),
-      ).animate(curve: Curves.decelerate);
-}
+class FortalezaAccordionStyle extends AccordionStyle {
+  const FortalezaAccordionStyle();
 
-Style get _lightVariant => Style(
+  @override
+  Style makeStyle(SpecConfiguration<AccordionSpecUtility> spec) {
+    final $ = spec.utilities;
+
+    final baseStyle = super.makeStyle(spec);
+
+    final lightVariant = Style(
       // Container
-      _container.chain
+      $.container.chain
         ..border.all.color.$neutral(2)
         ..shape.roundedRectangle.borderRadius(6)
         ..shape.roundedRectangle.side.width(1)
@@ -22,47 +23,51 @@ Style get _lightVariant => Style(
         ..color.$neutral(2),
 
       // Header
-      _header.chain
+      $.header.chain
         ..container.padding.horizontal.$space(4)
         ..text.style.fontWeight.w400()
         ..text.style.color.$neutral(12)
         ..trailingIcon.color.$neutral(10)
         ..container.color.$white(),
 
-      _contentContainer.chain
+      $.contentContainer.chain
         ..padding.all.$space(3)
         ..border.style.none()
         ..border.top.color.$neutral(6),
 
       // Text Container
-      _textContent.chain
+      $.textContent.chain
         ..style.color.$neutral(10)
         ..style.fontWeight.w300(),
 
       // Variants
-      openedVariant(_contentContainer.border.top.style.solid()),
-      $on.hover(
-        _header.container.color.$neutral(2),
-        _header.text.style.decoration.none(),
+      spec.on.selected($.contentContainer.border.top.style.solid()),
+      spec.on.hover(
+        $.header.container.color.$neutral(2),
+        $.header.text.style.decoration.none(),
       ),
     );
 
-Style get _darkVariant => Style(
-      _header.chain
-        ..container.color.$neutral(12)
-        ..text.style.color.$neutral(1),
-      _container.chain
-        ..border.all.color.$neutral(11)
-        ..border.all.color.withOpacity(0.5),
-      _contentContainer.chain
-        ..color.$neutral(12)
-        ..color.withOpacity(0.97),
-      _contentContainer.chain
-        ..border.top.color.$neutral(11)
-        ..border.color.withOpacity(0.3),
-      $on.hover(
-        _header.chain
-          ..container.color.$neutral(12)
-          ..container.color.withOpacity(0.97),
-      ),
-    );
+    // final darkVariant = Style(
+    //   $.header.chain
+    //     ..container.color.$neutral(12)
+    //     ..text.style.color.$neutral(1),
+    //   $.container.chain
+    //     ..border.all.color.$neutral(11)
+    //     ..border.all.color.withOpacity(0.5),
+    //   $.contentContainer.chain
+    //     ..color.$neutral(12)
+    //     ..color.withOpacity(0.97),
+    //   $.contentContainer.chain
+    //     ..border.top.color.$neutral(11)
+    //     ..border.color.withOpacity(0.3),
+    //   spec.on.hover(
+    //     $.header.chain
+    //       ..container.color.$neutral(12)
+    //       ..container.color.withOpacity(0.97),
+    //   ),
+    // );
+
+    return Style.create([baseStyle(), lightVariant()]);
+  }
+}

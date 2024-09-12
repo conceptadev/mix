@@ -14,7 +14,7 @@ class XDivider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final styleFromTheme = RemixThemeProvider.maybeOf(context)?.divider;
+    final styleFromTheme = _RemixThemeProvider.maybeOf(context)?.divider;
     final axisVariant = axis == Axis.horizontal
         ? XProgressVariants.horizontal
         : XProgressVariants.vertical;

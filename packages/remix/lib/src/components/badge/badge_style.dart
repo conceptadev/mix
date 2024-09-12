@@ -2,23 +2,23 @@
 
 part of 'badge.dart';
 
-final _container = $badge.container;
-final _label = $badge.label;
+class BadgeStyle extends SpecStyle<BadgeSpecUtility> {
+  const BadgeStyle();
 
-class XBadgeStyle {
-  static final Style base = Style(_containerStyle(), _labelStyle());
-}
+  @override
+  Style makeStyle(SpecConfiguration<BadgeSpecUtility> spec) {
+    final $ = spec.utilities;
 
-Style get _containerStyle => Style(
-      _container.chain
+    final containerStyle = [
+      $.container.chain
         ..color.black()
         ..borderRadius.all(10)
         ..padding.horizontal(10)
         ..padding.vertical(2),
-    );
+    ];
 
-Style get _labelStyle => Style(
-      _label.chain
+    final labelStyle = [
+      $.label.chain
         ..textHeightBehavior(
           const TextHeightBehavior(
             applyHeightToFirstAscent: false,
@@ -30,4 +30,8 @@ Style get _labelStyle => Style(
         ..style.fontWeight.w500()
         ..style.fontSize(12)
         ..style.color.white(),
-    );
+    ];
+
+    return Style.create([...containerStyle, ...labelStyle]);
+  }
+}

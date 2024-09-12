@@ -37,7 +37,7 @@ mixin _$SpinnerSpec on Spec<SpinnerSpec> {
     double? strokeWidth,
     Color? color,
     Duration? duration,
-    SpinnerStyle? style,
+    SpinnerTypeStyle? style,
     WidgetModifiersData? modifiers,
     AnimatedData? animated,
   }) {
@@ -136,7 +136,7 @@ final class SpinnerSpecAttribute extends SpecAttribute<SpinnerSpec>
   final double? strokeWidth;
   final ColorDto? color;
   final Duration? duration;
-  final SpinnerStyle? style;
+  final SpinnerTypeStyle? style;
 
   const SpinnerSpecAttribute({
     this.size,
@@ -267,7 +267,7 @@ class SpinnerSpecUtility<T extends Attribute>
     double? strokeWidth,
     ColorDto? color,
     Duration? duration,
-    SpinnerStyle? style,
+    SpinnerTypeStyle? style,
     WidgetModifiersDataDto? modifiers,
     AnimatedDataDto? animated,
   }) {

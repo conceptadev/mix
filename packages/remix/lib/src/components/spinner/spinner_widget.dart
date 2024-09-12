@@ -12,7 +12,7 @@ class XSpinner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final styleFromTheme = RemixThemeProvider.maybeOf(context)?.spinner;
+    final styleFromTheme = _RemixThemeProvider.maybeOf(context)?.spinner;
 
     return SpecBuilder(
       style: (styleFromTheme ?? XSpinnerStyle.base)
@@ -70,7 +70,7 @@ class _XSpinnerSpecWidgetState extends State<XSpinnerSpecWidget>
     final color = spec.color;
     final strokeWidth = spec.strokeWidth ?? 1;
     final size = spec.size;
-    final painter = spec.style == SpinnerStyle.dotted
+    final painter = spec.style == SpinnerTypeStyle.dotted
         ? DottedSpinnerPainter(
             animation: controller,
             strokeWidth: strokeWidth,

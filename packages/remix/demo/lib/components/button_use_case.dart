@@ -9,7 +9,7 @@ final _key = GlobalKey();
 
 @widgetbook.UseCase(
   name: 'Button Component',
-  type: XButton,
+  type: Button,
 )
 Widget buildButtonUseCase(BuildContext context) {
   return KeyedSubtree(
@@ -17,9 +17,9 @@ Widget buildButtonUseCase(BuildContext context) {
     child: Wrap(
       spacing: 12,
       children: [
-        XButton(
+        Button(
           variants: [
-            context.knobs.variant(ButtonThemeVariant.values),
+            context.knobs.variant(FortalezaButtonStyle.variants),
           ],
           label: context.knobs.string(
             label: 'Title',

@@ -7,13 +7,13 @@ import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
 @widgetbook.UseCase(
   name: 'Accordion Component',
-  type: XAccordion,
+  type: Accordion,
 )
 Widget buildAccordionUseCase(BuildContext context) {
   return Center(
     child: SizedBox(
       width: 300,
-      child: XAccordion(
+      child: Accordion(
         header: (spec) => XAccordionHeaderSpecWidget(
           title: context.knobs.string(
             label: 'Title',

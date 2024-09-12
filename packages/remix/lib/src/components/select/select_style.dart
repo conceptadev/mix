@@ -1,42 +1,35 @@
 part of 'select.dart';
 
-final _button = $select.button;
-final _menu = $select.menu;
-final _item = $select.item;
-final _position = $select.position;
+class SelectStyle extends SpecStyle<SelectSpecUtility> {
+  const SelectStyle();
 
-class XSelectStyle {
-  static Style get base => Style(
-        _itemStyle(),
-        _buttonStyle(),
-        _menuStyle(),
-        _positionStyle(),
-      );
-}
+  @override
+  Style makeStyle(SpecConfiguration<SelectSpecUtility> spec) {
+    final $ = spec.utilities;
 
-Style get _positionStyle => Style(
-      _position.targetAnchor.bottomCenter(),
-      _position.followerAnchor.topCenter(),
-      _position.offset(0, 4),
-    );
+    final positionStyle = [
+      $.position.targetAnchor.bottomCenter(),
+      $.position.followerAnchor.topCenter(),
+      $.position.offset(0, 4),
+    ];
 
-Style get _buttonStyle => Style(
-      _button.flex.mainAxisAlignment.spaceBetween(),
-      _button.container.chain
+    final buttonStyle = [
+      $.button.flex.mainAxisAlignment.spaceBetween(),
+      $.button.container.chain
         ..color.white()
         ..padding.all(10)
         ..border.color.black12()
         ..borderRadius(6),
-      _button.icon.chain
+      $.button.icon.chain
         ..size(20)
         ..color.black45(),
-      _button.label.chain
+      $.button.label.chain
         ..style.fontSize(14)
         ..style.color.black(),
-    );
+    ];
 
-Style get _menuStyle => Style(
-      _menu.container.chain
+    final menuStyle = [
+      $.menu.container.chain
         ..borderRadius(6)
         ..shadow.color(Colors.black.withOpacity(0.07))
         ..shadow.blurRadius(5)
@@ -47,33 +40,38 @@ Style get _menuStyle => Style(
         ..wrap.transform.scale(0.95)
         ..wrap.opacity(0)
         ..wrap.padding.top(0),
-      // Flex
-      _menu.flex.chain
+      $.menu.flex.chain
         ..mainAxisSize.min()
         ..crossAxisAlignment.start(),
-      _menu.wrap.transform.scale(1.5),
-      _menu.autoWidth.off(),
-      // Selected
-      $on.selected(
-        _menu.container.chain
+      $.menu.wrap.transform.scale(1.5),
+      $.menu.autoWidth.off(),
+      spec.on.selected(
+        $.menu.container.chain
           ..wrap.transform.scale(1)
           ..wrap.opacity(1)
           ..wrap.padding.top(4),
       ),
-    );
+    ];
 
-Style get _itemStyle => Style(
-      // Container
-      _item.container.chain
+    final itemStyle = [
+      $.item.container.chain
         ..borderRadius(6)
         ..padding.vertical(8)
         ..padding.horizontal(6)
         ..width.infinity(),
-      // Text
-      _item.text.chain
+      $.item.text.chain
         ..style.color.black()
         ..style.fontSize(14),
-      _item.icon.size(20),
-      _item.flex.gap(6),
-      $on.hover(_item.container.color.black12()),
-    );
+      $.item.icon.size(20),
+      $.item.flex.gap(6),
+      spec.on.hover($.item.container.color.black12()),
+    ];
+
+    return Style.create([
+      ...itemStyle,
+      ...buttonStyle,
+      ...menuStyle,
+      ...positionStyle,
+    ]);
+  }
+}

@@ -31,6 +31,11 @@ base class CardSpec extends Spec<CardSpec> with _$CardSpec, Diagnosticable {
     super.animated,
   })  : container = container ?? const BoxSpec(),
         flex = flex ?? const FlexSpec();
+
+  Widget call({Key? key, required List<Widget> children}) {
+    return CardSpecWidget(key: key, spec: this, children: children);
+  }
+
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);

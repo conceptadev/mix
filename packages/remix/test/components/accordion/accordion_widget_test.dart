@@ -9,7 +9,7 @@ void main() {
         (WidgetTester tester) async {
       await tester.pumpWidget(
         MaterialApp(
-          home: XAccordion(
+          home: Accordion(
             header: (spec) => XAccordionHeaderSpecWidget(
               title: 'Test Accordion',
               spec: spec,
@@ -29,7 +29,7 @@ void main() {
     testWidgets('renders with custom icons', (WidgetTester tester) async {
       await tester.pumpWidget(
         MaterialApp(
-          home: XAccordion(
+          home: Accordion(
             header: (spec) => XAccordionHeaderSpecWidget(
               title: 'Custom Icons',
               spec: spec,
@@ -70,7 +70,7 @@ void main() {
 
       await tester.pumpWidget(
         MaterialApp(
-          home: XAccordion(
+          home: Accordion(
             header: (spec) => XAccordionHeaderSpecWidget(
               spec: spec,
               title: 'Styled Accordion',

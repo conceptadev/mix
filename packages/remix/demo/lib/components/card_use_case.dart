@@ -22,7 +22,7 @@ Widget buildCard(BuildContext context) {
         context.knobs.variant(CardThemeVariant.values),
       ],
       children: [
-        XAvatar(
+        Avatar(
           fallbackBuilder: (spec) => spec('LF'),
           variants: const [AvatarThemeVariant.soft],
         ),

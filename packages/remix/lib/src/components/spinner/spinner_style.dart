@@ -2,11 +2,22 @@
 
 part of 'spinner.dart';
 
-class XSpinnerStyle {
-  static Style get base => Style(
-        $spinner.chain
-          ..size.call(24)
-          ..strokeWidth.call(1.5)
-          ..color.black(),
-      );
+class SpinnerStyle extends SpecStyle<SpinnerSpecUtility> {
+  const SpinnerStyle();
+
+  @override
+  Style makeStyle(SpecConfiguration<SpinnerSpecUtility> spec) {
+    final $ = spec.utilities;
+
+    final spinnerStyle = [
+      $.chain
+        ..size(24)
+        ..strokeWidth(1.5)
+        ..color.black(),
+    ];
+
+    return Style.create([
+      ...spinnerStyle,
+    ]);
+  }
 }

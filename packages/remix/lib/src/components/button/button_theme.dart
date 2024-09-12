@@ -1,178 +1,104 @@
 part of 'button.dart';
 
-class ButtonThemeVariant extends Variant {
-  static const solid = ButtonThemeVariant('solid');
-  static const soft = ButtonThemeVariant('soft');
-  static const outline = ButtonThemeVariant('outline');
-  static const surface = ButtonThemeVariant('surface');
-  static const ghost = ButtonThemeVariant('ghost');
+class FortalezaButtonStyle extends ButtonStyle {
+  static const solid = Variant('for.button.solid');
+  static const soft = Variant('for.button.soft');
+  static const outline = Variant('for.button.outline');
+  static const surface = Variant('for.button.surface');
+  static const ghost = Variant('for.button.ghost');
 
-  static const values = [solid, soft, outline, surface, ghost];
+  const FortalezaButtonStyle();
 
-  const ButtonThemeVariant(String value) : super('button.$value');
-}
+  static List<Variant> get variants => [solid, soft, outline, surface, ghost];
 
-class XButtonThemeStyle extends XButtonStyle {
-  static Style get value => Style(
-        XButtonStyle.base(),
-        _tokenOverrides(),
-        _onDisabledForeground(),
+  @override
+  Style makeStyle(SpecConfiguration<ButtonSpecUtility> spec) {
+    final $ = spec.utilities;
 
-        // Type variants
-        ButtonThemeVariant.solid(_solidVariant()),
-        ButtonThemeVariant.surface(_surfaceVariant()),
-        ButtonThemeVariant.soft(_softVariant()),
-        ButtonThemeVariant.outline(_outlineVariant()),
-        ButtonThemeVariant.ghost(_ghostVariant()),
-      );
-}
+    final baseStyle = super.makeStyle(spec);
+    final baseOverrides = Style(
+      baseStyle(),
+      $.container.chain
+        ..padding.vertical.$space(2)
+        ..padding.horizontal.$space(3),
+      $.flex.gap.$space(2),
+      $.label.style.$text(2),
+      $.icon.size(14),
+      $.spinner.size(14),
+    );
 
-Style get _onDisabledForeground {
-  return Style(
-    $on.disabled(
-      _icon.color.$neutralAlpha(7),
-      _label.style.color.$neutralAlpha(7),
-      _spinner.color.$neutralAlpha(7),
-    ),
-  );
-}
+    final onDisabledForeground = $on.disabled(
+      $.container.color.$neutralAlpha(7),
+      $.label.style.color.$neutralAlpha(7),
+      $.spinner.color.$neutralAlpha(7),
+    );
 
-Style get _tokenOverrides {
-  return Style(
-    _container.chain
-      ..padding.vertical.$space(2)
-      ..padding.horizontal.$space(3),
-    _flex.gap.$space(2),
-    _label.style.$text(2),
-    _icon.size(14),
-    _spinner.size(14),
-  );
-}
+    final spinnerDisabled = $.spinner.color.$neutralAlpha(7);
 
-Style get _solidVariant {
-  return Style(
-    _container.color.$accent(),
-    _label.style.color.white(),
-    _spinner.color.white(),
-    _icon.color.white(),
-    $on.hover(_container.color.$accent(10)),
-    $on.disabled(_container.color.$neutralAlpha(3), _spinnerDisable()),
-  );
-}
+    final solidVariant = Style(
+      $.container.color.$accent(),
+      $.label.style.color.white(),
+      $.spinner.color.white(),
+      $.icon.color.white(),
+      spec.on.hover($.container.color.$accent(10)),
+      spec.on.disabled($.container.color.$neutralAlpha(3), spinnerDisabled),
+    );
 
-Style get _softVariant {
-  return Style(
-    _container.color.$accentAlpha(3),
-    _label.style.color.$accentAlpha(11),
-    _spinner.color.$accentAlpha(11),
-    _icon.color.$accentAlpha(11),
-    $on.hover(_container.color.$accentAlpha(4)),
-    $on.disabled(_container.color.$neutralAlpha(3)),
-    $on.dark(_softOnDark()),
-  );
-}
+    final softVariant = Style(
+      $.container.color.$accentAlpha(3),
+      $.label.style.color.$accentAlpha(11),
+      $.spinner.color.$accentAlpha(11),
+      $.icon.color.$accentAlpha(11),
+      spec.on.hover($.container.color.$accentAlpha(4)),
+      spec.on.disabled($.container.color.$neutralAlpha(3)),
+    );
 
-Style get _softOnDark {
-  return Style(
-    _container.color.$accent(12),
-    _label.style.color.$accent(8),
-    _icon.color.$accent(8),
-    $on.hover(_container.color.$accentAlpha(12)),
-    $on.disabled(
-      _container.color.$neutral(12),
-      _icon.color.$neutral(10),
-      _label.style.color.$neutral(10),
-      _spinner.color.$neutral(11),
-    ),
-  );
-}
+    final outlineVariant = Style(
+      $.container.chain
+        ..color.transparent()
+        ..border.width(1)
+        ..border.strokeAlign(0)
+        ..border.color.$accentAlpha(8),
+      $.spinner.color.$accentAlpha(11),
+      $.icon.color.$accentAlpha(11),
+      $.label.style.color.$accentAlpha(11),
+      spec.on.hover($.container.color.$accentAlpha(2)),
+      spec.on.disabled(
+        $.container.chain
+          ..border.color.$neutralAlpha(8)
+          ..color.transparent(),
+      ),
+    );
 
-Style get _outlineVariant {
-  return Style(
-    _container.chain
-      ..color.transparent()
-      ..border.width(1)
-      ..border.strokeAlign(0)
-      ..border.color.$accentAlpha(8),
-    _spinner.color.$accentAlpha(11),
-    _icon.color.$accentAlpha(11),
-    _label.style.color.$accentAlpha(11),
-    $on.hover(_container.color.$accentAlpha(2)),
-    $on.disabled(
-      _container.chain
-        ..border.color.$neutralAlpha(8)
-        ..color.transparent(),
-    ),
-    $on.dark(_outlineOnDark()),
-  );
-}
+    final surfaceVariant = Style(
+      outlineVariant(),
+      $.container.color.$accentAlpha(3),
+      spec.on.hover(
+        $.container.color.$accentAlpha(4),
+        $.container.border.color.$accentAlpha(8),
+      ),
+      spec.on.disabled($.container.color.$neutralAlpha(2)),
+    );
 
-Style get _outlineOnDark {
-  return Style(
-    _label.style.color.$accent(8),
-    _icon.color.$accent(8),
-    _container.border.color.$accent(11),
-    $on.hover(_container.color.$accentAlpha(12)),
-    $on.disabled(
-      _container.border.color.$neutral(11),
-      _icon.color.$neutral(10),
-      _label.style.color.$neutral(10),
-      _spinnerDisable(),
-    ),
-  );
-}
+    final ghostVariant = Style(
+      $.container.border.style.none(),
+      $.container.color.transparent(),
+      $.spinner.color.$accentAlpha(11),
+      $.icon.color.$accentAlpha(11),
+      $.label.style.color.$accentAlpha(11),
+      spec.on.hover($.container.color.$accentAlpha(3)),
+    );
 
-Style get _surfaceVariant {
-  return Style(
-    _outlineVariant(),
-    _container.color.$accentAlpha(3),
-    $on.hover(
-      _container.color.$accentAlpha(4),
-      _container.border.color.$accentAlpha(8),
-    ),
-    $on.disabled(_container.color.$neutralAlpha(2)),
-    $on.dark(_surfaceOnDark()),
-  );
-}
-
-Style get _surfaceOnDark {
-  return Style(
-    _outlineOnDark(),
-    _container.color.$accent(12),
-    $on.hover(
-      _container.color.$accent(12),
-      _container.border.color.$accent(11),
-    ),
-    $on.disabled(_container.color.$neutral(12), _spinnerDisable()),
-  );
-}
-
-Style get _ghostVariant {
-  return Style(
-    _container.border.style.none(),
-    _container.color.transparent(),
-    _spinner.color.$accentAlpha(11),
-    _icon.color.$accentAlpha(11),
-    _label.style.color.$accentAlpha(11),
-    $on.hover(_container.color.$accentAlpha(3)),
-    $on.dark(_ghostOnDark()),
-  );
-}
-
-Style get _ghostOnDark {
-  return Style(
-    _container.color.transparent(),
-    _label.style.color.$accent(8),
-    _icon.color.$accent(8),
-    $on.disabled(
-      _container.color.transparent(),
-      _label.style.color.$neutral(11),
-      _icon.color.$neutral(11),
-      _spinnerDisable(),
-    ),
-  );
-}
-
-Style get _spinnerDisable {
-  return Style(_spinner.color.$neutral(11));
+    return Style.create(
+      [
+        baseOverrides(),
+        onDisabledForeground,
+        solid(solidVariant()),
+        soft(softVariant()),
+        outline(outlineVariant()),
+        surface(surfaceVariant()),
+        ghost(ghostVariant()),
+      ],
+    );
+  }
 }

@@ -61,7 +61,7 @@ class _XRadioState<T> extends State<XRadio<T>> {
 
   @override
   Widget build(BuildContext context) {
-    final styleFromTheme = RemixThemeProvider.maybeOf(context)?.radio;
+    final styleFromTheme = _RemixThemeProvider.maybeOf(context)?.radio;
 
     return Pressable(
       enabled: !widget.disabled,

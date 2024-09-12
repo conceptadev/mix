@@ -1,7 +1,7 @@
 part of 'select.dart';
 
-typedef XSelectButtonBuilder = XComponentBuilder<SelectButtonSpec>;
-typedef XSelectMenuBuilder = XComponentBuilder<SelectMenuSpec>;
+typedef XSelectButtonBuilder = WidgetSpecBuilder<SelectButtonSpec>;
+typedef XSelectMenuBuilder = WidgetSpecBuilder<SelectMenuSpec>;
 
 class XSelectMenuItem<T> {
   final T value;
@@ -61,7 +61,7 @@ class XSelectState<T> extends State<XSelect<T>>
 
   @override
   Widget build(BuildContext context) {
-    final styleFromTheme = RemixThemeProvider.maybeOf(context)?.select;
+    final styleFromTheme = _RemixThemeProvider.maybeOf(context)?.select;
 
     return SpecBuilder(
       style: (styleFromTheme ?? XSelectStyle.base)
