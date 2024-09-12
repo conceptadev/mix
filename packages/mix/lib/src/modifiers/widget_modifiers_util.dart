@@ -1,5 +1,3 @@
-import 'mouse_cursor_modifier.dart';
-
 import '../core/attribute.dart';
 import '../core/modifier.dart';
 import '../core/utility.dart';
@@ -9,6 +7,7 @@ import 'clip_widget_modifier.dart';
 import 'flexible_widget_modifier.dart';
 import 'fractionally_sized_box_widget_modifier.dart';
 import 'intrinsic_widget_modifier.dart';
+import 'mouse_cursor_modifier.dart';
 import 'opacity_widget_modifier.dart';
 import 'padding_widget_modifier.dart';
 import 'rotated_box_widget_modifier.dart';

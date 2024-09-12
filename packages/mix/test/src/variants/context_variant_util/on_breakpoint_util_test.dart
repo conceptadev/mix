@@ -17,7 +17,7 @@ void main() {
     const mediumScreenWidth = Size(1240, 768);
     const largeScreenWidth = Size(1440, 900);
     testWidgets('xSmall screen context variant', (tester) async {
-      await tester.pumpWidget(createMediaQuery(xSmallScreenWidth));
+      await tester.pumpWidget(createMediaQuery(size: xSmallScreenWidth));
       var context = tester.element(find.byType(Container));
 
       expect(onXSmall.when(context), true, reason: 'xsmall');
@@ -59,7 +59,7 @@ void main() {
 
     testWidgets('small screen context variant', (tester) async {
       tester.view.physicalSize = smallScreenWidth;
-      await tester.pumpWidget(createMediaQuery(smallScreenWidth));
+      await tester.pumpWidget(createMediaQuery(size: smallScreenWidth));
       var context = tester.element(find.byType(Container));
 
       expect(onXSmall.when(context), false, reason: 'xsmall');
@@ -72,7 +72,7 @@ void main() {
 
     testWidgets('medium screen context variant', (tester) async {
       tester.view.physicalSize = mediumScreenWidth;
-      await tester.pumpWidget(createMediaQuery(mediumScreenWidth));
+      await tester.pumpWidget(createMediaQuery(size: mediumScreenWidth));
       var context = tester.element(find.byType(Container));
 
       expect(onXSmall.when(context), false, reason: 'xsmall');
@@ -83,7 +83,7 @@ void main() {
 
     testWidgets('large screen context variant', (tester) async {
       tester.view.physicalSize = largeScreenWidth;
-      await tester.pumpWidget(createMediaQuery(largeScreenWidth));
+      await tester.pumpWidget(createMediaQuery(size: largeScreenWidth));
       var context = tester.element(find.byType(Container));
 
       expect(onXSmall.when(context), false, reason: 'xsmall');
@@ -118,7 +118,7 @@ void main() {
       const size4 = Size(400, 400);
       tester.view.physicalSize = size1;
 
-      await tester.pumpWidget(createMediaQuery(size1));
+      await tester.pumpWidget(createMediaQuery(size: size1));
       var context = tester.element(find.byType(Container));
       const breakpoint1 = OnBreakPointVariant(
         Breakpoint(maxWidth: 100, minWidth: 50),
@@ -138,7 +138,7 @@ void main() {
 
       tester.view.physicalSize = size2;
 
-      await tester.pumpWidget(createMediaQuery(size2));
+      await tester.pumpWidget(createMediaQuery(size: size2));
 
       context = tester.element(find.byType(Container));
 
@@ -150,7 +150,7 @@ void main() {
 
       tester.view.physicalSize = size3;
 
-      await tester.pumpWidget(createMediaQuery(size3));
+      await tester.pumpWidget(createMediaQuery(size: size3));
       context = tester.element(find.byType(Container));
 
       expect(breakpoint1.when(context), false, reason: 'size3 breakpoint1');
@@ -161,7 +161,7 @@ void main() {
 
       tester.view.physicalSize = size4;
 
-      await tester.pumpWidget(createMediaQuery(size4));
+      await tester.pumpWidget(createMediaQuery(size: size4));
 
       context = tester.element(find.byType(Container));
 
