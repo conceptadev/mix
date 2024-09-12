@@ -38,7 +38,7 @@ class _CustomCardStyle extends FortalezaCardStyle {
         children: [
           Avatar(
             fallbackBuilder: (spec) => spec('LF'),
-            variants: const [AvatarThemeVariant.soft],
+            variants: FortalezaCardStyle.variants,
           ),
           Column(
             mainAxisSize: MainAxisSize.min,

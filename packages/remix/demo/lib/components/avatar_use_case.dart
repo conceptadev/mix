@@ -24,7 +24,7 @@ Widget buildAvatarUseCase(BuildContext context) {
         children: [
           Avatar(
             variants: [
-              context.knobs.variant(AvatarThemeVariant.values),
+              context.knobs.variant(FortalezaAvatarStyle.variants),
             ],
             image: imageUrl.isNotEmpty ? NetworkImage(imageUrl) : null,
             fallbackBuilder: (spec) => spec('CA'),

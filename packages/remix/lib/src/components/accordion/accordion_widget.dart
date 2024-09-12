@@ -27,12 +27,28 @@ class Accordion extends StatefulWidget {
 
 class _AccordionState extends State<Accordion> with TickerProviderStateMixin {
   late bool opened = widget.initiallyExpanded;
-  late final _controller = MixWidgetStateController();
+  late MixWidgetStateController _controller;
+  late MixWidgetStateController _contentController;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = MixWidgetStateController()..selected = opened;
+    _contentController = MixWidgetStateController()..selected = opened;
+  }
 
   void _handleTap() {
     setState(() {
       _controller.selected = !opened;
+      _contentController.selected = !opened;
     });
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    _contentController.dispose();
+    super.dispose();
   }
 
   @override
@@ -45,7 +61,7 @@ class _AccordionState extends State<Accordion> with TickerProviderStateMixin {
 
     return RepaintBoundary(
       child: SpecBuilder(
-        controller: _controller,
+        controller: _contentController,
         style: variantStyle,
         builder: (context) {
           final spec = AccordionSpec.of(context);
@@ -60,6 +76,7 @@ class _AccordionState extends State<Accordion> with TickerProviderStateMixin {
               children: [
                 Pressable(
                   onPress: _handleTap,
+                  controller: _controller,
                   child: SpecBuilder(
                     style: variantStyle,
                     builder: (context) {
