@@ -19,6 +19,7 @@ class Select<T> extends StatefulWidget {
     required this.items,
     this.variants = const [],
     this.style,
+    this.disabled = false,
   });
 
   final T value;
@@ -26,6 +27,7 @@ class Select<T> extends StatefulWidget {
   final List<Variant> variants;
   final ValueChanged<T> onChanged;
   final SelectButtonBuilder button;
+  final bool disabled;
 
   final List<SelectMenuItem<T>> items;
 
@@ -36,7 +38,8 @@ class Select<T> extends StatefulWidget {
 class SelectState<T> extends State<Select<T>>
     with SingleTickerProviderStateMixin {
   final OverlayPortalController _tooltipController = OverlayPortalController();
-  late final MixWidgetStateController _stateController;
+  late final MixWidgetStateController _menuStateController;
+  late final MixWidgetStateController _buttonStateController;
 
   final _baseAnimation = (
     duration: const Duration(milliseconds: 100),
@@ -49,24 +52,35 @@ class SelectState<T> extends State<Select<T>>
   void initState() {
     super.initState();
 
-    _stateController = MixWidgetStateController();
-    _stateController.selected = false;
+    _menuStateController = MixWidgetStateController()..selected = false;
+    _buttonStateController = MixWidgetStateController()
+      ..disabled = widget.disabled;
+  }
+
+  @override
+  void didUpdateWidget(covariant Select<T> oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    _buttonStateController.disabled = widget.disabled;
   }
 
   @override
   void dispose() {
-    _stateController.dispose();
+    _buttonStateController.dispose();
+    _menuStateController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     final style = widget.style ?? context.remix.components.select;
-
     final configuration = SpecConfiguration(context, SelectSpecUtility.self);
+    final appliedStyle =
+        style.makeStyle(configuration).applyVariants(widget.variants);
 
     return SpecBuilder(
-      style: style.makeStyle(configuration).applyVariants(widget.variants),
+      controller: _buttonStateController,
+      style: appliedStyle,
       builder: (context) {
         final button = SelectSpec.of(context).button;
         final position = SelectSpec.of(context).position;
@@ -88,28 +102,22 @@ class SelectState<T> extends State<Select<T>>
                   followerAnchor:
                       position.followerAnchor.resolve(TextDirection.ltr),
                   child: SpecBuilder(
-                    controller: _stateController,
-                    style: style
-                        .makeStyle(configuration)
-                        .applyVariants(widget.variants)
-                        .animate(
-                          duration: _baseAnimation.duration,
-                          curve: _baseAnimation.curve,
-                          onEnd: () {
-                            if (_stateController.selected == false) {
-                              _tooltipController.hide();
-                            }
-                          },
-                        ),
+                    controller: _menuStateController,
+                    style: appliedStyle.animate(
+                      duration: _baseAnimation.duration,
+                      curve: _baseAnimation.curve,
+                      onEnd: () {
+                        if (_menuStateController.selected == false) {
+                          _tooltipController.hide();
+                        }
+                      },
+                    ),
                     builder: (context) {
                       final select = SelectSpec.of(context);
-
                       final menu = select.menu;
-
                       final Container = menu.container.copyWith(
                         width: menu.autoWidth ? _link.leaderSize!.width : null,
                       );
-
                       final Flex = menu.flex;
 
                       return Container(
@@ -122,13 +130,10 @@ class SelectState<T> extends State<Select<T>>
                                 hide();
                               },
                               child: SpecBuilder(
-                                style: style
-                                    .makeStyle(configuration)
-                                    .applyVariants(widget.variants)
-                                    .animate(
-                                      duration: _baseAnimation.duration,
-                                      curve: _baseAnimation.curve,
-                                    ),
+                                style: appliedStyle.animate(
+                                  duration: _baseAnimation.duration,
+                                  curve: _baseAnimation.curve,
+                                ),
                                 builder: (context) {
                                   return item.child;
                                 },
@@ -142,7 +147,13 @@ class SelectState<T> extends State<Select<T>>
                 ),
               ]);
             },
-            child: Pressable(onPress: onTap, child: widget.button(button)),
+            child: RepaintBoundary(
+              child: Pressable(
+                enabled: !widget.disabled,
+                onPress: onTap,
+                child: widget.button(button),
+              ),
+            ),
           ),
         );
       },
@@ -155,12 +166,12 @@ class SelectState<T> extends State<Select<T>>
     }
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      _stateController.selected = true;
+      _menuStateController.selected = true;
     });
   }
 
   void hide() {
-    _stateController.selected = false;
+    _menuStateController.selected = false;
   }
 
   void onTap() {

@@ -28,7 +28,7 @@ class FortalezaAccordionStyle extends AccordionStyle {
         ..text.style.fontWeight.w400()
         ..text.style.color.$neutral(12)
         ..trailingIcon.color.$neutral(10)
-        ..container.color.$white(),
+        ..container.color.$neutral(1),
 
       $.contentContainer.chain
         ..padding.all.$space(3)
@@ -37,37 +37,20 @@ class FortalezaAccordionStyle extends AccordionStyle {
 
       // Text Container
       $.textContent.chain
-        ..style.color.$neutral(10)
+        ..style.color.$neutral(11)
         ..style.fontWeight.w300(),
 
       // Variants
       spec.on.selected($.contentContainer.border.top.style.solid()),
       spec.on.hover(
-        $.header.container.color.$neutral(2),
+        $.header.container.color.$neutral(3),
         $.header.text.style.decoration.none(),
       ),
     );
 
-    // final darkVariant = Style(
-    //   $.header.chain
-    //     ..container.color.$neutral(12)
-    //     ..text.style.color.$neutral(1),
-    //   $.container.chain
-    //     ..border.all.color.$neutral(11)
-    //     ..border.all.color.withOpacity(0.5),
-    //   $.contentContainer.chain
-    //     ..color.$neutral(12)
-    //     ..color.withOpacity(0.97),
-    //   $.contentContainer.chain
-    //     ..border.top.color.$neutral(11)
-    //     ..border.color.withOpacity(0.3),
-    //   spec.on.hover(
-    //     $.header.chain
-    //       ..container.color.$neutral(12)
-    //       ..container.color.withOpacity(0.97),
-    //   ),
-    // );
-
-    return Style.create([baseStyle(), style()]);
+    return Style.create([baseStyle(), style()]).animate(
+      duration: const Duration(milliseconds: 100),
+      curve: Curves.easeInOut,
+    );
   }
 }

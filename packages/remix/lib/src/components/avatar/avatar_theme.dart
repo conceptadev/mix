@@ -29,3 +29,25 @@ class FortalezaAvatarStyle extends AvatarStyle {
     );
   }
 }
+
+class FortalezaDarkAvatarStyle extends FortalezaAvatarStyle {
+  const FortalezaDarkAvatarStyle();
+
+  @override
+  Style makeStyle(SpecConfiguration<AvatarSpecUtility> spec) {
+    final $ = spec.utilities;
+    final baseStyle = super.makeStyle(spec);
+
+    final solid = Style($.fallback.style.color.$neutral(12));
+    final soft = Style(
+      $.container.color.$accent(3),
+      $.fallback.style.color.$accent(11),
+    );
+
+    return Style.create([
+      baseStyle(),
+      FortalezaAvatarStyle.solid(solid()),
+      FortalezaAvatarStyle.soft(soft()),
+    ]);
+  }
+}

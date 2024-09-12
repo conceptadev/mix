@@ -3,8 +3,6 @@ part of 'accordion.dart';
 typedef XAccordionHeaderBuilder = WidgetSpecBuilder<AccordionHeaderSpec>;
 typedef XAccordionContentBuilder = WidgetSpecBuilder<TextSpec>;
 
-const Variant openedVariant = Variant('accordion.opened');
-
 class Accordion extends StatefulWidget {
   const Accordion({
     super.key,
@@ -26,22 +24,21 @@ class Accordion extends StatefulWidget {
 }
 
 class _AccordionState extends State<Accordion> with TickerProviderStateMixin {
-  late bool opened = widget.initiallyExpanded;
   late MixWidgetStateController _controller;
   late MixWidgetStateController _contentController;
 
   @override
   void initState() {
     super.initState();
-    _controller = MixWidgetStateController()..selected = opened;
-    _contentController = MixWidgetStateController()..selected = opened;
+    _controller = MixWidgetStateController()
+      ..selected = widget.initiallyExpanded;
+    _contentController = MixWidgetStateController()
+      ..selected = widget.initiallyExpanded;
   }
 
   void _handleTap() {
-    setState(() {
-      _controller.selected = !opened;
-      _contentController.selected = !opened;
-    });
+    _controller.selected = !_controller.selected;
+    _contentController.selected = !_contentController.selected;
   }
 
   @override

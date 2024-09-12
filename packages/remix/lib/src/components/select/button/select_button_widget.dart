@@ -14,18 +14,23 @@ class XSelectButtonSpecWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final button = SelectSpec.of(context).button;
+    return SpecBuilder(
+      inherit: true,
+      builder: (context) {
+        final button = SelectSpec.of(context).button;
 
-    final container = button.container;
-    final label = button.label;
-    final icon = button.icon;
-    final flex = button.flex;
+        final container = button.container;
+        final label = button.label;
+        final icon = button.icon;
+        final flex = button.flex;
 
-    return container(
-      child: flex(
-        direction: Axis.horizontal,
-        children: [label(text), icon(trailingIcon)],
-      ),
+        return container(
+          child: flex(
+            direction: Axis.horizontal,
+            children: [label(text), icon(trailingIcon)],
+          ),
+        );
+      },
     );
   }
 }

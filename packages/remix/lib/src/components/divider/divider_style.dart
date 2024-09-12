@@ -1,10 +1,10 @@
 part of 'divider.dart';
 
 class DividerStyle extends SpecStyle<DividerSpecUtility> {
-  const DividerStyle();
-
   static const vertical = Variant('divider.vertical');
   static const horizontal = Variant('divider.horizontal');
+
+  const DividerStyle();
 
   @override
   Style makeStyle(SpecConfiguration<DividerSpecUtility> spec) {
@@ -18,8 +18,6 @@ class DividerStyle extends SpecStyle<DividerSpecUtility> {
       vertical($.container.width(1)),
     ];
 
-    return Style.create([
-      ...containerStyle,
-    ]);
+    return Style.create([...containerStyle]);
   }
 }

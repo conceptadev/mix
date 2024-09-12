@@ -28,9 +28,10 @@ class FortalezaButtonStyle extends ButtonStyle {
     );
 
     final onDisabledForeground = $on.disabled(
-      $.container.color.$neutralAlpha(7),
-      $.label.style.color.$neutralAlpha(7),
-      $.spinner.color.$neutralAlpha(7),
+      $.container.color.$neutral(7),
+      $.label.style.color.$neutral(8),
+      $.icon.color.$neutral(8),
+      $.spinner.color.$neutral(7),
     );
 
     final spinnerDisabled = $.spinner.color.$neutralAlpha(7);
@@ -77,7 +78,7 @@ class FortalezaButtonStyle extends ButtonStyle {
         $.container.color.$accentAlpha(4),
         $.container.border.color.$accentAlpha(8),
       ),
-      spec.on.disabled($.container.color.$neutralAlpha(2)),
+      spec.on.disabled($.container.color.$neutral(1)),
     );
 
     final ghostVariant = Style(
@@ -87,6 +88,7 @@ class FortalezaButtonStyle extends ButtonStyle {
       $.icon.color.$accentAlpha(11),
       $.label.style.color.$accentAlpha(11),
       spec.on.hover($.container.color.$accentAlpha(3)),
+      spec.on.disabled($.container.color.transparent()),
     );
 
     return Style.create(

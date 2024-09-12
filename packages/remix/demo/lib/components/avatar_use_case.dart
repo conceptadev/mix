@@ -1,4 +1,3 @@
-import 'package:demo/helpers/knob_builder.dart';
 import 'package:flutter/widgets.dart';
 import 'package:remix/remix.dart';
 import 'package:widgetbook/widgetbook.dart';
@@ -23,8 +22,8 @@ Widget buildAvatarUseCase(BuildContext context) {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Avatar(
-            variants: [
-              context.knobs.variant(FortalezaAvatarStyle.variants),
+            variants: const [
+              // context.knobs.variant(FortalezaAvatarStyle.variants),
             ],
             image: imageUrl.isNotEmpty ? NetworkImage(imageUrl) : null,
             fallbackBuilder: (spec) => spec('CA'),

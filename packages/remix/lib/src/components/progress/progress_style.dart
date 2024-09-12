@@ -14,18 +14,10 @@ class ProgressStyle extends SpecStyle<ProgressSpecUtility> {
         ..borderRadius(99),
     ];
 
-    final trackStyle = [
-      $.track.color.black12(),
-    ];
+    final trackStyle = [$.track.color.black12()];
 
-    final fillStyle = [
-      $.fill.color.black(),
-    ];
+    final fillStyle = [$.fill.color.black()];
 
-    return Style.create([
-      ...containerStyle,
-      ...trackStyle,
-      ...fillStyle,
-    ]);
+    return Style.create([...containerStyle, ...trackStyle, ...fillStyle]);
   }
 }

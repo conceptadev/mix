@@ -49,3 +49,42 @@ class FortalezaSwitchStyle extends SwitchStyle {
     );
   }
 }
+
+class FortalezaDarkSwitchStyle extends FortalezaSwitchStyle {
+  const FortalezaDarkSwitchStyle();
+
+  @override
+  Style makeStyle(SpecConfiguration<SwitchSpecUtility> spec) {
+    final $ = spec.utilities;
+
+    final baseStyle = Style(super.makeStyle(spec).call());
+
+    final soft = Style(
+      $.indicator.color.$neutral(12),
+      $.container.chain
+        ..color.$neutral(2)
+        ..padding.all(1)
+        ..border.color.$neutralAlpha(7)
+        ..border.width(1.2),
+      spec.on.selected($.container.color.$accent(9)),
+      spec.on.disabled(
+        $.container.color.$neutral(2),
+        $.indicator.color.$neutral(4),
+      ),
+    );
+
+    final surface = Style(
+      $.indicator.color.$neutral(12),
+      spec.on.disabled(
+        $.container.color.$neutral(4),
+        $.indicator.color.$neutral(2),
+      ),
+    );
+
+    return Style(
+      baseStyle(),
+      FortalezaSwitchStyle.surface(soft()),
+      FortalezaSwitchStyle.soft(surface()),
+    );
+  }
+}

@@ -35,9 +35,6 @@ class SwitchStyle extends SpecStyle<SwitchSpecUtility> {
       spec.on.disabled($.indicator.color.grey.shade100()),
     ];
 
-    return Style.create([
-      ...containerStyle,
-      ...indicatorStyle,
-    ]);
+    return Style.create([...containerStyle, ...indicatorStyle]);
   }
 }

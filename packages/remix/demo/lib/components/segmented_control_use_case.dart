@@ -25,7 +25,6 @@ class _WidgetDemoState extends State<_WidgetDemo> {
   Widget build(BuildContext context) {
     return SegmentedControl(
       index: index,
-      style: const SegmentedControlStyle(),
       buttons: const [
         XSegmentButton(
           text: 'Apple',

@@ -26,9 +26,6 @@ class CheckboxStyle extends SpecStyle<CheckboxSpecUtility> {
       spec.on.selected($.indicator.wrap.opacity(1), $.indicator.color.white()),
     ];
 
-    return Style.create([
-      ...containerStyle,
-      ...indicatorStyle,
-    ]);
+    return Style.create([...containerStyle, ...indicatorStyle]);
   }
 }

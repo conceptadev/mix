@@ -29,7 +29,8 @@ class FortalezaProgressStyle extends ProgressStyle {
         ..border.color.$neutralAlpha(6),
     );
 
-    final softVariant = Style($.track.color.$neutral(4));
+    final softVariant =
+        Style($.track.color.$neutral(4), $.fill.color.$accent(8));
 
     return Style.create(
       [

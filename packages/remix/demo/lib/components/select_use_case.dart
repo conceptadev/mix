@@ -33,6 +33,8 @@ class _SelectDemoState extends State<SelectDemo> {
         mainAxisSize: MainAxisSize.min,
         children: [
           Select<String>(
+            disabled:
+                context.knobs.boolean(label: 'disabled', initialValue: false),
             variants: [context.knobs.variant(FortalezaSelectStyle.variants)],
             value: selectedValue,
             onChanged: (value) => setState(() => selectedValue = value),

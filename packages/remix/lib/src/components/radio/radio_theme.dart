@@ -29,7 +29,7 @@ class FortalezaRadioStyle extends RadioStyle {
 
     final surfaceVariant = Style(
       $.container.chain
-        ..color.$white()
+        ..color.$neutral(1)
         ..border.width(1)
         ..border.color.$neutral(8),
       $.indicator.chain..color.$white(),

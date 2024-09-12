@@ -26,6 +26,9 @@ class SelectStyle extends SpecStyle<SelectSpecUtility> {
       $.button.label.chain
         ..style.fontSize(14)
         ..style.color.black(),
+      spec.on.disabled(
+        $.button.container.color(Colors.black.withOpacity(0.05)),
+      ),
     ];
 
     final menuStyle = [

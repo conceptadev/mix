@@ -41,7 +41,7 @@ class FortalezaCheckboxStyle extends CheckboxStyle {
     final surfaceVariant = Style(
       $.container.chain
         ..border.strokeAlign(BorderSide.strokeAlignInside)
-        ..border.color.$neutral(8)
+        ..border.color.$neutral(9)
         ..border.style.solid(),
       $.indicator.color.$white(),
       spec.on.hover($.container.color.$neutral(3)),
@@ -54,16 +54,24 @@ class FortalezaCheckboxStyle extends CheckboxStyle {
       ),
       (spec.on.hover & spec.on.selected)($.container.color.$accent(11)),
       spec.on.disabled(
-        $.container.color.$neutralAlpha(2),
-        spec.on.selected($.container.color.$neutral(4)),
+        $.container.color.$neutral(3),
+        $.container.border.all.color.$neutral(9),
+        spec.on.selected(
+          $.indicator.color.$neutral(8),
+          $.container.chain
+            ..color.$neutral(3)
+            ..border.width(1)
+            ..border.all.color.$neutral(8)
+            ..border.all.style.solid(),
+        ),
       ),
     );
 
     final disabledVariant = Style(
       $.container.chain
-        ..color.$neutralAlpha(3)
-        ..border.color.$neutralAlpha(5),
-      $.indicator.color.$neutralAlpha(7),
+        ..color.$neutral(3)
+        ..border.color.$neutral(5),
+      $.indicator.color.$neutral(7),
     );
 
     return Style.create(

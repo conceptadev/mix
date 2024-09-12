@@ -7,8 +7,9 @@ class FortalezaDividerStyle extends DividerStyle {
   Style makeStyle(SpecConfiguration<DividerSpecUtility> spec) {
     final $ = spec.utilities;
 
+    final baseStyle = super.makeStyle(spec);
     final containerStyle = [$.container.color.$neutral(5)];
 
-    return Style.create([...containerStyle]);
+    return Style.create([baseStyle(), ...containerStyle]);
   }
 }

@@ -1,7 +1,12 @@
 import 'package:remix/remix.dart';
 import 'package:widgetbook/widgetbook.dart';
 
-class RemixComponentThemeAddon extends ThemeAddon<RemixComponentTheme> {
+typedef ThemeMultiBrightness = ({
+  RemixComponentTheme light,
+  RemixComponentTheme dark
+});
+
+class RemixComponentThemeAddon extends ThemeAddon<ThemeMultiBrightness> {
   @override
   String get name => 'Component Theme';
 
@@ -9,9 +14,16 @@ class RemixComponentThemeAddon extends ThemeAddon<RemixComponentTheme> {
     required super.themes,
     super.initialTheme,
   }) : super(
-          themeBuilder: (context, theme, child) {
+          themeBuilder: (context, themes, child) {
             return RemixTheme(
-              theme: RemixThemeData(components: theme, tokens: light),
+              darkTheme: RemixThemeData(
+                tokens: dark,
+                components: themes.dark,
+              ),
+              theme: RemixThemeData(
+                components: themes.light,
+                tokens: light,
+              ),
               child: child,
             );
           },

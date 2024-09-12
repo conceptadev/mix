@@ -36,17 +36,17 @@ class RemixComponentTheme {
 
   const RemixComponentTheme({
     required this.accordion,
-    required this.button,
     required this.avatar,
-    required this.divider,
     required this.badge,
+    required this.button,
     required this.callout,
     required this.card,
     required this.checkbox,
+    required this.divider,
     required this.progress,
     required this.radio,
-    required this.select,
     required this.segmentedControl,
+    required this.select,
     required this.spinner,
     required this.switchComponent,
   });
@@ -54,38 +54,82 @@ class RemixComponentTheme {
   factory RemixComponentTheme.base() {
     return const RemixComponentTheme(
       accordion: AccordionStyle(),
-      button: ButtonStyle(),
       avatar: AvatarStyle(),
-      divider: DividerStyle(),
       badge: BadgeStyle(),
+      button: ButtonStyle(),
       callout: CalloutStyle(),
       card: CardStyle(),
       checkbox: CheckboxStyle(),
+      divider: DividerStyle(),
       progress: ProgressStyle(),
       radio: RadioStyle(),
-      select: SelectStyle(),
       segmentedControl: SegmentedControlStyle(),
+      select: SelectStyle(),
       spinner: SpinnerStyle(),
       switchComponent: SwitchStyle(),
     );
   }
 
-  factory RemixComponentTheme.fortaleza() {
+  factory RemixComponentTheme.fortalezaLight() {
     return const RemixComponentTheme(
       accordion: FortalezaAccordionStyle(),
-      button: FortalezaButtonStyle(),
       avatar: FortalezaAvatarStyle(),
-      divider: FortalezaDividerStyle(),
       badge: FortalezaBadgeStyle(),
+      button: FortalezaButtonStyle(),
       callout: FortalezaCalloutStyle(),
       card: FortalezaCardStyle(),
       checkbox: FortalezaCheckboxStyle(),
+      divider: FortalezaDividerStyle(),
       progress: FortalezaProgressStyle(),
       radio: FortalezaRadioStyle(),
-      select: FortalezaSelectStyle(),
       segmentedControl: FortalezaSegmentedControlStyle(),
+      select: FortalezaSelectStyle(),
       spinner: FortalezaSpinnerStyle(),
       switchComponent: FortalezaSwitchStyle(),
+    );
+  }
+
+  factory RemixComponentTheme.fortalezaDark() {
+    return RemixComponentTheme.fortalezaLight().copyWith(
+      avatar: const FortalezaDarkAvatarStyle(),
+      badge: const FortalezaDarkBadgeStyle(),
+      segmentedControl: const FortalezaDarkSegmentedControlStyle(),
+      select: const FortalezaDarkSelectStyle(),
+      switchComponent: const FortalezaDarkSwitchStyle(),
+    );
+  }
+
+  RemixComponentTheme copyWith({
+    AccordionStyle? accordion,
+    AvatarStyle? avatar,
+    BadgeStyle? badge,
+    ButtonStyle? button,
+    CalloutStyle? callout,
+    CardStyle? card,
+    CheckboxStyle? checkbox,
+    DividerStyle? divider,
+    ProgressStyle? progress,
+    RadioStyle? radio,
+    SegmentedControlStyle? segmentedControl,
+    SelectStyle? select,
+    SpinnerStyle? spinner,
+    SwitchStyle? switchComponent,
+  }) {
+    return RemixComponentTheme(
+      accordion: accordion ?? this.accordion,
+      avatar: avatar ?? this.avatar,
+      badge: badge ?? this.badge,
+      button: button ?? this.button,
+      callout: callout ?? this.callout,
+      card: card ?? this.card,
+      checkbox: checkbox ?? this.checkbox,
+      divider: divider ?? this.divider,
+      progress: progress ?? this.progress,
+      radio: radio ?? this.radio,
+      segmentedControl: segmentedControl ?? this.segmentedControl,
+      select: select ?? this.select,
+      spinner: spinner ?? this.spinner,
+      switchComponent: switchComponent ?? this.switchComponent,
     );
   }
 }
