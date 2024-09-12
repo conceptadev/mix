@@ -10,6 +10,7 @@ void main() {
       await tester.pumpWidget(
         MaterialApp(
           home: re.Switch(
+            style: const re.SwitchStyle(),
             value: value,
             onChanged: (bool newValue) {
               value = newValue;
@@ -28,6 +29,7 @@ void main() {
           builder: (BuildContext context, StateSetter setState) {
             return MaterialApp(
               home: re.Switch(
+                style: const re.SwitchStyle(),
                 value: value,
                 onChanged: (bool newValue) {
                   setState(() {
@@ -53,6 +55,7 @@ void main() {
       await tester.pumpWidget(
         MaterialApp(
           home: re.Switch(
+            style: const re.SwitchStyle(),
             value: value,
             onChanged: (newValue) {
               value = newValue;
@@ -73,6 +76,7 @@ void main() {
       await tester.pumpWidget(
         MaterialApp(
           home: re.Switch(
+            style: const re.SwitchStyle(),
             value: true,
             onChanged: (_) {},
           ),
@@ -89,6 +93,7 @@ void main() {
       await tester.pumpWidget(
         MaterialApp(
           home: re.Switch(
+            style: const re.SwitchStyle(),
             value: false,
             onChanged: (_) {},
           ),

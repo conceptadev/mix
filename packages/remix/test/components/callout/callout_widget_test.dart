@@ -1,28 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
+import 'package:remix/remix.dart' as r;
 import 'package:remix/src/components/callout/callout.dart';
 
 void main() {
   group('XCallout', () {
-    final $callout = CalloutSpecUtility.self;
-
     testWidgets('renders with custom label', (WidgetTester tester) async {
       await tester.pumpWidget(
-        const MaterialApp(home: Callout(text: 'Test Callout')),
+        const MaterialApp(
+          home: r.Callout(
+            text: 'Test Callout',
+            style: r.CalloutStyle(),
+          ),
+        ),
       );
 
       expect(find.text('Test Callout'), findsOneWidget);
-      expect(find.byType(Callout), findsOneWidget);
+      expect(find.byType(r.Callout), findsOneWidget);
     });
 
     testWidgets('renders with custom icon', (WidgetTester tester) async {
       const icon = Icons.abc_rounded;
       await tester.pumpWidget(
         const MaterialApp(
-          home: Callout(
+          home: r.Callout(
             text: 'Test Callout',
             icon: icon,
+            style: r.CalloutStyle(),
           ),
         ),
       );
@@ -33,20 +38,16 @@ void main() {
     testWidgets('applies custom style', (WidgetTester tester) async {
       const color = Colors.red;
 
-      final customStyle = Style(
-        $callout.container.color(color),
-      );
-
       await tester.pumpWidget(
-        MaterialApp(
-          home: Callout(
+        const MaterialApp(
+          home: r.Callout(
             text: 'Test Callout',
-            style: customStyle,
+            style: FakeCalloutStyle(color),
           ),
         ),
       );
 
-      final badgeFinder = find.byType(Callout);
+      final badgeFinder = find.byType(r.Callout);
       expect(badgeFinder, findsOneWidget);
 
       final container = find.descendant(
@@ -59,4 +60,23 @@ void main() {
       expect((containerWidget.decoration! as BoxDecoration).color, color);
     });
   });
+}
+
+class FakeCalloutStyle extends CalloutStyle {
+  final Color color;
+
+  const FakeCalloutStyle(
+    this.color,
+  );
+
+  @override
+  Style makeStyle(SpecConfiguration<CalloutSpecUtility> spec) {
+    final $ = spec.utilities;
+
+    final baseStyle = super.makeStyle(spec);
+    return Style.create([
+      baseStyle(),
+      $.container.color(color),
+    ]);
+  }
 }

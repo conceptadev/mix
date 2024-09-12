@@ -6,14 +6,13 @@ import 'package:mix/mix.dart';
 import 'package:remix/src/components/avatar/avatar.dart';
 
 void main() {
-  final $avatar = AvatarSpecUtility.self;
-
   group('XAvatar', () {
     testWidgets('renders with custom image', (WidgetTester tester) async {
       final image = MemoryImage(Uint8List.fromList([1, 2, 3]));
       await tester.pumpWidget(
         MaterialApp(
           home: Avatar(
+            style: const AvatarStyle(),
             image: image,
             fallbackBuilder: (spec) => spec(''),
           ),
@@ -29,6 +28,7 @@ void main() {
       await tester.pumpWidget(
         MaterialApp(
           home: Avatar(
+            style: const AvatarStyle(),
             image: image,
             fallbackBuilder: (spec) => spec('AB'),
           ),
@@ -42,16 +42,10 @@ void main() {
     testWidgets('applies custom style', (WidgetTester tester) async {
       final color = Colors.redAccent.toDto();
 
-      final style = Style(
-        $avatar.container.color(color.value!),
-      );
-
-      $avatar.container.color.redAccent();
-
       await tester.pumpWidget(
         MaterialApp(
           home: Avatar(
-            style: style,
+            style: FakeAvatarStyle(color.value!),
             fallbackBuilder: (TextSpec spec) => spec(''),
           ),
         ),
@@ -65,4 +59,20 @@ void main() {
       expect(avatarAttr.container!.decoration!.color, color);
     });
   });
+}
+
+class FakeAvatarStyle extends AvatarStyle {
+  final Color color;
+  const FakeAvatarStyle(this.color);
+
+  @override
+  Style makeStyle(SpecConfiguration<AvatarSpecUtility> spec) {
+    final $ = spec.utilities;
+
+    final baseStyle = super.makeStyle(spec);
+    return Style.create([
+      baseStyle(),
+      $.container.color(color),
+    ]);
+  }
 }

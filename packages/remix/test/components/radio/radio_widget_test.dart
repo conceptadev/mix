@@ -1,22 +1,23 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' as m;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
 import 'package:remix/src/components/radio/radio.dart';
 
 void main() {
-  group('xRadio', () {
+  group('Radio', () {
     testWidgets('renders RxBlankRadio with correct properties',
         (WidgetTester tester) async {
       bool value = true;
       bool? changedValue;
 
       await tester.pumpWidget(
-        MaterialApp(
+        m.MaterialApp(
           home: Radio(
             value: value,
             onChanged: (v) => changedValue = v,
             groupValue: true,
             disabled: true,
+            style: const RadioStyle(),
             text: '',
           ),
         ),
@@ -32,27 +33,26 @@ void main() {
     });
 
     testWidgets('applies custom style', (WidgetTester tester) async {
-      final $radio = RadioSpecUtility.self;
+      const color = m.Colors.red;
 
       await tester.pumpWidget(
-        MaterialApp(
+        m.MaterialApp(
           home: Radio(
             value: false,
             groupValue: true,
             disabled: false,
             onChanged: (_) {},
-            style: Style(
-              $radio.container.color.red(),
-            ),
+            style: const FakeRadioStyle(color),
             text: '',
           ),
         ),
       );
 
-      final container = tester.firstWidget<Container>(find.byType(Container));
+      final container =
+          tester.firstWidget<m.Container>(find.byType(m.Container));
       expect(
-        (container.decoration as BoxDecoration).color,
-        equals(Colors.red),
+        (container.decoration as m.BoxDecoration).color,
+        equals(m.Colors.red),
       );
     });
 
@@ -61,8 +61,9 @@ void main() {
       bool? changedValue;
 
       await tester.pumpWidget(
-        MaterialApp(
+        m.MaterialApp(
           home: Radio(
+            style: const RadioStyle(),
             value: value,
             groupValue: true,
             onChanged: (v) => changedValue = v,
@@ -79,8 +80,9 @@ void main() {
       const testText = 'Test Radio';
 
       await tester.pumpWidget(
-        MaterialApp(
+        m.MaterialApp(
           home: Radio(
+            style: const RadioStyle(),
             value: false,
             groupValue: true,
             onChanged: (_) {},
@@ -92,4 +94,23 @@ void main() {
       expect(find.text(testText), findsOneWidget);
     });
   });
+}
+
+class FakeRadioStyle extends RadioStyle {
+  final m.Color color;
+
+  const FakeRadioStyle(
+    this.color,
+  );
+
+  @override
+  Style makeStyle(SpecConfiguration<RadioSpecUtility> spec) {
+    final $ = spec.utilities;
+
+    final baseStyle = super.makeStyle(spec);
+    return Style.create([
+      baseStyle(),
+      $.container.color(color),
+    ]);
+  }
 }

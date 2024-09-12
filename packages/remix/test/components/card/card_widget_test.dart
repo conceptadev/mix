@@ -1,17 +1,16 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' as m;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
 import 'package:remix/src/components/card/card.dart';
 
 void main() {
-  group('XCard', () {
-    final $card = CardSpecUtility.self;
-
+  group('Card', () {
     testWidgets('renders with default type', (WidgetTester tester) async {
       await tester.pumpWidget(
-        const MaterialApp(
+        const m.MaterialApp(
           home: Card(
-            children: [Text('Test')],
+            style: CardStyle(),
+            children: [m.Text('Test')],
           ),
         ),
       );
@@ -21,33 +20,30 @@ void main() {
     });
 
     testWidgets('applies custom style', (WidgetTester tester) async {
-      const color = Colors.red;
-
-      final customStyle = Style(
-        $card.container.color(color),
-      );
+      const color = m.Colors.red;
 
       await tester.pumpWidget(
-        MaterialApp(
+        const m.MaterialApp(
           home: Card(
-            style: customStyle,
-            children: const [Text('Custom Style')],
+            style: FakeCardStyle(color),
+            children: [m.Text('Custom Style')],
           ),
         ),
       );
 
-      final card = tester.widget<Container>(find.byType(Container));
-      expect((card.decoration as BoxDecoration).color, equals(color));
+      final card = tester.widget<m.Container>(find.byType(m.Container));
+      expect((card.decoration as m.BoxDecoration).color, equals(color));
     });
 
     testWidgets('renders multiple children', (WidgetTester tester) async {
       await tester.pumpWidget(
-        const MaterialApp(
+        const m.MaterialApp(
           home: Card(
+            style: CardStyle(),
             children: [
-              Text('Child 1'),
-              Text('Child 2'),
-              Text('Child 3'),
+              m.Text('Child 1'),
+              m.Text('Child 2'),
+              m.Text('Child 3'),
             ],
           ),
         ),
@@ -58,4 +54,23 @@ void main() {
       expect(find.text('Child 3'), findsOneWidget);
     });
   });
+}
+
+class FakeCardStyle extends CardStyle {
+  final m.Color color;
+
+  const FakeCardStyle(
+    this.color,
+  );
+
+  @override
+  Style makeStyle(SpecConfiguration<CardSpecUtility> spec) {
+    final $ = spec.utilities;
+
+    final baseStyle = super.makeStyle(spec);
+    return Style.create([
+      baseStyle(),
+      $.container.color(color),
+    ]);
+  }
 }

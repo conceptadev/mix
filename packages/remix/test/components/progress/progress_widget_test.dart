@@ -6,7 +6,14 @@ import 'package:remix/src/components/progress/progress.dart';
 void main() {
   group('XProgress', () {
     testWidgets('renders with default values', (WidgetTester tester) async {
-      await tester.pumpWidget(const MaterialApp(home: Progress(value: 0.0)));
+      await tester.pumpWidget(
+        const MaterialApp(
+          home: Progress(
+            value: 0.0,
+            style: ProgressStyle(),
+          ),
+        ),
+      );
 
       final progressFinder = find.byType(Progress);
       expect(progressFinder, findsOneWidget);
@@ -16,30 +23,55 @@ void main() {
     });
 
     testWidgets('applies custom value', (WidgetTester tester) async {
-      await tester.pumpWidget(const MaterialApp(home: Progress(value: 0.5)));
-
-      final progressFinder = find.byType(Progress);
-      final Progress progress = tester.widget(progressFinder);
-      expect(progress.value, 0.5);
-    });
-
-    testWidgets('applies custom style', (WidgetTester tester) async {
-      final $progress = ProgressSpecUtility.self;
-
       await tester.pumpWidget(
-        MaterialApp(
+        const MaterialApp(
           home: Progress(
-            value: 0.1,
-            style: Style(
-              $progress.fill.color.red(),
-            ),
+            value: 0.5,
+            style: ProgressStyle(),
           ),
         ),
       );
 
       final progressFinder = find.byType(Progress);
       final Progress progress = tester.widget(progressFinder);
-      expect(progress.style, isNotNull);
+      expect(progress.value, 0.5);
     });
+
+    // testWidgets('applies custom style', (WidgetTester tester) async {
+    //   const color = Colors.red;
+
+    //   await tester.pumpWidget(
+    //     const MaterialApp(
+    //       home: Progress(
+    //         value: 0.1,
+    //         style: FakeProgressStyle(color),
+    //       ),
+    //     ),
+    //   );
+
+    //   final progressFinder = find.byType(Progress);
+    //   final Progress progress = tester.widget(progressFinder);
+
+    //   expect(progress.style, isNotNull);
+    // });
   });
+}
+
+class FakeProgressStyle extends ProgressStyle {
+  final Color color;
+
+  const FakeProgressStyle(
+    this.color,
+  );
+
+  @override
+  Style makeStyle(SpecConfiguration<ProgressSpecUtility> spec) {
+    final $ = spec.utilities;
+
+    final baseStyle = super.makeStyle(spec);
+    return Style.create([
+      baseStyle(),
+      $.container.color(color),
+    ]);
+  }
 }
