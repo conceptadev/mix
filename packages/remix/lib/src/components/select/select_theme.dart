@@ -1,106 +1,69 @@
 part of 'select.dart';
 
-class XSelectThemeVariant extends Variant {
-  static const soft = XSelectThemeVariant('soft');
-  static const surface = XSelectThemeVariant('surface');
-  static const ghost = XSelectThemeVariant('ghost');
+class FortalezaSelectStyle extends SelectStyle {
+  static const soft = Variant('for.select.soft');
+  static const surface = Variant('for.select.surface');
+  static const ghost = Variant('for.select.ghost');
 
-  static const values = [soft, surface, ghost];
+  const FortalezaSelectStyle();
 
-  const XSelectThemeVariant(String value) : super('select.$value');
-}
+  static List<Variant> get variants => [soft, surface, ghost];
 
-class XSelectThemeStyle {
-  static Style get value => Style(
-        XSelectStyle.base(),
-        _baseThemeStyle(),
-        XSelectThemeVariant.surface(_surface()),
-        XSelectThemeVariant.soft(_soft()),
-        XSelectThemeVariant.ghost(_ghost()),
-      );
-}
+  @override
+  Style makeStyle(SpecConfiguration<SelectSpecUtility> spec) {
+    final $ = spec.utilities;
 
-Style get _baseThemeStyle => Style(
-      _menu.autoWidth.off(),
-      // Icon
-      _button.icon.color.$accentAlpha(12),
-      // Container
-      _menu.container.chain
+    final baseStyle = super.makeStyle(spec);
+    final baseThemeOverrides = Style(
+      $.menu.autoWidth.off(),
+      $.button.icon.color.$accentAlpha(12),
+      $.menu.container.chain
         ..wrap.intrinsicWidth()
         ..elevation.e2()
         ..padding.all.$space(2),
-      // Flex
-      _button.flex.chain
+      $.button.flex.chain
         ..gap.$space(1)
         ..mainAxisSize.min(),
     );
 
-Style get _ghost => Style(
-      _button.container.chain
+    final ghostVariant = Style(
+      $.button.container.chain
         ..color.transparent()
         ..border.none(),
-      $on.hover(
-        _button.container.color.$accent(4),
-        _item.container.color.$accent(4),
-      ),
-      $on.dark(
-        _button.chain
-          ..container.color.transparent()
-          ..icon.color.$accent(5)
-          ..label.style.color.$accent(5),
-        $on.hover(
-          _button.container.color.$accent(12),
-          _item.container.color.$accent(11),
-        ),
-        _menuOnDark(),
+      spec.on.hover(
+        $.button.container.color.$accent(4),
+        $.item.container.color.$accent(4),
       ),
     );
 
-Style get _soft => Style(
-      _button.container.chain
+    final softVariant = Style(
+      $.button.container.chain
         ..color.$accent(3)
         ..border.none(),
-      _button.label.style.color.$accent(12),
-      _item.text.style.color.$accent(12),
-      $on.hover(
-        _button.container.color.$accent(4),
-        _item.container.color.$accent(4),
-      ),
-      $on.dark(_softOnDark()),
-    );
-
-Style get _softOnDark => Style(
-      $on.dark(
-        _button.chain
-          ..container.color.$accent(12)
-          ..label.style.color.$accent(6)
-          ..icon.color.$accent(6),
-        _menuOnDark(),
-        $on.hover(
-          _button.container.color.$accent(11),
-          _item.container.color.$accent(11),
-        ),
+      $.button.label.style.color.$accent(12),
+      $.item.text.style.color.$accent(12),
+      spec.on.hover(
+        $.button.container.color.$accent(4),
+        $.item.container.color.$accent(4),
       ),
     );
 
-Style get _surface => Style(
-      $on.hover(
-        _button.container.border.all.color.$neutral(8),
-        _item.container.color.$accent(9),
-        _item.text.style.color.$white(),
-      ),
-      $on.dark(
-        _button.chain
-          ..container.color.black()
-          ..container.border.color.$neutral(11)
-          ..label.style.color.$neutral(4)
-          ..icon.color.$neutral(4),
-        _menuOnDark(),
-        $on.hover(_button.container.border.color.$neutral(10)),
+    final surfaceVariant = Style(
+      spec.on.hover(
+        $.button.container.border.all.color.$neutral(8),
+        $.item.container.color.$accent(9),
+        $.item.text.style.color.$white(),
       ),
     );
 
-Style get _menuOnDark => Style(
-      _menu.container.color.$neutral(12),
-      _item.text.style.color.$neutral(7),
+    return Style.create(
+      [
+        baseStyle(),
+        baseThemeOverrides(),
+        surface(surfaceVariant()),
+        soft(softVariant()),
+        ghost(ghostVariant()),
+      ],
     );
+  }
+}

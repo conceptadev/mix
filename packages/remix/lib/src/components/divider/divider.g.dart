@@ -173,10 +173,10 @@ base class DividerSpecAttribute extends SpecAttribute<DividerSpec>
   }
 }
 
-/// Utility class for configuring [DividerSpecAttribute] properties.
+/// Utility class for configuring [DividerSpec] properties.
 ///
-/// This class provides methods to set individual properties of a [DividerSpecAttribute].
-/// Use the methods of this class to configure specific properties of a [DividerSpecAttribute].
+/// This class provides methods to set individual properties of a [DividerSpec].
+/// Use the methods of this class to configure specific properties of a [DividerSpec].
 class DividerSpecUtility<T extends Attribute>
     extends SpecUtility<T, DividerSpecAttribute> {
   /// Utility for defining [DividerSpecAttribute.container]

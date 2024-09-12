@@ -45,6 +45,7 @@ class _AccordionState extends State<Accordion> with TickerProviderStateMixin {
 
     return RepaintBoundary(
       child: SpecBuilder(
+        controller: _controller,
         style: variantStyle,
         builder: (context) {
           final spec = AccordionSpec.of(context);
@@ -59,7 +60,6 @@ class _AccordionState extends State<Accordion> with TickerProviderStateMixin {
               children: [
                 Pressable(
                   onPress: _handleTap,
-                  controller: _controller,
                   child: SpecBuilder(
                     style: variantStyle,
                     builder: (context) {

@@ -24,10 +24,6 @@ class FortalezaBadgeStyle extends BadgeStyle {
     final softVariant = Style(
       $.container.color.$accent(3),
       $.label.style.color.$accent(11),
-      spec.on.dark(
-        $.container.color.$accentAlpha(12),
-        $.label.style.color.$accent(7),
-      ),
     );
 
     final surfaceVariant = Style(
@@ -36,12 +32,6 @@ class FortalezaBadgeStyle extends BadgeStyle {
         ..border.all.width(1)
         ..border.all.color.$accentAlpha(6),
       $.label.style.color.$accentAlpha(11),
-      spec.on.dark(
-        $.container.chain
-          ..border.all.color.$accent(9)
-          ..color.$accentAlpha(12),
-        $.label.style.color.$accent(7),
-      ),
     );
 
     final outlineVariant = Style(
@@ -50,10 +40,6 @@ class FortalezaBadgeStyle extends BadgeStyle {
         ..border.width(1)
         ..border.color.$accentAlpha(8),
       $.label.style.color.$accentAlpha(11),
-      spec.on.dark(
-        $.container.border.all.color.$accent(9),
-        $.label.style.color.$accent(7),
-      ),
     );
 
     return Style.create(

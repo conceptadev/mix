@@ -35,11 +35,6 @@ class FortalezaCalloutStyle extends CalloutStyle {
         ..color.$accentAlpha(3)
         ..border.all.width(0)
         ..border.all.style.none(),
-      spec.on.dark(
-        $.container.color.$accent(12),
-        $.text.style.color.$accent(8),
-        $.icon.color.$accent(8),
-      ),
     );
 
     final surfaceVariant = Style(
@@ -47,12 +42,6 @@ class FortalezaCalloutStyle extends CalloutStyle {
         ..color.$accentAlpha(2)
         ..border.width(1)
         ..border.color.$accentAlpha(5),
-      spec.on.dark(
-        $.container.color.$accentAlpha(6),
-        $.container.border.color.$accent(11),
-        $.text.style.color.$accent(8),
-        $.icon.color.$accent(8),
-      ),
     );
 
     final outlineVariant = Style(
@@ -60,13 +49,6 @@ class FortalezaCalloutStyle extends CalloutStyle {
         ..color.transparent()
         ..border.width(1)
         ..border.color.$accentAlpha(8),
-      spec.on.dark(
-        $.container.chain
-          ..color.transparent()
-          ..border.color.$accent(11),
-        $.text.style.color.$accent(8),
-        $.icon.color.$accent(8),
-      ),
     );
 
     return Style.create(

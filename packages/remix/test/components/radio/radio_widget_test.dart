@@ -12,7 +12,7 @@ void main() {
 
       await tester.pumpWidget(
         MaterialApp(
-          home: XRadio(
+          home: Radio(
             value: value,
             onChanged: (v) => changedValue = v,
             groupValue: true,
@@ -22,13 +22,12 @@ void main() {
         ),
       );
 
-      final rxBlankRadio =
-          tester.widget<XRadio<bool>>(find.byType(XRadio<bool>));
+      final rxBlankRadio = tester.widget<Radio<bool>>(find.byType(Radio<bool>));
       expect(rxBlankRadio.value, equals(true));
       expect(rxBlankRadio.groupValue, equals(true));
       expect(rxBlankRadio.disabled, equals(true));
 
-      await tester.tap(find.byType(XRadio<bool>));
+      await tester.tap(find.byType(Radio<bool>));
       expect(changedValue, isNull);
     });
 
@@ -37,7 +36,7 @@ void main() {
 
       await tester.pumpWidget(
         MaterialApp(
-          home: XRadio(
+          home: Radio(
             value: false,
             groupValue: true,
             disabled: false,
@@ -63,7 +62,7 @@ void main() {
 
       await tester.pumpWidget(
         MaterialApp(
-          home: XRadio(
+          home: Radio(
             value: value,
             groupValue: true,
             onChanged: (v) => changedValue = v,
@@ -72,7 +71,7 @@ void main() {
         ),
       );
 
-      await tester.tap(find.byType(XRadio<bool>));
+      await tester.tap(find.byType(Radio<bool>));
       expect(changedValue, isFalse);
     });
 
@@ -81,7 +80,7 @@ void main() {
 
       await tester.pumpWidget(
         MaterialApp(
-          home: XRadio(
+          home: Radio(
             value: false,
             groupValue: true,
             onChanged: (_) {},

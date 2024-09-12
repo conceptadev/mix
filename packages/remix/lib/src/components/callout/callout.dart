@@ -10,8 +10,6 @@ part 'callout_style.dart';
 part 'callout_theme.dart';
 part 'callout_widget.dart';
 
-final $callout = CalloutSpecUtility.self;
-
 @MixableSpec()
 base class CalloutSpec extends Spec<CalloutSpec> with _$CalloutSpec {
   final BoxSpec container;

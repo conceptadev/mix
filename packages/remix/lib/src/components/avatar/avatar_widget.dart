@@ -23,7 +23,7 @@ class Avatar extends StatelessWidget {
     final configuration = SpecConfiguration(context, AvatarSpecUtility.self);
 
     return SpecBuilder(
-      style: style.makeStyle(configuration),
+      style: style.makeStyle(configuration).applyVariants(variants),
       builder: (context) {
         final spec = AvatarSpec.of(context);
 

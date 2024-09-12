@@ -15,10 +15,6 @@ class RadioStyle extends SpecStyle<RadioSpecUtility> {
         ..border.all.width(1)
         ..border.all.color.black(),
       spec.on.disabled($.container.border.color.black45()),
-      spec.on.dark(
-        $.container.border.all.color.white(),
-        spec.on.disabled($.container.border.color.white60()),
-      ),
     ];
 
     final indicatorStyle = [
@@ -30,10 +26,6 @@ class RadioStyle extends SpecStyle<RadioSpecUtility> {
         ..wrap.scale(0.5),
       spec.on.selected($.indicator.wrap.opacity(1), $.indicator.wrap.scale(1)),
       spec.on.disabled($.indicator.color.black45()),
-      spec.on.dark(
-        $.indicator.color.white(),
-        spec.on.disabled($.indicator.color.white54()),
-      ),
     ];
 
     final textStyle = [

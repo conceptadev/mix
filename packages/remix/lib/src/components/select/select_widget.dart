@@ -1,39 +1,39 @@
 part of 'select.dart';
 
-typedef XSelectButtonBuilder = WidgetSpecBuilder<SelectButtonSpec>;
-typedef XSelectMenuBuilder = WidgetSpecBuilder<SelectMenuSpec>;
+typedef SelectButtonBuilder = WidgetSpecBuilder<SelectButtonSpec>;
+typedef SelectMenuBuilder = WidgetSpecBuilder<SelectMenuSpec>;
 
-class XSelectMenuItem<T> {
+class SelectMenuItem<T> {
   final T value;
   final Widget child;
 
-  const XSelectMenuItem({required this.value, required this.child});
+  const SelectMenuItem({required this.value, required this.child});
 }
 
-class XSelect<T> extends StatefulWidget {
-  const XSelect({
+class Select<T> extends StatefulWidget {
+  const Select({
     super.key,
     required this.value,
     required this.onChanged,
     required this.button,
     required this.items,
     this.variants = const [],
-    this.style = const Style.empty(),
+    this.style,
   });
 
   final T value;
-  final Style style;
+  final SelectStyle? style;
   final List<Variant> variants;
   final ValueChanged<T> onChanged;
-  final XSelectButtonBuilder button;
+  final SelectButtonBuilder button;
 
-  final List<XSelectMenuItem<T>> items;
+  final List<SelectMenuItem<T>> items;
 
   @override
-  State<XSelect> createState() => XSelectState<T>();
+  State<Select> createState() => SelectState<T>();
 }
 
-class XSelectState<T> extends State<XSelect<T>>
+class SelectState<T> extends State<Select<T>>
     with SingleTickerProviderStateMixin {
   final OverlayPortalController _tooltipController = OverlayPortalController();
   late final MixWidgetStateController _stateController;
@@ -61,12 +61,12 @@ class XSelectState<T> extends State<XSelect<T>>
 
   @override
   Widget build(BuildContext context) {
-    final styleFromTheme = _RemixThemeProvider.maybeOf(context)?.select;
+    final style = widget.style ?? context.remix.components.select;
+
+    final configuration = SpecConfiguration(context, SelectSpecUtility.self);
 
     return SpecBuilder(
-      style: (styleFromTheme ?? XSelectStyle.base)
-          .merge(widget.style)
-          .applyVariants(widget.variants),
+      style: style.makeStyle(configuration).applyVariants(widget.variants),
       builder: (context) {
         final button = SelectSpec.of(context).button;
         final position = SelectSpec.of(context).position;
@@ -89,8 +89,8 @@ class XSelectState<T> extends State<XSelect<T>>
                       position.followerAnchor.resolve(TextDirection.ltr),
                   child: SpecBuilder(
                     controller: _stateController,
-                    style: (styleFromTheme ?? XSelectStyle.base)
-                        .merge(widget.style)
+                    style: style
+                        .makeStyle(configuration)
                         .applyVariants(widget.variants)
                         .animate(
                           duration: _baseAnimation.duration,
@@ -122,8 +122,8 @@ class XSelectState<T> extends State<XSelect<T>>
                                 hide();
                               },
                               child: SpecBuilder(
-                                style: (styleFromTheme ?? XSelectStyle.base)
-                                    .merge(widget.style)
+                                style: style
+                                    .makeStyle(configuration)
                                     .applyVariants(widget.variants)
                                     .animate(
                                       duration: _baseAnimation.duration,

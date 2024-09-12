@@ -10,13 +10,13 @@ void main() {
     testWidgets('renders with default type', (WidgetTester tester) async {
       await tester.pumpWidget(
         const MaterialApp(
-          home: XCard(
+          home: Card(
             children: [Text('Test')],
           ),
         ),
       );
 
-      expect(find.byType(XCard), findsOneWidget);
+      expect(find.byType(Card), findsOneWidget);
       expect(find.text('Test'), findsOneWidget);
     });
 
@@ -29,7 +29,7 @@ void main() {
 
       await tester.pumpWidget(
         MaterialApp(
-          home: XCard(
+          home: Card(
             style: customStyle,
             children: const [Text('Custom Style')],
           ),
@@ -43,7 +43,7 @@ void main() {
     testWidgets('renders multiple children', (WidgetTester tester) async {
       await tester.pumpWidget(
         const MaterialApp(
-          home: XCard(
+          home: Card(
             children: [
               Text('Child 1'),
               Text('Child 2'),

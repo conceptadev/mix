@@ -1,18 +1,24 @@
 part of 'spinner.dart';
 
-class XSpinnerThemeVariant extends Variant {
-  static const soft = XSpinnerThemeVariant('soft');
-  static const solid = XSpinnerThemeVariant('solid');
+class FortalezaSpinnerStyle extends SpinnerStyle {
+  static const solid = Variant('for.spinner.solid');
+  static const soft = Variant('for.spinner.soft');
 
-  static const values = [soft, solid];
+  const FortalezaSpinnerStyle();
 
-  const XSpinnerThemeVariant(String value) : super('spinner.$value');
-}
+  static List<Variant> get variants => [solid, soft];
 
-class XSpinnerThemeStyle {
-  static Style get value => Style(
-        XSpinnerStyle.base(),
-        XSpinnerThemeVariant.solid($spinner.color.$accent()),
-        XSpinnerThemeVariant.soft($spinner.color.$accent(8)),
-      );
+  @override
+  Style makeStyle(SpecConfiguration<SpinnerSpecUtility> spec) {
+    final $ = spec.utilities;
+
+    final baseStyle = super.makeStyle(spec);
+
+    final solidVariant = Style($.color.$accent());
+    final softVariant = Style($.color.$accent(8));
+
+    return Style.create(
+      [baseStyle(), solid(solidVariant()), soft(softVariant())],
+    );
+  }
 }

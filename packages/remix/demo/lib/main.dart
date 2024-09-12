@@ -77,8 +77,7 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RemixTheme(
-      tokens: light,
-      components: RemixComponentTheme.fortaleza(),
+      theme: RemixThemeData.base(),
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         home: Scaffold(

@@ -18,7 +18,7 @@ Widget buildCalloutUseCase(BuildContext context) {
         width: 300,
         child: Callout(
           variants: [
-            context.knobs.variant(XCalloutThemeVariant.values),
+            context.knobs.variant(FortalezaCalloutStyle.variants),
           ],
           icon: Icons.info_outline,
           text: 'Lucas',

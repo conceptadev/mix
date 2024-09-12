@@ -224,10 +224,10 @@ class SegmentedControlSpecAttribute extends SpecAttribute<SegmentedControlSpec>
   }
 }
 
-/// Utility class for configuring [SegmentedControlSpecAttribute] properties.
+/// Utility class for configuring [SegmentedControlSpec] properties.
 ///
-/// This class provides methods to set individual properties of a [SegmentedControlSpecAttribute].
-/// Use the methods of this class to configure specific properties of a [SegmentedControlSpecAttribute].
+/// This class provides methods to set individual properties of a [SegmentedControlSpec].
+/// Use the methods of this class to configure specific properties of a [SegmentedControlSpec].
 class SegmentedControlSpecUtility<T extends Attribute>
     extends SpecUtility<T, SegmentedControlSpecAttribute> {
   /// Utility for defining [SegmentedControlSpecAttribute.container]
@@ -513,10 +513,10 @@ class SegmentButtonSpecAttribute extends SpecAttribute<SegmentButtonSpec>
   }
 }
 
-/// Utility class for configuring [SegmentButtonSpecAttribute] properties.
+/// Utility class for configuring [SegmentButtonSpec] properties.
 ///
-/// This class provides methods to set individual properties of a [SegmentButtonSpecAttribute].
-/// Use the methods of this class to configure specific properties of a [SegmentButtonSpecAttribute].
+/// This class provides methods to set individual properties of a [SegmentButtonSpec].
+/// Use the methods of this class to configure specific properties of a [SegmentButtonSpec].
 class SegmentButtonSpecUtility<T extends Attribute>
     extends SpecUtility<T, SegmentButtonSpecAttribute> {
   /// Utility for defining [SegmentButtonSpecAttribute.container]

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:remix/src/components/switch/switch.dart';
+import 'package:remix/remix.dart' as re;
 
 void main() {
   group('XSwitch', () {
@@ -9,7 +9,7 @@ void main() {
       bool value = false;
       await tester.pumpWidget(
         MaterialApp(
-          home: XSwitch(
+          home: re.Switch(
             value: value,
             onChanged: (bool newValue) {
               value = newValue;
@@ -18,7 +18,7 @@ void main() {
         ),
       );
 
-      expect(find.byType(XSwitch), findsOneWidget);
+      expect(find.byType(re.Switch), findsOneWidget);
     });
 
     testWidgets('calls onChanged when tapped', (WidgetTester tester) async {
@@ -27,7 +27,7 @@ void main() {
         StatefulBuilder(
           builder: (BuildContext context, StateSetter setState) {
             return MaterialApp(
-              home: XSwitch(
+              home: re.Switch(
                 value: value,
                 onChanged: (bool newValue) {
                   setState(() {
@@ -40,7 +40,7 @@ void main() {
         ),
       );
 
-      await tester.tap(find.byType(XSwitch));
+      await tester.tap(find.byType(re.Switch));
       await tester.pump();
 
       expect(value, isTrue);
@@ -52,7 +52,7 @@ void main() {
 
       await tester.pumpWidget(
         MaterialApp(
-          home: XSwitch(
+          home: re.Switch(
             value: value,
             onChanged: (newValue) {
               value = newValue;
@@ -62,7 +62,7 @@ void main() {
         ),
       );
 
-      await tester.tap(find.byType(XSwitch));
+      await tester.tap(find.byType(re.Switch));
       await tester.pump();
 
       expect(value, isFalse);
@@ -72,7 +72,7 @@ void main() {
         (WidgetTester tester) async {
       await tester.pumpWidget(
         MaterialApp(
-          home: XSwitch(
+          home: re.Switch(
             value: true,
             onChanged: (_) {},
           ),
@@ -88,7 +88,7 @@ void main() {
         (WidgetTester tester) async {
       await tester.pumpWidget(
         MaterialApp(
-          home: XSwitch(
+          home: re.Switch(
             value: false,
             onChanged: (_) {},
           ),

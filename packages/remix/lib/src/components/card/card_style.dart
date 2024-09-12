@@ -21,9 +21,6 @@ class CardStyle extends SpecStyle<CardSpecUtility> {
         ..direction.vertical(),
     ];
 
-    return Style.create([
-      ...containerStyle,
-      ...flexStyle,
-    ]);
+    return Style.create([...containerStyle, ...flexStyle]);
   }
 }

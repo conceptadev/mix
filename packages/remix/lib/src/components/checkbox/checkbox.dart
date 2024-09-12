@@ -11,8 +11,6 @@ part 'checkbox_style.dart';
 part 'checkbox_theme.dart';
 part 'checkbox_widget.dart';
 
-final $checkbox = CheckboxSpecUtility.self;
-
 @MixableSpec()
 base class CheckboxSpec extends Spec<CheckboxSpec>
     with _$CheckboxSpec, Diagnosticable {

@@ -1,11 +1,10 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:remix/remix.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
 @widgetbook.UseCase(
   name: 'SegmentedControl Component',
-  type: XSegmentedControl,
+  type: SegmentedControl,
 )
 Widget buildAccordionUseCase(BuildContext context) {
   return const Center(
@@ -24,9 +23,9 @@ class _WidgetDemoState extends State<_WidgetDemo> {
 
   @override
   Widget build(BuildContext context) {
-    return XSegmentedControl(
+    return SegmentedControl(
       index: index,
-      style: XSegmentedControlStyle.base,
+      style: const SegmentedControlStyle(),
       buttons: const [
         XSegmentButton(
           text: 'Apple',

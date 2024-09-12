@@ -1,13 +1,13 @@
 part of 'radio.dart';
 
-class XRadio<T> extends StatefulWidget {
-  const XRadio({
+class Radio<T> extends StatefulWidget {
+  const Radio({
     super.key,
     required this.value,
     required this.onChanged,
     required this.groupValue,
     this.disabled = false,
-    this.style = const Style.empty(),
+    this.style,
     this.variants = const [],
     required this.text,
   });
@@ -17,17 +17,18 @@ class XRadio<T> extends StatefulWidget {
   final T? groupValue;
   final String text;
   final bool disabled;
-  final Style style;
+  final RadioStyle? style;
   final List<Variant> variants;
 
   bool get _selected => value == groupValue;
 
   @override
-  State<XRadio<T>> createState() => _XRadioState<T>();
+  State<Radio<T>> createState() => _RadioState<T>();
 }
 
-class _XRadioState<T> extends State<XRadio<T>> {
+class _RadioState<T> extends State<Radio<T>> {
   late final MixWidgetStateController _controller;
+
   @override
   void initState() {
     super.initState();
@@ -41,7 +42,7 @@ class _XRadioState<T> extends State<XRadio<T>> {
   }
 
   @override
-  void didUpdateWidget(XRadio<T> oldWidget) {
+  void didUpdateWidget(Radio<T> oldWidget) {
     super.didUpdateWidget(oldWidget);
 
     if (oldWidget._selected != widget._selected) {
@@ -61,16 +62,16 @@ class _XRadioState<T> extends State<XRadio<T>> {
 
   @override
   Widget build(BuildContext context) {
-    final styleFromTheme = _RemixThemeProvider.maybeOf(context)?.radio;
+    final style = widget.style ?? context.remix.components.radio;
+
+    final configuration = SpecConfiguration(context, RadioSpecUtility.self);
 
     return Pressable(
       enabled: !widget.disabled,
       onPress: widget.disabled ? null : _handleOnPress,
       controller: _controller,
       child: SpecBuilder(
-        style: (styleFromTheme ?? XRadioStyle.base)
-            .merge(widget.style)
-            .applyVariants(widget.variants),
+        style: style.makeStyle(configuration).applyVariants(widget.variants),
         builder: (context) {
           final spec = RadioSpec.of(context);
 

@@ -1,14 +1,14 @@
 part of 'checkbox.dart';
 
-class XCheckbox extends StatefulWidget {
-  const XCheckbox({
+class Checkbox extends StatefulWidget {
+  const Checkbox({
     super.key,
     this.disabled = false,
     this.value = false,
     this.onChanged,
     this.iconChecked = Icons.check_rounded,
     this.iconUnchecked,
-    this.style = const Style.empty(),
+    this.style,
     this.variants = const [],
   });
 
@@ -17,14 +17,14 @@ class XCheckbox extends StatefulWidget {
   final IconData iconChecked;
   final IconData? iconUnchecked;
   final ValueChanged<bool>? onChanged;
-  final Style style;
+  final CheckboxStyle? style;
   final List<Variant> variants;
 
   @override
-  State<XCheckbox> createState() => _XCheckboxState();
+  State<Checkbox> createState() => _CheckboxState();
 }
 
-class _XCheckboxState extends State<XCheckbox> {
+class _CheckboxState extends State<Checkbox> {
   late final MixWidgetStateController _controller;
 
   @override
@@ -38,7 +38,7 @@ class _XCheckboxState extends State<XCheckbox> {
   void _handleOnPress() => widget.onChanged?.call(!widget.value);
 
   @override
-  void didUpdateWidget(XCheckbox oldWidget) {
+  void didUpdateWidget(Checkbox oldWidget) {
     super.didUpdateWidget(oldWidget);
 
     if (mounted) {
@@ -60,15 +60,17 @@ class _XCheckboxState extends State<XCheckbox> {
 
   @override
   Widget build(BuildContext context) {
-    final styleFromTheme = _RemixThemeProvider.maybeOf(context)?.checkbox;
+    final style = widget.style ?? context.remix.components.checkbox;
+
+    final configuration = SpecConfiguration(context, CheckboxSpecUtility.self);
 
     return Pressable(
       enabled: !widget.disabled,
       onPress: widget.disabled ? null : _handleOnPress,
       controller: _controller,
       child: SpecBuilder(
-        style: (styleFromTheme ?? XCheckboxStyle.base)
-            .merge(widget.style)
+        style: style
+            .makeStyle(configuration)
             .applyVariants(widget.variants)
             .animate(),
         builder: (context) {

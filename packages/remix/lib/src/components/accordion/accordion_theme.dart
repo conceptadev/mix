@@ -9,7 +9,7 @@ class FortalezaAccordionStyle extends AccordionStyle {
 
     final baseStyle = super.makeStyle(spec);
 
-    final lightVariant = Style(
+    final style = Style(
       // Container
       $.container.chain
         ..border.all.color.$neutral(2)
@@ -68,6 +68,6 @@ class FortalezaAccordionStyle extends AccordionStyle {
     //   ),
     // );
 
-    return Style.create([baseStyle(), lightVariant()]);
+    return Style.create([baseStyle(), style()]);
   }
 }

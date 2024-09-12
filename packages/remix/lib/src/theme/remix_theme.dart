@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:mix/mix.dart';
 
@@ -22,16 +23,16 @@ class RemixComponentTheme {
   final AvatarStyle avatar;
   final ButtonStyle button;
   final BadgeStyle badge;
-  final Style divider;
+  final DividerStyle divider;
   final CalloutStyle callout;
-  final Style card;
-  final Style checkbox;
-  final Style progress;
-  final Style radio;
-  final Style select;
-  final Style segmentedControl;
-  final Style spinner;
-  final Style switchComponent;
+  final CardStyle card;
+  final CheckboxStyle checkbox;
+  final ProgressStyle progress;
+  final RadioStyle radio;
+  final SelectStyle select;
+  final SegmentedControlStyle segmentedControl;
+  final SpinnerStyle spinner;
+  final SwitchStyle switchComponent;
 
   const RemixComponentTheme({
     required this.accordion,
@@ -51,40 +52,40 @@ class RemixComponentTheme {
   });
 
   factory RemixComponentTheme.base() {
-    return RemixComponentTheme(
-      accordion: const AccordionStyle(),
-      button: const ButtonStyle(),
-      avatar: const AvatarStyle(),
-      divider: XDividerStyle.base,
-      badge: const BadgeStyle(),
-      callout: const CalloutStyle(),
-      card: XCardStyle.base,
-      checkbox: XCheckboxStyle.base,
-      progress: XProgressStyle.base,
-      radio: XRadioStyle.base,
-      select: XSelectStyle.base,
-      segmentedControl: XSegmentedControlStyle.base,
-      spinner: XSpinnerStyle.base,
-      switchComponent: XSwitchStyle.base,
+    return const RemixComponentTheme(
+      accordion: AccordionStyle(),
+      button: ButtonStyle(),
+      avatar: AvatarStyle(),
+      divider: DividerStyle(),
+      badge: BadgeStyle(),
+      callout: CalloutStyle(),
+      card: CardStyle(),
+      checkbox: CheckboxStyle(),
+      progress: ProgressStyle(),
+      radio: RadioStyle(),
+      select: SelectStyle(),
+      segmentedControl: SegmentedControlStyle(),
+      spinner: SpinnerStyle(),
+      switchComponent: SwitchStyle(),
     );
   }
 
   factory RemixComponentTheme.fortaleza() {
-    return RemixComponentTheme(
-      accordion: const AccordionStyle(),
-      button: const FortalezaButtonStyle(),
-      avatar: const FortalezaAvatarStyle(),
-      divider: XDividerThemeStyle.value,
-      badge: const BadgeStyle(),
-      callout: const CalloutStyle(),
-      card: XCardThemeStyle.value,
-      checkbox: XCheckboxThemeStyle.value,
-      progress: XProgressThemeStyle.value,
-      radio: XRadioThemeStyle.value,
-      select: XSelectThemeStyle.value,
-      segmentedControl: XSegmentedControlThemeStyle.value,
-      spinner: XSpinnerThemeStyle.value,
-      switchComponent: XSwitchThemeStyle.value,
+    return const RemixComponentTheme(
+      accordion: FortalezaAccordionStyle(),
+      button: FortalezaButtonStyle(),
+      avatar: FortalezaAvatarStyle(),
+      divider: FortalezaDividerStyle(),
+      badge: FortalezaBadgeStyle(),
+      callout: FortalezaCalloutStyle(),
+      card: FortalezaCardStyle(),
+      checkbox: FortalezaCheckboxStyle(),
+      progress: FortalezaProgressStyle(),
+      radio: FortalezaRadioStyle(),
+      select: FortalezaSelectStyle(),
+      segmentedControl: FortalezaSegmentedControlStyle(),
+      spinner: FortalezaSpinnerStyle(),
+      switchComponent: FortalezaSwitchStyle(),
     );
   }
 }
@@ -97,6 +98,11 @@ class RemixThemeData {
   final RemixComponentTheme components;
   final RemixTokens tokens;
   const RemixThemeData({required this.components, required this.tokens});
+
+  static RemixThemeData base() => RemixThemeData(
+        components: RemixComponentTheme.base(),
+        tokens: RemixTokens.base(),
+      );
 
   @override
   bool operator ==(Object other) {
@@ -112,7 +118,12 @@ class RemixThemeData {
 }
 
 class RemixTheme extends StatelessWidget {
-  const RemixTheme({super.key, required this.data, required this.child});
+  const RemixTheme({
+    super.key,
+    required this.theme,
+    required this.child,
+    this.darkTheme,
+  });
 
   static RemixThemeData of(BuildContext context) {
     final _RemixThemeInherited? provider =
@@ -131,15 +142,21 @@ class RemixTheme extends StatelessWidget {
     return provider.data;
   }
 
-  final RemixThemeData data;
-  final Widget child;
+  final RemixThemeData? theme;
 
-  // static MixThemeData light = _lightRemixTokens;
-  // static MixThemeData dark = _darkRemixTokens;
+  final RemixThemeData? darkTheme;
+  final Widget child;
 
   @override
   Widget build(BuildContext context) {
-    final tokens = data.tokens;
+    final brightness = MediaQuery.platformBrightnessOf(context);
+
+    final isDark = brightness == Brightness.dark;
+    final theme = isDark && darkTheme != null
+        ? darkTheme!
+        : this.theme ?? RemixThemeData.base();
+
+    final tokens = theme.tokens;
 
     return MixTheme(
       data: MixThemeData(
@@ -148,7 +165,7 @@ class RemixTheme extends StatelessWidget {
         textStyles: tokens.textStyles,
         radii: tokens.radii,
       ),
-      child: _RemixThemeInherited(data: data, child: child),
+      child: _RemixThemeInherited(data: theme, child: child),
     );
   }
 }

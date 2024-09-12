@@ -1,42 +1,38 @@
 part of 'spinner.dart';
 
-class XSpinner extends StatelessWidget {
-  const XSpinner({
-    super.key,
-    this.style = const Style.empty(),
-    this.variants = const [],
-  });
+class Spinner extends StatelessWidget {
+  const Spinner({super.key, this.style, this.variants = const []});
 
-  final Style style;
+  final SpinnerStyle? style;
   final List<Variant> variants;
 
   @override
   Widget build(BuildContext context) {
-    final styleFromTheme = _RemixThemeProvider.maybeOf(context)?.spinner;
+    final style = this.style ?? context.remix.components.spinner;
+
+    final configuration = SpecConfiguration(context, SpinnerSpecUtility.self);
 
     return SpecBuilder(
-      style: (styleFromTheme ?? XSpinnerStyle.base)
-          .merge(style)
-          .applyVariants(variants),
+      style: style.makeStyle(configuration).applyVariants(variants),
       builder: (context) {
-        final SpinnerWidget = SpinnerSpec.of(context);
+        final spinnerWidget = SpinnerSpec.of(context);
 
-        return SpinnerWidget();
+        return spinnerWidget();
       },
     );
   }
 }
 
-class XSpinnerSpecWidget extends StatefulWidget {
-  const XSpinnerSpecWidget({this.spec = const SpinnerSpec(), super.key});
+class SpinnerSpecWidget extends StatefulWidget {
+  const SpinnerSpecWidget({this.spec = const SpinnerSpec(), super.key});
 
   final SpinnerSpec spec;
 
   @override
-  _XSpinnerSpecWidgetState createState() => _XSpinnerSpecWidgetState();
+  State createState() => _SpinnerSpecWidgetState();
 }
 
-class _XSpinnerSpecWidgetState extends State<XSpinnerSpecWidget>
+class _SpinnerSpecWidgetState extends State<SpinnerSpecWidget>
     with SingleTickerProviderStateMixin {
   late AnimationController controller;
 
@@ -50,7 +46,7 @@ class _XSpinnerSpecWidgetState extends State<XSpinnerSpecWidget>
   }
 
   @override
-  void didUpdateWidget(covariant XSpinnerSpecWidget oldWidget) {
+  void didUpdateWidget(covariant SpinnerSpecWidget oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.spec.duration != widget.spec.duration) {
       controller.duration = widget.spec.duration;

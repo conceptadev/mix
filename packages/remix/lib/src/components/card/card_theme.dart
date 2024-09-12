@@ -1,42 +1,38 @@
 part of 'card.dart';
 
-class CardThemeVariant extends Variant {
-  static const surface = CardThemeVariant('surface');
-  static const ghost = CardThemeVariant('ghost');
+class FortalezaCardStyle extends CardStyle {
+  static const surface = Variant('surface');
+  static const ghost = Variant('ghost');
 
-  static const values = [surface, ghost];
+  const FortalezaCardStyle();
 
-  const CardThemeVariant(String value) : super('card.$value');
-}
+  static List<Variant> get variants => [surface, ghost];
 
-class XCardThemeStyle {
-  static Style get value => Style(
-        XCardStyle.base(),
-        _container.padding.all.$space(3),
-        CardThemeVariant.surface(_surface()),
-        CardThemeVariant.ghost(_ghost()),
-      );
-}
+  @override
+  Style makeStyle(SpecConfiguration<CardSpecUtility> spec) {
+    final $ = spec.utilities;
 
-Style get _surface => Style(
-      _container.borderRadius.all.$radius(2),
-      $on.hover(_container.border.color.$neutral(8)),
-      $on.dark(
-        _container.chain
-          ..color.$neutral(12)
-          ..border.width(1)
-          ..border.color.$neutral(11)
-          ..border.color.withOpacity(0.4),
-      ),
+    final baseStyle = super.makeStyle(spec);
+
+    final surfaceVariant = Style(
+      $.container.borderRadius.all.$radius(2),
+      spec.on.hover($.container.color.$neutral(8)),
     );
 
-Style get _ghost => Style(
-      _container.chain
+    final ghostVariant = Style(
+      $.container.chain
         ..border.none()
         ..color.transparent(),
-      $on.hover(_container.color.$neutral(3)),
-      $on.dark(
-        _container.border.color.$neutral(8),
-        $on.hover(_container.color.$neutral(12)),
-      ),
+      spec.on.hover($.container.color.$neutral(3)),
     );
+
+    return Style.create(
+      [
+        baseStyle(),
+        $.container.padding.all.$space(3),
+        surface(surfaceVariant()),
+        ghost(ghostVariant()),
+      ],
+    );
+  }
+}

@@ -10,8 +10,6 @@ part 'badge_style.dart';
 part 'badge_theme.dart';
 part 'badge_widget.dart';
 
-final $badge = BadgeSpecUtility.self;
-
 @MixableSpec()
 base class BadgeSpec extends Spec<BadgeSpec> with _$BadgeSpec {
   final BoxSpec container;

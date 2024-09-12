@@ -1,28 +1,28 @@
 part of 'progress.dart';
 
-class XProgress extends StatelessWidget {
-  const XProgress({
+class Progress extends StatelessWidget {
+  const Progress({
     super.key,
-    this.style = const Style.empty(),
+    this.style,
     this.variants = const [],
     required this.value,
   }) : assert(
-          value >= 0 || value <= 1,
+          value >= 0 && value <= 1,
           'Progress value must be between 0 and 1',
         );
 
-  final Style style;
+  final ProgressStyle? style;
   final double value;
   final List<Variant> variants;
 
   @override
   Widget build(BuildContext context) {
-    final styleFromTheme = _RemixThemeProvider.maybeOf(context)?.progress;
+    final style = this.style ?? context.remix.components.progress;
+
+    final configuration = SpecConfiguration(context, ProgressSpecUtility.self);
 
     return SpecBuilder(
-      style: (styleFromTheme ?? XProgressStyle.base)
-          .merge(style)
-          .applyVariants(variants),
+      style: style.makeStyle(configuration).applyVariants(variants),
       builder: (context) {
         final spec = ProgressSpec.of(context);
 

@@ -14,8 +14,6 @@ part 'button_style.dart';
 part 'button_theme.dart';
 part 'button_widget.dart';
 
-final $button = ButtonSpecUtility.self;
-
 @MixableSpec()
 class ButtonSpec extends Spec<ButtonSpec> with _$ButtonSpec, Diagnosticable {
   final FlexSpec flex;

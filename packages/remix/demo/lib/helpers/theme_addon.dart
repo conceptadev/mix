@@ -11,8 +11,7 @@ class RemixComponentThemeAddon extends ThemeAddon<RemixComponentTheme> {
   }) : super(
           themeBuilder: (context, theme, child) {
             return RemixTheme(
-              tokens: light,
-              components: theme,
+              theme: RemixThemeData(components: theme, tokens: light),
               child: child,
             );
           },

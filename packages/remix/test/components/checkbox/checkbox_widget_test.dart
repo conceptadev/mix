@@ -8,18 +8,18 @@ void main() {
     testWidgets('renders with default properties', (WidgetTester tester) async {
       await tester.pumpWidget(
         const MaterialApp(
-          home: XCheckbox(),
+          home: Checkbox(),
         ),
       );
 
-      expect(find.byType(XCheckbox), findsOneWidget);
+      expect(find.byType(Checkbox), findsOneWidget);
       expect(find.byIcon(Icons.check_rounded), findsOneWidget);
     });
 
     testWidgets('respects disabled state', (WidgetTester tester) async {
       await tester.pumpWidget(
         const MaterialApp(
-          home: XCheckbox(disabled: true),
+          home: Checkbox(disabled: true),
         ),
       );
 
@@ -31,7 +31,7 @@ void main() {
     testWidgets('respects value state', (WidgetTester tester) async {
       await tester.pumpWidget(
         const MaterialApp(
-          home: XCheckbox(value: true),
+          home: Checkbox(value: true),
         ),
       );
 
@@ -43,14 +43,14 @@ void main() {
     testWidgets('uses custom icons when provided', (WidgetTester tester) async {
       await tester.pumpWidget(
         const MaterialApp(
-          home: XCheckbox(
+          home: Checkbox(
             iconChecked: Icons.done,
             iconUnchecked: Icons.close,
           ),
         ),
       );
 
-      final XCheckbox checkbox = tester.widget(find.byType(XCheckbox));
+      final Checkbox checkbox = tester.widget(find.byType(Checkbox));
       expect(checkbox.iconChecked, Icons.done);
       expect(checkbox.iconUnchecked, Icons.close);
     });
@@ -59,14 +59,14 @@ void main() {
       bool? changedValue;
       await tester.pumpWidget(
         MaterialApp(
-          home: XCheckbox(
+          home: Checkbox(
             value: false,
             onChanged: (value) => changedValue = value,
           ),
         ),
       );
 
-      await tester.tap(find.byType(XCheckbox));
+      await tester.tap(find.byType(Checkbox));
       expect(changedValue, isTrue);
     });
 
@@ -75,7 +75,7 @@ void main() {
       const color = Colors.red;
 
       await tester.pumpWidget(MaterialApp(
-        home: XCheckbox(
+        home: Checkbox(
           value: true,
           style: Style(
             // TODO: Discuss about this

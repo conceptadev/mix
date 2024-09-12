@@ -3,6 +3,8 @@
 part of 'spinner.dart';
 
 class SpinnerStyle extends SpecStyle<SpinnerSpecUtility> {
+  static const solid = Variant('spinner.solid');
+  static const dotted = Variant('spinner.dotted');
   const SpinnerStyle();
 
   @override
@@ -13,11 +15,18 @@ class SpinnerStyle extends SpecStyle<SpinnerSpecUtility> {
       $.chain
         ..size(24)
         ..strokeWidth(1.5)
-        ..color.black(),
+        ..color.black()
+        ..style.solid(),
     ];
+
+    final solidVariant = $.style.solid();
+
+    final dottedVariant = $.style.dotted();
 
     return Style.create([
       ...spinnerStyle,
+      solid(solidVariant),
+      dotted(dottedVariant),
     ]);
   }
 }
