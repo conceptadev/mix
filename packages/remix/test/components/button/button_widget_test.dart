@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:remix/src/components/button/button.dart';
+import 'package:remix/src/components/spinner/spinner.dart';
 
 void main() {
   group('RxButton', () {
@@ -65,7 +66,7 @@ void main() {
         ),
       );
 
-      expect(find.byType(XSpinnerSpecWidget), findsOneWidget);
+      expect(find.byType(SpinnerSpecWidget), findsOneWidget);
 
       final opacityWidget = tester.widget<Opacity>(find.byType(Opacity));
       expect(opacityWidget.opacity, 0);

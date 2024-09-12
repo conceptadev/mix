@@ -25,6 +25,7 @@ class Button extends StatelessWidget {
     this.iconLeft,
     this.iconRight,
     this.spinnerBuilder,
+    this.variant,
     this.variants = const [],
     required this.onPressed,
     this.style,
@@ -38,6 +39,7 @@ class Button extends StatelessWidget {
   final VoidCallback? onPressed;
   final ButtonSpinnerBuilder? spinnerBuilder;
 
+  final Variant? variant;
   final List<Variant> variants;
 
   /// Additional custom styling for the button.
@@ -56,7 +58,10 @@ class Button extends StatelessWidget {
       enabled: !isDisabled,
       onPress: disabled || loading ? null : onPressed,
       child: SpecBuilder(
-        style: style.makeStyle(configuration).applyVariants(variants),
+        style: style.makeStyle(configuration).applyVariants([
+          ...variants,
+          if (variant != null) variant!,
+        ]),
         builder: (context) {
           return ButtonSpecWidget(
             label: label,
