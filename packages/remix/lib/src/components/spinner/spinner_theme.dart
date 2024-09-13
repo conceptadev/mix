@@ -1,12 +1,11 @@
 part of 'spinner.dart';
 
 class FortalezaSpinnerStyle extends SpinnerStyle {
-  static const solid = Variant('for.spinner.solid');
   static const soft = Variant('for.spinner.soft');
 
   const FortalezaSpinnerStyle();
 
-  static List<Variant> get variants => [solid, soft];
+  static List<Variant> get variants => [soft];
 
   @override
   Style makeStyle(SpecConfiguration<SpinnerSpecUtility> spec) {
@@ -14,11 +13,10 @@ class FortalezaSpinnerStyle extends SpinnerStyle {
 
     final baseStyle = super.makeStyle(spec);
 
-    final solidVariant = Style($.color.$accent());
     final softVariant = Style($.color.$accent(8));
 
     return Style.create(
-      [baseStyle(), solid(solidVariant()), soft(softVariant())],
+      [baseStyle(), $.color.$accent(), soft(softVariant())],
     );
   }
 }

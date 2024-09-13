@@ -1,12 +1,11 @@
 part of 'avatar.dart';
 
 class FortalezaAvatarStyle extends AvatarStyle {
-  static const solid = Variant('avatar.solid');
   static const soft = Variant('avatar.soft');
 
   const FortalezaAvatarStyle();
 
-  static List<Variant> get variants => [solid, soft];
+  static List<Variant> get variants => [soft];
 
   @override
   Style makeStyle(SpecConfiguration<AvatarSpecUtility> spec) {
@@ -24,9 +23,7 @@ class FortalezaAvatarStyle extends AvatarStyle {
       $.fallback.style.color.$accent(),
     );
 
-    return Style.create(
-      [baseStyle(), solid(solidVariant()), soft(softVariant())],
-    );
+    return Style.create([baseStyle(), solidVariant(), soft(softVariant())]);
   }
 }
 
@@ -46,7 +43,7 @@ class FortalezaDarkAvatarStyle extends FortalezaAvatarStyle {
 
     return Style.create([
       baseStyle(),
-      FortalezaAvatarStyle.solid(solid()),
+      solid(),
       FortalezaAvatarStyle.soft(soft()),
     ]);
   }

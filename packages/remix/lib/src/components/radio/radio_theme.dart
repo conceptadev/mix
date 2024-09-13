@@ -2,32 +2,19 @@ part of 'radio.dart';
 
 class FortalezaRadioStyle extends RadioStyle {
   static const soft = Variant('for.radio.soft');
-  static const surface = Variant('for.radio.surface');
 
   const FortalezaRadioStyle();
 
-  static List<Variant> get variants => [soft, surface];
+  static List<Variant> get variants => [soft];
 
   @override
   Style makeStyle(SpecConfiguration<RadioSpecUtility> spec) {
     final $ = spec.utilities;
 
     final baseStyle = super.makeStyle(spec);
-    final baseOverrides = Style($.indicator.wrap.padding.all(3.5));
-
-    final softVariant = Style(
-      $.container.border.none(),
-      $.container.color.$accent(4),
-      $.indicator.color.$accent(10),
-      spec.on.hover($.container.color.$accent(5)),
-      spec.on.disabled(
-        $.container.color.$neutral(3),
-        $.container.border.color.black26(),
-        $.indicator.color.$neutral(8),
-      ),
-    );
 
     final surfaceVariant = Style(
+      $.indicator.wrap.padding.all(3.5),
       $.container.chain
         ..color.$neutral(1)
         ..border.width(1)
@@ -58,12 +45,25 @@ class FortalezaRadioStyle extends RadioStyle {
       $.indicator.color.$neutral(7),
     );
 
+    final softVariant = Style(
+      $.container.border.none(),
+      $.container.color.$accent(4),
+      $.indicator.color.$accent(10),
+      spec.on.selected($.container.color.$accent(4)),
+      spec.on.hover($.container.color.$accent(5)),
+      (spec.on.hover & spec.on.selected)($.container.color.$accent(5)),
+      spec.on.disabled(
+        $.container.color.$neutral(3),
+        $.container.border.color.black26(),
+        $.indicator.color.$neutral(8),
+      ),
+    );
+
     return Style.create(
       [
         baseStyle(),
-        baseOverrides(),
+        surfaceVariant(),
         spec.on.disabled(disabledVariant()),
-        surface(surfaceVariant()),
         soft(softVariant()),
       ],
     );

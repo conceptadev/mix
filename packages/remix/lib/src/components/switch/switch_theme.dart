@@ -2,11 +2,10 @@ part of 'switch.dart';
 
 class FortalezaSwitchStyle extends SwitchStyle {
   static const soft = Variant('for.switch.soft');
-  static const surface = Variant('for.switch.surface');
 
   const FortalezaSwitchStyle();
 
-  static List<Variant> get variants => [soft, surface];
+  static List<Variant> get variants => [soft];
 
   @override
   Style makeStyle(SpecConfiguration<SwitchSpecUtility> spec) {
@@ -14,17 +13,7 @@ class FortalezaSwitchStyle extends SwitchStyle {
 
     final baseStyle = super.makeStyle(spec);
 
-    final softVariant = Style(
-      $.indicator.color.$neutral(1),
-      $.container.color.$neutral(6),
-      spec.on.selected($.container.color.$accent(8)),
-      spec.on.disabled(
-        $.container.color.$neutral(6),
-        $.indicator.color.$neutral(4),
-      ),
-    );
-
-    final surfaceVariant = Style(
+    final baseThemeOverrides = Style(
       $.indicator.color.$neutral(1),
       $.container.chain
         ..padding.all(1)
@@ -44,8 +33,20 @@ class FortalezaSwitchStyle extends SwitchStyle {
       ),
     );
 
+    final softVariant = Style(
+      $.container.chain
+        ..border.all.style.none()
+        ..color.$neutral(6),
+      $.indicator.color.$neutral(1),
+      spec.on.selected($.container.color.$accent(6)),
+      spec.on.disabled(
+        $.container.color.$neutral(6),
+        $.indicator.color.$neutral(4),
+      ),
+    );
+
     return Style.create(
-      [baseStyle(), soft(softVariant()), surface(surfaceVariant())],
+      [baseStyle(), baseThemeOverrides(), soft(softVariant())],
     );
   }
 }
@@ -62,18 +63,18 @@ class FortalezaDarkSwitchStyle extends FortalezaSwitchStyle {
     final soft = Style(
       $.indicator.color.$neutral(12),
       $.container.chain
-        ..color.$neutral(2)
+        ..color.$neutral(3)
         ..padding.all(1)
         ..border.color.$neutralAlpha(7)
         ..border.width(1.2),
-      spec.on.selected($.container.color.$accent(9)),
+      spec.on.selected($.container.color.$accent(8)),
       spec.on.disabled(
         $.container.color.$neutral(2),
         $.indicator.color.$neutral(4),
       ),
     );
 
-    final surface = Style(
+    final baseThemeOverrides = Style(
       $.indicator.color.$neutral(12),
       spec.on.disabled(
         $.container.color.$neutral(4),
@@ -83,8 +84,8 @@ class FortalezaDarkSwitchStyle extends FortalezaSwitchStyle {
 
     return Style(
       baseStyle(),
-      FortalezaSwitchStyle.surface(soft()),
-      FortalezaSwitchStyle.soft(surface()),
+      baseThemeOverrides(),
+      FortalezaSwitchStyle.soft(soft()),
     );
   }
 }

@@ -20,45 +20,44 @@ class _CustomCardStyle extends FortalezaCardStyle {
         ..padding.all(8),
       $.flex.chain
         ..mainAxisSize.min()
-        ..column(),
+        ..row(),
     );
   }
+}
 
-  @widgetbook.UseCase(
-    name: 'Card Component',
-    type: Card,
-  )
-  Widget buildCard(BuildContext context) {
-    return Center(
-      child: Card(
-        style: const _CustomCardStyle(),
-        variants: [
-          context.knobs.variant(FortalezaCardStyle.variants),
-        ],
-        children: [
-          Avatar(
-            fallbackBuilder: (spec) => spec('LF'),
-            variants: FortalezaCardStyle.variants,
-          ),
-          Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              StyledText(
-                'Leo Farias',
-                style: Style($text.style.ref($rx.text.text3)),
+@widgetbook.UseCase(
+  name: 'Card Component',
+  type: Card,
+)
+Widget buildCard(BuildContext context) {
+  return Center(
+    child: Card(
+      variants: [
+        context.knobs.variant(FortalezaCardStyle.variants),
+      ],
+      children: [
+        Avatar(
+          fallbackBuilder: (spec) => spec('LF'),
+          variants: FortalezaCardStyle.variants,
+        ),
+        Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            StyledText(
+              'Leo Farias',
+              style: Style($text.style.ref($rx.text.text3)),
+            ),
+            StyledText(
+              'Flutter Engineer',
+              style: Style(
+                $text.style.ref($rx.text.text2),
+                $text.style.color.$neutral(10),
               ),
-              StyledText(
-                'Flutter Engineer',
-                style: Style(
-                  $text.style.ref($rx.text.text2),
-                  $text.style.color.$neutral(10),
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
+            ),
+          ],
+        ),
+      ],
+    ),
+  );
 }

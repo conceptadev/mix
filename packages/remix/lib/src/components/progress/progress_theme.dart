@@ -1,12 +1,11 @@
 part of 'progress.dart';
 
 class FortalezaProgressStyle extends ProgressStyle {
-  static const surface = Variant('for.progress.surface');
   static const soft = Variant('for.progress.soft');
 
   const FortalezaProgressStyle();
 
-  static List<Variant> get variants => [surface, soft];
+  static List<Variant> get variants => [soft];
 
   @override
   Style makeStyle(SpecConfiguration<ProgressSpecUtility> spec) {
@@ -14,31 +13,22 @@ class FortalezaProgressStyle extends ProgressStyle {
 
     final baseStyle = super.makeStyle(spec);
     final baseOverrides = Style(
-      $.track.color.$neutral(6),
-      $.fill.color.$accent(),
       $.container.clipBehavior.hardEdge(),
-      $.outerContainer.clipBehavior.hardEdge(),
-      $.outerContainer.shapeDecoration.shape.roundedRectangle(),
-    );
-
-    final surfaceVariant = Style(
       $.track.color.$neutral(3),
       $.fill.color.$accent(9),
       $.outerContainer.chain
+        ..clipBehavior.hardEdge()
+        ..shapeDecoration.shape.roundedRectangle()
         ..border.width(1)
-        ..border.color.$neutralAlpha(6),
+        ..border.color.$neutralAlpha(4),
     );
 
-    final softVariant =
-        Style($.track.color.$neutral(4), $.fill.color.$accent(8));
-
-    return Style.create(
-      [
-        baseStyle(),
-        baseOverrides(),
-        surface(surfaceVariant()),
-        soft(softVariant()),
-      ],
+    final softVariant = Style(
+      $.track.color.$neutral(4),
+      $.fill.color.$accent(8),
+      $.outerContainer.border.style.none(),
     );
+
+    return Style.create([baseStyle(), baseOverrides(), soft(softVariant())]);
   }
 }

@@ -2,12 +2,11 @@ part of 'select.dart';
 
 class FortalezaSelectStyle extends SelectStyle {
   static const soft = Variant('for.select.soft');
-  static const surface = Variant('for.select.surface');
   static const ghost = Variant('for.select.ghost');
 
   const FortalezaSelectStyle();
 
-  static List<Variant> get variants => [soft, surface, ghost];
+  static List<Variant> get variants => [soft, ghost];
 
   @override
   Style makeStyle(SpecConfiguration<SelectSpecUtility> spec) {
@@ -30,25 +29,15 @@ class FortalezaSelectStyle extends SelectStyle {
         ..mainAxisSize.min(),
       spec.on.disabled(
         $.button.chain
-          ..container.color.$neutral(3)
-          ..label.style.color.$neutral(11)
-          ..icon.color.$neutral(11),
-      ),
-    );
-
-    final ghostVariant = Style(
-      $.button.container.chain
-        ..color.transparent()
-        ..border.none(),
-      spec.on.hover(
-        $.button.container.color.$accent(4),
-        $.item.container.color.$accent(4),
-      ),
-      spec.on.disabled(
-        $.button.chain
-          ..container.color.transparent()
+          ..container.color.$neutral(2)
+          ..container.border.all.color.$neutral(8)
           ..label.style.color.$neutral(11)
           ..icon.color.$neutral(9),
+      ),
+      spec.on.hover(
+        $.button.container.border.all.color.$neutral(8),
+        $.item.container.color.$accent(9),
+        $.item.text.style.color.$white(),
       ),
     );
 
@@ -60,20 +49,25 @@ class FortalezaSelectStyle extends SelectStyle {
       $.item.text.style.color.$accent(12),
       spec.on.hover(
         $.button.container.color.$accent(4),
-        $.item.container.color.$accent(4),
+        $.item.chain
+          ..container.color.$accent(4)
+          ..text.style.color.$accent(12),
       ),
     );
 
-    final surfaceVariant = Style(
+    final ghostVariant = Style(
+      $.button.container.chain
+        ..color.transparent()
+        ..border.none(),
       spec.on.hover(
-        $.button.container.border.all.color.$neutral(8),
-        $.item.container.color.$accent(9),
-        $.item.text.style.color.$white(),
+        $.button.container.color.$accent(4),
+        $.item.chain
+          ..container.color.$accent(4)
+          ..text.style.color.$accent(12),
       ),
       spec.on.disabled(
         $.button.chain
-          ..container.color.$neutral(2)
-          ..container.border.all.color.$neutral(8)
+          ..container.color.transparent()
           ..label.style.color.$neutral(11)
           ..icon.color.$neutral(9),
       ),
@@ -83,7 +77,6 @@ class FortalezaSelectStyle extends SelectStyle {
       [
         baseStyle(),
         baseThemeOverrides(),
-        surface(surfaceVariant()),
         soft(softVariant()),
         ghost(ghostVariant()),
       ],
@@ -99,7 +92,8 @@ class FortalezaDarkSelectStyle extends FortalezaSelectStyle {
     final $ = spec.utilities;
 
     final baseStyle = Style(super.makeStyle(spec).call());
-    final surface = Style(
+
+    final baseThemeOverrides = Style(
       $.button.chain
         ..label.style.color.$neutral(12)
         ..container.color.$neutral(1)
@@ -120,7 +114,7 @@ class FortalezaDarkSelectStyle extends FortalezaSelectStyle {
 
     return Style.create([
       baseStyle(),
-      FortalezaSelectStyle.surface(surface()),
+      baseThemeOverrides(),
       FortalezaSelectStyle.ghost(ghost()),
     ]);
   }

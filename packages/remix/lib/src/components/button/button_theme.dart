@@ -1,7 +1,6 @@
 part of 'button.dart';
 
 class FortalezaButtonStyle extends ButtonStyle {
-  static const solid = Variant('for.button.solid');
   static const soft = Variant('for.button.soft');
   static const outline = Variant('for.button.outline');
   static const surface = Variant('for.button.surface');
@@ -9,7 +8,7 @@ class FortalezaButtonStyle extends ButtonStyle {
 
   const FortalezaButtonStyle();
 
-  static List<Variant> get variants => [solid, soft, outline, surface, ghost];
+  static List<Variant> get variants => [soft, outline, surface, ghost];
 
   @override
   Style makeStyle(SpecConfiguration<ButtonSpecUtility> spec) {
@@ -95,7 +94,7 @@ class FortalezaButtonStyle extends ButtonStyle {
       [
         baseOverrides(),
         onDisabledForeground,
-        solid(solidVariant()),
+        solidVariant(),
         soft(softVariant()),
         outline(outlineVariant()),
         surface(surfaceVariant()),

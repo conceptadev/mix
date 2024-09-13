@@ -1,14 +1,13 @@
 part of 'badge.dart';
 
 class FortalezaBadgeStyle extends BadgeStyle {
-  static const solid = Variant('for.badge.solid');
   static const soft = Variant('for.badge.soft');
   static const surface = Variant('for.badge.surface');
   static const outline = Variant('for.badge.outline');
 
   const FortalezaBadgeStyle();
 
-  static List<Variant> get variants => [solid, soft, surface, outline];
+  static List<Variant> get variants => [soft, surface, outline];
 
   @override
   Style makeStyle(SpecConfiguration<BadgeSpecUtility> spec) {
@@ -19,11 +18,8 @@ class FortalezaBadgeStyle extends BadgeStyle {
       $.container.chain
         ..borderRadius.all.$radius(1)
         ..padding.horizontal.$space(2)
-        ..padding.vertical.$space(1),
-    );
-
-    final solidVariant = Style(
-      $.container.color.$accent(),
+        ..padding.vertical.$space(1)
+        ..color.$accent(),
       $.label.style.color.$neutral(1),
     );
 
@@ -52,7 +48,6 @@ class FortalezaBadgeStyle extends BadgeStyle {
       [
         baseStyle(),
         baseStyleOverride(),
-        solid(solidVariant()),
         soft(softVariant()),
         surface(surfaceVariant()),
         outline(outlineVariant()),
@@ -69,7 +64,7 @@ class FortalezaDarkBadgeStyle extends FortalezaBadgeStyle {
     final $ = spec.utilities;
     final baseStyle = super.makeStyle(spec);
 
-    final solid = Style($.label.style.color.$neutral(12));
+    final baseStyleOverride = Style($.label.style.color.$neutral(12));
     final soft = Style(
       $.container.color.$accent(3),
       $.label.style.color.$accent(11),
@@ -78,7 +73,7 @@ class FortalezaDarkBadgeStyle extends FortalezaBadgeStyle {
 
     return Style.create([
       baseStyle(),
-      FortalezaBadgeStyle.solid(solid()),
+      baseStyleOverride(),
       FortalezaBadgeStyle.soft(soft()),
       FortalezaBadgeStyle.surface(surface()),
     ]);

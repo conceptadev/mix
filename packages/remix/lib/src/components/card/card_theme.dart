@@ -1,12 +1,11 @@
 part of 'card.dart';
 
 class FortalezaCardStyle extends CardStyle {
-  static const surface = Variant('surface');
   static const ghost = Variant('ghost');
 
   const FortalezaCardStyle();
 
-  static List<Variant> get variants => [surface, ghost];
+  static List<Variant> get variants => [ghost];
 
   @override
   Style makeStyle(SpecConfiguration<CardSpecUtility> spec) {
@@ -15,24 +14,24 @@ class FortalezaCardStyle extends CardStyle {
     final baseStyle = super.makeStyle(spec);
 
     final surfaceVariant = Style(
-      $.container.borderRadius.all.$radius(2),
-      spec.on.hover($.container.color.$neutral(8)),
+      $.container.chain
+        ..padding.all.$space(3)
+        ..borderRadius.all.$radius(2)
+        ..border.all.color.$neutral(6)
+        ..color.$neutral(1),
+      spec.on.hover($.container.border.color.$neutral(8)),
     );
 
     final ghostVariant = Style(
       $.container.chain
         ..border.none()
-        ..color.transparent(),
-      spec.on.hover($.container.color.$neutral(3)),
+        ..color.$neutral(2)
+        ..color.withOpacity(0),
+      spec.on.hover($.container.color.withOpacity(1)),
     );
 
     return Style.create(
-      [
-        baseStyle(),
-        $.container.padding.all.$space(3),
-        surface(surfaceVariant()),
-        ghost(ghostVariant()),
-      ],
-    );
+      [baseStyle(), surfaceVariant(), ghost(ghostVariant())],
+    ).animate(duration: const Duration(milliseconds: 100));
   }
 }

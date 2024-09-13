@@ -2,11 +2,10 @@ part of 'checkbox.dart';
 
 class FortalezaCheckboxStyle extends CheckboxStyle {
   static const soft = Variant('for.checkbox.soft');
-  static const surface = Variant('for.checkbox.surface');
 
   const FortalezaCheckboxStyle();
 
-  static List<Variant> get variants => [soft, surface];
+  static List<Variant> get variants => [soft];
 
   @override
   Style makeStyle(SpecConfiguration<CheckboxSpecUtility> spec) {
@@ -21,21 +20,6 @@ class FortalezaCheckboxStyle extends CheckboxStyle {
         ..wrap.opacity(0)
         ..wrap.scale(0.5),
       spec.on.selected($.indicator.wrap.opacity(1), $.indicator.wrap.scale(1)),
-    );
-
-    final softVariant = Style(
-      $.container.color.$accentAlpha(6),
-      $.indicator.color.$accentAlpha(11),
-      spec.on.hover($.container.color.$accentAlpha(5)),
-      (spec.on.hover & spec.on.selected)($.container.color.$accentAlpha(5)),
-      spec.on.selected(
-        $.container.color.$accentAlpha(6),
-        $.indicator.color.$accentAlpha(11),
-      ),
-      spec.on.disabled(
-        $.container.color.$neutralAlpha(3),
-        spec.on.selected($.container.color.$neutralAlpha(3)),
-      ),
     );
 
     final surfaceVariant = Style(
@@ -67,6 +51,23 @@ class FortalezaCheckboxStyle extends CheckboxStyle {
       ),
     );
 
+    final softVariant = Style(
+      $.container.border.style.none(),
+      $.container.color.$accentAlpha(6),
+      $.indicator.color.$accentAlpha(11),
+      spec.on.hover($.container.color.$accentAlpha(5)),
+      (spec.on.hover & spec.on.selected)($.container.color.$accentAlpha(5)),
+      spec.on.selected(
+        $.container.color.$accentAlpha(6),
+        $.indicator.color.$accentAlpha(11),
+      ),
+      spec.on.disabled(
+        $.container.color.$neutral(4),
+        spec.on.selected($.container.color.$neutral(3)),
+        spec.on.selected($.container.border.style.none()),
+      ),
+    );
+
     final disabledVariant = Style(
       $.container.chain
         ..color.$neutral(3)
@@ -79,8 +80,9 @@ class FortalezaCheckboxStyle extends CheckboxStyle {
         baseStyle(),
         baseOverrides(),
         spec.on.disabled(disabledVariant()),
+        $.container.border.style.none(),
+        surfaceVariant(),
         soft(softVariant()),
-        surface(surfaceVariant()),
       ],
     );
   }
