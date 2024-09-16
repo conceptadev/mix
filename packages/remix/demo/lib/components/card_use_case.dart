@@ -5,26 +5,6 @@ import 'package:remix/remix.dart';
 import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
-class _CustomCardStyle extends FortalezaCardStyle {
-  const _CustomCardStyle();
-
-  @override
-  Style makeStyle(SpecConfiguration<CardSpecUtility> spec) {
-    final $ = spec.utilities;
-
-    return Style(
-      $.container.chain
-        ..borderRadius(4)
-        ..color.white()
-        ..border.all.color.black12()
-        ..padding.all(8),
-      $.flex.chain
-        ..mainAxisSize.min()
-        ..row(),
-    );
-  }
-}
-
 @widgetbook.UseCase(
   name: 'Card Component',
   type: Card,
