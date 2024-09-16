@@ -1,71 +1,78 @@
 part of 'accordion.dart';
 
-typedef XAccordionHeaderBuilder = XComponentBuilder<AccordionHeaderSpec>;
-typedef XAccordionContentBuilder = XComponentBuilder<TextSpec>;
-
-const Variant openedVariant = Variant('accordion.opened');
-
-class XAccordion extends StatefulWidget {
-  const XAccordion({
+class Accordion extends StatefulWidget {
+  const Accordion({
     super.key,
     required this.header,
     required this.content,
     this.variants = const [],
     this.initiallyExpanded = false,
-    this.style = const Style.empty(),
+    this.style,
   });
 
-  final XAccordionHeaderBuilder header;
-  final XAccordionContentBuilder content;
-  final Style style;
+  final WidgetSpecBuilder<AccordionHeaderSpec> header;
+  final WidgetSpecBuilder<TextSpec> content;
+  final AccordionStyle? style;
   final bool initiallyExpanded;
   final List<Variant> variants;
 
   @override
-  State<XAccordion> createState() => _XAccordionState();
+  State<Accordion> createState() => _AccordionState();
 }
 
-class _XAccordionState extends State<XAccordion> with TickerProviderStateMixin {
-  late bool opened = widget.initiallyExpanded;
+class _AccordionState extends State<Accordion> with TickerProviderStateMixin {
+  late MixWidgetStateController _controller;
+  late MixWidgetStateController _contentController;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = MixWidgetStateController()
+      ..selected = widget.initiallyExpanded;
+    _contentController = MixWidgetStateController()
+      ..selected = widget.initiallyExpanded;
+  }
 
   void _handleTap() {
-    setState(() {
-      opened = !opened;
-    });
+    _controller.selected = !_controller.selected;
+    _contentController.selected = !_contentController.selected;
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    _contentController.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final styleFromTheme = RemixThemeProvider.maybeOf(context)?.accordion;
+    final style = widget.style ?? context.remix.components.accordion;
+    final configuration = SpecConfiguration(context, AccordionSpecUtility.self);
 
-    final style = (styleFromTheme ?? XAccordionStyle.base)
-        .merge(widget.style)
-        .applyVariant(opened ? openedVariant : null)
-        .applyVariants(widget.variants);
+    final variantStyle =
+        style.makeStyle(configuration).applyVariants(widget.variants);
 
     return RepaintBoundary(
       child: SpecBuilder(
-        style: style,
+        controller: _contentController,
+        style: variantStyle,
         builder: (context) {
           final spec = AccordionSpec.of(context);
 
-          final ContainerWidget = spec.container;
-          final specContentContainer = spec.contentContainer;
-          final FlexWidget = spec.flex;
-
-          final content = BoxSpecWidget(
-            spec: specContentContainer,
+          final content = spec.contentContainer(
             child: widget.content(spec.textContent),
           );
 
-          return ContainerWidget(
-            child: FlexWidget(
+          return spec.container(
+            child: spec.flex(
               direction: Axis.vertical,
               children: [
                 Pressable(
                   onPress: _handleTap,
+                  controller: _controller,
                   child: SpecBuilder(
-                    style: style,
+                    style: variantStyle,
                     builder: (context) {
                       final spec = AccordionSpec.of(context);
 

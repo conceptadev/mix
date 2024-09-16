@@ -1,6 +1,6 @@
 import 'package:demo/helpers/knob_builder.dart';
 import 'package:demo/helpers/string.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:remix/remix.dart';
 import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
@@ -15,7 +15,7 @@ enum Theme {
 
 @widgetbook.UseCase(
   name: 'Radio Component',
-  type: XRadio,
+  type: Radio,
 )
 Widget buildRadioUseCase(BuildContext context) {
   return const RadioExample();
@@ -42,8 +42,10 @@ class _RadioExampleState extends State<RadioExample> {
           for (var theme in Theme.values) ...[
             Row(
               children: [
-                XRadio<Theme>(
-                  variants: [context.knobs.variant(XRadioThemeVariant.values)],
+                Radio<Theme>(
+                  variants: [
+                    context.knobs.variant(FortalezaRadioStyle.variants)
+                  ],
                   value: theme,
                   groupValue: _theme,
                   onChanged: (Theme? value) {

@@ -1,4 +1,4 @@
-import 'package:flutter/foundation.dart';
+import 'package:flutter/widgets.dart';
 import 'package:mix_annotations/mix_annotations.dart';
 
 import '../attributes/animated/animated_data.dart';
@@ -6,8 +6,10 @@ import '../attributes/animated/animated_data_dto.dart';
 import '../attributes/modifiers/widget_modifiers_data.dart';
 import '../attributes/modifiers/widget_modifiers_data_dto.dart';
 import '../internal/compare_mixin.dart';
+import '../variants/context_variant_util/on_util.dart';
 import 'attribute.dart';
 import 'factory/mix_data.dart';
+import 'factory/style_mix.dart';
 
 @immutable
 abstract class Spec<T extends Spec<T>> with EqualityMixin {
@@ -82,4 +84,22 @@ abstract class SpecUtility<T extends Attribute, V> extends Attribute {
 
   @override
   get props => [attributeValue];
+}
+
+class SpecConfiguration<U extends SpecUtility> {
+  final BuildContext context;
+
+  final U _utility;
+
+  const SpecConfiguration(this.context, this._utility);
+
+  OnContextVariantUtility get on => OnContextVariantUtility.self;
+
+  U get utilities => _utility;
+}
+
+abstract class SpecStyle<U extends SpecUtility> {
+  const SpecStyle();
+
+  Style makeStyle(covariant SpecConfiguration<U> spec);
 }

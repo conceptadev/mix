@@ -1,52 +1,34 @@
 part of 'progress.dart';
 
-class XProgressThemeVariant extends Variant {
-  static const soft = XProgressThemeVariant('soft');
-  static const surface = XProgressThemeVariant('surface');
+class FortalezaProgressStyle extends ProgressStyle {
+  static const soft = Variant('for.progress.soft');
 
-  static const values = [soft, surface];
+  const FortalezaProgressStyle();
 
-  const XProgressThemeVariant(String value) : super('progress.$value');
-}
+  static List<Variant> get variants => [soft];
 
-class XProgressThemeStyle {
-  static Style get value => Style(
-        XProgressStyle.base(),
-        _baseStyle(),
-        XProgressThemeVariant.surface(_surfaceVariant()),
-        XProgressThemeVariant.soft(_softVariant()),
-      );
-}
+  @override
+  Style makeStyle(SpecConfiguration<ProgressSpecUtility> spec) {
+    final $ = spec.utilities;
 
-Style get _baseStyle {
-  return Style(
-    _track.color.$neutral(6),
-    _fill.color.$accent(),
-    _container.clipBehavior.hardEdge(),
-    _outerContainer.clipBehavior.hardEdge(),
-    _outerContainer.shapeDecoration.shape.roundedRectangle(),
-  );
-}
+    final baseStyle = super.makeStyle(spec);
+    final baseOverrides = Style(
+      $.container.clipBehavior.hardEdge(),
+      $.track.color.$neutral(3),
+      $.fill.color.$accent(9),
+      $.outerContainer.chain
+        ..clipBehavior.hardEdge()
+        ..shapeDecoration.shape.roundedRectangle()
+        ..border.width(1)
+        ..border.color.$neutralAlpha(4),
+    );
 
-Style get _surfaceVariant {
-  return Style(
-    _track.color.$neutral(3),
-    _fill.color.$accent(9),
-    _outerContainer.chain
-      ..border.width(1)
-      ..border.color.$neutralAlpha(6),
-    $on.dark(
-      _track.color.$neutral(12),
-      _outerContainer.chain
-        ..border.color.$white()
-        ..border.color.withOpacity(0.1),
-    ),
-  );
-}
+    final softVariant = Style(
+      $.track.color.$neutral(4),
+      $.fill.color.$accent(8),
+      $.outerContainer.border.style.none(),
+    );
 
-Style get _softVariant {
-  return Style(
-    $progress.track.color.$neutral(4),
-    $on.dark($progress.track.color.$neutral(12)),
-  );
+    return Style.create([baseStyle(), baseOverrides(), soft(softVariant())]);
+  }
 }

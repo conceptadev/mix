@@ -1,101 +1,71 @@
 part of 'radio.dart';
 
-class XRadioThemeVariant extends Variant {
-  static const soft = XRadioThemeVariant('soft');
-  static const surface = XRadioThemeVariant('surface');
+class FortalezaRadioStyle extends RadioStyle {
+  static const soft = Variant('for.radio.soft');
 
-  static const values = [soft, surface];
+  const FortalezaRadioStyle();
 
-  const XRadioThemeVariant(String value) : super('radio.$value');
-}
+  static List<Variant> get variants => [soft];
 
-class XRadioThemeStyle {
-  static Style get value => Style(
-        XRadioStyle.base(),
-        _indicator.wrap.padding.all(3.5),
-        $on.disabled(_disabledVariant()),
-        XRadioThemeVariant.surface(_surfaceVariant()),
-        XRadioThemeVariant.soft(_softVariant()),
-      );
-}
+  @override
+  Style makeStyle(SpecConfiguration<RadioSpecUtility> spec) {
+    final $ = spec.utilities;
 
-Style get _softVariant {
-  return Style(
-    _container.border.none(),
-    _container.color.$accent(4),
-    _indicator.color.$accent(10),
-    $on.hover(_container.color.$accent(5)),
-    $on.disabled(
-      _container.color.$neutral(3),
-      _container.border.color.black26(),
-      _indicator.color.$neutral(8),
-    ),
-    $on.dark(_softOnDark()),
-  );
-}
+    final baseStyle = super.makeStyle(spec);
 
-Style get _softOnDark {
-  return Style(
-    _container.color.$neutral(3),
-    _container.color.$accent(11),
-    _indicator.color.$accent(4),
-    $on.hover(_container.color.$accent(10)),
-    $on.disabled(_container.color.$neutral(12)),
-  );
-}
+    final surfaceVariant = Style(
+      $.indicator.wrap.padding.all(3.5),
+      $.container.chain
+        ..color.$neutral(1)
+        ..border.width(1)
+        ..border.color.$neutral(8),
+      $.indicator.chain..color.$white(),
+      spec.on.hover(
+        $.container.chain
+          ..color.$accentAlpha(4)
+          ..border.color.$accentAlpha(8),
+      ),
+      spec.on.selected(
+        $.container.chain
+          ..border.none()
+          ..color.$accent(9),
+      ),
+      (spec.on.selected & spec.on.hover)($.container.color.$accent(11)),
+      (spec.on.disabled & spec.on.selected)(
+        $.container.chain
+          ..color.$neutral(3)
+          ..border.style.solid(),
+      ),
+    );
 
-Style get _surfaceVariant {
-  return Style(
-    _container.chain
-      ..color.$white()
-      ..border.width(1)
-      ..border.color.$neutral(8),
-    _indicator.chain..color.$white(),
-    $on.hover(
-      _container.chain
-        ..color.$accentAlpha(4)
-        ..border.color.$accentAlpha(8),
-    ),
-    $on.selected(
-      _container.chain
-        ..border.none()
-        ..color.$accent(9),
-    ),
-    ($on.selected & $on.hover)(_container.color.$accent(11)),
-    ($on.disabled & $on.selected)(
-      _container.chain
+    final disabledVariant = Style(
+      $.container.chain
         ..color.$neutral(3)
-        ..border.style.solid(),
-    ),
-    $on.dark(_surfaceOnDark()),
-  );
-}
+        ..border.color.$neutral(5),
+      $.indicator.color.$neutral(7),
+    );
 
-Style get _surfaceOnDark {
-  return Style(
-    _container.chain
-      ..color.transparent()
-      ..border.color.$neutral(11),
-    $on.hover(
-      _container.chain
-        ..color.transparent()
-        ..border.color.$accent(11),
-      $on.selected(_container.color.$accent(11)),
-    ),
-    $on.disabled(
-      _container.chain
-        ..color.$neutral(12)
-        ..border.color.$neutral(11),
-      _indicator.color.$neutral(11),
-    ),
-  );
-}
+    final softVariant = Style(
+      $.container.border.none(),
+      $.container.color.$accent(4),
+      $.indicator.color.$accent(10),
+      spec.on.selected($.container.color.$accent(4)),
+      spec.on.hover($.container.color.$accent(5)),
+      (spec.on.hover & spec.on.selected)($.container.color.$accent(5)),
+      spec.on.disabled(
+        $.container.color.$neutral(3),
+        $.container.border.color.black26(),
+        $.indicator.color.$neutral(8),
+      ),
+    );
 
-Style get _disabledVariant {
-  return Style(
-    _container.chain
-      ..color.$neutral(3)
-      ..border.color.$neutral(5),
-    _indicator.color.$neutral(7),
-  );
+    return Style.create(
+      [
+        baseStyle(),
+        surfaceVariant(),
+        spec.on.disabled(disabledVariant()),
+        soft(softVariant()),
+      ],
+    );
+  }
 }

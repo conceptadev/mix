@@ -1,3 +1,4 @@
+import 'package:demo/helpers/theme_addon.dart';
 import 'package:flutter/material.dart';
 import 'package:remix/remix.dart';
 import 'package:widgetbook/widgetbook.dart';
@@ -37,28 +38,35 @@ class HotReload extends StatelessWidget {
           name: 'brightness',
           builder: (context, child) {
             final isDarkTheme = Theme.of(context).brightness == Brightness.dark;
-            return Container(
-              color: isDarkTheme ? Colors.black87 : Colors.white,
-              child: Center(child: child),
+            return MediaQuery(
+              data: MediaQueryData(
+                  platformBrightness:
+                      isDarkTheme ? Brightness.dark : Brightness.light),
+              child: Container(
+                color: isDarkTheme ? Colors.black87 : Colors.white,
+                child: Center(child: child),
+              ),
             );
           },
         ),
-        // RemixComponentThemeAddon(
-        //   themes: [
-        //     WidgetbookTheme(
-        //       name: 'Remix',
-        //       data: RemixComponentTheme.remix(),
-        //     ),
-        //     WidgetbookTheme(
-        //       name: 'Base',
-        //       data: RemixComponentTheme.base(),
-        //     ),
-        //     const WidgetbookTheme(
-        //       name: 'Blank',
-        //       data: RemixComponentTheme.blank(),
-        //     ),
-        //   ],
-        // ),
+        RemixComponentThemeAddon(
+          themes: [
+            WidgetbookTheme(
+              name: 'Fortaleza',
+              data: (
+                dark: RemixComponentTheme.fortalezaDark(),
+                light: RemixComponentTheme.fortalezaLight()
+              ),
+            ),
+            WidgetbookTheme(
+              name: 'Base',
+              data: (
+                dark: RemixComponentTheme.base(),
+                light: RemixComponentTheme.base(),
+              ),
+            ),
+          ],
+        ),
         InspectorAddon(),
       ],
       appBuilder: (context, child) => App(child: child),
@@ -77,8 +85,7 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RemixTheme(
-      tokens: light,
-      components: RemixComponentTheme.remix(),
+      theme: RemixThemeData.base(),
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         home: Scaffold(

@@ -13,6 +13,11 @@ class CompositedTransformFollowerSpec
   final AlignmentGeometry targetAnchor;
   final AlignmentGeometry followerAnchor;
 
+  /// {@macro button_spec_of}
+  static const of = _$CompositedTransformFollowerSpec.of;
+
+  static const from = _$CompositedTransformFollowerSpec.from;
+
   const CompositedTransformFollowerSpec({
     Offset? offset,
     AlignmentGeometry? targetAnchor,

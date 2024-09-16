@@ -1,4 +1,5 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/widgets.dart';
 import 'package:mix/mix.dart';
 
 import '../components/accordion/accordion.dart';
@@ -9,6 +10,7 @@ import '../components/callout/callout.dart';
 import '../components/card/card.dart';
 import '../components/checkbox/checkbox.dart';
 import '../components/divider/divider.dart';
+import '../components/icon_button/icon_button.dart';
 import '../components/progress/progress.dart';
 import '../components/radio/radio.dart';
 import '../components/segmented_control/segmented_control.dart';
@@ -18,110 +20,195 @@ import '../components/switch/switch.dart';
 import 'remix_tokens.dart';
 
 class RemixComponentTheme {
-  final Style? button;
-  final Style? avatar;
-  final Style? badge;
-  final Style? divider;
-  final Style? callout;
-  final Style? card;
-  final Style? checkbox;
-  final Style? progress;
-  final Style? radio;
-  final Style? select;
-  final Style? segmentedControl;
-  final Style? spinner;
-  final Style? accordion;
-  final Style? switchComponent;
+  final AccordionStyle accordion;
+  final AvatarStyle avatar;
+  final BadgeStyle badge;
+  final ButtonStyle button;
+  final CalloutStyle callout;
+  final CardStyle card;
+  final CheckboxStyle checkbox;
+  final DividerStyle divider;
+  final IconButtonStyle iconButton;
+  final ProgressStyle progress;
+  final RadioStyle radio;
+  final SegmentedControlStyle segmentedControl;
+  final SelectStyle select;
+  final SpinnerStyle spinner;
+  final SwitchStyle switchComponent;
 
   const RemixComponentTheme({
-    this.accordion,
-    this.button,
-    this.avatar,
-    this.divider,
-    this.badge,
-    this.callout,
-    this.card,
-    this.checkbox,
-    this.progress,
-    this.radio,
-    this.select,
-    this.segmentedControl,
-    this.spinner,
-    this.switchComponent,
+    required this.accordion,
+    required this.avatar,
+    required this.badge,
+    required this.button,
+    required this.callout,
+    required this.card,
+    required this.checkbox,
+    required this.divider,
+    required this.iconButton,
+    required this.progress,
+    required this.radio,
+    required this.segmentedControl,
+    required this.select,
+    required this.spinner,
+    required this.switchComponent,
   });
 
-  const RemixComponentTheme.blank()
-      : button = const Style.empty(),
-        accordion = const Style.empty(),
-        avatar = const Style.empty(),
-        badge = const Style.empty(),
-        callout = const Style.empty(),
-        card = const Style.empty(),
-        divider = const Style.empty(),
-        checkbox = const Style.empty(),
-        progress = const Style.empty(),
-        radio = const Style.empty(),
-        select = const Style.empty(),
-        segmentedControl = const Style.empty(),
-        spinner = const Style.empty(),
-        switchComponent = const Style.empty();
-
   factory RemixComponentTheme.base() {
-    return RemixComponentTheme(
-      accordion: XAccordionStyle.base,
-      button: XButtonStyle.base,
-      avatar: XAvatarStyle.base,
-      divider: XDividerStyle.base,
-      badge: XBadgeStyle.base,
-      callout: XCalloutStyle.base,
-      card: XCardStyle.base,
-      checkbox: XCheckboxStyle.base,
-      progress: XProgressStyle.base,
-      radio: XRadioStyle.base,
-      select: XSelectStyle.base,
-      segmentedControl: XSegmentedControlStyle.base,
-      spinner: XSpinnerStyle.base,
-      switchComponent: XSwitchStyle.base,
+    return const RemixComponentTheme(
+      accordion: AccordionStyle(),
+      avatar: AvatarStyle(),
+      badge: BadgeStyle(),
+      button: ButtonStyle(),
+      callout: CalloutStyle(),
+      card: CardStyle(),
+      checkbox: CheckboxStyle(),
+      divider: DividerStyle(),
+      iconButton: IconButtonStyle(),
+      progress: ProgressStyle(),
+      radio: RadioStyle(),
+      segmentedControl: SegmentedControlStyle(),
+      select: SelectStyle(),
+      spinner: SpinnerStyle(),
+      switchComponent: SwitchStyle(),
     );
   }
 
-  factory RemixComponentTheme.remix() {
-    return RemixComponentTheme(
-      accordion: XAccordionThemeStyle.value,
-      button: XButtonThemeStyle.value,
-      avatar: XAvatarThemeStyle.value,
-      badge: XBadgeThemeStyle.value,
-      callout: XCalloutThemeStyle.value,
-      card: XCardThemeStyle.value,
-      checkbox: XCheckboxThemeStyle.value,
-      progress: XProgressThemeStyle.value,
-      radio: XRadioThemeStyle.value,
-      select: XSelectThemeStyle.value,
-      segmentedControl: XSegmentedControlThemeStyle.value,
-      spinner: XSpinnerThemeStyle.value,
-      switchComponent: XSwitchThemeStyle.value,
+  factory RemixComponentTheme.fortalezaLight() {
+    return const RemixComponentTheme(
+      accordion: FortalezaAccordionStyle(),
+      avatar: FortalezaAvatarStyle(),
+      badge: FortalezaBadgeStyle(),
+      button: FortalezaButtonStyle(),
+      callout: FortalezaCalloutStyle(),
+      card: FortalezaCardStyle(),
+      checkbox: FortalezaCheckboxStyle(),
+      divider: FortalezaDividerStyle(),
+      iconButton: FortalezaIconButtonStyle(),
+      progress: FortalezaProgressStyle(),
+      radio: FortalezaRadioStyle(),
+      segmentedControl: FortalezaSegmentedControlStyle(),
+      select: FortalezaSelectStyle(),
+      spinner: FortalezaSpinnerStyle(),
+      switchComponent: FortalezaSwitchStyle(),
     );
   }
+
+  factory RemixComponentTheme.fortalezaDark() {
+    return RemixComponentTheme.fortalezaLight().copyWith(
+      avatar: const FortalezaDarkAvatarStyle(),
+      badge: const FortalezaDarkBadgeStyle(),
+      segmentedControl: const FortalezaDarkSegmentedControlStyle(),
+      select: const FortalezaDarkSelectStyle(),
+      switchComponent: const FortalezaDarkSwitchStyle(),
+    );
+  }
+
+  RemixComponentTheme copyWith({
+    AccordionStyle? accordion,
+    AvatarStyle? avatar,
+    BadgeStyle? badge,
+    ButtonStyle? button,
+    CalloutStyle? callout,
+    CardStyle? card,
+    CheckboxStyle? checkbox,
+    DividerStyle? divider,
+    IconButtonStyle? iconButton,
+    ProgressStyle? progress,
+    RadioStyle? radio,
+    SegmentedControlStyle? segmentedControl,
+    SelectStyle? select,
+    SpinnerStyle? spinner,
+    SwitchStyle? switchComponent,
+  }) {
+    return RemixComponentTheme(
+      accordion: accordion ?? this.accordion,
+      avatar: avatar ?? this.avatar,
+      badge: badge ?? this.badge,
+      button: button ?? this.button,
+      callout: callout ?? this.callout,
+      card: card ?? this.card,
+      checkbox: checkbox ?? this.checkbox,
+      divider: divider ?? this.divider,
+      iconButton: iconButton ?? this.iconButton,
+      progress: progress ?? this.progress,
+      radio: radio ?? this.radio,
+      segmentedControl: segmentedControl ?? this.segmentedControl,
+      select: select ?? this.select,
+      spinner: spinner ?? this.spinner,
+      switchComponent: switchComponent ?? this.switchComponent,
+    );
+  }
+}
+
+extension BuildContextRemixThemeX on BuildContext {
+  RemixThemeData get remix => RemixTheme.of(this);
+}
+
+class RemixThemeData {
+  final RemixComponentTheme components;
+  final RemixTokens tokens;
+  const RemixThemeData({required this.components, required this.tokens});
+
+  static RemixThemeData base() => RemixThemeData(
+        components: RemixComponentTheme.base(),
+        tokens: RemixTokens.base(),
+      );
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is RemixThemeData &&
+        other.components == components &&
+        other.tokens == tokens;
+  }
+
+  @override
+  int get hashCode => components.hashCode ^ tokens.hashCode;
 }
 
 class RemixTheme extends StatelessWidget {
   const RemixTheme({
     super.key,
+    required this.theme,
     required this.child,
-    required this.components,
-    required this.tokens,
+    this.darkTheme,
   });
 
+  static RemixThemeData of(BuildContext context) {
+    final _RemixThemeInherited? provider =
+        context.dependOnInheritedWidgetOfExactType<_RemixThemeInherited>();
+
+    if (provider == null) {
+      throw FlutterError(
+        'RemixTheme.of() called with a context that does not contain a RemixTheme.\n'
+        'No RemixTheme ancestor could be found starting from the context that was passed to RemixTheme.of(). '
+        'This can happen because the context you used comes from a widget above the RemixTheme.\n'
+        'The context used was:\n'
+        '  $context',
+      );
+    }
+
+    return provider.data;
+  }
+
+  final RemixThemeData? theme;
+
+  final RemixThemeData? darkTheme;
   final Widget child;
-
-  final RemixTokens tokens;
-  final RemixComponentTheme components;
-
-  // static MixThemeData light = _lightRemixTokens;
-  // static MixThemeData dark = _darkRemixTokens;
 
   @override
   Widget build(BuildContext context) {
+    final brightness = MediaQuery.platformBrightnessOf(context);
+
+    final isDark = brightness == Brightness.dark;
+    final theme = isDark && darkTheme != null
+        ? darkTheme!
+        : this.theme ?? RemixThemeData.base();
+
+    final tokens = theme.tokens;
+
     return MixTheme(
       data: MixThemeData(
         colors: tokens.colors,
@@ -129,29 +216,18 @@ class RemixTheme extends StatelessWidget {
         textStyles: tokens.textStyles,
         radii: tokens.radii,
       ),
-      child: RemixThemeProvider(theme: components, child: child),
+      child: _RemixThemeInherited(data: theme, child: child),
     );
   }
 }
 
-class RemixThemeProvider extends InheritedWidget {
-  const RemixThemeProvider({
-    super.key,
-    required super.child,
-    required this.theme,
-  });
+class _RemixThemeInherited extends InheritedWidget {
+  const _RemixThemeInherited({required super.child, required this.data});
 
-  static RemixComponentTheme? maybeOf(BuildContext context) {
-    final RemixThemeProvider? provider =
-        context.dependOnInheritedWidgetOfExactType<RemixThemeProvider>();
-
-    return provider?.theme;
-  }
-
-  final RemixComponentTheme theme;
+  final RemixThemeData data;
 
   @override
-  bool updateShouldNotify(RemixThemeProvider oldWidget) {
-    return theme != oldWidget.theme;
+  bool updateShouldNotify(_RemixThemeInherited oldWidget) {
+    return data != oldWidget.data;
   }
 }

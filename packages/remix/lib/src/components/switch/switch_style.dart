@@ -1,32 +1,30 @@
 part of 'switch.dart';
 
-final _util = SwitchSpecUtility.self;
+class SwitchStyle extends SpecStyle<SwitchSpecUtility> {
+  const SwitchStyle();
 
-final _container = _util.container;
-final _indicator = _util.indicator;
+  @override
+  Style makeStyle(SpecConfiguration<SwitchSpecUtility> spec) {
+    final $ = spec.utilities;
 
-class XSwitchStyle {
-  static Style get base => Style(_containerStyle(), _indicatorStyle());
-}
-
-Style get _containerStyle => Style(
-      _container.chain
+    final containerStyle = [
+      $.container.chain
         ..height(24)
         ..width(44)
         ..borderRadius(99)
         ..padding.all(2)
         ..alignment.centerLeft()
         ..color.grey.shade300(),
-      $on.selected(
-        _container.chain
+      spec.on.selected(
+        $.container.chain
           ..alignment.centerRight()
           ..color.black(),
       ),
-      ($on.disabled & $on.selected)(_container.color.grey.shade500()),
-    );
+      (spec.on.disabled & spec.on.selected)($.container.color.grey.shade500()),
+    ];
 
-Style get _indicatorStyle => Style(
-      _indicator.chain
+    final indicatorStyle = [
+      $.indicator.chain
         ..color.white()
         ..shape.circle()
         ..width(20)
@@ -34,5 +32,9 @@ Style get _indicatorStyle => Style(
         ..shadow.offset(0, 2)
         ..shadow.blurRadius(4)
         ..shadow.spreadRadius(1),
-      $on.disabled(_indicator.color.grey.shade100()),
-    );
+      spec.on.disabled($.indicator.color.grey.shade100()),
+    ];
+
+    return Style.create([...containerStyle, ...indicatorStyle]);
+  }
+}

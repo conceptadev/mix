@@ -1,34 +1,29 @@
-part of 'button.dart';
+part of 'icon_button.dart';
 
-class FortalezaButtonStyle extends ButtonStyle {
+class FortalezaIconButtonStyle extends IconButtonStyle {
   static const soft = Variant('for.button.soft');
   static const outline = Variant('for.button.outline');
   static const surface = Variant('for.button.surface');
   static const ghost = Variant('for.button.ghost');
 
-  const FortalezaButtonStyle();
+  const FortalezaIconButtonStyle();
 
   static List<Variant> get variants => [soft, outline, surface, ghost];
 
   @override
-  Style makeStyle(SpecConfiguration<ButtonSpecUtility> spec) {
+  Style makeStyle(SpecConfiguration<IconButtonSpecUtility> spec) {
     final $ = spec.utilities;
 
     final baseStyle = super.makeStyle(spec);
     final baseOverrides = Style(
       baseStyle(),
-      $.container.chain
-        ..padding.vertical.$space(2)
-        ..padding.horizontal.$space(3),
-      $.flex.gap.$space(2),
-      $.label.style.$text(2),
-      $.icon.size(14),
+      $.container.padding.all.$space(2),
+      $.icon.size(16),
       $.spinner.size(14),
     );
 
     final onDisabledForeground = $on.disabled(
       $.container.color.$neutral(7),
-      $.label.style.color.$neutral(8),
       $.icon.color.$neutral(8),
       $.spinner.color.$neutral(7),
     );
@@ -37,7 +32,6 @@ class FortalezaButtonStyle extends ButtonStyle {
 
     final solidVariant = Style(
       $.container.color.$accent(),
-      $.label.style.color.white(),
       $.spinner.color.white(),
       $.icon.color.white(),
       spec.on.hover($.container.color.$accent(10)),
@@ -46,7 +40,6 @@ class FortalezaButtonStyle extends ButtonStyle {
 
     final softVariant = Style(
       $.container.color.$accentAlpha(3),
-      $.label.style.color.$accentAlpha(11),
       $.spinner.color.$accentAlpha(11),
       $.icon.color.$accentAlpha(11),
       spec.on.hover($.container.color.$accentAlpha(4)),
@@ -61,7 +54,6 @@ class FortalezaButtonStyle extends ButtonStyle {
         ..border.color.$accentAlpha(8),
       $.spinner.color.$accentAlpha(11),
       $.icon.color.$accentAlpha(11),
-      $.label.style.color.$accentAlpha(11),
       spec.on.hover($.container.color.$accentAlpha(2)),
       spec.on.disabled(
         $.container.chain
@@ -85,7 +77,6 @@ class FortalezaButtonStyle extends ButtonStyle {
       $.container.color.transparent(),
       $.spinner.color.$accentAlpha(11),
       $.icon.color.$accentAlpha(11),
-      $.label.style.color.$accentAlpha(11),
       spec.on.hover($.container.color.$accentAlpha(3)),
       spec.on.disabled($.container.color.transparent()),
     );

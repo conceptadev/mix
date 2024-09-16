@@ -1,10 +1,10 @@
 part of 'card.dart';
 
-class XCard extends StatelessWidget {
-  const XCard({
+class Card extends StatelessWidget {
+  const Card({
     super.key,
     required this.children,
-    this.style = const Style.empty(),
+    this.style,
     this.variants = const [],
   });
 
@@ -14,24 +14,40 @@ class XCard extends StatelessWidget {
   /// Additional custom styling for the card.
   ///
   /// This allows you to override or extend the default card styling.
-  final Style style;
+  final CardStyle? style;
   final List<Variant> variants;
 
   @override
   Widget build(BuildContext context) {
-    final styleFromTheme = RemixThemeProvider.maybeOf(context)?.card;
+    final style = this.style ?? context.remix.components.card;
+
+    final configuration = SpecConfiguration(context, CardSpecUtility.self);
 
     return SpecBuilder(
-      style: (styleFromTheme ?? XCardStyle.base)
-          .merge(style)
-          .applyVariants(variants),
+      style: style.makeStyle(configuration).applyVariants(variants),
       builder: (context) {
         final spec = CardSpec.of(context);
 
-        return spec.container(
-          child: spec.flex(direction: Axis.vertical, children: children),
-        );
+        return CardSpecWidget(spec: spec, children: children);
       },
+    );
+  }
+}
+
+class CardSpecWidget extends StatelessWidget {
+  const CardSpecWidget({
+    super.key,
+    required this.spec,
+    required this.children,
+  });
+
+  final CardSpec? spec;
+  final List<Widget> children;
+
+  @override
+  Widget build(BuildContext context) {
+    return spec!.container(
+      child: spec!.flex(direction: Axis.vertical, children: children),
     );
   }
 }

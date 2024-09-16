@@ -12,8 +12,6 @@ part 'avatar_style.dart';
 part 'avatar_theme.dart';
 part 'avatar_widget.dart';
 
-final $avatar = AvatarSpecUtility.self;
-
 @MixableSpec()
 base class AvatarSpec extends Spec<AvatarSpec> with _$AvatarSpec {
   final BoxSpec container;

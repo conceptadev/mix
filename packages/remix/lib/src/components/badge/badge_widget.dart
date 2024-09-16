@@ -1,25 +1,25 @@
 part of 'badge.dart';
 
-class XBadge extends StatelessWidget {
-  const XBadge({
+class Badge extends StatelessWidget {
+  const Badge({
     super.key,
     required this.label,
-    this.style = const Style.empty(),
+    this.style,
     this.variants = const [],
   });
 
   final String label;
-  final Style style;
+  final BadgeStyle? style;
   final List<Variant> variants;
 
   @override
   Widget build(BuildContext context) {
-    final styleFromTheme = RemixThemeProvider.maybeOf(context)?.badge;
+    final style = this.style ?? context.remix.components.badge;
+
+    final configuration = SpecConfiguration(context, BadgeSpecUtility.self);
 
     return SpecBuilder(
-      style: (styleFromTheme ?? XBadgeStyle.base)
-          .merge(style)
-          .applyVariants(variants),
+      style: style.makeStyle(configuration).applyVariants(variants),
       builder: (context) {
         final spec = BadgeSpec.of(context);
 

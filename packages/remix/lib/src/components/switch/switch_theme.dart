@@ -1,71 +1,91 @@
 part of 'switch.dart';
 
-class XSwitchThemeVariant extends Variant {
-  static const soft = XSwitchThemeVariant('soft');
-  static const surface = XSwitchThemeVariant('surface');
+class FortalezaSwitchStyle extends SwitchStyle {
+  static const soft = Variant('for.switch.soft');
 
-  static const values = [soft, surface];
+  const FortalezaSwitchStyle();
 
-  const XSwitchThemeVariant(String value) : super('switch.$value');
-}
+  static List<Variant> get variants => [soft];
 
-class XSwitchThemeStyle {
-  static Style get value => Style(
-        XSwitchStyle.base(),
-        XSwitchThemeVariant.soft(_softVariant()),
-        XSwitchThemeVariant.surface(_surfaceVariant()),
-      );
-}
+  @override
+  Style makeStyle(SpecConfiguration<SwitchSpecUtility> spec) {
+    final $ = spec.utilities;
 
-Style get _softVariant {
-  return Style(
-    _indicator.color.$neutral(1),
-    _container.color.$neutral(6),
-    $on.selected(_container.color.$accent(8)),
-    $on.disabled(_container.color.$neutral(6), _indicator.color.$neutral(4)),
-    $on.dark(
-      _container.color.$neutral(11),
-      _indicator.color.$neutral(1),
-      $on.selected(_container.color.$accent(11)),
-    ),
-  );
-}
+    final baseStyle = super.makeStyle(spec);
 
-Style get _surfaceVariant {
-  return Style(
-    _indicator.color.$neutral(1),
-    _container.chain
-      ..padding.all(1)
-      ..color.$neutral(4)
-      ..border.all.width(1)
-      ..border.all.color.$neutral(7),
-    $on.disabled(
-      _container.chain
+    final baseThemeOverrides = Style(
+      $.indicator.color.$neutral(1),
+      $.container.chain
+        ..padding.all(1)
         ..color.$neutral(4)
+        ..border.all.width(1)
         ..border.all.color.$neutral(7),
-      _indicator.color.$neutral(3),
-    ),
-    $on.selected(
-      _container.chain
-        ..color.$accent(9)
-        ..border.all.color.$accent(10),
-    ),
-    $on.dark(_surfaceOnDark()),
-  );
+      spec.on.disabled(
+        $.container.chain
+          ..color.$neutral(4)
+          ..border.all.color.$neutral(7),
+        $.indicator.color.$neutral(3),
+      ),
+      spec.on.selected(
+        $.container.chain
+          ..color.$accent(9)
+          ..border.all.color.$accent(10),
+      ),
+    );
+
+    final softVariant = Style(
+      $.container.chain
+        ..border.all.style.none()
+        ..color.$neutral(6),
+      $.indicator.color.$neutral(1),
+      spec.on.selected($.container.color.$accent(6)),
+      spec.on.disabled(
+        $.container.color.$neutral(6),
+        $.indicator.color.$neutral(4),
+      ),
+    );
+
+    return Style.create(
+      [baseStyle(), baseThemeOverrides(), soft(softVariant())],
+    );
+  }
 }
 
-Style get _surfaceOnDark => Style(
-      $on.selected(_container.border.all.color.$accent(9)),
-      $on.disabled(
-        _container.chain
-          ..color.$neutral(12)
-          ..border.all.color.$neutral(11)
-          ..border.all.color.withOpacity(0.4),
-        _indicator.chain
-          ..color.$neutral(11)
-          ..color.withOpacity(0.4),
+class FortalezaDarkSwitchStyle extends FortalezaSwitchStyle {
+  const FortalezaDarkSwitchStyle();
+
+  @override
+  Style makeStyle(SpecConfiguration<SwitchSpecUtility> spec) {
+    final $ = spec.utilities;
+
+    final baseStyle = Style(super.makeStyle(spec).call());
+
+    final soft = Style(
+      $.indicator.color.$neutral(12),
+      $.container.chain
+        ..color.$neutral(3)
+        ..padding.all(1)
+        ..border.color.$neutralAlpha(7)
+        ..border.width(1.2),
+      spec.on.selected($.container.color.$accent(8)),
+      spec.on.disabled(
+        $.container.color.$neutral(2),
+        $.indicator.color.$neutral(4),
       ),
-      _container.chain
-        ..border.all.color.$neutral(11)
-        ..color.$neutral(12),
     );
+
+    final baseThemeOverrides = Style(
+      $.indicator.color.$neutral(12),
+      spec.on.disabled(
+        $.container.color.$neutral(4),
+        $.indicator.color.$neutral(2),
+      ),
+    );
+
+    return Style(
+      baseStyle(),
+      baseThemeOverrides(),
+      FortalezaSwitchStyle.soft(soft()),
+    );
+  }
+}

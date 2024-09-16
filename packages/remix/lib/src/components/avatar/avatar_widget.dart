@@ -1,29 +1,27 @@
 part of 'avatar.dart';
 
-typedef XAvatarFallbackBuilder = XComponentBuilder<TextSpec>;
-
-class XAvatar extends StatelessWidget {
-  const XAvatar({
+class Avatar extends StatelessWidget {
+  const Avatar({
     super.key,
     this.image,
     required this.fallbackBuilder,
     this.variants = const [],
-    this.style = const Style.empty(),
+    this.style,
   });
 
-  final XAvatarFallbackBuilder fallbackBuilder;
+  final WidgetSpecBuilder<TextSpec> fallbackBuilder;
   final ImageProvider<Object>? image;
   final List<Variant> variants;
-  final Style style;
+  final AvatarStyle? style;
 
   @override
   Widget build(BuildContext context) {
-    final styleFromTheme = RemixThemeProvider.maybeOf(context)?.avatar;
+    final style = this.style ?? context.remix.components.avatar;
+
+    final configuration = SpecConfiguration(context, AvatarSpecUtility.self);
 
     return SpecBuilder(
-      style: (styleFromTheme ?? XAvatarStyle.base)
-          .merge(style)
-          .applyVariants(variants),
+      style: style.makeStyle(configuration).applyVariants(variants),
       builder: (context) {
         final spec = AvatarSpec.of(context);
 

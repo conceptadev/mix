@@ -1,42 +1,42 @@
 part of 'select.dart';
 
-typedef XSelectButtonBuilder = XComponentBuilder<SelectButtonSpec>;
-typedef XSelectMenuBuilder = XComponentBuilder<SelectMenuSpec>;
-
-class XSelectMenuItem<T> {
+class SelectMenuItem<T> {
   final T value;
   final Widget child;
 
-  const XSelectMenuItem({required this.value, required this.child});
+  const SelectMenuItem({required this.value, required this.child});
 }
 
-class XSelect<T> extends StatefulWidget {
-  const XSelect({
+class Select<T> extends StatefulWidget {
+  const Select({
     super.key,
     required this.value,
     required this.onChanged,
     required this.button,
     required this.items,
     this.variants = const [],
-    this.style = const Style.empty(),
+    this.style,
+    this.disabled = false,
   });
 
   final T value;
-  final Style style;
+  final SelectStyle? style;
   final List<Variant> variants;
   final ValueChanged<T> onChanged;
-  final XSelectButtonBuilder button;
+  final WidgetSpecBuilder<SelectButtonSpec> button;
+  final bool disabled;
 
-  final List<XSelectMenuItem<T>> items;
+  final List<SelectMenuItem<T>> items;
 
   @override
-  State<XSelect> createState() => XSelectState<T>();
+  State<Select> createState() => SelectState<T>();
 }
 
-class XSelectState<T> extends State<XSelect<T>>
+class SelectState<T> extends State<Select<T>>
     with SingleTickerProviderStateMixin {
   final OverlayPortalController _tooltipController = OverlayPortalController();
-  late final MixWidgetStateController _stateController;
+  late final MixWidgetStateController _menuStateController;
+  late final MixWidgetStateController _buttonStateController;
 
   final _baseAnimation = (
     duration: const Duration(milliseconds: 100),
@@ -49,24 +49,35 @@ class XSelectState<T> extends State<XSelect<T>>
   void initState() {
     super.initState();
 
-    _stateController = MixWidgetStateController();
-    _stateController.selected = false;
+    _menuStateController = MixWidgetStateController()..selected = false;
+    _buttonStateController = MixWidgetStateController()
+      ..disabled = widget.disabled;
+  }
+
+  @override
+  void didUpdateWidget(covariant Select<T> oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    _buttonStateController.disabled = widget.disabled;
   }
 
   @override
   void dispose() {
-    _stateController.dispose();
+    _buttonStateController.dispose();
+    _menuStateController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final styleFromTheme = RemixThemeProvider.maybeOf(context)?.select;
+    final style = widget.style ?? context.remix.components.select;
+    final configuration = SpecConfiguration(context, SelectSpecUtility.self);
+    final appliedStyle =
+        style.makeStyle(configuration).applyVariants(widget.variants);
 
     return SpecBuilder(
-      style: (styleFromTheme ?? XSelectStyle.base)
-          .merge(widget.style)
-          .applyVariants(widget.variants),
+      controller: _buttonStateController,
+      style: appliedStyle,
       builder: (context) {
         final button = SelectSpec.of(context).button;
         final position = SelectSpec.of(context).position;
@@ -88,28 +99,22 @@ class XSelectState<T> extends State<XSelect<T>>
                   followerAnchor:
                       position.followerAnchor.resolve(TextDirection.ltr),
                   child: SpecBuilder(
-                    controller: _stateController,
-                    style: (styleFromTheme ?? XSelectStyle.base)
-                        .merge(widget.style)
-                        .applyVariants(widget.variants)
-                        .animate(
-                          duration: _baseAnimation.duration,
-                          curve: _baseAnimation.curve,
-                          onEnd: () {
-                            if (_stateController.selected == false) {
-                              _tooltipController.hide();
-                            }
-                          },
-                        ),
+                    controller: _menuStateController,
+                    style: appliedStyle.animate(
+                      duration: _baseAnimation.duration,
+                      curve: _baseAnimation.curve,
+                      onEnd: () {
+                        if (_menuStateController.selected == false) {
+                          _tooltipController.hide();
+                        }
+                      },
+                    ),
                     builder: (context) {
                       final select = SelectSpec.of(context);
-
                       final menu = select.menu;
-
                       final Container = menu.container.copyWith(
                         width: menu.autoWidth ? _link.leaderSize!.width : null,
                       );
-
                       final Flex = menu.flex;
 
                       return Container(
@@ -122,13 +127,10 @@ class XSelectState<T> extends State<XSelect<T>>
                                 hide();
                               },
                               child: SpecBuilder(
-                                style: (styleFromTheme ?? XSelectStyle.base)
-                                    .merge(widget.style)
-                                    .applyVariants(widget.variants)
-                                    .animate(
-                                      duration: _baseAnimation.duration,
-                                      curve: _baseAnimation.curve,
-                                    ),
+                                style: appliedStyle.animate(
+                                  duration: _baseAnimation.duration,
+                                  curve: _baseAnimation.curve,
+                                ),
                                 builder: (context) {
                                   return item.child;
                                 },
@@ -142,7 +144,13 @@ class XSelectState<T> extends State<XSelect<T>>
                 ),
               ]);
             },
-            child: Pressable(onPress: onTap, child: widget.button(button)),
+            child: RepaintBoundary(
+              child: Pressable(
+                enabled: !widget.disabled,
+                onPress: onTap,
+                child: widget.button(button),
+              ),
+            ),
           ),
         );
       },
@@ -155,12 +163,12 @@ class XSelectState<T> extends State<XSelect<T>>
     }
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      _stateController.selected = true;
+      _menuStateController.selected = true;
     });
   }
 
   void hide() {
-    _stateController.selected = false;
+    _menuStateController.selected = false;
   }
 
   void onTap() {

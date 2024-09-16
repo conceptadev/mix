@@ -1,5 +1,7 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' as m;
+import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mix/mix.dart';
 import 'package:remix/src/components/button/button.dart';
 import 'package:remix/src/components/spinner/spinner.dart';
 
@@ -7,8 +9,9 @@ void main() {
   group('RxButton', () {
     testWidgets('renders label correctly', (WidgetTester tester) async {
       await tester.pumpWidget(
-        MaterialApp(
-          home: XButton(
+        m.MaterialApp(
+          home: Button(
+            style: const ButtonStyle(),
             label: 'Test Button',
             onPressed: () {},
           ),
@@ -21,8 +24,9 @@ void main() {
     testWidgets('calls onPressed when tapped', (WidgetTester tester) async {
       bool wasTapped = false;
       await tester.pumpWidget(
-        MaterialApp(
-          home: XButton(
+        m.MaterialApp(
+          home: Button(
+            style: const ButtonStyle(),
             label: 'Test Button',
             onPressed: () {
               wasTapped = true;
@@ -31,7 +35,7 @@ void main() {
         ),
       );
 
-      await tester.tap(find.byType(XButton));
+      await tester.tap(find.byType(Button));
       expect(wasTapped, isTrue);
     });
 
@@ -39,8 +43,9 @@ void main() {
         (WidgetTester tester) async {
       bool wasTapped = false;
       await tester.pumpWidget(
-        MaterialApp(
-          home: XButton(
+        m.MaterialApp(
+          home: Button(
+            style: const ButtonStyle(),
             label: 'Test Button',
             onPressed: () {
               wasTapped = true;
@@ -50,15 +55,16 @@ void main() {
         ),
       );
 
-      await tester.tap(find.byType(XButton));
+      await tester.tap(find.byType(Button));
       expect(wasTapped, isFalse);
     });
 
     testWidgets('shows loading indicator when loading',
         (WidgetTester tester) async {
       await tester.pumpWidget(
-        MaterialApp(
-          home: XButton(
+        m.MaterialApp(
+          home: Button(
+            style: const ButtonStyle(),
             label: 'Test Button',
             onPressed: () {},
             loading: true,
@@ -66,7 +72,7 @@ void main() {
         ),
       );
 
-      expect(find.byType(XSpinnerSpecWidget), findsOneWidget);
+      expect(find.byType(SpinnerSpecWidget), findsOneWidget);
 
       final opacityWidget = tester.widget<Opacity>(find.byType(Opacity));
       expect(opacityWidget.opacity, 0);
@@ -74,30 +80,32 @@ void main() {
 
     testWidgets('renders left icon correctly', (WidgetTester tester) async {
       await tester.pumpWidget(
-        MaterialApp(
-          home: XButton(
+        m.MaterialApp(
+          home: Button(
+            style: const ButtonStyle(),
             label: 'Test Button',
             onPressed: () {},
-            iconLeft: Icons.add,
+            iconLeft: m.Icons.add,
           ),
         ),
       );
 
-      expect(find.byIcon(Icons.add), findsOneWidget);
+      expect(find.byIcon(m.Icons.add), findsOneWidget);
     });
 
     testWidgets('renders right icon correctly', (WidgetTester tester) async {
       await tester.pumpWidget(
-        MaterialApp(
-          home: XButton(
+        m.MaterialApp(
+          home: Button(
+            style: const ButtonStyle(),
             label: 'Test Button',
             onPressed: () {},
-            iconRight: Icons.arrow_forward,
+            iconRight: m.Icons.arrow_forward,
           ),
         ),
       );
 
-      expect(find.byIcon(Icons.arrow_forward), findsOneWidget);
+      expect(find.byIcon(m.Icons.arrow_forward), findsOneWidget);
     });
 
     testWidgets('uses custom spinner builder when provided',
@@ -105,8 +113,9 @@ void main() {
       const key = Key('key');
 
       await tester.pumpWidget(
-        MaterialApp(
-          home: XButton(
+        m.MaterialApp(
+          home: Button(
+            style: const ButtonStyle(),
             label: 'Test Button',
             onPressed: () {},
             loading: true,
@@ -115,7 +124,7 @@ void main() {
                 key: key,
                 width: 20,
                 height: 20,
-                color: Colors.red,
+                color: m.Colors.red,
               );
             },
           ),
@@ -126,32 +135,42 @@ void main() {
 
       expect(container.constraints?.maxWidth, 20);
       expect(container.constraints?.maxHeight, 20);
-      expect(container.color, Colors.red);
+      expect(container.color, m.Colors.red);
     });
 
-    // testWidgets('applies custom style', (WidgetTester tester) async {
-    //   // final customStyle = Style(
-    //   //   $box.color.purple(),
-    //   //   textStyle: TextStyle(color: Colors.white),
-    //   // );
+    testWidgets('applies custom style', (WidgetTester tester) async {
+      const color = m.Colors.red;
 
-    //   await tester.pumpWidget(
-    //     MaterialApp(
-    //       home: RxButton(
-    //         label: 'Test Button',
-    //         onPressed: () {},
-    //         style: customStyle,
-    //       ),
-    //     ),
-    //   );
+      await tester.pumpWidget(
+        m.MaterialApp(
+          home: Button(
+            label: 'Test Button',
+            onPressed: () {},
+            style: const FakeButtonStyle(color),
+          ),
+        ),
+      );
 
-    //   final container = tester.widget<Container>(find.byType(Container));
-    //   expect(container.decoration, isA<BoxDecoration>());
-    //   final boxDecoration = container.decoration as BoxDecoration;
-    //   expect(boxDecoration.color, equals(Colors.purple));
-
-    //   final text = tester.widget<Text>(find.text('Test Button'));
-    //   expect(text.style?.color, equals(Colors.white));
-    // });
+      final container = tester.widget<Container>(find.byType(Container));
+      expect(container.decoration, isA<BoxDecoration>());
+      final boxDecoration = container.decoration as BoxDecoration;
+      expect(boxDecoration.color, equals(color));
+    });
   });
+}
+
+class FakeButtonStyle extends ButtonStyle {
+  final Color color;
+  const FakeButtonStyle(this.color);
+
+  @override
+  Style makeStyle(SpecConfiguration<ButtonSpecUtility> spec) {
+    final $ = spec.utilities;
+
+    final baseStyle = super.makeStyle(spec);
+    return Style.create([
+      baseStyle(),
+      $.container.color(color),
+    ]);
+  }
 }

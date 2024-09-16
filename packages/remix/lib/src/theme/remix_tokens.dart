@@ -26,10 +26,12 @@ final light = RemixTokens(
   radii: remixRadiusTokens,
 );
 
-// final _lightRemixTokens = _baseRemixTokens;
-// final _darkRemixTokens = _baseRemixTokens.copyWith(
-//   colors: remixDarkColorTokens,
-// );
+final dark = RemixTokens(
+  colors: remixDarkColorTokens,
+  textStyles: remixTextTokens,
+  spaces: remixSpaceTokens,
+  radii: remixRadiusTokens,
+);
 
 class RemixTokens {
   final Map<ColorToken, Color> colors;
@@ -43,6 +45,15 @@ class RemixTokens {
     required this.spaces,
     required this.radii,
   });
+
+  static RemixTokens base() {
+    return const RemixTokens(
+      colors: {},
+      textStyles: {},
+      spaces: {},
+      radii: {},
+    );
+  }
 
   MixThemeData toThemeData() {
     return MixThemeData(

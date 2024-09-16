@@ -1,30 +1,31 @@
-// ignore_for_file: camel_case_types
-
 part of 'checkbox.dart';
 
-final _util = CheckboxSpecUtility.self;
-final _container = _util.container;
-final _indicator = _util.indicator;
+class CheckboxStyle extends SpecStyle<CheckboxSpecUtility> {
+  const CheckboxStyle();
 
-class XCheckboxStyle {
-  static Style get base => Style(_containerStyle(), _indicatorStyle());
-}
+  @override
+  Style makeStyle(SpecConfiguration<CheckboxSpecUtility> spec) {
+    final $ = spec.utilities;
 
-Style get _containerStyle => Style(
-      _container.chain
+    final containerStyle = [
+      $.container.chain
         ..borderRadius(4)
         ..border.all.color.black(),
-      $on.selected(_container.color.black()),
-      $on.disabled(
-        _container.border.all.color.black(),
-        $on.selected(_container.color.black()),
+      spec.on.selected($.container.color.black()),
+      spec.on.disabled(
+        $.container.border.all.color.black(),
+        spec.on.selected($.container.color.black()),
       ),
-    );
+    ];
 
-Style get _indicatorStyle => Style(
-      _indicator.chain
+    final indicatorStyle = [
+      $.indicator.chain
         ..size(16)
         ..color.white()
         ..wrap.opacity(0),
-      $on.selected(_indicator.wrap.opacity(1), _indicator.color.white()),
-    );
+      spec.on.selected($.indicator.wrap.opacity(1), $.indicator.color.white()),
+    ];
+
+    return Style.create([...containerStyle, ...indicatorStyle]);
+  }
+}

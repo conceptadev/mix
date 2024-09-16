@@ -6,7 +6,7 @@ import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
 @widgetbook.UseCase(
   name: 'Select Component',
-  type: XSelect,
+  type: Select,
 )
 Widget buildSelect(BuildContext context) {
   return const SelectDemo();
@@ -32,8 +32,10 @@ class _SelectDemoState extends State<SelectDemo> {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          XSelect<String>(
-            variants: [context.knobs.variant(XSelectThemeVariant.values)],
+          Select<String>(
+            disabled:
+                context.knobs.boolean(label: 'disabled', initialValue: false),
+            variants: [context.knobs.variant(FortalezaSelectStyle.variants)],
             value: selectedValue,
             onChanged: (value) => setState(() => selectedValue = value),
             button: (spec) => spec(
@@ -42,7 +44,7 @@ class _SelectDemoState extends State<SelectDemo> {
             ),
             items: List.generate(
               items.length,
-              (index) => XSelectMenuItem<String>(
+              (index) => SelectMenuItem<String>(
                 value: items[index],
                 child: XSelectMenuItemWidget(
                   text: items[index],

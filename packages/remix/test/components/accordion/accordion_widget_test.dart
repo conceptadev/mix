@@ -9,7 +9,8 @@ void main() {
         (WidgetTester tester) async {
       await tester.pumpWidget(
         MaterialApp(
-          home: XAccordion(
+          home: Accordion(
+            style: const AccordionStyle(),
             header: (spec) => XAccordionHeaderSpecWidget(
               title: 'Test Accordion',
               spec: spec,
@@ -29,7 +30,8 @@ void main() {
     testWidgets('renders with custom icons', (WidgetTester tester) async {
       await tester.pumpWidget(
         MaterialApp(
-          home: XAccordion(
+          home: Accordion(
+            style: const AccordionStyle(),
             header: (spec) => XAccordionHeaderSpecWidget(
               title: 'Custom Icons',
               spec: spec,
@@ -65,12 +67,11 @@ void main() {
     // });
 
     testWidgets('applies custom style', (WidgetTester tester) async {
-      final accordion = AccordionSpecUtility.self;
       const color = Colors.purpleAccent;
 
       await tester.pumpWidget(
         MaterialApp(
-          home: XAccordion(
+          home: Accordion(
             header: (spec) => XAccordionHeaderSpecWidget(
               spec: spec,
               title: 'Styled Accordion',
@@ -80,9 +81,7 @@ void main() {
               'Styled Content',
               spec: spec,
             ),
-            style: Style(
-              accordion.header.trailingIcon.color(color),
-            ),
+            style: const FakeAccordionStyle(color),
           ),
         ),
       );
@@ -94,4 +93,20 @@ void main() {
       expect(icon.color, color);
     });
   });
+}
+
+class FakeAccordionStyle extends AccordionStyle {
+  final Color color;
+  const FakeAccordionStyle(this.color);
+
+  @override
+  Style makeStyle(SpecConfiguration<AccordionSpecUtility> spec) {
+    final $ = spec.utilities;
+
+    final baseStyle = super.makeStyle(spec);
+    return Style.create([
+      baseStyle(),
+      $.header.trailingIcon.color(color),
+    ]);
+  }
 }

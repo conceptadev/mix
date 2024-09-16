@@ -4,7 +4,7 @@ import 'package:widgetbook/widgetbook.dart';
 extension KnobsBuilderX on KnobsBuilder {
   Variant variant(List<Variant> variants) => list<Variant>(
         label: 'Variants',
-        options: variants,
+        options: [const Variant('no Variant'), ...variants],
         labelBuilder: (value) => value.name.split('.').last,
       );
 }

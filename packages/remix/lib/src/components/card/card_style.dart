@@ -1,23 +1,26 @@
 part of 'card.dart';
 
-final _util = CardSpecUtility.self;
-final _container = _util.container;
-final _flex = _util.flex;
+class CardStyle extends SpecStyle<CardSpecUtility> {
+  const CardStyle();
 
-class XCardStyle {
-  static Style get base => Style(_containerStyle(), _flexStyle());
-}
+  @override
+  Style makeStyle(SpecConfiguration<CardSpecUtility> spec) {
+    final $ = spec.utilities;
 
-Style get _containerStyle => Style(
-      _container.chain
+    final containerStyle = [
+      $.container.chain
         ..borderRadius(4)
         ..color.white()
         ..border.all.color.black12()
         ..padding.all(8),
-    );
+    ];
 
-Style get _flexStyle => Style(
-      _flex.chain
+    final flexStyle = [
+      $.flex.chain
         ..mainAxisSize.min()
         ..direction.vertical(),
-    );
+    ];
+
+    return Style.create([...containerStyle, ...flexStyle]);
+  }
+}

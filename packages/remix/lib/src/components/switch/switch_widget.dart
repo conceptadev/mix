@@ -1,27 +1,28 @@
 part of 'switch.dart';
 
-class XSwitch extends StatefulWidget {
-  const XSwitch({
+class Switch extends StatefulWidget {
+  const Switch({
     super.key,
     this.disabled = false,
     required this.value,
     required this.onChanged,
-    this.style = const Style.empty(),
+    this.style,
     this.variants = const [],
   });
 
   final bool value;
   final ValueChanged<bool> onChanged;
-  final Style style;
+  final SwitchStyle? style;
   final bool disabled;
   final List<Variant> variants;
 
   @override
-  State<XSwitch> createState() => _RxBlankSwitchState();
+  State<Switch> createState() => _SwitchState();
 }
 
-class _RxBlankSwitchState extends State<XSwitch> {
+class _SwitchState extends State<Switch> {
   late final MixWidgetStateController _controller;
+
   @override
   void initState() {
     super.initState();
@@ -33,7 +34,7 @@ class _RxBlankSwitchState extends State<XSwitch> {
   void _handleOnPress() => widget.onChanged(!widget.value);
 
   @override
-  void didUpdateWidget(XSwitch oldWidget) {
+  void didUpdateWidget(Switch oldWidget) {
     super.didUpdateWidget(oldWidget);
 
     if (oldWidget.value != widget.value) {
@@ -53,15 +54,17 @@ class _RxBlankSwitchState extends State<XSwitch> {
 
   @override
   Widget build(BuildContext context) {
-    final styleFromTheme = RemixThemeProvider.maybeOf(context)?.switchComponent;
+    final style = widget.style ?? context.remix.components.switchComponent;
+
+    final configuration = SpecConfiguration(context, SwitchSpecUtility.self);
 
     return Pressable(
       enabled: !widget.disabled,
       onPress: widget.disabled ? null : _handleOnPress,
       controller: _controller,
       child: SpecBuilder(
-        style: (styleFromTheme ?? XSwitchStyle.base)
-            .merge(widget.style)
+        style: style
+            .makeStyle(configuration)
             .applyVariants(widget.variants)
             .animate(
               duration: const Duration(milliseconds: 100),
@@ -70,10 +73,10 @@ class _RxBlankSwitchState extends State<XSwitch> {
         builder: (context) {
           final spec = SwitchSpec.of(context);
 
-          final ContainerWidget = spec.container;
-          final IndicatorWidget = spec.indicator;
+          final containerWidget = spec.container;
+          final indicatorWidget = spec.indicator;
 
-          return ContainerWidget(child: IndicatorWidget());
+          return containerWidget(child: indicatorWidget());
         },
       ),
     );

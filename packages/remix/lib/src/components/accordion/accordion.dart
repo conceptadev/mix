@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:mix/mix.dart';
 import 'package:mix_annotations/mix_annotations.dart';
 
@@ -12,8 +13,6 @@ part 'accordion_theme.dart';
 part 'accordion_widget.dart';
 part 'header/accordion_header.dart';
 part 'header/accordion_header_spec_widget.dart';
-
-final $accordion = AccordionSpecUtility.self;
 
 @MixableSpec()
 base class AccordionSpec extends Spec<AccordionSpec> with _$AccordionSpec {

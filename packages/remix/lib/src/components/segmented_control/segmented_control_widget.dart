@@ -2,13 +2,13 @@ part of 'segmented_control.dart';
 
 const selectedItem = Variant('selectedItem');
 
-class XSegmentedControl extends StatefulWidget {
-  const XSegmentedControl({
+class SegmentedControl extends StatefulWidget {
+  const SegmentedControl({
     super.key,
     this.isEnabled = true,
     this.index = 0,
     this.variants = const [],
-    this.style = const Style.empty(),
+    this.style,
     required this.buttons,
     required this.onIndexChanged,
   });
@@ -16,15 +16,15 @@ class XSegmentedControl extends StatefulWidget {
   final int index;
   final ValueChanged<int> onIndexChanged;
   final bool isEnabled;
-  final Style style;
+  final SegmentedControlStyle? style;
   final List<Variant> variants;
   final List<Widget> buttons;
 
   @override
-  State<XSegmentedControl> createState() => _XSegmentedControlState();
+  State<SegmentedControl> createState() => _SegmentedControlState();
 }
 
-class _XSegmentedControlState extends State<XSegmentedControl> {
+class _SegmentedControlState extends State<SegmentedControl> {
   late final MixWidgetStateController controller;
 
   @override
@@ -41,17 +41,15 @@ class _XSegmentedControlState extends State<XSegmentedControl> {
 
   @override
   Widget build(BuildContext context) {
-    final styleFromTheme =
-        RemixThemeProvider.maybeOf(context)?.segmentedControl;
+    final style = widget.style ?? context.remix.components.segmentedControl;
 
-    final style = (styleFromTheme ?? XSegmentedControlStyle.base)
-        .merge(widget.style)
-        .applyVariants(widget.variants);
+    final configuration =
+        SpecConfiguration(context, SegmentedControlSpecUtility.self);
 
     final lastIndex = widget.buttons.length - 1;
 
     return SpecBuilder(
-      style: style,
+      style: style.makeStyle(configuration).applyVariants(widget.variants),
       builder: (context) {
         final spec = SegmentedControlSpec.of(context);
 
@@ -70,7 +68,7 @@ class _XSegmentedControlState extends State<XSegmentedControl> {
                           onPress: () => widget.onIndexChanged(i),
                           child: SpecBuilder(
                             controller: i == widget.index ? controller : null,
-                            style: style,
+                            style: style.makeStyle(configuration),
                             builder: (_) {
                               return widget.buttons[i];
                             },

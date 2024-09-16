@@ -1,5 +1,5 @@
 import 'package:demo/helpers/knob_builder.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:mix/mix.dart';
 import 'package:remix/remix.dart';
 import 'package:widgetbook/widgetbook.dart';
@@ -7,24 +7,18 @@ import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
 @widgetbook.UseCase(
   name: 'Card Component',
-  type: XCard,
+  type: Card,
 )
 Widget buildCard(BuildContext context) {
   return Center(
-    child: XCard(
-      style: Style(
-        $card.flex.row(),
-        $card.flex.mainAxisAlignment.start(),
-        $card.flex.crossAxisAlignment.center(),
-        $card.flex.gap(12),
-      ),
+    child: Card(
       variants: [
-        context.knobs.variant(CardThemeVariant.values),
+        context.knobs.variant(FortalezaCardStyle.variants),
       ],
       children: [
-        XAvatar(
+        Avatar(
           fallbackBuilder: (spec) => spec('LF'),
-          variants: const [AvatarThemeVariant.soft],
+          variants: FortalezaCardStyle.variants,
         ),
         Column(
           mainAxisSize: MainAxisSize.min,

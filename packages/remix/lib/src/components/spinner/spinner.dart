@@ -14,12 +14,10 @@ part 'spinner_style.dart';
 part 'spinner_theme.dart';
 part 'spinner_widget.dart';
 
-enum SpinnerStyle {
+enum SpinnerTypeStyle {
   solid,
   dotted,
 }
-
-final $spinner = SpinnerSpecUtility.self;
 
 @MixableSpec()
 final class SpinnerSpec extends Spec<SpinnerSpec>
@@ -37,7 +35,7 @@ final class SpinnerSpec extends Spec<SpinnerSpec>
   /// Duration of a full cycle of spin
   final Duration duration;
 
-  final SpinnerStyle style;
+  final SpinnerTypeStyle style;
 
   static const of = _$SpinnerSpec.of;
   static const from = _$SpinnerSpec.from;
@@ -47,15 +45,15 @@ final class SpinnerSpec extends Spec<SpinnerSpec>
     this.strokeWidth,
     Color? color,
     Duration? duration,
-    SpinnerStyle? style,
+    SpinnerTypeStyle? style,
     super.modifiers,
     super.animated,
   })  : size = size ?? 24,
         color = color ?? Colors.white,
-        style = style ?? SpinnerStyle.solid,
+        style = style ?? SpinnerTypeStyle.solid,
         duration = duration ?? const Duration(milliseconds: 500);
 
-  Widget call() => XSpinnerSpecWidget(spec: this);
+  Widget call() => SpinnerSpecWidget(spec: this);
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
@@ -63,10 +61,10 @@ final class SpinnerSpec extends Spec<SpinnerSpec>
   }
 }
 
-final class SpinnerStyleUtility<T extends Attribute>
-    extends ScalarUtility<T, SpinnerStyle> {
-  const SpinnerStyleUtility(super.builder);
+final class SpinnerTypeStyleUtility<T extends Attribute>
+    extends ScalarUtility<T, SpinnerTypeStyle> {
+  const SpinnerTypeStyleUtility(super.builder);
 
-  T dotted() => call(SpinnerStyle.dotted);
-  T solid() => call(SpinnerStyle.solid);
+  T dotted() => call(SpinnerTypeStyle.dotted);
+  T solid() => call(SpinnerTypeStyle.solid);
 }

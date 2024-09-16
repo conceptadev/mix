@@ -1,27 +1,29 @@
 part of 'divider.dart';
 
-class XDivider extends StatelessWidget {
-  const XDivider({
+class Divider extends StatelessWidget {
+  const Divider({
     super.key,
-    this.style = const Style.empty(),
+    this.style,
     this.variants = const [],
-    required this.axis,
+    this.axis = Axis.horizontal,
   });
 
-  final Style style;
+  final DividerStyle? style;
   final Axis axis;
   final List<Variant> variants;
 
   @override
   Widget build(BuildContext context) {
-    final styleFromTheme = RemixThemeProvider.maybeOf(context)?.divider;
+    final style = this.style ?? context.remix.components.divider;
     final axisVariant = axis == Axis.horizontal
-        ? XProgressVariants.horizontal
-        : XProgressVariants.vertical;
+        ? DividerStyle.horizontal
+        : DividerStyle.vertical;
+
+    final configuration = SpecConfiguration(context, DividerSpecUtility.self);
 
     return SpecBuilder(
-      style: (styleFromTheme ?? XDividerStyle.base)
-          .merge(style)
+      style: style
+          .makeStyle(configuration)
           .applyVariants([...variants, axisVariant]),
       builder: (context) {
         final spec = DividerSpec.of(context);
