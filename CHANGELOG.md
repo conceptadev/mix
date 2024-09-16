@@ -23,31 +23,12 @@ Packages with other changes:
 
 #### `mix` - `v1.5.0`
 
- - **REFACTOR**: Rewrite all components in the new Archtecture (#467).
- - **FIX**: reset modifiers and directives when using fluentAPI (#482).
  - **FIX**: Update OnBrightnessVariant to use `MediaQuery` instead of `Theme` (#471).
  - **FIX**: Style when merged with an AnimatedStyle should generate an AnimatedStyle (#472).
- - **FIX**(docs): fix fn level docs for Style::applyVariants (#460).
- - **FIX**: Shadow list animation (#445).
- - **FIX**: HitTestBehavior when there is a Interectable in the tree (#437).
- - **FIX**: Pressable disposes controller only if it creates it (#424).
- - **FIX**: breakpoint utility merge exception (#421).
- - **FIX**: FlexSpecWidget prioritizes the direction in spec (#414).
- - **FIX**: Added missing widget state utilities (#411).
- - **FIX**: Correct handling of individual border sides (#408).
- - **FEAT**: remix-styling-configuration (#483).
- - **FEAT**: transform.translate (#484).
+ - **FEAT**: Create a specific utility to Transform.translate (#484).
  - **FEAT**: Add more directives to Colors (#477).
  - **FEAT**: implement a way to clear inline modifiers (#478).
  - **FEAT**: Fluent API (#475).
- - **FEAT**: Create mouse cursor Decorator (#263).
- - **FEAT**: Create Select component (#448).
- - **FEAT**: Add parameter onEnd for AnimatedStyle (#458).
- - **FEAT**: `SingleChildScrollView` widget modifier (#427).
- - **FEAT**: Create a specific utility to Transform.rotate (#434).
- - **FEAT**: TargetPlatform and web variants (#431).
- - **FEAT**: Remix improvements and further improvements (#410).
- - **DOCS**: improve mix theme data features explanations (#404).
 
 #### `remix` - `v0.0.1-alpha.1`
 
@@ -55,7 +36,6 @@ Packages with other changes:
  - **REFACTOR**: Rewrite all components in the new Archtecture (#467).
  - **REFACTOR**: Create a new Architecture for remix's components (#446).
  - **REFACTOR**: Remix progress (#429).
- - **FEAT**: remix-styling-configuration (#483).
  - **FEAT**: Segmented control (#479).
  - **FEAT**: Accordion component (#433).
  - **FEAT**: Add more directives to Colors (#477).
@@ -70,10 +50,7 @@ Packages with other changes:
 
 #### `mix_generator` - `v0.3.1`
 
- - **FIX**: Shadow list animation (#445).
  - **FEAT**: Fluent API (#475).
- - **FEAT**: Remix improvements and further improvements (#410).
- - **DOCS**: improve mix theme data features explanations (#404).
 
 
 ## 2024-08-22
