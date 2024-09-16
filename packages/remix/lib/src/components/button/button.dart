@@ -50,7 +50,7 @@ class ButtonSpec extends Spec<ButtonSpec> with _$ButtonSpec, Diagnosticable {
     bool loading = false,
     IconData? iconLeft,
     IconData? iconRight,
-    ButtonSpinnerBuilder? spinnerBuilder,
+    WidgetSpecBuilder<SpinnerSpec>? spinnerBuilder,
     required void Function() onPressed,
   }) {
     return ButtonSpecWidget(

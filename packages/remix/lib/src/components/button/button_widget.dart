@@ -1,7 +1,5 @@
 part of 'button.dart';
 
-typedef ButtonSpinnerBuilder = WidgetSpecBuilder<SpinnerSpec>;
-
 /// A customizable button component with various styling options.
 ///
 /// The [Button] allows you to create buttons with different variants, sizes,
@@ -37,7 +35,7 @@ class Button extends StatelessWidget {
   final IconData? iconLeft;
   final IconData? iconRight;
   final VoidCallback? onPressed;
-  final ButtonSpinnerBuilder? spinnerBuilder;
+  final WidgetSpecBuilder<SpinnerSpec>? spinnerBuilder;
 
   final Variant? variant;
   final List<Variant> variants;
@@ -98,7 +96,7 @@ class ButtonSpecWidget extends StatelessWidget {
   final IconData? iconLeft;
   final IconData? iconRight;
   final VoidCallback? onPressed;
-  final ButtonSpinnerBuilder? spinnerBuilder;
+  final WidgetSpecBuilder<SpinnerSpec>? spinnerBuilder;
   final ButtonSpec? spec;
 
   bool get _hasIcon => iconLeft != null || iconRight != null;

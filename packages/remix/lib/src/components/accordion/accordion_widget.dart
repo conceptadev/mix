@@ -1,8 +1,5 @@
 part of 'accordion.dart';
 
-typedef XAccordionHeaderBuilder = WidgetSpecBuilder<AccordionHeaderSpec>;
-typedef XAccordionContentBuilder = WidgetSpecBuilder<TextSpec>;
-
 class Accordion extends StatefulWidget {
   const Accordion({
     super.key,
@@ -13,8 +10,8 @@ class Accordion extends StatefulWidget {
     this.style,
   });
 
-  final XAccordionHeaderBuilder header;
-  final XAccordionContentBuilder content;
+  final WidgetSpecBuilder<AccordionHeaderSpec> header;
+  final WidgetSpecBuilder<TextSpec> content;
   final AccordionStyle? style;
   final bool initiallyExpanded;
   final List<Variant> variants;

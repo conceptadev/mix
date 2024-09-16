@@ -1,7 +1,5 @@
 part of 'avatar.dart';
 
-typedef AvatarFallbackBuilder = WidgetSpecBuilder<TextSpec>;
-
 class Avatar extends StatelessWidget {
   const Avatar({
     super.key,
@@ -11,7 +9,7 @@ class Avatar extends StatelessWidget {
     this.style,
   });
 
-  final AvatarFallbackBuilder fallbackBuilder;
+  final WidgetSpecBuilder<TextSpec> fallbackBuilder;
   final ImageProvider<Object>? image;
   final List<Variant> variants;
   final AvatarStyle? style;

@@ -10,6 +10,7 @@ import '../components/callout/callout.dart';
 import '../components/card/card.dart';
 import '../components/checkbox/checkbox.dart';
 import '../components/divider/divider.dart';
+import '../components/icon_button/icon_button.dart';
 import '../components/progress/progress.dart';
 import '../components/radio/radio.dart';
 import '../components/segmented_control/segmented_control.dart';
@@ -21,16 +22,17 @@ import 'remix_tokens.dart';
 class RemixComponentTheme {
   final AccordionStyle accordion;
   final AvatarStyle avatar;
-  final ButtonStyle button;
   final BadgeStyle badge;
-  final DividerStyle divider;
+  final ButtonStyle button;
   final CalloutStyle callout;
   final CardStyle card;
   final CheckboxStyle checkbox;
+  final DividerStyle divider;
+  final IconButtonStyle iconButton;
   final ProgressStyle progress;
   final RadioStyle radio;
-  final SelectStyle select;
   final SegmentedControlStyle segmentedControl;
+  final SelectStyle select;
   final SpinnerStyle spinner;
   final SwitchStyle switchComponent;
 
@@ -43,6 +45,7 @@ class RemixComponentTheme {
     required this.card,
     required this.checkbox,
     required this.divider,
+    required this.iconButton,
     required this.progress,
     required this.radio,
     required this.segmentedControl,
@@ -61,6 +64,7 @@ class RemixComponentTheme {
       card: CardStyle(),
       checkbox: CheckboxStyle(),
       divider: DividerStyle(),
+      iconButton: IconButtonStyle(),
       progress: ProgressStyle(),
       radio: RadioStyle(),
       segmentedControl: SegmentedControlStyle(),
@@ -80,6 +84,7 @@ class RemixComponentTheme {
       card: FortalezaCardStyle(),
       checkbox: FortalezaCheckboxStyle(),
       divider: FortalezaDividerStyle(),
+      iconButton: FortalezaIconButtonStyle(),
       progress: FortalezaProgressStyle(),
       radio: FortalezaRadioStyle(),
       segmentedControl: FortalezaSegmentedControlStyle(),
@@ -108,6 +113,7 @@ class RemixComponentTheme {
     CardStyle? card,
     CheckboxStyle? checkbox,
     DividerStyle? divider,
+    IconButtonStyle? iconButton,
     ProgressStyle? progress,
     RadioStyle? radio,
     SegmentedControlStyle? segmentedControl,
@@ -124,6 +130,7 @@ class RemixComponentTheme {
       card: card ?? this.card,
       checkbox: checkbox ?? this.checkbox,
       divider: divider ?? this.divider,
+      iconButton: iconButton ?? this.iconButton,
       progress: progress ?? this.progress,
       radio: radio ?? this.radio,
       segmentedControl: segmentedControl ?? this.segmentedControl,

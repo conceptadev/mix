@@ -1,8 +1,5 @@
 part of 'select.dart';
 
-typedef SelectButtonBuilder = WidgetSpecBuilder<SelectButtonSpec>;
-typedef SelectMenuBuilder = WidgetSpecBuilder<SelectMenuSpec>;
-
 class SelectMenuItem<T> {
   final T value;
   final Widget child;
@@ -26,7 +23,7 @@ class Select<T> extends StatefulWidget {
   final SelectStyle? style;
   final List<Variant> variants;
   final ValueChanged<T> onChanged;
-  final SelectButtonBuilder button;
+  final WidgetSpecBuilder<SelectButtonSpec> button;
   final bool disabled;
 
   final List<SelectMenuItem<T>> items;
