@@ -1,3 +1,10 @@
+## 0.3.1
+
+ - **FIX**: Shadow list animation (#445).
+ - **FEAT**: Fluent API (#475).
+ - **FEAT**: Remix improvements and further improvements (#410).
+ - **DOCS**: improve mix theme data features explanations (#404).
+
 ## 0.3.0
 
  - **FIX**: SpecModifiers were taking a long time to animate. (#457).
