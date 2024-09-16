@@ -15,6 +15,27 @@ Packages with breaking changes:
 
 Packages with other changes:
 
+ - [`remix` - `v0.0.2-alpha.1`](#remix---v002-alpha1)
+
+---
+
+#### `remix` - `v0.0.2-alpha.1`
+
+ - Increasing the version
+
+
+## 2024-09-16
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
  - [`mix` - `v1.5.0`](#mix---v150)
  - [`remix` - `v0.0.1-alpha.1`](#remix---v001-alpha1)
  - [`mix_generator` - `v0.3.1`](#mix_generator---v031)
