@@ -146,6 +146,21 @@ void main() {
       final spec = result.resolve(EmptyMixData);
       expect(spec.transform, Matrix4.rotationZ(math.pi / 2));
     });
+
+    test('translate', () {
+      final utility =
+          TransformModifierSpecUtility<TransformModifierSpecAttribute>(
+              (attr) => attr);
+
+      final result = utility.translate(10, 20);
+
+      expect(result.transform, Matrix4.translationValues(10, 20, 0));
+      expect(result.alignment, Alignment.center);
+
+      final spec = result.resolve(EmptyMixData);
+
+      expect(spec.transform, Matrix4.translationValues(10, 20, 0));
+    });
   });
 
   group('TransformRotateModifierSpecUtility', () {

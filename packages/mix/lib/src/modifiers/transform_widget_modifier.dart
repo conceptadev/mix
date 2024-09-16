@@ -75,6 +75,13 @@ final class TransformModifierSpecUtility<T extends Attribute>
           alignment: Alignment.center,
         ),
       );
+
+  T translate(double x, double y) => builder(
+        TransformModifierSpecAttribute(
+          transform: Matrix4.translationValues(x, y, 0.0),
+          alignment: Alignment.center,
+        ),
+      );
 }
 
 final class TransformRotateModifierSpecUtility<T extends Attribute>
