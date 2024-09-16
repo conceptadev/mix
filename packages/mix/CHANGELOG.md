@@ -1,3 +1,12 @@
+## 1.5.0
+
+ - **FIX**: Update OnBrightnessVariant to use `MediaQuery` instead of `Theme` (#471).
+ - **FIX**: Style when merged with an AnimatedStyle should generate an AnimatedStyle (#472).
+ - **FEAT**: Create a specific utility to Transform.translate (#484).
+ - **FEAT**: Add more directives to Colors (#477).
+ - **FEAT**: implement a way to clear inline modifiers (#478).
+ - **FEAT**: Fluent API (#475).
+
 ## 1.4.6
 
  - **FIX**(docs): fix fn level docs for Style::applyVariants (#460).

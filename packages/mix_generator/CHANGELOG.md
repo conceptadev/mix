@@ -1,3 +1,7 @@
+## 0.3.1
+
+ - **FEAT**: Fluent API (#475).
+
 ## 0.3.0
 
  - **FIX**: SpecModifiers were taking a long time to animate. (#457).

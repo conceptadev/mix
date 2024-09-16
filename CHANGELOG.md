@@ -3,6 +3,56 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2024-09-16
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`mix` - `v1.5.0`](#mix---v150)
+ - [`remix` - `v0.0.1-alpha.1`](#remix---v001-alpha1)
+ - [`mix_generator` - `v0.3.1`](#mix_generator---v031)
+
+---
+
+#### `mix` - `v1.5.0`
+
+ - **FIX**: Update OnBrightnessVariant to use `MediaQuery` instead of `Theme` (#471).
+ - **FIX**: Style when merged with an AnimatedStyle should generate an AnimatedStyle (#472).
+ - **FEAT**: Create a specific utility to Transform.translate (#484).
+ - **FEAT**: Add more directives to Colors (#477).
+ - **FEAT**: implement a way to clear inline modifiers (#478).
+ - **FEAT**: Fluent API (#475).
+
+#### `remix` - `v0.0.1-alpha.1`
+
+ - **REFACTOR**: Remix was rewritten using Fluent API (#476).
+ - **REFACTOR**: Rewrite all components in the new Archtecture (#467).
+ - **REFACTOR**: Create a new Architecture for remix's components (#446).
+ - **REFACTOR**: Remix progress (#429).
+ - **FEAT**: Segmented control (#479).
+ - **FEAT**: Accordion component (#433).
+ - **FEAT**: Add more directives to Colors (#477).
+ - **FEAT**: Create a theme for Remix (#470).
+ - **FEAT**: Add group feature to Radio (#435).
+ - **FEAT**: Create Select component (#448).
+ - **FEAT**: Add parameter onEnd for AnimatedStyle (#458).
+ - **FEAT**: button supports component builder (#444).
+ - **FEAT**: Refactor Remix components (#428).
+ - **FEAT**: Remix improvements and further improvements (#410).
+ - **DOCS**: improve mix theme data features explanations (#404).
+
+#### `mix_generator` - `v0.3.1`
+
+ - **FEAT**: Fluent API (#475).
+
+
 ## 2024-08-22
 
 ### Changes
