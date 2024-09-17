@@ -4,3 +4,5 @@ widgetbook
 tool
 assets
 build
+packages/remix/macos/Flutter/ephemeral/Flutter-Generated.xcconfig
+packages/remix/macos/Flutter/ephemeral/flutter_export_environment.sh
