@@ -40,7 +40,7 @@ build/
 coverage/
 
 # MacOs related
-**/macos/Flutter/ephemeral
+# **/macos/Flutter/ephemeral
 
 # Android related
 **/android/**/gradle-wrapper.jar
