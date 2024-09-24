@@ -95,6 +95,7 @@ abstract class OutlinedBorderDto<T extends OutlinedBorder>
     return null;
   }
 
+  @protected
   BorderRadiusGeometryDto? get borderRadiusGetter;
 
   /// Tries to get borderRadius if available for [OutlineBorderDto]
