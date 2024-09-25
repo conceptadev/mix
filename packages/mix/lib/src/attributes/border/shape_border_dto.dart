@@ -294,9 +294,9 @@ final class StadiumBorderDto extends OutlinedBorderDto<StadiumBorder>
   StadiumBorder get defaultValue => const StadiumBorder();
 }
 
-abstract class CustomOutlinedBorder<T extends OutlinedBorderDto>
+abstract class MixOutlinedBorder<T extends OutlinedBorderDto>
     extends OutlinedBorder {
-  const CustomOutlinedBorder({super.side = BorderSide.none});
+  const MixOutlinedBorder({super.side = BorderSide.none});
   T toDto();
 }
 
@@ -310,12 +310,15 @@ extension ShapeBorderExt on ShapeBorder {
     if (self is RoundedRectangleBorder) return (self).toDto();
     if (self is StadiumBorder) return (self).toDto();
     if (self is StarBorder) return (self).toDto();
-    if (self is CustomOutlinedBorder) return (self).toDto();
+    if (self is MixOutlinedBorder) return (self).toDto();
 
     throw ArgumentError.value(
       this,
       'shapeBorder',
-      'ShapeBorder type is not supported',
+      'Unsupported ShapeBorder type.\n'
+          'If you are trying to create a custom ShapeBorder, it must extend MixOutlinedBorder.'
+          ' Otherwise, use a built-in Mix shape.\n'
+          'Custom ShapeBorders that do not extend MixOutlinedBorder will not work with Mix.',
     );
   }
 }
@@ -338,5 +341,5 @@ class ShapeBorderUtility<T extends Attribute>
 
   ShapeBorderUtility(super.builder);
 
-  T call(OutlinedBorder value) => builder(value.toDto());
+  T call(ShapeBorder value) => builder(value.toDto());
 }
