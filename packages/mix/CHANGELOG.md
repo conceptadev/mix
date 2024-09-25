@@ -1,3 +1,7 @@
+#### `mix` - `v1.5.1`
+
+ - **FEAT**: Add MixOutlinedBorder (#487).
+
 ## 1.5.0
 
  - **FIX**: Update OnBrightnessVariant to use `MediaQuery` instead of `Theme` (#471).
