@@ -3,6 +3,59 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2024-09-25
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`mix` - `v1.5.1`](#mix---v151)
+ - [`remix` - `v0.0.2-alpha.2`](#remix---v002-alpha2)
+
+Packages with dependency updates only:
+
+> Packages listed below depend on other packages in this workspace that have had changes. Their versions have been incremented to bump the minimum dependency versions of the packages they depend upon in this project.
+
+ - `remix` - `v0.0.2-alpha.2`
+
+---
+
+#### `mix` - `v1.5.1`
+
+ - **REFACTOR**: Rewrite all components in the new Archtecture (#467).
+ - **FIX**: reset modifiers and directives when using fluentAPI (#482).
+ - **FIX**: Update OnBrightnessVariant to use `MediaQuery` instead of `Theme` (#471).
+ - **FIX**: Style when merged with an AnimatedStyle should generate an AnimatedStyle (#472).
+ - **FIX**(docs): fix fn level docs for Style::applyVariants (#460).
+ - **FIX**: Shadow list animation (#445).
+ - **FIX**: HitTestBehavior when there is a Interectable in the tree (#437).
+ - **FIX**: Pressable disposes controller only if it creates it (#424).
+ - **FIX**: breakpoint utility merge exception (#421).
+ - **FIX**: FlexSpecWidget prioritizes the direction in spec (#414).
+ - **FIX**: Added missing widget state utilities (#411).
+ - **FIX**: Correct handling of individual border sides (#408).
+ - **FEAT**: Add CustomOutlinedBorder's  (#487).
+ - **FEAT**: remix-styling-configuration (#483).
+ - **FEAT**: transform.translate (#484).
+ - **FEAT**: Add more directives to Colors (#477).
+ - **FEAT**: implement a way to clear inline modifiers (#478).
+ - **FEAT**: Fluent API (#475).
+ - **FEAT**: Create mouse cursor Decorator (#263).
+ - **FEAT**: Create Select component (#448).
+ - **FEAT**: Add parameter onEnd for AnimatedStyle (#458).
+ - **FEAT**: `SingleChildScrollView` widget modifier (#427).
+ - **FEAT**: Create a specific utility to Transform.rotate (#434).
+ - **FEAT**: TargetPlatform and web variants (#431).
+ - **FEAT**: Remix improvements and further improvements (#410).
+ - **DOCS**: improve mix theme data features explanations (#404).
+
+
 ## 2024-09-16
 
 ### Changes
