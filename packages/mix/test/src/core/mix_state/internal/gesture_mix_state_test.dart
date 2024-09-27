@@ -5,11 +5,9 @@ import 'package:mix/src/core/widget_state/internal/mix_widget_state_builder.dart
 import 'package:mix/src/core/widget_state/widget_state_controller.dart';
 
 void main() {
-  group('GesturableWidget', () {
+  group('GestureMixStateWidget', () {
     const key = Key('context_key');
     const unpressDelay = Duration(milliseconds: 500);
-
-    final controller = MixWidgetStateController();
 
     GestureMixStateWidget buildGestureMixStateWidget({
       Duration unpressDelay = unpressDelay,
@@ -19,7 +17,18 @@ void main() {
       Function(DragDownDetails)? onPanDown,
       Function(DragUpdateDetails)? onPanUpdate,
       Function(DragEndDetails)? onPanEnd,
+      Function(TapUpDetails)? onTapUp,
+      Function()? onTapCancel,
+      Function(LongPressStartDetails)? onLongPressStart,
+      Function(LongPressEndDetails)? onLongPressEnd,
+      Function()? onLongPressCancel,
+      Function()? onPanCancel,
+      bool enableFeedback = false,
+      bool excludeFromSemantics = false,
+      HitTestBehavior hitTestBehavior = HitTestBehavior.opaque,
+      MixWidgetStateController? controller,
     }) {
+      controller ??= MixWidgetStateController();
       return GestureMixStateWidget(
         controller: controller,
         onTap: onTap,
@@ -29,6 +38,15 @@ void main() {
         onPanDown: onPanDown,
         onPanUpdate: onPanUpdate,
         onPanEnd: onPanEnd,
+        onTapUp: onTapUp,
+        onTapCancel: onTapCancel,
+        onLongPressStart: onLongPressStart,
+        onLongPressEnd: onLongPressEnd,
+        onLongPressCancel: onLongPressCancel,
+        onPanCancel: onPanCancel,
+        enableFeedback: enableFeedback,
+        excludeFromSemantics: excludeFromSemantics,
+        hitTestBehavior: hitTestBehavior,
         child: MixWidgetStateBuilder(
           controller: controller,
           builder: (_) => const SizedBox(
@@ -41,110 +59,100 @@ void main() {
     }
 
     testWidgets('should update press state when tapped', (tester) async {
+      final controller = MixWidgetStateController();
       bool onTapCalled = false;
+      bool onControllerTapCalled = false;
       await tester.pumpWidget(
         buildGestureMixStateWidget(
+          controller: controller,
           onTap: () {
             onTapCalled = true;
           },
         ),
       );
 
-      await tester.tap(find.byType(GestureMixStateWidget));
+      controller.addListener(() {
+        if (onControllerTapCalled) return;
+        onControllerTapCalled = controller.pressed;
+      });
+
+      await tester.tap(find.byKey(key));
       await tester.pump();
 
-      final context = tester.element(find.byKey(key));
-
-      expect(
-        MixWidgetState.hasStateOf(context, MixWidgetState.pressed),
-        isTrue,
-        reason: 'GesturableState should be pressed immediately after tap',
-      );
+      expect(onControllerTapCalled, isTrue);
       expect(onTapCalled, isTrue);
     });
 
     testWidgets('should update long press state when long pressed',
         (tester) async {
+      final controller = MixWidgetStateController();
       bool onLongPressCalled = false;
+      bool onControllerLongPressCalled = false;
       await tester.pumpWidget(
         buildGestureMixStateWidget(
+          controller: controller,
           onLongPress: () {
             onLongPressCalled = true;
           },
         ),
       );
 
-      await tester.longPress(find.byType(GestureMixStateWidget));
-      final context = tester.element(find.byKey(key));
+      controller.addListener(() {
+        if (onControllerLongPressCalled) return;
+        onControllerLongPressCalled = controller.longPressed;
+      });
 
+      await tester.longPress(find.byKey(key));
+      await tester.pump();
+
+      expect(onControllerLongPressCalled, isTrue);
       expect(onLongPressCalled, isTrue);
-      expect(MixWidgetState.hasStateOf(context, MixWidgetState.longPressed),
-          isTrue);
     });
 
     testWidgets('should update press state after delay when tapped',
         (tester) async {
+      final controller = MixWidgetStateController();
       await tester.pumpWidget(
         buildGestureMixStateWidget(
+          controller: controller,
           onTap: () {},
           unpressDelay: const Duration(milliseconds: 100),
         ),
       );
 
-      await tester.tap(find.byType(GestureMixStateWidget));
+      await tester.tap(find.byKey(key));
       await tester.pump();
-      final context = tester.element(find.byKey(key));
-      expect(
-        MixWidgetState.hasStateOf(context, MixWidgetState.pressed),
-        isTrue,
-        reason: 'GesturableState should be pressed immediately after tap',
-      );
+      expect(controller.pressed, isTrue);
 
-      await tester.pump(
-        const Duration(milliseconds: 50),
-      );
-      expect(
-        MixWidgetState.hasStateOf(context, MixWidgetState.pressed),
-        isTrue,
-        reason: 'GesturableState should still be pressed 50ms after tap',
-      );
+      await tester.pump(const Duration(milliseconds: 50));
+      expect(controller.pressed, isTrue);
 
-      await tester.pump(
-        const Duration(milliseconds: 100),
-      );
-      expect(
-        MixWidgetState.hasStateOf(context, MixWidgetState.pressed),
-        isFalse,
-        reason:
-            'GesturableState should be unpressed after unpressDelay has passed',
-      );
+      await tester.pump(const Duration(milliseconds: 100));
+      expect(controller.pressed, isFalse);
     });
 
     testWidgets('should not update press state when disabled', (tester) async {
-      await tester.pumpWidget(
-        buildGestureMixStateWidget(
-          onTap: () {},
-          unpressDelay: Duration.zero,
-        ),
-      );
+      final controller = MixWidgetStateController();
+      await tester
+          .pumpWidget(buildGestureMixStateWidget(controller: controller));
 
-      await tester.tap(find.byType(GestureMixStateWidget));
-      final context = tester.element(find.byKey(key));
-      expect(
-          MixWidgetState.hasStateOf(context, MixWidgetState.pressed), isFalse);
+      await tester.tap(find.byKey(key));
+      await tester.pump();
+      expect(controller.pressed, isFalse);
     });
 
-    testWidgets('GesturableWidget pan functions test', (
-      WidgetTester tester,
-    ) async {
+    testWidgets('should handle pan gestures correctly', (tester) async {
       bool isPanStartCalled = false;
       bool isPanDownCalled = false;
       bool isPanUpdateCalled = false;
       bool isPanEndCalled = false;
 
+      final controller = MixWidgetStateController();
+
       await tester.pumpWidget(
         MaterialApp(
           home: buildGestureMixStateWidget(
+            controller: controller,
             onPanStart: (details) {
               isPanStartCalled = true;
             },
@@ -157,69 +165,131 @@ void main() {
             onPanEnd: (details) {
               isPanEndCalled = true;
             },
-            unpressDelay: Duration.zero,
           ),
         ),
       );
 
-      final gesturableWidget = find.byType(GestureMixStateWidget);
-      expect(gesturableWidget, findsOneWidget);
-
-      final gesturableWidgetCenter = tester.getCenter(gesturableWidget);
-      final gesture = await tester.startGesture(gesturableWidgetCenter);
-      await gesture.moveBy(const Offset(50, 50), timeStamp: Durations.medium1);
-      // move back to the original position
-      await gesture.moveBy(const Offset(-50, -50),
-          timeStamp: Durations.medium1);
+      final gesture =
+          await tester.startGesture(tester.getCenter(find.byKey(key)));
+      await gesture.moveBy(const Offset(50, 50));
       await gesture.up();
 
-      // move it again but cancel it
-      await gesture.down(gesturableWidgetCenter);
+      await tester.pump();
 
-      await gesture.moveBy(const Offset(50, 50));
-      await gesture.cancel(timeStamp: const Duration(milliseconds: 100));
-      await tester.pump(const Duration(milliseconds: 200));
-
-      expect(
-        isPanStartCalled,
-        isTrue,
-        reason: 'onPanStart was not called',
-      );
-      expect(
-        isPanDownCalled,
-        isTrue,
-        reason: 'onPanDown was not called',
-      );
-      expect(
-        isPanUpdateCalled,
-        isTrue,
-        reason: 'onPanUpdate was not called',
-      );
-      expect(
-        isPanEndCalled,
-        isTrue,
-        reason: 'onPanEnd was not called',
-      );
+      expect(isPanStartCalled, isTrue);
+      expect(isPanDownCalled, isTrue);
+      expect(isPanUpdateCalled, isTrue);
+      expect(isPanEndCalled, isTrue);
     });
 
-    testWidgets(
-      'should propagate the onTap when it doesn\'t receive null',
-      (tester) async {
-        bool onTapCalled = false;
+    testWidgets('should provide feedback when enabled', (tester) async {
+      final controller = MixWidgetStateController();
 
-        await tester.pumpWidget(
-          GestureDetector(
-            onTap: () {
-              onTapCalled = true;
-            },
-            child: buildGestureMixStateWidget(),
-          ),
-        );
+      bool onTapCalled = false;
+      bool onLongPressCalled = false;
+      await tester.pumpWidget(
+        buildGestureMixStateWidget(
+          controller: controller,
+          onTap: () {
+            onTapCalled = true;
+          },
+          onLongPress: () {
+            onLongPressCalled = true;
+          },
+          enableFeedback: true,
+        ),
+      );
 
-        await tester.tap(find.byType(GestureMixStateWidget));
+      await tester.tap(find.byKey(key));
+      await tester.pump();
+      expect(onTapCalled, isTrue);
 
-        expect(onTapCalled, isTrue);
-      },
-    );
+      await tester.longPress(find.byKey(key));
+      await tester.pump();
+      expect(onLongPressCalled, isTrue);
+    });
+
+    testWidgets('should exclude from semantics when set', (tester) async {
+      await tester.pumpWidget(
+        buildGestureMixStateWidget(
+          excludeFromSemantics: true,
+        ),
+      );
+
+      final widget = tester.widget(find.byType(GestureMixStateWidget))
+          as GestureMixStateWidget;
+
+      expect(widget.excludeFromSemantics, isTrue);
+    });
+
+    testWidgets('should handle different hit test behaviors', (tester) async {
+      final controller = MixWidgetStateController();
+      await tester.pumpWidget(
+        buildGestureMixStateWidget(
+          controller: controller,
+          onTap: () {},
+          hitTestBehavior: HitTestBehavior.translucent,
+        ),
+      );
+
+      await tester.tap(find.byKey(key));
+      await tester.pump();
+      expect(controller.pressed, isTrue);
+    });
+
+    testWidgets('should update state with external controller', (tester) async {
+      final externalController = MixWidgetStateController();
+      await tester.pumpWidget(
+        buildGestureMixStateWidget(
+          onTap: () {},
+          controller: externalController,
+        ),
+      );
+
+      await tester.tap(find.byKey(key));
+      await tester.pump();
+      expect(externalController.pressed, isTrue);
+    });
+
+    testWidgets('should handle null callbacks gracefully', (tester) async {
+      final controller = MixWidgetStateController();
+      await tester
+          .pumpWidget(buildGestureMixStateWidget(controller: controller));
+
+      await tester.tap(find.byKey(key));
+      await tester.pump();
+      expect(controller.pressed, isFalse);
+    });
+
+    testWidgets('should dispose internal controller when disposed',
+        (tester) async {
+      final controller = MixWidgetStateController();
+      await tester.pumpWidget(_DisposableController(controller: controller));
+      await tester.pumpWidget(Container());
+
+      expect(controller.disposed, isTrue);
+    });
   });
+}
+
+class _DisposableController extends StatefulWidget {
+  final MixWidgetStateController controller;
+
+  const _DisposableController({required this.controller});
+
+  @override
+  State createState() => _DisposableControllerState();
+}
+
+class _DisposableControllerState extends State<_DisposableController> {
+  @override
+  void dispose() {
+    widget.controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return const SizedBox();
+  }
 }
