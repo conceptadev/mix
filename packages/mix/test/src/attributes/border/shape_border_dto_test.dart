@@ -640,4 +640,183 @@ void main() {
       expect(OutlinedBorderDto.tryToMerge(dto1, dto2), equals(expectedResult));
     });
   });
+  group('RoundedRectangleBorderDto', () {
+    test(
+        'adapt method should return the same instance if input is RoundedRectangleBorderDto',
+        () {
+      const dtoA = RoundedRectangleBorderDto(
+        borderRadius: BorderRadiusDto(topLeft: Radius.circular(10)),
+        side: BorderSideDto(width: 2.0),
+      );
+      const dtoB = RoundedRectangleBorderDto(
+        borderRadius: BorderRadiusDto(topLeft: Radius.circular(20)),
+        side: BorderSideDto(width: 4.0),
+      );
+      expect(dtoA.adapt(dtoB), equals(dtoB));
+    });
+
+    test(
+        'adapt method should create a new instance from other OutlinedBorderDto',
+        () {
+      const dtoA = RoundedRectangleBorderDto();
+      const dtoB = CircleBorderDto(side: BorderSideDto(width: 3.0));
+      final result = dtoA.adapt(dtoB);
+      expect(result, isA<RoundedRectangleBorderDto>());
+      expect(result.side, equals(dtoB.side));
+      expect(result.borderRadius, isNull);
+    });
+  });
+
+  group('BeveledRectangleBorderDto', () {
+    test(
+        'adapt method should return the same instance if input is BeveledRectangleBorderDto',
+        () {
+      const dtoA = BeveledRectangleBorderDto(
+        borderRadius: BorderRadiusDto(topLeft: Radius.circular(5)),
+        side: BorderSideDto(width: 1.5),
+      );
+      const dtoB = BeveledRectangleBorderDto(
+        borderRadius: BorderRadiusDto(topLeft: Radius.circular(5)),
+        side: BorderSideDto(width: 3),
+      );
+      expect(dtoA.adapt(dtoB), equals(dtoB));
+    });
+
+    test(
+        'adapt method should create a new instance from other OutlinedBorderDto',
+        () {
+      const dtoA = BeveledRectangleBorderDto();
+      const dtoB = StadiumBorderDto(side: BorderSideDto(width: 2.5));
+      final result = dtoA.adapt(dtoB);
+      expect(result, isA<BeveledRectangleBorderDto>());
+      expect(result.side, equals(dtoB.side));
+      expect(result.borderRadius, isNull);
+    });
+  });
+
+  group('ContinuousRectangleBorderDto', () {
+    test(
+        'adapt method should return the same instance if input is ContinuousRectangleBorderDto',
+        () {
+      const dtoA = ContinuousRectangleBorderDto(
+        borderRadius: BorderRadiusDto(topLeft: Radius.circular(8)),
+        side: BorderSideDto(width: 1.2),
+      );
+      const dtoB = ContinuousRectangleBorderDto(
+        borderRadius: BorderRadiusDto(topLeft: Radius.circular(16)),
+        side: BorderSideDto(width: 3),
+      );
+      expect(dtoA.adapt(dtoB), equals(dtoB));
+    });
+
+    test(
+        'adapt method should create a new instance from other OutlinedBorderDto',
+        () {
+      const dtoA = ContinuousRectangleBorderDto();
+      const dtoB = RoundedRectangleBorderDto(
+        side: BorderSideDto(width: 1.8),
+        borderRadius: BorderRadiusDto(
+          topLeft: Radius.circular(10),
+        ),
+      );
+      final result = dtoA.adapt(dtoB);
+      expect(result, isA<ContinuousRectangleBorderDto>());
+      expect(result.side, equals(dtoB.side));
+      expect(result.borderRadius, equals(dtoB.borderRadius));
+    });
+  });
+
+  group('CircleBorderDto', () {
+    test(
+        'adapt method should return the same instance if input is CircleBorderDto',
+        () {
+      const dtoA =
+          CircleBorderDto(side: BorderSideDto(width: 2.2), eccentricity: 0.5);
+      const dtoB =
+          CircleBorderDto(side: BorderSideDto(width: 22), eccentricity: 0.7);
+      expect(dtoA.adapt(dtoB), equals(dtoB));
+    });
+
+    test(
+        'adapt method should create a new instance from other OutlinedBorderDto',
+        () {
+      const dtoA = CircleBorderDto();
+      const dtoB = BeveledRectangleBorderDto(side: BorderSideDto(width: 1.7));
+      final result = dtoA.adapt(dtoB);
+      expect(result, isA<CircleBorderDto>());
+      expect(result.side, equals(dtoB.side));
+      expect(result.eccentricity, isNull);
+    });
+  });
+
+  group('StarBorderDto', () {
+    test(
+        'adapt method should create a new instance from other OutlinedBorderDto',
+        () {
+      const dtoA = StarBorderDto();
+      const dtoB = ContinuousRectangleBorderDto(
+        side: BorderSideDto(width: 1.3),
+      );
+
+      final result = dtoA.adapt(dtoB);
+      expect(result, isA<StarBorderDto>());
+      expect(result.side, equals(dtoB.side));
+      expect(result.points, isNull);
+      expect(result.innerRadiusRatio, isNull);
+      expect(result.pointRounding, isNull);
+      expect(result.valleyRounding, isNull);
+      expect(result.rotation, isNull);
+      expect(result.squash, isNull);
+    });
+  });
+
+  group('LinearBorderDto', () {
+    test(
+        'adapt method should return the same instance if input is LinearBorderDto',
+        () {
+      const dtoA = LinearBorderDto(
+        side: BorderSideDto(width: 1.9),
+        start: LinearBorderEdgeDto(size: 2.0, alignment: 0.5),
+      );
+      const dtoB = LinearBorderDto(
+        side: BorderSideDto(width: 19),
+        start: LinearBorderEdgeDto(size: 20, alignment: 0.9),
+      );
+      expect(dtoA.adapt(dtoB), equals(dtoB));
+    });
+
+    test(
+        'adapt method should create a new instance from other OutlinedBorderDto',
+        () {
+      const dtoA = LinearBorderDto();
+      const dtoB = StadiumBorderDto(side: BorderSideDto(width: 2.1));
+      final result = dtoA.adapt(dtoB);
+      expect(result, isA<LinearBorderDto>());
+      expect(result.side, equals(dtoB.side));
+      expect(result.start, isNull);
+      expect(result.end, isNull);
+      expect(result.top, isNull);
+      expect(result.bottom, isNull);
+    });
+  });
+
+  group('StadiumBorderDto', () {
+    test(
+        'adapt method should return the same instance if input is StadiumBorderDto',
+        () {
+      const dtoA = StadiumBorderDto(side: BorderSideDto(width: 1.6));
+      const dtoB = StadiumBorderDto(side: BorderSideDto(width: 16));
+      expect(dtoA.adapt(dtoB), equals(dtoB));
+    });
+
+    test(
+        'adapt method should create a new instance from other OutlinedBorderDto',
+        () {
+      const dtoA = StadiumBorderDto();
+      const dtoB = CircleBorderDto(side: BorderSideDto(width: 2.3));
+      final result = dtoA.adapt(dtoB);
+      expect(result, isA<StadiumBorderDto>());
+      expect(result.side, equals(dtoB.side));
+    });
+  });
 }

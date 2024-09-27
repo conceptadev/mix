@@ -35,16 +35,6 @@ sealed class ShapeBorderDto<T extends ShapeBorder> extends Dto<T> {
         : (side: null, borderRadius: null, boxShape: null);
   }
 
-  BorderSideDto? get _side =>
-      this is OutlinedBorderDto ? (this as OutlinedBorderDto).side : null;
-
-  BeveledRectangleBorderDto toBeveled();
-  RoundedRectangleBorderDto toRoundedRectangle();
-  ContinuousRectangleBorderDto toContinuous();
-  CircleBorderDto toCircle();
-  StadiumBorderDto toStadiumBorder();
-  StarBorderDto toStar();
-  LinearBorderDto toLinear();
   @override
   ShapeBorderDto<T> merge(covariant ShapeBorderDto<T>? other);
 
@@ -73,16 +63,9 @@ abstract class OutlinedBorderDto<T extends OutlinedBorder>
       B extends OutlinedBorderDto>(A a, B b) {
     if (a.runtimeType == b.runtimeType) return a.merge(b) as B;
 
-    return switch (b) {
-      (BeveledRectangleBorderDto b) => a.toBeveled().merge(b) as B,
-      (RoundedRectangleBorderDto b) => a.toRoundedRectangle().merge(b) as B,
-      (ContinuousRectangleBorderDto b) => a.toContinuous().merge(b) as B,
-      (CircleBorderDto b) => a.toCircle().merge(b) as B,
-      (StadiumBorderDto b) => a.toStadiumBorder().merge(b) as B,
-      (StarBorderDto b) => a.toStar().merge(b) as B,
-      (LinearBorderDto b) => a.toLinear().merge(b) as B,
-      (OutlinedBorderDto b) => a.merge(b) as B,
-    };
+    final adaptedA = b.adapt(a) as B;
+
+    return adaptedA.merge(b) as B;
   }
 
   BoxShape? _toBoxShape() {
@@ -98,67 +81,7 @@ abstract class OutlinedBorderDto<T extends OutlinedBorder>
   @protected
   BorderRadiusGeometryDto? get borderRadiusGetter;
 
-  /// Tries to get borderRadius if available for [OutlineBorderDto]
-
-  @override
-  BeveledRectangleBorderDto toBeveled() {
-    if (this is BeveledRectangleBorderDto) {
-      return this as BeveledRectangleBorderDto;
-    }
-
-    return BeveledRectangleBorderDto(
-      borderRadius: borderRadiusGetter,
-      side: _side,
-    );
-  }
-
-  @override
-  ContinuousRectangleBorderDto toContinuous() {
-    return ContinuousRectangleBorderDto(
-      borderRadius: borderRadiusGetter,
-      side: _side,
-    );
-  }
-
-  @override
-  RoundedRectangleBorderDto toRoundedRectangle() {
-    if (this is RoundedRectangleBorderDto) {
-      return this as RoundedRectangleBorderDto;
-    }
-
-    return RoundedRectangleBorderDto(
-      borderRadius: borderRadiusGetter,
-      side: _side,
-    );
-  }
-
-  @override
-  CircleBorderDto toCircle() {
-    if (this is CircleBorderDto) return this as CircleBorderDto;
-
-    return CircleBorderDto(side: _side);
-  }
-
-  @override
-  StadiumBorderDto toStadiumBorder() {
-    if (this is StadiumBorderDto) return this as StadiumBorderDto;
-
-    return StadiumBorderDto(side: _side);
-  }
-
-  @override
-  LinearBorderDto toLinear() {
-    if (this is LinearBorderDto) return this as LinearBorderDto;
-
-    return LinearBorderDto(side: _side);
-  }
-
-  @override
-  StarBorderDto toStar() {
-    if (this is StarBorderDto) return this as StarBorderDto;
-
-    return StarBorderDto(side: _side);
-  }
+  OutlinedBorderDto<T> adapt(OutlinedBorderDto other);
 
   @override
   OutlinedBorderDto<T> merge(covariant OutlinedBorderDto<T>? other);
@@ -177,6 +100,16 @@ final class RoundedRectangleBorderDto
   const RoundedRectangleBorderDto({this.borderRadius, super.side});
 
   @override
+  RoundedRectangleBorderDto adapt(OutlinedBorderDto other) {
+    if (other is RoundedRectangleBorderDto) return other;
+
+    return RoundedRectangleBorderDto(
+      borderRadius: other.borderRadiusGetter,
+      side: other.side,
+    );
+  }
+
+  @override
   BorderRadiusGeometryDto? get borderRadiusGetter => borderRadius;
 
   @override
@@ -190,6 +123,16 @@ final class BeveledRectangleBorderDto
   final BorderRadiusGeometryDto? borderRadius;
 
   const BeveledRectangleBorderDto({this.borderRadius, super.side});
+
+  @override
+  BeveledRectangleBorderDto adapt(OutlinedBorderDto other) {
+    if (other is BeveledRectangleBorderDto) return other;
+
+    return BeveledRectangleBorderDto(
+      borderRadius: other.borderRadiusGetter,
+      side: other.side,
+    );
+  }
 
   @override
   BorderRadiusGeometryDto? get borderRadiusGetter => borderRadius;
@@ -207,6 +150,18 @@ final class ContinuousRectangleBorderDto
   const ContinuousRectangleBorderDto({this.borderRadius, super.side});
 
   @override
+  ContinuousRectangleBorderDto adapt(OutlinedBorderDto other) {
+    if (other is ContinuousRectangleBorderDto) {
+      return other;
+    }
+
+    return ContinuousRectangleBorderDto(
+      borderRadius: other.borderRadiusGetter,
+      side: other.side,
+    );
+  }
+
+  @override
   BorderRadiusGeometryDto? get borderRadiusGetter => borderRadius;
   @override
   ContinuousRectangleBorder get defaultValue =>
@@ -219,6 +174,16 @@ final class CircleBorderDto extends OutlinedBorderDto<CircleBorder>
   final double? eccentricity;
 
   const CircleBorderDto({super.side, this.eccentricity});
+
+  @override
+  CircleBorderDto adapt(OutlinedBorderDto other) {
+    if (other is CircleBorderDto) {
+      return other;
+    }
+
+    return CircleBorderDto(side: other.side);
+  }
+
   @override
   BorderRadiusGeometryDto? get borderRadiusGetter => null;
   @override
@@ -244,6 +209,12 @@ final class StarBorderDto extends OutlinedBorderDto<StarBorder>
     this.rotation,
     this.squash,
   });
+
+  @override
+  StarBorderDto adapt(OutlinedBorderDto other) {
+    return StarBorderDto(side: other.side);
+  }
+
   @override
   BorderRadiusGeometryDto? get borderRadiusGetter => null;
   @override
@@ -265,6 +236,16 @@ final class LinearBorderDto extends OutlinedBorderDto<LinearBorder>
     this.top,
     this.bottom,
   });
+
+  @override
+  LinearBorderDto adapt(OutlinedBorderDto other) {
+    if (other is LinearBorderDto) {
+      return other;
+    }
+
+    return LinearBorderDto(side: other.side);
+  }
+
   @override
   BorderRadiusGeometryDto? get borderRadiusGetter => null;
   @override
@@ -287,6 +268,15 @@ final class LinearBorderEdgeDto extends Dto<LinearBorderEdge>
 final class StadiumBorderDto extends OutlinedBorderDto<StadiumBorder>
     with _$StadiumBorderDto {
   const StadiumBorderDto({super.side});
+
+  @override
+  StadiumBorderDto adapt(OutlinedBorderDto other) {
+    if (other is StadiumBorderDto) {
+      return other;
+    }
+
+    return StadiumBorderDto(side: other.side);
+  }
 
   @override
   BorderRadiusGeometryDto? get borderRadiusGetter => null;
@@ -339,7 +329,7 @@ class ShapeBorderUtility<T extends Attribute>
 
   late final star = StarBorderUtility(builder);
 
-  ShapeBorderUtility(super.builder);
+  late final shapeBuilder = builder;
 
-  T call(ShapeBorder value) => builder(value.toDto());
+  ShapeBorderUtility(super.builder);
 }
