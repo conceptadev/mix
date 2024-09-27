@@ -5,6 +5,7 @@ import 'package:mix/mix.dart';
 import 'package:mix_annotations/mix_annotations.dart';
 
 import '../../internal/diagnostic_properties_builder_ext.dart';
+import '../../internal/mix_error.dart';
 
 part 'edge_insets_dto.g.dart';
 
@@ -156,16 +157,13 @@ final class EdgeInsetsDirectionalDto
 
 extension EdgeInsetsGeometryExt on EdgeInsetsGeometry {
   SpacingDto toDto() {
-    if (this is EdgeInsetsDirectional) {
-      return (this as EdgeInsetsDirectional).toDto();
-    } else if (this is EdgeInsets) {
-      return (this as EdgeInsets).toDto();
-    }
+    final self = this;
+    if (self is EdgeInsetsDirectional) return self.toDto();
+    if (self is EdgeInsets) return self.toDto();
 
-    throw ArgumentError.value(
-      this,
-      'edgeInsets',
-      'Must be either EdgeInsets or EdgeInsetsDirectional',
+    throw MixError.unsupportedTypeInDto(
+      EdgeInsetsGeometry,
+      ['EdgeInsetsDirectional', 'EdgeInsets'],
     );
   }
 }

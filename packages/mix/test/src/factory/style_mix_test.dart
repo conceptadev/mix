@@ -88,7 +88,7 @@ void main() {
         attribute4,
         const MockInvalidAttribute(),
       ];
-      expect(() => Style.create(attributes), throwsUnsupportedError);
+      expect(() => Style.create(attributes), throwsFlutterError);
     });
   });
 

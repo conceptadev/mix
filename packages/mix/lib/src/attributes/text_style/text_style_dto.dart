@@ -16,9 +16,18 @@ final class TextStyleDataRef extends TextStyleData {
   @override
   TextStyleDataRef merge(covariant TextStyleDataRef? other) {
     if (other == null) return this;
-    throw UnsupportedError(
-      'Cannot merge $this with $other, most likely there is an error on Mix',
-    );
+    throw FlutterError.fromParts([
+      ErrorSummary('Cannot merge TextStyleDataRef instances'),
+      ErrorDescription(
+        'An attempt was made to merge incompatible TextStyleDataRef objects. '
+        'Attempted to merge: $this with $other',
+      ),
+      ErrorHint('This is likely due to an internal error in the Mix library.'),
+      ErrorHint(
+        'Please open an issue on GitHub: https://github.com/yourorganization/mix/issues, '
+        'Explain how you encountered this error, and provide the code that triggered it.',
+      ),
+    ]);
   }
 
   @override

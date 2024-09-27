@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 
+import '../../internal/mix_error.dart';
 import '../mix/mix_theme.dart';
 import 'mix_token.dart';
 
@@ -163,18 +164,6 @@ final class TextStyleRef extends TextStyle with TokenRef<TextStyleToken> {
   int get hashCode => token.name.hashCode;
 }
 
-TokenFieldAccessError _e(String token, String field) {
-  return TokenFieldAccessError(token, field);
-}
-
-class TokenFieldAccessError extends Error {
-  final String tokenName;
-  final String fieldName;
-
-  TokenFieldAccessError(this.tokenName, this.fieldName);
-
-  @override
-  String toString() {
-    return '$tokenName cannot have field $fieldName because it is outside of context';
-  }
+FlutterError _e(String token, String field) {
+  return MixError.accessTokenValue(token, field);
 }

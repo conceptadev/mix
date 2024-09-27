@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../../core/attribute.dart';
@@ -87,7 +88,19 @@ final class ElevationUtility<T extends Attribute>
   ///
   /// Throws an [AssertionError] if the provided [value] is not a valid elevation value.
   T call(int value) {
-    assert(kElevationToShadow.containsKey(value), 'Invalid elevation value');
+    if (!kElevationToShadow.containsKey(value)) {
+      throw FlutterError.fromParts(
+        [
+          ErrorSummary('Invalid elevation value provided.'),
+          ErrorDescription(
+            'The elevation value $value is not a valid predefined elevation.',
+          ),
+          ErrorHint(
+            'Please use one of the predefined elevation values: ${kElevationToShadow.keys.join(", ")}.',
+          ),
+        ],
+      );
+    }
 
     final boxShadows = kElevationToShadow[value]!.map((e) => e.toDto());
 

@@ -6,6 +6,7 @@ import 'package:mix/mix.dart';
 import 'package:mix_annotations/mix_annotations.dart';
 
 import '../../internal/diagnostic_properties_builder_ext.dart';
+import '../../internal/mix_error.dart';
 
 part 'border_radius_dto.g.dart';
 
@@ -147,16 +148,13 @@ final class BorderRadiusDirectionalDto
 
 extension BorderRadiusGeometryMixExt on BorderRadiusGeometry {
   BorderRadiusGeometryDto toDto() {
-    if (this is BorderRadius) {
-      return (this as BorderRadius).toDto();
-    }
-    if (this is BorderRadiusDirectional) {
-      return (this as BorderRadiusDirectional).toDto();
-    }
-    throw ArgumentError.value(
-      this,
-      'radius',
-      'BorderRadiusGeometry type is not supported',
+    final self = this;
+    if (self is BorderRadius) return self.toDto();
+    if (self is BorderRadiusDirectional) return self.toDto();
+
+    throw MixError.unsupportedTypeInDto(
+      BorderRadiusGeometry,
+      ['BorderRadius', 'BorderRadiusDirectional'],
     );
   }
 }
