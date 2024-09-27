@@ -9,6 +9,7 @@ enum MixWidgetState {
   dragged,
   selected,
   disabled,
+  error,
   longPressed;
 
   static const of = MixWidgetStateModel.of;
@@ -49,6 +50,9 @@ class MixWidgetStateController extends ChangeNotifier {
   /// Whether the widget is currently in the selected state.
   bool get selected => value.contains(MixWidgetState.selected);
 
+  /// Whether the widget is currently in the error state.
+  bool get error => value.contains(MixWidgetState.error);
+
   /// Whether the widget is currently being long-pressed.
   bool get longPressed => value.contains(MixWidgetState.longPressed);
 
@@ -69,6 +73,9 @@ class MixWidgetStateController extends ChangeNotifier {
 
   /// Sets whether the widget is in the selected state.
   set selected(bool value) => update(MixWidgetState.selected, value);
+
+  /// Sets whether the widget is in the selected state.
+  set error(bool value) => update(MixWidgetState.error, value);
 
   /// Sets whether the widget is being long-pressed.
   set longPressed(bool value) => update(MixWidgetState.longPressed, value);
