@@ -7,6 +7,7 @@ import 'package:mix/mix.dart';
 import 'package:mix_annotations/mix_annotations.dart';
 
 import '../../internal/diagnostic_properties_builder_ext.dart';
+import '../../internal/mix_error.dart';
 
 part 'decoration_dto.g.dart';
 
@@ -265,12 +266,14 @@ ShapeDecorationDto _toShapeDecorationDto(BoxDecorationDto dto) {
 
 extension DecorationMixExt on Decoration {
   DecorationDto toDto() {
-    if (this is BoxDecoration) {
-      return (this as BoxDecoration).toDto();
-    } else if (this is ShapeDecoration) {
-      return (this as ShapeDecoration).toDto();
-    }
-    throw Exception('Unknown decoration type: $runtimeType');
+    final self = this;
+    if (self is BoxDecoration) return self.toDto();
+    if (self is ShapeDecoration) return self.toDto();
+
+    throw MixError.unsupportedTypeInDto(
+      Decoration,
+      ['BoxDecoration', 'ShapeDecoration'],
+    );
   }
 }
 

@@ -5,6 +5,7 @@ import 'package:flutter/widgets.dart';
 import 'package:mix/mix.dart';
 import 'package:mix_annotations/mix_annotations.dart';
 
+import '../../internal/constants.dart';
 import '../../internal/diagnostic_properties_builder_ext.dart';
 
 part 'text_style_dto.g.dart';
@@ -16,9 +17,18 @@ final class TextStyleDataRef extends TextStyleData {
   @override
   TextStyleDataRef merge(covariant TextStyleDataRef? other) {
     if (other == null) return this;
-    throw UnsupportedError(
-      'Cannot merge $this with $other, most likely there is an error on Mix',
-    );
+    throw FlutterError.fromParts([
+      ErrorSummary('Cannot merge TextStyleDataRef instances'),
+      ErrorDescription(
+        'An attempt was made to merge incompatible TextStyleDataRef objects. '
+        'Attempted to merge: $this with $other',
+      ),
+      ErrorHint('This is likely due to an internal error in the Mix library.'),
+      ErrorHint(
+        'Please open an issue on GitHub: $mixIssuesUrl, '
+        'Explain how you encountered this error, and provide the code that triggered it.',
+      ),
+    ]);
   }
 
   @override

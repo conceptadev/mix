@@ -173,195 +173,195 @@ void main() {
   });
 
   group('TextStyleRef', () {
-    test('copyWith throws TokenFieldAccessError', () {
+    test('copyWith throws FlutterError', () {
       const ref = TextStyleRef(TextStyleToken('test'));
       expect(
         () => ref.copyWith(),
-        throwsA(isA<TokenFieldAccessError>()),
+        throwsA(isA<FlutterError>()),
       );
     });
 
-    test('fontFamily throws TokenFieldAccessError', () {
+    test('fontFamily throws FlutterError', () {
       const ref = TextStyleRef(TextStyleToken('test'));
       expect(
         () => ref.fontFamily,
-        throwsA(isA<TokenFieldAccessError>()),
+        throwsA(isA<FlutterError>()),
       );
     });
 
-    test('inherit throws TokenFieldAccessError', () {
+    test('inherit throws FlutterError', () {
       const ref = TextStyleRef(TextStyleToken('test'));
       expect(
         () => ref.inherit,
-        throwsA(isA<TokenFieldAccessError>()),
+        throwsA(isA<FlutterError>()),
       );
     });
 
-    test('color throws TokenFieldAccessError', () {
+    test('color throws FlutterError', () {
       const ref = TextStyleRef(TextStyleToken('test'));
       expect(
         () => ref.color,
-        throwsA(isA<TokenFieldAccessError>()),
+        throwsA(isA<FlutterError>()),
       );
     });
 
-    test('backgroundColor throws TokenFieldAccessError', () {
+    test('backgroundColor throws FlutterError', () {
       const ref = TextStyleRef(TextStyleToken('test'));
       expect(
         () => ref.backgroundColor,
-        throwsA(isA<TokenFieldAccessError>()),
+        throwsA(isA<FlutterError>()),
       );
     });
 
-    test('fontSize throws TokenFieldAccessError', () {
+    test('fontSize throws FlutterError', () {
       const ref = TextStyleRef(TextStyleToken('test'));
       expect(
         () => ref.fontSize,
-        throwsA(isA<TokenFieldAccessError>()),
+        throwsA(isA<FlutterError>()),
       );
     });
 
-    test('fontWeight throws TokenFieldAccessError', () {
+    test('fontWeight throws FlutterError', () {
       const ref = TextStyleRef(TextStyleToken('test'));
       expect(
         () => ref.fontWeight,
-        throwsA(isA<TokenFieldAccessError>()),
+        throwsA(isA<FlutterError>()),
       );
     });
 
-    test('fontStyle throws TokenFieldAccessError', () {
+    test('fontStyle throws FlutterError', () {
       const ref = TextStyleRef(TextStyleToken('test'));
       expect(
         () => ref.fontStyle,
-        throwsA(isA<TokenFieldAccessError>()),
+        throwsA(isA<FlutterError>()),
       );
     });
 
-    test('letterSpacing throws TokenFieldAccessError', () {
+    test('letterSpacing throws FlutterError', () {
       const ref = TextStyleRef(TextStyleToken('test'));
       expect(
         () => ref.letterSpacing,
-        throwsA(isA<TokenFieldAccessError>()),
+        throwsA(isA<FlutterError>()),
       );
     });
 
-    test('wordSpacing throws TokenFieldAccessError', () {
+    test('wordSpacing throws FlutterError', () {
       const ref = TextStyleRef(TextStyleToken('test'));
       expect(
         () => ref.wordSpacing,
-        throwsA(isA<TokenFieldAccessError>()),
+        throwsA(isA<FlutterError>()),
       );
     });
 
-    test('textBaseline throws TokenFieldAccessError', () {
+    test('textBaseline throws FlutterError', () {
       const ref = TextStyleRef(TextStyleToken('test'));
       expect(
         () => ref.textBaseline,
-        throwsA(isA<TokenFieldAccessError>()),
+        throwsA(isA<FlutterError>()),
       );
     });
 
-    test('height throws TokenFieldAccessError', () {
+    test('height throws FlutterError', () {
       const ref = TextStyleRef(TextStyleToken('test'));
       expect(
         () => ref.height,
-        throwsA(isA<TokenFieldAccessError>()),
+        throwsA(isA<FlutterError>()),
       );
     });
 
-    test('leadingDistribution throws TokenFieldAccessError', () {
+    test('leadingDistribution throws FlutterError', () {
       const ref = TextStyleRef(TextStyleToken('test'));
       expect(
         () => ref.leadingDistribution,
-        throwsA(isA<TokenFieldAccessError>()),
+        throwsA(isA<FlutterError>()),
       );
     });
 
-    test('locale throws TokenFieldAccessError', () {
+    test('locale throws FlutterError', () {
       const ref = TextStyleRef(TextStyleToken('test'));
       expect(
         () => ref.locale,
-        throwsA(isA<TokenFieldAccessError>()),
+        throwsA(isA<FlutterError>()),
       );
     });
 
-    test('foreground throws TokenFieldAccessError', () {
+    test('foreground throws FlutterError', () {
       const ref = TextStyleRef(TextStyleToken('test'));
       expect(
         () => ref.foreground,
-        throwsA(isA<TokenFieldAccessError>()),
+        throwsA(isA<FlutterError>()),
       );
     });
 
-    test('background throws TokenFieldAccessError', () {
+    test('background throws FlutterError', () {
       const ref = TextStyleRef(TextStyleToken('test'));
       expect(
         () => ref.background,
-        throwsA(isA<TokenFieldAccessError>()),
+        throwsA(isA<FlutterError>()),
       );
     });
 
-    test('shadows throws TokenFieldAccessError', () {
+    test('shadows throws FlutterError', () {
       const ref = TextStyleRef(TextStyleToken('test'));
       expect(
         () => ref.shadows,
-        throwsA(isA<TokenFieldAccessError>()),
+        throwsA(isA<FlutterError>()),
       );
     });
 
-    test('fontFeatures throws TokenFieldAccessError', () {
+    test('fontFeatures throws FlutterError', () {
       const ref = TextStyleRef(TextStyleToken('test'));
       expect(
         () => ref.fontFeatures,
-        throwsA(isA<TokenFieldAccessError>()),
+        throwsA(isA<FlutterError>()),
       );
     });
 
-    test('fontVariations throws TokenFieldAccessError', () {
+    test('fontVariations throws FlutterError', () {
       const ref = TextStyleRef(TextStyleToken('test'));
       expect(
         () => ref.fontVariations,
-        throwsA(isA<TokenFieldAccessError>()),
+        throwsA(isA<FlutterError>()),
       );
     });
 
-    test('decoration throws TokenFieldAccessError', () {
+    test('decoration throws FlutterError', () {
       const ref = TextStyleRef(TextStyleToken('test'));
       expect(
         () => ref.decoration,
-        throwsA(isA<TokenFieldAccessError>()),
+        throwsA(isA<FlutterError>()),
       );
     });
 
-    test('decorationColor throws TokenFieldAccessError', () {
+    test('decorationColor throws FlutterError', () {
       const ref = TextStyleRef(TextStyleToken('test'));
       expect(
         () => ref.decorationColor,
-        throwsA(isA<TokenFieldAccessError>()),
+        throwsA(isA<FlutterError>()),
       );
     });
 
-    test('decorationStyle throws TokenFieldAccessError', () {
+    test('decorationStyle throws FlutterError', () {
       const ref = TextStyleRef(TextStyleToken('test'));
       expect(
         () => ref.decorationStyle,
-        throwsA(isA<TokenFieldAccessError>()),
+        throwsA(isA<FlutterError>()),
       );
     });
 
-    test('decorationThickness throws TokenFieldAccessError', () {
+    test('decorationThickness throws FlutterError', () {
       const ref = TextStyleRef(TextStyleToken('test'));
       expect(
         () => ref.decorationThickness,
-        throwsA(isA<TokenFieldAccessError>()),
+        throwsA(isA<FlutterError>()),
       );
     });
 
-    test('debugLabel throws TokenFieldAccessError', () {
+    test('debugLabel throws FlutterError', () {
       const ref = TextStyleRef(TextStyleToken('test'));
       expect(
         () => ref.debugLabel,
-        throwsA(isA<TokenFieldAccessError>()),
+        throwsA(isA<FlutterError>()),
       );
     });
   });

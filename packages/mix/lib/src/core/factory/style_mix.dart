@@ -101,21 +101,34 @@ class Style with EqualityMixin {
     final styleList = <StyledAttribute>[];
 
     for (final attribute in attributes) {
-      if (attribute is StyledAttribute) {
-        styleList.add(attribute);
-      } else if (attribute is VariantAttribute) {
-        applyVariants.add(attribute);
-      } else if (attribute is NestedStyleAttribute) {
-        applyVariants.addAll(attribute.value.variants.values);
-        styleList.addAll(attribute.value.styles.values);
-      } else if (attribute is SpecUtility) {
-        if (attribute.attributeValue != null) {
-          final nestedStyle = Style.create([attribute.attributeValue!]);
-          styleList.addAll(nestedStyle.styles.values);
-          applyVariants.addAll(nestedStyle.variants.values);
-        }
-      } else {
-        throw UnsupportedError('Unsupported attribute type: $attribute');
+      switch (attribute) {
+        case StyledAttribute():
+          styleList.add(attribute);
+        case VariantAttribute():
+          applyVariants.add(attribute);
+        case NestedStyleAttribute():
+          applyVariants.addAll(attribute.value.variants.values);
+          styleList.addAll(attribute.value.styles.values);
+        case SpecUtility():
+          if (attribute.attributeValue != null) {
+            final nestedStyle = Style.create([attribute.attributeValue!]);
+            styleList.addAll(nestedStyle.styles.values);
+            applyVariants.addAll(nestedStyle.variants.values);
+          }
+        default:
+          throw FlutterError.fromParts([
+            ErrorSummary(
+              'Unsupported attribute type encountered in Style creation.',
+            ),
+            ErrorDescription(
+              'The attribute of type ${attribute.runtimeType} is not supported.',
+            ),
+            ErrorHint(
+              'Custom Attributes must be subclasses of one of the following types: '
+              'StyledAttribute, VariantAttribute, NestedStyleAttribute, or SpecUtility. '
+              'Please ensure your attribute implements one of these supported types.',
+            ),
+          ]);
       }
     }
 

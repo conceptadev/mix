@@ -1,4 +1,5 @@
 // ignore_for_file: prefer_relative_imports, avoid-importing-entrypoint-exports
+import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:mix/mix.dart';
 import 'package:mix_annotations/mix_annotations.dart';
@@ -302,14 +303,18 @@ extension ShapeBorderExt on ShapeBorder {
     if (self is StarBorder) return (self).toDto();
     if (self is MixOutlinedBorder) return (self).toDto();
 
-    throw ArgumentError.value(
-      this,
-      'shapeBorder',
-      'Unsupported ShapeBorder type.\n'
-          'If you are trying to create a custom ShapeBorder, it must extend MixOutlinedBorder.'
-          ' Otherwise, use a built-in Mix shape.\n'
-          'Custom ShapeBorders that do not extend MixOutlinedBorder will not work with Mix.',
-    );
+    throw FlutterError.fromParts([
+      ErrorSummary('Unsupported ShapeBorder type.'),
+      ErrorDescription(
+        'If you are trying to create a custom ShapeBorder, it must extend MixOutlinedBorder. '
+        'Otherwise, use a built-in Mix shape such as BeveledRectangleBorder, CircleBorder, '
+        'ContinuousRectangleBorder, LinearBorder, RoundedRectangleBorder, StadiumBorder, or StarBorder.',
+      ),
+      ErrorHint(
+        'Custom ShapeBorders that do not extend MixOutlinedBorder will not work with Mix.',
+      ),
+      DiagnosticsProperty<ShapeBorder>('The unsupported ShapeBorder was', this),
+    ]);
   }
 }
 

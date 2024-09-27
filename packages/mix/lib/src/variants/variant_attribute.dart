@@ -34,7 +34,7 @@ class VariantAttribute<V extends IVariant> extends Attribute {
 
   @override
   VariantAttribute<V> merge(covariant VariantAttribute<V>? other) {
-    if (other?.variant != variant) throw throwArgumentError(other);
+    if (other?.variant != variant) throw _throwArgumentError(other);
 
     return VariantAttribute(variant, _style.merge(other?._style));
   }
@@ -46,7 +46,7 @@ class VariantAttribute<V extends IVariant> extends Attribute {
   Object get mergeKey => variant.mergeKey;
 }
 
-ArgumentError throwArgumentError<T extends VariantAttribute>(T? other) {
+ArgumentError _throwArgumentError<T extends VariantAttribute>(T? other) {
   throw ArgumentError.value(
     other.runtimeType,
     'other',

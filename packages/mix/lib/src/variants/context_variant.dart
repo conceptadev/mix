@@ -85,8 +85,18 @@ final class ContextVariantBuilder extends VariantAttribute<ContextVariant> {
 
   @override
   @protected
-  Style get value => throw UnimplementedError(
-        'This is a ContextVariantBuilder you need to call build(context)',
+  Style get value => throw FlutterError.fromParts(
+        [
+          ErrorSummary(
+            'Attempted to access value of ContextVariantBuilder directly.',
+          ),
+          ErrorDescription(
+            'This is a ContextVariantBuilder and requires a BuildContext to resolve.',
+          ),
+          ErrorHint(
+            'Use the build(context) method instead of accessing value directly.',
+          ),
+        ],
       );
 
   @override

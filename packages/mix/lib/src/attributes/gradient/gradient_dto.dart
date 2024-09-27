@@ -3,6 +3,9 @@ import 'package:flutter/widgets.dart';
 import 'package:mix/mix.dart';
 import 'package:mix_annotations/mix_annotations.dart';
 
+import '../../internal/constants.dart';
+import '../../internal/mix_error.dart';
+
 part 'gradient_dto.g.dart';
 
 /// Represents a base Data transfer object of [Gradient]
@@ -153,7 +156,10 @@ extension GradientExt on Gradient {
     if (self is RadialGradient) return (self).toDto();
     if (self is SweepGradient) return (self).toDto();
 
-    throw UnimplementedError();
+    throw MixError.unsupportedTypeInDto(
+      Gradient,
+      ['LinearGradient', 'RadialGradient', 'SweepGradient'],
+    );
   }
 }
 
@@ -176,15 +182,25 @@ final class GradientUtility<T extends Attribute>
   ///
   /// Throws an [UnimplementedError] if the given gradient type is not supported.
   T as(Gradient gradient) {
-    if (gradient is RadialGradient) {
-      return radial.as(gradient);
-    } else if (gradient is LinearGradient) {
-      return linear.as(gradient);
-    } else if (gradient is SweepGradient) {
-      return sweep.as(gradient);
+    switch (gradient) {
+      case RadialGradient():
+        return radial.as(gradient);
+      case LinearGradient():
+        return linear.as(gradient);
+      case SweepGradient():
+        return sweep.as(gradient);
     }
-    throw UnimplementedError(
-      'Cannot create $T from gradient of type ${gradient.runtimeType}',
-    );
+
+    throw FlutterError.fromParts([
+      ErrorSummary('Mix does not support custom gradient implementations.'),
+      ErrorDescription(
+        'The provided gradient of type ${gradient.runtimeType} is not supported.',
+      ),
+      ErrorHint(
+        'If you believe this gradient type should be supported, please open an issue at '
+        '$mixIssuesUrl with details about your implementation '
+        'and its use case.',
+      ),
+    ]);
   }
 }

@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:mix/mix.dart';
 import 'package:mix_annotations/mix_annotations.dart';
 
+import '../../internal/mix_error.dart';
+
 part 'border_dto.g.dart';
 
 @immutable
@@ -151,6 +153,10 @@ extension BoxBorderExt on BoxBorder {
     final self = this;
     if (self is Border) return (self).toDto();
     if (self is BorderDirectional) return (self).toDto();
-    throw UnimplementedError();
+
+    throw MixError.unsupportedTypeInDto(
+      BoxBorder,
+      ['Border', 'BorderDirectional'],
+    );
   }
 }
