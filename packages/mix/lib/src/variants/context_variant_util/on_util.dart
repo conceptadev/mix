@@ -50,6 +50,7 @@ class OnContextVariantUtility {
   final selected = const OnSelectedVariant();
   final unselected = const OnNotVariant(OnSelectedVariant());
   final dragged = const OnDraggedVariant();
+  final error = const OnErrorVariant();
 
   /// Creates an [OnNotVariant] with the specified [variant].
   ///

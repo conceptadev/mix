@@ -126,6 +126,7 @@ void main() {
       controller.dragged = true;
       controller.selected = true;
       controller.longPressed = true;
+      controller.error = true;
 
       await tester.pumpWidget(
         MaterialApp(
@@ -137,6 +138,7 @@ void main() {
             dragged: controller.dragged,
             selected: controller.selected,
             longPressed: controller.longPressed,
+            error: controller.error,
             child: Container(),
           ),
         ),
@@ -151,6 +153,7 @@ void main() {
       expect(foundModel.dragged, isTrue);
       expect(foundModel.selected, isTrue);
       expect(foundModel.longPressed, isTrue);
+      expect(foundModel.error, isTrue);
     });
 
     testWidgets('hasStateOf returns if state is set', (tester) async {
@@ -164,20 +167,23 @@ void main() {
             dragged: false,
             selected: false,
             longPressed: false,
+            error: false,
             child: Builder(
               builder: (context) {
                 expect(
-                    MixWidgetStateModel.hasStateOf(
-                      context,
-                      MixWidgetState.disabled,
-                    ),
-                    isTrue);
+                  MixWidgetStateModel.hasStateOf(
+                    context,
+                    MixWidgetState.disabled,
+                  ),
+                  isTrue,
+                );
                 expect(
-                    MixWidgetStateModel.hasStateOf(
-                      context,
-                      MixWidgetState.hovered,
-                    ),
-                    isFalse);
+                  MixWidgetStateModel.hasStateOf(
+                    context,
+                    MixWidgetState.hovered,
+                  ),
+                  isFalse,
+                );
                 return Container();
               },
             ),
@@ -195,6 +201,7 @@ void main() {
         dragged: false,
         selected: false,
         longPressed: false,
+        error: false,
         child: Container(),
       );
       final newModel = MixWidgetStateModel(
@@ -205,6 +212,7 @@ void main() {
         dragged: false,
         selected: false,
         longPressed: false,
+        error: false,
         child: Container(),
       );
 
@@ -220,6 +228,7 @@ void main() {
         dragged: false,
         selected: false,
         longPressed: false,
+        error: false,
         child: Container(),
       );
       final newModel = MixWidgetStateModel(
@@ -230,6 +239,7 @@ void main() {
         dragged: false,
         selected: false,
         longPressed: false,
+        error: false,
         child: Container(),
       );
 
