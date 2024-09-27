@@ -88,3 +88,8 @@ class OnSelectedVariant extends _ToggleMixStateVariant {
 class OnDraggedVariant extends _ToggleMixStateVariant {
   const OnDraggedVariant() : super(MixWidgetState.dragged);
 }
+
+/// Applies styles when the widget is error.
+class OnErrorVariant extends _ToggleMixStateVariant {
+  const OnErrorVariant() : super(MixWidgetState.error);
+}
