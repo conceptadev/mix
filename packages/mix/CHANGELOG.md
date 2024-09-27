@@ -1,3 +1,9 @@
+#### `mix` - `v1.5.2`
+
+ - **REFACTOR**: ShapeBorder merge (#490).
+ - **FEAT**: Improve error messages (#491).
+ - **FEAT**: add error state to MixWidgetState (#489).
+ 
 #### `mix` - `v1.5.1`
 
  - **FEAT**: Add MixOutlinedBorder (#487).
