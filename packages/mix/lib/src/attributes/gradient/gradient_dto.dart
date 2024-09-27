@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:mix/mix.dart';
 import 'package:mix_annotations/mix_annotations.dart';
 
+import '../../internal/constants.dart';
 import '../../internal/mix_error.dart';
 
 part 'gradient_dto.g.dart';
@@ -197,7 +198,7 @@ final class GradientUtility<T extends Attribute>
       ),
       ErrorHint(
         'If you believe this gradient type should be supported, please open an issue at '
-        'https://github.com/conceptadev/mix/issues/new/choose with details about your implementation '
+        '$mixIssuesUrl with details about your implementation '
         'and its use case.',
       ),
     ]);
