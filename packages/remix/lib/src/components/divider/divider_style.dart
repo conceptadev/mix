@@ -18,6 +18,17 @@ class DividerStyle extends SpecStyle<DividerSpecUtility> {
       vertical($.container.width(1)),
     ];
 
-    return Style.create([...containerStyle]);
+    final flexStyle = [
+      $.flex.chain
+        ..crossAxisAlignment.center
+        ..mainAxisAlignment.center
+        ..gap(8),
+      horizontal($.flex.row()),
+      vertical($.flex.column()),
+    ];
+
+    final labelStyle = $.label.chain..style.fontSize(14);
+
+    return Style.create([...containerStyle, ...flexStyle, labelStyle]);
   }
 }

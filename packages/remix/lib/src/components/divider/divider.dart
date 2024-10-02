@@ -15,14 +15,23 @@ part 'divider_widget.dart';
 base class DividerSpec extends Spec<DividerSpec>
     with _$DividerSpec, Diagnosticable {
   final BoxSpec container;
+  final FlexSpec flex;
+  final TextSpec label;
 
   /// {@macro progress_spec_of}
   static const of = _$DividerSpec.of;
 
   static const from = _$DividerSpec.from;
 
-  const DividerSpec({BoxSpec? container, super.animated, super.modifiers})
-      : container = container ?? const BoxSpec();
+  const DividerSpec({
+    BoxSpec? container,
+    FlexSpec? flex,
+    TextSpec? label,
+    super.animated,
+    super.modifiers,
+  })  : container = container ?? const BoxSpec(),
+        flex = flex ?? const FlexSpec(),
+        label = label ?? const TextSpec();
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
