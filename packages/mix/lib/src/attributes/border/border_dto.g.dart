@@ -212,7 +212,7 @@ class BorderSideUtility<T extends Attribute>
   late final color = ColorUtility((v) => only(color: v));
 
   /// Utility for defining [BorderSideDto.strokeAlign]
-  late final strokeAlign = DoubleUtility((v) => only(strokeAlign: v));
+  late final strokeAlign = StrokeAlignUtility((v) => only(strokeAlign: v));
 
   /// Utility for defining [BorderSideDto.style]
   late final style = BorderStyleUtility((v) => only(style: v));
