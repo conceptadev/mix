@@ -3,7 +3,6 @@ import 'package:flutter/widgets.dart';
 import '../modifiers/internal/render_widget_modifier.dart';
 import '../variants/widget_state_variant.dart';
 import '../widgets/pressable_widget.dart';
-import 'attribute.dart';
 import 'factory/mix_data.dart';
 import 'factory/mix_provider.dart';
 import 'factory/style_mix.dart';
@@ -159,20 +158,31 @@ class SpecBuilder extends StatelessWidget {
 /// supported by another widget and simplifies it into a basic attribute that
 /// can be used by a specific widget. This is particularly useful when creating
 /// custom styled widgets.
-class AttributeBridge<T extends SpecAttribute> extends StatelessWidget {
+class AttributeBridge<T extends SpecAttribute, V extends SpecAttribute>
+    extends StatelessWidget {
   const AttributeBridge({
     super.key,
     required this.child,
     required this.bridgeBuilder,
   });
 
-  final Attribute Function(T?) bridgeBuilder;
+  final V Function(T) bridgeBuilder;
   final Widget child;
 
   @override
   Widget build(BuildContext context) {
     final data = Mix.maybeOfInherited(context);
     final attribute = data?.attributeOf<T>();
+
+    if (attribute == null) {
+      throw FlutterError.fromParts([
+        ErrorSummary('AttributeBridge requires that $T be non-null.'),
+        ErrorDescription('The $T was not found in the current Mix context.'),
+        ErrorHint(
+          'Make sure that the AttributeBridge is used within a Mix widget that provides the required attribute.',
+        ),
+      ]);
+    }
 
     return SpecBuilder(
       inherit: true,

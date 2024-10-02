@@ -225,4 +225,104 @@ void main() {
       );
     });
   });
+  group('AttributeBridge', () {
+    testWidgets('AttributeBridge passes correct attribute to child',
+        (tester) async {
+      const attr = _ComplexSpecAttribute(
+        label: TextSpecAttribute(textScaleFactor: 2),
+      );
+      await tester.pumpWidget(
+        Box(
+          style: Style(attr),
+          child: AttributeBridge<_ComplexSpecAttribute, TextSpecAttribute>(
+            bridgeBuilder: (attr) => attr.label!,
+            child: Builder(
+              builder: (context) {
+                final mix = Mix.of(context);
+                mix.attributes.length;
+
+                expect(mix.attributes.length, 2);
+                expect(mix.attributeOf<_ComplexSpecAttribute>(), equals(attr));
+                expect(
+                    mix.attributeOf<TextSpecAttribute>(), equals(attr.label));
+
+                return const SizedBox();
+              },
+            ),
+          ),
+        ),
+      );
+    });
+
+    testWidgets('AttributeBridge handles null attribute with an exception',
+        (tester) async {
+      await tester.pumpWidget(
+        AttributeBridge<_ComplexSpecAttribute, TextSpecAttribute>(
+          bridgeBuilder: (a) => a.label!,
+          child: const SizedBox(),
+        ),
+      );
+      expect(tester.takeException(), isA<FlutterError>());
+    });
+  });
+}
+
+base class _ComplexSpecAttribute extends SpecAttribute<_ComplexSpec> {
+  final TextSpecAttribute? label;
+
+  const _ComplexSpecAttribute({
+    this.label,
+    super.animated,
+    super.modifiers,
+  });
+
+  @override
+  _ComplexSpec resolve(MixData mix) {
+    return _ComplexSpec(
+      label: label?.resolve(mix),
+      animated: animated?.resolve(mix) ?? mix.animation,
+      modifiers: modifiers?.resolve(mix),
+    );
+  }
+
+  @override
+  _ComplexSpecAttribute merge(covariant _ComplexSpecAttribute? other) {
+    if (other == null) return this;
+
+    return _ComplexSpecAttribute(
+      label: label?.merge(other.label) ?? other.label,
+      animated: animated?.merge(other.animated) ?? other.animated,
+      modifiers: modifiers?.merge(other.modifiers) ?? other.modifiers,
+    );
+  }
+
+  @override
+  List<Object?> get props => [
+        label,
+        animated,
+        modifiers,
+      ];
+}
+
+base class _ComplexSpec extends Spec<_ComplexSpec> {
+  final TextSpec label;
+
+  const _ComplexSpec({
+    TextSpec? label,
+    super.animated,
+    super.modifiers,
+  }) : label = label ?? const TextSpec();
+
+  @override
+  _ComplexSpec copyWith() {
+    throw UnimplementedError();
+  }
+
+  @override
+  _ComplexSpec lerp(covariant _ComplexSpec? other, double t) {
+    throw UnimplementedError();
+  }
+
+  @override
+  List<Object?> get props => throw UnimplementedError();
 }
