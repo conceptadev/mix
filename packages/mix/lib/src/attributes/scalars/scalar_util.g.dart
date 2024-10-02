@@ -499,18 +499,6 @@ mixin _$ImageProviderUtility<T extends Attribute>
   T call(ImageProvider value) => builder(value);
 }
 
-/// {@template text_height_behavior_utility}
-/// A utility class for creating [Attribute] instances from [TextHeightBehavior] values.
-///
-/// This class extends [MixUtility] and provides methods to create [Attribute] instances
-/// from predefined [TextHeightBehavior] values.
-/// {@endtemplate}
-mixin _$TextHeightBehaviorUtility<T extends Attribute>
-    on MixUtility<T, TextHeightBehavior> {
-  /// Creates an [Attribute] instance with the specified TextHeightBehavior value.
-  T call(TextHeightBehavior value) => builder(value);
-}
-
 /// {@template gradient_transform_utility}
 /// A utility class for creating [Attribute] instances from [GradientTransform] values.
 ///

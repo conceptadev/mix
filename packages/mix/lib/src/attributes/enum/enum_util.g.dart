@@ -156,6 +156,24 @@ mixin _$TextDirectionUtility<T extends Attribute>
   T call(TextDirection value) => builder(value);
 }
 
+/// {@template text_leading_distribution_utility}
+/// A utility class for creating [Attribute] instances from [TextLeadingDistribution] values.
+///
+/// This class extends [MixUtility] and provides methods to create [Attribute] instances
+/// from predefined [TextLeadingDistribution] values.
+/// {@endtemplate}
+mixin _$TextLeadingDistributionUtility<T extends Attribute>
+    on MixUtility<T, TextLeadingDistribution> {
+  /// Creates an [Attribute] instance with [TextLeadingDistribution.proportional] value.
+  T proportional() => builder(TextLeadingDistribution.proportional);
+
+  /// Creates an [Attribute] instance with [TextLeadingDistribution.even] value.
+  T even() => builder(TextLeadingDistribution.even);
+
+  /// Creates an [Attribute] instance with the specified TextLeadingDistribution value.
+  T call(TextLeadingDistribution value) => builder(value);
+}
+
 /// {@template tile_mode_utility}
 /// A utility class for creating [Attribute] instances from [TileMode] values.
 ///

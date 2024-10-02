@@ -589,396 +589,377 @@ void main() {
     });
   });
 
-  group('TextHeightBehaviorUtility Tests', () {
-    const utility = TextHeightBehaviorUtility(UtilityTestAttribute.new);
+  group('TextScalerUtility Tests', () {
+    const utility = TextScalerUtility(UtilityTestAttribute.new);
 
     test('call() returns correct instance', () {
-      final textHeightBehavior = utility(
-        const TextHeightBehavior(
-          applyHeightToFirstAscent: true,
-          applyHeightToLastDescent: false,
-        ),
+      final textScaler = utility(
+        const TextScaler.linear(2),
       );
 
-      expect(textHeightBehavior.value, isA<TextHeightBehavior>());
-      expect(textHeightBehavior.value.applyHeightToFirstAscent, isTrue);
-      expect(textHeightBehavior.value.applyHeightToLastDescent, isFalse);
+      final linearTextScaler = utility.linear(3);
+
+      final noScalingTextScaler = utility.noScaling();
+
+      expect(textScaler.value, isA<TextScaler>());
+      expect(textScaler.value, const TextScaler.linear(2));
+      expect(linearTextScaler.value, const TextScaler.linear(3));
+      expect(noScalingTextScaler.value, TextScaler.noScaling);
     });
-    group('TextScalerUtility Tests', () {
-      const utility = TextScalerUtility(UtilityTestAttribute.new);
-
-      test('call() returns correct instance', () {
-        final textScaler = utility(
-          const TextScaler.linear(2),
-        );
-
-        final linearTextScaler = utility.linear(3);
-
-        final noScalingTextScaler = utility.noScaling();
-
-        expect(textScaler.value, isA<TextScaler>());
-        expect(textScaler.value, const TextScaler.linear(2));
-        expect(linearTextScaler.value, const TextScaler.linear(3));
-        expect(noScalingTextScaler.value, TextScaler.noScaling);
-      });
-    });
-    group('DurationUtility Tests', () {
-      const utility = DurationUtility(UtilityTestAttribute.new);
-      test('microseconds() returns correct instance', () {
-        final duration = utility.microseconds(500);
-        expect(duration.value, isA<Duration>());
-        expect(duration.value.inMicroseconds, 500);
-      });
-
-      test('milliseconds() returns correct instance', () {
-        final duration = utility.milliseconds(1500);
-        expect(duration.value, isA<Duration>());
-        expect(duration.value.inMilliseconds, 1500);
-      });
-
-      test('seconds() returns correct instance', () {
-        final duration = utility.seconds(30);
-        expect(duration.value, isA<Duration>());
-        expect(duration.value.inSeconds, 30);
-      });
-
-      test('minutes() returns correct instance', () {
-        final duration = utility.minutes(2);
-        expect(duration.value, isA<Duration>());
-        expect(duration.value.inMinutes, 2);
-      });
-
-      test('zero() returns correct instance', () {
-        final duration = utility.zero();
-        expect(duration.value, isA<Duration>());
-        expect(duration.value.inMicroseconds, 0);
-      });
-
-      test('call() returns correct instance', () {
-        final duration = utility(const Duration(seconds: 5));
-        expect(duration.value, isA<Duration>());
-        expect(duration.value.inSeconds, 5);
-      });
-    });
-    group('FontFeatureUtility Tests', () {
-      const utility = FontFeatureUtility(UtilityTestAttribute.new);
-
-      test('call() returns correct instance', () {
-        final fontFeature = utility(
-          const FontFeature('liga', 1),
-        );
-
-        expect(fontFeature.value, isA<FontFeature>());
-        expect(fontFeature.value.feature, 'liga');
-        expect(fontFeature.value.value, 1);
-      });
-
-      test('enable() returns correct instance', () {
-        final fontFeature = utility.enable('liga');
-
-        expect(fontFeature.value, isA<FontFeature>());
-        expect(fontFeature.value.feature, 'liga');
-        expect(fontFeature.value.value, 1);
-      });
-
-      test('disable() returns correct instance', () {
-        final fontFeature = utility.disable('liga');
-
-        expect(fontFeature.value, isA<FontFeature>());
-        expect(fontFeature.value.feature, 'liga');
-        expect(fontFeature.value.value, 0);
-      });
-
-      test('alternative() returns correct instance', () {
-        final fontFeature = utility.alternative(2);
-
-        expect(fontFeature.value, isA<FontFeature>());
-        expect(fontFeature.value, const FontFeature.alternative(2));
-      });
-
-      test('randomize() returns correct instance', () {
-        final fontFeature = utility.randomize();
-
-        expect(fontFeature.value, isA<FontFeature>());
-        expect(fontFeature.value, const FontFeature.randomize());
-      });
-
-      test('swash() returns correct instance', () {
-        final fontFeature = utility.swash();
-
-        expect(fontFeature.value, isA<FontFeature>());
-        expect(fontFeature.value, const FontFeature.swash());
-      });
-
-      test('alternativeFractions() returns correct instance', () {
-        final fontFeature = utility.alternativeFractions();
-
-        expect(fontFeature.value, isA<FontFeature>());
-        expect(fontFeature.value, const FontFeature.alternativeFractions());
-      });
-
-      test('contextualAlternates() returns correct instance', () {
-        final fontFeature = utility.contextualAlternates();
-
-        expect(fontFeature.value, isA<FontFeature>());
-        expect(fontFeature.value, const FontFeature.contextualAlternates());
-      });
-
-      test('caseSensitiveForms() returns correct instance', () {
-        final fontFeature = utility.caseSensitiveForms();
-
-        expect(fontFeature.value, isA<FontFeature>());
-        expect(fontFeature.value, const FontFeature.caseSensitiveForms());
-      });
-
-      test('characterVariant() returns correct instance', () {
-        final fontFeature = utility.characterVariant(5);
-
-        expect(fontFeature.value, isA<FontFeature>());
-        expect(fontFeature.value, FontFeature.characterVariant(5));
-      });
-
-      test('historicalForms() returns correct instance', () {
-        final fontFeature = utility.historicalForms();
-
-        expect(fontFeature.value, isA<FontFeature>());
-        expect(fontFeature.value, const FontFeature.historicalForms());
-      });
-
-      test('historicalLigatures() returns correct instance', () {
-        final fontFeature = utility.historicalLigatures();
-
-        expect(fontFeature.value, isA<FontFeature>());
-        expect(fontFeature.value, const FontFeature.historicalLigatures());
-      });
-
-      test('liningFigures() returns correct instance', () {
-        final fontFeature = utility.liningFigures();
-
-        expect(fontFeature.value, isA<FontFeature>());
-        expect(fontFeature.value, const FontFeature.liningFigures());
-      });
-
-      test('localeAware() returns correct instance', () {
-        final fontFeature = utility.localeAware();
-        final fontFeatureEnabled = utility.localeAware(enable: true);
-        final fontFeatureDisabled = utility.localeAware(enable: false);
-
-        expect(fontFeature.value, isA<FontFeature>());
-        expect(fontFeature.value, const FontFeature.localeAware());
-        expect(fontFeatureEnabled.value,
-            const FontFeature.localeAware(enable: true));
-        expect(fontFeatureDisabled.value,
-            const FontFeature.localeAware(enable: false));
-      });
-
-      test('notationalForms() returns correct instance', () {
-        final fontFeature = utility.notationalForms(2);
-
-        expect(fontFeature.value, isA<FontFeature>());
-        expect(fontFeature.value, const FontFeature.notationalForms(2));
-      });
-
-      test('numerators() returns correct instance', () {
-        final fontFeature = utility.numerators();
-
-        expect(fontFeature.value, isA<FontFeature>());
-        expect(fontFeature.value, const FontFeature.numerators());
-      });
-
-      test('ordinalForms() returns correct instance', () {
-        final fontFeature = utility.ordinalForms();
-
-        expect(fontFeature.value, isA<FontFeature>());
-        expect(fontFeature.value, const FontFeature.ordinalForms());
-      });
-
-      test('proportionalFigures() returns correct instance', () {
-        final fontFeature = utility.proportionalFigures();
-
-        expect(fontFeature.value, isA<FontFeature>());
-        expect(fontFeature.value, const FontFeature.proportionalFigures());
-      });
-
-      test('stylisticAlternates() returns correct instance', () {
-        final fontFeature = utility.stylisticAlternates();
-
-        expect(fontFeature.value, isA<FontFeature>());
-        expect(fontFeature.value, const FontFeature.stylisticAlternates());
-      });
-
-      test('scientificInferiors() returns correct instance', () {
-        final fontFeature = utility.scientificInferiors();
-
-        expect(fontFeature.value, isA<FontFeature>());
-        expect(fontFeature.value, const FontFeature.scientificInferiors());
-      });
-
-      test('stylisticSet() returns correct instance', () {
-        final fontFeature = utility.stylisticSet(2);
-
-        expect(fontFeature.value, isA<FontFeature>());
-        expect(fontFeature.value, FontFeature.stylisticSet(2));
-      });
-
-      test('subscripts() returns correct instance', () {
-        final fontFeature = utility.subscripts();
-
-        expect(fontFeature.value, isA<FontFeature>());
-        expect(fontFeature.value, const FontFeature.subscripts());
-      });
-
-      test('superscripts() returns correct instance', () {
-        final fontFeature = utility.superscripts();
-
-        expect(fontFeature.value, isA<FontFeature>());
-        expect(fontFeature.value, const FontFeature.superscripts());
-      });
-
-      test('tabularFigures() returns correct instance', () {
-        final fontFeature = utility.tabularFigures();
-
-        expect(fontFeature.value, isA<FontFeature>());
-        expect(fontFeature.value, const FontFeature.tabularFigures());
-      });
+  });
+  group('DurationUtility Tests', () {
+    const utility = DurationUtility(UtilityTestAttribute.new);
+    test('microseconds() returns correct instance', () {
+      final duration = utility.microseconds(500);
+      expect(duration.value, isA<Duration>());
+      expect(duration.value.inMicroseconds, 500);
     });
 
-    group('AlignmentDirectionalUtility Tests', () {
-      const utility = AlignmentDirectionalUtility(UtilityTestAttribute.new);
-
-      test('only() returns correct instance with y and start values', () {
-        final alignmentDirectional = utility.only(y: 5, start: 10);
-
-        expect(alignmentDirectional.value, isA<AlignmentDirectional>());
-        expect(alignmentDirectional.value,
-            equals(const AlignmentDirectional(10, 5)));
-      });
-
-      test('only() returns correct instance with only y value', () {
-        final alignmentDirectional = utility.only(y: 5);
-
-        expect(alignmentDirectional.value, isA<AlignmentDirectional>());
-        expect(alignmentDirectional.value,
-            equals(const AlignmentDirectional(0, 5)));
-      });
-
-      test('only() returns correct instance with only start value', () {
-        final alignmentDirectional = utility.only(start: 10);
-
-        expect(alignmentDirectional.value, isA<AlignmentDirectional>());
-        expect(alignmentDirectional.value,
-            equals(const AlignmentDirectional(10, 0)));
-      });
-
-      test('only() returns correct instance with no values', () {
-        final alignmentDirectional = utility.only(y: -1, start: -1);
-
-        expect(alignmentDirectional.value, isA<AlignmentDirectional>());
-        expect(
-            alignmentDirectional.value, equals(AlignmentDirectional.topStart));
-      });
-
-      test('topStart() returns correct instance', () {
-        final alignmentDirectional = utility.topStart();
-
-        expect(alignmentDirectional.value, isA<AlignmentDirectional>());
-        expect(
-            alignmentDirectional.value, equals(AlignmentDirectional.topStart));
-      });
-
-      test('topCenter() returns correct instance', () {
-        final alignmentDirectional = utility.topCenter();
-
-        expect(alignmentDirectional.value, isA<AlignmentDirectional>());
-        expect(
-            alignmentDirectional.value, equals(AlignmentDirectional.topCenter));
-      });
-
-      test('topEnd() returns correct instance', () {
-        final alignmentDirectional = utility.topEnd();
-
-        expect(alignmentDirectional.value, isA<AlignmentDirectional>());
-        expect(alignmentDirectional.value, equals(AlignmentDirectional.topEnd));
-      });
-
-      test('centerStart() returns correct instance', () {
-        final alignmentDirectional = utility.centerStart();
-
-        expect(alignmentDirectional.value, isA<AlignmentDirectional>());
-        expect(alignmentDirectional.value,
-            equals(AlignmentDirectional.centerStart));
-      });
-
-      test('center() returns correct instance', () {
-        final alignmentDirectional = utility.center();
-
-        expect(alignmentDirectional.value, isA<AlignmentDirectional>());
-        expect(alignmentDirectional.value, equals(AlignmentDirectional.center));
-      });
-
-      test('centerEnd() returns correct instance', () {
-        final alignmentDirectional = utility.centerEnd();
-
-        expect(alignmentDirectional.value, isA<AlignmentDirectional>());
-        expect(
-            alignmentDirectional.value, equals(AlignmentDirectional.centerEnd));
-      });
-
-      test('bottomStart() returns correct instance', () {
-        final alignmentDirectional = utility.bottomStart();
-
-        expect(alignmentDirectional.value, isA<AlignmentDirectional>());
-        expect(alignmentDirectional.value,
-            equals(AlignmentDirectional.bottomStart));
-      });
-
-      test('bottomCenter() returns correct instance', () {
-        final alignmentDirectional = utility.bottomCenter();
-
-        expect(alignmentDirectional.value, isA<AlignmentDirectional>());
-        expect(alignmentDirectional.value,
-            equals(AlignmentDirectional.bottomCenter));
-      });
-
-      test('bottomEnd() returns correct instance', () {
-        final alignmentDirectional = utility.bottomEnd();
-
-        expect(alignmentDirectional.value, isA<AlignmentDirectional>());
-        expect(
-            alignmentDirectional.value, equals(AlignmentDirectional.bottomEnd));
-      });
-
-      test('call() returns correct instance', () {
-        final alignmentDirectional = utility(AlignmentDirectional.topStart);
-
-        expect(alignmentDirectional.value, isA<AlignmentDirectional>());
-        expect(
-            alignmentDirectional.value, equals(AlignmentDirectional.topStart));
-      });
-    });
-    group('PaintUtility Tests', () {
-      const utility = PaintUtility(UtilityTestAttribute.new);
-      test('PaintUtility returns correct instance', () {
-        final paint = utility(Paint());
-        expect(paint.value, isA<Paint>());
-      });
+    test('milliseconds() returns correct instance', () {
+      final duration = utility.milliseconds(1500);
+      expect(duration.value, isA<Duration>());
+      expect(duration.value.inMilliseconds, 1500);
     });
 
-    group('LocaleUtility Tests', () {
-      const utility = LocaleUtility(UtilityTestAttribute.new);
-      test('LocaleUtility returns correct instance', () {
-        final locale = utility(const Locale('en', 'US'));
-        expect(locale.value, isA<Locale>());
-        expect(locale.value.languageCode, 'en');
-        expect(locale.value.countryCode, 'US');
-      });
+    test('seconds() returns correct instance', () {
+      final duration = utility.seconds(30);
+      expect(duration.value, isA<Duration>());
+      expect(duration.value.inSeconds, 30);
+    });
 
-      test('LocaleUtility handles locale without country code', () {
-        final locale = utility(const Locale('fr'));
-        expect(locale.value, isA<Locale>());
-        expect(locale.value.languageCode, 'fr');
-        expect(locale.value.countryCode, null);
-      });
+    test('minutes() returns correct instance', () {
+      final duration = utility.minutes(2);
+      expect(duration.value, isA<Duration>());
+      expect(duration.value.inMinutes, 2);
+    });
+
+    test('zero() returns correct instance', () {
+      final duration = utility.zero();
+      expect(duration.value, isA<Duration>());
+      expect(duration.value.inMicroseconds, 0);
+    });
+
+    test('call() returns correct instance', () {
+      final duration = utility(const Duration(seconds: 5));
+      expect(duration.value, isA<Duration>());
+      expect(duration.value.inSeconds, 5);
+    });
+  });
+  group('FontFeatureUtility Tests', () {
+    const utility = FontFeatureUtility(UtilityTestAttribute.new);
+
+    test('call() returns correct instance', () {
+      final fontFeature = utility(
+        const FontFeature('liga', 1),
+      );
+
+      expect(fontFeature.value, isA<FontFeature>());
+      expect(fontFeature.value.feature, 'liga');
+      expect(fontFeature.value.value, 1);
+    });
+
+    test('enable() returns correct instance', () {
+      final fontFeature = utility.enable('liga');
+
+      expect(fontFeature.value, isA<FontFeature>());
+      expect(fontFeature.value.feature, 'liga');
+      expect(fontFeature.value.value, 1);
+    });
+
+    test('disable() returns correct instance', () {
+      final fontFeature = utility.disable('liga');
+
+      expect(fontFeature.value, isA<FontFeature>());
+      expect(fontFeature.value.feature, 'liga');
+      expect(fontFeature.value.value, 0);
+    });
+
+    test('alternative() returns correct instance', () {
+      final fontFeature = utility.alternative(2);
+
+      expect(fontFeature.value, isA<FontFeature>());
+      expect(fontFeature.value, const FontFeature.alternative(2));
+    });
+
+    test('randomize() returns correct instance', () {
+      final fontFeature = utility.randomize();
+
+      expect(fontFeature.value, isA<FontFeature>());
+      expect(fontFeature.value, const FontFeature.randomize());
+    });
+
+    test('swash() returns correct instance', () {
+      final fontFeature = utility.swash();
+
+      expect(fontFeature.value, isA<FontFeature>());
+      expect(fontFeature.value, const FontFeature.swash());
+    });
+
+    test('alternativeFractions() returns correct instance', () {
+      final fontFeature = utility.alternativeFractions();
+
+      expect(fontFeature.value, isA<FontFeature>());
+      expect(fontFeature.value, const FontFeature.alternativeFractions());
+    });
+
+    test('contextualAlternates() returns correct instance', () {
+      final fontFeature = utility.contextualAlternates();
+
+      expect(fontFeature.value, isA<FontFeature>());
+      expect(fontFeature.value, const FontFeature.contextualAlternates());
+    });
+
+    test('caseSensitiveForms() returns correct instance', () {
+      final fontFeature = utility.caseSensitiveForms();
+
+      expect(fontFeature.value, isA<FontFeature>());
+      expect(fontFeature.value, const FontFeature.caseSensitiveForms());
+    });
+
+    test('characterVariant() returns correct instance', () {
+      final fontFeature = utility.characterVariant(5);
+
+      expect(fontFeature.value, isA<FontFeature>());
+      expect(fontFeature.value, FontFeature.characterVariant(5));
+    });
+
+    test('historicalForms() returns correct instance', () {
+      final fontFeature = utility.historicalForms();
+
+      expect(fontFeature.value, isA<FontFeature>());
+      expect(fontFeature.value, const FontFeature.historicalForms());
+    });
+
+    test('historicalLigatures() returns correct instance', () {
+      final fontFeature = utility.historicalLigatures();
+
+      expect(fontFeature.value, isA<FontFeature>());
+      expect(fontFeature.value, const FontFeature.historicalLigatures());
+    });
+
+    test('liningFigures() returns correct instance', () {
+      final fontFeature = utility.liningFigures();
+
+      expect(fontFeature.value, isA<FontFeature>());
+      expect(fontFeature.value, const FontFeature.liningFigures());
+    });
+
+    test('localeAware() returns correct instance', () {
+      final fontFeature = utility.localeAware();
+      final fontFeatureEnabled = utility.localeAware(enable: true);
+      final fontFeatureDisabled = utility.localeAware(enable: false);
+
+      expect(fontFeature.value, isA<FontFeature>());
+      expect(fontFeature.value, const FontFeature.localeAware());
+      expect(fontFeatureEnabled.value,
+          const FontFeature.localeAware(enable: true));
+      expect(fontFeatureDisabled.value,
+          const FontFeature.localeAware(enable: false));
+    });
+
+    test('notationalForms() returns correct instance', () {
+      final fontFeature = utility.notationalForms(2);
+
+      expect(fontFeature.value, isA<FontFeature>());
+      expect(fontFeature.value, const FontFeature.notationalForms(2));
+    });
+
+    test('numerators() returns correct instance', () {
+      final fontFeature = utility.numerators();
+
+      expect(fontFeature.value, isA<FontFeature>());
+      expect(fontFeature.value, const FontFeature.numerators());
+    });
+
+    test('ordinalForms() returns correct instance', () {
+      final fontFeature = utility.ordinalForms();
+
+      expect(fontFeature.value, isA<FontFeature>());
+      expect(fontFeature.value, const FontFeature.ordinalForms());
+    });
+
+    test('proportionalFigures() returns correct instance', () {
+      final fontFeature = utility.proportionalFigures();
+
+      expect(fontFeature.value, isA<FontFeature>());
+      expect(fontFeature.value, const FontFeature.proportionalFigures());
+    });
+
+    test('stylisticAlternates() returns correct instance', () {
+      final fontFeature = utility.stylisticAlternates();
+
+      expect(fontFeature.value, isA<FontFeature>());
+      expect(fontFeature.value, const FontFeature.stylisticAlternates());
+    });
+
+    test('scientificInferiors() returns correct instance', () {
+      final fontFeature = utility.scientificInferiors();
+
+      expect(fontFeature.value, isA<FontFeature>());
+      expect(fontFeature.value, const FontFeature.scientificInferiors());
+    });
+
+    test('stylisticSet() returns correct instance', () {
+      final fontFeature = utility.stylisticSet(2);
+
+      expect(fontFeature.value, isA<FontFeature>());
+      expect(fontFeature.value, FontFeature.stylisticSet(2));
+    });
+
+    test('subscripts() returns correct instance', () {
+      final fontFeature = utility.subscripts();
+
+      expect(fontFeature.value, isA<FontFeature>());
+      expect(fontFeature.value, const FontFeature.subscripts());
+    });
+
+    test('superscripts() returns correct instance', () {
+      final fontFeature = utility.superscripts();
+
+      expect(fontFeature.value, isA<FontFeature>());
+      expect(fontFeature.value, const FontFeature.superscripts());
+    });
+
+    test('tabularFigures() returns correct instance', () {
+      final fontFeature = utility.tabularFigures();
+
+      expect(fontFeature.value, isA<FontFeature>());
+      expect(fontFeature.value, const FontFeature.tabularFigures());
+    });
+  });
+
+  group('AlignmentDirectionalUtility Tests', () {
+    const utility = AlignmentDirectionalUtility(UtilityTestAttribute.new);
+
+    test('only() returns correct instance with y and start values', () {
+      final alignmentDirectional = utility.only(y: 5, start: 10);
+
+      expect(alignmentDirectional.value, isA<AlignmentDirectional>());
+      expect(alignmentDirectional.value,
+          equals(const AlignmentDirectional(10, 5)));
+    });
+
+    test('only() returns correct instance with only y value', () {
+      final alignmentDirectional = utility.only(y: 5);
+
+      expect(alignmentDirectional.value, isA<AlignmentDirectional>());
+      expect(
+          alignmentDirectional.value, equals(const AlignmentDirectional(0, 5)));
+    });
+
+    test('only() returns correct instance with only start value', () {
+      final alignmentDirectional = utility.only(start: 10);
+
+      expect(alignmentDirectional.value, isA<AlignmentDirectional>());
+      expect(alignmentDirectional.value,
+          equals(const AlignmentDirectional(10, 0)));
+    });
+
+    test('only() returns correct instance with no values', () {
+      final alignmentDirectional = utility.only(y: -1, start: -1);
+
+      expect(alignmentDirectional.value, isA<AlignmentDirectional>());
+      expect(alignmentDirectional.value, equals(AlignmentDirectional.topStart));
+    });
+
+    test('topStart() returns correct instance', () {
+      final alignmentDirectional = utility.topStart();
+
+      expect(alignmentDirectional.value, isA<AlignmentDirectional>());
+      expect(alignmentDirectional.value, equals(AlignmentDirectional.topStart));
+    });
+
+    test('topCenter() returns correct instance', () {
+      final alignmentDirectional = utility.topCenter();
+
+      expect(alignmentDirectional.value, isA<AlignmentDirectional>());
+      expect(
+          alignmentDirectional.value, equals(AlignmentDirectional.topCenter));
+    });
+
+    test('topEnd() returns correct instance', () {
+      final alignmentDirectional = utility.topEnd();
+
+      expect(alignmentDirectional.value, isA<AlignmentDirectional>());
+      expect(alignmentDirectional.value, equals(AlignmentDirectional.topEnd));
+    });
+
+    test('centerStart() returns correct instance', () {
+      final alignmentDirectional = utility.centerStart();
+
+      expect(alignmentDirectional.value, isA<AlignmentDirectional>());
+      expect(
+          alignmentDirectional.value, equals(AlignmentDirectional.centerStart));
+    });
+
+    test('center() returns correct instance', () {
+      final alignmentDirectional = utility.center();
+
+      expect(alignmentDirectional.value, isA<AlignmentDirectional>());
+      expect(alignmentDirectional.value, equals(AlignmentDirectional.center));
+    });
+
+    test('centerEnd() returns correct instance', () {
+      final alignmentDirectional = utility.centerEnd();
+
+      expect(alignmentDirectional.value, isA<AlignmentDirectional>());
+      expect(
+          alignmentDirectional.value, equals(AlignmentDirectional.centerEnd));
+    });
+
+    test('bottomStart() returns correct instance', () {
+      final alignmentDirectional = utility.bottomStart();
+
+      expect(alignmentDirectional.value, isA<AlignmentDirectional>());
+      expect(
+          alignmentDirectional.value, equals(AlignmentDirectional.bottomStart));
+    });
+
+    test('bottomCenter() returns correct instance', () {
+      final alignmentDirectional = utility.bottomCenter();
+
+      expect(alignmentDirectional.value, isA<AlignmentDirectional>());
+      expect(alignmentDirectional.value,
+          equals(AlignmentDirectional.bottomCenter));
+    });
+
+    test('bottomEnd() returns correct instance', () {
+      final alignmentDirectional = utility.bottomEnd();
+
+      expect(alignmentDirectional.value, isA<AlignmentDirectional>());
+      expect(
+          alignmentDirectional.value, equals(AlignmentDirectional.bottomEnd));
+    });
+
+    test('call() returns correct instance', () {
+      final alignmentDirectional = utility(AlignmentDirectional.topStart);
+
+      expect(alignmentDirectional.value, isA<AlignmentDirectional>());
+      expect(alignmentDirectional.value, equals(AlignmentDirectional.topStart));
+    });
+  });
+  group('PaintUtility Tests', () {
+    const utility = PaintUtility(UtilityTestAttribute.new);
+    test('PaintUtility returns correct instance', () {
+      final paint = utility(Paint());
+      expect(paint.value, isA<Paint>());
+    });
+  });
+
+  group('LocaleUtility Tests', () {
+    const utility = LocaleUtility(UtilityTestAttribute.new);
+    test('LocaleUtility returns correct instance', () {
+      final locale = utility(const Locale('en', 'US'));
+      expect(locale.value, isA<Locale>());
+      expect(locale.value.languageCode, 'en');
+      expect(locale.value.countryCode, 'US');
+    });
+
+    test('LocaleUtility handles locale without country code', () {
+      final locale = utility(const Locale('fr'));
+      expect(locale.value, isA<Locale>());
+      expect(locale.value.languageCode, 'fr');
+      expect(locale.value.countryCode, null);
     });
   });
 

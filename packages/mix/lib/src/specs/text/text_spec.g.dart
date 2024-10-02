@@ -189,7 +189,7 @@ final class TextSpecAttribute extends SpecAttribute<TextSpec>
   final int? maxLines;
   final TextStyleDto? style;
   final TextWidthBasis? textWidthBasis;
-  final TextHeightBehavior? textHeightBehavior;
+  final TextHeightBehaviorDto? textHeightBehavior;
   final TextDirection? textDirection;
   final bool? softWrap;
   final TextDirectiveDto? directive;
@@ -230,7 +230,7 @@ final class TextSpecAttribute extends SpecAttribute<TextSpec>
       maxLines: maxLines,
       style: style?.resolve(mix),
       textWidthBasis: textWidthBasis,
-      textHeightBehavior: textHeightBehavior,
+      textHeightBehavior: textHeightBehavior?.resolve(mix),
       textDirection: textDirection,
       softWrap: softWrap,
       directive: directive?.resolve(mix),
@@ -260,7 +260,8 @@ final class TextSpecAttribute extends SpecAttribute<TextSpec>
       maxLines: other.maxLines ?? maxLines,
       style: style?.merge(other.style) ?? other.style,
       textWidthBasis: other.textWidthBasis ?? textWidthBasis,
-      textHeightBehavior: other.textHeightBehavior ?? textHeightBehavior,
+      textHeightBehavior: textHeightBehavior?.merge(other.textHeightBehavior) ??
+          other.textHeightBehavior,
       textDirection: other.textDirection ?? textDirection,
       softWrap: other.softWrap ?? softWrap,
       directive: directive?.merge(other.directive) ?? other.directive,
@@ -410,7 +411,7 @@ class TextSpecUtility<T extends Attribute>
     int? maxLines,
     TextStyleDto? style,
     TextWidthBasis? textWidthBasis,
-    TextHeightBehavior? textHeightBehavior,
+    TextHeightBehaviorDto? textHeightBehavior,
     TextDirection? textDirection,
     bool? softWrap,
     TextDirectiveDto? directive,

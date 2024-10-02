@@ -11,6 +11,7 @@ import '../../attributes/modifiers/widget_modifiers_data_dto.dart';
 import '../../attributes/modifiers/widget_modifiers_util.dart';
 import '../../attributes/scalars/scalar_util.dart';
 import '../../attributes/strut_style/strut_style_dto.dart';
+import '../../attributes/text_height_behavior/text_height_behavior_dto.dart';
 import '../../attributes/text_style/text_style_dto.dart';
 import '../../attributes/text_style/text_style_util.dart';
 import '../../core/attribute.dart';
@@ -32,7 +33,6 @@ final class TextSpec extends Spec<TextSpec> with _$TextSpec, Diagnosticable {
   final TextAlign? textAlign;
   final int? maxLines;
   final TextWidthBasis? textWidthBasis;
-  final TextHeightBehavior? textHeightBehavior;
   final TextScaler? textScaler;
   final TextStyle? style;
   final TextDirection? textDirection;
@@ -40,6 +40,9 @@ final class TextSpec extends Spec<TextSpec> with _$TextSpec, Diagnosticable {
 
   @Deprecated('Use textScaler instead')
   final double? textScaleFactor;
+
+  @MixableProperty(dto: MixableFieldDto(type: TextHeightBehaviorDto))
+  final TextHeightBehavior? textHeightBehavior;
 
   @MixableProperty(
     utilities: [

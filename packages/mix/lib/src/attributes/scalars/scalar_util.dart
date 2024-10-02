@@ -135,12 +135,6 @@ final class ImageProviderUtility<T extends Attribute>
 }
 
 @MixableClassUtility()
-final class TextHeightBehaviorUtility<T extends Attribute>
-    extends MixUtility<T, TextHeightBehavior> with _$TextHeightBehaviorUtility {
-  const TextHeightBehaviorUtility(super.builder);
-}
-
-@MixableClassUtility()
 final class GradientTransformUtility<T extends Attribute>
     extends MixUtility<T, GradientTransform> with _$GradientTransformUtility {
   const GradientTransformUtility(super.builder);
