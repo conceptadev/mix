@@ -39,6 +39,9 @@ final class TextHeightBehaviorUtility<T extends Attribute>
         TextHeightBehaviorDto(leadingDistribution: distribution),
       );
 
+  @Deprecated("Use the utilities instead")
+  T call(TextHeightBehavior value) => builder(value.toDto());
+
   @override
   T only({
     bool? applyHeightToFirstAscent,
