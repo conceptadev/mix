@@ -3,10 +3,12 @@ import 'package:flutter/widgets.dart';
 import '../modifiers/internal/render_widget_modifier.dart';
 import '../variants/widget_state_variant.dart';
 import '../widgets/pressable_widget.dart';
+import 'attribute.dart';
 import 'factory/mix_data.dart';
 import 'factory/mix_provider.dart';
 import 'factory/style_mix.dart';
 import 'modifier.dart';
+import 'spec.dart';
 import 'widget_state/widget_state_controller.dart';
 
 /// An abstract widget for applying custom styles.
@@ -148,5 +150,34 @@ class SpecBuilder extends StatelessWidget {
 
     // Otherwise, directly build the mixed child widget
     return current;
+  }
+}
+
+/// A widget that bridges a complex attribute to a simpler one.
+///
+/// [AttributeBridge] acts as a link between a complex attribute not directly
+/// supported by another widget and simplifies it into a basic attribute that
+/// can be used by a specific widget. This is particularly useful when creating
+/// custom styled widgets.
+class AttributeBridge<T extends SpecAttribute> extends StatelessWidget {
+  const AttributeBridge({
+    super.key,
+    required this.child,
+    required this.bridgeBuilder,
+  });
+
+  final Attribute Function(T?) bridgeBuilder;
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    final data = Mix.maybeOfInherited(context);
+    final attribute = data?.attributeOf<T>();
+
+    return SpecBuilder(
+      inherit: true,
+      style: Style(bridgeBuilder(attribute)),
+      builder: (context) => child,
+    );
   }
 }

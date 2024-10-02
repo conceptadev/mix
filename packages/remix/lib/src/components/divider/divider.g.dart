@@ -34,11 +34,15 @@ mixin _$DividerSpec on Spec<DividerSpec> {
   @override
   DividerSpec copyWith({
     BoxSpec? container,
+    FlexSpec? flex,
+    TextSpec? label,
     AnimatedData? animated,
     WidgetModifiersData? modifiers,
   }) {
     return DividerSpec(
       container: container ?? _$this.container,
+      flex: flex ?? _$this.flex,
+      label: label ?? _$this.label,
       animated: animated ?? _$this.animated,
       modifiers: modifiers ?? _$this.modifiers,
     );
@@ -56,6 +60,8 @@ mixin _$DividerSpec on Spec<DividerSpec> {
   /// interpolation method:
   ///
   /// - [BoxSpec.lerp] for [container].
+  /// - [FlexSpec.lerp] for [flex].
+  /// - [TextSpec.lerp] for [label].
 
   /// For [animated] and [modifiers], the interpolation is performed using a step function.
   /// If [t] is less than 0.5, the value from the current [DividerSpec] is used. Otherwise, the value
@@ -69,6 +75,8 @@ mixin _$DividerSpec on Spec<DividerSpec> {
 
     return DividerSpec(
       container: _$this.container.lerp(other.container, t),
+      flex: _$this.flex.lerp(other.flex, t),
+      label: _$this.label.lerp(other.label, t),
       animated: t < 0.5 ? _$this.animated : other.animated,
       modifiers: other.modifiers,
     );
@@ -81,6 +89,8 @@ mixin _$DividerSpec on Spec<DividerSpec> {
   @override
   List<Object?> get props => [
         _$this.container,
+        _$this.flex,
+        _$this.label,
         _$this.animated,
         _$this.modifiers,
       ];
@@ -90,6 +100,10 @@ mixin _$DividerSpec on Spec<DividerSpec> {
   void _debugFillProperties(DiagnosticPropertiesBuilder properties) {
     properties.add(
         DiagnosticsProperty('container', _$this.container, defaultValue: null));
+    properties
+        .add(DiagnosticsProperty('flex', _$this.flex, defaultValue: null));
+    properties
+        .add(DiagnosticsProperty('label', _$this.label, defaultValue: null));
     properties.add(
         DiagnosticsProperty('animated', _$this.animated, defaultValue: null));
     properties.add(
@@ -107,9 +121,13 @@ mixin _$DividerSpec on Spec<DividerSpec> {
 base class DividerSpecAttribute extends SpecAttribute<DividerSpec>
     with Diagnosticable {
   final BoxSpecAttribute? container;
+  final FlexSpecAttribute? flex;
+  final TextSpecAttribute? label;
 
   const DividerSpecAttribute({
     this.container,
+    this.flex,
+    this.label,
     super.animated,
     super.modifiers,
   });
@@ -126,6 +144,8 @@ base class DividerSpecAttribute extends SpecAttribute<DividerSpec>
   DividerSpec resolve(MixData mix) {
     return DividerSpec(
       container: container?.resolve(mix),
+      flex: flex?.resolve(mix),
+      label: label?.resolve(mix),
       animated: animated?.resolve(mix) ?? mix.animation,
       modifiers: modifiers?.resolve(mix),
     );
@@ -145,6 +165,8 @@ base class DividerSpecAttribute extends SpecAttribute<DividerSpec>
 
     return DividerSpecAttribute(
       container: container?.merge(other.container) ?? other.container,
+      flex: flex?.merge(other.flex) ?? other.flex,
+      label: label?.merge(other.label) ?? other.label,
       animated: animated?.merge(other.animated) ?? other.animated,
       modifiers: modifiers?.merge(other.modifiers) ?? other.modifiers,
     );
@@ -157,6 +179,8 @@ base class DividerSpecAttribute extends SpecAttribute<DividerSpec>
   @override
   List<Object?> get props => [
         container,
+        flex,
+        label,
         animated,
         modifiers,
       ];
@@ -166,6 +190,8 @@ base class DividerSpecAttribute extends SpecAttribute<DividerSpec>
     super.debugFillProperties(properties);
     properties
         .add(DiagnosticsProperty('container', container, defaultValue: null));
+    properties.add(DiagnosticsProperty('flex', flex, defaultValue: null));
+    properties.add(DiagnosticsProperty('label', label, defaultValue: null));
     properties
         .add(DiagnosticsProperty('animated', animated, defaultValue: null));
     properties
@@ -181,6 +207,12 @@ class DividerSpecUtility<T extends Attribute>
     extends SpecUtility<T, DividerSpecAttribute> {
   /// Utility for defining [DividerSpecAttribute.container]
   late final container = BoxSpecUtility((v) => only(container: v));
+
+  /// Utility for defining [DividerSpecAttribute.flex]
+  late final flex = FlexSpecUtility((v) => only(flex: v));
+
+  /// Utility for defining [DividerSpecAttribute.label]
+  late final label = TextSpecUtility((v) => only(label: v));
 
   /// Utility for defining [DividerSpecAttribute.animated]
   late final animated = AnimatedUtility((v) => only(animated: v));
@@ -200,11 +232,15 @@ class DividerSpecUtility<T extends Attribute>
   @override
   T only({
     BoxSpecAttribute? container,
+    FlexSpecAttribute? flex,
+    TextSpecAttribute? label,
     AnimatedDataDto? animated,
     WidgetModifiersDataDto? modifiers,
   }) {
     return builder(DividerSpecAttribute(
       container: container,
+      flex: flex,
+      label: label,
       animated: animated,
       modifiers: modifiers,
     ));

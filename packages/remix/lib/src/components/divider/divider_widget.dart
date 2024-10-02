@@ -6,8 +6,10 @@ class Divider extends StatelessWidget {
     this.style,
     this.variants = const [],
     this.axis = Axis.horizontal,
+    this.child,
   });
 
+  final Widget? child;
   final DividerStyle? style;
   final Axis axis;
   final List<Variant> variants;
@@ -20,13 +22,28 @@ class Divider extends StatelessWidget {
         : DividerStyle.vertical;
 
     final configuration = SpecConfiguration(context, DividerSpecUtility.self);
+    final styleA = style
+        .makeStyle(configuration)
+        .applyVariants([...variants, axisVariant]);
 
     return SpecBuilder(
-      style: style
-          .makeStyle(configuration)
-          .applyVariants([...variants, axisVariant]),
+      style: styleA,
       builder: (context) {
         final spec = DividerSpec.of(context);
+
+        if (child != null) {
+          return spec.flex(
+            direction: axis,
+            children: [
+              Expanded(child: spec.container()),
+              AttributeBridge<DividerSpecAttribute>(
+                bridgeBuilder: (attribute) => attribute!.label!,
+                child: child!,
+              ),
+              Expanded(child: spec.container()),
+            ],
+          );
+        }
 
         return spec.container();
       },

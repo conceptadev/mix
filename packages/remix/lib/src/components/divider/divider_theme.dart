@@ -9,7 +9,16 @@ class FortalezaDividerStyle extends DividerStyle {
 
     final baseStyle = super.makeStyle(spec);
     final containerStyle = [$.container.color.$neutral(5)];
+    final labelStyle = $.label.chain
+      ..style.color.$neutral(10)
+      ..style.fontSize(14)
+      ..textHeightBehavior(
+        const TextHeightBehavior(
+          applyHeightToFirstAscent: false,
+          applyHeightToLastDescent: false,
+        ),
+      );
 
-    return Style.create([baseStyle(), ...containerStyle]);
+    return Style.create([baseStyle(), ...containerStyle, labelStyle]);
   }
 }
