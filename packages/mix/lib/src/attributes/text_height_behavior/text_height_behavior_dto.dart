@@ -29,7 +29,7 @@ final class TextHeightBehaviorUtility<T extends Attribute>
     (v) => only(applyHeightToFirstAscent: v),
   );
   late final heightToLastDescent = BoolUtility(
-    (v) => only(applyHeightToFirstAscent: v),
+    (v) => only(applyHeightToLastDescent: v),
   );
 
   TextHeightBehaviorUtility(super.builder)
