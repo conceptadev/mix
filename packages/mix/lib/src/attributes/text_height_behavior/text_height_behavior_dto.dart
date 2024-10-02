@@ -32,12 +32,12 @@ final class TextHeightBehaviorUtility<T extends Attribute>
     (v) => only(applyHeightToLastDescent: v),
   );
 
+  late final leadingDistribution = TextLeadingDistributionUtility(
+    (v) => only(leadingDistribution: v),
+  );
+
   TextHeightBehaviorUtility(super.builder)
       : super(valueToDto: (v) => v.toDto());
-
-  T leadingDistribution(TextLeadingDistribution distribution) => builder(
-        TextHeightBehaviorDto(leadingDistribution: distribution),
-      );
 
   @Deprecated("Use the utilities instead")
   T call(TextHeightBehavior value) => builder(value.toDto());
