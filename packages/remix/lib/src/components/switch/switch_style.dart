@@ -38,3 +38,25 @@ class SwitchStyle extends SpecStyle<SwitchSpecUtility> {
     return Style.create([...containerStyle, ...indicatorStyle]);
   }
 }
+
+class SwitchDarkStyle extends SwitchStyle {
+  const SwitchDarkStyle();
+
+  @override
+  Style makeStyle(SpecConfiguration<SwitchSpecUtility> spec) {
+    final $ = spec.utilities;
+
+    return Style.create([
+      super.makeStyle(spec).call(),
+      $.indicator.color.black(),
+      $.container.color.white12(),
+      spec.on.selected(
+        $.container.color.white(),
+      ),
+      spec.on.disabled(
+        $.indicator.color.black(),
+        $.container.color.white38(),
+      ),
+    ]);
+  }
+}

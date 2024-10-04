@@ -41,3 +41,32 @@ class CalloutStyle extends SpecStyle<CalloutSpecUtility> {
     ]);
   }
 }
+
+class CalloutDarkStyle extends CalloutStyle {
+  const CalloutDarkStyle();
+
+  @override
+  Style makeStyle(SpecConfiguration<CalloutSpecUtility> spec) {
+    final $ = spec.utilities;
+    final containerStyle = [
+      $.container.chain
+        ..color.black()
+        ..border.all.color.white30(),
+    ];
+
+    final textStyle = [
+      $.text.style.color.white(),
+    ];
+
+    final iconStyle = [
+      $.icon.color.white(),
+    ];
+
+    return Style.create([
+      super.makeStyle(spec).call(),
+      ...containerStyle,
+      ...textStyle,
+      ...iconStyle,
+    ]);
+  }
+}

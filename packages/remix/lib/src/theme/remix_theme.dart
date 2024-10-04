@@ -54,7 +54,7 @@ class RemixComponentTheme {
     required this.switchComponent,
   });
 
-  factory RemixComponentTheme.base() {
+  factory RemixComponentTheme.baseLight() {
     return const RemixComponentTheme(
       accordion: AccordionStyle(),
       avatar: AvatarStyle(),
@@ -71,6 +71,25 @@ class RemixComponentTheme {
       select: SelectStyle(),
       spinner: SpinnerStyle(),
       switchComponent: SwitchStyle(),
+    );
+  }
+
+  factory RemixComponentTheme.baseDark() {
+    return RemixComponentTheme.baseLight().copyWith(
+      accordion: const AccordionDarkStyle(),
+      avatar: const AvatarDarkStyle(),
+      badge: const BadgeDarkStyle(),
+      button: const ButtonDarkStyle(),
+      callout: const CalloutDarkStyle(),
+      card: const CardDarkStyle(),
+      checkbox: const CheckboxDarkStyle(),
+      iconButton: const IconButtonDarkStyle(),
+      progress: const ProgressDarkStyle(),
+      radio: const RadioDarkStyle(),
+      segmentedControl: const SegmentedControlDarkStyle(),
+      select: const SelectDarkStyle(),
+      spinner: const SpinnerDarkStyle(),
+      switchComponent: const SwitchDarkStyle(),
     );
   }
 
@@ -151,7 +170,7 @@ class RemixThemeData {
   const RemixThemeData({required this.components, required this.tokens});
 
   static RemixThemeData base() => RemixThemeData(
-        components: RemixComponentTheme.base(),
+        components: RemixComponentTheme.baseLight(),
         tokens: RemixTokens.base(),
       );
 

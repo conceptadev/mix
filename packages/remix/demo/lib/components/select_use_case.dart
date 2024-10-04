@@ -32,22 +32,25 @@ class _SelectDemoState extends State<SelectDemo> {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Select<String>(
-            disabled:
-                context.knobs.boolean(label: 'disabled', initialValue: false),
-            variants: [context.knobs.variant(FortalezaSelectStyle.variants)],
-            value: selectedValue,
-            onChanged: (value) => setState(() => selectedValue = value),
-            button: (spec) => spec(
-              text: selectedValue,
-              trailingIcon: Icons.keyboard_arrow_down_rounded,
-            ),
-            items: List.generate(
-              items.length,
-              (index) => SelectMenuItem<String>(
-                value: items[index],
-                child: XSelectMenuItemWidget(
-                  text: items[index],
+          SizedBox(
+            width: 200,
+            child: Select<String>(
+              disabled:
+                  context.knobs.boolean(label: 'disabled', initialValue: false),
+              variants: [context.knobs.variant(FortalezaSelectStyle.variants)],
+              value: selectedValue,
+              onChanged: (value) => setState(() => selectedValue = value),
+              button: (spec) => spec(
+                text: selectedValue,
+                trailingIcon: Icons.keyboard_arrow_down_rounded,
+              ),
+              items: List.generate(
+                items.length,
+                (index) => SelectMenuItem<String>(
+                  value: items[index],
+                  child: XSelectMenuItemWidget(
+                    text: items[index],
+                  ),
                 ),
               ),
             ),

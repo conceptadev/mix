@@ -63,3 +63,21 @@ class SegmentedControlStyle extends SpecStyle<SegmentedControlSpecUtility> {
     ]);
   }
 }
+
+class SegmentedControlDarkStyle extends SegmentedControlStyle {
+  const SegmentedControlDarkStyle();
+
+  @override
+  Style makeStyle(SpecConfiguration<SegmentedControlSpecUtility> spec) {
+    final $ = spec.utilities;
+    return Style.create([
+      super.makeStyle(spec).call(),
+      $.container.color.white12(),
+      $.item.label.style.color.white38(),
+      spec.on.selected(
+        $.item.container.color.black(),
+        $.item.label.style.color.white(),
+      ),
+    ]);
+  }
+}

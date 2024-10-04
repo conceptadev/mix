@@ -60,3 +60,22 @@ class RadioStyle extends SpecStyle<RadioSpecUtility> {
     );
   }
 }
+
+class RadioDarkStyle extends RadioStyle {
+  const RadioDarkStyle();
+
+  @override
+  Style makeStyle(SpecConfiguration<RadioSpecUtility> spec) {
+    final $ = spec.utilities;
+
+    return Style.create([
+      super.makeStyle(spec).call(),
+      $.container.border.all.color.white(),
+      $.indicator.color.white(),
+      spec.on.disabled(
+        $.container.border.all.color.white30(),
+        $.indicator.color.white30(),
+      ),
+    ]);
+  }
+}

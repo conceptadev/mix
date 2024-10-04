@@ -61,8 +61,8 @@ class HotReload extends StatelessWidget {
             WidgetbookTheme(
               name: 'Base',
               data: (
-                dark: RemixComponentTheme.base(),
-                light: RemixComponentTheme.base(),
+                dark: RemixComponentTheme.baseDark(),
+                light: RemixComponentTheme.baseLight(),
               ),
             ),
           ],

@@ -35,3 +35,17 @@ class AvatarStyle extends SpecStyle<AvatarSpecUtility> {
     ]);
   }
 }
+
+class AvatarDarkStyle extends AvatarStyle {
+  const AvatarDarkStyle();
+
+  @override
+  Style makeStyle(SpecConfiguration<AvatarSpecUtility> spec) {
+    final $ = spec.utilities;
+    return Style.create([
+      super.makeStyle(spec).call(),
+      $.container.color.white.shade(75),
+      $.fallback.style.color.white(),
+    ]);
+  }
+}

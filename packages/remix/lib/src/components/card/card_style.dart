@@ -24,3 +24,23 @@ class CardStyle extends SpecStyle<CardSpecUtility> {
     return Style.create([...containerStyle, ...flexStyle]);
   }
 }
+
+class CardDarkStyle extends CardStyle {
+  const CardDarkStyle();
+
+  @override
+  Style makeStyle(SpecConfiguration<CardSpecUtility> spec) {
+    final $ = spec.utilities;
+
+    final containerStyle = [
+      $.container.chain
+        ..color.black()
+        ..border.all.color.white30(),
+    ];
+
+    return Style.create([
+      super.makeStyle(spec).call(),
+      ...containerStyle,
+    ]);
+  }
+}
