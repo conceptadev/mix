@@ -39,6 +39,7 @@ class IconButtonDarkStyle extends IconButtonStyle {
   @override
   Style makeStyle(SpecConfiguration<IconButtonSpecUtility> spec) {
     final $ = spec.utilities;
+
     return Style.create([
       super.makeStyle(spec).call(),
       $.container.color.white(),

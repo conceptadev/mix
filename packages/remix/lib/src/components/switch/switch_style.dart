@@ -50,9 +50,7 @@ class SwitchDarkStyle extends SwitchStyle {
       super.makeStyle(spec).call(),
       $.indicator.color.black(),
       $.container.color.white12(),
-      spec.on.selected(
-        $.container.color.white(),
-      ),
+      spec.on.selected($.container.color.white()),
       spec.on.disabled(
         $.indicator.color.black(),
         $.container.color.white38(),

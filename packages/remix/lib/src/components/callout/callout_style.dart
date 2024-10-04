@@ -54,13 +54,9 @@ class CalloutDarkStyle extends CalloutStyle {
         ..border.all.color.white30(),
     ];
 
-    final textStyle = [
-      $.text.style.color.white(),
-    ];
+    final textStyle = [$.text.style.color.white()];
 
-    final iconStyle = [
-      $.icon.color.white(),
-    ];
+    final iconStyle = [$.icon.color.white()];
 
     return Style.create([
       super.makeStyle(spec).call(),

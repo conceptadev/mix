@@ -38,9 +38,6 @@ class CardDarkStyle extends CardStyle {
         ..border.all.color.white30(),
     ];
 
-    return Style.create([
-      super.makeStyle(spec).call(),
-      ...containerStyle,
-    ]);
+    return Style.create([super.makeStyle(spec).call(), ...containerStyle]);
   }
 }

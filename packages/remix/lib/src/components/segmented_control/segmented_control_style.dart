@@ -70,6 +70,7 @@ class SegmentedControlDarkStyle extends SegmentedControlStyle {
   @override
   Style makeStyle(SpecConfiguration<SegmentedControlSpecUtility> spec) {
     final $ = spec.utilities;
+
     return Style.create([
       super.makeStyle(spec).call(),
       $.container.color.white12(),

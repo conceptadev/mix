@@ -42,6 +42,7 @@ class AvatarDarkStyle extends AvatarStyle {
   @override
   Style makeStyle(SpecConfiguration<AvatarSpecUtility> spec) {
     final $ = spec.utilities;
+
     return Style.create([
       super.makeStyle(spec).call(),
       $.container.color.white.shade(75),
