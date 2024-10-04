@@ -10,7 +10,7 @@ void main() {
         const m.MaterialApp(
           home: Card(
             style: CardStyle(),
-            children: [m.Text('Test')],
+            child: m.Text('Test'),
           ),
         ),
       );
@@ -26,7 +26,7 @@ void main() {
         const m.MaterialApp(
           home: Card(
             style: FakeCardStyle(color),
-            children: [m.Text('Custom Style')],
+            child: m.Text('Custom Style'),
           ),
         ),
       );
@@ -40,18 +40,12 @@ void main() {
         const m.MaterialApp(
           home: Card(
             style: CardStyle(),
-            children: [
-              m.Text('Child 1'),
-              m.Text('Child 2'),
-              m.Text('Child 3'),
-            ],
+            child: m.Text('Child 1'),
           ),
         ),
       );
 
       expect(find.text('Child 1'), findsOneWidget);
-      expect(find.text('Child 2'), findsOneWidget);
-      expect(find.text('Child 3'), findsOneWidget);
     });
   });
 }
