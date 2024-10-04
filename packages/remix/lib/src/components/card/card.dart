@@ -16,8 +16,6 @@ part 'card_widget.dart';
 base class CardSpec extends Spec<CardSpec> with _$CardSpec, Diagnosticable {
   final BoxSpec container;
 
-  final FlexSpec flex;
-
   /// {@macro card_spec_of}
   static const of = _$CardSpec.of;
 
@@ -25,14 +23,12 @@ base class CardSpec extends Spec<CardSpec> with _$CardSpec, Diagnosticable {
 
   const CardSpec({
     BoxSpec? container,
-    FlexSpec? flex,
     super.modifiers,
     super.animated,
-  })  : container = container ?? const BoxSpec(),
-        flex = flex ?? const FlexSpec();
+  }) : container = container ?? const BoxSpec();
 
-  Widget call({Key? key, required List<Widget> children}) {
-    return CardSpecWidget(key: key, spec: this, children: children);
+  Widget call({Key? key, required Widget child}) {
+    return CardSpecWidget(key: key, spec: this, child: child);
   }
 
   @override
