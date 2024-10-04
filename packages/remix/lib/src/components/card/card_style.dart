@@ -15,13 +15,7 @@ class CardStyle extends SpecStyle<CardSpecUtility> {
         ..padding.all(8),
     ];
 
-    final flexStyle = [
-      $.flex.chain
-        ..mainAxisSize.min()
-        ..direction.vertical(),
-    ];
-
-    return Style.create([...containerStyle, ...flexStyle]);
+    return Style.create([...containerStyle]);
   }
 }
 

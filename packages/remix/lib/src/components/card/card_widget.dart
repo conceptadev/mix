@@ -3,13 +3,13 @@ part of 'card.dart';
 class Card extends StatelessWidget {
   const Card({
     super.key,
-    required this.children,
+    required this.child,
     this.style,
     this.variants = const [],
   });
 
   /// The list of child widgets to be displayed inside the card.
-  final List<Widget> children;
+  final Widget child;
 
   /// Additional custom styling for the card.
   ///
@@ -28,7 +28,7 @@ class Card extends StatelessWidget {
       builder: (context) {
         final spec = CardSpec.of(context);
 
-        return CardSpecWidget(spec: spec, children: children);
+        return CardSpecWidget(spec: spec, child: child);
       },
     );
   }
@@ -38,16 +38,16 @@ class CardSpecWidget extends StatelessWidget {
   const CardSpecWidget({
     super.key,
     required this.spec,
-    required this.children,
+    required this.child,
   });
 
   final CardSpec? spec;
-  final List<Widget> children;
+  final Widget child;
 
   @override
   Widget build(BuildContext context) {
     return spec!.container(
-      child: spec!.flex(direction: Axis.vertical, children: children),
+      child: child,
     );
   }
 }
