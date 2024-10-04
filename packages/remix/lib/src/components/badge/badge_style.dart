@@ -22,7 +22,7 @@ class BadgeStyle extends SpecStyle<BadgeSpecUtility> {
         ..textHeightBehavior(
           const TextHeightBehavior(
             applyHeightToFirstAscent: false,
-            applyHeightToLastDescent: false,
+            applyHeightToLastDescent: true,
           ),
         )
         ..textAlign.center()
@@ -33,5 +33,20 @@ class BadgeStyle extends SpecStyle<BadgeSpecUtility> {
     ];
 
     return Style.create([...containerStyle, ...labelStyle]);
+  }
+}
+
+class BadgeDarkStyle extends BadgeStyle {
+  const BadgeDarkStyle();
+
+  @override
+  Style makeStyle(SpecConfiguration<BadgeSpecUtility> spec) {
+    final $ = spec.utilities;
+
+    return Style.create([
+      super.makeStyle(spec).call(),
+      $.container.color.white(),
+      $.label.style.color.black(),
+    ]);
   }
 }

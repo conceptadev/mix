@@ -47,7 +47,7 @@ class SelectStyle extends SpecStyle<SelectSpecUtility> {
         ..mainAxisSize.min()
         ..crossAxisAlignment.start(),
       $.menu.wrap.transform.scale(1.5),
-      $.menu.autoWidth.off(),
+      $.menu.autoWidth.on(),
       spec.on.selected(
         $.menu.container.chain
           ..wrap.transform.scale(1)
@@ -75,6 +75,36 @@ class SelectStyle extends SpecStyle<SelectSpecUtility> {
       ...buttonStyle,
       ...menuStyle,
       ...positionStyle,
+    ]);
+  }
+}
+
+class SelectDarkStyle extends SelectStyle {
+  const SelectDarkStyle();
+
+  @override
+  Style makeStyle(SpecConfiguration<SelectSpecUtility> spec) {
+    final $ = spec.utilities;
+
+    final buttonStyle = $.button.chain
+      ..container.color.black()
+      ..container.border.color.white12()
+      ..icon.color.white54()
+      ..label.style.color.white();
+
+    final menuStyle = $.menu.container.chain
+      ..color.black()
+      ..border.all.color.white12();
+
+    final itemStyle = $.item.text.style.color.white();
+
+    return Style.create([
+      super.makeStyle(spec).call(),
+      buttonStyle,
+      menuStyle,
+      itemStyle,
+      spec.on.hover($.item.container.color.white12()),
+      spec.on.disabled($.button.container.color.white10()),
     ]);
   }
 }

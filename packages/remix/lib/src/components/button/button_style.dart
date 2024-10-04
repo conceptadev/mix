@@ -60,3 +60,18 @@ class ButtonStyle extends SpecStyle<ButtonSpecUtility> {
     ]);
   }
 }
+
+class ButtonDarkStyle extends ButtonStyle {
+  const ButtonDarkStyle();
+
+  @override
+  Style makeStyle(SpecConfiguration<ButtonSpecUtility> spec) {
+    final $ = spec.utilities;
+
+    return Style.create([
+      super.makeStyle(spec).call(),
+      $.container.color.white(),
+      $.label.style.color.black(),
+    ]);
+  }
+}

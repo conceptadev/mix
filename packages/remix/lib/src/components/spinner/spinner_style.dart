@@ -30,3 +30,14 @@ class SpinnerStyle extends SpecStyle<SpinnerSpecUtility> {
     ]);
   }
 }
+
+class SpinnerDarkStyle extends SpinnerStyle {
+  const SpinnerDarkStyle();
+
+  @override
+  Style makeStyle(SpecConfiguration<SpinnerSpecUtility> spec) {
+    final $ = spec.utilities;
+
+    return Style.create([super.makeStyle(spec).call(), $.color.white()]);
+  }
+}

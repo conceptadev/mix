@@ -32,3 +32,19 @@ class IconButtonStyle extends SpecStyle<IconButtonSpecUtility> {
     return Style.create([...iconStyle, ...containerStyle, ...spinnerStyle]);
   }
 }
+
+class IconButtonDarkStyle extends IconButtonStyle {
+  const IconButtonDarkStyle();
+
+  @override
+  Style makeStyle(SpecConfiguration<IconButtonSpecUtility> spec) {
+    final $ = spec.utilities;
+
+    return Style.create([
+      super.makeStyle(spec).call(),
+      $.container.color.white(),
+      $.icon.color.black(),
+      $.spinner.color.black(),
+    ]);
+  }
+}

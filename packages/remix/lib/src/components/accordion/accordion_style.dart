@@ -60,3 +60,17 @@ class AccordionStyle extends SpecStyle<AccordionSpecUtility> {
     ]);
   }
 }
+
+class AccordionDarkStyle extends AccordionStyle {
+  const AccordionDarkStyle();
+
+  @override
+  Style makeStyle(SpecConfiguration<AccordionSpecUtility> spec) {
+    final $ = spec.utilities;
+
+    return Style.create([
+      super.makeStyle(spec).call(),
+      $.container.border.bottom.color.white(),
+    ]);
+  }
+}
