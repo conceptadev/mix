@@ -182,11 +182,6 @@ class RemixTheme extends StatelessWidget {
     this.darkTheme,
   });
 
-  final ThemeMode? themeMode;
-
-  RemixThemeData get _defaultThemeDark => RemixThemeData.base();
-  RemixThemeData get _defaultThemeLight => RemixThemeData.base();
-
   static RemixThemeData of(BuildContext context) {
     final _RemixThemeInherited? provider =
         context.dependOnInheritedWidgetOfExactType<_RemixThemeInherited>();
@@ -210,10 +205,30 @@ class RemixTheme extends StatelessWidget {
         ?.data;
   }
 
+  final ThemeMode? themeMode;
+
   final RemixThemeData? theme;
 
   final RemixThemeData? darkTheme;
   final Widget child;
+
+  RemixThemeData get _defaultThemeDark => RemixThemeData.base();
+  RemixThemeData get _defaultThemeLight => RemixThemeData.base();
+
+  RemixThemeData _defineRemixThemeData(BuildContext context) {
+    if (themeMode != null) {
+      return themeMode == ThemeMode.dark
+          ? darkTheme ?? _defaultThemeDark
+          : theme ?? _defaultThemeLight;
+    }
+
+    final brightness = MediaQuery.platformBrightnessOf(context);
+    final isDark = brightness == Brightness.dark;
+
+    return isDark
+        ? darkTheme ?? _defaultThemeDark
+        : theme ?? _defaultThemeLight;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -229,21 +244,6 @@ class RemixTheme extends StatelessWidget {
       ),
       child: _RemixThemeInherited(data: theme, child: child),
     );
-  }
-
-  RemixThemeData _defineRemixThemeData(BuildContext context) {
-    if (themeMode != null) {
-      return themeMode == ThemeMode.dark
-          ? darkTheme ?? _defaultThemeDark
-          : theme ?? _defaultThemeLight;
-    }
-
-    final brightness = MediaQuery.platformBrightnessOf(context);
-    final isDark = brightness == Brightness.dark;
-
-    return isDark
-        ? darkTheme ?? _defaultThemeDark
-        : theme ?? _defaultThemeLight;
   }
 }
 
