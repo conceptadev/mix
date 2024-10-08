@@ -31,6 +31,7 @@ Future<T?> showDialog<T>({
       parent: animation,
       curve: Curves.easeInOut,
     );
+
     return FadeTransition(
       opacity: curvedAnimation,
       child: ScaleTransition(
@@ -43,14 +44,14 @@ Future<T?> showDialog<T>({
   return showGeneralDialog(
     context: context,
     pageBuilder: (context, animation, secondaryAnimation) => builder(context),
-    barrierColor: barrierColor,
     barrierDismissible: barrierDismissible,
     barrierLabel: barrierLabel,
+    barrierColor: barrierColor,
+    transitionDuration: transitionDuration,
+    transitionBuilder: transitionBuilder,
     useRootNavigator: useRootNavigator,
     routeSettings: routeSettings,
     anchorPoint: anchorPoint,
-    transitionBuilder: transitionBuilder,
-    transitionDuration: transitionDuration,
   );
 }
 
