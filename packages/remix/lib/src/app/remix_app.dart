@@ -2,7 +2,6 @@ import 'package:flutter/material.dart' as m;
 import 'package:flutter/widgets.dart';
 
 import '../theme/remix_theme.dart';
-import '../theme/remix_tokens.dart';
 
 class RemixApp extends StatelessWidget {
   const RemixApp({
