@@ -118,9 +118,7 @@ class RemixApp extends StatelessWidget {
       darkTheme: darkTheme,
       child: Builder(
         builder: (context) {
-          const textStyle = TextStyle(
-            color: Color(0xff000000),
-          );
+          const textStyle = TextStyle(color: Color(0xff000000));
 
           const accentColor = Color(0xFF0000FF);
 
