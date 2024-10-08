@@ -66,21 +66,3 @@ class Dialog extends StatelessWidget {
     );
   }
 }
-
-// class DialogSpecWidget extends StatelessWidget {
-//   const DialogSpecWidget({
-//     super.key,
-//     required this.spec,
-//     required this.children,
-//   });
-
-//   final DialogSpec? spec;
-//   final List<Widget> children;
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return spec!.container(
-//       child: spec!.flex(direction: Axis.vertical, children: children),
-//     );
-//   }
-// }
