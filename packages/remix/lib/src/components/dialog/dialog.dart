@@ -64,7 +64,7 @@ base class DialogSpec extends Spec<DialogSpec>
   final FlexSpec mainFlex;
   final FlexSpec actionsFlex;
 
-  /// {@macro card_spec_of}
+  /// {@macro dialog_spec_of}
   static const of = _$DialogSpec.of;
 
   static const from = _$DialogSpec.from;
