@@ -1,45 +1,10 @@
 import 'package:flutter/material.dart' as m;
 import 'package:flutter/widgets.dart';
 
-import 'theme/remix_theme.dart';
-import 'theme/remix_tokens.dart';
+import '../theme/remix_theme.dart';
+import '../theme/remix_tokens.dart';
 
 class RemixApp extends StatelessWidget {
-  final GlobalKey<NavigatorState>? navigatorKey;
-  final Widget? home;
-  final Map<String, WidgetBuilder> routes;
-  final String? initialRoute;
-  final RouteFactory? onGenerateRoute;
-  final InitialRouteListFactory? onGenerateInitialRoutes;
-  final RouteFactory? onUnknownRoute;
-  final List<NavigatorObserver> navigatorObservers;
-  final TransitionBuilder? builder;
-  final String title;
-  final GenerateAppTitle? onGenerateTitle;
-  final RemixThemeData? theme;
-  final RemixThemeData? darkTheme;
-  final Color? color;
-  final Locale? locale;
-  final Iterable<LocalizationsDelegate<dynamic>>? localizationsDelegates;
-  final LocaleListResolutionCallback? localeListResolutionCallback;
-  final LocaleResolutionCallback? localeResolutionCallback;
-  final Iterable<Locale> supportedLocales;
-  final bool showPerformanceOverlay;
-  final bool showSemanticsDebugger;
-  final bool debugShowCheckedModeBanner;
-  final Map<ShortcutActivator, Intent>? shortcuts;
-  final Map<Type, Action<Intent>>? actions;
-  final String? restorationScopeId;
-  final ScrollBehavior? scrollBehavior;
-  final PageRouteFactory? pageRouteBuilder;
-
-  // Router specific fields
-  final RouteInformationProvider? routeInformationProvider;
-  final RouteInformationParser<Object>? routeInformationParser;
-  final RouterDelegate<Object>? routerDelegate;
-  final BackButtonDispatcher? backButtonDispatcher;
-  final RouterConfig<Object>? routerConfig;
-
   const RemixApp({
     super.key,
     this.navigatorKey,
@@ -110,6 +75,42 @@ class RemixApp extends StatelessWidget {
         navigatorObservers = const <NavigatorObserver>[],
         pageRouteBuilder = null;
 
+  final GlobalKey<NavigatorState>? navigatorKey;
+  final Widget? home;
+  final Map<String, WidgetBuilder> routes;
+  final String? initialRoute;
+  final RouteFactory? onGenerateRoute;
+  final InitialRouteListFactory? onGenerateInitialRoutes;
+  final RouteFactory? onUnknownRoute;
+  final List<NavigatorObserver> navigatorObservers;
+  final TransitionBuilder? builder;
+  final String title;
+  final GenerateAppTitle? onGenerateTitle;
+  final RemixThemeData? theme;
+  final RemixThemeData? darkTheme;
+  final Color? color;
+  final Locale? locale;
+  // ignore: avoid-dynamic
+  final Iterable<LocalizationsDelegate<dynamic>>? localizationsDelegates;
+  final LocaleListResolutionCallback? localeListResolutionCallback;
+  final LocaleResolutionCallback? localeResolutionCallback;
+  final Iterable<Locale> supportedLocales;
+  final bool showPerformanceOverlay;
+  final bool showSemanticsDebugger;
+  final bool debugShowCheckedModeBanner;
+  final Map<ShortcutActivator, Intent>? shortcuts;
+  final Map<Type, Action<Intent>>? actions;
+  final String? restorationScopeId;
+  final ScrollBehavior? scrollBehavior;
+  final PageRouteFactory? pageRouteBuilder;
+
+  // Router specific fields
+  final RouteInformationProvider? routeInformationProvider;
+  final RouteInformationParser<Object>? routeInformationParser;
+  final RouterDelegate<Object>? routerDelegate;
+  final BackButtonDispatcher? backButtonDispatcher;
+  final RouterConfig<Object>? routerConfig;
+
   @override
   Widget build(BuildContext context) {
     return RemixTheme(
@@ -122,6 +123,7 @@ class RemixApp extends StatelessWidget {
           );
 
           final accentColor = $rx.color.accent().resolve(context);
+
           return routerConfig != null
               ? WidgetsApp.router(
                   key: key,
@@ -132,8 +134,8 @@ class RemixApp extends StatelessWidget {
                   backButtonDispatcher: backButtonDispatcher,
                   builder: builder,
                   title: title,
-                  textStyle: textStyle,
                   onGenerateTitle: onGenerateTitle,
+                  textStyle: textStyle,
                   color: color ?? accentColor,
                   locale: locale,
                   localizationsDelegates: localizationsDelegates,
@@ -150,17 +152,24 @@ class RemixApp extends StatelessWidget {
               : WidgetsApp(
                   key: GlobalObjectKey(this),
                   navigatorKey: navigatorKey,
-                  home: home,
-                  routes: routes,
-                  initialRoute: initialRoute,
                   onGenerateRoute: onGenerateRoute,
                   onGenerateInitialRoutes: onGenerateInitialRoutes,
                   onUnknownRoute: onUnknownRoute,
                   navigatorObservers: navigatorObservers,
+                  initialRoute: initialRoute,
+                  pageRouteBuilder: pageRouteBuilder ??
+                      <T>(RouteSettings settings, WidgetBuilder builder) {
+                        return m.MaterialPageRoute<T>(
+                          builder: builder,
+                          settings: settings,
+                        );
+                      },
+                  home: home,
+                  routes: routes,
                   builder: builder,
                   title: title,
-                  textStyle: textStyle,
                   onGenerateTitle: onGenerateTitle,
+                  textStyle: textStyle,
                   color: color ?? accentColor,
                   locale: locale,
                   localizationsDelegates: localizationsDelegates,
@@ -173,13 +182,6 @@ class RemixApp extends StatelessWidget {
                   shortcuts: shortcuts,
                   actions: actions,
                   restorationScopeId: restorationScopeId,
-                  pageRouteBuilder: pageRouteBuilder ??
-                      <T>(RouteSettings settings, WidgetBuilder builder) {
-                        return m.MaterialPageRoute<T>(
-                          settings: settings,
-                          builder: builder,
-                        );
-                      },
                 );
         },
       ),
