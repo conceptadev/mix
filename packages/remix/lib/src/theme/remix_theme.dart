@@ -9,6 +9,7 @@ import '../components/button/button.dart';
 import '../components/callout/callout.dart';
 import '../components/card/card.dart';
 import '../components/checkbox/checkbox.dart';
+import '../components/dialog/dialog.dart';
 import '../components/divider/divider.dart';
 import '../components/icon_button/icon_button.dart';
 import '../components/progress/progress.dart';
@@ -27,6 +28,7 @@ class RemixComponentTheme {
   final CalloutStyle callout;
   final CardStyle card;
   final CheckboxStyle checkbox;
+  final DialogStyle dialog;
   final DividerStyle divider;
   final IconButtonStyle iconButton;
   final ProgressStyle progress;
@@ -44,6 +46,7 @@ class RemixComponentTheme {
     required this.callout,
     required this.card,
     required this.checkbox,
+    required this.dialog,
     required this.divider,
     required this.iconButton,
     required this.progress,
@@ -63,6 +66,7 @@ class RemixComponentTheme {
       callout: CalloutStyle(),
       card: CardStyle(),
       checkbox: CheckboxStyle(),
+      dialog: DialogStyle(),
       divider: DividerStyle(),
       iconButton: IconButtonStyle(),
       progress: ProgressStyle(),
@@ -102,6 +106,7 @@ class RemixComponentTheme {
       callout: FortalezaCalloutStyle(),
       card: FortalezaCardStyle(),
       checkbox: FortalezaCheckboxStyle(),
+      dialog: FortalezaDialogStyle(),
       divider: FortalezaDividerStyle(),
       iconButton: FortalezaIconButtonStyle(),
       progress: FortalezaProgressStyle(),
@@ -131,6 +136,7 @@ class RemixComponentTheme {
     CalloutStyle? callout,
     CardStyle? card,
     CheckboxStyle? checkbox,
+    DialogStyle? dialog,
     DividerStyle? divider,
     IconButtonStyle? iconButton,
     ProgressStyle? progress,
@@ -148,6 +154,7 @@ class RemixComponentTheme {
       callout: callout ?? this.callout,
       card: card ?? this.card,
       checkbox: checkbox ?? this.checkbox,
+      dialog: dialog ?? this.dialog,
       divider: divider ?? this.divider,
       iconButton: iconButton ?? this.iconButton,
       progress: progress ?? this.progress,
