@@ -83,10 +83,6 @@ base class DialogSpec extends Spec<DialogSpec>
         mainFlex = mainFlex ?? const FlexSpec(),
         actionsFlex = actionsFlex ?? const FlexSpec();
 
-  // Widget call({Key? key, required List<Widget> children}) {
-  //   return DialogSpecWidget(key: key, spec: this, children: children);
-  // }
-
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
