@@ -118,11 +118,11 @@ class RemixApp extends StatelessWidget {
       darkTheme: darkTheme,
       child: Builder(
         builder: (context) {
-          final textStyle = TextStyle(
-            color: $rx.color.neutral(12).resolve(context),
+          const textStyle = TextStyle(
+            color: Color(0xff000000),
           );
 
-          final accentColor = $rx.color.accent().resolve(context);
+          const accentColor = Color(0xFF0000FF);
 
           return routerConfig != null
               ? WidgetsApp.router(
