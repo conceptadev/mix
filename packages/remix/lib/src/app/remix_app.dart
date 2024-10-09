@@ -116,6 +116,7 @@ class RemixApp extends StatelessWidget {
     return RemixTheme(
       theme: theme,
       darkTheme: darkTheme,
+      themeMode: ThemeMode.light,
       child: Builder(
         builder: (context) {
           const textStyle = TextStyle(color: Color(0xff000000));
