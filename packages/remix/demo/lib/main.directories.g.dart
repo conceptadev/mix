@@ -236,6 +236,18 @@ final directories = <_i1.WidgetbookNode>[
           )
         ],
       ),
+      _i1.WidgetbookFolder(
+        name: 'toast',
+        children: [
+          _i1.WidgetbookLeafComponent(
+            name: 'Toast',
+            useCase: _i1.WidgetbookUseCase(
+              name: 'Toast Component',
+              builder: _i17.buildButtonUseCase,
+            ),
+          )
+        ],
+      ),
     ],
   )
 ];
