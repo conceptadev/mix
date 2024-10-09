@@ -18,6 +18,7 @@ import '../components/segmented_control/segmented_control.dart';
 import '../components/select/select.dart';
 import '../components/spinner/spinner.dart';
 import '../components/switch/switch.dart';
+import '../components/toast/toast.dart';
 import 'remix_tokens.dart';
 
 class RemixComponentTheme {
@@ -37,6 +38,7 @@ class RemixComponentTheme {
   final SelectStyle select;
   final SpinnerStyle spinner;
   final SwitchStyle switchComponent;
+  final ToastStyle toast;
 
   const RemixComponentTheme({
     required this.accordion,
@@ -55,6 +57,7 @@ class RemixComponentTheme {
     required this.select,
     required this.spinner,
     required this.switchComponent,
+    required this.toast,
   });
 
   factory RemixComponentTheme.baseLight() {
@@ -75,6 +78,7 @@ class RemixComponentTheme {
       select: SelectStyle(),
       spinner: SpinnerStyle(),
       switchComponent: SwitchStyle(),
+      toast: ToastStyle(),
     );
   }
 
@@ -115,6 +119,7 @@ class RemixComponentTheme {
       select: FortalezaSelectStyle(),
       spinner: FortalezaSpinnerStyle(),
       switchComponent: FortalezaSwitchStyle(),
+      toast: FortalezaToastStyle(),
     );
   }
 
@@ -145,6 +150,7 @@ class RemixComponentTheme {
     SelectStyle? select,
     SpinnerStyle? spinner,
     SwitchStyle? switchComponent,
+    ToastStyle? toast,
   }) {
     return RemixComponentTheme(
       accordion: accordion ?? this.accordion,
@@ -163,6 +169,7 @@ class RemixComponentTheme {
       select: select ?? this.select,
       spinner: spinner ?? this.spinner,
       switchComponent: switchComponent ?? this.switchComponent,
+      toast: toast ?? this.toast,
     );
   }
 }
@@ -258,7 +265,7 @@ class RemixTheme extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = _defineRemixThemeData(context);
+    final theme = this.theme!;
     final tokens = theme.tokens;
 
     return MixTheme(

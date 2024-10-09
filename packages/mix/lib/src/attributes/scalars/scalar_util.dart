@@ -86,6 +86,16 @@ final class TextDecorationUtility<T extends Attribute>
 final class CurveUtility<T extends Attribute> extends MixUtility<T, Curve>
     with _$CurveUtility {
   const CurveUtility(super.builder);
+
+  T as(Curve curve) => builder(curve);
+
+  T spring({
+    Duration duration = const Duration(milliseconds: 500),
+    double bounce = 0.5,
+  }) =>
+      builder(
+        SpringCurve(duration: duration, bounce: bounce),
+      );
 }
 
 @MixableClassUtility(generateCallMethod: false)
