@@ -56,7 +56,7 @@ class ToastLayerState extends State<ToastLayer> implements ToastActions {
   Widget build(BuildContext context) {
     final toast = currentToast;
     final alignment = currentToast?.alignment ?? Alignment.bottomCenter;
-    print(toast);
+
     final toastWidget = KeyedSubtree(
       key: UniqueKey(),
       child: Align(

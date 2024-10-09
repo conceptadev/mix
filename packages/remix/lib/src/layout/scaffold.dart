@@ -21,9 +21,7 @@ class Scaffold extends StatelessWidget {
     return Box(
       style: Style(
         $box.color(color ?? const Color(0xFFFFFFFF)),
-        $on.dark(
-          $box.color(colorOnDark ?? const Color(0xFF000000)),
-        ),
+        $on.dark($box.color(colorOnDark ?? const Color(0xFF000000))),
       ),
       child: ToastLayer(body: body),
     );
