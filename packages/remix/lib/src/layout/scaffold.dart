@@ -5,14 +5,26 @@ import 'package:mix/mix.dart';
 import '../components/toast/toast_layer.dart';
 
 class Scaffold extends StatelessWidget {
-  const Scaffold({super.key, required this.body});
+  const Scaffold({
+    super.key,
+    required this.body,
+    this.color,
+    this.colorOnDark,
+  });
 
   final Widget body;
+  final Color? color;
+  final Color? colorOnDark;
 
   @override
   Widget build(BuildContext context) {
     return Box(
-      style: Style($box.color.white(), $on.dark($box.color.black())),
+      style: Style(
+        $box.color(color ?? const Color(0xFFFFFFFF)),
+        $on.dark(
+          $box.color(colorOnDark ?? const Color(0xFF000000)),
+        ),
+      ),
       child: ToastLayer(body: body),
     );
   }

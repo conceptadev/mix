@@ -9,14 +9,11 @@ import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
   type: Spinner,
 )
 Widget buildSpinnerUseCase(BuildContext context) {
-  return Spinner(
-    variants: [
-      context.knobs.variant(FortalezaSpinnerStyle.variants),
-      context.knobs.variantRaw(
-        label: 'types',
-        variants: [SpinnerStyle.dotted, SpinnerStyle.solid],
-        initialOption: SpinnerStyle.dotted,
+  return Scaffold(
+    body: Center(
+      child: Spinner(
+        variants: [context.knobs.variant(FortalezaSpinnerStyle.variants)],
       ),
-    ],
+    ),
   );
 }
