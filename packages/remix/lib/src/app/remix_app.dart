@@ -4,7 +4,7 @@ import 'package:flutter/widgets.dart';
 import '../theme/remix_theme.dart';
 
 //ignore: avoid-unnecessary-stateful-widgets
-class RemixApp extends m.StatefulWidget {
+class RemixApp extends StatefulWidget {
   const RemixApp({
     super.key,
     this.navigatorKey,
@@ -34,6 +34,7 @@ class RemixApp extends m.StatefulWidget {
     this.restorationScopeId,
     this.scrollBehavior,
     this.pageRouteBuilder,
+    this.themeMode,
   })  : routeInformationProvider = null,
         routeInformationParser = null,
         routerDelegate = null,
@@ -65,6 +66,7 @@ class RemixApp extends m.StatefulWidget {
     this.actions,
     this.restorationScopeId,
     this.scrollBehavior,
+    this.themeMode,
   })  : navigatorKey = null,
         home = null,
         routes = const <String, WidgetBuilder>{},
@@ -88,6 +90,7 @@ class RemixApp extends m.StatefulWidget {
   final GenerateAppTitle? onGenerateTitle;
   final RemixThemeData? theme;
   final RemixThemeData? darkTheme;
+  final ThemeMode? themeMode;
   final Color? color;
   final Locale? locale;
   // ignore: avoid-dynamic
@@ -116,80 +119,84 @@ class RemixApp extends m.StatefulWidget {
 }
 
 class _RemixAppState extends m.State<RemixApp> {
-  @override
-  Widget build(BuildContext context) {
+  Widget _remixBuilder(BuildContext context, Widget? child) {
     return RemixTheme(
       theme: widget.theme,
       darkTheme: widget.darkTheme,
-      child: Builder(
-        builder: (context) {
-          const textStyle = TextStyle(color: Color(0xff000000));
-
-          const accentColor = Color(0xFF0000FF);
-
-          return widget.routerConfig != null
-              ? WidgetsApp.router(
-                  key: GlobalObjectKey(this),
-                  routeInformationProvider: widget.routeInformationProvider,
-                  routeInformationParser: widget.routeInformationParser,
-                  routerDelegate: widget.routerDelegate,
-                  routerConfig: widget.routerConfig,
-                  backButtonDispatcher: widget.backButtonDispatcher,
-                  builder: widget.builder,
-                  title: widget.title,
-                  onGenerateTitle: widget.onGenerateTitle,
-                  textStyle: textStyle,
-                  color: widget.color ?? accentColor,
-                  locale: widget.locale,
-                  localizationsDelegates: widget.localizationsDelegates,
-                  localeListResolutionCallback:
-                      widget.localeListResolutionCallback,
-                  localeResolutionCallback: widget.localeResolutionCallback,
-                  supportedLocales: widget.supportedLocales,
-                  showPerformanceOverlay: widget.showPerformanceOverlay,
-                  showSemanticsDebugger: widget.showSemanticsDebugger,
-                  debugShowCheckedModeBanner: widget.debugShowCheckedModeBanner,
-                  shortcuts: widget.shortcuts,
-                  actions: widget.actions,
-                  restorationScopeId: widget.restorationScopeId,
-                )
-              : WidgetsApp(
-                  key: GlobalObjectKey(this),
-                  navigatorKey: widget.navigatorKey,
-                  onGenerateRoute: widget.onGenerateRoute,
-                  onGenerateInitialRoutes: widget.onGenerateInitialRoutes,
-                  onUnknownRoute: widget.onUnknownRoute,
-                  navigatorObservers: widget.navigatorObservers,
-                  initialRoute: widget.initialRoute,
-                  pageRouteBuilder: widget.pageRouteBuilder ??
-                      <T>(RouteSettings settings, WidgetBuilder builder) {
-                        return m.MaterialPageRoute<T>(
-                          builder: builder,
-                          settings: settings,
-                        );
-                      },
-                  home: widget.home,
-                  routes: widget.routes,
-                  builder: widget.builder,
-                  title: widget.title,
-                  onGenerateTitle: widget.onGenerateTitle,
-                  textStyle: textStyle,
-                  color: widget.color ?? accentColor,
-                  locale: widget.locale,
-                  localizationsDelegates: widget.localizationsDelegates,
-                  localeListResolutionCallback:
-                      widget.localeListResolutionCallback,
-                  localeResolutionCallback: widget.localeResolutionCallback,
-                  supportedLocales: widget.supportedLocales,
-                  showPerformanceOverlay: widget.showPerformanceOverlay,
-                  showSemanticsDebugger: widget.showSemanticsDebugger,
-                  debugShowCheckedModeBanner: widget.debugShowCheckedModeBanner,
-                  shortcuts: widget.shortcuts,
-                  actions: widget.actions,
-                  restorationScopeId: widget.restorationScopeId,
-                );
-        },
-      ),
+      child: widget.builder != null
+          ? Builder(
+              builder: (BuildContext context) {
+                return widget.builder!(context, child);
+              },
+            )
+          : child ?? const SizedBox.shrink(),
     );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    const textStyle = TextStyle(color: Color(0xff000000));
+
+    const accentColor = Color(0xFF0000FF);
+
+    return widget.routerConfig != null
+        ? WidgetsApp.router(
+            key: GlobalObjectKey(this),
+            routeInformationProvider: widget.routeInformationProvider,
+            routeInformationParser: widget.routeInformationParser,
+            routerDelegate: widget.routerDelegate,
+            routerConfig: widget.routerConfig,
+            backButtonDispatcher: widget.backButtonDispatcher,
+            builder: _remixBuilder,
+            title: widget.title,
+            onGenerateTitle: widget.onGenerateTitle,
+            textStyle: textStyle,
+            color: widget.color ?? accentColor,
+            locale: widget.locale,
+            localizationsDelegates: widget.localizationsDelegates,
+            localeListResolutionCallback: widget.localeListResolutionCallback,
+            localeResolutionCallback: widget.localeResolutionCallback,
+            supportedLocales: widget.supportedLocales,
+            showPerformanceOverlay: widget.showPerformanceOverlay,
+            showSemanticsDebugger: widget.showSemanticsDebugger,
+            debugShowCheckedModeBanner: widget.debugShowCheckedModeBanner,
+            shortcuts: widget.shortcuts,
+            actions: widget.actions,
+            restorationScopeId: widget.restorationScopeId,
+          )
+        : WidgetsApp(
+            key: GlobalObjectKey(this),
+            navigatorKey: widget.navigatorKey,
+            onGenerateRoute: widget.onGenerateRoute,
+            onGenerateInitialRoutes: widget.onGenerateInitialRoutes,
+            onUnknownRoute: widget.onUnknownRoute,
+            navigatorObservers: widget.navigatorObservers,
+            initialRoute: widget.initialRoute,
+            pageRouteBuilder: widget.pageRouteBuilder ??
+                <T>(RouteSettings settings, WidgetBuilder builder) {
+                  return m.MaterialPageRoute<T>(
+                    builder: builder,
+                    settings: settings,
+                  );
+                },
+            home: widget.home,
+            routes: widget.routes,
+            builder: _remixBuilder,
+            title: widget.title,
+            onGenerateTitle: widget.onGenerateTitle,
+            textStyle: textStyle,
+            color: widget.color ?? accentColor,
+            locale: widget.locale,
+            localizationsDelegates: widget.localizationsDelegates,
+            localeListResolutionCallback: widget.localeListResolutionCallback,
+            localeResolutionCallback: widget.localeResolutionCallback,
+            supportedLocales: widget.supportedLocales,
+            showPerformanceOverlay: widget.showPerformanceOverlay,
+            showSemanticsDebugger: widget.showSemanticsDebugger,
+            debugShowCheckedModeBanner: widget.debugShowCheckedModeBanner,
+            shortcuts: widget.shortcuts,
+            actions: widget.actions,
+            restorationScopeId: widget.restorationScopeId,
+          );
   }
 }

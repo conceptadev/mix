@@ -23,6 +23,7 @@ Widget buildButtonUseCase(BuildContext context) {
     label: 'Actions',
     initialValue: true,
   );
+
   return KeyedSubtree(
     key: _key,
     child: Scaffold(
@@ -32,6 +33,7 @@ Widget buildButtonUseCase(BuildContext context) {
             label: 'Show dialog',
             onPressed: () {
               showDialog(
+                useRootNavigator: false,
                 context: context,
                 builder: (BuildContext context) => Center(
                   child: SizedBox(
