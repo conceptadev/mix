@@ -63,14 +63,6 @@ class HotReload extends StatelessWidget {
         InspectorAddon(),
       ],
       appBuilder: (context, child) => RemixApp(
-        theme: RemixThemeData(
-          components: RemixComponentTheme.fortalezaLight(),
-          tokens: light,
-        ),
-        darkTheme: RemixThemeData(
-          components: RemixComponentTheme.fortalezaDark(),
-          tokens: dark,
-        ),
         debugShowCheckedModeBanner: false,
         home: child,
       ),

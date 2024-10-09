@@ -12,15 +12,21 @@ final _key = GlobalKey();
   type: Toast,
 )
 Widget buildButtonUseCase(BuildContext context) {
+  final title = context.knobs.string(
+    label: 'Title',
+    initialValue: 'Event has been created',
+  );
+  final description = context.knobs.string(
+    label: 'Description',
+    initialValue: 'Sunday, December 03, 2023 at 9:00 AM',
+  );
+
   return KeyedSubtree(
     key: _key,
     child: Scaffold(
       body: Builder(builder: (context) {
         return Center(
           child: Button(
-            variants: [
-              context.knobs.variant(FortalezaButtonStyle.variants),
-            ],
             label: 'Show toast',
             onPressed: () {
               showToast(
@@ -28,8 +34,9 @@ Widget buildButtonUseCase(BuildContext context) {
                 entry: ToastEntry(
                   showDuration: const Duration(seconds: 2),
                   alignment: Alignment.topCenter,
-                  builder: (context, entry) => const Toast(
-                    title: 'Toast',
+                  builder: (context, entry) => Toast(
+                    title: title,
+                    description: description,
                   ),
                 ),
               );

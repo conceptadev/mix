@@ -40,10 +40,38 @@ Future<T?> showDialog<T>({
       ),
     );
   };
+  final theme = RemixTheme.maybeOf(context);
 
+  if (theme == null) {
+    throw FlutterError.fromParts([
+      ErrorSummary('No RemixTheme found in the widget tree.'),
+      ErrorDescription('RemixTheme is required to show dialogs.'),
+      ErrorHint(
+        'Make sure to wrap your app with RemixTheme or use a RemixApp.',
+      ),
+      ErrorHint('Example with RemixTheme:\n'
+          'RemixTheme(\n'
+          '  theme: YourRemixTheme,\n'
+          '  child: YourAppContent(),\n'
+          ')'),
+      ErrorHint(
+        'Example with RemixApp:\n'
+        'RemixApp(\n'
+        '  theme: YourRemixTheme,\n'
+        '  home: YourHomeWidget(),\n'
+        ')',
+      ),
+    ]);
+  }
   return showGeneralDialog(
     context: context,
-    pageBuilder: (context, animation, secondaryAnimation) => builder(context),
+    pageBuilder: (context, animation, secondaryAnimation) => DefaultTextStyle(
+      style: const TextStyle(),
+      child: RemixTheme(
+        theme: theme,
+        child: builder(context),
+      ),
+    ),
     barrierDismissible: barrierDismissible,
     barrierLabel: barrierLabel,
     barrierColor: barrierColor,
