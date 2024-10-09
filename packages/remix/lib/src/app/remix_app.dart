@@ -3,7 +3,7 @@ import 'package:flutter/widgets.dart';
 
 import '../theme/remix_theme.dart';
 
-class RemixApp extends StatelessWidget {
+class RemixApp extends m.StatefulWidget {
   const RemixApp({
     super.key,
     this.navigatorKey,
@@ -111,75 +111,81 @@ class RemixApp extends StatelessWidget {
   final RouterConfig<Object>? routerConfig;
 
   @override
+  m.State<RemixApp> createState() => _RemixAppState();
+}
+
+class _RemixAppState extends m.State<RemixApp> {
+  @override
   Widget build(BuildContext context) {
     return RemixTheme(
-      theme: theme,
-      themeMode: ThemeMode.light,
-      darkTheme: darkTheme,
+      theme: widget.theme,
+      darkTheme: widget.darkTheme,
       child: Builder(
         builder: (context) {
           const textStyle = TextStyle(color: Color(0xff000000));
 
           const accentColor = Color(0xFF0000FF);
 
-          return routerConfig != null
+          return widget.routerConfig != null
               ? WidgetsApp.router(
-                  key: key,
-                  routeInformationProvider: routeInformationProvider,
-                  routeInformationParser: routeInformationParser,
-                  routerDelegate: routerDelegate,
-                  routerConfig: routerConfig,
-                  backButtonDispatcher: backButtonDispatcher,
-                  builder: builder,
-                  title: title,
-                  onGenerateTitle: onGenerateTitle,
+                  key: GlobalObjectKey(this),
+                  routeInformationProvider: widget.routeInformationProvider,
+                  routeInformationParser: widget.routeInformationParser,
+                  routerDelegate: widget.routerDelegate,
+                  routerConfig: widget.routerConfig,
+                  backButtonDispatcher: widget.backButtonDispatcher,
+                  builder: widget.builder,
+                  title: widget.title,
+                  onGenerateTitle: widget.onGenerateTitle,
                   textStyle: textStyle,
-                  color: color ?? accentColor,
-                  locale: locale,
-                  localizationsDelegates: localizationsDelegates,
-                  localeListResolutionCallback: localeListResolutionCallback,
-                  localeResolutionCallback: localeResolutionCallback,
-                  supportedLocales: supportedLocales,
-                  showPerformanceOverlay: showPerformanceOverlay,
-                  showSemanticsDebugger: showSemanticsDebugger,
-                  debugShowCheckedModeBanner: debugShowCheckedModeBanner,
-                  shortcuts: shortcuts,
-                  actions: actions,
-                  restorationScopeId: restorationScopeId,
+                  color: widget.color ?? accentColor,
+                  locale: widget.locale,
+                  localizationsDelegates: widget.localizationsDelegates,
+                  localeListResolutionCallback:
+                      widget.localeListResolutionCallback,
+                  localeResolutionCallback: widget.localeResolutionCallback,
+                  supportedLocales: widget.supportedLocales,
+                  showPerformanceOverlay: widget.showPerformanceOverlay,
+                  showSemanticsDebugger: widget.showSemanticsDebugger,
+                  debugShowCheckedModeBanner: widget.debugShowCheckedModeBanner,
+                  shortcuts: widget.shortcuts,
+                  actions: widget.actions,
+                  restorationScopeId: widget.restorationScopeId,
                 )
               : WidgetsApp(
                   key: GlobalObjectKey(this),
-                  navigatorKey: navigatorKey,
-                  onGenerateRoute: onGenerateRoute,
-                  onGenerateInitialRoutes: onGenerateInitialRoutes,
-                  onUnknownRoute: onUnknownRoute,
-                  navigatorObservers: navigatorObservers,
-                  initialRoute: initialRoute,
-                  pageRouteBuilder: pageRouteBuilder ??
+                  navigatorKey: widget.navigatorKey,
+                  onGenerateRoute: widget.onGenerateRoute,
+                  onGenerateInitialRoutes: widget.onGenerateInitialRoutes,
+                  onUnknownRoute: widget.onUnknownRoute,
+                  navigatorObservers: widget.navigatorObservers,
+                  initialRoute: widget.initialRoute,
+                  pageRouteBuilder: widget.pageRouteBuilder ??
                       <T>(RouteSettings settings, WidgetBuilder builder) {
                         return m.MaterialPageRoute<T>(
                           builder: builder,
                           settings: settings,
                         );
                       },
-                  home: home,
-                  routes: routes,
-                  builder: builder,
-                  title: title,
-                  onGenerateTitle: onGenerateTitle,
+                  home: widget.home,
+                  routes: widget.routes,
+                  builder: widget.builder,
+                  title: widget.title,
+                  onGenerateTitle: widget.onGenerateTitle,
                   textStyle: textStyle,
-                  color: color ?? accentColor,
-                  locale: locale,
-                  localizationsDelegates: localizationsDelegates,
-                  localeListResolutionCallback: localeListResolutionCallback,
-                  localeResolutionCallback: localeResolutionCallback,
-                  supportedLocales: supportedLocales,
-                  showPerformanceOverlay: showPerformanceOverlay,
-                  showSemanticsDebugger: showSemanticsDebugger,
-                  debugShowCheckedModeBanner: debugShowCheckedModeBanner,
-                  shortcuts: shortcuts,
-                  actions: actions,
-                  restorationScopeId: restorationScopeId,
+                  color: widget.color ?? accentColor,
+                  locale: widget.locale,
+                  localizationsDelegates: widget.localizationsDelegates,
+                  localeListResolutionCallback:
+                      widget.localeListResolutionCallback,
+                  localeResolutionCallback: widget.localeResolutionCallback,
+                  supportedLocales: widget.supportedLocales,
+                  showPerformanceOverlay: widget.showPerformanceOverlay,
+                  showSemanticsDebugger: widget.showSemanticsDebugger,
+                  debugShowCheckedModeBanner: widget.debugShowCheckedModeBanner,
+                  shortcuts: widget.shortcuts,
+                  actions: widget.actions,
+                  restorationScopeId: widget.restorationScopeId,
                 );
         },
       ),

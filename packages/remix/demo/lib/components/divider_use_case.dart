@@ -8,15 +8,17 @@ import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
   type: Divider,
 )
 Widget buildDivider(BuildContext context) {
-  return Center(
-    child: SizedBox(
-      height: 100,
-      width: 100,
-      child: Center(
-        child: Divider(
-          axis: context.knobs.list(
-            label: 'Axis',
-            options: [Axis.horizontal, Axis.vertical],
+  return Scaffold(
+    body: Center(
+      child: SizedBox(
+        height: 100,
+        width: 100,
+        child: Center(
+          child: Divider(
+            axis: context.knobs.list(
+              label: 'Axis',
+              options: [Axis.horizontal, Axis.vertical],
+            ),
           ),
         ),
       ),

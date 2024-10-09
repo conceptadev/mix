@@ -24,6 +24,7 @@ import 'package:demo/components/segmented_control_use_case.dart' as _i13;
 import 'package:demo/components/select_use_case.dart' as _i14;
 import 'package:demo/components/spinner_use_case.dart' as _i15;
 import 'package:demo/components/switch_use_case.dart' as _i16;
+import 'package:demo/components/toast_use_case.dart' as _i17;
 import 'package:widgetbook/widgetbook.dart' as _i1;
 
 final directories = <_i1.WidgetbookNode>[
@@ -206,6 +207,18 @@ final directories = <_i1.WidgetbookNode>[
             useCase: _i1.WidgetbookUseCase(
               name: 'Switch Component',
               builder: _i16.buildSwitchUseCase,
+            ),
+          )
+        ],
+      ),
+      _i1.WidgetbookFolder(
+        name: 'toast',
+        children: [
+          _i1.WidgetbookLeafComponent(
+            name: 'Toast',
+            useCase: _i1.WidgetbookUseCase(
+              name: 'Toast Component',
+              builder: _i17.buildButtonUseCase,
             ),
           )
         ],

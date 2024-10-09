@@ -246,7 +246,7 @@ class RemixTheme extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = this.theme!;
+    final theme = _defineRemixThemeData(context);
     final tokens = theme.tokens;
 
     return MixTheme(
