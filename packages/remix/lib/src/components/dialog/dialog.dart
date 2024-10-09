@@ -65,13 +65,7 @@ Future<T?> showDialog<T>({
   }
   return showGeneralDialog(
     context: context,
-    pageBuilder: (context, animation, secondaryAnimation) => DefaultTextStyle(
-      style: const TextStyle(),
-      child: RemixTheme(
-        theme: theme,
-        child: builder(context),
-      ),
-    ),
+    pageBuilder: (context, animation, secondaryAnimation) => builder(context),
     barrierDismissible: barrierDismissible,
     barrierLabel: barrierLabel,
     barrierColor: barrierColor,

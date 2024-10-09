@@ -62,10 +62,7 @@ class HotReload extends StatelessWidget {
         ),
         InspectorAddon(),
       ],
-      appBuilder: (context, child) => RemixApp(
-        debugShowCheckedModeBanner: false,
-        home: child,
-      ),
+      appBuilder: (context, child) => child,
       directories: directories,
     );
   }
