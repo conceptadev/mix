@@ -63,6 +63,7 @@ Future<T?> showDialog<T>({
       ),
     ]);
   }
+
   return showGeneralDialog(
     context: context,
     pageBuilder: (context, animation, secondaryAnimation) => builder(context),
