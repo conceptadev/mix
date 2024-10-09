@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 
 import '../theme/remix_theme.dart';
 
+//ignore: avoid-unnecessary-stateful-widgets
 class RemixApp extends m.StatefulWidget {
   const RemixApp({
     super.key,
