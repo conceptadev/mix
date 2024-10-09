@@ -32,6 +32,12 @@ class ToastLayerState extends State<ToastLayer> implements ToastActions {
   }
 
   @override
+  void dispose() {
+    _timer?.cancel();
+    super.dispose();
+  }
+
+  @override
   bool get isShowing => currentToast != null;
 
   @override
@@ -89,10 +95,7 @@ class ToastLayerState extends State<ToastLayer> implements ToastActions {
             return ScaleTransition(
               scale: animation.drive(Tween(begin: 0.8, end: 1)),
               alignment: previousToast?.alignment ?? Alignment.bottomCenter,
-              child: FadeTransition(
-                opacity: animation,
-                child: child,
-              ),
+              child: FadeTransition(opacity: animation, child: child),
             );
           },
           child: toastWidget,
@@ -103,19 +106,16 @@ class ToastLayerState extends State<ToastLayer> implements ToastActions {
   }
 }
 
-void showToast({
-  required BuildContext context,
-  required ToastEntry entry,
-  EdgeInsets? padding,
-}) {
+void showToast({required BuildContext context, required ToastEntry entry}) {
   final toastState = context.findAncestorStateOfType<ToastLayerState>();
 
   if (toastState == null) {
-    throw FlutterError.fromParts(<DiagnosticsNode>[
+    throw FlutterError.fromParts([
       ErrorSummary('No ToastLayer found in the widget tree.'),
       ErrorDescription('ToastLayer is required to show toasts.'),
       ErrorHint(
-          'Make sure to wrap your app with Scaffold or use a ToastLayer.'),
+        'Make sure to wrap your app with Scaffold or use a ToastLayer.',
+      ),
       ErrorHint('Example with Scaffold:\n'
           'Scaffold(\n'
           '  body: YourAppContent(),\n'
@@ -136,6 +136,13 @@ void showToast({
 }
 
 class ToastEntry {
+  final Widget Function(BuildContext context, ToastActions) builder;
+  final Duration showDuration;
+  final Alignment alignment;
+  final Duration animationDuration;
+  final Duration reverseAnimationDuration;
+  final Curve? animationCurve;
+  final Curve? reverseAnimationCurve;
   const ToastEntry({
     required this.builder,
     this.showDuration = const Duration(seconds: 4),
@@ -145,12 +152,4 @@ class ToastEntry {
     this.animationCurve,
     this.reverseAnimationCurve,
   });
-
-  final Widget Function(BuildContext context, ToastActions) builder;
-  final Duration showDuration;
-  final Alignment alignment;
-  final Duration animationDuration;
-  final Duration reverseAnimationDuration;
-  final Curve? animationCurve;
-  final Curve? reverseAnimationCurve;
 }

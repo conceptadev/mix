@@ -93,9 +93,7 @@ final class CurveUtility<T extends Attribute> extends MixUtility<T, Curve>
     Duration duration = const Duration(milliseconds: 500),
     double bounce = 0.5,
   }) =>
-      builder(
-        SpringCurve(duration: duration, bounce: bounce),
-      );
+      builder(SpringCurve(duration: duration, bounce: bounce));
 }
 
 @MixableClassUtility(generateCallMethod: false)

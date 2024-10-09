@@ -12,15 +12,8 @@ class Scaffold extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Box(
-      style: Style(
-        $box.color.white(),
-        $on.dark(
-          $box.color.black(),
-        ),
-      ),
-      child: ToastLayer(
-        body: body,
-      ),
+      style: Style($box.color.white(), $on.dark($box.color.black())),
+      child: ToastLayer(body: body),
     );
   }
 }
