@@ -3,9 +3,9 @@ import 'package:flutter/widgets.dart';
 import 'package:mix/mix.dart';
 
 class ToastLayer extends StatefulWidget {
-  const ToastLayer({super.key, required this.body});
+  const ToastLayer({super.key, required this.child});
 
-  final Widget body;
+  final Widget child;
 
   @override
   ToastLayerState createState() => ToastLayerState();
@@ -100,7 +100,7 @@ class ToastLayerState extends State<ToastLayer> implements ToastActions {
           },
           child: toastWidget,
         ),
-        widget.body,
+        widget.child,
       ],
     );
   }
@@ -143,6 +143,7 @@ class ToastEntry {
   final Duration reverseAnimationDuration;
   final Curve? animationCurve;
   final Curve? reverseAnimationCurve;
+
   const ToastEntry({
     required this.builder,
     this.showDuration = const Duration(seconds: 4),
