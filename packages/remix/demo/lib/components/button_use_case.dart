@@ -14,10 +14,9 @@ final _key = GlobalKey();
 Widget buildButtonUseCase(BuildContext context) {
   return KeyedSubtree(
     key: _key,
-    child: Wrap(
-      spacing: 12,
-      children: [
-        Button(
+    child: Scaffold(
+      body: Center(
+        child: Button(
           variants: [
             context.knobs.variant(FortalezaButtonStyle.variants),
           ],
@@ -42,8 +41,8 @@ Widget buildButtonUseCase(BuildContext context) {
             label: 'Icon right',
             initialValue: null,
           ),
-        )
-      ],
+        ),
+      ),
     ),
   );
 }

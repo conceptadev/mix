@@ -7,8 +7,10 @@ import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
   type: SegmentedControl,
 )
 Widget buildAccordionUseCase(BuildContext context) {
-  return const Center(
-    child: _WidgetDemo(),
+  return const Scaffold(
+    body: Center(
+      child: _WidgetDemo(),
+    ),
   );
 }
 

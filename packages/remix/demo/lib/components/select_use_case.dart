@@ -1,5 +1,6 @@
 import 'package:demo/helpers/knob_builder.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' as m;
+import 'package:flutter/widgets.dart';
 import 'package:remix/remix.dart';
 import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
@@ -9,7 +10,11 @@ import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
   type: Select,
 )
 Widget buildSelect(BuildContext context) {
-  return const SelectDemo();
+  return const Scaffold(
+    body: Center(
+      child: SelectDemo(),
+    ),
+  );
 }
 
 class SelectDemo extends StatefulWidget {
@@ -40,7 +45,7 @@ class _SelectDemoState extends State<SelectDemo> {
             onChanged: (value) => setState(() => selectedValue = value),
             button: (spec) => spec(
               text: selectedValue,
-              trailingIcon: Icons.keyboard_arrow_down_rounded,
+              trailingIcon: m.Icons.keyboard_arrow_down_rounded,
             ),
             items: List.generate(
               items.length,

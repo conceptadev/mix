@@ -14,14 +14,17 @@ final _key = GlobalKey();
 Widget buildCheckboxUseCase(BuildContext context) {
   final knobState = WidgetbookState.of(context);
 
-  return KeyedSubtree(
-    key: _key,
-    child: Center(
-      child: Checkbox(
-        variants: [context.knobs.variant(FortalezaCheckboxStyle.variants)],
-        disabled: context.knobs.boolean(label: 'Disabled', initialValue: false),
-        value: context.knobs.boolean(label: 'Checked', initialValue: true),
-        onChanged: (value) => knobState.updateKnob('Checked', value),
+  return Scaffold(
+    body: KeyedSubtree(
+      key: _key,
+      child: Center(
+        child: Checkbox(
+          variants: [context.knobs.variant(FortalezaCheckboxStyle.variants)],
+          disabled:
+              context.knobs.boolean(label: 'Disabled', initialValue: false),
+          value: context.knobs.boolean(label: 'Checked', initialValue: true),
+          onChanged: (value) => knobState.updateKnob('Checked', value),
+        ),
       ),
     ),
   );

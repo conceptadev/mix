@@ -44,6 +44,7 @@ export 'src/attributes/modifiers/widget_modifiers_data_dto.dart';
 export 'src/attributes/modifiers/widget_modifiers_util.dart';
 export 'src/attributes/nested_style/nested_style_attribute.dart';
 export 'src/attributes/nested_style/nested_style_util.dart';
+export 'src/attributes/scalars/curves.dart';
 export 'src/attributes/scalars/scalar_util.dart';
 export 'src/attributes/shadow/shadow_dto.dart';
 export 'src/attributes/shadow/shadow_util.dart';

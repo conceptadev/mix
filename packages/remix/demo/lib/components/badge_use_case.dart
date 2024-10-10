@@ -9,14 +9,16 @@ import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
   type: Badge,
 )
 Widget buildAvatarUseCase(BuildContext context) {
-  return Center(
-    child: Badge(
-      variants: [
-        context.knobs.variant(FortalezaBadgeStyle.variants),
-      ],
-      label: context.knobs.string(
-        label: 'Label',
-        initialValue: 'New',
+  return Scaffold(
+    body: Center(
+      child: Badge(
+        variants: [
+          context.knobs.variant(FortalezaBadgeStyle.variants),
+        ],
+        label: context.knobs.string(
+          label: 'Label',
+          initialValue: 'New',
+        ),
       ),
     ),
   );

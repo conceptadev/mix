@@ -15,7 +15,7 @@ class RemixComponentThemeAddon extends ThemeAddon<ThemeMultiBrightness> {
     super.initialTheme,
   }) : super(
           themeBuilder: (context, themes, child) {
-            return RemixTheme(
+            return RemixApp(
               darkTheme: RemixThemeData(
                 tokens: dark,
                 components: themes.dark,
@@ -24,7 +24,7 @@ class RemixComponentThemeAddon extends ThemeAddon<ThemeMultiBrightness> {
                 components: themes.light,
                 tokens: light,
               ),
-              child: child,
+              home: child,
             );
           },
         );
