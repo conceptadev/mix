@@ -17,7 +17,7 @@ class ToastStyle extends SpecStyle<ToastSpecUtility> {
 
     final mainFlexStyle = $.mainFlex.chain
       ..direction.horizontal()
-      ..mainAxisAlignment.start()
+      ..mainAxisAlignment.spaceBetween()
       ..mainAxisSize.min()
       ..gap(16);
 
