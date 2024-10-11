@@ -10,6 +10,7 @@ import '../components/callout/callout.dart';
 import '../components/card/card.dart';
 import '../components/checkbox/checkbox.dart';
 import '../components/dialog/dialog.dart';
+import '../components/chip/chip.dart';
 import '../components/divider/divider.dart';
 import '../components/icon_button/icon_button.dart';
 import '../components/progress/progress.dart';
@@ -30,6 +31,7 @@ class RemixComponentTheme {
   final CardStyle card;
   final CheckboxStyle checkbox;
   final DialogStyle dialog;
+  final ChipStyle chip;
   final DividerStyle divider;
   final IconButtonStyle iconButton;
   final ProgressStyle progress;
@@ -49,6 +51,7 @@ class RemixComponentTheme {
     required this.card,
     required this.checkbox,
     required this.dialog,
+    required this.chip,
     required this.divider,
     required this.iconButton,
     required this.progress,
@@ -70,6 +73,7 @@ class RemixComponentTheme {
       card: CardStyle(),
       checkbox: CheckboxStyle(),
       dialog: DialogStyle(),
+      chip: ChipStyle(),
       divider: DividerStyle(),
       iconButton: IconButtonStyle(),
       progress: ProgressStyle(),
@@ -92,6 +96,7 @@ class RemixComponentTheme {
       card: FortalezaCardStyle(),
       checkbox: FortalezaCheckboxStyle(),
       dialog: FortalezaDialogStyle(),
+      chip: ChipStyle(),
       divider: FortalezaDividerStyle(),
       iconButton: FortalezaIconButtonStyle(),
       progress: FortalezaProgressStyle(),
@@ -123,6 +128,7 @@ class RemixComponentTheme {
     CardStyle? card,
     CheckboxStyle? checkbox,
     DialogStyle? dialog,
+    ChipStyle? chip,
     DividerStyle? divider,
     IconButtonStyle? iconButton,
     ProgressStyle? progress,
@@ -142,6 +148,7 @@ class RemixComponentTheme {
       card: card ?? this.card,
       checkbox: checkbox ?? this.checkbox,
       dialog: dialog ?? this.dialog,
+      chip: chip ?? this.chip,
       divider: divider ?? this.divider,
       iconButton: iconButton ?? this.iconButton,
       progress: progress ?? this.progress,
