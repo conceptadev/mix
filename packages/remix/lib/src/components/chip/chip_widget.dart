@@ -4,20 +4,20 @@ class Chip extends StatefulWidget {
   const Chip({
     super.key,
     this.value = false,
-    required this.label,
+    this.label,
     this.disabled = false,
     this.iconLeft,
     this.iconRight,
     this.variants = const [],
-    required this.onPressed,
+    required this.onChanged,
     this.style,
   });
 
   final bool value;
-  final String label;
+  final String? label;
   final IconData? iconLeft;
   final IconData? iconRight;
-  final VoidCallback? onPressed;
+  final void Function(bool)? onChanged;
   final bool disabled;
   final List<Variant> variants;
   final ChipStyle? style;
@@ -65,7 +65,9 @@ class _ChipState extends State<Chip> {
 
     return Pressable(
       enabled: !widget.disabled,
-      onPress: widget.disabled ? null : widget.onPressed,
+      controller: _controller,
+      onPress:
+          widget.disabled ? null : () => widget.onChanged?.call(!widget.value),
       child: SpecBuilder(
         style: style.makeStyle(configuration).applyVariants(widget.variants),
         builder: (context) {
@@ -76,7 +78,7 @@ class _ChipState extends State<Chip> {
               direction: Axis.horizontal,
               children: [
                 if (widget.iconLeft != null) spec.icon(widget.iconLeft),
-                spec.label(widget.label),
+                if (widget.label?.isNotEmpty == true) spec.label(widget.label!),
                 if (widget.iconRight != null) spec.icon(widget.iconRight),
               ],
             ),
