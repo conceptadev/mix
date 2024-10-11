@@ -96,7 +96,7 @@ class RemixComponentTheme {
       card: FortalezaCardStyle(),
       checkbox: FortalezaCheckboxStyle(),
       dialog: FortalezaDialogStyle(),
-      chip: ChipStyle(),
+      chip: FortalezaChipStyle(),
       divider: FortalezaDividerStyle(),
       iconButton: FortalezaIconButtonStyle(),
       progress: FortalezaProgressStyle(),

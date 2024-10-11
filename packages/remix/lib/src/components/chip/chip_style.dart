@@ -17,8 +17,8 @@ class ChipStyle extends SpecStyle<ChipSpecUtility> {
 
     final iconStyle = [
       $.icon.chain
-        ..size(24)
-        ..color.white(),
+        ..size(20)
+        ..color.black(),
     ];
 
     final labelStyle = [
@@ -31,17 +31,20 @@ class ChipStyle extends SpecStyle<ChipSpecUtility> {
         )
         ..style.fontSize(14)
         ..style.height(1.5)
-        ..style.color.white()
-        ..style.fontWeight.w500(),
+        ..style.color.black()
+        ..style.fontWeight.w600(),
     ];
 
     final containerStyle = [
       $.container.chain
         ..borderRadius(6)
-        ..color.black()
+        ..color.white()
+        ..border.all.width(1)
+        ..border.color.grey.shade300()
         ..padding.vertical(8)
         ..padding.horizontal(12),
       spec.on.disabled($.container.color.grey.shade400()),
+      spec.on.selected($.container.color.grey.shade100()),
     ];
 
     return Style.create([

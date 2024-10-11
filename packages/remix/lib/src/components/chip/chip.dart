@@ -4,15 +4,13 @@ import 'package:flutter/widgets.dart';
 import 'package:mix/mix.dart';
 import 'package:mix_annotations/mix_annotations.dart';
 
-import '../../helpers/component_builder.dart';
 import '../../theme/remix_theme.dart';
-
-import '../spinner/spinner.dart';
+import '../../theme/remix_tokens.dart';
 
 part 'chip.g.dart';
 
 part 'chip_style.dart';
-// part 'chip_theme.dart';
+part 'chip_theme.dart';
 part 'chip_widget.dart';
 
 @MixableSpec()
