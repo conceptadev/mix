@@ -3,9 +3,9 @@ part of 'chip.dart';
 class FortalezaChipStyle extends ChipStyle {
   static const ghost = Variant('for.chip.ghost');
 
-  static List<Variant> get variants => [ghost];
-
   const FortalezaChipStyle();
+
+  static List<Variant> get variants => [ghost];
 
   @override
   Style makeStyle(SpecConfiguration<ChipSpecUtility> spec) {
@@ -13,14 +13,12 @@ class FortalezaChipStyle extends ChipStyle {
 
     final flexStyle = [$.flex.gap.$space(2)];
 
-    final iconStyle = [
-      $.icon.color.$accent(),
-    ];
+    final iconStyle = [$.icon.color.$accent()];
 
     final labelStyle = [
       $.label.chain
         ..style.$text(2)
-        ..style.color.$accent()
+        ..style.color.$accent(),
     ];
 
     final containerStyle = [
@@ -30,12 +28,8 @@ class FortalezaChipStyle extends ChipStyle {
         ..border.color.$accent(6)
         ..padding.vertical(8)
         ..padding.horizontal(12),
-      (spec.on.hover & spec.on.unselected)(
-        $.container.color.$accent(3),
-      ),
-      spec.on.selected(
-        $.container.color.$accent(4),
-      ),
+      (spec.on.hover & spec.on.unselected)($.container.color.$accent(3)),
+      spec.on.selected($.container.color.$accent(4)),
     ];
 
     final disabledStyle = [
@@ -45,9 +39,7 @@ class FortalezaChipStyle extends ChipStyle {
         $.label.style.color.$neutral(8),
         $.icon.color.$neutral(8),
       ),
-      (spec.on.disabled & spec.on.selected)(
-        $.container.color.$neutral(4),
-      ),
+      (spec.on.disabled & spec.on.selected)($.container.color.$neutral(4)),
     ];
 
     final ghostStyle = Style.create([
@@ -63,9 +55,7 @@ class FortalezaChipStyle extends ChipStyle {
         $.container.color.$neutral(2),
         $.icon.color.$neutral(8),
       ),
-      (spec.on.disabled & spec.on.selected)(
-        $.container.color.$neutral(4),
-      ),
+      (spec.on.disabled & spec.on.selected)($.container.color.$neutral(4)),
     ]);
 
     return Style.create([

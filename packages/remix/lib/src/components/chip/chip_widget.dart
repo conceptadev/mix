@@ -65,9 +65,9 @@ class _ChipState extends State<Chip> {
 
     return Pressable(
       enabled: !widget.disabled,
-      controller: _controller,
       onPress:
           widget.disabled ? null : () => widget.onChanged?.call(!widget.value),
+      controller: _controller,
       child: SpecBuilder(
         style: style.makeStyle(configuration).applyVariants(widget.variants),
         builder: (context) {
