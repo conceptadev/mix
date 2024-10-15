@@ -89,6 +89,9 @@ class Pressable extends StatefulWidget {
     this.unpressDelay = kDefaultAnimationDuration,
     this.controller,
     this.actions,
+    this.onPanDown,
+    this.onPanUpdate,
+    this.onPanEnd,
   });
 
   final Widget child;
@@ -102,6 +105,10 @@ class Pressable extends StatefulWidget {
   final bool excludeFromSemantics;
 
   final bool canRequestFocus;
+
+  final void Function(DragDownDetails)? onPanDown;
+  final void Function(DragUpdateDetails)? onPanUpdate;
+  final void Function(DragEndDetails)? onPanEnd;
 
   /// Should gestures provide audible and/or haptic feedback
   ///
@@ -201,6 +208,9 @@ class PressableWidgetState extends State<Pressable> {
       controller: _controller,
       onTap: widget.enabled ? widget.onPress?.call : null,
       onLongPress: widget.enabled ? widget.onLongPress?.call : null,
+      onPanDown: widget.enabled ? widget.onPanDown?.call : null,
+      onPanUpdate: widget.enabled ? widget.onPanUpdate?.call : null,
+      onPanEnd: widget.enabled ? widget.onPanEnd?.call : null,
       excludeFromSemantics: widget.excludeFromSemantics,
       hitTestBehavior: widget.hitTestBehavior,
       unpressDelay: widget.unpressDelay,

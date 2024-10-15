@@ -95,10 +95,12 @@ class _GestureMixStateWidgetState extends State<GestureMixStateWidget> {
   }
 
   void _onPanUpdate(DragUpdateDetails event) {
+    _controller.dragged = true;
     widget.onPanUpdate?.call(event);
   }
 
   void _onPanDown(DragDownDetails details) {
+    _controller.dragged = true;
     widget.onPanDown?.call(details);
   }
 
@@ -112,7 +114,7 @@ class _GestureMixStateWidgetState extends State<GestureMixStateWidget> {
   }
 
   void _onPanEnd(DragEndDetails details) {
-    _handlePress(true);
+    _controller.dragged = false;
     widget.onPanEnd?.call(details);
   }
 
@@ -142,10 +144,12 @@ class _GestureMixStateWidgetState extends State<GestureMixStateWidget> {
   }
 
   void _onPanCancel() {
+    _controller.dragged = false;
     widget.onPanCancel?.call();
   }
 
   void _onPanStart(DragStartDetails details) {
+    _controller.dragged = true;
     widget.onPanStart?.call(details);
   }
 
