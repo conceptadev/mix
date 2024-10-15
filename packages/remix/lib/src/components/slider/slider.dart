@@ -12,15 +12,10 @@ part 'slider_widget.dart';
 
 @MixableSpec()
 class SliderSpec extends Spec<SliderSpec> with _$SliderSpec, Diagnosticable {
-  final Color thumbColor;
-  final Color thumbStrokeColor;
-  final double thumbRadius;
-  final double thumbStrokeWidth;
-  final Color divisionColor;
-  final Color trackColor;
-  final double trackHeight;
-  final double divisionRadius;
-  final Color activeTrackColor;
+  final BoxSpec thumb;
+  final BoxSpec track;
+  final BoxSpec activeTrack;
+  final BoxSpec division;
   final EdgeInsetsGeometry padding;
 
   /// {@macro button_spec_of}
@@ -29,28 +24,18 @@ class SliderSpec extends Spec<SliderSpec> with _$SliderSpec, Diagnosticable {
   static const from = _$SliderSpec.from;
 
   SliderSpec({
-    Color? thumbColor,
-    Color? thumbStrokeColor,
-    Color? trackColor,
-    Color? activeTrackColor,
-    double? trackHeight,
-    double? thumbRadius,
-    double? thumbStrokeWidth,
+    BoxSpec? thumb,
+    BoxSpec? track,
+    BoxSpec? activeTrack,
     EdgeInsetsGeometry? padding,
-    Color? divisionColor,
-    double? divisionRadius,
+    BoxSpec? division,
     super.modifiers,
     super.animated,
-  })  : thumbColor = thumbColor ?? const Color(0xff000000),
-        thumbStrokeColor = thumbStrokeColor ?? const Color(0xffffffff),
-        trackColor = trackColor ?? const Color(0xff000000),
-        activeTrackColor = activeTrackColor ?? const Color(0xff000000),
-        trackHeight = trackHeight ?? 4.0,
-        thumbRadius = thumbRadius ?? 10.0,
-        thumbStrokeWidth = thumbStrokeWidth ?? 2.0,
+  })  : thumb = thumb ?? const BoxSpec(),
+        track = track ?? const BoxSpec(),
+        activeTrack = activeTrack ?? const BoxSpec(),
         padding = padding ?? EdgeInsets.zero,
-        divisionColor = divisionColor ?? const Color(0xff000000),
-        divisionRadius = divisionRadius ?? 1.5;
+        division = division ?? const BoxSpec();
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
