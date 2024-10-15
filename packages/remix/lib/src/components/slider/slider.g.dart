@@ -35,7 +35,6 @@ mixin _$SliderSpec on Spec<SliderSpec> {
     BoxSpec? thumb,
     BoxSpec? track,
     BoxSpec? activeTrack,
-    EdgeInsetsGeometry? padding,
     BoxSpec? division,
     WidgetModifiersData? modifiers,
     AnimatedData? animated,
@@ -44,7 +43,6 @@ mixin _$SliderSpec on Spec<SliderSpec> {
       thumb: thumb ?? _$this.thumb,
       track: track ?? _$this.track,
       activeTrack: activeTrack ?? _$this.activeTrack,
-      padding: padding ?? _$this.padding,
       division: division ?? _$this.division,
       modifiers: modifiers ?? _$this.modifiers,
       animated: animated ?? _$this.animated,
@@ -63,7 +61,6 @@ mixin _$SliderSpec on Spec<SliderSpec> {
   /// interpolation method:
   ///
   /// - [BoxSpec.lerp] for [thumb] and [track] and [activeTrack] and [division].
-  /// - [EdgeInsetsGeometry.lerp] for [padding].
 
   /// For [modifiers] and [animated], the interpolation is performed using a step function.
   /// If [t] is less than 0.5, the value from the current [SliderSpec] is used. Otherwise, the value
@@ -79,7 +76,6 @@ mixin _$SliderSpec on Spec<SliderSpec> {
       thumb: _$this.thumb.lerp(other.thumb, t),
       track: _$this.track.lerp(other.track, t),
       activeTrack: _$this.activeTrack.lerp(other.activeTrack, t),
-      padding: EdgeInsetsGeometry.lerp(_$this.padding, other.padding, t)!,
       division: _$this.division.lerp(other.division, t),
       modifiers: other.modifiers,
       animated: t < 0.5 ? _$this.animated : other.animated,
@@ -95,7 +91,6 @@ mixin _$SliderSpec on Spec<SliderSpec> {
         _$this.thumb,
         _$this.track,
         _$this.activeTrack,
-        _$this.padding,
         _$this.division,
         _$this.modifiers,
         _$this.animated,
@@ -110,8 +105,6 @@ mixin _$SliderSpec on Spec<SliderSpec> {
         .add(DiagnosticsProperty('track', _$this.track, defaultValue: null));
     properties.add(DiagnosticsProperty('activeTrack', _$this.activeTrack,
         defaultValue: null));
-    properties.add(
-        DiagnosticsProperty('padding', _$this.padding, defaultValue: null));
     properties.add(
         DiagnosticsProperty('division', _$this.division, defaultValue: null));
     properties.add(
@@ -133,14 +126,12 @@ class SliderSpecAttribute extends SpecAttribute<SliderSpec>
   final BoxSpecAttribute? thumb;
   final BoxSpecAttribute? track;
   final BoxSpecAttribute? activeTrack;
-  final SpacingDto? padding;
   final BoxSpecAttribute? division;
 
   const SliderSpecAttribute({
     this.thumb,
     this.track,
     this.activeTrack,
-    this.padding,
     this.division,
     super.modifiers,
     super.animated,
@@ -160,7 +151,6 @@ class SliderSpecAttribute extends SpecAttribute<SliderSpec>
       thumb: thumb?.resolve(mix),
       track: track?.resolve(mix),
       activeTrack: activeTrack?.resolve(mix),
-      padding: padding?.resolve(mix),
       division: division?.resolve(mix),
       modifiers: modifiers?.resolve(mix),
       animated: animated?.resolve(mix) ?? mix.animation,
@@ -183,7 +173,6 @@ class SliderSpecAttribute extends SpecAttribute<SliderSpec>
       thumb: thumb?.merge(other.thumb) ?? other.thumb,
       track: track?.merge(other.track) ?? other.track,
       activeTrack: activeTrack?.merge(other.activeTrack) ?? other.activeTrack,
-      padding: padding?.merge(other.padding) ?? other.padding,
       division: division?.merge(other.division) ?? other.division,
       modifiers: modifiers?.merge(other.modifiers) ?? other.modifiers,
       animated: animated?.merge(other.animated) ?? other.animated,
@@ -199,7 +188,6 @@ class SliderSpecAttribute extends SpecAttribute<SliderSpec>
         thumb,
         track,
         activeTrack,
-        padding,
         division,
         modifiers,
         animated,
@@ -212,7 +200,6 @@ class SliderSpecAttribute extends SpecAttribute<SliderSpec>
     properties.add(DiagnosticsProperty('track', track, defaultValue: null));
     properties.add(
         DiagnosticsProperty('activeTrack', activeTrack, defaultValue: null));
-    properties.add(DiagnosticsProperty('padding', padding, defaultValue: null));
     properties
         .add(DiagnosticsProperty('division', division, defaultValue: null));
     properties
@@ -237,9 +224,6 @@ class SliderSpecUtility<T extends Attribute>
   /// Utility for defining [SliderSpecAttribute.activeTrack]
   late final activeTrack = BoxSpecUtility((v) => only(activeTrack: v));
 
-  /// Utility for defining [SliderSpecAttribute.padding]
-  late final padding = SpacingUtility((v) => only(padding: v));
-
   /// Utility for defining [SliderSpecAttribute.division]
   late final division = BoxSpecUtility((v) => only(division: v));
 
@@ -263,7 +247,6 @@ class SliderSpecUtility<T extends Attribute>
     BoxSpecAttribute? thumb,
     BoxSpecAttribute? track,
     BoxSpecAttribute? activeTrack,
-    SpacingDto? padding,
     BoxSpecAttribute? division,
     WidgetModifiersDataDto? modifiers,
     AnimatedDataDto? animated,
@@ -272,7 +255,6 @@ class SliderSpecUtility<T extends Attribute>
       thumb: thumb,
       track: track,
       activeTrack: activeTrack,
-      padding: padding,
       division: division,
       modifiers: modifiers,
       animated: animated,

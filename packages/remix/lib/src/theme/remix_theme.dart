@@ -110,7 +110,7 @@ class RemixComponentTheme {
       spinner: FortalezaSpinnerStyle(),
       switchComponent: FortalezaSwitchStyle(),
       toast: FortalezaToastStyle(),
-      slider: SliderStyle(),
+      slider: FortalezaSliderStyle(),
     );
   }
 
