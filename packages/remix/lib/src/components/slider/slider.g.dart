@@ -32,30 +32,20 @@ mixin _$SliderSpec on Spec<SliderSpec> {
   /// replaced with the new values.
   @override
   SliderSpec copyWith({
-    Color? thumbColor,
-    Color? thumbStrokeColor,
-    Color? trackColor,
-    Color? activeTrackColor,
-    double? trackHeight,
-    double? thumbRadius,
-    double? thumbStrokeWidth,
+    BoxSpec? thumb,
+    BoxSpec? track,
+    BoxSpec? activeTrack,
     EdgeInsetsGeometry? padding,
-    Color? divisionColor,
-    double? divisionRadius,
+    BoxSpec? division,
     WidgetModifiersData? modifiers,
     AnimatedData? animated,
   }) {
     return SliderSpec(
-      thumbColor: thumbColor ?? _$this.thumbColor,
-      thumbStrokeColor: thumbStrokeColor ?? _$this.thumbStrokeColor,
-      trackColor: trackColor ?? _$this.trackColor,
-      activeTrackColor: activeTrackColor ?? _$this.activeTrackColor,
-      trackHeight: trackHeight ?? _$this.trackHeight,
-      thumbRadius: thumbRadius ?? _$this.thumbRadius,
-      thumbStrokeWidth: thumbStrokeWidth ?? _$this.thumbStrokeWidth,
+      thumb: thumb ?? _$this.thumb,
+      track: track ?? _$this.track,
+      activeTrack: activeTrack ?? _$this.activeTrack,
       padding: padding ?? _$this.padding,
-      divisionColor: divisionColor ?? _$this.divisionColor,
-      divisionRadius: divisionRadius ?? _$this.divisionRadius,
+      division: division ?? _$this.division,
       modifiers: modifiers ?? _$this.modifiers,
       animated: animated ?? _$this.animated,
     );
@@ -72,8 +62,7 @@ mixin _$SliderSpec on Spec<SliderSpec> {
   /// The interpolation is performed on each property of the [SliderSpec] using the appropriate
   /// interpolation method:
   ///
-  /// - [Color.lerp] for [thumbColor] and [thumbStrokeColor] and [trackColor] and [activeTrackColor] and [divisionColor].
-  /// - [MixHelpers.lerpDouble] for [trackHeight] and [thumbRadius] and [thumbStrokeWidth] and [divisionRadius].
+  /// - [BoxSpec.lerp] for [thumb] and [track] and [activeTrack] and [division].
   /// - [EdgeInsetsGeometry.lerp] for [padding].
 
   /// For [modifiers] and [animated], the interpolation is performed using a step function.
@@ -87,22 +76,11 @@ mixin _$SliderSpec on Spec<SliderSpec> {
     if (other == null) return _$this;
 
     return SliderSpec(
-      thumbColor: Color.lerp(_$this.thumbColor, other.thumbColor, t)!,
-      thumbStrokeColor:
-          Color.lerp(_$this.thumbStrokeColor, other.thumbStrokeColor, t)!,
-      trackColor: Color.lerp(_$this.trackColor, other.trackColor, t)!,
-      activeTrackColor:
-          Color.lerp(_$this.activeTrackColor, other.activeTrackColor, t)!,
-      trackHeight:
-          MixHelpers.lerpDouble(_$this.trackHeight, other.trackHeight, t)!,
-      thumbRadius:
-          MixHelpers.lerpDouble(_$this.thumbRadius, other.thumbRadius, t)!,
-      thumbStrokeWidth: MixHelpers.lerpDouble(
-          _$this.thumbStrokeWidth, other.thumbStrokeWidth, t)!,
+      thumb: _$this.thumb.lerp(other.thumb, t),
+      track: _$this.track.lerp(other.track, t),
+      activeTrack: _$this.activeTrack.lerp(other.activeTrack, t),
       padding: EdgeInsetsGeometry.lerp(_$this.padding, other.padding, t)!,
-      divisionColor: Color.lerp(_$this.divisionColor, other.divisionColor, t)!,
-      divisionRadius: MixHelpers.lerpDouble(
-          _$this.divisionRadius, other.divisionRadius, t)!,
+      division: _$this.division.lerp(other.division, t),
       modifiers: other.modifiers,
       animated: t < 0.5 ? _$this.animated : other.animated,
     );
@@ -114,16 +92,11 @@ mixin _$SliderSpec on Spec<SliderSpec> {
   /// compare two [SliderSpec] instances for equality.
   @override
   List<Object?> get props => [
-        _$this.thumbColor,
-        _$this.thumbStrokeColor,
-        _$this.trackColor,
-        _$this.activeTrackColor,
-        _$this.trackHeight,
-        _$this.thumbRadius,
-        _$this.thumbStrokeWidth,
+        _$this.thumb,
+        _$this.track,
+        _$this.activeTrack,
         _$this.padding,
-        _$this.divisionColor,
-        _$this.divisionRadius,
+        _$this.division,
         _$this.modifiers,
         _$this.animated,
       ];
@@ -131,29 +104,16 @@ mixin _$SliderSpec on Spec<SliderSpec> {
   SliderSpec get _$this => this as SliderSpec;
 
   void _debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    properties.add(DiagnosticsProperty('thumbColor', _$this.thumbColor,
-        defaultValue: null));
-    properties.add(DiagnosticsProperty(
-        'thumbStrokeColor', _$this.thumbStrokeColor,
-        defaultValue: null));
-    properties.add(DiagnosticsProperty('trackColor', _$this.trackColor,
-        defaultValue: null));
-    properties.add(DiagnosticsProperty(
-        'activeTrackColor', _$this.activeTrackColor,
-        defaultValue: null));
-    properties.add(DiagnosticsProperty('trackHeight', _$this.trackHeight,
-        defaultValue: null));
-    properties.add(DiagnosticsProperty('thumbRadius', _$this.thumbRadius,
-        defaultValue: null));
-    properties.add(DiagnosticsProperty(
-        'thumbStrokeWidth', _$this.thumbStrokeWidth,
+    properties
+        .add(DiagnosticsProperty('thumb', _$this.thumb, defaultValue: null));
+    properties
+        .add(DiagnosticsProperty('track', _$this.track, defaultValue: null));
+    properties.add(DiagnosticsProperty('activeTrack', _$this.activeTrack,
         defaultValue: null));
     properties.add(
         DiagnosticsProperty('padding', _$this.padding, defaultValue: null));
-    properties.add(DiagnosticsProperty('divisionColor', _$this.divisionColor,
-        defaultValue: null));
-    properties.add(DiagnosticsProperty('divisionRadius', _$this.divisionRadius,
-        defaultValue: null));
+    properties.add(
+        DiagnosticsProperty('division', _$this.division, defaultValue: null));
     properties.add(
         DiagnosticsProperty('modifiers', _$this.modifiers, defaultValue: null));
     properties.add(
@@ -170,28 +130,18 @@ mixin _$SliderSpec on Spec<SliderSpec> {
 /// the [SliderSpec] constructor.
 class SliderSpecAttribute extends SpecAttribute<SliderSpec>
     with Diagnosticable {
-  final ColorDto? thumbColor;
-  final ColorDto? thumbStrokeColor;
-  final ColorDto? trackColor;
-  final ColorDto? activeTrackColor;
-  final double? trackHeight;
-  final double? thumbRadius;
-  final double? thumbStrokeWidth;
+  final BoxSpecAttribute? thumb;
+  final BoxSpecAttribute? track;
+  final BoxSpecAttribute? activeTrack;
   final SpacingDto? padding;
-  final ColorDto? divisionColor;
-  final double? divisionRadius;
+  final BoxSpecAttribute? division;
 
   const SliderSpecAttribute({
-    this.thumbColor,
-    this.thumbStrokeColor,
-    this.trackColor,
-    this.activeTrackColor,
-    this.trackHeight,
-    this.thumbRadius,
-    this.thumbStrokeWidth,
+    this.thumb,
+    this.track,
+    this.activeTrack,
     this.padding,
-    this.divisionColor,
-    this.divisionRadius,
+    this.division,
     super.modifiers,
     super.animated,
   });
@@ -207,16 +157,11 @@ class SliderSpecAttribute extends SpecAttribute<SliderSpec>
   @override
   SliderSpec resolve(MixData mix) {
     return SliderSpec(
-      thumbColor: thumbColor?.resolve(mix),
-      thumbStrokeColor: thumbStrokeColor?.resolve(mix),
-      trackColor: trackColor?.resolve(mix),
-      activeTrackColor: activeTrackColor?.resolve(mix),
-      trackHeight: trackHeight,
-      thumbRadius: thumbRadius,
-      thumbStrokeWidth: thumbStrokeWidth,
+      thumb: thumb?.resolve(mix),
+      track: track?.resolve(mix),
+      activeTrack: activeTrack?.resolve(mix),
       padding: padding?.resolve(mix),
-      divisionColor: divisionColor?.resolve(mix),
-      divisionRadius: divisionRadius,
+      division: division?.resolve(mix),
       modifiers: modifiers?.resolve(mix),
       animated: animated?.resolve(mix) ?? mix.animation,
     );
@@ -235,19 +180,11 @@ class SliderSpecAttribute extends SpecAttribute<SliderSpec>
     if (other == null) return this;
 
     return SliderSpecAttribute(
-      thumbColor: thumbColor?.merge(other.thumbColor) ?? other.thumbColor,
-      thumbStrokeColor: thumbStrokeColor?.merge(other.thumbStrokeColor) ??
-          other.thumbStrokeColor,
-      trackColor: trackColor?.merge(other.trackColor) ?? other.trackColor,
-      activeTrackColor: activeTrackColor?.merge(other.activeTrackColor) ??
-          other.activeTrackColor,
-      trackHeight: other.trackHeight ?? trackHeight,
-      thumbRadius: other.thumbRadius ?? thumbRadius,
-      thumbStrokeWidth: other.thumbStrokeWidth ?? thumbStrokeWidth,
+      thumb: thumb?.merge(other.thumb) ?? other.thumb,
+      track: track?.merge(other.track) ?? other.track,
+      activeTrack: activeTrack?.merge(other.activeTrack) ?? other.activeTrack,
       padding: padding?.merge(other.padding) ?? other.padding,
-      divisionColor:
-          divisionColor?.merge(other.divisionColor) ?? other.divisionColor,
-      divisionRadius: other.divisionRadius ?? divisionRadius,
+      division: division?.merge(other.division) ?? other.division,
       modifiers: modifiers?.merge(other.modifiers) ?? other.modifiers,
       animated: animated?.merge(other.animated) ?? other.animated,
     );
@@ -259,16 +196,11 @@ class SliderSpecAttribute extends SpecAttribute<SliderSpec>
   /// compare two [SliderSpecAttribute] instances for equality.
   @override
   List<Object?> get props => [
-        thumbColor,
-        thumbStrokeColor,
-        trackColor,
-        activeTrackColor,
-        trackHeight,
-        thumbRadius,
-        thumbStrokeWidth,
+        thumb,
+        track,
+        activeTrack,
         padding,
-        divisionColor,
-        divisionRadius,
+        division,
         modifiers,
         animated,
       ];
@@ -276,25 +208,13 @@ class SliderSpecAttribute extends SpecAttribute<SliderSpec>
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties
-        .add(DiagnosticsProperty('thumbColor', thumbColor, defaultValue: null));
-    properties.add(DiagnosticsProperty('thumbStrokeColor', thumbStrokeColor,
-        defaultValue: null));
-    properties
-        .add(DiagnosticsProperty('trackColor', trackColor, defaultValue: null));
-    properties.add(DiagnosticsProperty('activeTrackColor', activeTrackColor,
-        defaultValue: null));
+    properties.add(DiagnosticsProperty('thumb', thumb, defaultValue: null));
+    properties.add(DiagnosticsProperty('track', track, defaultValue: null));
     properties.add(
-        DiagnosticsProperty('trackHeight', trackHeight, defaultValue: null));
-    properties.add(
-        DiagnosticsProperty('thumbRadius', thumbRadius, defaultValue: null));
-    properties.add(DiagnosticsProperty('thumbStrokeWidth', thumbStrokeWidth,
-        defaultValue: null));
+        DiagnosticsProperty('activeTrack', activeTrack, defaultValue: null));
     properties.add(DiagnosticsProperty('padding', padding, defaultValue: null));
-    properties.add(DiagnosticsProperty('divisionColor', divisionColor,
-        defaultValue: null));
-    properties.add(DiagnosticsProperty('divisionRadius', divisionRadius,
-        defaultValue: null));
+    properties
+        .add(DiagnosticsProperty('division', division, defaultValue: null));
     properties
         .add(DiagnosticsProperty('modifiers', modifiers, defaultValue: null));
     properties
@@ -308,35 +228,20 @@ class SliderSpecAttribute extends SpecAttribute<SliderSpec>
 /// Use the methods of this class to configure specific properties of a [SliderSpec].
 class SliderSpecUtility<T extends Attribute>
     extends SpecUtility<T, SliderSpecAttribute> {
-  /// Utility for defining [SliderSpecAttribute.thumbColor]
-  late final thumbColor = ColorUtility((v) => only(thumbColor: v));
+  /// Utility for defining [SliderSpecAttribute.thumb]
+  late final thumb = BoxSpecUtility((v) => only(thumb: v));
 
-  /// Utility for defining [SliderSpecAttribute.thumbStrokeColor]
-  late final thumbStrokeColor = ColorUtility((v) => only(thumbStrokeColor: v));
+  /// Utility for defining [SliderSpecAttribute.track]
+  late final track = BoxSpecUtility((v) => only(track: v));
 
-  /// Utility for defining [SliderSpecAttribute.trackColor]
-  late final trackColor = ColorUtility((v) => only(trackColor: v));
-
-  /// Utility for defining [SliderSpecAttribute.activeTrackColor]
-  late final activeTrackColor = ColorUtility((v) => only(activeTrackColor: v));
-
-  /// Utility for defining [SliderSpecAttribute.trackHeight]
-  late final trackHeight = DoubleUtility((v) => only(trackHeight: v));
-
-  /// Utility for defining [SliderSpecAttribute.thumbRadius]
-  late final thumbRadius = DoubleUtility((v) => only(thumbRadius: v));
-
-  /// Utility for defining [SliderSpecAttribute.thumbStrokeWidth]
-  late final thumbStrokeWidth = DoubleUtility((v) => only(thumbStrokeWidth: v));
+  /// Utility for defining [SliderSpecAttribute.activeTrack]
+  late final activeTrack = BoxSpecUtility((v) => only(activeTrack: v));
 
   /// Utility for defining [SliderSpecAttribute.padding]
   late final padding = SpacingUtility((v) => only(padding: v));
 
-  /// Utility for defining [SliderSpecAttribute.divisionColor]
-  late final divisionColor = ColorUtility((v) => only(divisionColor: v));
-
-  /// Utility for defining [SliderSpecAttribute.divisionRadius]
-  late final divisionRadius = DoubleUtility((v) => only(divisionRadius: v));
+  /// Utility for defining [SliderSpecAttribute.division]
+  late final division = BoxSpecUtility((v) => only(division: v));
 
   /// Utility for defining [SliderSpecAttribute.modifiers]
   late final wrap = SpecModifierUtility((v) => only(modifiers: v));
@@ -355,30 +260,20 @@ class SliderSpecUtility<T extends Attribute>
   /// Returns a new [SliderSpecAttribute] with the specified properties.
   @override
   T only({
-    ColorDto? thumbColor,
-    ColorDto? thumbStrokeColor,
-    ColorDto? trackColor,
-    ColorDto? activeTrackColor,
-    double? trackHeight,
-    double? thumbRadius,
-    double? thumbStrokeWidth,
+    BoxSpecAttribute? thumb,
+    BoxSpecAttribute? track,
+    BoxSpecAttribute? activeTrack,
     SpacingDto? padding,
-    ColorDto? divisionColor,
-    double? divisionRadius,
+    BoxSpecAttribute? division,
     WidgetModifiersDataDto? modifiers,
     AnimatedDataDto? animated,
   }) {
     return builder(SliderSpecAttribute(
-      thumbColor: thumbColor,
-      thumbStrokeColor: thumbStrokeColor,
-      trackColor: trackColor,
-      activeTrackColor: activeTrackColor,
-      trackHeight: trackHeight,
-      thumbRadius: thumbRadius,
-      thumbStrokeWidth: thumbStrokeWidth,
+      thumb: thumb,
+      track: track,
+      activeTrack: activeTrack,
       padding: padding,
-      divisionColor: divisionColor,
-      divisionRadius: divisionRadius,
+      division: division,
       modifiers: modifiers,
       animated: animated,
     ));
