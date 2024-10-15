@@ -13,6 +13,7 @@ import '../components/chip/chip.dart';
 import '../components/dialog/dialog.dart';
 import '../components/divider/divider.dart';
 import '../components/icon_button/icon_button.dart';
+import '../components/menu_item/menu_item.dart';
 import '../components/progress/progress.dart';
 import '../components/radio/radio.dart';
 import '../components/scaffold/scaffold.dart';
@@ -35,6 +36,7 @@ class RemixComponentTheme {
   final ChipStyle chip;
   final DividerStyle divider;
   final IconButtonStyle iconButton;
+  final MenuItemStyle menuItem;
   final ProgressStyle progress;
   final RadioStyle radio;
   final ScaffoldStyle scaffold;
@@ -56,6 +58,7 @@ class RemixComponentTheme {
     required this.chip,
     required this.divider,
     required this.iconButton,
+    required this.menuItem,
     required this.progress,
     required this.radio,
     required this.scaffold,
@@ -79,6 +82,7 @@ class RemixComponentTheme {
       chip: ChipStyle(),
       divider: DividerStyle(),
       iconButton: IconButtonStyle(),
+      menuItem: MenuItemStyle(),
       progress: ProgressStyle(),
       radio: RadioStyle(),
       scaffold: ScaffoldStyle(),
@@ -123,6 +127,7 @@ class RemixComponentTheme {
       chip: FortalezaChipStyle(),
       divider: FortalezaDividerStyle(),
       iconButton: FortalezaIconButtonStyle(),
+      menuItem: FortalezaMenuItemStyle(),
       progress: FortalezaProgressStyle(),
       radio: FortalezaRadioStyle(),
       scaffold: FortalezaScaffoldStyle(),
@@ -156,6 +161,7 @@ class RemixComponentTheme {
     ChipStyle? chip,
     DividerStyle? divider,
     IconButtonStyle? iconButton,
+    MenuItemStyle? menuItem,
     ProgressStyle? progress,
     RadioStyle? radio,
     ScaffoldStyle? scaffold,
@@ -177,6 +183,7 @@ class RemixComponentTheme {
       chip: chip ?? this.chip,
       divider: divider ?? this.divider,
       iconButton: iconButton ?? this.iconButton,
+      menuItem: menuItem ?? this.menuItem,
       progress: progress ?? this.progress,
       radio: radio ?? this.radio,
       scaffold: scaffold ?? this.scaffold,
