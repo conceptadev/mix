@@ -4,7 +4,7 @@ class Slider extends StatefulWidget {
   const Slider({
     super.key,
     this.min = 0.0,
-    this.max = 100.0,
+    this.max = 1.0,
     this.divisions = 0,
     required this.onChanged,
     required this.value,
@@ -56,7 +56,7 @@ class _SliderState extends State<Slider> with TickerProviderStateMixin {
     final style = widget.style ?? context.remix.components.slider;
     final configuration = SpecConfiguration(context, SliderSpecUtility.self);
 
-    return Pressable(
+    return MixGestureDetector(
       enabled: !widget.disabled,
       onPanUpdate: (details) {
         final value = _calculateValue(details.localPosition);
@@ -65,6 +65,10 @@ class _SliderState extends State<Slider> with TickerProviderStateMixin {
       onPanEnd: (details) {
         final value = _calculateValue(details.localPosition);
         widget.onChangeEnd?.call(value);
+      },
+      onPanStart: (details) {
+        final value = _calculateValue(details.localPosition);
+        widget.onChangeStart?.call(value);
       },
       child: SpecBuilder(
         style: style.makeStyle(configuration).applyVariants(widget.variants),
@@ -83,16 +87,12 @@ class _SliderState extends State<Slider> with TickerProviderStateMixin {
                     ((widget.value - widget.min) / (widget.max - widget.min))
                         .clamp(0, 1);
 
+                final a =
+                    (constraints.maxWidth - _thumbWidth / 4) / widget.divisions;
                 final divisions = [
                   for (int i = 0; i < widget.divisions; i++)
                     Transform.translate(
-                      offset: Offset(
-                        (constraints.maxWidth -
-                                _thumbWidth / widget.divisions) /
-                            widget.divisions *
-                            (i + 1),
-                        0,
-                      ),
+                      offset: Offset(a * (i + 1), 0),
                       child: spec.division(),
                     ),
                 ];

@@ -4,10 +4,11 @@ import 'package:mix/mix.dart';
 import 'package:mix_annotations/mix_annotations.dart';
 
 import '../../theme/remix_theme.dart';
+import '../../theme/remix_tokens.dart';
 
 part 'slider.g.dart';
 part 'slider_style.dart';
-// part 'slider_theme.dart';
+part 'slider_theme.dart';
 part 'slider_widget.dart';
 
 @MixableSpec()
@@ -16,7 +17,6 @@ class SliderSpec extends Spec<SliderSpec> with _$SliderSpec, Diagnosticable {
   final BoxSpec track;
   final BoxSpec activeTrack;
   final BoxSpec division;
-  final EdgeInsetsGeometry padding;
 
   /// {@macro button_spec_of}
   static const of = _$SliderSpec.of;
@@ -27,14 +27,12 @@ class SliderSpec extends Spec<SliderSpec> with _$SliderSpec, Diagnosticable {
     BoxSpec? thumb,
     BoxSpec? track,
     BoxSpec? activeTrack,
-    EdgeInsetsGeometry? padding,
     BoxSpec? division,
     super.modifiers,
     super.animated,
   })  : thumb = thumb ?? const BoxSpec(),
         track = track ?? const BoxSpec(),
         activeTrack = activeTrack ?? const BoxSpec(),
-        padding = padding ?? EdgeInsets.zero,
         division = division ?? const BoxSpec();
 
   @override
