@@ -9,10 +9,11 @@ import '../components/button/button.dart';
 import '../components/callout/callout.dart';
 import '../components/card/card.dart';
 import '../components/checkbox/checkbox.dart';
-import '../components/dialog/dialog.dart';
 import '../components/chip/chip.dart';
+import '../components/dialog/dialog.dart';
 import '../components/divider/divider.dart';
 import '../components/icon_button/icon_button.dart';
+import '../components/menu_item/menu_item.dart';
 import '../components/progress/progress.dart';
 import '../components/radio/radio.dart';
 import '../components/segmented_control/segmented_control.dart';
@@ -34,6 +35,7 @@ class RemixComponentTheme {
   final ChipStyle chip;
   final DividerStyle divider;
   final IconButtonStyle iconButton;
+  final MenuItemStyle menuItem;
   final ProgressStyle progress;
   final RadioStyle radio;
   final SegmentedControlStyle segmentedControl;
@@ -54,6 +56,7 @@ class RemixComponentTheme {
     required this.chip,
     required this.divider,
     required this.iconButton,
+    required this.menuItem,
     required this.progress,
     required this.radio,
     required this.segmentedControl,
@@ -76,6 +79,7 @@ class RemixComponentTheme {
       chip: ChipStyle(),
       divider: DividerStyle(),
       iconButton: IconButtonStyle(),
+      menuItem: MenuItemStyle(),
       progress: ProgressStyle(),
       radio: RadioStyle(),
       segmentedControl: SegmentedControlStyle(),
@@ -99,6 +103,7 @@ class RemixComponentTheme {
       chip: FortalezaChipStyle(),
       divider: FortalezaDividerStyle(),
       iconButton: FortalezaIconButtonStyle(),
+      menuItem: FortalezaMenuItemStyle(),
       progress: FortalezaProgressStyle(),
       radio: FortalezaRadioStyle(),
       segmentedControl: FortalezaSegmentedControlStyle(),
@@ -131,6 +136,7 @@ class RemixComponentTheme {
     ChipStyle? chip,
     DividerStyle? divider,
     IconButtonStyle? iconButton,
+    MenuItemStyle? menuItem,
     ProgressStyle? progress,
     RadioStyle? radio,
     SegmentedControlStyle? segmentedControl,
@@ -151,6 +157,7 @@ class RemixComponentTheme {
       chip: chip ?? this.chip,
       divider: divider ?? this.divider,
       iconButton: iconButton ?? this.iconButton,
+      menuItem: menuItem ?? this.menuItem,
       progress: progress ?? this.progress,
       radio: radio ?? this.radio,
       segmentedControl: segmentedControl ?? this.segmentedControl,
