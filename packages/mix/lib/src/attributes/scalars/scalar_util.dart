@@ -172,3 +172,12 @@ class TableBorderUtility<T extends Attribute> extends MixUtility<T, TableBorder>
     with _$TableBorderUtility<T> {
   const TableBorderUtility(super.builder);
 }
+
+final class StrokeAlignUtility<T extends Attribute>
+    extends ScalarUtility<T, double> {
+  const StrokeAlignUtility(super.builder);
+
+  T center() => builder(0);
+  T inside() => builder(-1);
+  T outside() => builder(1);
+}
