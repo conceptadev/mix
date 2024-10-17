@@ -19,12 +19,8 @@ class BadgeStyle extends SpecStyle<BadgeSpecUtility> {
 
     final labelStyle = [
       $.label.chain
-        ..textHeightBehavior(
-          const TextHeightBehavior(
-            applyHeightToFirstAscent: false,
-            applyHeightToLastDescent: true,
-          ),
-        )
+        ..textHeightBehavior.heightToFirstAscent.off()
+        ..textHeightBehavior.heightToLastDescent.on()
         ..textAlign.center()
         ..style.height(1.5)
         ..style.fontWeight.w500()

@@ -28,32 +28,23 @@ class RadioStyle extends SpecStyle<RadioSpecUtility> {
       spec.on.disabled($.indicator.color.black45()),
     ];
 
-    final textStyle = [
-      $.text.chain
-        ..style.fontSize(14)
-        ..style.height(1)
-        ..style.fontWeight.w500()
-        ..textHeightBehavior(
-          const TextHeightBehavior(
-            applyHeightToFirstAscent: false,
-            applyHeightToLastDescent: false,
-          ),
-        ),
-    ];
+    final textStyle = $.text.chain
+      ..style.fontSize(14)
+      ..style.height(1)
+      ..style.fontWeight.w500()
+      ..textHeightBehavior.heightToFirstAscent.off();
 
-    final flexStyle = [
-      $.flex.chain
-        ..row()
-        ..mainAxisAlignment.start()
-        ..crossAxisAlignment.center()
-        ..gap(8),
-    ];
+    final flexStyle = $.flex.chain
+      ..row()
+      ..mainAxisAlignment.start()
+      ..crossAxisAlignment.center()
+      ..gap(8);
 
     return Style.create([
       ...containerStyle,
       ...indicatorStyle,
-      ...textStyle,
-      ...flexStyle,
+      textStyle,
+      flexStyle,
     ]).animate(
       duration: const Duration(milliseconds: 100),
       curve: Curves.easeInOutQuad,
