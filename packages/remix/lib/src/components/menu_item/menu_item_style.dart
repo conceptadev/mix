@@ -13,11 +13,14 @@ class MenuItemStyle extends SpecStyle<MenuItemSpecUtility> {
       ..mainAxisSize.min()
       ..wrap.expanded()
       ..gap(4.0);
+
     final mainFlex = $.mainFlex.chain..gap(12.0);
+
     final title = $.title.style.fontSize(14.0);
+
     final subtitle = $.subtitle.chain
       ..style.fontSize(12.0)
-      ..style.color.black.withValue(0.5)
+      ..style.color.grey.shade600()
       ..maxLines(2);
 
     final container = $.container.chain
@@ -28,6 +31,40 @@ class MenuItemStyle extends SpecStyle<MenuItemSpecUtility> {
       ..size(20)
       ..color.black87();
 
-    return Style.create([textFlex, mainFlex, title, subtitle, container, icon]);
+    final disabled = spec.on.disabled(
+      $.title.style.color.grey.shade600(),
+      $.subtitle.style.color.grey.shade400(),
+    );
+
+    return Style.create([
+      textFlex,
+      mainFlex,
+      title,
+      subtitle,
+      container,
+      icon,
+      spec.on.disabled(disabled),
+    ]);
+  }
+}
+
+class MenuItemDarkStyle extends MenuItemStyle {
+  const MenuItemDarkStyle();
+
+  @override
+  Style makeStyle(SpecConfiguration<MenuItemSpecUtility> spec) {
+    final $ = spec.utilities;
+
+    final disabled = spec.on.disabled(
+      $.title.style.color.grey.shade400(),
+      $.subtitle.style.color.grey.shade700(),
+    );
+
+    return Style.create([
+      super.makeStyle(spec).call(),
+      $.title.style.color.white(),
+      $.icon.color.white(),
+      spec.on.disabled(disabled),
+    ]);
   }
 }

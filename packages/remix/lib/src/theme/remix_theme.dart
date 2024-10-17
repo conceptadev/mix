@@ -104,6 +104,7 @@ class RemixComponentTheme {
       card: const CardDarkStyle(),
       checkbox: const CheckboxDarkStyle(),
       iconButton: const IconButtonDarkStyle(),
+      menuItem: const MenuItemDarkStyle(),
       progress: const ProgressDarkStyle(),
       radio: const RadioDarkStyle(),
       scaffold: const ScaffoldDarkStyle(),
