@@ -559,8 +559,11 @@ void main() {
 
       final finder = find.byType(Pressable);
       expect(finder, findsOneWidget);
+      final gesturefinder = find.byType(MixGestureDetector);
+      expect(gesturefinder, findsOneWidget);
 
-      final pressableState = tester.state<MixGestureDetectorState>(finder);
+      final pressableState =
+          tester.state<MixGestureDetectorState>(gesturefinder);
       expect(pressableState.mouseCursor, equals(SystemMouseCursors.help));
     });
 
@@ -576,7 +579,11 @@ void main() {
       final finder = find.byType(Pressable);
       expect(finder, findsOneWidget);
 
-      final pressableState = tester.state<MixGestureDetectorState>(finder);
+      final gesturefinder = find.byType(MixGestureDetector);
+      expect(gesturefinder, findsOneWidget);
+
+      final pressableState =
+          tester.state<MixGestureDetectorState>(gesturefinder);
       expect(pressableState.mouseCursor, equals(SystemMouseCursors.forbidden));
     });
 
@@ -592,7 +599,11 @@ void main() {
       final finder = find.byType(Pressable);
       expect(finder, findsOneWidget);
 
-      final pressableState = tester.state<MixGestureDetectorState>(finder);
+      final gesturefinder = find.byType(MixGestureDetector);
+      expect(gesturefinder, findsOneWidget);
+
+      final pressableState =
+          tester.state<MixGestureDetectorState>(gesturefinder);
       expect(pressableState.mouseCursor, equals(SystemMouseCursors.click));
     });
 
@@ -607,7 +618,11 @@ void main() {
       final finder = find.byType(Pressable);
       expect(finder, findsOneWidget);
 
-      final pressableState = tester.state<MixGestureDetectorState>(finder);
+      final gesturefinder = find.byType(MixGestureDetector);
+      expect(gesturefinder, findsOneWidget);
+
+      final pressableState =
+          tester.state<MixGestureDetectorState>(gesturefinder);
       expect(pressableState.mouseCursor, equals(MouseCursor.defer));
     });
   });
