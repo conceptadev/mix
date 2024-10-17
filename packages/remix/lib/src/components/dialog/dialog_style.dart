@@ -48,3 +48,24 @@ class DialogStyle extends SpecStyle<DialogSpecUtility> {
     );
   }
 }
+
+class DialogDarkStyle extends DialogStyle {
+  const DialogDarkStyle();
+
+  @override
+  Style makeStyle(SpecConfiguration<DialogSpecUtility> spec) {
+    final $ = spec.utilities;
+
+    return Style.create([
+      super.makeStyle(spec).call(),
+      $.container.chain
+        ..color.black()
+        ..border.all.width(1)
+        ..border.color.grey.shade900(),
+      $.title.style.color.white(),
+      $.description.chain
+        ..style.color.white()
+        ..style.color.grey.shade400(),
+    ]);
+  }
+}
