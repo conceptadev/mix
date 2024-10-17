@@ -15,30 +15,32 @@ Widget buildCard(BuildContext context) {
       variants: [
         context.knobs.variant(FortalezaCardStyle.variants),
       ],
-      children: [
-        Avatar(
-          fallbackBuilder: (spec) => spec('LF'),
-          variants: FortalezaCardStyle.variants,
-        ),
-        Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            StyledText(
-              'Leo Farias',
-              style: Style($text.style.ref($rx.text.text3)),
-            ),
-            StyledText(
-              'Flutter Engineer',
-              style: Style(
-                $text.style.ref($rx.text.text2),
-                $text.style.color.$neutral(10),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Avatar(
+            fallbackBuilder: (spec) => spec('LF'),
+          ),
+          Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              StyledText(
+                'Leo Farias',
+                style: Style($text.style.ref($rx.text.text3)),
               ),
-            ),
-          ],
-        ),
-      ],
+              StyledText(
+                'Flutter Engineer',
+                style: Style(
+                  $text.style.ref($rx.text.text2),
+                  $text.style.color.$neutral(10),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
     ),
   );
 }

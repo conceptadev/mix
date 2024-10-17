@@ -23,12 +23,8 @@ class ButtonStyle extends SpecStyle<ButtonSpecUtility> {
 
     final labelStyle = [
       $.label.chain
-        ..textHeightBehavior(
-          const TextHeightBehavior(
-            applyHeightToFirstAscent: false,
-            applyHeightToLastDescent: true,
-          ),
-        )
+        ..textHeightBehavior.heightToFirstAscent.off()
+        ..textHeightBehavior.heightToLastDescent.on()
         ..style.fontSize(14)
         ..style.height(1.5)
         ..style.color.white()
