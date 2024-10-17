@@ -6,7 +6,7 @@ class FortalezaScaffoldStyle extends ScaffoldStyle {
   @override
   Style makeStyle(SpecConfiguration<ScaffoldSpecUtility> spec) {
     final $ = spec.utilities;
-
+    
     return Style.create([$.container.color.$neutral(1)]);
   }
 }
