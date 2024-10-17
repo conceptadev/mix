@@ -24,9 +24,10 @@ import 'package:demo/components/progress_use_case.dart' as _i13;
 import 'package:demo/components/radio_use_case.dart' as _i14;
 import 'package:demo/components/segmented_control_use_case.dart' as _i15;
 import 'package:demo/components/select_use_case.dart' as _i16;
-import 'package:demo/components/spinner_use_case.dart' as _i17;
-import 'package:demo/components/switch_use_case.dart' as _i18;
-import 'package:demo/components/toast_use_case.dart' as _i19;
+import 'package:demo/components/slider.dart' as _i17;
+import 'package:demo/components/spinner_use_case.dart' as _i18;
+import 'package:demo/components/switch_use_case.dart' as _i19;
+import 'package:demo/components/toast_use_case.dart' as _i20;
 import 'package:widgetbook/widgetbook.dart' as _i1;
 
 final directories = <_i1.WidgetbookNode>[
@@ -214,13 +215,25 @@ final directories = <_i1.WidgetbookNode>[
         ],
       ),
       _i1.WidgetbookFolder(
+        name: 'slider',
+        children: [
+          _i1.WidgetbookLeafComponent(
+            name: 'Slider',
+            useCase: _i1.WidgetbookUseCase(
+              name: 'Slider Component',
+              builder: _i17.buildButtonUseCase,
+            ),
+          )
+        ],
+      ),
+      _i1.WidgetbookFolder(
         name: 'spinner',
         children: [
           _i1.WidgetbookLeafComponent(
             name: 'Spinner',
             useCase: _i1.WidgetbookUseCase(
               name: 'Spinner Component',
-              builder: _i17.buildSpinnerUseCase,
+              builder: _i18.buildSpinnerUseCase,
             ),
           )
         ],
@@ -232,7 +245,7 @@ final directories = <_i1.WidgetbookNode>[
             name: 'Switch',
             useCase: _i1.WidgetbookUseCase(
               name: 'Switch Component',
-              builder: _i18.buildSwitchUseCase,
+              builder: _i19.buildSwitchUseCase,
             ),
           )
         ],
@@ -244,7 +257,7 @@ final directories = <_i1.WidgetbookNode>[
             name: 'Toast',
             useCase: _i1.WidgetbookUseCase(
               name: 'Toast Component',
-              builder: _i19.buildButtonUseCase,
+              builder: _i20.buildButtonUseCase,
             ),
           )
         ],

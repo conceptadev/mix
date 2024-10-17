@@ -126,4 +126,5 @@ export 'src/variants/context_variant_util/on_util.dart';
 export 'src/variants/variant_attribute.dart';
 export 'src/variants/widget_state_variant.dart';
 /// WIDGETS
+export 'src/widgets/gesture_detector_widget.dart';
 export 'src/widgets/pressable_widget.dart';

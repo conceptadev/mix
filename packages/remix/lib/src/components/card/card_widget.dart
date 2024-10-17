@@ -35,19 +35,13 @@ class Card extends StatelessWidget {
 }
 
 class CardSpecWidget extends StatelessWidget {
-  const CardSpecWidget({
-    super.key,
-    required this.spec,
-    required this.child,
-  });
+  const CardSpecWidget({super.key, required this.spec, required this.child});
 
   final CardSpec? spec;
   final Widget child;
 
   @override
   Widget build(BuildContext context) {
-    return spec!.container(
-      child: child,
-    );
+    return spec!.container(child: child);
   }
 }
