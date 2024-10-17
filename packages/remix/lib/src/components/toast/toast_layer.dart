@@ -71,7 +71,7 @@ class ToastLayerState extends State<ToastLayer> implements ToastActions {
           reverseDuration: toast?.reverseAnimationDuration ??
               const Duration(milliseconds: 200),
           switchInCurve: toast?.animationCurve ??
-              SpringCurve(
+              SpringCurve.durationBased(
                 duration: const Duration(milliseconds: 500),
                 bounce: 0.2,
               ),

@@ -14,7 +14,9 @@ class SwitchStyle extends SpecStyle<SwitchSpecUtility> {
         ..borderRadius(99)
         ..padding.all(2)
         ..alignment.centerLeft()
-        ..color.grey.shade300(),
+        ..color.grey.shade300()
+        ..animated.curve.spring(stiffness: 100, dampingRatio: 1)
+        ..animated.duration(const Duration(milliseconds: 300)),
       spec.on.selected(
         $.container.chain
           ..alignment.centerRight()
@@ -25,13 +27,18 @@ class SwitchStyle extends SpecStyle<SwitchSpecUtility> {
 
     final indicatorStyle = [
       $.indicator.chain
+        ..wrap.align(alignment: Alignment.centerLeft)
         ..color.white()
         ..shape.circle()
         ..width(20)
         ..shadow.color.black12()
         ..shadow.offset(0, 2)
         ..shadow.blurRadius(4)
-        ..shadow.spreadRadius(1),
+        ..shadow.spreadRadius(1)
+        ..animated.curve.spring(stiffness: 100, dampingRatio: 0.7)
+        ..animated.duration(const Duration(milliseconds: 300)),
+      spec.on
+          .selected($.indicator.wrap.align(alignment: Alignment.centerRight)),
       spec.on.disabled($.indicator.color.grey.shade100()),
     ];
 
