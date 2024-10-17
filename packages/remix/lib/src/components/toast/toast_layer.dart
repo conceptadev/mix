@@ -1,6 +1,4 @@
-import 'dart:async';
-import 'package:flutter/widgets.dart';
-import 'package:mix/mix.dart';
+part of 'toast.dart';
 
 class ToastLayer extends StatefulWidget {
   const ToastLayer({super.key, required this.child});

@@ -14,9 +14,9 @@ class FortalezaToastStyle extends ToastStyle {
       ..padding.all.$space(4)
       ..margin.all.$space(4);
 
-    final mainFlexStyle = $.mainFlex.gap.$space(5);
+    final containerFlexStyle = $.containerFlex.gap.$space(5);
 
-    final textflexStyle = $.textFlex.gap.$space(1);
+    final textContentFlexStyle = $.textContentFlex.gap.$space(1);
 
     final titleStyle = $.title.chain
       ..style.$text(2)
@@ -29,8 +29,8 @@ class FortalezaToastStyle extends ToastStyle {
     return Style.create([
       super.makeStyle(spec).call(),
       containerStyle,
-      mainFlexStyle,
-      textflexStyle,
+      containerFlexStyle,
+      textContentFlexStyle,
       titleStyle,
       descriptionStyle,
     ]);

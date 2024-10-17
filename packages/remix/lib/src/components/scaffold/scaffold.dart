@@ -6,7 +6,7 @@ import 'package:mix_annotations/mix_annotations.dart';
 
 import '../../theme/remix_theme.dart';
 import '../../theme/remix_tokens.dart';
-import '../toast/toast_layer.dart';
+import '../toast/toast.dart';
 
 part 'scaffold.g.dart';
 part 'scaffold_style.dart';

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:mix/mix.dart';
@@ -7,15 +9,16 @@ import '../../theme/remix_theme.dart';
 import '../../theme/remix_tokens.dart';
 
 part 'toast.g.dart';
+part 'toast_layer.dart';
 part 'toast_style.dart';
-part 'toast_widget.dart';
 part 'toast_theme.dart';
+part 'toast_widget.dart';
 
 @MixableSpec()
 base class ToastSpec extends Spec<ToastSpec> with _$ToastSpec, Diagnosticable {
   final BoxSpec container;
-  final FlexSpec mainFlex;
-  final FlexSpec textFlex;
+  final FlexSpec containerFlex;
+  final FlexSpec textContentFlex;
   final TextSpec title;
   final TextSpec description;
 
@@ -26,15 +29,15 @@ base class ToastSpec extends Spec<ToastSpec> with _$ToastSpec, Diagnosticable {
 
   const ToastSpec({
     BoxSpec? container,
-    FlexSpec? mainFlex,
-    FlexSpec? textFlex,
+    FlexSpec? containerFlex,
+    FlexSpec? textContentFlex,
     TextSpec? title,
     TextSpec? description,
     super.modifiers,
     super.animated,
   })  : container = container ?? const BoxSpec(),
-        mainFlex = mainFlex ?? const FlexSpec(),
-        textFlex = textFlex ?? const FlexSpec(),
+        containerFlex = containerFlex ?? const FlexSpec(),
+        textContentFlex = textContentFlex ?? const FlexSpec(),
         title = title ?? const TextSpec(),
         description = description ?? const TextSpec();
 

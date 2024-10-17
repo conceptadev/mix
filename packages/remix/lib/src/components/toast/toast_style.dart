@@ -15,13 +15,13 @@ class ToastStyle extends SpecStyle<ToastSpecUtility> {
       ..margin.all(20)
       ..constraints.minWidth(300);
 
-    final mainFlexStyle = $.mainFlex.chain
+    final containerFlexStyle = $.containerFlex.chain
       ..direction.horizontal()
       ..mainAxisAlignment.spaceBetween()
       ..mainAxisSize.min()
       ..gap(16);
 
-    final textflexStyle = $.textFlex.chain
+    final textContentFlexStyle = $.textContentFlex.chain
       ..direction.vertical()
       ..crossAxisAlignment.start()
       ..gap(4)
@@ -37,8 +37,8 @@ class ToastStyle extends SpecStyle<ToastSpecUtility> {
 
     return Style.create([
       containerStyle,
-      mainFlexStyle,
-      textflexStyle,
+      containerFlexStyle,
+      textContentFlexStyle,
       titleStyle,
       descriptionStyle,
     ]);
