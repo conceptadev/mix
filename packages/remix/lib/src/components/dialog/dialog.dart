@@ -79,8 +79,7 @@ Future<T?> showDialog<T>({
 }
 
 @MixableSpec()
-base class DialogSpec extends Spec<DialogSpec>
-    with _$DialogSpec, Diagnosticable {
+class DialogSpec extends Spec<DialogSpec> with _$DialogSpec, Diagnosticable {
   final BoxSpec container;
   final TextSpec title;
   final TextSpec description;

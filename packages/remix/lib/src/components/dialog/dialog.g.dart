@@ -130,7 +130,7 @@ mixin _$DialogSpec on Spec<DialogSpec> {
 ///
 /// Use this class to configure the attributes of a [DialogSpec] and pass it to
 /// the [DialogSpec] constructor.
-base class DialogSpecAttribute extends SpecAttribute<DialogSpec>
+class DialogSpecAttribute extends SpecAttribute<DialogSpec>
     with Diagnosticable {
   final BoxSpecAttribute? container;
   final TextSpecAttribute? title;

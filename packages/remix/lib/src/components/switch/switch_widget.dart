@@ -67,8 +67,11 @@ class _SwitchState extends State<Switch> {
             .makeStyle(configuration)
             .applyVariants(widget.variants)
             .animate(
-              duration: const Duration(milliseconds: 100),
-              curve: Curves.linear,
+              duration: const Duration(milliseconds: 400),
+              curve: SpringCurve(
+                duration: const Duration(milliseconds: 400),
+                bounce: 0.4,
+              ),
             ),
         builder: (context) {
           final spec = SwitchSpec.of(context);

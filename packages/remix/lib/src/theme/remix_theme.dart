@@ -14,6 +14,7 @@ import '../components/divider/divider.dart';
 import '../components/icon_button/icon_button.dart';
 import '../components/progress/progress.dart';
 import '../components/radio/radio.dart';
+import '../components/scaffold/scaffold.dart';
 import '../components/segmented_control/segmented_control.dart';
 import '../components/select/select.dart';
 import '../components/spinner/spinner.dart';
@@ -34,6 +35,7 @@ class RemixComponentTheme {
   final IconButtonStyle iconButton;
   final ProgressStyle progress;
   final RadioStyle radio;
+  final ScaffoldStyle scaffold;
   final SegmentedControlStyle segmentedControl;
   final SelectStyle select;
   final SpinnerStyle spinner;
@@ -53,6 +55,7 @@ class RemixComponentTheme {
     required this.iconButton,
     required this.progress,
     required this.radio,
+    required this.scaffold,
     required this.segmentedControl,
     required this.select,
     required this.spinner,
@@ -74,6 +77,7 @@ class RemixComponentTheme {
       iconButton: IconButtonStyle(),
       progress: ProgressStyle(),
       radio: RadioStyle(),
+      scaffold: ScaffoldStyle(),
       segmentedControl: SegmentedControlStyle(),
       select: SelectStyle(),
       spinner: SpinnerStyle(),
@@ -94,6 +98,7 @@ class RemixComponentTheme {
       iconButton: const IconButtonDarkStyle(),
       progress: const ProgressDarkStyle(),
       radio: const RadioDarkStyle(),
+      scaffold: const ScaffoldDarkStyle(),
       segmentedControl: const SegmentedControlDarkStyle(),
       select: const SelectDarkStyle(),
       spinner: const SpinnerDarkStyle(),
@@ -115,6 +120,7 @@ class RemixComponentTheme {
       iconButton: FortalezaIconButtonStyle(),
       progress: FortalezaProgressStyle(),
       radio: FortalezaRadioStyle(),
+      scaffold: FortalezaScaffoldStyle(),
       segmentedControl: FortalezaSegmentedControlStyle(),
       select: FortalezaSelectStyle(),
       spinner: FortalezaSpinnerStyle(),
@@ -146,6 +152,7 @@ class RemixComponentTheme {
     IconButtonStyle? iconButton,
     ProgressStyle? progress,
     RadioStyle? radio,
+    ScaffoldStyle? scaffold,
     SegmentedControlStyle? segmentedControl,
     SelectStyle? select,
     SpinnerStyle? spinner,
@@ -165,6 +172,7 @@ class RemixComponentTheme {
       iconButton: iconButton ?? this.iconButton,
       progress: progress ?? this.progress,
       radio: radio ?? this.radio,
+      scaffold: scaffold ?? this.scaffold,
       segmentedControl: segmentedControl ?? this.segmentedControl,
       select: select ?? this.select,
       spinner: spinner ?? this.spinner,

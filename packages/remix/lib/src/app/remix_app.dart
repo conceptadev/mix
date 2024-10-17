@@ -115,10 +115,10 @@ class RemixApp extends StatefulWidget {
   final RouterConfig<Object>? routerConfig;
 
   @override
-  m.State<RemixApp> createState() => _RemixAppState();
+  State<RemixApp> createState() => _RemixAppState();
 }
 
-class _RemixAppState extends m.State<RemixApp> {
+class _RemixAppState extends State<RemixApp> {
   Widget _remixBuilder(BuildContext context, Widget? child) {
     return RemixTheme(
       theme: widget.theme,

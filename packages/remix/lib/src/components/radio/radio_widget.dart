@@ -63,7 +63,6 @@ class _RadioState<T> extends State<Radio<T>> {
   @override
   Widget build(BuildContext context) {
     final style = widget.style ?? context.remix.components.radio;
-
     final configuration = SpecConfiguration(context, RadioSpecUtility.self);
 
     return Pressable(
