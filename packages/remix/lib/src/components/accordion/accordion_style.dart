@@ -12,8 +12,7 @@ class AccordionStyle extends SpecStyle<AccordionSpecUtility> {
     final containerStyle = [
       $.container.chain
         ..clipBehavior.antiAlias()
-        ..border.bottom.color.black()
-        ..border.bottom.color.withOpacity(0.2),
+        ..border.bottom.color.grey.shade400(),
     ];
 
     final contentStyle = [
@@ -70,7 +69,10 @@ class AccordionDarkStyle extends AccordionStyle {
 
     return Style.create([
       super.makeStyle(spec).call(),
-      $.container.border.bottom.color.white(),
+      $.container.border.bottom.color.grey.shade700(),
+      $.header.text.style.color.white(),
+      $.header.trailingIcon.color.white(),
+      $.textContent.style.color.white(),
     ]);
   }
 }
