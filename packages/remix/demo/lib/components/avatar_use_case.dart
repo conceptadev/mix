@@ -18,18 +18,20 @@ Widget buildAvatarUseCase(BuildContext context) {
 
   return KeyedSubtree(
     key: _key,
-    child: Center(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Avatar(
-            variants: [
-              context.knobs.variant(FortalezaAvatarStyle.variants),
-            ],
-            image: imageUrl.isNotEmpty ? NetworkImage(imageUrl) : null,
-            fallbackBuilder: (spec) => spec('CA'),
-          ),
-        ],
+    child: Scaffold(
+      body: Center(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Avatar(
+              variants: [
+                context.knobs.variant(FortalezaAvatarStyle.variants),
+              ],
+              image: imageUrl.isNotEmpty ? NetworkImage(imageUrl) : null,
+              fallbackBuilder: (spec) => spec('CA'),
+            ),
+          ],
+        ),
       ),
     ),
   );

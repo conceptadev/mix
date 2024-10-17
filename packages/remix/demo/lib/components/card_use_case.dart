@@ -10,36 +10,41 @@ import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
   type: Card,
 )
 Widget buildCard(BuildContext context) {
-  return Center(
-    child: Card(
-      variants: [
-        context.knobs.variant(FortalezaCardStyle.variants),
-      ],
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Avatar(
-            fallbackBuilder: (spec) => spec('LF'),
-          ),
-          Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              StyledText(
-                'Leo Farias',
-                style: Style($text.style.ref($rx.text.text3)),
-              ),
-              StyledText(
-                'Flutter Engineer',
-                style: Style(
-                  $text.style.ref($rx.text.text2),
-                  $text.style.color.$neutral(10),
-                ),
-              ),
-            ],
-          ),
+  return Scaffold(
+    body: Center(
+      child: Card(
+        variants: [
+          context.knobs.variant(FortalezaCardStyle.variants),
         ],
+        child: StyledRow(
+          style: Style(
+            $flex.gap(12),
+            $flex.mainAxisSize.min(),
+          ),
+          children: [
+            Avatar(
+              fallbackBuilder: (spec) => spec('LF'),
+              variants: FortalezaCardStyle.variants,
+            ),
+            Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                StyledText(
+                  'Leo Farias',
+                  style: Style($text.style.ref($rx.text.text3)),
+                ),
+                StyledText(
+                  'Flutter Engineer',
+                  style: Style(
+                    $text.style.ref($rx.text.text2),
+                    $text.style.color.$neutral(10),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     ),
   );

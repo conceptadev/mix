@@ -15,27 +15,24 @@ final _key = GlobalKey();
 Widget buildButtonUseCase(BuildContext context) {
   return KeyedSubtree(
     key: _key,
-    child: Wrap(
-      spacing: 12,
-      children: [
-        RepaintBoundary(
-          child: IconButton(
-            m.Icons.add,
-            variants: [
-              context.knobs.variant(FortalezaIconButtonStyle.variants),
-            ],
-            onPressed: () {},
-            disabled: context.knobs.boolean(
-              label: 'Disabled',
-              initialValue: false,
-            ),
-            loading: context.knobs.boolean(
-              label: 'loading',
-              initialValue: false,
-            ),
+    child: Scaffold(
+      body: Center(
+        child: IconButton(
+          m.Icons.add,
+          variants: [
+            context.knobs.variant(FortalezaIconButtonStyle.variants),
+          ],
+          onPressed: () {},
+          disabled: context.knobs.boolean(
+            label: 'Disabled',
+            initialValue: false,
           ),
-        )
-      ],
+          loading: context.knobs.boolean(
+            label: 'loading',
+            initialValue: false,
+          ),
+        ),
+      ),
     ),
   );
 }

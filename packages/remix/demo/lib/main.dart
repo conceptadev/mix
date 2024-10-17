@@ -1,5 +1,5 @@
 import 'package:demo/helpers/theme_addon.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide Scaffold, ThemeMode;
 import 'package:remix/remix.dart';
 import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
@@ -16,36 +16,29 @@ class HotReload extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Widgetbook.material(
+    return Widgetbook(
       addons: [
-        MaterialThemeAddon(
+        ThemeAddon<Brightness>(
           themes: [
-            WidgetbookTheme(
+            const WidgetbookTheme(
               name: 'Light',
-              data: ThemeData.light(),
+              data: Brightness.light,
             ),
-            WidgetbookTheme(
+            const WidgetbookTheme(
               name: 'Dark',
-              data: ThemeData.dark(),
+              data: Brightness.dark,
             ),
           ],
-          initialTheme: WidgetbookTheme(
+          initialTheme: const WidgetbookTheme(
             name: 'Light',
-            data: ThemeData.light(),
+            data: Brightness.light,
           ),
-        ),
-        BuilderAddon(
-          name: 'brightness',
-          builder: (context, child) {
-            final isDarkTheme = Theme.of(context).brightness == Brightness.dark;
+          themeBuilder: (context, Brightness theme, child) {
             return MediaQuery(
               data: MediaQueryData(
-                  platformBrightness:
-                      isDarkTheme ? Brightness.dark : Brightness.light),
-              child: Container(
-                color: isDarkTheme ? Colors.black87 : Colors.white,
-                child: Center(child: child),
+                platformBrightness: theme,
               ),
+              child: child,
             );
           },
         ),
@@ -69,29 +62,8 @@ class HotReload extends StatelessWidget {
         ),
         InspectorAddon(),
       ],
-      appBuilder: (context, child) => App(child: child),
+      appBuilder: (context, child) => child,
       directories: directories,
-    );
-  }
-}
-
-class App extends StatelessWidget {
-  const App({
-    super.key,
-    required this.child,
-  });
-
-  final Widget child;
-  @override
-  Widget build(BuildContext context) {
-    return RemixTheme(
-      theme: RemixThemeData.base(),
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: Scaffold(
-          body: Center(child: child),
-        ),
-      ),
     );
   }
 }

@@ -16,12 +16,15 @@ Widget buildSwitchUseCase(BuildContext context) {
 
   return KeyedSubtree(
     key: _key,
-    child: Center(
-      child: Switch(
-        variants: [context.knobs.variant(FortalezaSwitchStyle.variants)],
-        value: context.knobs.boolean(label: 'Toggle', initialValue: true),
-        disabled: context.knobs.boolean(label: 'Disabled', initialValue: false),
-        onChanged: (value) => knobState.updateKnob('Toggle', value),
+    child: Scaffold(
+      body: Center(
+        child: Switch(
+          variants: [context.knobs.variant(FortalezaSwitchStyle.variants)],
+          value: context.knobs.boolean(label: 'Toggle', initialValue: true),
+          disabled:
+              context.knobs.boolean(label: 'Disabled', initialValue: false),
+          onChanged: (value) => knobState.updateKnob('Toggle', value),
+        ),
       ),
     ),
   );

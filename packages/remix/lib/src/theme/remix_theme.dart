@@ -9,14 +9,17 @@ import '../components/button/button.dart';
 import '../components/callout/callout.dart';
 import '../components/card/card.dart';
 import '../components/checkbox/checkbox.dart';
+import '../components/dialog/dialog.dart';
 import '../components/divider/divider.dart';
 import '../components/icon_button/icon_button.dart';
 import '../components/progress/progress.dart';
 import '../components/radio/radio.dart';
+import '../components/scaffold/scaffold.dart';
 import '../components/segmented_control/segmented_control.dart';
 import '../components/select/select.dart';
 import '../components/spinner/spinner.dart';
 import '../components/switch/switch.dart';
+import '../components/toast/toast.dart';
 import 'remix_tokens.dart';
 
 class RemixComponentTheme {
@@ -27,14 +30,17 @@ class RemixComponentTheme {
   final CalloutStyle callout;
   final CardStyle card;
   final CheckboxStyle checkbox;
+  final DialogStyle dialog;
   final DividerStyle divider;
   final IconButtonStyle iconButton;
   final ProgressStyle progress;
   final RadioStyle radio;
+  final ScaffoldStyle scaffold;
   final SegmentedControlStyle segmentedControl;
   final SelectStyle select;
   final SpinnerStyle spinner;
   final SwitchStyle switchComponent;
+  final ToastStyle toast;
 
   const RemixComponentTheme({
     required this.accordion,
@@ -44,14 +50,17 @@ class RemixComponentTheme {
     required this.callout,
     required this.card,
     required this.checkbox,
+    required this.dialog,
     required this.divider,
     required this.iconButton,
     required this.progress,
     required this.radio,
+    required this.scaffold,
     required this.segmentedControl,
     required this.select,
     required this.spinner,
     required this.switchComponent,
+    required this.toast,
   });
 
   factory RemixComponentTheme.baseLight() {
@@ -63,14 +72,17 @@ class RemixComponentTheme {
       callout: CalloutStyle(),
       card: CardStyle(),
       checkbox: CheckboxStyle(),
+      dialog: DialogStyle(),
       divider: DividerStyle(),
       iconButton: IconButtonStyle(),
       progress: ProgressStyle(),
       radio: RadioStyle(),
+      scaffold: ScaffoldStyle(),
       segmentedControl: SegmentedControlStyle(),
       select: SelectStyle(),
       spinner: SpinnerStyle(),
       switchComponent: SwitchStyle(),
+      toast: ToastStyle(),
     );
   }
 
@@ -86,6 +98,7 @@ class RemixComponentTheme {
       iconButton: const IconButtonDarkStyle(),
       progress: const ProgressDarkStyle(),
       radio: const RadioDarkStyle(),
+      scaffold: const ScaffoldDarkStyle(),
       segmentedControl: const SegmentedControlDarkStyle(),
       select: const SelectDarkStyle(),
       spinner: const SpinnerDarkStyle(),
@@ -102,14 +115,17 @@ class RemixComponentTheme {
       callout: FortalezaCalloutStyle(),
       card: FortalezaCardStyle(),
       checkbox: FortalezaCheckboxStyle(),
+      dialog: FortalezaDialogStyle(),
       divider: FortalezaDividerStyle(),
       iconButton: FortalezaIconButtonStyle(),
       progress: FortalezaProgressStyle(),
       radio: FortalezaRadioStyle(),
+      scaffold: FortalezaScaffoldStyle(),
       segmentedControl: FortalezaSegmentedControlStyle(),
       select: FortalezaSelectStyle(),
       spinner: FortalezaSpinnerStyle(),
       switchComponent: FortalezaSwitchStyle(),
+      toast: FortalezaToastStyle(),
     );
   }
 
@@ -131,14 +147,17 @@ class RemixComponentTheme {
     CalloutStyle? callout,
     CardStyle? card,
     CheckboxStyle? checkbox,
+    DialogStyle? dialog,
     DividerStyle? divider,
     IconButtonStyle? iconButton,
     ProgressStyle? progress,
     RadioStyle? radio,
+    ScaffoldStyle? scaffold,
     SegmentedControlStyle? segmentedControl,
     SelectStyle? select,
     SpinnerStyle? spinner,
     SwitchStyle? switchComponent,
+    ToastStyle? toast,
   }) {
     return RemixComponentTheme(
       accordion: accordion ?? this.accordion,
@@ -148,14 +167,17 @@ class RemixComponentTheme {
       callout: callout ?? this.callout,
       card: card ?? this.card,
       checkbox: checkbox ?? this.checkbox,
+      dialog: dialog ?? this.dialog,
       divider: divider ?? this.divider,
       iconButton: iconButton ?? this.iconButton,
       progress: progress ?? this.progress,
       radio: radio ?? this.radio,
+      scaffold: scaffold ?? this.scaffold,
       segmentedControl: segmentedControl ?? this.segmentedControl,
       select: select ?? this.select,
       spinner: spinner ?? this.spinner,
       switchComponent: switchComponent ?? this.switchComponent,
+      toast: toast ?? this.toast,
     );
   }
 }
@@ -187,11 +209,17 @@ class RemixThemeData {
   int get hashCode => components.hashCode ^ tokens.hashCode;
 }
 
+enum ThemeMode {
+  light,
+  dark,
+}
+
 class RemixTheme extends StatelessWidget {
   const RemixTheme({
     super.key,
     required this.theme,
     required this.child,
+    this.themeMode,
     this.darkTheme,
   });
 
@@ -212,20 +240,40 @@ class RemixTheme extends StatelessWidget {
     return provider.data;
   }
 
+  static RemixThemeData? maybeOf(BuildContext context) {
+    return context
+        .dependOnInheritedWidgetOfExactType<_RemixThemeInherited>()
+        ?.data;
+  }
+
+  final ThemeMode? themeMode;
+
   final RemixThemeData? theme;
 
   final RemixThemeData? darkTheme;
   final Widget child;
 
+  RemixThemeData get _defaultThemeDark => RemixThemeData.base();
+  RemixThemeData get _defaultThemeLight => RemixThemeData.base();
+
+  RemixThemeData _defineRemixThemeData(BuildContext context) {
+    if (themeMode != null) {
+      return themeMode == ThemeMode.dark
+          ? darkTheme ?? _defaultThemeDark
+          : theme ?? _defaultThemeLight;
+    }
+
+    final brightness = MediaQuery.platformBrightnessOf(context);
+    final isDark = brightness == Brightness.dark;
+
+    return isDark
+        ? darkTheme ?? _defaultThemeDark
+        : theme ?? _defaultThemeLight;
+  }
+
   @override
   Widget build(BuildContext context) {
-    final brightness = MediaQuery.platformBrightnessOf(context);
-
-    final isDark = brightness == Brightness.dark;
-    final theme = isDark && darkTheme != null
-        ? darkTheme!
-        : this.theme ?? RemixThemeData.base();
-
+    final theme = _defineRemixThemeData(context);
     final tokens = theme.tokens;
 
     return MixTheme(

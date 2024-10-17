@@ -18,7 +18,11 @@ enum Theme {
   type: Radio,
 )
 Widget buildRadioUseCase(BuildContext context) {
-  return const RadioExample();
+  return const Scaffold(
+    body: Center(
+      child: RadioExample(),
+    ),
+  );
 }
 
 class RadioExample extends StatefulWidget {
