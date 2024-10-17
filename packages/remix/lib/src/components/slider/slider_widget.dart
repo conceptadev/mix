@@ -58,6 +58,9 @@ class _SliderState extends State<Slider> with TickerProviderStateMixin {
 
     return MixGestureDetector(
       enabled: !widget.disabled,
+      mouseCursor: widget.disabled
+          ? SystemMouseCursors.forbidden
+          : SystemMouseCursors.click,
       onPanUpdate: (details) {
         final value = _calculateValue(details.localPosition);
         widget.onChanged?.call(value);

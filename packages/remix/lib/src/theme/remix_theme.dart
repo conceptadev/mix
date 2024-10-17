@@ -111,6 +111,7 @@ class RemixComponentTheme {
       select: const SelectDarkStyle(),
       spinner: const SpinnerDarkStyle(),
       switchComponent: const SwitchDarkStyle(),
+      slider: const SliderDarkStyle(),
     );
   }
 
