@@ -66,6 +66,14 @@ final class TextDirectionUtility<T extends Attribute>
   const TextDirectionUtility(super.builder);
 }
 
+/// {@macro text_direction_utility}
+@MixableEnumUtility()
+final class TextLeadingDistributionUtility<T extends Attribute>
+    extends MixUtility<T, TextLeadingDistribution>
+    with _$TextLeadingDistributionUtility {
+  const TextLeadingDistributionUtility(super.builder);
+}
+
 /// {@macro tile_mode_utility}
 @MixableEnumUtility()
 final class TileModeUtility<T extends Attribute> extends MixUtility<T, TileMode>
