@@ -20,13 +20,14 @@ import 'package:demo/components/chip_use_case.dart' as _i9;
 import 'package:demo/components/dialog_use_case.dart' as _i10;
 import 'package:demo/components/divider_use_case.dart' as _i11;
 import 'package:demo/components/icon_button_use_case.dart' as _i12;
-import 'package:demo/components/progress_use_case.dart' as _i13;
-import 'package:demo/components/radio_use_case.dart' as _i14;
-import 'package:demo/components/segmented_control_use_case.dart' as _i15;
-import 'package:demo/components/select_use_case.dart' as _i16;
-import 'package:demo/components/spinner_use_case.dart' as _i17;
-import 'package:demo/components/switch_use_case.dart' as _i18;
-import 'package:demo/components/toast_use_case.dart' as _i19;
+import 'package:demo/components/menu_item_use_case.dart' as _i13;
+import 'package:demo/components/progress_use_case.dart' as _i14;
+import 'package:demo/components/radio_use_case.dart' as _i15;
+import 'package:demo/components/segmented_control_use_case.dart' as _i16;
+import 'package:demo/components/select_use_case.dart' as _i17;
+import 'package:demo/components/spinner_use_case.dart' as _i18;
+import 'package:demo/components/switch_use_case.dart' as _i19;
+import 'package:demo/components/toast_use_case.dart' as _i20;
 import 'package:widgetbook/widgetbook.dart' as _i1;
 
 final directories = <_i1.WidgetbookNode>[
@@ -166,13 +167,25 @@ final directories = <_i1.WidgetbookNode>[
         ],
       ),
       _i1.WidgetbookFolder(
+        name: 'menu_item',
+        children: [
+          _i1.WidgetbookLeafComponent(
+            name: 'MenuItem',
+            useCase: _i1.WidgetbookUseCase(
+              name: 'Menu Item Component',
+              builder: _i13.buildButtonUseCase,
+            ),
+          )
+        ],
+      ),
+      _i1.WidgetbookFolder(
         name: 'progress',
         children: [
           _i1.WidgetbookLeafComponent(
             name: 'Progress',
             useCase: _i1.WidgetbookUseCase(
               name: 'Progress Component',
-              builder: _i13.buildProgressUseCase,
+              builder: _i14.buildProgressUseCase,
             ),
           )
         ],
@@ -184,7 +197,7 @@ final directories = <_i1.WidgetbookNode>[
             name: 'Radio',
             useCase: _i1.WidgetbookUseCase(
               name: 'Radio Component',
-              builder: _i14.buildRadioUseCase,
+              builder: _i15.buildRadioUseCase,
             ),
           )
         ],
@@ -196,7 +209,7 @@ final directories = <_i1.WidgetbookNode>[
             name: 'SegmentedControl',
             useCase: _i1.WidgetbookUseCase(
               name: 'SegmentedControl Component',
-              builder: _i15.buildAccordionUseCase,
+              builder: _i16.buildAccordionUseCase,
             ),
           )
         ],
@@ -208,7 +221,7 @@ final directories = <_i1.WidgetbookNode>[
             name: 'Select',
             useCase: _i1.WidgetbookUseCase(
               name: 'Select Component',
-              builder: _i16.buildSelect,
+              builder: _i17.buildSelect,
             ),
           )
         ],
@@ -220,7 +233,7 @@ final directories = <_i1.WidgetbookNode>[
             name: 'Spinner',
             useCase: _i1.WidgetbookUseCase(
               name: 'Spinner Component',
-              builder: _i17.buildSpinnerUseCase,
+              builder: _i18.buildSpinnerUseCase,
             ),
           )
         ],
@@ -232,7 +245,7 @@ final directories = <_i1.WidgetbookNode>[
             name: 'Switch',
             useCase: _i1.WidgetbookUseCase(
               name: 'Switch Component',
-              builder: _i18.buildSwitchUseCase,
+              builder: _i19.buildSwitchUseCase,
             ),
           )
         ],
@@ -244,7 +257,7 @@ final directories = <_i1.WidgetbookNode>[
             name: 'Toast',
             useCase: _i1.WidgetbookUseCase(
               name: 'Toast Component',
-              builder: _i19.buildButtonUseCase,
+              builder: _i20.buildButtonUseCase,
             ),
           )
         ],

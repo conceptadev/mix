@@ -33,6 +33,7 @@ export 'src/components/chip/chip.dart';
 export 'src/components/dialog/dialog.dart';
 export 'src/components/divider/divider.dart';
 export 'src/components/icon_button/icon_button.dart';
+export 'src/components/menu_item/menu_item.dart';
 export 'src/components/progress/progress.dart';
 export 'src/components/radio/radio.dart';
 export 'src/components/scaffold/scaffold.dart';
