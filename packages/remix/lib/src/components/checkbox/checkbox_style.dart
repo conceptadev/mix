@@ -13,8 +13,8 @@ class CheckboxStyle extends SpecStyle<CheckboxSpecUtility> {
         ..border.all.color.black(),
       spec.on.selected($.container.color.black()),
       spec.on.disabled(
-        $.container.border.all.color.black(),
-        spec.on.selected($.container.color.black()),
+        $.container.border.all.color.grey(),
+        spec.on.selected($.container.color.grey()),
       ),
     ];
 
@@ -27,5 +27,22 @@ class CheckboxStyle extends SpecStyle<CheckboxSpecUtility> {
     ];
 
     return Style.create([...containerStyle, ...indicatorStyle]);
+  }
+}
+
+class CheckboxDarkStyle extends CheckboxStyle {
+  const CheckboxDarkStyle();
+
+  @override
+  Style makeStyle(SpecConfiguration<CheckboxSpecUtility> spec) {
+    final $ = spec.utilities;
+
+    return Style.create([
+      super.makeStyle(spec).call(),
+      $.container.border.all.color.white(),
+      $.indicator.color.black(),
+      spec.on.selected($.container.color.white()),
+      spec.on.selected($.indicator.color.black()),
+    ]);
   }
 }

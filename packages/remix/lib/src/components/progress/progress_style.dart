@@ -21,3 +21,18 @@ class ProgressStyle extends SpecStyle<ProgressSpecUtility> {
     return Style.create([...containerStyle, ...trackStyle, ...fillStyle]);
   }
 }
+
+class ProgressDarkStyle extends ProgressStyle {
+  const ProgressDarkStyle();
+
+  @override
+  Style makeStyle(SpecConfiguration<ProgressSpecUtility> spec) {
+    final $ = spec.utilities;
+
+    return Style.create([
+      super.makeStyle(spec).call(),
+      $.track.color.white12(),
+      $.fill.color.white(),
+    ]);
+  }
+}

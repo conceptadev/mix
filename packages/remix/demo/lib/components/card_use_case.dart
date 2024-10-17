@@ -23,6 +23,7 @@ Widget buildCard(BuildContext context) {
         Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
             StyledText(
               'Leo Farias',
