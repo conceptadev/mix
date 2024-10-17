@@ -28,12 +28,16 @@ class FortalezaAccordionStyle extends AccordionStyle {
         ..text.style.fontWeight.w400()
         ..text.style.color.$neutral(12)
         ..trailingIcon.color.$neutral(10)
-        ..container.color.$neutral(1),
+        ..container.color.$neutral(1)
+        ..container.animated.curve.easeInCubic()
+        ..container.animated.duration(const Duration(milliseconds: 100)),
 
       $.contentContainer.chain
         ..padding.all.$space(3)
         ..border.style.none()
-        ..border.top.color.$neutral(6),
+        ..border.top.color.$neutral(6)
+        ..animated.curve.spring(stiffness: 100)
+        ..animated.duration(const Duration(milliseconds: 250)),
 
       // Text Container
       $.textContent.chain
@@ -48,9 +52,6 @@ class FortalezaAccordionStyle extends AccordionStyle {
       ),
     );
 
-    return Style.create([baseStyle(), style()]).animate(
-      duration: const Duration(milliseconds: 100),
-      curve: Curves.easeInOut,
-    );
+    return Style.create([baseStyle(), style()]);
   }
 }

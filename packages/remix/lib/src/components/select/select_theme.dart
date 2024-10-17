@@ -16,17 +16,17 @@ class FortalezaSelectStyle extends SelectStyle {
 
     final baseThemeOverrides = Style(
       $.menu.autoWidth.off(),
-      $.item.container.padding.horizontal.$space(3),
-      $.button.icon.color.$accentAlpha(12),
       $.menu.container.chain
         ..color.$neutral(1)
         ..border.all.color.$neutral(5)
         ..wrap.intrinsicWidth()
         ..elevation.e2()
         ..padding.all.$space(2),
-      $.button.flex.chain
-        ..gap.$space(1)
-        ..mainAxisSize.min(),
+      $.button.chain
+        ..icon.color.$accentAlpha(12)
+        ..flex.gap.$space(1)
+        ..flex.mainAxisSize.min(),
+      $.item.container.padding.horizontal.$space(3),
       spec.on.disabled(
         $.button.chain
           ..container.color.$neutral(2)

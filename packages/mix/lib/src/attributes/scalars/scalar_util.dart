@@ -90,10 +90,17 @@ final class CurveUtility<T extends Attribute> extends MixUtility<T, Curve>
   T as(Curve curve) => builder(curve);
 
   T spring({
-    Duration duration = const Duration(milliseconds: 500),
-    double bounce = 0.5,
+    double stiffness = 3.5,
+    double dampingRatio = 1.0,
+    double mass = 1.0,
   }) =>
-      builder(SpringCurve(duration: duration, bounce: bounce));
+      builder(
+        SpringCurve(
+          stiffness: stiffness,
+          dampingRatio: dampingRatio,
+          mass: mass,
+        ),
+      );
 }
 
 @MixableClassUtility(generateCallMethod: false)

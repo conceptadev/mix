@@ -29,13 +29,16 @@ Future<T?> showDialog<T>({
   transitionBuilder ??= (context, animation, secondaryAnimation, child) {
     final curvedAnimation = CurvedAnimation(
       parent: animation,
-      curve: Curves.easeInOut,
+      curve: SpringCurve.durationBased(
+        duration: transitionDuration,
+        bounce: 0.2,
+      ),
     );
 
     return FadeTransition(
       opacity: curvedAnimation,
       child: ScaleTransition(
-        scale: curvedAnimation.drive(Tween(begin: 0.85, end: 1)),
+        scale: curvedAnimation.drive(Tween(begin: 0.7, end: 1)),
         child: child,
       ),
     );
