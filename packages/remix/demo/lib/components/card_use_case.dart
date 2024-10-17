@@ -16,8 +16,11 @@ Widget buildCard(BuildContext context) {
         variants: [
           context.knobs.variant(FortalezaCardStyle.variants),
         ],
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
+        child: StyledRow(
+          style: Style(
+            $flex.gap(12),
+            $flex.mainAxisSize.min(),
+          ),
           children: [
             Avatar(
               fallbackBuilder: (spec) => spec('LF'),
