@@ -30,8 +30,7 @@ class ToastLayerState extends State<ToastLayer> implements ToastActions {
   }
 
   @override
-  void @override
-  dispose() {
+  void dispose() {
     _timer?.cancel();
     super.dispose();
   }
