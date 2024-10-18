@@ -374,8 +374,8 @@ class _TextFieldState extends State<TextField>
 
   @override
   void dispose() {
-    // _effectiveFocusNode.removeListener(_handleFocusChanged);
-    // _focusNode?.dispose();
+    _effectiveFocusNode.removeListener(_handleFocusChanged);
+    _focusNode?.dispose();
     _controller?.dispose();
     // _statesController.removeListener(_handleStatesControllerChange);
     // _internalStatesController?.dispose();
@@ -397,8 +397,8 @@ class _TextFieldState extends State<TextField>
           child: EditableText(
             // key: editableTextKey,
             controller: _effectiveController,
-            // possui logica propria
-            focusNode: widget.focusNode ?? FocusNode(),
+
+            focusNode: _effectiveFocusNode,
             style: spec.style,
             strutStyle: spec.strutStyle,
             cursorColor: spec.cursorColor,
