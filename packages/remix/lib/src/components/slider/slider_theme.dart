@@ -31,7 +31,7 @@ class FortalezaSliderStyle extends SliderStyle {
       $.thumb.shape.circle.side.color.black.withOpacity(0.5),
     );
 
-    final animation = (spec.on.hover | spec.on.dragged)(
+    final animation = (spec.on.press | spec.on.hover)(
       $.thumb.shadow.spreadRadius(8),
       $.thumb.shadow.color.$accentAlpha(4),
     );

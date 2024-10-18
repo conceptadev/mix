@@ -35,6 +35,14 @@ class _SliderState extends State<Slider> with TickerProviderStateMixin {
   double _sliderWidth = 0.0;
   double _thumbWidth = 0.0;
 
+  late MixWidgetStateController? _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = MixWidgetStateController()..disabled = widget.disabled;
+  }
+
   double _calculateValue(Offset localPosition) {
     double dx = (localPosition.dx - _thumbWidth / 2).clamp(0, _sliderWidth);
     double percent = dx / _sliderWidth;
@@ -51,82 +59,101 @@ class _SliderState extends State<Slider> with TickerProviderStateMixin {
     return widget.min + percent * (widget.max - widget.min);
   }
 
+  void _updateController(void Function(MixWidgetStateController) callback) {
+    if (_controller == null || _controller!.disabled) return;
+    callback(_controller!);
+  }
+
+  @override
+  void dispose() {
+    _controller?.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     final style = widget.style ?? context.remix.components.slider;
     final configuration = SpecConfiguration(context, SliderSpecUtility.self);
 
-    return MixGestureDetector(
-      enabled: !widget.disabled,
-      mouseCursor: widget.disabled
-          ? SystemMouseCursors.forbidden
-          : SystemMouseCursors.click,
-      onPanUpdate: (details) {
-        final value = _calculateValue(details.localPosition);
-        widget.onChanged?.call(value);
+    return MouseRegion(
+      onEnter: (event) {
+        _updateController((c) => c.hovered = true);
       },
-      onPanEnd: (details) {
-        final value = _calculateValue(details.localPosition);
-        widget.onChangeEnd?.call(value);
+      onExit: (event) {
+        _updateController((c) => c.hovered = false);
       },
-      onPanStart: (details) {
-        final value = _calculateValue(details.localPosition);
-        widget.onChangeStart?.call(value);
-      },
-      child: SpecBuilder(
-        style: style.makeStyle(configuration).applyVariants(widget.variants),
-        builder: (context) {
-          final spec = SliderSpec.of(context);
-          _thumbWidth = spec.thumb.width ?? 0;
-
-          return Padding(
-            padding: EdgeInsets.symmetric(
-              horizontal: (spec.thumb.width ?? 0) / 2,
-            ),
-            child: LayoutBuilder(
-              builder: (context, constraints) {
-                _sliderWidth = constraints.maxWidth;
-                double percent =
-                    ((widget.value - widget.min) / (widget.max - widget.min))
-                        .clamp(0, 1);
-
-                final a =
-                    (constraints.maxWidth - _thumbWidth / 4) / widget.divisions;
-                final divisions = [
-                  for (int i = 0; i < widget.divisions; i++)
-                    Transform.translate(
-                      offset: Offset(a * (i + 1), 0),
-                      child: spec.division(),
-                    ),
-                ];
-
-                return Container(
-                  color: Colors.transparent,
-                  height: (spec.thumb.height ?? 0) * 2,
-                  child: Stack(
-                    alignment: Alignment.centerLeft,
-                    children: [
-                      spec.track(),
-                      ...divisions,
-                      FractionallySizedBox(
-                        alignment: Alignment.centerLeft,
-                        widthFactor: percent,
-                        child: spec.activeTrack(),
-                      ),
-                      Transform.translate(
-                        offset: Offset(
-                          percent * constraints.maxWidth - _thumbWidth / 2,
-                          0,
-                        ),
-                        child: spec.thumb(),
-                      ),
-                    ],
-                  ),
-                );
-              },
-            ),
-          );
+      child: GestureDetector(
+        onPanStart: (details) {
+          _updateController((c) => c.pressed = true);
+          final value = _calculateValue(details.localPosition);
+          widget.onChangeStart?.call(value);
         },
+        onPanUpdate: (details) {
+          _updateController((c) => c.pressed = true);
+          final value = _calculateValue(details.localPosition);
+          widget.onChanged?.call(value);
+        },
+        onPanEnd: (details) {
+          _updateController((c) => c.pressed = false);
+          final value = _calculateValue(details.localPosition);
+          widget.onChangeEnd?.call(value);
+        },
+        child: SpecBuilder(
+          controller: _controller,
+          style: style.makeStyle(configuration).applyVariants(widget.variants),
+          builder: (context) {
+            final spec = SliderSpec.of(context);
+            _thumbWidth = spec.thumb.width ?? 0;
+
+            return Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: (spec.thumb.width ?? 0) / 2,
+              ),
+              child: LayoutBuilder(
+                builder: (context, constraints) {
+                  _sliderWidth = constraints.maxWidth;
+                  double percent =
+                      ((widget.value - widget.min) / (widget.max - widget.min))
+                          .clamp(0, 1);
+
+                  final a = (constraints.maxWidth - _thumbWidth / 4) /
+                      widget.divisions;
+                  final divisions = [
+                    for (int i = 0; i < widget.divisions; i++)
+                      Transform.translate(
+                        offset: Offset(a * (i + 1), 0),
+                        child: spec.division(),
+                      ),
+                  ];
+
+                  return Container(
+                    color: Colors.transparent,
+                    height: (spec.thumb.height ?? 0) * 2,
+                    child: Stack(
+                      alignment: Alignment.centerLeft,
+                      children: [
+                        spec.track(),
+                        ...divisions,
+                        FractionallySizedBox(
+                          alignment: Alignment.centerLeft,
+                          widthFactor: percent,
+                          child: spec.activeTrack(),
+                        ),
+                        Transform.translate(
+                          offset: Offset(
+                            percent * constraints.maxWidth - _thumbWidth / 2,
+                            0,
+                          ),
+                          child: spec.thumb(),
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              ),
+            );
+          },
+        ),
       ),
     );
   }

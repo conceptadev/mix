@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
 import '../core/factory/style_mix.dart';
+import '../core/widget_state/internal/gesture_mix_state.dart';
 import '../core/widget_state/internal/interactive_mix_state.dart';
 import '../core/widget_state/internal/mix_widget_state_builder.dart';
 import '../core/widget_state/internal/mouse_region_mix_state.dart';
 import '../core/widget_state/widget_state_controller.dart';
 import '../internal/constants.dart';
 import '../specs/box/box_widget.dart';
-import 'gesture_detector_widget.dart';
 
 class PressableBox extends StatelessWidget {
   const PressableBox({
@@ -68,7 +68,7 @@ class PressableBox extends StatelessWidget {
   }
 }
 
-class Pressable extends StatelessWidget {
+class Pressable extends StatefulWidget {
   const Pressable({
     super.key,
     required this.child,
@@ -150,27 +150,90 @@ class Pressable extends StatelessWidget {
   final Duration unpressDelay;
 
   @override
+  State createState() => PressableWidgetState();
+}
+
+@visibleForTesting
+class PressableWidgetState extends State<Pressable> {
+  late final MixWidgetStateController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = widget.controller ?? MixWidgetStateController();
+  }
+
+  @override
+  void dispose() {
+    if (widget.controller == null) _controller.dispose();
+    super.dispose();
+  }
+
+  bool get hasOnPress => widget.onPress != null;
+
+  MouseCursor get mouseCursor {
+    if (widget.mouseCursor != null) {
+      return widget.mouseCursor!;
+    }
+
+    if (!widget.enabled) {
+      return SystemMouseCursors.forbidden;
+    }
+
+    return hasOnPress ? SystemMouseCursors.click : MouseCursor.defer;
+  }
+
+  /// Binds the [ActivateIntent] from the Flutter SDK to the onPressed callback by default.
+  /// This enables SPACE and ENTER key activation on most platforms.
+  /// Additional actions can be provided externally to extend functionality.
+  Map<Type, Action<Intent>> get actions {
+    return {
+      ActivateIntent:
+          CallbackAction<Intent>(onInvoke: (_) => widget.onPress?.call()),
+      ...?widget.actions,
+    };
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return MixGestureDetector(
-      enabled: enabled,
-      enableFeedback: enableFeedback,
-      onPress: onPress,
-      hitTestBehavior: hitTestBehavior,
-      onLongPress: onLongPress,
-      onFocusChange: onFocusChange,
-      autofocus: autofocus,
-      focusNode: focusNode,
-      mouseCursor: mouseCursor,
-      onKey: onKey,
-      canRequestFocus: canRequestFocus,
-      excludeFromSemantics: excludeFromSemantics,
-      semanticButtonLabel: semanticButtonLabel,
-      onKeyEvent: onKeyEvent,
-      unpressDelay: unpressDelay,
-      controller: controller,
-      actions: actions,
-      child: child,
+    Widget current = GestureMixStateWidget(
+      enableFeedback: widget.enableFeedback,
+      controller: _controller,
+      onTap: widget.enabled ? widget.onPress?.call : null,
+      onLongPress: widget.enabled ? widget.onLongPress?.call : null,
+      excludeFromSemantics: widget.excludeFromSemantics,
+      hitTestBehavior: widget.hitTestBehavior,
+      unpressDelay: widget.unpressDelay,
+      child: InteractiveMixStateWidget(
+        enabled: widget.enabled,
+        onFocusChange: widget.onFocusChange,
+        autofocus: widget.autofocus,
+        focusNode: widget.focusNode,
+        onKey: widget.onKey,
+        onKeyEvent: widget.onKeyEvent,
+        canRequestFocus: widget.canRequestFocus,
+        mouseCursor: mouseCursor,
+        controller: _controller,
+        actions: actions,
+        child: MouseRegionMixStateWidget(
+          child: MixWidgetStateBuilder(
+            controller: _controller,
+            builder: (_) => widget.child,
+          ),
+        ),
+      ),
     );
+
+    if (!widget.excludeFromSemantics) {
+      current = Semantics(
+        button: true,
+        label: widget.semanticButtonLabel,
+        onTap: widget.onPress,
+        child: current,
+      );
+    }
+
+    return current;
   }
 }
 
