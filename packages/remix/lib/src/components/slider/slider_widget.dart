@@ -98,8 +98,6 @@ class _SliderState extends State<Slider> with TickerProviderStateMixin {
         onPanEnd: (details) {
           _handleInteraction((c) {
             c.pressed = false;
-            final value = _calculateValue(details.localPosition);
-            widget.onChangeEnd?.call(value);
           });
         },
         child: SpecBuilder(
