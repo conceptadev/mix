@@ -43,7 +43,6 @@ class _SliderState extends State<Slider> with TickerProviderStateMixin {
   }
 
   double _calculateValue(Offset localPosition) {
-    print('calculateValue');
     double dx = (localPosition.dx - _thumbWidth / 2).clamp(0, _sliderWidth);
     double percent = dx / _sliderWidth;
     int divisions = widget.divisions;
