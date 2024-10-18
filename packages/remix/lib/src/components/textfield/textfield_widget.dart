@@ -25,6 +25,47 @@ class TextField extends StatefulWidget {
   final ValueChanged<String>? onSubmitted;
   final List<TextInputFormatter>? inputFormatters;
 
+  /// Determines how the [maxLength] limit should be enforced.
+  ///
+  /// {@macro flutter.services.textFormatter.effectiveMaxLengthEnforcement}
+  ///
+  /// {@macro flutter.services.textFormatter.maxLengthEnforcement}
+  final MaxLengthEnforcement? maxLengthEnforcement;
+
+  /// If [maxLength] is set to this value, only the "current input length"
+  /// part of the character counter is shown.
+  static const int noMaxLength = -1;
+
+  /// The maximum number of characters (Unicode grapheme clusters) to allow in
+  /// the text field.
+  ///
+  /// If set, a character counter will be displayed below the
+  /// field showing how many characters have been entered. If set to a number
+  /// greater than 0, it will also display the maximum number allowed. If set
+  /// to [TextField.noMaxLength] then only the current character count is displayed.
+  ///
+  /// After [maxLength] characters have been input, additional input
+  /// is ignored, unless [maxLengthEnforcement] is set to
+  /// [MaxLengthEnforcement.none].
+  ///
+  /// The text field enforces the length with a [LengthLimitingTextInputFormatter],
+  /// which is evaluated after the supplied [inputFormatters], if any.
+  ///
+  /// This value must be either null, [TextField.noMaxLength], or greater than 0.
+  /// If null (the default) then there is no limit to the number of characters
+  /// that can be entered. If set to [TextField.noMaxLength], then no limit will
+  /// be enforced, but the number of characters entered will still be displayed.
+  ///
+  /// Whitespace characters (e.g. newline, space, tab) are included in the
+  /// character count.
+  ///
+  /// If [maxLengthEnforcement] is [MaxLengthEnforcement.none], then more than
+  /// [maxLength] characters may be entered, but the error counter and divider
+  /// will switch to the [decoration]'s [InputDecoration.errorStyle] when the
+  /// limit is exceeded.
+  ///
+  /// {@macro flutter.services.lengthLimitingTextInputFormatter.maxLength}
+  final int? maxLength;
   // Fica dentro do Decoration
   final String? hintText;
 
@@ -84,9 +125,11 @@ class TextField extends StatefulWidget {
   const TextField({
     super.key,
     this.controller,
+    this.maxLength,
     this.focusNode,
     this.enabled = true,
     this.onTap,
+    this.maxLengthEnforcement,
     TextInputType? keyboardType,
     this.textCapitalization = TextCapitalization.none,
     this.textInputAction,
@@ -317,7 +360,10 @@ class _TextFieldState extends State<TextField>
       GlobalKey<EditableTextState>();
 
   bool _showSelectionHandles = false;
-
+  MaxLengthEnforcement get _effectiveMaxLengthEnforcement =>
+      widget.maxLengthEnforcement ??
+      LengthLimitingTextInputFormatter.getDefaultMaxLengthEnforcement(
+          m.Theme.of(context).platform);
   @override
   void initState() {
     super.initState();
@@ -415,6 +461,25 @@ class _TextFieldState extends State<TextField>
 
   @override
   Widget build(BuildContext context) {
+    final List<TextInputFormatter> formatters = <TextInputFormatter>[
+      ...?widget.inputFormatters,
+      if (widget.maxLength != null)
+        LengthLimitingTextInputFormatter(
+          widget.maxLength,
+          maxLengthEnforcement: _effectiveMaxLengthEnforcement,
+        ),
+    ];
+
+    // Olhar quando for implementar o semantics
+    final int? semanticsMaxValueLength;
+    if (_effectiveMaxLengthEnforcement != MaxLengthEnforcement.none &&
+        widget.maxLength != null &&
+        widget.maxLength! > 0) {
+      semanticsMaxValueLength = widget.maxLength;
+    } else {
+      semanticsMaxValueLength = null;
+    }
+
     return SpecBuilder(
       style: widget.style,
       builder: (context) {
@@ -439,7 +504,7 @@ class _TextFieldState extends State<TextField>
             textAlign: spec.textAlign,
             textDirection: widget.textDirection,
             // possui logicas relacionadas
-            readOnly: widget.readOnly,
+            readOnly: widget.readOnly || !widget.enabled,
             showCursor: widget.showCursor,
             // Logica de assert
             obscuringCharacter: widget.obscuringCharacter,
@@ -458,8 +523,7 @@ class _TextFieldState extends State<TextField>
             onChanged: widget.onChanged,
             onEditingComplete: widget.onEditingComplete,
             onSubmitted: widget.onSubmitted,
-            // Possui logica propria
-            inputFormatters: widget.inputFormatters,
+            inputFormatters: formatters,
             cursorWidth: spec.cursorWidth,
             cursorHeight: spec.cursorHeight,
             // Depende do sistema operacional
@@ -473,7 +537,6 @@ class _TextFieldState extends State<TextField>
             restorationId: 'editable',
             scribbleEnabled: widget.scribbleEnabled,
             enableIMEPersonalizedLearning: widget.enableIMEPersonalizedLearning,
-            // Possui logica propria
             showSelectionHandles: _showSelectionHandles,
             rendererIgnoresPointer: true,
             mouseCursor: MouseCursor.defer, // TextField will handle the cursor
