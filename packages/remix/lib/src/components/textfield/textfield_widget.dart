@@ -67,7 +67,6 @@ class TextField extends StatefulWidget {
   final Object groupId;
   final Locale? locale;
   final AppPrivateCommandCallback? onAppPrivateCommand;
-  final SelectionChangedCallback? onSelectionChanged;
 
   final TapRegionCallback? onTapOutside;
   final TextMagnifierConfiguration? magnifierConfiguration;
@@ -127,7 +126,6 @@ class TextField extends StatefulWidget {
     this.groupId = EditableText,
     this.locale,
     this.onAppPrivateCommand,
-    this.onSelectionChanged,
     this.onTapOutside,
     this.scrollBehavior,
     this.canRequestFocus = true,
@@ -228,6 +226,31 @@ class _TextFieldState extends State<TextField>
       setState(() {
         _showSelectionHandles = willShowSelectionHandles;
       });
+    }
+
+    switch (m.Theme.of(context).platform) {
+      case TargetPlatform.iOS:
+      case TargetPlatform.macOS:
+      case TargetPlatform.linux:
+      case TargetPlatform.windows:
+      case TargetPlatform.fuchsia:
+      case TargetPlatform.android:
+        if (cause == SelectionChangedCause.longPress) {
+          _editableText?.bringIntoView(selection.extent);
+        }
+    }
+
+    switch (m.Theme.of(context).platform) {
+      case TargetPlatform.iOS:
+      case TargetPlatform.fuchsia:
+      case TargetPlatform.android:
+        break;
+      case TargetPlatform.macOS:
+      case TargetPlatform.linux:
+      case TargetPlatform.windows:
+        if (cause == SelectionChangedCause.drag) {
+          _editableText?.hideToolbar();
+        }
     }
   }
 
@@ -470,8 +493,7 @@ class _TextFieldState extends State<TextField>
             locale: widget.locale,
             // mouseCursor: mouseCursor,
             onAppPrivateCommand: widget.onAppPrivateCommand,
-            // Material tem função propria para reagir ao selection
-            onSelectionChanged: widget.onSelectionChanged,
+            onSelectionChanged: _handleSelectionChanged,
             onSelectionHandleTapped: _handleSelectionHandleTapped,
 
             onTapOutside: widget.onTapOutside,
