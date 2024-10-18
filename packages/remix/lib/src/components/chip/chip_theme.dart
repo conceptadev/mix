@@ -51,7 +51,7 @@ class FortalezaChipStyle extends ChipStyle {
         ..padding.horizontal(12),
       (spec.on.hover & spec.on.unselected)($.container.color.$accent(3)),
       spec.on.selected($.container.color.$accent(4)),
-      (spec.on.disabled)(
+      spec.on.disabled(
         $.container.color.$neutral(2),
         $.icon.color.$neutral(8),
       ),

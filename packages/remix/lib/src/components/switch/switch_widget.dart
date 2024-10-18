@@ -63,16 +63,7 @@ class _SwitchState extends State<Switch> {
       onPress: widget.disabled ? null : _handleOnPress,
       controller: _controller,
       child: SpecBuilder(
-        style: style
-            .makeStyle(configuration)
-            .applyVariants(widget.variants)
-            .animate(
-              duration: const Duration(milliseconds: 400),
-              curve: SpringCurve(
-                duration: const Duration(milliseconds: 400),
-                bounce: 0.4,
-              ),
-            ),
+        style: style.makeStyle(configuration).applyVariants(widget.variants),
         builder: (context) {
           final spec = SwitchSpec.of(context);
 
