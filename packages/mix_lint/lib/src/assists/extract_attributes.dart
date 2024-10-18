@@ -16,8 +16,6 @@ class ExtractAttributes extends DartAssist {
     AstNode? ancestorNode;
 
     ancestorNode = node.thisOrAncestorMatching<Block>((node) {
-      print('node ${node.runtimeType}');
-
       return node is Block;
     });
 
