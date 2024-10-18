@@ -50,6 +50,7 @@ mixin _$TextFieldSpec on Spec<TextFieldSpec> {
     EdgeInsets? scrollPadding,
     Clip? clipBehavior,
     Color? autocorrectionTextRectColor,
+    BoxSpec? container,
     AnimatedData? animated,
     WidgetModifiersData? modifiers,
   }) {
@@ -73,6 +74,7 @@ mixin _$TextFieldSpec on Spec<TextFieldSpec> {
       clipBehavior: clipBehavior ?? _$this.clipBehavior,
       autocorrectionTextRectColor:
           autocorrectionTextRectColor ?? _$this.autocorrectionTextRectColor,
+      container: container ?? _$this.container,
       animated: animated ?? _$this.animated,
       modifiers: modifiers ?? _$this.modifiers,
     );
@@ -96,6 +98,7 @@ mixin _$TextFieldSpec on Spec<TextFieldSpec> {
   /// - [Color.lerp] for [cursorColor] and [backgroundCursorColor] and [selectionColor] and [autocorrectionTextRectColor].
   /// - [Offset.lerp] for [cursorOffset].
   /// - [EdgeInsets.lerp] for [scrollPadding].
+  /// - [BoxSpec.lerp] for [container].
 
   /// For [textAlign] and [textHeightBehavior] and [textScaler] and [textWidthBasis] and [paintCursorAboveText] and [clipBehavior] and [animated] and [modifiers], the interpolation is performed using a step function.
   /// If [t] is less than 0.5, the value from the current [TextFieldSpec] is used. Otherwise, the value
@@ -136,6 +139,7 @@ mixin _$TextFieldSpec on Spec<TextFieldSpec> {
           _$this.autocorrectionTextRectColor,
           other.autocorrectionTextRectColor,
           t),
+      container: _$this.container?.lerp(other.container, t) ?? other.container,
       animated: t < 0.5 ? _$this.animated : other.animated,
       modifiers: other.modifiers,
     );
@@ -164,6 +168,7 @@ mixin _$TextFieldSpec on Spec<TextFieldSpec> {
         _$this.scrollPadding,
         _$this.clipBehavior,
         _$this.autocorrectionTextRectColor,
+        _$this.container,
         _$this.animated,
         _$this.modifiers,
       ];
@@ -210,6 +215,8 @@ mixin _$TextFieldSpec on Spec<TextFieldSpec> {
         'autocorrectionTextRectColor', _$this.autocorrectionTextRectColor,
         defaultValue: null));
     properties.add(
+        DiagnosticsProperty('container', _$this.container, defaultValue: null));
+    properties.add(
         DiagnosticsProperty('animated', _$this.animated, defaultValue: null));
     properties.add(
         DiagnosticsProperty('modifiers', _$this.modifiers, defaultValue: null));
@@ -242,6 +249,7 @@ class TextFieldSpecAttribute extends SpecAttribute<TextFieldSpec>
   final EdgeInsetsDto? scrollPadding;
   final Clip? clipBehavior;
   final ColorDto? autocorrectionTextRectColor;
+  final BoxSpecAttribute? container;
 
   const TextFieldSpecAttribute({
     this.style,
@@ -261,6 +269,7 @@ class TextFieldSpecAttribute extends SpecAttribute<TextFieldSpec>
     this.scrollPadding,
     this.clipBehavior,
     this.autocorrectionTextRectColor,
+    this.container,
     super.animated,
     super.modifiers,
   });
@@ -293,6 +302,7 @@ class TextFieldSpecAttribute extends SpecAttribute<TextFieldSpec>
       scrollPadding: scrollPadding?.resolve(mix),
       clipBehavior: clipBehavior,
       autocorrectionTextRectColor: autocorrectionTextRectColor?.resolve(mix),
+      container: container?.resolve(mix),
       animated: animated?.resolve(mix) ?? mix.animation,
       modifiers: modifiers?.resolve(mix),
     );
@@ -335,6 +345,7 @@ class TextFieldSpecAttribute extends SpecAttribute<TextFieldSpec>
       autocorrectionTextRectColor: autocorrectionTextRectColor
               ?.merge(other.autocorrectionTextRectColor) ??
           other.autocorrectionTextRectColor,
+      container: container?.merge(other.container) ?? other.container,
       animated: animated?.merge(other.animated) ?? other.animated,
       modifiers: modifiers?.merge(other.modifiers) ?? other.modifiers,
     );
@@ -363,6 +374,7 @@ class TextFieldSpecAttribute extends SpecAttribute<TextFieldSpec>
         scrollPadding,
         clipBehavior,
         autocorrectionTextRectColor,
+        container,
         animated,
         modifiers,
       ];
@@ -407,6 +419,8 @@ class TextFieldSpecAttribute extends SpecAttribute<TextFieldSpec>
     properties.add(DiagnosticsProperty(
         'autocorrectionTextRectColor', autocorrectionTextRectColor,
         defaultValue: null));
+    properties
+        .add(DiagnosticsProperty('container', container, defaultValue: null));
     properties
         .add(DiagnosticsProperty('animated', animated, defaultValue: null));
     properties
@@ -476,6 +490,9 @@ class TextFieldSpecUtility<T extends Attribute>
   late final autocorrectionTextRectColor =
       ColorUtility((v) => only(autocorrectionTextRectColor: v));
 
+  /// Utility for defining [TextFieldSpecAttribute.container]
+  late final container = BoxSpecUtility((v) => only(container: v));
+
   /// Utility for defining [TextFieldSpecAttribute.animated]
   late final animated = AnimatedUtility((v) => only(animated: v));
 
@@ -510,6 +527,7 @@ class TextFieldSpecUtility<T extends Attribute>
     EdgeInsetsDto? scrollPadding,
     Clip? clipBehavior,
     ColorDto? autocorrectionTextRectColor,
+    BoxSpecAttribute? container,
     AnimatedDataDto? animated,
     WidgetModifiersDataDto? modifiers,
   }) {
@@ -531,6 +549,7 @@ class TextFieldSpecUtility<T extends Attribute>
       scrollPadding: scrollPadding,
       clipBehavior: clipBehavior,
       autocorrectionTextRectColor: autocorrectionTextRectColor,
+      container: container,
       animated: animated,
       modifiers: modifiers,
     ));

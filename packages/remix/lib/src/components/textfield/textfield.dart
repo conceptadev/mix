@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:flutter/cupertino.dart' show CupertinoColors;
 import 'package:flutter/gestures.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart' as m;
@@ -152,6 +153,8 @@ class TextFieldSpec extends Spec<TextFieldSpec>
   final Color? autocorrectionTextRectColor;
   // final MouseCursor? mouseCursor;
 
+  final BoxSpec container;
+
   @MixableProperty(dto: MixableFieldDto(type: TextHeightBehaviorDto))
   final TextHeightBehavior? textHeightBehavior;
 
@@ -183,20 +186,23 @@ class TextFieldSpec extends Spec<TextFieldSpec>
     // Brightness? keyboardAppearance,
     this.autocorrectionTextRectColor,
     // this.mouseCursor,
+    BoxSpec? container,
     super.animated,
     super.modifiers,
   })  : style = style ?? const TextStyle(),
         textAlign = textAlign ?? TextAlign.start,
         textWidthBasis = textWidthBasis ?? TextWidthBasis.parent,
         cursorWidth = cursorWidth ?? 2.0,
-        cursorColor = cursorColor ?? m.Colors.purpleAccent,
+        cursorColor = cursorColor ?? m.Colors.black54,
         cursorOffset = cursorOffset ?? Offset.zero,
         paintCursorAboveText = paintCursorAboveText ?? false,
-        backgroundCursorColor = backgroundCursorColor ?? m.Colors.grey,
+        backgroundCursorColor =
+            backgroundCursorColor ?? CupertinoColors.inactiveGray,
         // selectionHeightStyle = selectionHeightStyle ?? BoxHeightStyle.tight,
         // selectionWidthStyle = selectionWidthStyle ?? BoxWidthStyle.tight,
         scrollPadding = scrollPadding ?? const EdgeInsets.all(20.0),
-        clipBehavior = clipBehavior ?? Clip.hardEdge;
+        clipBehavior = clipBehavior ?? Clip.hardEdge,
+        container = container ?? const BoxSpec();
   // keyboardAppearance = keyboardAppearance ?? Brightness.light;
 
   @override
