@@ -25,6 +25,9 @@ class TextField extends StatefulWidget {
   final ValueChanged<String>? onSubmitted;
   final List<TextInputFormatter>? inputFormatters;
 
+  // Fica dentro do Decoration
+  final String? hintText;
+
   /// Determine whether this text field can request the primary focus.
   ///
   /// Defaults to true. If false, the text field will not request focus
@@ -94,6 +97,7 @@ class TextField extends StatefulWidget {
     this.showCursor,
     this.obscuringCharacter = '•',
     this.obscureText = false,
+    this.hintText,
     this.autocorrect = true,
     SmartDashesType? smartDashesType,
     SmartQuotesType? smartQuotesType,
@@ -115,7 +119,7 @@ class TextField extends StatefulWidget {
     this.enableIMEPersonalizedLearning = true,
     this.showSelectionHandles = false,
     this.autofillClient,
-    this.autofillHints,
+    this.autofillHints = const <String>[],
     this.contentInsertionConfiguration,
     this.cursorOpacityAnimates = false,
     this.dragStartBehavior = DragStartBehavior.start,
@@ -171,7 +175,7 @@ class TextField extends StatefulWidget {
 
 class _TextFieldState extends State<TextField>
     with RestorationMixin
-    implements TextSelectionGestureDetectorBuilderDelegate {
+    implements TextSelectionGestureDetectorBuilderDelegate, AutofillClient {
   late MixWidgetStateController statesController;
 
   late _TextFieldSelectionGestureDetectorBuilder
@@ -397,7 +401,6 @@ class _TextFieldState extends State<TextField>
           child: EditableText(
             // key: editableTextKey,
             controller: _effectiveController,
-
             focusNode: _effectiveFocusNode,
             style: spec.style,
             strutStyle: spec.strutStyle,
@@ -453,9 +456,7 @@ class _TextFieldState extends State<TextField>
             // depende do sistema operacional
             autocorrectionTextRectColor: spec.autocorrectionTextRectColor,
             // implementa um AutofillClient
-            autofillClient: widget.autofillClient,
-            // Material possui logica propria
-            autofillHints: widget.autofillHints,
+            autofillClient: this,
             contentInsertionConfiguration: widget.contentInsertionConfiguration,
             // Depende do sistema operacional
             cursorOffset: spec.cursorOffset,
@@ -502,6 +503,32 @@ class _TextFieldState extends State<TextField>
 
   @override
   bool get selectionEnabled => widget.selectionEnabled && widget.enabled;
+
+  // AutofillClient implementation start.
+  @override
+  String get autofillId => _editableText!.autofillId;
+
+  @override
+  void autofill(TextEditingValue newEditingValue) =>
+      _editableText!.autofill(newEditingValue);
+
+  @override
+  TextInputConfiguration get textInputConfiguration {
+    final List<String>? autofillHints =
+        widget.autofillHints?.toList(growable: false);
+    final AutofillConfiguration autofillConfiguration = autofillHints != null
+        ? AutofillConfiguration(
+            uniqueIdentifier: autofillId,
+            autofillHints: autofillHints,
+            currentEditingValue: _effectiveController.value,
+            hintText: widget.hintText,
+          )
+        : AutofillConfiguration.disabled;
+
+    return _editableText!.textInputConfiguration
+        .copyWith(autofillConfiguration: autofillConfiguration);
+  }
+  // AutofillClient implementation end.
 }
 
 class _TextFieldSelectionGestureDetectorBuilder
