@@ -474,11 +474,11 @@ class _TextFieldState extends State<TextField>
             scribbleEnabled: widget.scribbleEnabled,
             enableIMEPersonalizedLearning: widget.enableIMEPersonalizedLearning,
             // Possui logica propria
-            showSelectionHandles: widget.showSelectionHandles,
+            showSelectionHandles: _showSelectionHandles,
             rendererIgnoresPointer: true,
+            mouseCursor: MouseCursor.defer, // TextField will handle the cursor
             // depende do sistema operacional
             autocorrectionTextRectColor: spec.autocorrectionTextRectColor,
-            // implementa um AutofillClient
             autofillClient: this,
             contentInsertionConfiguration: widget.contentInsertionConfiguration,
             // Depende do sistema operacional
