@@ -19,6 +19,7 @@ import '../components/radio/radio.dart';
 import '../components/scaffold/scaffold.dart';
 import '../components/segmented_control/segmented_control.dart';
 import '../components/select/select.dart';
+import '../components/slider/slider.dart';
 import '../components/spinner/spinner.dart';
 import '../components/switch/switch.dart';
 import '../components/toast/toast.dart';
@@ -45,6 +46,7 @@ class RemixComponentTheme {
   final SpinnerStyle spinner;
   final SwitchStyle switchComponent;
   final ToastStyle toast;
+  final SliderStyle slider;
 
   const RemixComponentTheme({
     required this.accordion,
@@ -67,6 +69,7 @@ class RemixComponentTheme {
     required this.spinner,
     required this.switchComponent,
     required this.toast,
+    required this.slider,
   });
 
   factory RemixComponentTheme.baseLight() {
@@ -91,6 +94,7 @@ class RemixComponentTheme {
       spinner: SpinnerStyle(),
       switchComponent: SwitchStyle(),
       toast: ToastStyle(),
+      slider: SliderStyle(),
     );
   }
 
@@ -115,6 +119,7 @@ class RemixComponentTheme {
       select: const SelectDarkStyle(),
       spinner: const SpinnerDarkStyle(),
       switchComponent: const SwitchDarkStyle(),
+      slider: const SliderDarkStyle(),
     );
   }
 
@@ -140,6 +145,7 @@ class RemixComponentTheme {
       spinner: FortalezaSpinnerStyle(),
       switchComponent: FortalezaSwitchStyle(),
       toast: FortalezaToastStyle(),
+      slider: FortalezaSliderStyle(),
     );
   }
 
@@ -174,6 +180,7 @@ class RemixComponentTheme {
     SpinnerStyle? spinner,
     SwitchStyle? switchComponent,
     ToastStyle? toast,
+    SliderStyle? slider,
   }) {
     return RemixComponentTheme(
       accordion: accordion ?? this.accordion,
@@ -196,6 +203,7 @@ class RemixComponentTheme {
       spinner: spinner ?? this.spinner,
       switchComponent: switchComponent ?? this.switchComponent,
       toast: toast ?? this.toast,
+      slider: slider ?? this.slider,
     );
   }
 }
