@@ -6,10 +6,8 @@ class TextField extends StatelessWidget {
   final TextInputType? keyboardType;
   final TextCapitalization textCapitalization;
   final TextInputAction? textInputAction;
-  final TextStyle? style;
   final TextDirection? textDirection;
-  final TextAlign textAlign;
-  final TextAlignVertical? textAlignVertical;
+
   final bool autofocus;
   final bool readOnly;
   final bool? showCursor;
@@ -26,12 +24,7 @@ class TextField extends StatelessWidget {
   final VoidCallback? onEditingComplete;
   final ValueChanged<String>? onSubmitted;
   final List<TextInputFormatter>? inputFormatters;
-  final double cursorWidth;
-  final double? cursorHeight;
-  final Radius? cursorRadius;
-  final Color? cursorColor;
-  final Brightness keyboardAppearance;
-  final EdgeInsets scrollPadding;
+
   final bool enableInteractiveSelection;
   final TextSelectionControls? selectionControls;
   final ScrollController? scrollController;
@@ -40,33 +33,28 @@ class TextField extends StatelessWidget {
   final String? restorationId;
   final bool scribbleEnabled;
   final bool enableIMEPersonalizedLearning;
-  final StrutStyle? strutStyle;
+
   final bool showSelectionHandles;
   final bool rendererIgnoresPointer;
-  final Color? autocorrectionTextRectColor;
+
   final AutofillClient? autofillClient;
   final Iterable<String>? autofillHints;
   final ContentInsertionConfiguration? contentInsertionConfiguration;
-  final Offset cursorOffset;
+
   final bool cursorOpacityAnimates;
   final DragStartBehavior dragStartBehavior;
   final bool forceLine;
   final Object groupId;
   final Locale? locale;
-  final MouseCursor? mouseCursor;
   final AppPrivateCommandCallback? onAppPrivateCommand;
   final SelectionChangedCallback? onSelectionChanged;
   final VoidCallback? onSelectionHandleTapped;
   final TapRegionCallback? onTapOutside;
-  final bool paintCursorAboveText;
+
   final ScrollBehavior? scrollBehavior;
-  final BoxHeightStyle selectionHeightStyle;
-  final BoxWidthStyle selectionWidthStyle;
-  final TextHeightBehavior? textHeightBehavior;
-  final TextScaler? textScaler;
-  final TextWidthBasis textWidthBasis;
+
   final UndoHistoryController? undoController;
-  final Style mixStyle;
+  final Style style;
 
   const TextField({
     super.key,
@@ -75,11 +63,7 @@ class TextField extends StatelessWidget {
     this.keyboardType,
     this.textCapitalization = TextCapitalization.none,
     this.textInputAction,
-    this.style,
-    this.strutStyle,
     this.textDirection,
-    this.textAlign = TextAlign.start,
-    this.textAlignVertical,
     this.autofocus = false,
     this.readOnly = false,
     this.showCursor,
@@ -96,12 +80,6 @@ class TextField extends StatelessWidget {
     this.onEditingComplete,
     this.onSubmitted,
     this.inputFormatters,
-    this.cursorWidth = 2.0,
-    this.cursorHeight,
-    this.cursorRadius,
-    this.cursorColor,
-    this.keyboardAppearance = Brightness.light,
-    this.scrollPadding = const EdgeInsets.all(20.0),
     this.enableInteractiveSelection = true,
     this.selectionControls,
     this.scrollController,
@@ -112,36 +90,27 @@ class TextField extends StatelessWidget {
     this.enableIMEPersonalizedLearning = true,
     this.showSelectionHandles = false,
     this.rendererIgnoresPointer = false,
-    this.autocorrectionTextRectColor,
     this.autofillClient,
     this.autofillHints,
     this.contentInsertionConfiguration,
-    this.cursorOffset = Offset.zero,
     this.cursorOpacityAnimates = false,
     this.dragStartBehavior = DragStartBehavior.start,
     this.forceLine = true,
     this.groupId = EditableText,
     this.locale,
-    this.mouseCursor,
     this.onAppPrivateCommand,
     this.onSelectionChanged,
     this.onSelectionHandleTapped,
     this.onTapOutside,
-    this.paintCursorAboveText = false,
     this.scrollBehavior,
-    this.selectionHeightStyle = BoxHeightStyle.tight,
-    this.selectionWidthStyle = BoxWidthStyle.tight,
-    this.textHeightBehavior,
-    this.textScaler,
-    this.textWidthBasis = TextWidthBasis.parent,
     this.undoController,
-    required this.mixStyle,
+    required this.style,
   });
 
   @override
   Widget build(BuildContext context) {
     return SpecBuilder(
-      style: mixStyle,
+      style: style,
       builder: (context) {
         final spec = TextFieldSpec.of(context);
 
@@ -149,15 +118,14 @@ class TextField extends StatelessWidget {
           controller: controller ?? TextEditingController(),
           focusNode: focusNode ?? FocusNode(),
           style: spec.style,
-          strutStyle: strutStyle,
-          cursorColor: cursorColor ?? m.Theme.of(context).colorScheme.primary,
-          backgroundCursorColor: m.Colors.grey,
-          selectionColor:
-              m.Theme.of(context).colorScheme.primary.withOpacity(0.4),
+          strutStyle: spec.strutStyle,
+          cursorColor: spec.cursorColor,
+          backgroundCursorColor: spec.backgroundCursorColor,
+          selectionColor: spec.selectionColor,
           keyboardType: keyboardType,
           textInputAction: textInputAction,
           textCapitalization: textCapitalization,
-          textAlign: textAlign,
+          textAlign: spec.textAlign,
           textDirection: textDirection,
           readOnly: readOnly,
           showCursor: showCursor,
@@ -176,12 +144,12 @@ class TextField extends StatelessWidget {
           onEditingComplete: onEditingComplete,
           onSubmitted: onSubmitted,
           inputFormatters: inputFormatters,
-          cursorWidth: cursorWidth,
-          cursorHeight: cursorHeight,
-          cursorRadius: cursorRadius,
-          scrollPadding: scrollPadding,
+          cursorWidth: spec.cursorWidth,
+          cursorHeight: spec.cursorHeight,
+          cursorRadius: spec.cursorRadius,
+          scrollPadding: spec.scrollPadding,
           scrollPhysics: scrollPhysics,
-          keyboardAppearance: keyboardAppearance ?? Brightness.dark,
+          // keyboardAppearance: keyboardAppearance ?? Brightness.dark,
           enableInteractiveSelection: enableInteractiveSelection,
           scrollController: scrollController,
           clipBehavior: clipBehavior,
@@ -190,29 +158,28 @@ class TextField extends StatelessWidget {
           enableIMEPersonalizedLearning: enableIMEPersonalizedLearning,
           showSelectionHandles: showSelectionHandles,
           rendererIgnoresPointer: rendererIgnoresPointer,
-          autocorrectionTextRectColor:
-              autocorrectionTextRectColor ?? m.Colors.transparent,
+          autocorrectionTextRectColor: spec.autocorrectionTextRectColor,
           autofillClient: autofillClient,
           autofillHints: autofillHints,
           contentInsertionConfiguration: contentInsertionConfiguration,
-          cursorOffset: cursorOffset,
+          cursorOffset: spec.cursorOffset,
           cursorOpacityAnimates: cursorOpacityAnimates,
           dragStartBehavior: dragStartBehavior,
           forceLine: forceLine,
           groupId: groupId,
           locale: locale,
-          mouseCursor: mouseCursor,
+          // mouseCursor: mouseCursor,
           onAppPrivateCommand: onAppPrivateCommand,
           onSelectionChanged: onSelectionChanged,
           onSelectionHandleTapped: onSelectionHandleTapped,
           onTapOutside: onTapOutside,
-          paintCursorAboveText: paintCursorAboveText,
+          paintCursorAboveText: spec.paintCursorAboveText,
           scrollBehavior: scrollBehavior,
-          selectionHeightStyle: selectionHeightStyle,
-          selectionWidthStyle: selectionWidthStyle,
-          textHeightBehavior: textHeightBehavior,
-          textScaler: textScaler ?? MediaQuery.textScalerOf(context),
-          textWidthBasis: textWidthBasis,
+          // selectionHeightStyle: spec.selectionHeightStyle,
+          // selectionWidthStyle: spec.selectionWidthStyle,
+          textHeightBehavior: spec.textHeightBehavior,
+          textScaler: spec.textScaler ?? MediaQuery.textScalerOf(context),
+          textWidthBasis: spec.textWidthBasis,
           undoController: undoController,
           contextMenuBuilder: (context, editableTextState) {
             return m.AdaptiveTextSelectionToolbar.editableText(

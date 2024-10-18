@@ -126,6 +126,34 @@ part 'textfield_widget.dart';
 class TextFieldSpec extends Spec<TextFieldSpec>
     with _$TextFieldSpec, Diagnosticable {
   final TextStyle style;
+  final TextAlign textAlign;
+  // final TextAlignVertical? textAlignVertical;
+  final StrutStyle? strutStyle;
+  final TextScaler? textScaler;
+  final TextWidthBasis textWidthBasis;
+
+  final double cursorWidth;
+  final double? cursorHeight;
+  final Radius? cursorRadius;
+  final Color cursorColor;
+  final Offset cursorOffset;
+  final bool paintCursorAboveText;
+  final Color backgroundCursorColor;
+  final Color? selectionColor;
+
+  // final BoxHeightStyle selectionHeightStyle;
+  // final BoxWidthStyle selectionWidthStyle;
+
+  final EdgeInsets scrollPadding;
+  final Clip clipBehavior;
+  // final ScrollBehavior? scrollBehavior;
+
+  // final Brightness keyboardAppearance;
+  final Color? autocorrectionTextRectColor;
+  // final MouseCursor? mouseCursor;
+
+  @MixableProperty(dto: MixableFieldDto(type: TextHeightBehaviorDto))
+  final TextHeightBehavior? textHeightBehavior;
 
   static const of = _$TextFieldSpec.of;
 
@@ -133,9 +161,43 @@ class TextFieldSpec extends Spec<TextFieldSpec>
 
   const TextFieldSpec({
     TextStyle? style,
+    TextAlign? textAlign,
+    // this.textAlignVertical,
+    this.strutStyle,
+    this.textHeightBehavior,
+    this.textScaler,
+    TextWidthBasis? textWidthBasis,
+    double? cursorWidth,
+    this.cursorHeight,
+    this.cursorRadius,
+    Color? cursorColor,
+    Offset? cursorOffset,
+    bool? paintCursorAboveText,
+    Color? backgroundCursorColor,
+    this.selectionColor,
+    // BoxHeightStyle? selectionHeightStyle,
+    // BoxWidthStyle? selectionWidthStyle,
+    EdgeInsets? scrollPadding,
+    Clip? clipBehavior,
+    // this.scrollBehavior,
+    // Brightness? keyboardAppearance,
+    this.autocorrectionTextRectColor,
+    // this.mouseCursor,
     super.animated,
     super.modifiers,
-  }) : style = style ?? const TextStyle();
+  })  : style = style ?? const TextStyle(),
+        textAlign = textAlign ?? TextAlign.start,
+        textWidthBasis = textWidthBasis ?? TextWidthBasis.parent,
+        cursorWidth = cursorWidth ?? 2.0,
+        cursorColor = cursorColor ?? m.Colors.purpleAccent,
+        cursorOffset = cursorOffset ?? Offset.zero,
+        paintCursorAboveText = paintCursorAboveText ?? false,
+        backgroundCursorColor = backgroundCursorColor ?? m.Colors.grey,
+        // selectionHeightStyle = selectionHeightStyle ?? BoxHeightStyle.tight,
+        // selectionWidthStyle = selectionWidthStyle ?? BoxWidthStyle.tight,
+        scrollPadding = scrollPadding ?? const EdgeInsets.all(20.0),
+        clipBehavior = clipBehavior ?? Clip.hardEdge;
+  // keyboardAppearance = keyboardAppearance ?? Brightness.light;
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
