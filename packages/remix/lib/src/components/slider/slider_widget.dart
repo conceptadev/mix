@@ -35,8 +35,7 @@ class _SliderState extends State<Slider> with TickerProviderStateMixin {
   double _sliderWidth = 0.0;
   double _thumbWidth = 0.0;
 
-  late MixWidgetStateController? _controller;
-
+  late MixWidgetStateController _controller;
   @override
   void initState() {
     super.initState();
@@ -44,6 +43,7 @@ class _SliderState extends State<Slider> with TickerProviderStateMixin {
   }
 
   double _calculateValue(Offset localPosition) {
+    print('calculateValue');
     double dx = (localPosition.dx - _thumbWidth / 2).clamp(0, _sliderWidth);
     double percent = dx / _sliderWidth;
     int divisions = widget.divisions;
@@ -59,14 +59,14 @@ class _SliderState extends State<Slider> with TickerProviderStateMixin {
     return widget.min + percent * (widget.max - widget.min);
   }
 
-  void _updateController(void Function(MixWidgetStateController) callback) {
-    if (_controller == null || _controller!.disabled) return;
-    callback(_controller!);
+  void _handleInteraction(void Function(MixWidgetStateController) callback) {
+    if (_controller.disabled) return;
+    callback(_controller);
   }
 
   @override
   void dispose() {
-    _controller?.dispose();
+    _controller.dispose();
     super.dispose();
   }
 
@@ -75,31 +75,35 @@ class _SliderState extends State<Slider> with TickerProviderStateMixin {
     final style = widget.style ?? context.remix.components.slider;
     final configuration = SpecConfiguration(context, SliderSpecUtility.self);
 
-    return MouseRegion(
-      onEnter: (event) {
-        _updateController((c) => c.hovered = true);
-      },
-      onExit: (event) {
-        _updateController((c) => c.hovered = false);
-      },
+    return Interactable(
+      enabled: !widget.disabled,
+      mouseCursor: widget.disabled
+          ? SystemMouseCursors.forbidden
+          : SystemMouseCursors.click,
+      controller: _controller,
       child: GestureDetector(
         onPanStart: (details) {
-          _updateController((c) => c.pressed = true);
-          final value = _calculateValue(details.localPosition);
-          widget.onChangeStart?.call(value);
+          _handleInteraction((c) {
+            c.pressed = true;
+            final value = _calculateValue(details.localPosition);
+            widget.onChangeStart?.call(value);
+          });
         },
         onPanUpdate: (details) {
-          _updateController((c) => c.pressed = true);
-          final value = _calculateValue(details.localPosition);
-          widget.onChanged?.call(value);
+          _handleInteraction((c) {
+            c.pressed = true;
+            final value = _calculateValue(details.localPosition);
+            widget.onChanged?.call(value);
+          });
         },
         onPanEnd: (details) {
-          _updateController((c) => c.pressed = false);
-          final value = _calculateValue(details.localPosition);
-          widget.onChangeEnd?.call(value);
+          _handleInteraction((c) {
+            c.pressed = false;
+            final value = _calculateValue(details.localPosition);
+            widget.onChangeEnd?.call(value);
+          });
         },
         child: SpecBuilder(
-          controller: _controller,
           style: style.makeStyle(configuration).applyVariants(widget.variants),
           builder: (context) {
             final spec = SliderSpec.of(context);
