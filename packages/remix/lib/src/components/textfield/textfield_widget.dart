@@ -7,7 +7,7 @@ class TextField extends StatefulWidget {
   final TextCapitalization textCapitalization;
   final TextInputAction? textInputAction;
   final TextDirection? textDirection;
-
+  final bool enabled;
   final bool autofocus;
   final bool readOnly;
   final bool? showCursor;
@@ -24,6 +24,24 @@ class TextField extends StatefulWidget {
   final VoidCallback? onEditingComplete;
   final ValueChanged<String>? onSubmitted;
   final List<TextInputFormatter>? inputFormatters;
+
+  /// Determine whether this text field can request the primary focus.
+  ///
+  /// Defaults to true. If false, the text field will not request focus
+  /// when tapped, or when its context menu is displayed. If false it will not
+  /// be possible to move the focus to the text field with tab key.
+  final bool canRequestFocus;
+
+  /// Whether [onTap] should be called for every tap.
+  ///
+  /// Defaults to false, so [onTap] is only called for each distinct tap. When
+  /// enabled, [onTap] is called for every tap including consecutive taps.
+  final bool onTapAlwaysCalled;
+
+  /// {@macro flutter.material.textfield.onTap}
+  ///  If [onTapAlwaysCalled] is enabled, this will also be called for consecutive
+  /// taps.
+  final GestureTapCallback? onTap;
 
   final bool enableInteractiveSelection;
   final TextSelectionControls? selectionControls;
@@ -58,11 +76,16 @@ class TextField extends StatefulWidget {
 
   final Widget Function(BuildContext, EditableTextState)? contextMenuBuilder;
 
+  /// {@macro flutter.widgets.editableText.selectionEnabled}
+  bool get selectionEnabled => enableInteractiveSelection;
+
   const TextField({
     super.key,
     this.controller,
     this.focusNode,
-    this.keyboardType,
+    this.enabled = true,
+    this.onTap,
+    TextInputType? keyboardType,
     this.textCapitalization = TextCapitalization.none,
     this.textInputAction,
     this.textDirection,
@@ -72,8 +95,8 @@ class TextField extends StatefulWidget {
     this.obscuringCharacter = '•',
     this.obscureText = false,
     this.autocorrect = true,
-    this.smartDashesType,
-    this.smartQuotesType,
+    SmartDashesType? smartDashesType,
+    SmartQuotesType? smartQuotesType,
     this.enableSuggestions = true,
     this.maxLines = 1,
     this.minLines,
@@ -82,7 +105,7 @@ class TextField extends StatefulWidget {
     this.onEditingComplete,
     this.onSubmitted,
     this.inputFormatters,
-    this.enableInteractiveSelection = true,
+    bool? enableInteractiveSelection,
     this.selectionControls,
     this.scrollController,
     this.scrollPhysics,
@@ -103,21 +126,64 @@ class TextField extends StatefulWidget {
     this.onSelectionChanged,
     this.onTapOutside,
     this.scrollBehavior,
+    this.canRequestFocus = true,
+    this.onTapAlwaysCalled = false,
     this.undoController,
     this.magnifierConfiguration,
     this.spellCheckConfiguration,
     this.contextMenuBuilder,
     required this.style,
-  });
+  })  : assert(obscuringCharacter.length == 1),
+        smartDashesType = smartDashesType ??
+            (obscureText ? SmartDashesType.disabled : SmartDashesType.enabled),
+        smartQuotesType = smartQuotesType ??
+            (obscureText ? SmartQuotesType.disabled : SmartQuotesType.enabled),
+        assert(maxLines == null || maxLines > 0),
+        assert(minLines == null || minLines > 0),
+        assert(
+          (maxLines == null) || (minLines == null) || (maxLines >= minLines),
+          "minLines can't be greater than maxLines",
+        ),
+        assert(
+          !expands || (maxLines == null && minLines == null),
+          'minLines and maxLines must be null when expands is true.',
+        ),
+        assert(!obscureText || maxLines == 1,
+            'Obscured fields cannot be multiline.'),
+        // assert(maxLength == null ||
+        //     maxLength == TextField.noMaxLength ||
+        //     maxLength > 0),
+        // Assert the following instead of setting it directly to avoid surprising the user by silently changing the value they set.
+        assert(
+          !identical(textInputAction, TextInputAction.newline) ||
+              maxLines == 1 ||
+              !identical(keyboardType, TextInputType.text),
+          'Use keyboardType TextInputType.multiline when using TextInputAction.newline on a multiline TextField.',
+        ),
+        keyboardType = keyboardType ??
+            (maxLines == 1 ? TextInputType.text : TextInputType.multiline),
+        enableInteractiveSelection =
+            enableInteractiveSelection ?? (!readOnly || !obscureText);
 
   @override
   State<TextField> createState() => _TextFieldState();
 }
 
-class _TextFieldState extends State<TextField> with RestorationMixin {
+class _TextFieldState extends State<TextField>
+    with RestorationMixin
+    implements TextSelectionGestureDetectorBuilderDelegate {
+  late MixWidgetStateController statesController;
+
+  late _TextFieldSelectionGestureDetectorBuilder
+      _selectionGestureDetectorBuilder;
+
   RestorableTextEditingController? _controller;
   TextEditingController get _effectiveController =>
       widget.controller ?? _controller!.value;
+
+  FocusNode? _focusNode;
+  FocusNode get _effectiveFocusNode =>
+      widget.focusNode ?? (_focusNode ??= FocusNode());
 
   @override
   String? get restorationId => widget.restorationId;
@@ -151,14 +217,46 @@ class _TextFieldState extends State<TextField> with RestorationMixin {
     }
   }
 
-  // void _handleSelectionChanged(
-  //     TextSelection selection, SelectionChangedCause? cause) {
-  //   final bool willShowSelectionHandles = _shouldShowSelectionHandles(cause);
-  //   if (willShowSelectionHandles != _showSelectionHandles) {
-  //     setState(() {
-  //       _showSelectionHandles = willShowSelectionHandles;
-  //     });
-  //   }
+  void _handleSelectionChanged(
+      TextSelection selection, SelectionChangedCause? cause) {
+    final bool willShowSelectionHandles = _shouldShowSelectionHandles(cause);
+    if (willShowSelectionHandles != _showSelectionHandles) {
+      setState(() {
+        _showSelectionHandles = willShowSelectionHandles;
+      });
+    }
+  }
+
+  bool _shouldShowSelectionHandles(SelectionChangedCause? cause) {
+    // When the text field is activated by something that doesn't trigger the
+    // selection overlay, we shouldn't show the handles either.
+    if (!_selectionGestureDetectorBuilder.shouldShowSelectionToolbar) {
+      return false;
+    }
+
+    if (cause == SelectionChangedCause.keyboard) {
+      return false;
+    }
+
+    if (widget.readOnly && _effectiveController.selection.isCollapsed) {
+      return false;
+    }
+
+    if (!widget.enabled) {
+      return false;
+    }
+
+    if (cause == SelectionChangedCause.longPress ||
+        cause == SelectionChangedCause.scribble) {
+      return true;
+    }
+
+    if (_effectiveController.text.isNotEmpty) {
+      return true;
+    }
+
+    return false;
+  }
 
   //   switch (Theme.of(context).platform) {
   //     case TargetPlatform.iOS:
@@ -191,17 +289,45 @@ class _TextFieldState extends State<TextField> with RestorationMixin {
   final GlobalKey<EditableTextState> editableTextKey =
       GlobalKey<EditableTextState>();
 
+  bool _showSelectionHandles = false;
+
   @override
   void initState() {
     super.initState();
+    statesController = MixWidgetStateController();
+    statesController.disabled = !widget.enabled;
     // _selectionGestureDetectorBuilder =
     //     _TextFieldSelectionGestureDetectorBuilder(state: this);
     if (widget.controller == null) {
       _createLocalController();
     }
-    // _effectiveFocusNode.canRequestFocus = widget.canRequestFocus && _isEnabled;
-    // _effectiveFocusNode.addListener(_handleFocusChanged);
+    _effectiveFocusNode.canRequestFocus =
+        widget.canRequestFocus && widget.enabled;
+    _effectiveFocusNode.addListener(_handleFocusChanged);
     // _initStatesController();
+  }
+
+  void _handleFocusChanged() {
+    setState(() {
+      // Rebuild the widget on focus change to show/hide the text selection
+      // highlight.
+    });
+    statesController.focused = _effectiveFocusNode.hasFocus;
+  }
+
+  bool get _canRequestFocus {
+    final NavigationMode mode =
+        MediaQuery.maybeNavigationModeOf(context) ?? NavigationMode.traditional;
+    return switch (mode) {
+      NavigationMode.traditional => widget.canRequestFocus && widget.enabled,
+      NavigationMode.directional => true,
+    };
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _effectiveFocusNode.canRequestFocus = _canRequestFocus;
   }
 
   @override
@@ -215,20 +341,20 @@ class _TextFieldState extends State<TextField> with RestorationMixin {
       _controller = null;
     }
 
-    // if (widget.focusNode != oldWidget.focusNode) {
-    //   (oldWidget.focusNode ?? _focusNode)?.removeListener(_handleFocusChanged);
-    //   (widget.focusNode ?? _focusNode)?.addListener(_handleFocusChanged);
-    // }
+    if (widget.focusNode != oldWidget.focusNode) {
+      (oldWidget.focusNode ?? _focusNode)?.removeListener(_handleFocusChanged);
+      (widget.focusNode ?? _focusNode)?.addListener(_handleFocusChanged);
+    }
 
-    // _effectiveFocusNode.canRequestFocus = _canRequestFocus;
+    _effectiveFocusNode.canRequestFocus = _canRequestFocus;
 
-    // if (_effectiveFocusNode.hasFocus &&
-    //     widget.readOnly != oldWidget.readOnly &&
-    //     _isEnabled) {
-    //   if (_effectiveController.selection.isCollapsed) {
-    //     _showSelectionHandles = !widget.readOnly;
-    //   }
-    // }
+    if (_effectiveFocusNode.hasFocus &&
+        widget.readOnly != oldWidget.readOnly &&
+        widget.enabled) {
+      if (_effectiveController.selection.isCollapsed) {
+        _showSelectionHandles = !widget.readOnly;
+      }
+    }
 
     // if (widget.statesController == oldWidget.statesController) {
     //   _statesController.update(WidgetState.disabled, !_isEnabled);
@@ -368,5 +494,60 @@ class _TextFieldState extends State<TextField> with RestorationMixin {
         );
       },
     );
+  }
+
+  @override
+  // TODO: Depende do sistema operacional
+  bool get forcePressEnabled => false;
+
+  @override
+  bool get selectionEnabled => widget.selectionEnabled && widget.enabled;
+}
+
+class _TextFieldSelectionGestureDetectorBuilder
+    extends TextSelectionGestureDetectorBuilder {
+  _TextFieldSelectionGestureDetectorBuilder({
+    required _TextFieldState state,
+  })  : _state = state,
+        super(delegate: state);
+
+  final _TextFieldState _state;
+
+  @override
+  void onForcePressStart(ForcePressDetails details) {
+    super.onForcePressStart(details);
+    if (delegate.selectionEnabled && shouldShowSelectionToolbar) {
+      editableText.showToolbar();
+    }
+  }
+
+  @override
+  void onForcePressEnd(ForcePressDetails details) {
+    // Not required.
+  }
+
+  @override
+  bool get onUserTapAlwaysCalled => _state.widget.onTapAlwaysCalled;
+
+  @override
+  void onUserTap() {
+    _state.widget.onTap?.call();
+  }
+
+  @override
+  void onSingleLongTapStart(LongPressStartDetails details) {
+    super.onSingleLongTapStart(details);
+    if (delegate.selectionEnabled) {
+      switch (m.Theme.of(_state.context).platform) {
+        case TargetPlatform.iOS:
+        case TargetPlatform.macOS:
+          break;
+        case TargetPlatform.android:
+        case TargetPlatform.fuchsia:
+        case TargetPlatform.linux:
+        case TargetPlatform.windows:
+          Feedback.forLongPress(_state.context);
+      }
+    }
   }
 }
