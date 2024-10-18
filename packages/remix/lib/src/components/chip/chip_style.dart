@@ -40,11 +40,14 @@ class ChipStyle extends SpecStyle<ChipSpecUtility> {
         ..borderRadius(6)
         ..color.white()
         ..border.all.width(1)
-        ..border.color.grey.shade300()
+        ..border.color.grey.shade200()
         ..padding.vertical(8)
         ..padding.horizontal(12),
-      spec.on.disabled($.container.color.grey.shade400()),
-      spec.on.selected($.container.color.grey.shade100()),
+      spec.on.selected($.container.color.grey.shade200()),
+      spec.on.disabled(
+        $.label.style.color.grey.shade800(),
+        spec.on.selected($.container.color.grey.shade300()),
+      ),
     ];
 
     return Style.create([
@@ -52,6 +55,35 @@ class ChipStyle extends SpecStyle<ChipSpecUtility> {
       ...iconStyle,
       ...labelStyle,
       ...containerStyle,
+    ]);
+  }
+}
+
+class ChipDarkStyle extends ChipStyle {
+  const ChipDarkStyle();
+
+  @override
+  Style makeStyle(SpecConfiguration<ChipSpecUtility> spec) {
+    final $ = spec.utilities;
+
+    final containerStyle = [
+      $.container.chain
+        ..border.all.color.grey.shade900()
+        ..color.black(),
+      spec.on.selected($.container.color.grey.shade900()),
+      spec.on.disabled(
+        $.label.style.color.grey.shade600(),
+        $.container.color.black(),
+        spec.on.selected($.container.color.grey.shade900()),
+      ),
+    ];
+
+    final labelStyle = $.label.chain..style.color.white();
+
+    return Style.create([
+      super.makeStyle(spec).call(),
+      ...containerStyle,
+      labelStyle,
     ]);
   }
 }

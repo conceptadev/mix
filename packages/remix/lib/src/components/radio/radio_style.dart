@@ -63,6 +63,7 @@ class RadioDarkStyle extends RadioStyle {
       super.makeStyle(spec).call(),
       $.container.border.all.color.white(),
       $.indicator.color.white(),
+      $.text.style.color.white(),
       spec.on.disabled(
         $.container.border.all.color.white30(),
         $.indicator.color.white30(),
