@@ -8,9 +8,9 @@ class FortalezaMenuItemStyle extends MenuItemStyle {
     final $ = spec.utilities;
 
     final baseStyle = super.makeStyle(spec);
-    final textFlex = $.textFlex.chain..gap.$space(1);
+    final titleSubtitleLayout = $.titleSubtitleLayout.chain..gap.$space(1);
 
-    final mainFlex = $.mainFlex.chain..gap.$space(3);
+    final contentLayout = $.contentLayout.chain..gap.$space(3);
     final title = $.title.chain
       ..style.$text(2)
       ..style.color.resetDirectives()
@@ -21,14 +21,14 @@ class FortalezaMenuItemStyle extends MenuItemStyle {
       ..style.color.resetDirectives()
       ..style.color.$neutral(9);
 
-    final container = $.container.chain
+    final outerContainer = $.outerContainer.chain
       ..padding.all.$space(3)
       ..padding.right.$space(4)
       ..borderRadius.all.$radius(2);
 
     final icon = $.icon.color.$neutral(11);
 
-    final hovered = $.container.color.$accent(2);
+    final hovered = $.outerContainer.color.$accent(2);
 
     final disabled = $.chain
       ..title.style.color.$neutral(9)
@@ -37,11 +37,11 @@ class FortalezaMenuItemStyle extends MenuItemStyle {
 
     return Style.create([
       baseStyle(),
-      textFlex,
-      mainFlex,
+      titleSubtitleLayout,
+      contentLayout,
       title,
       subtitle,
-      container,
+      outerContainer,
       icon,
       spec.on.hover(hovered),
       spec.on.disabled(disabled),

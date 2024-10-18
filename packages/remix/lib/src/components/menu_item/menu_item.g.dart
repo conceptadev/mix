@@ -33,22 +33,22 @@ mixin _$MenuItemSpec on Spec<MenuItemSpec> {
   /// replaced with the new values.
   @override
   MenuItemSpec copyWith({
-    FlexSpec? mainFlex,
-    FlexSpec? textFlex,
+    BoxSpec? outerContainer,
+    FlexSpec? contentLayout,
+    FlexSpec? titleSubtitleLayout,
     IconSpec? icon,
     TextSpec? title,
     TextSpec? subtitle,
-    BoxSpec? container,
     WidgetModifiersData? modifiers,
     AnimatedData? animated,
   }) {
     return MenuItemSpec(
-      mainFlex: mainFlex ?? _$this.mainFlex,
-      textFlex: textFlex ?? _$this.textFlex,
+      outerContainer: outerContainer ?? _$this.outerContainer,
+      contentLayout: contentLayout ?? _$this.contentLayout,
+      titleSubtitleLayout: titleSubtitleLayout ?? _$this.titleSubtitleLayout,
       icon: icon ?? _$this.icon,
       title: title ?? _$this.title,
       subtitle: subtitle ?? _$this.subtitle,
-      container: container ?? _$this.container,
       modifiers: modifiers ?? _$this.modifiers,
       animated: animated ?? _$this.animated,
     );
@@ -65,10 +65,10 @@ mixin _$MenuItemSpec on Spec<MenuItemSpec> {
   /// The interpolation is performed on each property of the [MenuItemSpec] using the appropriate
   /// interpolation method:
   ///
-  /// - [FlexSpec.lerp] for [mainFlex] and [textFlex].
+  /// - [BoxSpec.lerp] for [outerContainer].
+  /// - [FlexSpec.lerp] for [contentLayout] and [titleSubtitleLayout].
   /// - [IconSpec.lerp] for [icon].
   /// - [TextSpec.lerp] for [title] and [subtitle].
-  /// - [BoxSpec.lerp] for [container].
 
   /// For [modifiers] and [animated], the interpolation is performed using a step function.
   /// If [t] is less than 0.5, the value from the current [MenuItemSpec] is used. Otherwise, the value
@@ -81,12 +81,13 @@ mixin _$MenuItemSpec on Spec<MenuItemSpec> {
     if (other == null) return _$this;
 
     return MenuItemSpec(
-      mainFlex: _$this.mainFlex.lerp(other.mainFlex, t),
-      textFlex: _$this.textFlex.lerp(other.textFlex, t),
+      outerContainer: _$this.outerContainer.lerp(other.outerContainer, t),
+      contentLayout: _$this.contentLayout.lerp(other.contentLayout, t),
+      titleSubtitleLayout:
+          _$this.titleSubtitleLayout.lerp(other.titleSubtitleLayout, t),
       icon: _$this.icon.lerp(other.icon, t),
       title: _$this.title.lerp(other.title, t),
       subtitle: _$this.subtitle.lerp(other.subtitle, t),
-      container: _$this.container.lerp(other.container, t),
       modifiers: other.modifiers,
       animated: t < 0.5 ? _$this.animated : other.animated,
     );
@@ -98,12 +99,12 @@ mixin _$MenuItemSpec on Spec<MenuItemSpec> {
   /// compare two [MenuItemSpec] instances for equality.
   @override
   List<Object?> get props => [
-        _$this.mainFlex,
-        _$this.textFlex,
+        _$this.outerContainer,
+        _$this.contentLayout,
+        _$this.titleSubtitleLayout,
         _$this.icon,
         _$this.title,
         _$this.subtitle,
-        _$this.container,
         _$this.modifiers,
         _$this.animated,
       ];
@@ -111,18 +112,19 @@ mixin _$MenuItemSpec on Spec<MenuItemSpec> {
   MenuItemSpec get _$this => this as MenuItemSpec;
 
   void _debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    properties.add(
-        DiagnosticsProperty('mainFlex', _$this.mainFlex, defaultValue: null));
-    properties.add(
-        DiagnosticsProperty('textFlex', _$this.textFlex, defaultValue: null));
+    properties.add(DiagnosticsProperty('outerContainer', _$this.outerContainer,
+        defaultValue: null));
+    properties.add(DiagnosticsProperty('contentLayout', _$this.contentLayout,
+        defaultValue: null));
+    properties.add(DiagnosticsProperty(
+        'titleSubtitleLayout', _$this.titleSubtitleLayout,
+        defaultValue: null));
     properties
         .add(DiagnosticsProperty('icon', _$this.icon, defaultValue: null));
     properties
         .add(DiagnosticsProperty('title', _$this.title, defaultValue: null));
     properties.add(
         DiagnosticsProperty('subtitle', _$this.subtitle, defaultValue: null));
-    properties.add(
-        DiagnosticsProperty('container', _$this.container, defaultValue: null));
     properties.add(
         DiagnosticsProperty('modifiers', _$this.modifiers, defaultValue: null));
     properties.add(
@@ -139,20 +141,20 @@ mixin _$MenuItemSpec on Spec<MenuItemSpec> {
 /// the [MenuItemSpec] constructor.
 class MenuItemSpecAttribute extends SpecAttribute<MenuItemSpec>
     with Diagnosticable {
-  final FlexSpecAttribute? mainFlex;
-  final FlexSpecAttribute? textFlex;
+  final BoxSpecAttribute? outerContainer;
+  final FlexSpecAttribute? contentLayout;
+  final FlexSpecAttribute? titleSubtitleLayout;
   final IconSpecAttribute? icon;
   final TextSpecAttribute? title;
   final TextSpecAttribute? subtitle;
-  final BoxSpecAttribute? container;
 
   const MenuItemSpecAttribute({
-    this.mainFlex,
-    this.textFlex,
+    this.outerContainer,
+    this.contentLayout,
+    this.titleSubtitleLayout,
     this.icon,
     this.title,
     this.subtitle,
-    this.container,
     super.modifiers,
     super.animated,
   });
@@ -168,12 +170,12 @@ class MenuItemSpecAttribute extends SpecAttribute<MenuItemSpec>
   @override
   MenuItemSpec resolve(MixData mix) {
     return MenuItemSpec(
-      mainFlex: mainFlex?.resolve(mix),
-      textFlex: textFlex?.resolve(mix),
+      outerContainer: outerContainer?.resolve(mix),
+      contentLayout: contentLayout?.resolve(mix),
+      titleSubtitleLayout: titleSubtitleLayout?.resolve(mix),
       icon: icon?.resolve(mix),
       title: title?.resolve(mix),
       subtitle: subtitle?.resolve(mix),
-      container: container?.resolve(mix),
       modifiers: modifiers?.resolve(mix),
       animated: animated?.resolve(mix) ?? mix.animation,
     );
@@ -192,12 +194,16 @@ class MenuItemSpecAttribute extends SpecAttribute<MenuItemSpec>
     if (other == null) return this;
 
     return MenuItemSpecAttribute(
-      mainFlex: mainFlex?.merge(other.mainFlex) ?? other.mainFlex,
-      textFlex: textFlex?.merge(other.textFlex) ?? other.textFlex,
+      outerContainer:
+          outerContainer?.merge(other.outerContainer) ?? other.outerContainer,
+      contentLayout:
+          contentLayout?.merge(other.contentLayout) ?? other.contentLayout,
+      titleSubtitleLayout:
+          titleSubtitleLayout?.merge(other.titleSubtitleLayout) ??
+              other.titleSubtitleLayout,
       icon: icon?.merge(other.icon) ?? other.icon,
       title: title?.merge(other.title) ?? other.title,
       subtitle: subtitle?.merge(other.subtitle) ?? other.subtitle,
-      container: container?.merge(other.container) ?? other.container,
       modifiers: modifiers?.merge(other.modifiers) ?? other.modifiers,
       animated: animated?.merge(other.animated) ?? other.animated,
     );
@@ -209,12 +215,12 @@ class MenuItemSpecAttribute extends SpecAttribute<MenuItemSpec>
   /// compare two [MenuItemSpecAttribute] instances for equality.
   @override
   List<Object?> get props => [
-        mainFlex,
-        textFlex,
+        outerContainer,
+        contentLayout,
+        titleSubtitleLayout,
         icon,
         title,
         subtitle,
-        container,
         modifiers,
         animated,
       ];
@@ -222,16 +228,17 @@ class MenuItemSpecAttribute extends SpecAttribute<MenuItemSpec>
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties
-        .add(DiagnosticsProperty('mainFlex', mainFlex, defaultValue: null));
-    properties
-        .add(DiagnosticsProperty('textFlex', textFlex, defaultValue: null));
+    properties.add(DiagnosticsProperty('outerContainer', outerContainer,
+        defaultValue: null));
+    properties.add(DiagnosticsProperty('contentLayout', contentLayout,
+        defaultValue: null));
+    properties.add(DiagnosticsProperty(
+        'titleSubtitleLayout', titleSubtitleLayout,
+        defaultValue: null));
     properties.add(DiagnosticsProperty('icon', icon, defaultValue: null));
     properties.add(DiagnosticsProperty('title', title, defaultValue: null));
     properties
         .add(DiagnosticsProperty('subtitle', subtitle, defaultValue: null));
-    properties
-        .add(DiagnosticsProperty('container', container, defaultValue: null));
     properties
         .add(DiagnosticsProperty('modifiers', modifiers, defaultValue: null));
     properties
@@ -245,11 +252,15 @@ class MenuItemSpecAttribute extends SpecAttribute<MenuItemSpec>
 /// Use the methods of this class to configure specific properties of a [MenuItemSpec].
 class MenuItemSpecUtility<T extends Attribute>
     extends SpecUtility<T, MenuItemSpecAttribute> {
-  /// Utility for defining [MenuItemSpecAttribute.mainFlex]
-  late final mainFlex = FlexSpecUtility((v) => only(mainFlex: v));
+  /// Utility for defining [MenuItemSpecAttribute.outerContainer]
+  late final outerContainer = BoxSpecUtility((v) => only(outerContainer: v));
 
-  /// Utility for defining [MenuItemSpecAttribute.textFlex]
-  late final textFlex = FlexSpecUtility((v) => only(textFlex: v));
+  /// Utility for defining [MenuItemSpecAttribute.contentLayout]
+  late final contentLayout = FlexSpecUtility((v) => only(contentLayout: v));
+
+  /// Utility for defining [MenuItemSpecAttribute.titleSubtitleLayout]
+  late final titleSubtitleLayout =
+      FlexSpecUtility((v) => only(titleSubtitleLayout: v));
 
   /// Utility for defining [MenuItemSpecAttribute.icon]
   late final icon = IconSpecUtility((v) => only(icon: v));
@@ -259,9 +270,6 @@ class MenuItemSpecUtility<T extends Attribute>
 
   /// Utility for defining [MenuItemSpecAttribute.subtitle]
   late final subtitle = TextSpecUtility((v) => only(subtitle: v));
-
-  /// Utility for defining [MenuItemSpecAttribute.container]
-  late final container = BoxSpecUtility((v) => only(container: v));
 
   /// Utility for defining [MenuItemSpecAttribute.modifiers]
   late final wrap = SpecModifierUtility((v) => only(modifiers: v));
@@ -280,22 +288,22 @@ class MenuItemSpecUtility<T extends Attribute>
   /// Returns a new [MenuItemSpecAttribute] with the specified properties.
   @override
   T only({
-    FlexSpecAttribute? mainFlex,
-    FlexSpecAttribute? textFlex,
+    BoxSpecAttribute? outerContainer,
+    FlexSpecAttribute? contentLayout,
+    FlexSpecAttribute? titleSubtitleLayout,
     IconSpecAttribute? icon,
     TextSpecAttribute? title,
     TextSpecAttribute? subtitle,
-    BoxSpecAttribute? container,
     WidgetModifiersDataDto? modifiers,
     AnimatedDataDto? animated,
   }) {
     return builder(MenuItemSpecAttribute(
-      mainFlex: mainFlex,
-      textFlex: textFlex,
+      outerContainer: outerContainer,
+      contentLayout: contentLayout,
+      titleSubtitleLayout: titleSubtitleLayout,
       icon: icon,
       title: title,
       subtitle: subtitle,
-      container: container,
       modifiers: modifiers,
       animated: animated,
     ));

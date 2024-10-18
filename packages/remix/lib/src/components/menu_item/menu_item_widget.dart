@@ -35,13 +35,13 @@ class MenuItem extends StatelessWidget {
         builder: (context) {
           final spec = MenuItemSpec.of(context);
 
-          return spec.container(
-            child: spec.mainFlex(
+          return spec.outerContainer(
+            child: spec.contentLayout(
               direction: Axis.horizontal,
               children: [
                 if (leadingWidgetBuilder != null)
                   leadingWidgetBuilder!(spec.icon),
-                spec.textFlex(
+                spec.titleSubtitleLayout(
                   direction: Axis.vertical,
                   children: [
                     spec.title(title),

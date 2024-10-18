@@ -15,9 +15,9 @@ part 'menu_item_widget.dart';
 @MixableSpec()
 class MenuItemSpec extends Spec<MenuItemSpec>
     with _$MenuItemSpec, Diagnosticable {
-  final BoxSpec container;
-  final FlexSpec mainFlex;
-  final FlexSpec textFlex;
+  final BoxSpec outerContainer;
+  final FlexSpec contentLayout;
+  final FlexSpec titleSubtitleLayout;
   final IconSpec icon;
   final TextSpec title;
   final TextSpec subtitle;
@@ -28,20 +28,20 @@ class MenuItemSpec extends Spec<MenuItemSpec>
   static const from = _$MenuItemSpec.from;
 
   const MenuItemSpec({
-    FlexSpec? mainFlex,
-    FlexSpec? textFlex,
+    BoxSpec? outerContainer,
+    FlexSpec? contentLayout,
+    FlexSpec? titleSubtitleLayout,
     IconSpec? icon,
     TextSpec? title,
     TextSpec? subtitle,
-    BoxSpec? container,
     super.modifiers,
     super.animated,
-  })  : mainFlex = mainFlex ?? const FlexSpec(),
-        textFlex = textFlex ?? const FlexSpec(),
+  })  : outerContainer = outerContainer ?? const BoxSpec(),
+        contentLayout = contentLayout ?? const FlexSpec(),
+        titleSubtitleLayout = titleSubtitleLayout ?? const FlexSpec(),
         icon = icon ?? const IconSpec(),
         title = title ?? const TextSpec(),
-        subtitle = subtitle ?? const TextSpec(),
-        container = container ?? const BoxSpec();
+        subtitle = subtitle ?? const TextSpec();
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
