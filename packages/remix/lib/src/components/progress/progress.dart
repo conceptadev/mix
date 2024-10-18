@@ -11,8 +11,6 @@ part 'progress_style.dart';
 part 'progress_theme.dart';
 part 'progress_widget.dart';
 
-final $progress = ProgressSpecUtility.self;
-
 @MixableSpec()
 base class ProgressSpec extends Spec<ProgressSpec>
     with _$ProgressSpec, Diagnosticable {
