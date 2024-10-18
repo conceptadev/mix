@@ -27,8 +27,8 @@ class FortalezaSliderStyle extends SliderStyle {
       ..borderRadius.all(10);
 
     final disabled = spec.on.disabled(
-      $.activeTrack.color.white.withLightness(0.7),
-      $.thumb.shape.circle.side.color.black.withOpacity(0.5),
+      $.activeTrack.color.$accent(7),
+      $.thumb.shape.circle.side.color.$accent(7),
     );
 
     final animation = (spec.on.press | spec.on.hover)(
