@@ -1,6 +1,99 @@
 part of 'textfield.dart';
 
 class TextField extends StatefulWidget {
+  const TextField({
+    super.key,
+    this.controller,
+    this.maxLength,
+    this.focusNode,
+    this.enabled = true,
+    this.ignorePointers,
+    this.onTap,
+    this.maxLengthEnforcement,
+    TextInputType? keyboardType,
+    this.textCapitalization = TextCapitalization.none,
+    this.textInputAction,
+    this.textDirection,
+    this.autofocus = false,
+    this.readOnly = false,
+    this.showCursor,
+    this.obscuringCharacter = '•',
+    this.obscureText = false,
+    this.hintText,
+    this.autocorrect = true,
+    SmartDashesType? smartDashesType,
+    SmartQuotesType? smartQuotesType,
+    this.enableSuggestions = true,
+    this.maxLines = 1,
+    this.minLines,
+    this.expands = false,
+    this.onChanged,
+    this.onEditingComplete,
+    this.onSubmitted,
+    this.inputFormatters,
+    bool? enableInteractiveSelection,
+    this.selectionControls,
+    this.scrollController,
+    this.scrollPhysics,
+    this.clipBehavior = Clip.hardEdge,
+    this.restorationId,
+    this.scribbleEnabled = true,
+    this.enableIMEPersonalizedLearning = true,
+    this.showSelectionHandles = false,
+    this.autofillClient,
+    this.autofillHints = const <String>[],
+    this.contentInsertionConfiguration,
+    this.dragStartBehavior = DragStartBehavior.start,
+    this.groupId = EditableText,
+    this.onAppPrivateCommand,
+    this.onTapOutside,
+    this.scrollBehavior,
+    this.canRequestFocus = true,
+    this.onTapAlwaysCalled = false,
+    this.undoController,
+    this.magnifierConfiguration,
+    this.spellCheckConfiguration,
+    this.contextMenuBuilder,
+    this.style,
+    this.variants = const [],
+    this.error = false,
+    this.label,
+  })  : assert(obscuringCharacter.length == 1),
+        smartDashesType = smartDashesType ??
+            (obscureText ? SmartDashesType.disabled : SmartDashesType.enabled),
+        smartQuotesType = smartQuotesType ??
+            (obscureText ? SmartQuotesType.disabled : SmartQuotesType.enabled),
+        assert(maxLines == null || maxLines > 0),
+        assert(minLines == null || minLines > 0),
+        assert(
+          (maxLines == null) || (minLines == null) || (maxLines >= minLines),
+          "minLines can't be greater than maxLines",
+        ),
+        assert(
+          !expands || (maxLines == null && minLines == null),
+          'minLines and maxLines must be null when expands is true.',
+        ),
+        assert(!obscureText || maxLines == 1,
+            'Obscured fields cannot be multiline.'),
+        assert(maxLength == null ||
+            maxLength == TextField.noMaxLength ||
+            maxLength > 0),
+        // Assert the following instead of setting it directly to avoid surprising the user by silently changing the value they set.
+        assert(
+          !identical(textInputAction, TextInputAction.newline) ||
+              maxLines == 1 ||
+              !identical(keyboardType, TextInputType.text),
+          'Use keyboardType TextInputType.multiline when using TextInputAction.newline on a multiline TextField.',
+        ),
+        keyboardType = keyboardType ??
+            (maxLines == 1 ? TextInputType.text : TextInputType.multiline),
+        enableInteractiveSelection =
+            enableInteractiveSelection ?? (!readOnly || !obscureText);
+
+  /// If [maxLength] is set to this value, only the "current input length"
+  /// part of the character counter is shown.
+  static const int noMaxLength = -1;
+
   final TextEditingController? controller;
   final FocusNode? focusNode;
   final TextInputType? keyboardType;
@@ -12,6 +105,7 @@ class TextField extends StatefulWidget {
   final bool readOnly;
   final bool? showCursor;
   final String obscuringCharacter;
+  final String? label;
   final bool obscureText;
   final bool autocorrect;
   final SmartDashesType? smartDashesType;
@@ -37,10 +131,6 @@ class TextField extends StatefulWidget {
   ///
   /// {@macro flutter.services.textFormatter.maxLengthEnforcement}
   final MaxLengthEnforcement? maxLengthEnforcement;
-
-  /// If [maxLength] is set to this value, only the "current input length"
-  /// part of the character counter is shown.
-  static const int noMaxLength = -1;
 
   /// The maximum number of characters (Unicode grapheme clusters) to allow in
   /// the text field.
@@ -108,11 +198,8 @@ class TextField extends StatefulWidget {
   final Iterable<String>? autofillHints;
   final ContentInsertionConfiguration? contentInsertionConfiguration;
 
-  final bool cursorOpacityAnimates;
   final DragStartBehavior dragStartBehavior;
-  final bool forceLine;
   final Object groupId;
-  final Locale? locale;
   final AppPrivateCommandCallback? onAppPrivateCommand;
 
   final TapRegionCallback? onTapOutside;
@@ -121,102 +208,13 @@ class TextField extends StatefulWidget {
   final SpellCheckConfiguration? spellCheckConfiguration;
 
   final UndoHistoryController? undoController;
-  final Style style;
+  final TextFieldStyle? style;
+  final List<Variant> variants;
 
   final Widget Function(BuildContext, EditableTextState)? contextMenuBuilder;
 
   /// {@macro flutter.widgets.editableText.selectionEnabled}
   bool get selectionEnabled => enableInteractiveSelection;
-
-  const TextField({
-    super.key,
-    this.controller,
-    this.maxLength,
-    this.focusNode,
-    this.enabled = true,
-    this.ignorePointers,
-    this.onTap,
-    this.maxLengthEnforcement,
-    TextInputType? keyboardType,
-    this.textCapitalization = TextCapitalization.none,
-    this.textInputAction,
-    this.textDirection,
-    this.autofocus = false,
-    this.readOnly = false,
-    this.showCursor,
-    this.obscuringCharacter = '•',
-    this.obscureText = false,
-    this.hintText,
-    this.autocorrect = true,
-    SmartDashesType? smartDashesType,
-    SmartQuotesType? smartQuotesType,
-    this.enableSuggestions = true,
-    this.maxLines = 1,
-    this.minLines,
-    this.expands = false,
-    this.onChanged,
-    this.onEditingComplete,
-    this.onSubmitted,
-    this.inputFormatters,
-    bool? enableInteractiveSelection,
-    this.selectionControls,
-    this.scrollController,
-    this.scrollPhysics,
-    this.clipBehavior = Clip.hardEdge,
-    this.restorationId,
-    this.scribbleEnabled = true,
-    this.enableIMEPersonalizedLearning = true,
-    this.showSelectionHandles = false,
-    this.autofillClient,
-    this.autofillHints = const <String>[],
-    this.contentInsertionConfiguration,
-    this.cursorOpacityAnimates = false,
-    this.dragStartBehavior = DragStartBehavior.start,
-    this.forceLine = true,
-    this.groupId = EditableText,
-    this.locale,
-    this.onAppPrivateCommand,
-    this.onTapOutside,
-    this.scrollBehavior,
-    this.canRequestFocus = true,
-    this.onTapAlwaysCalled = false,
-    this.undoController,
-    this.magnifierConfiguration,
-    this.spellCheckConfiguration,
-    this.contextMenuBuilder,
-    required this.style,
-    this.error = false,
-  })  : assert(obscuringCharacter.length == 1),
-        smartDashesType = smartDashesType ??
-            (obscureText ? SmartDashesType.disabled : SmartDashesType.enabled),
-        smartQuotesType = smartQuotesType ??
-            (obscureText ? SmartQuotesType.disabled : SmartQuotesType.enabled),
-        assert(maxLines == null || maxLines > 0),
-        assert(minLines == null || minLines > 0),
-        assert(
-          (maxLines == null) || (minLines == null) || (maxLines >= minLines),
-          "minLines can't be greater than maxLines",
-        ),
-        assert(
-          !expands || (maxLines == null && minLines == null),
-          'minLines and maxLines must be null when expands is true.',
-        ),
-        assert(!obscureText || maxLines == 1,
-            'Obscured fields cannot be multiline.'),
-        assert(maxLength == null ||
-            maxLength == TextField.noMaxLength ||
-            maxLength > 0),
-        // Assert the following instead of setting it directly to avoid surprising the user by silently changing the value they set.
-        assert(
-          !identical(textInputAction, TextInputAction.newline) ||
-              maxLines == 1 ||
-              !identical(keyboardType, TextInputType.text),
-          'Use keyboardType TextInputType.multiline when using TextInputAction.newline on a multiline TextField.',
-        ),
-        keyboardType = keyboardType ??
-            (maxLines == 1 ? TextInputType.text : TextInputType.multiline),
-        enableInteractiveSelection =
-            enableInteractiveSelection ?? (!readOnly || !obscureText);
 
   @override
   State<TextField> createState() => _TextFieldState();
@@ -241,22 +239,40 @@ class _TextFieldState extends State<TextField>
   @override
   String? get restorationId => widget.restorationId;
 
+  bool get _hasError => widget.error || _hasIntrinsicError;
+
+  @override
+  final GlobalKey<EditableTextState> editableTextKey =
+      GlobalKey<EditableTextState>();
+
+  // final bool _isHovering = false;
+  @override
+  void initState() {
+    super.initState();
+    _statesController = MixWidgetStateController();
+
+    _selectionGestureDetectorBuilder =
+        _TextFieldSelectionGestureDetectorBuilder(state: this);
+    if (widget.controller == null) {
+      _createLocalController();
+    }
+    _effectiveFocusNode.canRequestFocus =
+        widget.canRequestFocus && widget.enabled;
+    _effectiveFocusNode.addListener(_handleFocusChanged);
+    _initStatesController();
+  }
+
   void _registerController() {
     assert(_controller != null);
     registerForRestoration(_controller!, 'controller');
   }
 
-  @override
-  void restoreState(RestorationBucket? oldBucket, bool initialRestore) {
-    if (_controller != null) {
-      _registerController();
-    }
-  }
-
   void _createLocalController([TextEditingValue? value]) {
     assert(_controller == null);
     _controller = value == null
+        // ignore: avoid-undisposed-instances
         ? RestorableTextEditingController()
+        // ignore: avoid-undisposed-instances
         : RestorableTextEditingController.fromValue(value);
     if (!restorePending) {
       _registerController();
@@ -271,7 +287,9 @@ class _TextFieldState extends State<TextField>
   }
 
   void _handleSelectionChanged(
-      TextSelection selection, SelectionChangedCause? cause) {
+    TextSelection selection,
+    SelectionChangedCause? cause,
+  ) {
     final bool willShowSelectionHandles = _shouldShowSelectionHandles(cause);
     if (willShowSelectionHandles != _showSelectionHandles) {
       setState(() {
@@ -324,6 +342,7 @@ class _TextFieldState extends State<TextField>
       return false;
     }
 
+    // ignore: prefer-switch-with-enums
     if (cause == SelectionChangedCause.longPress ||
         cause == SelectionChangedCause.scribble) {
       return true;
@@ -336,50 +355,14 @@ class _TextFieldState extends State<TextField>
     return false;
   }
 
-  EditableTextState? get _editableText => editableTextKey.currentState;
-  @override
-  final GlobalKey<EditableTextState> editableTextKey =
-      GlobalKey<EditableTextState>();
-
-  bool _showSelectionHandles = false;
-  MaxLengthEnforcement get _effectiveMaxLengthEnforcement =>
-      widget.maxLengthEnforcement ??
-      LengthLimitingTextInputFormatter.getDefaultMaxLengthEnforcement(
-          m.Theme.of(context).platform);
-
-  bool get _hasIntrinsicError =>
-      widget.maxLength != null &&
-      widget.maxLength! > 0 &&
-      (widget.controller == null
-          ? !restorePending &&
-              _effectiveController.value.text.characters.length >
-                  widget.maxLength!
-          : _effectiveController.value.text.characters.length >
-              widget.maxLength!);
-
-  @override
-  void initState() {
-    super.initState();
-    _statesController = MixWidgetStateController();
-
-    _selectionGestureDetectorBuilder =
-        _TextFieldSelectionGestureDetectorBuilder(state: this);
-    if (widget.controller == null) {
-      _createLocalController();
-    }
-    _effectiveFocusNode.canRequestFocus =
-        widget.canRequestFocus && widget.enabled;
-    _effectiveFocusNode.addListener(_handleFocusChanged);
-    _initStatesController();
-  }
-
   void _initStatesController() {
     _statesController.disabled = !widget.enabled;
     _statesController.focused = _effectiveFocusNode.hasFocus;
-    _statesController.error = widget.error;
+    _statesController.error = _hasError;
   }
 
   void _handleFocusChanged() {
+    // ignore: avoid-empty-setstate, no-empty-block
     setState(() {
       // Rebuild the widget on focus change to show/hide the text selection
       // highlight.
@@ -387,13 +370,20 @@ class _TextFieldState extends State<TextField>
     _statesController.focused = _effectiveFocusNode.hasFocus;
   }
 
-  bool get _canRequestFocus {
-    final NavigationMode mode =
-        MediaQuery.maybeNavigationModeOf(context) ?? NavigationMode.traditional;
-    return switch (mode) {
-      NavigationMode.traditional => widget.canRequestFocus && widget.enabled,
-      NavigationMode.directional => true,
-    };
+  // void _handleHover(bool hovering) {
+  //   if (hovering != _isHovering) {
+  //     setState(() {
+  //       _isHovering = hovering;
+  //     });
+  //     _statesController.hovered = _isHovering;
+  //   }
+  // }
+
+  @override
+  void restoreState(RestorationBucket? oldBucket, bool initialRestore) {
+    if (_controller != null) {
+      _registerController();
+    }
   }
 
   @override
@@ -428,19 +418,9 @@ class _TextFieldState extends State<TextField>
       }
     }
 
-    _statesController.error = widget.error;
+    _statesController.error = _hasError;
     _statesController.focused = _effectiveFocusNode.hasFocus;
     _statesController.disabled = !widget.enabled;
-  }
-
-  bool _isHovering = false;
-  void _handleHover(bool hovering) {
-    if (hovering != _isHovering) {
-      setState(() {
-        _isHovering = hovering;
-      });
-      _statesController.hovered = _isHovering;
-    }
   }
 
   @override
@@ -455,7 +435,64 @@ class _TextFieldState extends State<TextField>
   }
 
   @override
+  late bool forcePressEnabled;
+
+  @override
+  void autofill(TextEditingValue newEditingValue) =>
+      _editableText!.autofill(newEditingValue);
+
+  EditableTextState? get _editableText => editableTextKey.currentState;
+  bool _showSelectionHandles = false;
+  MaxLengthEnforcement get _effectiveMaxLengthEnforcement =>
+      widget.maxLengthEnforcement ??
+      LengthLimitingTextInputFormatter.getDefaultMaxLengthEnforcement(
+        m.Theme.of(context).platform,
+      );
+
+  bool get _hasIntrinsicError =>
+      widget.maxLength != null &&
+      widget.maxLength! > 0 &&
+      (widget.controller == null
+          ? !restorePending &&
+              _effectiveController.value.text.characters.length >
+                  widget.maxLength!
+          : _effectiveController.value.text.characters.length >
+              widget.maxLength!);
+
+  bool get _canRequestFocus {
+    final NavigationMode mode =
+        MediaQuery.maybeNavigationModeOf(context) ?? NavigationMode.traditional;
+
+    return switch (mode) {
+      NavigationMode.traditional => widget.canRequestFocus && widget.enabled,
+      NavigationMode.directional => true,
+    };
+  }
+
+  @override
   Widget build(BuildContext context) {
+    TextSelectionControls? textSelectionControls = widget.selectionControls;
+
+    switch (MixHelpers.targetPlatform) {
+      case TargetPlatform.iOS:
+        forcePressEnabled = true;
+        textSelectionControls ??= cupertinoTextSelectionHandleControls;
+
+      case TargetPlatform.macOS:
+        forcePressEnabled = false;
+        textSelectionControls ??= cupertinoDesktopTextSelectionHandleControls;
+
+      case TargetPlatform.android:
+      case TargetPlatform.fuchsia:
+        forcePressEnabled = false;
+        textSelectionControls ??= m.materialTextSelectionHandleControls;
+
+      case TargetPlatform.windows:
+      case TargetPlatform.linux:
+        forcePressEnabled = false;
+        textSelectionControls ??= m.desktopTextSelectionHandleControls;
+    }
+
     final List<TextInputFormatter> formatters = <TextInputFormatter>[
       ...?widget.inputFormatters,
       if (widget.maxLength != null)
@@ -466,127 +503,117 @@ class _TextFieldState extends State<TextField>
     ];
 
     // Olhar quando for implementar o semantics
-    final int? semanticsMaxValueLength;
-    if (_effectiveMaxLengthEnforcement != MaxLengthEnforcement.none &&
-        widget.maxLength != null &&
-        widget.maxLength! > 0) {
-      semanticsMaxValueLength = widget.maxLength;
-    } else {
-      semanticsMaxValueLength = null;
-    }
+    // final int? semanticsMaxValueLength;
+    // if (_effectiveMaxLengthEnforcement != MaxLengthEnforcement.none &&
+    //     widget.maxLength != null &&
+    //     widget.maxLength! > 0) {
+    //   semanticsMaxValueLength = widget.maxLength;
+    // } else {
+    //   semanticsMaxValueLength = null;
+    // }
 
     // TODO: Estudar como implementar o mouseCursor
-    const MouseCursor effectiveMouseCursor = WidgetStateMouseCursor.textable;
+    const MouseCursor effectiveMouseCursor = SystemMouseCursors.text;
+    final style = widget.style ?? context.remix.components.textField;
+    final configuration = SpecConfiguration(context, TextFieldSpecUtility.self);
 
-    // // WidgetStateProperty.resolveAs<MouseCursor>(
-    //   widget.mouseCursor ?? WidgetStateMouseCursor.textable,
-    //   _statesController.value,
-    // );
     final child = SpecBuilder(
       controller: _statesController,
-      style: widget.style,
+      style: style.makeStyle(configuration).applyVariants(widget.variants),
       builder: (context) {
         final spec = TextFieldSpec.of(context);
 
         return spec.container(
-          child: EditableText(
-            key: editableTextKey,
-            controller: _effectiveController,
-            focusNode: _effectiveFocusNode,
-            style: spec.style,
-            strutStyle: spec.strutStyle,
-            cursorColor: spec.cursorColor,
-            backgroundCursorColor: spec.backgroundCursorColor,
-            selectionColor: spec.selectionColor,
-            // assert
-            keyboardType: widget.keyboardType,
-            // assert
-            textInputAction: widget.textInputAction,
-            // Logica de assert
-            textCapitalization: widget.textCapitalization,
-            textAlign: spec.textAlign,
-            textDirection: widget.textDirection,
-            readOnly: widget.readOnly || !widget.enabled,
-            showCursor: widget.showCursor,
-            // Logica de assert
-            obscuringCharacter: widget.obscuringCharacter,
-            obscureText: widget.obscureText,
-            autocorrect: widget.autocorrect,
-            // para ambos os smarts tem logica de assert
-            smartDashesType: widget.smartDashesType,
-            smartQuotesType: widget.smartQuotesType,
-            enableSuggestions: widget.enableSuggestions,
-            maxLines: widget.maxLines,
-            minLines: widget.minLines,
-            expands: widget.expands,
-            autofocus: widget.autofocus,
-            // Depende do sistema operacional
-            selectionControls: widget.selectionControls,
-            onChanged: widget.onChanged,
-            onEditingComplete: widget.onEditingComplete,
-            onSubmitted: widget.onSubmitted,
-            inputFormatters: formatters,
-            cursorWidth: spec.cursorWidth,
-            cursorHeight: spec.cursorHeight,
-            // Depende do sistema operacional
-            cursorRadius: spec.cursorRadius,
-            scrollPadding: spec.scrollPadding,
-            scrollPhysics: widget.scrollPhysics,
-            // keyboardAppearance: keyboardAppearance ?? Brightness.dark,
-            enableInteractiveSelection: widget.enableInteractiveSelection,
-            scrollController: widget.scrollController,
-            clipBehavior: widget.clipBehavior,
-            restorationId: 'editable',
-            scribbleEnabled: widget.scribbleEnabled,
-            enableIMEPersonalizedLearning: widget.enableIMEPersonalizedLearning,
-            showSelectionHandles: _showSelectionHandles,
-            rendererIgnoresPointer: true,
-            mouseCursor: MouseCursor.defer, // TextField will handle the cursor
-            // depende do sistema operacional
-            autocorrectionTextRectColor: spec.autocorrectionTextRectColor,
-            autofillClient: this,
-            contentInsertionConfiguration: widget.contentInsertionConfiguration,
-            // Depende do sistema operacional
-            cursorOffset: spec.cursorOffset,
-            // Depende do sistema operacional
-            cursorOpacityAnimates: widget.cursorOpacityAnimates,
-            dragStartBehavior: widget.dragStartBehavior,
-            // Nao tem no material
-            forceLine: widget.forceLine,
-            groupId: widget.groupId,
-            // No material nao tem
-            locale: widget.locale,
-            // mouseCursor: mouseCursor,
-            onAppPrivateCommand: widget.onAppPrivateCommand,
-            onSelectionChanged: _handleSelectionChanged,
-            onSelectionHandleTapped: _handleSelectionHandleTapped,
-
-            onTapOutside: widget.onTapOutside,
-            // No material depende do sistema operacional
-            paintCursorAboveText: spec.paintCursorAboveText,
-            // Nao tem no material
-            scrollBehavior: widget.scrollBehavior,
-            // selectionHeightStyle: spec.selectionHeightStyle,
-            // selectionWidthStyle: spec.selectionWidthStyle,
-            textHeightBehavior: spec.textHeightBehavior,
-            // Nao tem no material
-            textScaler: spec.textScaler ?? MediaQuery.textScalerOf(context),
-            // Nao tem no material
-            textWidthBasis: spec.textWidthBasis,
-            undoController: widget.undoController,
-            contextMenuBuilder: widget.contextMenuBuilder,
-            spellCheckConfiguration: widget.spellCheckConfiguration,
-            magnifierConfiguration: widget.magnifierConfiguration ??
-                m.TextMagnifier.adaptiveMagnifierConfiguration,
+          child: Stack(
+            children: [
+              AnimatedBuilder(
+                animation: _effectiveController,
+                builder: (context, child) => Opacity(
+                  opacity: _effectiveController.value.text.isEmpty ? 1 : 0,
+                  child: spec.hint(widget.hintText ?? ''),
+                ),
+              ),
+              EditableText(
+                // groupId: widget.groupId,
+                key: editableTextKey,
+                controller: _effectiveController,
+                focusNode: _effectiveFocusNode,
+                readOnly: widget.readOnly || !widget.enabled,
+                obscuringCharacter: widget.obscuringCharacter,
+                obscureText: widget.obscureText,
+                autocorrect: widget.autocorrect,
+                smartDashesType: widget.smartDashesType,
+                smartQuotesType: widget.smartQuotesType,
+                enableSuggestions: widget.enableSuggestions,
+                style: spec.style,
+                strutStyle: spec.strutStyle,
+                cursorColor: spec.cursorColor,
+                backgroundCursorColor: spec.backgroundCursorColor,
+                textAlign: spec.textAlign,
+                textDirection: widget.textDirection,
+                maxLines: widget.maxLines,
+                minLines: widget.minLines,
+                expands: widget.expands,
+                // selectionHeightStyle: spec.selectionHeightStyle,
+                // selectionWidthStyle: spec.selectionWidthStyle,
+                textHeightBehavior: spec.textHeightBehavior,
+                textWidthBasis: spec.textWidthBasis,
+                autofocus: widget.autofocus,
+                showCursor: widget.showCursor,
+                showSelectionHandles: _showSelectionHandles,
+                selectionColor: spec.selectionColor,
+                selectionControls: textSelectionControls,
+                keyboardType: widget.keyboardType,
+                textInputAction: widget.textInputAction,
+                textCapitalization: widget.textCapitalization,
+                onChanged: widget.onChanged,
+                onEditingComplete: widget.onEditingComplete,
+                onSubmitted: widget.onSubmitted,
+                onAppPrivateCommand: widget.onAppPrivateCommand,
+                onSelectionChanged: _handleSelectionChanged,
+                onSelectionHandleTapped: _handleSelectionHandleTapped,
+                onTapOutside: widget.onTapOutside,
+                inputFormatters: formatters,
+                mouseCursor:
+                    MouseCursor.defer, // TextField will handle the cursor
+                rendererIgnoresPointer: true,
+                cursorWidth: spec.cursorWidth,
+                cursorHeight: spec.cursorHeight,
+                cursorOpacityAnimates: spec.cursorOpacityAnimates,
+                cursorOffset: spec.cursorOffset,
+                paintCursorAboveText: spec.paintCursorAboveText,
+                scrollPadding: spec.scrollPadding,
+                dragStartBehavior: widget.dragStartBehavior,
+                // keyboardAppearance: spec.keyboardAppearance,
+                enableInteractiveSelection: widget.enableInteractiveSelection,
+                scrollController: widget.scrollController,
+                scrollPhysics: widget.scrollPhysics,
+                autocorrectionTextRectColor: spec.autocorrectionTextRectColor,
+                autofillClient: this,
+                clipBehavior: widget.clipBehavior,
+                restorationId: 'editable',
+                // Nao tem no material
+                scrollBehavior: widget.scrollBehavior,
+                scribbleEnabled: widget.scribbleEnabled,
+                enableIMEPersonalizedLearning:
+                    widget.enableIMEPersonalizedLearning,
+                contentInsertionConfiguration:
+                    widget.contentInsertionConfiguration,
+                contextMenuBuilder: widget.contextMenuBuilder,
+                spellCheckConfiguration: widget.spellCheckConfiguration,
+                magnifierConfiguration: widget.magnifierConfiguration ??
+                    m.TextMagnifier.adaptiveMagnifierConfiguration,
+                undoController: widget.undoController,
+              ),
+            ],
           ),
         );
       },
     );
 
-    return MouseRegion(
-      cursor: effectiveMouseCursor,
-      onEnter: (PointerEnterEvent event) => _handleHover(true),
-      onExit: (PointerExitEvent event) => _handleHover(false),
+    return Interactable(
+      mouseCursor: effectiveMouseCursor,
+      controller: _statesController,
       child: TextFieldTapRegion(
         child: IgnorePointer(
           ignoring: widget.ignorePointers ?? !widget.enabled,
@@ -604,19 +631,11 @@ class _TextFieldState extends State<TextField>
   }
 
   @override
-  // TODO: Depende do sistema operacional
-  bool get forcePressEnabled => false;
-
-  @override
   bool get selectionEnabled => widget.selectionEnabled && widget.enabled;
 
   // AutofillClient implementation start.
   @override
   String get autofillId => _editableText!.autofillId;
-
-  @override
-  void autofill(TextEditingValue newEditingValue) =>
-      _editableText!.autofill(newEditingValue);
 
   @override
   TextInputConfiguration get textInputConfiguration {
@@ -639,12 +658,12 @@ class _TextFieldState extends State<TextField>
 
 class _TextFieldSelectionGestureDetectorBuilder
     extends TextSelectionGestureDetectorBuilder {
+  final _TextFieldState _state;
+
   _TextFieldSelectionGestureDetectorBuilder({
     required _TextFieldState state,
   })  : _state = state,
         super(delegate: state);
-
-  final _TextFieldState _state;
 
   @override
   void onForcePressStart(ForcePressDetails details) {
@@ -658,9 +677,6 @@ class _TextFieldSelectionGestureDetectorBuilder
   void onForcePressEnd(ForcePressDetails details) {
     // Not required.
   }
-
-  @override
-  bool get onUserTapAlwaysCalled => _state.widget.onTapAlwaysCalled;
 
   @override
   void onUserTap() {
@@ -679,8 +695,11 @@ class _TextFieldSelectionGestureDetectorBuilder
         case TargetPlatform.fuchsia:
         case TargetPlatform.linux:
         case TargetPlatform.windows:
-          Feedback.forLongPress(_state.context);
+        // Feedback.forLongPress(_state.context);
       }
     }
   }
+
+  @override
+  bool get onUserTapAlwaysCalled => _state.widget.onTapAlwaysCalled;
 }

@@ -21,6 +21,7 @@ import '../components/segmented_control/segmented_control.dart';
 import '../components/select/select.dart';
 import '../components/spinner/spinner.dart';
 import '../components/switch/switch.dart';
+import '../components/textfield/textfield.dart';
 import '../components/toast/toast.dart';
 import 'remix_tokens.dart';
 
@@ -44,6 +45,7 @@ class RemixComponentTheme {
   final SelectStyle select;
   final SpinnerStyle spinner;
   final SwitchStyle switchComponent;
+  final TextFieldStyle textField;
   final ToastStyle toast;
 
   const RemixComponentTheme({
@@ -66,6 +68,7 @@ class RemixComponentTheme {
     required this.select,
     required this.spinner,
     required this.switchComponent,
+    required this.textField,
     required this.toast,
   });
 
@@ -90,6 +93,7 @@ class RemixComponentTheme {
       select: SelectStyle(),
       spinner: SpinnerStyle(),
       switchComponent: SwitchStyle(),
+      textField: TextFieldStyle(),
       toast: ToastStyle(),
     );
   }
@@ -115,6 +119,7 @@ class RemixComponentTheme {
       select: const SelectDarkStyle(),
       spinner: const SpinnerDarkStyle(),
       switchComponent: const SwitchDarkStyle(),
+      // textField: const TextFieldDarkStyle(),
     );
   }
 
@@ -139,6 +144,8 @@ class RemixComponentTheme {
       select: FortalezaSelectStyle(),
       spinner: FortalezaSpinnerStyle(),
       switchComponent: FortalezaSwitchStyle(),
+      textField: TextFieldStyle(),
+      // textField: FortalezaTextFieldStyle(),
       toast: FortalezaToastStyle(),
     );
   }
@@ -150,6 +157,7 @@ class RemixComponentTheme {
       segmentedControl: const FortalezaDarkSegmentedControlStyle(),
       select: const FortalezaDarkSelectStyle(),
       switchComponent: const FortalezaDarkSwitchStyle(),
+      // textField: const FortalezaDarkTextFieldStyle(),
     );
   }
 
@@ -173,6 +181,7 @@ class RemixComponentTheme {
     SelectStyle? select,
     SpinnerStyle? spinner,
     SwitchStyle? switchComponent,
+    TextFieldStyle? textField,
     ToastStyle? toast,
   }) {
     return RemixComponentTheme(
@@ -195,6 +204,7 @@ class RemixComponentTheme {
       select: select ?? this.select,
       spinner: spinner ?? this.spinner,
       switchComponent: switchComponent ?? this.switchComponent,
+      textField: textField ?? this.textField,
       toast: toast ?? this.toast,
     );
   }

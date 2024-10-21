@@ -37,7 +37,6 @@ mixin _$TextFieldSpec on Spec<TextFieldSpec> {
     TextAlign? textAlign,
     StrutStyle? strutStyle,
     TextHeightBehavior? textHeightBehavior,
-    TextScaler? textScaler,
     TextWidthBasis? textWidthBasis,
     double? cursorWidth,
     double? cursorHeight,
@@ -50,7 +49,9 @@ mixin _$TextFieldSpec on Spec<TextFieldSpec> {
     EdgeInsets? scrollPadding,
     Clip? clipBehavior,
     Color? autocorrectionTextRectColor,
+    bool? cursorOpacityAnimates,
     BoxSpec? container,
+    TextSpec? hint,
     AnimatedData? animated,
     WidgetModifiersData? modifiers,
   }) {
@@ -59,7 +60,6 @@ mixin _$TextFieldSpec on Spec<TextFieldSpec> {
       textAlign: textAlign ?? _$this.textAlign,
       strutStyle: strutStyle ?? _$this.strutStyle,
       textHeightBehavior: textHeightBehavior ?? _$this.textHeightBehavior,
-      textScaler: textScaler ?? _$this.textScaler,
       textWidthBasis: textWidthBasis ?? _$this.textWidthBasis,
       cursorWidth: cursorWidth ?? _$this.cursorWidth,
       cursorHeight: cursorHeight ?? _$this.cursorHeight,
@@ -74,7 +74,10 @@ mixin _$TextFieldSpec on Spec<TextFieldSpec> {
       clipBehavior: clipBehavior ?? _$this.clipBehavior,
       autocorrectionTextRectColor:
           autocorrectionTextRectColor ?? _$this.autocorrectionTextRectColor,
+      cursorOpacityAnimates:
+          cursorOpacityAnimates ?? _$this.cursorOpacityAnimates,
       container: container ?? _$this.container,
+      hint: hint ?? _$this.hint,
       animated: animated ?? _$this.animated,
       modifiers: modifiers ?? _$this.modifiers,
     );
@@ -99,8 +102,9 @@ mixin _$TextFieldSpec on Spec<TextFieldSpec> {
   /// - [Offset.lerp] for [cursorOffset].
   /// - [EdgeInsets.lerp] for [scrollPadding].
   /// - [BoxSpec.lerp] for [container].
+  /// - [TextSpec.lerp] for [hint].
 
-  /// For [textAlign] and [textHeightBehavior] and [textScaler] and [textWidthBasis] and [paintCursorAboveText] and [clipBehavior] and [animated] and [modifiers], the interpolation is performed using a step function.
+  /// For [textAlign] and [textHeightBehavior] and [textWidthBasis] and [paintCursorAboveText] and [clipBehavior] and [cursorOpacityAnimates] and [animated] and [modifiers], the interpolation is performed using a step function.
   /// If [t] is less than 0.5, the value from the current [TextFieldSpec] is used. Otherwise, the value
   /// from the [other] [TextFieldSpec] is used.
   ///
@@ -117,7 +121,6 @@ mixin _$TextFieldSpec on Spec<TextFieldSpec> {
           MixHelpers.lerpStrutStyle(_$this.strutStyle, other.strutStyle, t),
       textHeightBehavior:
           t < 0.5 ? _$this.textHeightBehavior : other.textHeightBehavior,
-      textScaler: t < 0.5 ? _$this.textScaler : other.textScaler,
       textWidthBasis: t < 0.5 ? _$this.textWidthBasis : other.textWidthBasis,
       cursorWidth:
           MixHelpers.lerpDouble(_$this.cursorWidth, other.cursorWidth, t)!,
@@ -139,7 +142,10 @@ mixin _$TextFieldSpec on Spec<TextFieldSpec> {
           _$this.autocorrectionTextRectColor,
           other.autocorrectionTextRectColor,
           t),
-      container: _$this.container?.lerp(other.container, t) ?? other.container,
+      cursorOpacityAnimates:
+          t < 0.5 ? _$this.cursorOpacityAnimates : other.cursorOpacityAnimates,
+      container: _$this.container.lerp(other.container, t),
+      hint: _$this.hint.lerp(other.hint, t),
       animated: t < 0.5 ? _$this.animated : other.animated,
       modifiers: other.modifiers,
     );
@@ -155,7 +161,6 @@ mixin _$TextFieldSpec on Spec<TextFieldSpec> {
         _$this.textAlign,
         _$this.strutStyle,
         _$this.textHeightBehavior,
-        _$this.textScaler,
         _$this.textWidthBasis,
         _$this.cursorWidth,
         _$this.cursorHeight,
@@ -168,7 +173,9 @@ mixin _$TextFieldSpec on Spec<TextFieldSpec> {
         _$this.scrollPadding,
         _$this.clipBehavior,
         _$this.autocorrectionTextRectColor,
+        _$this.cursorOpacityAnimates,
         _$this.container,
+        _$this.hint,
         _$this.animated,
         _$this.modifiers,
       ];
@@ -184,8 +191,6 @@ mixin _$TextFieldSpec on Spec<TextFieldSpec> {
         defaultValue: null));
     properties.add(DiagnosticsProperty(
         'textHeightBehavior', _$this.textHeightBehavior,
-        defaultValue: null));
-    properties.add(DiagnosticsProperty('textScaler', _$this.textScaler,
         defaultValue: null));
     properties.add(DiagnosticsProperty('textWidthBasis', _$this.textWidthBasis,
         defaultValue: null));
@@ -214,8 +219,13 @@ mixin _$TextFieldSpec on Spec<TextFieldSpec> {
     properties.add(DiagnosticsProperty(
         'autocorrectionTextRectColor', _$this.autocorrectionTextRectColor,
         defaultValue: null));
+    properties.add(DiagnosticsProperty(
+        'cursorOpacityAnimates', _$this.cursorOpacityAnimates,
+        defaultValue: null));
     properties.add(
         DiagnosticsProperty('container', _$this.container, defaultValue: null));
+    properties
+        .add(DiagnosticsProperty('hint', _$this.hint, defaultValue: null));
     properties.add(
         DiagnosticsProperty('animated', _$this.animated, defaultValue: null));
     properties.add(
@@ -236,7 +246,6 @@ class TextFieldSpecAttribute extends SpecAttribute<TextFieldSpec>
   final TextAlign? textAlign;
   final StrutStyleDto? strutStyle;
   final TextHeightBehaviorDto? textHeightBehavior;
-  final TextScaler? textScaler;
   final TextWidthBasis? textWidthBasis;
   final double? cursorWidth;
   final double? cursorHeight;
@@ -249,14 +258,15 @@ class TextFieldSpecAttribute extends SpecAttribute<TextFieldSpec>
   final EdgeInsetsDto? scrollPadding;
   final Clip? clipBehavior;
   final ColorDto? autocorrectionTextRectColor;
+  final bool? cursorOpacityAnimates;
   final BoxSpecAttribute? container;
+  final TextSpecAttribute? hint;
 
   const TextFieldSpecAttribute({
     this.style,
     this.textAlign,
     this.strutStyle,
     this.textHeightBehavior,
-    this.textScaler,
     this.textWidthBasis,
     this.cursorWidth,
     this.cursorHeight,
@@ -269,7 +279,9 @@ class TextFieldSpecAttribute extends SpecAttribute<TextFieldSpec>
     this.scrollPadding,
     this.clipBehavior,
     this.autocorrectionTextRectColor,
+    this.cursorOpacityAnimates,
     this.container,
+    this.hint,
     super.animated,
     super.modifiers,
   });
@@ -289,7 +301,6 @@ class TextFieldSpecAttribute extends SpecAttribute<TextFieldSpec>
       textAlign: textAlign,
       strutStyle: strutStyle?.resolve(mix),
       textHeightBehavior: textHeightBehavior?.resolve(mix),
-      textScaler: textScaler,
       textWidthBasis: textWidthBasis,
       cursorWidth: cursorWidth,
       cursorHeight: cursorHeight,
@@ -302,7 +313,9 @@ class TextFieldSpecAttribute extends SpecAttribute<TextFieldSpec>
       scrollPadding: scrollPadding?.resolve(mix),
       clipBehavior: clipBehavior,
       autocorrectionTextRectColor: autocorrectionTextRectColor?.resolve(mix),
+      cursorOpacityAnimates: cursorOpacityAnimates,
       container: container?.resolve(mix),
+      hint: hint?.resolve(mix),
       animated: animated?.resolve(mix) ?? mix.animation,
       modifiers: modifiers?.resolve(mix),
     );
@@ -326,7 +339,6 @@ class TextFieldSpecAttribute extends SpecAttribute<TextFieldSpec>
       strutStyle: strutStyle?.merge(other.strutStyle) ?? other.strutStyle,
       textHeightBehavior: textHeightBehavior?.merge(other.textHeightBehavior) ??
           other.textHeightBehavior,
-      textScaler: other.textScaler ?? textScaler,
       textWidthBasis: other.textWidthBasis ?? textWidthBasis,
       cursorWidth: other.cursorWidth ?? cursorWidth,
       cursorHeight: other.cursorHeight ?? cursorHeight,
@@ -345,7 +357,10 @@ class TextFieldSpecAttribute extends SpecAttribute<TextFieldSpec>
       autocorrectionTextRectColor: autocorrectionTextRectColor
               ?.merge(other.autocorrectionTextRectColor) ??
           other.autocorrectionTextRectColor,
+      cursorOpacityAnimates:
+          other.cursorOpacityAnimates ?? cursorOpacityAnimates,
       container: container?.merge(other.container) ?? other.container,
+      hint: hint?.merge(other.hint) ?? other.hint,
       animated: animated?.merge(other.animated) ?? other.animated,
       modifiers: modifiers?.merge(other.modifiers) ?? other.modifiers,
     );
@@ -361,7 +376,6 @@ class TextFieldSpecAttribute extends SpecAttribute<TextFieldSpec>
         textAlign,
         strutStyle,
         textHeightBehavior,
-        textScaler,
         textWidthBasis,
         cursorWidth,
         cursorHeight,
@@ -374,7 +388,9 @@ class TextFieldSpecAttribute extends SpecAttribute<TextFieldSpec>
         scrollPadding,
         clipBehavior,
         autocorrectionTextRectColor,
+        cursorOpacityAnimates,
         container,
+        hint,
         animated,
         modifiers,
       ];
@@ -390,8 +406,6 @@ class TextFieldSpecAttribute extends SpecAttribute<TextFieldSpec>
         .add(DiagnosticsProperty('strutStyle', strutStyle, defaultValue: null));
     properties.add(DiagnosticsProperty('textHeightBehavior', textHeightBehavior,
         defaultValue: null));
-    properties
-        .add(DiagnosticsProperty('textScaler', textScaler, defaultValue: null));
     properties.add(DiagnosticsProperty('textWidthBasis', textWidthBasis,
         defaultValue: null));
     properties.add(
@@ -419,8 +433,12 @@ class TextFieldSpecAttribute extends SpecAttribute<TextFieldSpec>
     properties.add(DiagnosticsProperty(
         'autocorrectionTextRectColor', autocorrectionTextRectColor,
         defaultValue: null));
+    properties.add(DiagnosticsProperty(
+        'cursorOpacityAnimates', cursorOpacityAnimates,
+        defaultValue: null));
     properties
         .add(DiagnosticsProperty('container', container, defaultValue: null));
+    properties.add(DiagnosticsProperty('hint', hint, defaultValue: null));
     properties
         .add(DiagnosticsProperty('animated', animated, defaultValue: null));
     properties
@@ -446,9 +464,6 @@ class TextFieldSpecUtility<T extends Attribute>
   /// Utility for defining [TextFieldSpecAttribute.textHeightBehavior]
   late final textHeightBehavior =
       TextHeightBehaviorUtility((v) => only(textHeightBehavior: v));
-
-  /// Utility for defining [TextFieldSpecAttribute.textScaler]
-  late final textScaler = TextScalerUtility((v) => only(textScaler: v));
 
   /// Utility for defining [TextFieldSpecAttribute.textWidthBasis]
   late final textWidthBasis =
@@ -490,8 +505,15 @@ class TextFieldSpecUtility<T extends Attribute>
   late final autocorrectionTextRectColor =
       ColorUtility((v) => only(autocorrectionTextRectColor: v));
 
+  /// Utility for defining [TextFieldSpecAttribute.cursorOpacityAnimates]
+  late final cursorOpacityAnimates =
+      BoolUtility((v) => only(cursorOpacityAnimates: v));
+
   /// Utility for defining [TextFieldSpecAttribute.container]
   late final container = BoxSpecUtility((v) => only(container: v));
+
+  /// Utility for defining [TextFieldSpecAttribute.hint]
+  late final hint = TextSpecUtility((v) => only(hint: v));
 
   /// Utility for defining [TextFieldSpecAttribute.animated]
   late final animated = AnimatedUtility((v) => only(animated: v));
@@ -514,7 +536,6 @@ class TextFieldSpecUtility<T extends Attribute>
     TextAlign? textAlign,
     StrutStyleDto? strutStyle,
     TextHeightBehaviorDto? textHeightBehavior,
-    TextScaler? textScaler,
     TextWidthBasis? textWidthBasis,
     double? cursorWidth,
     double? cursorHeight,
@@ -527,7 +548,9 @@ class TextFieldSpecUtility<T extends Attribute>
     EdgeInsetsDto? scrollPadding,
     Clip? clipBehavior,
     ColorDto? autocorrectionTextRectColor,
+    bool? cursorOpacityAnimates,
     BoxSpecAttribute? container,
+    TextSpecAttribute? hint,
     AnimatedDataDto? animated,
     WidgetModifiersDataDto? modifiers,
   }) {
@@ -536,7 +559,6 @@ class TextFieldSpecUtility<T extends Attribute>
       textAlign: textAlign,
       strutStyle: strutStyle,
       textHeightBehavior: textHeightBehavior,
-      textScaler: textScaler,
       textWidthBasis: textWidthBasis,
       cursorWidth: cursorWidth,
       cursorHeight: cursorHeight,
@@ -549,7 +571,9 @@ class TextFieldSpecUtility<T extends Attribute>
       scrollPadding: scrollPadding,
       clipBehavior: clipBehavior,
       autocorrectionTextRectColor: autocorrectionTextRectColor,
+      cursorOpacityAnimates: cursorOpacityAnimates,
       container: container,
+      hint: hint,
       animated: animated,
       modifiers: modifiers,
     ));

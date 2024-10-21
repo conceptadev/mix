@@ -1,16 +1,20 @@
-import 'dart:ui';
-
-import 'package:flutter/cupertino.dart' show CupertinoColors;
-import 'package:flutter/gestures.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter/material.dart' as m;
-import 'package:flutter/widgets.dart';
+import 'package:flutter/cupertino.dart'
+    show
+        CupertinoColors,
+        cupertinoDesktopTextSelectionHandleControls,
+        cupertinoTextSelectionHandleControls;
 import 'package:flutter/foundation.dart';
+import 'package:flutter/gestures.dart';
+import 'package:flutter/material.dart' as m;
+import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
 import 'package:mix/mix.dart';
-
 import 'package:mix_annotations/mix_annotations.dart';
 
+import '../../theme/remix_theme.dart';
+
 part 'textfield.g.dart';
+part 'textfield_style.dart';
 part 'textfield_widget.dart';
 
 // @MixableSpec()
@@ -130,7 +134,6 @@ class TextFieldSpec extends Spec<TextFieldSpec>
   final TextAlign textAlign;
   // final TextAlignVertical? textAlignVertical;
   final StrutStyle? strutStyle;
-  final TextScaler? textScaler;
   final TextWidthBasis textWidthBasis;
 
   final double cursorWidth;
@@ -139,6 +142,7 @@ class TextFieldSpec extends Spec<TextFieldSpec>
   final Color cursorColor;
   final Offset cursorOffset;
   final bool paintCursorAboveText;
+  final bool cursorOpacityAnimates;
   final Color backgroundCursorColor;
   final Color? selectionColor;
 
@@ -154,6 +158,7 @@ class TextFieldSpec extends Spec<TextFieldSpec>
   // final MouseCursor? mouseCursor;
 
   final BoxSpec container;
+  final TextSpec hint;
 
   @MixableProperty(dto: MixableFieldDto(type: TextHeightBehaviorDto))
   final TextHeightBehavior? textHeightBehavior;
@@ -168,7 +173,6 @@ class TextFieldSpec extends Spec<TextFieldSpec>
     // this.textAlignVertical,
     this.strutStyle,
     this.textHeightBehavior,
-    this.textScaler,
     TextWidthBasis? textWidthBasis,
     double? cursorWidth,
     this.cursorHeight,
@@ -185,8 +189,10 @@ class TextFieldSpec extends Spec<TextFieldSpec>
     // this.scrollBehavior,
     // Brightness? keyboardAppearance,
     this.autocorrectionTextRectColor,
+    bool? cursorOpacityAnimates,
     // this.mouseCursor,
     BoxSpec? container,
+    TextSpec? hint,
     super.animated,
     super.modifiers,
   })  : style = style ?? const TextStyle(),
@@ -196,13 +202,15 @@ class TextFieldSpec extends Spec<TextFieldSpec>
         cursorColor = cursorColor ?? m.Colors.black54,
         cursorOffset = cursorOffset ?? Offset.zero,
         paintCursorAboveText = paintCursorAboveText ?? false,
+        cursorOpacityAnimates = cursorOpacityAnimates ?? false,
         backgroundCursorColor =
             backgroundCursorColor ?? CupertinoColors.inactiveGray,
         // selectionHeightStyle = selectionHeightStyle ?? BoxHeightStyle.tight,
         // selectionWidthStyle = selectionWidthStyle ?? BoxWidthStyle.tight,
         scrollPadding = scrollPadding ?? const EdgeInsets.all(20.0),
         clipBehavior = clipBehavior ?? Clip.hardEdge,
-        container = container ?? const BoxSpec();
+        container = container ?? const BoxSpec(),
+        hint = hint ?? const TextSpec();
   // keyboardAppearance = keyboardAppearance ?? Brightness.light;
 
   @override
