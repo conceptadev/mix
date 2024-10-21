@@ -24,6 +24,7 @@ class TextField extends StatefulWidget {
   final VoidCallback? onEditingComplete;
   final ValueChanged<String>? onSubmitted;
   final List<TextInputFormatter>? inputFormatters;
+  final bool error;
 
   /// Determines whether this widget ignores pointer events.
   ///
@@ -184,6 +185,7 @@ class TextField extends StatefulWidget {
     this.spellCheckConfiguration,
     this.contextMenuBuilder,
     required this.style,
+    this.error = false,
   })  : assert(obscuringCharacter.length == 1),
         smartDashesType = smartDashesType ??
             (obscureText ? SmartDashesType.disabled : SmartDashesType.enabled),
@@ -201,9 +203,9 @@ class TextField extends StatefulWidget {
         ),
         assert(!obscureText || maxLines == 1,
             'Obscured fields cannot be multiline.'),
-        // assert(maxLength == null ||
-        //     maxLength == TextField.noMaxLength ||
-        //     maxLength > 0),
+        assert(maxLength == null ||
+            maxLength == TextField.noMaxLength ||
+            maxLength > 0),
         // Assert the following instead of setting it directly to avoid surprising the user by silently changing the value they set.
         assert(
           !identical(textInputAction, TextInputAction.newline) ||
@@ -334,32 +336,6 @@ class _TextFieldState extends State<TextField>
     return false;
   }
 
-  //   switch (Theme.of(context).platform) {
-  //     case TargetPlatform.iOS:
-  //     case TargetPlatform.macOS:
-  //     case TargetPlatform.linux:
-  //     case TargetPlatform.windows:
-  //     case TargetPlatform.fuchsia:
-  //     case TargetPlatform.android:
-  //       if (cause == SelectionChangedCause.longPress) {
-  //         _editableText?.bringIntoView(selection.extent);
-  //       }
-  //   }
-
-  //   switch (Theme.of(context).platform) {
-  //     case TargetPlatform.iOS:
-  //     case TargetPlatform.fuchsia:
-  //     case TargetPlatform.android:
-  //       break;
-  //     case TargetPlatform.macOS:
-  //     case TargetPlatform.linux:
-  //     case TargetPlatform.windows:
-  //       if (cause == SelectionChangedCause.drag) {
-  //         _editableText?.hideToolbar();
-  //       }
-  //   }
-  // }
-
   EditableTextState? get _editableText => editableTextKey.currentState;
   @override
   final GlobalKey<EditableTextState> editableTextKey =
@@ -370,11 +346,22 @@ class _TextFieldState extends State<TextField>
       widget.maxLengthEnforcement ??
       LengthLimitingTextInputFormatter.getDefaultMaxLengthEnforcement(
           m.Theme.of(context).platform);
+
+  bool get _hasIntrinsicError =>
+      widget.maxLength != null &&
+      widget.maxLength! > 0 &&
+      (widget.controller == null
+          ? !restorePending &&
+              _effectiveController.value.text.characters.length >
+                  widget.maxLength!
+          : _effectiveController.value.text.characters.length >
+              widget.maxLength!);
+
   @override
   void initState() {
     super.initState();
     _statesController = MixWidgetStateController();
-    _statesController.disabled = !widget.enabled;
+
     _selectionGestureDetectorBuilder =
         _TextFieldSelectionGestureDetectorBuilder(state: this);
     if (widget.controller == null) {
@@ -383,7 +370,13 @@ class _TextFieldState extends State<TextField>
     _effectiveFocusNode.canRequestFocus =
         widget.canRequestFocus && widget.enabled;
     _effectiveFocusNode.addListener(_handleFocusChanged);
-    // _initStatesController();
+    _initStatesController();
+  }
+
+  void _initStatesController() {
+    _statesController.disabled = !widget.enabled;
+    _statesController.focused = _effectiveFocusNode.hasFocus;
+    _statesController.error = widget.error;
   }
 
   void _handleFocusChanged() {
@@ -435,20 +428,9 @@ class _TextFieldState extends State<TextField>
       }
     }
 
-    // if (widget.statesController == oldWidget.statesController) {
-    //   _statesController.update(WidgetState.disabled, !_isEnabled);
-    //   _statesController.update(WidgetState.hovered, _isHovering);
-    //   _statesController.update(
-    //       WidgetState.focused, _effectiveFocusNode.hasFocus);
-    //   _statesController.update(WidgetState.error, _hasError);
-    // } else {
-    //   oldWidget.statesController?.removeListener(_handleStatesControllerChange);
-    //   if (widget.statesController != null) {
-    //     _internalStatesController?.dispose();
-    //     _internalStatesController = null;
-    //   }
-    //   _initStatesController();
-    // }
+    _statesController.error = widget.error;
+    _statesController.focused = _effectiveFocusNode.hasFocus;
+    _statesController.disabled = !widget.enabled;
   }
 
   bool _isHovering = false;
@@ -466,14 +448,11 @@ class _TextFieldState extends State<TextField>
     _effectiveFocusNode.removeListener(_handleFocusChanged);
     _focusNode?.dispose();
     _controller?.dispose();
+    _statesController.dispose();
     // _statesController.removeListener(_handleStatesControllerChange);
     // _internalStatesController?.dispose();
     super.dispose();
   }
-
-  // @override
-  // final GlobalKey<EditableTextState> editableTextKey =
-  //     GlobalKey<EditableTextState>();
 
   @override
   Widget build(BuildContext context) {
