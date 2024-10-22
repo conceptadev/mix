@@ -47,7 +47,6 @@ class TextField extends StatefulWidget {
     this.groupId = EditableText,
     this.onAppPrivateCommand,
     this.onTapOutside,
-    this.scrollBehavior,
     this.canRequestFocus = true,
     this.onTapAlwaysCalled = false,
     this.undoController,
@@ -204,7 +203,6 @@ class TextField extends StatefulWidget {
 
   final TapRegionCallback? onTapOutside;
   final TextMagnifierConfiguration? magnifierConfiguration;
-  final ScrollBehavior? scrollBehavior;
   final SpellCheckConfiguration? spellCheckConfiguration;
 
   final UndoHistoryController? undoController;
@@ -525,6 +523,7 @@ class _TextFieldState extends State<TextField>
 
         return spec.container(
           child: Stack(
+            alignment: Alignment.topLeft,
             children: [
               AnimatedBuilder(
                 animation: _effectiveController,
@@ -553,9 +552,8 @@ class _TextFieldState extends State<TextField>
                 textDirection: widget.textDirection,
                 maxLines: widget.maxLines,
                 minLines: widget.minLines,
+
                 expands: widget.expands,
-                // selectionHeightStyle: spec.selectionHeightStyle,
-                // selectionWidthStyle: spec.selectionWidthStyle,
                 textHeightBehavior: spec.textHeightBehavior,
                 textWidthBasis: spec.textWidthBasis,
                 autofocus: widget.autofocus,
@@ -582,9 +580,12 @@ class _TextFieldState extends State<TextField>
                 cursorOpacityAnimates: spec.cursorOpacityAnimates,
                 cursorOffset: spec.cursorOffset,
                 paintCursorAboveText: spec.paintCursorAboveText,
+                selectionHeightStyle: spec.selectionHeightStyle,
+                selectionWidthStyle: spec.selectionWidthStyle,
                 scrollPadding: spec.scrollPadding,
+                keyboardAppearance: spec.keyboardAppearance,
                 dragStartBehavior: widget.dragStartBehavior,
-                // keyboardAppearance: spec.keyboardAppearance,
+                // textAlignVertical: spec.textAlignVertical,
                 enableInteractiveSelection: widget.enableInteractiveSelection,
                 scrollController: widget.scrollController,
                 scrollPhysics: widget.scrollPhysics,
@@ -592,8 +593,6 @@ class _TextFieldState extends State<TextField>
                 autofillClient: this,
                 clipBehavior: widget.clipBehavior,
                 restorationId: 'editable',
-                // Nao tem no material
-                scrollBehavior: widget.scrollBehavior,
                 scribbleEnabled: widget.scribbleEnabled,
                 enableIMEPersonalizedLearning:
                     widget.enableIMEPersonalizedLearning,

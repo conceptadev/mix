@@ -46,8 +46,11 @@ mixin _$TextFieldSpec on Spec<TextFieldSpec> {
     bool? paintCursorAboveText,
     Color? backgroundCursorColor,
     Color? selectionColor,
+    BoxHeightStyle? selectionHeightStyle,
+    BoxWidthStyle? selectionWidthStyle,
     EdgeInsets? scrollPadding,
     Clip? clipBehavior,
+    Brightness? keyboardAppearance,
     Color? autocorrectionTextRectColor,
     bool? cursorOpacityAnimates,
     BoxSpec? container,
@@ -70,8 +73,11 @@ mixin _$TextFieldSpec on Spec<TextFieldSpec> {
       backgroundCursorColor:
           backgroundCursorColor ?? _$this.backgroundCursorColor,
       selectionColor: selectionColor ?? _$this.selectionColor,
+      selectionHeightStyle: selectionHeightStyle ?? _$this.selectionHeightStyle,
+      selectionWidthStyle: selectionWidthStyle ?? _$this.selectionWidthStyle,
       scrollPadding: scrollPadding ?? _$this.scrollPadding,
       clipBehavior: clipBehavior ?? _$this.clipBehavior,
+      keyboardAppearance: keyboardAppearance ?? _$this.keyboardAppearance,
       autocorrectionTextRectColor:
           autocorrectionTextRectColor ?? _$this.autocorrectionTextRectColor,
       cursorOpacityAnimates:
@@ -104,7 +110,7 @@ mixin _$TextFieldSpec on Spec<TextFieldSpec> {
   /// - [BoxSpec.lerp] for [container].
   /// - [TextSpec.lerp] for [hint].
 
-  /// For [textAlign] and [textHeightBehavior] and [textWidthBasis] and [paintCursorAboveText] and [clipBehavior] and [cursorOpacityAnimates] and [animated] and [modifiers], the interpolation is performed using a step function.
+  /// For [textAlign] and [textHeightBehavior] and [textWidthBasis] and [paintCursorAboveText] and [selectionHeightStyle] and [selectionWidthStyle] and [clipBehavior] and [keyboardAppearance] and [cursorOpacityAnimates] and [animated] and [modifiers], the interpolation is performed using a step function.
   /// If [t] is less than 0.5, the value from the current [TextFieldSpec] is used. Otherwise, the value
   /// from the [other] [TextFieldSpec] is used.
   ///
@@ -135,9 +141,15 @@ mixin _$TextFieldSpec on Spec<TextFieldSpec> {
           _$this.backgroundCursorColor, other.backgroundCursorColor, t)!,
       selectionColor:
           Color.lerp(_$this.selectionColor, other.selectionColor, t),
+      selectionHeightStyle:
+          t < 0.5 ? _$this.selectionHeightStyle : other.selectionHeightStyle,
+      selectionWidthStyle:
+          t < 0.5 ? _$this.selectionWidthStyle : other.selectionWidthStyle,
       scrollPadding:
           EdgeInsets.lerp(_$this.scrollPadding, other.scrollPadding, t)!,
       clipBehavior: t < 0.5 ? _$this.clipBehavior : other.clipBehavior,
+      keyboardAppearance:
+          t < 0.5 ? _$this.keyboardAppearance : other.keyboardAppearance,
       autocorrectionTextRectColor: Color.lerp(
           _$this.autocorrectionTextRectColor,
           other.autocorrectionTextRectColor,
@@ -170,8 +182,11 @@ mixin _$TextFieldSpec on Spec<TextFieldSpec> {
         _$this.paintCursorAboveText,
         _$this.backgroundCursorColor,
         _$this.selectionColor,
+        _$this.selectionHeightStyle,
+        _$this.selectionWidthStyle,
         _$this.scrollPadding,
         _$this.clipBehavior,
+        _$this.keyboardAppearance,
         _$this.autocorrectionTextRectColor,
         _$this.cursorOpacityAnimates,
         _$this.container,
@@ -212,9 +227,18 @@ mixin _$TextFieldSpec on Spec<TextFieldSpec> {
         defaultValue: null));
     properties.add(DiagnosticsProperty('selectionColor', _$this.selectionColor,
         defaultValue: null));
+    properties.add(DiagnosticsProperty(
+        'selectionHeightStyle', _$this.selectionHeightStyle,
+        defaultValue: null));
+    properties.add(DiagnosticsProperty(
+        'selectionWidthStyle', _$this.selectionWidthStyle,
+        defaultValue: null));
     properties.add(DiagnosticsProperty('scrollPadding', _$this.scrollPadding,
         defaultValue: null));
     properties.add(DiagnosticsProperty('clipBehavior', _$this.clipBehavior,
+        defaultValue: null));
+    properties.add(DiagnosticsProperty(
+        'keyboardAppearance', _$this.keyboardAppearance,
         defaultValue: null));
     properties.add(DiagnosticsProperty(
         'autocorrectionTextRectColor', _$this.autocorrectionTextRectColor,
@@ -255,8 +279,11 @@ class TextFieldSpecAttribute extends SpecAttribute<TextFieldSpec>
   final bool? paintCursorAboveText;
   final ColorDto? backgroundCursorColor;
   final ColorDto? selectionColor;
+  final BoxHeightStyle? selectionHeightStyle;
+  final BoxWidthStyle? selectionWidthStyle;
   final EdgeInsetsDto? scrollPadding;
   final Clip? clipBehavior;
+  final Brightness? keyboardAppearance;
   final ColorDto? autocorrectionTextRectColor;
   final bool? cursorOpacityAnimates;
   final BoxSpecAttribute? container;
@@ -276,8 +303,11 @@ class TextFieldSpecAttribute extends SpecAttribute<TextFieldSpec>
     this.paintCursorAboveText,
     this.backgroundCursorColor,
     this.selectionColor,
+    this.selectionHeightStyle,
+    this.selectionWidthStyle,
     this.scrollPadding,
     this.clipBehavior,
+    this.keyboardAppearance,
     this.autocorrectionTextRectColor,
     this.cursorOpacityAnimates,
     this.container,
@@ -310,8 +340,11 @@ class TextFieldSpecAttribute extends SpecAttribute<TextFieldSpec>
       paintCursorAboveText: paintCursorAboveText,
       backgroundCursorColor: backgroundCursorColor?.resolve(mix),
       selectionColor: selectionColor?.resolve(mix),
+      selectionHeightStyle: selectionHeightStyle,
+      selectionWidthStyle: selectionWidthStyle,
       scrollPadding: scrollPadding?.resolve(mix),
       clipBehavior: clipBehavior,
+      keyboardAppearance: keyboardAppearance,
       autocorrectionTextRectColor: autocorrectionTextRectColor?.resolve(mix),
       cursorOpacityAnimates: cursorOpacityAnimates,
       container: container?.resolve(mix),
@@ -351,9 +384,12 @@ class TextFieldSpecAttribute extends SpecAttribute<TextFieldSpec>
               other.backgroundCursorColor,
       selectionColor:
           selectionColor?.merge(other.selectionColor) ?? other.selectionColor,
+      selectionHeightStyle: other.selectionHeightStyle ?? selectionHeightStyle,
+      selectionWidthStyle: other.selectionWidthStyle ?? selectionWidthStyle,
       scrollPadding:
           scrollPadding?.merge(other.scrollPadding) ?? other.scrollPadding,
       clipBehavior: other.clipBehavior ?? clipBehavior,
+      keyboardAppearance: other.keyboardAppearance ?? keyboardAppearance,
       autocorrectionTextRectColor: autocorrectionTextRectColor
               ?.merge(other.autocorrectionTextRectColor) ??
           other.autocorrectionTextRectColor,
@@ -385,8 +421,11 @@ class TextFieldSpecAttribute extends SpecAttribute<TextFieldSpec>
         paintCursorAboveText,
         backgroundCursorColor,
         selectionColor,
+        selectionHeightStyle,
+        selectionWidthStyle,
         scrollPadding,
         clipBehavior,
+        keyboardAppearance,
         autocorrectionTextRectColor,
         cursorOpacityAnimates,
         container,
@@ -426,10 +465,18 @@ class TextFieldSpecAttribute extends SpecAttribute<TextFieldSpec>
         defaultValue: null));
     properties.add(DiagnosticsProperty('selectionColor', selectionColor,
         defaultValue: null));
+    properties.add(DiagnosticsProperty(
+        'selectionHeightStyle', selectionHeightStyle,
+        defaultValue: null));
+    properties.add(DiagnosticsProperty(
+        'selectionWidthStyle', selectionWidthStyle,
+        defaultValue: null));
     properties.add(DiagnosticsProperty('scrollPadding', scrollPadding,
         defaultValue: null));
     properties.add(
         DiagnosticsProperty('clipBehavior', clipBehavior, defaultValue: null));
+    properties.add(DiagnosticsProperty('keyboardAppearance', keyboardAppearance,
+        defaultValue: null));
     properties.add(DiagnosticsProperty(
         'autocorrectionTextRectColor', autocorrectionTextRectColor,
         defaultValue: null));
@@ -495,11 +542,23 @@ class TextFieldSpecUtility<T extends Attribute>
   /// Utility for defining [TextFieldSpecAttribute.selectionColor]
   late final selectionColor = ColorUtility((v) => only(selectionColor: v));
 
+  /// Utility for defining [TextFieldSpecAttribute.selectionHeightStyle]
+  late final selectionHeightStyle =
+      BoxHeightStyleUtility((v) => only(selectionHeightStyle: v));
+
+  /// Utility for defining [TextFieldSpecAttribute.selectionWidthStyle]
+  late final selectionWidthStyle =
+      BoxWidthStyleUtility((v) => only(selectionWidthStyle: v));
+
   /// Utility for defining [TextFieldSpecAttribute.scrollPadding]
   late final scrollPadding = EdgeInsetsUtility((v) => only(scrollPadding: v));
 
   /// Utility for defining [TextFieldSpecAttribute.clipBehavior]
   late final clipBehavior = ClipUtility((v) => only(clipBehavior: v));
+
+  /// Utility for defining [TextFieldSpecAttribute.keyboardAppearance]
+  late final keyboardAppearance =
+      BrightnessUtility((v) => only(keyboardAppearance: v));
 
   /// Utility for defining [TextFieldSpecAttribute.autocorrectionTextRectColor]
   late final autocorrectionTextRectColor =
@@ -545,8 +604,11 @@ class TextFieldSpecUtility<T extends Attribute>
     bool? paintCursorAboveText,
     ColorDto? backgroundCursorColor,
     ColorDto? selectionColor,
+    BoxHeightStyle? selectionHeightStyle,
+    BoxWidthStyle? selectionWidthStyle,
     EdgeInsetsDto? scrollPadding,
     Clip? clipBehavior,
+    Brightness? keyboardAppearance,
     ColorDto? autocorrectionTextRectColor,
     bool? cursorOpacityAnimates,
     BoxSpecAttribute? container,
@@ -568,8 +630,11 @@ class TextFieldSpecUtility<T extends Attribute>
       paintCursorAboveText: paintCursorAboveText,
       backgroundCursorColor: backgroundCursorColor,
       selectionColor: selectionColor,
+      selectionHeightStyle: selectionHeightStyle,
+      selectionWidthStyle: selectionWidthStyle,
       scrollPadding: scrollPadding,
       clipBehavior: clipBehavior,
+      keyboardAppearance: keyboardAppearance,
       autocorrectionTextRectColor: autocorrectionTextRectColor,
       cursorOpacityAnimates: cursorOpacityAnimates,
       container: container,
