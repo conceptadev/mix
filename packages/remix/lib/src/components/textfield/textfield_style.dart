@@ -56,9 +56,12 @@ class TextFieldStyle extends SpecStyle<TextFieldSpecUtility> {
 
   @override
   Style makeStyle(SpecConfiguration<TextFieldSpecUtility> spec) {
+    spec as TextFieldSpecConfiguration;
+
     final $ = spec.utilities;
 
     final containerStyle = $.container.chain
+      // ..height(80)
       ..color.white()
       ..padding.horizontal(12)
       ..padding.vertical(8)
@@ -96,19 +99,18 @@ class TextFieldStyle extends SpecStyle<TextFieldSpecUtility> {
       ..style.fontSize(12)
       ..wrap.padding.left(12);
 
-    final focus = spec.on.focus($.container.border.all.color.red());
-    final hover = spec.on.hover($.container.border.all.color.purple());
+    final focus = spec.on.focus($.container.border.all.color.black());
 
     return Style(
       platformSettings(spec).call(),
       containerStyle,
+      $.floatingLabel.on(),
       contentLayoutStyle,
       layoutStyle,
       textStyle,
       helperStyle,
       hintStyle,
       $.selectionColor.black12(),
-      hover,
       focus,
     );
   }

@@ -59,6 +59,7 @@ mixin _$TextFieldSpec on Spec<TextFieldSpec> {
     TextSpec? helperText,
     IconSpec? icon,
     FlexSpec? contentLayout,
+    bool? floatingLabel,
     AnimatedData? animated,
     WidgetModifiersData? modifiers,
   }) {
@@ -92,6 +93,7 @@ mixin _$TextFieldSpec on Spec<TextFieldSpec> {
       helperText: helperText ?? _$this.helperText,
       icon: icon ?? _$this.icon,
       contentLayout: contentLayout ?? _$this.contentLayout,
+      floatingLabel: floatingLabel ?? _$this.floatingLabel,
       animated: animated ?? _$this.animated,
       modifiers: modifiers ?? _$this.modifiers,
     );
@@ -120,7 +122,7 @@ mixin _$TextFieldSpec on Spec<TextFieldSpec> {
   /// - [TextSpec.lerp] for [hintText] and [helperText].
   /// - [IconSpec.lerp] for [icon].
 
-  /// For [textAlign] and [textHeightBehavior] and [textWidthBasis] and [paintCursorAboveText] and [selectionHeightStyle] and [selectionWidthStyle] and [clipBehavior] and [keyboardAppearance] and [cursorOpacityAnimates] and [animated] and [modifiers], the interpolation is performed using a step function.
+  /// For [textAlign] and [textHeightBehavior] and [textWidthBasis] and [paintCursorAboveText] and [selectionHeightStyle] and [selectionWidthStyle] and [clipBehavior] and [keyboardAppearance] and [cursorOpacityAnimates] and [floatingLabel] and [animated] and [modifiers], the interpolation is performed using a step function.
   /// If [t] is less than 0.5, the value from the current [TextFieldSpec] is used. Otherwise, the value
   /// from the [other] [TextFieldSpec] is used.
   ///
@@ -172,6 +174,7 @@ mixin _$TextFieldSpec on Spec<TextFieldSpec> {
       helperText: _$this.helperText.lerp(other.helperText, t),
       icon: _$this.icon.lerp(other.icon, t),
       contentLayout: _$this.contentLayout.lerp(other.contentLayout, t),
+      floatingLabel: t < 0.5 ? _$this.floatingLabel : other.floatingLabel,
       animated: t < 0.5 ? _$this.animated : other.animated,
       modifiers: other.modifiers,
     );
@@ -209,6 +212,7 @@ mixin _$TextFieldSpec on Spec<TextFieldSpec> {
         _$this.helperText,
         _$this.icon,
         _$this.contentLayout,
+        _$this.floatingLabel,
         _$this.animated,
         _$this.modifiers,
       ];
@@ -277,6 +281,8 @@ mixin _$TextFieldSpec on Spec<TextFieldSpec> {
         .add(DiagnosticsProperty('icon', _$this.icon, defaultValue: null));
     properties.add(DiagnosticsProperty('contentLayout', _$this.contentLayout,
         defaultValue: null));
+    properties.add(DiagnosticsProperty('floatingLabel', _$this.floatingLabel,
+        defaultValue: null));
     properties.add(
         DiagnosticsProperty('animated', _$this.animated, defaultValue: null));
     properties.add(
@@ -319,6 +325,7 @@ class TextFieldSpecAttribute extends SpecAttribute<TextFieldSpec>
   final TextSpecAttribute? helperText;
   final IconSpecAttribute? icon;
   final FlexSpecAttribute? contentLayout;
+  final bool? floatingLabel;
 
   const TextFieldSpecAttribute({
     this.style,
@@ -347,6 +354,7 @@ class TextFieldSpecAttribute extends SpecAttribute<TextFieldSpec>
     this.helperText,
     this.icon,
     this.contentLayout,
+    this.floatingLabel,
     super.animated,
     super.modifiers,
   });
@@ -388,6 +396,7 @@ class TextFieldSpecAttribute extends SpecAttribute<TextFieldSpec>
       helperText: helperText?.resolve(mix),
       icon: icon?.resolve(mix),
       contentLayout: contentLayout?.resolve(mix),
+      floatingLabel: floatingLabel,
       animated: animated?.resolve(mix) ?? mix.animation,
       modifiers: modifiers?.resolve(mix),
     );
@@ -442,6 +451,7 @@ class TextFieldSpecAttribute extends SpecAttribute<TextFieldSpec>
       icon: icon?.merge(other.icon) ?? other.icon,
       contentLayout:
           contentLayout?.merge(other.contentLayout) ?? other.contentLayout,
+      floatingLabel: other.floatingLabel ?? floatingLabel,
       animated: animated?.merge(other.animated) ?? other.animated,
       modifiers: modifiers?.merge(other.modifiers) ?? other.modifiers,
     );
@@ -479,6 +489,7 @@ class TextFieldSpecAttribute extends SpecAttribute<TextFieldSpec>
         helperText,
         icon,
         contentLayout,
+        floatingLabel,
         animated,
         modifiers,
       ];
@@ -542,6 +553,8 @@ class TextFieldSpecAttribute extends SpecAttribute<TextFieldSpec>
         .add(DiagnosticsProperty('helperText', helperText, defaultValue: null));
     properties.add(DiagnosticsProperty('icon', icon, defaultValue: null));
     properties.add(DiagnosticsProperty('contentLayout', contentLayout,
+        defaultValue: null));
+    properties.add(DiagnosticsProperty('floatingLabel', floatingLabel,
         defaultValue: null));
     properties
         .add(DiagnosticsProperty('animated', animated, defaultValue: null));
@@ -643,6 +656,9 @@ class TextFieldSpecUtility<T extends Attribute>
   /// Utility for defining [TextFieldSpecAttribute.contentLayout]
   late final contentLayout = FlexSpecUtility((v) => only(contentLayout: v));
 
+  /// Utility for defining [TextFieldSpecAttribute.floatingLabel]
+  late final floatingLabel = BoolUtility((v) => only(floatingLabel: v));
+
   /// Utility for defining [TextFieldSpecAttribute.animated]
   late final animated = AnimatedUtility((v) => only(animated: v));
 
@@ -686,6 +702,7 @@ class TextFieldSpecUtility<T extends Attribute>
     TextSpecAttribute? helperText,
     IconSpecAttribute? icon,
     FlexSpecAttribute? contentLayout,
+    bool? floatingLabel,
     AnimatedDataDto? animated,
     WidgetModifiersDataDto? modifiers,
   }) {
@@ -716,6 +733,7 @@ class TextFieldSpecUtility<T extends Attribute>
       helperText: helperText,
       icon: icon,
       contentLayout: contentLayout,
+      floatingLabel: floatingLabel,
       animated: animated,
       modifiers: modifiers,
     ));

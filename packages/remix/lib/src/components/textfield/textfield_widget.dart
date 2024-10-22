@@ -519,7 +519,8 @@ class _TextFieldState extends State<TextField>
     // TODO: Estudar como implementar o mouseCursor
     const MouseCursor effectiveMouseCursor = SystemMouseCursors.text;
     final style = widget.style ?? context.remix.components.textField;
-    final configuration = SpecConfiguration(context, TextFieldSpecUtility.self);
+    final configuration =
+        TextFieldSpecConfiguration(context, TextFieldSpecUtility.self);
 
     final child = SpecBuilder(
       controller: _statesController,
@@ -538,91 +539,120 @@ class _TextFieldState extends State<TextField>
                     widget.prefixBuilder!(spec.icon),
                   Expanded(
                     child: Stack(
-                      alignment: Alignment.topLeft,
+                      alignment: Alignment.centerLeft,
                       children: [
                         AnimatedBuilder(
                           animation: _effectiveController,
-                          builder: (context, child) => Opacity(
-                            opacity:
-                                _effectiveController.value.text.isEmpty ? 1 : 0,
-                            child: spec.hintText(widget.hintText ?? ''),
-                          ),
-                        ),
-                        EditableText(
-                          key: editableTextKey,
-                          controller: _effectiveController,
-                          focusNode: _effectiveFocusNode,
-                          readOnly: widget.readOnly || !widget.enabled,
-                          obscuringCharacter: widget.obscuringCharacter,
-                          obscureText: widget.obscureText,
-                          autocorrect: widget.autocorrect,
-                          smartDashesType: widget.smartDashesType,
-                          smartQuotesType: widget.smartQuotesType,
-                          enableSuggestions: widget.enableSuggestions,
-                          style: spec.style,
-                          strutStyle: spec.strutStyle,
-                          cursorColor: spec.cursorColor,
-                          backgroundCursorColor: spec.backgroundCursorColor,
-                          textAlign: spec.textAlign,
-                          textDirection: widget.textDirection,
-                          maxLines: widget.maxLines,
-                          minLines: widget.minLines,
+                          builder: (context, child) {
+                            final hintText =
+                                spec.hintText(widget.hintText ?? '');
 
-                          // groupId: widget.groupId,
-                          expands: widget.expands,
-                          textHeightBehavior: spec.textHeightBehavior,
-                          textWidthBasis: spec.textWidthBasis,
-                          autofocus: widget.autofocus,
-                          showCursor: widget.showCursor,
-                          showSelectionHandles: _showSelectionHandles,
-                          selectionColor: spec.selectionColor,
-                          selectionControls: textSelectionControls,
-                          keyboardType: widget.keyboardType,
-                          textInputAction: widget.textInputAction,
-                          textCapitalization: widget.textCapitalization,
-                          onChanged: widget.onChanged,
-                          onEditingComplete: widget.onEditingComplete,
-                          onSubmitted: widget.onSubmitted,
-                          onAppPrivateCommand: widget.onAppPrivateCommand,
-                          onSelectionChanged: _handleSelectionChanged,
-                          onSelectionHandleTapped: _handleSelectionHandleTapped,
-                          onTapOutside: widget.onTapOutside,
-                          inputFormatters: formatters,
-                          mouseCursor: MouseCursor
-                              .defer, // TextField will handle the cursor
-                          rendererIgnoresPointer: true,
-                          cursorWidth: spec.cursorWidth,
-                          cursorHeight: spec.cursorHeight,
-                          cursorOpacityAnimates: spec.cursorOpacityAnimates,
-                          cursorOffset: spec.cursorOffset,
-                          paintCursorAboveText: spec.paintCursorAboveText,
-                          selectionHeightStyle: spec.selectionHeightStyle,
-                          selectionWidthStyle: spec.selectionWidthStyle,
-                          scrollPadding: spec.scrollPadding,
-                          keyboardAppearance: spec.keyboardAppearance,
-                          dragStartBehavior: widget.dragStartBehavior,
-                          // textAlignVertical: spec.textAlignVertical,
-                          enableInteractiveSelection:
-                              widget.enableInteractiveSelection,
-                          scrollController: widget.scrollController,
-                          scrollPhysics: widget.scrollPhysics,
-                          autocorrectionTextRectColor:
-                              spec.autocorrectionTextRectColor,
-                          autofillClient: this,
-                          clipBehavior: widget.clipBehavior,
-                          restorationId: 'editable',
-                          scribbleEnabled: widget.scribbleEnabled,
-                          enableIMEPersonalizedLearning:
-                              widget.enableIMEPersonalizedLearning,
-                          contentInsertionConfiguration:
-                              widget.contentInsertionConfiguration,
-                          contextMenuBuilder: widget.contextMenuBuilder,
-                          spellCheckConfiguration:
-                              widget.spellCheckConfiguration,
-                          magnifierConfiguration: widget
-                                  .magnifierConfiguration ??
-                              m.TextMagnifier.adaptiveMagnifierConfiguration,
-                          undoController: widget.undoController,
+                            if (spec.floatingLabel) {
+                              final condition =
+                                  _effectiveController.value.text.isNotEmpty ||
+                                      _effectiveFocusNode.hasFocus;
+                              final animated = spec.hintText.animated ??
+                                  const AnimatedData(
+                                    duration: Duration(milliseconds: 100),
+                                    curve: Curves.decelerate,
+                                  );
+
+                              return AnimatedAlign(
+                                alignment: condition
+                                    ? Alignment.topLeft
+                                    : Alignment.centerLeft,
+                                curve: animated.curve,
+                                duration: animated.duration,
+                                child: hintText,
+                              );
+                            }
+
+                            return Opacity(
+                              opacity: _effectiveController.value.text.isEmpty
+                                  ? 1
+                                  : 0,
+                              child: hintText,
+                            );
+                          },
+                        ),
+                        Align(
+                          alignment: spec.floatingLabel
+                              ? Alignment.bottomLeft
+                              : Alignment.centerLeft,
+                          child: EditableText(
+                            key: editableTextKey,
+                            controller: _effectiveController,
+                            focusNode: _effectiveFocusNode,
+                            readOnly: widget.readOnly || !widget.enabled,
+                            obscuringCharacter: widget.obscuringCharacter,
+                            obscureText: widget.obscureText,
+                            autocorrect: widget.autocorrect,
+                            smartDashesType: widget.smartDashesType,
+                            smartQuotesType: widget.smartQuotesType,
+                            enableSuggestions: widget.enableSuggestions,
+                            style: spec.style,
+                            strutStyle: spec.strutStyle,
+                            cursorColor: spec.cursorColor,
+                            backgroundCursorColor: spec.backgroundCursorColor,
+                            textAlign: spec.textAlign,
+                            textDirection: widget.textDirection,
+                            maxLines: widget.maxLines,
+                            minLines: widget.minLines,
+                            expands: widget.expands,
+                            textHeightBehavior: spec.textHeightBehavior,
+                            textWidthBasis: spec.textWidthBasis,
+                            autofocus: widget.autofocus,
+                            showCursor: widget.showCursor,
+                            showSelectionHandles: _showSelectionHandles,
+                            selectionColor: spec.selectionColor,
+                            selectionControls: textSelectionControls,
+                            keyboardType: widget.keyboardType,
+                            textInputAction: widget.textInputAction,
+                            textCapitalization: widget.textCapitalization,
+                            onChanged: widget.onChanged,
+                            onEditingComplete: widget.onEditingComplete,
+                            onSubmitted: widget.onSubmitted,
+                            onAppPrivateCommand: widget.onAppPrivateCommand,
+                            onSelectionChanged: _handleSelectionChanged,
+                            onSelectionHandleTapped:
+                                _handleSelectionHandleTapped,
+                            onTapOutside: widget.onTapOutside,
+                            inputFormatters: formatters,
+                            mouseCursor: MouseCursor
+                                .defer, // TextField will handle the cursor
+                            rendererIgnoresPointer: true,
+                            cursorWidth: spec.cursorWidth,
+                            cursorHeight: spec.cursorHeight,
+                            cursorOpacityAnimates: spec.cursorOpacityAnimates,
+                            cursorOffset: spec.cursorOffset,
+                            paintCursorAboveText: spec.paintCursorAboveText,
+                            selectionHeightStyle: spec.selectionHeightStyle,
+                            selectionWidthStyle: spec.selectionWidthStyle,
+                            scrollPadding: spec.scrollPadding,
+                            keyboardAppearance: spec.keyboardAppearance,
+                            dragStartBehavior: widget.dragStartBehavior,
+                            enableInteractiveSelection:
+                                widget.enableInteractiveSelection,
+                            scrollController: widget.scrollController,
+                            scrollPhysics: widget.scrollPhysics,
+                            autocorrectionTextRectColor:
+                                spec.autocorrectionTextRectColor,
+                            autofillClient: this,
+                            clipBehavior: widget.clipBehavior,
+                            restorationId: 'editable',
+                            scribbleEnabled: widget.scribbleEnabled,
+                            enableIMEPersonalizedLearning:
+                                widget.enableIMEPersonalizedLearning,
+                            contentInsertionConfiguration:
+                                widget.contentInsertionConfiguration,
+                            contextMenuBuilder: widget.contextMenuBuilder,
+                            spellCheckConfiguration:
+                                widget.spellCheckConfiguration,
+                            magnifierConfiguration: widget
+                                    .magnifierConfiguration ??
+                                m.TextMagnifier.adaptiveMagnifierConfiguration,
+                            undoController: widget.undoController,
+                          ),
                         ),
                       ],
                     ),
@@ -645,7 +675,10 @@ class _TextFieldState extends State<TextField>
           ignoring: widget.ignorePointers ?? !widget.enabled,
           child: AnimatedBuilder(
             animation: _effectiveController,
-            builder: (context, child) => child!,
+            builder: (context, child) => _TextFieldContext(
+              isEmpty: _effectiveController.value.text.isEmpty,
+              child: child!,
+            ),
             child: _selectionGestureDetectorBuilder.buildGestureDetector(
               behavior: HitTestBehavior.translucent,
               child: child,
@@ -728,4 +761,39 @@ class _TextFieldSelectionGestureDetectorBuilder
 
   @override
   bool get onUserTapAlwaysCalled => _state.widget.onTapAlwaysCalled;
+}
+
+class _TextFieldContext extends InheritedWidget {
+  const _TextFieldContext({required super.child, required this.isEmpty});
+
+  final bool isEmpty;
+
+  @override
+  bool updateShouldNotify(_TextFieldContext oldWidget) =>
+      isEmpty != oldWidget.isEmpty;
+}
+
+class IsEmptyContextVariant extends ContextVariant {
+  const IsEmptyContextVariant();
+
+  @override
+  bool when(BuildContext context) =>
+      context
+          .dependOnInheritedWidgetOfExactType<_TextFieldContext>()
+          ?.isEmpty ??
+      false;
+}
+
+class TextFieldSpecConfiguration
+    extends SpecConfiguration<TextFieldSpecUtility> {
+  const TextFieldSpecConfiguration(super.context, super._utility);
+
+  @override
+  TextFieldContextVariantUtil get on => TextFieldContextVariantUtil(super.on);
+}
+
+extension type const TextFieldContextVariantUtil(
+    OnContextVariantUtility _utility) implements OnContextVariantUtility {
+  ContextVariant get isEmpty => const IsEmptyContextVariant();
+  ContextVariant get isNotEmpty => const OnNotVariant(IsEmptyContextVariant());
 }

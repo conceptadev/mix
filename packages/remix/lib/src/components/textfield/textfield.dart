@@ -27,6 +27,8 @@ class TextFieldSpec extends Spec<TextFieldSpec>
   final TextStyle style;
   final TextAlign textAlign;
 
+  final bool floatingLabel;
+
   final StrutStyle? strutStyle;
   final TextWidthBasis textWidthBasis;
 
@@ -90,6 +92,7 @@ class TextFieldSpec extends Spec<TextFieldSpec>
     TextSpec? helperText,
     IconSpec? icon,
     FlexSpec? contentLayout,
+    bool? floatingLabel,
     super.animated,
     super.modifiers,
   })  : style = style ?? const TextStyle(),
@@ -112,7 +115,8 @@ class TextFieldSpec extends Spec<TextFieldSpec>
         helperText = helperText ?? const TextSpec(),
         containerLayout = containerLayout ?? const FlexSpec(),
         icon = icon ?? const IconSpec(),
-        contentLayout = contentLayout ?? const FlexSpec();
+        contentLayout = contentLayout ?? const FlexSpec(),
+        floatingLabel = floatingLabel ?? false;
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
