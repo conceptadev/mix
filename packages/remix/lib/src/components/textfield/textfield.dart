@@ -20,116 +20,6 @@ part 'textfield.g.dart';
 part 'textfield_style.dart';
 part 'textfield_widget.dart';
 
-// @MixableSpec()
-// base class TextFieldSpec extends Spec<TextFieldSpec>
-//     with _$TextFieldSpec, Diagnosticable {
-//   final TextStyle? style;
-//   final TextAlign textAlign;
-//   final TextAlignVertical? textAlignVertical;
-//   final StrutStyle? strutStyle;
-//   final TextHeightBehavior? textHeightBehavior;
-//   final TextScaler? textScaler;
-//   final TextWidthBasis textWidthBasis;
-
-//   // final double cursorWidth;
-//   // final double? cursorHeight;
-//   // final Radius? cursorRadius;
-//   // final Color? cursorColor;
-//   // final Offset cursorOffset;
-//   // final bool paintCursorAboveText;
-
-//   // final BoxHeightStyle selectionHeightStyle;
-//   // final BoxWidthStyle selectionWidthStyle;
-
-//   // final EdgeInsets scrollPadding;
-//   // final Clip clipBehavior;
-//   // final ScrollBehavior? scrollBehavior;
-
-//   // final Brightness keyboardAppearance;
-//   // final Color? autocorrectionTextRectColor;
-//   // final MouseCursor? mouseCursor;
-
-//   /// {@macro textfield_spec_of}
-//   static const of = _$TextFieldSpec.of;
-
-//   static const from = _$TextFieldSpec.from;
-
-//   const TextFieldSpec({
-//     TextStyle? style,
-//     TextAlign? textAlign,
-//     TextAlignVertical? textAlignVertical,
-//     StrutStyle? strutStyle,
-//     TextHeightBehavior? textHeightBehavior,
-//     TextScaler? textScaler,
-//     TextWidthBasis? textWidthBasis,
-//     // double? cursorWidth,
-//     // double? cursorHeight,
-//     // Radius? cursorRadius,
-//     // Color? cursorColor,
-//     // Offset? cursorOffset,
-//     // bool? paintCursorAboveText,
-//     // BoxHeightStyle? selectionHeightStyle,
-//     // BoxWidthStyle? selectionWidthStyle,
-//     // EdgeInsets? scrollPadding,
-//     // Clip? clipBehavior,
-//     // ScrollBehavior? scrollBehavior,
-//     // Brightness? keyboardAppearance,
-//     // Color? autocorrectionTextRectColor,
-//     // MouseCursor? mouseCursor,
-//     // super.animated,
-//     // super.modifiers,
-//   })  : style = style,
-//         textAlign = textAlign ?? TextAlign.start,
-//         textAlignVertical = textAlignVertical ?? TextAlignVertical.center,
-//         strutStyle = strutStyle ?? const StrutStyle(),
-//         textHeightBehavior = textHeightBehavior ?? const TextHeightBehavior(),
-//         textScaler = textScaler ?? TextScaler.noScaling,
-//         textWidthBasis = textWidthBasis ?? TextWidthBasis.parent
-//   // cursorWidth = cursorWidth ?? 2.0,
-//   // cursorHeight = cursorHeight,
-//   // cursorRadius = cursorRadius,
-//   // cursorColor = cursorColor,
-//   // cursorOffset = cursorOffset ?? Offset.zero,
-//   // paintCursorAboveText = paintCursorAboveText ?? false,
-//   // selectionHeightStyle = selectionHeightStyle ?? BoxHeightStyle.tight,
-//   // selectionWidthStyle = selectionWidthStyle ?? BoxWidthStyle.tight,
-//   // scrollPadding = scrollPadding ?? const EdgeInsets.all(20.0),
-//   // clipBehavior = clipBehavior ?? Clip.hardEdge,
-//   // scrollBehavior = scrollBehavior,
-//   // keyboardAppearance = keyboardAppearance ?? Brightness.dark,
-//   // autocorrectionTextRectColor = autocorrectionTextRectColor,
-//   // mouseCursor = mouseCursor
-//   ;
-
-//   @override
-//   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-//     super.debugFillProperties(properties);
-//     _debugFillProperties(properties);
-//   }
-// }
-
-// @MixableSpec()
-// base class TextFieldSpec extends Spec<TextFieldSpec>
-//     with _$TextFieldSpec, Diagnosticable {
-//   final TextStyle style;
-
-//   /// {@macro progress_spec_of}
-//   static const of = _$TextFieldSpec.of;
-
-//   static const from = _$TextFieldSpec.from;
-
-//   const TextFieldSpec({
-//     TextStyle? style,
-//     super.animated,
-//     super.modifiers,
-//   }) : style = style ?? const TextStyle();
-
-//   @override
-//   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-//     super.debugFillProperties(properties);
-//     _debugFillProperties(properties);
-//   }
-// }
 @MixableSpec()
 class TextFieldSpec extends Spec<TextFieldSpec>
     with _$TextFieldSpec, Diagnosticable {
@@ -159,7 +49,9 @@ class TextFieldSpec extends Spec<TextFieldSpec>
   final Color? autocorrectionTextRectColor;
 
   final BoxSpec container;
-  final TextSpec hint;
+  final FlexSpec containerLayout;
+  final TextSpec hintText;
+  final TextSpec helperText;
 
   @MixableProperty(dto: MixableFieldDto(type: TextHeightBehaviorDto))
   final TextHeightBehavior? textHeightBehavior;
@@ -190,7 +82,9 @@ class TextFieldSpec extends Spec<TextFieldSpec>
     this.autocorrectionTextRectColor,
     bool? cursorOpacityAnimates,
     BoxSpec? container,
-    TextSpec? hint,
+    FlexSpec? containerLayout,
+    TextSpec? hintText,
+    TextSpec? helperText,
     super.animated,
     super.modifiers,
   })  : style = style ?? const TextStyle(),
@@ -209,7 +103,9 @@ class TextFieldSpec extends Spec<TextFieldSpec>
         clipBehavior = clipBehavior ?? Clip.hardEdge,
         keyboardAppearance = keyboardAppearance ?? Brightness.light,
         container = container ?? const BoxSpec(),
-        hint = hint ?? const TextSpec();
+        hintText = hintText ?? const TextSpec(),
+        helperText = helperText ?? const TextSpec(),
+        containerLayout = containerLayout ?? const FlexSpec();
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {

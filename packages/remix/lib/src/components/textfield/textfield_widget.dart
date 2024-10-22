@@ -57,6 +57,7 @@ class TextField extends StatefulWidget {
     this.variants = const [],
     this.error = false,
     this.label,
+    this.helperText,
   })  : assert(obscuringCharacter.length == 1),
         smartDashesType = smartDashesType ??
             (obscureText ? SmartDashesType.disabled : SmartDashesType.enabled),
@@ -161,8 +162,9 @@ class TextField extends StatefulWidget {
   ///
   /// {@macro flutter.services.lengthLimitingTextInputFormatter.maxLength}
   final int? maxLength;
-  // Fica dentro do Decoration
+
   final String? hintText;
+  final String? helperText;
 
   /// Determine whether this text field can request the primary focus.
   ///
@@ -521,91 +523,99 @@ class _TextFieldState extends State<TextField>
       builder: (context) {
         final spec = TextFieldSpec.of(context);
 
-        return spec.container(
-          child: Stack(
-            alignment: Alignment.topLeft,
-            children: [
-              AnimatedBuilder(
-                animation: _effectiveController,
-                builder: (context, child) => Opacity(
-                  opacity: _effectiveController.value.text.isEmpty ? 1 : 0,
-                  child: spec.hint(widget.hintText ?? ''),
-                ),
-              ),
-              EditableText(
-                // groupId: widget.groupId,
-                key: editableTextKey,
-                controller: _effectiveController,
-                focusNode: _effectiveFocusNode,
-                readOnly: widget.readOnly || !widget.enabled,
-                obscuringCharacter: widget.obscuringCharacter,
-                obscureText: widget.obscureText,
-                autocorrect: widget.autocorrect,
-                smartDashesType: widget.smartDashesType,
-                smartQuotesType: widget.smartQuotesType,
-                enableSuggestions: widget.enableSuggestions,
-                style: spec.style,
-                strutStyle: spec.strutStyle,
-                cursorColor: spec.cursorColor,
-                backgroundCursorColor: spec.backgroundCursorColor,
-                textAlign: spec.textAlign,
-                textDirection: widget.textDirection,
-                maxLines: widget.maxLines,
-                minLines: widget.minLines,
+        return spec.containerLayout(
+          direction: Axis.vertical,
+          children: [
+            spec.container(
+              child: Stack(
+                alignment: Alignment.topLeft,
+                children: [
+                  AnimatedBuilder(
+                    animation: _effectiveController,
+                    builder: (context, child) => Opacity(
+                      opacity: _effectiveController.value.text.isEmpty ? 1 : 0,
+                      child: spec.hintText(widget.hintText ?? ''),
+                    ),
+                  ),
+                  EditableText(
+                    // groupId: widget.groupId,
+                    key: editableTextKey,
+                    controller: _effectiveController,
+                    focusNode: _effectiveFocusNode,
+                    readOnly: widget.readOnly || !widget.enabled,
+                    obscuringCharacter: widget.obscuringCharacter,
+                    obscureText: widget.obscureText,
+                    autocorrect: widget.autocorrect,
+                    smartDashesType: widget.smartDashesType,
+                    smartQuotesType: widget.smartQuotesType,
+                    enableSuggestions: widget.enableSuggestions,
+                    style: spec.style,
+                    strutStyle: spec.strutStyle,
+                    cursorColor: spec.cursorColor,
+                    backgroundCursorColor: spec.backgroundCursorColor,
+                    textAlign: spec.textAlign,
+                    textDirection: widget.textDirection,
+                    maxLines: widget.maxLines,
+                    minLines: widget.minLines,
 
-                expands: widget.expands,
-                textHeightBehavior: spec.textHeightBehavior,
-                textWidthBasis: spec.textWidthBasis,
-                autofocus: widget.autofocus,
-                showCursor: widget.showCursor,
-                showSelectionHandles: _showSelectionHandles,
-                selectionColor: spec.selectionColor,
-                selectionControls: textSelectionControls,
-                keyboardType: widget.keyboardType,
-                textInputAction: widget.textInputAction,
-                textCapitalization: widget.textCapitalization,
-                onChanged: widget.onChanged,
-                onEditingComplete: widget.onEditingComplete,
-                onSubmitted: widget.onSubmitted,
-                onAppPrivateCommand: widget.onAppPrivateCommand,
-                onSelectionChanged: _handleSelectionChanged,
-                onSelectionHandleTapped: _handleSelectionHandleTapped,
-                onTapOutside: widget.onTapOutside,
-                inputFormatters: formatters,
-                mouseCursor:
-                    MouseCursor.defer, // TextField will handle the cursor
-                rendererIgnoresPointer: true,
-                cursorWidth: spec.cursorWidth,
-                cursorHeight: spec.cursorHeight,
-                cursorOpacityAnimates: spec.cursorOpacityAnimates,
-                cursorOffset: spec.cursorOffset,
-                paintCursorAboveText: spec.paintCursorAboveText,
-                selectionHeightStyle: spec.selectionHeightStyle,
-                selectionWidthStyle: spec.selectionWidthStyle,
-                scrollPadding: spec.scrollPadding,
-                keyboardAppearance: spec.keyboardAppearance,
-                dragStartBehavior: widget.dragStartBehavior,
-                // textAlignVertical: spec.textAlignVertical,
-                enableInteractiveSelection: widget.enableInteractiveSelection,
-                scrollController: widget.scrollController,
-                scrollPhysics: widget.scrollPhysics,
-                autocorrectionTextRectColor: spec.autocorrectionTextRectColor,
-                autofillClient: this,
-                clipBehavior: widget.clipBehavior,
-                restorationId: 'editable',
-                scribbleEnabled: widget.scribbleEnabled,
-                enableIMEPersonalizedLearning:
-                    widget.enableIMEPersonalizedLearning,
-                contentInsertionConfiguration:
-                    widget.contentInsertionConfiguration,
-                contextMenuBuilder: widget.contextMenuBuilder,
-                spellCheckConfiguration: widget.spellCheckConfiguration,
-                magnifierConfiguration: widget.magnifierConfiguration ??
-                    m.TextMagnifier.adaptiveMagnifierConfiguration,
-                undoController: widget.undoController,
+                    expands: widget.expands,
+                    textHeightBehavior: spec.textHeightBehavior,
+                    textWidthBasis: spec.textWidthBasis,
+                    autofocus: widget.autofocus,
+                    showCursor: widget.showCursor,
+                    showSelectionHandles: _showSelectionHandles,
+                    selectionColor: spec.selectionColor,
+                    selectionControls: textSelectionControls,
+                    keyboardType: widget.keyboardType,
+                    textInputAction: widget.textInputAction,
+                    textCapitalization: widget.textCapitalization,
+                    onChanged: widget.onChanged,
+                    onEditingComplete: widget.onEditingComplete,
+                    onSubmitted: widget.onSubmitted,
+                    onAppPrivateCommand: widget.onAppPrivateCommand,
+                    onSelectionChanged: _handleSelectionChanged,
+                    onSelectionHandleTapped: _handleSelectionHandleTapped,
+                    onTapOutside: widget.onTapOutside,
+                    inputFormatters: formatters,
+                    mouseCursor:
+                        MouseCursor.defer, // TextField will handle the cursor
+                    rendererIgnoresPointer: true,
+                    cursorWidth: spec.cursorWidth,
+                    cursorHeight: spec.cursorHeight,
+                    cursorOpacityAnimates: spec.cursorOpacityAnimates,
+                    cursorOffset: spec.cursorOffset,
+                    paintCursorAboveText: spec.paintCursorAboveText,
+                    selectionHeightStyle: spec.selectionHeightStyle,
+                    selectionWidthStyle: spec.selectionWidthStyle,
+                    scrollPadding: spec.scrollPadding,
+                    keyboardAppearance: spec.keyboardAppearance,
+                    dragStartBehavior: widget.dragStartBehavior,
+                    // textAlignVertical: spec.textAlignVertical,
+                    enableInteractiveSelection:
+                        widget.enableInteractiveSelection,
+                    scrollController: widget.scrollController,
+                    scrollPhysics: widget.scrollPhysics,
+                    autocorrectionTextRectColor:
+                        spec.autocorrectionTextRectColor,
+                    autofillClient: this,
+                    clipBehavior: widget.clipBehavior,
+                    restorationId: 'editable',
+                    scribbleEnabled: widget.scribbleEnabled,
+                    enableIMEPersonalizedLearning:
+                        widget.enableIMEPersonalizedLearning,
+                    contentInsertionConfiguration:
+                        widget.contentInsertionConfiguration,
+                    contextMenuBuilder: widget.contextMenuBuilder,
+                    spellCheckConfiguration: widget.spellCheckConfiguration,
+                    magnifierConfiguration: widget.magnifierConfiguration ??
+                        m.TextMagnifier.adaptiveMagnifierConfiguration,
+                    undoController: widget.undoController,
+                  ),
+                ],
               ),
-            ],
-          ),
+            ),
+            spec.helperText(widget.helperText ?? ''),
+          ],
         );
       },
     );

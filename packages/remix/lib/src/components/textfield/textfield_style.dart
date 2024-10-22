@@ -69,21 +69,35 @@ class TextFieldStyle extends SpecStyle<TextFieldSpecUtility> {
       ..shadow.offset(-1, 1)
       ..shadow.color.grey.shade200();
 
+    final layoutStyle = $.containerLayout.chain
+      ..direction.vertical()
+      ..mainAxisSize.min()
+      ..mainAxisAlignment.start()
+      ..crossAxisAlignment.start()
+      ..gap(6);
+
     final textStyle = $.chain
       ..style.color.black87()
       ..style.fontSize(14);
 
-    final hintStyle = $.hint.chain
+    final hintStyle = $.hintText.chain
       ..style.color.black54()
       ..style.fontSize(14);
+
+    final helperStyle = $.helperText.chain
+      ..style.color.black54()
+      ..style.fontSize(12)
+      ..wrap.padding.left(12);
 
     final focus = spec.on.focus($.container.border.all.color.red());
     final hover = spec.on.hover($.container.border.all.color.purple());
 
     return Style(
       platformSettings(spec).call(),
-      textStyle,
       containerStyle,
+      layoutStyle,
+      textStyle,
+      helperStyle,
       hintStyle,
       $.selectionColor.black12(),
       hover,

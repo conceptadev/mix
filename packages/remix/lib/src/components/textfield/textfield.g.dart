@@ -54,7 +54,9 @@ mixin _$TextFieldSpec on Spec<TextFieldSpec> {
     Color? autocorrectionTextRectColor,
     bool? cursorOpacityAnimates,
     BoxSpec? container,
-    TextSpec? hint,
+    FlexSpec? containerLayout,
+    TextSpec? hintText,
+    TextSpec? helperText,
     AnimatedData? animated,
     WidgetModifiersData? modifiers,
   }) {
@@ -83,7 +85,9 @@ mixin _$TextFieldSpec on Spec<TextFieldSpec> {
       cursorOpacityAnimates:
           cursorOpacityAnimates ?? _$this.cursorOpacityAnimates,
       container: container ?? _$this.container,
-      hint: hint ?? _$this.hint,
+      containerLayout: containerLayout ?? _$this.containerLayout,
+      hintText: hintText ?? _$this.hintText,
+      helperText: helperText ?? _$this.helperText,
       animated: animated ?? _$this.animated,
       modifiers: modifiers ?? _$this.modifiers,
     );
@@ -108,7 +112,8 @@ mixin _$TextFieldSpec on Spec<TextFieldSpec> {
   /// - [Offset.lerp] for [cursorOffset].
   /// - [EdgeInsets.lerp] for [scrollPadding].
   /// - [BoxSpec.lerp] for [container].
-  /// - [TextSpec.lerp] for [hint].
+  /// - [FlexSpec.lerp] for [containerLayout].
+  /// - [TextSpec.lerp] for [hintText] and [helperText].
 
   /// For [textAlign] and [textHeightBehavior] and [textWidthBasis] and [paintCursorAboveText] and [selectionHeightStyle] and [selectionWidthStyle] and [clipBehavior] and [keyboardAppearance] and [cursorOpacityAnimates] and [animated] and [modifiers], the interpolation is performed using a step function.
   /// If [t] is less than 0.5, the value from the current [TextFieldSpec] is used. Otherwise, the value
@@ -157,7 +162,9 @@ mixin _$TextFieldSpec on Spec<TextFieldSpec> {
       cursorOpacityAnimates:
           t < 0.5 ? _$this.cursorOpacityAnimates : other.cursorOpacityAnimates,
       container: _$this.container.lerp(other.container, t),
-      hint: _$this.hint.lerp(other.hint, t),
+      containerLayout: _$this.containerLayout.lerp(other.containerLayout, t),
+      hintText: _$this.hintText.lerp(other.hintText, t),
+      helperText: _$this.helperText.lerp(other.helperText, t),
       animated: t < 0.5 ? _$this.animated : other.animated,
       modifiers: other.modifiers,
     );
@@ -190,7 +197,9 @@ mixin _$TextFieldSpec on Spec<TextFieldSpec> {
         _$this.autocorrectionTextRectColor,
         _$this.cursorOpacityAnimates,
         _$this.container,
-        _$this.hint,
+        _$this.containerLayout,
+        _$this.hintText,
+        _$this.helperText,
         _$this.animated,
         _$this.modifiers,
       ];
@@ -248,8 +257,13 @@ mixin _$TextFieldSpec on Spec<TextFieldSpec> {
         defaultValue: null));
     properties.add(
         DiagnosticsProperty('container', _$this.container, defaultValue: null));
-    properties
-        .add(DiagnosticsProperty('hint', _$this.hint, defaultValue: null));
+    properties.add(DiagnosticsProperty(
+        'containerLayout', _$this.containerLayout,
+        defaultValue: null));
+    properties.add(
+        DiagnosticsProperty('hintText', _$this.hintText, defaultValue: null));
+    properties.add(DiagnosticsProperty('helperText', _$this.helperText,
+        defaultValue: null));
     properties.add(
         DiagnosticsProperty('animated', _$this.animated, defaultValue: null));
     properties.add(
@@ -287,7 +301,9 @@ class TextFieldSpecAttribute extends SpecAttribute<TextFieldSpec>
   final ColorDto? autocorrectionTextRectColor;
   final bool? cursorOpacityAnimates;
   final BoxSpecAttribute? container;
-  final TextSpecAttribute? hint;
+  final FlexSpecAttribute? containerLayout;
+  final TextSpecAttribute? hintText;
+  final TextSpecAttribute? helperText;
 
   const TextFieldSpecAttribute({
     this.style,
@@ -311,7 +327,9 @@ class TextFieldSpecAttribute extends SpecAttribute<TextFieldSpec>
     this.autocorrectionTextRectColor,
     this.cursorOpacityAnimates,
     this.container,
-    this.hint,
+    this.containerLayout,
+    this.hintText,
+    this.helperText,
     super.animated,
     super.modifiers,
   });
@@ -348,7 +366,9 @@ class TextFieldSpecAttribute extends SpecAttribute<TextFieldSpec>
       autocorrectionTextRectColor: autocorrectionTextRectColor?.resolve(mix),
       cursorOpacityAnimates: cursorOpacityAnimates,
       container: container?.resolve(mix),
-      hint: hint?.resolve(mix),
+      containerLayout: containerLayout?.resolve(mix),
+      hintText: hintText?.resolve(mix),
+      helperText: helperText?.resolve(mix),
       animated: animated?.resolve(mix) ?? mix.animation,
       modifiers: modifiers?.resolve(mix),
     );
@@ -396,7 +416,10 @@ class TextFieldSpecAttribute extends SpecAttribute<TextFieldSpec>
       cursorOpacityAnimates:
           other.cursorOpacityAnimates ?? cursorOpacityAnimates,
       container: container?.merge(other.container) ?? other.container,
-      hint: hint?.merge(other.hint) ?? other.hint,
+      containerLayout: containerLayout?.merge(other.containerLayout) ??
+          other.containerLayout,
+      hintText: hintText?.merge(other.hintText) ?? other.hintText,
+      helperText: helperText?.merge(other.helperText) ?? other.helperText,
       animated: animated?.merge(other.animated) ?? other.animated,
       modifiers: modifiers?.merge(other.modifiers) ?? other.modifiers,
     );
@@ -429,7 +452,9 @@ class TextFieldSpecAttribute extends SpecAttribute<TextFieldSpec>
         autocorrectionTextRectColor,
         cursorOpacityAnimates,
         container,
-        hint,
+        containerLayout,
+        hintText,
+        helperText,
         animated,
         modifiers,
       ];
@@ -485,7 +510,12 @@ class TextFieldSpecAttribute extends SpecAttribute<TextFieldSpec>
         defaultValue: null));
     properties
         .add(DiagnosticsProperty('container', container, defaultValue: null));
-    properties.add(DiagnosticsProperty('hint', hint, defaultValue: null));
+    properties.add(DiagnosticsProperty('containerLayout', containerLayout,
+        defaultValue: null));
+    properties
+        .add(DiagnosticsProperty('hintText', hintText, defaultValue: null));
+    properties
+        .add(DiagnosticsProperty('helperText', helperText, defaultValue: null));
     properties
         .add(DiagnosticsProperty('animated', animated, defaultValue: null));
     properties
@@ -571,8 +601,14 @@ class TextFieldSpecUtility<T extends Attribute>
   /// Utility for defining [TextFieldSpecAttribute.container]
   late final container = BoxSpecUtility((v) => only(container: v));
 
-  /// Utility for defining [TextFieldSpecAttribute.hint]
-  late final hint = TextSpecUtility((v) => only(hint: v));
+  /// Utility for defining [TextFieldSpecAttribute.containerLayout]
+  late final containerLayout = FlexSpecUtility((v) => only(containerLayout: v));
+
+  /// Utility for defining [TextFieldSpecAttribute.hintText]
+  late final hintText = TextSpecUtility((v) => only(hintText: v));
+
+  /// Utility for defining [TextFieldSpecAttribute.helperText]
+  late final helperText = TextSpecUtility((v) => only(helperText: v));
 
   /// Utility for defining [TextFieldSpecAttribute.animated]
   late final animated = AnimatedUtility((v) => only(animated: v));
@@ -612,7 +648,9 @@ class TextFieldSpecUtility<T extends Attribute>
     ColorDto? autocorrectionTextRectColor,
     bool? cursorOpacityAnimates,
     BoxSpecAttribute? container,
-    TextSpecAttribute? hint,
+    FlexSpecAttribute? containerLayout,
+    TextSpecAttribute? hintText,
+    TextSpecAttribute? helperText,
     AnimatedDataDto? animated,
     WidgetModifiersDataDto? modifiers,
   }) {
@@ -638,7 +676,9 @@ class TextFieldSpecUtility<T extends Attribute>
       autocorrectionTextRectColor: autocorrectionTextRectColor,
       cursorOpacityAnimates: cursorOpacityAnimates,
       container: container,
-      hint: hint,
+      containerLayout: containerLayout,
+      hintText: hintText,
+      helperText: helperText,
       animated: animated,
       modifiers: modifiers,
     ));
