@@ -76,6 +76,13 @@ class TextFieldStyle extends SpecStyle<TextFieldSpecUtility> {
       ..crossAxisAlignment.start()
       ..gap(6);
 
+    final contentLayoutStyle = $.contentLayout.chain
+      ..direction.horizontal()
+      ..mainAxisSize.min()
+      ..mainAxisAlignment.start()
+      ..crossAxisAlignment.center()
+      ..gap(6);
+
     final textStyle = $.chain
       ..style.color.black87()
       ..style.fontSize(14);
@@ -95,6 +102,7 @@ class TextFieldStyle extends SpecStyle<TextFieldSpecUtility> {
     return Style(
       platformSettings(spec).call(),
       containerStyle,
+      contentLayoutStyle,
       layoutStyle,
       textStyle,
       helperStyle,

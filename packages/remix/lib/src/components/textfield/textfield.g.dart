@@ -57,6 +57,8 @@ mixin _$TextFieldSpec on Spec<TextFieldSpec> {
     FlexSpec? containerLayout,
     TextSpec? hintText,
     TextSpec? helperText,
+    IconSpec? icon,
+    FlexSpec? contentLayout,
     AnimatedData? animated,
     WidgetModifiersData? modifiers,
   }) {
@@ -88,6 +90,8 @@ mixin _$TextFieldSpec on Spec<TextFieldSpec> {
       containerLayout: containerLayout ?? _$this.containerLayout,
       hintText: hintText ?? _$this.hintText,
       helperText: helperText ?? _$this.helperText,
+      icon: icon ?? _$this.icon,
+      contentLayout: contentLayout ?? _$this.contentLayout,
       animated: animated ?? _$this.animated,
       modifiers: modifiers ?? _$this.modifiers,
     );
@@ -112,8 +116,9 @@ mixin _$TextFieldSpec on Spec<TextFieldSpec> {
   /// - [Offset.lerp] for [cursorOffset].
   /// - [EdgeInsets.lerp] for [scrollPadding].
   /// - [BoxSpec.lerp] for [container].
-  /// - [FlexSpec.lerp] for [containerLayout].
+  /// - [FlexSpec.lerp] for [containerLayout] and [contentLayout].
   /// - [TextSpec.lerp] for [hintText] and [helperText].
+  /// - [IconSpec.lerp] for [icon].
 
   /// For [textAlign] and [textHeightBehavior] and [textWidthBasis] and [paintCursorAboveText] and [selectionHeightStyle] and [selectionWidthStyle] and [clipBehavior] and [keyboardAppearance] and [cursorOpacityAnimates] and [animated] and [modifiers], the interpolation is performed using a step function.
   /// If [t] is less than 0.5, the value from the current [TextFieldSpec] is used. Otherwise, the value
@@ -165,6 +170,8 @@ mixin _$TextFieldSpec on Spec<TextFieldSpec> {
       containerLayout: _$this.containerLayout.lerp(other.containerLayout, t),
       hintText: _$this.hintText.lerp(other.hintText, t),
       helperText: _$this.helperText.lerp(other.helperText, t),
+      icon: _$this.icon.lerp(other.icon, t),
+      contentLayout: _$this.contentLayout.lerp(other.contentLayout, t),
       animated: t < 0.5 ? _$this.animated : other.animated,
       modifiers: other.modifiers,
     );
@@ -200,6 +207,8 @@ mixin _$TextFieldSpec on Spec<TextFieldSpec> {
         _$this.containerLayout,
         _$this.hintText,
         _$this.helperText,
+        _$this.icon,
+        _$this.contentLayout,
         _$this.animated,
         _$this.modifiers,
       ];
@@ -264,6 +273,10 @@ mixin _$TextFieldSpec on Spec<TextFieldSpec> {
         DiagnosticsProperty('hintText', _$this.hintText, defaultValue: null));
     properties.add(DiagnosticsProperty('helperText', _$this.helperText,
         defaultValue: null));
+    properties
+        .add(DiagnosticsProperty('icon', _$this.icon, defaultValue: null));
+    properties.add(DiagnosticsProperty('contentLayout', _$this.contentLayout,
+        defaultValue: null));
     properties.add(
         DiagnosticsProperty('animated', _$this.animated, defaultValue: null));
     properties.add(
@@ -304,6 +317,8 @@ class TextFieldSpecAttribute extends SpecAttribute<TextFieldSpec>
   final FlexSpecAttribute? containerLayout;
   final TextSpecAttribute? hintText;
   final TextSpecAttribute? helperText;
+  final IconSpecAttribute? icon;
+  final FlexSpecAttribute? contentLayout;
 
   const TextFieldSpecAttribute({
     this.style,
@@ -330,6 +345,8 @@ class TextFieldSpecAttribute extends SpecAttribute<TextFieldSpec>
     this.containerLayout,
     this.hintText,
     this.helperText,
+    this.icon,
+    this.contentLayout,
     super.animated,
     super.modifiers,
   });
@@ -369,6 +386,8 @@ class TextFieldSpecAttribute extends SpecAttribute<TextFieldSpec>
       containerLayout: containerLayout?.resolve(mix),
       hintText: hintText?.resolve(mix),
       helperText: helperText?.resolve(mix),
+      icon: icon?.resolve(mix),
+      contentLayout: contentLayout?.resolve(mix),
       animated: animated?.resolve(mix) ?? mix.animation,
       modifiers: modifiers?.resolve(mix),
     );
@@ -420,6 +439,9 @@ class TextFieldSpecAttribute extends SpecAttribute<TextFieldSpec>
           other.containerLayout,
       hintText: hintText?.merge(other.hintText) ?? other.hintText,
       helperText: helperText?.merge(other.helperText) ?? other.helperText,
+      icon: icon?.merge(other.icon) ?? other.icon,
+      contentLayout:
+          contentLayout?.merge(other.contentLayout) ?? other.contentLayout,
       animated: animated?.merge(other.animated) ?? other.animated,
       modifiers: modifiers?.merge(other.modifiers) ?? other.modifiers,
     );
@@ -455,6 +477,8 @@ class TextFieldSpecAttribute extends SpecAttribute<TextFieldSpec>
         containerLayout,
         hintText,
         helperText,
+        icon,
+        contentLayout,
         animated,
         modifiers,
       ];
@@ -516,6 +540,9 @@ class TextFieldSpecAttribute extends SpecAttribute<TextFieldSpec>
         .add(DiagnosticsProperty('hintText', hintText, defaultValue: null));
     properties
         .add(DiagnosticsProperty('helperText', helperText, defaultValue: null));
+    properties.add(DiagnosticsProperty('icon', icon, defaultValue: null));
+    properties.add(DiagnosticsProperty('contentLayout', contentLayout,
+        defaultValue: null));
     properties
         .add(DiagnosticsProperty('animated', animated, defaultValue: null));
     properties
@@ -610,6 +637,12 @@ class TextFieldSpecUtility<T extends Attribute>
   /// Utility for defining [TextFieldSpecAttribute.helperText]
   late final helperText = TextSpecUtility((v) => only(helperText: v));
 
+  /// Utility for defining [TextFieldSpecAttribute.icon]
+  late final icon = IconSpecUtility((v) => only(icon: v));
+
+  /// Utility for defining [TextFieldSpecAttribute.contentLayout]
+  late final contentLayout = FlexSpecUtility((v) => only(contentLayout: v));
+
   /// Utility for defining [TextFieldSpecAttribute.animated]
   late final animated = AnimatedUtility((v) => only(animated: v));
 
@@ -651,6 +684,8 @@ class TextFieldSpecUtility<T extends Attribute>
     FlexSpecAttribute? containerLayout,
     TextSpecAttribute? hintText,
     TextSpecAttribute? helperText,
+    IconSpecAttribute? icon,
+    FlexSpecAttribute? contentLayout,
     AnimatedDataDto? animated,
     WidgetModifiersDataDto? modifiers,
   }) {
@@ -679,6 +714,8 @@ class TextFieldSpecUtility<T extends Attribute>
       containerLayout: containerLayout,
       hintText: hintText,
       helperText: helperText,
+      icon: icon,
+      contentLayout: contentLayout,
       animated: animated,
       modifiers: modifiers,
     ));

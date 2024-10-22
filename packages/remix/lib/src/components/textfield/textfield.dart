@@ -13,6 +13,7 @@ import 'package:flutter/widgets.dart';
 import 'package:mix/mix.dart';
 import 'package:mix_annotations/mix_annotations.dart';
 
+import '../../helpers/component_builder.dart';
 import '../../theme/remix_theme.dart';
 import 'attributes/attributes.dart';
 
@@ -50,8 +51,10 @@ class TextFieldSpec extends Spec<TextFieldSpec>
 
   final BoxSpec container;
   final FlexSpec containerLayout;
+  final FlexSpec contentLayout;
   final TextSpec hintText;
   final TextSpec helperText;
+  final IconSpec icon;
 
   @MixableProperty(dto: MixableFieldDto(type: TextHeightBehaviorDto))
   final TextHeightBehavior? textHeightBehavior;
@@ -85,6 +88,8 @@ class TextFieldSpec extends Spec<TextFieldSpec>
     FlexSpec? containerLayout,
     TextSpec? hintText,
     TextSpec? helperText,
+    IconSpec? icon,
+    FlexSpec? contentLayout,
     super.animated,
     super.modifiers,
   })  : style = style ?? const TextStyle(),
@@ -105,7 +110,9 @@ class TextFieldSpec extends Spec<TextFieldSpec>
         container = container ?? const BoxSpec(),
         hintText = hintText ?? const TextSpec(),
         helperText = helperText ?? const TextSpec(),
-        containerLayout = containerLayout ?? const FlexSpec();
+        containerLayout = containerLayout ?? const FlexSpec(),
+        icon = icon ?? const IconSpec(),
+        contentLayout = contentLayout ?? const FlexSpec();
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
