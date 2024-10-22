@@ -60,6 +60,8 @@ mixin _$TextFieldSpec on Spec<TextFieldSpec> {
     IconSpec? icon,
     FlexSpec? contentLayout,
     bool? floatingLabel,
+    double? floatingLabelHeight,
+    double? floatingLabelFontSize,
     AnimatedData? animated,
     WidgetModifiersData? modifiers,
   }) {
@@ -94,6 +96,9 @@ mixin _$TextFieldSpec on Spec<TextFieldSpec> {
       icon: icon ?? _$this.icon,
       contentLayout: contentLayout ?? _$this.contentLayout,
       floatingLabel: floatingLabel ?? _$this.floatingLabel,
+      floatingLabelHeight: floatingLabelHeight ?? _$this.floatingLabelHeight,
+      floatingLabelFontSize:
+          floatingLabelFontSize ?? _$this.floatingLabelFontSize,
       animated: animated ?? _$this.animated,
       modifiers: modifiers ?? _$this.modifiers,
     );
@@ -112,7 +117,7 @@ mixin _$TextFieldSpec on Spec<TextFieldSpec> {
   ///
   /// - [MixHelpers.lerpTextStyle] for [style].
   /// - [MixHelpers.lerpStrutStyle] for [strutStyle].
-  /// - [MixHelpers.lerpDouble] for [cursorWidth] and [cursorHeight].
+  /// - [MixHelpers.lerpDouble] for [cursorWidth] and [cursorHeight] and [floatingLabelHeight] and [floatingLabelFontSize].
   /// - [Radius.lerp] for [cursorRadius].
   /// - [Color.lerp] for [cursorColor] and [backgroundCursorColor] and [selectionColor] and [autocorrectionTextRectColor].
   /// - [Offset.lerp] for [cursorOffset].
@@ -175,6 +180,10 @@ mixin _$TextFieldSpec on Spec<TextFieldSpec> {
       icon: _$this.icon.lerp(other.icon, t),
       contentLayout: _$this.contentLayout.lerp(other.contentLayout, t),
       floatingLabel: t < 0.5 ? _$this.floatingLabel : other.floatingLabel,
+      floatingLabelHeight: MixHelpers.lerpDouble(
+          _$this.floatingLabelHeight, other.floatingLabelHeight, t)!,
+      floatingLabelFontSize: MixHelpers.lerpDouble(
+          _$this.floatingLabelFontSize, other.floatingLabelFontSize, t)!,
       animated: t < 0.5 ? _$this.animated : other.animated,
       modifiers: other.modifiers,
     );
@@ -213,6 +222,8 @@ mixin _$TextFieldSpec on Spec<TextFieldSpec> {
         _$this.icon,
         _$this.contentLayout,
         _$this.floatingLabel,
+        _$this.floatingLabelHeight,
+        _$this.floatingLabelFontSize,
         _$this.animated,
         _$this.modifiers,
       ];
@@ -283,6 +294,12 @@ mixin _$TextFieldSpec on Spec<TextFieldSpec> {
         defaultValue: null));
     properties.add(DiagnosticsProperty('floatingLabel', _$this.floatingLabel,
         defaultValue: null));
+    properties.add(DiagnosticsProperty(
+        'floatingLabelHeight', _$this.floatingLabelHeight,
+        defaultValue: null));
+    properties.add(DiagnosticsProperty(
+        'floatingLabelFontSize', _$this.floatingLabelFontSize,
+        defaultValue: null));
     properties.add(
         DiagnosticsProperty('animated', _$this.animated, defaultValue: null));
     properties.add(
@@ -326,6 +343,8 @@ class TextFieldSpecAttribute extends SpecAttribute<TextFieldSpec>
   final IconSpecAttribute? icon;
   final FlexSpecAttribute? contentLayout;
   final bool? floatingLabel;
+  final double? floatingLabelHeight;
+  final double? floatingLabelFontSize;
 
   const TextFieldSpecAttribute({
     this.style,
@@ -355,6 +374,8 @@ class TextFieldSpecAttribute extends SpecAttribute<TextFieldSpec>
     this.icon,
     this.contentLayout,
     this.floatingLabel,
+    this.floatingLabelHeight,
+    this.floatingLabelFontSize,
     super.animated,
     super.modifiers,
   });
@@ -397,6 +418,8 @@ class TextFieldSpecAttribute extends SpecAttribute<TextFieldSpec>
       icon: icon?.resolve(mix),
       contentLayout: contentLayout?.resolve(mix),
       floatingLabel: floatingLabel,
+      floatingLabelHeight: floatingLabelHeight,
+      floatingLabelFontSize: floatingLabelFontSize,
       animated: animated?.resolve(mix) ?? mix.animation,
       modifiers: modifiers?.resolve(mix),
     );
@@ -452,6 +475,9 @@ class TextFieldSpecAttribute extends SpecAttribute<TextFieldSpec>
       contentLayout:
           contentLayout?.merge(other.contentLayout) ?? other.contentLayout,
       floatingLabel: other.floatingLabel ?? floatingLabel,
+      floatingLabelHeight: other.floatingLabelHeight ?? floatingLabelHeight,
+      floatingLabelFontSize:
+          other.floatingLabelFontSize ?? floatingLabelFontSize,
       animated: animated?.merge(other.animated) ?? other.animated,
       modifiers: modifiers?.merge(other.modifiers) ?? other.modifiers,
     );
@@ -490,6 +516,8 @@ class TextFieldSpecAttribute extends SpecAttribute<TextFieldSpec>
         icon,
         contentLayout,
         floatingLabel,
+        floatingLabelHeight,
+        floatingLabelFontSize,
         animated,
         modifiers,
       ];
@@ -555,6 +583,12 @@ class TextFieldSpecAttribute extends SpecAttribute<TextFieldSpec>
     properties.add(DiagnosticsProperty('contentLayout', contentLayout,
         defaultValue: null));
     properties.add(DiagnosticsProperty('floatingLabel', floatingLabel,
+        defaultValue: null));
+    properties.add(DiagnosticsProperty(
+        'floatingLabelHeight', floatingLabelHeight,
+        defaultValue: null));
+    properties.add(DiagnosticsProperty(
+        'floatingLabelFontSize', floatingLabelFontSize,
         defaultValue: null));
     properties
         .add(DiagnosticsProperty('animated', animated, defaultValue: null));
@@ -659,6 +693,14 @@ class TextFieldSpecUtility<T extends Attribute>
   /// Utility for defining [TextFieldSpecAttribute.floatingLabel]
   late final floatingLabel = BoolUtility((v) => only(floatingLabel: v));
 
+  /// Utility for defining [TextFieldSpecAttribute.floatingLabelHeight]
+  late final floatingLabelHeight =
+      DoubleUtility((v) => only(floatingLabelHeight: v));
+
+  /// Utility for defining [TextFieldSpecAttribute.floatingLabelFontSize]
+  late final floatingLabelFontSize =
+      DoubleUtility((v) => only(floatingLabelFontSize: v));
+
   /// Utility for defining [TextFieldSpecAttribute.animated]
   late final animated = AnimatedUtility((v) => only(animated: v));
 
@@ -703,6 +745,8 @@ class TextFieldSpecUtility<T extends Attribute>
     IconSpecAttribute? icon,
     FlexSpecAttribute? contentLayout,
     bool? floatingLabel,
+    double? floatingLabelHeight,
+    double? floatingLabelFontSize,
     AnimatedDataDto? animated,
     WidgetModifiersDataDto? modifiers,
   }) {
@@ -734,6 +778,8 @@ class TextFieldSpecUtility<T extends Attribute>
       icon: icon,
       contentLayout: contentLayout,
       floatingLabel: floatingLabel,
+      floatingLabelHeight: floatingLabelHeight,
+      floatingLabelFontSize: floatingLabelFontSize,
       animated: animated,
       modifiers: modifiers,
     ));

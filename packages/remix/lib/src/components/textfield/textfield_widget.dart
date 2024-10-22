@@ -527,6 +527,10 @@ class _TextFieldState extends State<TextField>
       style: style.makeStyle(configuration).applyVariants(widget.variants),
       builder: (context) {
         final spec = TextFieldSpec.of(context);
+        final isFloating = spec.floatingLabel &
+            (_effectiveFocusNode.hasFocus ||
+                _effectiveController.value.text.isNotEmpty);
+        // final isShowing = spec.hintText.on.isNotEmpty;
 
         return spec.containerLayout(
           direction: Axis.vertical,
@@ -538,123 +542,92 @@ class _TextFieldState extends State<TextField>
                   if (widget.prefixBuilder != null)
                     widget.prefixBuilder!(spec.icon),
                   Expanded(
-                    child: Stack(
-                      alignment: Alignment.centerLeft,
-                      children: [
-                        AnimatedBuilder(
-                          animation: _effectiveController,
-                          builder: (context, child) {
-                            final hintText =
-                                spec.hintText(widget.hintText ?? '');
-
-                            if (spec.floatingLabel) {
-                              final condition =
-                                  _effectiveController.value.text.isNotEmpty ||
-                                      _effectiveFocusNode.hasFocus;
-                              final animated = spec.hintText.animated ??
-                                  const AnimatedData(
-                                    duration: Duration(milliseconds: 100),
-                                    curve: Curves.decelerate,
-                                  );
-
-                              return AnimatedAlign(
-                                alignment: condition
-                                    ? Alignment.topLeft
-                                    : Alignment.centerLeft,
-                                curve: animated.curve,
-                                duration: animated.duration,
-                                child: hintText,
-                              );
-                            }
-
-                            return Opacity(
-                              opacity: _effectiveController.value.text.isEmpty
-                                  ? 1
-                                  : 0,
-                              child: hintText,
-                            );
-                          },
+                    child: AnimatedBuilder(
+                      animation: _effectiveController,
+                      builder: (context, child) => _HintLabel(
+                        text: widget.hintText ?? '',
+                        style: spec.hintText.style ?? spec.style,
+                        float: isFloating,
+                        show: spec.floatingLabel
+                            ? true
+                            : _effectiveController.value.text.isEmpty,
+                        floatingLabelHeight:
+                            spec.floatingLabel ? spec.floatingLabelHeight : 0,
+                        floatingLabelFontSize: spec.floatingLabelFontSize,
+                        child: EditableText(
+                          key: editableTextKey,
+                          controller: _effectiveController,
+                          focusNode: _effectiveFocusNode,
+                          readOnly: widget.readOnly || !widget.enabled,
+                          obscuringCharacter: widget.obscuringCharacter,
+                          obscureText: widget.obscureText,
+                          autocorrect: widget.autocorrect,
+                          smartDashesType: widget.smartDashesType,
+                          smartQuotesType: widget.smartQuotesType,
+                          enableSuggestions: widget.enableSuggestions,
+                          style: spec.style,
+                          strutStyle: spec.strutStyle,
+                          cursorColor: spec.cursorColor,
+                          backgroundCursorColor: spec.backgroundCursorColor,
+                          textAlign: spec.textAlign,
+                          textDirection: widget.textDirection,
+                          maxLines: widget.maxLines,
+                          minLines: widget.minLines,
+                          expands: widget.expands,
+                          textHeightBehavior: spec.textHeightBehavior,
+                          textWidthBasis: spec.textWidthBasis,
+                          autofocus: widget.autofocus,
+                          showCursor: widget.showCursor,
+                          showSelectionHandles: _showSelectionHandles,
+                          selectionColor: spec.selectionColor,
+                          selectionControls: textSelectionControls,
+                          keyboardType: widget.keyboardType,
+                          textInputAction: widget.textInputAction,
+                          textCapitalization: widget.textCapitalization,
+                          onChanged: widget.onChanged,
+                          onEditingComplete: widget.onEditingComplete,
+                          onSubmitted: widget.onSubmitted,
+                          onAppPrivateCommand: widget.onAppPrivateCommand,
+                          onSelectionChanged: _handleSelectionChanged,
+                          onSelectionHandleTapped: _handleSelectionHandleTapped,
+                          onTapOutside: widget.onTapOutside,
+                          inputFormatters: formatters,
+                          mouseCursor: MouseCursor
+                              .defer, // TextField will handle the cursor
+                          rendererIgnoresPointer: true,
+                          cursorWidth: spec.cursorWidth,
+                          cursorHeight: spec.cursorHeight,
+                          cursorOpacityAnimates: spec.cursorOpacityAnimates,
+                          cursorOffset: spec.cursorOffset,
+                          paintCursorAboveText: spec.paintCursorAboveText,
+                          selectionHeightStyle: spec.selectionHeightStyle,
+                          selectionWidthStyle: spec.selectionWidthStyle,
+                          scrollPadding: spec.scrollPadding,
+                          keyboardAppearance: spec.keyboardAppearance,
+                          dragStartBehavior: widget.dragStartBehavior,
+                          enableInteractiveSelection:
+                              widget.enableInteractiveSelection,
+                          scrollController: widget.scrollController,
+                          scrollPhysics: widget.scrollPhysics,
+                          autocorrectionTextRectColor:
+                              spec.autocorrectionTextRectColor,
+                          autofillClient: this,
+                          clipBehavior: widget.clipBehavior,
+                          restorationId: 'editable',
+                          scribbleEnabled: widget.scribbleEnabled,
+                          enableIMEPersonalizedLearning:
+                              widget.enableIMEPersonalizedLearning,
+                          contentInsertionConfiguration:
+                              widget.contentInsertionConfiguration,
+                          contextMenuBuilder: widget.contextMenuBuilder,
+                          spellCheckConfiguration:
+                              widget.spellCheckConfiguration,
+                          magnifierConfiguration: widget
+                                  .magnifierConfiguration ??
+                              m.TextMagnifier.adaptiveMagnifierConfiguration,
+                          undoController: widget.undoController,
                         ),
-                        Align(
-                          alignment: spec.floatingLabel
-                              ? Alignment.bottomLeft
-                              : Alignment.centerLeft,
-                          child: EditableText(
-                            key: editableTextKey,
-                            controller: _effectiveController,
-                            focusNode: _effectiveFocusNode,
-                            readOnly: widget.readOnly || !widget.enabled,
-                            obscuringCharacter: widget.obscuringCharacter,
-                            obscureText: widget.obscureText,
-                            autocorrect: widget.autocorrect,
-                            smartDashesType: widget.smartDashesType,
-                            smartQuotesType: widget.smartQuotesType,
-                            enableSuggestions: widget.enableSuggestions,
-                            style: spec.style,
-                            strutStyle: spec.strutStyle,
-                            cursorColor: spec.cursorColor,
-                            backgroundCursorColor: spec.backgroundCursorColor,
-                            textAlign: spec.textAlign,
-                            textDirection: widget.textDirection,
-                            maxLines: widget.maxLines,
-                            minLines: widget.minLines,
-                            expands: widget.expands,
-                            textHeightBehavior: spec.textHeightBehavior,
-                            textWidthBasis: spec.textWidthBasis,
-                            autofocus: widget.autofocus,
-                            showCursor: widget.showCursor,
-                            showSelectionHandles: _showSelectionHandles,
-                            selectionColor: spec.selectionColor,
-                            selectionControls: textSelectionControls,
-                            keyboardType: widget.keyboardType,
-                            textInputAction: widget.textInputAction,
-                            textCapitalization: widget.textCapitalization,
-                            onChanged: widget.onChanged,
-                            onEditingComplete: widget.onEditingComplete,
-                            onSubmitted: widget.onSubmitted,
-                            onAppPrivateCommand: widget.onAppPrivateCommand,
-                            onSelectionChanged: _handleSelectionChanged,
-                            onSelectionHandleTapped:
-                                _handleSelectionHandleTapped,
-                            onTapOutside: widget.onTapOutside,
-                            inputFormatters: formatters,
-                            mouseCursor: MouseCursor
-                                .defer, // TextField will handle the cursor
-                            rendererIgnoresPointer: true,
-                            cursorWidth: spec.cursorWidth,
-                            cursorHeight: spec.cursorHeight,
-                            cursorOpacityAnimates: spec.cursorOpacityAnimates,
-                            cursorOffset: spec.cursorOffset,
-                            paintCursorAboveText: spec.paintCursorAboveText,
-                            selectionHeightStyle: spec.selectionHeightStyle,
-                            selectionWidthStyle: spec.selectionWidthStyle,
-                            scrollPadding: spec.scrollPadding,
-                            keyboardAppearance: spec.keyboardAppearance,
-                            dragStartBehavior: widget.dragStartBehavior,
-                            enableInteractiveSelection:
-                                widget.enableInteractiveSelection,
-                            scrollController: widget.scrollController,
-                            scrollPhysics: widget.scrollPhysics,
-                            autocorrectionTextRectColor:
-                                spec.autocorrectionTextRectColor,
-                            autofillClient: this,
-                            clipBehavior: widget.clipBehavior,
-                            restorationId: 'editable',
-                            scribbleEnabled: widget.scribbleEnabled,
-                            enableIMEPersonalizedLearning:
-                                widget.enableIMEPersonalizedLearning,
-                            contentInsertionConfiguration:
-                                widget.contentInsertionConfiguration,
-                            contextMenuBuilder: widget.contextMenuBuilder,
-                            spellCheckConfiguration:
-                                widget.spellCheckConfiguration,
-                            magnifierConfiguration: widget
-                                    .magnifierConfiguration ??
-                                m.TextMagnifier.adaptiveMagnifierConfiguration,
-                            undoController: widget.undoController,
-                          ),
-                        ),
-                      ],
+                      ),
                     ),
                   ),
                   if (widget.suffix != null) widget.suffix!,
@@ -796,4 +769,134 @@ extension type const TextFieldContextVariantUtil(
     OnContextVariantUtility _utility) implements OnContextVariantUtility {
   ContextVariant get isEmpty => const IsEmptyContextVariant();
   ContextVariant get isNotEmpty => const OnNotVariant(IsEmptyContextVariant());
+}
+
+class _HintLabel extends StatefulWidget {
+  const _HintLabel({
+    super.key,
+    required this.text,
+    required this.style,
+    required this.float,
+    required this.show,
+    required this.floatingLabelHeight,
+    required this.floatingLabelFontSize,
+    this.child,
+  });
+
+  final String text;
+  final TextStyle style;
+  final bool float;
+  final bool show;
+  final double floatingLabelHeight;
+  final double floatingLabelFontSize;
+  final Widget? child;
+
+  @override
+  State<_HintLabel> createState() => _HintLabelState();
+}
+
+class _HintLabelState extends State<_HintLabel>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      duration: const Duration(milliseconds: 100),
+      vsync: this,
+    );
+  }
+
+  @override
+  void didUpdateWidget(_HintLabel oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    if (widget.float != oldWidget.float) {
+      if (widget.float) {
+        _controller.forward();
+      } else {
+        _controller.reverse();
+      }
+    }
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedBuilder(
+      animation: _controller,
+      builder: (context, child) => CustomPaint(
+        painter: FloatingLabelPainter(
+          text: widget.text,
+          style: widget.style,
+          floatingProgress: _controller.value,
+          show: widget.show,
+          floatingLabelFontSize: widget.floatingLabelFontSize,
+        ),
+        child: Padding(
+          padding: EdgeInsets.only(top: widget.floatingLabelHeight),
+          child: widget.child,
+        ),
+      ),
+    );
+  }
+}
+
+class FloatingLabelPainter extends CustomPainter {
+  final String text;
+  final TextStyle style;
+
+  // 0 = normal, 1 = floating
+  final double floatingProgress;
+  final double floatingLabelFontSize;
+  final bool show;
+
+  const FloatingLabelPainter({
+    required this.text,
+    required this.style,
+    required this.floatingProgress,
+    required this.show,
+    required this.floatingLabelFontSize,
+  });
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    if (!show) return;
+    final style = TextStyle.lerp(
+      this.style,
+      this.style.copyWith(fontSize: floatingLabelFontSize),
+      floatingProgress,
+    );
+
+    TextSpan span = TextSpan(text: text, style: style);
+
+    TextPainter tp = TextPainter(
+      text: span,
+      // TODO: Verificar TextDirection
+      textDirection: TextDirection.ltr,
+    );
+    tp.layout();
+
+    final yCenter = Offset(0, (size.height - tp.height) / 2);
+
+    const floatingPosition = Offset(0.0, -2);
+
+    final offset = Offset.lerp(yCenter, floatingPosition, floatingProgress);
+    tp.paint(canvas, offset!);
+  }
+
+  @override
+  bool shouldRepaint(FloatingLabelPainter oldDelegate) {
+    return text != oldDelegate.text ||
+        style != oldDelegate.style ||
+        floatingProgress != oldDelegate.floatingProgress ||
+        show != oldDelegate.show ||
+        floatingLabelFontSize != oldDelegate.floatingLabelFontSize;
+  }
 }

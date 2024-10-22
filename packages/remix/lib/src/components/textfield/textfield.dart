@@ -57,6 +57,8 @@ class TextFieldSpec extends Spec<TextFieldSpec>
   final TextSpec hintText;
   final TextSpec helperText;
   final IconSpec icon;
+  final double floatingLabelHeight;
+  final double floatingLabelFontSize;
 
   @MixableProperty(dto: MixableFieldDto(type: TextHeightBehaviorDto))
   final TextHeightBehavior? textHeightBehavior;
@@ -93,6 +95,8 @@ class TextFieldSpec extends Spec<TextFieldSpec>
     IconSpec? icon,
     FlexSpec? contentLayout,
     bool? floatingLabel,
+    double? floatingLabelHeight,
+    double? floatingLabelFontSize,
     super.animated,
     super.modifiers,
   })  : style = style ?? const TextStyle(),
@@ -116,7 +120,9 @@ class TextFieldSpec extends Spec<TextFieldSpec>
         containerLayout = containerLayout ?? const FlexSpec(),
         icon = icon ?? const IconSpec(),
         contentLayout = contentLayout ?? const FlexSpec(),
-        floatingLabel = floatingLabel ?? false;
+        floatingLabel = floatingLabel ?? false,
+        floatingLabelHeight = floatingLabelHeight ?? 14,
+        floatingLabelFontSize = floatingLabelFontSize ?? 12;
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
