@@ -695,6 +695,7 @@ class _TextFieldSelectionGestureDetectorBuilder
   }
 
   @override
+  // ignore: no-empty-block
   void onForcePressEnd(ForcePressDetails details) {
     // Not required.
   }
@@ -737,7 +738,6 @@ class _TextFieldContext extends InheritedWidget {
 
 class _HintLabel extends StatefulWidget {
   const _HintLabel({
-    super.key,
     required this.text,
     required this.style,
     required this.float,

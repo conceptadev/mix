@@ -70,13 +70,7 @@ class TextFieldStyle extends SpecStyle<TextFieldSpecUtility> {
         ..cursorOpacityAnimates.off(),
     );
 
-    return Style(
-      androidAndFuchsia,
-      iOS,
-      macos,
-      windows,
-      linux,
-    );
+    return Style(androidAndFuchsia, iOS, macos, windows, linux);
   }
 
   @override
