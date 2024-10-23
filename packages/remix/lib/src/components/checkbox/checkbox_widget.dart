@@ -10,6 +10,7 @@ class Checkbox extends StatefulWidget {
     this.iconUnchecked,
     this.style,
     this.variants = const [],
+    this.label,
   });
 
   final bool disabled;
@@ -19,6 +20,7 @@ class Checkbox extends StatefulWidget {
   final ValueChanged<bool>? onChanged;
   final CheckboxStyle? style;
   final List<Variant> variants;
+  final String? label;
 
   @override
   State<Checkbox> createState() => _CheckboxState();
@@ -77,17 +79,25 @@ class _CheckboxState extends State<Checkbox> {
           final spec = CheckboxSpec.of(context);
 
           final ContainerWidget = spec.container;
+          final ContainerLayout = spec.containerLayout;
           final IconWidget = spec.indicator;
 
-          return ContainerWidget(
-            child: IconWidget(
-              widget.value
-                  ? widget.iconChecked
-                  : widget.iconUnchecked ?? widget.iconChecked,
-            ),
+          return ContainerLayout(
+            direction: Axis.horizontal,
+            children: [
+              ContainerWidget(
+                child: IconWidget(
+                  widget.value
+                      ? widget.iconChecked
+                      : widget.iconUnchecked ?? widget.iconChecked,
+                ),
+              ),
+              if (widget.label != null) spec.label(widget.label!),
+            ],
           );
         },
       ),
     );
   }
 }
+                // if (widget.label != null) spec.label(widget.label!),

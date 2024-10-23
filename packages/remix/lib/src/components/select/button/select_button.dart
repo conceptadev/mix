@@ -8,6 +8,7 @@ class SelectButtonSpec extends Spec<SelectButtonSpec>
   final TextSpec label;
   final IconSpec icon;
 
+  /// {@macro select_button_spec_of}
   static const of = _$SelectButtonSpec.of;
 
   static const from = _$SelectButtonSpec.from;

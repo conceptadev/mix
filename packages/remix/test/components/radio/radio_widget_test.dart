@@ -18,7 +18,7 @@ void main() {
             groupValue: true,
             disabled: true,
             style: const RadioStyle(),
-            text: '',
+            label: '',
           ),
         ),
       );
@@ -43,7 +43,7 @@ void main() {
             disabled: false,
             onChanged: (_) {},
             style: const FakeRadioStyle(color),
-            text: '',
+            label: '',
           ),
         ),
       );
@@ -67,7 +67,7 @@ void main() {
             value: value,
             groupValue: true,
             onChanged: (v) => changedValue = v,
-            text: '',
+            label: '',
           ),
         ),
       );
@@ -86,7 +86,7 @@ void main() {
             value: false,
             groupValue: true,
             onChanged: (_) {},
-            text: testText,
+            label: testText,
           ),
         ),
       );

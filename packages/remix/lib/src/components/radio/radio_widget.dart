@@ -9,13 +9,13 @@ class Radio<T> extends StatefulWidget {
     this.disabled = false,
     this.style,
     this.variants = const [],
-    required this.text,
+    required this.label,
   });
 
   final T value;
   final ValueChanged<T?> onChanged;
   final T? groupValue;
-  final String text;
+  final String label;
   final bool disabled;
   final RadioStyle? style;
   final List<Variant> variants;
@@ -83,7 +83,7 @@ class _RadioState<T> extends State<Radio<T>> {
             direction: Axis.horizontal,
             children: [
               ContainerWidget(child: IndicatorWidget()),
-              TextWidget(widget.text),
+              TextWidget(widget.label),
             ],
           );
         },

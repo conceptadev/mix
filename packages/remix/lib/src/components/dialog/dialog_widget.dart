@@ -22,16 +22,10 @@ class Dialog extends StatelessWidget {
     this.variants = const [],
   });
 
-  /// The list of child widgets to be displayed inside the card.
-
   final WidgetSpecBuilder<TextSpec>? titleBuilder;
   final WidgetSpecBuilder<TextSpec>? descriptionBuilder;
   final Widget? content;
   final List<Widget>? actions;
-
-  /// Additional custom styling for the card.
-  ///
-  /// This allows you to override or extend the default card styling.
   final DialogStyle? style;
   final List<Variant> variants;
 

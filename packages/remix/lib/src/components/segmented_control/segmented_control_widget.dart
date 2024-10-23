@@ -5,7 +5,6 @@ const selectedItem = Variant('selectedItem');
 class SegmentedControl extends StatefulWidget {
   const SegmentedControl({
     super.key,
-    this.isEnabled = true,
     this.index = 0,
     this.variants = const [],
     this.style,
@@ -15,7 +14,6 @@ class SegmentedControl extends StatefulWidget {
 
   final int index;
   final ValueChanged<int> onIndexChanged;
-  final bool isEnabled;
   final SegmentedControlStyle? style;
   final List<Variant> variants;
   final List<Widget> buttons;
