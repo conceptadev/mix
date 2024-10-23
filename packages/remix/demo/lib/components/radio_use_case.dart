@@ -5,8 +5,6 @@ import 'package:remix/remix.dart';
 import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
-final _key = GlobalKey();
-
 enum Theme {
   dark,
   light,
