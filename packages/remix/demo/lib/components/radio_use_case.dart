@@ -15,17 +15,6 @@ enum Theme {
   name: 'Radio Component',
   type: Radio,
 )
-class _ThemeState extends ValueNotifier<Theme> {
-  _ThemeState(super.value);
-
-  void update(Theme value) {
-    this.value = value;
-    notifyListeners();
-  }
-}
-
-_ThemeState _state = _ThemeState(Theme.dark);
-
 Widget buildRadioUseCase(BuildContext context) {
   return Scaffold(
     body: Center(
@@ -64,3 +53,14 @@ Widget buildRadioUseCase(BuildContext context) {
     ),
   );
 }
+
+class _ThemeState extends ValueNotifier<Theme> {
+  _ThemeState(super.value);
+
+  void update(Theme value) {
+    this.value = value;
+    notifyListeners();
+  }
+}
+
+_ThemeState _state = _ThemeState(Theme.dark);
