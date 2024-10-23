@@ -100,3 +100,4 @@ class _CheckboxState extends State<Checkbox> {
     );
   }
 }
+                // if (widget.label != null) spec.label(widget.label!),
