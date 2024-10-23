@@ -19,6 +19,7 @@ import '../components/radio/radio.dart';
 import '../components/scaffold/scaffold.dart';
 import '../components/segmented_control/segmented_control.dart';
 import '../components/select/select.dart';
+import '../components/slider/slider.dart';
 import '../components/spinner/spinner.dart';
 import '../components/switch/switch.dart';
 import '../components/textfield/textfield.dart';
@@ -47,6 +48,7 @@ class RemixComponentTheme {
   final SwitchStyle switchComponent;
   final TextFieldStyle textField;
   final ToastStyle toast;
+  final SliderStyle slider;
 
   const RemixComponentTheme({
     required this.accordion,
@@ -70,6 +72,7 @@ class RemixComponentTheme {
     required this.switchComponent,
     required this.textField,
     required this.toast,
+    required this.slider,
   });
 
   factory RemixComponentTheme.baseLight() {
@@ -95,6 +98,7 @@ class RemixComponentTheme {
       switchComponent: SwitchStyle(),
       textField: TextFieldStyle(),
       toast: ToastStyle(),
+      slider: SliderStyle(),
     );
   }
 
@@ -120,6 +124,7 @@ class RemixComponentTheme {
       spinner: const SpinnerDarkStyle(),
       switchComponent: const SwitchDarkStyle(),
       textField: const TextFieldDarkStyle(),
+      slider: const SliderDarkStyle(),
     );
   }
 
@@ -146,6 +151,7 @@ class RemixComponentTheme {
       switchComponent: FortalezaSwitchStyle(),
       textField: FortalezaTextFieldStyle(),
       toast: FortalezaToastStyle(),
+      slider: FortalezaSliderStyle(),
     );
   }
 
@@ -181,6 +187,7 @@ class RemixComponentTheme {
     SwitchStyle? switchComponent,
     TextFieldStyle? textField,
     ToastStyle? toast,
+    SliderStyle? slider,
   }) {
     return RemixComponentTheme(
       accordion: accordion ?? this.accordion,
@@ -204,6 +211,7 @@ class RemixComponentTheme {
       switchComponent: switchComponent ?? this.switchComponent,
       textField: textField ?? this.textField,
       toast: toast ?? this.toast,
+      slider: slider ?? this.slider,
     );
   }
 }
