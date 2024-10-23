@@ -156,7 +156,6 @@ class RemixComponentTheme {
       segmentedControl: const FortalezaDarkSegmentedControlStyle(),
       select: const FortalezaDarkSelectStyle(),
       switchComponent: const FortalezaDarkSwitchStyle(),
-      // textField: const FortalezaDarkTextFieldStyle(),
     );
   }
 
