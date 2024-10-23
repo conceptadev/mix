@@ -16,7 +16,7 @@ class SpinnerStyle extends SpecStyle<SpinnerSpecUtility> {
         ..size(24)
         ..strokeWidth(1.5)
         ..color.black()
-        ..style.solid(),
+        ..style.dotted(),
     ];
 
     final solidVariant = $.style.solid();

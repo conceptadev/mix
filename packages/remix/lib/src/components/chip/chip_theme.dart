@@ -33,13 +33,13 @@ class FortalezaChipStyle extends ChipStyle {
     ];
 
     final disabledStyle = [
-      (spec.on.disabled)(
+      spec.on.disabled(
         $.container.border.color.$neutral(4),
         $.container.color.$neutral(2),
         $.label.style.color.$neutral(8),
         $.icon.color.$neutral(8),
+        spec.on.selected($.container.color.$neutral(4)),
       ),
-      (spec.on.disabled & spec.on.selected)($.container.color.$neutral(4)),
     ];
 
     final ghostStyle = Style.create([
@@ -54,8 +54,8 @@ class FortalezaChipStyle extends ChipStyle {
       spec.on.disabled(
         $.container.color.$neutral(2),
         $.icon.color.$neutral(8),
+        (spec.on.selected)($.container.color.$neutral(4)),
       ),
-      (spec.on.disabled & spec.on.selected)($.container.color.$neutral(4)),
     ]);
 
     return Style.create([

@@ -22,7 +22,7 @@ class IconButtonSpec extends Spec<IconButtonSpec>
   @MixableProperty(dto: MixableFieldDto(type: 'SpinnerSpecAttribute'))
   final SpinnerSpec spinner;
 
-  /// {@macro button_spec_of}
+  /// {@macro icon_button_spec_of}
   static const of = _$IconButtonSpec.of;
 
   static const from = _$IconButtonSpec.from;

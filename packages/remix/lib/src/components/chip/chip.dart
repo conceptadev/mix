@@ -8,7 +8,6 @@ import '../../theme/remix_theme.dart';
 import '../../theme/remix_tokens.dart';
 
 part 'chip.g.dart';
-
 part 'chip_style.dart';
 part 'chip_theme.dart';
 part 'chip_widget.dart';
@@ -20,7 +19,7 @@ class ChipSpec extends Spec<ChipSpec> with _$ChipSpec, Diagnosticable {
   final IconSpec icon;
   final TextSpec label;
 
-  /// {@macro button_spec_of}
+  /// {@macro chip_spec_of}
   static const of = _$ChipSpec.of;
 
   static const from = _$ChipSpec.from;

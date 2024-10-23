@@ -19,6 +19,7 @@ class FortalezaCheckboxStyle extends CheckboxStyle {
       $.indicator.chain
         ..wrap.opacity(0)
         ..wrap.scale(0.5),
+      $.label.style.color.$neutral(12),
       spec.on.selected($.indicator.wrap.opacity(1), $.indicator.wrap.scale(1)),
     );
 
@@ -73,6 +74,7 @@ class FortalezaCheckboxStyle extends CheckboxStyle {
         ..color.$neutral(3)
         ..border.color.$neutral(5),
       $.indicator.color.$neutral(7),
+      $.label.style.color.$neutral(9),
     );
 
     return Style.create(

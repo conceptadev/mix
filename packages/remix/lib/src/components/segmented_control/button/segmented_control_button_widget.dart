@@ -1,8 +1,7 @@
 part of '../segmented_control.dart';
 
-class XSegmentButton extends StatelessWidget {
-  const XSegmentButton({super.key, IconData? icon, this.text})
-      : iconData = icon;
+class SegmentButton extends StatelessWidget {
+  const SegmentButton({super.key, IconData? icon, this.text}) : iconData = icon;
 
   final IconData? iconData;
   final String? text;

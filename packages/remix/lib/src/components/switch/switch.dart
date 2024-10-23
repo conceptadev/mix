@@ -17,6 +17,7 @@ base class SwitchSpec extends Spec<SwitchSpec>
   final BoxSpec container;
   final BoxSpec indicator;
 
+  /// {@macro switch_spec_of}
   static const of = _$SwitchSpec.of;
 
   static const from = _$SwitchSpec.from;

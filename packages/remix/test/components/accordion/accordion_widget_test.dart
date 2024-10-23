@@ -11,7 +11,7 @@ void main() {
         MaterialApp(
           home: Accordion(
             style: const AccordionStyle(),
-            header: (spec) => XAccordionHeaderSpecWidget(
+            header: (spec) => AccordionHeaderSpecWidget(
               title: 'Test Accordion',
               spec: spec,
             ),
@@ -32,7 +32,7 @@ void main() {
         MaterialApp(
           home: Accordion(
             style: const AccordionStyle(),
-            header: (spec) => XAccordionHeaderSpecWidget(
+            header: (spec) => AccordionHeaderSpecWidget(
               title: 'Custom Icons',
               spec: spec,
               leadingIcon: Icons.star,
@@ -72,7 +72,7 @@ void main() {
       await tester.pumpWidget(
         MaterialApp(
           home: Accordion(
-            header: (spec) => XAccordionHeaderSpecWidget(
+            header: (spec) => AccordionHeaderSpecWidget(
               spec: spec,
               title: 'Styled Accordion',
               trailingIcon: Icons.rocket_launch,

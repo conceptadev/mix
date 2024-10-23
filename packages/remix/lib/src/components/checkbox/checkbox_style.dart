@@ -12,10 +12,6 @@ class CheckboxStyle extends SpecStyle<CheckboxSpecUtility> {
         ..borderRadius(4)
         ..border.all.color.black(),
       spec.on.selected($.container.color.black()),
-      spec.on.disabled(
-        $.container.border.all.color.grey(),
-        spec.on.selected($.container.color.grey()),
-      ),
     ];
 
     final indicatorStyle = [
@@ -26,7 +22,31 @@ class CheckboxStyle extends SpecStyle<CheckboxSpecUtility> {
       spec.on.selected($.indicator.wrap.opacity(1), $.indicator.color.white()),
     ];
 
-    return Style.create([...containerStyle, ...indicatorStyle]);
+    final labelStyle = $.label.chain
+      ..style.color.black()
+      ..style.fontSize(14)
+      ..style.fontWeight.w500()
+      ..textHeightBehavior.heightToFirstAscent.off();
+
+    final containerLayoutStyle = $.containerLayout.chain
+      ..crossAxisAlignment.center()
+      ..mainAxisAlignment.start()
+      ..mainAxisSize.min()
+      ..gap(8);
+
+    final disabledStyle = spec.on.disabled(
+      $.container.border.all.color.grey(),
+      $.label.style.color.grey(),
+      spec.on.selected($.container.color.grey()),
+    );
+
+    return Style.create([
+      ...containerStyle,
+      ...indicatorStyle,
+      labelStyle,
+      containerLayoutStyle,
+      disabledStyle,
+    ]);
   }
 }
 

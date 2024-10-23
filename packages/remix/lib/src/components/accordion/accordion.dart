@@ -23,7 +23,7 @@ base class AccordionSpec extends Spec<AccordionSpec> with _$AccordionSpec {
   final FlexSpec flex;
   final TextSpec textContent;
 
-  /// {@macro avatar_spec_of}
+  /// {@macro accordion_spec_of}
   static const of = _$AccordionSpec.of;
 
   static const from = _$AccordionSpec.from;

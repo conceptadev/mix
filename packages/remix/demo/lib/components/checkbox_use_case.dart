@@ -19,6 +19,7 @@ Widget buildCheckboxUseCase(BuildContext context) {
       key: _key,
       child: Center(
         child: Checkbox(
+          label: context.knobs.string(label: 'Label', initialValue: 'Label'),
           variants: [context.knobs.variant(FortalezaCheckboxStyle.variants)],
           disabled:
               context.knobs.boolean(label: 'Disabled', initialValue: false),

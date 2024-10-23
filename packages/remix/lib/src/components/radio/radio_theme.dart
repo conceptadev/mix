@@ -20,6 +20,7 @@ class FortalezaRadioStyle extends RadioStyle {
         ..border.width(1)
         ..border.color.$neutral(8),
       $.indicator.chain..color.$white(),
+      $.text.style.color.$neutral(12),
       spec.on.hover(
         $.container.chain
           ..color.$accentAlpha(4)

@@ -35,6 +35,7 @@ class SelectSpec extends Spec<SelectSpec> with _$SelectSpec, Diagnosticable {
   )
   final CompositedTransformFollowerSpec position;
 
+  /// {@macro select_spec_of}
   static const of = _$SelectSpec.of;
 
   static const from = _$SelectSpec.from;
@@ -65,6 +66,7 @@ base class SelectMenuSpec extends Spec<SelectMenuSpec>
   final FlexSpec flex;
   final bool autoWidth;
 
+  /// {@macro select_menu_spec_of}
   static const of = _$SelectMenuSpec.of;
 
   static const from = _$SelectMenuSpec.from;

@@ -28,13 +28,13 @@ class _WidgetDemoState extends State<_WidgetDemo> {
     return SegmentedControl(
       index: index,
       buttons: const [
-        XSegmentButton(
+        SegmentButton(
           text: 'Apple',
         ),
-        XSegmentButton(
+        SegmentButton(
           text: 'Pear',
         ),
-        XSegmentButton(
+        SegmentButton(
           text: 'Banana',
         ),
       ],

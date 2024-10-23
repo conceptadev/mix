@@ -1,7 +1,7 @@
 part of '../select.dart';
 
-class XSelectMenuItemWidget extends StatelessWidget {
-  const XSelectMenuItemWidget({
+class SelectMenuItemWidget extends StatelessWidget {
+  const SelectMenuItemWidget({
     super.key,
     IconData? icon,
     required this.text,

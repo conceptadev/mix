@@ -36,15 +36,19 @@ class RadioStyle extends SpecStyle<RadioSpecUtility> {
 
     final flexStyle = $.flex.chain
       ..row()
+      ..mainAxisSize.min()
       ..mainAxisAlignment.start()
       ..crossAxisAlignment.center()
       ..gap(8);
+
+    final disabledStyle = spec.on.disabled($.text.style.color.grey());
 
     return Style.create([
       ...containerStyle,
       ...indicatorStyle,
       textStyle,
       flexStyle,
+      disabledStyle,
     ]).animate(
       duration: const Duration(milliseconds: 100),
       curve: Curves.easeInOutQuad,

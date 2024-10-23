@@ -16,7 +16,7 @@ base class DividerSpec extends Spec<DividerSpec>
     with _$DividerSpec, Diagnosticable {
   final BoxSpec container;
 
-  /// {@macro progress_spec_of}
+  /// {@macro divider_spec_of}
   static const of = _$DividerSpec.of;
 
   static const from = _$DividerSpec.from;
