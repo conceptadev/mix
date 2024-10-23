@@ -119,7 +119,7 @@ class RemixComponentTheme {
       select: const SelectDarkStyle(),
       spinner: const SpinnerDarkStyle(),
       switchComponent: const SwitchDarkStyle(),
-      // textField: const TextFieldDarkStyle(),
+      textField: const TextFieldDarkStyle(),
     );
   }
 
@@ -144,8 +144,7 @@ class RemixComponentTheme {
       select: FortalezaSelectStyle(),
       spinner: FortalezaSpinnerStyle(),
       switchComponent: FortalezaSwitchStyle(),
-      textField: TextFieldStyle(),
-      // textField: FortalezaTextFieldStyle(),
+      textField: FortalezaTextFieldStyle(),
       toast: FortalezaToastStyle(),
     );
   }

@@ -55,13 +55,13 @@ mixin _$TextFieldSpec on Spec<TextFieldSpec> {
     bool? cursorOpacityAnimates,
     BoxSpec? container,
     FlexSpec? containerLayout,
-    TextSpec? hintText,
+    TextStyle? hintTextStyle,
     TextSpec? helperText,
     IconSpec? icon,
     FlexSpec? contentLayout,
     bool? floatingLabel,
     double? floatingLabelHeight,
-    double? floatingLabelFontSize,
+    TextStyle? floatingLabelStyle,
     AnimatedData? animated,
     WidgetModifiersData? modifiers,
   }) {
@@ -91,14 +91,13 @@ mixin _$TextFieldSpec on Spec<TextFieldSpec> {
           cursorOpacityAnimates ?? _$this.cursorOpacityAnimates,
       container: container ?? _$this.container,
       containerLayout: containerLayout ?? _$this.containerLayout,
-      hintText: hintText ?? _$this.hintText,
+      hintTextStyle: hintTextStyle ?? _$this.hintTextStyle,
       helperText: helperText ?? _$this.helperText,
       icon: icon ?? _$this.icon,
       contentLayout: contentLayout ?? _$this.contentLayout,
       floatingLabel: floatingLabel ?? _$this.floatingLabel,
       floatingLabelHeight: floatingLabelHeight ?? _$this.floatingLabelHeight,
-      floatingLabelFontSize:
-          floatingLabelFontSize ?? _$this.floatingLabelFontSize,
+      floatingLabelStyle: floatingLabelStyle ?? _$this.floatingLabelStyle,
       animated: animated ?? _$this.animated,
       modifiers: modifiers ?? _$this.modifiers,
     );
@@ -115,16 +114,16 @@ mixin _$TextFieldSpec on Spec<TextFieldSpec> {
   /// The interpolation is performed on each property of the [TextFieldSpec] using the appropriate
   /// interpolation method:
   ///
-  /// - [MixHelpers.lerpTextStyle] for [style].
+  /// - [MixHelpers.lerpTextStyle] for [style] and [hintTextStyle] and [floatingLabelStyle].
   /// - [MixHelpers.lerpStrutStyle] for [strutStyle].
-  /// - [MixHelpers.lerpDouble] for [cursorWidth] and [cursorHeight] and [floatingLabelHeight] and [floatingLabelFontSize].
+  /// - [MixHelpers.lerpDouble] for [cursorWidth] and [cursorHeight] and [floatingLabelHeight].
   /// - [Radius.lerp] for [cursorRadius].
   /// - [Color.lerp] for [cursorColor] and [backgroundCursorColor] and [selectionColor] and [autocorrectionTextRectColor].
   /// - [Offset.lerp] for [cursorOffset].
   /// - [EdgeInsets.lerp] for [scrollPadding].
   /// - [BoxSpec.lerp] for [container].
   /// - [FlexSpec.lerp] for [containerLayout] and [contentLayout].
-  /// - [TextSpec.lerp] for [hintText] and [helperText].
+  /// - [TextSpec.lerp] for [helperText].
   /// - [IconSpec.lerp] for [icon].
 
   /// For [textAlign] and [textHeightBehavior] and [textWidthBasis] and [paintCursorAboveText] and [selectionHeightStyle] and [selectionWidthStyle] and [clipBehavior] and [keyboardAppearance] and [cursorOpacityAnimates] and [floatingLabel] and [animated] and [modifiers], the interpolation is performed using a step function.
@@ -175,15 +174,16 @@ mixin _$TextFieldSpec on Spec<TextFieldSpec> {
           t < 0.5 ? _$this.cursorOpacityAnimates : other.cursorOpacityAnimates,
       container: _$this.container.lerp(other.container, t),
       containerLayout: _$this.containerLayout.lerp(other.containerLayout, t),
-      hintText: _$this.hintText.lerp(other.hintText, t),
+      hintTextStyle: MixHelpers.lerpTextStyle(
+          _$this.hintTextStyle, other.hintTextStyle, t),
       helperText: _$this.helperText.lerp(other.helperText, t),
       icon: _$this.icon.lerp(other.icon, t),
       contentLayout: _$this.contentLayout.lerp(other.contentLayout, t),
       floatingLabel: t < 0.5 ? _$this.floatingLabel : other.floatingLabel,
       floatingLabelHeight: MixHelpers.lerpDouble(
           _$this.floatingLabelHeight, other.floatingLabelHeight, t)!,
-      floatingLabelFontSize: MixHelpers.lerpDouble(
-          _$this.floatingLabelFontSize, other.floatingLabelFontSize, t)!,
+      floatingLabelStyle: MixHelpers.lerpTextStyle(
+          _$this.floatingLabelStyle, other.floatingLabelStyle, t),
       animated: t < 0.5 ? _$this.animated : other.animated,
       modifiers: other.modifiers,
     );
@@ -217,13 +217,13 @@ mixin _$TextFieldSpec on Spec<TextFieldSpec> {
         _$this.cursorOpacityAnimates,
         _$this.container,
         _$this.containerLayout,
-        _$this.hintText,
+        _$this.hintTextStyle,
         _$this.helperText,
         _$this.icon,
         _$this.contentLayout,
         _$this.floatingLabel,
         _$this.floatingLabelHeight,
-        _$this.floatingLabelFontSize,
+        _$this.floatingLabelStyle,
         _$this.animated,
         _$this.modifiers,
       ];
@@ -284,8 +284,8 @@ mixin _$TextFieldSpec on Spec<TextFieldSpec> {
     properties.add(DiagnosticsProperty(
         'containerLayout', _$this.containerLayout,
         defaultValue: null));
-    properties.add(
-        DiagnosticsProperty('hintText', _$this.hintText, defaultValue: null));
+    properties.add(DiagnosticsProperty('hintTextStyle', _$this.hintTextStyle,
+        defaultValue: null));
     properties.add(DiagnosticsProperty('helperText', _$this.helperText,
         defaultValue: null));
     properties
@@ -298,7 +298,7 @@ mixin _$TextFieldSpec on Spec<TextFieldSpec> {
         'floatingLabelHeight', _$this.floatingLabelHeight,
         defaultValue: null));
     properties.add(DiagnosticsProperty(
-        'floatingLabelFontSize', _$this.floatingLabelFontSize,
+        'floatingLabelStyle', _$this.floatingLabelStyle,
         defaultValue: null));
     properties.add(
         DiagnosticsProperty('animated', _$this.animated, defaultValue: null));
@@ -338,13 +338,13 @@ class TextFieldSpecAttribute extends SpecAttribute<TextFieldSpec>
   final bool? cursorOpacityAnimates;
   final BoxSpecAttribute? container;
   final FlexSpecAttribute? containerLayout;
-  final TextSpecAttribute? hintText;
+  final TextStyleDto? hintTextStyle;
   final TextSpecAttribute? helperText;
   final IconSpecAttribute? icon;
   final FlexSpecAttribute? contentLayout;
   final bool? floatingLabel;
   final double? floatingLabelHeight;
-  final double? floatingLabelFontSize;
+  final TextStyleDto? floatingLabelStyle;
 
   const TextFieldSpecAttribute({
     this.style,
@@ -369,13 +369,13 @@ class TextFieldSpecAttribute extends SpecAttribute<TextFieldSpec>
     this.cursorOpacityAnimates,
     this.container,
     this.containerLayout,
-    this.hintText,
+    this.hintTextStyle,
     this.helperText,
     this.icon,
     this.contentLayout,
     this.floatingLabel,
     this.floatingLabelHeight,
-    this.floatingLabelFontSize,
+    this.floatingLabelStyle,
     super.animated,
     super.modifiers,
   });
@@ -413,13 +413,13 @@ class TextFieldSpecAttribute extends SpecAttribute<TextFieldSpec>
       cursorOpacityAnimates: cursorOpacityAnimates,
       container: container?.resolve(mix),
       containerLayout: containerLayout?.resolve(mix),
-      hintText: hintText?.resolve(mix),
+      hintTextStyle: hintTextStyle?.resolve(mix),
       helperText: helperText?.resolve(mix),
       icon: icon?.resolve(mix),
       contentLayout: contentLayout?.resolve(mix),
       floatingLabel: floatingLabel,
       floatingLabelHeight: floatingLabelHeight,
-      floatingLabelFontSize: floatingLabelFontSize,
+      floatingLabelStyle: floatingLabelStyle?.resolve(mix),
       animated: animated?.resolve(mix) ?? mix.animation,
       modifiers: modifiers?.resolve(mix),
     );
@@ -469,15 +469,16 @@ class TextFieldSpecAttribute extends SpecAttribute<TextFieldSpec>
       container: container?.merge(other.container) ?? other.container,
       containerLayout: containerLayout?.merge(other.containerLayout) ??
           other.containerLayout,
-      hintText: hintText?.merge(other.hintText) ?? other.hintText,
+      hintTextStyle:
+          hintTextStyle?.merge(other.hintTextStyle) ?? other.hintTextStyle,
       helperText: helperText?.merge(other.helperText) ?? other.helperText,
       icon: icon?.merge(other.icon) ?? other.icon,
       contentLayout:
           contentLayout?.merge(other.contentLayout) ?? other.contentLayout,
       floatingLabel: other.floatingLabel ?? floatingLabel,
       floatingLabelHeight: other.floatingLabelHeight ?? floatingLabelHeight,
-      floatingLabelFontSize:
-          other.floatingLabelFontSize ?? floatingLabelFontSize,
+      floatingLabelStyle: floatingLabelStyle?.merge(other.floatingLabelStyle) ??
+          other.floatingLabelStyle,
       animated: animated?.merge(other.animated) ?? other.animated,
       modifiers: modifiers?.merge(other.modifiers) ?? other.modifiers,
     );
@@ -511,13 +512,13 @@ class TextFieldSpecAttribute extends SpecAttribute<TextFieldSpec>
         cursorOpacityAnimates,
         container,
         containerLayout,
-        hintText,
+        hintTextStyle,
         helperText,
         icon,
         contentLayout,
         floatingLabel,
         floatingLabelHeight,
-        floatingLabelFontSize,
+        floatingLabelStyle,
         animated,
         modifiers,
       ];
@@ -575,8 +576,8 @@ class TextFieldSpecAttribute extends SpecAttribute<TextFieldSpec>
         .add(DiagnosticsProperty('container', container, defaultValue: null));
     properties.add(DiagnosticsProperty('containerLayout', containerLayout,
         defaultValue: null));
-    properties
-        .add(DiagnosticsProperty('hintText', hintText, defaultValue: null));
+    properties.add(DiagnosticsProperty('hintTextStyle', hintTextStyle,
+        defaultValue: null));
     properties
         .add(DiagnosticsProperty('helperText', helperText, defaultValue: null));
     properties.add(DiagnosticsProperty('icon', icon, defaultValue: null));
@@ -587,8 +588,7 @@ class TextFieldSpecAttribute extends SpecAttribute<TextFieldSpec>
     properties.add(DiagnosticsProperty(
         'floatingLabelHeight', floatingLabelHeight,
         defaultValue: null));
-    properties.add(DiagnosticsProperty(
-        'floatingLabelFontSize', floatingLabelFontSize,
+    properties.add(DiagnosticsProperty('floatingLabelStyle', floatingLabelStyle,
         defaultValue: null));
     properties
         .add(DiagnosticsProperty('animated', animated, defaultValue: null));
@@ -678,8 +678,8 @@ class TextFieldSpecUtility<T extends Attribute>
   /// Utility for defining [TextFieldSpecAttribute.containerLayout]
   late final containerLayout = FlexSpecUtility((v) => only(containerLayout: v));
 
-  /// Utility for defining [TextFieldSpecAttribute.hintText]
-  late final hintText = TextSpecUtility((v) => only(hintText: v));
+  /// Utility for defining [TextFieldSpecAttribute.hintTextStyle]
+  late final hintTextStyle = TextStyleUtility((v) => only(hintTextStyle: v));
 
   /// Utility for defining [TextFieldSpecAttribute.helperText]
   late final helperText = TextSpecUtility((v) => only(helperText: v));
@@ -697,9 +697,9 @@ class TextFieldSpecUtility<T extends Attribute>
   late final floatingLabelHeight =
       DoubleUtility((v) => only(floatingLabelHeight: v));
 
-  /// Utility for defining [TextFieldSpecAttribute.floatingLabelFontSize]
-  late final floatingLabelFontSize =
-      DoubleUtility((v) => only(floatingLabelFontSize: v));
+  /// Utility for defining [TextFieldSpecAttribute.floatingLabelStyle]
+  late final floatingLabelStyle =
+      TextStyleUtility((v) => only(floatingLabelStyle: v));
 
   /// Utility for defining [TextFieldSpecAttribute.animated]
   late final animated = AnimatedUtility((v) => only(animated: v));
@@ -740,13 +740,13 @@ class TextFieldSpecUtility<T extends Attribute>
     bool? cursorOpacityAnimates,
     BoxSpecAttribute? container,
     FlexSpecAttribute? containerLayout,
-    TextSpecAttribute? hintText,
+    TextStyleDto? hintTextStyle,
     TextSpecAttribute? helperText,
     IconSpecAttribute? icon,
     FlexSpecAttribute? contentLayout,
     bool? floatingLabel,
     double? floatingLabelHeight,
-    double? floatingLabelFontSize,
+    TextStyleDto? floatingLabelStyle,
     AnimatedDataDto? animated,
     WidgetModifiersDataDto? modifiers,
   }) {
@@ -773,13 +773,13 @@ class TextFieldSpecUtility<T extends Attribute>
       cursorOpacityAnimates: cursorOpacityAnimates,
       container: container,
       containerLayout: containerLayout,
-      hintText: hintText,
+      hintTextStyle: hintTextStyle,
       helperText: helperText,
       icon: icon,
       contentLayout: contentLayout,
       floatingLabel: floatingLabel,
       floatingLabelHeight: floatingLabelHeight,
-      floatingLabelFontSize: floatingLabelFontSize,
+      floatingLabelStyle: floatingLabelStyle,
       animated: animated,
       modifiers: modifiers,
     ));

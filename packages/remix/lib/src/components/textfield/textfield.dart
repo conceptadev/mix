@@ -15,10 +15,12 @@ import 'package:mix_annotations/mix_annotations.dart';
 
 import '../../helpers/component_builder.dart';
 import '../../theme/remix_theme.dart';
+import '../../theme/remix_tokens.dart';
 import 'attributes/attributes.dart';
 
 part 'textfield.g.dart';
 part 'textfield_style.dart';
+part 'textfield_theme.dart';
 part 'textfield_widget.dart';
 
 @MixableSpec()
@@ -54,11 +56,11 @@ class TextFieldSpec extends Spec<TextFieldSpec>
   final BoxSpec container;
   final FlexSpec containerLayout;
   final FlexSpec contentLayout;
-  final TextSpec hintText;
+  final TextStyle? hintTextStyle;
   final TextSpec helperText;
   final IconSpec icon;
   final double floatingLabelHeight;
-  final double floatingLabelFontSize;
+  final TextStyle? floatingLabelStyle;
 
   @MixableProperty(dto: MixableFieldDto(type: TextHeightBehaviorDto))
   final TextHeightBehavior? textHeightBehavior;
@@ -90,13 +92,13 @@ class TextFieldSpec extends Spec<TextFieldSpec>
     bool? cursorOpacityAnimates,
     BoxSpec? container,
     FlexSpec? containerLayout,
-    TextSpec? hintText,
+    this.hintTextStyle,
     TextSpec? helperText,
     IconSpec? icon,
     FlexSpec? contentLayout,
     bool? floatingLabel,
     double? floatingLabelHeight,
-    double? floatingLabelFontSize,
+    this.floatingLabelStyle,
     super.animated,
     super.modifiers,
   })  : style = style ?? const TextStyle(),
@@ -115,14 +117,12 @@ class TextFieldSpec extends Spec<TextFieldSpec>
         clipBehavior = clipBehavior ?? Clip.hardEdge,
         keyboardAppearance = keyboardAppearance ?? Brightness.light,
         container = container ?? const BoxSpec(),
-        hintText = hintText ?? const TextSpec(),
         helperText = helperText ?? const TextSpec(),
         containerLayout = containerLayout ?? const FlexSpec(),
         icon = icon ?? const IconSpec(),
         contentLayout = contentLayout ?? const FlexSpec(),
         floatingLabel = floatingLabel ?? false,
-        floatingLabelHeight = floatingLabelHeight ?? 14,
-        floatingLabelFontSize = floatingLabelFontSize ?? 12;
+        floatingLabelHeight = floatingLabelHeight ?? 14;
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {

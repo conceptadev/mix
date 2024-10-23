@@ -249,7 +249,6 @@ class _TextFieldState extends State<TextField>
   final GlobalKey<EditableTextState> editableTextKey =
       GlobalKey<EditableTextState>();
 
-  // final bool _isHovering = false;
   @override
   void initState() {
     super.initState();
@@ -373,15 +372,6 @@ class _TextFieldState extends State<TextField>
     });
     _statesController.focused = _effectiveFocusNode.hasFocus;
   }
-
-  // void _handleHover(bool hovering) {
-  //   if (hovering != _isHovering) {
-  //     setState(() {
-  //       _isHovering = hovering;
-  //     });
-  //     _statesController.hovered = _isHovering;
-  //   }
-  // }
 
   @override
   void restoreState(RestorationBucket? oldBucket, bool initialRestore) {
@@ -516,8 +506,6 @@ class _TextFieldState extends State<TextField>
     //   semanticsMaxValueLength = null;
     // }
 
-    // TODO: Estudar como implementar o mouseCursor
-    const MouseCursor effectiveMouseCursor = SystemMouseCursors.text;
     final style = widget.style ?? context.remix.components.textField;
     final configuration =
         TextFieldSpecConfiguration(context, TextFieldSpecUtility.self);
@@ -530,7 +518,6 @@ class _TextFieldState extends State<TextField>
         final isFloating = spec.floatingLabel &
             (_effectiveFocusNode.hasFocus ||
                 _effectiveController.value.text.isNotEmpty);
-        // final isShowing = spec.hintText.on.isNotEmpty;
 
         return spec.containerLayout(
           direction: Axis.vertical,
@@ -546,14 +533,15 @@ class _TextFieldState extends State<TextField>
                       animation: _effectiveController,
                       builder: (context, child) => _HintLabel(
                         text: widget.hintText ?? '',
-                        style: spec.hintText.style ?? spec.style,
+                        style: spec.hintTextStyle ?? spec.style,
                         float: isFloating,
                         show: spec.floatingLabel
                             ? true
                             : _effectiveController.value.text.isEmpty,
                         floatingLabelHeight:
                             spec.floatingLabel ? spec.floatingLabelHeight : 0,
-                        floatingLabelFontSize: spec.floatingLabelFontSize,
+                        floatingLabelStyle:
+                            spec.floatingLabelStyle ?? spec.style,
                         child: EditableText(
                           key: editableTextKey,
                           controller: _effectiveController,
@@ -597,6 +585,7 @@ class _TextFieldState extends State<TextField>
                           rendererIgnoresPointer: true,
                           cursorWidth: spec.cursorWidth,
                           cursorHeight: spec.cursorHeight,
+                          cursorRadius: spec.cursorRadius,
                           cursorOpacityAnimates: spec.cursorOpacityAnimates,
                           cursorOffset: spec.cursorOffset,
                           paintCursorAboveText: spec.paintCursorAboveText,
@@ -641,7 +630,7 @@ class _TextFieldState extends State<TextField>
     );
 
     return Interactable(
-      mouseCursor: effectiveMouseCursor,
+      mouseCursor: SystemMouseCursors.text,
       controller: _statesController,
       child: TextFieldTapRegion(
         child: IgnorePointer(
@@ -746,31 +735,6 @@ class _TextFieldContext extends InheritedWidget {
       isEmpty != oldWidget.isEmpty;
 }
 
-class IsEmptyContextVariant extends ContextVariant {
-  const IsEmptyContextVariant();
-
-  @override
-  bool when(BuildContext context) =>
-      context
-          .dependOnInheritedWidgetOfExactType<_TextFieldContext>()
-          ?.isEmpty ??
-      false;
-}
-
-class TextFieldSpecConfiguration
-    extends SpecConfiguration<TextFieldSpecUtility> {
-  const TextFieldSpecConfiguration(super.context, super._utility);
-
-  @override
-  TextFieldContextVariantUtil get on => TextFieldContextVariantUtil(super.on);
-}
-
-extension type const TextFieldContextVariantUtil(
-    OnContextVariantUtility _utility) implements OnContextVariantUtility {
-  ContextVariant get isEmpty => const IsEmptyContextVariant();
-  ContextVariant get isNotEmpty => const OnNotVariant(IsEmptyContextVariant());
-}
-
 class _HintLabel extends StatefulWidget {
   const _HintLabel({
     super.key,
@@ -779,7 +743,7 @@ class _HintLabel extends StatefulWidget {
     required this.float,
     required this.show,
     required this.floatingLabelHeight,
-    required this.floatingLabelFontSize,
+    required this.floatingLabelStyle,
     this.child,
   });
 
@@ -788,7 +752,7 @@ class _HintLabel extends StatefulWidget {
   final bool float;
   final bool show;
   final double floatingLabelHeight;
-  final double floatingLabelFontSize;
+  final TextStyle floatingLabelStyle;
   final Widget? child;
 
   @override
@@ -832,12 +796,12 @@ class _HintLabelState extends State<_HintLabel>
     return AnimatedBuilder(
       animation: _controller,
       builder: (context, child) => CustomPaint(
-        painter: FloatingLabelPainter(
+        painter: _FloatingLabelPainter(
           text: widget.text,
           style: widget.style,
           floatingProgress: _controller.value,
           show: widget.show,
-          floatingLabelFontSize: widget.floatingLabelFontSize,
+          floatingLabelStyle: widget.floatingLabelStyle,
         ),
         child: Padding(
           padding: EdgeInsets.only(top: widget.floatingLabelHeight),
@@ -848,21 +812,19 @@ class _HintLabelState extends State<_HintLabel>
   }
 }
 
-class FloatingLabelPainter extends CustomPainter {
+class _FloatingLabelPainter extends CustomPainter {
   final String text;
   final TextStyle style;
-
-  // 0 = normal, 1 = floating
   final double floatingProgress;
-  final double floatingLabelFontSize;
+  final TextStyle floatingLabelStyle;
   final bool show;
 
-  const FloatingLabelPainter({
+  const _FloatingLabelPainter({
     required this.text,
     required this.style,
     required this.floatingProgress,
     required this.show,
-    required this.floatingLabelFontSize,
+    required this.floatingLabelStyle,
   });
 
   @override
@@ -870,7 +832,7 @@ class FloatingLabelPainter extends CustomPainter {
     if (!show) return;
     final style = TextStyle.lerp(
       this.style,
-      this.style.copyWith(fontSize: floatingLabelFontSize),
+      floatingLabelStyle,
       floatingProgress,
     );
 
@@ -878,7 +840,6 @@ class FloatingLabelPainter extends CustomPainter {
 
     TextPainter tp = TextPainter(
       text: span,
-      // TODO: Verificar TextDirection
       textDirection: TextDirection.ltr,
     );
     tp.layout();
@@ -892,11 +853,11 @@ class FloatingLabelPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(FloatingLabelPainter oldDelegate) {
+  bool shouldRepaint(_FloatingLabelPainter oldDelegate) {
     return text != oldDelegate.text ||
         style != oldDelegate.style ||
         floatingProgress != oldDelegate.floatingProgress ||
         show != oldDelegate.show ||
-        floatingLabelFontSize != oldDelegate.floatingLabelFontSize;
+        floatingLabelStyle != oldDelegate.floatingLabelStyle;
   }
 }
