@@ -29,11 +29,10 @@ class Avatar extends StatelessWidget {
   /// ```
   final WidgetSpecBuilder<TextSpec> fallbackBuilder;
 
-  /// The variants of the avatar.
+  /// {@macro remix.component.variants}
   final List<Variant> variants;
 
-  /// The style of the avatar.
-  /// {@macro use_style_from_context}
+  /// {@macro remix.component.style}
   final AvatarStyle? style;
 
   @override

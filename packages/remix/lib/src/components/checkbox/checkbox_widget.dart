@@ -32,7 +32,7 @@ class Checkbox extends StatefulWidget {
   /// {@macro use_style_from_context}
   final CheckboxStyle? style;
 
-  /// The variants of the checkbox.
+  /// {@macro remix.component.variants}
   final List<Variant> variants;
 
   /// An optional label for the checkbox.
