@@ -16,7 +16,7 @@ part 'button_widget.dart';
 
 @MixableSpec()
 class ButtonSpec extends Spec<ButtonSpec> with _$ButtonSpec, Diagnosticable {
-  final FlexSpec flex;
+  final FlexSpec layout;
   final BoxSpec container;
   final IconSpec icon;
   final TextSpec label;
@@ -31,40 +31,17 @@ class ButtonSpec extends Spec<ButtonSpec> with _$ButtonSpec, Diagnosticable {
 
   const ButtonSpec({
     BoxSpec? container,
-    FlexSpec? flex,
+    FlexSpec? layout,
     IconSpec? icon,
     TextSpec? label,
     super.modifiers,
     SpinnerSpec? spinner,
     super.animated,
-  })  : flex = flex ?? const FlexSpec(),
+  })  : layout = layout ?? const FlexSpec(),
         container = container ?? const BoxSpec(),
         icon = icon ?? const IconSpec(),
         label = label ?? const TextSpec(),
         spinner = spinner ?? const SpinnerSpec();
-
-  Widget call({
-    Key? key,
-    required String label,
-    bool disabled = false,
-    bool loading = false,
-    IconData? iconLeft,
-    IconData? iconRight,
-    WidgetSpecBuilder<SpinnerSpec>? spinnerBuilder,
-    required void Function() onPressed,
-  }) {
-    return ButtonSpecWidget(
-      key: key,
-      label: label,
-      disabled: disabled,
-      loading: loading,
-      iconLeft: iconLeft,
-      iconRight: iconRight,
-      spinnerBuilder: spinnerBuilder,
-      onPressed: onPressed,
-      spec: this,
-    );
-  }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {

@@ -20,7 +20,7 @@ class FortalezaButtonStyle extends ButtonStyle {
       $.container.chain
         ..padding.vertical.$space(2)
         ..padding.horizontal.$space(3),
-      $.flex.gap.$space(2),
+      $.layout.gap.$space(2),
       $.label.style.$text(2),
       $.icon.size(14),
       $.spinner.size(14),

@@ -53,57 +53,6 @@ class Button extends StatelessWidget {
   /// {@macro remix.component.style}
   final ButtonStyle? style;
 
-  @override
-  Widget build(BuildContext context) {
-    final isDisabled = disabled || loading;
-
-    final style = this.style ?? context.remix.components.button;
-    final configuration = SpecConfiguration(context, ButtonSpecUtility.self);
-
-    return Pressable(
-      enabled: !isDisabled,
-      onPress: disabled || loading ? null : onPressed,
-      child: SpecBuilder(
-        style: style.makeStyle(configuration).applyVariants(variants),
-        builder: (context) {
-          return ButtonSpecWidget(
-            label: label,
-            disabled: disabled,
-            loading: loading,
-            iconLeft: iconLeft,
-            iconRight: iconRight,
-            spinnerBuilder: spinnerBuilder,
-            onPressed: onPressed,
-            spec: ButtonSpec.of(context),
-          );
-        },
-      ),
-    );
-  }
-}
-
-class ButtonSpecWidget extends StatelessWidget {
-  const ButtonSpecWidget({
-    super.key,
-    required this.label,
-    this.disabled = false,
-    this.loading = false,
-    this.iconLeft,
-    this.iconRight,
-    this.spinnerBuilder,
-    required this.onPressed,
-    this.spec,
-  });
-
-  final String label;
-  final bool disabled;
-  final bool loading;
-  final IconData? iconLeft;
-  final IconData? iconRight;
-  final VoidCallback? onPressed;
-  final WidgetSpecBuilder<SpinnerSpec>? spinnerBuilder;
-  final ButtonSpec? spec;
-
   bool get _hasIcon => iconLeft != null || iconRight != null;
 
   Widget _buildLoadingOverlay(ButtonSpec spec, Widget child) {
@@ -118,7 +67,7 @@ class ButtonSpecWidget extends StatelessWidget {
   }
 
   Widget _buildChildren(ButtonSpec spec) {
-    final flexWidget = spec.flex(
+    final flexWidget = spec.layout(
       direction: Axis.horizontal,
       children: [
         if (iconLeft != null) spec.icon(iconLeft),
@@ -133,8 +82,22 @@ class ButtonSpecWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final spec = this.spec ?? const ButtonSpec();
+    final isDisabled = disabled || loading;
 
-    return spec.container(child: _buildChildren(spec));
+    final style = this.style ?? context.remix.components.button;
+    final configuration = SpecConfiguration(context, ButtonSpecUtility.self);
+
+    return Pressable(
+      enabled: !isDisabled,
+      onPress: disabled || loading ? null : onPressed,
+      child: SpecBuilder(
+        style: style.makeStyle(configuration).applyVariants(variants),
+        builder: (context) {
+          final spec = ButtonSpec.of(context);
+
+          return spec.container(child: _buildChildren(spec));
+        },
+      ),
+    );
   }
 }
