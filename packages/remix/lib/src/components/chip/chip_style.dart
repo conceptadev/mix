@@ -7,8 +7,8 @@ class ChipStyle extends SpecStyle<ChipSpecUtility> {
   Style makeStyle(SpecConfiguration<ChipSpecUtility> spec) {
     final $ = spec.utilities;
 
-    final flexStyle = [
-      $.flex.chain
+    final layoutStyle = [
+      $.layout.chain
         ..mainAxisAlignment.center()
         ..crossAxisAlignment.center()
         ..mainAxisSize.min()
@@ -49,7 +49,7 @@ class ChipStyle extends SpecStyle<ChipSpecUtility> {
     );
 
     return Style.create([
-      ...flexStyle,
+      ...layoutStyle,
       ...iconStyle,
       ...labelStyle,
       ...containerStyle,

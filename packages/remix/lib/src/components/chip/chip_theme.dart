@@ -11,7 +11,7 @@ class FortalezaChipStyle extends ChipStyle {
   Style makeStyle(SpecConfiguration<ChipSpecUtility> spec) {
     final $ = spec.utilities;
 
-    final flexStyle = [$.flex.gap.$space(2)];
+    final layoutStyle = [$.layout.gap.$space(2)];
 
     final iconStyle = [$.icon.color.$accent()];
 
@@ -60,7 +60,7 @@ class FortalezaChipStyle extends ChipStyle {
 
     return Style.create([
       super.makeStyle(spec).call(),
-      ...flexStyle,
+      ...layoutStyle,
       ...iconStyle,
       ...labelStyle,
       ...containerStyle,

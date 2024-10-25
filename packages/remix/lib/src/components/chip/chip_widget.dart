@@ -74,7 +74,7 @@ class _ChipState extends State<Chip> {
           final spec = ChipSpec.of(context);
 
           return spec.container(
-            child: spec.flex(
+            child: spec.layout(
               direction: Axis.horizontal,
               children: [
                 if (widget.iconLeft != null) spec.icon(widget.iconLeft),
