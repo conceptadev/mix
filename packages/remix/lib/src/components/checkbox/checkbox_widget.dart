@@ -28,14 +28,13 @@ class Checkbox extends StatefulWidget {
   /// The callback function that is called when the checkbox is tapped.
   final ValueChanged<bool>? onChanged;
 
-  /// The style of the checkbox.
-  /// {@macro use_style_from_context}
+  /// {@macro remix.component.style}
   final CheckboxStyle? style;
 
   /// {@macro remix.component.variants}
   final List<Variant> variants;
 
-  /// An optional label for the checkbox.
+  /// An optional label that will be displayed next to the checkbox.
   final String? label;
 
   @override
