@@ -111,7 +111,7 @@ class FakeCheckboxStyle extends r.CheckboxStyle {
     final baseStyle = super.makeStyle(spec);
     return Style.create([
       baseStyle(),
-      $.container.color(color),
+      $.indicatorContainer.color(color),
     ]);
   }
 }
