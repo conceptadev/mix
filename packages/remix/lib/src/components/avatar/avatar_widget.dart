@@ -9,9 +9,31 @@ class Avatar extends StatelessWidget {
     this.style,
   });
 
-  final WidgetSpecBuilder<TextSpec> fallbackBuilder;
+  /// The image to display in the avatar.
   final ImageProvider<Object>? image;
+
+  /// A builder for the fallback widget.
+  ///
+  /// This builder creates a widget to display when the image
+  /// fails to load or isn't provided. While commonly used for initials,
+  /// it can render any widget, offering versatile fallback options.
+  ///
+  /// {@macro remix.widget_spec_builder.text_spec}
+  ///
+  /// ```dart
+  /// Avatar(
+  ///   fallbackBuilder: (spec) => spec(
+  ///     'LF',
+  ///   ),
+  /// );
+  /// ```
+  final WidgetSpecBuilder<TextSpec> fallbackBuilder;
+
+  /// The variants of the avatar.
   final List<Variant> variants;
+
+  /// The style of the avatar.
+  /// {@macro use_style_from_context}
   final AvatarStyle? style;
 
   @override

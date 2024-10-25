@@ -29,6 +29,7 @@ class Checkbox extends StatefulWidget {
   final ValueChanged<bool>? onChanged;
 
   /// The style of the checkbox.
+  /// {@macro use_style_from_context}
   final CheckboxStyle? style;
 
   /// The variants of the checkbox.
