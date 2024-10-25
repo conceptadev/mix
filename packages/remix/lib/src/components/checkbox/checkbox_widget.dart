@@ -13,13 +13,28 @@ class Checkbox extends StatefulWidget {
     this.label,
   });
 
+  /// Whether the checkbox is disabled.
   final bool disabled;
+
+  /// Whether the checkbox is checked.
   final bool value;
+
+  /// The icon to display when the checkbox is checked.
   final IconData iconChecked;
+
+  /// The icon to display when the checkbox is unchecked.
   final IconData? iconUnchecked;
+
+  /// The callback function that is called when the checkbox is tapped.
   final ValueChanged<bool>? onChanged;
+
+  /// The style of the checkbox.
   final CheckboxStyle? style;
+
+  /// The variants of the checkbox.
   final List<Variant> variants;
+
+  /// An optional label for the checkbox.
   final String? label;
 
   @override
@@ -78,9 +93,9 @@ class _CheckboxState extends State<Checkbox> {
         builder: (context) {
           final spec = CheckboxSpec.of(context);
 
-          final ContainerWidget = spec.container;
-          final ContainerLayout = spec.containerLayout;
-          final IconWidget = spec.indicator;
+          final ContainerWidget = spec.indicatorContainer;
+          final ContainerLayout = spec.layout;
+          final IconWidget = spec.indicatorIcon;
 
           return ContainerLayout(
             direction: Axis.horizontal,
