@@ -11,10 +11,10 @@ class Card extends StatelessWidget {
   /// The list of child widgets to be displayed inside the card.
   final Widget child;
 
-  /// Additional custom styling for the card.
-  ///
-  /// This allows you to override or extend the default card styling.
+  /// {@macro remix.component.style}
   final CardStyle? style;
+
+  /// {@macro remix.component.variants}
   final List<Variant> variants;
 
   @override
@@ -28,20 +28,8 @@ class Card extends StatelessWidget {
       builder: (context) {
         final spec = CardSpec.of(context);
 
-        return CardSpecWidget(spec: spec, child: child);
+        return spec.container(child: child);
       },
     );
-  }
-}
-
-class CardSpecWidget extends StatelessWidget {
-  const CardSpecWidget({super.key, required this.spec, required this.child});
-
-  final CardSpec? spec;
-  final Widget child;
-
-  @override
-  Widget build(BuildContext context) {
-    return spec!.container(child: child);
   }
 }
