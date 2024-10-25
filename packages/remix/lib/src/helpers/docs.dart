@@ -22,7 +22,8 @@ const _widgetSpecBuilder = '';
 /// {@endtemplate}
 ///
 /// {@template remix.component.style}
-/// This property allows you to customize the appearance of the component.
-/// If provided, it overrides or extends the style from the context.
+/// Customizes the component's appearance, overriding the style from theme.
+/// Use this to create unique variations or apply specific styling that
+/// differs from the global theme.
 /// {@endtemplate}
 const _useStyleFromContext = '';
