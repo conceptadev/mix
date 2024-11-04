@@ -16,8 +16,8 @@ part 'button_widget.dart';
 
 @MixableSpec()
 class ButtonSpec extends Spec<ButtonSpec> with _$ButtonSpec, Diagnosticable {
-  final FlexSpec layout;
   final BoxSpec container;
+  final FlexSpec layout;
   final IconSpec icon;
   final TextSpec label;
 

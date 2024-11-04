@@ -32,7 +32,7 @@ class Button extends StatelessWidget {
   /// Called when the button is tapped or otherwise activated
   final VoidCallback? onPressed;
 
-  /// A builder for the spinner widget.
+  /// A builder that returns a [Widget] for the button's spinner.
   ///
   /// This builder creates a widget to display when the button is loading.
   ///

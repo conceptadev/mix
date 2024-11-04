@@ -41,7 +41,7 @@ class ButtonStyle extends SpecStyle<ButtonSpecUtility> {
     final containerStyle = [
       $.container.chain
         ..borderRadius(6)
-        ..color.black()
+        ..color.red()
         ..padding.vertical(8)
         ..padding.horizontal(12),
       spec.on.disabled($.container.color.grey.shade400()),
