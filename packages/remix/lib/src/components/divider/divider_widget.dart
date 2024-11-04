@@ -8,8 +8,13 @@ class Divider extends StatelessWidget {
     this.axis = Axis.horizontal,
   });
 
+  /// {@macro remix.component.style}
   final DividerStyle? style;
+
+  /// The axis along which the divider will be displayed.
   final Axis axis;
+
+  /// {@macro remix.component.variants}
   final List<Variant> variants;
 
   @override
