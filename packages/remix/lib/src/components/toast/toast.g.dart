@@ -34,8 +34,8 @@ mixin _$ToastSpec on Spec<ToastSpec> {
   @override
   ToastSpec copyWith({
     BoxSpec? container,
-    FlexSpec? containerFlex,
-    FlexSpec? textContentFlex,
+    FlexSpec? layout,
+    FlexSpec? textLayout,
     TextSpec? title,
     TextSpec? description,
     WidgetModifiersData? modifiers,
@@ -43,8 +43,8 @@ mixin _$ToastSpec on Spec<ToastSpec> {
   }) {
     return ToastSpec(
       container: container ?? _$this.container,
-      containerFlex: containerFlex ?? _$this.containerFlex,
-      textContentFlex: textContentFlex ?? _$this.textContentFlex,
+      layout: layout ?? _$this.layout,
+      textLayout: textLayout ?? _$this.textLayout,
       title: title ?? _$this.title,
       description: description ?? _$this.description,
       modifiers: modifiers ?? _$this.modifiers,
@@ -64,7 +64,7 @@ mixin _$ToastSpec on Spec<ToastSpec> {
   /// interpolation method:
   ///
   /// - [BoxSpec.lerp] for [container].
-  /// - [FlexSpec.lerp] for [containerFlex] and [textContentFlex].
+  /// - [FlexSpec.lerp] for [layout] and [textLayout].
   /// - [TextSpec.lerp] for [title] and [description].
 
   /// For [modifiers] and [animated], the interpolation is performed using a step function.
@@ -79,8 +79,8 @@ mixin _$ToastSpec on Spec<ToastSpec> {
 
     return ToastSpec(
       container: _$this.container.lerp(other.container, t),
-      containerFlex: _$this.containerFlex.lerp(other.containerFlex, t),
-      textContentFlex: _$this.textContentFlex.lerp(other.textContentFlex, t),
+      layout: _$this.layout.lerp(other.layout, t),
+      textLayout: _$this.textLayout.lerp(other.textLayout, t),
       title: _$this.title.lerp(other.title, t),
       description: _$this.description.lerp(other.description, t),
       modifiers: other.modifiers,
@@ -95,8 +95,8 @@ mixin _$ToastSpec on Spec<ToastSpec> {
   @override
   List<Object?> get props => [
         _$this.container,
-        _$this.containerFlex,
-        _$this.textContentFlex,
+        _$this.layout,
+        _$this.textLayout,
         _$this.title,
         _$this.description,
         _$this.modifiers,
@@ -108,10 +108,9 @@ mixin _$ToastSpec on Spec<ToastSpec> {
   void _debugFillProperties(DiagnosticPropertiesBuilder properties) {
     properties.add(
         DiagnosticsProperty('container', _$this.container, defaultValue: null));
-    properties.add(DiagnosticsProperty('containerFlex', _$this.containerFlex,
-        defaultValue: null));
-    properties.add(DiagnosticsProperty(
-        'textContentFlex', _$this.textContentFlex,
+    properties
+        .add(DiagnosticsProperty('layout', _$this.layout, defaultValue: null));
+    properties.add(DiagnosticsProperty('textLayout', _$this.textLayout,
         defaultValue: null));
     properties
         .add(DiagnosticsProperty('title', _$this.title, defaultValue: null));
@@ -134,15 +133,15 @@ mixin _$ToastSpec on Spec<ToastSpec> {
 base class ToastSpecAttribute extends SpecAttribute<ToastSpec>
     with Diagnosticable {
   final BoxSpecAttribute? container;
-  final FlexSpecAttribute? containerFlex;
-  final FlexSpecAttribute? textContentFlex;
+  final FlexSpecAttribute? layout;
+  final FlexSpecAttribute? textLayout;
   final TextSpecAttribute? title;
   final TextSpecAttribute? description;
 
   const ToastSpecAttribute({
     this.container,
-    this.containerFlex,
-    this.textContentFlex,
+    this.layout,
+    this.textLayout,
     this.title,
     this.description,
     super.modifiers,
@@ -161,8 +160,8 @@ base class ToastSpecAttribute extends SpecAttribute<ToastSpec>
   ToastSpec resolve(MixData mix) {
     return ToastSpec(
       container: container?.resolve(mix),
-      containerFlex: containerFlex?.resolve(mix),
-      textContentFlex: textContentFlex?.resolve(mix),
+      layout: layout?.resolve(mix),
+      textLayout: textLayout?.resolve(mix),
       title: title?.resolve(mix),
       description: description?.resolve(mix),
       modifiers: modifiers?.resolve(mix),
@@ -184,10 +183,8 @@ base class ToastSpecAttribute extends SpecAttribute<ToastSpec>
 
     return ToastSpecAttribute(
       container: container?.merge(other.container) ?? other.container,
-      containerFlex:
-          containerFlex?.merge(other.containerFlex) ?? other.containerFlex,
-      textContentFlex: textContentFlex?.merge(other.textContentFlex) ??
-          other.textContentFlex,
+      layout: layout?.merge(other.layout) ?? other.layout,
+      textLayout: textLayout?.merge(other.textLayout) ?? other.textLayout,
       title: title?.merge(other.title) ?? other.title,
       description: description?.merge(other.description) ?? other.description,
       modifiers: modifiers?.merge(other.modifiers) ?? other.modifiers,
@@ -202,8 +199,8 @@ base class ToastSpecAttribute extends SpecAttribute<ToastSpec>
   @override
   List<Object?> get props => [
         container,
-        containerFlex,
-        textContentFlex,
+        layout,
+        textLayout,
         title,
         description,
         modifiers,
@@ -215,10 +212,9 @@ base class ToastSpecAttribute extends SpecAttribute<ToastSpec>
     super.debugFillProperties(properties);
     properties
         .add(DiagnosticsProperty('container', container, defaultValue: null));
-    properties.add(DiagnosticsProperty('containerFlex', containerFlex,
-        defaultValue: null));
-    properties.add(DiagnosticsProperty('textContentFlex', textContentFlex,
-        defaultValue: null));
+    properties.add(DiagnosticsProperty('layout', layout, defaultValue: null));
+    properties
+        .add(DiagnosticsProperty('textLayout', textLayout, defaultValue: null));
     properties.add(DiagnosticsProperty('title', title, defaultValue: null));
     properties.add(
         DiagnosticsProperty('description', description, defaultValue: null));
@@ -238,11 +234,11 @@ class ToastSpecUtility<T extends Attribute>
   /// Utility for defining [ToastSpecAttribute.container]
   late final container = BoxSpecUtility((v) => only(container: v));
 
-  /// Utility for defining [ToastSpecAttribute.containerFlex]
-  late final containerFlex = FlexSpecUtility((v) => only(containerFlex: v));
+  /// Utility for defining [ToastSpecAttribute.layout]
+  late final layout = FlexSpecUtility((v) => only(layout: v));
 
-  /// Utility for defining [ToastSpecAttribute.textContentFlex]
-  late final textContentFlex = FlexSpecUtility((v) => only(textContentFlex: v));
+  /// Utility for defining [ToastSpecAttribute.textLayout]
+  late final textLayout = FlexSpecUtility((v) => only(textLayout: v));
 
   /// Utility for defining [ToastSpecAttribute.title]
   late final title = TextSpecUtility((v) => only(title: v));
@@ -268,8 +264,8 @@ class ToastSpecUtility<T extends Attribute>
   @override
   T only({
     BoxSpecAttribute? container,
-    FlexSpecAttribute? containerFlex,
-    FlexSpecAttribute? textContentFlex,
+    FlexSpecAttribute? layout,
+    FlexSpecAttribute? textLayout,
     TextSpecAttribute? title,
     TextSpecAttribute? description,
     WidgetModifiersDataDto? modifiers,
@@ -277,8 +273,8 @@ class ToastSpecUtility<T extends Attribute>
   }) {
     return builder(ToastSpecAttribute(
       container: container,
-      containerFlex: containerFlex,
-      textContentFlex: textContentFlex,
+      layout: layout,
+      textLayout: textLayout,
       title: title,
       description: description,
       modifiers: modifiers,
