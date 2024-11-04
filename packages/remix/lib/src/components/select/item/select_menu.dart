@@ -6,7 +6,7 @@ base class SelectMenuItemSpec extends Spec<SelectMenuItemSpec>
   final IconSpec icon;
   final TextSpec text;
   final BoxSpec container;
-  final FlexSpec flex;
+  final FlexSpec layout;
 
   static const of = _$SelectMenuItemSpec.of;
 
@@ -16,13 +16,13 @@ base class SelectMenuItemSpec extends Spec<SelectMenuItemSpec>
     IconSpec? icon,
     TextSpec? text,
     BoxSpec? container,
-    FlexSpec? flex,
+    FlexSpec? layout,
     super.modifiers,
     super.animated,
   })  : icon = icon ?? const IconSpec(),
         text = text ?? const TextSpec(),
         container = container ?? const BoxSpec(),
-        flex = flex ?? const FlexSpec();
+        layout = layout ?? const FlexSpec();
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {

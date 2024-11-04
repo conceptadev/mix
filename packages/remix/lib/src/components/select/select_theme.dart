@@ -25,8 +25,8 @@ class FortalezaSelectStyle extends SelectStyle {
         ..container.border.all.color.$neutral(6)
         ..container.color.$neutral(1)
         ..icon.color.$accentAlpha(12)
-        ..flex.gap.$space(1)
-        ..flex.mainAxisSize.min(),
+        ..layout.gap.$space(1)
+        ..layout.mainAxisSize.min(),
       $.item.container.padding.horizontal.$space(3),
       spec.on.disabled(
         $.button.chain

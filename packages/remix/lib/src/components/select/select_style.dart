@@ -14,7 +14,7 @@ class SelectStyle extends SpecStyle<SelectSpecUtility> {
     ];
 
     final buttonStyle = [
-      $.button.flex.mainAxisAlignment.spaceBetween(),
+      $.button.layout.mainAxisAlignment.spaceBetween(),
       $.button.container.chain
         ..color.white()
         ..padding.all(10)
@@ -66,7 +66,7 @@ class SelectStyle extends SpecStyle<SelectSpecUtility> {
         ..style.color.black()
         ..style.fontSize(14),
       $.item.icon.size(20),
-      $.item.flex.gap(6),
+      $.item.layout.gap(6),
       spec.on.hover($.item.container.color.black12()),
     ];
 
