@@ -34,7 +34,7 @@ class RadioStyle extends SpecStyle<RadioSpecUtility> {
       ..style.fontWeight.w500()
       ..textHeightBehavior.heightToFirstAscent.off();
 
-    final flexStyle = $.flex.chain
+    final layoutStyle = $.layout.chain
       ..row()
       ..mainAxisSize.min()
       ..mainAxisAlignment.start()
@@ -47,7 +47,7 @@ class RadioStyle extends SpecStyle<RadioSpecUtility> {
       ...containerStyle,
       ...indicatorStyle,
       textStyle,
-      flexStyle,
+      layoutStyle,
       disabledStyle,
     ]).animate(
       duration: const Duration(milliseconds: 100),

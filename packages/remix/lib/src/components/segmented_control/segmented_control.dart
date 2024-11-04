@@ -19,9 +19,9 @@ final $segmentedControl = SegmentedControlSpecUtility.self;
 class SegmentedControlSpec extends Spec<SegmentedControlSpec>
     with _$SegmentedControlSpec, Diagnosticable {
   final BoxSpec container;
-  final FlexSpec flex;
-  final bool showDivider;
+  final FlexSpec layout;
   final BoxSpec divider;
+  final bool showDivider;
 
   @MixableProperty(dto: MixableFieldDto(type: 'SegmentButtonSpecAttribute'))
   final SegmentButtonSpec item;
@@ -33,13 +33,13 @@ class SegmentedControlSpec extends Spec<SegmentedControlSpec>
 
   const SegmentedControlSpec({
     BoxSpec? container,
-    FlexSpec? flex,
+    FlexSpec? layout,
     bool? showDivider,
     BoxSpec? divider,
     SegmentButtonSpec? item,
     super.modifiers,
     super.animated,
-  })  : flex = flex ?? const FlexSpec(),
+  })  : layout = layout ?? const FlexSpec(),
         container = container ?? const BoxSpec(),
         showDivider = showDivider ?? false,
         item = item ?? const SegmentButtonSpec(),

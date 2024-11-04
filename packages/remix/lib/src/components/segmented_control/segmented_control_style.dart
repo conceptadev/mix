@@ -25,8 +25,8 @@ class SegmentedControlStyle extends SpecStyle<SegmentedControlSpecUtility> {
       $.showDivider.off(),
     ];
 
-    final flexStyle = [
-      $.flex.chain
+    final layoutStyle = [
+      $.layout.chain
         ..row()
         ..mainAxisSize.min(),
     ];
@@ -58,7 +58,7 @@ class SegmentedControlStyle extends SpecStyle<SegmentedControlSpecUtility> {
     return Style.create([
       ...containerStyle,
       ...dividerStyle,
-      ...flexStyle,
+      ...layoutStyle,
       ...itemStyle,
     ]);
   }

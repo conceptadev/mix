@@ -34,7 +34,7 @@ mixin _$SegmentedControlSpec on Spec<SegmentedControlSpec> {
   @override
   SegmentedControlSpec copyWith({
     BoxSpec? container,
-    FlexSpec? flex,
+    FlexSpec? layout,
     bool? showDivider,
     BoxSpec? divider,
     SegmentButtonSpec? item,
@@ -43,7 +43,7 @@ mixin _$SegmentedControlSpec on Spec<SegmentedControlSpec> {
   }) {
     return SegmentedControlSpec(
       container: container ?? _$this.container,
-      flex: flex ?? _$this.flex,
+      layout: layout ?? _$this.layout,
       showDivider: showDivider ?? _$this.showDivider,
       divider: divider ?? _$this.divider,
       item: item ?? _$this.item,
@@ -64,7 +64,7 @@ mixin _$SegmentedControlSpec on Spec<SegmentedControlSpec> {
   /// interpolation method:
   ///
   /// - [BoxSpec.lerp] for [container] and [divider].
-  /// - [FlexSpec.lerp] for [flex].
+  /// - [FlexSpec.lerp] for [layout].
 
   /// For [showDivider] and [item] and [modifiers] and [animated], the interpolation is performed using a step function.
   /// If [t] is less than 0.5, the value from the current [SegmentedControlSpec] is used. Otherwise, the value
@@ -78,7 +78,7 @@ mixin _$SegmentedControlSpec on Spec<SegmentedControlSpec> {
 
     return SegmentedControlSpec(
       container: _$this.container.lerp(other.container, t),
-      flex: _$this.flex.lerp(other.flex, t),
+      layout: _$this.layout.lerp(other.layout, t),
       showDivider: t < 0.5 ? _$this.showDivider : other.showDivider,
       divider: _$this.divider.lerp(other.divider, t),
       item: _$this.item.lerp(other.item, t),
@@ -94,7 +94,7 @@ mixin _$SegmentedControlSpec on Spec<SegmentedControlSpec> {
   @override
   List<Object?> get props => [
         _$this.container,
-        _$this.flex,
+        _$this.layout,
         _$this.showDivider,
         _$this.divider,
         _$this.item,
@@ -108,7 +108,7 @@ mixin _$SegmentedControlSpec on Spec<SegmentedControlSpec> {
     properties.add(
         DiagnosticsProperty('container', _$this.container, defaultValue: null));
     properties
-        .add(DiagnosticsProperty('flex', _$this.flex, defaultValue: null));
+        .add(DiagnosticsProperty('layout', _$this.layout, defaultValue: null));
     properties.add(DiagnosticsProperty('showDivider', _$this.showDivider,
         defaultValue: null));
     properties.add(
@@ -132,14 +132,14 @@ mixin _$SegmentedControlSpec on Spec<SegmentedControlSpec> {
 class SegmentedControlSpecAttribute extends SpecAttribute<SegmentedControlSpec>
     with Diagnosticable {
   final BoxSpecAttribute? container;
-  final FlexSpecAttribute? flex;
+  final FlexSpecAttribute? layout;
   final bool? showDivider;
   final BoxSpecAttribute? divider;
   final SegmentButtonSpecAttribute? item;
 
   const SegmentedControlSpecAttribute({
     this.container,
-    this.flex,
+    this.layout,
     this.showDivider,
     this.divider,
     this.item,
@@ -159,7 +159,7 @@ class SegmentedControlSpecAttribute extends SpecAttribute<SegmentedControlSpec>
   SegmentedControlSpec resolve(MixData mix) {
     return SegmentedControlSpec(
       container: container?.resolve(mix),
-      flex: flex?.resolve(mix),
+      layout: layout?.resolve(mix),
       showDivider: showDivider,
       divider: divider?.resolve(mix),
       item: item?.resolve(mix),
@@ -183,7 +183,7 @@ class SegmentedControlSpecAttribute extends SpecAttribute<SegmentedControlSpec>
 
     return SegmentedControlSpecAttribute(
       container: container?.merge(other.container) ?? other.container,
-      flex: flex?.merge(other.flex) ?? other.flex,
+      layout: layout?.merge(other.layout) ?? other.layout,
       showDivider: other.showDivider ?? showDivider,
       divider: divider?.merge(other.divider) ?? other.divider,
       item: item?.merge(other.item) ?? other.item,
@@ -199,7 +199,7 @@ class SegmentedControlSpecAttribute extends SpecAttribute<SegmentedControlSpec>
   @override
   List<Object?> get props => [
         container,
-        flex,
+        layout,
         showDivider,
         divider,
         item,
@@ -212,7 +212,7 @@ class SegmentedControlSpecAttribute extends SpecAttribute<SegmentedControlSpec>
     super.debugFillProperties(properties);
     properties
         .add(DiagnosticsProperty('container', container, defaultValue: null));
-    properties.add(DiagnosticsProperty('flex', flex, defaultValue: null));
+    properties.add(DiagnosticsProperty('layout', layout, defaultValue: null));
     properties.add(
         DiagnosticsProperty('showDivider', showDivider, defaultValue: null));
     properties.add(DiagnosticsProperty('divider', divider, defaultValue: null));
@@ -233,8 +233,8 @@ class SegmentedControlSpecUtility<T extends Attribute>
   /// Utility for defining [SegmentedControlSpecAttribute.container]
   late final container = BoxSpecUtility((v) => only(container: v));
 
-  /// Utility for defining [SegmentedControlSpecAttribute.flex]
-  late final flex = FlexSpecUtility((v) => only(flex: v));
+  /// Utility for defining [SegmentedControlSpecAttribute.layout]
+  late final layout = FlexSpecUtility((v) => only(layout: v));
 
   /// Utility for defining [SegmentedControlSpecAttribute.showDivider]
   late final showDivider = BoolUtility((v) => only(showDivider: v));
@@ -263,7 +263,7 @@ class SegmentedControlSpecUtility<T extends Attribute>
   @override
   T only({
     BoxSpecAttribute? container,
-    FlexSpecAttribute? flex,
+    FlexSpecAttribute? layout,
     bool? showDivider,
     BoxSpecAttribute? divider,
     SegmentButtonSpecAttribute? item,
@@ -272,7 +272,7 @@ class SegmentedControlSpecUtility<T extends Attribute>
   }) {
     return builder(SegmentedControlSpecAttribute(
       container: container,
-      flex: flex,
+      layout: layout,
       showDivider: showDivider,
       divider: divider,
       item: item,
