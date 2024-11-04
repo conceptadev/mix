@@ -17,10 +17,17 @@ class Button extends StatelessWidget {
   /// The text content displayed in the center of the button.
   final String label;
 
-  /// Whether the button is disabled or enabled.
+  /// {@template remix.component.disabled}
+  /// When disabled, the component will not respond to user interaction and will
+  /// appear visually distinct to indicate its disabled state.
+  /// {@endtemplate}
   final bool disabled;
 
-  /// Whether the button is loading or not.
+  /// {@template remix.component.loading}
+  /// When loading, the component will display a spinner and disable user
+  /// interaction. The component's content will be hidden but maintain its
+  /// space to prevent layout shifts.
+  /// {@endtemplate}
   final bool loading;
 
   /// The icon displayed in the left side of the button.
@@ -29,7 +36,11 @@ class Button extends StatelessWidget {
   /// The icon displayed in the right side of the button.
   final IconData? iconRight;
 
-  /// Called when the button is tapped or otherwise activated
+  /// {@template remix.component.onPressed}
+  /// Called when the component is tapped.
+  /// If null or if [disabled] is true, the component will be disabled and won't
+  /// respond to touch.
+  /// {@endtemplate}
   final VoidCallback? onPressed;
 
   /// A builder that returns a [Widget] for the button's spinner.

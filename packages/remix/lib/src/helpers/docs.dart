@@ -6,6 +6,10 @@ library docs;
 /// The builder offers a [TextSpec] which can be used to style the
 /// text consistently with component's style.
 /// {@endtemplate}
+/// {@template remix.widget_spec_builder.spinner_builder}
+/// The builder offers a [SpinnerSpec] which can be used to style the
+/// spinner consistently with component's style.
+/// {@endtemplate}
 /// {@template remix.widget_spec_builder.text_spec.code}
 /// ```dart
 ///
