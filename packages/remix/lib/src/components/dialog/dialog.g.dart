@@ -36,8 +36,8 @@ mixin _$DialogSpec on Spec<DialogSpec> {
     BoxSpec? container,
     TextSpec? title,
     TextSpec? description,
-    FlexSpec? mainFlex,
-    FlexSpec? actionsFlex,
+    FlexSpec? containerLayout,
+    FlexSpec? actionsLayout,
     WidgetModifiersData? modifiers,
     AnimatedData? animated,
   }) {
@@ -45,8 +45,8 @@ mixin _$DialogSpec on Spec<DialogSpec> {
       container: container ?? _$this.container,
       title: title ?? _$this.title,
       description: description ?? _$this.description,
-      mainFlex: mainFlex ?? _$this.mainFlex,
-      actionsFlex: actionsFlex ?? _$this.actionsFlex,
+      containerLayout: containerLayout ?? _$this.containerLayout,
+      actionsLayout: actionsLayout ?? _$this.actionsLayout,
       modifiers: modifiers ?? _$this.modifiers,
       animated: animated ?? _$this.animated,
     );
@@ -65,7 +65,7 @@ mixin _$DialogSpec on Spec<DialogSpec> {
   ///
   /// - [BoxSpec.lerp] for [container].
   /// - [TextSpec.lerp] for [title] and [description].
-  /// - [FlexSpec.lerp] for [mainFlex] and [actionsFlex].
+  /// - [FlexSpec.lerp] for [containerLayout] and [actionsLayout].
 
   /// For [modifiers] and [animated], the interpolation is performed using a step function.
   /// If [t] is less than 0.5, the value from the current [DialogSpec] is used. Otherwise, the value
@@ -81,8 +81,8 @@ mixin _$DialogSpec on Spec<DialogSpec> {
       container: _$this.container.lerp(other.container, t),
       title: _$this.title.lerp(other.title, t),
       description: _$this.description.lerp(other.description, t),
-      mainFlex: _$this.mainFlex.lerp(other.mainFlex, t),
-      actionsFlex: _$this.actionsFlex.lerp(other.actionsFlex, t),
+      containerLayout: _$this.containerLayout.lerp(other.containerLayout, t),
+      actionsLayout: _$this.actionsLayout.lerp(other.actionsLayout, t),
       modifiers: other.modifiers,
       animated: t < 0.5 ? _$this.animated : other.animated,
     );
@@ -97,8 +97,8 @@ mixin _$DialogSpec on Spec<DialogSpec> {
         _$this.container,
         _$this.title,
         _$this.description,
-        _$this.mainFlex,
-        _$this.actionsFlex,
+        _$this.containerLayout,
+        _$this.actionsLayout,
         _$this.modifiers,
         _$this.animated,
       ];
@@ -112,9 +112,10 @@ mixin _$DialogSpec on Spec<DialogSpec> {
         .add(DiagnosticsProperty('title', _$this.title, defaultValue: null));
     properties.add(DiagnosticsProperty('description', _$this.description,
         defaultValue: null));
-    properties.add(
-        DiagnosticsProperty('mainFlex', _$this.mainFlex, defaultValue: null));
-    properties.add(DiagnosticsProperty('actionsFlex', _$this.actionsFlex,
+    properties.add(DiagnosticsProperty(
+        'containerLayout', _$this.containerLayout,
+        defaultValue: null));
+    properties.add(DiagnosticsProperty('actionsLayout', _$this.actionsLayout,
         defaultValue: null));
     properties.add(
         DiagnosticsProperty('modifiers', _$this.modifiers, defaultValue: null));
@@ -135,15 +136,15 @@ class DialogSpecAttribute extends SpecAttribute<DialogSpec>
   final BoxSpecAttribute? container;
   final TextSpecAttribute? title;
   final TextSpecAttribute? description;
-  final FlexSpecAttribute? mainFlex;
-  final FlexSpecAttribute? actionsFlex;
+  final FlexSpecAttribute? containerLayout;
+  final FlexSpecAttribute? actionsLayout;
 
   const DialogSpecAttribute({
     this.container,
     this.title,
     this.description,
-    this.mainFlex,
-    this.actionsFlex,
+    this.containerLayout,
+    this.actionsLayout,
     super.modifiers,
     super.animated,
   });
@@ -162,8 +163,8 @@ class DialogSpecAttribute extends SpecAttribute<DialogSpec>
       container: container?.resolve(mix),
       title: title?.resolve(mix),
       description: description?.resolve(mix),
-      mainFlex: mainFlex?.resolve(mix),
-      actionsFlex: actionsFlex?.resolve(mix),
+      containerLayout: containerLayout?.resolve(mix),
+      actionsLayout: actionsLayout?.resolve(mix),
       modifiers: modifiers?.resolve(mix),
       animated: animated?.resolve(mix) ?? mix.animation,
     );
@@ -185,8 +186,10 @@ class DialogSpecAttribute extends SpecAttribute<DialogSpec>
       container: container?.merge(other.container) ?? other.container,
       title: title?.merge(other.title) ?? other.title,
       description: description?.merge(other.description) ?? other.description,
-      mainFlex: mainFlex?.merge(other.mainFlex) ?? other.mainFlex,
-      actionsFlex: actionsFlex?.merge(other.actionsFlex) ?? other.actionsFlex,
+      containerLayout: containerLayout?.merge(other.containerLayout) ??
+          other.containerLayout,
+      actionsLayout:
+          actionsLayout?.merge(other.actionsLayout) ?? other.actionsLayout,
       modifiers: modifiers?.merge(other.modifiers) ?? other.modifiers,
       animated: animated?.merge(other.animated) ?? other.animated,
     );
@@ -201,8 +204,8 @@ class DialogSpecAttribute extends SpecAttribute<DialogSpec>
         container,
         title,
         description,
-        mainFlex,
-        actionsFlex,
+        containerLayout,
+        actionsLayout,
         modifiers,
         animated,
       ];
@@ -215,10 +218,10 @@ class DialogSpecAttribute extends SpecAttribute<DialogSpec>
     properties.add(DiagnosticsProperty('title', title, defaultValue: null));
     properties.add(
         DiagnosticsProperty('description', description, defaultValue: null));
-    properties
-        .add(DiagnosticsProperty('mainFlex', mainFlex, defaultValue: null));
-    properties.add(
-        DiagnosticsProperty('actionsFlex', actionsFlex, defaultValue: null));
+    properties.add(DiagnosticsProperty('containerLayout', containerLayout,
+        defaultValue: null));
+    properties.add(DiagnosticsProperty('actionsLayout', actionsLayout,
+        defaultValue: null));
     properties
         .add(DiagnosticsProperty('modifiers', modifiers, defaultValue: null));
     properties
@@ -241,11 +244,11 @@ class DialogSpecUtility<T extends Attribute>
   /// Utility for defining [DialogSpecAttribute.description]
   late final description = TextSpecUtility((v) => only(description: v));
 
-  /// Utility for defining [DialogSpecAttribute.mainFlex]
-  late final mainFlex = FlexSpecUtility((v) => only(mainFlex: v));
+  /// Utility for defining [DialogSpecAttribute.containerLayout]
+  late final containerLayout = FlexSpecUtility((v) => only(containerLayout: v));
 
-  /// Utility for defining [DialogSpecAttribute.actionsFlex]
-  late final actionsFlex = FlexSpecUtility((v) => only(actionsFlex: v));
+  /// Utility for defining [DialogSpecAttribute.actionsLayout]
+  late final actionsLayout = FlexSpecUtility((v) => only(actionsLayout: v));
 
   /// Utility for defining [DialogSpecAttribute.modifiers]
   late final wrap = SpecModifierUtility((v) => only(modifiers: v));
@@ -267,8 +270,8 @@ class DialogSpecUtility<T extends Attribute>
     BoxSpecAttribute? container,
     TextSpecAttribute? title,
     TextSpecAttribute? description,
-    FlexSpecAttribute? mainFlex,
-    FlexSpecAttribute? actionsFlex,
+    FlexSpecAttribute? containerLayout,
+    FlexSpecAttribute? actionsLayout,
     WidgetModifiersDataDto? modifiers,
     AnimatedDataDto? animated,
   }) {
@@ -276,8 +279,8 @@ class DialogSpecUtility<T extends Attribute>
       container: container,
       title: title,
       description: description,
-      mainFlex: mainFlex,
-      actionsFlex: actionsFlex,
+      containerLayout: containerLayout,
+      actionsLayout: actionsLayout,
       modifiers: modifiers,
       animated: animated,
     ));

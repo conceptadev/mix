@@ -33,7 +33,7 @@ class ButtonStyle extends SpecStyle<ButtonSpecUtility> {
     final flexboxStyle = [
       $.flexbox.chain
         ..borderRadius(6)
-        ..color.black()
+        ..color.red()
         ..padding.vertical(8)
         ..padding.horizontal(12)
         ..flex.mainAxisAlignment.center()

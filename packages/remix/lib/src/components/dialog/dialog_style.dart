@@ -14,13 +14,13 @@ class DialogStyle extends SpecStyle<DialogSpecUtility> {
       ..constraints.minWidth(300)
       ..constraints.maxWidth(500);
 
-    final mainFlex = $.mainFlex.chain
+    final containerLayout = $.containerLayout.chain
       ..mainAxisSize.min()
       ..gap(4)
       ..crossAxisAlignment.start()
       ..direction.vertical();
 
-    final actionsFlex = $.actionsFlex.chain
+    final actionsLayout = $.actionsLayout.chain
       ..mainAxisSize.max()
       ..mainAxisAlignment.end()
       ..gap(12)
@@ -40,10 +40,10 @@ class DialogStyle extends SpecStyle<DialogSpecUtility> {
       [
         $with.align(alignment: Alignment.center),
         containerStyle,
-        mainFlex,
+        containerLayout,
         titleStyle,
         descriptionStyle,
-        actionsFlex,
+        actionsLayout,
       ],
     );
   }
