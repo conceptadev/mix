@@ -27,7 +27,7 @@ class FortalezaSelectStyle extends SelectStyle {
         ..icon.color.$accentAlpha(12)
         ..layout.gap.$space(1)
         ..layout.mainAxisSize.min(),
-      $.item.container.padding.horizontal.$space(3),
+      $.item.outerContainer.padding.horizontal.$space(3),
       spec.on.disabled(
         $.button.chain
           ..container.color.$neutral(2)
@@ -37,8 +37,8 @@ class FortalezaSelectStyle extends SelectStyle {
       ),
       spec.on.hover(
         $.button.container.border.all.color.$neutral(8),
-        $.item.container.color.$accent(9),
-        $.item.text.style.color.$white(),
+        $.item.outerContainer.color.$accent(9),
+        $.item.title.style.color.$white(),
       ),
     );
 
@@ -47,12 +47,12 @@ class FortalezaSelectStyle extends SelectStyle {
         ..color.$accent(3)
         ..border.none(),
       $.button.label.style.color.$accent(12),
-      $.item.text.style.color.$accent(12),
+      $.item.title.style.color.$accent(12),
       spec.on.hover(
         $.button.container.color.$accent(4),
         $.item.chain
-          ..container.color.$accent(4)
-          ..text.style.color.$accent(12),
+          ..outerContainer.color.$accent(4)
+          ..title.style.color.$accent(12),
       ),
     );
 
@@ -63,8 +63,8 @@ class FortalezaSelectStyle extends SelectStyle {
       spec.on.hover(
         $.button.container.color.$accent(4),
         $.item.chain
-          ..container.color.$accent(4)
-          ..text.style.color.$accent(12),
+          ..outerContainer.color.$accent(4)
+          ..title.style.color.$accent(12),
       ),
       spec.on.disabled(
         $.button.chain
@@ -100,7 +100,7 @@ class FortalezaDarkSelectStyle extends FortalezaSelectStyle {
         ..container.color.$neutral(1)
         ..container.border.all.color.$neutral(7),
       $.menu.container.color.$neutral(1),
-      $.item.text.style.color.$neutral(12),
+      $.item.title.style.color.$neutral(12),
       spec.on.hover($.button.container.border.all.color.$neutral(8)),
     );
 
@@ -110,7 +110,7 @@ class FortalezaDarkSelectStyle extends FortalezaSelectStyle {
         ..icon.color.$accent(12)
         ..container.color.transparent()
         ..container.border.all.color.$neutral(7),
-      $.item.text.style.color.$neutral(12),
+      $.item.title.style.color.$neutral(12),
     );
 
     return Style.create([

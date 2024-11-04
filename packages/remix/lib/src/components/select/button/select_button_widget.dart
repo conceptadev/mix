@@ -5,12 +5,12 @@ class SelectButtonSpecWidget extends StatelessWidget {
     super.key,
     required this.spec,
     required this.text,
-    required this.trailingIcon,
+    this.trailingIcon,
   });
 
   final SelectButtonSpec spec;
   final String text;
-  final IconData trailingIcon;
+  final IconData? trailingIcon;
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +27,10 @@ class SelectButtonSpecWidget extends StatelessWidget {
         return container(
           child: flex(
             direction: Axis.horizontal,
-            children: [label(text), icon(trailingIcon)],
+            children: [
+              label(text),
+              if (trailingIcon != null) icon(trailingIcon),
+            ],
           ),
         );
       },

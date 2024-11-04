@@ -72,25 +72,51 @@ class MenuItem extends StatelessWidget {
         builder: (context) {
           final spec = MenuItemSpec.of(context);
 
-          return spec.outerContainer(
-            child: spec.contentLayout(
-              direction: Axis.horizontal,
-              children: [
-                if (leadingWidgetBuilder != null)
-                  leadingWidgetBuilder!(spec.icon),
-                spec.titleSubtitleLayout(
-                  direction: Axis.vertical,
-                  children: [
-                    spec.title(title),
-                    if (subtitle != null) spec.subtitle(subtitle!),
-                  ],
-                ),
-                if (trailingWidgetBuilder != null)
-                  trailingWidgetBuilder!(spec.icon),
-              ],
-            ),
+          return MenuItemSpecWidget(
+            spec: spec,
+            leadingWidgetBuilder: leadingWidgetBuilder,
+            title: title,
+            subtitle: subtitle,
+            trailingWidgetBuilder: trailingWidgetBuilder,
           );
         },
+      ),
+    );
+  }
+}
+
+class MenuItemSpecWidget extends StatelessWidget {
+  const MenuItemSpecWidget({
+    super.key,
+    required this.spec,
+    required this.leadingWidgetBuilder,
+    required this.title,
+    required this.subtitle,
+    required this.trailingWidgetBuilder,
+  });
+
+  final MenuItemSpec spec;
+  final WidgetSpecBuilder<IconSpec>? leadingWidgetBuilder;
+  final String title;
+  final String? subtitle;
+  final WidgetSpecBuilder<IconSpec>? trailingWidgetBuilder;
+
+  @override
+  Widget build(BuildContext context) {
+    return spec.outerContainer(
+      child: spec.contentLayout(
+        direction: Axis.horizontal,
+        children: [
+          if (leadingWidgetBuilder != null) leadingWidgetBuilder!(spec.icon),
+          spec.titleSubtitleLayout(
+            direction: Axis.vertical,
+            children: [
+              spec.title(title),
+              if (subtitle != null) spec.subtitle(subtitle!),
+            ],
+          ),
+          if (trailingWidgetBuilder != null) trailingWidgetBuilder!(spec.icon),
+        ],
       ),
     );
   }

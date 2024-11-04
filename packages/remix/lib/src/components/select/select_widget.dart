@@ -1,10 +1,35 @@
 part of 'select.dart';
 
+/// A menu item for use in a [Select] dropdown.
+///
+/// Each menu item has a [value] that will be passed to the [Select.onChanged]
+/// callback when selected, and a [childBuilder] that defines how the item is displayed.
+///
+///
+/// Example:
+/// ```dart
+/// SelectMenuItem(
+///   value: 'item1',
+///   childBuilder: (spec) => spec(
+///     title: 'Item 1',
+///     subtitle: 'Description',
+///     leadingWidgetBuilder: (spec) => spec(Icons.star),
+///   ),
+/// )
+/// ```
 class SelectMenuItem<T> {
+  /// The value associated with this menu item.
+  /// This value will be passed to [Select.onChanged] when the item is selected.
   final T value;
-  final Widget child;
 
-  const SelectMenuItem({required this.value, required this.child});
+  /// A builder function that returns the widget to display for this menu item.
+  /// The builder receives a [MenuItemSpec] that can be used to customize the appearance.
+  final WidgetSpecBuilder<MenuItemSpec> childBuilder;
+
+  /// Creates a menu item for a [Select] dropdown.
+  ///
+  /// The [value] and [childBuilder] parameters must not be null.
+  const SelectMenuItem({required this.value, required this.childBuilder});
 }
 
 class Select<T> extends StatefulWidget {
@@ -136,18 +161,26 @@ class SelectState<T> extends State<Select<T>>
                         child: Flex(
                           direction: Axis.vertical,
                           children: widget.items.map((item) {
+                            final selectedItemStateController =
+                                MixWidgetStateController()..selected = true;
+
                             return Pressable(
                               onPress: () {
                                 widget.onChanged(item.value);
                                 hide();
                               },
+                              controller: (widget.value == item.value)
+                                  ? selectedItemStateController
+                                  : null,
                               child: SpecBuilder(
                                 style: appliedStyle.animate(
                                   duration: _baseAnimation.duration,
                                   curve: _baseAnimation.curve,
                                 ),
                                 builder: (context) {
-                                  return item.child;
+                                  final itemSpec = SelectSpec.of(context).item;
+
+                                  return item.childBuilder(itemSpec);
                                 },
                               ),
                             );

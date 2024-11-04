@@ -35,7 +35,7 @@ mixin _$SelectSpec on Spec<SelectSpec> {
   SelectSpec copyWith({
     SelectButtonSpec? button,
     SelectMenuSpec? menu,
-    SelectMenuItemSpec? item,
+    MenuItemSpec? item,
     CompositedTransformFollowerSpec? position,
     WidgetModifiersData? modifiers,
     AnimatedData? animated,
@@ -125,7 +125,7 @@ class SelectSpecAttribute extends SpecAttribute<SelectSpec>
     with Diagnosticable {
   final SelectButtonSpecAttribute? button;
   final SelectMenuSpecAttribute? menu;
-  final SelectMenuItemSpecAttribute? item;
+  final MenuItemSpecAttribute? item;
   final CompositedTransformFollowerSpecAttribute? position;
 
   const SelectSpecAttribute({
@@ -221,7 +221,7 @@ class SelectSpecUtility<T extends Attribute>
   late final menu = SelectMenuSpecUtility((v) => only(menu: v));
 
   /// Utility for defining [SelectSpecAttribute.item]
-  late final item = SelectMenuItemSpecUtility((v) => only(item: v));
+  late final item = MenuItemSpecUtility((v) => only(item: v));
 
   /// Utility for defining [SelectSpecAttribute.position]
   late final position =
@@ -246,7 +246,7 @@ class SelectSpecUtility<T extends Attribute>
   T only({
     SelectButtonSpecAttribute? button,
     SelectMenuSpecAttribute? menu,
-    SelectMenuItemSpecAttribute? item,
+    MenuItemSpecAttribute? item,
     CompositedTransformFollowerSpecAttribute? position,
     WidgetModifiersDataDto? modifiers,
     AnimatedDataDto? animated,

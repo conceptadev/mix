@@ -7,11 +7,12 @@ import '../../helpers/component_builder.dart';
 import '../../helpers/spec/composited_transform_follower_spec.dart';
 import '../../theme/remix_theme.dart';
 import '../../theme/remix_tokens.dart';
+import '../menu_item/menu_item.dart';
 
 part 'button/select_button.dart';
 part 'button/select_button_widget.dart';
 part 'item/select_menu.dart';
-part 'item/select_menu_widget.dart';
+// part 'item/select_menu_widget.dart';
 part 'select.g.dart';
 part 'select_style.dart';
 part 'select_theme.dart';
@@ -27,8 +28,8 @@ class SelectSpec extends Spec<SelectSpec> with _$SelectSpec, Diagnosticable {
   @MixableProperty(dto: MixableFieldDto(type: 'SelectMenuSpecAttribute'))
   final SelectMenuSpec menu;
 
-  @MixableProperty(dto: MixableFieldDto(type: 'SelectMenuItemSpecAttribute'))
-  final SelectMenuItemSpec item;
+  @MixableProperty(dto: MixableFieldDto(type: 'MenuItemSpecAttribute'))
+  final MenuItemSpec item;
 
   @MixableProperty(
     dto: MixableFieldDto(type: 'CompositedTransformFollowerSpecAttribute'),
@@ -43,12 +44,12 @@ class SelectSpec extends Spec<SelectSpec> with _$SelectSpec, Diagnosticable {
   const SelectSpec({
     SelectButtonSpec? button,
     SelectMenuSpec? menu,
-    SelectMenuItemSpec? item,
+    MenuItemSpec? item,
     CompositedTransformFollowerSpec? position,
     super.modifiers,
     super.animated,
   })  : button = button ?? const SelectButtonSpec(),
-        item = item ?? const SelectMenuItemSpec(),
+        item = item ?? const MenuItemSpec(),
         menu = menu ?? const SelectMenuSpec(),
         position = position ?? const CompositedTransformFollowerSpec();
 

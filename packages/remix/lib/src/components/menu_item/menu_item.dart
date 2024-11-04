@@ -43,6 +43,20 @@ class MenuItemSpec extends Spec<MenuItemSpec>
         title = title ?? const TextSpec(),
         subtitle = subtitle ?? const TextSpec();
 
+  Widget call({
+    required String title,
+    String? subtitle,
+    WidgetSpecBuilder<IconSpec>? leadingWidgetBuilder,
+    WidgetSpecBuilder<IconSpec>? trailingWidgetBuilder,
+  }) =>
+      MenuItemSpecWidget(
+        spec: this,
+        leadingWidgetBuilder: leadingWidgetBuilder,
+        title: title,
+        subtitle: subtitle,
+        trailingWidgetBuilder: trailingWidgetBuilder,
+      );
+
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);

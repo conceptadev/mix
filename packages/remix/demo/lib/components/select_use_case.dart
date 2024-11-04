@@ -53,8 +53,8 @@ class _SelectDemoState extends State<SelectDemo> {
                 items.length,
                 (index) => SelectMenuItem<String>(
                   value: items[index],
-                  child: SelectMenuItemWidget(
-                    text: items[index],
+                  childBuilder: (spec) => spec(
+                    title: items[index],
                   ),
                 ),
               ),
