@@ -66,7 +66,7 @@ class _SegmentedControlState extends State<SegmentedControl> {
           child: Stack(
             alignment: Alignment.centerLeft,
             children: [
-              spec.flex(
+              spec.layout(
                 direction: Axis.vertical,
                 children: [
                   for (int i = 0; i < widget.buttons.length; i++)
