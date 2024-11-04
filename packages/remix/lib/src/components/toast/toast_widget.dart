@@ -11,12 +11,22 @@ class Toast extends StatelessWidget {
     this.variants = const [],
   });
 
+  /// The title text displayed in the toast.
   final String title;
+
+  /// The description text displayed below the title.
   final String? description;
+
+  /// Optional widget displayed on the right side of the toast.
   final Widget? trailing;
+
+  /// Optional widget displayed on the left side of the toast.
   final Widget? leading;
 
+  /// {@macro remix.component.style}
   final ToastStyle? style;
+
+  /// {@macro remix.component.variants}
   final List<Variant> variants;
 
   @override
@@ -30,11 +40,11 @@ class Toast extends StatelessWidget {
         final spec = ToastSpec.of(context);
 
         return spec.container(
-          child: spec.containerFlex(
+          child: spec.layout(
             direction: Axis.horizontal,
             children: [
               if (leading != null) leading!,
-              spec.textContentFlex(
+              spec.textLayout(
                 direction: Axis.vertical,
                 children: [
                   spec.title(title),

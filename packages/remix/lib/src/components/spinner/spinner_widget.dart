@@ -3,7 +3,10 @@ part of 'spinner.dart';
 class Spinner extends StatelessWidget {
   const Spinner({super.key, this.style, this.variants = const []});
 
+  /// {@macro remix.component.style}
   final SpinnerStyle? style;
+
+  /// {@macro remix.component.variants}
   final List<Variant> variants;
 
   @override
