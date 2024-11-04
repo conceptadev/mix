@@ -19,13 +19,28 @@ class Select<T> extends StatefulWidget {
     this.disabled = false,
   });
 
+  /// The currently selected value in the select component.
   final T value;
+
+  /// {@macro remix.component.style}
   final SelectStyle? style;
+
+  /// {@macro remix.component.variants}
   final List<Variant> variants;
+
+  /// {@macro remix.component.onChanged}
   final ValueChanged<T> onChanged;
+
+  /// Builder function that creates the button portion of the select component.
+  /// When tapped, this button will display the dropdown menu.
+  /// This allows customizing how the button is displayed.
   final WidgetSpecBuilder<SelectButtonSpec> button;
+
+  /// {@macro remix.component.disabled}
   final bool disabled;
 
+  /// The list of items to display in the dropdown menu.
+  /// Each item contains a value and widget to display.
   final List<SelectMenuItem<T>> items;
 
   @override
