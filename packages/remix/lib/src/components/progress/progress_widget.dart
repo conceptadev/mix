@@ -11,8 +11,16 @@ class Progress extends StatelessWidget {
           'Progress value must be between 0 and 1',
         );
 
+  /// {@macro remix.component.style}
   final ProgressStyle? style;
+
+  /// The progress value between 0 and 1.
+  ///
+  /// This value determines how much of the progress bar is filled.
+  /// A value of 0 means empty, while 1 means completely filled.
   final double value;
+
+  /// {@macro remix.component.variants}
   final List<Variant> variants;
 
   @override
