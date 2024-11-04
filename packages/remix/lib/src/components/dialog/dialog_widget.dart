@@ -22,17 +22,47 @@ class Dialog extends StatelessWidget {
     this.variants = const [],
   });
 
-  /// The list of child widgets to be displayed inside the card.
-
+  /// A builder that returns a [Widget] for the dialog's title.
+  ///
+  /// This builder is used to create a custom title widget for the dialog.
+  /// If null, the default title will be used.
   final WidgetSpecBuilder<TextSpec>? titleBuilder;
+
+  /// A builder that returns a [Widget] for the dialog's description.
+  ///
   final WidgetSpecBuilder<TextSpec>? descriptionBuilder;
+
+  /// The content widget to be displayed in the dialog.
+  ///
+  /// This widget is placed below the title and description, and above the actions.
+  /// If null, no additional content will be displayed.
+  /// Use this to add custom widgets or more complex content to your dialog.
+  ///
+  /// Example:
+  /// ```dart
+  /// Dialog(
+  ///   title: 'Confirmation',
+  ///   description: 'Are you sure you want to proceed?',
+  ///   content: Image.asset('assets/warning_icon.png'),
+  ///   actions: [
+  ///     Button(onPressed: () {}, child: Text('Cancel')),
+  ///     Button(onPressed: () {}, child: Text('Confirm')),
+  ///   ],
+  /// )
+  /// ```
   final Widget? content;
+
+  /// A list of widgets to display as actions in the dialog.
+  ///
+  /// Typically, these are buttons that allow the user to confirm, cancel,
+  /// or take other actions related to the dialog's content.
+  /// If null, no actions will be displayed.
   final List<Widget>? actions;
 
-  /// Additional custom styling for the card.
-  ///
-  /// This allows you to override or extend the default card styling.
+  /// {@macro remix.component.style}
   final DialogStyle? style;
+
+  /// {@macro remix.component.variants}
   final List<Variant> variants;
 
   @override
@@ -47,7 +77,7 @@ class Dialog extends StatelessWidget {
         final spec = DialogSpec.of(context);
 
         return spec.container(
-          child: spec.mainFlex(
+          child: spec.containerLayout(
             direction: Axis.vertical,
             children: [
               if (titleBuilder != null) titleBuilder!(spec.title),
@@ -55,7 +85,7 @@ class Dialog extends StatelessWidget {
                 descriptionBuilder!(spec.description),
               content ?? const SizedBox.shrink(),
               if (actions != null)
-                spec.actionsFlex(
+                spec.actionsLayout(
                   direction: Axis.horizontal,
                   children: actions!,
                 ),

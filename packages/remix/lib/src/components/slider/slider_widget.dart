@@ -13,19 +13,42 @@ class Slider extends StatefulWidget {
     this.style,
     this.variants = const [],
     this.disabled = false,
-  });
+  }) : assert(
+          value >= min && value <= max,
+          'Slider value must be between min and max values',
+        );
 
+  /// The minimum value the slider can have.
   final double min;
+
+  /// The maximum value the slider can have.
   final double max;
+
+  /// The number of discrete divisions the slider can move through.
+  /// If it's 0, the slider moves continuously.
   final int divisions;
+
+  /// The current value of the slider.
+  /// Must be between [min] and [max].
   final double value;
+
+  /// {@macro remix.component.style}
   final SliderStyle? style;
+
+  /// {@macro remix.component.variants}
   final List<Variant> variants;
+
+  /// {@macro remix.component.disabled}
   final bool disabled;
 
-  final ValueChanged<double>? onChanged;
-  final ValueChanged<double>? onChangeEnd;
+  /// Called when the user starts dragging the slider.
   final ValueChanged<double>? onChangeStart;
+
+  /// Called during drag with the new value.
+  final ValueChanged<double>? onChanged;
+
+  /// Called when the user is done selecting a new value.
+  final ValueChanged<double>? onChangeEnd;
 
   @override
   State<Slider> createState() => _SliderState();

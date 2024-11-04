@@ -9,15 +9,33 @@ class Radio<T> extends StatefulWidget {
     this.disabled = false,
     this.style,
     this.variants = const [],
-    required this.text,
+    required this.label,
   });
 
+  /// The value associated with this radio button.
+  ///
+  /// This value is compared against [groupValue] to determine if this radio button
+  /// is selected.
   final T value;
+
+  /// {@macro remix.component.onChanged}
   final ValueChanged<T?> onChanged;
+
+  /// The currently selected value for a group of radio buttons.
+  ///
+  /// When [value] matches [groupValue], this radio button is considered selected.
   final T? groupValue;
-  final String text;
+
+  /// The label text displayed next to the radio button.
+  final String label;
+
+  /// {@macro remix.component.disabled}
   final bool disabled;
+
+  /// {@macro remix.component.style}
   final RadioStyle? style;
+
+  /// {@macro remix.component.variants}
   final List<Variant> variants;
 
   bool get _selected => value == groupValue;
@@ -76,14 +94,14 @@ class _RadioState<T> extends State<Radio<T>> {
 
           final ContainerWidget = spec.container;
           final IndicatorWidget = spec.indicator;
-          final FlexWidget = spec.flex;
+          final FlexWidget = spec.layout;
           final TextWidget = spec.text;
 
           return FlexWidget(
             direction: Axis.horizontal,
             children: [
               ContainerWidget(child: IndicatorWidget()),
-              TextWidget(widget.text),
+              TextWidget(widget.label),
             ],
           );
         },

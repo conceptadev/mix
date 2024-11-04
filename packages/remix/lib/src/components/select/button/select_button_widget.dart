@@ -1,16 +1,16 @@
 part of '../select.dart';
 
-class XSelectButtonSpecWidget extends StatelessWidget {
-  const XSelectButtonSpecWidget({
+class SelectButtonSpecWidget extends StatelessWidget {
+  const SelectButtonSpecWidget({
     super.key,
     required this.spec,
     required this.text,
-    required this.trailingIcon,
+    this.trailingIcon,
   });
 
   final SelectButtonSpec spec;
   final String text;
-  final IconData trailingIcon;
+  final IconData? trailingIcon;
 
   @override
   Widget build(BuildContext context) {
@@ -22,12 +22,15 @@ class XSelectButtonSpecWidget extends StatelessWidget {
         final container = button.container;
         final label = button.label;
         final icon = button.icon;
-        final flex = button.flex;
+        final flex = button.layout;
 
         return container(
           child: flex(
             direction: Axis.horizontal,
-            children: [label(text), icon(trailingIcon)],
+            children: [
+              label(text),
+              if (trailingIcon != null) icon(trailingIcon),
+            ],
           ),
         );
       },

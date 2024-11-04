@@ -34,17 +34,21 @@ class RadioStyle extends SpecStyle<RadioSpecUtility> {
       ..style.fontWeight.w500()
       ..textHeightBehavior.heightToFirstAscent.off();
 
-    final flexStyle = $.flex.chain
+    final layoutStyle = $.layout.chain
       ..row()
+      ..mainAxisSize.min()
       ..mainAxisAlignment.start()
       ..crossAxisAlignment.center()
       ..gap(8);
+
+    final disabledStyle = spec.on.disabled($.text.style.color.grey());
 
     return Style.create([
       ...containerStyle,
       ...indicatorStyle,
       textStyle,
-      flexStyle,
+      layoutStyle,
+      disabledStyle,
     ]).animate(
       duration: const Duration(milliseconds: 100),
       curve: Curves.easeInOutQuad,

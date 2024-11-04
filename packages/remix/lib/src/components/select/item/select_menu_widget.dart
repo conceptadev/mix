@@ -1,37 +1,61 @@
-part of '../select.dart';
+// part of '../select.dart';
 
-class XSelectMenuItemWidget extends StatelessWidget {
-  const XSelectMenuItemWidget({
-    super.key,
-    IconData? icon,
-    required this.text,
-  }) : iconData = icon;
+// /// A widget that represents an individual item in a [Select] dropdown menu.
+// ///
+// /// This widget is used internally by the [Select] widget to render each [SelectMenuItem]
+// /// in its dropdown. It applies styling and layout defined in the [SelectStyle].
+// ///
+// /// Example usage within [Select]:
+// /// ```dart
+// /// Select<String>(
+// ///   value: selectedValue,
+// ///   onChanged: (value) => setState(() => selectedValue = value),
+// ///   items: [
+// ///     SelectMenuItem(
+// ///       value: 'profile',
+// ///       child: SelectMenuItemWidget(
+// ///         icon: Icons.person,
+// ///         text: 'Profile',
+// ///       ),
+// ///     ),
+// ///   ],
+// /// )
+// /// ```
+// class SelectMenuItemWidget extends StatelessWidget {
+//   const SelectMenuItemWidget({
+//     super.key,
+//     IconData? icon,
+//     required this.text,
+//   }) : iconData = icon;
 
-  final IconData? iconData;
-  final String text;
+//   /// The optional icon data to display before the text.
+//   final IconData? iconData;
 
-  @override
-  Widget build(BuildContext context) {
-    return SpecBuilder(
-      inherit: true,
-      builder: (context) {
-        final item = SelectSpec.of(context).item;
+//   /// The text label to display for this menu item.
+//   final String text;
 
-        final container = item.container;
-        final flex = item.flex;
-        final icon = item.icon;
-        final text = item.text;
+//   @override
+//   Widget build(BuildContext context) {
+//     return SpecBuilder(
+//       inherit: true,
+//       builder: (context) {
+//         final item = SelectSpec.of(context).item;
 
-        return container(
-          child: flex(
-            direction: Axis.horizontal,
-            children: [
-              if (iconData != null) icon(iconData),
-              text(this.text),
-            ],
-          ),
-        );
-      },
-    );
-  }
-}
+//         final container = item.container;
+//         final layout = item.layout;
+//         final icon = item.icon;
+//         final text = item.text;
+
+//         return container(
+//           child: layout(
+//             direction: Axis.horizontal,
+//             children: [
+//               if (iconData != null) icon(iconData),
+//               text(this.text),
+//             ],
+//           ),
+//         );
+//       },
+//     );
+//   }
+// }

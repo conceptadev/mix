@@ -10,10 +10,19 @@ class Switch extends StatefulWidget {
     this.variants = const [],
   });
 
+  /// Whether the switch is on or off.
   final bool value;
+
+  /// {@macro remix.component.onChanged}
   final ValueChanged<bool> onChanged;
+
+  /// {@macro remix.component.style}
   final SwitchStyle? style;
+
+  /// {@macro remix.component.disabled}
   final bool disabled;
+
+  /// {@macro remix.component.variants}
   final List<Variant> variants;
 
   @override

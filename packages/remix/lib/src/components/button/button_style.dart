@@ -7,8 +7,8 @@ class ButtonStyle extends SpecStyle<ButtonSpecUtility> {
   Style makeStyle(SpecConfiguration<ButtonSpecUtility> spec) {
     final $ = spec.utilities;
 
-    final flexStyle = [
-      $.flex.chain
+    final layoutStyle = [
+      $.layout.chain
         ..mainAxisAlignment.center()
         ..crossAxisAlignment.center()
         ..mainAxisSize.min()
@@ -41,14 +41,14 @@ class ButtonStyle extends SpecStyle<ButtonSpecUtility> {
     final containerStyle = [
       $.container.chain
         ..borderRadius(6)
-        ..color.black()
+        ..color.red()
         ..padding.vertical(8)
         ..padding.horizontal(12),
       spec.on.disabled($.container.color.grey.shade400()),
     ];
 
     return Style.create([
-      ...flexStyle,
+      ...layoutStyle,
       ...iconStyle,
       ...labelStyle,
       ...containerStyle,

@@ -4,28 +4,29 @@ part of '../select.dart';
 class SelectButtonSpec extends Spec<SelectButtonSpec>
     with _$SelectButtonSpec, Diagnosticable {
   final BoxSpec container;
-  final FlexSpec flex;
+  final FlexSpec layout;
   final TextSpec label;
   final IconSpec icon;
 
+  /// {@macro select_button_spec_of}
   static const of = _$SelectButtonSpec.of;
 
   static const from = _$SelectButtonSpec.from;
 
   const SelectButtonSpec({
     BoxSpec? container,
-    FlexSpec? flex,
+    FlexSpec? layout,
     IconSpec? icon,
     TextSpec? label,
     super.modifiers,
     super.animated,
-  })  : flex = flex ?? const FlexSpec(),
+  })  : layout = layout ?? const FlexSpec(),
         container = container ?? const BoxSpec(),
         icon = icon ?? const IconSpec(),
         label = label ?? const TextSpec();
 
-  Widget call({required String text, required IconData trailingIcon}) =>
-      XSelectButtonSpecWidget(
+  Widget call({required String text, IconData? trailingIcon}) =>
+      SelectButtonSpecWidget(
         spec: this,
         text: text,
         trailingIcon: trailingIcon,

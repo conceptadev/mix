@@ -10,15 +10,32 @@ class Checkbox extends StatefulWidget {
     this.iconUnchecked,
     this.style,
     this.variants = const [],
+    this.label,
   });
 
+  /// Whether the checkbox is disabled.
   final bool disabled;
+
+  /// Whether the checkbox is checked.
   final bool value;
+
+  /// The icon to display when the checkbox is checked.
   final IconData iconChecked;
+
+  /// The icon to display when the checkbox is unchecked.
   final IconData? iconUnchecked;
+
+  /// The callback function that is called when the checkbox is tapped.
   final ValueChanged<bool>? onChanged;
+
+  /// {@macro remix.component.style}
   final CheckboxStyle? style;
+
+  /// {@macro remix.component.variants}
   final List<Variant> variants;
+
+  /// An optional label that will be displayed next to the checkbox.
+  final String? label;
 
   @override
   State<Checkbox> createState() => _CheckboxState();
@@ -76,15 +93,22 @@ class _CheckboxState extends State<Checkbox> {
         builder: (context) {
           final spec = CheckboxSpec.of(context);
 
-          final ContainerWidget = spec.container;
-          final IconWidget = spec.indicator;
+          final ContainerWidget = spec.indicatorContainer;
+          final ContainerLayout = spec.layout;
+          final IconWidget = spec.indicatorIcon;
 
-          return ContainerWidget(
-            child: IconWidget(
-              widget.value
-                  ? widget.iconChecked
-                  : widget.iconUnchecked ?? widget.iconChecked,
-            ),
+          return ContainerLayout(
+            direction: Axis.horizontal,
+            children: [
+              ContainerWidget(
+                child: IconWidget(
+                  widget.value
+                      ? widget.iconChecked
+                      : widget.iconUnchecked ?? widget.iconChecked,
+                ),
+              ),
+              if (widget.label != null) spec.label(widget.label!),
+            ],
           );
         },
       ),

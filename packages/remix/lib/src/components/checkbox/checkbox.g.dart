@@ -33,14 +33,18 @@ mixin _$CheckboxSpec on Spec<CheckboxSpec> {
   /// replaced with the new values.
   @override
   CheckboxSpec copyWith({
-    BoxSpec? container,
-    IconSpec? indicator,
+    BoxSpec? indicatorContainer,
+    IconSpec? indicatorIcon,
+    FlexSpec? layout,
+    TextSpec? label,
     WidgetModifiersData? modifiers,
     AnimatedData? animated,
   }) {
     return CheckboxSpec(
-      container: container ?? _$this.container,
-      indicator: indicator ?? _$this.indicator,
+      indicatorContainer: indicatorContainer ?? _$this.indicatorContainer,
+      indicatorIcon: indicatorIcon ?? _$this.indicatorIcon,
+      layout: layout ?? _$this.layout,
+      label: label ?? _$this.label,
       modifiers: modifiers ?? _$this.modifiers,
       animated: animated ?? _$this.animated,
     );
@@ -57,8 +61,10 @@ mixin _$CheckboxSpec on Spec<CheckboxSpec> {
   /// The interpolation is performed on each property of the [CheckboxSpec] using the appropriate
   /// interpolation method:
   ///
-  /// - [BoxSpec.lerp] for [container].
-  /// - [IconSpec.lerp] for [indicator].
+  /// - [BoxSpec.lerp] for [indicatorContainer].
+  /// - [IconSpec.lerp] for [indicatorIcon].
+  /// - [FlexSpec.lerp] for [layout].
+  /// - [TextSpec.lerp] for [label].
 
   /// For [modifiers] and [animated], the interpolation is performed using a step function.
   /// If [t] is less than 0.5, the value from the current [CheckboxSpec] is used. Otherwise, the value
@@ -71,8 +77,11 @@ mixin _$CheckboxSpec on Spec<CheckboxSpec> {
     if (other == null) return _$this;
 
     return CheckboxSpec(
-      container: _$this.container.lerp(other.container, t),
-      indicator: _$this.indicator.lerp(other.indicator, t),
+      indicatorContainer:
+          _$this.indicatorContainer.lerp(other.indicatorContainer, t),
+      indicatorIcon: _$this.indicatorIcon.lerp(other.indicatorIcon, t),
+      layout: _$this.layout.lerp(other.layout, t),
+      label: _$this.label.lerp(other.label, t),
       modifiers: other.modifiers,
       animated: t < 0.5 ? _$this.animated : other.animated,
     );
@@ -84,8 +93,10 @@ mixin _$CheckboxSpec on Spec<CheckboxSpec> {
   /// compare two [CheckboxSpec] instances for equality.
   @override
   List<Object?> get props => [
-        _$this.container,
-        _$this.indicator,
+        _$this.indicatorContainer,
+        _$this.indicatorIcon,
+        _$this.layout,
+        _$this.label,
         _$this.modifiers,
         _$this.animated,
       ];
@@ -93,10 +104,15 @@ mixin _$CheckboxSpec on Spec<CheckboxSpec> {
   CheckboxSpec get _$this => this as CheckboxSpec;
 
   void _debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    properties.add(
-        DiagnosticsProperty('container', _$this.container, defaultValue: null));
-    properties.add(
-        DiagnosticsProperty('indicator', _$this.indicator, defaultValue: null));
+    properties.add(DiagnosticsProperty(
+        'indicatorContainer', _$this.indicatorContainer,
+        defaultValue: null));
+    properties.add(DiagnosticsProperty('indicatorIcon', _$this.indicatorIcon,
+        defaultValue: null));
+    properties
+        .add(DiagnosticsProperty('layout', _$this.layout, defaultValue: null));
+    properties
+        .add(DiagnosticsProperty('label', _$this.label, defaultValue: null));
     properties.add(
         DiagnosticsProperty('modifiers', _$this.modifiers, defaultValue: null));
     properties.add(
@@ -113,12 +129,16 @@ mixin _$CheckboxSpec on Spec<CheckboxSpec> {
 /// the [CheckboxSpec] constructor.
 base class CheckboxSpecAttribute extends SpecAttribute<CheckboxSpec>
     with Diagnosticable {
-  final BoxSpecAttribute? container;
-  final IconSpecAttribute? indicator;
+  final BoxSpecAttribute? indicatorContainer;
+  final IconSpecAttribute? indicatorIcon;
+  final FlexSpecAttribute? layout;
+  final TextSpecAttribute? label;
 
   const CheckboxSpecAttribute({
-    this.container,
-    this.indicator,
+    this.indicatorContainer,
+    this.indicatorIcon,
+    this.layout,
+    this.label,
     super.modifiers,
     super.animated,
   });
@@ -134,8 +154,10 @@ base class CheckboxSpecAttribute extends SpecAttribute<CheckboxSpec>
   @override
   CheckboxSpec resolve(MixData mix) {
     return CheckboxSpec(
-      container: container?.resolve(mix),
-      indicator: indicator?.resolve(mix),
+      indicatorContainer: indicatorContainer?.resolve(mix),
+      indicatorIcon: indicatorIcon?.resolve(mix),
+      layout: layout?.resolve(mix),
+      label: label?.resolve(mix),
       modifiers: modifiers?.resolve(mix),
       animated: animated?.resolve(mix) ?? mix.animation,
     );
@@ -154,8 +176,12 @@ base class CheckboxSpecAttribute extends SpecAttribute<CheckboxSpec>
     if (other == null) return this;
 
     return CheckboxSpecAttribute(
-      container: container?.merge(other.container) ?? other.container,
-      indicator: indicator?.merge(other.indicator) ?? other.indicator,
+      indicatorContainer: indicatorContainer?.merge(other.indicatorContainer) ??
+          other.indicatorContainer,
+      indicatorIcon:
+          indicatorIcon?.merge(other.indicatorIcon) ?? other.indicatorIcon,
+      layout: layout?.merge(other.layout) ?? other.layout,
+      label: label?.merge(other.label) ?? other.label,
       modifiers: modifiers?.merge(other.modifiers) ?? other.modifiers,
       animated: animated?.merge(other.animated) ?? other.animated,
     );
@@ -167,8 +193,10 @@ base class CheckboxSpecAttribute extends SpecAttribute<CheckboxSpec>
   /// compare two [CheckboxSpecAttribute] instances for equality.
   @override
   List<Object?> get props => [
-        container,
-        indicator,
+        indicatorContainer,
+        indicatorIcon,
+        layout,
+        label,
         modifiers,
         animated,
       ];
@@ -176,10 +204,12 @@ base class CheckboxSpecAttribute extends SpecAttribute<CheckboxSpec>
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties
-        .add(DiagnosticsProperty('container', container, defaultValue: null));
-    properties
-        .add(DiagnosticsProperty('indicator', indicator, defaultValue: null));
+    properties.add(DiagnosticsProperty('indicatorContainer', indicatorContainer,
+        defaultValue: null));
+    properties.add(DiagnosticsProperty('indicatorIcon', indicatorIcon,
+        defaultValue: null));
+    properties.add(DiagnosticsProperty('layout', layout, defaultValue: null));
+    properties.add(DiagnosticsProperty('label', label, defaultValue: null));
     properties
         .add(DiagnosticsProperty('modifiers', modifiers, defaultValue: null));
     properties
@@ -193,11 +223,18 @@ base class CheckboxSpecAttribute extends SpecAttribute<CheckboxSpec>
 /// Use the methods of this class to configure specific properties of a [CheckboxSpec].
 class CheckboxSpecUtility<T extends Attribute>
     extends SpecUtility<T, CheckboxSpecAttribute> {
-  /// Utility for defining [CheckboxSpecAttribute.container]
-  late final container = BoxSpecUtility((v) => only(container: v));
+  /// Utility for defining [CheckboxSpecAttribute.indicatorContainer]
+  late final indicatorContainer =
+      BoxSpecUtility((v) => only(indicatorContainer: v));
 
-  /// Utility for defining [CheckboxSpecAttribute.indicator]
-  late final indicator = IconSpecUtility((v) => only(indicator: v));
+  /// Utility for defining [CheckboxSpecAttribute.indicatorIcon]
+  late final indicatorIcon = IconSpecUtility((v) => only(indicatorIcon: v));
+
+  /// Utility for defining [CheckboxSpecAttribute.layout]
+  late final layout = FlexSpecUtility((v) => only(layout: v));
+
+  /// Utility for defining [CheckboxSpecAttribute.label]
+  late final label = TextSpecUtility((v) => only(label: v));
 
   /// Utility for defining [CheckboxSpecAttribute.modifiers]
   late final wrap = SpecModifierUtility((v) => only(modifiers: v));
@@ -216,14 +253,18 @@ class CheckboxSpecUtility<T extends Attribute>
   /// Returns a new [CheckboxSpecAttribute] with the specified properties.
   @override
   T only({
-    BoxSpecAttribute? container,
-    IconSpecAttribute? indicator,
+    BoxSpecAttribute? indicatorContainer,
+    IconSpecAttribute? indicatorIcon,
+    FlexSpecAttribute? layout,
+    TextSpecAttribute? label,
     WidgetModifiersDataDto? modifiers,
     AnimatedDataDto? animated,
   }) {
     return builder(CheckboxSpecAttribute(
-      container: container,
-      indicator: indicator,
+      indicatorContainer: indicatorContainer,
+      indicatorIcon: indicatorIcon,
+      layout: layout,
+      label: label,
       modifiers: modifiers,
       animated: animated,
     ));

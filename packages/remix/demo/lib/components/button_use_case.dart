@@ -16,32 +16,44 @@ Widget buildButtonUseCase(BuildContext context) {
     key: _key,
     child: Scaffold(
       body: Center(
-        child: Button(
-          variants: [
-            context.knobs.variant(FortalezaButtonStyle.variants),
-          ],
-          label: context.knobs.string(
-            label: 'Title',
-            initialValue: 'Button',
-          ),
-          onPressed: () {},
-          disabled: context.knobs.boolean(
-            label: 'Disabled',
-            initialValue: false,
-          ),
-          loading: context.knobs.boolean(
-            label: 'loading',
-            initialValue: false,
-          ),
-          iconLeft: context.knobs.iconData(
-            label: 'Icon left',
-            initialValue: null,
-          ),
-          iconRight: context.knobs.iconData(
-            label: 'Icon right',
-            initialValue: null,
-          ),
-        ),
+        child: Builder(builder: (context) {
+          return Button(
+            variants: [
+              context.knobs.variant(FortalezaButtonStyle.variants),
+            ],
+            label: context.knobs.string(
+              label: 'Title',
+              initialValue: 'Button',
+            ),
+            onPressed: () {
+              showToast(
+                context: context,
+                entry: ToastEntry(
+                  showDuration: const Duration(milliseconds: 800),
+                  builder: (context, actions) => const Toast(
+                    title: 'Button pressed',
+                  ),
+                ),
+              );
+            },
+            disabled: context.knobs.boolean(
+              label: 'Disabled',
+              initialValue: false,
+            ),
+            loading: context.knobs.boolean(
+              label: 'loading',
+              initialValue: false,
+            ),
+            iconLeft: context.knobs.iconData(
+              label: 'Icon left',
+              initialValue: null,
+            ),
+            iconRight: context.knobs.iconData(
+              label: 'Icon right',
+              initialValue: null,
+            ),
+          );
+        }),
       ),
     ),
   );

@@ -9,8 +9,8 @@ import '../../theme/remix_tokens.dart';
 part 'button/segmented_control_button.dart';
 part 'button/segmented_control_button_widget.dart';
 part 'segmented_control.g.dart';
-part 'segmented_control_theme.dart';
 part 'segmented_control_style.dart';
+part 'segmented_control_theme.dart';
 part 'segmented_control_widget.dart';
 
 final $segmentedControl = SegmentedControlSpecUtility.self;
@@ -19,26 +19,27 @@ final $segmentedControl = SegmentedControlSpecUtility.self;
 class SegmentedControlSpec extends Spec<SegmentedControlSpec>
     with _$SegmentedControlSpec, Diagnosticable {
   final BoxSpec container;
-  final FlexSpec flex;
-  final bool showDivider;
+  final FlexSpec layout;
   final BoxSpec divider;
+  final bool showDivider;
 
   @MixableProperty(dto: MixableFieldDto(type: 'SegmentButtonSpecAttribute'))
   final SegmentButtonSpec item;
 
+  /// {@macro segmented_control_spec_of}
   static const of = _$SegmentedControlSpec.of;
 
   static const from = _$SegmentedControlSpec.from;
 
   const SegmentedControlSpec({
     BoxSpec? container,
-    FlexSpec? flex,
+    FlexSpec? layout,
     bool? showDivider,
     BoxSpec? divider,
     SegmentButtonSpec? item,
     super.modifiers,
     super.animated,
-  })  : flex = flex ?? const FlexSpec(),
+  })  : layout = layout ?? const FlexSpec(),
         container = container ?? const BoxSpec(),
         showDivider = showDivider ?? false,
         item = item ?? const SegmentButtonSpec(),

@@ -22,7 +22,7 @@ class MenuItemSpec extends Spec<MenuItemSpec>
   final TextSpec title;
   final TextSpec subtitle;
 
-  /// {@macro button_spec_of}
+  /// {@macro menu_item_spec_of}
   static const of = _$MenuItemSpec.of;
 
   static const from = _$MenuItemSpec.from;
@@ -42,6 +42,20 @@ class MenuItemSpec extends Spec<MenuItemSpec>
         icon = icon ?? const IconSpec(),
         title = title ?? const TextSpec(),
         subtitle = subtitle ?? const TextSpec();
+
+  Widget call({
+    required String title,
+    String? subtitle,
+    WidgetSpecBuilder<IconSpec>? leadingWidgetBuilder,
+    WidgetSpecBuilder<IconSpec>? trailingWidgetBuilder,
+  }) =>
+      MenuItemSpecWidget(
+        spec: this,
+        leadingWidgetBuilder: leadingWidgetBuilder,
+        title: title,
+        subtitle: subtitle,
+        trailingWidgetBuilder: trailingWidgetBuilder,
+      );
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {

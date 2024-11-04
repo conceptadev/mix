@@ -86,8 +86,8 @@ class DialogSpec extends Spec<DialogSpec> with _$DialogSpec, Diagnosticable {
   final BoxSpec container;
   final TextSpec title;
   final TextSpec description;
-  final FlexSpec mainFlex;
-  final FlexSpec actionsFlex;
+  final FlexSpec containerLayout;
+  final FlexSpec actionsLayout;
 
   /// {@macro dialog_spec_of}
   static const of = _$DialogSpec.of;
@@ -98,15 +98,15 @@ class DialogSpec extends Spec<DialogSpec> with _$DialogSpec, Diagnosticable {
     BoxSpec? container,
     TextSpec? title,
     TextSpec? description,
-    FlexSpec? mainFlex,
-    FlexSpec? actionsFlex,
+    FlexSpec? containerLayout,
+    FlexSpec? actionsLayout,
     super.modifiers,
     super.animated,
   })  : container = container ?? const BoxSpec(),
         title = title ?? const TextSpec(),
         description = description ?? const TextSpec(),
-        mainFlex = mainFlex ?? const FlexSpec(),
-        actionsFlex = actionsFlex ?? const FlexSpec();
+        containerLayout = containerLayout ?? const FlexSpec(),
+        actionsLayout = actionsLayout ?? const FlexSpec();
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
