@@ -12,11 +12,22 @@ class SegmentedControl extends StatefulWidget {
     required this.onIndexChanged,
   });
 
+  /// The currently selected index.
   final int index;
+
+  /// Callback that is called when a segment is selected.
+  /// The index of the selected segment is passed as an argument.
   final ValueChanged<int> onIndexChanged;
+
+  /// {@macro remix.component.style}
   final SegmentedControlStyle? style;
+
+  /// {@macro remix.component.variants}
   final List<Variant> variants;
-  final List<Widget> buttons;
+
+  /// The list of widgets to display as segments.
+  /// Each widget represents one segment in the control.
+  final List<SegmentButton> buttons;
 
   @override
   State<SegmentedControl> createState() => _SegmentedControlState();
