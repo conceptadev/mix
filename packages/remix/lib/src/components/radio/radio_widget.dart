@@ -12,12 +12,30 @@ class Radio<T> extends StatefulWidget {
     required this.label,
   });
 
+  /// The value associated with this radio button.
+  ///
+  /// This value is compared against [groupValue] to determine if this radio button
+  /// is selected.
   final T value;
+
+  /// {@macro remix.component.onChanged}
   final ValueChanged<T?> onChanged;
+
+  /// The currently selected value for a group of radio buttons.
+  ///
+  /// When [value] matches [groupValue], this radio button is considered selected.
   final T? groupValue;
+
+  /// The label text displayed next to the radio button.
   final String label;
+
+  /// {@macro remix.component.disabled}
   final bool disabled;
+
+  /// {@macro remix.component.style}
   final RadioStyle? style;
+
+  /// {@macro remix.component.variants}
   final List<Variant> variants;
 
   bool get _selected => value == groupValue;
