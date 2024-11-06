@@ -22,6 +22,7 @@ import '../components/select/select.dart';
 import '../components/slider/slider.dart';
 import '../components/spinner/spinner.dart';
 import '../components/switch/switch.dart';
+import '../components/textfield/textfield.dart';
 import '../components/toast/toast.dart';
 import 'remix_tokens.dart';
 
@@ -45,6 +46,7 @@ class RemixComponentTheme {
   final SelectStyle select;
   final SpinnerStyle spinner;
   final SwitchStyle switchComponent;
+  final TextFieldStyle textField;
   final ToastStyle toast;
   final SliderStyle slider;
 
@@ -68,6 +70,7 @@ class RemixComponentTheme {
     required this.select,
     required this.spinner,
     required this.switchComponent,
+    required this.textField,
     required this.toast,
     required this.slider,
   });
@@ -93,6 +96,7 @@ class RemixComponentTheme {
       select: SelectStyle(),
       spinner: SpinnerStyle(),
       switchComponent: SwitchStyle(),
+      textField: TextFieldStyle(),
       toast: ToastStyle(),
       slider: SliderStyle(),
     );
@@ -119,6 +123,7 @@ class RemixComponentTheme {
       select: const SelectDarkStyle(),
       spinner: const SpinnerDarkStyle(),
       switchComponent: const SwitchDarkStyle(),
+      textField: const TextFieldDarkStyle(),
       slider: const SliderDarkStyle(),
     );
   }
@@ -144,6 +149,7 @@ class RemixComponentTheme {
       select: FortalezaSelectStyle(),
       spinner: FortalezaSpinnerStyle(),
       switchComponent: FortalezaSwitchStyle(),
+      textField: FortalezaTextFieldStyle(),
       toast: FortalezaToastStyle(),
       slider: FortalezaSliderStyle(),
     );
@@ -179,6 +185,7 @@ class RemixComponentTheme {
     SelectStyle? select,
     SpinnerStyle? spinner,
     SwitchStyle? switchComponent,
+    TextFieldStyle? textField,
     ToastStyle? toast,
     SliderStyle? slider,
   }) {
@@ -202,6 +209,7 @@ class RemixComponentTheme {
       select: select ?? this.select,
       spinner: spinner ?? this.spinner,
       switchComponent: switchComponent ?? this.switchComponent,
+      textField: textField ?? this.textField,
       toast: toast ?? this.toast,
       slider: slider ?? this.slider,
     );
