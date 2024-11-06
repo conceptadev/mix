@@ -26,6 +26,33 @@ import 'text_widget.dart';
 
 part 'text_spec.g.dart';
 
+const _style = MixableUtility(
+  type: TextStyle,
+  properties: [
+    (path: 'color', alias: 'color'),
+    (path: 'fontFamily', alias: 'fontFamily'),
+    (path: 'fontWeight', alias: 'fontWeight'),
+    (path: 'fontStyle', alias: 'fontStyle'),
+    (path: 'fontSize', alias: 'fontSize'),
+    (path: 'letterSpacing', alias: 'letterSpacing'),
+    (path: 'wordSpacing', alias: 'wordSpacing'),
+    (path: 'textBaseline', alias: 'textBaseline'),
+    (path: 'backgroundColor', alias: 'backgroundColor'),
+    (path: 'shadows', alias: 'shadows'),
+    (path: 'fontFeatures', alias: 'fontFeatures'),
+    (path: 'fontVariations', alias: 'fontVariations'),
+    (path: 'decoration', alias: 'decoration'),
+    (path: 'decorationColor', alias: 'decorationColor'),
+    (path: 'decorationStyle', alias: 'decorationStyle'),
+    (path: 'debugLabel', alias: 'debugLabel'),
+    (path: 'height', alias: 'height'),
+    (path: 'foreground', alias: 'foreground'),
+    (path: 'background', alias: 'background'),
+    (path: 'decorationThickness', alias: 'decorationThickness'),
+    (path: 'fontFamilyFallback', alias: 'fontFamilyFallback'),
+  ],
+);
+
 @MixableSpec()
 final class TextSpec extends Spec<TextSpec> with _$TextSpec, Diagnosticable {
   final TextOverflow? overflow;
@@ -34,6 +61,8 @@ final class TextSpec extends Spec<TextSpec> with _$TextSpec, Diagnosticable {
   final int? maxLines;
   final TextWidthBasis? textWidthBasis;
   final TextScaler? textScaler;
+
+  @MixableProperty(utilities: [_style])
   final TextStyle? style;
   final TextDirection? textDirection;
   final bool? softWrap;

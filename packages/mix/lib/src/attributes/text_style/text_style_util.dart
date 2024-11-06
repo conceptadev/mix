@@ -59,8 +59,6 @@ final class TextStyleUtility<T extends Attribute>
 
   T fontFeatures(List<FontFeature> v) => call(fontFeatures: v);
 
-  T locale(Locale v) => call(locale: v);
-
   T debugLabel(String v) => call(debugLabel: v);
 
   T decorationThickness(double v) => call(decorationThickness: v);
@@ -84,7 +82,6 @@ final class TextStyleUtility<T extends Attribute>
     List<FontFeature>? fontFeatures,
     TextDecoration? decoration,
     TextDecorationStyle? decorationStyle,
-    Locale? locale,
     String? debugLabel,
     List<String>? fontFamilyFallback,
     Paint? foreground,
@@ -112,7 +109,6 @@ final class TextStyleUtility<T extends Attribute>
       background: background,
       decorationThickness: decorationThickness,
       fontFamilyFallback: fontFamilyFallback,
-      locale: locale,
       debugLabel: debugLabel,
       height: height,
       fontFamily: fontFamily,
@@ -139,7 +135,6 @@ final class TextStyleUtility<T extends Attribute>
     Paint? background,
     double? decorationThickness,
     List<String>? fontFamilyFallback,
-    Locale? locale,
     String? debugLabel,
     double? height,
     String? fontFamily,
@@ -160,7 +155,6 @@ final class TextStyleUtility<T extends Attribute>
       decorationColor: decorationColor,
       decorationStyle: decorationStyle,
       fontVariations: fontVariations,
-      locale: locale,
       height: height,
       foreground: foreground,
       background: background,

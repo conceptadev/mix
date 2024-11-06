@@ -353,6 +353,69 @@ class TextSpecUtility<T extends Attribute>
   /// Utility for defining [TextSpecAttribute.style]
   late final style = TextStyleUtility((v) => only(style: v));
 
+  /// Utility for defining [TextSpecAttribute.style.color]
+  late final color = style.color;
+
+  /// Utility for defining [TextSpecAttribute.style.fontFamily]
+  late final fontFamily = style.fontFamily;
+
+  /// Utility for defining [TextSpecAttribute.style.fontWeight]
+  late final fontWeight = style.fontWeight;
+
+  /// Utility for defining [TextSpecAttribute.style.fontStyle]
+  late final fontStyle = style.fontStyle;
+
+  /// Utility for defining [TextSpecAttribute.style.fontSize]
+  late final fontSize = style.fontSize;
+
+  /// Utility for defining [TextSpecAttribute.style.letterSpacing]
+  late final letterSpacing = style.letterSpacing;
+
+  /// Utility for defining [TextSpecAttribute.style.wordSpacing]
+  late final wordSpacing = style.wordSpacing;
+
+  /// Utility for defining [TextSpecAttribute.style.textBaseline]
+  late final textBaseline = style.textBaseline;
+
+  /// Utility for defining [TextSpecAttribute.style.backgroundColor]
+  late final backgroundColor = style.backgroundColor;
+
+  /// Utility for defining [TextSpecAttribute.style.shadows]
+  late final shadows = style.shadows;
+
+  /// Utility for defining [TextSpecAttribute.style.fontFeatures]
+  late final fontFeatures = style.fontFeatures;
+
+  /// Utility for defining [TextSpecAttribute.style.fontVariations]
+  late final fontVariations = style.fontVariations;
+
+  /// Utility for defining [TextSpecAttribute.style.decoration]
+  late final decoration = style.decoration;
+
+  /// Utility for defining [TextSpecAttribute.style.decorationColor]
+  late final decorationColor = style.decorationColor;
+
+  /// Utility for defining [TextSpecAttribute.style.decorationStyle]
+  late final decorationStyle = style.decorationStyle;
+
+  /// Utility for defining [TextSpecAttribute.style.debugLabel]
+  late final debugLabel = style.debugLabel;
+
+  /// Utility for defining [TextSpecAttribute.style.height]
+  late final height = style.height;
+
+  /// Utility for defining [TextSpecAttribute.style.foreground]
+  late final foreground = style.foreground;
+
+  /// Utility for defining [TextSpecAttribute.style.background]
+  late final background = style.background;
+
+  /// Utility for defining [TextSpecAttribute.style.decorationThickness]
+  late final decorationThickness = style.decorationThickness;
+
+  /// Utility for defining [TextSpecAttribute.style.fontFamilyFallback]
+  late final fontFamilyFallback = style.fontFamilyFallback;
+
   /// Utility for defining [TextSpecAttribute.textWidthBasis]
   late final textWidthBasis =
       TextWidthBasisUtility((v) => only(textWidthBasis: v));
