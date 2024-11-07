@@ -28,7 +28,8 @@ import 'package:demo/components/select_use_case.dart' as _i17;
 import 'package:demo/components/slider.dart' as _i18;
 import 'package:demo/components/spinner_use_case.dart' as _i19;
 import 'package:demo/components/switch_use_case.dart' as _i20;
-import 'package:demo/components/toast_use_case.dart' as _i21;
+import 'package:demo/components/textfield_use_case.dart' as _i21;
+import 'package:demo/components/toast_use_case.dart' as _i22;
 import 'package:widgetbook/widgetbook.dart' as _i1;
 
 final directories = <_i1.WidgetbookNode>[
@@ -264,13 +265,25 @@ final directories = <_i1.WidgetbookNode>[
         ],
       ),
       _i1.WidgetbookFolder(
+        name: 'textfield',
+        children: [
+          _i1.WidgetbookLeafComponent(
+            name: 'TextField',
+            useCase: _i1.WidgetbookUseCase(
+              name: 'TextField Component',
+              builder: _i21.buildButtonUseCase,
+            ),
+          )
+        ],
+      ),
+      _i1.WidgetbookFolder(
         name: 'toast',
         children: [
           _i1.WidgetbookLeafComponent(
             name: 'Toast',
             useCase: _i1.WidgetbookUseCase(
               name: 'Toast Component',
-              builder: _i21.buildButtonUseCase,
+              builder: _i22.buildButtonUseCase,
             ),
           )
         ],
