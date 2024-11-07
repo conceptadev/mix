@@ -1,4 +1,3 @@
-import 'package:demo/helpers/knob_builder.dart';
 import 'package:flutter/material.dart' hide Scaffold;
 import 'package:remix/remix.dart';
 import 'package:widgetbook/widgetbook.dart';
@@ -18,9 +17,6 @@ Widget buildButtonUseCase(BuildContext context) {
         child: SizedBox(
           width: 350,
           child: MenuItem(
-            variants: [
-              context.knobs.variant(FortalezaButtonStyle.variants),
-            ],
             title: context.knobs.string(
               label: 'Title',
               initialValue: 'Menu Item',
