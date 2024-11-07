@@ -37,6 +37,7 @@ final class SpinnerSpec extends Spec<SpinnerSpec>
 
   final SpinnerTypeStyle style;
 
+  /// {@macro spinner_spec_of}
   static const of = _$SpinnerSpec.of;
   static const from = _$SpinnerSpec.from;
 

@@ -15,9 +15,11 @@ part 'checkbox_widget.dart';
 base class CheckboxSpec extends Spec<CheckboxSpec>
     with _$CheckboxSpec, Diagnosticable {
   final BoxSpec container;
+  final FlexSpec containerLayout;
   final IconSpec indicator;
+  final TextSpec label;
 
-  /// {@macro button_spec_of}
+  /// {@macro checkbox_spec_of}
   static const of = _$CheckboxSpec.of;
 
   static const from = _$CheckboxSpec.from;
@@ -25,10 +27,14 @@ base class CheckboxSpec extends Spec<CheckboxSpec>
   const CheckboxSpec({
     BoxSpec? container,
     IconSpec? indicator,
+    FlexSpec? containerLayout,
+    TextSpec? label,
     super.modifiers,
     super.animated,
   })  : container = container ?? const BoxSpec(),
-        indicator = indicator ?? const IconSpec();
+        indicator = indicator ?? const IconSpec(),
+        containerLayout = containerLayout ?? const FlexSpec(),
+        label = label ?? const TextSpec();
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
