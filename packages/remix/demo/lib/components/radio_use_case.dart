@@ -5,12 +5,10 @@ import 'package:remix/remix.dart';
 import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
-final _key = GlobalKey();
-
 enum Theme {
   dark,
   light,
-  system,
+  system;
 }
 
 @widgetbook.UseCase(
@@ -18,57 +16,51 @@ enum Theme {
   type: Radio,
 )
 Widget buildRadioUseCase(BuildContext context) {
-  return const Scaffold(
+  return Scaffold(
     body: Center(
-      child: RadioExample(),
+      child: ListenableBuilder(
+        listenable: _state,
+        builder: (context, child) {
+          return Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: Theme.values
+                .map(
+                  (theme) => Padding(
+                    padding: const EdgeInsets.all(4.0),
+                    child: Radio<Theme>(
+                      value: theme,
+                      disabled: context.knobs.boolean(
+                        label: 'Disabled',
+                        initialValue: false,
+                      ),
+                      groupValue: _state.value,
+                      onChanged: (value) {
+                        _state.update(value!);
+                      },
+                      variants: [
+                        context.knobs.variant(FortalezaRadioStyle.variants)
+                      ],
+                      label: theme.name.capitalize(),
+                    ),
+                  ),
+                )
+                .toList(),
+          );
+        },
+      ),
     ),
   );
 }
 
-class RadioExample extends StatefulWidget {
-  const RadioExample({super.key});
+class _ThemeState extends ValueNotifier<Theme> {
+  _ThemeState(super.value);
 
-  @override
-  State<RadioExample> createState() => _RadioExampleState();
-}
-
-class _RadioExampleState extends State<RadioExample> {
-  Theme _theme = Theme.dark;
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: 200,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        key: _key,
-        children: <Widget>[
-          for (var theme in Theme.values) ...[
-            Row(
-              children: [
-                Radio<Theme>(
-                  variants: [
-                    context.knobs.variant(FortalezaRadioStyle.variants)
-                  ],
-                  value: theme,
-                  groupValue: _theme,
-                  onChanged: (Theme? value) {
-                    setState(() {
-                      _theme = value!;
-                    });
-                  },
-                  disabled: context.knobs.boolean(
-                    label: 'Disabled',
-                    initialValue: false,
-                  ),
-                  text: theme.name.capitalize(),
-                ),
-              ],
-            ),
-            const SizedBox(height: 8),
-          ]
-        ],
-      ),
-    );
+  void update(Theme value) {
+    this.value = value;
+    notifyListeners();
   }
 }
+
+_ThemeState _state = _ThemeState(Theme.dark);

@@ -29,7 +29,6 @@ export 'src/components/button/button.dart';
 export 'src/components/callout/callout.dart';
 export 'src/components/card/card.dart';
 export 'src/components/checkbox/checkbox.dart';
-export 'src/components/checkbox_group/checkbox_group.dart';
 export 'src/components/chip/chip.dart';
 export 'src/components/dialog/dialog.dart';
 export 'src/components/divider/divider.dart';

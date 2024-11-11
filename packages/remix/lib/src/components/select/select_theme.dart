@@ -15,14 +15,15 @@ class FortalezaSelectStyle extends SelectStyle {
     final baseStyle = super.makeStyle(spec);
 
     final baseThemeOverrides = Style(
-      $.menu.autoWidth.off(),
+      $.menu.autoWidth.on(),
       $.menu.container.chain
         ..color.$neutral(1)
-        ..border.all.color.$neutral(5)
+        ..border.all.color.$neutral(6)
         ..wrap.intrinsicWidth()
-        ..elevation.e2()
         ..padding.all.$space(2),
       $.button.chain
+        ..container.border.all.color.$neutral(6)
+        ..container.color.$neutral(1)
         ..icon.color.$accentAlpha(12)
         ..flex.gap.$space(1)
         ..flex.mainAxisSize.min(),

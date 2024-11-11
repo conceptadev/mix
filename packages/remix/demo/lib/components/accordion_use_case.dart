@@ -16,7 +16,7 @@ Widget buildAccordionUseCase(BuildContext context) {
       child: SizedBox(
         width: 300,
         child: Accordion(
-          header: (spec) => XAccordionHeaderSpecWidget(
+          header: (spec) => AccordionHeaderSpecWidget(
             title: context.knobs.string(
               label: 'Title',
               initialValue: 'Title',

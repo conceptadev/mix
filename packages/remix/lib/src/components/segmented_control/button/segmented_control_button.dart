@@ -8,7 +8,7 @@ class SegmentButtonSpec extends Spec<SegmentButtonSpec>
   final IconSpec icon;
   final TextSpec label;
 
-  /// {@macro button_spec_of}
+  /// {@macro segment_button_spec_of}
   static const of = _$SegmentButtonSpec.of;
 
   static const from = _$SegmentButtonSpec.from;
