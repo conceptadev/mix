@@ -24,7 +24,6 @@ void main() {
         fontWeight: FontWeight.bold,
         height: 2.0,
         letterSpacing: 1.0,
-        locale: const Locale('en', 'US'),
         shadows: [
           const Shadow(
             color: Colors.black,
@@ -70,7 +69,6 @@ void main() {
       expect(resolvedValue.fontVariations, [const FontVariation('wght', 900)]);
 
       expect(resolvedValue.debugLabel, 'debugLabel');
-      expect(resolvedValue.locale, const Locale('en', 'US'));
       expect(resolvedValue.height, 2.0);
       expect(resolvedWithPaint.foreground, yellowPaint);
       expect(resolvedWithPaint.background, purplePaint);

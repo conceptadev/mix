@@ -40,7 +40,6 @@ mixin _$TextStyleData on Dto<TextStyle> {
       foreground: _$this.foreground ?? defaultValue.foreground,
       height: _$this.height ?? defaultValue.height,
       letterSpacing: _$this.letterSpacing ?? defaultValue.letterSpacing,
-      locale: _$this.locale ?? defaultValue.locale,
       shadows: _$this.shadows?.map((e) => e.resolve(mix)).toList() ??
           defaultValue.shadows,
       textBaseline: _$this.textBaseline ?? defaultValue.textBaseline,
@@ -85,7 +84,6 @@ mixin _$TextStyleData on Dto<TextStyle> {
       foreground: other.foreground ?? _$this.foreground,
       height: other.height ?? _$this.height,
       letterSpacing: other.letterSpacing ?? _$this.letterSpacing,
-      locale: other.locale ?? _$this.locale,
       shadows: MixHelpers.mergeList(_$this.shadows, other.shadows),
       textBaseline: other.textBaseline ?? _$this.textBaseline,
       wordSpacing: other.wordSpacing ?? _$this.wordSpacing,
@@ -116,7 +114,6 @@ mixin _$TextStyleData on Dto<TextStyle> {
         _$this.foreground,
         _$this.height,
         _$this.letterSpacing,
-        _$this.locale,
         _$this.shadows,
         _$this.textBaseline,
         _$this.wordSpacing,

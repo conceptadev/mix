@@ -66,7 +66,6 @@ base class TextStyleData extends Dto<TextStyle>
   final TextDecoration? decoration;
   final ColorDto? decorationColor;
   final TextDecorationStyle? decorationStyle;
-  final Locale? locale;
   final String? debugLabel;
   final double? height;
   final Paint? foreground;
@@ -93,7 +92,6 @@ base class TextStyleData extends Dto<TextStyle>
     this.foreground,
     this.height,
     this.letterSpacing,
-    this.locale,
     this.shadows,
     this.textBaseline,
     this.wordSpacing,
@@ -120,7 +118,6 @@ base class TextStyleData extends Dto<TextStyle>
     properties.addUsingDefault('foreground', foreground);
     properties.addUsingDefault('height', height);
     properties.addUsingDefault('letterSpacing', letterSpacing);
-    properties.addUsingDefault('locale', locale);
     properties.addUsingDefault('shadows', shadows);
     properties.addUsingDefault('textBaseline', textBaseline);
     properties.addUsingDefault('wordSpacing', wordSpacing);
@@ -156,7 +153,6 @@ final class TextStyleDto extends Dto<TextStyle>
     ColorDto? decorationColor,
     TextDecorationStyle? decorationStyle,
     List<FontVariation>? fontVariations,
-    Locale? locale,
     double? height,
     Paint? foreground,
     Paint? background,
@@ -184,7 +180,6 @@ final class TextStyleDto extends Dto<TextStyle>
         foreground: foreground,
         height: height,
         letterSpacing: letterSpacing,
-        locale: locale,
         shadows: shadows,
         textBaseline: textBaseline,
         wordSpacing: wordSpacing,
@@ -260,7 +255,6 @@ extension TextStyleExt on TextStyle {
         foreground: foreground,
         height: height,
         letterSpacing: letterSpacing,
-        locale: locale,
         shadows: shadows?.map((e) => e.toDto()).toList(),
         textBaseline: textBaseline,
         wordSpacing: wordSpacing,

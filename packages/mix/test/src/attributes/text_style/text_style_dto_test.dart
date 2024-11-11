@@ -27,7 +27,6 @@ void main() {
         decoration: TextDecoration.underline,
         decorationColor: Colors.blue.toDto(),
         decorationStyle: TextDecorationStyle.dashed,
-        locale: const Locale('en', 'US'),
         height: 2.0,
       );
 
@@ -45,7 +44,6 @@ void main() {
         decoration: TextDecoration.lineThrough,
         decorationColor: Colors.red.toDto(),
         decorationStyle: TextDecorationStyle.dotted,
-        locale: const Locale('en', 'US'),
         height: 3.0,
       );
 
@@ -62,7 +60,6 @@ void main() {
       expect(merged.letterSpacing, 2.0);
       expect(merged.wordSpacing, 3.0);
       expect(merged.height, 3.0);
-      expect(merged.locale, const Locale('en', 'US'));
       expect(merged.textBaseline, TextBaseline.alphabetic);
     });
     test('resolve returns correct TextStyle with specific values', () {
@@ -80,7 +77,6 @@ void main() {
         decoration: TextDecoration.underline,
         decorationColor: Colors.blue.toDto(),
         decorationStyle: TextDecorationStyle.dashed,
-        locale: const Locale('en', 'US'),
         height: 2.0,
       );
       final textStyle = attr.resolve(EmptyMixData);
@@ -95,7 +91,6 @@ void main() {
       expect(textStyle.letterSpacing, 1.0);
       expect(textStyle.wordSpacing, 2.0);
       expect(textStyle.height, 2.0);
-      expect(textStyle.locale, const Locale('en', 'US'));
       expect(textStyle.textBaseline, TextBaseline.ideographic);
 
       return const Placeholder();
