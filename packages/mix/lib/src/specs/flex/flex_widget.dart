@@ -4,7 +4,6 @@ import 'package:flutter/widgets.dart';
 
 import '../../core/styled_widget.dart';
 import '../../modifiers/internal/render_widget_modifier.dart';
-import '../box/box_spec.dart';
 import 'flex_spec.dart';
 
 /// A flexible layout widget enhanced with `Style` for simplified styling.
@@ -88,8 +87,11 @@ class FlexSpecWidget extends StatelessWidget {
       mainAxisSize: spec?.mainAxisSize ?? _defaultFlex.mainAxisSize,
       crossAxisAlignment:
           spec?.crossAxisAlignment ?? _defaultFlex.crossAxisAlignment,
+      textDirection: spec?.textDirection ?? _defaultFlex.textDirection,
       verticalDirection:
           spec?.verticalDirection ?? _defaultFlex.verticalDirection,
+      textBaseline: spec?.textBaseline ?? _defaultFlex.textBaseline,
+      clipBehavior: spec?.clipBehavior ?? _defaultFlex.clipBehavior,
       children: _buildChildren(gap),
     );
 
@@ -197,100 +199,6 @@ class StyledColumn extends StyledFlex {
     super.key,
     super.inherit,
     super.children,
-  }) : super(direction: Axis.vertical);
-}
-
-/// A flex container widget with integrated `Style` for enhanced styling.
-///
-/// `FlexBox` combines the features of `StyledContainer` and `StyledFlex`, offering
-/// a powerful tool for creating flexible layouts with advanced styling capabilities
-/// through `Style`. It's perfect for designing complex layouts that require both
-/// container and flex properties with uniform styling.
-///
-/// The `direction` parameter sets the layout's orientation, while the `Style`
-/// integration simplifies the process of applying consistent styles to all elements.
-///
-/// Example Usage:
-/// ```dart
-/// FlexBox(
-///   direction: Axis.horizontal,
-///   style: yourStyle,
-///   children: [Widget1(), Widget2()],
-/// );
-/// ```
-class FlexBox extends StyledWidget {
-  const FlexBox({
-    super.style,
-    super.key,
-    super.inherit,
-    required this.direction,
-    required this.children,
-    super.orderOfModifiers = const [],
-  });
-
-  final List<Widget> children;
-  final Axis direction;
-
-  @override
-  Widget build(BuildContext context) {
-    return withMix(context, (mix) {
-      final boxSpec = BoxSpec.of(mix);
-      final flexSpec = FlexSpec.of(mix);
-
-      return boxSpec(
-        orderOfModifiers: orderOfModifiers,
-        child: flexSpec(direction: direction, children: children),
-      );
-    });
-  }
-}
-
-/// A horizontal flex container with `Style` for easy and consistent styling.
-///
-/// `HBox` is a specialized `FlexBox` designed for horizontal layouts, simplifying
-/// the process of applying horizontal alignment with advanced styling via `Style`.
-/// It's an efficient way to achieve consistent styling in horizontal arrangements.
-///
-/// Inherits all functionalities of `FlexBox`, optimized for horizontal layouts.
-///
-/// Example Usage:
-/// ```dart
-/// HBox(
-///   style: yourStyle,
-///   children: [Widget1(), Widget2()],
-/// );
-/// ```
-class HBox extends FlexBox {
-  const HBox({
-    super.style,
-    super.key,
-    super.inherit,
-    super.children = const <Widget>[],
-  }) : super(direction: Axis.horizontal);
-}
-
-/// A vertical flex container that uses `Style` for streamlined styling.
-///
-/// `VBox` is a vertical counterpart to `HBox`, utilizing `Style` for efficient
-/// and consistent styling in vertical layouts. It offers an easy way to manage
-/// vertical alignment and styling in a cohesive manner.
-///
-/// Inherits the comprehensive styling and layout capabilities of `FlexBox`, tailored
-/// for vertical orientations.
-///
-/// Example Usage:
-/// ```dart
-/// VBox(
-///   style: yourStyle,
-///   children: [Widget1(), Widget2()],
-/// );
-/// ```
-class VBox extends FlexBox {
-  const VBox({
-    super.style,
-    super.key,
-    super.inherit,
-    super.children = const <Widget>[],
   }) : super(direction: Axis.vertical);
 }
 
