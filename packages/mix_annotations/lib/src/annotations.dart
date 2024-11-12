@@ -248,3 +248,13 @@ class MixDeprecatedRenamed extends MixDeprecated {
     required this.updatedName,
   });
 }
+
+class MixableToken {
+  const MixableToken();
+}
+
+class MixableTokenField {
+  final Object? type;
+
+  const MixableTokenField(this.type);
+}
