@@ -73,7 +73,7 @@ class BreakpointToken extends MixToken<Breakpoint> {
 
     return themeValue is BreakpointResolver
         ? themeValue.resolve(context)
-        : themeValue ?? const Breakpoint();
+        : (themeValue ?? const Breakpoint());
   }
 }
 

@@ -129,7 +129,7 @@ class _RemixAppState extends State<RemixApp> {
                 return widget.builder!(context, child);
               },
             )
-          : child ?? const SizedBox.shrink(),
+          : (child ?? const SizedBox.shrink()),
     );
   }
 
