@@ -1,12 +1,13 @@
 import 'package:analyzer/dart/constant/value.dart';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:mix_annotations/mix_annotations.dart';
-import 'dart_type_ext.dart';
 import 'package:source_gen/source_gen.dart';
+
+import 'dart_type_ext.dart';
 
 const _specChecker = TypeChecker.fromRuntime(MixableSpec);
 const _utilityChecker = TypeChecker.fromRuntime(MixableUtility);
-
+const _tokenChecker = TypeChecker.fromRuntime(MixableToken);
 MixableSpec readMixableSpec(ClassElement classElement) {
   final annotation = _specChecker.firstAnnotationOfExact(classElement);
 
@@ -108,4 +109,19 @@ MixableFieldDto? _getMixableDto(ConstantReader? reader) {
   if (reader == null) return null;
 
   return MixableFieldDto(type: reader.typeAsString);
+}
+
+MixableToken readMixableToken(ClassElement element) {
+  final annotation = _tokenChecker.firstAnnotationOfExact(element);
+
+  if (annotation == null) {
+    throw InvalidGenerationSource(
+      'No MixableToken annotation found on the class',
+      element: element,
+    );
+  }
+  final reader = ConstantReader(annotation);
+  final type = reader.read('type').typeValue;
+
+  return MixableToken(type);
 }

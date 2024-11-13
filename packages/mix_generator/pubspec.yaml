@@ -15,7 +15,6 @@ dependencies:
   dart_style: ^2.3.6
   collection: ^1.17.1
   build_config: ^1.1.1
-  code_builder: ^4.10.1
 
 dev_dependencies:
   test: ^1.24.4

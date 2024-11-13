@@ -250,11 +250,13 @@ class MixDeprecatedRenamed extends MixDeprecated {
 }
 
 class MixableToken {
-  const MixableToken();
+  final Object type;
+  const MixableToken(this.type);
 }
 
-class MixableTokenField {
-  final Object? type;
+class MixableSwatchColorToken {
+  final int scale;
+  final int defaultValue;
 
-  const MixableTokenField(this.type);
+  const MixableSwatchColorToken({this.scale = 3, this.defaultValue = 1});
 }
