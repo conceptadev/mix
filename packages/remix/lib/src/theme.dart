@@ -4,7 +4,7 @@ import 'package:mix_annotations/mix_annotations.dart';
 
 part 'theme.g.dart';
 
-@MixableToken()
+@MixableToken(Color)
 class ColorTokens {
   final Color primary;
   final Color secondary;
@@ -16,10 +16,10 @@ class ColorTokens {
     required this.tertiary,
   });
 
-  Map<ColorToken, Color> get data => _$TokensToData(this);
+  Map<ColorToken, Color> get data => _$ColorTokensToData(this);
 }
 
-@MixableToken()
+@MixableToken(TextStyle)
 class TextTokens {
   final TextStyle h1;
   final TextStyle h2;
@@ -32,12 +32,36 @@ class TextTokens {
     required this.h3,
     required this.body,
   });
+
+  Map<TextStyleToken, TextStyle> get data => _$TextTokensToData(this);
 }
 
-class ColorStruct {
-  final Color p10;
-  final Color p20;
-  final Color p30;
+@MixableToken(Radius)
+class RadiusTokens {
+  final Radius small;
+  final Radius medium;
+  final Radius large;
 
-  const ColorStruct(this.p10, this.p20, this.p30);
+  const RadiusTokens({
+    required this.small,
+    required this.medium,
+    required this.large,
+  });
+
+  Map<RadiusToken, Radius> get data => _$RadiusTokensToData(this);
+}
+
+@MixableToken(double)
+class SpaceTokens {
+  final double p8;
+  final double p16;
+  final double p24;
+
+  const SpaceTokens({
+    required this.p8,
+    required this.p16,
+    required this.p24,
+  });
+
+  Map<SpaceToken, double> get data => _$SpaceTokensToData(this);
 }
