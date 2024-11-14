@@ -33,18 +33,16 @@ mixin _$AccordionSpec on Spec<AccordionSpec> {
   /// replaced with the new values.
   @override
   AccordionSpec copyWith({
-    BoxSpec? container,
+    FlexBoxSpec? flexContainer,
     AccordionHeaderSpec? header,
     BoxSpec? contentContainer,
-    FlexSpec? flex,
     TextSpec? textContent,
     AnimatedData? animated,
   }) {
     return AccordionSpec(
-      container: container ?? _$this.container,
+      flexContainer: flexContainer ?? _$this.flexContainer,
       header: header ?? _$this.header,
       contentContainer: contentContainer ?? _$this.contentContainer,
-      flex: flex ?? _$this.flex,
       textContent: textContent ?? _$this.textContent,
       animated: animated ?? _$this.animated,
     );
@@ -61,8 +59,8 @@ mixin _$AccordionSpec on Spec<AccordionSpec> {
   /// The interpolation is performed on each property of the [AccordionSpec] using the appropriate
   /// interpolation method:
   ///
-  /// - [BoxSpec.lerp] for [container] and [contentContainer].
-  /// - [FlexSpec.lerp] for [flex].
+  /// - [FlexBoxSpec.lerp] for [flexContainer].
+  /// - [BoxSpec.lerp] for [contentContainer].
   /// - [TextSpec.lerp] for [textContent].
 
   /// For [header] and [animated], the interpolation is performed using a step function.
@@ -76,10 +74,9 @@ mixin _$AccordionSpec on Spec<AccordionSpec> {
     if (other == null) return _$this;
 
     return AccordionSpec(
-      container: _$this.container.lerp(other.container, t),
+      flexContainer: _$this.flexContainer.lerp(other.flexContainer, t),
       header: _$this.header.lerp(other.header, t),
       contentContainer: _$this.contentContainer.lerp(other.contentContainer, t),
-      flex: _$this.flex.lerp(other.flex, t),
       textContent: _$this.textContent.lerp(other.textContent, t),
       animated: t < 0.5 ? _$this.animated : other.animated,
     );
@@ -91,10 +88,9 @@ mixin _$AccordionSpec on Spec<AccordionSpec> {
   /// compare two [AccordionSpec] instances for equality.
   @override
   List<Object?> get props => [
-        _$this.container,
+        _$this.flexContainer,
         _$this.header,
         _$this.contentContainer,
-        _$this.flex,
         _$this.textContent,
         _$this.animated,
       ];
@@ -110,17 +106,15 @@ mixin _$AccordionSpec on Spec<AccordionSpec> {
 /// Use this class to configure the attributes of a [AccordionSpec] and pass it to
 /// the [AccordionSpec] constructor.
 base class AccordionSpecAttribute extends SpecAttribute<AccordionSpec> {
-  final BoxSpecAttribute? container;
+  final FlexBoxSpecAttribute? flexContainer;
   final AccordionHeaderSpecAttribute? header;
   final BoxSpecAttribute? contentContainer;
-  final FlexSpecAttribute? flex;
   final TextSpecAttribute? textContent;
 
   const AccordionSpecAttribute({
-    this.container,
+    this.flexContainer,
     this.header,
     this.contentContainer,
-    this.flex,
     this.textContent,
     super.animated,
   });
@@ -136,10 +130,9 @@ base class AccordionSpecAttribute extends SpecAttribute<AccordionSpec> {
   @override
   AccordionSpec resolve(MixData mix) {
     return AccordionSpec(
-      container: container?.resolve(mix),
+      flexContainer: flexContainer?.resolve(mix),
       header: header?.resolve(mix),
       contentContainer: contentContainer?.resolve(mix),
-      flex: flex?.resolve(mix),
       textContent: textContent?.resolve(mix),
       animated: animated?.resolve(mix) ?? mix.animation,
     );
@@ -158,11 +151,11 @@ base class AccordionSpecAttribute extends SpecAttribute<AccordionSpec> {
     if (other == null) return this;
 
     return AccordionSpecAttribute(
-      container: container?.merge(other.container) ?? other.container,
+      flexContainer:
+          flexContainer?.merge(other.flexContainer) ?? other.flexContainer,
       header: header?.merge(other.header) ?? other.header,
       contentContainer: contentContainer?.merge(other.contentContainer) ??
           other.contentContainer,
-      flex: flex?.merge(other.flex) ?? other.flex,
       textContent: textContent?.merge(other.textContent) ?? other.textContent,
       animated: animated?.merge(other.animated) ?? other.animated,
     );
@@ -174,10 +167,9 @@ base class AccordionSpecAttribute extends SpecAttribute<AccordionSpec> {
   /// compare two [AccordionSpecAttribute] instances for equality.
   @override
   List<Object?> get props => [
-        container,
+        flexContainer,
         header,
         contentContainer,
-        flex,
         textContent,
         animated,
       ];
@@ -189,8 +181,8 @@ base class AccordionSpecAttribute extends SpecAttribute<AccordionSpec> {
 /// Use the methods of this class to configure specific properties of a [AccordionSpec].
 class AccordionSpecUtility<T extends Attribute>
     extends SpecUtility<T, AccordionSpecAttribute> {
-  /// Utility for defining [AccordionSpecAttribute.container]
-  late final container = BoxSpecUtility((v) => only(container: v));
+  /// Utility for defining [AccordionSpecAttribute.flexContainer]
+  late final flexContainer = FlexBoxSpecUtility((v) => only(flexContainer: v));
 
   /// Utility for defining [AccordionSpecAttribute.header]
   late final header = AccordionHeaderSpecUtility((v) => only(header: v));
@@ -198,9 +190,6 @@ class AccordionSpecUtility<T extends Attribute>
   /// Utility for defining [AccordionSpecAttribute.contentContainer]
   late final contentContainer =
       BoxSpecUtility((v) => only(contentContainer: v));
-
-  /// Utility for defining [AccordionSpecAttribute.flex]
-  late final flex = FlexSpecUtility((v) => only(flex: v));
 
   /// Utility for defining [AccordionSpecAttribute.textContent]
   late final textContent = TextSpecUtility((v) => only(textContent: v));
@@ -219,18 +208,16 @@ class AccordionSpecUtility<T extends Attribute>
   /// Returns a new [AccordionSpecAttribute] with the specified properties.
   @override
   T only({
-    BoxSpecAttribute? container,
+    FlexBoxSpecAttribute? flexContainer,
     AccordionHeaderSpecAttribute? header,
     BoxSpecAttribute? contentContainer,
-    FlexSpecAttribute? flex,
     TextSpecAttribute? textContent,
     AnimatedDataDto? animated,
   }) {
     return builder(AccordionSpecAttribute(
-      container: container,
+      flexContainer: flexContainer,
       header: header,
       contentContainer: contentContainer,
-      flex: flex,
       textContent: textContent,
       animated: animated,
     ));
@@ -288,16 +275,14 @@ mixin _$AccordionHeaderSpec on Spec<AccordionHeaderSpec> {
   /// replaced with the new values.
   @override
   AccordionHeaderSpec copyWith({
-    BoxSpec? container,
-    FlexSpec? flex,
+    FlexBoxSpec? flexContainer,
     IconSpec? leadingIcon,
     TextSpec? text,
     IconSpec? trailingIcon,
     AnimatedData? animated,
   }) {
     return AccordionHeaderSpec(
-      container: container ?? _$this.container,
-      flex: flex ?? _$this.flex,
+      flexContainer: flexContainer ?? _$this.flexContainer,
       leadingIcon: leadingIcon ?? _$this.leadingIcon,
       text: text ?? _$this.text,
       trailingIcon: trailingIcon ?? _$this.trailingIcon,
@@ -316,8 +301,7 @@ mixin _$AccordionHeaderSpec on Spec<AccordionHeaderSpec> {
   /// The interpolation is performed on each property of the [AccordionHeaderSpec] using the appropriate
   /// interpolation method:
   ///
-  /// - [BoxSpec.lerp] for [container].
-  /// - [FlexSpec.lerp] for [flex].
+  /// - [FlexBoxSpec.lerp] for [flexContainer].
   /// - [IconSpec.lerp] for [leadingIcon] and [trailingIcon].
   /// - [TextSpec.lerp] for [text].
 
@@ -332,8 +316,7 @@ mixin _$AccordionHeaderSpec on Spec<AccordionHeaderSpec> {
     if (other == null) return _$this;
 
     return AccordionHeaderSpec(
-      container: _$this.container.lerp(other.container, t),
-      flex: _$this.flex.lerp(other.flex, t),
+      flexContainer: _$this.flexContainer.lerp(other.flexContainer, t),
       leadingIcon: _$this.leadingIcon.lerp(other.leadingIcon, t),
       text: _$this.text.lerp(other.text, t),
       trailingIcon: _$this.trailingIcon.lerp(other.trailingIcon, t),
@@ -347,8 +330,7 @@ mixin _$AccordionHeaderSpec on Spec<AccordionHeaderSpec> {
   /// compare two [AccordionHeaderSpec] instances for equality.
   @override
   List<Object?> get props => [
-        _$this.container,
-        _$this.flex,
+        _$this.flexContainer,
         _$this.leadingIcon,
         _$this.text,
         _$this.trailingIcon,
@@ -367,15 +349,13 @@ mixin _$AccordionHeaderSpec on Spec<AccordionHeaderSpec> {
 /// the [AccordionHeaderSpec] constructor.
 base class AccordionHeaderSpecAttribute
     extends SpecAttribute<AccordionHeaderSpec> {
-  final BoxSpecAttribute? container;
-  final FlexSpecAttribute? flex;
+  final FlexBoxSpecAttribute? flexContainer;
   final IconSpecAttribute? leadingIcon;
   final TextSpecAttribute? text;
   final IconSpecAttribute? trailingIcon;
 
   const AccordionHeaderSpecAttribute({
-    this.container,
-    this.flex,
+    this.flexContainer,
     this.leadingIcon,
     this.text,
     this.trailingIcon,
@@ -393,8 +373,7 @@ base class AccordionHeaderSpecAttribute
   @override
   AccordionHeaderSpec resolve(MixData mix) {
     return AccordionHeaderSpec(
-      container: container?.resolve(mix),
-      flex: flex?.resolve(mix),
+      flexContainer: flexContainer?.resolve(mix),
       leadingIcon: leadingIcon?.resolve(mix),
       text: text?.resolve(mix),
       trailingIcon: trailingIcon?.resolve(mix),
@@ -416,8 +395,8 @@ base class AccordionHeaderSpecAttribute
     if (other == null) return this;
 
     return AccordionHeaderSpecAttribute(
-      container: container?.merge(other.container) ?? other.container,
-      flex: flex?.merge(other.flex) ?? other.flex,
+      flexContainer:
+          flexContainer?.merge(other.flexContainer) ?? other.flexContainer,
       leadingIcon: leadingIcon?.merge(other.leadingIcon) ?? other.leadingIcon,
       text: text?.merge(other.text) ?? other.text,
       trailingIcon:
@@ -432,8 +411,7 @@ base class AccordionHeaderSpecAttribute
   /// compare two [AccordionHeaderSpecAttribute] instances for equality.
   @override
   List<Object?> get props => [
-        container,
-        flex,
+        flexContainer,
         leadingIcon,
         text,
         trailingIcon,
@@ -447,11 +425,8 @@ base class AccordionHeaderSpecAttribute
 /// Use the methods of this class to configure specific properties of a [AccordionHeaderSpec].
 class AccordionHeaderSpecUtility<T extends Attribute>
     extends SpecUtility<T, AccordionHeaderSpecAttribute> {
-  /// Utility for defining [AccordionHeaderSpecAttribute.container]
-  late final container = BoxSpecUtility((v) => only(container: v));
-
-  /// Utility for defining [AccordionHeaderSpecAttribute.flex]
-  late final flex = FlexSpecUtility((v) => only(flex: v));
+  /// Utility for defining [AccordionHeaderSpecAttribute.flexContainer]
+  late final flexContainer = FlexBoxSpecUtility((v) => only(flexContainer: v));
 
   /// Utility for defining [AccordionHeaderSpecAttribute.leadingIcon]
   late final leadingIcon = IconSpecUtility((v) => only(leadingIcon: v));
@@ -476,16 +451,14 @@ class AccordionHeaderSpecUtility<T extends Attribute>
   /// Returns a new [AccordionHeaderSpecAttribute] with the specified properties.
   @override
   T only({
-    BoxSpecAttribute? container,
-    FlexSpecAttribute? flex,
+    FlexBoxSpecAttribute? flexContainer,
     IconSpecAttribute? leadingIcon,
     TextSpecAttribute? text,
     IconSpecAttribute? trailingIcon,
     AnimatedDataDto? animated,
   }) {
     return builder(AccordionHeaderSpecAttribute(
-      container: container,
-      flex: flex,
+      flexContainer: flexContainer,
       leadingIcon: leadingIcon,
       text: text,
       trailingIcon: trailingIcon,

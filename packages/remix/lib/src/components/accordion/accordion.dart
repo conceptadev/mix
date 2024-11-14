@@ -16,12 +16,11 @@ part 'header/accordion_header_spec_widget.dart';
 
 @MixableSpec()
 base class AccordionSpec extends Spec<AccordionSpec> with _$AccordionSpec {
-  final BoxSpec container;
   @MixableProperty(dto: MixableFieldDto(type: 'AccordionHeaderSpecAttribute'))
   final AccordionHeaderSpec header;
   final BoxSpec contentContainer;
-  final FlexSpec flex;
   final TextSpec textContent;
+  final FlexBoxSpec flexContainer;
 
   /// {@macro accordion_spec_of}
   static const of = _$AccordionSpec.of;
@@ -29,15 +28,13 @@ base class AccordionSpec extends Spec<AccordionSpec> with _$AccordionSpec {
   static const from = _$AccordionSpec.from;
 
   const AccordionSpec({
-    BoxSpec? container,
+    FlexBoxSpec? flexContainer,
     AccordionHeaderSpec? header,
     BoxSpec? contentContainer,
-    FlexSpec? flex,
     TextSpec? textContent,
     super.animated,
-  })  : container = container ?? const BoxSpec(),
+  })  : flexContainer = flexContainer ?? const FlexBoxSpec(),
         header = header ?? const AccordionHeaderSpec(),
         contentContainer = contentContainer ?? const BoxSpec(),
-        flex = flex ?? const FlexSpec(),
         textContent = textContent ?? const TextSpec();
 }

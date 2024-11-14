@@ -16,22 +16,19 @@ class AccordionHeaderSpecWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ContainerWidget = spec.container;
-    final FlexWidget = spec.flex;
+    final FlexContainerWidget = spec.flexContainer;
     final LeadingIconWidget = spec.leadingIcon;
     final TrailingIconWidget = spec.trailingIcon;
     final TitleWidget = spec.text;
 
-    return ContainerWidget(
-      child: FlexWidget(
-        direction: Axis.horizontal,
-        children: [
-          if (leadingIcon != null) LeadingIconWidget(leadingIcon),
-          TitleWidget(title),
-          const Spacer(),
-          TrailingIconWidget(trailingIcon),
-        ],
-      ),
+    return FlexContainerWidget(
+      direction: Axis.horizontal,
+      children: [
+        if (leadingIcon != null) LeadingIconWidget(leadingIcon),
+        TitleWidget(title),
+        const Spacer(),
+        TrailingIconWidget(trailingIcon),
+      ],
     );
   }
 }

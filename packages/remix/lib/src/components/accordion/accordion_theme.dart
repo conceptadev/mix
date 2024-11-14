@@ -11,7 +11,7 @@ class FortalezaAccordionStyle extends AccordionStyle {
 
     final style = Style(
       // Container
-      $.container.chain
+      $.flexContainer.chain
         ..border.all.color.$neutral(2)
         ..shape.roundedRectangle.borderRadius(6)
         ..shape.roundedRectangle.side.width(1)
@@ -24,13 +24,13 @@ class FortalezaAccordionStyle extends AccordionStyle {
 
       // Header
       $.header.chain
-        ..container.padding.horizontal.$space(4)
+        ..flexContainer.padding.horizontal.$space(4)
         ..text.style.fontWeight.w400()
         ..text.style.color.$neutral(12)
         ..trailingIcon.color.$neutral(10)
-        ..container.color.$neutral(1)
-        ..container.animated.curve.easeInCubic()
-        ..container.animated.duration(const Duration(milliseconds: 100)),
+        ..flexContainer.color.$neutral(1)
+        ..flexContainer.animated.curve.easeInCubic()
+        ..flexContainer.animated.duration(const Duration(milliseconds: 100)),
 
       $.contentContainer.chain
         ..padding.all.$space(3)
@@ -47,7 +47,7 @@ class FortalezaAccordionStyle extends AccordionStyle {
       // Variants
       spec.on.selected($.contentContainer.border.top.style.solid()),
       spec.on.hover(
-        $.header.container.color.$neutral(3),
+        $.header.flexContainer.color.$neutral(3),
         $.header.text.style.decoration.none(),
       ),
     );
