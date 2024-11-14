@@ -92,9 +92,9 @@ class _RadioState<T> extends State<Radio<T>> {
         builder: (context) {
           final spec = RadioSpec.of(context);
 
-          final ContainerWidget = spec.container;
+          final ContainerWidget = spec.indicatorContainer;
           final IndicatorWidget = spec.indicator;
-          final FlexWidget = spec.layout;
+          final FlexWidget = spec.flexContainer;
           final TextWidget = spec.text;
 
           return FlexWidget(
