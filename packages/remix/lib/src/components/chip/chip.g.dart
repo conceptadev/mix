@@ -33,16 +33,14 @@ mixin _$ChipSpec on Spec<ChipSpec> {
   /// replaced with the new values.
   @override
   ChipSpec copyWith({
-    BoxSpec? container,
-    FlexSpec? layout,
+    FlexBoxSpec? flexContainer,
     IconSpec? icon,
     TextSpec? label,
     WidgetModifiersData? modifiers,
     AnimatedData? animated,
   }) {
     return ChipSpec(
-      container: container ?? _$this.container,
-      layout: layout ?? _$this.layout,
+      flexContainer: flexContainer ?? _$this.flexContainer,
       icon: icon ?? _$this.icon,
       label: label ?? _$this.label,
       modifiers: modifiers ?? _$this.modifiers,
@@ -61,8 +59,7 @@ mixin _$ChipSpec on Spec<ChipSpec> {
   /// The interpolation is performed on each property of the [ChipSpec] using the appropriate
   /// interpolation method:
   ///
-  /// - [BoxSpec.lerp] for [container].
-  /// - [FlexSpec.lerp] for [layout].
+  /// - [FlexBoxSpec.lerp] for [flexContainer].
   /// - [IconSpec.lerp] for [icon].
   /// - [TextSpec.lerp] for [label].
 
@@ -77,8 +74,7 @@ mixin _$ChipSpec on Spec<ChipSpec> {
     if (other == null) return _$this;
 
     return ChipSpec(
-      container: _$this.container.lerp(other.container, t),
-      layout: _$this.layout.lerp(other.layout, t),
+      flexContainer: _$this.flexContainer.lerp(other.flexContainer, t),
       icon: _$this.icon.lerp(other.icon, t),
       label: _$this.label.lerp(other.label, t),
       modifiers: other.modifiers,
@@ -92,8 +88,7 @@ mixin _$ChipSpec on Spec<ChipSpec> {
   /// compare two [ChipSpec] instances for equality.
   @override
   List<Object?> get props => [
-        _$this.container,
-        _$this.layout,
+        _$this.flexContainer,
         _$this.icon,
         _$this.label,
         _$this.modifiers,
@@ -103,10 +98,8 @@ mixin _$ChipSpec on Spec<ChipSpec> {
   ChipSpec get _$this => this as ChipSpec;
 
   void _debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    properties.add(
-        DiagnosticsProperty('container', _$this.container, defaultValue: null));
-    properties
-        .add(DiagnosticsProperty('layout', _$this.layout, defaultValue: null));
+    properties.add(DiagnosticsProperty('flexContainer', _$this.flexContainer,
+        defaultValue: null));
     properties
         .add(DiagnosticsProperty('icon', _$this.icon, defaultValue: null));
     properties
@@ -126,14 +119,12 @@ mixin _$ChipSpec on Spec<ChipSpec> {
 /// Use this class to configure the attributes of a [ChipSpec] and pass it to
 /// the [ChipSpec] constructor.
 class ChipSpecAttribute extends SpecAttribute<ChipSpec> with Diagnosticable {
-  final BoxSpecAttribute? container;
-  final FlexSpecAttribute? layout;
+  final FlexBoxSpecAttribute? flexContainer;
   final IconSpecAttribute? icon;
   final TextSpecAttribute? label;
 
   const ChipSpecAttribute({
-    this.container,
-    this.layout,
+    this.flexContainer,
     this.icon,
     this.label,
     super.modifiers,
@@ -151,8 +142,7 @@ class ChipSpecAttribute extends SpecAttribute<ChipSpec> with Diagnosticable {
   @override
   ChipSpec resolve(MixData mix) {
     return ChipSpec(
-      container: container?.resolve(mix),
-      layout: layout?.resolve(mix),
+      flexContainer: flexContainer?.resolve(mix),
       icon: icon?.resolve(mix),
       label: label?.resolve(mix),
       modifiers: modifiers?.resolve(mix),
@@ -173,8 +163,8 @@ class ChipSpecAttribute extends SpecAttribute<ChipSpec> with Diagnosticable {
     if (other == null) return this;
 
     return ChipSpecAttribute(
-      container: container?.merge(other.container) ?? other.container,
-      layout: layout?.merge(other.layout) ?? other.layout,
+      flexContainer:
+          flexContainer?.merge(other.flexContainer) ?? other.flexContainer,
       icon: icon?.merge(other.icon) ?? other.icon,
       label: label?.merge(other.label) ?? other.label,
       modifiers: modifiers?.merge(other.modifiers) ?? other.modifiers,
@@ -188,8 +178,7 @@ class ChipSpecAttribute extends SpecAttribute<ChipSpec> with Diagnosticable {
   /// compare two [ChipSpecAttribute] instances for equality.
   @override
   List<Object?> get props => [
-        container,
-        layout,
+        flexContainer,
         icon,
         label,
         modifiers,
@@ -199,9 +188,8 @@ class ChipSpecAttribute extends SpecAttribute<ChipSpec> with Diagnosticable {
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties
-        .add(DiagnosticsProperty('container', container, defaultValue: null));
-    properties.add(DiagnosticsProperty('layout', layout, defaultValue: null));
+    properties.add(DiagnosticsProperty('flexContainer', flexContainer,
+        defaultValue: null));
     properties.add(DiagnosticsProperty('icon', icon, defaultValue: null));
     properties.add(DiagnosticsProperty('label', label, defaultValue: null));
     properties
@@ -217,11 +205,8 @@ class ChipSpecAttribute extends SpecAttribute<ChipSpec> with Diagnosticable {
 /// Use the methods of this class to configure specific properties of a [ChipSpec].
 class ChipSpecUtility<T extends Attribute>
     extends SpecUtility<T, ChipSpecAttribute> {
-  /// Utility for defining [ChipSpecAttribute.container]
-  late final container = BoxSpecUtility((v) => only(container: v));
-
-  /// Utility for defining [ChipSpecAttribute.layout]
-  late final layout = FlexSpecUtility((v) => only(layout: v));
+  /// Utility for defining [ChipSpecAttribute.flexContainer]
+  late final flexContainer = FlexBoxSpecUtility((v) => only(flexContainer: v));
 
   /// Utility for defining [ChipSpecAttribute.icon]
   late final icon = IconSpecUtility((v) => only(icon: v));
@@ -246,16 +231,14 @@ class ChipSpecUtility<T extends Attribute>
   /// Returns a new [ChipSpecAttribute] with the specified properties.
   @override
   T only({
-    BoxSpecAttribute? container,
-    FlexSpecAttribute? layout,
+    FlexBoxSpecAttribute? flexContainer,
     IconSpecAttribute? icon,
     TextSpecAttribute? label,
     WidgetModifiersDataDto? modifiers,
     AnimatedDataDto? animated,
   }) {
     return builder(ChipSpecAttribute(
-      container: container,
-      layout: layout,
+      flexContainer: flexContainer,
       icon: icon,
       label: label,
       modifiers: modifiers,

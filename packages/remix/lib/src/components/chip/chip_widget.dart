@@ -92,15 +92,13 @@ class _ChipState extends State<Chip> {
         builder: (context) {
           final spec = ChipSpec.of(context);
 
-          return spec.container(
-            child: spec.layout(
-              direction: Axis.horizontal,
-              children: [
-                if (widget.iconLeft != null) spec.icon(widget.iconLeft),
-                if (widget.label?.isNotEmpty == true) spec.label(widget.label!),
-                if (widget.iconRight != null) spec.icon(widget.iconRight),
-              ],
-            ),
+          return spec.flexContainer(
+            direction: Axis.horizontal,
+            children: [
+              if (widget.iconLeft != null) spec.icon(widget.iconLeft),
+              if (widget.label?.isNotEmpty == true) spec.label(widget.label!),
+              if (widget.iconRight != null) spec.icon(widget.iconRight),
+            ],
           );
         },
       ),

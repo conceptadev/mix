@@ -7,14 +7,6 @@ class ChipStyle extends SpecStyle<ChipSpecUtility> {
   Style makeStyle(SpecConfiguration<ChipSpecUtility> spec) {
     final $ = spec.utilities;
 
-    final layoutStyle = [
-      $.layout.chain
-        ..mainAxisAlignment.center()
-        ..crossAxisAlignment.center()
-        ..mainAxisSize.min()
-        ..gap(8),
-    ];
-
     final iconStyle = [
       $.icon.chain
         ..size(18)
@@ -31,28 +23,32 @@ class ChipStyle extends SpecStyle<ChipSpecUtility> {
         ..style.fontWeight.w600(),
     ];
 
-    final containerStyle = [
-      $.container.chain
+    final flexContainerStyle = [
+      $.flexContainer.chain
         ..borderRadius(6)
         ..color.white()
         ..border.all.width(1)
         ..border.color.grey.shade200()
         ..padding.vertical(8)
-        ..padding.horizontal(12),
-      spec.on.selected($.container.color.grey.shade200()),
+        ..padding.horizontal(12)
+        ..flex.mainAxisAlignment.center()
+        ..flex.crossAxisAlignment.center()
+        ..flex.mainAxisSize.min()
+        ..flex.gap(8),
+      spec.on.selected($.flexContainer.color.grey.shade200()),
     ];
 
     final disabledStyle = spec.on.disabled(
       $.label.style.color.grey.shade600(),
       $.icon.color.grey.shade600(),
-      spec.on.selected($.container.color.grey.shade300()),
+      spec.on.selected($.flexContainer.color.grey.shade300()),
     );
 
     return Style.create([
-      ...layoutStyle,
+      ...flexContainerStyle,
       ...iconStyle,
       ...labelStyle,
-      ...containerStyle,
+      ...flexContainerStyle,
       disabledStyle,
     ]);
   }
@@ -65,17 +61,17 @@ class ChipDarkStyle extends ChipStyle {
   Style makeStyle(SpecConfiguration<ChipSpecUtility> spec) {
     final $ = spec.utilities;
 
-    final containerStyle = [
-      $.container.chain
+    final flexContainerStyle = [
+      $.flexContainer.chain
         ..border.all.color.grey.shade900()
         ..color.black(),
       $.icon.color.white(),
-      spec.on.selected($.container.color.grey.shade900()),
+      spec.on.selected($.flexContainer.color.grey.shade900()),
       spec.on.disabled(
         $.label.style.color.grey.shade600(),
         $.icon.color.grey.shade600(),
-        $.container.color.black(),
-        spec.on.selected($.container.color.grey.shade900()),
+        $.flexContainer.color.black(),
+        spec.on.selected($.flexContainer.color.grey.shade900()),
       ),
     ];
 
@@ -83,7 +79,7 @@ class ChipDarkStyle extends ChipStyle {
 
     return Style.create([
       super.makeStyle(spec).call(),
-      ...containerStyle,
+      ...flexContainerStyle,
       labelStyle,
     ]);
   }
