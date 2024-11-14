@@ -28,6 +28,7 @@ const _boxUtility = MixableUtility(
     (path: 'constraints.maxWidth', alias: 'maxWidth'),
     (path: 'constraints.minHeight', alias: 'minHeight'),
     (path: 'constraints.maxHeight', alias: 'maxHeight'),
+    (path: 'decoration', alias: 'decoration'),
     (path: 'decoration.color', alias: 'color'),
     (path: 'decoration.border', alias: 'border'),
     (path: 'decoration.border.directional', alias: 'borderDirectional'),
@@ -43,6 +44,7 @@ const _boxUtility = MixableUtility(
     (path: 'decoration.boxShadows', alias: 'shadows'),
     (path: 'decoration.boxShadow', alias: 'shadow'),
     (path: 'decoration.elevation', alias: 'elevation'),
+    (path: 'shapeDecoration', alias: 'shapeDecoration'),
     (path: 'shape', alias: 'shape'),
     (path: 'foregroundDecoration', alias: 'foregroundDecoration'),
     (path: 'transform', alias: 'transform'),
@@ -53,26 +55,12 @@ const _boxUtility = MixableUtility(
   ],
 );
 
-const _flexUtility = MixableUtility(
-  properties: [
-    (path: 'direction', alias: 'direction'),
-    (path: 'mainAxisAlignment', alias: 'mainAxisAlignment'),
-    (path: 'crossAxisAlignment', alias: 'crossAxisAlignment'),
-    (path: 'mainAxisSize', alias: 'mainAxisSize'),
-    (path: 'verticalDirection', alias: 'verticalDirection'),
-    (path: 'textDirection', alias: 'textDirection'),
-    (path: 'textBaseline', alias: 'textBaseline'),
-    (path: 'gap', alias: 'gap'),
-  ],
-);
-
 @MixableSpec()
 final class FlexBoxSpec extends Spec<FlexBoxSpec>
     with _$FlexBoxSpec, Diagnosticable {
   @MixableProperty(utilities: [_boxUtility])
   final BoxSpec box;
 
-  @MixableProperty(utilities: [_flexUtility])
   final FlexSpec flex;
 
   static const of = _$FlexBoxSpec.of;
@@ -90,16 +78,16 @@ final class FlexBoxSpec extends Spec<FlexBoxSpec>
     return (isAnimated)
         ? AnimatedFlexBoxSpecWidget(
             spec: this,
-            children: children,
             direction: direction,
             curve: animated!.curve,
             duration: animated!.duration,
             onEnd: animated!.onEnd,
+            children: children,
           )
         : FlexBoxSpecWidget(
             spec: this,
-            children: children,
             direction: direction,
+            children: children,
           );
   }
 

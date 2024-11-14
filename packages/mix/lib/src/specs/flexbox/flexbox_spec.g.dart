@@ -221,6 +221,9 @@ class FlexBoxSpecUtility<T extends Attribute>
   /// Utility for defining [FlexBoxSpecAttribute.box.constraints.maxHeight]
   late final maxHeight = box.constraints.maxHeight;
 
+  /// Utility for defining [FlexBoxSpecAttribute.box.decoration]
+  late final decoration = box.decoration;
+
   /// Utility for defining [FlexBoxSpecAttribute.box.decoration.color]
   late final color = box.decoration.color;
 
@@ -257,6 +260,9 @@ class FlexBoxSpecUtility<T extends Attribute>
   /// Utility for defining [FlexBoxSpecAttribute.box.decoration.elevation]
   late final elevation = box.decoration.elevation;
 
+  /// Utility for defining [FlexBoxSpecAttribute.box.shapeDecoration]
+  late final shapeDecoration = box.shapeDecoration;
+
   /// Utility for defining [FlexBoxSpecAttribute.box.shape]
   late final shape = box.shape;
 
@@ -280,30 +286,6 @@ class FlexBoxSpecUtility<T extends Attribute>
 
   /// Utility for defining [FlexBoxSpecAttribute.flex]
   late final flex = FlexSpecUtility((v) => only(flex: v));
-
-  /// Utility for defining [FlexBoxSpecAttribute.flex.direction]
-  late final direction = flex.direction;
-
-  /// Utility for defining [FlexBoxSpecAttribute.flex.mainAxisAlignment]
-  late final mainAxisAlignment = flex.mainAxisAlignment;
-
-  /// Utility for defining [FlexBoxSpecAttribute.flex.crossAxisAlignment]
-  late final crossAxisAlignment = flex.crossAxisAlignment;
-
-  /// Utility for defining [FlexBoxSpecAttribute.flex.mainAxisSize]
-  late final mainAxisSize = flex.mainAxisSize;
-
-  /// Utility for defining [FlexBoxSpecAttribute.flex.verticalDirection]
-  late final verticalDirection = flex.verticalDirection;
-
-  /// Utility for defining [FlexBoxSpecAttribute.flex.textDirection]
-  late final textDirection = flex.textDirection;
-
-  /// Utility for defining [FlexBoxSpecAttribute.flex.textBaseline]
-  late final textBaseline = flex.textBaseline;
-
-  /// Utility for defining [FlexBoxSpecAttribute.flex.gap]
-  late final gap = flex.gap;
 
   FlexBoxSpecUtility(super.builder, {super.mutable});
 
