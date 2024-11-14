@@ -96,10 +96,8 @@ class AnimatedStyledIcon extends StyledWidget {
     this.textDirection,
     @Deprecated('Use orderOfModifiers parameter instead')
     List<Type> modifierOrder = const <Type>[],
-    List<Type> orderOfModifiers = const <Type>[],
-  }) : super(
-          orderOfModifiers: false ? modifierOrder : orderOfModifiers,
-        );
+    super.orderOfModifiers = const <Type>[],
+  });
 
   final AnimatedIconData icon;
   final String? semanticLabel;
