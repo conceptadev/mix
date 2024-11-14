@@ -9,10 +9,7 @@ void main() {
     testWidgets('renders with custom label', (WidgetTester tester) async {
       await tester.pumpWidget(
         const MaterialApp(
-          home: r.Callout(
-            text: 'Test Callout',
-            style: r.CalloutStyle(),
-          ),
+          home: r.Callout(text: 'Test Callout', style: r.CalloutStyle()),
         ),
       );
 
@@ -25,8 +22,8 @@ void main() {
       await tester.pumpWidget(
         const MaterialApp(
           home: r.Callout(
-            text: 'Test Callout',
             icon: icon,
+            text: 'Test Callout',
             style: r.CalloutStyle(),
           ),
         ),
@@ -65,18 +62,14 @@ void main() {
 class FakeCalloutStyle extends CalloutStyle {
   final Color color;
 
-  const FakeCalloutStyle(
-    this.color,
-  );
+  const FakeCalloutStyle(this.color);
 
   @override
   Style makeStyle(SpecConfiguration<CalloutSpecUtility> spec) {
     final $ = spec.utilities;
 
     final baseStyle = super.makeStyle(spec);
-    return Style.create([
-      baseStyle(),
-      $.container.color(color),
-    ]);
+
+    return Style.create([baseStyle(), $.flexContainer.color(color)]);
   }
 }

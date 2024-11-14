@@ -8,9 +8,8 @@ class FortalezaMenuItemStyle extends MenuItemStyle {
     final $ = spec.utilities;
 
     final baseStyle = super.makeStyle(spec);
-    final titleSubtitleLayout = $.titleSubtitleLayout.chain..gap.$space(1);
+    final titleSubtitleLayout = $.titleSubtitleFlex.chain..gap.$space(1);
 
-    final contentLayout = $.contentLayout.chain..gap.$space(3);
     final title = $.title.chain
       ..style.$text(2)
       ..style.color.resetDirectives()
@@ -21,14 +20,15 @@ class FortalezaMenuItemStyle extends MenuItemStyle {
       ..style.color.resetDirectives()
       ..style.color.$neutral(9);
 
-    final outerContainer = $.outerContainer.chain
+    final flexContainer = $.flexContainer.chain
       ..padding.all.$space(3)
       ..padding.right.$space(4)
-      ..borderRadius.all.$radius(2);
+      ..borderRadius.all.$radius(2)
+      ..flex.gap.$space(3);
 
     final icon = $.icon.color.$neutral(11);
 
-    final hovered = $.outerContainer.color.$accent(2);
+    final hovered = $.flexContainer.color.$accent(3);
 
     final disabled = $.chain
       ..title.style.color.$neutral(9)
@@ -38,16 +38,12 @@ class FortalezaMenuItemStyle extends MenuItemStyle {
     return Style.create([
       baseStyle(),
       titleSubtitleLayout,
-      contentLayout,
+      flexContainer,
       title,
       subtitle,
-      outerContainer,
       icon,
       spec.on.hover(hovered),
       spec.on.disabled(disabled),
-    ]).animate(
-      duration: const Duration(milliseconds: 100),
-      curve: Curves.easeInOut,
-    );
+    ]).animate(duration: const Duration(milliseconds: 100));
   }
 }

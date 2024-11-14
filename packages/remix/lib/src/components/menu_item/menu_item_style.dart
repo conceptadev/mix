@@ -7,14 +7,12 @@ class MenuItemStyle extends SpecStyle<MenuItemSpecUtility> {
   Style makeStyle(SpecConfiguration<MenuItemSpecUtility> spec) {
     final $ = spec.utilities;
 
-    final titleSubtitleLayout = $.titleSubtitleLayout.chain
+    final titleSubtitleFlex = $.titleSubtitleFlex.chain
       ..mainAxisAlignment.start()
       ..crossAxisAlignment.start()
       ..mainAxisSize.min()
       ..wrap.expanded()
       ..gap(4.0);
-
-    final contentLayout = $.contentLayout.gap(12.0);
 
     final title = $.title.style.fontSize(14.0);
 
@@ -23,7 +21,8 @@ class MenuItemStyle extends SpecStyle<MenuItemSpecUtility> {
       ..style.color.grey.shade600()
       ..maxLines(2);
 
-    final outerContainer = $.outerContainer.chain
+    final flexContainer = $.flexContainer.chain
+      ..flex.gap(12)
       ..padding(12)
       ..borderRadius(12);
 
@@ -37,11 +36,10 @@ class MenuItemStyle extends SpecStyle<MenuItemSpecUtility> {
     );
 
     return Style.create([
-      titleSubtitleLayout,
-      contentLayout,
+      titleSubtitleFlex,
+      flexContainer,
       title,
       subtitle,
-      outerContainer,
       icon,
       spec.on.disabled(disabled),
     ]);
