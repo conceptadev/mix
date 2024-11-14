@@ -3,8 +3,7 @@ part of '../select.dart';
 @MixableSpec()
 class SelectButtonSpec extends Spec<SelectButtonSpec>
     with _$SelectButtonSpec, Diagnosticable {
-  final BoxSpec container;
-  final FlexSpec layout;
+  final FlexBoxSpec flexContainer;
   final TextSpec label;
   final IconSpec icon;
 
@@ -14,14 +13,12 @@ class SelectButtonSpec extends Spec<SelectButtonSpec>
   static const from = _$SelectButtonSpec.from;
 
   const SelectButtonSpec({
-    BoxSpec? container,
-    FlexSpec? layout,
+    FlexBoxSpec? flexContainer,
     IconSpec? icon,
     TextSpec? label,
     super.modifiers,
     super.animated,
-  })  : layout = layout ?? const FlexSpec(),
-        container = container ?? const BoxSpec(),
+  })  : flexContainer = flexContainer ?? const FlexBoxSpec(),
         icon = icon ?? const IconSpec(),
         label = label ?? const TextSpec();
 

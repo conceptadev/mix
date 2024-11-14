@@ -62,8 +62,7 @@ class SelectSpec extends Spec<SelectSpec> with _$SelectSpec, Diagnosticable {
 @MixableSpec()
 base class SelectMenuSpec extends Spec<SelectMenuSpec>
     with _$SelectMenuSpec, Diagnosticable {
-  final BoxSpec container;
-  final FlexSpec flex;
+  final FlexBoxSpec flexContainer;
   final bool autoWidth;
 
   /// {@macro select_menu_spec_of}
@@ -72,13 +71,11 @@ base class SelectMenuSpec extends Spec<SelectMenuSpec>
   static const from = _$SelectMenuSpec.from;
 
   const SelectMenuSpec({
-    BoxSpec? container,
-    FlexSpec? flex,
+    FlexBoxSpec? flexContainer,
     bool? autoWidth,
     super.modifiers,
     super.animated,
-  })  : container = container ?? const BoxSpec(),
-        flex = flex ?? const FlexSpec(),
+  })  : flexContainer = flexContainer ?? const FlexBoxSpec(),
         autoWidth = autoWidth ?? true;
 
   @override

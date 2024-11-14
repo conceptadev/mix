@@ -14,8 +14,8 @@ class SelectStyle extends SpecStyle<SelectSpecUtility> {
     ];
 
     final buttonStyle = [
-      $.button.layout.mainAxisAlignment.spaceBetween(),
-      $.button.container.chain
+      $.button.flexContainer.chain
+        ..flex.mainAxisAlignment.spaceBetween()
         ..color.white()
         ..padding.all(10)
         ..border.color.black12()
@@ -27,12 +27,12 @@ class SelectStyle extends SpecStyle<SelectSpecUtility> {
         ..style.fontSize(14)
         ..style.color.black(),
       spec.on.disabled(
-        $.button.container.color(Colors.black.withOpacity(0.05)),
+        $.button.flexContainer.color(Colors.black.withOpacity(0.05)),
       ),
     ];
 
     final menuStyle = [
-      $.menu.container.chain
+      $.menu.flexContainer.chain
         ..borderRadius(6)
         ..shadow.color(Colors.black.withOpacity(0.07))
         ..shadow.blurRadius(5)
@@ -42,14 +42,13 @@ class SelectStyle extends SpecStyle<SelectSpecUtility> {
         ..wrap.intrinsicWidth()
         ..wrap.transform.scale(0.95)
         ..wrap.opacity(0)
-        ..wrap.padding.top(0),
-      $.menu.flex.chain
-        ..mainAxisSize.min()
-        ..crossAxisAlignment.start(),
+        ..wrap.padding.top(0)
+        ..flex.mainAxisSize.min()
+        ..flex.crossAxisAlignment.start(),
       $.menu.wrap.transform.scale(1.5),
       $.menu.autoWidth.on(),
       spec.on.selected(
-        $.menu.container.chain
+        $.menu.flexContainer.chain
           ..wrap.transform.scale(1)
           ..wrap.opacity(1)
           ..wrap.padding.top(4),
@@ -57,17 +56,17 @@ class SelectStyle extends SpecStyle<SelectSpecUtility> {
     ];
 
     final itemStyle = [
-      $.item.container.chain
+      $.item.flexContainer.chain
         ..borderRadius(6)
         ..padding.vertical(8)
         ..padding.horizontal(6)
-        ..width.infinity(),
+        ..width.infinity()
+        ..flex.gap(6),
       $.item.text.chain
         ..style.color.black()
         ..style.fontSize(14),
       $.item.icon.size(20),
-      $.item.layout.gap(6),
-      spec.on.hover($.item.container.color.black12()),
+      spec.on.hover($.item.flexContainer.color.black12()),
     ];
 
     return Style.create([
@@ -87,12 +86,12 @@ class SelectDarkStyle extends SelectStyle {
     final $ = spec.utilities;
 
     final buttonStyle = $.button.chain
-      ..container.color.black()
-      ..container.border.color.white12()
+      ..flexContainer.color.black()
+      ..flexContainer.border.color.white12()
       ..icon.color.white54()
       ..label.style.color.white();
 
-    final menuStyle = $.menu.container.chain
+    final menuStyle = $.menu.flexContainer.chain
       ..color.black()
       ..border.all.color.white12();
 
@@ -103,8 +102,8 @@ class SelectDarkStyle extends SelectStyle {
       buttonStyle,
       menuStyle,
       itemStyle,
-      spec.on.hover($.item.container.color.white12()),
-      spec.on.disabled($.button.container.color.white10()),
+      spec.on.hover($.item.flexContainer.color.white12()),
+      spec.on.disabled($.button.flexContainer.color.white10()),
     ]);
   }
 }

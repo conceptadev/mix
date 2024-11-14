@@ -19,16 +19,13 @@ class SelectButtonSpecWidget extends StatelessWidget {
       builder: (context) {
         final button = SelectSpec.of(context).button;
 
-        final container = button.container;
+        final flexContainer = button.flexContainer;
         final label = button.label;
         final icon = button.icon;
-        final flex = button.layout;
 
-        return container(
-          child: flex(
-            direction: Axis.horizontal,
-            children: [label(text), icon(trailingIcon)],
-          ),
+        return flexContainer(
+          direction: Axis.horizontal,
+          children: [label(text), icon(trailingIcon)],
         );
       },
     );

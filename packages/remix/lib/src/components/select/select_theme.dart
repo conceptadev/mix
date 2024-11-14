@@ -16,59 +16,59 @@ class FortalezaSelectStyle extends SelectStyle {
 
     final baseThemeOverrides = Style(
       $.menu.autoWidth.on(),
-      $.menu.container.chain
+      $.menu.flexContainer.chain
         ..color.$neutral(1)
         ..border.all.color.$neutral(6)
         ..wrap.intrinsicWidth()
         ..padding.all.$space(2),
       $.button.chain
-        ..container.border.all.color.$neutral(6)
-        ..container.color.$neutral(1)
+        ..flexContainer.border.all.color.$neutral(6)
+        ..flexContainer.color.$neutral(1)
         ..icon.color.$accentAlpha(12)
-        ..layout.gap.$space(1)
-        ..layout.mainAxisSize.min(),
-      $.item.container.padding.horizontal.$space(3),
+        ..flexContainer.flex.gap.$space(1)
+        ..flexContainer.flex.mainAxisSize.min(),
+      $.item.flexContainer.padding.horizontal.$space(3),
       spec.on.disabled(
         $.button.chain
-          ..container.color.$neutral(2)
-          ..container.border.all.color.$neutral(8)
+          ..flexContainer.color.$neutral(2)
+          ..flexContainer.border.all.color.$neutral(8)
           ..label.style.color.$neutral(11)
           ..icon.color.$neutral(9),
       ),
       spec.on.hover(
-        $.button.container.border.all.color.$neutral(8),
-        $.item.container.color.$accent(9),
+        $.button.flexContainer.border.all.color.$neutral(8),
+        $.item.flexContainer.color.$accent(9),
         $.item.text.style.color.$white(),
       ),
     );
 
     final softVariant = Style(
-      $.button.container.chain
+      $.button.flexContainer.chain
         ..color.$accent(3)
         ..border.none(),
       $.button.label.style.color.$accent(12),
       $.item.text.style.color.$accent(12),
       spec.on.hover(
-        $.button.container.color.$accent(4),
+        $.button.flexContainer.color.$accent(4),
         $.item.chain
-          ..container.color.$accent(4)
+          ..flexContainer.color.$accent(4)
           ..text.style.color.$accent(12),
       ),
     );
 
     final ghostVariant = Style(
-      $.button.container.chain
+      $.button.flexContainer.chain
         ..color.transparent()
         ..border.none(),
       spec.on.hover(
-        $.button.container.color.$accent(4),
+        $.button.flexContainer.color.$accent(4),
         $.item.chain
-          ..container.color.$accent(4)
+          ..flexContainer.color.$accent(4)
           ..text.style.color.$accent(12),
       ),
       spec.on.disabled(
         $.button.chain
-          ..container.color.transparent()
+          ..flexContainer.color.transparent()
           ..label.style.color.$neutral(11)
           ..icon.color.$neutral(9),
       ),
@@ -97,19 +97,19 @@ class FortalezaDarkSelectStyle extends FortalezaSelectStyle {
     final baseThemeOverrides = Style(
       $.button.chain
         ..label.style.color.$neutral(12)
-        ..container.color.$neutral(1)
-        ..container.border.all.color.$neutral(7),
-      $.menu.container.color.$neutral(1),
+        ..flexContainer.color.$neutral(1)
+        ..flexContainer.border.all.color.$neutral(7),
+      $.menu.flexContainer.color.$neutral(1),
       $.item.text.style.color.$neutral(12),
-      spec.on.hover($.button.container.border.all.color.$neutral(8)),
+      spec.on.hover($.button.flexContainer.border.all.color.$neutral(8)),
     );
 
     final ghost = Style(
       $.button.chain
         ..label.style.color.$accent(12)
         ..icon.color.$accent(12)
-        ..container.color.transparent()
-        ..container.border.all.color.$neutral(7),
+        ..flexContainer.color.transparent()
+        ..flexContainer.border.all.color.$neutral(7),
       $.item.text.style.color.$neutral(12),
     );
 

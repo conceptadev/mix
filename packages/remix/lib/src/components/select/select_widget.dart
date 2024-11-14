@@ -127,32 +127,33 @@ class SelectState<T> extends State<Select<T>>
                     builder: (context) {
                       final select = SelectSpec.of(context);
                       final menu = select.menu;
-                      final Container = menu.container.copyWith(
-                        width: menu.autoWidth ? _link.leaderSize!.width : null,
+
+                      final Container = menu.flexContainer.copyWith(
+                        box: menu.flexContainer.box.copyWith(
+                          width:
+                              menu.autoWidth ? _link.leaderSize!.width : null,
+                        ),
                       );
-                      final Flex = menu.flex;
 
                       return Container(
-                        child: Flex(
-                          direction: Axis.vertical,
-                          children: widget.items.map((item) {
-                            return Pressable(
-                              onPress: () {
-                                widget.onChanged(item.value);
-                                hide();
-                              },
-                              child: SpecBuilder(
-                                style: appliedStyle.animate(
-                                  duration: _baseAnimation.duration,
-                                  curve: _baseAnimation.curve,
-                                ),
-                                builder: (context) {
-                                  return item.child;
-                                },
+                        direction: Axis.vertical,
+                        children: widget.items.map((item) {
+                          return Pressable(
+                            onPress: () {
+                              widget.onChanged(item.value);
+                              hide();
+                            },
+                            child: SpecBuilder(
+                              style: appliedStyle.animate(
+                                duration: _baseAnimation.duration,
+                                curve: _baseAnimation.curve,
                               ),
-                            );
-                          }).toList(),
-                        ),
+                              builder: (context) {
+                                return item.child;
+                              },
+                            ),
+                          );
+                        }).toList(),
                       );
                     },
                   ),

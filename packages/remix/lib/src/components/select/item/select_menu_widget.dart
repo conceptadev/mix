@@ -41,19 +41,13 @@ class SelectMenuItemWidget extends StatelessWidget {
       builder: (context) {
         final item = SelectSpec.of(context).item;
 
-        final container = item.container;
-        final layout = item.layout;
+        final flexContainer = item.flexContainer;
         final icon = item.icon;
         final text = item.text;
 
-        return container(
-          child: layout(
-            direction: Axis.horizontal,
-            children: [
-              if (iconData != null) icon(iconData),
-              text(this.text),
-            ],
-          ),
+        return flexContainer(
+          direction: Axis.horizontal,
+          children: [if (iconData != null) icon(iconData), text(this.text)],
         );
       },
     );

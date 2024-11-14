@@ -110,7 +110,7 @@ class FakeRadioStyle extends RadioStyle {
     final baseStyle = super.makeStyle(spec);
     return Style.create([
       baseStyle(),
-      $.container.color(color),
+      $.flexContainer.color(color),
     ]);
   }
 }
