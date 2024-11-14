@@ -31,7 +31,7 @@ class CheckboxStyle extends SpecStyle<CheckboxSpecUtility> {
       ..style.fontWeight.w500()
       ..textHeightBehavior.heightToFirstAscent.off();
 
-    final layoutStyle = $.layout.chain
+    final flexContainerStyle = $.flexContainer.flex.chain
       ..crossAxisAlignment.center()
       ..mainAxisAlignment.start()
       ..mainAxisSize.min()
@@ -47,7 +47,7 @@ class CheckboxStyle extends SpecStyle<CheckboxSpecUtility> {
       ...containerStyle,
       ...indicatorStyle,
       labelStyle,
-      layoutStyle,
+      flexContainerStyle,
       disabledStyle,
     ]);
   }
@@ -64,6 +64,7 @@ class CheckboxDarkStyle extends CheckboxStyle {
       super.makeStyle(spec).call(),
       $.indicatorContainer.border.all.color.white(),
       $.indicatorIcon.color.black(),
+      $.label.style.color.white(),
       spec.on.selected(
         $.indicatorContainer.color.white(),
         $.indicatorIcon.color.black(),

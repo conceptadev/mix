@@ -13,17 +13,12 @@ class FortalezaCheckboxStyle extends CheckboxStyle {
 
     final baseStyle = super.makeStyle(spec);
     final baseOverrides = Style(
+      $.indicatorIcon.wrap.scale(0.5),
       $.indicatorContainer.chain
         ..border.all.width(0)
         ..border.all.style.none(),
-      $.indicatorContainer.chain
-        ..wrap.opacity(0)
-        ..wrap.scale(0.5),
       $.label.style.color.$neutral(12),
-      spec.on.selected(
-        $.indicatorContainer.wrap.opacity(1),
-        $.indicatorContainer.wrap.scale(1),
-      ),
+      spec.on.selected($.indicatorIcon.wrap.scale(0.9)),
     );
 
     final surfaceVariant = Style(

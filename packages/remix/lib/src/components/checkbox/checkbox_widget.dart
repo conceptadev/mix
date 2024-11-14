@@ -93,11 +93,11 @@ class _CheckboxState extends State<Checkbox> {
         builder: (context) {
           final spec = CheckboxSpec.of(context);
 
+          final FlexContainerLayout = spec.flexContainer;
           final ContainerWidget = spec.indicatorContainer;
-          final ContainerLayout = spec.layout;
           final IconWidget = spec.indicatorIcon;
 
-          return ContainerLayout(
+          return FlexContainerLayout(
             direction: Axis.horizontal,
             children: [
               ContainerWidget(
