@@ -21,7 +21,7 @@ class OnOrientationVariant extends MediaQueryContextVariant {
   /// [orientation] associated with this variant, and `false` otherwise.
   @override
   bool when(BuildContext context) {
-    return MediaQuery.of(context).orientation == orientation;
+    return MediaQuery.orientationOf(context) == orientation;
   }
 
   /// The properties used for equality comparison.
