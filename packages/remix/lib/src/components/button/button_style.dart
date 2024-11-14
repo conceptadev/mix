@@ -7,14 +7,6 @@ class ButtonStyle extends SpecStyle<ButtonSpecUtility> {
   Style makeStyle(SpecConfiguration<ButtonSpecUtility> spec) {
     final $ = spec.utilities;
 
-    final flexStyle = [
-      $.flex.chain
-        ..mainAxisAlignment.center()
-        ..crossAxisAlignment.center()
-        ..mainAxisSize.min()
-        ..gap(8),
-    ];
-
     final iconStyle = [
       $.icon.chain
         ..size(24)
@@ -38,20 +30,23 @@ class ButtonStyle extends SpecStyle<ButtonSpecUtility> {
         ..color.white(),
     ];
 
-    final containerStyle = [
-      $.container.chain
+    final flexboxStyle = [
+      $.flexbox.chain
         ..borderRadius(6)
         ..color.black()
         ..padding.vertical(8)
-        ..padding.horizontal(12),
-      spec.on.disabled($.container.color.grey.shade400()),
+        ..padding.horizontal(12)
+        ..flex.mainAxisAlignment.center()
+        ..flex.crossAxisAlignment.center()
+        ..flex.mainAxisSize.min()
+        ..flex.gap(8),
+      spec.on.disabled($.flexbox.color.grey.shade400()),
     ];
 
     return Style.create([
-      ...flexStyle,
+      ...flexboxStyle,
       ...iconStyle,
       ...labelStyle,
-      ...containerStyle,
       ...spinnerStyle,
     ]);
   }
@@ -66,7 +61,7 @@ class ButtonDarkStyle extends ButtonStyle {
 
     return Style.create([
       super.makeStyle(spec).call(),
-      $.container.color.white(),
+      $.flexbox.color.white(),
       $.label.style.color.black(),
     ]);
   }

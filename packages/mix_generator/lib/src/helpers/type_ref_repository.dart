@@ -1,4 +1,5 @@
 import 'package:analyzer/dart/element/type.dart';
+
 import 'builder_utils.dart';
 import 'helpers.dart';
 
@@ -44,6 +45,7 @@ class TypeRefRepository {
     'TextSpec': 'TextSpecAttribute',
     'ImageSpec': 'ImageSpecAttribute',
     'IconSpec': 'IconSpecAttribute',
+    'FlexBoxSpec': 'FlexBoxSpecAttribute',
     'StackSpec': 'StackSpecAttribute',
   };
 

@@ -53,6 +53,8 @@ class Button extends StatelessWidget {
     final configuration = SpecConfiguration(context, ButtonSpecUtility.self);
 
     return Pressable(
+      enabled: !isDisabled,
+      onPress: disabled || loading ? null : onPressed,
       child: SpecBuilder(
         style: style.makeStyle(configuration).applyVariants([
           ...variants,
@@ -71,8 +73,6 @@ class Button extends StatelessWidget {
           );
         },
       ),
-      enabled: !isDisabled,
-      onPress: disabled || loading ? null : onPressed,
     );
   }
 }
@@ -113,7 +113,7 @@ class ButtonSpecWidget extends StatelessWidget {
   }
 
   Widget _buildChildren(ButtonSpec spec) {
-    final flexWidget = spec.flex(
+    final flexboxWidget = spec.flexbox(
       children: [
         if (iconLeft != null) spec.icon(iconLeft),
         // If there is no icon always render the label
@@ -123,13 +123,13 @@ class ButtonSpecWidget extends StatelessWidget {
       direction: Axis.horizontal,
     );
 
-    return loading ? _buildLoadingOverlay(spec, flexWidget) : flexWidget;
+    return loading ? _buildLoadingOverlay(spec, flexboxWidget) : flexboxWidget;
   }
 
   @override
   Widget build(BuildContext context) {
     final spec = this.spec ?? const ButtonSpec();
 
-    return spec.container(child: _buildChildren(spec));
+    return _buildChildren(spec);
   }
 }
