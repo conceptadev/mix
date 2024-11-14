@@ -39,21 +39,19 @@ class Toast extends StatelessWidget {
       builder: (context) {
         final spec = ToastSpec.of(context);
 
-        return spec.container(
-          child: spec.layout(
-            direction: Axis.horizontal,
-            children: [
-              if (leading != null) leading!,
-              spec.textLayout(
-                direction: Axis.vertical,
-                children: [
-                  spec.title(title),
-                  if (description != null) spec.description(description!),
-                ],
-              ),
-              if (trailing != null) trailing!,
-            ],
-          ),
+        return spec.flexContainer(
+          direction: Axis.horizontal,
+          children: [
+            if (leading != null) leading!,
+            spec.textLayout(
+              direction: Axis.vertical,
+              children: [
+                spec.title(title),
+                if (description != null) spec.description(description!),
+              ],
+            ),
+            if (trailing != null) trailing!,
+          ],
         );
       },
     );

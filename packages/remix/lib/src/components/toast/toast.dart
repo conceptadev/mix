@@ -16,8 +16,7 @@ part 'toast_widget.dart';
 
 @MixableSpec()
 base class ToastSpec extends Spec<ToastSpec> with _$ToastSpec, Diagnosticable {
-  final BoxSpec container;
-  final FlexSpec layout;
+  final FlexBoxSpec flexContainer;
   final FlexSpec textLayout;
   final TextSpec title;
   final TextSpec description;
@@ -28,15 +27,13 @@ base class ToastSpec extends Spec<ToastSpec> with _$ToastSpec, Diagnosticable {
   static const from = _$ToastSpec.from;
 
   const ToastSpec({
-    BoxSpec? container,
-    FlexSpec? layout,
+    FlexBoxSpec? flexContainer,
     FlexSpec? textLayout,
     TextSpec? title,
     TextSpec? description,
     super.modifiers,
     super.animated,
-  })  : container = container ?? const BoxSpec(),
-        layout = layout ?? const FlexSpec(),
+  })  : flexContainer = flexContainer ?? const FlexBoxSpec(),
         textLayout = textLayout ?? const FlexSpec(),
         title = title ?? const TextSpec(),
         description = description ?? const TextSpec();
