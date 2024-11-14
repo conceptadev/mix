@@ -62,6 +62,7 @@ class Button extends StatelessWidget {
         ]),
         builder: (context) {
           return ButtonSpecWidget(
+            spec: ButtonSpec.of(context),
             label: label,
             disabled: disabled,
             loading: loading,
@@ -69,7 +70,6 @@ class Button extends StatelessWidget {
             iconRight: iconRight,
             spinnerBuilder: spinnerBuilder,
             onPressed: onPressed,
-            spec: ButtonSpec.of(context),
           );
         },
       ),

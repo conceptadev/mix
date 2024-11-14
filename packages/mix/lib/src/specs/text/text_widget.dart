@@ -92,8 +92,8 @@ class TextSpecWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     // The Text widget is used here, applying the resolved styles and properties from TextSpec.
     return RenderSpecModifiers(
-      orderOfModifiers: const [],
       spec: spec ?? const TextSpec(),
+      orderOfModifiers: const [],
       child: Text(
         spec?.directive?.apply(text) ?? text,
         style: spec?.style,

@@ -25,6 +25,9 @@ dart_code_metrics:
     prefer-prefixed-global-constants: false
     avoid-returning-widgets: false
     arguments-ordering:
+      first:
+        - key
+        - spec
       last:
         - child
         - children

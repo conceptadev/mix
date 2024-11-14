@@ -52,6 +52,7 @@ class ButtonSpec extends Spec<ButtonSpec> with _$ButtonSpec, Diagnosticable {
   }) {
     return ButtonSpecWidget(
       key: key,
+      spec: this,
       label: label,
       disabled: disabled,
       loading: loading,
@@ -59,7 +60,6 @@ class ButtonSpec extends Spec<ButtonSpec> with _$ButtonSpec, Diagnosticable {
       iconRight: iconRight,
       spinnerBuilder: spinnerBuilder,
       onPressed: onPressed,
-      spec: this,
     );
   }
 

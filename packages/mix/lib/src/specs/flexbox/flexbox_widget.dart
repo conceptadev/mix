@@ -88,8 +88,8 @@ class FlexBoxSpecWidget extends StatelessWidget {
     // it should be implemented following the same pattern as the others SpecWidgets.
     // This code must be like this to keep the existing animation API working.
     return RenderSpecModifiers(
-      orderOfModifiers: orderOfModifiers,
       spec: spec,
+      orderOfModifiers: orderOfModifiers,
       child: spec.box(
         orderOfModifiers: orderOfModifiers,
         child: spec.flex(direction: direction, children: children),
