@@ -123,16 +123,16 @@ final class BoxSpec extends Spec<BoxSpec> with _$BoxSpec, Diagnosticable {
     return isAnimated
         ? AnimatedBoxSpecWidget(
             spec: this,
-            child: child,
             duration: animated!.duration,
             curve: animated!.curve,
             onEnd: animated?.onEnd,
             orderOfModifiers: orderOfModifiers,
+            child: child,
           )
         : BoxSpecWidget(
             spec: this,
-            child: child,
             orderOfModifiers: orderOfModifiers,
+            child: child,
           );
   }
 

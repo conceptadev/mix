@@ -122,6 +122,7 @@ class _RemixAppState extends State<RemixApp> {
   Widget _remixBuilder(BuildContext context, Widget? child) {
     return RemixTheme(
       theme: widget.theme,
+      darkTheme: widget.darkTheme,
       child: widget.builder != null
           ? Builder(
               builder: (BuildContext context) {
@@ -129,7 +130,6 @@ class _RemixAppState extends State<RemixApp> {
               },
             )
           : (child ?? const SizedBox.shrink()),
-      darkTheme: widget.darkTheme,
     );
   }
 

@@ -75,12 +75,12 @@ class _ChipState extends State<Chip> {
 
           return spec.container(
             child: spec.flex(
+              direction: Axis.horizontal,
               children: [
                 if (widget.iconLeft != null) spec.icon(widget.iconLeft),
                 if (widget.label?.isNotEmpty == true) spec.label(widget.label!),
                 if (widget.iconRight != null) spec.icon(widget.iconRight),
               ],
-              direction: Axis.horizontal,
             ),
           );
         },

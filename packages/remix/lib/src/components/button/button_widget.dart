@@ -114,13 +114,13 @@ class ButtonSpecWidget extends StatelessWidget {
 
   Widget _buildChildren(ButtonSpec spec) {
     final flexboxWidget = spec.flexbox(
+      direction: Axis.horizontal,
       children: [
         if (iconLeft != null) spec.icon(iconLeft),
         // If there is no icon always render the label
         if (label.isNotEmpty || !_hasIcon) spec.label(label),
         if (iconRight != null) spec.icon(iconRight),
       ],
-      direction: Axis.horizontal,
     );
 
     return loading ? _buildLoadingOverlay(spec, flexboxWidget) : flexboxWidget;

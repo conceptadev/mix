@@ -105,8 +105,8 @@ class RenderModifiers extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _RenderModifiers(
-      child: child,
       modifiers: combineModifiers(mix, modifiers, orderOfModifiers).reversed,
+      child: child,
     );
   }
 }
@@ -160,10 +160,10 @@ class RenderAnimatedModifiers extends StatelessWidget {
         orderOfModifiers,
         defaultOrder: MixTheme.maybeOf(context)?.defaultOrderOfModifiers,
       ).reversed.toList(),
-      child: child,
       duration: duration,
       curve: curve,
       onEnd: onEnd,
+      child: child,
     );
   }
 }
@@ -275,15 +275,15 @@ class RenderSpecModifiers extends StatelessWidget {
     return spec.isAnimated
         ? RenderAnimatedModifiers(
             modifiers: modifiers,
-            child: child,
             duration: spec.animated!.duration,
             orderOfModifiers: orderOfModifiers,
             curve: spec.animated!.curve,
+            child: child,
           )
         : RenderModifiers(
-            child: child,
             modifiers: modifiers,
             orderOfModifiers: orderOfModifiers,
+            child: child,
           );
   }
 }

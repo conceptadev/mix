@@ -29,7 +29,7 @@ extension StyleExt on Style {
     Key? key,
     Style? style,
   }) {
-    return container(child: child, inherit: inherit, key: key, style: style);
+    return container(inherit: inherit, key: key, style: style, child: child);
   }
 
   HBox hbox({

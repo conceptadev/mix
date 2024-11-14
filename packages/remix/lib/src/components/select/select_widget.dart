@@ -89,8 +89,8 @@ class SelectState<T> extends State<Select<T>>
             overlayChildBuilder: (BuildContext context) {
               return Stack(children: [
                 GestureDetector(
-                  child: Container(color: Colors.transparent),
                   onTap: () => hide(),
+                  child: Container(color: Colors.transparent),
                 ),
                 CompositedTransformFollower(
                   link: _link,
@@ -119,6 +119,7 @@ class SelectState<T> extends State<Select<T>>
 
                       return Container(
                         child: Flex(
+                          direction: Axis.vertical,
                           children: widget.items.map((item) {
                             return Pressable(
                               onPress: () {
@@ -136,7 +137,6 @@ class SelectState<T> extends State<Select<T>>
                               ),
                             );
                           }).toList(),
-                          direction: Axis.vertical,
                         ),
                       );
                     },

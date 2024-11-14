@@ -80,11 +80,11 @@ class _RadioState<T> extends State<Radio<T>> {
           final TextWidget = spec.text;
 
           return FlexWidget(
+            direction: Axis.horizontal,
             children: [
               ContainerWidget(child: IndicatorWidget()),
               TextWidget(widget.label),
             ],
-            direction: Axis.horizontal,
           );
         },
       ),

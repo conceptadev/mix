@@ -26,8 +26,8 @@ class XSelectButtonSpecWidget extends StatelessWidget {
 
         return container(
           child: flex(
-            children: [label(text), icon(trailingIcon)],
             direction: Axis.horizontal,
+            children: [label(text), icon(trailingIcon)],
           ),
         );
       },

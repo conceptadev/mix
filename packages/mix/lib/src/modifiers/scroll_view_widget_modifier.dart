@@ -43,8 +43,8 @@ final class ScrollViewModifierSpec
       reverse: reverse ?? false,
       padding: padding,
       physics: physics,
-      child: child,
       clipBehavior: clipBehavior ?? Clip.hardEdge,
+      child: child,
     );
   }
 }

@@ -76,6 +76,7 @@ class IconSpecWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return RenderSpecModifiers(
       orderOfModifiers: orderOfModifiers,
+      spec: spec ?? const IconSpec(),
       child: Icon(
         icon,
         size: spec?.size,
@@ -88,7 +89,6 @@ class IconSpecWidget extends StatelessWidget {
         semanticLabel: semanticLabel,
         textDirection: textDirection,
       ),
-      spec: spec ?? const IconSpec(),
     );
   }
 }

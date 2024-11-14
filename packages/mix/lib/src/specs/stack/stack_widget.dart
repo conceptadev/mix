@@ -57,6 +57,7 @@ class StackSpecWidget extends StatelessWidget {
     // The Stack widget is used here, applying the resolved styles from StackSpec.
     return RenderSpecModifiers(
       orderOfModifiers: orderOfModifiers,
+      spec: spec ?? const StackSpec(),
       child: Stack(
         alignment: spec?.alignment ?? _defaultStack.alignment,
         textDirection: spec?.textDirection,
@@ -64,7 +65,6 @@ class StackSpecWidget extends StatelessWidget {
         clipBehavior: spec?.clipBehavior ?? _defaultStack.clipBehavior,
         children: children ?? const [],
       ),
-      spec: spec ?? const StackSpec(),
     );
   }
 }
@@ -109,8 +109,8 @@ class AnimatedStackSpecWidgetState
 
     return StackSpecWidget(
       spec: spec,
-      children: widget.children,
       orderOfModifiers: widget.orderOfModifiers,
+      children: widget.children,
     );
   }
 }

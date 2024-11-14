@@ -37,20 +37,20 @@ class MenuItem extends StatelessWidget {
 
           return spec.outerContainer(
             child: spec.contentLayout(
+              direction: Axis.horizontal,
               children: [
                 if (leadingWidgetBuilder != null)
                   leadingWidgetBuilder!(spec.icon),
                 spec.titleSubtitleLayout(
+                  direction: Axis.vertical,
                   children: [
                     spec.title(title),
                     if (subtitle != null) spec.subtitle(subtitle!),
                   ],
-                  direction: Axis.vertical,
                 ),
                 if (trailingWidgetBuilder != null)
                   trailingWidgetBuilder!(spec.icon),
               ],
-              direction: Axis.horizontal,
             ),
           );
         },

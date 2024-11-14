@@ -66,7 +66,6 @@ class ToastLayerState extends State<ToastLayer> implements ToastActions {
     return Stack(
       children: [
         AnimatedSwitcher(
-          child: toastWidget,
           duration:
               toast?.animationDuration ?? const Duration(milliseconds: 500),
           reverseDuration: toast?.reverseAnimationDuration ??
@@ -97,6 +96,7 @@ class ToastLayerState extends State<ToastLayer> implements ToastActions {
               child: FadeTransition(opacity: animation, child: child),
             );
           },
+          child: toastWidget,
         ),
         widget.child,
       ],

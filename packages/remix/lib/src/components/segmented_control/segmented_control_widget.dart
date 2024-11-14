@@ -56,6 +56,7 @@ class _SegmentedControlState extends State<SegmentedControl> {
             alignment: Alignment.centerLeft,
             children: [
               spec.flex(
+                direction: Axis.vertical,
                 children: [
                   for (int i = 0; i < widget.buttons.length; i++)
                     Stack(
@@ -79,7 +80,6 @@ class _SegmentedControlState extends State<SegmentedControl> {
                       ],
                     ),
                 ],
-                direction: Axis.vertical,
               ),
             ],
           ),

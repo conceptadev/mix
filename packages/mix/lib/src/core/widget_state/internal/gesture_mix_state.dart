@@ -189,7 +189,6 @@ class _GestureMixStateWidgetState extends State<GestureMixStateWidget> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      child: widget.child,
       onTapUp: widget.onTap != null ? _onTapUp : null,
       onTap: widget.onTap != null ? _onTap : null,
       onTapCancel: widget.onTap != null ? _onTapCancel : null,
@@ -204,6 +203,7 @@ class _GestureMixStateWidgetState extends State<GestureMixStateWidget> {
       onPanCancel: widget.onPanCancel != null ? _onPanCancel : null,
       behavior: widget.hitTestBehavior,
       excludeFromSemantics: widget.excludeFromSemantics,
+      child: widget.child,
     );
   }
 }

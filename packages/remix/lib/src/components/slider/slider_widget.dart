@@ -75,7 +75,31 @@ class _SliderState extends State<Slider> with TickerProviderStateMixin {
     final configuration = SpecConfiguration(context, SliderSpecUtility.self);
 
     return Interactable(
+      enabled: !widget.disabled,
+      mouseCursor: widget.disabled
+          ? SystemMouseCursors.forbidden
+          : SystemMouseCursors.click,
+      controller: _controller,
       child: GestureDetector(
+        onPanStart: (details) {
+          _handleInteraction((c) {
+            c.pressed = true;
+            final value = _calculateValue(details.localPosition);
+            widget.onChangeStart?.call(value);
+          });
+        },
+        onPanUpdate: (details) {
+          _handleInteraction((c) {
+            c.pressed = true;
+            final value = _calculateValue(details.localPosition);
+            widget.onChanged?.call(value);
+          });
+        },
+        onPanEnd: (details) {
+          _handleInteraction((c) {
+            c.pressed = false;
+          });
+        },
         child: SpecBuilder(
           style: style.makeStyle(configuration).applyVariants(widget.variants),
           builder: (context) {
@@ -131,31 +155,7 @@ class _SliderState extends State<Slider> with TickerProviderStateMixin {
             );
           },
         ),
-        onPanStart: (details) {
-          _handleInteraction((c) {
-            c.pressed = true;
-            final value = _calculateValue(details.localPosition);
-            widget.onChangeStart?.call(value);
-          });
-        },
-        onPanUpdate: (details) {
-          _handleInteraction((c) {
-            c.pressed = true;
-            final value = _calculateValue(details.localPosition);
-            widget.onChanged?.call(value);
-          });
-        },
-        onPanEnd: (details) {
-          _handleInteraction((c) {
-            c.pressed = false;
-          });
-        },
       ),
-      enabled: !widget.disabled,
-      mouseCursor: widget.disabled
-          ? SystemMouseCursors.forbidden
-          : SystemMouseCursors.click,
-      controller: _controller,
     );
   }
 }

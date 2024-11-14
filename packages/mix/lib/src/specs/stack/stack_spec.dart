@@ -42,9 +42,9 @@ final class StackSpec extends Spec<StackSpec> with _$StackSpec, Diagnosticable {
     return isAnimated
         ? AnimatedStackSpecWidget(
             spec: this,
-            children: children,
             curve: animated!.curve,
             duration: animated!.duration,
+            children: children,
           )
         : StackSpecWidget(spec: this, children: children);
   }
