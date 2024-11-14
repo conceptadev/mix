@@ -79,7 +79,7 @@ class TextFieldStyle extends SpecStyle<TextFieldSpecUtility> {
 
     final $ = spec.utilities;
 
-    final containerStyle = $.container.chain
+    final flexContainerStyle = $.flexContainer.chain
       ..color.white()
       ..padding.horizontal(12)
       ..padding.vertical(8)
@@ -88,21 +88,19 @@ class TextFieldStyle extends SpecStyle<TextFieldSpecUtility> {
       ..shadow.spreadRadius(0)
       ..shadow.blurRadius(2)
       ..shadow.offset(-1, 1)
-      ..shadow.color.grey.shade200();
+      ..shadow.color.grey.shade200()
+      ..flex.direction.horizontal()
+      ..flex.mainAxisSize.min()
+      ..flex.mainAxisAlignment.start()
+      ..flex.crossAxisAlignment.center()
+      ..flex.gap(8);
 
-    final layoutStyle = $.containerLayout.chain
+    final layoutStyle = $.mainFlex.chain
       ..direction.vertical()
       ..mainAxisSize.min()
       ..mainAxisAlignment.start()
       ..crossAxisAlignment.start()
       ..gap(6);
-
-    final contentLayoutStyle = $.contentLayout.chain
-      ..direction.horizontal()
-      ..mainAxisSize.min()
-      ..mainAxisAlignment.start()
-      ..crossAxisAlignment.center()
-      ..gap(8);
 
     final textStyle = $.chain
       ..style.color.black87()
@@ -122,14 +120,13 @@ class TextFieldStyle extends SpecStyle<TextFieldSpecUtility> {
       ..style.fontSize(12)
       ..wrap.padding.left(12);
 
-    final focus = spec.on.focus($.container.border.all.color.black());
+    final focus = spec.on.focus($.flexContainer.border.all.color.black());
 
     return Style.create([
       platformSettings(spec).call(),
-      containerStyle,
+      flexContainerStyle,
       $.floatingLabel.off(),
       $.selectionColor.black12(),
-      contentLayoutStyle,
       layoutStyle,
       textStyle,
       helperStyle,
@@ -148,7 +145,7 @@ class TextFieldDarkStyle extends TextFieldStyle {
     final $ = spec.utilities;
     final cursor = $.cursorColor.grey.shade100();
 
-    final containerStyle = $.container.chain
+    final flexContainerStyle = $.flexContainer.chain
       ..color.black()
       ..border.all.color.grey.shade800()
       ..shadow.spreadRadius(0)
@@ -166,12 +163,12 @@ class TextFieldDarkStyle extends TextFieldStyle {
     final helperStyle = $.helperText.style.color.grey.shade400();
     final icon = $.icon.color.grey.shade300();
 
-    final focus = spec.on.focus($.container.border.all.color.white());
+    final focus = spec.on.focus($.flexContainer.border.all.color.white());
 
     return Style.create([
       super.makeStyle(spec).call(),
       cursor,
-      containerStyle,
+      flexContainerStyle,
       focus,
       textStyle,
       helperStyle,
