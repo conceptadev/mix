@@ -40,9 +40,6 @@ abstract class ContextVariant extends IVariant {
   }
 
   @override
-  bool when(BuildContext context);
-
-  @override
   VariantPriority get priority => VariantPriority.normal;
 
   @override

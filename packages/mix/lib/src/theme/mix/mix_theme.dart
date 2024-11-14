@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../../internal/iterable_ext.dart';
@@ -152,7 +153,7 @@ class MixThemeData {
         other.breakpoints == breakpoints &&
         other.radii == radii &&
         other.spaces == spaces &&
-        other.defaultOrderOfModifiers == defaultOrderOfModifiers;
+        listEquals(other.defaultOrderOfModifiers, defaultOrderOfModifiers);
   }
 
   @override

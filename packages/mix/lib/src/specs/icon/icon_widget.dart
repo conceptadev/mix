@@ -15,8 +15,7 @@ class StyledIcon extends StyledWidget {
     @Deprecated('Use orderOfModifiers parameter instead')
     List<Type> modifierOrder = const <Type>[],
     List<Type> orderOfModifiers = const <Type>[],
-  })  : assert(modifierOrder == const <Type>[] ||
-            orderOfModifiers == const <Type>[]),
+  })  : assert(modifierOrder.length == 0 || orderOfModifiers.length == 0),
         super(
           orderOfModifiers:
               orderOfModifiers == const [] ? modifierOrder : orderOfModifiers,
@@ -61,10 +60,9 @@ class IconSpecWidget extends StatelessWidget {
     @Deprecated('Use orderOfModifiers parameter instead')
     List<Type> modifierOrder = const <Type>[],
     List<Type> orderOfModifiers = const <Type>[],
-  })  : assert(modifierOrder == const <Type>[] ||
-            orderOfModifiers == const <Type>[]),
+  })  : assert(modifierOrder.length == 0 || orderOfModifiers.length == 0),
         orderOfModifiers =
-            orderOfModifiers == const [] ? modifierOrder : orderOfModifiers;
+            orderOfModifiers.length == 0 ? modifierOrder : orderOfModifiers;
 
   final IconData? icon;
   final IconSpec? spec;
@@ -105,12 +103,10 @@ class AnimatedStyledIcon extends StyledWidget {
     @Deprecated('Use orderOfModifiers parameter instead')
     List<Type> modifierOrder = const <Type>[],
     List<Type> orderOfModifiers = const <Type>[],
-  })  : assert(modifierOrder == const <Type>[] ||
-            orderOfModifiers == const <Type>[]),
+  })  : assert(modifierOrder.length == 0 || orderOfModifiers.length == 0),
         super(
-          orderOfModifiers: orderOfModifiers == const <Type>[]
-              ? modifierOrder
-              : orderOfModifiers,
+          orderOfModifiers:
+              orderOfModifiers.length == 0 ? modifierOrder : orderOfModifiers,
         );
 
   final AnimatedIconData icon;
@@ -148,11 +144,9 @@ class AnimatedIconSpecWidget extends ImplicitlyAnimatedWidget {
     @Deprecated('Use orderOfModifiers parameter instead')
     List<Type> modifierOrder = const <Type>[],
     List<Type> orderOfModifiers = const <Type>[],
-  })  : assert(modifierOrder == const <Type>[] ||
-            orderOfModifiers == const <Type>[]),
-        orderOfModifiers = orderOfModifiers == const <Type>[]
-            ? modifierOrder
-            : orderOfModifiers;
+  })  : assert(modifierOrder.length == 0 || orderOfModifiers.length == 0),
+        orderOfModifiers =
+            orderOfModifiers.length == 0 ? modifierOrder : orderOfModifiers;
 
   final IconData? icon;
   final IconSpec spec;

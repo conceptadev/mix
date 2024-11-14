@@ -56,9 +56,6 @@ sealed class BorderRadiusGeometryDto<T extends BorderRadiusGeometry>
     properties.addUsingDefault('bottomStart', bottomStart);
     properties.addUsingDefault('bottomEnd', bottomEnd);
   }
-
-  @override
-  T resolve(MixData mix);
 }
 
 @MixableDto(generateUtility: false)

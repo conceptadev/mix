@@ -6,15 +6,12 @@ import 'factory/mix_data.dart';
 import 'utility.dart';
 
 @immutable
-abstract class Dto<Value> with EqualityMixin, MergeableMixin {
+abstract class Dto<Value> with EqualityMixin, MergeableMixin<Dto> {
   const Dto();
 
   Value get defaultValue;
 
   Value resolve(MixData mix);
-  // /// Merges this object with [other], returning a new object of type [T].
-  @override
-  Dto merge(covariant Dto? other);
 }
 
 abstract class DtoUtility<Attr extends Attribute, D extends Dto<Value>, Value>
