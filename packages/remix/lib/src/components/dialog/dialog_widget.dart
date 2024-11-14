@@ -76,21 +76,19 @@ class Dialog extends StatelessWidget {
       builder: (context) {
         final spec = DialogSpec.of(context);
 
-        return spec.container(
-          child: spec.containerLayout(
-            direction: Axis.vertical,
-            children: [
-              if (titleBuilder != null) titleBuilder!(spec.title),
-              if (descriptionBuilder != null)
-                descriptionBuilder!(spec.description),
-              content ?? const SizedBox.shrink(),
-              if (actions != null)
-                spec.actionsLayout(
-                  direction: Axis.horizontal,
-                  children: actions!,
-                ),
-            ],
-          ),
+        return spec.flexContainer(
+          direction: Axis.vertical,
+          children: [
+            if (titleBuilder != null) titleBuilder!(spec.title),
+            if (descriptionBuilder != null)
+              descriptionBuilder!(spec.description),
+            content ?? const SizedBox.shrink(),
+            if (actions != null)
+              spec.flexActions(
+                direction: Axis.horizontal,
+                children: actions!,
+              ),
+          ],
         );
       },
     );
