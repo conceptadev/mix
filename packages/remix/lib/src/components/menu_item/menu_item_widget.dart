@@ -28,8 +28,6 @@ class MenuItem extends StatelessWidget {
     final configuration = SpecConfiguration(context, MenuItemSpecUtility.self);
 
     return Pressable(
-      enabled: !disabled,
-      onPress: disabled ? null : onPress,
       child: SpecBuilder(
         style: style.makeStyle(configuration).applyVariants([...variants]),
         builder: (context) {
@@ -37,24 +35,26 @@ class MenuItem extends StatelessWidget {
 
           return spec.outerContainer(
             child: spec.contentLayout(
-              direction: Axis.horizontal,
               children: [
                 if (leadingWidgetBuilder != null)
                   leadingWidgetBuilder!(spec.icon),
                 spec.titleSubtitleLayout(
-                  direction: Axis.vertical,
                   children: [
                     spec.title(title),
                     if (subtitle != null) spec.subtitle(subtitle!),
                   ],
+                  direction: Axis.vertical,
                 ),
                 if (trailingWidgetBuilder != null)
                   trailingWidgetBuilder!(spec.icon),
               ],
+              direction: Axis.horizontal,
             ),
           );
         },
       ),
+      enabled: !disabled,
+      onPress: disabled ? null : onPress,
     );
   }
 }

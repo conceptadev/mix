@@ -47,8 +47,6 @@ class IconButton extends StatelessWidget {
         SpecConfiguration(context, IconButtonSpecUtility.self);
 
     return Pressable(
-      enabled: !isDisabled,
-      onPress: disabled || loading ? null : onPressed,
       child: SpecBuilder(
         style: style.makeStyle(configuration).applyVariants(variants),
         builder: (context) {
@@ -65,6 +63,8 @@ class IconButton extends StatelessWidget {
           );
         },
       ),
+      enabled: !isDisabled,
+      onPress: disabled || loading ? null : onPressed,
     );
   }
 }

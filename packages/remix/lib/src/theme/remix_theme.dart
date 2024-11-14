@@ -311,13 +311,13 @@ class RemixTheme extends StatelessWidget {
     final tokens = theme.tokens;
 
     return MixTheme(
+      child: _RemixThemeInherited(child: child, data: theme),
       data: MixThemeData(
         colors: tokens.colors,
         spaces: tokens.spaces,
         textStyles: tokens.textStyles,
         radii: tokens.radii,
       ),
-      child: _RemixThemeInherited(data: theme, child: child),
     );
   }
 }

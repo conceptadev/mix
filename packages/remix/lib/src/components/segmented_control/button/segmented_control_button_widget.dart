@@ -20,11 +20,11 @@ class SegmentButton extends StatelessWidget {
 
         return container(
           child: flex(
-            direction: Axis.horizontal,
             children: [
               if (iconData != null) icon(iconData),
               if (text != null) label(text!),
             ],
+            direction: Axis.horizontal,
           ),
         );
       },

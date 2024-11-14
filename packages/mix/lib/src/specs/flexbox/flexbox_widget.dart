@@ -61,7 +61,7 @@ class FlexBox extends StyledWidget {
         flex: flexSpec,
       );
 
-      return newSpec(direction: direction, children: children);
+      return newSpec(children: children, direction: direction);
     });
   }
 }
@@ -89,11 +89,11 @@ class FlexBoxSpecWidget extends StatelessWidget {
     // This code must be like this to keep the existing animation API working.
     return RenderSpecModifiers(
       orderOfModifiers: orderOfModifiers,
-      spec: spec,
       child: spec.box(
+        child: spec.flex(children: children, direction: direction),
         orderOfModifiers: orderOfModifiers,
-        child: spec.flex(direction: direction, children: children),
       ),
+      spec: spec,
     );
   }
 }
@@ -139,9 +139,9 @@ class AnimatedFlexBoxSpecWidgetState
   Widget build(BuildContext context) {
     return FlexBoxSpecWidget(
       spec: _specTween?.evaluate(animation),
+      children: widget.children,
       direction: widget.direction,
       orderOfModifiers: widget.orderOfModifiers,
-      children: widget.children,
     );
   }
 }

@@ -24,11 +24,11 @@ class SelectMenuItemWidget extends StatelessWidget {
 
         return container(
           child: flex(
-            direction: Axis.horizontal,
             children: [
               if (iconData != null) icon(iconData),
               text(this.text),
             ],
+            direction: Axis.horizontal,
           ),
         );
       },

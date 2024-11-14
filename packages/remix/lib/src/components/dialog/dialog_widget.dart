@@ -42,7 +42,6 @@ class Dialog extends StatelessWidget {
 
         return spec.container(
           child: spec.mainFlex(
-            direction: Axis.vertical,
             children: [
               if (titleBuilder != null) titleBuilder!(spec.title),
               if (descriptionBuilder != null)
@@ -50,10 +49,11 @@ class Dialog extends StatelessWidget {
               content ?? const SizedBox.shrink(),
               if (actions != null)
                 spec.actionsFlex(
-                  direction: Axis.horizontal,
                   children: actions!,
+                  direction: Axis.horizontal,
                 ),
             ],
+            direction: Axis.vertical,
           ),
         );
       },

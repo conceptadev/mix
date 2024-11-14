@@ -24,13 +24,13 @@ class AccordionHeaderSpecWidget extends StatelessWidget {
 
     return ContainerWidget(
       child: FlexWidget(
-        direction: Axis.horizontal,
         children: [
           if (leadingIcon != null) LeadingIconWidget(leadingIcon),
           TitleWidget(title),
           const Spacer(),
           TrailingIconWidget(trailingIcon),
         ],
+        direction: Axis.horizontal,
       ),
     );
   }

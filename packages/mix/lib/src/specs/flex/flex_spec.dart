@@ -67,15 +67,15 @@ final class FlexSpec extends Spec<FlexSpec> with _$FlexSpec, Diagnosticable {
     return isAnimated
         ? AnimatedFlexSpecWidget(
             spec: this,
+            children: children,
             direction: direction,
             curve: animated!.curve,
             duration: animated!.duration,
-            children: children,
           )
         : FlexSpecWidget(
             spec: this,
-            direction: direction,
             children: children,
+            direction: direction,
           );
   }
 

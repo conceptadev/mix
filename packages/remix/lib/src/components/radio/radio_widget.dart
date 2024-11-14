@@ -66,9 +66,6 @@ class _RadioState<T> extends State<Radio<T>> {
     final configuration = SpecConfiguration(context, RadioSpecUtility.self);
 
     return Pressable(
-      enabled: !widget.disabled,
-      onPress: widget.disabled ? null : _handleOnPress,
-      controller: _controller,
       child: SpecBuilder(
         style: style.makeStyle(configuration).applyVariants(widget.variants),
         builder: (context) {
@@ -80,14 +77,17 @@ class _RadioState<T> extends State<Radio<T>> {
           final TextWidget = spec.text;
 
           return FlexWidget(
-            direction: Axis.horizontal,
             children: [
               ContainerWidget(child: IndicatorWidget()),
               TextWidget(widget.label),
             ],
+            direction: Axis.horizontal,
           );
         },
       ),
+      enabled: !widget.disabled,
+      onPress: widget.disabled ? null : _handleOnPress,
+      controller: _controller,
     );
   }
 }

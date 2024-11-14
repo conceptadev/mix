@@ -66,11 +66,8 @@ class _AccordionState extends State<Accordion> with TickerProviderStateMixin {
 
           return spec.container(
             child: spec.flex(
-              direction: Axis.vertical,
               children: [
                 Pressable(
-                  onPress: _handleTap,
-                  controller: _controller,
                   child: SpecBuilder(
                     style: variantStyle,
                     builder: (context) {
@@ -79,9 +76,12 @@ class _AccordionState extends State<Accordion> with TickerProviderStateMixin {
                       return widget.header(spec.header);
                     },
                   ),
+                  onPress: _handleTap,
+                  controller: _controller,
                 ),
                 content,
               ],
+              direction: Axis.vertical,
             ),
           );
         },

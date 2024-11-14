@@ -55,6 +55,7 @@ class PressableBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Pressable(
+      child: Box(style: style, child: child),
       enabled: enabled,
       onPress: onPress,
       hitTestBehavior: hitTestBehavior,
@@ -63,7 +64,6 @@ class PressableBox extends StatelessWidget {
       autofocus: autofocus,
       focusNode: focusNode,
       unpressDelay: unpressDelay,
-      child: Box(style: style, child: child),
     );
   }
 }
@@ -197,14 +197,13 @@ class PressableWidgetState extends State<Pressable> {
   @override
   Widget build(BuildContext context) {
     Widget current = GestureMixStateWidget(
-      enableFeedback: widget.enableFeedback,
-      controller: _controller,
-      onTap: widget.enabled ? widget.onPress?.call : null,
-      onLongPress: widget.enabled ? widget.onLongPress?.call : null,
-      excludeFromSemantics: widget.excludeFromSemantics,
-      hitTestBehavior: widget.hitTestBehavior,
-      unpressDelay: widget.unpressDelay,
       child: InteractiveMixStateWidget(
+        child: MouseRegionMixStateWidget(
+          child: MixWidgetStateBuilder(
+            controller: _controller,
+            builder: (_) => widget.child,
+          ),
+        ),
         enabled: widget.enabled,
         onFocusChange: widget.onFocusChange,
         autofocus: widget.autofocus,
@@ -215,21 +214,22 @@ class PressableWidgetState extends State<Pressable> {
         mouseCursor: mouseCursor,
         controller: _controller,
         actions: actions,
-        child: MouseRegionMixStateWidget(
-          child: MixWidgetStateBuilder(
-            controller: _controller,
-            builder: (_) => widget.child,
-          ),
-        ),
       ),
+      enableFeedback: widget.enableFeedback,
+      controller: _controller,
+      onTap: widget.enabled ? widget.onPress?.call : null,
+      onLongPress: widget.enabled ? widget.onLongPress?.call : null,
+      excludeFromSemantics: widget.excludeFromSemantics,
+      hitTestBehavior: widget.hitTestBehavior,
+      unpressDelay: widget.unpressDelay,
     );
 
     if (!widget.excludeFromSemantics) {
       current = Semantics(
+        child: current,
         button: true,
         label: widget.semanticButtonLabel,
         onTap: widget.onPress,
-        child: current,
       );
     }
 
@@ -308,6 +308,12 @@ class _InteractableState extends State<Interactable> {
   @override
   Widget build(BuildContext context) {
     return InteractiveMixStateWidget(
+      child: MouseRegionMixStateWidget(
+        child: MixWidgetStateBuilder(
+          controller: _controller,
+          builder: (context) => widget.child,
+        ),
+      ),
       enabled: widget.enabled,
       onFocusChange: widget.onFocusChange,
       autofocus: widget.autofocus,
@@ -321,12 +327,6 @@ class _InteractableState extends State<Interactable> {
       shortcuts: widget.shortcuts,
       controller: _controller,
       actions: widget.actions,
-      child: MouseRegionMixStateWidget(
-        child: MixWidgetStateBuilder(
-          controller: _controller,
-          builder: (context) => widget.child,
-        ),
-      ),
     );
   }
 }

@@ -42,7 +42,7 @@ class StyledFlex extends StyledWidget {
     return withMix(context, (context) {
       final spec = FlexSpec.of(context);
 
-      return spec(direction: direction, children: children);
+      return spec(children: children, direction: direction);
     });
   }
 }
@@ -99,8 +99,8 @@ class FlexSpecWidget extends StatelessWidget {
         ? flexWidget
         : RenderSpecModifiers(
             orderOfModifiers: orderOfModifiers,
-            spec: spec!,
             child: flexWidget,
+            spec: spec!,
           );
   }
 }
@@ -145,9 +145,9 @@ class AnimatedFlexSpecWidgetState
   Widget build(BuildContext context) {
     return FlexSpecWidget(
       spec: _specTween?.evaluate(animation),
+      children: widget.children,
       direction: widget.direction,
       orderOfModifiers: widget.orderOfModifiers,
-      children: widget.children,
     );
   }
 }

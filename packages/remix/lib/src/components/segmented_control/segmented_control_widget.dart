@@ -56,14 +56,12 @@ class _SegmentedControlState extends State<SegmentedControl> {
             alignment: Alignment.centerLeft,
             children: [
               spec.flex(
-                direction: Axis.vertical,
                 children: [
                   for (int i = 0; i < widget.buttons.length; i++)
                     Stack(
                       alignment: Alignment.centerRight,
                       children: [
                         Pressable(
-                          onPress: () => widget.onIndexChanged(i),
                           child: SpecBuilder(
                             controller: i == widget.index ? controller : null,
                             style: style.makeStyle(configuration),
@@ -71,6 +69,7 @@ class _SegmentedControlState extends State<SegmentedControl> {
                               return widget.buttons[i];
                             },
                           ),
+                          onPress: () => widget.onIndexChanged(i),
                         ),
                         if (i < lastIndex &&
                             spec.showDivider &&
@@ -80,6 +79,7 @@ class _SegmentedControlState extends State<SegmentedControl> {
                       ],
                     ),
                 ],
+                direction: Axis.vertical,
               ),
             ],
           ),

@@ -64,10 +64,6 @@ class _ChipState extends State<Chip> {
     final configuration = SpecConfiguration(context, ChipSpecUtility.self);
 
     return Pressable(
-      enabled: !widget.disabled,
-      onPress:
-          widget.disabled ? null : () => widget.onChanged?.call(!widget.value),
-      controller: _controller,
       child: SpecBuilder(
         style: style.makeStyle(configuration).applyVariants(widget.variants),
         builder: (context) {
@@ -75,16 +71,20 @@ class _ChipState extends State<Chip> {
 
           return spec.container(
             child: spec.flex(
-              direction: Axis.horizontal,
               children: [
                 if (widget.iconLeft != null) spec.icon(widget.iconLeft),
                 if (widget.label?.isNotEmpty == true) spec.label(widget.label!),
                 if (widget.iconRight != null) spec.icon(widget.iconRight),
               ],
+              direction: Axis.horizontal,
             ),
           );
         },
       ),
+      enabled: !widget.disabled,
+      onPress:
+          widget.disabled ? null : () => widget.onChanged?.call(!widget.value),
+      controller: _controller,
     );
   }
 }

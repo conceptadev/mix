@@ -93,7 +93,6 @@ class TextSpecWidget extends StatelessWidget {
     // The Text widget is used here, applying the resolved styles and properties from TextSpec.
     return RenderSpecModifiers(
       orderOfModifiers: const [],
-      spec: spec ?? const TextSpec(),
       child: Text(
         spec?.directive?.apply(text) ?? text,
         style: spec?.style,
@@ -111,6 +110,7 @@ class TextSpecWidget extends StatelessWidget {
         textWidthBasis: spec?.textWidthBasis,
         textHeightBehavior: spec?.textHeightBehavior,
       ),
+      spec: spec ?? const TextSpec(),
     );
   }
 }

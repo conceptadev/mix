@@ -520,11 +520,9 @@ class _TextFieldState extends State<TextField>
                 _effectiveController.value.text.isNotEmpty);
 
         return spec.containerLayout(
-          direction: Axis.vertical,
           children: [
             spec.container(
               child: spec.contentLayout(
-                direction: Axis.horizontal,
                 children: [
                   if (widget.prefixBuilder != null)
                     widget.prefixBuilder!(spec.icon),
@@ -621,25 +619,25 @@ class _TextFieldState extends State<TextField>
                   ),
                   if (widget.suffix != null) widget.suffix!,
                 ],
+                direction: Axis.horizontal,
               ),
             ),
             spec.helperText(widget.helperText ?? ''),
           ],
+          direction: Axis.vertical,
         );
       },
     );
 
     return Interactable(
-      mouseCursor: SystemMouseCursors.text,
-      controller: _statesController,
       child: TextFieldTapRegion(
         child: IgnorePointer(
           ignoring: widget.ignorePointers ?? !widget.enabled,
           child: AnimatedBuilder(
             animation: _effectiveController,
             builder: (context, child) => _TextFieldContext(
-              isEmpty: _effectiveController.value.text.isEmpty,
               child: child!,
+              isEmpty: _effectiveController.value.text.isEmpty,
             ),
             child: _selectionGestureDetectorBuilder.buildGestureDetector(
               behavior: HitTestBehavior.translucent,
@@ -648,6 +646,8 @@ class _TextFieldState extends State<TextField>
           ),
         ),
       ),
+      mouseCursor: SystemMouseCursors.text,
+      controller: _statesController,
     );
   }
 

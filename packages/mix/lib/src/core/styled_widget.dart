@@ -105,17 +105,17 @@ class SpecBuilder extends StatelessWidget {
     return mix.isAnimated
         ? RenderAnimatedModifiers(
             modifiers: modifiers,
+            child: child,
             duration: mix.animation!.duration,
             mix: mix,
             orderOfModifiers: orderOfModifiers,
             curve: mix.animation!.curve,
-            child: child,
           )
         : RenderModifiers(
+            child: child,
             modifiers: modifiers,
             mix: mix,
             orderOfModifiers: orderOfModifiers,
-            child: child,
           );
   }
 
@@ -143,7 +143,7 @@ class SpecBuilder extends StatelessWidget {
         _hasWidgetStateVariant && MixWidgetState.of(context) == null;
 
     if (needsWidgetState || controller != null) {
-      current = Interactable(controller: controller, child: current);
+      current = Interactable(child: current, controller: controller);
     }
 
     // Otherwise, directly build the mixed child widget

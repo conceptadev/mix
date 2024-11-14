@@ -106,7 +106,6 @@ class ImageSpecWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return RenderSpecModifiers(
       orderOfModifiers: orderOfModifiers,
-      spec: spec ?? const ImageSpec(),
       child: Image(
         image: image,
         frameBuilder: frameBuilder,
@@ -128,6 +127,7 @@ class ImageSpecWidget extends StatelessWidget {
         isAntiAlias: isAntiAlias,
         filterQuality: spec?.filterQuality ?? FilterQuality.low,
       ),
+      spec: spec ?? const ImageSpec(),
     );
   }
 }

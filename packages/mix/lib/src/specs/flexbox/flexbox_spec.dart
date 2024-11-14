@@ -90,16 +90,16 @@ final class FlexBoxSpec extends Spec<FlexBoxSpec>
     return (isAnimated)
         ? AnimatedFlexBoxSpecWidget(
             spec: this,
+            children: children,
             direction: direction,
             curve: animated!.curve,
             duration: animated!.duration,
             onEnd: animated!.onEnd,
-            children: children,
           )
         : FlexBoxSpecWidget(
             spec: this,
-            direction: direction,
             children: children,
+            direction: direction,
           );
   }
 

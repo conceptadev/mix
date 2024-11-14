@@ -26,7 +26,7 @@ final class VisibilityModifierSpec
 
   @override
   Widget build(Widget child) {
-    return Visibility(visible: visible, child: child);
+    return Visibility(child: child, visible: visible);
   }
 }
 

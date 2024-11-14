@@ -23,16 +23,16 @@ class AvoidDefiningTokensOrVariantsWithinStyle extends DartLintRule {
   ) {
     context.checkTypeHierarchyCompliance(
       parent: styleChecker,
+      child: variantChecker,
       reporter: reporter,
       code: _code,
-      child: variantChecker,
     );
 
     context.checkTypeHierarchyCompliance(
       parent: styleChecker,
+      child: mixTokenChecker,
       reporter: reporter,
       code: _code,
-      child: mixTokenChecker,
     );
   }
 }

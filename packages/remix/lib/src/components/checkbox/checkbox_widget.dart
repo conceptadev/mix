@@ -67,9 +67,6 @@ class _CheckboxState extends State<Checkbox> {
     final configuration = SpecConfiguration(context, CheckboxSpecUtility.self);
 
     return Pressable(
-      enabled: !widget.disabled,
-      onPress: widget.disabled ? null : _handleOnPress,
-      controller: _controller,
       child: SpecBuilder(
         style: style
             .makeStyle(configuration)
@@ -83,7 +80,6 @@ class _CheckboxState extends State<Checkbox> {
           final IconWidget = spec.indicator;
 
           return ContainerLayout(
-            direction: Axis.horizontal,
             children: [
               ContainerWidget(
                 child: IconWidget(
@@ -94,9 +90,13 @@ class _CheckboxState extends State<Checkbox> {
               ),
               if (widget.label != null) spec.label(widget.label!),
             ],
+            direction: Axis.horizontal,
           );
         },
       ),
+      enabled: !widget.disabled,
+      onPress: widget.disabled ? null : _handleOnPress,
+      controller: _controller,
     );
   }
 }
