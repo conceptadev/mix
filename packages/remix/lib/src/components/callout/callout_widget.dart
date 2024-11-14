@@ -32,11 +32,9 @@ class Callout extends StatelessWidget {
       builder: (context) {
         final spec = CalloutSpec.of(context);
 
-        return spec.container(
-          child: spec.flex(
-            direction: Axis.horizontal,
-            children: [if (icon != null) spec.icon(icon!), spec.text(text)],
-          ),
+        return spec.flexContainer(
+          direction: Axis.horizontal,
+          children: [if (icon != null) spec.icon(icon!), spec.text(text)],
         );
       },
     );
