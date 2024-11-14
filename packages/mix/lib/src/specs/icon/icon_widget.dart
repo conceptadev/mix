@@ -14,12 +14,8 @@ class StyledIcon extends StyledWidget {
     this.textDirection,
     @Deprecated('Use orderOfModifiers parameter instead')
     List<Type> modifierOrder = const <Type>[],
-    List<Type> orderOfModifiers = const <Type>[],
-  })  : assert(modifierOrder.length == 0 || orderOfModifiers.length == 0),
-        super(
-          orderOfModifiers:
-              orderOfModifiers == const [] ? modifierOrder : orderOfModifiers,
-        );
+    super.orderOfModifiers = const <Type>[],
+  });
 
   final IconData? icon;
   final String? semanticLabel;
@@ -59,10 +55,8 @@ class IconSpecWidget extends StatelessWidget {
     this.textDirection,
     @Deprecated('Use orderOfModifiers parameter instead')
     List<Type> modifierOrder = const <Type>[],
-    List<Type> orderOfModifiers = const <Type>[],
-  })  : assert(modifierOrder.length == 0 || orderOfModifiers.length == 0),
-        orderOfModifiers =
-            orderOfModifiers.length == 0 ? modifierOrder : orderOfModifiers;
+    this.orderOfModifiers = const <Type>[],
+  });
 
   final IconData? icon;
   final IconSpec? spec;
@@ -103,10 +97,8 @@ class AnimatedStyledIcon extends StyledWidget {
     @Deprecated('Use orderOfModifiers parameter instead')
     List<Type> modifierOrder = const <Type>[],
     List<Type> orderOfModifiers = const <Type>[],
-  })  : assert(modifierOrder.length == 0 || orderOfModifiers.length == 0),
-        super(
-          orderOfModifiers:
-              orderOfModifiers.length == 0 ? modifierOrder : orderOfModifiers,
+  }) : super(
+          orderOfModifiers: false ? modifierOrder : orderOfModifiers,
         );
 
   final AnimatedIconData icon;
@@ -143,10 +135,8 @@ class AnimatedIconSpecWidget extends ImplicitlyAnimatedWidget {
     super.onEnd,
     @Deprecated('Use orderOfModifiers parameter instead')
     List<Type> modifierOrder = const <Type>[],
-    List<Type> orderOfModifiers = const <Type>[],
-  })  : assert(modifierOrder.length == 0 || orderOfModifiers.length == 0),
-        orderOfModifiers =
-            orderOfModifiers.length == 0 ? modifierOrder : orderOfModifiers;
+    this.orderOfModifiers = const <Type>[],
+  });
 
   final IconData? icon;
   final IconSpec spec;
