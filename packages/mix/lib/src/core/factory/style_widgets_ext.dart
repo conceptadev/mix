@@ -16,8 +16,8 @@ extension StyleExt on Style {
     Style? style,
   }) {
     return Box(
-      style: merge(style),
       key: key,
+      style: merge(style),
       inherit: inherit,
       child: child,
     );
@@ -29,7 +29,7 @@ extension StyleExt on Style {
     Key? key,
     Style? style,
   }) {
-    return container(inherit: inherit, key: key, style: style, child: child);
+    return container(key: key, inherit: inherit, style: style, child: child);
   }
 
   HBox hbox({
@@ -39,8 +39,8 @@ extension StyleExt on Style {
     Style? style,
   }) {
     return HBox(
-      style: merge(style),
       key: key,
+      style: merge(style),
       inherit: inherit,
       children: children,
     );
@@ -53,8 +53,8 @@ extension StyleExt on Style {
     Style? style,
   }) {
     return StyledRow(
-      style: merge(style),
       key: key,
+      style: merge(style),
       inherit: inherit,
       children: children,
     );
@@ -69,9 +69,9 @@ extension StyleExt on Style {
   }) {
     return StyledText(
       text,
+      key: key,
       semanticsLabel: semanticsLabel,
       style: merge(style),
-      key: key,
       inherit: inherit,
     );
   }
@@ -83,8 +83,8 @@ extension StyleExt on Style {
     Style? style,
   }) {
     return VBox(
-      style: merge(style),
       key: key,
+      style: merge(style),
       inherit: inherit,
       children: children,
     );
@@ -97,8 +97,8 @@ extension StyleExt on Style {
     Style? style,
   }) {
     return StyledColumn(
-      style: merge(style),
       key: key,
+      style: merge(style),
       inherit: inherit,
       children: children,
     );
@@ -110,6 +110,6 @@ extension StyleExt on Style {
     Key? key,
     Style? style,
   }) {
-    return StyledIcon(icon, style: merge(style), key: key, inherit: inherit);
+    return StyledIcon(icon, key: key, style: merge(style), inherit: inherit);
   }
 }
