@@ -67,6 +67,9 @@ class _CheckboxState extends State<Checkbox> {
     final configuration = SpecConfiguration(context, CheckboxSpecUtility.self);
 
     return Pressable(
+      enabled: !widget.disabled,
+      onPress: widget.disabled ? null : _handleOnPress,
+      controller: _controller,
       child: SpecBuilder(
         style: style
             .makeStyle(configuration)
@@ -94,9 +97,6 @@ class _CheckboxState extends State<Checkbox> {
           );
         },
       ),
-      enabled: !widget.disabled,
-      onPress: widget.disabled ? null : _handleOnPress,
-      controller: _controller,
     );
   }
 }

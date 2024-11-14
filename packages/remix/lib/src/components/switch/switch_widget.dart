@@ -59,6 +59,9 @@ class _SwitchState extends State<Switch> {
     final configuration = SpecConfiguration(context, SwitchSpecUtility.self);
 
     return Pressable(
+      enabled: !widget.disabled,
+      onPress: widget.disabled ? null : _handleOnPress,
+      controller: _controller,
       child: SpecBuilder(
         style: style.makeStyle(configuration).applyVariants(widget.variants),
         builder: (context) {
@@ -70,9 +73,6 @@ class _SwitchState extends State<Switch> {
           return containerWidget(child: indicatorWidget());
         },
       ),
-      enabled: !widget.disabled,
-      onPress: widget.disabled ? null : _handleOnPress,
-      controller: _controller,
     );
   }
 }

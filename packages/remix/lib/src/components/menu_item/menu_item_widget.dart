@@ -28,6 +28,8 @@ class MenuItem extends StatelessWidget {
     final configuration = SpecConfiguration(context, MenuItemSpecUtility.self);
 
     return Pressable(
+      enabled: !disabled,
+      onPress: disabled ? null : onPress,
       child: SpecBuilder(
         style: style.makeStyle(configuration).applyVariants([...variants]),
         builder: (context) {
@@ -53,8 +55,6 @@ class MenuItem extends StatelessWidget {
           );
         },
       ),
-      enabled: !disabled,
-      onPress: disabled ? null : onPress,
     );
   }
 }

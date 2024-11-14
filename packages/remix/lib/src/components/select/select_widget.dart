@@ -121,6 +121,10 @@ class SelectState<T> extends State<Select<T>>
                         child: Flex(
                           children: widget.items.map((item) {
                             return Pressable(
+                              onPress: () {
+                                widget.onChanged(item.value);
+                                hide();
+                              },
                               child: SpecBuilder(
                                 style: appliedStyle.animate(
                                   duration: _baseAnimation.duration,
@@ -130,10 +134,6 @@ class SelectState<T> extends State<Select<T>>
                                   return item.child;
                                 },
                               ),
-                              onPress: () {
-                                widget.onChanged(item.value);
-                                hide();
-                              },
                             );
                           }).toList(),
                           direction: Axis.vertical,
@@ -146,9 +146,9 @@ class SelectState<T> extends State<Select<T>>
             },
             child: RepaintBoundary(
               child: Pressable(
-                child: widget.button(button),
                 enabled: !widget.disabled,
                 onPress: onTap,
+                child: widget.button(button),
               ),
             ),
           ),

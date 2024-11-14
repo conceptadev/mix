@@ -64,6 +64,10 @@ class _ChipState extends State<Chip> {
     final configuration = SpecConfiguration(context, ChipSpecUtility.self);
 
     return Pressable(
+      enabled: !widget.disabled,
+      onPress:
+          widget.disabled ? null : () => widget.onChanged?.call(!widget.value),
+      controller: _controller,
       child: SpecBuilder(
         style: style.makeStyle(configuration).applyVariants(widget.variants),
         builder: (context) {
@@ -81,10 +85,6 @@ class _ChipState extends State<Chip> {
           );
         },
       ),
-      enabled: !widget.disabled,
-      onPress:
-          widget.disabled ? null : () => widget.onChanged?.call(!widget.value),
-      controller: _controller,
     );
   }
 }
