@@ -94,7 +94,7 @@ class _RadioState<T> extends State<Radio<T>> {
 
           final ContainerWidget = spec.indicatorContainer;
           final IndicatorWidget = spec.indicator;
-          final FlexWidget = spec.flexContainer;
+          final FlexWidget = spec.container;
           final TextWidget = spec.text;
 
           return FlexWidget(

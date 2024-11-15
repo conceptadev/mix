@@ -16,7 +16,7 @@ part 'radio_widget.dart';
 base class RadioSpec extends Spec<RadioSpec> with _$RadioSpec, Diagnosticable {
   final BoxSpec indicatorContainer;
   final BoxSpec indicator;
-  final FlexBoxSpec flexContainer;
+  final FlexBoxSpec container;
   final TextSpec text;
 
   /// {@macro radio_spec_of}
@@ -27,14 +27,14 @@ base class RadioSpec extends Spec<RadioSpec> with _$RadioSpec, Diagnosticable {
   const RadioSpec({
     BoxSpec? indicatorContainer,
     BoxSpec? indicator,
-    FlexBoxSpec? flexContainer,
+    FlexBoxSpec? container,
     TextSpec? text,
     super.modifiers,
     super.animated,
   })  : indicatorContainer = indicatorContainer ?? const BoxSpec(),
         indicator = indicator ?? const BoxSpec(),
         text = text ?? const TextSpec(),
-        flexContainer = flexContainer ?? const FlexBoxSpec();
+        container = container ?? const FlexBoxSpec();
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
