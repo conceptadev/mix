@@ -32,7 +32,7 @@ class ColorToken extends MixToken<Color> {
 
     return themeValue is ColorResolver
         ? themeValue.resolve(context)
-        : themeValue ?? Colors.transparent;
+        : (themeValue ?? Colors.transparent);
   }
 }
 

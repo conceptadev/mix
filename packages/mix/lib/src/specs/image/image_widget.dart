@@ -105,8 +105,8 @@ class ImageSpecWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RenderSpecModifiers(
-      orderOfModifiers: orderOfModifiers,
       spec: spec ?? const ImageSpec(),
+      orderOfModifiers: orderOfModifiers,
       child: Image(
         image: image,
         frameBuilder: frameBuilder,

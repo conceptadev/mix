@@ -170,7 +170,7 @@ class FakeButtonStyle extends ButtonStyle {
     final baseStyle = super.makeStyle(spec);
     return Style.create([
       baseStyle(),
-      $.container.color(color),
+      $.flexbox.color(color),
     ]);
   }
 }

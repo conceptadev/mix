@@ -33,8 +33,7 @@ mixin _$ButtonSpec on Spec<ButtonSpec> {
   /// replaced with the new values.
   @override
   ButtonSpec copyWith({
-    BoxSpec? container,
-    FlexSpec? flex,
+    FlexBoxSpec? flexbox,
     IconSpec? icon,
     TextSpec? label,
     WidgetModifiersData? modifiers,
@@ -42,8 +41,7 @@ mixin _$ButtonSpec on Spec<ButtonSpec> {
     AnimatedData? animated,
   }) {
     return ButtonSpec(
-      container: container ?? _$this.container,
-      flex: flex ?? _$this.flex,
+      flexbox: flexbox ?? _$this.flexbox,
       icon: icon ?? _$this.icon,
       label: label ?? _$this.label,
       modifiers: modifiers ?? _$this.modifiers,
@@ -63,8 +61,7 @@ mixin _$ButtonSpec on Spec<ButtonSpec> {
   /// The interpolation is performed on each property of the [ButtonSpec] using the appropriate
   /// interpolation method:
   ///
-  /// - [BoxSpec.lerp] for [container].
-  /// - [FlexSpec.lerp] for [flex].
+  /// - [FlexBoxSpec.lerp] for [flexbox].
   /// - [IconSpec.lerp] for [icon].
   /// - [TextSpec.lerp] for [label].
 
@@ -79,8 +76,7 @@ mixin _$ButtonSpec on Spec<ButtonSpec> {
     if (other == null) return _$this;
 
     return ButtonSpec(
-      container: _$this.container.lerp(other.container, t),
-      flex: _$this.flex.lerp(other.flex, t),
+      flexbox: _$this.flexbox.lerp(other.flexbox, t),
       icon: _$this.icon.lerp(other.icon, t),
       label: _$this.label.lerp(other.label, t),
       modifiers: other.modifiers,
@@ -95,8 +91,7 @@ mixin _$ButtonSpec on Spec<ButtonSpec> {
   /// compare two [ButtonSpec] instances for equality.
   @override
   List<Object?> get props => [
-        _$this.container,
-        _$this.flex,
+        _$this.flexbox,
         _$this.icon,
         _$this.label,
         _$this.modifiers,
@@ -108,9 +103,7 @@ mixin _$ButtonSpec on Spec<ButtonSpec> {
 
   void _debugFillProperties(DiagnosticPropertiesBuilder properties) {
     properties.add(
-        DiagnosticsProperty('container', _$this.container, defaultValue: null));
-    properties
-        .add(DiagnosticsProperty('flex', _$this.flex, defaultValue: null));
+        DiagnosticsProperty('flexbox', _$this.flexbox, defaultValue: null));
     properties
         .add(DiagnosticsProperty('icon', _$this.icon, defaultValue: null));
     properties
@@ -133,15 +126,13 @@ mixin _$ButtonSpec on Spec<ButtonSpec> {
 /// the [ButtonSpec] constructor.
 class ButtonSpecAttribute extends SpecAttribute<ButtonSpec>
     with Diagnosticable {
-  final BoxSpecAttribute? container;
-  final FlexSpecAttribute? flex;
+  final FlexBoxSpecAttribute? flexbox;
   final IconSpecAttribute? icon;
   final TextSpecAttribute? label;
   final SpinnerSpecAttribute? spinner;
 
   const ButtonSpecAttribute({
-    this.container,
-    this.flex,
+    this.flexbox,
     this.icon,
     this.label,
     super.modifiers,
@@ -160,8 +151,7 @@ class ButtonSpecAttribute extends SpecAttribute<ButtonSpec>
   @override
   ButtonSpec resolve(MixData mix) {
     return ButtonSpec(
-      container: container?.resolve(mix),
-      flex: flex?.resolve(mix),
+      flexbox: flexbox?.resolve(mix),
       icon: icon?.resolve(mix),
       label: label?.resolve(mix),
       modifiers: modifiers?.resolve(mix),
@@ -183,8 +173,7 @@ class ButtonSpecAttribute extends SpecAttribute<ButtonSpec>
     if (other == null) return this;
 
     return ButtonSpecAttribute(
-      container: container?.merge(other.container) ?? other.container,
-      flex: flex?.merge(other.flex) ?? other.flex,
+      flexbox: flexbox?.merge(other.flexbox) ?? other.flexbox,
       icon: icon?.merge(other.icon) ?? other.icon,
       label: label?.merge(other.label) ?? other.label,
       modifiers: modifiers?.merge(other.modifiers) ?? other.modifiers,
@@ -199,8 +188,7 @@ class ButtonSpecAttribute extends SpecAttribute<ButtonSpec>
   /// compare two [ButtonSpecAttribute] instances for equality.
   @override
   List<Object?> get props => [
-        container,
-        flex,
+        flexbox,
         icon,
         label,
         modifiers,
@@ -211,9 +199,7 @@ class ButtonSpecAttribute extends SpecAttribute<ButtonSpec>
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties
-        .add(DiagnosticsProperty('container', container, defaultValue: null));
-    properties.add(DiagnosticsProperty('flex', flex, defaultValue: null));
+    properties.add(DiagnosticsProperty('flexbox', flexbox, defaultValue: null));
     properties.add(DiagnosticsProperty('icon', icon, defaultValue: null));
     properties.add(DiagnosticsProperty('label', label, defaultValue: null));
     properties
@@ -230,11 +216,8 @@ class ButtonSpecAttribute extends SpecAttribute<ButtonSpec>
 /// Use the methods of this class to configure specific properties of a [ButtonSpec].
 class ButtonSpecUtility<T extends Attribute>
     extends SpecUtility<T, ButtonSpecAttribute> {
-  /// Utility for defining [ButtonSpecAttribute.container]
-  late final container = BoxSpecUtility((v) => only(container: v));
-
-  /// Utility for defining [ButtonSpecAttribute.flex]
-  late final flex = FlexSpecUtility((v) => only(flex: v));
+  /// Utility for defining [ButtonSpecAttribute.flexbox]
+  late final flexbox = FlexBoxSpecUtility((v) => only(flexbox: v));
 
   /// Utility for defining [ButtonSpecAttribute.icon]
   late final icon = IconSpecUtility((v) => only(icon: v));
@@ -262,8 +245,7 @@ class ButtonSpecUtility<T extends Attribute>
   /// Returns a new [ButtonSpecAttribute] with the specified properties.
   @override
   T only({
-    BoxSpecAttribute? container,
-    FlexSpecAttribute? flex,
+    FlexBoxSpecAttribute? flexbox,
     IconSpecAttribute? icon,
     TextSpecAttribute? label,
     WidgetModifiersDataDto? modifiers,
@@ -271,8 +253,7 @@ class ButtonSpecUtility<T extends Attribute>
     AnimatedDataDto? animated,
   }) {
     return builder(ButtonSpecAttribute(
-      container: container,
-      flex: flex,
+      flexbox: flexbox,
       icon: icon,
       label: label,
       modifiers: modifiers,
