@@ -313,13 +313,13 @@ mixin _$SelectMenuSpec on Spec<SelectMenuSpec> {
   /// replaced with the new values.
   @override
   SelectMenuSpec copyWith({
-    FlexBoxSpec? flexContainer,
+    FlexBoxSpec? container,
     bool? autoWidth,
     WidgetModifiersData? modifiers,
     AnimatedData? animated,
   }) {
     return SelectMenuSpec(
-      flexContainer: flexContainer ?? _$this.flexContainer,
+      container: container ?? _$this.container,
       autoWidth: autoWidth ?? _$this.autoWidth,
       modifiers: modifiers ?? _$this.modifiers,
       animated: animated ?? _$this.animated,
@@ -337,7 +337,7 @@ mixin _$SelectMenuSpec on Spec<SelectMenuSpec> {
   /// The interpolation is performed on each property of the [SelectMenuSpec] using the appropriate
   /// interpolation method:
   ///
-  /// - [FlexBoxSpec.lerp] for [flexContainer].
+  /// - [FlexBoxSpec.lerp] for [container].
 
   /// For [autoWidth] and [modifiers] and [animated], the interpolation is performed using a step function.
   /// If [t] is less than 0.5, the value from the current [SelectMenuSpec] is used. Otherwise, the value
@@ -350,7 +350,7 @@ mixin _$SelectMenuSpec on Spec<SelectMenuSpec> {
     if (other == null) return _$this;
 
     return SelectMenuSpec(
-      flexContainer: _$this.flexContainer.lerp(other.flexContainer, t),
+      container: _$this.container.lerp(other.container, t),
       autoWidth: t < 0.5 ? _$this.autoWidth : other.autoWidth,
       modifiers: other.modifiers,
       animated: t < 0.5 ? _$this.animated : other.animated,
@@ -363,7 +363,7 @@ mixin _$SelectMenuSpec on Spec<SelectMenuSpec> {
   /// compare two [SelectMenuSpec] instances for equality.
   @override
   List<Object?> get props => [
-        _$this.flexContainer,
+        _$this.container,
         _$this.autoWidth,
         _$this.modifiers,
         _$this.animated,
@@ -372,8 +372,8 @@ mixin _$SelectMenuSpec on Spec<SelectMenuSpec> {
   SelectMenuSpec get _$this => this as SelectMenuSpec;
 
   void _debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    properties.add(DiagnosticsProperty('flexContainer', _$this.flexContainer,
-        defaultValue: null));
+    properties.add(
+        DiagnosticsProperty('container', _$this.container, defaultValue: null));
     properties.add(
         DiagnosticsProperty('autoWidth', _$this.autoWidth, defaultValue: null));
     properties.add(
@@ -392,11 +392,11 @@ mixin _$SelectMenuSpec on Spec<SelectMenuSpec> {
 /// the [SelectMenuSpec] constructor.
 base class SelectMenuSpecAttribute extends SpecAttribute<SelectMenuSpec>
     with Diagnosticable {
-  final FlexBoxSpecAttribute? flexContainer;
+  final FlexBoxSpecAttribute? container;
   final bool? autoWidth;
 
   const SelectMenuSpecAttribute({
-    this.flexContainer,
+    this.container,
     this.autoWidth,
     super.modifiers,
     super.animated,
@@ -413,7 +413,7 @@ base class SelectMenuSpecAttribute extends SpecAttribute<SelectMenuSpec>
   @override
   SelectMenuSpec resolve(MixData mix) {
     return SelectMenuSpec(
-      flexContainer: flexContainer?.resolve(mix),
+      container: container?.resolve(mix),
       autoWidth: autoWidth,
       modifiers: modifiers?.resolve(mix),
       animated: animated?.resolve(mix) ?? mix.animation,
@@ -433,8 +433,7 @@ base class SelectMenuSpecAttribute extends SpecAttribute<SelectMenuSpec>
     if (other == null) return this;
 
     return SelectMenuSpecAttribute(
-      flexContainer:
-          flexContainer?.merge(other.flexContainer) ?? other.flexContainer,
+      container: container?.merge(other.container) ?? other.container,
       autoWidth: other.autoWidth ?? autoWidth,
       modifiers: modifiers?.merge(other.modifiers) ?? other.modifiers,
       animated: animated?.merge(other.animated) ?? other.animated,
@@ -447,7 +446,7 @@ base class SelectMenuSpecAttribute extends SpecAttribute<SelectMenuSpec>
   /// compare two [SelectMenuSpecAttribute] instances for equality.
   @override
   List<Object?> get props => [
-        flexContainer,
+        container,
         autoWidth,
         modifiers,
         animated,
@@ -456,8 +455,8 @@ base class SelectMenuSpecAttribute extends SpecAttribute<SelectMenuSpec>
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty('flexContainer', flexContainer,
-        defaultValue: null));
+    properties
+        .add(DiagnosticsProperty('container', container, defaultValue: null));
     properties
         .add(DiagnosticsProperty('autoWidth', autoWidth, defaultValue: null));
     properties
@@ -473,8 +472,8 @@ base class SelectMenuSpecAttribute extends SpecAttribute<SelectMenuSpec>
 /// Use the methods of this class to configure specific properties of a [SelectMenuSpec].
 class SelectMenuSpecUtility<T extends Attribute>
     extends SpecUtility<T, SelectMenuSpecAttribute> {
-  /// Utility for defining [SelectMenuSpecAttribute.flexContainer]
-  late final flexContainer = FlexBoxSpecUtility((v) => only(flexContainer: v));
+  /// Utility for defining [SelectMenuSpecAttribute.container]
+  late final container = FlexBoxSpecUtility((v) => only(container: v));
 
   /// Utility for defining [SelectMenuSpecAttribute.autoWidth]
   late final autoWidth = BoolUtility((v) => only(autoWidth: v));
@@ -496,13 +495,13 @@ class SelectMenuSpecUtility<T extends Attribute>
   /// Returns a new [SelectMenuSpecAttribute] with the specified properties.
   @override
   T only({
-    FlexBoxSpecAttribute? flexContainer,
+    FlexBoxSpecAttribute? container,
     bool? autoWidth,
     WidgetModifiersDataDto? modifiers,
     AnimatedDataDto? animated,
   }) {
     return builder(SelectMenuSpecAttribute(
-      flexContainer: flexContainer,
+      container: container,
       autoWidth: autoWidth,
       modifiers: modifiers,
       animated: animated,
@@ -561,14 +560,14 @@ mixin _$SelectButtonSpec on Spec<SelectButtonSpec> {
   /// replaced with the new values.
   @override
   SelectButtonSpec copyWith({
-    FlexBoxSpec? flexContainer,
+    FlexBoxSpec? container,
     IconSpec? icon,
     TextSpec? label,
     WidgetModifiersData? modifiers,
     AnimatedData? animated,
   }) {
     return SelectButtonSpec(
-      flexContainer: flexContainer ?? _$this.flexContainer,
+      container: container ?? _$this.container,
       icon: icon ?? _$this.icon,
       label: label ?? _$this.label,
       modifiers: modifiers ?? _$this.modifiers,
@@ -587,7 +586,7 @@ mixin _$SelectButtonSpec on Spec<SelectButtonSpec> {
   /// The interpolation is performed on each property of the [SelectButtonSpec] using the appropriate
   /// interpolation method:
   ///
-  /// - [FlexBoxSpec.lerp] for [flexContainer].
+  /// - [FlexBoxSpec.lerp] for [container].
   /// - [IconSpec.lerp] for [icon].
   /// - [TextSpec.lerp] for [label].
 
@@ -602,7 +601,7 @@ mixin _$SelectButtonSpec on Spec<SelectButtonSpec> {
     if (other == null) return _$this;
 
     return SelectButtonSpec(
-      flexContainer: _$this.flexContainer.lerp(other.flexContainer, t),
+      container: _$this.container.lerp(other.container, t),
       icon: _$this.icon.lerp(other.icon, t),
       label: _$this.label.lerp(other.label, t),
       modifiers: other.modifiers,
@@ -616,7 +615,7 @@ mixin _$SelectButtonSpec on Spec<SelectButtonSpec> {
   /// compare two [SelectButtonSpec] instances for equality.
   @override
   List<Object?> get props => [
-        _$this.flexContainer,
+        _$this.container,
         _$this.icon,
         _$this.label,
         _$this.modifiers,
@@ -626,8 +625,8 @@ mixin _$SelectButtonSpec on Spec<SelectButtonSpec> {
   SelectButtonSpec get _$this => this as SelectButtonSpec;
 
   void _debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    properties.add(DiagnosticsProperty('flexContainer', _$this.flexContainer,
-        defaultValue: null));
+    properties.add(
+        DiagnosticsProperty('container', _$this.container, defaultValue: null));
     properties
         .add(DiagnosticsProperty('icon', _$this.icon, defaultValue: null));
     properties
@@ -648,12 +647,12 @@ mixin _$SelectButtonSpec on Spec<SelectButtonSpec> {
 /// the [SelectButtonSpec] constructor.
 class SelectButtonSpecAttribute extends SpecAttribute<SelectButtonSpec>
     with Diagnosticable {
-  final FlexBoxSpecAttribute? flexContainer;
+  final FlexBoxSpecAttribute? container;
   final IconSpecAttribute? icon;
   final TextSpecAttribute? label;
 
   const SelectButtonSpecAttribute({
-    this.flexContainer,
+    this.container,
     this.icon,
     this.label,
     super.modifiers,
@@ -671,7 +670,7 @@ class SelectButtonSpecAttribute extends SpecAttribute<SelectButtonSpec>
   @override
   SelectButtonSpec resolve(MixData mix) {
     return SelectButtonSpec(
-      flexContainer: flexContainer?.resolve(mix),
+      container: container?.resolve(mix),
       icon: icon?.resolve(mix),
       label: label?.resolve(mix),
       modifiers: modifiers?.resolve(mix),
@@ -692,8 +691,7 @@ class SelectButtonSpecAttribute extends SpecAttribute<SelectButtonSpec>
     if (other == null) return this;
 
     return SelectButtonSpecAttribute(
-      flexContainer:
-          flexContainer?.merge(other.flexContainer) ?? other.flexContainer,
+      container: container?.merge(other.container) ?? other.container,
       icon: icon?.merge(other.icon) ?? other.icon,
       label: label?.merge(other.label) ?? other.label,
       modifiers: modifiers?.merge(other.modifiers) ?? other.modifiers,
@@ -707,7 +705,7 @@ class SelectButtonSpecAttribute extends SpecAttribute<SelectButtonSpec>
   /// compare two [SelectButtonSpecAttribute] instances for equality.
   @override
   List<Object?> get props => [
-        flexContainer,
+        container,
         icon,
         label,
         modifiers,
@@ -717,8 +715,8 @@ class SelectButtonSpecAttribute extends SpecAttribute<SelectButtonSpec>
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty('flexContainer', flexContainer,
-        defaultValue: null));
+    properties
+        .add(DiagnosticsProperty('container', container, defaultValue: null));
     properties.add(DiagnosticsProperty('icon', icon, defaultValue: null));
     properties.add(DiagnosticsProperty('label', label, defaultValue: null));
     properties
@@ -734,8 +732,8 @@ class SelectButtonSpecAttribute extends SpecAttribute<SelectButtonSpec>
 /// Use the methods of this class to configure specific properties of a [SelectButtonSpec].
 class SelectButtonSpecUtility<T extends Attribute>
     extends SpecUtility<T, SelectButtonSpecAttribute> {
-  /// Utility for defining [SelectButtonSpecAttribute.flexContainer]
-  late final flexContainer = FlexBoxSpecUtility((v) => only(flexContainer: v));
+  /// Utility for defining [SelectButtonSpecAttribute.container]
+  late final container = FlexBoxSpecUtility((v) => only(container: v));
 
   /// Utility for defining [SelectButtonSpecAttribute.icon]
   late final icon = IconSpecUtility((v) => only(icon: v));
@@ -760,14 +758,14 @@ class SelectButtonSpecUtility<T extends Attribute>
   /// Returns a new [SelectButtonSpecAttribute] with the specified properties.
   @override
   T only({
-    FlexBoxSpecAttribute? flexContainer,
+    FlexBoxSpecAttribute? container,
     IconSpecAttribute? icon,
     TextSpecAttribute? label,
     WidgetModifiersDataDto? modifiers,
     AnimatedDataDto? animated,
   }) {
     return builder(SelectButtonSpecAttribute(
-      flexContainer: flexContainer,
+      container: container,
       icon: icon,
       label: label,
       modifiers: modifiers,
@@ -829,14 +827,14 @@ mixin _$SelectMenuItemSpec on Spec<SelectMenuItemSpec> {
   SelectMenuItemSpec copyWith({
     IconSpec? icon,
     TextSpec? text,
-    FlexBoxSpec? flexContainer,
+    FlexBoxSpec? container,
     WidgetModifiersData? modifiers,
     AnimatedData? animated,
   }) {
     return SelectMenuItemSpec(
       icon: icon ?? _$this.icon,
       text: text ?? _$this.text,
-      flexContainer: flexContainer ?? _$this.flexContainer,
+      container: container ?? _$this.container,
       modifiers: modifiers ?? _$this.modifiers,
       animated: animated ?? _$this.animated,
     );
@@ -855,7 +853,7 @@ mixin _$SelectMenuItemSpec on Spec<SelectMenuItemSpec> {
   ///
   /// - [IconSpec.lerp] for [icon].
   /// - [TextSpec.lerp] for [text].
-  /// - [FlexBoxSpec.lerp] for [flexContainer].
+  /// - [FlexBoxSpec.lerp] for [container].
 
   /// For [modifiers] and [animated], the interpolation is performed using a step function.
   /// If [t] is less than 0.5, the value from the current [SelectMenuItemSpec] is used. Otherwise, the value
@@ -870,7 +868,7 @@ mixin _$SelectMenuItemSpec on Spec<SelectMenuItemSpec> {
     return SelectMenuItemSpec(
       icon: _$this.icon.lerp(other.icon, t),
       text: _$this.text.lerp(other.text, t),
-      flexContainer: _$this.flexContainer.lerp(other.flexContainer, t),
+      container: _$this.container.lerp(other.container, t),
       modifiers: other.modifiers,
       animated: t < 0.5 ? _$this.animated : other.animated,
     );
@@ -884,7 +882,7 @@ mixin _$SelectMenuItemSpec on Spec<SelectMenuItemSpec> {
   List<Object?> get props => [
         _$this.icon,
         _$this.text,
-        _$this.flexContainer,
+        _$this.container,
         _$this.modifiers,
         _$this.animated,
       ];
@@ -896,8 +894,8 @@ mixin _$SelectMenuItemSpec on Spec<SelectMenuItemSpec> {
         .add(DiagnosticsProperty('icon', _$this.icon, defaultValue: null));
     properties
         .add(DiagnosticsProperty('text', _$this.text, defaultValue: null));
-    properties.add(DiagnosticsProperty('flexContainer', _$this.flexContainer,
-        defaultValue: null));
+    properties.add(
+        DiagnosticsProperty('container', _$this.container, defaultValue: null));
     properties.add(
         DiagnosticsProperty('modifiers', _$this.modifiers, defaultValue: null));
     properties.add(
@@ -916,12 +914,12 @@ base class SelectMenuItemSpecAttribute extends SpecAttribute<SelectMenuItemSpec>
     with Diagnosticable {
   final IconSpecAttribute? icon;
   final TextSpecAttribute? text;
-  final FlexBoxSpecAttribute? flexContainer;
+  final FlexBoxSpecAttribute? container;
 
   const SelectMenuItemSpecAttribute({
     this.icon,
     this.text,
-    this.flexContainer,
+    this.container,
     super.modifiers,
     super.animated,
   });
@@ -939,7 +937,7 @@ base class SelectMenuItemSpecAttribute extends SpecAttribute<SelectMenuItemSpec>
     return SelectMenuItemSpec(
       icon: icon?.resolve(mix),
       text: text?.resolve(mix),
-      flexContainer: flexContainer?.resolve(mix),
+      container: container?.resolve(mix),
       modifiers: modifiers?.resolve(mix),
       animated: animated?.resolve(mix) ?? mix.animation,
     );
@@ -961,8 +959,7 @@ base class SelectMenuItemSpecAttribute extends SpecAttribute<SelectMenuItemSpec>
     return SelectMenuItemSpecAttribute(
       icon: icon?.merge(other.icon) ?? other.icon,
       text: text?.merge(other.text) ?? other.text,
-      flexContainer:
-          flexContainer?.merge(other.flexContainer) ?? other.flexContainer,
+      container: container?.merge(other.container) ?? other.container,
       modifiers: modifiers?.merge(other.modifiers) ?? other.modifiers,
       animated: animated?.merge(other.animated) ?? other.animated,
     );
@@ -976,7 +973,7 @@ base class SelectMenuItemSpecAttribute extends SpecAttribute<SelectMenuItemSpec>
   List<Object?> get props => [
         icon,
         text,
-        flexContainer,
+        container,
         modifiers,
         animated,
       ];
@@ -986,8 +983,8 @@ base class SelectMenuItemSpecAttribute extends SpecAttribute<SelectMenuItemSpec>
     super.debugFillProperties(properties);
     properties.add(DiagnosticsProperty('icon', icon, defaultValue: null));
     properties.add(DiagnosticsProperty('text', text, defaultValue: null));
-    properties.add(DiagnosticsProperty('flexContainer', flexContainer,
-        defaultValue: null));
+    properties
+        .add(DiagnosticsProperty('container', container, defaultValue: null));
     properties
         .add(DiagnosticsProperty('modifiers', modifiers, defaultValue: null));
     properties
@@ -1007,8 +1004,8 @@ class SelectMenuItemSpecUtility<T extends Attribute>
   /// Utility for defining [SelectMenuItemSpecAttribute.text]
   late final text = TextSpecUtility((v) => only(text: v));
 
-  /// Utility for defining [SelectMenuItemSpecAttribute.flexContainer]
-  late final flexContainer = FlexBoxSpecUtility((v) => only(flexContainer: v));
+  /// Utility for defining [SelectMenuItemSpecAttribute.container]
+  late final container = FlexBoxSpecUtility((v) => only(container: v));
 
   /// Utility for defining [SelectMenuItemSpecAttribute.modifiers]
   late final wrap = SpecModifierUtility((v) => only(modifiers: v));
@@ -1029,14 +1026,14 @@ class SelectMenuItemSpecUtility<T extends Attribute>
   T only({
     IconSpecAttribute? icon,
     TextSpecAttribute? text,
-    FlexBoxSpecAttribute? flexContainer,
+    FlexBoxSpecAttribute? container,
     WidgetModifiersDataDto? modifiers,
     AnimatedDataDto? animated,
   }) {
     return builder(SelectMenuItemSpecAttribute(
       icon: icon,
       text: text,
-      flexContainer: flexContainer,
+      container: container,
       modifiers: modifiers,
       animated: animated,
     ));

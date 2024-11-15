@@ -128,8 +128,8 @@ class SelectState<T> extends State<Select<T>>
                       final select = SelectSpec.of(context);
                       final menu = select.menu;
 
-                      final Container = menu.flexContainer.copyWith(
-                        box: menu.flexContainer.box.copyWith(
+                      final Container = menu.container.copyWith(
+                        box: menu.container.box.copyWith(
                           width:
                               menu.autoWidth ? _link.leaderSize!.width : null,
                         ),
