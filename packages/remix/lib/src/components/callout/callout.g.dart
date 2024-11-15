@@ -33,14 +33,14 @@ mixin _$CalloutSpec on Spec<CalloutSpec> {
   /// replaced with the new values.
   @override
   CalloutSpec copyWith({
-    FlexBoxSpec? flexContainer,
+    FlexBoxSpec? container,
     IconSpec? icon,
     TextSpec? text,
     WidgetModifiersData? modifiers,
     AnimatedData? animated,
   }) {
     return CalloutSpec(
-      flexContainer: flexContainer ?? _$this.flexContainer,
+      container: container ?? _$this.container,
       icon: icon ?? _$this.icon,
       text: text ?? _$this.text,
       modifiers: modifiers ?? _$this.modifiers,
@@ -59,7 +59,7 @@ mixin _$CalloutSpec on Spec<CalloutSpec> {
   /// The interpolation is performed on each property of the [CalloutSpec] using the appropriate
   /// interpolation method:
   ///
-  /// - [FlexBoxSpec.lerp] for [flexContainer].
+  /// - [FlexBoxSpec.lerp] for [container].
   /// - [IconSpec.lerp] for [icon].
   /// - [TextSpec.lerp] for [text].
 
@@ -74,7 +74,7 @@ mixin _$CalloutSpec on Spec<CalloutSpec> {
     if (other == null) return _$this;
 
     return CalloutSpec(
-      flexContainer: _$this.flexContainer.lerp(other.flexContainer, t),
+      container: _$this.container.lerp(other.container, t),
       icon: _$this.icon.lerp(other.icon, t),
       text: _$this.text.lerp(other.text, t),
       modifiers: other.modifiers,
@@ -88,7 +88,7 @@ mixin _$CalloutSpec on Spec<CalloutSpec> {
   /// compare two [CalloutSpec] instances for equality.
   @override
   List<Object?> get props => [
-        _$this.flexContainer,
+        _$this.container,
         _$this.icon,
         _$this.text,
         _$this.modifiers,
@@ -106,12 +106,12 @@ mixin _$CalloutSpec on Spec<CalloutSpec> {
 /// Use this class to configure the attributes of a [CalloutSpec] and pass it to
 /// the [CalloutSpec] constructor.
 base class CalloutSpecAttribute extends SpecAttribute<CalloutSpec> {
-  final FlexBoxSpecAttribute? flexContainer;
+  final FlexBoxSpecAttribute? container;
   final IconSpecAttribute? icon;
   final TextSpecAttribute? text;
 
   const CalloutSpecAttribute({
-    this.flexContainer,
+    this.container,
     this.icon,
     this.text,
     super.modifiers,
@@ -129,7 +129,7 @@ base class CalloutSpecAttribute extends SpecAttribute<CalloutSpec> {
   @override
   CalloutSpec resolve(MixData mix) {
     return CalloutSpec(
-      flexContainer: flexContainer?.resolve(mix),
+      container: container?.resolve(mix),
       icon: icon?.resolve(mix),
       text: text?.resolve(mix),
       modifiers: modifiers?.resolve(mix),
@@ -150,8 +150,7 @@ base class CalloutSpecAttribute extends SpecAttribute<CalloutSpec> {
     if (other == null) return this;
 
     return CalloutSpecAttribute(
-      flexContainer:
-          flexContainer?.merge(other.flexContainer) ?? other.flexContainer,
+      container: container?.merge(other.container) ?? other.container,
       icon: icon?.merge(other.icon) ?? other.icon,
       text: text?.merge(other.text) ?? other.text,
       modifiers: modifiers?.merge(other.modifiers) ?? other.modifiers,
@@ -165,7 +164,7 @@ base class CalloutSpecAttribute extends SpecAttribute<CalloutSpec> {
   /// compare two [CalloutSpecAttribute] instances for equality.
   @override
   List<Object?> get props => [
-        flexContainer,
+        container,
         icon,
         text,
         modifiers,
@@ -179,8 +178,8 @@ base class CalloutSpecAttribute extends SpecAttribute<CalloutSpec> {
 /// Use the methods of this class to configure specific properties of a [CalloutSpec].
 class CalloutSpecUtility<T extends Attribute>
     extends SpecUtility<T, CalloutSpecAttribute> {
-  /// Utility for defining [CalloutSpecAttribute.flexContainer]
-  late final flexContainer = FlexBoxSpecUtility((v) => only(flexContainer: v));
+  /// Utility for defining [CalloutSpecAttribute.container]
+  late final container = FlexBoxSpecUtility((v) => only(container: v));
 
   /// Utility for defining [CalloutSpecAttribute.icon]
   late final icon = IconSpecUtility((v) => only(icon: v));
@@ -205,14 +204,14 @@ class CalloutSpecUtility<T extends Attribute>
   /// Returns a new [CalloutSpecAttribute] with the specified properties.
   @override
   T only({
-    FlexBoxSpecAttribute? flexContainer,
+    FlexBoxSpecAttribute? container,
     IconSpecAttribute? icon,
     TextSpecAttribute? text,
     WidgetModifiersDataDto? modifiers,
     AnimatedDataDto? animated,
   }) {
     return builder(CalloutSpecAttribute(
-      flexContainer: flexContainer,
+      container: container,
       icon: icon,
       text: text,
       modifiers: modifiers,

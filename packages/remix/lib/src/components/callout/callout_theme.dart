@@ -15,7 +15,7 @@ class FortalezaCalloutStyle extends CalloutStyle {
     final baseStyle = super.makeStyle(spec);
     final baseOverrides = Style(
       baseStyle(),
-      $.flexContainer.chain
+      $.container.chain
         ..borderRadius(8)
         ..color.$accent(3)
         ..border.all.width(0)
@@ -33,7 +33,7 @@ class FortalezaCalloutStyle extends CalloutStyle {
     );
 
     final surfaceVariant = Style(
-      $.flexContainer.chain
+      $.container.chain
         ..border.all.style.solid()
         ..color.$accentAlpha(3)
         ..border.width(1)
@@ -41,7 +41,7 @@ class FortalezaCalloutStyle extends CalloutStyle {
     );
 
     final outlineVariant = Style(
-      $.flexContainer.chain
+      $.container.chain
         ..border.all.style.solid()
         ..color.transparent()
         ..border.width(1)

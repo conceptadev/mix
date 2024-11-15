@@ -10,7 +10,7 @@ class CalloutStyle extends SpecStyle<CalloutSpecUtility> {
     final $ = spec.utilities;
 
     final flexContainerStyle = [
-      $.flexContainer.chain
+      $.container.chain
         ..borderRadius(6)
         ..color.white()
         ..padding(12)
@@ -40,7 +40,7 @@ class CalloutDarkStyle extends CalloutStyle {
   Style makeStyle(SpecConfiguration<CalloutSpecUtility> spec) {
     final $ = spec.utilities;
     final flexContainerStyle = [
-      $.flexContainer.chain
+      $.container.chain
         ..color.black()
         ..border.all.color.white30(),
     ];
