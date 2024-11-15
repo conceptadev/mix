@@ -19,7 +19,7 @@ final $segmentedControl = SegmentedControlSpecUtility.self;
 class SegmentedControlSpec extends Spec<SegmentedControlSpec>
     with _$SegmentedControlSpec, Diagnosticable {
   final BoxSpec container;
-  final FlexSpec layout;
+  final FlexSpec flex;
   final BoxSpec divider;
   final bool showDivider;
 
@@ -33,13 +33,13 @@ class SegmentedControlSpec extends Spec<SegmentedControlSpec>
 
   const SegmentedControlSpec({
     BoxSpec? container,
-    FlexSpec? layout,
+    FlexSpec? flex,
     bool? showDivider,
     BoxSpec? divider,
     SegmentButtonSpec? item,
     super.modifiers,
     super.animated,
-  })  : layout = layout ?? const FlexSpec(),
+  })  : flex = flex ?? const FlexSpec(),
         container = container ?? const BoxSpec(),
         showDivider = showDivider ?? false,
         item = item ?? const SegmentButtonSpec(),
