@@ -64,7 +64,7 @@ class _AccordionState extends State<Accordion> with TickerProviderStateMixin {
             child: widget.content(spec.textContent),
           );
 
-          return spec.flexContainer(
+          return spec.container(
             direction: Axis.vertical,
             children: [
               Pressable(
