@@ -21,7 +21,7 @@ class OnBrightnessVariant extends MediaQueryContextVariant {
   /// [brightness] associated with this variant, and `false` otherwise.
   @override
   bool when(BuildContext context) {
-    final mediaBrightness = MediaQuery.of(context).platformBrightness;
+    final mediaBrightness = MediaQuery.platformBrightnessOf(context);
 
     return mediaBrightness == brightness;
   }
