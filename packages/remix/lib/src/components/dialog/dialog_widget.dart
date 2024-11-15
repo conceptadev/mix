@@ -76,7 +76,7 @@ class Dialog extends StatelessWidget {
       builder: (context) {
         final spec = DialogSpec.of(context);
 
-        return spec.flexContainer(
+        return spec.container(
           direction: Axis.vertical,
           children: [
             if (titleBuilder != null) titleBuilder!(spec.title),
@@ -84,7 +84,7 @@ class Dialog extends StatelessWidget {
               descriptionBuilder!(spec.description),
             content ?? const SizedBox.shrink(),
             if (actions != null)
-              spec.flexActions(
+              spec.actionsContainer(
                 direction: Axis.horizontal,
                 children: actions!,
               ),

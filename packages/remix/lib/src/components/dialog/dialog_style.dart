@@ -7,7 +7,7 @@ class DialogStyle extends SpecStyle<DialogSpecUtility> {
   Style makeStyle(SpecConfiguration<DialogSpecUtility> spec) {
     final $ = spec.utilities;
 
-    final flexContainerStyle = $.flexContainer.chain
+    final containerStyle = $.container.chain
       ..padding.all(16)
       ..borderRadius.all(8)
       ..color.white()
@@ -18,7 +18,7 @@ class DialogStyle extends SpecStyle<DialogSpecUtility> {
       ..flex.crossAxisAlignment.start()
       ..flex.direction.vertical();
 
-    final actionsLayout = $.flexActions.chain
+    final actionsContainer = $.actionsContainer.chain
       ..mainAxisSize.max()
       ..mainAxisAlignment.end()
       ..gap(12)
@@ -37,10 +37,10 @@ class DialogStyle extends SpecStyle<DialogSpecUtility> {
     return Style.create(
       [
         $with.align(alignment: Alignment.center),
-        flexContainerStyle,
+        containerStyle,
         titleStyle,
         descriptionStyle,
-        actionsLayout,
+        actionsContainer,
       ],
     );
   }
@@ -55,7 +55,7 @@ class DialogDarkStyle extends DialogStyle {
 
     return Style.create([
       super.makeStyle(spec).call(),
-      $.flexContainer.chain
+      $.container.chain
         ..color.black()
         ..border.all.width(1)
         ..border.color.grey.shade900(),

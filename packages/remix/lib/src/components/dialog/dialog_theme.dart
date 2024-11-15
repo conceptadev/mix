@@ -7,7 +7,7 @@ class FortalezaDialogStyle extends DialogStyle {
   Style makeStyle(SpecConfiguration<DialogSpecUtility> spec) {
     final $ = spec.utilities;
 
-    final flexContainerStyle = $.flexContainer.chain
+    final containerStyle = $.container.chain
       ..padding.all.$space(4)
       ..borderRadius.all.$radius(2)
       ..border.all.color.$neutral(6)
@@ -24,7 +24,7 @@ class FortalezaDialogStyle extends DialogStyle {
     return Style.create(
       [
         super.makeStyle(spec).call(),
-        flexContainerStyle,
+        containerStyle,
         titleStyle,
         descriptionStyle,
       ],
