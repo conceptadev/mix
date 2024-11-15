@@ -13,12 +13,12 @@ class FortalezaCheckboxStyle extends CheckboxStyle {
 
     final baseStyle = super.makeStyle(spec);
     final baseOverrides = Style(
-      $.indicatorIcon.wrap.scale(0.5),
+      $.indicator.wrap.scale(0.5),
       $.indicatorContainer.chain
         ..border.all.width(0)
         ..border.all.style.none(),
       $.label.style.color.$neutral(12),
-      spec.on.selected($.indicatorIcon.wrap.scale(0.9)),
+      spec.on.selected($.indicator.wrap.scale(0.9)),
     );
 
     final surfaceVariant = Style(
@@ -26,7 +26,7 @@ class FortalezaCheckboxStyle extends CheckboxStyle {
         ..border.strokeAlign(BorderSide.strokeAlignInside)
         ..border.color.$neutral(9)
         ..border.style.solid(),
-      $.indicatorIcon.color.$white(),
+      $.indicator.color.$white(),
       spec.on.hover($.indicatorContainer.color.$neutral(3)),
       spec.on.selected(
         $.indicatorContainer.chain
@@ -41,7 +41,7 @@ class FortalezaCheckboxStyle extends CheckboxStyle {
         $.indicatorContainer.color.$neutral(3),
         $.indicatorContainer.border.all.color.$neutral(9),
         spec.on.selected(
-          $.indicatorIcon.color.$neutral(8),
+          $.indicator.color.$neutral(8),
           $.indicatorContainer.chain
             ..color.$neutral(3)
             ..border.width(1)
@@ -54,13 +54,13 @@ class FortalezaCheckboxStyle extends CheckboxStyle {
     final softVariant = Style(
       $.indicatorContainer.border.style.none(),
       $.indicatorContainer.color.$accentAlpha(6),
-      $.indicatorIcon.color.$accentAlpha(11),
+      $.indicator.color.$accentAlpha(11),
       spec.on.hover($.indicatorContainer.color.$accentAlpha(5)),
       (spec.on.hover &
           spec.on.selected)($.indicatorContainer.color.$accentAlpha(5)),
       spec.on.selected(
         $.indicatorContainer.color.$accentAlpha(6),
-        $.indicatorIcon.color.$accentAlpha(11),
+        $.indicator.color.$accentAlpha(11),
       ),
       spec.on.disabled(
         $.indicatorContainer.color.$neutral(4),
@@ -73,7 +73,7 @@ class FortalezaCheckboxStyle extends CheckboxStyle {
       $.indicatorContainer.chain
         ..color.$neutral(3)
         ..border.color.$neutral(5),
-      $.indicatorIcon.color.$neutral(7),
+      $.indicator.color.$neutral(7),
       $.label.style.color.$neutral(9),
     );
 

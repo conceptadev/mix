@@ -7,7 +7,7 @@ class CheckboxStyle extends SpecStyle<CheckboxSpecUtility> {
   Style makeStyle(SpecConfiguration<CheckboxSpecUtility> spec) {
     final $ = spec.utilities;
 
-    final containerStyle = [
+    final indicatorContainerStyle = [
       $.indicatorContainer.chain
         ..borderRadius(4)
         ..border.all.color.black(),
@@ -15,13 +15,13 @@ class CheckboxStyle extends SpecStyle<CheckboxSpecUtility> {
     ];
 
     final indicatorStyle = [
-      $.indicatorIcon.chain
+      $.indicator.chain
         ..size(16)
         ..color.white()
         ..wrap.opacity(0),
       spec.on.selected(
-        $.indicatorIcon.wrap.opacity(1),
-        $.indicatorIcon.color.white(),
+        $.indicator.wrap.opacity(1),
+        $.indicator.color.white(),
       ),
     ];
 
@@ -31,7 +31,7 @@ class CheckboxStyle extends SpecStyle<CheckboxSpecUtility> {
       ..style.fontWeight.w500()
       ..textHeightBehavior.heightToFirstAscent.off();
 
-    final flexContainerStyle = $.flexContainer.flex.chain
+    final containerStyle = $.container.flex.chain
       ..crossAxisAlignment.center()
       ..mainAxisAlignment.start()
       ..mainAxisSize.min()
@@ -44,10 +44,10 @@ class CheckboxStyle extends SpecStyle<CheckboxSpecUtility> {
     );
 
     return Style.create([
-      ...containerStyle,
+      ...indicatorContainerStyle,
       ...indicatorStyle,
       labelStyle,
-      flexContainerStyle,
+      containerStyle,
       disabledStyle,
     ]);
   }
@@ -63,11 +63,11 @@ class CheckboxDarkStyle extends CheckboxStyle {
     return Style.create([
       super.makeStyle(spec).call(),
       $.indicatorContainer.border.all.color.white(),
-      $.indicatorIcon.color.black(),
+      $.indicator.color.black(),
       $.label.style.color.white(),
       spec.on.selected(
         $.indicatorContainer.color.white(),
-        $.indicatorIcon.color.black(),
+        $.indicator.color.black(),
       ),
     ]);
   }
