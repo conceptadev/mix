@@ -38,9 +38,6 @@ sealed class ShapeBorderDto<T extends ShapeBorder> extends Dto<T> {
 
   @override
   ShapeBorderDto<T> merge(covariant ShapeBorderDto<T>? other);
-
-  @override
-  T resolve(MixData mix);
 }
 
 @immutable
@@ -86,9 +83,6 @@ abstract class OutlinedBorderDto<T extends OutlinedBorder>
 
   @override
   OutlinedBorderDto<T> merge(covariant OutlinedBorderDto<T>? other);
-
-  @override
-  T resolve(MixData mix);
 }
 
 @MixableDto()
