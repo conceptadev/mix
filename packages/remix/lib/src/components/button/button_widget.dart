@@ -129,7 +129,7 @@ class ButtonSpecWidget extends StatelessWidget {
   }
 
   Widget _buildChildren(ButtonSpec spec) {
-    final flexboxWidget = spec.flexbox(
+    final flexboxWidget = spec.container(
       direction: Axis.horizontal,
       children: [
         if (iconLeft != null) spec.icon(iconLeft),
