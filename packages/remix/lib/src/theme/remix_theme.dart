@@ -293,16 +293,16 @@ class RemixTheme extends StatelessWidget {
   RemixThemeData _defineRemixThemeData(BuildContext context) {
     if (themeMode != null) {
       return themeMode == ThemeMode.dark
-          ? darkTheme ?? _defaultThemeDark
-          : theme ?? _defaultThemeLight;
+          ? (darkTheme ?? _defaultThemeDark)
+          : (theme ?? _defaultThemeLight);
     }
 
     final brightness = MediaQuery.platformBrightnessOf(context);
     final isDark = brightness == Brightness.dark;
 
     return isDark
-        ? darkTheme ?? _defaultThemeDark
-        : theme ?? _defaultThemeLight;
+        ? (darkTheme ?? _defaultThemeDark)
+        : (theme ?? _defaultThemeLight);
   }
 
   @override

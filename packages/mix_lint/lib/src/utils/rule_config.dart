@@ -6,7 +6,7 @@ typedef RuleParameterParser<T> = T Function(Map<String, Object?> json);
 
 typedef RuleProblemFactory<T> = String Function(T value);
 
-class RuleConfig<T extends Object?> {
+class RuleConfig<T> {
   final String name;
   final ErrorSeverity errorSeverity;
   final String? correctionMessage;

@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mix/mix.dart';
 
-void main() async {
-  runApp(
-    const MaterialApp(
-      home: MyApp(),
-    ),
-  );
+void main() {
+  runApp(const MaterialApp(home: MyApp()));
 }
 
 final style = Style(
@@ -17,11 +13,7 @@ final style = Style(
   $box.borderRadius(10),
   $box.padding(20, 10),
   $box.margin(10),
-  $box.border(
-    color: Colors.black,
-    width: 1,
-    style: BorderStyle.solid,
-  ),
+  $box.border(color: Colors.black, style: BorderStyle.solid, width: 1),
 );
 
 class MyApp extends StatelessWidget {
@@ -30,11 +22,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Center(
-      child: Box(
-        style: style,
-        child: const Center(child: Text('Hello Mix')),
+      body: Center(
+        child: Box(
+          style: style,
+          child: const Center(child: Text('Hello Mix')),
+        ),
       ),
-    ));
+    );
   }
 }

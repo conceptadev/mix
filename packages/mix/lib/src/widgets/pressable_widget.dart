@@ -71,7 +71,6 @@ class PressableBox extends StatelessWidget {
 class Pressable extends StatefulWidget {
   const Pressable({
     super.key,
-    required this.child,
     this.enabled = true,
     this.enableFeedback = false,
     this.onPress,
@@ -89,6 +88,7 @@ class Pressable extends StatefulWidget {
     this.unpressDelay = kDefaultAnimationDuration,
     this.controller,
     this.actions,
+    required this.child,
   });
 
   final Widget child;

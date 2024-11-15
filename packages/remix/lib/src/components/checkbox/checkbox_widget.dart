@@ -89,7 +89,7 @@ class _CheckboxState extends State<Checkbox> {
                 child: IconWidget(
                   widget.value
                       ? widget.iconChecked
-                      : widget.iconUnchecked ?? widget.iconChecked,
+                      : (widget.iconUnchecked ?? widget.iconChecked),
                 ),
               ),
               if (widget.label != null) spec.label(widget.label!),

@@ -62,6 +62,7 @@ class Button extends StatelessWidget {
         ]),
         builder: (context) {
           return ButtonSpecWidget(
+            spec: ButtonSpec.of(context),
             label: label,
             disabled: disabled,
             loading: loading,
@@ -69,7 +70,6 @@ class Button extends StatelessWidget {
             iconRight: iconRight,
             spinnerBuilder: spinnerBuilder,
             onPressed: onPressed,
-            spec: ButtonSpec.of(context),
           );
         },
       ),
@@ -113,7 +113,7 @@ class ButtonSpecWidget extends StatelessWidget {
   }
 
   Widget _buildChildren(ButtonSpec spec) {
-    final flexWidget = spec.flex(
+    final flexboxWidget = spec.flexbox(
       direction: Axis.horizontal,
       children: [
         if (iconLeft != null) spec.icon(iconLeft),
@@ -123,13 +123,13 @@ class ButtonSpecWidget extends StatelessWidget {
       ],
     );
 
-    return loading ? _buildLoadingOverlay(spec, flexWidget) : flexWidget;
+    return loading ? _buildLoadingOverlay(spec, flexboxWidget) : flexboxWidget;
   }
 
   @override
   Widget build(BuildContext context) {
     final spec = this.spec ?? const ButtonSpec();
 
-    return spec.container(child: _buildChildren(spec));
+    return _buildChildren(spec);
   }
 }

@@ -6,6 +6,53 @@ import '../../../helpers/override_modifiers_order.dart';
 import '../../../helpers/testing_utils.dart';
 
 void main() {
+  testWidgets('FlexSpec properties should match Flex properties',
+      (WidgetTester tester) async {
+    const flexSpec = FlexSpec(
+      direction: Axis.horizontal,
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisSize: MainAxisSize.max,
+      verticalDirection: VerticalDirection.down,
+      textDirection: TextDirection.ltr,
+      textBaseline: TextBaseline.alphabetic,
+      clipBehavior: Clip.antiAlias,
+      gap: 16,
+    );
+
+    const flexKey = Key('flex');
+    const flexWidget = FlexSpecWidget(
+      key: flexKey,
+      spec: flexSpec,
+      direction: Axis.horizontal,
+      children: [Text('test')],
+    );
+
+    await tester.pumpWidget(
+      const MaterialApp(
+        home: Scaffold(
+          body: flexWidget,
+        ),
+      ),
+    );
+
+    final flexFinder = find.byKey(flexKey);
+    expect(flexFinder, findsOneWidget);
+
+    final flex = tester.widget<Flex>(find.descendant(
+      of: flexFinder,
+      matching: find.byType(Flex),
+    ));
+
+    expect(flex.direction, flexSpec.direction);
+    expect(flex.mainAxisAlignment, flexSpec.mainAxisAlignment);
+    expect(flex.crossAxisAlignment, flexSpec.crossAxisAlignment);
+    expect(flex.mainAxisSize, flexSpec.mainAxisSize);
+    expect(flex.verticalDirection, flexSpec.verticalDirection);
+    expect(flex.textDirection, flexSpec.textDirection);
+    expect(flex.textBaseline, flexSpec.textBaseline);
+  });
+
   group('FlexSpecWidget', () {
     testWidgets('prioritizes the direction in spec', (tester) async {
       await tester.pumpMaterialApp(
