@@ -23,8 +23,8 @@ class ChipStyle extends SpecStyle<ChipSpecUtility> {
         ..style.fontWeight.w600(),
     ];
 
-    final flexContainerStyle = [
-      $.flexContainer.chain
+    final containerStyle = [
+      $.container.chain
         ..borderRadius(6)
         ..color.white()
         ..border.all.width(1)
@@ -35,20 +35,19 @@ class ChipStyle extends SpecStyle<ChipSpecUtility> {
         ..flex.crossAxisAlignment.center()
         ..flex.mainAxisSize.min()
         ..flex.gap(8),
-      spec.on.selected($.flexContainer.color.grey.shade200()),
+      spec.on.selected($.container.color.grey.shade200()),
     ];
 
     final disabledStyle = spec.on.disabled(
       $.label.style.color.grey.shade600(),
       $.icon.color.grey.shade600(),
-      spec.on.selected($.flexContainer.color.grey.shade300()),
+      spec.on.selected($.container.color.grey.shade300()),
     );
 
     return Style.create([
-      ...flexContainerStyle,
+      ...containerStyle,
       ...iconStyle,
       ...labelStyle,
-      ...flexContainerStyle,
       disabledStyle,
     ]);
   }
@@ -61,17 +60,17 @@ class ChipDarkStyle extends ChipStyle {
   Style makeStyle(SpecConfiguration<ChipSpecUtility> spec) {
     final $ = spec.utilities;
 
-    final flexContainerStyle = [
-      $.flexContainer.chain
+    final containerStyle = [
+      $.container.chain
         ..border.all.color.grey.shade900()
         ..color.black(),
       $.icon.color.white(),
-      spec.on.selected($.flexContainer.color.grey.shade900()),
+      spec.on.selected($.container.color.grey.shade900()),
       spec.on.disabled(
         $.label.style.color.grey.shade600(),
         $.icon.color.grey.shade600(),
-        $.flexContainer.color.black(),
-        spec.on.selected($.flexContainer.color.grey.shade900()),
+        $.container.color.black(),
+        spec.on.selected($.container.color.grey.shade900()),
       ),
     ];
 
@@ -79,7 +78,7 @@ class ChipDarkStyle extends ChipStyle {
 
     return Style.create([
       super.makeStyle(spec).call(),
-      ...flexContainerStyle,
+      ...containerStyle,
       labelStyle,
     ]);
   }

@@ -19,50 +19,49 @@ class FortalezaChipStyle extends ChipStyle {
         ..style.color.$accent(),
     ];
 
-    final flexContainerStyle = [
-      $.flexContainer.chain
+    final containerStyle = [
+      $.container.chain
         ..flex.gap.$space(2)
         ..borderRadius(20)
         ..color.$accent(2)
         ..border.color.$accent(6)
         ..padding.vertical(8)
         ..padding.horizontal(12),
-      (spec.on.hover & spec.on.unselected)($.flexContainer.color.$accent(3)),
-      spec.on.selected($.flexContainer.color.$accent(4)),
+      (spec.on.hover & spec.on.unselected)($.container.color.$accent(3)),
+      spec.on.selected($.container.color.$accent(4)),
     ];
 
     final disabledStyle = [
       spec.on.disabled(
-        $.flexContainer.border.color.$neutral(4),
-        $.flexContainer.color.$neutral(2),
+        $.container.border.color.$neutral(4),
+        $.container.color.$neutral(2),
         $.label.style.color.$neutral(8),
         $.icon.color.$neutral(8),
-        spec.on.selected($.flexContainer.color.$neutral(4)),
+        spec.on.selected($.container.color.$neutral(4)),
       ),
     ];
 
     final ghostStyle = Style.create([
-      $.flexContainer.chain
+      $.container.chain
         ..borderRadius(6)
         ..color.$accent(1)
         ..border.style.none()
         ..padding.vertical(8)
         ..padding.horizontal(12),
-      (spec.on.hover & spec.on.unselected)($.flexContainer.color.$accent(3)),
-      spec.on.selected($.flexContainer.color.$accent(4)),
+      (spec.on.hover & spec.on.unselected)($.container.color.$accent(3)),
+      spec.on.selected($.container.color.$accent(4)),
       spec.on.disabled(
-        $.flexContainer.color.$neutral(2),
+        $.container.color.$neutral(2),
         $.icon.color.$neutral(8),
-        (spec.on.selected)($.flexContainer.color.$neutral(4)),
+        (spec.on.selected)($.container.color.$neutral(4)),
       ),
     ]);
 
     return Style.create([
       super.makeStyle(spec).call(),
-      ...flexContainerStyle,
+      ...containerStyle,
       ...iconStyle,
       ...labelStyle,
-      ...flexContainerStyle,
       ...disabledStyle,
       ghost(ghostStyle()),
     ]).animate(duration: const Duration(milliseconds: 150));
