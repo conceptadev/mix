@@ -37,4 +37,28 @@ const _widgetSpecBuilder = '';
 /// Use this to create unique variations or apply specific styling that
 /// differs from the global theme.
 /// {@endtemplate}
-const _useStyleFromContext = '';
+// const _useStyleFromContext = '';
+///
+/// {@template remix.component.disabled}
+/// When disabled, the component will not respond to user interaction and will
+/// appear visually distinct to indicate its disabled state.
+/// {@endtemplate}
+///
+/// {@template remix.component.loading}
+/// When loading, the component will display a spinner and disable user
+/// interaction. The component's content will be hidden but maintain its
+/// space to prevent layout shifts.
+/// {@endtemplate}
+///
+/// {@template remix.component.onPressed}
+/// Called when the component is tapped.
+/// If null or if [disabled] is true, the component will be disabled and won't
+/// respond to touch.
+/// {@endtemplate}
+///
+/// {@template remix.component.onChanged}
+/// Called when the component is tapped.
+/// If null or if [disabled] is true, the component will be disabled and won't
+/// respond to touch.
+/// {@endtemplate}
+const _remixComponent = '';

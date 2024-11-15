@@ -7,7 +7,7 @@ class ToastStyle extends SpecStyle<ToastSpecUtility> {
   Style makeStyle(SpecConfiguration<ToastSpecUtility> spec) {
     final $ = spec.utilities;
 
-    final flexContainerStyle = $.flexContainer.chain
+    final containerStyle = $.container.chain
       ..borderRadius(6)
       ..color.white()
       ..border.all.color.black12()
@@ -19,7 +19,7 @@ class ToastStyle extends SpecStyle<ToastSpecUtility> {
       ..flex.mainAxisSize.min()
       ..flex.gap(16);
 
-    final textLayoutFlexStyle = $.textLayout.chain
+    final titleSubtitleContainerStyle = $.titleSubtitleContainer.flex.chain
       ..direction.vertical()
       ..crossAxisAlignment.start()
       ..gap(4)
@@ -29,15 +29,15 @@ class ToastStyle extends SpecStyle<ToastSpecUtility> {
       ..style.bold()
       ..style.fontSize(14);
 
-    final descriptionStyle = $.description.chain
+    final subtitleStyle = $.subtitle.chain
       ..style.fontSize(13)
       ..style.color.black54();
 
     return Style.create([
-      flexContainerStyle,
-      textLayoutFlexStyle,
+      containerStyle,
+      titleSubtitleContainerStyle,
       titleStyle,
-      descriptionStyle,
+      subtitleStyle,
     ]);
   }
 }

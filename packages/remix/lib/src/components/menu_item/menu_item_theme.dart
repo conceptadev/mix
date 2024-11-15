@@ -8,7 +8,7 @@ class FortalezaMenuItemStyle extends MenuItemStyle {
     final $ = spec.utilities;
 
     final baseStyle = super.makeStyle(spec);
-    final titleSubtitleLayout = $.titleSubtitleContainer.chain..gap.$space(1);
+    final titleSubtitleLayout = $.titleSubtitleContainer.flex.gap.$space(1);
 
     final title = $.title.chain
       ..style.$text(2)

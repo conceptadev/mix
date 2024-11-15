@@ -7,7 +7,7 @@ class FortalezaTextFieldStyle extends TextFieldStyle {
   Style makeStyle(SpecConfiguration<TextFieldSpecUtility> spec) {
     final $ = spec.utilities;
 
-    final flexContainerStyle = $.flexContainer.chain
+    final textFieldContainerStyle = $.textFieldContainer.chain
       ..color.$neutral(1)
       ..padding.horizontal.$space(3)
       ..padding.vertical.$space(2)
@@ -19,7 +19,7 @@ class FortalezaTextFieldStyle extends TextFieldStyle {
 
     final textStyle = [$.style.$text(2), $.style.color.$neutral(12)];
 
-    final layoutStyle = $.mainFlex.gap.$space(2);
+    final containerStyle = $.container.flex.gap.$space(2);
 
     final hintStyle = [
       $.hintTextStyle.color.$neutral(9),
@@ -38,7 +38,7 @@ class FortalezaTextFieldStyle extends TextFieldStyle {
     final icon = $.icon.color.$accent();
 
     final focus = spec.on.focus(
-      $.flexContainer.chain
+      $.textFieldContainer.chain
         ..border.all.color.$accent()
         ..border.all.width(2),
     );
@@ -47,8 +47,8 @@ class FortalezaTextFieldStyle extends TextFieldStyle {
       super.makeStyle(spec).call(),
       $.floatingLabel.on(),
       $.cursorColor.$neutral(12),
-      flexContainerStyle,
-      layoutStyle,
+      textFieldContainerStyle,
+      containerStyle,
       ...textStyle,
       ...hintStyle,
       ...floatingHintStyle,

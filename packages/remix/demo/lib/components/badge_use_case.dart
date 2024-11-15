@@ -1,4 +1,3 @@
-import 'package:demo/helpers/knob_builder.dart';
 import 'package:flutter/widgets.dart';
 import 'package:remix/remix.dart';
 import 'package:widgetbook/widgetbook.dart';
@@ -12,13 +11,13 @@ Widget buildAvatarUseCase(BuildContext context) {
   return Scaffold(
     body: Center(
       child: Badge(
-        variants: [
-          context.knobs.variant(FortalezaBadgeStyle.variants),
-        ],
         label: context.knobs.string(
           label: 'Label',
           initialValue: 'New',
         ),
+        variants: const [
+          // context.knobs.variant(FortalezaBadgeStyle.variants),
+        ],
       ),
     ),
   );

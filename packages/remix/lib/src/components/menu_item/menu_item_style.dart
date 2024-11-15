@@ -8,11 +8,11 @@ class MenuItemStyle extends SpecStyle<MenuItemSpecUtility> {
     final $ = spec.utilities;
 
     final titleSubtitleContainer = $.titleSubtitleContainer.chain
-      ..mainAxisAlignment.start()
-      ..crossAxisAlignment.start()
-      ..mainAxisSize.min()
+      ..flex.mainAxisAlignment.start()
+      ..flex.crossAxisAlignment.start()
+      ..flex.mainAxisSize.min()
       ..wrap.expanded()
-      ..gap(4.0);
+      ..flex.gap(4.0);
 
     final title = $.title.style.fontSize(14.0);
 

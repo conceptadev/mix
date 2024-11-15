@@ -70,6 +70,6 @@ class FakeCalloutStyle extends CalloutStyle {
 
     final baseStyle = super.makeStyle(spec);
 
-    return Style.create([baseStyle(), $.flexContainer.color(color)]);
+    return Style.create([baseStyle(), $.container.color(color)]);
   }
 }

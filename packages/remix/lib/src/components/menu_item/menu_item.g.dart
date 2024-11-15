@@ -34,7 +34,7 @@ mixin _$MenuItemSpec on Spec<MenuItemSpec> {
   @override
   MenuItemSpec copyWith({
     FlexBoxSpec? container,
-    FlexSpec? titleSubtitleContainer,
+    FlexBoxSpec? titleSubtitleContainer,
     IconSpec? icon,
     TextSpec? title,
     TextSpec? subtitle,
@@ -64,8 +64,7 @@ mixin _$MenuItemSpec on Spec<MenuItemSpec> {
   /// The interpolation is performed on each property of the [MenuItemSpec] using the appropriate
   /// interpolation method:
   ///
-  /// - [FlexBoxSpec.lerp] for [container].
-  /// - [FlexSpec.lerp] for [titleSubtitleContainer].
+  /// - [FlexBoxSpec.lerp] for [container] and [titleSubtitleContainer].
   /// - [IconSpec.lerp] for [icon].
   /// - [TextSpec.lerp] for [title] and [subtitle].
 
@@ -137,7 +136,7 @@ mixin _$MenuItemSpec on Spec<MenuItemSpec> {
 class MenuItemSpecAttribute extends SpecAttribute<MenuItemSpec>
     with Diagnosticable {
   final FlexBoxSpecAttribute? container;
-  final FlexSpecAttribute? titleSubtitleContainer;
+  final FlexBoxSpecAttribute? titleSubtitleContainer;
   final IconSpecAttribute? icon;
   final TextSpecAttribute? title;
   final TextSpecAttribute? subtitle;
@@ -243,7 +242,7 @@ class MenuItemSpecUtility<T extends Attribute>
 
   /// Utility for defining [MenuItemSpecAttribute.titleSubtitleContainer]
   late final titleSubtitleContainer =
-      FlexSpecUtility((v) => only(titleSubtitleContainer: v));
+      FlexBoxSpecUtility((v) => only(titleSubtitleContainer: v));
 
   /// Utility for defining [MenuItemSpecAttribute.icon]
   late final icon = IconSpecUtility((v) => only(icon: v));
@@ -272,7 +271,7 @@ class MenuItemSpecUtility<T extends Attribute>
   @override
   T only({
     FlexBoxSpecAttribute? container,
-    FlexSpecAttribute? titleSubtitleContainer,
+    FlexBoxSpecAttribute? titleSubtitleContainer,
     IconSpecAttribute? icon,
     TextSpecAttribute? title,
     TextSpecAttribute? subtitle,

@@ -25,11 +25,7 @@ class Chip extends StatefulWidget {
   /// The icon displayed in the right side of the component.
   final IconData? iconRight;
 
-  /// {@template remix.component.onChanged}
-  /// Called when the component is tapped.
-  /// If null or if [disabled] is true, the component will be disabled and won't
-  /// respond to touch.
-  /// {@endtemplate}
+  /// {@macro remix.component.onChanged}
   final void Function(bool)? onChanged;
 
   /// {@macro remix.component.disabled}

@@ -53,8 +53,8 @@ class TextFieldSpec extends Spec<TextFieldSpec>
   final Brightness keyboardAppearance;
   final Color? autocorrectionTextRectColor;
 
-  final FlexBoxSpec flexContainer;
-  final FlexSpec mainFlex;
+  final FlexBoxSpec textFieldContainer;
+  final FlexBoxSpec container;
   final TextStyle? hintTextStyle;
   final TextSpec helperText;
   final IconSpec icon;
@@ -89,8 +89,8 @@ class TextFieldSpec extends Spec<TextFieldSpec>
     Brightness? keyboardAppearance,
     this.autocorrectionTextRectColor,
     bool? cursorOpacityAnimates,
-    FlexBoxSpec? flexContainer,
-    FlexSpec? mainFlex,
+    FlexBoxSpec? textFieldContainer,
+    FlexBoxSpec? container,
     this.hintTextStyle,
     TextSpec? helperText,
     IconSpec? icon,
@@ -114,9 +114,9 @@ class TextFieldSpec extends Spec<TextFieldSpec>
         scrollPadding = scrollPadding ?? const EdgeInsets.all(20.0),
         clipBehavior = clipBehavior ?? Clip.hardEdge,
         keyboardAppearance = keyboardAppearance ?? Brightness.light,
-        flexContainer = flexContainer ?? const FlexBoxSpec(),
+        textFieldContainer = textFieldContainer ?? const FlexBoxSpec(),
         helperText = helperText ?? const TextSpec(),
-        mainFlex = mainFlex ?? const FlexSpec(),
+        container = container ?? const FlexBoxSpec(),
         icon = icon ?? const IconSpec(),
         floatingLabel = floatingLabel ?? false,
         floatingLabelHeight = floatingLabelHeight ?? 14;

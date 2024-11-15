@@ -79,7 +79,7 @@ class TextFieldStyle extends SpecStyle<TextFieldSpecUtility> {
 
     final $ = spec.utilities;
 
-    final flexContainerStyle = $.flexContainer.chain
+    final textFieldContainerStyle = $.textFieldContainer.chain
       ..color.white()
       ..padding.horizontal(12)
       ..padding.vertical(8)
@@ -95,7 +95,7 @@ class TextFieldStyle extends SpecStyle<TextFieldSpecUtility> {
       ..flex.crossAxisAlignment.center()
       ..flex.gap(8);
 
-    final layoutStyle = $.mainFlex.chain
+    final containerStyle = $.container.flex.chain
       ..direction.vertical()
       ..mainAxisSize.min()
       ..mainAxisAlignment.start()
@@ -120,14 +120,14 @@ class TextFieldStyle extends SpecStyle<TextFieldSpecUtility> {
       ..style.fontSize(12)
       ..wrap.padding.left(12);
 
-    final focus = spec.on.focus($.flexContainer.border.all.color.black());
+    final focus = spec.on.focus($.textFieldContainer.border.all.color.black());
 
     return Style.create([
       platformSettings(spec).call(),
-      flexContainerStyle,
+      textFieldContainerStyle,
       $.floatingLabel.off(),
       $.selectionColor.black12(),
-      layoutStyle,
+      containerStyle,
       textStyle,
       helperStyle,
       ...hintStyle,
@@ -145,7 +145,7 @@ class TextFieldDarkStyle extends TextFieldStyle {
     final $ = spec.utilities;
     final cursor = $.cursorColor.grey.shade100();
 
-    final flexContainerStyle = $.flexContainer.chain
+    final textFieldContainerStyle = $.textFieldContainer.chain
       ..color.black()
       ..border.all.color.grey.shade800()
       ..shadow.spreadRadius(0)
@@ -163,12 +163,12 @@ class TextFieldDarkStyle extends TextFieldStyle {
     final helperStyle = $.helperText.style.color.grey.shade400();
     final icon = $.icon.color.grey.shade300();
 
-    final focus = spec.on.focus($.flexContainer.border.all.color.white());
+    final focus = spec.on.focus($.textFieldContainer.border.all.color.white());
 
     return Style.create([
       super.makeStyle(spec).call(),
       cursor,
-      flexContainerStyle,
+      textFieldContainerStyle,
       focus,
       textStyle,
       helperStyle,

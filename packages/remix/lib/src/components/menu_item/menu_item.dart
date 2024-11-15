@@ -16,7 +16,7 @@ part 'menu_item_widget.dart';
 class MenuItemSpec extends Spec<MenuItemSpec>
     with _$MenuItemSpec, Diagnosticable {
   final FlexBoxSpec container;
-  final FlexSpec titleSubtitleContainer;
+  final FlexBoxSpec titleSubtitleContainer;
   final IconSpec icon;
   final TextSpec title;
   final TextSpec subtitle;
@@ -28,14 +28,14 @@ class MenuItemSpec extends Spec<MenuItemSpec>
 
   const MenuItemSpec({
     FlexBoxSpec? container,
-    FlexSpec? titleSubtitleContainer,
+    FlexBoxSpec? titleSubtitleContainer,
     IconSpec? icon,
     TextSpec? title,
     TextSpec? subtitle,
     super.modifiers,
     super.animated,
   })  : container = container ?? const FlexBoxSpec(),
-        titleSubtitleContainer = titleSubtitleContainer ?? const FlexSpec(),
+        titleSubtitleContainer = titleSubtitleContainer ?? const FlexBoxSpec(),
         icon = icon ?? const IconSpec(),
         title = title ?? const TextSpec(),
         subtitle = subtitle ?? const TextSpec();

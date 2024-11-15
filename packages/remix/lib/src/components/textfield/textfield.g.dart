@@ -53,8 +53,8 @@ mixin _$TextFieldSpec on Spec<TextFieldSpec> {
     Brightness? keyboardAppearance,
     Color? autocorrectionTextRectColor,
     bool? cursorOpacityAnimates,
-    FlexBoxSpec? flexContainer,
-    FlexSpec? mainFlex,
+    FlexBoxSpec? textFieldContainer,
+    FlexBoxSpec? container,
     TextStyle? hintTextStyle,
     TextSpec? helperText,
     IconSpec? icon,
@@ -88,8 +88,8 @@ mixin _$TextFieldSpec on Spec<TextFieldSpec> {
           autocorrectionTextRectColor ?? _$this.autocorrectionTextRectColor,
       cursorOpacityAnimates:
           cursorOpacityAnimates ?? _$this.cursorOpacityAnimates,
-      flexContainer: flexContainer ?? _$this.flexContainer,
-      mainFlex: mainFlex ?? _$this.mainFlex,
+      textFieldContainer: textFieldContainer ?? _$this.textFieldContainer,
+      container: container ?? _$this.container,
       hintTextStyle: hintTextStyle ?? _$this.hintTextStyle,
       helperText: helperText ?? _$this.helperText,
       icon: icon ?? _$this.icon,
@@ -119,8 +119,7 @@ mixin _$TextFieldSpec on Spec<TextFieldSpec> {
   /// - [Color.lerp] for [cursorColor] and [backgroundCursorColor] and [selectionColor] and [autocorrectionTextRectColor].
   /// - [Offset.lerp] for [cursorOffset].
   /// - [EdgeInsets.lerp] for [scrollPadding].
-  /// - [FlexBoxSpec.lerp] for [flexContainer].
-  /// - [FlexSpec.lerp] for [mainFlex].
+  /// - [FlexBoxSpec.lerp] for [textFieldContainer] and [container].
   /// - [TextSpec.lerp] for [helperText].
   /// - [IconSpec.lerp] for [icon].
 
@@ -170,8 +169,9 @@ mixin _$TextFieldSpec on Spec<TextFieldSpec> {
           t),
       cursorOpacityAnimates:
           t < 0.5 ? _$this.cursorOpacityAnimates : other.cursorOpacityAnimates,
-      flexContainer: _$this.flexContainer.lerp(other.flexContainer, t),
-      mainFlex: _$this.mainFlex.lerp(other.mainFlex, t),
+      textFieldContainer:
+          _$this.textFieldContainer.lerp(other.textFieldContainer, t),
+      container: _$this.container.lerp(other.container, t),
       hintTextStyle: MixHelpers.lerpTextStyle(
           _$this.hintTextStyle, other.hintTextStyle, t),
       helperText: _$this.helperText.lerp(other.helperText, t),
@@ -212,8 +212,8 @@ mixin _$TextFieldSpec on Spec<TextFieldSpec> {
         _$this.keyboardAppearance,
         _$this.autocorrectionTextRectColor,
         _$this.cursorOpacityAnimates,
-        _$this.flexContainer,
-        _$this.mainFlex,
+        _$this.textFieldContainer,
+        _$this.container,
         _$this.hintTextStyle,
         _$this.helperText,
         _$this.icon,
@@ -275,10 +275,11 @@ mixin _$TextFieldSpec on Spec<TextFieldSpec> {
     properties.add(DiagnosticsProperty(
         'cursorOpacityAnimates', _$this.cursorOpacityAnimates,
         defaultValue: null));
-    properties.add(DiagnosticsProperty('flexContainer', _$this.flexContainer,
+    properties.add(DiagnosticsProperty(
+        'textFieldContainer', _$this.textFieldContainer,
         defaultValue: null));
     properties.add(
-        DiagnosticsProperty('mainFlex', _$this.mainFlex, defaultValue: null));
+        DiagnosticsProperty('container', _$this.container, defaultValue: null));
     properties.add(DiagnosticsProperty('hintTextStyle', _$this.hintTextStyle,
         defaultValue: null));
     properties.add(DiagnosticsProperty('helperText', _$this.helperText,
@@ -329,8 +330,8 @@ class TextFieldSpecAttribute extends SpecAttribute<TextFieldSpec>
   final Brightness? keyboardAppearance;
   final ColorDto? autocorrectionTextRectColor;
   final bool? cursorOpacityAnimates;
-  final FlexBoxSpecAttribute? flexContainer;
-  final FlexSpecAttribute? mainFlex;
+  final FlexBoxSpecAttribute? textFieldContainer;
+  final FlexBoxSpecAttribute? container;
   final TextStyleDto? hintTextStyle;
   final TextSpecAttribute? helperText;
   final IconSpecAttribute? icon;
@@ -359,8 +360,8 @@ class TextFieldSpecAttribute extends SpecAttribute<TextFieldSpec>
     this.keyboardAppearance,
     this.autocorrectionTextRectColor,
     this.cursorOpacityAnimates,
-    this.flexContainer,
-    this.mainFlex,
+    this.textFieldContainer,
+    this.container,
     this.hintTextStyle,
     this.helperText,
     this.icon,
@@ -402,8 +403,8 @@ class TextFieldSpecAttribute extends SpecAttribute<TextFieldSpec>
       keyboardAppearance: keyboardAppearance,
       autocorrectionTextRectColor: autocorrectionTextRectColor?.resolve(mix),
       cursorOpacityAnimates: cursorOpacityAnimates,
-      flexContainer: flexContainer?.resolve(mix),
-      mainFlex: mainFlex?.resolve(mix),
+      textFieldContainer: textFieldContainer?.resolve(mix),
+      container: container?.resolve(mix),
       hintTextStyle: hintTextStyle?.resolve(mix),
       helperText: helperText?.resolve(mix),
       icon: icon?.resolve(mix),
@@ -456,9 +457,9 @@ class TextFieldSpecAttribute extends SpecAttribute<TextFieldSpec>
           other.autocorrectionTextRectColor,
       cursorOpacityAnimates:
           other.cursorOpacityAnimates ?? cursorOpacityAnimates,
-      flexContainer:
-          flexContainer?.merge(other.flexContainer) ?? other.flexContainer,
-      mainFlex: mainFlex?.merge(other.mainFlex) ?? other.mainFlex,
+      textFieldContainer: textFieldContainer?.merge(other.textFieldContainer) ??
+          other.textFieldContainer,
+      container: container?.merge(other.container) ?? other.container,
       hintTextStyle:
           hintTextStyle?.merge(other.hintTextStyle) ?? other.hintTextStyle,
       helperText: helperText?.merge(other.helperText) ?? other.helperText,
@@ -498,8 +499,8 @@ class TextFieldSpecAttribute extends SpecAttribute<TextFieldSpec>
         keyboardAppearance,
         autocorrectionTextRectColor,
         cursorOpacityAnimates,
-        flexContainer,
-        mainFlex,
+        textFieldContainer,
+        container,
         hintTextStyle,
         helperText,
         icon,
@@ -559,10 +560,10 @@ class TextFieldSpecAttribute extends SpecAttribute<TextFieldSpec>
     properties.add(DiagnosticsProperty(
         'cursorOpacityAnimates', cursorOpacityAnimates,
         defaultValue: null));
-    properties.add(DiagnosticsProperty('flexContainer', flexContainer,
+    properties.add(DiagnosticsProperty('textFieldContainer', textFieldContainer,
         defaultValue: null));
     properties
-        .add(DiagnosticsProperty('mainFlex', mainFlex, defaultValue: null));
+        .add(DiagnosticsProperty('container', container, defaultValue: null));
     properties.add(DiagnosticsProperty('hintTextStyle', hintTextStyle,
         defaultValue: null));
     properties
@@ -657,11 +658,12 @@ class TextFieldSpecUtility<T extends Attribute>
   late final cursorOpacityAnimates =
       BoolUtility((v) => only(cursorOpacityAnimates: v));
 
-  /// Utility for defining [TextFieldSpecAttribute.flexContainer]
-  late final flexContainer = FlexBoxSpecUtility((v) => only(flexContainer: v));
+  /// Utility for defining [TextFieldSpecAttribute.textFieldContainer]
+  late final textFieldContainer =
+      FlexBoxSpecUtility((v) => only(textFieldContainer: v));
 
-  /// Utility for defining [TextFieldSpecAttribute.mainFlex]
-  late final mainFlex = FlexSpecUtility((v) => only(mainFlex: v));
+  /// Utility for defining [TextFieldSpecAttribute.container]
+  late final container = FlexBoxSpecUtility((v) => only(container: v));
 
   /// Utility for defining [TextFieldSpecAttribute.hintTextStyle]
   late final hintTextStyle = TextStyleUtility((v) => only(hintTextStyle: v));
@@ -720,8 +722,8 @@ class TextFieldSpecUtility<T extends Attribute>
     Brightness? keyboardAppearance,
     ColorDto? autocorrectionTextRectColor,
     bool? cursorOpacityAnimates,
-    FlexBoxSpecAttribute? flexContainer,
-    FlexSpecAttribute? mainFlex,
+    FlexBoxSpecAttribute? textFieldContainer,
+    FlexBoxSpecAttribute? container,
     TextStyleDto? hintTextStyle,
     TextSpecAttribute? helperText,
     IconSpecAttribute? icon,
@@ -752,8 +754,8 @@ class TextFieldSpecUtility<T extends Attribute>
       keyboardAppearance: keyboardAppearance,
       autocorrectionTextRectColor: autocorrectionTextRectColor,
       cursorOpacityAnimates: cursorOpacityAnimates,
-      flexContainer: flexContainer,
-      mainFlex: mainFlex,
+      textFieldContainer: textFieldContainer,
+      container: container,
       hintTextStyle: hintTextStyle,
       helperText: helperText,
       icon: icon,

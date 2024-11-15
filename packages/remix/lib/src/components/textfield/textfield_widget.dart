@@ -519,10 +519,10 @@ class _TextFieldState extends State<TextField>
             (_effectiveFocusNode.hasFocus ||
                 _effectiveController.value.text.isNotEmpty);
 
-        return spec.mainFlex(
+        return spec.container(
           direction: Axis.vertical,
           children: [
-            spec.flexContainer(
+            spec.textFieldContainer(
               direction: Axis.horizontal,
               children: [
                 if (widget.prefixBuilder != null)
