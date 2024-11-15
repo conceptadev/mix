@@ -2,7 +2,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 
 import 'attribute.dart';
-import 'factory/mix_data.dart';
 import 'spec.dart';
 import 'utility.dart';
 
@@ -34,9 +33,6 @@ abstract class WidgetModifierSpecAttribute<
         Value extends WidgetModifierSpec<Value>> extends SpecAttribute<Value>
     with Diagnosticable {
   const WidgetModifierSpecAttribute();
-
-  @override
-  Value resolve(MixData mix);
 }
 
 abstract class WidgetModifierUtility<

@@ -3,14 +3,12 @@ import 'package:flutter/widgets.dart';
 import '../internal/compare_mixin.dart';
 import 'dto.dart';
 
-abstract class Attribute with MergeableMixin, EqualityMixin {
+abstract class Attribute with MergeableMixin<Attribute>, EqualityMixin {
   const Attribute();
 
   // Used as the key to determine how
   // attributes get merged
   Object get mergeKey => runtimeType;
-  @override
-  Attribute merge(covariant Attribute? other);
 }
 
 /// Provides the ability to merge this object with another of the same type.

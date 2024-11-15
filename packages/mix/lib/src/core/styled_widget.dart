@@ -58,9 +58,6 @@ abstract class StyledWidget extends StatelessWidget {
       builder: builder,
     );
   }
-
-  @override
-  Widget build(BuildContext context);
 }
 
 /// A styled widget that builds its child using a [MixData] object.

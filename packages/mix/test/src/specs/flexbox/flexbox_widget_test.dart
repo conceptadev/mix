@@ -102,7 +102,6 @@ void main() {
               ),
             ).animate(
               onEnd: () {
-                print('onEnd');
                 countOnEnd++;
               },
             ),
@@ -142,7 +141,6 @@ void main() {
               ),
             ).animate(
               onEnd: () {
-                print('onEnd');
                 countOnEnd++;
               },
             ),
