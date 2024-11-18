@@ -174,10 +174,10 @@ String _generateTokenUtilityExtension(
     final annotation = getMixableSwatchColorToken(field);
 
     if (annotation != null) {
-      return '${field.name}([int step = ${annotation.defaultValue}]) => ref(${_kVariableStructName(context.name)}.${field.name}[step]);';
+      return 'T \$${field.name}([int step = ${annotation.defaultValue}]) => ref(${_kVariableStructName(context.name)}.${field.name}[step]);';
     }
 
-    return '${field.name}() => ref(${_kVariableStructName(context.name)}.${field.name});';
+    return 'T \$${field.name}() => ref(${_kVariableStructName(context.name)}.${field.name});';
   }
 
   for (final utility in settings.utilities) {
@@ -205,10 +205,10 @@ String _generateBuildContextMethods(ClassBuilderContext<MixableToken> context) {
     final annotation = getMixableSwatchColorToken(field);
 
     if (annotation != null) {
-      return '${field.name}([int step = ${annotation.defaultValue}]) => ${_kVariableStructName(context.name)}.${field.name}[step].resolve(context);';
+      return '${field.type} ${field.name}([int step = ${annotation.defaultValue}]) => ${_kVariableStructName(context.name)}.${field.name}[step].resolve(context);';
     }
 
-    return '${field.name}() => ${_kVariableStructName(context.name)}.${field.name}.resolve(context);';
+    return '${field.type} ${field.name}() => ${_kVariableStructName(context.name)}.${field.name}.resolve(context);';
   }
 
   return '''
