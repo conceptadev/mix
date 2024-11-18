@@ -96,6 +96,7 @@ class ParameterInfo extends FieldInfo {
   final bool isPositional;
   final bool isRequiredNamed;
   final bool isRequiredPositional;
+
   final ParameterElement element;
 
   final ParameterElement element;
