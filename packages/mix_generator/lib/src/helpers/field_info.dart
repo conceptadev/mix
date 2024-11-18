@@ -321,12 +321,6 @@ class ClassBuilderContext<T> {
         constructor.parameters.map(ParameterInfo.ofElement).toList();
   }
 
-  // List<FieldInfo> get fields {
-  //   // if (_fieldsCache != null) return _fieldsCache!;
-
-  //   return classElement.fields.map((e) => FieldInfo.ofElement(e)).toList();
-  // }
-
   bool get hasDiagnosticable =>
       classElement.allSupertypes.any((e) => e.element.name == 'Diagnosticable');
 

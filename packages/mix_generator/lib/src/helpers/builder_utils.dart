@@ -131,19 +131,6 @@ extension EnumElementX on EnumElement {
   }
 }
 
-class TokenAnnotationContext extends AnnotationContext {
-  final Object? type;
-
-  TokenAnnotationContext({
-    required super.element,
-    required this.type,
-  });
-
-  String get name => element.name;
-
-  String get generatedName => element.generatedName;
-}
-
 extension ClassElementX on ClassElement {
   bool get isConst => unnamedConstructor?.isConst ?? false;
 
