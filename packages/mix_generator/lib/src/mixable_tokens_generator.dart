@@ -91,7 +91,11 @@ String _generateTokenStruct(ClassBuilderContext<MixableToken> context) {
   buffer.writeln();
 
   for (var i = 0; i < context.constructorParameters.length; i++) {
-    final field = context.classElement.fields[i];
+    final field = context.constructorParameters[i].fieldElement;
+
+    if (field == null) {
+      throw Exception('Field element is null');
+    }
 
     final annotation = getMixableSwatchColorToken(field);
     if (annotation != null) {
@@ -136,8 +140,11 @@ String _generateTokenUtilityExtension(
   String result = '';
 
   String generateMethod(int index) {
-    final field = context.classElement.fields[index];
-    print(field.type);
+    final field = context.constructorParameters[index].fieldElement;
+    if (field == null) {
+      throw Exception('Field element is null');
+    }
+
     final annotation = getMixableSwatchColorToken(field);
 
     if (annotation != null) {
@@ -151,7 +158,7 @@ String _generateTokenUtilityExtension(
     result += '''
 extension ${_kUtilityExtensionName(context.name, utility)}<T extends Attribute> on $utility<T> {
     ${[
-      for (var i = 0; i < context.classElement.fields.length; i++)
+      for (var i = 0; i < context.constructorParameters.length; i++)
         generateMethod(i),
     ].join('\n')}
 }
@@ -163,8 +170,14 @@ extension ${_kUtilityExtensionName(context.name, utility)}<T extends Attribute> 
 
 String _generateBuildContextMethods(ClassBuilderContext<MixableToken> context) {
   String generateMethod(int index) {
-    final field = context.classElement.fields[index];
+    final field = context.constructorParameters[index].fieldElement;
+
+    if (field == null) {
+      throw Exception('Field element is null');
+    }
+
     final annotation = getMixableSwatchColorToken(field);
+
     if (annotation != null) {
       return '${field.name}([int step = ${annotation.defaultValue}]) => ${_kVariableStructName(context.name)}.${field.name}[step].resolve(context);';
     }
@@ -178,7 +191,7 @@ class ${_kBuildContextMethodsClassName(context.name)} {
 
   final BuildContext context;
   ${[
-    for (var i = 0; i < context.classElement.fields.length; i++)
+    for (var i = 0; i < context.constructorParameters.length; i++)
       generateMethod(i),
   ].join('\n')}
 }
@@ -203,7 +216,6 @@ const _tokenChecker = TypeChecker.fromRuntime(MixableSwatchColorToken);
 
 MixableSwatchColorToken? getMixableSwatchColorToken(FieldElement element) {
   final annotation = _tokenChecker.firstAnnotationOfExact(element);
-  print('annotation: $annotation, ${element.name}');
   if (annotation == null) return null;
 
   final reader = ConstantReader(annotation);

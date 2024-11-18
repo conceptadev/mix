@@ -11,10 +11,10 @@ class _$MyThemeColorTokenStruct {
 
   final ColorToken primary = const ColorToken('primary');
   final ColorToken onPrimary = const ColorToken('onPrimary');
+  final ColorToken surface = const ColorToken('surface');
   final ColorToken onSurface = const ColorToken('onSurface');
   final ColorSwatchToken onSurfaceVariant =
       ColorSwatchToken.scale('onSurfaceVariant', 12);
-  final ColorToken surface = const ColorToken('surface');
 }
 
 final _structMyThemeColorToken = _$MyThemeColorTokenStruct();
@@ -33,11 +33,10 @@ extension $MyThemeColorTokenColorUtilityX<T extends Attribute>
     on ColorUtility<T> {
   primary() => ref(_structMyThemeColorToken.primary);
   onPrimary() => ref(_structMyThemeColorToken.onPrimary);
+  surface() => ref(_structMyThemeColorToken.surface);
   onSurface() => ref(_structMyThemeColorToken.onSurface);
   onSurfaceVariant([int step = 1]) =>
       ref(_structMyThemeColorToken.onSurfaceVariant[step]);
-  surface() => ref(_structMyThemeColorToken.surface);
-  toMap() => ref(_structMyThemeColorToken.toMap);
 }
 
 class BuildContextMyThemeColorTokenMethods {
@@ -46,11 +45,10 @@ class BuildContextMyThemeColorTokenMethods {
   final BuildContext context;
   primary() => _structMyThemeColorToken.primary.resolve(context);
   onPrimary() => _structMyThemeColorToken.onPrimary.resolve(context);
+  surface() => _structMyThemeColorToken.surface.resolve(context);
   onSurface() => _structMyThemeColorToken.onSurface.resolve(context);
   onSurfaceVariant([int step = 1]) =>
       _structMyThemeColorToken.onSurfaceVariant[step].resolve(context);
-  surface() => _structMyThemeColorToken.surface.resolve(context);
-  toMap() => _structMyThemeColorToken.toMap.resolve(context);
 }
 
 extension $BuildContextMyThemeColorTokenX on BuildContext {
@@ -101,7 +99,6 @@ extension $MyThemeRadiusTokenRadiusUtilityX<T extends Attribute>
     on RadiusUtility<T> {
   large() => ref(_structMyThemeRadiusToken.large);
   medium() => ref(_structMyThemeRadiusToken.medium);
-  toMap() => ref(_structMyThemeRadiusToken.toMap);
 }
 
 class BuildContextMyThemeRadiusTokenMethods {
@@ -110,7 +107,6 @@ class BuildContextMyThemeRadiusTokenMethods {
   final BuildContext context;
   large() => _structMyThemeRadiusToken.large.resolve(context);
   medium() => _structMyThemeRadiusToken.medium.resolve(context);
-  toMap() => _structMyThemeRadiusToken.toMap.resolve(context);
 }
 
 extension $BuildContextMyThemeRadiusTokenX on BuildContext {
@@ -138,13 +134,11 @@ extension $MyThemeSpaceTokenSpacingSideUtilityX<T extends Attribute>
     on SpacingSideUtility<T> {
   medium() => ref(_structMyThemeSpaceToken.medium);
   large() => ref(_structMyThemeSpaceToken.large);
-  toMap() => ref(_structMyThemeSpaceToken.toMap);
 }
 
 extension $MyThemeSpaceTokenGapUtilityX<T extends Attribute> on GapUtility<T> {
   medium() => ref(_structMyThemeSpaceToken.medium);
   large() => ref(_structMyThemeSpaceToken.large);
-  toMap() => ref(_structMyThemeSpaceToken.toMap);
 }
 
 class BuildContextMyThemeSpaceTokenMethods {
@@ -153,7 +147,6 @@ class BuildContextMyThemeSpaceTokenMethods {
   final BuildContext context;
   medium() => _structMyThemeSpaceToken.medium.resolve(context);
   large() => _structMyThemeSpaceToken.large.resolve(context);
-  toMap() => _structMyThemeSpaceToken.toMap.resolve(context);
 }
 
 extension $BuildContextMyThemeSpaceTokenX on BuildContext {
