@@ -31,7 +31,7 @@ class MixableTokensGenerator extends GeneratorForAnnotation<MixableToken> {
     BuildStep buildStep,
   ) async {
     final context = _loadContext(element);
-
+    verifyIfIsValidClass(context);
     final output = StringBuffer();
 
     output.writeln(_generateTokenStruct(context));
@@ -46,6 +46,32 @@ class MixableTokensGenerator extends GeneratorForAnnotation<MixableToken> {
     }
 
     return dartFormat(output.toString());
+  }
+}
+
+void verifyIfIsValidClass(ClassBuilderContext<MixableToken> context) {
+  if (context.classElement.fields.isEmpty) {
+    throw InvalidGenerationSourceError(
+      'The class must have at least one field.',
+      element: context.classElement,
+    );
+  }
+  if (context.classElement.constructors.isEmpty) {
+    throw InvalidGenerationSourceError(
+      'The class must have at least one constructor.',
+      element: context.classElement,
+    );
+  }
+
+  for (final param in context.constructorParameters) {
+    final typeFromAnnotation = context.annotation.type.toString();
+
+    if (!param.type.toString().contains(typeFromAnnotation)) {
+      throw InvalidGenerationSourceError(
+        'The constructor parameters must have the same type as the class annotation.',
+        element: param.fieldElement,
+      );
+    }
   }
 }
 
