@@ -3,13 +3,11 @@ import 'package:flutter/widgets.dart';
 import 'package:mix/mix.dart';
 import 'package:mix_annotations/mix_annotations.dart';
 
+import '../../core/theme/remix_theme.dart';
 import '../../helpers/component_builder.dart';
-import '../../theme/remix_theme.dart';
-import '../../theme/remix_tokens.dart';
 
 part 'accordion.g.dart';
 part 'accordion_style.dart';
-part 'accordion_theme.dart';
 part 'accordion_widget.dart';
 part 'header/accordion_header.dart';
 part 'header/accordion_header_spec_widget.dart';

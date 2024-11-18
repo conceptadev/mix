@@ -5,13 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:mix/mix.dart';
 import 'package:mix_annotations/mix_annotations.dart';
 
-import '../../theme/remix_theme.dart';
-import '../../theme/remix_tokens.dart';
+import '../../core/theme/remix_theme.dart';
 
 part 'spinner.g.dart';
 part 'spinner_painter.dart';
 part 'spinner_style.dart';
-part 'spinner_theme.dart';
 part 'spinner_widget.dart';
 
 enum SpinnerTypeStyle {

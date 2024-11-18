@@ -4,13 +4,11 @@ import 'package:flutter/widgets.dart';
 import 'package:mix/mix.dart';
 import 'package:mix_annotations/mix_annotations.dart';
 
-import '../../theme/remix_theme.dart';
-import '../../theme/remix_tokens.dart';
+import '../../core/theme/remix_theme.dart';
 import '../toast/toast.dart';
 
 part 'scaffold.g.dart';
 part 'scaffold_style.dart';
-part 'scaffold_theme.dart';
 part 'scaffold_widget.dart';
 
 @MixableSpec()

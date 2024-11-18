@@ -2,6 +2,7 @@ import 'package:demo/helpers/knob_builder.dart';
 import 'package:flutter/widgets.dart';
 import 'package:mix/mix.dart';
 import 'package:remix/remix.dart';
+import 'package:remix/themes/fortaleza.dart';
 import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
@@ -10,6 +11,7 @@ import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
   type: Card,
 )
 Widget buildCard(BuildContext context) {
+  final color = context.$color.neutral(10);
   return Scaffold(
     body: Center(
       child: Card(
@@ -32,12 +34,12 @@ Widget buildCard(BuildContext context) {
               children: [
                 StyledText(
                   'Leo Farias',
-                  style: Style($text.style.ref($rx.text.text3)),
+                  style: Style($text.style.$text3()),
                 ),
                 StyledText(
                   'Flutter Engineer',
                   style: Style(
-                    $text.style.ref($rx.text.text2),
+                    $text.style.$text2(),
                     $text.style.color.$neutral(10),
                   ),
                 ),
