@@ -1,6 +1,7 @@
 import 'package:demo/helpers/theme_addon.dart';
 import 'package:flutter/material.dart' hide Scaffold, ThemeMode;
 import 'package:remix/remix.dart';
+import 'package:remix/themes/fortaleza.dart';
 import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
@@ -44,18 +45,18 @@ class HotReload extends StatelessWidget {
         ),
         RemixComponentThemeAddon(
           themes: [
-            WidgetbookTheme(
+            const WidgetbookTheme(
               name: 'Fortaleza',
               data: (
-                dark: RemixComponentTheme.fortalezaDark(),
-                light: RemixComponentTheme.fortalezaLight()
+                dark: FortalezaComponentTheme.dark,
+                light: FortalezaComponentTheme.light,
               ),
             ),
             WidgetbookTheme(
               name: 'Base',
               data: (
-                dark: RemixComponentTheme.baseDark(),
-                light: RemixComponentTheme.baseLight(),
+                dark: RemixComponentTheme.dark(),
+                light: RemixComponentTheme.light(),
               ),
             ),
           ],
