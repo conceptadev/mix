@@ -92,6 +92,7 @@ class ParameterInfo extends FieldInfo {
   final bool isPositional;
   final bool isRequiredNamed;
   final bool isRequiredPositional;
+  final ParameterElement element;
 
   const ParameterInfo({
     required super.name,
@@ -105,6 +106,7 @@ class ParameterInfo extends FieldInfo {
     required super.hasDeprecated,
     required this.isRequiredNamed,
     required this.isRequiredPositional,
+    required this.element,
   });
 
   factory ParameterInfo.ofElement(ParameterElement element) {
@@ -126,6 +128,7 @@ class ParameterInfo extends FieldInfo {
           (fieldInfo?.hasDeprecated ?? false) || element.hasDeprecated,
       isRequiredNamed: element.isRequiredNamed,
       isRequiredPositional: element.isRequiredPositional,
+      element: element,
     );
   }
   String get asInternalRef => '$internalRefPrefix.$name';
@@ -301,12 +304,18 @@ class ClassBuilderContext<T> {
     required this.annotation,
   });
 
-  List<ParameterInfo> get fields {
+  List<ParameterInfo> get constructorParameters {
     if (_fieldsCache != null) return _fieldsCache!;
 
     return _fieldsCache =
         constructor.parameters.map(ParameterInfo.ofElement).toList();
   }
+
+  // List<FieldInfo> get fields {
+  //   // if (_fieldsCache != null) return _fieldsCache!;
+
+  //   return classElement.fields.map((e) => FieldInfo.ofElement(e)).toList();
+  // }
 
   bool get hasDiagnosticable =>
       classElement.allSupertypes.any((e) => e.element.name == 'Diagnosticable');

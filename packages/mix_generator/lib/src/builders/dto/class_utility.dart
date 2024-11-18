@@ -20,24 +20,25 @@ String utilityClass(ClassBuilderContext context) {
 
   final instance = ClassInfo(
     name: utilityName,
-    fields: context.fields,
+    fields: context.constructorParameters,
     extendsType: extendsType,
     genericTypes: {'T extends Attribute'},
   );
 
   final className = instance.name;
 
-  final fields = generateUtilityFields(attributeName, context.fields);
+  final fields =
+      generateUtilityFields(attributeName, context.constructorParameters);
 
   final onlyMethod = utilityMethodOnlyBuilder(
     utilityType: attributeName,
-    fields: context.fields,
+    fields: context.constructorParameters,
   );
 
   final valueClassFields = generateUtilityFieldsFromClass(context.classElement);
 
   final callMethodDefinition =
-      isDto ? utilityMethodCallBuilder(context.fields) : '';
+      isDto ? utilityMethodCallBuilder(context.constructorParameters) : '';
 
   final chainGetterDefinition = isDto
       ? ''

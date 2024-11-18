@@ -251,7 +251,21 @@ class MixDeprecatedRenamed extends MixDeprecated {
 
 class MixableToken {
   final Object type;
-  const MixableToken(this.type);
+  final String? namespace;
+  final bool utilityExtension;
+  final bool contextExtension;
+
+  const MixableToken(
+    this.type, {
+    this.namespace,
+    this.utilityExtension = true,
+    this.contextExtension = true,
+  });
+
+  @override
+  String toString() {
+    return 'MixableToken(type: $type, namespace: $namespace, utilityExtension: $utilityExtension, contextExtension: $contextExtension)';
+  }
 }
 
 class MixableSwatchColorToken {

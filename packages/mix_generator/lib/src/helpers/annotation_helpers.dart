@@ -123,5 +123,12 @@ MixableToken readMixableToken(ClassElement element) {
   final reader = ConstantReader(annotation);
   final type = reader.read('type').typeValue;
 
-  return MixableToken(type);
+  return MixableToken(
+    type,
+    namespace: reader.read('namespace').isNull
+        ? null
+        : reader.read('namespace').stringValue,
+    utilityExtension: reader.read('utilityExtension').boolValue,
+    contextExtension: reader.read('contextExtension').boolValue,
+  );
 }
