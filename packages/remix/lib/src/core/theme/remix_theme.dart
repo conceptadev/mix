@@ -15,6 +15,16 @@ class RemixThemeData {
         tokens: const MixThemeData.empty(),
       );
 
+  RemixThemeData copyWith({
+    RemixComponentTheme? components,
+    MixThemeData? tokens,
+  }) {
+    return RemixThemeData(
+      components: components ?? this.components,
+      tokens: tokens ?? this.tokens,
+    );
+  }
+
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
@@ -43,8 +53,8 @@ class RemixTheme extends StatelessWidget {
   });
 
   static RemixThemeData of(BuildContext context) {
-    final _RemixThemeInherited? provider =
-        context.dependOnInheritedWidgetOfExactType<_RemixThemeInherited>();
+    final RemixThemeInherited? provider =
+        context.dependOnInheritedWidgetOfExactType<RemixThemeInherited>();
 
     if (provider == null) {
       throw FlutterError(
@@ -61,7 +71,7 @@ class RemixTheme extends StatelessWidget {
 
   static RemixThemeData? maybeOf(BuildContext context) {
     return context
-        .dependOnInheritedWidgetOfExactType<_RemixThemeInherited>()
+        .dependOnInheritedWidgetOfExactType<RemixThemeInherited>()
         ?.data;
   }
 
@@ -97,18 +107,23 @@ class RemixTheme extends StatelessWidget {
 
     return MixTheme(
       data: tokens,
-      child: _RemixThemeInherited(data: theme, child: child),
+      child: RemixThemeInherited(data: theme, child: child),
     );
   }
 }
 
-class _RemixThemeInherited extends InheritedWidget {
-  const _RemixThemeInherited({required this.data, required super.child});
+@visibleForTesting
+class RemixThemeInherited extends InheritedWidget {
+  const RemixThemeInherited({
+    super.key,
+    required this.data,
+    required super.child,
+  });
 
   final RemixThemeData data;
 
   @override
-  bool updateShouldNotify(_RemixThemeInherited oldWidget) {
+  bool updateShouldNotify(RemixThemeInherited oldWidget) {
     return data != oldWidget.data;
   }
 }

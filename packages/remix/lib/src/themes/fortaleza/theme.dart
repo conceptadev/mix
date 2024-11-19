@@ -1,20 +1,24 @@
 import '../../core/theme/remix_theme.dart';
-import 'components/components.dart';
+import 'components.dart';
 import 'tokens.dart';
 
 class FortalezaThemeData {
   final FortalezaComponentTheme components;
   final FortalezaTokens tokens;
 
-  static final FortalezaThemeData light = FortalezaThemeData(
-    components: FortalezaComponentTheme.light,
-    tokens: FortalezaTokens.light(),
-  );
+  factory FortalezaThemeData.light() {
+    return FortalezaThemeData(
+      components: FortalezaComponentTheme.light(),
+      tokens: FortalezaTokens.light(),
+    );
+  }
 
-  static final FortalezaThemeData dark = FortalezaThemeData(
-    components: FortalezaComponentTheme.dark,
-    tokens: FortalezaTokens.dark(),
-  );
+  factory FortalezaThemeData.dark() {
+    return FortalezaThemeData(
+      components: FortalezaComponentTheme.dark(),
+      tokens: FortalezaTokens.dark(),
+    );
+  }
 
   const FortalezaThemeData({required this.components, required this.tokens});
 

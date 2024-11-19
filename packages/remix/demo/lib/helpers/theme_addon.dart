@@ -1,11 +1,7 @@
 import 'package:remix/remix.dart';
-import 'package:remix/themes/fortaleza.dart';
 import 'package:widgetbook/widgetbook.dart';
 
-typedef ThemeMultiBrightness = ({
-  RemixComponentTheme light,
-  RemixComponentTheme dark
-});
+typedef ThemeMultiBrightness = ({RemixThemeData light, RemixThemeData dark});
 
 class RemixComponentThemeAddon extends ThemeAddon<ThemeMultiBrightness> {
   @override
@@ -18,14 +14,8 @@ class RemixComponentThemeAddon extends ThemeAddon<ThemeMultiBrightness> {
           themeBuilder: (context, themes, child) {
             return RemixApp(
               debugShowCheckedModeBanner: false,
-              darkTheme: RemixThemeData(
-                tokens: FortalezaTokens.dark().toThemeData(),
-                components: themes.dark,
-              ),
-              theme: RemixThemeData(
-                components: themes.light,
-                tokens: FortalezaTokens.light().toThemeData(),
-              ),
+              darkTheme: themes.dark,
+              theme: themes.light,
               home: child,
             );
           },

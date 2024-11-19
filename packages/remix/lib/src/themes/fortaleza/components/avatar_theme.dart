@@ -1,7 +1,7 @@
 import 'package:mix/mix.dart';
 
-import '../../../../themes/fortaleza.dart';
 import '../../../components/avatar/avatar.dart';
+import '../tokens.dart';
 
 class FortalezaAvatarStyle extends AvatarStyle {
   static const soft = Variant('avatar.soft');
