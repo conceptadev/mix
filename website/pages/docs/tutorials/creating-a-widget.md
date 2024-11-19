@@ -94,6 +94,7 @@ A Spec, which is short for Specification, is the visual properties and attribute
 This will look something like this:
 
 ```dart
+import 'package:flutter/widgets.dart';
 import 'package:mix/mix.dart';
 import 'package:mix_annotations/mix_annotations.dart';
 
