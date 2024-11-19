@@ -16,7 +16,7 @@ class ColorTokens {
     required this.tertiary,
   });
 
-  Map<ColorToken, Color> get data => _$ColorTokensToData(this);
+  Map<ColorToken, Color> get data => _$ColorTokensToMap(this);
 }
 
 @MixableToken(TextStyle)
@@ -33,7 +33,7 @@ class TextTokens {
     required this.body,
   });
 
-  Map<TextStyleToken, TextStyle> get data => _$TextTokensToData(this);
+  Map<TextStyleToken, TextStyle> get data => _$TextTokensToMap(this);
 }
 
 @MixableToken(Radius)
@@ -48,7 +48,7 @@ class RadiusTokens {
     required this.large,
   });
 
-  Map<RadiusToken, Radius> get data => _$RadiusTokensToData(this);
+  Map<RadiusToken, Radius> get data => _$RadiusTokensToMap(this);
 }
 
 @MixableToken(double)
@@ -63,5 +63,5 @@ class SpaceTokens {
     required this.p24,
   });
 
-  Map<SpaceToken, double> get data => _$SpaceTokensToData(this);
+  Map<SpaceToken, double> get data => _$SpaceTokensToMap(this);
 }

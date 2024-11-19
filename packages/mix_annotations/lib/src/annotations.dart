@@ -261,11 +261,6 @@ class MixableToken {
     this.utilityExtension = true,
     this.contextExtension = true,
   });
-
-  @override
-  String toString() {
-    return 'MixableToken(type: $type, namespace: $namespace, utilityExtension: $utilityExtension, contextExtension: $contextExtension)';
-  }
 }
 
 class MixableSwatchColorToken {
