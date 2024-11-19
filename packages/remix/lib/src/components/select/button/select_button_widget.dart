@@ -1,7 +1,7 @@
 part of '../select.dart';
 
-class XSelectButtonSpecWidget extends StatelessWidget {
-  const XSelectButtonSpecWidget({
+class SelectButtonSpecWidget extends StatelessWidget {
+  const SelectButtonSpecWidget({
     super.key,
     required this.spec,
     required this.text,
@@ -22,13 +22,10 @@ class XSelectButtonSpecWidget extends StatelessWidget {
         final container = button.container;
         final label = button.label;
         final icon = button.icon;
-        final flex = button.flex;
 
         return container(
-          child: flex(
-            direction: Axis.horizontal,
-            children: [label(text), icon(trailingIcon)],
-          ),
+          direction: Axis.horizontal,
+          children: [label(text), icon(trailingIcon)],
         );
       },
     );

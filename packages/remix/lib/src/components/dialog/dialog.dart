@@ -83,11 +83,10 @@ Future<T?> showDialog<T>({
 
 @MixableSpec()
 class DialogSpec extends Spec<DialogSpec> with _$DialogSpec, Diagnosticable {
-  final BoxSpec container;
+  final FlexBoxSpec container;
   final TextSpec title;
   final TextSpec description;
-  final FlexSpec mainFlex;
-  final FlexSpec actionsFlex;
+  final FlexSpec actionsContainer;
 
   /// {@macro dialog_spec_of}
   static const of = _$DialogSpec.of;
@@ -95,18 +94,16 @@ class DialogSpec extends Spec<DialogSpec> with _$DialogSpec, Diagnosticable {
   static const from = _$DialogSpec.from;
 
   const DialogSpec({
-    BoxSpec? container,
+    FlexBoxSpec? container,
     TextSpec? title,
     TextSpec? description,
-    FlexSpec? mainFlex,
-    FlexSpec? actionsFlex,
+    FlexSpec? actionsContainer,
     super.modifiers,
     super.animated,
-  })  : container = container ?? const BoxSpec(),
+  })  : container = container ?? const FlexBoxSpec(),
         title = title ?? const TextSpec(),
         description = description ?? const TextSpec(),
-        mainFlex = mainFlex ?? const FlexSpec(),
-        actionsFlex = actionsFlex ?? const FlexSpec();
+        actionsContainer = actionsContainer ?? const FlexSpec();
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {

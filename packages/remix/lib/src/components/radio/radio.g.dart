@@ -33,17 +33,17 @@ mixin _$RadioSpec on Spec<RadioSpec> {
   /// replaced with the new values.
   @override
   RadioSpec copyWith({
-    BoxSpec? container,
+    BoxSpec? indicatorContainer,
     BoxSpec? indicator,
-    FlexSpec? flex,
+    FlexBoxSpec? container,
     TextSpec? text,
     WidgetModifiersData? modifiers,
     AnimatedData? animated,
   }) {
     return RadioSpec(
-      container: container ?? _$this.container,
+      indicatorContainer: indicatorContainer ?? _$this.indicatorContainer,
       indicator: indicator ?? _$this.indicator,
-      flex: flex ?? _$this.flex,
+      container: container ?? _$this.container,
       text: text ?? _$this.text,
       modifiers: modifiers ?? _$this.modifiers,
       animated: animated ?? _$this.animated,
@@ -61,8 +61,8 @@ mixin _$RadioSpec on Spec<RadioSpec> {
   /// The interpolation is performed on each property of the [RadioSpec] using the appropriate
   /// interpolation method:
   ///
-  /// - [BoxSpec.lerp] for [container] and [indicator].
-  /// - [FlexSpec.lerp] for [flex].
+  /// - [BoxSpec.lerp] for [indicatorContainer] and [indicator].
+  /// - [FlexBoxSpec.lerp] for [container].
   /// - [TextSpec.lerp] for [text].
 
   /// For [modifiers] and [animated], the interpolation is performed using a step function.
@@ -76,9 +76,10 @@ mixin _$RadioSpec on Spec<RadioSpec> {
     if (other == null) return _$this;
 
     return RadioSpec(
-      container: _$this.container.lerp(other.container, t),
+      indicatorContainer:
+          _$this.indicatorContainer.lerp(other.indicatorContainer, t),
       indicator: _$this.indicator.lerp(other.indicator, t),
-      flex: _$this.flex.lerp(other.flex, t),
+      container: _$this.container.lerp(other.container, t),
       text: _$this.text.lerp(other.text, t),
       modifiers: other.modifiers,
       animated: t < 0.5 ? _$this.animated : other.animated,
@@ -91,9 +92,9 @@ mixin _$RadioSpec on Spec<RadioSpec> {
   /// compare two [RadioSpec] instances for equality.
   @override
   List<Object?> get props => [
-        _$this.container,
+        _$this.indicatorContainer,
         _$this.indicator,
-        _$this.flex,
+        _$this.container,
         _$this.text,
         _$this.modifiers,
         _$this.animated,
@@ -102,12 +103,13 @@ mixin _$RadioSpec on Spec<RadioSpec> {
   RadioSpec get _$this => this as RadioSpec;
 
   void _debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    properties.add(
-        DiagnosticsProperty('container', _$this.container, defaultValue: null));
+    properties.add(DiagnosticsProperty(
+        'indicatorContainer', _$this.indicatorContainer,
+        defaultValue: null));
     properties.add(
         DiagnosticsProperty('indicator', _$this.indicator, defaultValue: null));
-    properties
-        .add(DiagnosticsProperty('flex', _$this.flex, defaultValue: null));
+    properties.add(
+        DiagnosticsProperty('container', _$this.container, defaultValue: null));
     properties
         .add(DiagnosticsProperty('text', _$this.text, defaultValue: null));
     properties.add(
@@ -126,15 +128,15 @@ mixin _$RadioSpec on Spec<RadioSpec> {
 /// the [RadioSpec] constructor.
 base class RadioSpecAttribute extends SpecAttribute<RadioSpec>
     with Diagnosticable {
-  final BoxSpecAttribute? container;
+  final BoxSpecAttribute? indicatorContainer;
   final BoxSpecAttribute? indicator;
-  final FlexSpecAttribute? flex;
+  final FlexBoxSpecAttribute? container;
   final TextSpecAttribute? text;
 
   const RadioSpecAttribute({
-    this.container,
+    this.indicatorContainer,
     this.indicator,
-    this.flex,
+    this.container,
     this.text,
     super.modifiers,
     super.animated,
@@ -151,9 +153,9 @@ base class RadioSpecAttribute extends SpecAttribute<RadioSpec>
   @override
   RadioSpec resolve(MixData mix) {
     return RadioSpec(
-      container: container?.resolve(mix),
+      indicatorContainer: indicatorContainer?.resolve(mix),
       indicator: indicator?.resolve(mix),
-      flex: flex?.resolve(mix),
+      container: container?.resolve(mix),
       text: text?.resolve(mix),
       modifiers: modifiers?.resolve(mix),
       animated: animated?.resolve(mix) ?? mix.animation,
@@ -173,9 +175,10 @@ base class RadioSpecAttribute extends SpecAttribute<RadioSpec>
     if (other == null) return this;
 
     return RadioSpecAttribute(
-      container: container?.merge(other.container) ?? other.container,
+      indicatorContainer: indicatorContainer?.merge(other.indicatorContainer) ??
+          other.indicatorContainer,
       indicator: indicator?.merge(other.indicator) ?? other.indicator,
-      flex: flex?.merge(other.flex) ?? other.flex,
+      container: container?.merge(other.container) ?? other.container,
       text: text?.merge(other.text) ?? other.text,
       modifiers: modifiers?.merge(other.modifiers) ?? other.modifiers,
       animated: animated?.merge(other.animated) ?? other.animated,
@@ -188,9 +191,9 @@ base class RadioSpecAttribute extends SpecAttribute<RadioSpec>
   /// compare two [RadioSpecAttribute] instances for equality.
   @override
   List<Object?> get props => [
-        container,
+        indicatorContainer,
         indicator,
-        flex,
+        container,
         text,
         modifiers,
         animated,
@@ -199,11 +202,12 @@ base class RadioSpecAttribute extends SpecAttribute<RadioSpec>
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties
-        .add(DiagnosticsProperty('container', container, defaultValue: null));
+    properties.add(DiagnosticsProperty('indicatorContainer', indicatorContainer,
+        defaultValue: null));
     properties
         .add(DiagnosticsProperty('indicator', indicator, defaultValue: null));
-    properties.add(DiagnosticsProperty('flex', flex, defaultValue: null));
+    properties
+        .add(DiagnosticsProperty('container', container, defaultValue: null));
     properties.add(DiagnosticsProperty('text', text, defaultValue: null));
     properties
         .add(DiagnosticsProperty('modifiers', modifiers, defaultValue: null));
@@ -218,14 +222,15 @@ base class RadioSpecAttribute extends SpecAttribute<RadioSpec>
 /// Use the methods of this class to configure specific properties of a [RadioSpec].
 class RadioSpecUtility<T extends Attribute>
     extends SpecUtility<T, RadioSpecAttribute> {
-  /// Utility for defining [RadioSpecAttribute.container]
-  late final container = BoxSpecUtility((v) => only(container: v));
+  /// Utility for defining [RadioSpecAttribute.indicatorContainer]
+  late final indicatorContainer =
+      BoxSpecUtility((v) => only(indicatorContainer: v));
 
   /// Utility for defining [RadioSpecAttribute.indicator]
   late final indicator = BoxSpecUtility((v) => only(indicator: v));
 
-  /// Utility for defining [RadioSpecAttribute.flex]
-  late final flex = FlexSpecUtility((v) => only(flex: v));
+  /// Utility for defining [RadioSpecAttribute.container]
+  late final container = FlexBoxSpecUtility((v) => only(container: v));
 
   /// Utility for defining [RadioSpecAttribute.text]
   late final text = TextSpecUtility((v) => only(text: v));
@@ -247,17 +252,17 @@ class RadioSpecUtility<T extends Attribute>
   /// Returns a new [RadioSpecAttribute] with the specified properties.
   @override
   T only({
-    BoxSpecAttribute? container,
+    BoxSpecAttribute? indicatorContainer,
     BoxSpecAttribute? indicator,
-    FlexSpecAttribute? flex,
+    FlexBoxSpecAttribute? container,
     TextSpecAttribute? text,
     WidgetModifiersDataDto? modifiers,
     AnimatedDataDto? animated,
   }) {
     return builder(RadioSpecAttribute(
-      container: container,
+      indicatorContainer: indicatorContainer,
       indicator: indicator,
-      flex: flex,
+      container: container,
       text: text,
       modifiers: modifiers,
       animated: animated,

@@ -20,8 +20,8 @@ class SegmentedControlSpec extends Spec<SegmentedControlSpec>
     with _$SegmentedControlSpec, Diagnosticable {
   final BoxSpec container;
   final FlexSpec flex;
-  final bool showDivider;
   final BoxSpec divider;
+  final bool showDivider;
 
   @MixableProperty(dto: MixableFieldDto(type: 'SegmentButtonSpecAttribute'))
   final SegmentButtonSpec item;

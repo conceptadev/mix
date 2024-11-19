@@ -1,19 +1,5 @@
 part of 'icon_button.dart';
 
-/// A customizable button component with various styling options.
-///
-/// The [Button] allows you to create buttons with different variants, sizes,
-/// and icons. You can also disable the button or show a loading state.
-///
-/// Example usage:
-///
-/// ```dart
-/// RxButton(
-///   label: 'Click me',
-///   onPressed: () {},
-///   iconLeft: Icons.add,
-/// )
-/// ```
 class IconButton extends StatelessWidget {
   const IconButton(
     this.icon, {
@@ -26,16 +12,37 @@ class IconButton extends StatelessWidget {
     this.style,
   });
 
+  /// {@macro remix.component.disabled}
   final bool disabled;
+
+  /// {@macro remix.component.loading}
   final bool loading;
+
+  /// The icon displayed in the IconButton.
   final IconData? icon;
+
+  /// {@macro remix.component.onPressed}
   final VoidCallback? onPressed;
+
+  /// A builder that returns a [Widget] for the IconButton's spinner.
+  ///
+  /// This builder creates a widget to display when the IconButton is loading.
+  ///
+  /// {@macro remix.widget_spec_builder.spinner_builder}
+  ///
+  /// ```dart
+  /// IconButton(
+  ///   icon: Icons.add,
+  ///   onPressed: () {},
+  ///   spinnerBuilder: (spec) => spec(),
+  /// );
+  /// ```
   final WidgetSpecBuilder<SpinnerSpec>? spinnerBuilder;
+
+  /// {@macro remix.component.variants}
   final List<Variant> variants;
 
-  /// Additional custom styling for the button.
-  ///
-  /// This allows you to override or extend the default button styling.
+  /// {@macro remix.component.style}
   final IconButtonStyle? style;
 
   @override

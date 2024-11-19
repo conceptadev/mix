@@ -16,11 +16,10 @@ part 'toast_widget.dart';
 
 @MixableSpec()
 base class ToastSpec extends Spec<ToastSpec> with _$ToastSpec, Diagnosticable {
-  final BoxSpec container;
-  final FlexSpec containerFlex;
-  final FlexSpec textContentFlex;
+  final FlexBoxSpec container;
+  final FlexBoxSpec titleSubtitleContainer;
   final TextSpec title;
-  final TextSpec description;
+  final TextSpec subtitle;
 
   /// {@macro toast_spec_of}
   static const of = _$ToastSpec.of;
@@ -28,18 +27,16 @@ base class ToastSpec extends Spec<ToastSpec> with _$ToastSpec, Diagnosticable {
   static const from = _$ToastSpec.from;
 
   const ToastSpec({
-    BoxSpec? container,
-    FlexSpec? containerFlex,
-    FlexSpec? textContentFlex,
+    FlexBoxSpec? container,
+    FlexBoxSpec? titleSubtitleContainer,
     TextSpec? title,
-    TextSpec? description,
+    TextSpec? subtitle,
     super.modifiers,
     super.animated,
-  })  : container = container ?? const BoxSpec(),
-        containerFlex = containerFlex ?? const FlexSpec(),
-        textContentFlex = textContentFlex ?? const FlexSpec(),
+  })  : container = container ?? const FlexBoxSpec(),
+        titleSubtitleContainer = titleSubtitleContainer ?? const FlexBoxSpec(),
         title = title ?? const TextSpec(),
-        description = description ?? const TextSpec();
+        subtitle = subtitle ?? const TextSpec();
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {

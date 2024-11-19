@@ -14,8 +14,8 @@ class SelectStyle extends SpecStyle<SelectSpecUtility> {
     ];
 
     final buttonStyle = [
-      $.button.flex.mainAxisAlignment.spaceBetween(),
       $.button.container.chain
+        ..flex.mainAxisAlignment.spaceBetween()
         ..color.white()
         ..padding.all(10)
         ..border.color.black12()
@@ -42,10 +42,9 @@ class SelectStyle extends SpecStyle<SelectSpecUtility> {
         ..wrap.intrinsicWidth()
         ..wrap.transform.scale(0.95)
         ..wrap.opacity(0)
-        ..wrap.padding.top(0),
-      $.menu.flex.chain
-        ..mainAxisSize.min()
-        ..crossAxisAlignment.start(),
+        ..wrap.padding.top(0)
+        ..flex.mainAxisSize.min()
+        ..flex.crossAxisAlignment.start(),
       $.menu.wrap.transform.scale(1.5),
       $.menu.autoWidth.on(),
       spec.on.selected(
@@ -61,12 +60,12 @@ class SelectStyle extends SpecStyle<SelectSpecUtility> {
         ..borderRadius(6)
         ..padding.vertical(8)
         ..padding.horizontal(6)
-        ..width.infinity(),
+        ..width.infinity()
+        ..flex.gap(6),
       $.item.text.chain
         ..style.color.black()
         ..style.fontSize(14),
       $.item.icon.size(20),
-      $.item.flex.gap(6),
       spec.on.hover($.item.container.color.black12()),
     ];
 

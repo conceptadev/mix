@@ -7,14 +7,6 @@ class ChipStyle extends SpecStyle<ChipSpecUtility> {
   Style makeStyle(SpecConfiguration<ChipSpecUtility> spec) {
     final $ = spec.utilities;
 
-    final flexStyle = [
-      $.flex.chain
-        ..mainAxisAlignment.center()
-        ..crossAxisAlignment.center()
-        ..mainAxisSize.min()
-        ..gap(8),
-    ];
-
     final iconStyle = [
       $.icon.chain
         ..size(18)
@@ -38,7 +30,11 @@ class ChipStyle extends SpecStyle<ChipSpecUtility> {
         ..border.all.width(1)
         ..border.color.grey.shade200()
         ..padding.vertical(8)
-        ..padding.horizontal(12),
+        ..padding.horizontal(12)
+        ..flex.mainAxisAlignment.center()
+        ..flex.crossAxisAlignment.center()
+        ..flex.mainAxisSize.min()
+        ..flex.gap(8),
       spec.on.selected($.container.color.grey.shade200()),
     ];
 
@@ -49,10 +45,9 @@ class ChipStyle extends SpecStyle<ChipSpecUtility> {
     );
 
     return Style.create([
-      ...flexStyle,
+      ...containerStyle,
       ...iconStyle,
       ...labelStyle,
-      ...containerStyle,
       disabledStyle,
     ]);
   }

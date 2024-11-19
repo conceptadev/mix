@@ -8,8 +8,13 @@ class Badge extends StatelessWidget {
     this.variants = const [],
   });
 
+  /// The label to display in the badge.
   final String label;
+
+  /// {@macro remix.component.style}
   final BadgeStyle? style;
+
+  /// {@macro remix.component.variants}
   final List<Variant> variants;
 
   @override

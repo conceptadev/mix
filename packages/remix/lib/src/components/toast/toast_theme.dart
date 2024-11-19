@@ -12,27 +12,26 @@ class FortalezaToastStyle extends ToastStyle {
       ..color.$neutral(2)
       ..border.all.color.$neutral(6)
       ..padding.all.$space(4)
-      ..margin.all.$space(4);
+      ..margin.all.$space(4)
+      ..flex.gap.$space(5);
 
-    final containerFlexStyle = $.containerFlex.gap.$space(5);
-
-    final textContentFlexStyle = $.textContentFlex.gap.$space(1);
+    final titleSubtitleContainerStyle =
+        $.titleSubtitleContainer.flex.gap.$space(1);
 
     final titleStyle = $.title.chain
       ..style.$text(2)
       ..style.color.$neutral(12);
 
-    final descriptionStyle = $.description.chain
+    final subtitleStyle = $.subtitle.chain
       ..style.$text(1)
       ..style.color.$neutral(9);
 
     return Style.create([
       super.makeStyle(spec).call(),
       containerStyle,
-      containerFlexStyle,
-      textContentFlexStyle,
+      titleSubtitleContainerStyle,
       titleStyle,
-      descriptionStyle,
+      subtitleStyle,
     ]);
   }
 }

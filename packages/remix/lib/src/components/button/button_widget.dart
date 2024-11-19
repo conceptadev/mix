@@ -1,19 +1,5 @@
 part of 'button.dart';
 
-/// A customizable button component with various styling options.
-///
-/// The [Button] allows you to create buttons with different variants, sizes,
-/// and icons. You can also disable the button or show a loading state.
-///
-/// Example usage:
-///
-/// ```dart
-/// RxButton(
-///   label: 'Click me',
-///   onPressed: () {},
-///   iconLeft: Icons.add,
-/// )
-/// ```
 class Button extends StatelessWidget {
   const Button({
     super.key,
@@ -23,26 +9,48 @@ class Button extends StatelessWidget {
     this.iconLeft,
     this.iconRight,
     this.spinnerBuilder,
-    this.variant,
     this.variants = const [],
     required this.onPressed,
     this.style,
   });
 
+  /// The text content displayed in the center of the button.
   final String label;
+
+  /// {@macro remix.component.disabled}
   final bool disabled;
+
+  /// {@macro remix.component.loading}
   final bool loading;
+
+  /// The icon displayed in the left side of the button.
   final IconData? iconLeft;
+
+  /// The icon displayed in the right side of the button.
   final IconData? iconRight;
+
+  /// {@macro remix.component.onPressed}
   final VoidCallback? onPressed;
+
+  /// A builder that returns a [Widget] for the button's spinner.
+  ///
+  /// This builder creates a widget to display when the button is loading.
+  ///
+  /// {@macro remix.widget_spec_builder.text_spec}
+  ///
+  /// ```dart
+  /// Button(
+  ///   label: 'Click me',
+  ///   onPressed: () {},
+  ///   spinnerBuilder: (spec) => spec(),
+  /// );
+  /// ```
   final WidgetSpecBuilder<SpinnerSpec>? spinnerBuilder;
 
-  final Variant? variant;
+  /// {@macro remix.component.variants}
   final List<Variant> variants;
 
-  /// Additional custom styling for the button.
-  ///
-  /// This allows you to override or extend the default button styling.
+  /// {@macro remix.component.style}
   final ButtonStyle? style;
 
   @override
@@ -56,10 +64,7 @@ class Button extends StatelessWidget {
       enabled: !isDisabled,
       onPress: disabled || loading ? null : onPressed,
       child: SpecBuilder(
-        style: style.makeStyle(configuration).applyVariants([
-          ...variants,
-          if (variant != null) variant!,
-        ]),
+        style: style.makeStyle(configuration).applyVariants(variants),
         builder: (context) {
           return ButtonSpecWidget(
             spec: ButtonSpec.of(context),
@@ -113,7 +118,7 @@ class ButtonSpecWidget extends StatelessWidget {
   }
 
   Widget _buildChildren(ButtonSpec spec) {
-    final flexboxWidget = spec.flexbox(
+    final flexboxWidget = spec.container(
       direction: Axis.horizontal,
       children: [
         if (iconLeft != null) spec.icon(iconLeft),

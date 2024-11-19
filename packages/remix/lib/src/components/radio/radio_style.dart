@@ -7,14 +7,14 @@ class RadioStyle extends SpecStyle<RadioSpecUtility> {
   Style makeStyle(SpecConfiguration<RadioSpecUtility> spec) {
     final $ = spec.utilities;
 
-    final containerStyle = [
-      $.container.chain
+    final indicatorContainerStyle = [
+      $.indicatorContainer.chain
         ..borderRadius(99)
         ..alignment.center()
         ..size(14)
         ..border.all.width(1)
         ..border.all.color.black(),
-      spec.on.disabled($.container.border.color.black45()),
+      spec.on.disabled($.indicatorContainer.border.color.black45()),
     ];
 
     final indicatorStyle = [
@@ -34,25 +34,22 @@ class RadioStyle extends SpecStyle<RadioSpecUtility> {
       ..style.fontWeight.w500()
       ..textHeightBehavior.heightToFirstAscent.off();
 
-    final flexStyle = $.flex.chain
-      ..row()
-      ..mainAxisSize.min()
-      ..mainAxisAlignment.start()
-      ..crossAxisAlignment.center()
-      ..gap(8);
+    final containerStyle = $.container.chain
+      ..flex.row()
+      ..flex.mainAxisSize.min()
+      ..flex.mainAxisAlignment.start()
+      ..flex.crossAxisAlignment.center()
+      ..flex.gap(8);
 
     final disabledStyle = spec.on.disabled($.text.style.color.grey());
 
     return Style.create([
-      ...containerStyle,
+      ...indicatorContainerStyle,
       ...indicatorStyle,
       textStyle,
-      flexStyle,
+      containerStyle,
       disabledStyle,
-    ]).animate(
-      duration: const Duration(milliseconds: 100),
-      curve: Curves.easeInOutQuad,
-    );
+    ]);
   }
 }
 
@@ -65,11 +62,11 @@ class RadioDarkStyle extends RadioStyle {
 
     return Style.create([
       super.makeStyle(spec).call(),
-      $.container.border.all.color.white(),
+      $.indicatorContainer.border.all.color.white(),
       $.indicator.color.white(),
       $.text.style.color.white(),
       spec.on.disabled(
-        $.container.border.all.color.white30(),
+        $.indicatorContainer.border.all.color.white30(),
         $.indicator.color.white30(),
       ),
     ]);

@@ -9,13 +9,16 @@ class Callout extends StatelessWidget {
     this.style,
   });
 
+  /// The text content displayed in the callout.
   final String text;
+
+  /// The icon displayed in the callout.
   final IconData? icon;
+
+  /// {@macro remix.component.variants}
   final List<Variant> variants;
 
-  /// Additional custom styling for the callout.
-  ///
-  /// This allows you to override or extend the default callout styling.
+  /// {@macro remix.component.style}
   final CalloutStyle? style;
 
   @override
@@ -30,10 +33,8 @@ class Callout extends StatelessWidget {
         final spec = CalloutSpec.of(context);
 
         return spec.container(
-          child: spec.flex(
-            direction: Axis.horizontal,
-            children: [if (icon != null) spec.icon(icon!), spec.text(text)],
-          ),
+          direction: Axis.horizontal,
+          children: [if (icon != null) spec.icon(icon!), spec.text(text)],
         );
       },
     );

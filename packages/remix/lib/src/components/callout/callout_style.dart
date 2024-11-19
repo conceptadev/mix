@@ -9,19 +9,15 @@ class CalloutStyle extends SpecStyle<CalloutSpecUtility> {
   Style makeStyle(SpecConfiguration<CalloutSpecUtility> spec) {
     final $ = spec.utilities;
 
-    final containerStyle = [
+    final flexContainerStyle = [
       $.container.chain
         ..borderRadius(6)
         ..color.white()
-        ..border.all.color.black12(),
-    ];
-
-    final flexStyle = [
-      $.flex.chain
-        ..wrap.padding(12)
-        ..gap(8)
-        ..mainAxisSize.min()
-        ..direction.horizontal(),
+        ..padding(12)
+        ..border.all.color.black12()
+        ..flex.mainAxisSize.min()
+        ..flex.gap(8)
+        ..flex.direction.horizontal(),
     ];
 
     final iconStyle = [$.icon.color.black(), $.icon.size(16)];
@@ -33,12 +29,7 @@ class CalloutStyle extends SpecStyle<CalloutSpecUtility> {
         ..style.fontWeight.w500(),
     ];
 
-    return Style.create([
-      ...containerStyle,
-      ...flexStyle,
-      ...iconStyle,
-      ...textStyle,
-    ]);
+    return Style.create([...flexContainerStyle, ...iconStyle, ...textStyle]);
   }
 }
 
@@ -48,7 +39,7 @@ class CalloutDarkStyle extends CalloutStyle {
   @override
   Style makeStyle(SpecConfiguration<CalloutSpecUtility> spec) {
     final $ = spec.utilities;
-    final containerStyle = [
+    final flexContainerStyle = [
       $.container.chain
         ..color.black()
         ..border.all.color.white30(),
@@ -60,7 +51,7 @@ class CalloutDarkStyle extends CalloutStyle {
 
     return Style.create([
       super.makeStyle(spec).call(),
-      ...containerStyle,
+      ...flexContainerStyle,
       ...textStyle,
       ...iconStyle,
     ]);

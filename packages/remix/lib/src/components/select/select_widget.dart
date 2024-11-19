@@ -19,13 +19,28 @@ class Select<T> extends StatefulWidget {
     this.disabled = false,
   });
 
+  /// The currently selected value in the select component.
   final T value;
+
+  /// {@macro remix.component.style}
   final SelectStyle? style;
+
+  /// {@macro remix.component.variants}
   final List<Variant> variants;
+
+  /// {@macro remix.component.onChanged}
   final ValueChanged<T> onChanged;
+
+  /// Builder function that creates the button portion of the select component.
+  /// When tapped, this button will display the dropdown menu.
+  /// This allows customizing how the button is displayed.
   final WidgetSpecBuilder<SelectButtonSpec> button;
+
+  /// {@macro remix.component.disabled}
   final bool disabled;
 
+  /// The list of items to display in the dropdown menu.
+  /// Each item contains a value and widget to display.
   final List<SelectMenuItem<T>> items;
 
   @override
@@ -112,32 +127,33 @@ class SelectState<T> extends State<Select<T>>
                     builder: (context) {
                       final select = SelectSpec.of(context);
                       final menu = select.menu;
+
                       final Container = menu.container.copyWith(
-                        width: menu.autoWidth ? _link.leaderSize!.width : null,
+                        box: menu.container.box.copyWith(
+                          width:
+                              menu.autoWidth ? _link.leaderSize!.width : null,
+                        ),
                       );
-                      final Flex = menu.flex;
 
                       return Container(
-                        child: Flex(
-                          direction: Axis.vertical,
-                          children: widget.items.map((item) {
-                            return Pressable(
-                              onPress: () {
-                                widget.onChanged(item.value);
-                                hide();
-                              },
-                              child: SpecBuilder(
-                                style: appliedStyle.animate(
-                                  duration: _baseAnimation.duration,
-                                  curve: _baseAnimation.curve,
-                                ),
-                                builder: (context) {
-                                  return item.child;
-                                },
+                        direction: Axis.vertical,
+                        children: widget.items.map((item) {
+                          return Pressable(
+                            onPress: () {
+                              widget.onChanged(item.value);
+                              hide();
+                            },
+                            child: SpecBuilder(
+                              style: appliedStyle.animate(
+                                duration: _baseAnimation.duration,
+                                curve: _baseAnimation.curve,
                               ),
-                            );
-                          }).toList(),
-                        ),
+                              builder: (context) {
+                                return item.child;
+                              },
+                            ),
+                          );
+                        }).toList(),
                       );
                     },
                   ),

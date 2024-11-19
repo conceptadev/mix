@@ -7,11 +7,7 @@ void main() {
   group('Checkbox', () {
     testWidgets('renders with default properties', (WidgetTester tester) async {
       await tester.pumpWidget(
-        const MaterialApp(
-          home: r.Checkbox(
-            style: r.CheckboxStyle(),
-          ),
-        ),
+        const MaterialApp(home: r.Checkbox(style: r.CheckboxStyle())),
       );
 
       expect(find.byType(r.Checkbox), findsOneWidget);
@@ -21,10 +17,7 @@ void main() {
     testWidgets('respects disabled state', (WidgetTester tester) async {
       await tester.pumpWidget(
         const MaterialApp(
-          home: r.Checkbox(
-            disabled: true,
-            style: r.CheckboxStyle(),
-          ),
+          home: r.Checkbox(disabled: true, style: r.CheckboxStyle()),
         ),
       );
 
@@ -36,10 +29,7 @@ void main() {
     testWidgets('respects value state', (WidgetTester tester) async {
       await tester.pumpWidget(
         const MaterialApp(
-          home: r.Checkbox(
-            value: true,
-            style: r.CheckboxStyle(),
-          ),
+          home: r.Checkbox(value: true, style: r.CheckboxStyle()),
         ),
       );
 
@@ -52,9 +42,9 @@ void main() {
       await tester.pumpWidget(
         const MaterialApp(
           home: r.Checkbox(
-            style: r.CheckboxStyle(),
             iconChecked: Icons.done,
             iconUnchecked: Icons.close,
+            style: r.CheckboxStyle(),
           ),
         ),
       );
@@ -69,9 +59,9 @@ void main() {
       await tester.pumpWidget(
         MaterialApp(
           home: r.Checkbox(
-            style: const r.CheckboxStyle(),
             value: false,
             onChanged: (value) => changedValue = value,
+            style: const r.CheckboxStyle(),
           ),
         ),
       );
@@ -84,14 +74,12 @@ void main() {
       const color = Colors.red;
 
       await tester.pumpWidget(const MaterialApp(
-        home: r.Checkbox(
-          value: false,
-          style: FakeCheckboxStyle(color),
-        ),
+        home: r.Checkbox(value: false, style: FakeCheckboxStyle(color)),
       ));
       await tester.pumpAndSettle(const Duration(milliseconds: 150));
 
-      final Container container = tester.widget(find.byType(Container));
+      final Container container =
+          tester.widgetList(find.byType(Container)).last as Container;
       expect((container.decoration as BoxDecoration).color, color);
     });
   });
@@ -100,18 +88,14 @@ void main() {
 class FakeCheckboxStyle extends r.CheckboxStyle {
   final Color color;
 
-  const FakeCheckboxStyle(
-    this.color,
-  );
+  const FakeCheckboxStyle(this.color);
 
   @override
   Style makeStyle(SpecConfiguration<r.CheckboxSpecUtility> spec) {
     final $ = spec.utilities;
 
     final baseStyle = super.makeStyle(spec);
-    return Style.create([
-      baseStyle(),
-      $.container.color(color),
-    ]);
+
+    return Style.create([baseStyle(), $.indicatorContainer.color(color)]);
   }
 }

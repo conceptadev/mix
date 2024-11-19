@@ -65,24 +65,22 @@ class _AccordionState extends State<Accordion> with TickerProviderStateMixin {
           );
 
           return spec.container(
-            child: spec.flex(
-              direction: Axis.vertical,
-              children: [
-                Pressable(
-                  onPress: _handleTap,
-                  controller: _controller,
-                  child: SpecBuilder(
-                    style: variantStyle,
-                    builder: (context) {
-                      final spec = AccordionSpec.of(context);
+            direction: Axis.vertical,
+            children: [
+              Pressable(
+                onPress: _handleTap,
+                controller: _controller,
+                child: SpecBuilder(
+                  style: variantStyle,
+                  builder: (context) {
+                    final spec = AccordionSpec.of(context);
 
-                      return widget.header(spec.header);
-                    },
-                  ),
+                    return widget.header(spec.header);
+                  },
                 ),
-                content,
-              ],
-            ),
+              ),
+              content,
+            ],
           );
         },
       ),

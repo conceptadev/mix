@@ -42,8 +42,8 @@ export 'src/components/select/select.dart';
 export 'src/components/slider/slider.dart';
 export 'src/components/spinner/spinner.dart';
 export 'src/components/switch/switch.dart';
-export 'src/components/toast/toast.dart';
 export 'src/components/textfield/textfield.dart';
+export 'src/components/toast/toast.dart';
 
 /// HELPERS
 export 'src/helpers/color_palette.dart';

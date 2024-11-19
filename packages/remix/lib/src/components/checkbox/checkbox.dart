@@ -14,8 +14,8 @@ part 'checkbox_widget.dart';
 @MixableSpec()
 base class CheckboxSpec extends Spec<CheckboxSpec>
     with _$CheckboxSpec, Diagnosticable {
-  final BoxSpec container;
-  final FlexSpec containerLayout;
+  final FlexBoxSpec container;
+  final BoxSpec indicatorContainer;
   final IconSpec indicator;
   final TextSpec label;
 
@@ -25,15 +25,15 @@ base class CheckboxSpec extends Spec<CheckboxSpec>
   static const from = _$CheckboxSpec.from;
 
   const CheckboxSpec({
-    BoxSpec? container,
+    BoxSpec? indicatorContainer,
     IconSpec? indicator,
-    FlexSpec? containerLayout,
+    FlexBoxSpec? container,
     TextSpec? label,
     super.modifiers,
     super.animated,
-  })  : container = container ?? const BoxSpec(),
+  })  : indicatorContainer = indicatorContainer ?? const BoxSpec(),
         indicator = indicator ?? const IconSpec(),
-        containerLayout = containerLayout ?? const FlexSpec(),
+        container = container ?? const FlexBoxSpec(),
         label = label ?? const TextSpec();
 
   @override

@@ -7,10 +7,9 @@ class AccordionStyle extends SpecStyle<AccordionSpecUtility> {
   Style makeStyle(SpecConfiguration<AccordionSpecUtility> spec) {
     final $ = spec.utilities;
 
-    final flexStyle = [$.flex.mainAxisSize.min()];
-
-    final containerStyle = [
+    final flexContainerStyle = [
       $.container.chain
+        ..flex.mainAxisSize.min()
         ..clipBehavior.antiAlias()
         ..border.bottom.color.grey.shade400(),
     ];
@@ -33,11 +32,11 @@ class AccordionStyle extends SpecStyle<AccordionSpecUtility> {
 
     final headerStyle = [
       $.header.container.chain
+        ..flex.gap(6)
         ..width.infinity()
         ..padding.vertical(16)
         ..color.transparent(),
       $.header.chain
-        ..flex.gap(6)
         ..leadingIcon.size(18)
         ..trailingIcon.wrap.transform.rotate(0)
         ..trailingIcon.size(18),
@@ -51,8 +50,7 @@ class AccordionStyle extends SpecStyle<AccordionSpecUtility> {
     ];
 
     return Style.create([
-      ...flexStyle,
-      ...containerStyle,
+      ...flexContainerStyle,
       ...contentStyle,
       ...textContainerStyle,
       ...headerStyle,

@@ -53,12 +53,11 @@ mixin _$TextFieldSpec on Spec<TextFieldSpec> {
     Brightness? keyboardAppearance,
     Color? autocorrectionTextRectColor,
     bool? cursorOpacityAnimates,
-    BoxSpec? container,
-    FlexSpec? containerLayout,
+    FlexBoxSpec? textFieldContainer,
+    FlexBoxSpec? container,
     TextStyle? hintTextStyle,
     TextSpec? helperText,
     IconSpec? icon,
-    FlexSpec? contentLayout,
     bool? floatingLabel,
     double? floatingLabelHeight,
     TextStyle? floatingLabelStyle,
@@ -89,12 +88,11 @@ mixin _$TextFieldSpec on Spec<TextFieldSpec> {
           autocorrectionTextRectColor ?? _$this.autocorrectionTextRectColor,
       cursorOpacityAnimates:
           cursorOpacityAnimates ?? _$this.cursorOpacityAnimates,
+      textFieldContainer: textFieldContainer ?? _$this.textFieldContainer,
       container: container ?? _$this.container,
-      containerLayout: containerLayout ?? _$this.containerLayout,
       hintTextStyle: hintTextStyle ?? _$this.hintTextStyle,
       helperText: helperText ?? _$this.helperText,
       icon: icon ?? _$this.icon,
-      contentLayout: contentLayout ?? _$this.contentLayout,
       floatingLabel: floatingLabel ?? _$this.floatingLabel,
       floatingLabelHeight: floatingLabelHeight ?? _$this.floatingLabelHeight,
       floatingLabelStyle: floatingLabelStyle ?? _$this.floatingLabelStyle,
@@ -121,8 +119,7 @@ mixin _$TextFieldSpec on Spec<TextFieldSpec> {
   /// - [Color.lerp] for [cursorColor] and [backgroundCursorColor] and [selectionColor] and [autocorrectionTextRectColor].
   /// - [Offset.lerp] for [cursorOffset].
   /// - [EdgeInsets.lerp] for [scrollPadding].
-  /// - [BoxSpec.lerp] for [container].
-  /// - [FlexSpec.lerp] for [containerLayout] and [contentLayout].
+  /// - [FlexBoxSpec.lerp] for [textFieldContainer] and [container].
   /// - [TextSpec.lerp] for [helperText].
   /// - [IconSpec.lerp] for [icon].
 
@@ -172,13 +169,13 @@ mixin _$TextFieldSpec on Spec<TextFieldSpec> {
           t),
       cursorOpacityAnimates:
           t < 0.5 ? _$this.cursorOpacityAnimates : other.cursorOpacityAnimates,
+      textFieldContainer:
+          _$this.textFieldContainer.lerp(other.textFieldContainer, t),
       container: _$this.container.lerp(other.container, t),
-      containerLayout: _$this.containerLayout.lerp(other.containerLayout, t),
       hintTextStyle: MixHelpers.lerpTextStyle(
           _$this.hintTextStyle, other.hintTextStyle, t),
       helperText: _$this.helperText.lerp(other.helperText, t),
       icon: _$this.icon.lerp(other.icon, t),
-      contentLayout: _$this.contentLayout.lerp(other.contentLayout, t),
       floatingLabel: t < 0.5 ? _$this.floatingLabel : other.floatingLabel,
       floatingLabelHeight: MixHelpers.lerpDouble(
           _$this.floatingLabelHeight, other.floatingLabelHeight, t)!,
@@ -215,12 +212,11 @@ mixin _$TextFieldSpec on Spec<TextFieldSpec> {
         _$this.keyboardAppearance,
         _$this.autocorrectionTextRectColor,
         _$this.cursorOpacityAnimates,
+        _$this.textFieldContainer,
         _$this.container,
-        _$this.containerLayout,
         _$this.hintTextStyle,
         _$this.helperText,
         _$this.icon,
-        _$this.contentLayout,
         _$this.floatingLabel,
         _$this.floatingLabelHeight,
         _$this.floatingLabelStyle,
@@ -279,19 +275,17 @@ mixin _$TextFieldSpec on Spec<TextFieldSpec> {
     properties.add(DiagnosticsProperty(
         'cursorOpacityAnimates', _$this.cursorOpacityAnimates,
         defaultValue: null));
+    properties.add(DiagnosticsProperty(
+        'textFieldContainer', _$this.textFieldContainer,
+        defaultValue: null));
     properties.add(
         DiagnosticsProperty('container', _$this.container, defaultValue: null));
-    properties.add(DiagnosticsProperty(
-        'containerLayout', _$this.containerLayout,
-        defaultValue: null));
     properties.add(DiagnosticsProperty('hintTextStyle', _$this.hintTextStyle,
         defaultValue: null));
     properties.add(DiagnosticsProperty('helperText', _$this.helperText,
         defaultValue: null));
     properties
         .add(DiagnosticsProperty('icon', _$this.icon, defaultValue: null));
-    properties.add(DiagnosticsProperty('contentLayout', _$this.contentLayout,
-        defaultValue: null));
     properties.add(DiagnosticsProperty('floatingLabel', _$this.floatingLabel,
         defaultValue: null));
     properties.add(DiagnosticsProperty(
@@ -336,12 +330,11 @@ class TextFieldSpecAttribute extends SpecAttribute<TextFieldSpec>
   final Brightness? keyboardAppearance;
   final ColorDto? autocorrectionTextRectColor;
   final bool? cursorOpacityAnimates;
-  final BoxSpecAttribute? container;
-  final FlexSpecAttribute? containerLayout;
+  final FlexBoxSpecAttribute? textFieldContainer;
+  final FlexBoxSpecAttribute? container;
   final TextStyleDto? hintTextStyle;
   final TextSpecAttribute? helperText;
   final IconSpecAttribute? icon;
-  final FlexSpecAttribute? contentLayout;
   final bool? floatingLabel;
   final double? floatingLabelHeight;
   final TextStyleDto? floatingLabelStyle;
@@ -367,12 +360,11 @@ class TextFieldSpecAttribute extends SpecAttribute<TextFieldSpec>
     this.keyboardAppearance,
     this.autocorrectionTextRectColor,
     this.cursorOpacityAnimates,
+    this.textFieldContainer,
     this.container,
-    this.containerLayout,
     this.hintTextStyle,
     this.helperText,
     this.icon,
-    this.contentLayout,
     this.floatingLabel,
     this.floatingLabelHeight,
     this.floatingLabelStyle,
@@ -411,12 +403,11 @@ class TextFieldSpecAttribute extends SpecAttribute<TextFieldSpec>
       keyboardAppearance: keyboardAppearance,
       autocorrectionTextRectColor: autocorrectionTextRectColor?.resolve(mix),
       cursorOpacityAnimates: cursorOpacityAnimates,
+      textFieldContainer: textFieldContainer?.resolve(mix),
       container: container?.resolve(mix),
-      containerLayout: containerLayout?.resolve(mix),
       hintTextStyle: hintTextStyle?.resolve(mix),
       helperText: helperText?.resolve(mix),
       icon: icon?.resolve(mix),
-      contentLayout: contentLayout?.resolve(mix),
       floatingLabel: floatingLabel,
       floatingLabelHeight: floatingLabelHeight,
       floatingLabelStyle: floatingLabelStyle?.resolve(mix),
@@ -466,15 +457,13 @@ class TextFieldSpecAttribute extends SpecAttribute<TextFieldSpec>
           other.autocorrectionTextRectColor,
       cursorOpacityAnimates:
           other.cursorOpacityAnimates ?? cursorOpacityAnimates,
+      textFieldContainer: textFieldContainer?.merge(other.textFieldContainer) ??
+          other.textFieldContainer,
       container: container?.merge(other.container) ?? other.container,
-      containerLayout: containerLayout?.merge(other.containerLayout) ??
-          other.containerLayout,
       hintTextStyle:
           hintTextStyle?.merge(other.hintTextStyle) ?? other.hintTextStyle,
       helperText: helperText?.merge(other.helperText) ?? other.helperText,
       icon: icon?.merge(other.icon) ?? other.icon,
-      contentLayout:
-          contentLayout?.merge(other.contentLayout) ?? other.contentLayout,
       floatingLabel: other.floatingLabel ?? floatingLabel,
       floatingLabelHeight: other.floatingLabelHeight ?? floatingLabelHeight,
       floatingLabelStyle: floatingLabelStyle?.merge(other.floatingLabelStyle) ??
@@ -510,12 +499,11 @@ class TextFieldSpecAttribute extends SpecAttribute<TextFieldSpec>
         keyboardAppearance,
         autocorrectionTextRectColor,
         cursorOpacityAnimates,
+        textFieldContainer,
         container,
-        containerLayout,
         hintTextStyle,
         helperText,
         icon,
-        contentLayout,
         floatingLabel,
         floatingLabelHeight,
         floatingLabelStyle,
@@ -572,17 +560,15 @@ class TextFieldSpecAttribute extends SpecAttribute<TextFieldSpec>
     properties.add(DiagnosticsProperty(
         'cursorOpacityAnimates', cursorOpacityAnimates,
         defaultValue: null));
+    properties.add(DiagnosticsProperty('textFieldContainer', textFieldContainer,
+        defaultValue: null));
     properties
         .add(DiagnosticsProperty('container', container, defaultValue: null));
-    properties.add(DiagnosticsProperty('containerLayout', containerLayout,
-        defaultValue: null));
     properties.add(DiagnosticsProperty('hintTextStyle', hintTextStyle,
         defaultValue: null));
     properties
         .add(DiagnosticsProperty('helperText', helperText, defaultValue: null));
     properties.add(DiagnosticsProperty('icon', icon, defaultValue: null));
-    properties.add(DiagnosticsProperty('contentLayout', contentLayout,
-        defaultValue: null));
     properties.add(DiagnosticsProperty('floatingLabel', floatingLabel,
         defaultValue: null));
     properties.add(DiagnosticsProperty(
@@ -672,11 +658,12 @@ class TextFieldSpecUtility<T extends Attribute>
   late final cursorOpacityAnimates =
       BoolUtility((v) => only(cursorOpacityAnimates: v));
 
-  /// Utility for defining [TextFieldSpecAttribute.container]
-  late final container = BoxSpecUtility((v) => only(container: v));
+  /// Utility for defining [TextFieldSpecAttribute.textFieldContainer]
+  late final textFieldContainer =
+      FlexBoxSpecUtility((v) => only(textFieldContainer: v));
 
-  /// Utility for defining [TextFieldSpecAttribute.containerLayout]
-  late final containerLayout = FlexSpecUtility((v) => only(containerLayout: v));
+  /// Utility for defining [TextFieldSpecAttribute.container]
+  late final container = FlexBoxSpecUtility((v) => only(container: v));
 
   /// Utility for defining [TextFieldSpecAttribute.hintTextStyle]
   late final hintTextStyle = TextStyleUtility((v) => only(hintTextStyle: v));
@@ -686,9 +673,6 @@ class TextFieldSpecUtility<T extends Attribute>
 
   /// Utility for defining [TextFieldSpecAttribute.icon]
   late final icon = IconSpecUtility((v) => only(icon: v));
-
-  /// Utility for defining [TextFieldSpecAttribute.contentLayout]
-  late final contentLayout = FlexSpecUtility((v) => only(contentLayout: v));
 
   /// Utility for defining [TextFieldSpecAttribute.floatingLabel]
   late final floatingLabel = BoolUtility((v) => only(floatingLabel: v));
@@ -738,12 +722,11 @@ class TextFieldSpecUtility<T extends Attribute>
     Brightness? keyboardAppearance,
     ColorDto? autocorrectionTextRectColor,
     bool? cursorOpacityAnimates,
-    BoxSpecAttribute? container,
-    FlexSpecAttribute? containerLayout,
+    FlexBoxSpecAttribute? textFieldContainer,
+    FlexBoxSpecAttribute? container,
     TextStyleDto? hintTextStyle,
     TextSpecAttribute? helperText,
     IconSpecAttribute? icon,
-    FlexSpecAttribute? contentLayout,
     bool? floatingLabel,
     double? floatingLabelHeight,
     TextStyleDto? floatingLabelStyle,
@@ -771,12 +754,11 @@ class TextFieldSpecUtility<T extends Attribute>
       keyboardAppearance: keyboardAppearance,
       autocorrectionTextRectColor: autocorrectionTextRectColor,
       cursorOpacityAnimates: cursorOpacityAnimates,
+      textFieldContainer: textFieldContainer,
       container: container,
-      containerLayout: containerLayout,
       hintTextStyle: hintTextStyle,
       helperText: helperText,
       icon: icon,
-      contentLayout: contentLayout,
       floatingLabel: floatingLabel,
       floatingLabelHeight: floatingLabelHeight,
       floatingLabelStyle: floatingLabelStyle,

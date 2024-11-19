@@ -33,8 +33,7 @@ mixin _$CalloutSpec on Spec<CalloutSpec> {
   /// replaced with the new values.
   @override
   CalloutSpec copyWith({
-    BoxSpec? container,
-    FlexSpec? flex,
+    FlexBoxSpec? container,
     IconSpec? icon,
     TextSpec? text,
     WidgetModifiersData? modifiers,
@@ -42,7 +41,6 @@ mixin _$CalloutSpec on Spec<CalloutSpec> {
   }) {
     return CalloutSpec(
       container: container ?? _$this.container,
-      flex: flex ?? _$this.flex,
       icon: icon ?? _$this.icon,
       text: text ?? _$this.text,
       modifiers: modifiers ?? _$this.modifiers,
@@ -61,8 +59,7 @@ mixin _$CalloutSpec on Spec<CalloutSpec> {
   /// The interpolation is performed on each property of the [CalloutSpec] using the appropriate
   /// interpolation method:
   ///
-  /// - [BoxSpec.lerp] for [container].
-  /// - [FlexSpec.lerp] for [flex].
+  /// - [FlexBoxSpec.lerp] for [container].
   /// - [IconSpec.lerp] for [icon].
   /// - [TextSpec.lerp] for [text].
 
@@ -78,7 +75,6 @@ mixin _$CalloutSpec on Spec<CalloutSpec> {
 
     return CalloutSpec(
       container: _$this.container.lerp(other.container, t),
-      flex: _$this.flex.lerp(other.flex, t),
       icon: _$this.icon.lerp(other.icon, t),
       text: _$this.text.lerp(other.text, t),
       modifiers: other.modifiers,
@@ -93,7 +89,6 @@ mixin _$CalloutSpec on Spec<CalloutSpec> {
   @override
   List<Object?> get props => [
         _$this.container,
-        _$this.flex,
         _$this.icon,
         _$this.text,
         _$this.modifiers,
@@ -111,14 +106,12 @@ mixin _$CalloutSpec on Spec<CalloutSpec> {
 /// Use this class to configure the attributes of a [CalloutSpec] and pass it to
 /// the [CalloutSpec] constructor.
 base class CalloutSpecAttribute extends SpecAttribute<CalloutSpec> {
-  final BoxSpecAttribute? container;
-  final FlexSpecAttribute? flex;
+  final FlexBoxSpecAttribute? container;
   final IconSpecAttribute? icon;
   final TextSpecAttribute? text;
 
   const CalloutSpecAttribute({
     this.container,
-    this.flex,
     this.icon,
     this.text,
     super.modifiers,
@@ -137,7 +130,6 @@ base class CalloutSpecAttribute extends SpecAttribute<CalloutSpec> {
   CalloutSpec resolve(MixData mix) {
     return CalloutSpec(
       container: container?.resolve(mix),
-      flex: flex?.resolve(mix),
       icon: icon?.resolve(mix),
       text: text?.resolve(mix),
       modifiers: modifiers?.resolve(mix),
@@ -159,7 +151,6 @@ base class CalloutSpecAttribute extends SpecAttribute<CalloutSpec> {
 
     return CalloutSpecAttribute(
       container: container?.merge(other.container) ?? other.container,
-      flex: flex?.merge(other.flex) ?? other.flex,
       icon: icon?.merge(other.icon) ?? other.icon,
       text: text?.merge(other.text) ?? other.text,
       modifiers: modifiers?.merge(other.modifiers) ?? other.modifiers,
@@ -174,7 +165,6 @@ base class CalloutSpecAttribute extends SpecAttribute<CalloutSpec> {
   @override
   List<Object?> get props => [
         container,
-        flex,
         icon,
         text,
         modifiers,
@@ -189,10 +179,7 @@ base class CalloutSpecAttribute extends SpecAttribute<CalloutSpec> {
 class CalloutSpecUtility<T extends Attribute>
     extends SpecUtility<T, CalloutSpecAttribute> {
   /// Utility for defining [CalloutSpecAttribute.container]
-  late final container = BoxSpecUtility((v) => only(container: v));
-
-  /// Utility for defining [CalloutSpecAttribute.flex]
-  late final flex = FlexSpecUtility((v) => only(flex: v));
+  late final container = FlexBoxSpecUtility((v) => only(container: v));
 
   /// Utility for defining [CalloutSpecAttribute.icon]
   late final icon = IconSpecUtility((v) => only(icon: v));
@@ -217,8 +204,7 @@ class CalloutSpecUtility<T extends Attribute>
   /// Returns a new [CalloutSpecAttribute] with the specified properties.
   @override
   T only({
-    BoxSpecAttribute? container,
-    FlexSpecAttribute? flex,
+    FlexBoxSpecAttribute? container,
     IconSpecAttribute? icon,
     TextSpecAttribute? text,
     WidgetModifiersDataDto? modifiers,
@@ -226,7 +212,6 @@ class CalloutSpecUtility<T extends Attribute>
   }) {
     return builder(CalloutSpecAttribute(
       container: container,
-      flex: flex,
       icon: icon,
       text: text,
       modifiers: modifiers,

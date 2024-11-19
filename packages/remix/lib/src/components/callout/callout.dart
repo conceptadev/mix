@@ -12,8 +12,7 @@ part 'callout_widget.dart';
 
 @MixableSpec()
 base class CalloutSpec extends Spec<CalloutSpec> with _$CalloutSpec {
-  final BoxSpec container;
-  final FlexSpec flex;
+  final FlexBoxSpec container;
   final IconSpec icon;
   final TextSpec text;
 
@@ -23,14 +22,12 @@ base class CalloutSpec extends Spec<CalloutSpec> with _$CalloutSpec {
   static const from = _$CalloutSpec.from;
 
   const CalloutSpec({
-    BoxSpec? container,
-    FlexSpec? flex,
+    FlexBoxSpec? container,
     IconSpec? icon,
     TextSpec? text,
     super.modifiers,
     super.animated,
-  })  : container = container ?? const BoxSpec(),
-        flex = flex ?? const FlexSpec(),
+  })  : container = container ?? const FlexBoxSpec(),
         icon = icon ?? const IconSpec(),
         text = text ?? const TextSpec();
 }

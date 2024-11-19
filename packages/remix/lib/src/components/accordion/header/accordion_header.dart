@@ -3,8 +3,7 @@ part of '../accordion.dart';
 @MixableSpec()
 base class AccordionHeaderSpec extends Spec<AccordionHeaderSpec>
     with _$AccordionHeaderSpec {
-  final BoxSpec container;
-  final FlexSpec flex;
+  final FlexBoxSpec container;
   final IconSpec leadingIcon;
   final TextSpec text;
   final IconSpec trailingIcon;
@@ -15,14 +14,12 @@ base class AccordionHeaderSpec extends Spec<AccordionHeaderSpec>
   static const from = _$AccordionHeaderSpec.from;
 
   const AccordionHeaderSpec({
-    BoxSpec? container,
-    FlexSpec? flex,
+    FlexBoxSpec? container,
     IconSpec? leadingIcon,
     TextSpec? text,
     IconSpec? trailingIcon,
     super.animated,
-  })  : container = container ?? const BoxSpec(),
-        flex = flex ?? const FlexSpec(),
+  })  : container = container ?? const FlexBoxSpec(),
         leadingIcon = leadingIcon ?? const IconSpec(),
         text = text ?? const TextSpec(),
         trailingIcon = trailingIcon ?? const IconSpec();

@@ -13,15 +13,13 @@ class ToastStyle extends SpecStyle<ToastSpecUtility> {
       ..border.all.color.black12()
       ..padding.all(16)
       ..margin.all(20)
-      ..constraints.minWidth(300);
+      ..constraints.minWidth(300)
+      ..flex.direction.horizontal()
+      ..flex.mainAxisAlignment.spaceBetween()
+      ..flex.mainAxisSize.min()
+      ..flex.gap(16);
 
-    final containerFlexStyle = $.containerFlex.chain
-      ..direction.horizontal()
-      ..mainAxisAlignment.spaceBetween()
-      ..mainAxisSize.min()
-      ..gap(16);
-
-    final textContentFlexStyle = $.textContentFlex.chain
+    final titleSubtitleContainerStyle = $.titleSubtitleContainer.flex.chain
       ..direction.vertical()
       ..crossAxisAlignment.start()
       ..gap(4)
@@ -31,16 +29,15 @@ class ToastStyle extends SpecStyle<ToastSpecUtility> {
       ..style.bold()
       ..style.fontSize(14);
 
-    final descriptionStyle = $.description.chain
+    final subtitleStyle = $.subtitle.chain
       ..style.fontSize(13)
       ..style.color.black54();
 
     return Style.create([
       containerStyle,
-      containerFlexStyle,
-      textContentFlexStyle,
+      titleSubtitleContainerStyle,
       titleStyle,
-      descriptionStyle,
+      subtitleStyle,
     ]);
   }
 }

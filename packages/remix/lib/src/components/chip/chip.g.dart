@@ -33,8 +33,7 @@ mixin _$ChipSpec on Spec<ChipSpec> {
   /// replaced with the new values.
   @override
   ChipSpec copyWith({
-    BoxSpec? container,
-    FlexSpec? flex,
+    FlexBoxSpec? container,
     IconSpec? icon,
     TextSpec? label,
     WidgetModifiersData? modifiers,
@@ -42,7 +41,6 @@ mixin _$ChipSpec on Spec<ChipSpec> {
   }) {
     return ChipSpec(
       container: container ?? _$this.container,
-      flex: flex ?? _$this.flex,
       icon: icon ?? _$this.icon,
       label: label ?? _$this.label,
       modifiers: modifiers ?? _$this.modifiers,
@@ -61,8 +59,7 @@ mixin _$ChipSpec on Spec<ChipSpec> {
   /// The interpolation is performed on each property of the [ChipSpec] using the appropriate
   /// interpolation method:
   ///
-  /// - [BoxSpec.lerp] for [container].
-  /// - [FlexSpec.lerp] for [flex].
+  /// - [FlexBoxSpec.lerp] for [container].
   /// - [IconSpec.lerp] for [icon].
   /// - [TextSpec.lerp] for [label].
 
@@ -78,7 +75,6 @@ mixin _$ChipSpec on Spec<ChipSpec> {
 
     return ChipSpec(
       container: _$this.container.lerp(other.container, t),
-      flex: _$this.flex.lerp(other.flex, t),
       icon: _$this.icon.lerp(other.icon, t),
       label: _$this.label.lerp(other.label, t),
       modifiers: other.modifiers,
@@ -93,7 +89,6 @@ mixin _$ChipSpec on Spec<ChipSpec> {
   @override
   List<Object?> get props => [
         _$this.container,
-        _$this.flex,
         _$this.icon,
         _$this.label,
         _$this.modifiers,
@@ -105,8 +100,6 @@ mixin _$ChipSpec on Spec<ChipSpec> {
   void _debugFillProperties(DiagnosticPropertiesBuilder properties) {
     properties.add(
         DiagnosticsProperty('container', _$this.container, defaultValue: null));
-    properties
-        .add(DiagnosticsProperty('flex', _$this.flex, defaultValue: null));
     properties
         .add(DiagnosticsProperty('icon', _$this.icon, defaultValue: null));
     properties
@@ -126,14 +119,12 @@ mixin _$ChipSpec on Spec<ChipSpec> {
 /// Use this class to configure the attributes of a [ChipSpec] and pass it to
 /// the [ChipSpec] constructor.
 class ChipSpecAttribute extends SpecAttribute<ChipSpec> with Diagnosticable {
-  final BoxSpecAttribute? container;
-  final FlexSpecAttribute? flex;
+  final FlexBoxSpecAttribute? container;
   final IconSpecAttribute? icon;
   final TextSpecAttribute? label;
 
   const ChipSpecAttribute({
     this.container,
-    this.flex,
     this.icon,
     this.label,
     super.modifiers,
@@ -152,7 +143,6 @@ class ChipSpecAttribute extends SpecAttribute<ChipSpec> with Diagnosticable {
   ChipSpec resolve(MixData mix) {
     return ChipSpec(
       container: container?.resolve(mix),
-      flex: flex?.resolve(mix),
       icon: icon?.resolve(mix),
       label: label?.resolve(mix),
       modifiers: modifiers?.resolve(mix),
@@ -174,7 +164,6 @@ class ChipSpecAttribute extends SpecAttribute<ChipSpec> with Diagnosticable {
 
     return ChipSpecAttribute(
       container: container?.merge(other.container) ?? other.container,
-      flex: flex?.merge(other.flex) ?? other.flex,
       icon: icon?.merge(other.icon) ?? other.icon,
       label: label?.merge(other.label) ?? other.label,
       modifiers: modifiers?.merge(other.modifiers) ?? other.modifiers,
@@ -189,7 +178,6 @@ class ChipSpecAttribute extends SpecAttribute<ChipSpec> with Diagnosticable {
   @override
   List<Object?> get props => [
         container,
-        flex,
         icon,
         label,
         modifiers,
@@ -201,7 +189,6 @@ class ChipSpecAttribute extends SpecAttribute<ChipSpec> with Diagnosticable {
     super.debugFillProperties(properties);
     properties
         .add(DiagnosticsProperty('container', container, defaultValue: null));
-    properties.add(DiagnosticsProperty('flex', flex, defaultValue: null));
     properties.add(DiagnosticsProperty('icon', icon, defaultValue: null));
     properties.add(DiagnosticsProperty('label', label, defaultValue: null));
     properties
@@ -218,10 +205,7 @@ class ChipSpecAttribute extends SpecAttribute<ChipSpec> with Diagnosticable {
 class ChipSpecUtility<T extends Attribute>
     extends SpecUtility<T, ChipSpecAttribute> {
   /// Utility for defining [ChipSpecAttribute.container]
-  late final container = BoxSpecUtility((v) => only(container: v));
-
-  /// Utility for defining [ChipSpecAttribute.flex]
-  late final flex = FlexSpecUtility((v) => only(flex: v));
+  late final container = FlexBoxSpecUtility((v) => only(container: v));
 
   /// Utility for defining [ChipSpecAttribute.icon]
   late final icon = IconSpecUtility((v) => only(icon: v));
@@ -246,8 +230,7 @@ class ChipSpecUtility<T extends Attribute>
   /// Returns a new [ChipSpecAttribute] with the specified properties.
   @override
   T only({
-    BoxSpecAttribute? container,
-    FlexSpecAttribute? flex,
+    FlexBoxSpecAttribute? container,
     IconSpecAttribute? icon,
     TextSpecAttribute? label,
     WidgetModifiersDataDto? modifiers,
@@ -255,7 +238,6 @@ class ChipSpecUtility<T extends Attribute>
   }) {
     return builder(ChipSpecAttribute(
       container: container,
-      flex: flex,
       icon: icon,
       label: label,
       modifiers: modifiers,

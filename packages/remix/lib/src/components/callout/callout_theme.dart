@@ -15,16 +15,15 @@ class FortalezaCalloutStyle extends CalloutStyle {
     final baseStyle = super.makeStyle(spec);
     final baseOverrides = Style(
       baseStyle(),
-      $.flex.chain
-        ..gap.$space(3)
-        ..crossAxisAlignment.center()
-        ..mainAxisAlignment.start()
-        ..wrap.padding(16),
       $.container.chain
         ..borderRadius(8)
         ..color.$accent(3)
         ..border.all.width(0)
-        ..border.all.style.none(),
+        ..border.all.style.none()
+        ..padding(16)
+        ..flex.gap.$space(3)
+        ..flex.crossAxisAlignment.center()
+        ..flex.mainAxisAlignment.start(),
       $.icon.chain
         ..color.$accentAlpha(11)
         ..size(20),

@@ -16,7 +16,7 @@ part 'button_widget.dart';
 
 @MixableSpec()
 class ButtonSpec extends Spec<ButtonSpec> with _$ButtonSpec, Diagnosticable {
-  final FlexBoxSpec flexbox;
+  final FlexBoxSpec container;
   final IconSpec icon;
   final TextSpec label;
 
@@ -29,13 +29,13 @@ class ButtonSpec extends Spec<ButtonSpec> with _$ButtonSpec, Diagnosticable {
   static const from = _$ButtonSpec.from;
 
   const ButtonSpec({
-    FlexBoxSpec? flexbox,
+    FlexBoxSpec? container,
     IconSpec? icon,
     TextSpec? label,
     super.modifiers,
     SpinnerSpec? spinner,
     super.animated,
-  })  : flexbox = flexbox ?? const FlexBoxSpec(),
+  })  : container = container ?? const FlexBoxSpec(),
         icon = icon ?? const IconSpec(),
         label = label ?? const TextSpec(),
         spinner = spinner ?? const SpinnerSpec();

@@ -7,11 +7,11 @@ class CheckboxStyle extends SpecStyle<CheckboxSpecUtility> {
   Style makeStyle(SpecConfiguration<CheckboxSpecUtility> spec) {
     final $ = spec.utilities;
 
-    final containerStyle = [
-      $.container.chain
+    final indicatorContainerStyle = [
+      $.indicatorContainer.chain
         ..borderRadius(4)
         ..border.all.color.black(),
-      spec.on.selected($.container.color.black()),
+      spec.on.selected($.indicatorContainer.color.black()),
     ];
 
     final indicatorStyle = [
@@ -19,7 +19,10 @@ class CheckboxStyle extends SpecStyle<CheckboxSpecUtility> {
         ..size(16)
         ..color.white()
         ..wrap.opacity(0),
-      spec.on.selected($.indicator.wrap.opacity(1), $.indicator.color.white()),
+      spec.on.selected(
+        $.indicator.wrap.opacity(1),
+        $.indicator.color.white(),
+      ),
     ];
 
     final labelStyle = $.label.chain
@@ -28,23 +31,23 @@ class CheckboxStyle extends SpecStyle<CheckboxSpecUtility> {
       ..style.fontWeight.w500()
       ..textHeightBehavior.heightToFirstAscent.off();
 
-    final containerLayoutStyle = $.containerLayout.chain
+    final containerStyle = $.container.flex.chain
       ..crossAxisAlignment.center()
       ..mainAxisAlignment.start()
       ..mainAxisSize.min()
       ..gap(8);
 
     final disabledStyle = spec.on.disabled(
-      $.container.border.all.color.grey(),
+      $.indicatorContainer.border.all.color.grey(),
       $.label.style.color.grey(),
-      spec.on.selected($.container.color.grey()),
+      spec.on.selected($.indicatorContainer.color.grey()),
     );
 
     return Style.create([
-      ...containerStyle,
+      ...indicatorContainerStyle,
       ...indicatorStyle,
       labelStyle,
-      containerLayoutStyle,
+      containerStyle,
       disabledStyle,
     ]);
   }
@@ -59,10 +62,13 @@ class CheckboxDarkStyle extends CheckboxStyle {
 
     return Style.create([
       super.makeStyle(spec).call(),
-      $.container.border.all.color.white(),
+      $.indicatorContainer.border.all.color.white(),
       $.indicator.color.black(),
-      spec.on.selected($.container.color.white()),
-      spec.on.selected($.indicator.color.black()),
+      $.label.style.color.white(),
+      spec.on.selected(
+        $.indicatorContainer.color.white(),
+        $.indicator.color.black(),
+      ),
     ]);
   }
 }

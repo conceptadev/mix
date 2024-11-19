@@ -14,8 +14,7 @@ part 'chip_widget.dart';
 
 @MixableSpec()
 class ChipSpec extends Spec<ChipSpec> with _$ChipSpec, Diagnosticable {
-  final FlexSpec flex;
-  final BoxSpec container;
+  final FlexBoxSpec container;
   final IconSpec icon;
   final TextSpec label;
 
@@ -25,14 +24,12 @@ class ChipSpec extends Spec<ChipSpec> with _$ChipSpec, Diagnosticable {
   static const from = _$ChipSpec.from;
 
   const ChipSpec({
-    BoxSpec? container,
-    FlexSpec? flex,
+    FlexBoxSpec? container,
     IconSpec? icon,
     TextSpec? label,
     super.modifiers,
     super.animated,
-  })  : flex = flex ?? const FlexSpec(),
-        container = container ?? const BoxSpec(),
+  })  : container = container ?? const FlexBoxSpec(),
         icon = icon ?? const IconSpec(),
         label = label ?? const TextSpec();
 

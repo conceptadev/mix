@@ -11,9 +11,9 @@ void main() {
       await tester.pumpWidget(
         m.MaterialApp(
           home: Button(
-            style: const ButtonStyle(),
             label: 'Test Button',
             onPressed: () {},
+            style: const ButtonStyle(),
           ),
         ),
       );
@@ -26,11 +26,11 @@ void main() {
       await tester.pumpWidget(
         m.MaterialApp(
           home: Button(
-            style: const ButtonStyle(),
             label: 'Test Button',
             onPressed: () {
               wasTapped = true;
             },
+            style: const ButtonStyle(),
           ),
         ),
       );
@@ -39,53 +39,57 @@ void main() {
       expect(wasTapped, isTrue);
     });
 
-    testWidgets('does not call onPressed when disabled',
-        (WidgetTester tester) async {
-      bool wasTapped = false;
-      await tester.pumpWidget(
-        m.MaterialApp(
-          home: Button(
-            style: const ButtonStyle(),
-            label: 'Test Button',
-            onPressed: () {
-              wasTapped = true;
-            },
-            disabled: true,
+    testWidgets(
+      'does not call onPressed when disabled',
+      (WidgetTester tester) async {
+        bool wasTapped = false;
+        await tester.pumpWidget(
+          m.MaterialApp(
+            home: Button(
+              label: 'Test Button',
+              disabled: true,
+              onPressed: () {
+                wasTapped = true;
+              },
+              style: const ButtonStyle(),
+            ),
           ),
-        ),
-      );
+        );
 
-      await tester.tap(find.byType(Button));
-      expect(wasTapped, isFalse);
-    });
+        await tester.tap(find.byType(Button));
+        expect(wasTapped, isFalse);
+      },
+    );
 
-    testWidgets('shows loading indicator when loading',
-        (WidgetTester tester) async {
-      await tester.pumpWidget(
-        m.MaterialApp(
-          home: Button(
-            style: const ButtonStyle(),
-            label: 'Test Button',
-            onPressed: () {},
-            loading: true,
+    testWidgets(
+      'shows loading indicator when loading',
+      (WidgetTester tester) async {
+        await tester.pumpWidget(
+          m.MaterialApp(
+            home: Button(
+              label: 'Test Button',
+              loading: true,
+              onPressed: () {},
+              style: const ButtonStyle(),
+            ),
           ),
-        ),
-      );
+        );
 
-      expect(find.byType(SpinnerSpecWidget), findsOneWidget);
+        expect(find.byType(SpinnerSpecWidget), findsOneWidget);
 
-      final opacityWidget = tester.widget<Opacity>(find.byType(Opacity));
-      expect(opacityWidget.opacity, 0);
-    });
+        final opacityWidget = tester.widget<Opacity>(find.byType(Opacity));
+        expect(opacityWidget.opacity, 0);
+      },
+    );
 
     testWidgets('renders left icon correctly', (WidgetTester tester) async {
       await tester.pumpWidget(
         m.MaterialApp(
           home: Button(
-            style: const ButtonStyle(),
             label: 'Test Button',
-            onPressed: () {},
             iconLeft: m.Icons.add,
+            onPressed: () {},
+            style: const ButtonStyle(),
           ),
         ),
       );
@@ -97,10 +101,10 @@ void main() {
       await tester.pumpWidget(
         m.MaterialApp(
           home: Button(
-            style: const ButtonStyle(),
             label: 'Test Button',
-            onPressed: () {},
             iconRight: m.Icons.arrow_forward,
+            onPressed: () {},
+            style: const ButtonStyle(),
           ),
         ),
       );
@@ -108,35 +112,37 @@ void main() {
       expect(find.byIcon(m.Icons.arrow_forward), findsOneWidget);
     });
 
-    testWidgets('uses custom spinner builder when provided',
-        (WidgetTester tester) async {
-      const key = Key('key');
+    testWidgets(
+      'uses custom spinner builder when provided',
+      (WidgetTester tester) async {
+        const key = Key('key');
 
-      await tester.pumpWidget(
-        m.MaterialApp(
-          home: Button(
-            style: const ButtonStyle(),
-            label: 'Test Button',
-            onPressed: () {},
-            loading: true,
-            spinnerBuilder: (_) {
-              return Container(
-                key: key,
-                width: 20,
-                height: 20,
-                color: m.Colors.red,
-              );
-            },
+        await tester.pumpWidget(
+          m.MaterialApp(
+            home: Button(
+              label: 'Test Button',
+              loading: true,
+              spinnerBuilder: (_) {
+                return Container(
+                  key: key,
+                  color: m.Colors.red,
+                  width: 20,
+                  height: 20,
+                );
+              },
+              onPressed: () {},
+              style: const ButtonStyle(),
+            ),
           ),
-        ),
-      );
+        );
 
-      final container = tester.widget<Container>(find.byKey(key));
+        final container = tester.widget<Container>(find.byKey(key));
 
-      expect(container.constraints?.maxWidth, 20);
-      expect(container.constraints?.maxHeight, 20);
-      expect(container.color, m.Colors.red);
-    });
+        expect(container.constraints?.maxWidth, 20);
+        expect(container.constraints?.maxHeight, 20);
+        expect(container.color, m.Colors.red);
+      },
+    );
 
     testWidgets('applies custom style', (WidgetTester tester) async {
       const color = m.Colors.red;
@@ -168,9 +174,7 @@ class FakeButtonStyle extends ButtonStyle {
     final $ = spec.utilities;
 
     final baseStyle = super.makeStyle(spec);
-    return Style.create([
-      baseStyle(),
-      $.flexbox.color(color),
-    ]);
+
+    return Style.create([baseStyle(), $.container.color(color)]);
   }
 }

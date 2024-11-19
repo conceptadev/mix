@@ -31,7 +31,7 @@ class ButtonStyle extends SpecStyle<ButtonSpecUtility> {
     ];
 
     final flexboxStyle = [
-      $.flexbox.chain
+      $.container.chain
         ..borderRadius(6)
         ..color.black()
         ..padding.vertical(8)
@@ -40,7 +40,7 @@ class ButtonStyle extends SpecStyle<ButtonSpecUtility> {
         ..flex.crossAxisAlignment.center()
         ..flex.mainAxisSize.min()
         ..flex.gap(8),
-      spec.on.disabled($.flexbox.color.grey.shade400()),
+      spec.on.disabled($.container.color.grey.shade400()),
     ];
 
     return Style.create([
@@ -61,7 +61,7 @@ class ButtonDarkStyle extends ButtonStyle {
 
     return Style.create([
       super.makeStyle(spec).call(),
-      $.flexbox.color.white(),
+      $.container.color.white(),
       $.label.style.color.black(),
     ]);
   }
