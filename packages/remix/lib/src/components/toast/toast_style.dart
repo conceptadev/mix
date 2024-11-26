@@ -15,7 +15,7 @@ class ToastStyle extends SpecStyle<ToastSpecUtility> {
       ..margin.all(20)
       ..constraints.minWidth(300)
       ..flex.direction.horizontal()
-      ..flex.mainAxisAlignment.spaceBetween()
+      ..flex.mainAxisAlignment.start()
       ..flex.mainAxisSize.min()
       ..flex.gap(16);
 
@@ -38,6 +38,25 @@ class ToastStyle extends SpecStyle<ToastSpecUtility> {
       titleSubtitleContainerStyle,
       titleStyle,
       subtitleStyle,
+    ]);
+  }
+}
+
+class ToastDarkStyle extends ToastStyle {
+  const ToastDarkStyle();
+  @override
+  Style makeStyle(
+    covariant SpecConfiguration<ToastSpecUtility<Attribute>> spec,
+  ) {
+    final $ = spec.utilities;
+
+    return Style.create([
+      super.makeStyle(spec).call(),
+      $.chain
+        ..container.color.black()
+        ..container.border.color.white30()
+        ..subtitle.color.white70()
+        ..title.color.white(),
     ]);
   }
 }

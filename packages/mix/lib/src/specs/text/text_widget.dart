@@ -50,24 +50,10 @@ class StyledText extends StyledWidget {
 
   @override
   Widget build(BuildContext context) {
-    return withMix(context, (context) {
-      final spec = TextSpec.of(context);
+    return withMix(context, (contextNew) {
+      final spec = TextSpec.of(contextNew);
 
-      return spec.isAnimated
-          ? AnimatedTextSpecWidget(
-              text,
-              spec: spec,
-              semanticsLabel: semanticsLabel,
-              locale: locale,
-              duration: spec.animated!.duration,
-              curve: spec.animated!.curve,
-            )
-          : TextSpecWidget(
-              text,
-              spec: spec,
-              semanticsLabel: semanticsLabel,
-              locale: locale,
-            );
+      return spec(text, semanticsLabel: semanticsLabel, locale: locale);
     });
   }
 }
@@ -93,7 +79,7 @@ class TextSpecWidget extends StatelessWidget {
     // The Text widget is used here, applying the resolved styles and properties from TextSpec.
     return RenderSpecModifiers(
       spec: spec ?? const TextSpec(),
-      orderOfModifiers: const [],
+      orderOfModifiers: orderOfModifiers,
       child: Text(
         spec?.directive?.apply(text) ?? text,
         style: spec?.style,
@@ -121,6 +107,7 @@ class AnimatedTextSpecWidget extends ImplicitlyAnimatedWidget {
     this.spec,
     this.semanticsLabel,
     this.locale,
+    this.orderOfModifiers = const [],
     super.key,
     required super.duration,
     super.curve = Curves.linear,
@@ -131,7 +118,7 @@ class AnimatedTextSpecWidget extends ImplicitlyAnimatedWidget {
   final String? semanticsLabel;
   final Locale? locale;
   final TextSpec? spec;
-
+  final List<Type> orderOfModifiers;
   @override
   AnimatedWidgetBaseState<AnimatedTextSpecWidget> createState() =>
       _AnimatedTextSpecWidgetState();
@@ -161,6 +148,7 @@ class _AnimatedTextSpecWidgetState
       spec: spec,
       semanticsLabel: widget.semanticsLabel,
       locale: widget.locale,
+      orderOfModifiers: widget.orderOfModifiers,
     );
   }
 }

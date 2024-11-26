@@ -26,7 +26,9 @@ class ToastLayerState extends State<ToastLayer> implements ToastActions {
       previousToast = currentToast;
       currentToast = entry;
     });
-    _timer = Timer(entry.showDuration, () => close());
+    if (entry.showDuration > Duration.zero) {
+      _timer = Timer(entry.showDuration, () => close());
+    }
   }
 
   @override
@@ -42,6 +44,7 @@ class ToastLayerState extends State<ToastLayer> implements ToastActions {
   void close() {
     _timer?.cancel();
     _timer = null;
+
     if (mounted) {
       setState(() {
         previousToast = currentToast;
@@ -56,7 +59,7 @@ class ToastLayerState extends State<ToastLayer> implements ToastActions {
     final alignment = currentToast?.alignment ?? Alignment.bottomCenter;
 
     final toastWidget = KeyedSubtree(
-      key: UniqueKey(),
+      key: ValueKey(toast.hashCode),
       child: Align(
         alignment: alignment,
         child: toast?.builder(context, this) ?? const SizedBox(),
@@ -65,6 +68,7 @@ class ToastLayerState extends State<ToastLayer> implements ToastActions {
 
     return Stack(
       children: [
+        widget.child,
         AnimatedSwitcher(
           duration:
               toast?.animationDuration ?? const Duration(milliseconds: 500),
@@ -98,7 +102,6 @@ class ToastLayerState extends State<ToastLayer> implements ToastActions {
           },
           child: toastWidget,
         ),
-        widget.child,
       ],
     );
   }
@@ -133,6 +136,11 @@ void showToast({required BuildContext context, required ToastEntry entry}) {
   toastState._addEntry(entry);
 }
 
+void closeToast(BuildContext context) {
+  final toastState = context.findAncestorStateOfType<ToastLayerState>();
+  toastState?.close();
+}
+
 class ToastEntry {
   final Widget Function(BuildContext context, ToastActions) builder;
   final Duration showDuration;
@@ -151,4 +159,24 @@ class ToastEntry {
     this.animationCurve,
     this.reverseAnimationCurve,
   });
+
+  List<Object?> get props => [
+        builder,
+        showDuration,
+        alignment,
+        animationDuration,
+        reverseAnimationDuration,
+        animationCurve,
+        reverseAnimationCurve,
+      ];
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is ToastEntry &&
+          runtimeType == other.runtimeType &&
+          listEquals(props, other.props);
+
+  @override
+  int get hashCode => Object.hashAll(props);
 }

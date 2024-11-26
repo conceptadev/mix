@@ -507,8 +507,10 @@ class _TextFieldState extends State<TextField>
     // }
 
     final style = widget.style ?? context.remix.components.textField;
-    final configuration =
-        TextFieldSpecConfiguration(context, TextFieldSpecUtility.self);
+    final configuration = TextFieldSpecConfiguration(
+      context,
+      TextFieldSpecUtility.self,
+    );
 
     final child = SpecBuilder(
       controller: _statesController,
@@ -519,10 +521,10 @@ class _TextFieldState extends State<TextField>
             (_effectiveFocusNode.hasFocus ||
                 _effectiveController.value.text.isNotEmpty);
 
-        return spec.container(
+        return spec.outerContainer(
           direction: Axis.vertical,
           children: [
-            spec.textFieldContainer(
+            spec.container(
               direction: Axis.horizontal,
               children: [
                 if (widget.prefixBuilder != null)
@@ -618,7 +620,8 @@ class _TextFieldState extends State<TextField>
                 if (widget.suffix != null) widget.suffix!,
               ],
             ),
-            spec.helperText(widget.helperText ?? ''),
+            if (widget.helperText != null)
+              spec.helperText(widget.helperText ?? ''),
           ],
         );
       },
