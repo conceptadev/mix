@@ -18,8 +18,8 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  custom_lint: ^0.6.4
-  analyzer: ^6.0.0
+  custom_lint: ^0.6.5
+  analyzer: ^6.6.0
   analyzer_plugin: ^0.11.2
   test: ^1.24.9
 
