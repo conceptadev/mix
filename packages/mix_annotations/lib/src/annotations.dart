@@ -248,3 +248,24 @@ class MixDeprecatedRenamed extends MixDeprecated {
     required this.updatedName,
   });
 }
+
+class MixableToken {
+  final Object type;
+  final String? namespace;
+  final bool utilityExtension;
+  final bool contextExtension;
+
+  const MixableToken(
+    this.type, {
+    this.namespace,
+    this.utilityExtension = true,
+    this.contextExtension = true,
+  });
+}
+
+class MixableSwatchColorToken {
+  final int scale;
+  final int defaultValue;
+
+  const MixableSwatchColorToken({this.scale = 3, this.defaultValue = 1});
+}

@@ -13,7 +13,7 @@ String toRefTypeExtension(ClassBuilderContext<MixableDto> context) {
     params[element.name] = ParameterInfo.ofElement(element);
   });
 
-  final fieldStatements = context.fields.map((field) {
+  final fieldStatements = context.constructorParameters.map((field) {
     final fieldName = field.name;
 
     if (field.hasDto) {

@@ -17,6 +17,8 @@ class FieldInfo {
   /// Parameter / field type.
   final String name;
 
+  final FieldElement? fieldElement;
+
   final DartType dartType;
 
   final bool hasDeprecated;
@@ -31,6 +33,7 @@ class FieldInfo {
   final bool nullable;
 
   const FieldInfo({
+    required this.fieldElement,
     required this.name,
     required this.type,
     required this.dartType,
@@ -42,6 +45,7 @@ class FieldInfo {
 
   factory FieldInfo.ofElement(FieldElement element) {
     return FieldInfo(
+      fieldElement: element,
       name: element.name,
       type: element.type.getTypeAsString(),
       dartType: element.type,
@@ -93,6 +97,8 @@ class ParameterInfo extends FieldInfo {
   final bool isRequiredNamed;
   final bool isRequiredPositional;
 
+  final ParameterElement element;
+
   const ParameterInfo({
     required super.name,
     required super.type,
@@ -105,6 +111,8 @@ class ParameterInfo extends FieldInfo {
     required super.hasDeprecated,
     required this.isRequiredNamed,
     required this.isRequiredPositional,
+    required this.element,
+    required super.fieldElement,
   });
 
   factory ParameterInfo.ofElement(ParameterElement element) {
@@ -126,6 +134,8 @@ class ParameterInfo extends FieldInfo {
           (fieldInfo?.hasDeprecated ?? false) || element.hasDeprecated,
       isRequiredNamed: element.isRequiredNamed,
       isRequiredPositional: element.isRequiredPositional,
+      element: element,
+      fieldElement: fieldInfo?.fieldElement,
     );
   }
   String get asInternalRef => '$internalRefPrefix.$name';
@@ -280,6 +290,7 @@ FieldInfo? getFieldInfoFromParameter(ParameterElement parameter) {
   final annotation = readMixableProperty(field);
 
   return FieldInfo(
+    fieldElement: field,
     name: field.name,
     type: field.type.getTypeAsString(),
     dartType: field.type,
@@ -301,7 +312,7 @@ class ClassBuilderContext<T> {
     required this.annotation,
   });
 
-  List<ParameterInfo> get fields {
+  List<ParameterInfo> get constructorParameters {
     if (_fieldsCache != null) return _fieldsCache!;
 
     return _fieldsCache =

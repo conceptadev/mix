@@ -66,14 +66,18 @@ class _TodoListPageState extends State<TodoListPage> {
         onPressed: () {
           Future.delayed(
             const Duration(milliseconds: 200),
-            () => Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => AddTaskPage(
-                  controller: _controller,
-                ),
-              ),
-            ),
+            () {
+              if (mounted) {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => AddTaskPage(
+                      controller: _controller,
+                    ),
+                  ),
+                );
+              }
+            },
           );
         },
       ),

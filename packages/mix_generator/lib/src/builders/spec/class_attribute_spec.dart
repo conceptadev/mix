@@ -1,9 +1,10 @@
 import 'package:mix_annotations/mix_annotations.dart';
+
+import '../../helpers/field_info.dart';
 import '../method_debug_fill_properties.dart';
 import '../method_equality.dart';
 import '../method_merge.dart';
 import '../method_resolve.dart';
-import '../../helpers/field_info.dart';
 
 String specAttributeClass(ClassBuilderContext<MixableSpec> context) {
   final specName = context.name;
@@ -13,7 +14,7 @@ String specAttributeClass(ClassBuilderContext<MixableSpec> context) {
 
   final attributeInstance = ClassInfo(
     name: context.attributeName,
-    fields: context.fields,
+    fields: context.constructorParameters,
     isBase: specInstance.isBase,
     isFinal: specInstance.isFinal,
     mixinTypes: hasDiagnosticable ? {'Diagnosticable'} : {},

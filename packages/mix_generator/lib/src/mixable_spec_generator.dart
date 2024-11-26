@@ -38,9 +38,10 @@ class MixableSpecGenerator extends GeneratorForAnnotation<MixableSpec> {
   ) async {
     final context = _loadContext(element);
 
-    final deprecatedRule = context.fields.any((e) => e.hasDeprecated)
-        ? '// ignore_for_file: deprecated_member_use_from_same_package'
-        : '';
+    final deprecatedRule =
+        context.constructorParameters.any((e) => e.hasDeprecated)
+            ? '// ignore_for_file: deprecated_member_use_from_same_package'
+            : '';
 
     final skipUtility = context.annotation.skipUtility;
 
