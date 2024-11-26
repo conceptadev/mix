@@ -133,6 +133,10 @@ class _AnimatedBoxSpecWidgetState
   Widget build(BuildContext context) {
     final spec = _boxSpec?.evaluate(animation);
 
-    return BoxSpecWidget(spec: spec, child: widget.child);
+    return BoxSpecWidget(
+      spec: spec,
+      orderOfModifiers: widget.orderOfModifiers,
+      child: widget.child,
+    );
   }
 }

@@ -109,21 +109,29 @@ final class TextSpec extends Spec<TextSpec> with _$TextSpec, Diagnosticable {
     super.modifiers,
   });
 
-  Widget call(String text, {String? semanticLabel, Locale? locale}) {
+  Widget call(
+    String text, {
+    @Deprecated('Use semanticsLabel instead') String? semanticLabel,
+    String? semanticsLabel,
+    Locale? locale,
+    List<Type> orderOfModifiers = const [],
+  }) {
     return isAnimated
         ? AnimatedTextSpecWidget(
             text,
             spec: this,
-            semanticsLabel: semanticLabel,
+            semanticsLabel: semanticsLabel ?? semanticLabel,
             locale: locale,
+            orderOfModifiers: orderOfModifiers,
             duration: animated!.duration,
             curve: animated!.curve,
           )
         : TextSpecWidget(
             text,
             spec: this,
-            semanticsLabel: semanticLabel,
+            semanticsLabel: semanticsLabel ?? semanticLabel,
             locale: locale,
+            orderOfModifiers: orderOfModifiers,
           );
   }
 
