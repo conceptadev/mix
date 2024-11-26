@@ -119,6 +119,7 @@ class RemixComponentTheme {
       spinner: const SpinnerDarkStyle(),
       switchComponent: const SwitchDarkStyle(),
       textField: const TextFieldDarkStyle(),
+      toast: const ToastDarkStyle(),
       slider: const SliderDarkStyle(),
     );
   }
