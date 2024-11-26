@@ -54,6 +54,7 @@ class StyledImage extends StyledWidget {
               isAntiAlias: isAntiAlias,
               matchTextDirection: matchTextDirection,
               opacity: opacity,
+              orderOfModifiers: orderOfModifiers,
             )
           : ImageSpecWidget(
               spec: spec,
@@ -67,6 +68,7 @@ class StyledImage extends StyledWidget {
               isAntiAlias: isAntiAlias,
               opacity: opacity,
               matchTextDirection: matchTextDirection,
+              orderOfModifiers: orderOfModifiers,
             );
     });
   }
@@ -148,6 +150,7 @@ class AnimatedImageSpecWidget extends ImplicitlyAnimatedWidget {
     this.gaplessPlayback = false,
     this.isAntiAlias = false,
     this.matchTextDirection = false,
+    this.orderOfModifiers = const [],
     this.opacity,
   });
 
@@ -162,6 +165,7 @@ class AnimatedImageSpecWidget extends ImplicitlyAnimatedWidget {
   final bool isAntiAlias;
   final bool matchTextDirection;
   final Animation<double>? opacity;
+  final List<Type> orderOfModifiers;
 
   @override
   AnimatedWidgetBaseState<AnimatedImageSpecWidget> createState() =>
@@ -190,6 +194,7 @@ class _AnimateImageSpecState
 
     return ImageSpecWidget(
       spec: spec,
+      orderOfModifiers: widget.orderOfModifiers,
       image: widget.image,
       frameBuilder: widget.frameBuilder,
       loadingBuilder: widget.loadingBuilder,
