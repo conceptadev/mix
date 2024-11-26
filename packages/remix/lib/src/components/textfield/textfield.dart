@@ -52,7 +52,6 @@ class TextFieldSpec extends Spec<TextFieldSpec>
 
   final Brightness keyboardAppearance;
   final Color? autocorrectionTextRectColor;
-  //TODO: Rename those containers, maybe outerContainer and container.
   final FlexBoxSpec outerContainer;
   final FlexBoxSpec container;
   final TextStyle? hintTextStyle;
