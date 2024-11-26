@@ -2,37 +2,20 @@ import '../../core/theme/remix_theme.dart';
 import 'components.dart';
 import 'tokens.dart';
 
-class FortalezaThemeData {
-  final FortalezaComponentTheme components;
-  final FortalezaTokens tokens;
-
+class FortalezaThemeData extends RemixThemeData {
   factory FortalezaThemeData.light() {
     return FortalezaThemeData(
       components: FortalezaComponentTheme.light(),
-      tokens: FortalezaTokens.light(),
+      tokens: FortalezaTokens.light().toThemeData(),
     );
   }
 
   factory FortalezaThemeData.dark() {
     return FortalezaThemeData(
       components: FortalezaComponentTheme.dark(),
-      tokens: FortalezaTokens.dark(),
+      tokens: FortalezaTokens.dark().toThemeData(),
     );
   }
 
-  const FortalezaThemeData({required this.components, required this.tokens});
-
-  FortalezaThemeData copyWith({
-    FortalezaComponentTheme? components,
-    FortalezaTokens? tokens,
-  }) {
-    return FortalezaThemeData(
-      components: components ?? this.components,
-      tokens: tokens ?? this.tokens,
-    );
-  }
-
-  RemixThemeData toThemeData() {
-    return RemixThemeData(components: components, tokens: tokens.toThemeData());
-  }
+  const FortalezaThemeData({required super.components, required super.tokens});
 }

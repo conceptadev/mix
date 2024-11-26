@@ -10,8 +10,13 @@ class RemixThemeData {
 
   const RemixThemeData({required this.components, required this.tokens});
 
-  static RemixThemeData base() => RemixThemeData(
+  factory RemixThemeData.baseLight() => RemixThemeData(
         components: RemixComponentTheme.light(),
+        tokens: const MixThemeData.empty(),
+      );
+
+  factory RemixThemeData.baseDark() => RemixThemeData(
+        components: RemixComponentTheme.dark(),
         tokens: const MixThemeData.empty(),
       );
 
@@ -82,8 +87,8 @@ class RemixTheme extends StatelessWidget {
   final RemixThemeData? darkTheme;
   final Widget child;
 
-  RemixThemeData get _defaultThemeDark => RemixThemeData.base();
-  RemixThemeData get _defaultThemeLight => RemixThemeData.base();
+  RemixThemeData get _defaultThemeLight => RemixThemeData.baseLight();
+  RemixThemeData get _defaultThemeDark => RemixThemeData.baseDark();
 
   RemixThemeData _defineRemixThemeData(BuildContext context) {
     if (themeMode != null) {
