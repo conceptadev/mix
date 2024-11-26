@@ -79,9 +79,9 @@ class TextFieldStyle extends SpecStyle<TextFieldSpecUtility> {
 
     final $ = spec.utilities;
 
-    final textFieldContainerStyle = $.textFieldContainer.chain
+    final containerStyle = $.container.chain
       ..color.white()
-      ..padding.horizontal(12)
+      ..padding.horizontal(10)
       ..padding.vertical(8)
       ..borderRadius(6)
       ..border.all.color.grey.shade300()
@@ -95,7 +95,7 @@ class TextFieldStyle extends SpecStyle<TextFieldSpecUtility> {
       ..flex.crossAxisAlignment.center()
       ..flex.gap(8);
 
-    final containerStyle = $.container.flex.chain
+    final outerContainerStyle = $.outerContainer.flex.chain
       ..direction.vertical()
       ..mainAxisSize.min()
       ..mainAxisAlignment.start()
@@ -120,11 +120,11 @@ class TextFieldStyle extends SpecStyle<TextFieldSpecUtility> {
       ..style.fontSize(12)
       ..wrap.padding.left(12);
 
-    final focus = spec.on.focus($.textFieldContainer.border.all.color.black());
+    final focus = spec.on.focus($.container.border.all.color.black());
 
     return Style.create([
       platformSettings(spec).call(),
-      textFieldContainerStyle,
+      outerContainerStyle,
       $.floatingLabel.off(),
       $.selectionColor.black12(),
       containerStyle,
@@ -145,7 +145,7 @@ class TextFieldDarkStyle extends TextFieldStyle {
     final $ = spec.utilities;
     final cursor = $.cursorColor.grey.shade100();
 
-    final textFieldContainerStyle = $.textFieldContainer.chain
+    final containerStyle = $.container.chain
       ..color.black()
       ..border.all.color.grey.shade800()
       ..shadow.spreadRadius(0)
@@ -163,12 +163,12 @@ class TextFieldDarkStyle extends TextFieldStyle {
     final helperStyle = $.helperText.style.color.grey.shade400();
     final icon = $.icon.color.grey.shade300();
 
-    final focus = spec.on.focus($.textFieldContainer.border.all.color.white());
+    final focus = spec.on.focus($.container.border.all.color.white());
 
     return Style.create([
       super.makeStyle(spec).call(),
       cursor,
-      textFieldContainerStyle,
+      containerStyle,
       focus,
       textStyle,
       helperStyle,
