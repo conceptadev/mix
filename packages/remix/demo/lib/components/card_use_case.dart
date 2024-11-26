@@ -11,7 +11,6 @@ import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
   type: Card,
 )
 Widget buildCard(BuildContext context) {
-  final color = context.$color.neutral(10);
   return Scaffold(
     body: Center(
       child: Card(
