@@ -15,7 +15,7 @@ class ToastStyle extends SpecStyle<ToastSpecUtility> {
       ..margin.all(20)
       ..constraints.minWidth(300)
       ..flex.direction.horizontal()
-      ..flex.mainAxisAlignment.spaceBetween()
+      ..flex.mainAxisAlignment.start()
       ..flex.mainAxisSize.min()
       ..flex.gap(16);
 
