@@ -12,8 +12,9 @@ dart_code_metrics:
     # avoid-collection-mutating-methods: true
     newline-before-return: true
     avoid-importing-entrypoint-exports:
-        only-in-src: true
+      only-in-src: true
     prefer-match-file-name: false
+    avoid-suspicious-super-overrides: false
     prefer-overriding-parent-equality: false
     prefer-correct-callback-field-name: false
     prefer-single-widget-per-file: false
@@ -33,21 +34,21 @@ dart_code_metrics:
         - child
         - children
     avoid-nested-conditional-expressions:
-        acceptable-level: 3
+      acceptable-level: 3
     member-ordering:
-        order:
-          - public-fields
-          - private-fields
-          - constructors
-          - static-methods
-          - private-methods
-          - private-getters
-          - private-setters
-          - public-getters
-          - public-setters
-          - public-methods
-          - overridden-public-methods
-          - overridden-public-getters
-          - build-method
+      order:
+        - public-fields
+        - private-fields
+        - constructors
+        - static-methods
+        - private-methods
+        - private-getters
+        - private-setters
+        - public-getters
+        - public-setters
+        - public-methods
+        - overridden-public-methods
+        - overridden-public-getters
+        - build-method
     prefer-named-boolean-parameters:
       ignore-single: true

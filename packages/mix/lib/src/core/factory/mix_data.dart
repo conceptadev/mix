@@ -108,7 +108,7 @@ class MixData with Diagnosticable {
   // /// Merges this [MixData] with another, prioritizing this instance's properties.
   MixData merge(MixData other) {
     return MixData._(
-      resolver: _tokenResolver,
+      resolver: other._tokenResolver,
       attributes: _attributes.merge(other._attributes),
       animation: other.animation ?? animation,
     );

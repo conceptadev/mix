@@ -6,7 +6,7 @@ homepage: https://github.com/conceptadev/mix
 environment:
   sdk: ">=3.3.0 <4.0.0"
   flutter: ">=3.19.0"
-  
+
 dependencies:
   mix_annotations: ^0.3.0
   build: ^2.4.1
@@ -15,7 +15,6 @@ dependencies:
   dart_style: ^2.3.6
   collection: ^1.17.1
   build_config: ^1.1.1
-  
 
 dev_dependencies:
   test: ^1.24.4

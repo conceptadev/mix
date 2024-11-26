@@ -12,17 +12,22 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  mix: 
+  mix:
     path: ../../packages/mix
+  mix_annotations:
+    path: ../../packages/mix_annotations
   custom_lint: ^0.6.4
-  google_fonts: ^6.0.0 
+  google_fonts: ^6.0.0
 
   cupertino_icons: ^1.0.6
 
 dev_dependencies:
+  mix_generator:
+    path: ../../packages/mix_generator
+  build_runner:
   flutter_test:
     sdk: flutter
-  mix_lint: 
+  mix_lint:
     path: ../../packages/mix_lint
 
   flutter_lints: ^4.0.0
