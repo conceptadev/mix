@@ -39,16 +39,16 @@ void main() {
             ),
           ),
         );
-        final remixTheme = tester
-            .firstWidget<RemixThemeInherited>(find.byType(RemixThemeInherited));
+        final remixThemeInherited = tester
+            .widget<RemixThemeInherited>(find.byType(RemixThemeInherited));
 
-        final expectedTheme = (
-          brightness == Brightness.light
-              ? FortalezaThemeData.light()
-              : FortalezaThemeData.dark(),
-        );
+        final remixTheme = tester.widget<RemixTheme>(find.byType(RemixTheme));
 
-        expect(remixTheme.data, expectedTheme);
+        final expectedTheme = brightness == Brightness.light
+            ? remixTheme.theme
+            : remixTheme.darkTheme;
+
+        expect(remixThemeInherited.data, expectedTheme);
       }
     },
   );
