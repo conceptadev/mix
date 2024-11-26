@@ -41,3 +41,21 @@ class ToastStyle extends SpecStyle<ToastSpecUtility> {
     ]);
   }
 }
+
+class ToastDarkStyle extends ToastStyle {
+  const ToastDarkStyle();
+  @override
+  Style makeStyle(
+      covariant SpecConfiguration<ToastSpecUtility<Attribute>> spec) {
+    final $ = spec.utilities;
+
+    return Style.create([
+      super.makeStyle(spec).call(),
+      $.chain
+        ..container.color.black()
+        ..container.border.color.white30()
+        ..subtitle.color.white70()
+        ..title.color.white(),
+    ]);
+  }
+}
