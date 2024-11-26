@@ -53,7 +53,7 @@ mixin _$TextFieldSpec on Spec<TextFieldSpec> {
     Brightness? keyboardAppearance,
     Color? autocorrectionTextRectColor,
     bool? cursorOpacityAnimates,
-    FlexBoxSpec? textFieldContainer,
+    FlexBoxSpec? outerContainer,
     FlexBoxSpec? container,
     TextStyle? hintTextStyle,
     TextSpec? helperText,
@@ -88,7 +88,7 @@ mixin _$TextFieldSpec on Spec<TextFieldSpec> {
           autocorrectionTextRectColor ?? _$this.autocorrectionTextRectColor,
       cursorOpacityAnimates:
           cursorOpacityAnimates ?? _$this.cursorOpacityAnimates,
-      textFieldContainer: textFieldContainer ?? _$this.textFieldContainer,
+      outerContainer: outerContainer ?? _$this.outerContainer,
       container: container ?? _$this.container,
       hintTextStyle: hintTextStyle ?? _$this.hintTextStyle,
       helperText: helperText ?? _$this.helperText,
@@ -119,7 +119,7 @@ mixin _$TextFieldSpec on Spec<TextFieldSpec> {
   /// - [Color.lerp] for [cursorColor] and [backgroundCursorColor] and [selectionColor] and [autocorrectionTextRectColor].
   /// - [Offset.lerp] for [cursorOffset].
   /// - [EdgeInsets.lerp] for [scrollPadding].
-  /// - [FlexBoxSpec.lerp] for [textFieldContainer] and [container].
+  /// - [FlexBoxSpec.lerp] for [outerContainer] and [container].
   /// - [TextSpec.lerp] for [helperText].
   /// - [IconSpec.lerp] for [icon].
 
@@ -169,8 +169,7 @@ mixin _$TextFieldSpec on Spec<TextFieldSpec> {
           t),
       cursorOpacityAnimates:
           t < 0.5 ? _$this.cursorOpacityAnimates : other.cursorOpacityAnimates,
-      textFieldContainer:
-          _$this.textFieldContainer.lerp(other.textFieldContainer, t),
+      outerContainer: _$this.outerContainer.lerp(other.outerContainer, t),
       container: _$this.container.lerp(other.container, t),
       hintTextStyle: MixHelpers.lerpTextStyle(
           _$this.hintTextStyle, other.hintTextStyle, t),
@@ -212,7 +211,7 @@ mixin _$TextFieldSpec on Spec<TextFieldSpec> {
         _$this.keyboardAppearance,
         _$this.autocorrectionTextRectColor,
         _$this.cursorOpacityAnimates,
-        _$this.textFieldContainer,
+        _$this.outerContainer,
         _$this.container,
         _$this.hintTextStyle,
         _$this.helperText,
@@ -275,8 +274,7 @@ mixin _$TextFieldSpec on Spec<TextFieldSpec> {
     properties.add(DiagnosticsProperty(
         'cursorOpacityAnimates', _$this.cursorOpacityAnimates,
         defaultValue: null));
-    properties.add(DiagnosticsProperty(
-        'textFieldContainer', _$this.textFieldContainer,
+    properties.add(DiagnosticsProperty('outerContainer', _$this.outerContainer,
         defaultValue: null));
     properties.add(
         DiagnosticsProperty('container', _$this.container, defaultValue: null));
@@ -330,7 +328,7 @@ class TextFieldSpecAttribute extends SpecAttribute<TextFieldSpec>
   final Brightness? keyboardAppearance;
   final ColorDto? autocorrectionTextRectColor;
   final bool? cursorOpacityAnimates;
-  final FlexBoxSpecAttribute? textFieldContainer;
+  final FlexBoxSpecAttribute? outerContainer;
   final FlexBoxSpecAttribute? container;
   final TextStyleDto? hintTextStyle;
   final TextSpecAttribute? helperText;
@@ -360,7 +358,7 @@ class TextFieldSpecAttribute extends SpecAttribute<TextFieldSpec>
     this.keyboardAppearance,
     this.autocorrectionTextRectColor,
     this.cursorOpacityAnimates,
-    this.textFieldContainer,
+    this.outerContainer,
     this.container,
     this.hintTextStyle,
     this.helperText,
@@ -403,7 +401,7 @@ class TextFieldSpecAttribute extends SpecAttribute<TextFieldSpec>
       keyboardAppearance: keyboardAppearance,
       autocorrectionTextRectColor: autocorrectionTextRectColor?.resolve(mix),
       cursorOpacityAnimates: cursorOpacityAnimates,
-      textFieldContainer: textFieldContainer?.resolve(mix),
+      outerContainer: outerContainer?.resolve(mix),
       container: container?.resolve(mix),
       hintTextStyle: hintTextStyle?.resolve(mix),
       helperText: helperText?.resolve(mix),
@@ -457,8 +455,8 @@ class TextFieldSpecAttribute extends SpecAttribute<TextFieldSpec>
           other.autocorrectionTextRectColor,
       cursorOpacityAnimates:
           other.cursorOpacityAnimates ?? cursorOpacityAnimates,
-      textFieldContainer: textFieldContainer?.merge(other.textFieldContainer) ??
-          other.textFieldContainer,
+      outerContainer:
+          outerContainer?.merge(other.outerContainer) ?? other.outerContainer,
       container: container?.merge(other.container) ?? other.container,
       hintTextStyle:
           hintTextStyle?.merge(other.hintTextStyle) ?? other.hintTextStyle,
@@ -499,7 +497,7 @@ class TextFieldSpecAttribute extends SpecAttribute<TextFieldSpec>
         keyboardAppearance,
         autocorrectionTextRectColor,
         cursorOpacityAnimates,
-        textFieldContainer,
+        outerContainer,
         container,
         hintTextStyle,
         helperText,
@@ -560,7 +558,7 @@ class TextFieldSpecAttribute extends SpecAttribute<TextFieldSpec>
     properties.add(DiagnosticsProperty(
         'cursorOpacityAnimates', cursorOpacityAnimates,
         defaultValue: null));
-    properties.add(DiagnosticsProperty('textFieldContainer', textFieldContainer,
+    properties.add(DiagnosticsProperty('outerContainer', outerContainer,
         defaultValue: null));
     properties
         .add(DiagnosticsProperty('container', container, defaultValue: null));
@@ -658,9 +656,9 @@ class TextFieldSpecUtility<T extends Attribute>
   late final cursorOpacityAnimates =
       BoolUtility((v) => only(cursorOpacityAnimates: v));
 
-  /// Utility for defining [TextFieldSpecAttribute.textFieldContainer]
-  late final textFieldContainer =
-      FlexBoxSpecUtility((v) => only(textFieldContainer: v));
+  /// Utility for defining [TextFieldSpecAttribute.outerContainer]
+  late final outerContainer =
+      FlexBoxSpecUtility((v) => only(outerContainer: v));
 
   /// Utility for defining [TextFieldSpecAttribute.container]
   late final container = FlexBoxSpecUtility((v) => only(container: v));
@@ -722,7 +720,7 @@ class TextFieldSpecUtility<T extends Attribute>
     Brightness? keyboardAppearance,
     ColorDto? autocorrectionTextRectColor,
     bool? cursorOpacityAnimates,
-    FlexBoxSpecAttribute? textFieldContainer,
+    FlexBoxSpecAttribute? outerContainer,
     FlexBoxSpecAttribute? container,
     TextStyleDto? hintTextStyle,
     TextSpecAttribute? helperText,
@@ -754,7 +752,7 @@ class TextFieldSpecUtility<T extends Attribute>
       keyboardAppearance: keyboardAppearance,
       autocorrectionTextRectColor: autocorrectionTextRectColor,
       cursorOpacityAnimates: cursorOpacityAnimates,
-      textFieldContainer: textFieldContainer,
+      outerContainer: outerContainer,
       container: container,
       hintTextStyle: hintTextStyle,
       helperText: helperText,

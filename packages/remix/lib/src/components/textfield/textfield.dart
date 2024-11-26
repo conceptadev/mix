@@ -52,8 +52,8 @@ class TextFieldSpec extends Spec<TextFieldSpec>
 
   final Brightness keyboardAppearance;
   final Color? autocorrectionTextRectColor;
-
-  final FlexBoxSpec textFieldContainer;
+  //TODO: Rename those containers, maybe outerContainer and container.
+  final FlexBoxSpec outerContainer;
   final FlexBoxSpec container;
   final TextStyle? hintTextStyle;
   final TextSpec helperText;
@@ -89,7 +89,7 @@ class TextFieldSpec extends Spec<TextFieldSpec>
     Brightness? keyboardAppearance,
     this.autocorrectionTextRectColor,
     bool? cursorOpacityAnimates,
-    FlexBoxSpec? textFieldContainer,
+    FlexBoxSpec? outerContainer,
     FlexBoxSpec? container,
     this.hintTextStyle,
     TextSpec? helperText,
@@ -114,7 +114,7 @@ class TextFieldSpec extends Spec<TextFieldSpec>
         scrollPadding = scrollPadding ?? const EdgeInsets.all(20.0),
         clipBehavior = clipBehavior ?? Clip.hardEdge,
         keyboardAppearance = keyboardAppearance ?? Brightness.light,
-        textFieldContainer = textFieldContainer ?? const FlexBoxSpec(),
+        outerContainer = outerContainer ?? const FlexBoxSpec(),
         helperText = helperText ?? const TextSpec(),
         container = container ?? const FlexBoxSpec(),
         icon = icon ?? const IconSpec(),
