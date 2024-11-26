@@ -122,16 +122,16 @@ final class TextSpec extends Spec<TextSpec> with _$TextSpec, Diagnosticable {
             spec: this,
             semanticsLabel: semanticsLabel ?? semanticLabel,
             locale: locale,
+            orderOfModifiers: orderOfModifiers,
             duration: animated!.duration,
             curve: animated!.curve,
-            orderOfModifiers: orderOfModifiers,
           )
         : TextSpecWidget(
             text,
             spec: this,
             semanticsLabel: semanticsLabel ?? semanticLabel,
-            orderOfModifiers: orderOfModifiers,
             locale: locale,
+            orderOfModifiers: orderOfModifiers,
           );
   }
 

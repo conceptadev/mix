@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import '../../core/styled_widget.dart';
 import '../../modifiers/internal/render_widget_modifier.dart';
-import '../../theme/mix/mix_theme.dart';
 import 'text_spec.dart';
 
 /// [StyledText] - A styled widget for displaying text with a mix of styles.
@@ -53,11 +52,8 @@ class StyledText extends StyledWidget {
   Widget build(BuildContext context) {
     return withMix(context, (contextNew) {
       final spec = TextSpec.of(contextNew);
-      return spec(
-        text,
-        semanticsLabel: semanticsLabel,
-        locale: locale,
-      );
+
+      return spec(text, semanticsLabel: semanticsLabel, locale: locale);
     });
   }
 }
@@ -151,8 +147,8 @@ class _AnimatedTextSpecWidgetState
       widget.text,
       spec: spec,
       semanticsLabel: widget.semanticsLabel,
-      orderOfModifiers: widget.orderOfModifiers,
       locale: widget.locale,
+      orderOfModifiers: widget.orderOfModifiers,
     );
   }
 }

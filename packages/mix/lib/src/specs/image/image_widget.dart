@@ -53,11 +53,12 @@ class StyledImage extends StyledWidget {
               gaplessPlayback: gaplessPlayback,
               isAntiAlias: isAntiAlias,
               matchTextDirection: matchTextDirection,
-              opacity: opacity,
               orderOfModifiers: orderOfModifiers,
+              opacity: opacity,
             )
           : ImageSpecWidget(
               spec: spec,
+              orderOfModifiers: orderOfModifiers,
               image: image,
               frameBuilder: frameBuilder,
               loadingBuilder: loadingBuilder,
@@ -68,7 +69,6 @@ class StyledImage extends StyledWidget {
               isAntiAlias: isAntiAlias,
               opacity: opacity,
               matchTextDirection: matchTextDirection,
-              orderOfModifiers: orderOfModifiers,
             );
     });
   }
