@@ -99,8 +99,6 @@ class ParameterInfo extends FieldInfo {
 
   final ParameterElement element;
 
-  final ParameterElement element;
-
   const ParameterInfo({
     required super.name,
     required super.type,
