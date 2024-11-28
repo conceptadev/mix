@@ -3,6 +3,45 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 import '../widget_state_controller.dart';
+import '../press_event_mix_state.dart';
+
+abstract interface class WidgetStateHandler {
+  @visibleForTesting
+  late final MixWidgetStateController controller;
+}
+
+mixin HandlePress on WidgetStateHandler {
+  int _pressCount = 0;
+  Timer? _timer;
+
+  void pressCallback();
+
+  void handlePress({required bool value, required Duration delay}) {
+    controller.pressed = value;
+    if (value) {
+      _pressCount++;
+      final initialPressCount = _pressCount;
+      _unpressAfterDelay(initialPressCount, delay: delay);
+    }
+  }
+
+  void _unpressAfterDelay(int initialPressCount, {required Duration delay}) {
+    void unpressCallback() {
+      if (controller.pressed && _pressCount == initialPressCount) {
+        controller.pressed = false;
+        pressCallback();
+      }
+    }
+
+    _timer?.cancel();
+
+    if (delay != Duration.zero) {
+      _timer = Timer(delay, unpressCallback);
+    } else {
+      unpressCallback();
+    }
+  }
+}
 
 class GestureMixStateWidget extends StatefulWidget {
   const GestureMixStateWidget({
@@ -83,15 +122,21 @@ class GestureMixStateWidget extends StatefulWidget {
   State createState() => _GestureMixStateWidgetState();
 }
 
-class _GestureMixStateWidgetState extends State<GestureMixStateWidget> {
-  int _pressCount = 0;
-  Timer? _timer;
-  late final MixWidgetStateController _controller;
+abstract class _GestureMixStateWidgetStateWithController
+    extends State<GestureMixStateWidget> implements WidgetStateHandler {}
+
+class _GestureMixStateWidgetState
+    extends _GestureMixStateWidgetStateWithController with HandlePress {
+  PressEvent _event = PressEvent.idle;
+
+  @override
+  @protected
+  late final MixWidgetStateController controller;
 
   @override
   void initState() {
     super.initState();
-    _controller = widget.controller ?? MixWidgetStateController();
+    controller = widget.controller ?? MixWidgetStateController();
   }
 
   void _onPanUpdate(DragUpdateDetails event) {
@@ -102,42 +147,27 @@ class _GestureMixStateWidgetState extends State<GestureMixStateWidget> {
     widget.onPanDown?.call(details);
   }
 
-  _handlePress(bool value) {
-    _controller.pressed = value;
-    if (value) {
-      _pressCount++;
-      final initialPressCount = _pressCount;
-      _unpressAfterDelay(initialPressCount);
-    }
-  }
-
   void _onPanEnd(DragEndDetails details) {
-    _handlePress(true);
+    handlePress(value: true, delay: widget.unpressDelay);
     widget.onPanEnd?.call(details);
   }
 
-  void _onTapUp(TapUpDetails details) {
-    _controller.longPressed = false;
-    widget.onTapUp?.call(details);
-  }
-
-  void _onTapCancel() {
-    _controller.longPressed = false;
-    widget.onTapCancel?.call();
-  }
-
   void _onLongPressStart(LongPressStartDetails details) {
-    _controller.longPressed = true;
+    controller.longPressed = true;
     widget.onLongPressStart?.call(details);
   }
 
   void _onLongPressEnd(LongPressEndDetails details) {
-    _controller.longPressed = false;
+    controller.longPressed = false;
+    controller.pressed = false;
+    setState(() {
+      _event = PressEvent.idle;
+    });
     widget.onLongPressEnd?.call(details);
   }
 
   void _onLongPressCancel() {
-    _controller.longPressed = false;
+    controller.longPressed = false;
     widget.onLongPressCancel?.call();
   }
 
@@ -149,28 +179,30 @@ class _GestureMixStateWidgetState extends State<GestureMixStateWidget> {
     widget.onPanStart?.call(details);
   }
 
-  void _unpressAfterDelay(int initialPressCount) {
-    void unpressCallback() {
-      if (_controller.pressed && _pressCount == initialPressCount) {
-        _controller.pressed = false;
-      }
-    }
-
-    _timer?.cancel();
-
-    final delay = widget.unpressDelay;
-
-    if (delay != Duration.zero) {
-      _timer = Timer(delay, unpressCallback);
-    } else {
-      unpressCallback();
-    }
-  }
-
   void _onTap() {
-    _handlePress(true);
+    handlePress(value: true, delay: widget.unpressDelay);
+
     widget.onTap?.call();
     if (widget.enableFeedback) Feedback.forTap(context);
+  }
+
+  void _onTapDown(TapDownDetails details) {
+    setState(() {
+      _event = PressEvent.onTapDown;
+    });
+  }
+
+  void _onTapUp(TapUpDetails details) {
+    setState(() {
+      _event = PressEvent.onTapUp;
+    });
+    controller.longPressed = false;
+    widget.onTapUp?.call(details);
+  }
+
+  void _onTapCancel() {
+    controller.longPressed = false;
+    widget.onTapCancel?.call();
   }
 
   void _onLongPress() {
@@ -182,28 +214,40 @@ class _GestureMixStateWidgetState extends State<GestureMixStateWidget> {
   void dispose() {
     _timer?.cancel();
     // Dispose if  being managed internally
-    if (widget.controller == null) _controller.dispose();
+    if (widget.controller == null) controller.dispose();
     super.dispose();
   }
 
   @override
+  void pressCallback() {
+    setState(() {
+      _event = PressEvent.idle;
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTapUp: widget.onTap != null ? _onTapUp : null,
-      onTap: widget.onTap != null ? _onTap : null,
-      onTapCancel: widget.onTap != null ? _onTapCancel : null,
-      onLongPressCancel: widget.onLongPress != null ? _onLongPressCancel : null,
-      onLongPress: widget.onLongPress != null ? _onLongPress : null,
-      onLongPressStart: widget.onLongPress != null ? _onLongPressStart : null,
-      onLongPressEnd: widget.onLongPress != null ? _onLongPressEnd : null,
-      onPanDown: widget.onPanDown != null ? _onPanDown : null,
-      onPanStart: widget.onPanStart != null ? _onPanStart : null,
-      onPanUpdate: widget.onPanUpdate != null ? _onPanUpdate : null,
-      onPanEnd: widget.onPanEnd != null ? _onPanEnd : null,
-      onPanCancel: widget.onPanCancel != null ? _onPanCancel : null,
-      behavior: widget.hitTestBehavior,
-      excludeFromSemantics: widget.excludeFromSemantics,
-      child: widget.child,
+    return PressEventMixWidgetState(
+      _event,
+      child: GestureDetector(
+        onTapDown: widget.onTap != null ? _onTapDown : null,
+        onTapUp: widget.onTap != null ? _onTapUp : null,
+        onTap: widget.onTap != null ? _onTap : null,
+        onTapCancel: widget.onTap != null ? _onTapCancel : null,
+        onLongPressCancel:
+            widget.onLongPress != null ? _onLongPressCancel : null,
+        onLongPress: widget.onLongPress != null ? _onLongPress : null,
+        onLongPressStart: widget.onLongPress != null ? _onLongPressStart : null,
+        onLongPressEnd: widget.onLongPress != null ? _onLongPressEnd : null,
+        onPanDown: widget.onPanDown != null ? _onPanDown : null,
+        onPanStart: widget.onPanStart != null ? _onPanStart : null,
+        onPanUpdate: widget.onPanUpdate != null ? _onPanUpdate : null,
+        onPanEnd: widget.onPanEnd != null ? _onPanEnd : null,
+        onPanCancel: widget.onPanCancel != null ? _onPanCancel : null,
+        behavior: widget.hitTestBehavior,
+        excludeFromSemantics: widget.excludeFromSemantics,
+        child: widget.child,
+      ),
     );
   }
 }
