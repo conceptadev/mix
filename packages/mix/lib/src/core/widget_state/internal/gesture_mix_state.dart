@@ -14,7 +14,7 @@ mixin HandlePress on WidgetStateHandler {
   int _pressCount = 0;
   Timer? _timer;
 
-  void pressCallback();
+  void returnToStartState();
 
   void handlePress({required bool value, required Duration delay}) {
     controller.pressed = value;
@@ -29,7 +29,7 @@ mixin HandlePress on WidgetStateHandler {
     void unpressCallback() {
       if (controller.pressed && _pressCount == initialPressCount) {
         controller.pressed = false;
-        pressCallback();
+        returnToStartState();
       }
     }
 
@@ -202,6 +202,7 @@ class _GestureMixStateWidgetState
 
   void _onTapCancel() {
     controller.longPressed = false;
+    returnToStartState();
     widget.onTapCancel?.call();
   }
 
@@ -219,7 +220,7 @@ class _GestureMixStateWidgetState
   }
 
   @override
-  void pressCallback() {
+  void returnToStartState() {
     setState(() {
       _event = PressEvent.idle;
     });

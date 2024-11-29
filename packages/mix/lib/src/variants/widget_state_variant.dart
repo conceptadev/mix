@@ -2,7 +2,6 @@ import 'package:flutter/widgets.dart';
 
 import '../core/factory/style_mix.dart';
 import '../core/variant.dart';
-import '../core/widget_state/internal/gesture_mix_state.dart';
 import '../core/widget_state/internal/mouse_region_mix_state.dart';
 import '../core/widget_state/press_event_mix_state.dart';
 import '../core/widget_state/widget_state_controller.dart';
