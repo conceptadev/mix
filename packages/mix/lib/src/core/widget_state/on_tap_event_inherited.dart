@@ -1,7 +1,6 @@
 import 'package:flutter/widgets.dart';
 
 enum OnTapEvent {
-  idle,
   up,
   down;
 }
@@ -13,7 +12,7 @@ class OnTapEventInherited extends InheritedWidget {
     return context.dependOnInheritedWidgetOfExactType();
   }
 
-  final OnTapEvent event;
+  final OnTapEvent? event;
 
   @override
   bool updateShouldNotify(OnTapEventInherited oldWidget) {

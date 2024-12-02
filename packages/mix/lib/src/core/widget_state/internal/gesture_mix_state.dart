@@ -128,7 +128,7 @@ abstract class _GestureMixStateWidgetStateWithController
 
 class _GestureMixStateWidgetState
     extends _GestureMixStateWidgetStateWithController with HandlePress {
-  OnTapEvent _event = OnTapEvent.idle;
+  OnTapEvent? _event;
 
   @override
   @protected
@@ -164,7 +164,7 @@ class _GestureMixStateWidgetState
     controller.longPressed = false;
     controller.pressed = false;
     setState(() {
-      _event = OnTapEvent.idle;
+      _event = null;
     });
     widget.onLongPressEnd?.call(details);
   }
@@ -227,7 +227,7 @@ class _GestureMixStateWidgetState
   @override
   void returnToStartState() {
     setState(() {
-      _event = OnTapEvent.idle;
+      _event = null;
     });
   }
 

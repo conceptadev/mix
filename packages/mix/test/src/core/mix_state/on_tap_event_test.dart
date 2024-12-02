@@ -35,7 +35,7 @@ Future<TestGesture> _setupPressableWidgetWithInitialTests(
   );
 
   // Initial state should be idle
-  expect(tester.findPressEventWidget().event, OnTapEvent.idle);
+  expect(tester.findPressEventWidget().event, isNull);
 
   // Press down on the PressableBox
   final gesture = await tester.press(find.byType(PressableBox));
@@ -62,7 +62,7 @@ void main() {
       expect(counter.value, equals(1));
 
       await tester.pump(const Duration(milliseconds: 300));
-      expect(tester.findPressEventWidget().event, OnTapEvent.idle);
+      expect(tester.findPressEventWidget().event, isNull);
     },
   );
 
@@ -78,7 +78,7 @@ void main() {
       await tester.pumpAndSettle();
 
       await tester.pump(const Duration(milliseconds: 300));
-      expect(tester.findPressEventWidget().event, OnTapEvent.idle);
+      expect(tester.findPressEventWidget().event, isNull);
 
       expect(counter.value, equals(0));
     },
