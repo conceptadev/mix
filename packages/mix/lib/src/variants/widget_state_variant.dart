@@ -3,7 +3,6 @@ import 'package:flutter/widgets.dart';
 import '../core/factory/style_mix.dart';
 import '../core/variant.dart';
 import '../core/widget_state/internal/mouse_region_mix_state.dart';
-import '../core/widget_state/press_event_mix_state.dart';
 import '../core/widget_state/widget_state_controller.dart';
 import 'context_variant.dart';
 
@@ -61,19 +60,8 @@ class OnHoverVariant extends MixWidgetStateVariant<PointerPosition?> {
 }
 
 /// Applies styles when the widget is pressed.
-class OnPressVariant extends MixWidgetStateVariant<PressEvent> {
-  const OnPressVariant();
-
-  @override
-  PressEvent builder(BuildContext context) {
-    final event = PressEventMixWidgetState.of(context)?.event;
-
-    return event ?? PressEvent.idle;
-  }
-
-  @override
-  bool when(BuildContext context) =>
-      MixWidgetState.hasStateOf(context, MixWidgetState.pressed);
+class OnPressVariant extends _ToggleMixStateVariant {
+  const OnPressVariant() : super(MixWidgetState.pressed);
 }
 
 /// Applies styles when the widget is long pressed.

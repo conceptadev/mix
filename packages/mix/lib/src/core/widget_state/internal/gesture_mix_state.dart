@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
+import '../on_tap_event_inherited.dart';
 import '../widget_state_controller.dart';
-import '../press_event_mix_state.dart';
 
 abstract interface class WidgetStateHandler {
   @visibleForTesting
@@ -127,7 +127,7 @@ abstract class _GestureMixStateWidgetStateWithController
 
 class _GestureMixStateWidgetState
     extends _GestureMixStateWidgetStateWithController with HandlePress {
-  PressEvent _event = PressEvent.idle;
+  OnTapEvent _event = OnTapEvent.idle;
 
   @override
   @protected
@@ -154,6 +154,8 @@ class _GestureMixStateWidgetState
 
   void _onLongPressStart(LongPressStartDetails details) {
     controller.longPressed = true;
+    _event = OnTapEvent.down;
+    controller.pressed = _event == OnTapEvent.down;
     widget.onLongPressStart?.call(details);
   }
 
@@ -161,13 +163,14 @@ class _GestureMixStateWidgetState
     controller.longPressed = false;
     controller.pressed = false;
     setState(() {
-      _event = PressEvent.idle;
+      _event = OnTapEvent.idle;
     });
     widget.onLongPressEnd?.call(details);
   }
 
   void _onLongPressCancel() {
     controller.longPressed = false;
+    controller.pressed = false;
     widget.onLongPressCancel?.call();
   }
 
@@ -188,13 +191,13 @@ class _GestureMixStateWidgetState
 
   void _onTapDown(TapDownDetails details) {
     setState(() {
-      _event = PressEvent.onTapDown;
+      _event = OnTapEvent.down;
     });
   }
 
   void _onTapUp(TapUpDetails details) {
     setState(() {
-      _event = PressEvent.onTapUp;
+      _event = OnTapEvent.up;
     });
     controller.longPressed = false;
     widget.onTapUp?.call(details);
@@ -202,6 +205,7 @@ class _GestureMixStateWidgetState
 
   void _onTapCancel() {
     controller.longPressed = false;
+    controller.pressed = false;
     returnToStartState();
     widget.onTapCancel?.call();
   }
@@ -222,13 +226,13 @@ class _GestureMixStateWidgetState
   @override
   void returnToStartState() {
     setState(() {
-      _event = PressEvent.idle;
+      _event = OnTapEvent.idle;
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return PressEventMixWidgetState(
+    return OnTapEventInherited(
       _event,
       child: GestureDetector(
         onTapDown: widget.onTap != null ? _onTapDown : null,
