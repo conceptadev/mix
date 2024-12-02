@@ -7,6 +7,7 @@ import '../widget_state_controller.dart';
 
 abstract interface class WidgetStateHandler {
   @visibleForTesting
+  // ignore: avoid-unassigned-late-fields
   late final MixWidgetStateController controller;
 }
 
