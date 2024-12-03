@@ -1,0 +1,42 @@
+name: "Lint PR"
+
+on: push
+
+jobs:
+  production:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup flutter
+        uses: subosito/flutter-action@v2
+        with:
+        channel: stable
+
+      - name: Bootstrap App
+        shell: bash
+        run: |
+          flutter pub get
+
+      - name: Bootstrap Widgetbook
+        working-directory: widgetbook
+        shell: bash
+        run: |
+          cd packages/remix/demo
+          flutter pub get
+          dart run build_runner build -d
+
+      - name: Build Widgetbook
+        working-directory: widgetbook
+        shell: bash
+        run: |
+          cd packages/remix/demo
+          flutter build web
+
+      - name: Install Widgetbook CLI
+        run: dart pub global activate widgetbook_cli
+
+      - name: Upload Widgetbook
+        working-directory: widgetbook
+        run: widgetbook cloud build push --api-key ${{ secrets.WIDGETBOOK_API_KEY }}
