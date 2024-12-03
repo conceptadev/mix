@@ -77,13 +77,13 @@ class BreakpointToken extends MixToken<Breakpoint> {
   }
 }
 
-/// A resolver for breakpoint tokens.
+/// {@macro mix.token.resolver}
 @immutable
 class BreakpointResolver extends Breakpoint with WithTokenResolver<Breakpoint> {
   @override
   final BuildContextResolver<Breakpoint> resolve;
 
-  /// Creates a new breakpoint resolver with the given [resolve] function.
+  /// {@macro mix.token.resolver}
   const BreakpointResolver(this.resolve);
 }
 
