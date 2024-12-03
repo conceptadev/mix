@@ -5,45 +5,6 @@ import 'package:flutter/material.dart';
 import '../on_tap_event_inherited.dart';
 import '../widget_state_controller.dart';
 
-abstract interface class WidgetStateHandler {
-  @visibleForTesting
-  // ignore: avoid-unassigned-late-fields
-  late final MixWidgetStateController controller;
-}
-
-mixin HandlePress on WidgetStateHandler {
-  int _pressCount = 0;
-  Timer? _timer;
-
-  void returnToStartState();
-
-  void handlePress({required bool value, required Duration delay}) {
-    controller.pressed = value;
-    if (value) {
-      _pressCount++;
-      final initialPressCount = _pressCount;
-      _unpressAfterDelay(initialPressCount, delay: delay);
-    }
-  }
-
-  void _unpressAfterDelay(int initialPressCount, {required Duration delay}) {
-    void unpressCallback() {
-      if (controller.pressed && _pressCount == initialPressCount) {
-        controller.pressed = false;
-        returnToStartState();
-      }
-    }
-
-    _timer?.cancel();
-
-    if (delay != Duration.zero) {
-      _timer = Timer(delay, unpressCallback);
-    } else {
-      unpressCallback();
-    }
-  }
-}
-
 class GestureMixStateWidget extends StatefulWidget {
   const GestureMixStateWidget({
     super.key,
@@ -123,21 +84,22 @@ class GestureMixStateWidget extends StatefulWidget {
   State createState() => _GestureMixStateWidgetState();
 }
 
-abstract class _GestureMixStateWidgetStateWithController
-    extends State<GestureMixStateWidget> implements WidgetStateHandler {}
-
-class _GestureMixStateWidgetState
-    extends _GestureMixStateWidgetStateWithController with HandlePress {
-  OnTapEvent? _event;
-
-  @override
-  @protected
-  late final MixWidgetStateController controller;
+class _GestureMixStateWidgetState extends State<GestureMixStateWidget> {
+  int _pressCount = 0;
+  Timer? _timer;
+  OnTapEvent? _onTapEvent;
+  late final MixWidgetStateController _controller;
 
   @override
   void initState() {
     super.initState();
-    controller = widget.controller ?? MixWidgetStateController();
+    _controller = widget.controller ?? MixWidgetStateController();
+  }
+
+  void _restoreTapEvent() {
+    setState(() {
+      _onTapEvent = null;
+    });
   }
 
   void _onPanUpdate(DragUpdateDetails event) {
@@ -148,30 +110,59 @@ class _GestureMixStateWidgetState
     widget.onPanDown?.call(details);
   }
 
+  _handlePress(bool value) {
+    _controller.pressed = value;
+    if (value) {
+      _pressCount++;
+      final initialPressCount = _pressCount;
+      _unpressAfterDelay(initialPressCount);
+    }
+  }
+
   void _onPanEnd(DragEndDetails details) {
-    handlePress(value: true, delay: widget.unpressDelay);
+    _handlePress(true);
     widget.onPanEnd?.call(details);
   }
 
+  void _onTapUp(TapUpDetails details) {
+    setState(() {
+      _onTapEvent = OnTapEvent.up;
+    });
+    _controller.longPressed = false;
+    widget.onTapUp?.call(details);
+  }
+
+  void _onTapDown(TapDownDetails details) {
+    setState(() {
+      _onTapEvent = OnTapEvent.down;
+    });
+  }
+
+  void _onTapCancel() {
+    _controller.longPressed = false;
+    _controller.pressed = false;
+    _restoreTapEvent();
+    widget.onTapCancel?.call();
+  }
+
   void _onLongPressStart(LongPressStartDetails details) {
-    controller.longPressed = true;
-    _event = OnTapEvent.down;
-    controller.pressed = _event == OnTapEvent.down;
+    _controller.longPressed = true;
+    _onTapEvent = OnTapEvent.down;
+    _controller.pressed = true;
     widget.onLongPressStart?.call(details);
   }
 
   void _onLongPressEnd(LongPressEndDetails details) {
-    controller.longPressed = false;
-    controller.pressed = false;
-    setState(() {
-      _event = null;
-    });
+    _controller.longPressed = false;
+    _controller.pressed = false;
+    _restoreTapEvent();
     widget.onLongPressEnd?.call(details);
   }
 
   void _onLongPressCancel() {
-    controller.longPressed = false;
-    controller.pressed = false;
+    _controller.longPressed = false;
+    _controller.pressed = false;
+    _restoreTapEvent();
     widget.onLongPressCancel?.call();
   }
 
@@ -183,32 +174,29 @@ class _GestureMixStateWidgetState
     widget.onPanStart?.call(details);
   }
 
-  void _onTap() {
-    handlePress(value: true, delay: widget.unpressDelay);
+  void _unpressAfterDelay(int initialPressCount) {
+    void unpressCallback() {
+      if (_controller.pressed && _pressCount == initialPressCount) {
+        _controller.pressed = false;
+        _restoreTapEvent();
+      }
+    }
 
+    _timer?.cancel();
+
+    final delay = widget.unpressDelay;
+
+    if (delay != Duration.zero) {
+      _timer = Timer(delay, unpressCallback);
+    } else {
+      unpressCallback();
+    }
+  }
+
+  void _onTap() {
+    _handlePress(true);
     widget.onTap?.call();
     if (widget.enableFeedback) Feedback.forTap(context);
-  }
-
-  void _onTapDown(TapDownDetails details) {
-    setState(() {
-      _event = OnTapEvent.down;
-    });
-  }
-
-  void _onTapUp(TapUpDetails details) {
-    setState(() {
-      _event = OnTapEvent.up;
-    });
-    controller.longPressed = false;
-    widget.onTapUp?.call(details);
-  }
-
-  void _onTapCancel() {
-    controller.longPressed = false;
-    controller.pressed = false;
-    returnToStartState();
-    widget.onTapCancel?.call();
   }
 
   void _onLongPress() {
@@ -220,21 +208,14 @@ class _GestureMixStateWidgetState
   void dispose() {
     _timer?.cancel();
     // Dispose if  being managed internally
-    if (widget.controller == null) controller.dispose();
+    if (widget.controller == null) _controller.dispose();
     super.dispose();
-  }
-
-  @override
-  void returnToStartState() {
-    setState(() {
-      _event = null;
-    });
   }
 
   @override
   Widget build(BuildContext context) {
     return OnTapEventInherited(
-      _event,
+      _onTapEvent,
       child: GestureDetector(
         onTapDown: widget.onTap != null ? _onTapDown : null,
         onTapUp: widget.onTap != null ? _onTapUp : null,
