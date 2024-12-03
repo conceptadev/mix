@@ -36,7 +36,7 @@ class FortalezaButtonStyle extends ButtonStyle {
     final spinnerDisabled = $.spinner.color.$neutralAlpha(7);
 
     final solidVariant = Style(
-      $.container.color.$accent(),
+      $.container.color.amberAccent(),
       $.label.style.color.white(),
       $.spinner.color.white(),
       $.icon.color.white(),
