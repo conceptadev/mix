@@ -36,18 +36,16 @@ jobs:
           flutter pub get
 
       - name: Bootstrap Widgetbook
-        working-directory: widgetbook
+        working-directory: packages/remix/demo
         shell: bash
         run: |
-          cd packages/remix/demo
           flutter pub get
           dart run build_runner build -d
 
       - name: Build Widgetbook
-        working-directory: widgetbook
+        working-directory: packages/remix/demo
         shell: bash
         run: |
-          cd packages/remix/demo
           flutter build web
 
       - name: Install Widgetbook CLI
