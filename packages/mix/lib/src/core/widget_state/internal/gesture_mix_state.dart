@@ -214,7 +214,7 @@ class _GestureMixStateWidgetState extends State<GestureMixStateWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return OnTapEventInherited(
+    return OnTapEventProvider(
       _onTapEvent,
       child: GestureDetector(
         onTapDown: widget.onTap != null ? _onTapDown : null,

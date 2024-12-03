@@ -5,17 +5,17 @@ enum OnTapEvent {
   down;
 }
 
-class OnTapEventInherited extends InheritedWidget {
-  const OnTapEventInherited(this.event, {super.key, required super.child});
+class OnTapEventProvider extends InheritedWidget {
+  const OnTapEventProvider(this.event, {super.key, required super.child});
 
-  static OnTapEventInherited? of(BuildContext context) {
+  static OnTapEventProvider? of(BuildContext context) {
     return context.dependOnInheritedWidgetOfExactType();
   }
 
   final OnTapEvent? event;
 
   @override
-  bool updateShouldNotify(OnTapEventInherited oldWidget) {
+  bool updateShouldNotify(OnTapEventProvider oldWidget) {
     return event != oldWidget.event;
   }
 }

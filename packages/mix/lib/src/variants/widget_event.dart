@@ -14,7 +14,7 @@ class OnTapEventVariant extends IVariant {
   VariantAttribute call(Style Function(OnTapEvent) fn) {
     return ContextVariantBuilder(
       (BuildContext context) {
-        final event = OnTapEventInherited.of(context)?.event;
+        final event = OnTapEventProvider.of(context)?.event;
         if (event == null) {
           return const Style.empty();
         }
@@ -28,7 +28,7 @@ class OnTapEventVariant extends IVariant {
   @override
   bool when(BuildContext context) {
     return MixWidgetState.hasStateOf(context, MixWidgetState.pressed) &&
-        OnTapEventInherited.of(context) != null;
+        OnTapEventProvider.of(context) != null;
   }
 
   @override

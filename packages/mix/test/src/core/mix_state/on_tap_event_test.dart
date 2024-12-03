@@ -6,7 +6,7 @@ import '../../../helpers/context_finder.dart';
 import '../../../helpers/testing_utils.dart';
 
 extension _WidgetTesterX on WidgetTester {
-  OnTapEventInherited findPressEventWidget() {
+  OnTapEventProvider findPressEventWidget() {
     return findWidgetOfType();
   }
 }
