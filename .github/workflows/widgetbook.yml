@@ -52,5 +52,5 @@ jobs:
         run: dart pub global activate widgetbook_cli
 
       - name: Upload Widgetbook
-        working-directory: widgetbook
+        working-directory: packages/remix/demo
         run: widgetbook cloud build push --api-key ${{ secrets.WIDGETBOOK_API_KEY }}
