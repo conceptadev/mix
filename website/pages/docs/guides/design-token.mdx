@@ -43,15 +43,63 @@ MixTheme(
 
 `MixThemeData` is a class that defines the values for the design tokens that will be used throughout the application. It has five properties related to Design Tokens: `colors`, `textStyles`, `spaces`, `radii`, and `breakpoints`. Each property is a map that contains the tokens and their values.
 
+```dart {1-4}
+const primary = ColorToken('primary');
+const h1 = TextStyleToken('h1');
+const radiusMedium = RadiusToken('radiusMedium');
+const spaceMedium = SpaceToken('spaceMedium');
+
+final docTheme = MixThemeData(
+  colors: {
+    primary: Colors.lightBlue,
+  },
+  textStyles: {
+    h1: const TextStyle(
+      fontSize: 24,
+      fontWeight: FontWeight.bold,
+    ),
+  },
+  radii: {
+    radiusMedium: const Radius.circular(10),
+  },
+  spaces: {
+    spaceMedium: 10,
+  },
+);
+```
+
 Also, `MixThemeData` has an additional property called `defaultOrderOfModifiers`, which is used to override the default order of modifiers. Therefore, if you prefer to use a different order of modifiers, you can set it in the `defaultOrderOfModifiers` instead of using the `orderOfModifiers` property in each `StyledWidget`. To set your own order of modifiers, you just need to pass a list of types that extends `WidgetModifierSpec`. For instance:
 
-```dart {3-5}
-final overrideOrderTheme = MixThemeData(
-  defaultOrderOfModifiers: [
+```dart
+final docTheme = MixThemeData(
+
+  // ...
+  defaultOrderOfModifiers: const [
     SizedBoxModifierSpec,
     ClipRectModifierSpec,
     TransformModifierSpec,
   ],
+);
+```
+
+### Dynamic Themes
+
+Mix allows you to define dynamic themes, which means that the values of the design tokens can be resolved dynamically using a [BuildContext](https://api.flutter.dev/flutter/widgets/BuildContext-class.html). To do this, you need to use the `ColorResolver`, `TextStyleResolver`, `RadiusResolver` and `BreakpointResolver` classes. These classes are used to resolve the values of the design tokens based on the current `BuildContext`.
+
+As an example, let's say you want to define a `surface` color token that changes based on the platform brightness. You can do this by using the `ColorResolver` class:
+
+```dart
+final surface = ColorToken('surface');
+
+final docTheme = MixThemeData(
+  colors: {
+    surface: ColorResolver((context) {
+      if (MediaQuery.of(context).platformBrightness == Brightness.dark) {
+        return Colors.black;
+      }
+      return Colors.white;
+    }),
+  },
 );
 ```
 

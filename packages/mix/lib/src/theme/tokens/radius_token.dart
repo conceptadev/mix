@@ -26,11 +26,13 @@ class RadiusToken extends MixToken<Radius> {
   }
 }
 
+/// {@macro mix.token.resolver}
 @immutable
 class RadiusResolver extends Radius with WithTokenResolver<Radius> {
   @override
   final BuildContextResolver<Radius> resolve;
 
+  /// {@macro mix.token.resolver}
   const RadiusResolver(this.resolve) : super.circular(0);
 }
 
