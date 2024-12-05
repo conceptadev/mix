@@ -1,6 +1,6 @@
 name: mix_generator
 description: A code generator for Mix, an expressive way to effortlessly build design systems in Flutter.
-version: 0.3.1
+version: 0.3.2
 homepage: https://github.com/conceptadev/mix
 
 environment:
@@ -8,7 +8,7 @@ environment:
   flutter: ">=3.19.0"
 
 dependencies:
-  mix_annotations: ^0.3.0
+  mix_annotations: ^0.3.1
   build: ^2.4.1
   source_gen: ^1.5.0
   analyzer: ^6.1.0

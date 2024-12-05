@@ -1,3 +1,46 @@
+## 1.6.0
+
+ - **REFACTOR**: Solve dcm lint issues (#519).
+ - **REFACTOR**: ShapeBorder merge (#490).
+ - **REFACTOR**: Rewrite Fortaleza theme using the new code gen for tokens (#528).
+ - **REFACTOR**: Rewrite all components in the new Archtecture (#467).
+ - **FIX**: FlexSpecWidget prioritizes the direction in spec (#414).
+ - **FIX**: Correct handling of individual border sides (#408).
+ - **FIX**: Order of modifiers implementation on Box, Image and Text (#529).
+ - **FIX**: Pressable disposes controller only if it creates it (#424).
+ - **FIX**: reset modifiers and directives when using fluentAPI (#482).
+ - **FIX**: Update OnBrightnessVariant to use `MediaQuery` instead of `Theme` (#471).
+ - **FIX**: Style when merged with an AnimatedStyle should generate an AnimatedStyle (#472).
+ - **FIX**: Added missing widget state utilities (#411).
+ - **FIX**(docs): fix fn level docs for Style::applyVariants (#460).
+ - **FIX**: Shadow list animation (#445).
+ - **FIX**: HitTestBehavior when there is a Interectable in the tree (#437).
+ - **FIX**: breakpoint utility merge exception (#421).
+ - **FEAT**: add error state to MixWidgetState (#489).
+ - **FEAT**: Improve spring curve.
+ - **FEAT**: implement toast component (#503).
+ - **FEAT**: Add more directives to Colors (#477).
+ - **FEAT**: implement a way to clear inline modifiers (#478).
+ - **FEAT**: Fluent API (#475).
+ - **FEAT**: Create StrokeAlignUtility (#496).
+ - **FEAT**: Utilities for text height behavior (#495).
+ - **FEAT**: Create mouse cursor Decorator (#263).
+ - **FEAT**: Improve error messages (#491).
+ - **FEAT**: Rewrite FlexBox as a Mix's primitive component (#517).
+ - **FEAT**: Add parameter onEnd for AnimatedStyle (#458).
+ - **FEAT**: `SingleChildScrollView` widget modifier (#427).
+ - **FEAT**: Create code gen for design tokens (#521).
+ - **FEAT**: Create a specific utility to Transform.rotate (#434).
+ - **FEAT**: Add CustomOutlinedBorder's  (#487).
+ - **FEAT**: TargetPlatform and web variants (#431).
+ - **FEAT**: Create Select component (#448).
+ - **FEAT**: remix-styling-configuration (#483).
+ - **FEAT**: Remix improvements and further improvements (#410).
+ - **FEAT**: transform.translate (#484).
+ - **FEAT**: Slider component (#509).
+ - **DOCS**: Add section for `TokenResolver` (#537).
+ - **DOCS**: improve mix theme data features explanations (#404).
+
 #### `mix` - `v1.5.2`
 
  - **REFACTOR**: ShapeBorder merge (#490).
