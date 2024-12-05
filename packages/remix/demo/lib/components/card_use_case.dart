@@ -33,13 +33,25 @@ Widget buildCard(BuildContext context) {
               children: [
                 StyledText(
                   'Leo Farias',
-                  style: Style($text.style.$text3()),
+                  style: Style(
+                    $text.chain
+                      ..style.fontSize(14)
+                      ..style.fontWeight.bold()
+                      ..style.color.black87(),
+                    $on.dark(
+                      $text.style.color.white(),
+                    ),
+                  ),
                 ),
                 StyledText(
                   'Flutter Engineer',
                   style: Style(
-                    $text.style.$text2(),
-                    $text.style.color.$neutral(10),
+                    $text.chain
+                      ..style.fontSize(12)
+                      ..style.color.black54(),
+                    $on.dark(
+                      $text.style.color.white70(),
+                    ),
                   ),
                 ),
               ],

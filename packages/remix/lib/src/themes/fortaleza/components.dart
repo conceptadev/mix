@@ -48,7 +48,7 @@ class FortalezaComponentTheme extends RemixComponentTheme {
     required super.slider,
   });
 
-  factory FortalezaComponentTheme.light() {
+  static RemixComponentTheme light() {
     return const FortalezaComponentTheme(
       accordion: FortalezaAccordionStyle(),
       avatar: FortalezaAvatarStyle(),
@@ -75,64 +75,13 @@ class FortalezaComponentTheme extends RemixComponentTheme {
     );
   }
 
-  factory FortalezaComponentTheme.dark() {
+  static RemixComponentTheme dark() {
     return FortalezaComponentTheme.light().copyWith(
       avatar: const FortalezaDarkAvatarStyle(),
       badge: const FortalezaDarkBadgeStyle(),
       segmentedControl: const FortalezaDarkSegmentedControlStyle(),
       select: const FortalezaDarkSelectStyle(),
       switchComponent: const FortalezaDarkSwitchStyle(),
-    );
-  }
-
-  @override
-  FortalezaComponentTheme copyWith({
-    covariant FortalezaAccordionStyle? accordion,
-    covariant FortalezaAvatarStyle? avatar,
-    covariant FortalezaBadgeStyle? badge,
-    covariant FortalezaButtonStyle? button,
-    covariant FortalezaCalloutStyle? callout,
-    covariant FortalezaCardStyle? card,
-    covariant FortalezaCheckboxStyle? checkbox,
-    covariant FortalezaDialogStyle? dialog,
-    covariant FortalezaChipStyle? chip,
-    covariant FortalezaDividerStyle? divider,
-    covariant FortalezaIconButtonStyle? iconButton,
-    covariant FortalezaMenuItemStyle? menuItem,
-    covariant FortalezaProgressStyle? progress,
-    covariant FortalezaRadioStyle? radio,
-    covariant FortalezaScaffoldStyle? scaffold,
-    covariant FortalezaSegmentedControlStyle? segmentedControl,
-    covariant FortalezaSelectStyle? select,
-    covariant FortalezaSpinnerStyle? spinner,
-    covariant FortalezaSwitchStyle? switchComponent,
-    covariant FortalezaTextFieldStyle? textField,
-    covariant FortalezaToastStyle? toast,
-    covariant FortalezaSliderStyle? slider,
-  }) {
-    return FortalezaComponentTheme(
-      accordion: accordion ?? this.accordion,
-      avatar: avatar ?? this.avatar,
-      badge: badge ?? this.badge,
-      button: button ?? this.button,
-      callout: callout ?? this.callout,
-      card: card ?? this.card,
-      checkbox: checkbox ?? this.checkbox,
-      dialog: dialog ?? this.dialog,
-      chip: chip ?? this.chip,
-      divider: divider ?? this.divider,
-      iconButton: iconButton ?? this.iconButton,
-      menuItem: menuItem ?? this.menuItem,
-      progress: progress ?? this.progress,
-      radio: radio ?? this.radio,
-      scaffold: scaffold ?? this.scaffold,
-      segmentedControl: segmentedControl ?? this.segmentedControl,
-      select: select ?? this.select,
-      spinner: spinner ?? this.spinner,
-      switchComponent: switchComponent ?? this.switchComponent,
-      textField: textField ?? this.textField,
-      toast: toast ?? this.toast,
-      slider: slider ?? this.slider,
     );
   }
 }

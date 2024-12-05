@@ -29,24 +29,11 @@ class FortalezaTokens {
         neutral: RadixColors.slate.swatch,
         neutralAlpha: RadixColors.slate.alphaSwatch,
       ),
-      radii: const FortalezaRadius(
-        radius1: Radius.circular(4),
-        radius2: Radius.circular(8),
-        radius3: Radius.circular(12),
-        radius4: Radius.circular(16),
-        radius5: Radius.circular(24),
-        radius6: Radius.circular(32),
+      radii: FortalezaRadius.values(
+        [4, 8, 12, 16, 24, 32],
       ),
-      spaces: const FortalezaSpace(
-        space1: 4,
-        space2: 8,
-        space3: 12,
-        space4: 16,
-        space5: 24,
-        space6: 32,
-        space7: 40,
-        space8: 48,
-        space9: 64,
+      spaces: FortalezaSpace.values(
+        [4, 8, 12, 16, 24, 32, 40, 48, 64],
       ),
       textStyles: const FortalezaTextStyle(
         text1: TextStyle(fontSize: 12, letterSpacing: 0.0025, height: 1.33),
@@ -77,10 +64,10 @@ class FortalezaTokens {
 
   MixThemeData toThemeData() {
     return MixThemeData(
-      colors: colors.toMap,
-      spaces: spaces.toMap,
-      textStyles: textStyles.toMap,
-      radii: radii.toMap,
+      colors: colors.toMap(),
+      spaces: spaces.toMap(),
+      textStyles: textStyles.toMap(),
+      radii: radii.toMap(),
     );
   }
 
@@ -122,7 +109,7 @@ class FortalezaColor {
     required this.neutralAlpha,
   });
 
-  Map<ColorToken, Color> get toMap => _$FortalezaColorToMap(this);
+  Map<ColorToken, Color> toMap() => _$FortalezaColorToMap(this);
 }
 
 @MixableToken(Radius)
@@ -143,7 +130,19 @@ class FortalezaRadius {
     required this.radius6,
   });
 
-  Map<RadiusToken, Radius> get toMap => _$FortalezaRadiusToMap(this);
+  factory FortalezaRadius.values(List<double> values) {
+    assert(values.length == 6, 'Expected 6 values, got ${values.length}');
+    return FortalezaRadius(
+      radius1: Radius.circular(values[0]),
+      radius2: Radius.circular(values[1]),
+      radius3: Radius.circular(values[2]),
+      radius4: Radius.circular(values[3]),
+      radius5: Radius.circular(values[4]),
+      radius6: Radius.circular(values[5]),
+    );
+  }
+
+  Map<RadiusToken, Radius> toMap() => _$FortalezaRadiusToMap(this);
 }
 
 @MixableToken(double)
@@ -170,7 +169,22 @@ class FortalezaSpace {
     required this.space9,
   });
 
-  Map<SpaceToken, double> get toMap => _$FortalezaSpaceToMap(this);
+  factory FortalezaSpace.values(List<double> values) {
+    assert(values.length == 9, 'Expected 9 values, got ${values.length}');
+    return FortalezaSpace(
+      space1: values[0],
+      space2: values[1],
+      space3: values[2],
+      space4: values[3],
+      space5: values[4],
+      space6: values[5],
+      space7: values[6],
+      space8: values[7],
+      space9: values[8],
+    );
+  }
+
+  Map<SpaceToken, double> toMap() => _$FortalezaSpaceToMap(this);
 }
 
 @MixableToken(TextStyle)
@@ -197,5 +211,5 @@ class FortalezaTextStyle {
     required this.text9,
   });
 
-  Map<TextStyleToken, TextStyle> get toMap => _$FortalezaTextStyleToMap(this);
+  Map<TextStyleToken, TextStyle> toMap() => _$FortalezaTextStyleToMap(this);
 }

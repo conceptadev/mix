@@ -103,6 +103,6 @@ class FortalezaButtonStyle extends ButtonStyle {
         surface(surfaceVariant()),
         ghost(ghostVariant()),
       ],
-    );
+    ).animate(duration: const Duration(milliseconds: 200));
   }
 }
