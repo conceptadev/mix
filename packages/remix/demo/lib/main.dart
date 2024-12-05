@@ -1,7 +1,5 @@
 import 'package:demo/addons/theme_addon.dart';
 import 'package:flutter/material.dart' hide Scaffold, ThemeMode;
-import 'package:remix/remix.dart';
-import 'package:remix/themes/fortaleza.dart';
 import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
