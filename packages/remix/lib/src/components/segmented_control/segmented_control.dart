@@ -3,14 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:mix/mix.dart';
 import 'package:mix_annotations/mix_annotations.dart';
 
-import '../../theme/remix_theme.dart';
-import '../../theme/remix_tokens.dart';
+import '../../core/theme/remix_theme.dart';
 
 part 'button/segmented_control_button.dart';
 part 'button/segmented_control_button_widget.dart';
 part 'segmented_control.g.dart';
 part 'segmented_control_style.dart';
-part 'segmented_control_theme.dart';
 part 'segmented_control_widget.dart';
 
 final $segmentedControl = SegmentedControlSpecUtility.self;

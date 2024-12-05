@@ -118,7 +118,7 @@ class ButtonSpecWidget extends StatelessWidget {
   }
 
   Widget _buildChildren(ButtonSpec spec) {
-    final flexboxWidget = spec.container(
+    final flexWidget = spec.container.flex(
       direction: Axis.horizontal,
       children: [
         if (iconLeft != null) spec.icon(iconLeft),
@@ -128,13 +128,13 @@ class ButtonSpecWidget extends StatelessWidget {
       ],
     );
 
-    return loading ? _buildLoadingOverlay(spec, flexboxWidget) : flexboxWidget;
+    return loading ? _buildLoadingOverlay(spec, flexWidget) : flexWidget;
   }
 
   @override
   Widget build(BuildContext context) {
     final spec = this.spec ?? const ButtonSpec();
 
-    return _buildChildren(spec);
+    return spec.container.box(child: _buildChildren(spec));
   }
 }

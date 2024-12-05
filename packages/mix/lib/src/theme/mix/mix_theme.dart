@@ -11,7 +11,7 @@ import '../tokens/space_token.dart';
 import '../tokens/text_style_token.dart';
 
 class MixTheme extends InheritedWidget {
-  const MixTheme({required super.child, required this.data, super.key});
+  const MixTheme({required this.data, super.key, required super.child});
 
   static MixThemeData of(BuildContext context) {
     final themeData =

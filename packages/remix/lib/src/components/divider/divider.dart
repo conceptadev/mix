@@ -3,12 +3,10 @@ import 'package:flutter/widgets.dart';
 import 'package:mix/mix.dart';
 import 'package:mix_annotations/mix_annotations.dart';
 
-import '../../theme/remix_theme.dart';
-import '../../theme/remix_tokens.dart';
+import '../../core/theme/remix_theme.dart';
 
 part 'divider.g.dart';
 part 'divider_style.dart';
-part 'divider_theme.dart';
 part 'divider_widget.dart';
 
 @MixableSpec()

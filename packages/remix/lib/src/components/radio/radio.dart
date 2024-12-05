@@ -3,13 +3,11 @@ import 'package:flutter/widgets.dart';
 import 'package:mix/mix.dart';
 import 'package:mix_annotations/mix_annotations.dart';
 
+import '../../core/theme/remix_theme.dart';
 import '../../helpers/utility_extension.dart';
-import '../../theme/remix_theme.dart';
-import '../../theme/remix_tokens.dart';
 
 part 'radio.g.dart';
 part 'radio_style.dart';
-part 'radio_theme.dart';
 part 'radio_widget.dart';
 
 @MixableSpec()

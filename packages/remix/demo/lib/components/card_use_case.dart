@@ -2,6 +2,7 @@ import 'package:demo/helpers/knob_builder.dart';
 import 'package:flutter/widgets.dart';
 import 'package:mix/mix.dart';
 import 'package:remix/remix.dart';
+import 'package:remix/themes/fortaleza.dart';
 import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
@@ -32,13 +33,25 @@ Widget buildCard(BuildContext context) {
               children: [
                 StyledText(
                   'Leo Farias',
-                  style: Style($text.style.ref($rx.text.text3)),
+                  style: Style(
+                    $text.chain
+                      ..style.fontSize(14)
+                      ..style.fontWeight.bold()
+                      ..style.color.black87(),
+                    $on.dark(
+                      $text.style.color.white(),
+                    ),
+                  ),
                 ),
                 StyledText(
                   'Flutter Engineer',
                   style: Style(
-                    $text.style.ref($rx.text.text2),
-                    $text.style.color.$neutral(10),
+                    $text.chain
+                      ..style.fontSize(12)
+                      ..style.color.black54(),
+                    $on.dark(
+                      $text.style.color.white70(),
+                    ),
                   ),
                 ),
               ],

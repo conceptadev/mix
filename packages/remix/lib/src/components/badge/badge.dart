@@ -2,12 +2,10 @@ import 'package:flutter/widgets.dart';
 import 'package:mix/mix.dart';
 import 'package:mix_annotations/mix_annotations.dart';
 
-import '../../theme/remix_theme.dart';
-import '../../theme/remix_tokens.dart';
+import '../../core/theme/remix_theme.dart';
 
 part 'badge.g.dart';
 part 'badge_style.dart';
-part 'badge_theme.dart';
 part 'badge_widget.dart';
 
 @MixableSpec()
