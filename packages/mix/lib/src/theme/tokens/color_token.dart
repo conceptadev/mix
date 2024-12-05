@@ -102,15 +102,20 @@ class ColorSwatchToken<T> extends ColorToken {
   }
 }
 
-/// A color resolver that allows dynamic resolution of a color value.
+/// {@template mix.token.resolver}
+/// A resolver that allows dynamic resolution of a token value.
 ///
-/// This is useful when the color value is dependent on the current [BuildContext],
+/// This is useful when the token value is dependent on the current [BuildContext],
 /// and cannot be resolved statically.
+///
+/// For more information, see [Dynamic Themes](https://www.fluttermix.com/docs/guides/design-token#dynamic-themes).
+/// {@endtemplate}
 class ColorResolver extends Color with WithTokenResolver<Color> {
   /// The function used to resolve the color value dynamically.
   @override
   final BuildContextResolver<Color> resolve;
 
+  /// {@macro mix.token.resolver}
   const ColorResolver(this.resolve) : super(0);
 }
 

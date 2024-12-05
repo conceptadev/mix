@@ -26,6 +26,7 @@ class TextStyleToken extends MixToken<TextStyle> {
   }
 }
 
+/// {@macro mix.token.resolver}
 @immutable
 class TextStyleResolver extends TextStyle with WithTokenResolver<TextStyle> {
   @override
