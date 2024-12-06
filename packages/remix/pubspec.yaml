@@ -3,7 +3,7 @@ description: Completely unstyled, widgets designed to integrate with Mix
 repository: https://github.com/conceptadev/mix/tree/main/packages/remix
 homepage: https://www.fluttermix.com/
 
-version: 0.0.2-alpha.3
+version: 0.0.3
 
 environment:
   sdk: ">=3.3.0 <4.0.0"
@@ -11,15 +11,15 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  mix: ^1.5.2
-  mix_annotations: ^0.3.0
+  mix: ^1.5.3
+  mix_annotations: ^0.3.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   # custom_lint: ^0.6.4
   # mix_lint: ^0.1.1
-  mix_generator: ^0.3.1
+  mix_generator: ^0.3.2
   build_runner: ^2.4.9
   #lint
   flutter_lints: ^4.0.0

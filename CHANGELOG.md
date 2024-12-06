@@ -3,6 +3,89 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2024-12-06
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`mix` - `v1.5.3`](#mix---v153)
+ - [`remix` - `v0.0.3`](#remix---v003)
+ - [`mix_annotations` - `v0.3.1`](#mix_annotations---v031)
+ - [`mix_generator` - `v0.3.2`](#mix_generator---v032)
+ - [`mix_lint` - `v0.1.2`](#mix_lint---v012)
+
+---
+
+#### `mix` - `v1.5.3`
+
+ - **REFACTOR**: Solve dcm lint issues (#519).
+ - **FIX**: Order of modifiers implementation on Box, Image and Text (#529).
+ - **FIX**: reset modifiers and directives when using fluentAPI (#482).
+ - **FEAT**: Add spring curve (#503).
+ - **FEAT**: Create StrokeAlignUtility (#496).
+ - **FEAT**: Utilities for text height behavior (#495).
+ - **FEAT**: Rewrite FlexBox as a Mix's primitive component (#517).
+ - **FEAT**: Add `SpecConfiguration` (#483).
+ - **DOCS**: Add section for `TokenResolver` (#537).
+
+#### `remix` - `v0.0.3`
+
+ - **REFACTOR**: Create a new Architecture for remix's components (#446).
+ - **REFACTOR**(remix): improve widgetbook navigation (#524).
+ - **REFACTOR**: Add in code documentation and rename params for each component (#514).
+ - **REFACTOR**: Remix progress (#429).
+ - **REFACTOR**: small fixes on remix (#512).
+ - **REFACTOR**: Rewrite Fortaleza theme using the new code gen for tokens (#528).
+ - **REFACTOR**: Remix was rewritten using Fluent API (#476).
+ - **REFACTOR**: Rewrite all components in the new Archtecture (#467).
+ - **FIX**: Textfield helper Text (#531).
+ - **FIX**: Toast animation trigger (#530).
+ - **FEAT**: Create Textfield (#511).
+ - **FEAT**: Chip component (#504).
+ - **FEAT**: implement toast component (#503).
+ - **FEAT**: Card has child instead of children parameter (#499).
+ - **FEAT**: Create dark base theme for Remix (#498).
+ - **FEAT**: remix-styling-configuration (#483).
+ - **FEAT**: Segmented control (#479).
+ - **FEAT**: Accordion component (#433).
+ - **FEAT**: Slider component (#509).
+ - **FEAT**: Add more directives to Colors (#477).
+ - **FEAT**: Menu Item Component (#508).
+ - **FEAT**: Add group feature to Radio (#435).
+ - **FEAT**: Create Select component (#448).
+ - **FEAT**: Add parameter onEnd for AnimatedStyle (#458).
+ - **FEAT**: button supports component builder (#444).
+ - **FEAT**: Create a theme for Remix (#470).
+ - **FEAT**: Refactor Remix components (#428).
+ - **FEAT**: Remix improvements and further improvements (#410).
+ - **FEAT**: Rewrite FlexBox as a Mix's primitive component (#517).
+
+#### `mix_annotations` - `v0.3.1`
+
+ - **FEAT**: Create code gen for design tokens (#521).
+
+#### `mix_generator` - `v0.3.2`
+
+ - **REFACTOR**: Rewrite Fortaleza theme using the new code gen for tokens (#528).
+ - **FIX**: Shadow list animation (#445).
+ - **FEAT**: Create code gen for design tokens (#521).
+ - **FEAT**: Rewrite FlexBox as a Mix's primitive component (#517).
+ - **FEAT**: Fluent API (#475).
+ - **FEAT**: Remix improvements and further improvements (#410).
+ - **DOCS**: improve mix theme data features explanations (#404).
+
+#### `mix_lint` - `v0.1.2`
+
+ - **FEAT**: Rewrite FlexBox as a Mix's primitive component (#517).
+
+
 ## 2024-09-27
 
 ### Changes

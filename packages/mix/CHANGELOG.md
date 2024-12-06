@@ -1,3 +1,15 @@
+## 1.5.3
+
+ - **REFACTOR**: Solve dcm lint issues (#519).
+ - **FIX**: Order of modifiers implementation on Box, Image and Text (#529).
+ - **FIX**: reset modifiers and directives when using fluentAPI (#482).
+ - **FEAT**: Add spring curve (#503).
+ - **FEAT**: Create StrokeAlignUtility (#496).
+ - **FEAT**: Utilities for text height behavior (#495).
+ - **FEAT**: Rewrite FlexBox as a Mix's primitive component (#517).
+ - **FEAT**: Add `SpecConfiguration` (#483).
+ - **DOCS**: Add section for `TokenResolver` (#537).
+
 #### `mix` - `v1.5.2`
 
  - **REFACTOR**: ShapeBorder merge (#490).
