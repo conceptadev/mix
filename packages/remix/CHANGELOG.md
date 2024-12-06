@@ -10,7 +10,6 @@
  - **REFACTOR**: Rewrite all components in the new Archtecture (#467).
  - **FIX**: Textfield helper Text (#531).
  - **FIX**: Toast animation trigger (#530).
- - **FEAT**: Improve spring curve.
  - **FEAT**: Create Textfield (#511).
  - **FEAT**: Chip component (#504).
  - **FEAT**: implement toast component (#503).
@@ -21,19 +20,15 @@
  - **FEAT**: Accordion component (#433).
  - **FEAT**: Slider component (#509).
  - **FEAT**: Add more directives to Colors (#477).
- - **FEAT**: remix - Foundational components (#317).
  - **FEAT**: Menu Item Component (#508).
  - **FEAT**: Add group feature to Radio (#435).
  - **FEAT**: Create Select component (#448).
  - **FEAT**: Add parameter onEnd for AnimatedStyle (#458).
- - **FEAT**: Add Dark Theme.
  - **FEAT**: button supports component builder (#444).
  - **FEAT**: Create a theme for Remix (#470).
  - **FEAT**: Refactor Remix components (#428).
  - **FEAT**: Remix improvements and further improvements (#410).
- - **FEAT**: Ability to pass MixWidgetStateController to SpecBuilder (#391).
  - **FEAT**: Rewrite FlexBox as a Mix's primitive component (#517).
- - **DOCS**: improve mix theme data features explanations (#404).
 
 ## 0.0.2-alpha.3
 
