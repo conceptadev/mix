@@ -33,6 +33,18 @@ class AnimatedData {
     return AnimatedDataDto(duration: duration, curve: curve, onEnd: _onEnd);
   }
 
+  AnimatedData copyWith({
+    Duration? duration,
+    Curve? curve,
+    VoidCallback? onEnd,
+  }) {
+    return AnimatedData(
+      duration: duration ?? this.duration,
+      curve: curve ?? this.curve,
+      onEnd: onEnd ?? this.onEnd,
+    );
+  }
+
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
