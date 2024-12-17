@@ -46,7 +46,7 @@ class SelectStyle extends SpecStyle<SelectSpecUtility> {
         ..flex.mainAxisSize.min()
         ..flex.crossAxisAlignment.start(),
       $.menu.wrap.transform.scale(1.5),
-      $.menu.autoWidth.on(),
+      $.menu.autoWidth.off(),
       spec.on.selected(
         $.menu.container.chain
           ..wrap.transform.scale(1)

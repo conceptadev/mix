@@ -15,8 +15,6 @@ part 'select.g.dart';
 part 'select_style.dart';
 part 'select_widget.dart';
 
-final $select = SelectSpecUtility.self;
-
 @MixableSpec()
 class SelectSpec extends Spec<SelectSpec> with _$SelectSpec, Diagnosticable {
   @MixableProperty(dto: MixableFieldDto(type: 'SelectButtonSpecAttribute'))
