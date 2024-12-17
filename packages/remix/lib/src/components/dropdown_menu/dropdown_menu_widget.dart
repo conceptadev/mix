@@ -1,13 +1,12 @@
 part of 'dropdown_menu.dart';
 
-class DropdownMenu<T> extends StatefulWidget {
+class DropdownMenu extends StatefulWidget {
   const DropdownMenu({
     super.key,
     this.variants = const [],
     this.style,
     required this.trigger,
     required this.items,
-    required this.onSelected,
     this.offset = const Offset(0, 4),
     this.targetAnchor = Alignment.bottomCenter,
     this.followerAnchor = Alignment.topCenter,
@@ -23,12 +22,9 @@ class DropdownMenu<T> extends StatefulWidget {
   /// It is a builder that returns a widget and a callback to open the menu
   final Widget Function(VoidCallback action) trigger;
 
-  /// The callback that is called when an item is selected.
-  final void Function(T value) onSelected;
-
   /// The list of items to display in the dropdown menu.
   /// Each item contains a value and widget to display.
-  final List<DropdownMenuItem<T>> items;
+  final List<DropdownMenuItem> items;
 
   /// The offset of the dropdown menu relative to the trigger widget.
   final Offset offset;
@@ -40,10 +36,10 @@ class DropdownMenu<T> extends StatefulWidget {
   final Alignment followerAnchor;
 
   @override
-  State<DropdownMenu<T>> createState() => DropdownMenuState<T>();
+  State<DropdownMenu> createState() => DropdownMenuState();
 }
 
-class DropdownMenuState<T> extends State<DropdownMenu<T>>
+class DropdownMenuState extends State<DropdownMenu>
     with SingleTickerProviderStateMixin {
   final OverlayPortalController _tooltipController = OverlayPortalController();
   late final MixWidgetStateController _menuStateController;
@@ -115,18 +111,7 @@ class DropdownMenuState<T> extends State<DropdownMenu<T>>
                       children: List.generate(widget.items.length, (index) {
                         final item = widget.items[index];
 
-                        return Pressable(
-                          onPress: () {
-                            widget.onSelected(item.value);
-                            hide();
-                          },
-                          child: SpecBuilder(
-                            style: appliedStyle,
-                            builder: (context) {
-                              return item;
-                            },
-                          ),
-                        );
+                        return item;
                       }),
                     ),
                   );

@@ -1,6 +1,8 @@
 part of 'dropdown_menu.dart';
 
 class DropdownMenuStyle extends SpecStyle<DropdownMenuSpecUtility> {
+  static const itemLabel = Variant('item.label');
+
   const DropdownMenuStyle();
 
   @override
@@ -42,6 +44,11 @@ class DropdownMenuStyle extends SpecStyle<DropdownMenuSpecUtility> {
         ..style.fontSize(14),
       $.item.icon.size(20),
       spec.on.hover($.item.container.color.black12()),
+      itemLabel(
+        $.item.container.borderRadius.all(0),
+        $.item.text.style.bold(),
+        spec.on.hover($.item.container.color.transparent()),
+      ),
     ];
 
     return Style.create([...menuStyle, ...itemStyle]).animate(

@@ -21,33 +21,57 @@ part of '../dropdown_menu.dart';
 ///   ],
 /// )
 /// ```
-class DropdownMenuItem<T> extends StatelessWidget {
+
+class DropdownMenuItem extends StatelessWidget {
   const DropdownMenuItem({
     super.key,
-    IconData? icon,
+    this.icon,
     required this.text,
-    required this.value,
-  }) : iconData = icon;
+    this.onPress,
+    this.variants = const [],
+  });
 
   /// The optional icon data to display before the text.
-  final IconData? iconData;
+  final IconData? icon;
 
   /// The text label to display for this menu item.
   final String text;
 
-  /// The value to return when this item is selected.
-  final T value;
+  /// The callback that is called when the item is pressed.
+  final VoidCallback? onPress;
+
+  final List<Variant> variants;
+
+  Style _inheritStyleFromDropdownMenu(BuildContext context) {
+    final dropdownMenu = context.findAncestorWidgetOfExactType<DropdownMenu>()!;
+
+    final style = dropdownMenu.style ?? context.remix.components.dropdownMenu;
+    final configuration =
+        SpecConfiguration(context, DropdownMenuSpecUtility.self);
+
+    return style.makeStyle(configuration).applyVariants(dropdownMenu.variants);
+  }
 
   @override
   Widget build(BuildContext context) {
-    final item = DropdownMenuSpec.of(context).item;
-    final container = item.container;
-    final icon = item.icon;
-    final text = item.text;
+    final style = _inheritStyleFromDropdownMenu(context);
 
-    return container(
-      direction: Axis.horizontal,
-      children: [if (iconData != null) icon(iconData), text(this.text)],
+    return Pressable(
+      onPress: onPress,
+      child: SpecBuilder(
+        style: style.applyVariants(variants),
+        builder: (context) {
+          final item = DropdownMenuSpec.of(context).item;
+          final container = item.container;
+          final iconWidget = item.icon;
+          final textWidget = item.text;
+
+          return container(
+            direction: Axis.horizontal,
+            children: [if (icon != null) iconWidget(icon), textWidget(text)],
+          );
+        },
+      ),
     );
   }
 }

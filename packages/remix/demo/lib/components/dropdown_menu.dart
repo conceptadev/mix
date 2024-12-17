@@ -38,26 +38,40 @@ class _DropdownMenuDemoState extends State<DropdownMenuDemo> {
           m.Icons.menu,
           onPressed: action,
         ),
-        items: const [
+        items: [
+          const DropdownMenuItem(
+            text: 'Features',
+            variants: [
+              DropdownMenuStyle.itemLabel,
+            ],
+          ),
           DropdownMenuItem(
             text: 'home',
-            value: MenuItem.home,
+            onPress: () {
+              showToast(
+                context: context,
+                entry: ToastEntry(
+                  builder: (context, actions) => const Toast(
+                    title: 'home was selected',
+                  ),
+                ),
+              );
+            },
           ),
           DropdownMenuItem(
             text: 'profile',
-            value: MenuItem.profile,
+            onPress: () {
+              showToast(
+                context: context,
+                entry: ToastEntry(
+                  builder: (context, actions) => const Toast(
+                    title: 'profile was selected',
+                  ),
+                ),
+              );
+            },
           ),
         ],
-        onSelected: (menuItem) {
-          showToast(
-            context: context,
-            entry: ToastEntry(
-              builder: (context, actions) => Toast(
-                title: '${menuItem.name} was selected',
-              ),
-            ),
-          );
-        },
       ),
     );
   }
