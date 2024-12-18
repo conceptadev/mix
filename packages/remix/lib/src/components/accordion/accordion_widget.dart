@@ -5,8 +5,8 @@ class Accordion extends StatefulWidget {
     super.key,
     required this.header,
     required this.content,
-    required this.onChanged,
-    this.expanded = false,
+    this.onChanged,
+    this.expanded = true,
     this.variants = const [],
     this.style,
   });
@@ -16,7 +16,7 @@ class Accordion extends StatefulWidget {
   final AccordionStyle? style;
   final bool expanded;
   final List<Variant> variants;
-  final void Function(bool) onChanged;
+  final void Function(bool)? onChanged;
 
   @override
   State<Accordion> createState() => _AccordionState();
@@ -33,7 +33,7 @@ class _AccordionState extends State<Accordion> {
 
   void _handleTap() {
     _controller.selected = !_controller.selected;
-    widget.onChanged(widget.expanded);
+    widget.onChanged?.call(widget.expanded);
   }
 
   @override
