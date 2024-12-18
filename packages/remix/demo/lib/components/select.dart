@@ -1,5 +1,4 @@
 import 'package:demo/helpers/knob_builder.dart';
-import 'package:flutter/material.dart' as m;
 import 'package:flutter/widgets.dart';
 import 'package:remix/remix.dart';
 import 'package:remix/themes/fortaleza.dart';
@@ -43,13 +42,12 @@ class _SelectDemoState extends State<SelectDemo> {
             child: Select<String>(
               value: selectedValue,
               onChanged: (value) => setState(() => selectedValue = value),
-              trigger: (spec) => spec(
+              trigger: SelectTrigger(
                 text: selectedValue,
-                trailingIcon: m.Icons.keyboard_arrow_down_rounded,
-              ),
-              disabled: context.knobs.boolean(
-                label: 'disabled',
-                initialValue: false,
+                disabled: context.knobs.boolean(
+                  label: 'disabled',
+                  initialValue: false,
+                ),
               ),
               variants: [context.knobs.variant(FortalezaSelectStyle.variants)],
               items: List.generate(

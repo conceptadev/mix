@@ -1,16 +1,16 @@
 part of '../select.dart';
 
-class SelectButtonSpecWidget extends StatelessWidget {
-  const SelectButtonSpecWidget({
+class SelectTrigger extends StatelessWidget {
+  const SelectTrigger({
     super.key,
-    required this.spec,
     required this.text,
-    required this.trailingIcon,
+    this.trailingIcon = Icons.keyboard_arrow_down_rounded,
+    this.disabled = false,
   });
 
-  final SelectButtonSpec spec;
   final String text;
   final IconData trailingIcon;
+  final bool disabled;
 
   @override
   Widget build(BuildContext context) {
@@ -26,6 +26,7 @@ class SelectButtonSpecWidget extends StatelessWidget {
         style.makeStyle(configuration).applyVariants(select.widget.variants);
 
     return Pressable(
+      enabled: !disabled,
       onPress: () {
         select.openMenu();
       },

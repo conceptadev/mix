@@ -16,7 +16,6 @@ class Select<T> extends StatefulWidget {
     required this.items,
     this.variants = const [],
     this.style,
-    this.disabled = false,
   });
 
   /// The currently selected value in the select component.
@@ -34,10 +33,7 @@ class Select<T> extends StatefulWidget {
   /// Builder function that creates the button portion of the select component.
   /// When tapped, this button will display the dropdown menu.
   /// This allows customizing how the button is displayed.
-  final WidgetSpecBuilder<SelectButtonSpec> trigger;
-
-  /// {@macro remix.component.disabled}
-  final bool disabled;
+  final SelectTrigger trigger;
 
   /// The list of items to display in the dropdown menu.
   /// Each item contains a value and widget to display.
@@ -49,7 +45,6 @@ class Select<T> extends StatefulWidget {
 
 class SelectState<T> extends State<Select<T>> {
   late final MixWidgetStateController _menuStateController;
-  late final MixWidgetStateController _buttonStateController;
 
   final _link = LayerLink();
 
@@ -58,15 +53,6 @@ class SelectState<T> extends State<Select<T>> {
     super.initState();
 
     _menuStateController = MixWidgetStateController()..selected = false;
-    _buttonStateController = MixWidgetStateController()
-      ..disabled = widget.disabled;
-  }
-
-  @override
-  void didUpdateWidget(covariant Select<T> oldWidget) {
-    super.didUpdateWidget(oldWidget);
-
-    _buttonStateController.disabled = widget.disabled;
   }
 
   void openMenu() {
@@ -83,7 +69,6 @@ class SelectState<T> extends State<Select<T>> {
 
   @override
   void dispose() {
-    _buttonStateController.dispose();
     _menuStateController.dispose();
     super.dispose();
   }
@@ -98,50 +83,42 @@ class SelectState<T> extends State<Select<T>> {
     final animatedStyle = appliedStyle.cast<AnimatedStyle>();
 
     return OverlayWrapper(
-      target: RepaintBoundary(
+      target: widget.trigger,
+      overlayChild: RepaintBoundary(
         child: SpecBuilder(
-          controller: _buttonStateController,
+          controller: _menuStateController,
           style: appliedStyle,
           builder: (context) {
-            final buttonSpec = SelectSpec.of(context).button;
+            final select = SelectSpec.of(context);
+            final menu = select.menu;
 
-            return widget.trigger(buttonSpec);
+            final FlexContainer = menu.container.copyWith(
+              box: menu.container.box.copyWith(
+                width: menu.autoWidth ? _link.leaderSize!.width : null,
+              ),
+            );
+
+            return FlexContainer(
+              direction: Axis.vertical,
+              children: widget.items
+                  .map(
+                    (item) => Pressable(
+                      onPress: () {
+                        widget.onChanged(item.value);
+                        closeMenu();
+                      },
+                      child: SpecBuilder(
+                        style: appliedStyle,
+                        builder: (context) {
+                          return item.child;
+                        },
+                      ),
+                    ),
+                  )
+                  .toList(),
+            );
           },
         ),
-      ),
-      overlayChild: SpecBuilder(
-        controller: _menuStateController,
-        style: appliedStyle,
-        builder: (context) {
-          final select = SelectSpec.of(context);
-          final menu = select.menu;
-
-          final FlexContainer = menu.container.copyWith(
-            box: menu.container.box.copyWith(
-              width: menu.autoWidth ? _link.leaderSize!.width : null,
-            ),
-          );
-
-          return FlexContainer(
-            direction: Axis.vertical,
-            children: widget.items
-                .map(
-                  (item) => Pressable(
-                    onPress: () {
-                      widget.onChanged(item.value);
-                      closeMenu();
-                    },
-                    child: SpecBuilder(
-                      style: appliedStyle,
-                      builder: (context) {
-                        return item.child;
-                      },
-                    ),
-                  ),
-                )
-                .toList(),
-          );
-        },
       ),
       onTapOutside: closeMenu,
       showOverlay: _menuStateController.selected,

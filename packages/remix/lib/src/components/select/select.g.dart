@@ -33,7 +33,7 @@ mixin _$SelectSpec on Spec<SelectSpec> {
   /// replaced with the new values.
   @override
   SelectSpec copyWith({
-    SelectButtonSpec? button,
+    SelectTriggerSpec? button,
     SelectMenuSpec? menu,
     SelectMenuItemSpec? item,
     CompositedTransformFollowerSpec? position,
@@ -123,7 +123,7 @@ mixin _$SelectSpec on Spec<SelectSpec> {
 /// the [SelectSpec] constructor.
 class SelectSpecAttribute extends SpecAttribute<SelectSpec>
     with Diagnosticable {
-  final SelectButtonSpecAttribute? button;
+  final SelectTriggerSpecAttribute? button;
   final SelectMenuSpecAttribute? menu;
   final SelectMenuItemSpecAttribute? item;
   final CompositedTransformFollowerSpecAttribute? position;
@@ -215,7 +215,7 @@ class SelectSpecAttribute extends SpecAttribute<SelectSpec>
 class SelectSpecUtility<T extends Attribute>
     extends SpecUtility<T, SelectSpecAttribute> {
   /// Utility for defining [SelectSpecAttribute.button]
-  late final button = SelectButtonSpecUtility((v) => only(button: v));
+  late final button = SelectTriggerSpecUtility((v) => only(button: v));
 
   /// Utility for defining [SelectSpecAttribute.menu]
   late final menu = SelectMenuSpecUtility((v) => only(menu: v));
@@ -244,7 +244,7 @@ class SelectSpecUtility<T extends Attribute>
   /// Returns a new [SelectSpecAttribute] with the specified properties.
   @override
   T only({
-    SelectButtonSpecAttribute? button,
+    SelectTriggerSpecAttribute? button,
     SelectMenuSpecAttribute? menu,
     SelectMenuItemSpecAttribute? item,
     CompositedTransformFollowerSpecAttribute? position,
@@ -533,271 +533,6 @@ class SelectMenuSpecTween extends Tween<SelectMenuSpec?> {
   }
 }
 
-mixin _$SelectButtonSpec on Spec<SelectButtonSpec> {
-  static SelectButtonSpec from(MixData mix) {
-    return mix.attributeOf<SelectButtonSpecAttribute>()?.resolve(mix) ??
-        const SelectButtonSpec();
-  }
-
-  /// {@template select_button_spec_of}
-  /// Retrieves the [SelectButtonSpec] from the nearest [Mix] ancestor in the widget tree.
-  ///
-  /// This method uses [Mix.of] to obtain the [Mix] instance associated with the
-  /// given [BuildContext], and then retrieves the [SelectButtonSpec] from that [Mix].
-  /// If no ancestor [Mix] is found, this method returns an empty [SelectButtonSpec].
-  ///
-  /// Example:
-  ///
-  /// ```dart
-  /// final selectButtonSpec = SelectButtonSpec.of(context);
-  /// ```
-  /// {@endtemplate}
-  static SelectButtonSpec of(BuildContext context) {
-    return _$SelectButtonSpec.from(Mix.of(context));
-  }
-
-  /// Creates a copy of this [SelectButtonSpec] but with the given fields
-  /// replaced with the new values.
-  @override
-  SelectButtonSpec copyWith({
-    FlexBoxSpec? container,
-    IconSpec? icon,
-    TextSpec? label,
-    WidgetModifiersData? modifiers,
-    AnimatedData? animated,
-  }) {
-    return SelectButtonSpec(
-      container: container ?? _$this.container,
-      icon: icon ?? _$this.icon,
-      label: label ?? _$this.label,
-      modifiers: modifiers ?? _$this.modifiers,
-      animated: animated ?? _$this.animated,
-    );
-  }
-
-  /// Linearly interpolates between this [SelectButtonSpec] and another [SelectButtonSpec] based on the given parameter [t].
-  ///
-  /// The parameter [t] represents the interpolation factor, typically ranging from 0.0 to 1.0.
-  /// When [t] is 0.0, the current [SelectButtonSpec] is returned. When [t] is 1.0, the [other] [SelectButtonSpec] is returned.
-  /// For values of [t] between 0.0 and 1.0, an interpolated [SelectButtonSpec] is returned.
-  ///
-  /// If [other] is null, this method returns the current [SelectButtonSpec] instance.
-  ///
-  /// The interpolation is performed on each property of the [SelectButtonSpec] using the appropriate
-  /// interpolation method:
-  ///
-  /// - [FlexBoxSpec.lerp] for [container].
-  /// - [IconSpec.lerp] for [icon].
-  /// - [TextSpec.lerp] for [label].
-
-  /// For [modifiers] and [animated], the interpolation is performed using a step function.
-  /// If [t] is less than 0.5, the value from the current [SelectButtonSpec] is used. Otherwise, the value
-  /// from the [other] [SelectButtonSpec] is used.
-  ///
-  /// This method is typically used in animations to smoothly transition between
-  /// different [SelectButtonSpec] configurations.
-  @override
-  SelectButtonSpec lerp(SelectButtonSpec? other, double t) {
-    if (other == null) return _$this;
-
-    return SelectButtonSpec(
-      container: _$this.container.lerp(other.container, t),
-      icon: _$this.icon.lerp(other.icon, t),
-      label: _$this.label.lerp(other.label, t),
-      modifiers: other.modifiers,
-      animated: t < 0.5 ? _$this.animated : other.animated,
-    );
-  }
-
-  /// The list of properties that constitute the state of this [SelectButtonSpec].
-  ///
-  /// This property is used by the [==] operator and the [hashCode] getter to
-  /// compare two [SelectButtonSpec] instances for equality.
-  @override
-  List<Object?> get props => [
-        _$this.container,
-        _$this.icon,
-        _$this.label,
-        _$this.modifiers,
-        _$this.animated,
-      ];
-
-  SelectButtonSpec get _$this => this as SelectButtonSpec;
-
-  void _debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    properties.add(
-        DiagnosticsProperty('container', _$this.container, defaultValue: null));
-    properties
-        .add(DiagnosticsProperty('icon', _$this.icon, defaultValue: null));
-    properties
-        .add(DiagnosticsProperty('label', _$this.label, defaultValue: null));
-    properties.add(
-        DiagnosticsProperty('modifiers', _$this.modifiers, defaultValue: null));
-    properties.add(
-        DiagnosticsProperty('animated', _$this.animated, defaultValue: null));
-  }
-}
-
-/// Represents the attributes of a [SelectButtonSpec].
-///
-/// This class encapsulates properties defining the layout and
-/// appearance of a [SelectButtonSpec].
-///
-/// Use this class to configure the attributes of a [SelectButtonSpec] and pass it to
-/// the [SelectButtonSpec] constructor.
-class SelectButtonSpecAttribute extends SpecAttribute<SelectButtonSpec>
-    with Diagnosticable {
-  final FlexBoxSpecAttribute? container;
-  final IconSpecAttribute? icon;
-  final TextSpecAttribute? label;
-
-  const SelectButtonSpecAttribute({
-    this.container,
-    this.icon,
-    this.label,
-    super.modifiers,
-    super.animated,
-  });
-
-  /// Resolves to [SelectButtonSpec] using the provided [MixData].
-  ///
-  /// If a property is null in the [MixData], it falls back to the
-  /// default value defined in the `defaultValue` for that property.
-  ///
-  /// ```dart
-  /// final selectButtonSpec = SelectButtonSpecAttribute(...).resolve(mix);
-  /// ```
-  @override
-  SelectButtonSpec resolve(MixData mix) {
-    return SelectButtonSpec(
-      container: container?.resolve(mix),
-      icon: icon?.resolve(mix),
-      label: label?.resolve(mix),
-      modifiers: modifiers?.resolve(mix),
-      animated: animated?.resolve(mix) ?? mix.animation,
-    );
-  }
-
-  /// Merges the properties of this [SelectButtonSpecAttribute] with the properties of [other].
-  ///
-  /// If [other] is null, returns this instance unchanged. Otherwise, returns a new
-  /// [SelectButtonSpecAttribute] with the properties of [other] taking precedence over
-  /// the corresponding properties of this instance.
-  ///
-  /// Properties from [other] that are null will fall back
-  /// to the values from this instance.
-  @override
-  SelectButtonSpecAttribute merge(covariant SelectButtonSpecAttribute? other) {
-    if (other == null) return this;
-
-    return SelectButtonSpecAttribute(
-      container: container?.merge(other.container) ?? other.container,
-      icon: icon?.merge(other.icon) ?? other.icon,
-      label: label?.merge(other.label) ?? other.label,
-      modifiers: modifiers?.merge(other.modifiers) ?? other.modifiers,
-      animated: animated?.merge(other.animated) ?? other.animated,
-    );
-  }
-
-  /// The list of properties that constitute the state of this [SelectButtonSpecAttribute].
-  ///
-  /// This property is used by the [==] operator and the [hashCode] getter to
-  /// compare two [SelectButtonSpecAttribute] instances for equality.
-  @override
-  List<Object?> get props => [
-        container,
-        icon,
-        label,
-        modifiers,
-        animated,
-      ];
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-        .add(DiagnosticsProperty('container', container, defaultValue: null));
-    properties.add(DiagnosticsProperty('icon', icon, defaultValue: null));
-    properties.add(DiagnosticsProperty('label', label, defaultValue: null));
-    properties
-        .add(DiagnosticsProperty('modifiers', modifiers, defaultValue: null));
-    properties
-        .add(DiagnosticsProperty('animated', animated, defaultValue: null));
-  }
-}
-
-/// Utility class for configuring [SelectButtonSpec] properties.
-///
-/// This class provides methods to set individual properties of a [SelectButtonSpec].
-/// Use the methods of this class to configure specific properties of a [SelectButtonSpec].
-class SelectButtonSpecUtility<T extends Attribute>
-    extends SpecUtility<T, SelectButtonSpecAttribute> {
-  /// Utility for defining [SelectButtonSpecAttribute.container]
-  late final container = FlexBoxSpecUtility((v) => only(container: v));
-
-  /// Utility for defining [SelectButtonSpecAttribute.icon]
-  late final icon = IconSpecUtility((v) => only(icon: v));
-
-  /// Utility for defining [SelectButtonSpecAttribute.label]
-  late final label = TextSpecUtility((v) => only(label: v));
-
-  /// Utility for defining [SelectButtonSpecAttribute.modifiers]
-  late final wrap = SpecModifierUtility((v) => only(modifiers: v));
-
-  /// Utility for defining [SelectButtonSpecAttribute.animated]
-  late final animated = AnimatedUtility((v) => only(animated: v));
-
-  SelectButtonSpecUtility(super.builder, {super.mutable});
-
-  SelectButtonSpecUtility<T> get chain =>
-      SelectButtonSpecUtility(attributeBuilder, mutable: true);
-
-  static SelectButtonSpecUtility<SelectButtonSpecAttribute> get self =>
-      SelectButtonSpecUtility((v) => v);
-
-  /// Returns a new [SelectButtonSpecAttribute] with the specified properties.
-  @override
-  T only({
-    FlexBoxSpecAttribute? container,
-    IconSpecAttribute? icon,
-    TextSpecAttribute? label,
-    WidgetModifiersDataDto? modifiers,
-    AnimatedDataDto? animated,
-  }) {
-    return builder(SelectButtonSpecAttribute(
-      container: container,
-      icon: icon,
-      label: label,
-      modifiers: modifiers,
-      animated: animated,
-    ));
-  }
-}
-
-/// A tween that interpolates between two [SelectButtonSpec] instances.
-///
-/// This class can be used in animations to smoothly transition between
-/// different [SelectButtonSpec] specifications.
-class SelectButtonSpecTween extends Tween<SelectButtonSpec?> {
-  SelectButtonSpecTween({
-    super.begin,
-    super.end,
-  });
-
-  @override
-  SelectButtonSpec lerp(double t) {
-    if (begin == null && end == null) {
-      return const SelectButtonSpec();
-    }
-
-    if (begin == null) {
-      return end!;
-    }
-
-    return begin!.lerp(end!, t);
-  }
-}
-
 mixin _$SelectMenuItemSpec on Spec<SelectMenuItemSpec> {
   static SelectMenuItemSpec from(MixData mix) {
     return mix.attributeOf<SelectMenuItemSpecAttribute>()?.resolve(mix) ??
@@ -1054,6 +789,272 @@ class SelectMenuItemSpecTween extends Tween<SelectMenuItemSpec?> {
   SelectMenuItemSpec lerp(double t) {
     if (begin == null && end == null) {
       return const SelectMenuItemSpec();
+    }
+
+    if (begin == null) {
+      return end!;
+    }
+
+    return begin!.lerp(end!, t);
+  }
+}
+
+mixin _$SelectTriggerSpec on Spec<SelectTriggerSpec> {
+  static SelectTriggerSpec from(MixData mix) {
+    return mix.attributeOf<SelectTriggerSpecAttribute>()?.resolve(mix) ??
+        const SelectTriggerSpec();
+  }
+
+  /// {@template select_trigger_spec_of}
+  /// Retrieves the [SelectTriggerSpec] from the nearest [Mix] ancestor in the widget tree.
+  ///
+  /// This method uses [Mix.of] to obtain the [Mix] instance associated with the
+  /// given [BuildContext], and then retrieves the [SelectTriggerSpec] from that [Mix].
+  /// If no ancestor [Mix] is found, this method returns an empty [SelectTriggerSpec].
+  ///
+  /// Example:
+  ///
+  /// ```dart
+  /// final selectTriggerSpec = SelectTriggerSpec.of(context);
+  /// ```
+  /// {@endtemplate}
+  static SelectTriggerSpec of(BuildContext context) {
+    return _$SelectTriggerSpec.from(Mix.of(context));
+  }
+
+  /// Creates a copy of this [SelectTriggerSpec] but with the given fields
+  /// replaced with the new values.
+  @override
+  SelectTriggerSpec copyWith({
+    FlexBoxSpec? container,
+    IconSpec? icon,
+    TextSpec? label,
+    WidgetModifiersData? modifiers,
+    AnimatedData? animated,
+  }) {
+    return SelectTriggerSpec(
+      container: container ?? _$this.container,
+      icon: icon ?? _$this.icon,
+      label: label ?? _$this.label,
+      modifiers: modifiers ?? _$this.modifiers,
+      animated: animated ?? _$this.animated,
+    );
+  }
+
+  /// Linearly interpolates between this [SelectTriggerSpec] and another [SelectTriggerSpec] based on the given parameter [t].
+  ///
+  /// The parameter [t] represents the interpolation factor, typically ranging from 0.0 to 1.0.
+  /// When [t] is 0.0, the current [SelectTriggerSpec] is returned. When [t] is 1.0, the [other] [SelectTriggerSpec] is returned.
+  /// For values of [t] between 0.0 and 1.0, an interpolated [SelectTriggerSpec] is returned.
+  ///
+  /// If [other] is null, this method returns the current [SelectTriggerSpec] instance.
+  ///
+  /// The interpolation is performed on each property of the [SelectTriggerSpec] using the appropriate
+  /// interpolation method:
+  ///
+  /// - [FlexBoxSpec.lerp] for [container].
+  /// - [IconSpec.lerp] for [icon].
+  /// - [TextSpec.lerp] for [label].
+
+  /// For [modifiers] and [animated], the interpolation is performed using a step function.
+  /// If [t] is less than 0.5, the value from the current [SelectTriggerSpec] is used. Otherwise, the value
+  /// from the [other] [SelectTriggerSpec] is used.
+  ///
+  /// This method is typically used in animations to smoothly transition between
+  /// different [SelectTriggerSpec] configurations.
+  @override
+  SelectTriggerSpec lerp(SelectTriggerSpec? other, double t) {
+    if (other == null) return _$this;
+
+    return SelectTriggerSpec(
+      container: _$this.container.lerp(other.container, t),
+      icon: _$this.icon.lerp(other.icon, t),
+      label: _$this.label.lerp(other.label, t),
+      modifiers: other.modifiers,
+      animated: t < 0.5 ? _$this.animated : other.animated,
+    );
+  }
+
+  /// The list of properties that constitute the state of this [SelectTriggerSpec].
+  ///
+  /// This property is used by the [==] operator and the [hashCode] getter to
+  /// compare two [SelectTriggerSpec] instances for equality.
+  @override
+  List<Object?> get props => [
+        _$this.container,
+        _$this.icon,
+        _$this.label,
+        _$this.modifiers,
+        _$this.animated,
+      ];
+
+  SelectTriggerSpec get _$this => this as SelectTriggerSpec;
+
+  void _debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    properties.add(
+        DiagnosticsProperty('container', _$this.container, defaultValue: null));
+    properties
+        .add(DiagnosticsProperty('icon', _$this.icon, defaultValue: null));
+    properties
+        .add(DiagnosticsProperty('label', _$this.label, defaultValue: null));
+    properties.add(
+        DiagnosticsProperty('modifiers', _$this.modifiers, defaultValue: null));
+    properties.add(
+        DiagnosticsProperty('animated', _$this.animated, defaultValue: null));
+  }
+}
+
+/// Represents the attributes of a [SelectTriggerSpec].
+///
+/// This class encapsulates properties defining the layout and
+/// appearance of a [SelectTriggerSpec].
+///
+/// Use this class to configure the attributes of a [SelectTriggerSpec] and pass it to
+/// the [SelectTriggerSpec] constructor.
+class SelectTriggerSpecAttribute extends SpecAttribute<SelectTriggerSpec>
+    with Diagnosticable {
+  final FlexBoxSpecAttribute? container;
+  final IconSpecAttribute? icon;
+  final TextSpecAttribute? label;
+
+  const SelectTriggerSpecAttribute({
+    this.container,
+    this.icon,
+    this.label,
+    super.modifiers,
+    super.animated,
+  });
+
+  /// Resolves to [SelectTriggerSpec] using the provided [MixData].
+  ///
+  /// If a property is null in the [MixData], it falls back to the
+  /// default value defined in the `defaultValue` for that property.
+  ///
+  /// ```dart
+  /// final selectTriggerSpec = SelectTriggerSpecAttribute(...).resolve(mix);
+  /// ```
+  @override
+  SelectTriggerSpec resolve(MixData mix) {
+    return SelectTriggerSpec(
+      container: container?.resolve(mix),
+      icon: icon?.resolve(mix),
+      label: label?.resolve(mix),
+      modifiers: modifiers?.resolve(mix),
+      animated: animated?.resolve(mix) ?? mix.animation,
+    );
+  }
+
+  /// Merges the properties of this [SelectTriggerSpecAttribute] with the properties of [other].
+  ///
+  /// If [other] is null, returns this instance unchanged. Otherwise, returns a new
+  /// [SelectTriggerSpecAttribute] with the properties of [other] taking precedence over
+  /// the corresponding properties of this instance.
+  ///
+  /// Properties from [other] that are null will fall back
+  /// to the values from this instance.
+  @override
+  SelectTriggerSpecAttribute merge(
+      covariant SelectTriggerSpecAttribute? other) {
+    if (other == null) return this;
+
+    return SelectTriggerSpecAttribute(
+      container: container?.merge(other.container) ?? other.container,
+      icon: icon?.merge(other.icon) ?? other.icon,
+      label: label?.merge(other.label) ?? other.label,
+      modifiers: modifiers?.merge(other.modifiers) ?? other.modifiers,
+      animated: animated?.merge(other.animated) ?? other.animated,
+    );
+  }
+
+  /// The list of properties that constitute the state of this [SelectTriggerSpecAttribute].
+  ///
+  /// This property is used by the [==] operator and the [hashCode] getter to
+  /// compare two [SelectTriggerSpecAttribute] instances for equality.
+  @override
+  List<Object?> get props => [
+        container,
+        icon,
+        label,
+        modifiers,
+        animated,
+      ];
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+        .add(DiagnosticsProperty('container', container, defaultValue: null));
+    properties.add(DiagnosticsProperty('icon', icon, defaultValue: null));
+    properties.add(DiagnosticsProperty('label', label, defaultValue: null));
+    properties
+        .add(DiagnosticsProperty('modifiers', modifiers, defaultValue: null));
+    properties
+        .add(DiagnosticsProperty('animated', animated, defaultValue: null));
+  }
+}
+
+/// Utility class for configuring [SelectTriggerSpec] properties.
+///
+/// This class provides methods to set individual properties of a [SelectTriggerSpec].
+/// Use the methods of this class to configure specific properties of a [SelectTriggerSpec].
+class SelectTriggerSpecUtility<T extends Attribute>
+    extends SpecUtility<T, SelectTriggerSpecAttribute> {
+  /// Utility for defining [SelectTriggerSpecAttribute.container]
+  late final container = FlexBoxSpecUtility((v) => only(container: v));
+
+  /// Utility for defining [SelectTriggerSpecAttribute.icon]
+  late final icon = IconSpecUtility((v) => only(icon: v));
+
+  /// Utility for defining [SelectTriggerSpecAttribute.label]
+  late final label = TextSpecUtility((v) => only(label: v));
+
+  /// Utility for defining [SelectTriggerSpecAttribute.modifiers]
+  late final wrap = SpecModifierUtility((v) => only(modifiers: v));
+
+  /// Utility for defining [SelectTriggerSpecAttribute.animated]
+  late final animated = AnimatedUtility((v) => only(animated: v));
+
+  SelectTriggerSpecUtility(super.builder, {super.mutable});
+
+  SelectTriggerSpecUtility<T> get chain =>
+      SelectTriggerSpecUtility(attributeBuilder, mutable: true);
+
+  static SelectTriggerSpecUtility<SelectTriggerSpecAttribute> get self =>
+      SelectTriggerSpecUtility((v) => v);
+
+  /// Returns a new [SelectTriggerSpecAttribute] with the specified properties.
+  @override
+  T only({
+    FlexBoxSpecAttribute? container,
+    IconSpecAttribute? icon,
+    TextSpecAttribute? label,
+    WidgetModifiersDataDto? modifiers,
+    AnimatedDataDto? animated,
+  }) {
+    return builder(SelectTriggerSpecAttribute(
+      container: container,
+      icon: icon,
+      label: label,
+      modifiers: modifiers,
+      animated: animated,
+    ));
+  }
+}
+
+/// A tween that interpolates between two [SelectTriggerSpec] instances.
+///
+/// This class can be used in animations to smoothly transition between
+/// different [SelectTriggerSpec] specifications.
+class SelectTriggerSpecTween extends Tween<SelectTriggerSpec?> {
+  SelectTriggerSpecTween({
+    super.begin,
+    super.end,
+  });
+
+  @override
+  SelectTriggerSpec lerp(double t) {
+    if (begin == null && end == null) {
+      return const SelectTriggerSpec();
     }
 
     if (begin == null) {
