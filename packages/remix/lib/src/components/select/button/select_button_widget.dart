@@ -14,20 +14,36 @@ class SelectButtonSpecWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SpecBuilder(
-      inherit: true,
-      builder: (context) {
-        final button = SelectSpec.of(context).button;
+    final select = context.findAncestorStateOfType<SelectState>();
 
-        final container = button.container;
-        final label = button.label;
-        final icon = button.icon;
+    if (select == null) {
+      throw Exception('SelectButton must be a child of a Select');
+    }
 
-        return container(
-          direction: Axis.horizontal,
-          children: [label(text), icon(trailingIcon)],
-        );
+    final style = select.widget.style ?? context.remix.components.select;
+    final configuration = SpecConfiguration(context, SelectSpecUtility.self);
+    final appliedStyle =
+        style.makeStyle(configuration).applyVariants(select.widget.variants);
+
+    return Pressable(
+      onPress: () {
+        select.openMenu();
       },
+      child: SpecBuilder(
+        style: appliedStyle,
+        builder: (context) {
+          final button = SelectSpec.of(context).button;
+
+          final container = button.container;
+          final label = button.label;
+          final icon = button.icon;
+
+          return container(
+            direction: Axis.horizontal,
+            children: [label(text), icon(trailingIcon)],
+          );
+        },
+      ),
     );
   }
 }

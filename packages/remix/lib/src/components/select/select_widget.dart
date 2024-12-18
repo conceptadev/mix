@@ -12,7 +12,7 @@ class Select<T> extends StatefulWidget {
     super.key,
     required this.value,
     required this.onChanged,
-    required this.button,
+    required this.trigger,
     required this.items,
     this.variants = const [],
     this.style,
@@ -34,7 +34,7 @@ class Select<T> extends StatefulWidget {
   /// Builder function that creates the button portion of the select component.
   /// When tapped, this button will display the dropdown menu.
   /// This allows customizing how the button is displayed.
-  final WidgetSpecBuilder<SelectButtonSpec> button;
+  final WidgetSpecBuilder<SelectButtonSpec> trigger;
 
   /// {@macro remix.component.disabled}
   final bool disabled;
@@ -49,14 +49,8 @@ class Select<T> extends StatefulWidget {
 
 class SelectState<T> extends State<Select<T>>
     with SingleTickerProviderStateMixin {
-  final OverlayPortalController _tooltipController = OverlayPortalController();
   late final MixWidgetStateController _menuStateController;
   late final MixWidgetStateController _buttonStateController;
-
-  final _baseAnimation = (
-    duration: const Duration(milliseconds: 100),
-    curve: Curves.decelerate,
-  );
 
   final _link = LayerLink();
 
@@ -76,6 +70,18 @@ class SelectState<T> extends State<Select<T>>
     _buttonStateController.disabled = widget.disabled;
   }
 
+  void openMenu() {
+    setState(() {
+      _menuStateController.selected = true;
+    });
+  }
+
+  void closeMenu() {
+    setState(() {
+      _menuStateController.selected = false;
+    });
+  }
+
   @override
   void dispose() {
     _buttonStateController.dispose();
@@ -90,108 +96,63 @@ class SelectState<T> extends State<Select<T>>
     final appliedStyle =
         style.makeStyle(configuration).applyVariants(widget.variants);
 
-    return SpecBuilder(
-      controller: _buttonStateController,
-      style: appliedStyle,
-      builder: (context) {
-        final button = SelectSpec.of(context).button;
-        final position = SelectSpec.of(context).position;
+    final animatedStyle = appliedStyle.cast<AnimatedStyle>();
 
-        return CompositedTransformTarget(
-          link: _link,
-          child: OverlayPortal(
-            controller: _tooltipController,
-            overlayChildBuilder: (BuildContext context) {
-              return Stack(children: [
-                GestureDetector(
-                  onTap: () => hide(),
-                  child: Container(color: Colors.transparent),
-                ),
-                CompositedTransformFollower(
-                  link: _link,
-                  targetAnchor:
-                      position.targetAnchor.resolve(TextDirection.ltr),
-                  followerAnchor:
-                      position.followerAnchor.resolve(TextDirection.ltr),
-                  child: SpecBuilder(
-                    controller: _menuStateController,
-                    style: appliedStyle.animate(
-                      duration: _baseAnimation.duration,
-                      curve: _baseAnimation.curve,
-                      onEnd: () {
-                        if (_menuStateController.selected == false) {
-                          _tooltipController.hide();
-                        }
-                      },
-                    ),
-                    builder: (context) {
-                      final select = SelectSpec.of(context);
-                      final menu = select.menu;
+    return OverlayWrapper(
+      target: RepaintBoundary(
+        child: SpecBuilder(
+          controller: _buttonStateController,
+          style: appliedStyle,
+          builder: (context) {
+            final buttonSpec = SelectSpec.of(context).button;
 
-                      final Container = menu.container.copyWith(
-                        box: menu.container.box.copyWith(
-                          width:
-                              menu.autoWidth ? _link.leaderSize!.width : null,
-                        ),
-                      );
+            return widget.trigger(buttonSpec);
+          },
+        ),
+      ),
+      overlayChild: SpecBuilder(
+        controller: _menuStateController,
+        style: appliedStyle,
+        builder: (context) {
+          final select = SelectSpec.of(context);
+          final menu = select.menu;
 
-                      return Container(
-                        direction: Axis.vertical,
-                        children: widget.items.map((item) {
-                          return Pressable(
-                            onPress: () {
-                              widget.onChanged(item.value);
-                              hide();
-                            },
-                            child: SpecBuilder(
-                              style: appliedStyle.animate(
-                                duration: _baseAnimation.duration,
-                                curve: _baseAnimation.curve,
-                              ),
-                              builder: (context) {
-                                return item.child;
-                              },
-                            ),
-                          );
-                        }).toList(),
-                      );
-                    },
-                  ),
-                ),
-              ]);
-            },
-            child: RepaintBoundary(
-              child: Pressable(
-                enabled: !widget.disabled,
-                onPress: onTap,
-                child: widget.button(button),
-              ),
+          final FlexContainer = menu.container.copyWith(
+            box: menu.container.box.copyWith(
+              width: menu.autoWidth ? _link.leaderSize!.width : null,
             ),
-          ),
-        );
-      },
+          );
+
+          return AnimatedBoxSpecWidget(
+            spec: FlexContainer.box,
+            duration: animatedStyle?.animated.duration ?? Duration.zero,
+            curve: animatedStyle?.animated.curve ?? Curves.easeInOut,
+            child: FlexContainer.flex(
+              direction: Axis.vertical,
+              children: widget.items
+                  .map(
+                    (item) => Pressable(
+                      onPress: () {
+                        widget.onChanged(item.value);
+                        closeMenu();
+                      },
+                      child: SpecBuilder(
+                        style: appliedStyle,
+                        builder: (context) {
+                          return item.child;
+                        },
+                      ),
+                    ),
+                  )
+                  .toList(),
+            ),
+          );
+        },
+      ),
+      onTapOutside: closeMenu,
+      showOverlay: _menuStateController.selected,
+      animationDuration: animatedStyle?.animated.duration ?? Duration.zero,
+      link: _link,
     );
-  }
-
-  void show() {
-    if (!_tooltipController.isShowing) {
-      _tooltipController.show();
-    }
-
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _menuStateController.selected = true;
-    });
-  }
-
-  void hide() {
-    _menuStateController.selected = false;
-  }
-
-  void onTap() {
-    if (!_tooltipController.isShowing) {
-      show();
-    } else {
-      hide();
-    }
   }
 }

@@ -41,15 +41,17 @@ class _SelectDemoState extends State<SelectDemo> {
           SizedBox(
             width: 200,
             child: Select<String>(
-              disabled:
-                  context.knobs.boolean(label: 'disabled', initialValue: false),
-              variants: [context.knobs.variant(FortalezaSelectStyle.variants)],
               value: selectedValue,
               onChanged: (value) => setState(() => selectedValue = value),
-              button: (spec) => spec(
+              trigger: (spec) => spec(
                 text: selectedValue,
                 trailingIcon: m.Icons.keyboard_arrow_down_rounded,
               ),
+              disabled: context.knobs.boolean(
+                label: 'disabled',
+                initialValue: false,
+              ),
+              variants: [context.knobs.variant(FortalezaSelectStyle.variants)],
               items: List.generate(
                 items.length,
                 (index) => SelectMenuItem<String>(

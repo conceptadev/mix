@@ -74,7 +74,10 @@ class SelectStyle extends SpecStyle<SelectSpecUtility> {
       ...buttonStyle,
       ...menuStyle,
       ...positionStyle,
-    ]);
+    ]).animate(
+      duration: const Duration(milliseconds: 1500),
+      curve: Curves.easeInOut,
+    );
   }
 }
 

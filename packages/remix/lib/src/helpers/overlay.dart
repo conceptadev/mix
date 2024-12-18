@@ -14,6 +14,7 @@ class OverlayWrapper extends StatefulWidget {
     this.onTapOutside,
     this.showOverlay = true,
     this.animationDuration = const Duration(),
+    required this.link,
   });
 
   /// The trigger widget that opens the dropdown menu.
@@ -42,12 +43,13 @@ class OverlayWrapper extends StatefulWidget {
 
   final Duration animationDuration;
 
+  final LayerLink link;
+
   @override
   State<OverlayWrapper> createState() => OverlayWrapperState();
 }
 
 class OverlayWrapperState extends State<OverlayWrapper> {
-  final _link = LayerLink();
   OverlayPortalController? _controller;
   Timer? _timer;
 
@@ -91,7 +93,7 @@ class OverlayWrapperState extends State<OverlayWrapper> {
   @override
   Widget build(BuildContext context) {
     return CompositedTransformTarget(
-      link: _link,
+      link: widget.link,
       child: OverlayPortal(
         controller: _controller!,
         overlayChildBuilder: (BuildContext context) {
@@ -102,7 +104,7 @@ class OverlayWrapperState extends State<OverlayWrapper> {
                 child: Container(color: Colors.transparent),
               ),
             CompositedTransformFollower(
-              link: _link,
+              link: widget.link,
               offset: widget.offset,
               targetAnchor: widget.targetAnchor,
               followerAnchor: widget.followerAnchor,

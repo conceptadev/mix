@@ -116,6 +116,7 @@ class DropdownMenuState extends State<DropdownMenu> {
       onTapOutside: widget.onPressOutside,
       showOverlay: widget.open,
       animationDuration: animatedStyle?.animated.duration ?? Duration.zero,
+      link: _link,
     );
   }
 }
