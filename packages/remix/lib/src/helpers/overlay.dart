@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 class OverlayWrapper extends StatefulWidget {
@@ -8,9 +10,10 @@ class OverlayWrapper extends StatefulWidget {
     this.offset = const Offset(0, 4),
     this.targetAnchor = Alignment.bottomCenter,
     this.followerAnchor = Alignment.topCenter,
-    required this.controller,
+    this.controller,
     this.onTapOutside,
     this.showOverlay = true,
+    this.animationDuration = const Duration(),
   });
 
   /// The trigger widget that opens the dropdown menu.
@@ -30,12 +33,14 @@ class OverlayWrapper extends StatefulWidget {
   final Alignment followerAnchor;
 
   /// The controller that controls the overlay.
-  final OverlayPortalController controller;
+  final OverlayPortalController? controller;
 
   /// Whether the overlay should be shown.
   final bool showOverlay;
 
   final VoidCallback? onTapOutside;
+
+  final Duration animationDuration;
 
   @override
   State<OverlayWrapper> createState() => OverlayWrapperState();
@@ -43,13 +48,52 @@ class OverlayWrapper extends StatefulWidget {
 
 class OverlayWrapperState extends State<OverlayWrapper> {
   final _link = LayerLink();
+  OverlayPortalController? _controller;
+  Timer? _timer;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _controller = widget.controller ?? OverlayPortalController();
+
+    if (widget.showOverlay) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        _controller!.show();
+      });
+    }
+  }
+
+  @override
+  void didUpdateWidget(OverlayWrapper oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    if (widget.showOverlay) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        _controller!.show();
+      });
+    } else {
+      if (_timer != null) {
+        _timer!.cancel();
+      }
+      _timer = Timer(widget.animationDuration, () {
+        _controller!.hide();
+      });
+    }
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return CompositedTransformTarget(
       link: _link,
       child: OverlayPortal(
-        controller: widget.controller,
+        controller: _controller!,
         overlayChildBuilder: (BuildContext context) {
           return Stack(children: [
             if (widget.onTapOutside != null)

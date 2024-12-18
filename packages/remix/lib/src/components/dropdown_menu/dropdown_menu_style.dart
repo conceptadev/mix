@@ -12,7 +12,7 @@ class DropdownMenuStyle extends SpecStyle<DropdownMenuSpecUtility> {
     final menuStyle = [
       $.menu.container.chain
         ..borderRadius(6)
-        ..shadow.color(Colors.black.withOpacity(0.07))
+        ..shadow.color.black.withOpacity(0.07)
         ..shadow.blurRadius(5)
         ..color.white()
         ..border.color.black12()

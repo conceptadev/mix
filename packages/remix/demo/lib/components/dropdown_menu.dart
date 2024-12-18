@@ -43,6 +43,11 @@ class _DropdownMenuDemoState extends State<DropdownMenuDemo> {
             });
           },
         ),
+        onPressOutside: () {
+          setState(() {
+            open = false;
+          });
+        },
         open: open,
         items: [
           const DropdownMenuItem(

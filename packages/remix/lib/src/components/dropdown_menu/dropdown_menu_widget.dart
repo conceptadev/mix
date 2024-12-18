@@ -46,7 +46,6 @@ class DropdownMenu extends StatefulWidget {
 }
 
 class DropdownMenuState extends State<DropdownMenu> {
-  final OverlayPortalController _tooltipController = OverlayPortalController();
   late final MixWidgetStateController _menuStateController;
 
   final _link = LayerLink();
@@ -55,33 +54,15 @@ class DropdownMenuState extends State<DropdownMenu> {
   void initState() {
     super.initState();
 
-    _menuStateController = MixWidgetStateController()..selected = false;
-
-    if (widget.open) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        show();
-      });
-    }
-  }
-
-  void _onEndAnimation() {
-    if (_menuStateController.selected == false) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        _tooltipController.hide();
-      });
-    }
+    _menuStateController = MixWidgetStateController()..selected = widget.open;
   }
 
   @override
   void didUpdateWidget(DropdownMenu oldWidget) {
     super.didUpdateWidget(oldWidget);
 
-    if (widget.open) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        show();
-      });
-    } else {
-      hide();
+    if (widget.open != oldWidget.open) {
+      _menuStateController.selected = widget.open;
     }
   }
 
@@ -93,11 +74,15 @@ class DropdownMenuState extends State<DropdownMenu> {
 
   @override
   Widget build(BuildContext context) {
-    final style = widget.style ?? context.remix.components.dropdownMenu;
+    final dropdownMenuStyle =
+        widget.style ?? context.remix.components.dropdownMenu;
     final configuration =
         SpecConfiguration(context, DropdownMenuSpecUtility.self);
-    final appliedStyle =
-        style.makeStyle(configuration).applyVariants(widget.variants);
+    final appliedStyle = dropdownMenuStyle
+        .makeStyle(configuration)
+        .applyVariants(widget.variants);
+
+    final animatedStyle = appliedStyle.cast<AnimatedStyle>();
 
     return OverlayWrapper(
       target: RepaintBoundary(child: widget.trigger),
@@ -113,14 +98,10 @@ class DropdownMenuState extends State<DropdownMenu> {
             ),
           );
 
-          final AnimatedStyle? animatedStyle =
-              appliedStyle is AnimatedStyle ? appliedStyle : null;
-
           return AnimatedBoxSpecWidget(
             spec: FlexContainer.box,
             duration: animatedStyle?.animated.duration ?? Duration.zero,
             curve: animatedStyle?.animated.curve ?? Curves.easeInOut,
-            onEnd: _onEndAnimation,
             child: FlexContainer.flex(
               direction: Axis.vertical,
               children: List.generate(widget.items.length, (index) {
@@ -132,31 +113,9 @@ class DropdownMenuState extends State<DropdownMenu> {
           );
         },
       ),
-      controller: _tooltipController,
       onTapOutside: widget.onPressOutside,
-      // onPressOutside: hide,
+      showOverlay: widget.open,
+      animationDuration: animatedStyle?.animated.duration ?? Duration.zero,
     );
-  }
-
-  void show() {
-    if (!_tooltipController.isShowing) {
-      _tooltipController.show();
-    }
-
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _menuStateController.selected = true;
-    });
-  }
-
-  void hide() {
-    _menuStateController.selected = false;
-  }
-
-  void toggleMenu() {
-    if (!_tooltipController.isShowing) {
-      show();
-    } else {
-      hide();
-    }
   }
 }
