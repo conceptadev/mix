@@ -56,8 +56,15 @@ class DropdownMenuItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final style = _inheritStyleFromDropdownMenu(context);
 
+    void onPressWrapper() {
+      onPress?.call();
+      final dropdownState =
+          context.findAncestorStateOfType<DropdownMenuState>()!;
+      dropdownState.hide();
+    }
+
     return Pressable(
-      onPress: onPress,
+      onPress: onPress == null ? null : onPressWrapper,
       child: SpecBuilder(
         style: style.applyVariants(variants),
         builder: (context) {

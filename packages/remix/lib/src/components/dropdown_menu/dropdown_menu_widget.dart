@@ -39,8 +39,7 @@ class DropdownMenu extends StatefulWidget {
   State<DropdownMenu> createState() => DropdownMenuState();
 }
 
-class DropdownMenuState extends State<DropdownMenu>
-    with SingleTickerProviderStateMixin {
+class DropdownMenuState extends State<DropdownMenu> {
   final OverlayPortalController _tooltipController = OverlayPortalController();
   late final MixWidgetStateController _menuStateController;
 
@@ -51,6 +50,12 @@ class DropdownMenuState extends State<DropdownMenu>
     super.initState();
 
     _menuStateController = MixWidgetStateController()..selected = false;
+  }
+
+  void _onEndAnimation() {
+    if (_menuStateController.selected == false) {
+      _tooltipController.hide();
+    }
   }
 
   @override
@@ -67,61 +72,41 @@ class DropdownMenuState extends State<DropdownMenu>
     final appliedStyle =
         style.makeStyle(configuration).applyVariants(widget.variants);
 
-    return CompositedTransformTarget(
-      link: _link,
-      child: OverlayPortal(
-        controller: _tooltipController,
-        overlayChildBuilder: (BuildContext context) {
-          return Stack(children: [
-            GestureDetector(
-              onTap: () => hide(),
-              child: Container(color: Colors.transparent),
+    return OverlayWrapper(
+      target: RepaintBoundary(child: widget.trigger(toggleMenu)),
+      overlayChild: SpecBuilder(
+        controller: _menuStateController,
+        style: appliedStyle,
+        builder: (context) {
+          final menu = DropdownMenuSpec.of(context).menu;
+
+          final FlexContainer = menu.container.copyWith(
+            box: menu.container.box.copyWith(
+              width: menu.autoWidth ? _link.leaderSize!.width : null,
             ),
-            CompositedTransformFollower(
-              link: _link,
-              offset: widget.offset,
-              targetAnchor: widget.targetAnchor,
-              followerAnchor: widget.followerAnchor,
-              child: SpecBuilder(
-                controller: _menuStateController,
-                style: appliedStyle,
-                builder: (context) {
-                  final menu = DropdownMenuSpec.of(context).menu;
+          );
 
-                  final FlexContainer = menu.container.copyWith(
-                    box: menu.container.box.copyWith(
-                      width: menu.autoWidth ? _link.leaderSize!.width : null,
-                    ),
-                  );
+          final AnimatedStyle? animatedStyle =
+              appliedStyle is AnimatedStyle ? appliedStyle : null;
 
-                  final AnimatedStyle? animatedStyle =
-                      appliedStyle is AnimatedStyle ? appliedStyle : null;
+          return AnimatedBoxSpecWidget(
+            spec: FlexContainer.box,
+            duration: animatedStyle?.animated.duration ?? Duration.zero,
+            curve: animatedStyle?.animated.curve ?? Curves.easeInOut,
+            onEnd: _onEndAnimation,
+            child: FlexContainer.flex(
+              direction: Axis.vertical,
+              children: List.generate(widget.items.length, (index) {
+                final item = widget.items[index];
 
-                  return AnimatedBoxSpecWidget(
-                    spec: FlexContainer.box,
-                    duration: animatedStyle?.animated.duration ?? Duration.zero,
-                    curve: animatedStyle?.animated.curve ?? Curves.easeInOut,
-                    onEnd: () {
-                      if (_menuStateController.selected == false) {
-                        _tooltipController.hide();
-                      }
-                    },
-                    child: FlexContainer.flex(
-                      direction: Axis.vertical,
-                      children: List.generate(widget.items.length, (index) {
-                        final item = widget.items[index];
-
-                        return item;
-                      }),
-                    ),
-                  );
-                },
-              ),
+                return item;
+              }),
             ),
-          ]);
+          );
         },
-        child: RepaintBoundary(child: widget.trigger(onTap)),
       ),
+      controller: _tooltipController,
+      onPressOutside: hide,
     );
   }
 
@@ -139,7 +124,7 @@ class DropdownMenuState extends State<DropdownMenu>
     _menuStateController.selected = false;
   }
 
-  void onTap() {
+  void toggleMenu() {
     if (!_tooltipController.isShowing) {
       show();
     } else {

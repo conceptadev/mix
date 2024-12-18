@@ -1,4 +1,4 @@
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 
 class OverlayWrapper extends StatefulWidget {
   const OverlayWrapper({
@@ -34,62 +34,24 @@ class OverlayWrapper extends StatefulWidget {
   final VoidCallback? onPressOutside;
 
   @override
-  State<OverlayWrapper> createState() => DropdownMenuState();
+  State<OverlayWrapper> createState() => OverlayWrapperState();
 }
 
-class DropdownMenuState extends State<OverlayWrapper>
-    with SingleTickerProviderStateMixin {
-  final OverlayPortalController _tooltipController = OverlayPortalController();
-
+class OverlayWrapperState extends State<OverlayWrapper> {
   final _link = LayerLink();
-
-  void show() {
-    if (!_tooltipController.isShowing) {
-      _tooltipController.show();
-    }
-
-    // WidgetsBinding.instance.addPostFrameCallback((_) {
-    //   _menuStateController.selected = true;
-    // });
-  }
-
-  // void hide() {
-  //   _menuStateController.selected = false;
-  // }
-
-  // void onTap() {
-  //   if (!_tooltipController.isShowing) {
-  //     show();
-  //   } else {
-  //     hide();
-  //   }
-  // }
-
-  // @override
-  // void initState() {
-  //   super.initState();
-
-  //   _menuStateController = MixWidgetStateController()..selected = false;
-  // }
-
-  // @override
-  // void dispose() {
-  //   _menuStateController.dispose();
-  //   super.dispose();
-  // }
 
   @override
   Widget build(BuildContext context) {
     return CompositedTransformTarget(
       link: _link,
       child: OverlayPortal(
-        controller: _tooltipController,
+        controller: widget.controller,
         overlayChildBuilder: (BuildContext context) {
           return Stack(children: [
-            // GestureDetector(
-            //   onTap: () => hide(),
-            //   child: Container(color: Colors.transparent),
-            // ),
+            GestureDetector(
+              onTap: widget.onPressOutside,
+              child: Container(color: Colors.transparent),
+            ),
             CompositedTransformFollower(
               link: _link,
               offset: widget.offset,
