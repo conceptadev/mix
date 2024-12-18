@@ -9,7 +9,7 @@ import 'components/checkbox_theme.dart';
 import 'components/chip_theme.dart';
 import 'components/dialog_theme.dart';
 import 'components/divider_theme.dart';
-import 'components/dropdown.dart';
+import 'components/dropdown_theme.dart';
 import 'components/icon_button_theme.dart';
 import 'components/menu_item_theme.dart';
 import 'components/progress_theme.dart';
