@@ -5,64 +5,56 @@ class Accordion extends StatefulWidget {
     super.key,
     required this.header,
     required this.content,
+    this.onChanged,
+    this.expanded = true,
     this.variants = const [],
-    this.initiallyExpanded = false,
     this.style,
   });
 
   final WidgetSpecBuilder<AccordionHeaderSpec> header;
-  final WidgetSpecBuilder<TextSpec> content;
+  final Widget content;
   final AccordionStyle? style;
-  final bool initiallyExpanded;
+  final bool expanded;
   final List<Variant> variants;
+  final void Function(bool)? onChanged;
 
   @override
   State<Accordion> createState() => _AccordionState();
 }
 
-class _AccordionState extends State<Accordion> with TickerProviderStateMixin {
+class _AccordionState extends State<Accordion> {
   late MixWidgetStateController _controller;
-  late MixWidgetStateController _contentController;
 
   @override
   void initState() {
     super.initState();
-    _controller = MixWidgetStateController()
-      ..selected = widget.initiallyExpanded;
-    _contentController = MixWidgetStateController()
-      ..selected = widget.initiallyExpanded;
+    _controller = MixWidgetStateController()..selected = widget.expanded;
   }
 
   void _handleTap() {
     _controller.selected = !_controller.selected;
-    _contentController.selected = !_contentController.selected;
+    widget.onChanged?.call(widget.expanded);
   }
 
   @override
   void dispose() {
     _controller.dispose();
-    _contentController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final style = widget.style ?? context.remix.components.accordion;
+    final Accordionstyle = widget.style ?? context.remix.components.accordion;
     final configuration = SpecConfiguration(context, AccordionSpecUtility.self);
 
-    final variantStyle =
-        style.makeStyle(configuration).applyVariants(widget.variants);
+    final style =
+        Accordionstyle.makeStyle(configuration).applyVariants(widget.variants);
 
     return RepaintBoundary(
       child: SpecBuilder(
-        controller: _contentController,
-        style: variantStyle,
+        style: style,
         builder: (context) {
           final spec = AccordionSpec.of(context);
-
-          final content = spec.contentContainer(
-            child: widget.content(spec.textContent),
-          );
 
           return spec.container(
             direction: Axis.vertical,
@@ -71,7 +63,7 @@ class _AccordionState extends State<Accordion> with TickerProviderStateMixin {
                 onPress: _handleTap,
                 controller: _controller,
                 child: SpecBuilder(
-                  style: variantStyle,
+                  style: style,
                   builder: (context) {
                     final spec = AccordionSpec.of(context);
 
@@ -79,7 +71,12 @@ class _AccordionState extends State<Accordion> with TickerProviderStateMixin {
                   },
                 ),
               ),
-              content,
+              AnimatedAlign(
+                alignment: Alignment.topCenter,
+                heightFactor: widget.expanded ? 1 : 0,
+                duration: const Duration(milliseconds: 200),
+                child: spec.contentContainer(child: widget.content),
+              ),
             ],
           );
         },

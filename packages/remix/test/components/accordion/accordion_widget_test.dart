@@ -5,43 +5,40 @@ import 'package:remix/remix.dart';
 
 void main() {
   group('XAccordion', () {
-    testWidgets('renders with required properties',
-        (WidgetTester tester) async {
-      await tester.pumpWidget(
-        MaterialApp(
-          home: Accordion(
-            style: const AccordionStyle(),
-            header: (spec) => AccordionHeaderSpecWidget(
-              title: 'Test Accordion',
-              spec: spec,
-            ),
-            content: (spec) => TextSpecWidget(
-              'Accordion Content',
-              spec: spec,
+    testWidgets(
+      'renders with required properties',
+      (WidgetTester tester) async {
+        await tester.pumpWidget(
+          MaterialApp(
+            home: Accordion(
+              header: (spec) => AccordionHeaderSpecWidget(
+                spec: spec,
+                title: 'Test Accordion',
+              ),
+              content: const Text('Accordion Content'),
+              expanded: true,
+              style: const AccordionStyle(),
             ),
           ),
-        ),
-      );
+        );
 
-      expect(find.text('Test Accordion'), findsOneWidget);
-      expect(find.text('Accordion Content'), findsOneWidget);
-    });
+        expect(find.text('Test Accordion'), findsOneWidget);
+        expect(find.text('Accordion Content'), findsOneWidget);
+      },
+    );
 
     testWidgets('renders with custom icons', (WidgetTester tester) async {
       await tester.pumpWidget(
         MaterialApp(
           home: Accordion(
-            style: const AccordionStyle(),
             header: (spec) => AccordionHeaderSpecWidget(
-              title: 'Custom Icons',
               spec: spec,
               leadingIcon: Icons.star,
+              title: 'Custom Icons',
               trailingIcon: Icons.arrow_drop_down,
             ),
-            content: (spec) => TextSpecWidget(
-              'Content',
-              spec: spec,
-            ),
+            content: const Text('Content'),
+            style: const AccordionStyle(),
           ),
         ),
       );
@@ -77,10 +74,7 @@ void main() {
               title: 'Styled Accordion',
               trailingIcon: Icons.rocket_launch,
             ),
-            content: (spec) => TextSpecWidget(
-              'Styled Content',
-              spec: spec,
-            ),
+            content: const Text('Styled Content'),
             style: const FakeAccordionStyle(color),
           ),
         ),
@@ -104,9 +98,7 @@ class FakeAccordionStyle extends AccordionStyle {
     final $ = spec.utilities;
 
     final baseStyle = super.makeStyle(spec);
-    return Style.create([
-      baseStyle(),
-      $.header.trailingIcon.color(color),
-    ]);
+
+    return Style.create([baseStyle(), $.header.trailingIcon.color(color)]);
   }
 }

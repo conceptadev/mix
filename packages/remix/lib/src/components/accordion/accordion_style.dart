@@ -14,22 +14,6 @@ class AccordionStyle extends SpecStyle<AccordionSpecUtility> {
         ..border.bottom.color.grey.shade400(),
     ];
 
-    final contentStyle = [
-      $.contentContainer.padding.bottom(16),
-      $.contentContainer.wrap.align(
-        alignment: Alignment.topCenter,
-        heightFactor: 0,
-      ),
-      spec.on.selected($.contentContainer.wrap.align(heightFactor: 1)),
-    ];
-
-    final textContainerStyle = [
-      $.textContent.chain
-        ..style.fontSize(14)
-        ..style.height(1.4)
-        ..style.letterSpacing(0.2),
-    ];
-
     final headerStyle = [
       $.header.container.chain
         ..flex.gap(6)
@@ -49,12 +33,7 @@ class AccordionStyle extends SpecStyle<AccordionSpecUtility> {
       spec.on.selected($.header.trailingIcon.wrap.transform.rotate.d180()),
     ];
 
-    return Style.create([
-      ...flexContainerStyle,
-      ...contentStyle,
-      ...textContainerStyle,
-      ...headerStyle,
-    ]);
+    return Style.create([...flexContainerStyle, ...headerStyle]);
   }
 }
 
@@ -70,7 +49,6 @@ class AccordionDarkStyle extends AccordionStyle {
       $.container.border.bottom.color.grey.shade700(),
       $.header.text.style.color.white(),
       $.header.trailingIcon.color.white(),
-      $.textContent.style.color.white(),
     ]);
   }
 }

@@ -29,12 +29,8 @@ class FortalezaTokens {
         neutral: RadixColors.slate.swatch,
         neutralAlpha: RadixColors.slate.alphaSwatch,
       ),
-      radii: FortalezaRadius.values(
-        [4, 8, 12, 16, 24, 32],
-      ),
-      spaces: FortalezaSpace.values(
-        [4, 8, 12, 16, 24, 32, 40, 48, 64],
-      ),
+      radii: FortalezaRadius.values([4, 8, 12, 16, 24, 32]),
+      spaces: FortalezaSpace.values([4, 8, 12, 16, 24, 32, 40, 48, 64]),
       textStyles: const FortalezaTextStyle(
         text1: TextStyle(fontSize: 12, letterSpacing: 0.0025, height: 1.33),
         text2: TextStyle(fontSize: 14, letterSpacing: 0, height: 1.43),
@@ -132,6 +128,7 @@ class FortalezaRadius {
 
   factory FortalezaRadius.values(List<double> values) {
     assert(values.length == 6, 'Expected 6 values, got ${values.length}');
+
     return FortalezaRadius(
       radius1: Radius.circular(values[0]),
       radius2: Radius.circular(values[1]),
@@ -171,6 +168,7 @@ class FortalezaSpace {
 
   factory FortalezaSpace.values(List<double> values) {
     assert(values.length == 9, 'Expected 9 values, got ${values.length}');
+
     return FortalezaSpace(
       space1: values[0],
       space2: values[1],

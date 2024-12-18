@@ -43,11 +43,6 @@ class FortalezaAccordionStyle extends AccordionStyle {
         ..animated.curve.spring(stiffness: 100)
         ..animated.duration(const Duration(milliseconds: 250)),
 
-      // Text Container
-      $.textContent.chain
-        ..style.color.$neutral(11)
-        ..style.fontWeight.w300(),
-
       // Variants
       spec.on.selected($.contentContainer.border.top.style.solid()),
       spec.on.hover(

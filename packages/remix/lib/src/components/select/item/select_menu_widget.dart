@@ -36,20 +36,15 @@ class SelectMenuItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SpecBuilder(
-      inherit: true,
-      builder: (context) {
-        final item = SelectSpec.of(context).item;
+    final item = SelectSpec.of(context).item;
 
-        final container = item.container;
-        final icon = item.icon;
-        final text = item.text;
+    final container = item.container;
+    final icon = item.icon;
+    final text = item.text;
 
-        return container(
-          direction: Axis.horizontal,
-          children: [if (iconData != null) icon(iconData), text(this.text)],
-        );
-      },
+    return container(
+      direction: Axis.horizontal,
+      children: [if (iconData != null) icon(iconData), text(this.text)],
     );
   }
 }
