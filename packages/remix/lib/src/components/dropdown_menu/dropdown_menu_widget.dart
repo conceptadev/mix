@@ -10,6 +10,8 @@ class DropdownMenu extends StatefulWidget {
     this.offset = const Offset(0, 4),
     this.targetAnchor = Alignment.bottomCenter,
     this.followerAnchor = Alignment.topCenter,
+    required this.open,
+    this.onPressOutside,
   });
 
   /// {@macro remix.component.style}
@@ -20,7 +22,7 @@ class DropdownMenu extends StatefulWidget {
 
   /// The trigger widget that opens the dropdown menu.
   /// It is a builder that returns a widget and a callback to open the menu
-  final Widget Function(VoidCallback action) trigger;
+  final Widget trigger;
 
   /// The list of items to display in the dropdown menu.
   /// Each item contains a value and widget to display.
@@ -34,6 +36,10 @@ class DropdownMenu extends StatefulWidget {
 
   /// The anchor point on the dropdown menu that the trigger widget should be aligned to.
   final Alignment followerAnchor;
+
+  final bool open;
+
+  final VoidCallback? onPressOutside;
 
   @override
   State<DropdownMenu> createState() => DropdownMenuState();
@@ -50,11 +56,32 @@ class DropdownMenuState extends State<DropdownMenu> {
     super.initState();
 
     _menuStateController = MixWidgetStateController()..selected = false;
+
+    if (widget.open) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        show();
+      });
+    }
   }
 
   void _onEndAnimation() {
     if (_menuStateController.selected == false) {
-      _tooltipController.hide();
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        _tooltipController.hide();
+      });
+    }
+  }
+
+  @override
+  void didUpdateWidget(DropdownMenu oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    if (widget.open) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        show();
+      });
+    } else {
+      hide();
     }
   }
 
@@ -73,7 +100,7 @@ class DropdownMenuState extends State<DropdownMenu> {
         style.makeStyle(configuration).applyVariants(widget.variants);
 
     return OverlayWrapper(
-      target: RepaintBoundary(child: widget.trigger(toggleMenu)),
+      target: RepaintBoundary(child: widget.trigger),
       overlayChild: SpecBuilder(
         controller: _menuStateController,
         style: appliedStyle,
@@ -106,7 +133,8 @@ class DropdownMenuState extends State<DropdownMenu> {
         },
       ),
       controller: _tooltipController,
-      onPressOutside: hide,
+      onTapOutside: widget.onPressOutside,
+      // onPressOutside: hide,
     );
   }
 

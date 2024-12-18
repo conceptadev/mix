@@ -9,7 +9,8 @@ class OverlayWrapper extends StatefulWidget {
     this.targetAnchor = Alignment.bottomCenter,
     this.followerAnchor = Alignment.topCenter,
     required this.controller,
-    this.onPressOutside,
+    this.onTapOutside,
+    this.showOverlay = true,
   });
 
   /// The trigger widget that opens the dropdown menu.
@@ -31,7 +32,10 @@ class OverlayWrapper extends StatefulWidget {
   /// The controller that controls the overlay.
   final OverlayPortalController controller;
 
-  final VoidCallback? onPressOutside;
+  /// Whether the overlay should be shown.
+  final bool showOverlay;
+
+  final VoidCallback? onTapOutside;
 
   @override
   State<OverlayWrapper> createState() => OverlayWrapperState();
@@ -48,10 +52,11 @@ class OverlayWrapperState extends State<OverlayWrapper> {
         controller: widget.controller,
         overlayChildBuilder: (BuildContext context) {
           return Stack(children: [
-            GestureDetector(
-              onTap: widget.onPressOutside,
-              child: Container(color: Colors.transparent),
-            ),
+            if (widget.onTapOutside != null)
+              GestureDetector(
+                onTap: widget.onTapOutside,
+                child: Container(color: Colors.transparent),
+              ),
             CompositedTransformFollower(
               link: _link,
               offset: widget.offset,

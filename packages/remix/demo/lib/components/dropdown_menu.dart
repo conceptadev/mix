@@ -30,14 +30,20 @@ enum MenuItem {
 }
 
 class _DropdownMenuDemoState extends State<DropdownMenuDemo> {
+  bool open = false;
   @override
   Widget build(BuildContext context) {
     return Center(
       child: DropdownMenu(
-        trigger: (action) => IconButton(
+        trigger: IconButton(
           m.Icons.menu,
-          onPressed: action,
+          onPressed: () {
+            setState(() {
+              open = !open;
+            });
+          },
         ),
+        open: open,
         items: [
           const DropdownMenuItem(
             text: 'Features',
@@ -48,6 +54,9 @@ class _DropdownMenuDemoState extends State<DropdownMenuDemo> {
           DropdownMenuItem(
             text: 'home',
             onPress: () {
+              setState(() {
+                open = false;
+              });
               showToast(
                 context: context,
                 entry: ToastEntry(
@@ -61,6 +70,9 @@ class _DropdownMenuDemoState extends State<DropdownMenuDemo> {
           DropdownMenuItem(
             text: 'profile',
             onPress: () {
+              setState(() {
+                open = false;
+              });
               showToast(
                 context: context,
                 entry: ToastEntry(

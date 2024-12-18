@@ -43,7 +43,11 @@ class DropdownMenuItem extends StatelessWidget {
   final List<Variant> variants;
 
   Style _inheritStyleFromDropdownMenu(BuildContext context) {
-    final dropdownMenu = context.findAncestorWidgetOfExactType<DropdownMenu>()!;
+    final dropdownMenu = context.findAncestorWidgetOfExactType<DropdownMenu>();
+
+    if (dropdownMenu == null) {
+      throw Exception('DropdownMenuItem must be a child of a DropdownMenu');
+    }
 
     final style = dropdownMenu.style ?? context.remix.components.dropdownMenu;
     final configuration =
@@ -56,15 +60,8 @@ class DropdownMenuItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final style = _inheritStyleFromDropdownMenu(context);
 
-    void onPressWrapper() {
-      onPress?.call();
-      final dropdownState =
-          context.findAncestorStateOfType<DropdownMenuState>()!;
-      dropdownState.hide();
-    }
-
     return Pressable(
-      onPress: onPress == null ? null : onPressWrapper,
+      onPress: onPress,
       child: SpecBuilder(
         style: style.applyVariants(variants),
         builder: (context) {
