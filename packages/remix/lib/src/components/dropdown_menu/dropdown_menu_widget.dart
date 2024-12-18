@@ -98,18 +98,13 @@ class DropdownMenuState extends State<DropdownMenu> {
             ),
           );
 
-          return AnimatedBoxSpecWidget(
-            spec: FlexContainer.box,
-            duration: animatedStyle?.animated.duration ?? Duration.zero,
-            curve: animatedStyle?.animated.curve ?? Curves.easeInOut,
-            child: FlexContainer.flex(
-              direction: Axis.vertical,
-              children: List.generate(widget.items.length, (index) {
-                final item = widget.items[index];
+          return FlexContainer(
+            direction: Axis.vertical,
+            children: List.generate(widget.items.length, (index) {
+              final item = widget.items[index];
 
-                return item;
-              }),
-            ),
+              return item;
+            }),
           );
         },
       ),

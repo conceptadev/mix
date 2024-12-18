@@ -84,7 +84,7 @@ class FortalezaSelectStyle extends SelectStyle {
         soft(softVariant()),
         ghost(ghostVariant()),
       ],
-    );
+    ).animate(duration: const Duration(milliseconds: 100));
   }
 }
 

@@ -70,6 +70,7 @@ class OverlayWrapperState extends State<OverlayWrapper> {
   void didUpdateWidget(OverlayWrapper oldWidget) {
     super.didUpdateWidget(oldWidget);
 
+    if (widget.showOverlay == oldWidget.showOverlay) return;
     if (widget.showOverlay) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         _controller!.show();

@@ -47,8 +47,7 @@ class Select<T> extends StatefulWidget {
   State<Select> createState() => SelectState<T>();
 }
 
-class SelectState<T> extends State<Select<T>>
-    with SingleTickerProviderStateMixin {
+class SelectState<T> extends State<Select<T>> {
   late final MixWidgetStateController _menuStateController;
   late final MixWidgetStateController _buttonStateController;
 
@@ -123,29 +122,24 @@ class SelectState<T> extends State<Select<T>>
             ),
           );
 
-          return AnimatedBoxSpecWidget(
-            spec: FlexContainer.box,
-            duration: animatedStyle?.animated.duration ?? Duration.zero,
-            curve: animatedStyle?.animated.curve ?? Curves.easeInOut,
-            child: FlexContainer.flex(
-              direction: Axis.vertical,
-              children: widget.items
-                  .map(
-                    (item) => Pressable(
-                      onPress: () {
-                        widget.onChanged(item.value);
-                        closeMenu();
+          return FlexContainer(
+            direction: Axis.vertical,
+            children: widget.items
+                .map(
+                  (item) => Pressable(
+                    onPress: () {
+                      widget.onChanged(item.value);
+                      closeMenu();
+                    },
+                    child: SpecBuilder(
+                      style: appliedStyle,
+                      builder: (context) {
+                        return item.child;
                       },
-                      child: SpecBuilder(
-                        style: appliedStyle,
-                        builder: (context) {
-                          return item.child;
-                        },
-                      ),
                     ),
-                  )
-                  .toList(),
-            ),
+                  ),
+                )
+                .toList(),
           );
         },
       ),

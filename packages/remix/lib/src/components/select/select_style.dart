@@ -39,19 +39,19 @@ class SelectStyle extends SpecStyle<SelectSpecUtility> {
         ..color.white()
         ..border.color.black12()
         ..padding.all(4)
-        ..wrap.intrinsicWidth()
-        ..wrap.transform.scale(0.95)
-        ..wrap.opacity(0)
-        ..wrap.padding.top(0)
+        ..box.wrap.intrinsicWidth()
+        ..box.wrap.transform.scale(0.95)
+        ..box.wrap.opacity(0)
+        ..box.wrap.padding.top(0)
         ..flex.mainAxisSize.min()
         ..flex.crossAxisAlignment.start(),
       $.menu.wrap.transform.scale(1.5),
       $.menu.autoWidth.off(),
       spec.on.selected(
         $.menu.container.chain
-          ..wrap.transform.scale(1)
-          ..wrap.opacity(1)
-          ..wrap.padding.top(4),
+          ..box.wrap.transform.scale(1)
+          ..box.wrap.opacity(1)
+          ..box.wrap.padding.top(4),
       ),
     ];
 
@@ -75,8 +75,8 @@ class SelectStyle extends SpecStyle<SelectSpecUtility> {
       ...menuStyle,
       ...positionStyle,
     ]).animate(
-      duration: const Duration(milliseconds: 1500),
-      curve: Curves.easeInOut,
+      duration: const Duration(milliseconds: 100),
+      curve: Curves.decelerate,
     );
   }
 }
@@ -107,6 +107,9 @@ class SelectDarkStyle extends SelectStyle {
       itemStyle,
       spec.on.hover($.item.container.color.white12()),
       spec.on.disabled($.button.container.color.white10()),
-    ]);
+    ]).animate(
+      duration: const Duration(milliseconds: 100),
+      curve: Curves.decelerate,
+    );
   }
 }
