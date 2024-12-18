@@ -1,3 +1,4 @@
+import '../../components/dropdown_menu/dropdown_menu.dart';
 import '../../core/theme/component.dart';
 import 'components/accordion_theme.dart';
 import 'components/avatar_theme.dart';
@@ -46,6 +47,7 @@ class FortalezaComponentTheme extends RemixComponentTheme {
     required super.textField,
     required super.toast,
     required super.slider,
+    required super.dropdownMenu,
   });
 
   static RemixComponentTheme light() {
@@ -72,6 +74,7 @@ class FortalezaComponentTheme extends RemixComponentTheme {
       textField: FortalezaTextFieldStyle(),
       toast: FortalezaToastStyle(),
       slider: FortalezaSliderStyle(),
+      dropdownMenu: DropdownMenuStyle(),
     );
   }
 

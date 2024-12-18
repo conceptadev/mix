@@ -1,18 +1,18 @@
 part of '../select.dart';
 
 @MixableSpec()
-class SelectButtonSpec extends Spec<SelectButtonSpec>
-    with _$SelectButtonSpec, Diagnosticable {
+class SelectTriggerSpec extends Spec<SelectTriggerSpec>
+    with _$SelectTriggerSpec, Diagnosticable {
   final FlexBoxSpec container;
   final TextSpec label;
   final IconSpec icon;
 
   /// {@macro select_button_spec_of}
-  static const of = _$SelectButtonSpec.of;
+  static const of = _$SelectTriggerSpec.of;
 
-  static const from = _$SelectButtonSpec.from;
+  static const from = _$SelectTriggerSpec.from;
 
-  const SelectButtonSpec({
+  const SelectTriggerSpec({
     FlexBoxSpec? container,
     IconSpec? icon,
     TextSpec? label,
@@ -21,13 +21,6 @@ class SelectButtonSpec extends Spec<SelectButtonSpec>
   })  : container = container ?? const FlexBoxSpec(),
         icon = icon ?? const IconSpec(),
         label = label ?? const TextSpec();
-
-  Widget call({required String text, required IconData trailingIcon}) =>
-      SelectButtonSpecWidget(
-        spec: this,
-        text: text,
-        trailingIcon: trailingIcon,
-      );
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
