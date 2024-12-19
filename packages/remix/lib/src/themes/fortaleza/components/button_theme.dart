@@ -1,3 +1,4 @@
+import 'package:flutter/widgets.dart';
 import 'package:mix/mix.dart';
 
 import '../../../components/button/button.dart';
@@ -9,17 +10,87 @@ class FortalezaButtonStyle extends ButtonStyle {
   static const surface = Variant('for.button.surface');
   static const ghost = Variant('for.button.ghost');
 
-  const FortalezaButtonStyle();
+  final Color? color;
+  final TextStyle? textStyle;
+  final EdgeInsets? padding;
+  final double? radius;
 
   static List<Variant> get variants => [soft, outline, surface, ghost];
+
+  const FortalezaButtonStyle({
+    this.color,
+    this.textStyle,
+    this.padding,
+    this.radius,
+  });
 
   @override
   Style makeStyle(SpecConfiguration<ButtonSpecUtility> spec) {
     final $ = spec.utilities;
 
-    final baseStyle = super.makeStyle(spec);
+    Style setColor() {
+      final color = this.color ?? spec.context.$color.accent();
+
+      final disabled = Style(
+        $.container.color.$neutral(4),
+      );
+
+      final borderedDisabled = Style(
+        disabled(),
+        $.container.border.color.$neutral(7),
+      );
+
+      return Style.create([
+        $.container.color(color),
+        spec.on.hover(
+          $.container.color(color.withOpacity(0.8)),
+        ),
+        soft(
+          $.container.color(color.withOpacity(0.1)),
+          $.label.style.color(color),
+          spec.on.hover(
+            $.container.color(color.withOpacity(0.2)),
+          ),
+          spec.on.disabled(
+            disabled(),
+          ),
+        ),
+        outline(
+          $.container.color.transparent(),
+          $.container.border.color(color),
+          $.label.style.color(color),
+          spec.on.hover(
+            $.label.style.color.withOpacity(0.8),
+            $.container.color.transparent(),
+          ),
+          spec.on.disabled(
+            borderedDisabled(),
+          ),
+        ),
+        surface(
+          $.container.color(color.withOpacity(0.1)),
+          $.container.border.color(color.withOpacity(0.7)),
+          $.label.style.color(color),
+          spec.on.hover(
+            $.container.color(color.withOpacity(0.2)),
+            $.container.border.color.withOpacity(0.8),
+          ),
+          spec.on.disabled(
+            borderedDisabled(),
+          ),
+        ),
+        ghost(
+          $.container.color.transparent(),
+          $.label.style.color(color),
+          spec.on.hover(
+            $.container.color.withOpacity(0.1),
+          ),
+        ),
+      ]);
+    }
+
     final baseOverrides = Style(
-      baseStyle(),
+      super.makeStyle(spec).call(),
       $.container.chain
         ..padding.vertical.$space2()
         ..padding.horizontal.$space3()
@@ -30,78 +101,24 @@ class FortalezaButtonStyle extends ButtonStyle {
     );
 
     final onDisabledForeground = $on.disabled(
-      $.container.color.$neutral(7),
+      $.container.color.$neutralAlpha(4),
       $.label.style.color.$neutral(8),
       $.icon.color.$neutral(8),
-      $.spinner.color.$neutral(7),
+      $.spinner.color.$neutral(8),
     );
 
-    final spinnerDisabled = $.spinner.color.$neutralAlpha(7);
-
-    final solidVariant = Style(
-      $.container.color.$accent(),
-      $.label.style.color.white(),
-      $.spinner.color.white(),
-      $.icon.color.white(),
-      spec.on.hover($.container.color.$accent(10)),
-      spec.on.disabled($.container.color.$neutralAlpha(3), spinnerDisabled),
-    );
-
-    final softVariant = Style(
-      $.container.color.$accentAlpha(3),
-      $.label.style.color.$accentAlpha(11),
-      $.spinner.color.$accentAlpha(11),
-      $.icon.color.$accentAlpha(11),
-      spec.on.hover($.container.color.$accentAlpha(4)),
-      spec.on.disabled($.container.color.$neutralAlpha(3)),
-    );
-
-    final outlineVariant = Style(
-      $.container.chain
-        ..color.transparent()
-        ..border.width(1)
-        ..border.strokeAlign(0)
-        ..border.color.$accentAlpha(8),
-      $.spinner.color.$accentAlpha(11),
-      $.icon.color.$accentAlpha(11),
-      $.label.style.color.$accentAlpha(11),
-      spec.on.hover($.container.color.$accentAlpha(2)),
-      spec.on.disabled(
-        $.container.chain
-          ..border.color.$neutralAlpha(8)
-          ..color.transparent(),
-      ),
-    );
-
-    final surfaceVariant = Style(
-      outlineVariant(),
-      $.container.color.$accentAlpha(3),
-      spec.on.hover(
-        $.container.color.$accentAlpha(4),
-        $.container.border.color.$accentAlpha(8),
-      ),
-      spec.on.disabled($.container.color.$neutral(1)),
-    );
-
-    final ghostVariant = Style(
-      $.container.border.style.none(),
-      $.container.color.transparent(),
-      $.spinner.color.$accentAlpha(11),
-      $.icon.color.$accentAlpha(11),
-      $.label.style.color.$accentAlpha(11),
-      spec.on.hover($.container.color.$accentAlpha(3)),
-      spec.on.disabled($.container.color.transparent()),
-    );
+    final overrides = Style.create([
+      if (textStyle != null) $.label.style.as(textStyle!),
+      if (padding != null) $.container.padding.as(padding!),
+      if (radius != null) $.container.borderRadius(radius!),
+    ]);
 
     return Style.create(
       [
         baseOverrides(),
+        setColor().call(),
         onDisabledForeground,
-        solidVariant(),
-        soft(softVariant()),
-        outline(outlineVariant()),
-        surface(surfaceVariant()),
-        ghost(ghostVariant()),
+        overrides(),
       ],
     ).animate(duration: const Duration(milliseconds: 200));
   }
