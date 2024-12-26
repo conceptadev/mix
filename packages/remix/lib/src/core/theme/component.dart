@@ -8,6 +8,7 @@ import '../../components/checkbox/checkbox.dart';
 import '../../components/chip/chip.dart';
 import '../../components/dialog/dialog.dart';
 import '../../components/divider/divider.dart';
+import '../../components/dropdown_menu/dropdown_menu.dart';
 import '../../components/icon_button/icon_button.dart';
 import '../../components/menu_item/menu_item.dart';
 import '../../components/progress/progress.dart';
@@ -44,6 +45,7 @@ class RemixComponentTheme {
   final TextFieldStyle textField;
   final ToastStyle toast;
   final SliderStyle slider;
+  final DropdownMenuStyle dropdownMenu;
 
   const RemixComponentTheme({
     required this.accordion,
@@ -68,6 +70,7 @@ class RemixComponentTheme {
     required this.textField,
     required this.toast,
     required this.slider,
+    required this.dropdownMenu,
   });
 
   factory RemixComponentTheme.light() {
@@ -94,6 +97,7 @@ class RemixComponentTheme {
       textField: TextFieldStyle(),
       toast: ToastStyle(),
       slider: SliderStyle(),
+      dropdownMenu: DropdownMenuStyle(),
     );
   }
 
@@ -121,6 +125,7 @@ class RemixComponentTheme {
       textField: const TextFieldDarkStyle(),
       toast: const ToastDarkStyle(),
       slider: const SliderDarkStyle(),
+      dropdownMenu: const DropdownMenuDarkStyle(),
     );
   }
 
@@ -147,6 +152,7 @@ class RemixComponentTheme {
     TextFieldStyle? textField,
     ToastStyle? toast,
     SliderStyle? slider,
+    DropdownMenuStyle? dropdownMenu,
   }) {
     return RemixComponentTheme(
       accordion: accordion ?? this.accordion,
@@ -171,6 +177,7 @@ class RemixComponentTheme {
       textField: textField ?? this.textField,
       toast: toast ?? this.toast,
       slider: slider ?? this.slider,
+      dropdownMenu: dropdownMenu ?? this.dropdownMenu,
     );
   }
 }

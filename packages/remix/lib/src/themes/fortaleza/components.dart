@@ -9,6 +9,7 @@ import 'components/checkbox_theme.dart';
 import 'components/chip_theme.dart';
 import 'components/dialog_theme.dart';
 import 'components/divider_theme.dart';
+import 'components/dropdown_theme.dart';
 import 'components/icon_button_theme.dart';
 import 'components/menu_item_theme.dart';
 import 'components/progress_theme.dart';
@@ -46,6 +47,7 @@ class FortalezaComponentTheme extends RemixComponentTheme {
     required super.textField,
     required super.toast,
     required super.slider,
+    required super.dropdownMenu,
   });
 
   static RemixComponentTheme light() {
@@ -72,6 +74,7 @@ class FortalezaComponentTheme extends RemixComponentTheme {
       textField: FortalezaTextFieldStyle(),
       toast: FortalezaToastStyle(),
       slider: FortalezaSliderStyle(),
+      dropdownMenu: FortalezaDropdownMenuStyle(),
     );
   }
 
