@@ -1,5 +1,3 @@
-import 'package:test/test.dart';
-
 void main() {
   test('Test for attributes_ordering', () async {
     expect(true, true);
