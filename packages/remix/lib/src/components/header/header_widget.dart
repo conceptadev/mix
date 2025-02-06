@@ -53,7 +53,4 @@ class Header extends StatelessWidget {
       },
     );
   }
-
-  @override
-  Size get preferredSize => const Size(double.infinity, 88);
 }
