@@ -28,12 +28,14 @@ Widget buildCard(BuildContext context) {
   );
 
   final actions = Row(
-    spacing: 16,
     children: [
       IconButton(
         CupertinoIcons.trash,
         variants: const [FortalezaIconButtonStyle.ghost],
         onPressed: () {},
+      ),
+      const SizedBox(
+        height: 16,
       ),
       Button(label: 'Button', onPressed: () {}),
     ],
