@@ -37,7 +37,7 @@ class DottedSpinnerPainter extends SpinnerPainter {
       final angle = i * lineAngle;
       final opacity = (lines - i + animation.value * lines) % lines / lines;
 
-      paint.color = color.withValues(alpha: opacity);
+      paint.color = color.withOpacity(opacity);
 
       final lineHeight = radius * 0.45;
 
@@ -78,7 +78,7 @@ class StrippedSpinnerPainter extends SpinnerPainter {
       final angle = i * lineAngle;
       final opacity = (lines - i + animation.value * lines) % lines / lines;
 
-      paint.color = color.withValues(alpha: opacity);
+      paint.color = color.withOpacity(opacity);
 
       final lineHeight = radius * 0.8;
 
