@@ -85,14 +85,11 @@ class _ScaffoldLayoutDelegate extends MultiChildLayoutDelegate {
   @override
   void performLayout(Size size) {
     final BoxConstraints looseConstraints = BoxConstraints.loose(size);
-    final BoxConstraints fullWidthConstraints =
-        looseConstraints.tighten(width: size.width);
-
     double appBarHeight = 0.0;
 
     const headerKey = _ScaffoldElement.header;
     if (hasChild(headerKey)) {
-      appBarHeight = layoutChild(headerKey, fullWidthConstraints).height;
+      appBarHeight = layoutChild(headerKey, looseConstraints).height;
       positionChild(headerKey, Offset.zero);
     }
 
@@ -101,7 +98,7 @@ class _ScaffoldLayoutDelegate extends MultiChildLayoutDelegate {
       final listHeight = size.height - appBarHeight;
 
       final bodyConstraints = BoxConstraints.tightFor(
-        width: fullWidthConstraints.maxWidth,
+        width: looseConstraints.maxWidth,
         height: listHeight,
       );
 
