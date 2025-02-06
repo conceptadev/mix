@@ -45,11 +45,12 @@ class HeaderDarkStyle extends HeaderStyle {
       $.subtitle.color.grey.shade200(),
     ];
 
-    final containerStyle = [
-      $.container.color.black(),
-    ];
+    final containerStyle = [$.container.color.black()];
 
-    return Style.create(
-        [super.makeStyle(spec).call(), ...textStyle, ...containerStyle]);
+    return Style.create([
+      super.makeStyle(spec).call(),
+      ...textStyle,
+      ...containerStyle,
+    ]);
   }
 }
