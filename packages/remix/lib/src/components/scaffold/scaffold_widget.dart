@@ -1,6 +1,7 @@
 part of 'scaffold.dart';
 
 enum _ScaffoldElement {
+  sidebar,
   header,
   body;
 }
@@ -32,12 +33,14 @@ class Scaffold extends StatelessWidget {
   const Scaffold({
     super.key,
     this.header,
+    this.sidebar,
     required this.body,
     this.style,
     this.variants = const [],
   });
 
   final Widget? header;
+  final Widget? sidebar;
 
   /// The primary content of the scaffold.
   final Widget body;
@@ -63,6 +66,11 @@ class Scaffold extends StatelessWidget {
             child: CustomMultiChildLayout(
               delegate: _ScaffoldLayoutDelegate(),
               children: [
+                if (sidebar != null)
+                  LayoutId(
+                    id: _ScaffoldElement.sidebar,
+                    child: sidebar!,
+                  ),
                 if (header != null)
                   LayoutId(
                     id: _ScaffoldElement.header,
@@ -86,11 +94,18 @@ class _ScaffoldLayoutDelegate extends MultiChildLayoutDelegate {
   void performLayout(Size size) {
     final BoxConstraints looseConstraints = BoxConstraints.loose(size);
     double appBarHeight = 0.0;
+    double sideBarWidth = 0.0;
+
+    const sidebarKey = _ScaffoldElement.sidebar;
+    if (hasChild(sidebarKey)) {
+      sideBarWidth = layoutChild(sidebarKey, looseConstraints).width;
+      positionChild(sidebarKey, Offset.zero);
+    }
 
     const headerKey = _ScaffoldElement.header;
     if (hasChild(headerKey)) {
       appBarHeight = layoutChild(headerKey, looseConstraints).height;
-      positionChild(headerKey, Offset.zero);
+      positionChild(headerKey, Offset(sideBarWidth, 0));
     }
 
     const bodyKey = _ScaffoldElement.body;
@@ -98,12 +113,12 @@ class _ScaffoldLayoutDelegate extends MultiChildLayoutDelegate {
       final listHeight = size.height - appBarHeight;
 
       final bodyConstraints = BoxConstraints.tightFor(
-        width: looseConstraints.maxWidth,
+        width: looseConstraints.maxWidth - sideBarWidth,
         height: listHeight,
       );
 
       layoutChild(bodyKey, bodyConstraints);
-      positionChild(bodyKey, Offset(0, appBarHeight));
+      positionChild(bodyKey, Offset(sideBarWidth, appBarHeight));
     }
   }
 
