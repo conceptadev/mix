@@ -1,3 +1,8 @@
+## 0.0.4
+
+ - **FEAT**: Support header on scaffold (#554).
+ - **FEAT**: Accordion interaction based on open variable (#546).
+
 ## 0.0.3
 
  - **REFACTOR**: Create a new Architecture for remix's components (#446).

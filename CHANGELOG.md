@@ -3,6 +3,33 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2025-02-07
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`mix` - `v1.5.4`](#mix---v154)
+ - [`remix` - `v0.0.4`](#remix---v004)
+
+---
+
+#### `mix` - `v1.5.4`
+
+ - **FEAT**: Accordion interaction based on open variable (#546).
+
+#### `remix` - `v0.0.4`
+
+ - **FEAT**: Support header on scaffold (#554).
+ - **FEAT**: Accordion interaction based on open variable (#546).
+
+
 ## 2024-12-06
 
 ### Changes

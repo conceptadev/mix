@@ -1,3 +1,7 @@
+## 1.5.4
+
+ - **FEAT**: Accordion interaction based on open variable (#546).
+
 ## 1.5.3
 
  - **REFACTOR**: Solve dcm lint issues (#519).
