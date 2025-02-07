@@ -1,23 +1,7 @@
 ## 0.0.4
 
- - **REFACTOR**: Rewrite Fortaleza theme using the new code gen for tokens (#528).
- - **REFACTOR**(remix): improve widgetbook navigation (#524).
- - **REFACTOR**: Add in code documentation and rename params for each component (#514).
- - **REFACTOR**: small fixes on remix (#512).
- - **FIX**: Textfield helper Text (#531).
- - **FIX**: Toast animation trigger (#530).
  - **FEAT**: Support header on scaffold (#554).
  - **FEAT**: Accordion interaction based on open variable (#546).
- - **FEAT**: Rewrite FlexBox as a Mix's primitive component (#517).
- - **FEAT**: Create Textfield (#511).
- - **FEAT**: Slider component (#509).
- - **FEAT**: Menu Item Component (#508).
- - **FEAT**: Add Dark Theme.
- - **FEAT**: Improve spring curve.
- - **FEAT**: Chip component (#504).
- - **FEAT**: implement toast component (#503).
- - **FEAT**: Card has child instead of children parameter (#499).
- - **FEAT**: Create dark base theme for Remix (#498).
 
 ## 0.0.3
 
