@@ -3,6 +3,110 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2025-02-07
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`mix` - `v1.6.0`](#mix---v160)
+ - [`mix_annotations` - `v0.3.2`](#mix_annotations---v032)
+ - [`mix_generator` - `v0.3.3`](#mix_generator---v033)
+ - [`mix_lint` - `v0.1.3`](#mix_lint---v013)
+ - [`remix` - `v0.0.4`](#remix---v004)
+
+---
+
+#### `mix` - `v1.6.0`
+
+ - **REFACTOR**: Rewrite Fortaleza theme using the new code gen for tokens (#528).
+ - **REFACTOR**: Solve dcm lint issues (#519).
+ - **REFACTOR**: ShapeBorder merge (#490).
+ - **REFACTOR**: Rewrite all components in the new Archtecture (#467).
+ - **FIX**: FlexSpecWidget prioritizes the direction in spec (#414).
+ - **FIX**: Correct handling of individual border sides (#408).
+ - **FIX**: Order of modifiers implementation on Box, Image and Text (#529).
+ - **FIX**: Pressable disposes controller only if it creates it (#424).
+ - **FIX**: reset modifiers and directives when using fluentAPI (#482).
+ - **FIX**: Update OnBrightnessVariant to use `MediaQuery` instead of `Theme` (#471).
+ - **FIX**: Style when merged with an AnimatedStyle should generate an AnimatedStyle (#472).
+ - **FIX**: Added missing widget state utilities (#411).
+ - **FIX**(docs): fix fn level docs for Style::applyVariants (#460).
+ - **FIX**: Shadow list animation (#445).
+ - **FIX**: HitTestBehavior when there is a Interectable in the tree (#437).
+ - **FIX**: breakpoint utility merge exception (#421).
+ - **FEAT**: add error state to MixWidgetState (#489).
+ - **FEAT**: transform.translate (#484).
+ - **FEAT**: Slider component (#509).
+ - **FEAT**: Improve spring curve.
+ - **FEAT**: Add more directives to Colors (#477).
+ - **FEAT**: implement a way to clear inline modifiers (#478).
+ - **FEAT**: Fluent API (#475).
+ - **FEAT**: implement toast component (#503).
+ - **FEAT**: Create StrokeAlignUtility (#496).
+ - **FEAT**: Create mouse cursor Decorator (#263).
+ - **FEAT**: Utilities for text height behavior (#495).
+ - **FEAT**: Improve error messages (#491).
+ - **FEAT**: Add parameter onEnd for AnimatedStyle (#458).
+ - **FEAT**: `SingleChildScrollView` widget modifier (#427).
+ - **FEAT**: Create code gen for design tokens (#521).
+ - **FEAT**: Create a specific utility to Transform.rotate (#434).
+ - **FEAT**: Accordion interaction based on open variable (#546).
+ - **FEAT**: TargetPlatform and web variants (#431).
+ - **FEAT**: Create Select component (#448).
+ - **FEAT**: Add CustomOutlinedBorder's  (#487).
+ - **FEAT**: Remix improvements and further improvements (#410).
+ - **FEAT**: remix-styling-configuration (#483).
+ - **FEAT**: Rewrite FlexBox as a Mix's primitive component (#517).
+ - **DOCS**: Add section for `TokenResolver` (#537).
+ - **DOCS**: improve mix theme data features explanations (#404).
+
+#### `mix_annotations` - `v0.3.2`
+
+ - **FEAT**: Create code gen for design tokens (#521).
+
+#### `mix_generator` - `v0.3.3`
+
+ - **REFACTOR**: Rewrite Fortaleza theme using the new code gen for tokens (#528).
+ - **FIX**: Shadow list animation (#445).
+ - **FEAT**: Create code gen for design tokens (#521).
+ - **FEAT**: Rewrite FlexBox as a Mix's primitive component (#517).
+ - **FEAT**: Fluent API (#475).
+ - **FEAT**: Remix improvements and further improvements (#410).
+ - **DOCS**: improve mix theme data features explanations (#404).
+
+#### `mix_lint` - `v0.1.3`
+
+ - **FEAT**: Rewrite FlexBox as a Mix's primitive component (#517).
+
+#### `remix` - `v0.0.4`
+
+ - **REFACTOR**: Rewrite Fortaleza theme using the new code gen for tokens (#528).
+ - **REFACTOR**(remix): improve widgetbook navigation (#524).
+ - **REFACTOR**: Add in code documentation and rename params for each component (#514).
+ - **REFACTOR**: small fixes on remix (#512).
+ - **FIX**: Textfield helper Text (#531).
+ - **FIX**: Toast animation trigger (#530).
+ - **FEAT**: Support header on scaffold (#554).
+ - **FEAT**: Accordion interaction based on open variable (#546).
+ - **FEAT**: Rewrite FlexBox as a Mix's primitive component (#517).
+ - **FEAT**: Create Textfield (#511).
+ - **FEAT**: Slider component (#509).
+ - **FEAT**: Menu Item Component (#508).
+ - **FEAT**: Add Dark Theme.
+ - **FEAT**: Improve spring curve.
+ - **FEAT**: Chip component (#504).
+ - **FEAT**: implement toast component (#503).
+ - **FEAT**: Card has child instead of children parameter (#499).
+ - **FEAT**: Create dark base theme for Remix (#498).
+
+
 ## 2024-12-06
 
 ### Changes

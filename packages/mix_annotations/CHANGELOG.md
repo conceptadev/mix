@@ -1,3 +1,7 @@
+## 0.3.2
+
+ - **FEAT**: Create code gen for design tokens (#521).
+
 ## 0.3.1
 
  - **FEAT**: Create code gen for design tokens (#521).
