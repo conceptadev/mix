@@ -107,8 +107,14 @@ class ToastLayerState extends State<ToastLayer> implements ToastActions {
   }
 }
 
-void showToast({required BuildContext context, required ToastEntry entry}) {
-  final toastState = context.findAncestorStateOfType<ToastLayerState>();
+void showToast({
+  required BuildContext context,
+  required ToastEntry entry,
+  bool useRootToastLayer = false,
+}) {
+  final toastState = useRootToastLayer
+      ? context.findRootAncestorStateOfType<ToastLayerState>()
+      : context.findAncestorStateOfType<ToastLayerState>();
 
   if (toastState == null) {
     throw FlutterError.fromParts([
