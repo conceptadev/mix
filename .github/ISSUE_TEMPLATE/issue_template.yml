@@ -1,0 +1,79 @@
+name: "<Replace with feature title>"
+labels:
+  - enhancement
+  - breaking-change
+assignees: []
+
+description: |
+  <Provide a clear and concise description of the issue, explaining the current state and why the change is needed.>
+
+body:
+  - type: markdown
+    attributes:
+      value: "## Proposed Changes"
+  - type: textarea
+    id: proposed-changes
+    attributes:
+      label: "List the changes proposed"
+      description: "Highlight improvements, simplifications, or deprecations."
+      placeholder: "1. Describe the first change\n2. Describe the second change"
+
+  - type: markdown
+    attributes:
+      value: "## Code Examples"
+  - type: textarea
+    id: before-code
+    attributes:
+      label: "Before"
+      description: "Provide an example of the current implementation."
+      render: dart
+  - type: textarea
+    id: after-code
+    attributes:
+      label: "After"
+      description: "Provide an example of the proposed implementation."
+      render: dart
+
+  - type: markdown
+    attributes:
+      value: "## Impact Analysis"
+  - type: textarea
+    id: benefits
+    attributes:
+      label: "Benefits"
+      description: "List the benefits of these changes, such as maintainability or performance improvements."
+  - type: textarea
+    id: drawbacks
+    attributes:
+      label: "Potential Drawbacks"
+      description: "Mention any possible drawbacks, such as breaking changes."
+
+  - type: markdown
+    attributes:
+      value: "## Implementation Plan"
+  - type: checkboxes
+    id: tasks
+    attributes:
+      label: "Tasks"
+      options:
+        - label: "Define the key tasks required to complete this change."
+        - label: "Mention if code generation needs to be removed or updated."
+        - label: "Update documentation if necessary."
+
+  - type: markdown
+    attributes:
+      value: "## Testing Strategy"
+  - type: textarea
+    id: testing-strategy
+    attributes:
+      label: "Testing Strategy"
+      description: "Describe any specific testing strategies or state if no special testing is required."
+
+  - type: markdown
+    attributes:
+      value: "## Additional Considerations"
+  - type: textarea
+    id: additional-considerations
+    attributes:
+      label: "Additional Considerations"
+      description: "Discuss additional changes or future improvements related to this update."
