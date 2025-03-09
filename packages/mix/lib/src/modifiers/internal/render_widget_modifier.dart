@@ -15,6 +15,7 @@ import '../fractionally_sized_box_widget_modifier.dart';
 import '../intrinsic_widget_modifier.dart';
 import '../opacity_widget_modifier.dart';
 import '../padding_widget_modifier.dart';
+import '../positioned_widget_modifier.dart';
 import '../rotated_box_widget_modifier.dart';
 import '../sized_box_widget_modifier.dart';
 import '../transform_widget_modifier.dart';
@@ -25,6 +26,10 @@ const _defaultOrder = [
   // automatically adjust its size to fill the available space. This modifier is applied first to
   // ensure that the widget is not affected by any other modifiers.
   FlexibleModifierSpec,
+
+  // 2. PositionedModifierSpec: Positions the widget within a Stack widget. This modifier must be
+  // applied before any other transformations to ensure that the widget is positioned correctly within the stack.
+  PositionedModifierSpec,
 
   // 2. VisibilityModifier: Controls overall visibility. If the widget is set to be invisible,
   // none of the subsequent decorations are processed, providing an early exit and optimizing performance.
