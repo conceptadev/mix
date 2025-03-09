@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
 import 'package:mix/src/modifiers/internal/render_widget_modifier.dart';
+import 'package:mix/src/modifiers/positioned_widget_modifier.dart';
 
 import '../../empty_widget.dart';
 import '../../helpers/testing_utils.dart';
@@ -23,6 +24,7 @@ void main() {
     const clipTriangle =
         ClipTriangleModifierSpecUtility(UtilityTestAttribute.new);
     final sizedBox = SizedBoxModifierSpecUtility(UtilityTestAttribute.new);
+    final positioned = PositionedModifierSpecUtility(UtilityTestAttribute.new);
     const fractionallySizedBox =
         FractionallySizedBoxModifierSpecUtility(UtilityTestAttribute.new);
     const intrinsicHeight =
@@ -168,6 +170,29 @@ void main() {
 
       expect(widget.width, 100);
       expect(widget.height, 100);
+    });
+
+    test('positioned creates PositionedModifier correctly', () {
+      final positionedModifier = positioned(width: 50, height: 60, top: 50);
+
+      final widget = positionedModifier.value
+          .resolve(EmptyMixData)
+          .build(const Empty()) as Positioned;
+
+      expect(widget.width, 50);
+      expect(widget.height, 60);
+      expect(widget.top, 50);
+    });
+    test('positioned.fill creates PositionedModifier correctly', () {
+      final positionedModifier = positioned.fill(top: 50);
+
+      final widget = positionedModifier.value
+          .resolve(EmptyMixData)
+          .build(const Empty()) as Positioned;
+
+      expect(widget.top, 50);
+      expect(widget.height, null);
+      expect(widget.width, null);
     });
 
     test(
@@ -410,6 +435,39 @@ void main() {
         );
 
         _expectOneWidgetOfType<SizedBox>();
+      },
+    );
+    testWidgets(
+      'Applying a positioned must add a Positioned widget in the widget tree',
+      (tester) async {
+        await tester.pumpWidget(Directionality(
+          textDirection: TextDirection.ltr,
+          child: Stack(
+            children: [
+              _TestableRenderModifier(
+                Style(
+                  $with.positioned(),
+                ),
+              ),
+            ],
+          ),
+        ));
+
+        _expectOneWidgetOfType<Positioned>();
+
+        await tester.pumpWidget(Directionality(
+          textDirection: TextDirection.ltr,
+          child: Stack(
+            children: [
+              _TestableRenderModifier(
+                Style(
+                  $with.positioned.fill(),
+                ),
+              ),
+            ],
+          ),
+        ));
+        _expectOneWidgetOfType<Positioned>();
       },
     );
   });
