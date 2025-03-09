@@ -10,6 +10,7 @@ import 'intrinsic_widget_modifier.dart';
 import 'mouse_cursor_modifier.dart';
 import 'opacity_widget_modifier.dart';
 import 'padding_widget_modifier.dart';
+import 'positioned_widget_modifier.dart';
 import 'rotated_box_widget_modifier.dart';
 import 'scroll_view_widget_modifier.dart';
 import 'sized_box_widget_modifier.dart';
@@ -42,6 +43,7 @@ abstract class ModifierUtility<T extends Attribute, Value>
   late final sizedBox = SizedBoxModifierSpecUtility(only);
   late final cursor = MouseCursorModifierSpecUtility(only);
   late final padding = PaddingModifierSpecUtility(only).padding;
+  late final positioned = PositionedModifierSpecUtility(only);
 
   /// This modifier wraps the widget with a [SingleChildScrollView].
   late final scrollView = ScrollViewModifierSpecUtility(only);
