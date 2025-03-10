@@ -89,7 +89,7 @@ void main() {
     });
 
     testWidgets(
-      'Build method creates Flexible widget with correct flex and fit',
+      'Build method creates Positioned widget with correct positioning properties',
       (WidgetTester tester) async {
         const bottom = 0;
         const top = 1.0;

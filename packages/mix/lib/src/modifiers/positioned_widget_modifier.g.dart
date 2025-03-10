@@ -17,6 +17,7 @@ mixin _$PositionedModifierSpec on WidgetModifierSpec<PositionedModifierSpec> {
     num? bottom,
     num? width,
     num? height,
+    bool? fill,
   }) {
     return PositionedModifierSpec(
       right: right ?? _$this.right,
@@ -25,6 +26,7 @@ mixin _$PositionedModifierSpec on WidgetModifierSpec<PositionedModifierSpec> {
       bottom: bottom ?? _$this.bottom,
       width: width ?? _$this.width,
       height: height ?? _$this.height,
+      fill: fill ?? _$this.fill,
     );
   }
 
@@ -40,7 +42,7 @@ mixin _$PositionedModifierSpec on WidgetModifierSpec<PositionedModifierSpec> {
   /// interpolation method:
   ///
 
-  /// For [right] and [left] and [top] and [bottom] and [width] and [height], the interpolation is performed using a step function.
+  /// For [right] and [left] and [top] and [bottom] and [width] and [height] and [fill], the interpolation is performed using a step function.
   /// If [t] is less than 0.5, the value from the current [PositionedModifierSpec] is used. Otherwise, the value
   /// from the [other] [PositionedModifierSpec] is used.
   ///
@@ -57,6 +59,7 @@ mixin _$PositionedModifierSpec on WidgetModifierSpec<PositionedModifierSpec> {
       bottom: t < 0.5 ? _$this.bottom : other.bottom,
       width: t < 0.5 ? _$this.width : other.width,
       height: t < 0.5 ? _$this.height : other.height,
+      fill: t < 0.5 ? _$this.fill : other.fill,
     );
   }
 
@@ -72,6 +75,7 @@ mixin _$PositionedModifierSpec on WidgetModifierSpec<PositionedModifierSpec> {
         _$this.bottom,
         _$this.width,
         _$this.height,
+        _$this.fill,
       ];
 
   PositionedModifierSpec get _$this => this as PositionedModifierSpec;
@@ -88,6 +92,8 @@ mixin _$PositionedModifierSpec on WidgetModifierSpec<PositionedModifierSpec> {
         .add(DiagnosticsProperty('width', _$this.width, defaultValue: null));
     properties
         .add(DiagnosticsProperty('height', _$this.height, defaultValue: null));
+    properties
+        .add(DiagnosticsProperty('fill', _$this.fill, defaultValue: null));
   }
 }
 
@@ -107,6 +113,7 @@ final class PositionedModifierSpecAttribute
   final num? bottom;
   final num? width;
   final num? height;
+  final bool? fill;
 
   const PositionedModifierSpecAttribute({
     this.right,
@@ -115,6 +122,7 @@ final class PositionedModifierSpecAttribute
     this.bottom,
     this.width,
     this.height,
+    this.fill,
   });
 
   /// Resolves to [PositionedModifierSpec] using the provided [MixData].
@@ -134,6 +142,7 @@ final class PositionedModifierSpecAttribute
       bottom: bottom,
       width: width,
       height: height,
+      fill: fill,
     );
   }
 
@@ -157,6 +166,7 @@ final class PositionedModifierSpecAttribute
       bottom: other.bottom ?? bottom,
       width: other.width ?? width,
       height: other.height ?? height,
+      fill: other.fill ?? fill,
     );
   }
 
@@ -172,6 +182,7 @@ final class PositionedModifierSpecAttribute
         bottom,
         width,
         height,
+        fill,
       ];
 
   @override
@@ -183,6 +194,7 @@ final class PositionedModifierSpecAttribute
     properties.add(DiagnosticsProperty('bottom', bottom, defaultValue: null));
     properties.add(DiagnosticsProperty('width', width, defaultValue: null));
     properties.add(DiagnosticsProperty('height', height, defaultValue: null));
+    properties.add(DiagnosticsProperty('fill', fill, defaultValue: null));
   }
 }
 
