@@ -18,6 +18,9 @@ import 'package:analyzer/dart/element/type.dart';
 import 'package:collection/collection.dart';
 import 'package:source_gen/source_gen.dart';
 
+import 'builder_utils.dart';
+import 'type_ref_repository.dart';
+
 extension DartTypeExtension on DartType {
   bool isAssignableTo(DartType other) {
     final self = this;
@@ -36,6 +39,39 @@ extension DartTypeExtension on DartType {
 
     return self is InterfaceType && self.element is EnumElement;
   }
+
+  bool get isDto => _isMixType($Dto);
+
+  bool get isSpec => _isMixType($Spec);
+
+  bool get isSpecAttribute => _isMixType($SpecAttribute);
+
+  bool get isWidgetModifier => _isMixType($WidgetModifierSpec);
+
+  bool _isMixType(String className) {
+    final self = this;
+    if (self is! InterfaceType) return false;
+
+    return self.allSupertypes.any((type) {
+      final hasType = type.element.name == className;
+      final isMixPackage = type.element.isMixRef;
+
+      if (hasType && isMixPackage) {
+        return true;
+      }
+
+      if (isMixPackage) {
+        // Check if the current type or any of its supertypes has the specified className
+        return type.element.allSupertypes.any((supertype) {
+          return supertype.element.name == className;
+        });
+      }
+
+      return false;
+    });
+  }
+
+  String get displayType => getTypeAsString();
 
   bool get isNullableType =>
       this is DynamicType || nullabilitySuffix == NullabilitySuffix.question;

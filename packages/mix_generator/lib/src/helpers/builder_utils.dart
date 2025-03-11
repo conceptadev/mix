@@ -55,7 +55,7 @@ abstract class AnnotationContext<T> {
 }
 
 sealed class ClassVisitorAnnotationContext<T> extends AnnotationContext {
-  final ClassBuilderContext classInfo;
+  final AnnotatedClassBuilderContext classInfo;
 
   final T annotation;
   ClassVisitorAnnotationContext({
@@ -136,8 +136,11 @@ extension ClassElementX on ClassElement {
 
   bool get hasUnamedConstructor => unnamedConstructor != null;
 
-  ClassElement get genericType =>
+  ClassElement get genericSuperType =>
       getGenericTypeOfSuperclass()!.element as ClassElement;
+
+  bool get hasDiagnosticable =>
+      allSupertypes.any((e) => e.element.name == 'Diagnosticable');
 
   ConstructorElement get defaultConstructor {
     final selectedConstructor = constructors.firstWhereOrNull((element) {
@@ -152,6 +155,13 @@ extension ClassElementX on ClassElement {
     return selectedConstructor;
   }
 
+  List<String> get methodNames => methods.map((e) => e.name).toList();
+
+  List<String> get mixinNames => mixins.map((e) => e.displayType).toList();
+
+  List<String> get interfaceNames =>
+      interfaces.map((e) => e.displayType).toList();
+
   DartType? getGenericTypeOfSuperclass() {
     final supertype = this.supertype;
     if (supertype != null) {
@@ -162,36 +172,6 @@ extension ClassElementX on ClassElement {
   }
 
   String get generatedName => '_\$$name';
-
-  bool get isDto => _isMixType('Dto');
-
-  bool get isSpec => _isMixType('Spec');
-
-  bool get isSpecAttribute => _isMixType('SpecAttribute');
-
-  bool get isWidgetModifier => _isMixType('WidgetModifierSpec');
-
-  bool get isMixUtiilty => _isMixType('MixUtility');
-
-  bool _isMixType(String className) {
-    return allSupertypes.any((type) {
-      final hasType = type.element.name == className;
-      final isMixPackage = type.element.isMixRef;
-
-      if (hasType && isMixPackage) {
-        return true;
-      }
-
-      if (isMixPackage) {
-        // Check if the current type or any of its supertypes has the specified className
-        return type.element.allSupertypes.any((supertype) {
-          return supertype.element.name == className;
-        });
-      }
-
-      return false;
-    });
-  }
 }
 
 extension InterfaceElementX on InterfaceElement {
@@ -227,17 +207,6 @@ Future<ClassElement?> getClassElementForTypeName(
 
 String kDefaultValueRef = 'defaultValue';
 
-extension InterfaceTypeX on InterfaceType {
-  String get typeName => element.name;
-
-  ClassElement? get _classElement =>
-      (element is ClassElement) ? element as ClassElement : null;
-
-  bool get isDto => _classElement?.isDto ?? false;
-
-  bool get isSpec => _classElement?.isSpec ?? false;
-}
-
 extension DartTypeX on DartType {
   String getTypeAsString() {
     final thisElement = element;
@@ -261,10 +230,6 @@ extension DartTypeX on DartType {
   InterfaceType? get interfaceType {
     return this is InterfaceType ? this as InterfaceType : null;
   }
-
-  bool get isDto => interfaceType?.isDto ?? false;
-
-  bool get isSpec => interfaceType?.isSpec ?? false;
 
   DartType? tryGetTypeGeneric() {
     if (this is ParameterizedType) {

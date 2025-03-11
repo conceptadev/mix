@@ -2,18 +2,18 @@ import 'package:mix_annotations/mix_annotations.dart';
 
 import '../../helpers/field_info.dart';
 
-String toRefTypeExtension(ClassBuilderContext<MixableDto> context) {
-  final resolvedType = context.referenceClass;
-
-  final className = context.name;
+String toRefTypeExtension(AnnotatedClassBuilderContext<MixableDto> context) {
+  final className = context.classElement.name;
 
   final params = <String, ParameterInfo>{};
 
-  resolvedType.unnamedConstructor?.parameters.forEach((element) {
-    params[element.name] = ParameterInfo.ofElement(element);
+  final resolvedType = context.resolvedType;
+
+  resolvedType!.unnamedConstructor?.parameters.forEach((element) {
+    params[element.name] = ParameterInfo.fromParameter(element);
   });
 
-  final fieldStatements = context.constructorParameters.map((field) {
+  final fieldStatements = context.fields.map((field) {
     final fieldName = field.name;
 
     if (field.hasDto) {
@@ -30,7 +30,7 @@ String toRefTypeExtension(ClassBuilderContext<MixableDto> context) {
     return '$fieldName: $fieldName,';
   }).join('\n');
 
-  final resolvedTypeName = resolvedType.name;
+  final resolvedTypeName = context.resolvedType?.name ?? '';
 
   return '''
 extension ${resolvedTypeName}MixExt on $resolvedTypeName {

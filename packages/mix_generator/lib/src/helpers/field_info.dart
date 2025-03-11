@@ -1,5 +1,6 @@
 import 'package:analyzer/dart/element/element.dart'
     show ClassElement, FieldElement, ParameterElement, ConstructorElement;
+import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/nullability_suffix.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:collection/collection.dart';
@@ -10,225 +11,248 @@ import 'builder_utils.dart';
 import 'dart_type_ext.dart';
 import 'type_ref_repository.dart';
 
-typedef MixTypeReferences = ({String utility, String lerp, String dto});
+/// Provides information about a field or parameter for code generation.
+///
+/// This class can represent either a class field or a constructor parameter, or both
+/// when a parameter corresponds to a field. It provides convenient access to type
+/// information, annotations, and other metadata needed during code generation.
+class ParameterInfo {
+  /// Prefix used for internal references in generated code
+  static const String internalRefPrefix = '_\$this';
 
-/// Class field info relevant for code generation.
-class FieldInfo {
-  /// Parameter / field type.
+  /// The name of the field or parameter
   final String name;
 
-  final FieldElement? fieldElement;
-
+  /// The Dart type of the field or parameter
   final DartType dartType;
 
-  final bool hasDeprecated;
-
+  /// The annotation associated with this field or parameter
   final MixableProperty annotation;
 
+  /// Documentation comment, if any
   final String? documentationComment;
 
-  /// Dart type of the field
-  final String type;
+  /// Whether the field or parameter has a @deprecated annotation
+  final bool hasDeprecated;
+
+  /// Whether this is a super parameter
+  final bool isSuper;
+
+  /// Whether this is a positional parameter
+  final bool isPositional;
+
+  /// Whether this parameter is required (either named or positional)
+  final bool isRequired;
 
   final bool nullable;
 
-  const FieldInfo({
-    required this.fieldElement,
+  /// Creates a new FieldInfo instance.
+  const ParameterInfo({
     required this.name,
-    required this.type,
     required this.dartType,
-    required this.documentationComment,
     required this.annotation,
-    required this.nullable,
+    this.documentationComment,
     required this.hasDeprecated,
+    required this.nullable,
+    this.isSuper = false,
+    this.isPositional = false,
+    this.isRequired = false,
   });
 
-  factory FieldInfo.ofElement(FieldElement element) {
-    return FieldInfo(
-      fieldElement: element,
+  /// Creates a FieldInfo from a class field element.
+  factory ParameterInfo.fromField(FieldElement element) {
+    return ParameterInfo(
       name: element.name,
-      type: element.type.getTypeAsString(),
       dartType: element.type,
-      documentationComment: element.documentationComment,
       annotation: readMixableProperty(element),
-      nullable: element.type.isNullableType,
+      documentationComment: element.documentationComment,
       hasDeprecated: element.hasDeprecated,
+      nullable: element.type.nullabilitySuffix == NullabilitySuffix.question,
     );
   }
-  String get typeWithNullability => type + (nullable ? '?' : '');
 
-  /// Returns whether the field has a DTO type associated with it.
-  bool get hasDto => dtoType != null;
-
-  bool get isDto => dartType.isDto;
-
-  bool get isSpec => dartType.isSpec;
-
-  bool get isListType => dartType.isDartCoreList;
-
-  bool get isMapType => dartType.isDartCoreMap;
-
-  bool get isSetType => dartType.isDartCoreSet;
-
-  /// Returns the DTO type associated with the field, if any.
-  /// If a DTO type is explicitly specified in the `MixProperty` annotation, that is returned.
-  /// Otherwise, the DTO type is inferred from the field type using a mapping defined in `_dtoMap`.
-
-  String? get dtoType {
-    if (annotation.dto?.typeAsString != null) {
-      return annotation.dto!.typeAsString!;
-    }
-
-    return typeRefs.getDto(dartType);
-  }
-
-  /// True if the type is `dynamic`.
-  bool get isDynamic => type == 'dynamic';
-
-  @override
-  String toString() => 'FieldInfo(name: $name, type: $type)';
-}
-
-class ParameterInfo extends FieldInfo {
-  static const internalRefPrefix = '_\$this';
-
-  final bool isSuper;
-  final bool isPositional;
-  final bool isRequiredNamed;
-  final bool isRequiredPositional;
-
-  final ParameterElement element;
-
-  const ParameterInfo({
-    required super.name,
-    required super.type,
-    required super.nullable,
-    required this.isSuper,
-    required this.isPositional,
-    required super.dartType,
-    required super.annotation,
-    required super.documentationComment,
-    required super.hasDeprecated,
-    required this.isRequiredNamed,
-    required this.isRequiredPositional,
-    required this.element,
-    required super.fieldElement,
-  });
-
-  factory ParameterInfo.ofElement(ParameterElement element) {
-    final fieldInfo = getFieldInfoFromParameter(element);
+  /// Creates a FieldInfo from a constructor parameter element.
+  ///
+  /// If the parameter corresponds to a class field, that field's information
+  /// will be incorporated into the FieldInfo.
+  factory ParameterInfo.fromParameter(ParameterElement element) {
+    final existingFieldInfo = _getFieldInfoFromParameter(element);
 
     final isNullable =
         element.type.nullabilitySuffix == NullabilitySuffix.question;
 
     return ParameterInfo(
       name: element.name,
-      type: element.type.getDisplayString(withNullability: false),
-      nullable: fieldInfo?.nullable ?? isNullable,
+      dartType: element.type,
+      annotation: existingFieldInfo?.annotation ?? const MixableProperty(),
+      documentationComment: existingFieldInfo?.documentationComment,
+      hasDeprecated: existingFieldInfo?.hasDeprecated ?? element.hasDeprecated,
+      nullable: existingFieldInfo?.nullable ?? isNullable,
       isSuper: element.isSuperFormal,
       isPositional: element.isPositional,
-      dartType: element.type,
-      annotation: fieldInfo?.annotation ?? const MixableProperty(),
-      documentationComment: fieldInfo?.documentationComment,
-      hasDeprecated:
-          (fieldInfo?.hasDeprecated ?? false) || element.hasDeprecated,
-      isRequiredNamed: element.isRequiredNamed,
-      isRequiredPositional: element.isRequiredPositional,
-      element: element,
-      fieldElement: fieldInfo?.fieldElement,
+      isRequired: element.isRequiredNamed || element.isRequiredPositional,
     );
   }
-  String get asInternalRef => '$internalRefPrefix.$name';
 
-  bool get isRequired => isRequiredNamed || isRequiredPositional;
+  /// The type name as a string.
+  String get type => dartType.getDisplayString(withNullability: false);
+
+  /// Type with nullability marker (e.g. "String" or "String?").
+  String get typeWithNullability => type + (nullable ? '?' : '');
+
+  /// Whether the type is dynamic.
+  bool get isDynamic => dartType is DynamicType;
+
+  /// Whether the type is a List.
+  bool get isListType => dartType.isDartCoreList;
+
+  /// Whether the type is a Map.
+  bool get isMapType => dartType.isDartCoreMap;
+
+  /// Whether the type is a Set.
+  bool get isSetType => dartType.isDartCoreSet;
+
+  /// Returns the DTO type associated with this field, if any.
+  String? get dtoType =>
+      annotation.dto?.typeAsString ?? typeRefs.getDto(dartType);
+
+  /// Whether this field has a DTO type.
+  bool get hasDto => dtoType != null;
+
+  /// Returns an internal reference to this field or parameter.
+  String get asInternalRef => '$internalRefPrefix.$name';
 }
 
-class ClassInfo {
+/// Gets field information from a constructor parameter by finding its corresponding field.
+ParameterInfo? _getFieldInfoFromParameter(ParameterElement parameter) {
+  final element = parameter.enclosingElement;
+  if (element is! ConstructorElement) return null;
+
+  final classElement = element.enclosingElement as ClassElement;
+
+  FieldElement? field;
+  ClassElement? currentClass = classElement;
+
+  while (currentClass != null) {
+    field =
+        currentClass.fields.firstWhereOrNull((e) => e.name == parameter.name);
+
+    if (field != null) break;
+
+    currentClass = currentClass.supertype?.element as ClassElement?;
+  }
+
+  return field != null ? ParameterInfo.fromField(field) : null;
+}
+
+class AnnotatedClassBuilderContext<T> {
+  final T annotation;
+  final List<ParameterInfo> fields;
+
+  final ConstructorElement constructor;
+  final ClassElement _element;
+
+  AnnotatedClassBuilderContext({
+    required ClassElement element,
+    required this.annotation,
+  })  : _element = element,
+        fields = element.defaultConstructor.parameters
+            .map(ParameterInfo.fromParameter)
+            .toList(),
+        constructor = element.defaultConstructor;
+
+  ClassElement get classElement => _element;
+
+  ClassDefinition get definition => ClassDefinition.fromClassElement(_element);
+
+  String get name => _element.name;
+
+  String get constructorRef =>
+      constructor.name.isEmpty ? '' : '.${constructor.name}';
+
+  bool get isDiagnosticable => _element.hasDiagnosticable;
+
+  bool get isConst => _element.isConst;
+
+  String get genericSuperType => _element.genericSuperType.name;
+
+  bool hasMethod(String methodName) =>
+      _element.methodNames.contains(methodName);
+}
+
+extension AnnotatedDtoClassBuilderContextExt
+    on AnnotatedClassBuilderContext<MixableDto> {
+  ClassElement? get resolvedType =>
+      _element.getGenericTypeOfSuperclass()?.element as ClassElement?;
+}
+
+extension AnnotatedSpecClassBuilderContextExt
+    on AnnotatedClassBuilderContext<MixableSpec> {
+  bool get isModifierSpec => _element.thisType.isWidgetModifier;
+}
+
+class ClassDefinition {
   final String name;
   final List<ParameterInfo> fields;
-  final bool isBase;
-  final bool isFinal;
-  final bool isInternalRef;
-  final Set<String> mixinTypes;
-  final String extendsType;
-  final Set<String> methods;
-  final Set<String> genericTypes;
-
   final bool isConst;
-  final String constructorName;
+  final bool isBase;
+  final bool isDiagnosticable;
+  final bool isAbstract;
+  final bool isFinal;
 
-  const ClassInfo({
+  final String genericType;
+
+  final String extendTypes;
+
+  final String _constructorName;
+
+  const ClassDefinition({
     required this.name,
-    required this.fields,
+    String constructorName = '',
+    this.fields = const [],
+    String mixinTypes = '',
+    this.extendTypes = '',
+    String body = '',
+    this.genericType = '',
+    this.isAbstract = false,
+    this.isConst = false,
     this.isBase = false,
     this.isFinal = false,
-    this.isConst = false,
-    this.isInternalRef = false,
-    this.constructorName = '',
-    this.mixinTypes = const {},
-    this.extendsType = '',
-    this.genericTypes = const {},
-    this.methods = const {},
-  });
+    this.isDiagnosticable = false,
+  }) : _constructorName = constructorName;
 
-  factory ClassInfo.ofElement(
-    ClassElement element, {
-    bool asInternalRef = false,
-  }) {
-    final constructor = element.defaultConstructor;
-
-    return ClassInfo(
+  static ClassDefinition fromClassElement(ClassElement element) {
+    return ClassDefinition(
       name: element.name,
-      fields: constructor.parameters.map(ParameterInfo.ofElement).toList(),
+      constructorName: element.defaultConstructor.name,
+      fields: element.defaultConstructor.parameters
+          .map(ParameterInfo.fromParameter)
+          .toList(),
+      mixinTypes: element.mixinNames.join(', '),
+      extendTypes: element.interfaceNames.join(', '),
+      isAbstract: element.isAbstract,
+      isConst: element.isConst,
       isBase: element.isBase,
       isFinal: element.isFinal,
-      isConst: element.isConst,
-      isInternalRef: asInternalRef,
-      constructorName: constructor.name,
-      mixinTypes: element.mixins
-          .map((e) => e.getDisplayString(withNullability: false))
-          .toSet(),
-      methods: element.methods.map((e) => e.name).toSet(),
+      isDiagnosticable: element.hasDiagnosticable,
     );
   }
+
   String get constructorRef =>
-      constructorName.isEmpty ? '' : '.$constructorName';
+      _constructorName.isEmpty ? '' : '.$_constructorName';
 
-  ClassInfo copyWith({
-    String? name,
-    List<ParameterInfo>? fields,
-    bool? isBase,
-    bool? isFinal,
-    bool? isConst,
-    bool? isInternalRef,
-    String? constructorName,
-    Set<String>? mixinTypes,
-    String? extendsType,
-    Set<String>? genericTypes,
-    Set<String>? methods,
-  }) {
-    return ClassInfo(
-      name: name ?? this.name,
-      fields: fields ?? this.fields,
-      isBase: isBase ?? this.isBase,
-      isFinal: isFinal ?? this.isFinal,
-      isConst: isConst ?? this.isConst,
-      isInternalRef: isInternalRef ?? this.isInternalRef,
-      constructorName: constructorName ?? this.constructorName,
-      mixinTypes: mixinTypes ?? this.mixinTypes,
-      extendsType: extendsType ?? this.extendsType,
-      genericTypes: genericTypes ?? this.genericTypes,
-      methods: methods ?? this.methods,
-    );
+  String writeConstructor([String? parameters, String? superParameters]) {
+    final constDef = isConst ? 'const ' : '';
+
+    parameters ??= '';
+
+    final hasSuper = superParameters != null && superParameters.isNotEmpty;
+    final superCall = hasSuper ? ' : super($superParameters)' : '';
+
+    return '$constDef$name$constructorRef($parameters)$superCall;';
   }
 
-  bool hasMethod(String name) => methods.contains(name);
-
-  String writeConstructor() {
-    return '$name$constructorRef';
-  }
-
-  String writeDefinition() {
+  String writeDeclaration() {
     final bufferString = StringBuffer();
 
     if (isFinal) {
@@ -239,149 +263,35 @@ class ClassInfo {
       bufferString.write('base ');
     }
 
-    bufferString.write('class $name ');
+    bufferString.write('class $name');
 
-    if (genericTypes.isNotEmpty) {
-      bufferString.write('<${genericTypes.join(', ')}> ');
+    if (genericType.isNotEmpty) {
+      bufferString.write(genericType);
     }
 
-    if (extendsType.isNotEmpty) {
-      bufferString.write('extends $extendsType ');
+    bufferString.write(' ');
+
+    if (extendTypes.isNotEmpty) {
+      bufferString.write('extends $extendTypes ');
     }
 
-    if (mixinTypes.isNotEmpty) {
-      bufferString.write('with ${mixinTypes.join(', ')} ');
+    if (isDiagnosticable) {
+      bufferString.write('with Diagnosticable ');
     }
 
     return bufferString.toString();
   }
 }
 
-FieldInfo? getFieldInfoFromParameter(ParameterElement parameter) {
-  final element = parameter.enclosingElement;
+class ClassBuilder {
+  final ClassDefinition definition;
+  final String classContent;
 
-  if (element is! ConstructorElement) {
-    throw ArgumentError('Parameter needs to be a constructor element');
+  const ClassBuilder(this.definition, this.classContent);
+
+  String build() {
+    return '''
+    $classContent
+    ''';
   }
-  final classElement = element.enclosingElement as ClassElement;
-
-  FieldElement? field;
-  ClassElement? currentClass = classElement;
-
-  while (currentClass != null) {
-    field = currentClass.fields
-        .where((e) => e.name == parameter.name)
-        .fold<FieldElement?>(null, (previousValue, element) => element);
-
-    if (field != null) {
-      break;
-    }
-
-    final supertype = currentClass.supertype;
-    if (supertype != null) {
-      currentClass = supertype.element as ClassElement?;
-    } else {
-      currentClass = null;
-    }
-  }
-
-  if (field == null) return null;
-
-  final annotation = readMixableProperty(field);
-
-  return FieldInfo(
-    fieldElement: field,
-    name: field.name,
-    type: field.type.getTypeAsString(),
-    dartType: field.type,
-    documentationComment: field.documentationComment,
-    annotation: annotation,
-    nullable: field.type.isNullableType,
-    hasDeprecated: field.hasDeprecated,
-  );
-}
-
-class ClassBuilderContext<T> {
-  final ClassElement classElement;
-  final T annotation;
-
-  List<ParameterInfo>? _fieldsCache;
-
-  ClassBuilderContext({
-    required this.classElement,
-    required this.annotation,
-  });
-
-  List<ParameterInfo> get constructorParameters {
-    if (_fieldsCache != null) return _fieldsCache!;
-
-    return _fieldsCache =
-        constructor.parameters.map(ParameterInfo.ofElement).toList();
-  }
-
-  bool get hasDiagnosticable =>
-      classElement.allSupertypes.any((e) => e.element.name == 'Diagnosticable');
-
-  ConstructorElement get constructor {
-    final defaultContructor = classElement.constructors.firstWhereOrNull(
-      (element) =>
-          element.isDefaultConstructor ||
-          element.isPrivateConstructor ||
-          element.isUnamedConstructor,
-    );
-
-    return defaultContructor ?? classElement.unnamedConstructor!;
-  }
-
-  Set<String> get superTypes =>
-      classElement.allSupertypes.map((e) => e.element.name).toSet();
-
-  String get name => classElement.name;
-
-  /// Class Context is being used in an internal Mix class
-  bool get isMixInternal => classElement.isMixRef;
-  bool get isConst => classElement.isConst;
-
-  String get dtoName => '${name}Dto';
-
-  String get generatedName => '_\$$name';
-
-  String get constructorRef =>
-      constructor.name.isEmpty ? '' : '.${constructor.name}';
-
-  bool get isBase => classElement.isBase;
-  bool get isFinal => classElement.isFinal;
-  bool get isAbstract => classElement.isAbstract;
-}
-
-extension ClassContextSpecX on ClassBuilderContext<MixableSpec> {
-  String get specType => classElement.isWidgetModifier
-      ? MixType.widgetModifierSpec.name
-      : MixType.spec.name;
-
-  String get _prefix => annotation.prefix.isEmpty ? name : annotation.prefix;
-  String get attributeName => '${_prefix}Attribute';
-  String get utilityName => '${_prefix}Utility';
-  String get tweenClassName => '${_prefix}Tween';
-
-  String get attributeExtendsType => '${specType}Attribute<$name>';
-}
-
-extension ClassContextDtoX on ClassBuilderContext<MixableDto> {
-  bool get mergeLists => annotation.mergeLists;
-  bool get generateValueExtension => annotation.generateValueExtension;
-  bool get generateUtility => annotation.generateUtility;
-  ClassElement get referenceClass =>
-      classElement.getGenericTypeOfSuperclass()!.element as ClassElement;
-}
-
-enum MixType {
-  dto('Dto'),
-  spec('Spec'),
-  utility('Utility'),
-  widgetModifierSpec('WidgetModifierSpec');
-
-  const MixType(this.name);
-
-  final String name;
 }

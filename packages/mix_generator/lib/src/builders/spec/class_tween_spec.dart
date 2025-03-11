@@ -1,10 +1,10 @@
 import '../../helpers/field_info.dart';
 
-String specTweenClass(ClassBuilderContext classInfo) {
-  final className = classInfo.name;
-  final constructorRef = classInfo.constructorRef;
+String specTweenClass(ClassDefinition classDefinition) {
+  final className = classDefinition.name;
+  final constructorRef = classDefinition.constructorRef;
 
-  final constIndicator = classInfo.isConst ? 'const' : '';
+  final constIndicator = classDefinition.isConst ? 'const' : '';
 
   return '''
 /// A tween that interpolates between two [$className] instances.

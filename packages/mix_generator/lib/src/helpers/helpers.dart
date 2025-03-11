@@ -1,28 +1,6 @@
-import 'package:analyzer/dart/element/element.dart' show ClassElement;
 import 'package:dart_style/dart_style.dart';
 
 import 'field_info.dart';
-
-/// Returns parameter names or full parameters declaration declared by this class or an empty string.
-///
-/// If `nameOnly` is `true`: `class MyClass<T extends String, Y>` returns `<T, Y>`.
-///
-/// If `nameOnly` is `false`: `class MyClass<T extends String, Y>` returns `<T extends String, Y>`.
-String typeParametersString(
-  ClassElement classElement, {
-  required bool nameOnly,
-}) {
-  final names = classElement.typeParameters
-      .map(
-        (e) => nameOnly ? e.name : e.getDisplayString(withNullability: true),
-      )
-      .join(',');
-  if (names.isNotEmpty) {
-    return '<$names>';
-  }
-
-  return '';
-}
 
 /// Returns constructor for the given type and optional named constructor name. E.g. "TestConstructor" or "TestConstructor._private" when "_private" constructor name is provided.
 String constructorFor(String typeAnnotation, String? namedConstructor) =>
@@ -106,7 +84,7 @@ String dartFormat(String contents) {
   try {
     return _formatter.format(contents);
   } catch (e) {
-    print('Generating: $contents');
+    // print('Generating: $contents');
     rethrow;
   }
 }

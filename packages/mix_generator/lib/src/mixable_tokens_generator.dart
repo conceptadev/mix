@@ -10,7 +10,7 @@ import 'helpers/helpers.dart';
 class MixableTokensGenerator extends GeneratorForAnnotation<MixableToken> {
   const MixableTokensGenerator();
 
-  ClassBuilderContext<MixableToken> _loadContext(Element element) {
+  AnnotatedClassBuilderContext<MixableToken> _loadContext(Element element) {
     if (element is! ClassElement) {
       throw InvalidGenerationSourceError(
         'The annotation can only be applied to a class.',
@@ -18,8 +18,8 @@ class MixableTokensGenerator extends GeneratorForAnnotation<MixableToken> {
       );
     }
 
-    return ClassBuilderContext(
-      classElement: element,
+    return AnnotatedClassBuilderContext(
+      element: element,
       annotation: readMixableToken(element),
     );
   }
@@ -49,7 +49,7 @@ class MixableTokensGenerator extends GeneratorForAnnotation<MixableToken> {
   }
 }
 
-void verifyIfIsValidClass(ClassBuilderContext<MixableToken> context) {
+void verifyIfIsValidClass(AnnotatedClassBuilderContext<MixableToken> context) {
   if (context.classElement.fields.isEmpty) {
     throw InvalidGenerationSourceError(
       'The class must have at least one field.',
@@ -63,13 +63,13 @@ void verifyIfIsValidClass(ClassBuilderContext<MixableToken> context) {
     );
   }
 
-  for (final param in context.constructorParameters) {
+  for (final param in context.classElement.fields) {
     final typeFromAnnotation = context.annotation.type.toString();
 
     if (!param.type.toString().contains(typeFromAnnotation)) {
       throw InvalidGenerationSourceError(
         'The constructor parameters must have the same type as the class annotation.',
-        element: param.fieldElement,
+        element: param,
       );
     }
   }
@@ -107,7 +107,9 @@ String _kBuildContextMethodsClassName(String name) =>
     'BuildContext${name}Methods';
 String _kBuildContextExtensionName(String name) => '\$BuildContext${name}X';
 
-String _generateTokenStruct(ClassBuilderContext<MixableToken> context) {
+String _generateTokenStruct(
+  AnnotatedClassBuilderContext<MixableToken> context,
+) {
   final type = context.annotation.type.toString();
   final settings = _predefinedTokens[type]!;
 
@@ -116,12 +118,8 @@ String _generateTokenStruct(ClassBuilderContext<MixableToken> context) {
   buffer.writeln('  ${_kTokenStructName(context.name)}();');
   buffer.writeln();
 
-  for (var i = 0; i < context.constructorParameters.length; i++) {
-    final field = context.constructorParameters[i].fieldElement;
-
-    if (field == null) {
-      throw Exception('Field element is null');
-    }
+  for (var i = 0; i < context.fields.length; i++) {
+    final field = context.classElement.fields[i];
 
     final annotation = getMixableSwatchColorToken(field);
     if (annotation != null) {
@@ -144,7 +142,9 @@ String _generateTokenStruct(ClassBuilderContext<MixableToken> context) {
   return buffer.toString();
 }
 
-String _generateTokenToDataMethod(ClassBuilderContext<MixableToken> context) {
+String _generateTokenToDataMethod(
+  AnnotatedClassBuilderContext<MixableToken> context,
+) {
   final type = context.annotation.type.toString();
   final settings = _predefinedTokens[type]!;
 
@@ -152,24 +152,21 @@ String _generateTokenToDataMethod(ClassBuilderContext<MixableToken> context) {
 
 Map<${settings.token}, $type> ${_kFunctionToMapName(context.name)}(${context.name} tokens) {
   return {
-    ${context.constructorParameters.map((e) => '${_kVariableStructName(context.name)}.${e.name}: tokens.${e.name},').join('\n')}
+    ${context.fields.map((e) => '${_kVariableStructName(context.name)}.${e.name}: tokens.${e.name},').join('\n')}
   };
 }
 ''';
 }
 
 String _generateTokenUtilityExtension(
-  ClassBuilderContext<MixableToken> context,
+  AnnotatedClassBuilderContext<MixableToken> context,
 ) {
   final type = context.annotation.type.toString();
   final settings = _predefinedTokens[type]!;
   String result = '';
 
   String generateMethod(int index) {
-    final field = context.constructorParameters[index].fieldElement;
-    if (field == null) {
-      throw Exception('Field element is null');
-    }
+    final field = context.classElement.fields[index];
 
     final annotation = getMixableSwatchColorToken(field);
 
@@ -184,8 +181,7 @@ String _generateTokenUtilityExtension(
     result += '''
 extension ${_kUtilityExtensionName(context.name, utility)}<T extends Attribute> on $utility<T> {
     ${[
-      for (var i = 0; i < context.constructorParameters.length; i++)
-        generateMethod(i),
+      for (var i = 0; i < context.fields.length; i++) generateMethod(i)
     ].join('\n')}
 }
 ''';
@@ -194,13 +190,11 @@ extension ${_kUtilityExtensionName(context.name, utility)}<T extends Attribute> 
   return result;
 }
 
-String _generateBuildContextMethods(ClassBuilderContext<MixableToken> context) {
+String _generateBuildContextMethods(
+  AnnotatedClassBuilderContext<MixableToken> context,
+) {
   String generateMethod(int index) {
-    final field = context.constructorParameters[index].fieldElement;
-
-    if (field == null) {
-      throw Exception('Field element is null');
-    }
+    final field = context.classElement.fields[index];
 
     final annotation = getMixableSwatchColorToken(field);
 
@@ -217,15 +211,14 @@ class ${_kBuildContextMethodsClassName(context.name)} {
 
   final BuildContext context;
   ${[
-    for (var i = 0; i < context.constructorParameters.length; i++)
-      generateMethod(i),
+    for (var i = 0; i < context.fields.length; i++) generateMethod(i)
   ].join('\n')}
 }
 ''';
 }
 
 String _generateBuildContextExtension(
-  ClassBuilderContext<MixableToken> context,
+  AnnotatedClassBuilderContext<MixableToken> context,
 ) {
   final type = context.annotation.type.toString();
   final settings = _predefinedTokens[type]!;

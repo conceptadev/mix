@@ -1,17 +1,19 @@
 import 'package:analyzer/dart/element/element.dart';
-import '../helpers/field_info.dart';
-import '../helpers/type_ref_repository.dart';
-import '../mixable_class_utility_generator.dart';
+
+import '../../helpers/builder_utils.dart';
+import '../../helpers/field_info.dart';
+import '../../helpers/type_ref_repository.dart';
+import '../../mixable_class_utility_generator.dart';
 
 /// Generates the utility statements for public consts
 /// static methods of `mappingElement` in the context
 ///
 /// For example:
 /// T staticValue() => builder(ClassElement.staticValue);
-String generateUtilityFieldsFromClass(ClassElement element) {
+String generateUtilityFieldsFromClass(ClassElement classElement) {
   final fieldStatements = <String>[];
 
-  final constructors = element.constructors.where((constructor) {
+  final constructors = classElement.constructors.where((constructor) {
     return isValidConstructor(constructor);
   });
 
@@ -57,7 +59,7 @@ String generateUtilityForConstructor(
 
   for (var param in parameters) {
     final paramName = param.name;
-    final paramType = param.type.getDisplayString(withNullability: true);
+    final paramType = param.type.getTypeAsString();
     final defaultValue =
         param.defaultValueCode != null ? ' = ${param.defaultValueCode}' : '';
 
@@ -250,4 +252,79 @@ T call({
   );
 }
 ''';
+}
+
+ClassBuilder utilityClassBuilder({
+  required AnnotatedClassBuilderContext context,
+  required bool isDto,
+  required bool isSpec,
+}) {
+  final attributeOrDtoName = context.name + (isSpec ? $Attribute : '');
+
+  final resolvedType = context.genericSuperType;
+
+  final utilityDefinition = ClassDefinition(
+    name: '$resolvedType${$Utility}',
+    extendTypes: isDto
+        ? '${$DtoUtility}<T, $attributeOrDtoName, $resolvedType>'
+        : '${$SpecUtility}<T, $attributeOrDtoName>',
+    genericType: '<T extends ${$Attribute}>',
+  );
+
+  final utilityName = MixHelper.defineUtilityName(resolvedType);
+
+  final fields = generateUtilityFields(attributeOrDtoName, context.fields);
+
+  final onlyMethod = utilityMethodOnlyBuilder(
+    utilityType: attributeOrDtoName,
+    fields: context.fields,
+  );
+
+  final valueClassFields = generateUtilityFieldsFromClass(context.classElement);
+
+  final callMethodDefinition =
+      isDto ? utilityMethodCallBuilder(context.fields) : '';
+
+  final chainGetterDefinition = isDto
+      ? ''
+      : '''
+  $utilityName<T> get chain => $utilityName(attributeBuilder, mutable: true);
+  ''';
+
+  final selfGetterDefinition = isDto
+      ? ''
+      : '''
+  static $utilityName<$attributeOrDtoName> get self => $utilityName((v) => v);
+  ''';
+
+  final constructorDefinition = (isDto
+      ? utilityDefinition.writeConstructor(
+          'super.builder',
+          'valueToDto: (v) => v.toDto()',
+        )
+      : utilityDefinition.writeConstructor('super.builder, {super.mutable}'));
+
+  final body = '''
+/// Utility class for configuring [$resolvedType] properties.
+///
+/// This class provides methods to set individual properties of a [$resolvedType].
+/// Use the methods of this class to configure specific properties of a [$resolvedType].
+${utilityDefinition.writeDeclaration()} {
+  $fields
+
+  $valueClassFields
+
+  $constructorDefinition
+
+  $chainGetterDefinition
+
+  $selfGetterDefinition
+
+  $onlyMethod
+
+  $callMethodDefinition
+}
+''';
+
+  return ClassBuilder(utilityDefinition, body);
 }

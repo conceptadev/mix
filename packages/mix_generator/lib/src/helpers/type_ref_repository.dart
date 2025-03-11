@@ -1,6 +1,9 @@
+// ignore_for_file: constant_identifier_names, unused-code
+
 import 'package:analyzer/dart/element/type.dart';
 
 import 'builder_utils.dart';
+import 'dart_type_ext.dart';
 import 'helpers.dart';
 
 final typeRefs = TypeRefRepository.instance;
@@ -133,29 +136,48 @@ class TypeRefRepository {
   String getUtilityNameFromTypeName(String typeName) {
     // check if typeName ends with Utility
     // If not then add utility to it
-    const utilityPostfix = 'Utility';
-    const dtoPostfix = 'Dto';
-    // TODO: improve this in the feature as
-    // it can cause conflict
-    const dtoList = 'DtoList';
 
-    // if typename ends with Dto, remove it
-    if (typeName.endsWith(dtoPostfix)) {
-      typeName = typeName.substring(0, typeName.length - dtoPostfix.length);
+    if (typeName.endsWith($Dto)) {
+      typeName = typeName.substring(0, typeName.length - $Dto.length);
     }
 
     // if typename ends with DtoList, remove it
-    if (typeName.endsWith(dtoList)) {
+    if (typeName.endsWith($DtoList)) {
       typeName =
-          '${typeName.substring(0, typeName.length - dtoList.length)}List';
+          '${typeName.substring(0, typeName.length - $DtoList.length)}List';
     }
 
     typeName = typeName.capitalize;
 
-    if (!typeName.endsWith(utilityPostfix)) {
-      return '$typeName$utilityPostfix';
+    if (!typeName.endsWith($Utility)) {
+      return '$typeName${$Utility}';
     }
 
     return typeName;
+  }
+}
+
+const $MixData = 'MixData';
+const $Mix = 'Mix';
+const $Attribute = 'Attribute';
+const $Spec = 'Spec';
+const $SpecAttribute = 'SpecAttribute';
+const $WidgetModifierSpecAttribute = 'WidgetModifierSpecAttribute';
+const $Dto = 'Dto';
+const $DtoList = 'DtoList';
+const $Utility = 'Utility';
+const $DtoUtility = 'DtoUtility';
+const $SpecUtility = 'SpecUtility';
+const $WidgetModifierSpec = 'WidgetModifierSpec';
+
+class MixHelper {
+  const MixHelper();
+
+  static String defineUtilityName(String name) {
+    return '$name${$Utility}';
+  }
+
+  static String defineTweenName(String name) {
+    return '${name}Tween';
   }
 }

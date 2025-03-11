@@ -4,12 +4,12 @@ import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:build/build.dart';
 import 'package:mix_annotations/mix_annotations.dart';
-import 'builders/utility_class_builder.dart';
-import 'helpers/dart_type_ext.dart';
-import 'helpers/helpers.dart';
 import 'package:source_gen/source_gen.dart';
 
+import 'builders/dto/utility_class_builder.dart';
 import 'helpers/builder_utils.dart';
+import 'helpers/dart_type_ext.dart';
+import 'helpers/helpers.dart';
 
 class MixableClassUtilityGenerator
     extends GeneratorForAnnotation<MixableClassUtility> {
@@ -53,7 +53,7 @@ class MixableClassUtilityGenerator
   @override
   Future<String> generateForAnnotatedElement(
     Element element,
-    ConstantReader reader,
+    ConstantReader annotation,
     BuildStep buildStep,
   ) async {
     if (element is! ClassElement) {
