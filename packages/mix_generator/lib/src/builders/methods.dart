@@ -207,7 +207,7 @@ String mergeMethodBuilder({
     return 'other.$propName ?? $thisName';
   });
 
-  final covariantKey = !ownerClass.isAbstract ? '' : 'covariant';
+  final covariantKey = ownerClass.isAbstract ? 'covariant' : '';
 
   final constructorCall = '${ownerClass.name}${ownerClass.constructorRef}';
 

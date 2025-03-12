@@ -199,9 +199,7 @@ class ClassDefinition {
   final bool isDiagnosticable;
   final bool isAbstract;
   final bool isFinal;
-
   final String genericType;
-
   final String extendTypes;
 
   final String _constructorName;
