@@ -3,6 +3,7 @@ import 'package:analyzer/dart/element/element.dart';
 import '../helpers/builder_utils.dart';
 import '../helpers/field_info.dart';
 import '../helpers/helpers.dart';
+import '../helpers/type_extension.dart';
 
 const _expandableFields = ['decoration', 'style'];
 

@@ -1,9 +1,9 @@
 import 'package:analyzer/dart/element/element.dart';
 
-import '../../helpers/builder_utils.dart';
+import '../../generators/mixable_class_utility_generator.dart';
 import '../../helpers/field_info.dart';
+import '../../helpers/type_extension.dart';
 import '../../helpers/type_ref_repository.dart';
-import '../../mixable_class_utility_generator.dart';
 
 /// Generates the utility statements for public consts
 /// static methods of `mappingElement` in the context

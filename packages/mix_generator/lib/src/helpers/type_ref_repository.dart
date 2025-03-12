@@ -3,8 +3,7 @@
 import 'package:analyzer/dart/element/type.dart';
 
 import 'builder_utils.dart';
-import 'dart_type_ext.dart';
-import 'helpers.dart';
+import 'type_extension.dart';
 
 final typeRefs = TypeRefRepository.instance;
 

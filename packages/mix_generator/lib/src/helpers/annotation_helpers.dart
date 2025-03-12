@@ -3,7 +3,7 @@ import 'package:analyzer/dart/element/element.dart';
 import 'package:mix_annotations/mix_annotations.dart';
 import 'package:source_gen/source_gen.dart';
 
-import 'dart_type_ext.dart';
+import 'type_extension.dart';
 
 const _specChecker = TypeChecker.fromRuntime(MixableSpec);
 const _utilityChecker = TypeChecker.fromRuntime(MixableUtility);

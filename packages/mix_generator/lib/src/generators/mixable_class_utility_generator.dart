@@ -6,10 +6,10 @@ import 'package:build/build.dart';
 import 'package:mix_annotations/mix_annotations.dart';
 import 'package:source_gen/source_gen.dart';
 
-import 'builders/dto/utility_class_builder.dart';
-import 'helpers/builder_utils.dart';
-import 'helpers/dart_type_ext.dart';
-import 'helpers/helpers.dart';
+import '../builders/attribute/utility_class_builder.dart';
+import '../helpers/builder_utils.dart';
+import '../helpers/helpers.dart';
+import '../helpers/type_extension.dart';
 
 class MixableClassUtilityGenerator
     extends GeneratorForAnnotation<MixableClassUtility> {

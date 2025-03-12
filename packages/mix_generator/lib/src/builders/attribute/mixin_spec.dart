@@ -1,7 +1,7 @@
 import 'package:mix_annotations/mix_annotations.dart';
 
 import '../../helpers/field_info.dart';
-import '../../helpers/helpers.dart';
+import '../../helpers/type_extension.dart';
 import '../../helpers/type_ref_repository.dart';
 import '../methods.dart';
 

@@ -4,12 +4,12 @@ import 'package:analyzer/dart/element/element.dart';
 import 'package:mix_annotations/mix_annotations.dart';
 import 'package:source_gen/source_gen.dart';
 
-import 'builders/dto/extension_value.dart';
-import 'builders/dto/mixin_dto.dart';
-import 'builders/dto/utility_class_builder.dart';
-import 'helpers/base_generator.dart';
-import 'helpers/field_info.dart';
-import 'helpers/helpers.dart';
+import '../builders/attribute/extension_value.dart';
+import '../builders/attribute/mixin_dto.dart';
+import '../builders/attribute/utility_class_builder.dart';
+import '../helpers/base_generator.dart';
+import '../helpers/field_info.dart';
+import '../helpers/helpers.dart';
 
 class MixableDtoGenerator extends BaseMixGenerator<MixableDto> {
   const MixableDtoGenerator();

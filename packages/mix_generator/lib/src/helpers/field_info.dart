@@ -8,7 +8,7 @@ import 'package:mix_annotations/mix_annotations.dart';
 
 import 'annotation_helpers.dart';
 import 'builder_utils.dart';
-import 'dart_type_ext.dart';
+import 'type_extension.dart';
 import 'type_ref_repository.dart';
 
 /// Provides information about a field or parameter for code generation.

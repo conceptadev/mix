@@ -3,11 +3,11 @@
 import 'package:build/build.dart';
 import 'package:source_gen/source_gen.dart';
 
-import 'src/mixable_class_utility_generator.dart';
-import 'src/mixable_dto_generator.dart';
-import 'src/mixable_enum_utility_generator.dart';
-import 'src/mixable_spec_generator.dart';
-import 'src/mixable_tokens_generator.dart';
+import 'src/generators/mixable_class_utility_generator.dart';
+import 'src/generators/mixable_dto_generator.dart';
+import 'src/generators/mixable_enum_utility_generator.dart';
+import 'src/generators/mixable_spec_generator.dart';
+import 'src/generators/mixable_tokens_generator.dart';
 
 Builder specDefinition(BuilderOptions options) => SharedPartBuilder(
       [const MixableSpecGenerator()],

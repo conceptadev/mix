@@ -4,6 +4,7 @@ import 'package:source_gen/source_gen.dart';
 
 import 'field_info.dart';
 import 'helpers.dart';
+import 'type_registry.dart';
 
 abstract class BaseMixGenerator<T> extends GeneratorForAnnotation<T> {
   const BaseMixGenerator();
@@ -43,6 +44,16 @@ abstract class BaseMixGenerator<T> extends GeneratorForAnnotation<T> {
   ) async {
     final classElement = validateClassElement(element);
     final context = createClassContext(classElement, annotation);
+    final library = await buildStep.inputLibrary;
+
+    TypeRegistry.instance.scanLibrary(library);
+
+    // Also scan imported libraries for better coverage
+    for (final import in library.importedLibraries) {
+      if (import.isInSdk) continue;
+
+      TypeRegistry.instance.scanLibrary(import);
+    }
 
     return dartFormat(generateCode(context));
   }

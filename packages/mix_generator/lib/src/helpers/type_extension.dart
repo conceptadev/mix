@@ -34,6 +34,48 @@ extension DartTypeExtension on DartType {
     return true;
   }
 
+  String getTypeAsString() {
+    final thisElement = element;
+
+    // Check if element is a list
+    if (thisElement is ClassElement &&
+        !isDartCoreList &&
+        !isDartCoreMap &&
+        !isDartCoreSet &&
+        !isDartCoreObject) {
+      return thisElement.name;
+    }
+
+    return getDisplayString(withNullability: false);
+  }
+
+  ClassElement? get classElement {
+    return element is ClassElement ? element as ClassElement : null;
+  }
+
+  InterfaceType? get interfaceType {
+    return this is InterfaceType ? this as InterfaceType : null;
+  }
+
+  DartType? tryGetTypeGeneric() {
+    if (this is ParameterizedType) {
+      final type = this as ParameterizedType;
+      if (type.typeArguments.isNotEmpty) {
+        return type.typeArguments.firstOrNull;
+      }
+    }
+
+    return null;
+  }
+
+  DartType getGenericType() {
+    final type = tryGetTypeGeneric();
+    if (type != null) {
+      return type;
+    }
+    throw Exception(type?.getTypeAsString() ?? '' 'has no type generic');
+  }
+
   bool get isEnum {
     final self = this;
 
@@ -112,21 +154,6 @@ extension DartTypeExtension on DartType {
       typeImplementations.firstWhereOrNull(checker.isExactlyType);
 }
 
-extension ElementX on Element {
-  Iterable<LibraryImportElement> get nonCoreImports =>
-      library?.libraryImports.where((element) {
-        final lib = element.importedLibrary;
-        if (lib == null) {
-          return false;
-        }
-
-        return !lib.isDartAsync && //
-            !lib.isDartCore &&
-            !lib.isInSdk;
-      }) ??
-      [];
-}
-
 // Check if identifier starts with 'package:flutter/' or 'dart:
 // Also check if there is a depednency on pubspec, that matches 'package:NAME/'
 
@@ -159,5 +186,28 @@ extension ConstantReaderX on ConstantReader {
     }
 
     return name;
+  }
+}
+
+extension StringX on String {
+  /// Returns a new string with the first character in upper case.
+  String get capitalize {
+    if (isEmpty) {
+      return this;
+    }
+
+    return this[0].toUpperCase() + substring(1);
+  }
+
+  String get lowercaseFirst {
+    if (isEmpty) {
+      return this;
+    }
+
+    return this[0].toLowerCase() + substring(1);
+  }
+
+  String get snakecase {
+    return replaceAll(RegExp(r'(?<!^)(?=[A-Z])'), '_').toLowerCase();
   }
 }

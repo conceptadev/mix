@@ -9,7 +9,6 @@ import '../internal/compare_mixin.dart';
 import '../variants/context_variant_util/on_util.dart';
 import 'attribute.dart';
 import 'factory/mix_data.dart';
-import 'factory/style_mix.dart';
 
 @immutable
 abstract class Spec<T extends Spec<T>> with EqualityMixin {
@@ -96,10 +95,4 @@ class SpecConfiguration<U extends SpecUtility> {
   OnContextVariantUtility get on => OnContextVariantUtility.self;
 
   U get utilities => _utility;
-}
-
-abstract class SpecStyle<U extends SpecUtility> {
-  const SpecStyle();
-
-  Style makeStyle(covariant SpecConfiguration<U> spec);
 }

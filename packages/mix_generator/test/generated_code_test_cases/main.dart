@@ -1,6 +1,6 @@
 import 'package:mix_annotations/mix_annotations.dart';
-import 'package:mix_generator/src/mixable_dto_generator.dart';
-import 'package:mix_generator/src/mixable_spec_generator.dart';
+import 'package:mix_generator/src/generators/mixable_dto_generator.dart';
+import 'package:mix_generator/src/generators/mixable_spec_generator.dart';
 import 'package:source_gen_test/source_gen_test.dart'
     show
         initializeLibraryReaderForDirectory,

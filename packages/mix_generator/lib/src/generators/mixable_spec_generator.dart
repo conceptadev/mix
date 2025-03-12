@@ -4,14 +4,14 @@ import 'package:analyzer/dart/element/element.dart';
 import 'package:mix_annotations/mix_annotations.dart';
 import 'package:source_gen/source_gen.dart';
 
-import 'builders/dto/mixin_spec.dart';
-import 'builders/dto/utility_class_builder.dart';
-import 'builders/spec/class_tween_spec.dart';
-import 'builders/spec/spec_attribute_builder.dart';
-import 'helpers/annotation_helpers.dart';
-import 'helpers/base_generator.dart';
-import 'helpers/field_info.dart';
-import 'helpers/helpers.dart';
+import '../builders/attribute/mixin_spec.dart';
+import '../builders/attribute/utility_class_builder.dart';
+import '../builders/spec/class_tween_spec.dart';
+import '../builders/spec/spec_attribute_builder.dart';
+import '../helpers/annotation_helpers.dart';
+import '../helpers/base_generator.dart';
+import '../helpers/field_info.dart';
+import '../helpers/helpers.dart';
 
 class MixableSpecGenerator extends BaseMixGenerator<MixableSpec> {
   const MixableSpecGenerator();

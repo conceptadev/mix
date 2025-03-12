@@ -6,29 +6,6 @@ import 'field_info.dart';
 String constructorFor(String typeAnnotation, String? namedConstructor) =>
     "$typeAnnotation${namedConstructor == null ? "" : ".$namedConstructor"}";
 
-extension StringX on String {
-  /// Returns a new string with the first character in upper case.
-  String get capitalize {
-    if (isEmpty) {
-      return this;
-    }
-
-    return this[0].toUpperCase() + substring(1);
-  }
-
-  String get lowercaseFirst {
-    if (isEmpty) {
-      return this;
-    }
-
-    return this[0].toLowerCase() + substring(1);
-  }
-
-  String get snakecase {
-    return replaceAll(RegExp(r'(?<!^)(?=[A-Z])'), '_').toLowerCase();
-  }
-}
-
 String buildConstructorParams(
   List<ParameterInfo> params,
   String Function(ParameterInfo) buildParam,
@@ -81,10 +58,5 @@ String buildConstructorParamsAsNamed(
 final _formatter = DartFormatter(pageWidth: 80, fixes: StyleFix.all);
 
 String dartFormat(String contents) {
-  try {
-    return _formatter.format(contents);
-  } catch (e) {
-    // print('Generating: $contents');
-    rethrow;
-  }
+  return _formatter.format(contents);
 }

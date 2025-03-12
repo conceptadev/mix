@@ -3,9 +3,9 @@ import 'package:build/build.dart';
 import 'package:mix_annotations/mix_annotations.dart';
 import 'package:source_gen/source_gen.dart';
 
-import 'helpers/annotation_helpers.dart';
-import 'helpers/field_info.dart';
-import 'helpers/helpers.dart';
+import '../helpers/annotation_helpers.dart';
+import '../helpers/field_info.dart';
+import '../helpers/helpers.dart';
 
 class MixableTokensGenerator extends GeneratorForAnnotation<MixableToken> {
   const MixableTokensGenerator();
@@ -181,7 +181,7 @@ String _generateTokenUtilityExtension(
     result += '''
 extension ${_kUtilityExtensionName(context.name, utility)}<T extends Attribute> on $utility<T> {
     ${[
-      for (var i = 0; i < context.fields.length; i++) generateMethod(i)
+      for (var i = 0; i < context.fields.length; i++) generateMethod(i),
     ].join('\n')}
 }
 ''';
@@ -211,7 +211,7 @@ class ${_kBuildContextMethodsClassName(context.name)} {
 
   final BuildContext context;
   ${[
-    for (var i = 0; i < context.fields.length; i++) generateMethod(i)
+    for (var i = 0; i < context.fields.length; i++) generateMethod(i),
   ].join('\n')}
 }
 ''';

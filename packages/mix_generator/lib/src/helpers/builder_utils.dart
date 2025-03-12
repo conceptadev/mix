@@ -7,8 +7,8 @@ import 'package:collection/collection.dart';
 import 'package:mix_annotations/mix_annotations.dart';
 import 'package:source_gen/source_gen.dart';
 
-import 'dart_type_ext.dart';
 import 'field_info.dart';
+import 'type_extension.dart';
 
 class MixHelperRef {
   const MixHelperRef._();
@@ -206,50 +206,6 @@ Future<ClassElement?> getClassElementForTypeName(
 }
 
 String kDefaultValueRef = 'defaultValue';
-
-extension DartTypeX on DartType {
-  String getTypeAsString() {
-    final thisElement = element;
-
-    // Check if element is a list
-    if (thisElement is ClassElement &&
-        !isDartCoreList &&
-        !isDartCoreMap &&
-        !isDartCoreSet &&
-        !isDartCoreObject) {
-      return thisElement.name;
-    }
-
-    return getDisplayString(withNullability: false);
-  }
-
-  ClassElement? get classElement {
-    return element is ClassElement ? element as ClassElement : null;
-  }
-
-  InterfaceType? get interfaceType {
-    return this is InterfaceType ? this as InterfaceType : null;
-  }
-
-  DartType? tryGetTypeGeneric() {
-    if (this is ParameterizedType) {
-      final type = this as ParameterizedType;
-      if (type.typeArguments.isNotEmpty) {
-        return type.typeArguments.firstOrNull;
-      }
-    }
-
-    return null;
-  }
-
-  DartType getGenericType() {
-    final type = tryGetTypeGeneric();
-    if (type != null) {
-      return type;
-    }
-    throw Exception(type?.getTypeAsString() ?? '' 'has no type generic');
-  }
-}
 
 DartType? extractDtoTypeArgument(ClassElement classElement) {
   // Check if the class itself is Dto<T>
