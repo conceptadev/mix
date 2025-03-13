@@ -4,6 +4,7 @@ import 'package:logging/logging.dart';
 import 'package:mix_annotations/mix_annotations.dart';
 import 'package:source_gen/source_gen.dart';
 
+import '../core/dto/dto_extension_builder.dart';
 import '../core/dto/dto_mixin_builder.dart';
 import '../core/dto/dto_utility_builder.dart';
 import '../core/models/dto_metadata.dart';
@@ -34,24 +35,6 @@ class MixableDtoGenerator extends BaseMixGenerator<MixableDto, DtoMetadata> {
   }
 
   @override
-  Future<String> generateForAnnotatedElement(
-    Element element,
-    ConstantReader annotation,
-    BuildStep buildStep,
-  ) async {
-    if (element is! ClassElement) {
-      throw InvalidGenerationSourceError(
-        '@MixableDto can only be applied to classes.',
-        element: element,
-      );
-    }
-
-    final metadata = await createMetadata(element, buildStep);
-
-    return generateForMetadata(metadata, buildStep);
-  }
-
-  @override
   String generateForMetadata(DtoMetadata metadata, BuildStep buildStep) {
     final output = StringBuffer();
 
@@ -76,7 +59,8 @@ class MixableDtoGenerator extends BaseMixGenerator<MixableDto, DtoMetadata> {
         output.writeln(utilityCode);
       } catch (e) {
         // Skip utility class generation if it fails
-        print('Error generating utility class for ${metadata.name}: $e');
+        _logger
+            .warning('Error generating utility class for ${metadata.name}: $e');
       }
       output.writeln();
     }
@@ -84,13 +68,14 @@ class MixableDtoGenerator extends BaseMixGenerator<MixableDto, DtoMetadata> {
     // Generate value extension (if enabled)
     if (metadata.generateValueExtension) {
       try {
-        // Skip extension generation for now as DtoExtensionBuilder is not available
-        print(
-          'Value extension generation is not currently supported for ${metadata.name}',
-        );
+        final extensionBuilder = DtoExtensionBuilder(metadata);
+        final extensionCode = extensionBuilder.build();
+        output.writeln(extensionCode);
       } catch (e) {
         // Skip extension generation if it fails
-        print('Error generating value extension for ${metadata.name}: $e');
+        _logger.warning(
+          'Error generating value extension for ${metadata.name}: $e',
+        );
       }
     }
 

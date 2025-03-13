@@ -1,96 +1,101 @@
-import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/type.dart';
-import 'package:build/build.dart';
 import 'package:logging/logging.dart';
 
 import 'utils/dart_type_utils.dart';
 import 'utils/extensions.dart';
+import 'utils/string_utils.dart';
 
-/// A unified registry for managing type mappings based on MixUtility type parameters.
-///
-/// This registry determines:
-/// - What representation class (DTO/Attribute) is used for a specific type
-/// - What utility class is used for a specific type by scanning MixUtility implementations
+/// A simplified registry for managing type mappings using hardcoded maps.
 class TypeRegistry {
   static final TypeRegistry instance = TypeRegistry._();
 
   final Logger _logger = Logger('TypeRegistry');
 
-  // Core type mappings
-  final Map<String, TypeMapping> _mappings = {};
-
   TypeRegistry._();
 
-  /// Detects if a class is a representation (DTO or Attribute) and registers it
-  void _detectRepresentationFromClass(ClassElement classElement) {
-    final isSpec = TypeUtils.isSpec(classElement.thisType);
-    final isDto = TypeUtils.isDto(classElement.thisType);
-    if (!isSpec && !isDto) return;
+  /// Gets the utility type for a DartType
+  TypeReference? getUtilityForType(DartType type) {
+    final typeString = type.getTypeAsString();
 
-    TypeReference representationType;
-    TypeReference referenceType;
+    // Check if it's a list type
+    if (type.isList && type.firstTypeArgument != null) {
+      final elementType = type.firstTypeArgument!;
+      final elementTypeName = elementType.getTypeAsString();
 
-    final typeName = classElement.name;
-
-    final utilityType = TypeReference('${typeName}Utility');
-
-    if (isSpec) {
-      representationType = TypeReference('${typeName}Attribute');
-      referenceType = TypeReference.fromType(classElement.thisType);
-    } else {
-      final typeArg = TypeUtils.extractDtoTypeArgument(classElement);
-      if (typeArg == null) return;
-      referenceType = TypeReference.fromType(typeArg);
-      representationType = TypeReference.fromType(classElement.thisType);
-    }
-    // Register the DTO mapping using the resolved key.
-    final typing = TypeMapping(
-      reference: referenceType,
-      representation: representationType,
-      utility: utilityType,
-      isSpec: isSpec,
-    );
-
-    _mappings[typing.key] = typing;
-  }
-
-  /// Scans a library for types and their relationships
-  void scanLibrary(LibraryElement library) {
-    for (final classElement in library.units.expand((u) => u.classes)) {
-      // Detect DTOs and Attributes
-      _detectRepresentationFromClass(classElement);
-    }
-  }
-
-  /// Scans a BuildStep for type relationships
-  Future<void> scanBuildStep(BuildStep buildStep) async {
-    final resolver = buildStep.resolver;
-    if (!await resolver.isLibrary(buildStep.inputId)) return;
-
-    final library = await resolver.libraryFor(buildStep.inputId);
-    scanLibrary(library);
-
-    // Also scan imported libraries
-    for (final import in library.importedLibraries) {
-      if (!import.isInSdk) {
-        scanLibrary(import);
+      // Look for a list utility that handles this element type
+      for (final entry in utilities.entries) {
+        if (entry.value == 'List<$elementTypeName>' ||
+            entry.value == 'List<${elementTypeName}Dto>') {
+          return TypeReference(entry.key);
+        }
       }
     }
-  }
 
-  /// Gets the mapping for a DartType, including generic handling
-  TypeMapping? getMappingForType(DartType type) {
-    return _mappings[type.getTypeAsString()];
+    // Special handling for Spec types
+    if (TypeUtils.isSpec(type)) {
+      final typeName = typeString;
+
+      return TypeReference('${typeName}Utility');
+    }
+
+    // Special handling for DTO types
+    if (TypeUtils.isDto(type)) {
+      final dtoName = type.element!.name!;
+      // Remove the Dto suffix if present
+      final baseName = dtoName.endsWith('Dto')
+          ? dtoName.substring(0, dtoName.length - 3)
+          : dtoName;
+
+      return TypeReference('${baseName}Utility');
+    }
+
+    // Check for a direct utility mapping
+    for (final entry in utilities.entries) {
+      if (entry.value == typeString) {
+        return TypeReference(entry.key);
+      }
+    }
+
+    // If no mapping found, use DynamicUtility
+    _logger.warning(
+      'No utility found for type: $typeString, using DynamicUtility',
+    );
+
+    return TypeReference('DynamicUtility');
   }
 
   /// Gets the representation type (DTO or Attribute) for a DartType
-  TypeReference? getRepresentationType(DartType type) {
-    return getMappingForType(type)?.representation;
+  TypeReference? getRepresentationForType(DartType type) {
+    final typeString = type.getDisplayString(withNullability: false);
+
+    // Special handling for Spec types
+    if (TypeUtils.isSpec(type)) {
+      final typeName = typeString;
+
+      return TypeReference('${typeName}Attribute');
+    }
+
+    // Special handling for DTO types
+    if (TypeUtils.isDto(type)) {
+      return TypeReference(type.element!.name!);
+    }
+
+    // Check for a direct DTO mapping
+    for (final dtoEntry in dtos.entries) {
+      if (dtoEntry.value == typeString) {
+        return TypeReference(dtoEntry.key);
+      }
+    }
+
+    // If no specific representation, return the type itself
+    return TypeReference(typeString);
   }
 
-  /// Gets the utility type for a DartType
-  TypeReference? getUtilityType(DartType type) {
-    return getMappingForType(type)?.utility;
+  /// Gets the utility for a field with a specific name and type
+  TypeReference? getUtilityForField(String fieldName, DartType type) {
+    // For now, just delegate to the type utility
+    // In the future, this could be enhanced to handle field-specific utilities
+    return getUtilityForType(type);
   }
 
   /// Gets the utility name from a type name string
@@ -102,8 +107,8 @@ class TypeRegistry {
       typeName = typeName.substring(0, typeName.length - 9);
     }
 
-    // Ensure capitalized
-    typeName = typeName[0].toUpperCase() + typeName.substring(1);
+    // Ensure capitalized and add utility suffix
+    typeName = typeName.capitalize;
 
     // Add utility suffix if not present
     if (!typeName.endsWith('Utility')) {
@@ -114,33 +119,7 @@ class TypeRegistry {
   }
 }
 
-/// Represents a complete mapping for a type
-class TypeMapping {
-  /// The base type name
-  final TypeReference reference;
-
-  /// The corresponding representation type (DTO or Attribute)
-  final TypeReference representation;
-
-  /// The corresponding utility type
-  final TypeReference utility;
-
-  final bool isSpec;
-
-  const TypeMapping({
-    required this.reference,
-    required this.representation,
-    required this.utility,
-    required this.isSpec,
-  });
-
-  String get key => reference.name;
-
-  @override
-  String toString() =>
-      'TypeMapping(reference: $reference, representation: $representation, utility: $utility, isSpec: $isSpec)';
-}
-
+/// Reference to a type by name
 class TypeReference {
   final String name;
   final DartType? type;
@@ -163,3 +142,92 @@ String _getSimpleTypeName(String typeName) {
 
   return typeName;
 }
+
+/// List of utility types that should be ignored in certain contexts
+final ignoredUtilities = [
+  'SpacingSideUtility',
+  'FontFamilyUtility',
+  'GapUtility',
+];
+
+/// Map of DTO class names to their corresponding Flutter type names
+final dtos = {
+  'SpacingSideDto': 'SpacingSide',
+  'EdgeInsetsGeometryDto': 'EdgeInsetsGeometry',
+  'StrutStyleDto': 'StrutStyle',
+  'AnimatedDataDto': 'AnimatedData',
+  'TextHeightBehaviorDto': 'TextHeightBehavior',
+  'GradientDto': 'Gradient',
+  'TextStyleData': 'TextStyle',
+  'TextStyleDto': 'TextStyle',
+  'ConstraintsDto': 'Constraints',
+  'WidgetModifiersDataDto': 'WidgetModifiersData',
+  'ColorDto': 'Color',
+  'ShadowDto': 'Shadow',
+  'ShapeBorderDto': 'ShapeBorder',
+  'LinearBorderEdgeDto': 'LinearBorderEdge',
+  'TextDirectiveDto': 'TextDirective',
+  'BoxBorderDto': 'BoxBorder',
+  'BorderSideDto': 'BorderSide',
+  'BorderRadiusGeometryDto': 'BorderRadiusGeometry',
+  'DecorationDto': 'Decoration',
+  'DecorationImageDto': 'DecorationImage',
+};
+
+/// Map of utility class names to their corresponding value types
+final utilities = {
+  'TextDirectivesUtility': 'TextDirectiveDto',
+  'ShadowListUtility': 'List<ShadowDto>',
+  'DoubleUtility': 'double',
+  'IntUtility': 'int',
+  'StringUtility': 'String',
+  'BoolUtility': 'bool',
+  'ListUtility': 'List',
+  'BoxShadowListUtility': 'List<BoxShadowDto>',
+  'ColorUtility': 'ColorDto',
+  'ColorListUtility': 'List<ColorDto>',
+  'VerticalDirectionUtility': 'VerticalDirection',
+  'BorderStyleUtility': 'BorderStyle',
+  'ClipUtility': 'Clip',
+  'AxisUtility': 'Axis',
+  'FlexFitUtility': 'FlexFit',
+  'StackFitUtility': 'StackFit',
+  'ImageRepeatUtility': 'ImageRepeat',
+  'TextDirectionUtility': 'TextDirection',
+  'TextLeadingDistributionUtility': 'TextLeadingDistribution',
+  'TileModeUtility': 'TileMode',
+  'MainAxisAlignmentUtility': 'MainAxisAlignment',
+  'CrossAxisAlignmentUtility': 'CrossAxisAlignment',
+  'MainAxisSizeUtility': 'MainAxisSize',
+  'BoxFitUtility': 'BoxFit',
+  'BlendModeUtility': 'BlendMode',
+  'BoxShapeUtility': 'BoxShape',
+  'FontStyleUtility': 'FontStyle',
+  'TextDecorationStyleUtility': 'TextDecorationStyle',
+  'TextBaselineUtility': 'TextBaseline',
+  'TextOverflowUtility': 'TextOverflow',
+  'TextWidthBasisUtility': 'TextWidthBasis',
+  'TextAlignUtility': 'TextAlign',
+  'FilterQualityUtility': 'FilterQuality',
+  'WrapAlignmentUtility': 'WrapAlignment',
+  'TableCellVerticalAlignmentUtility': 'TableCellVerticalAlignment',
+  'ShapeBorderUtility': 'ShapeBorderDto',
+  'AlignmentUtility': 'AlignmentGeometry',
+  'AlignmentDirectionalUtility': 'AlignmentDirectional',
+  'FontFeatureUtility': 'FontFeature',
+  'DurationUtility': 'Duration',
+  'FontWeightUtility': 'FontWeight',
+  'TextDecorationUtility': 'TextDecoration',
+  'CurveUtility': 'Curve',
+  'OffsetUtility': 'Offset',
+  'RadiusUtility': 'Radius',
+  'RectUtility': 'Rect',
+  'ImageProviderUtility': 'ImageProvider',
+  'GradientTransformUtility': 'GradientTransform',
+  'Matrix4Utility': 'Matrix4',
+  'TextScalerUtility': 'TextScaler',
+  'TableColumnWidthUtility': 'TableColumnWidth',
+  'TableBorderUtility': 'TableBorder',
+  'DecorationUtility': 'DecorationDto',
+  'GradientUtility': 'GradientDto',
+};

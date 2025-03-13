@@ -152,7 +152,9 @@ class DecorationImageUtility<T extends Attribute>
   }
 }
 
+/// Extension methods to convert [DecorationImage] to [DecorationImageDto].
 extension DecorationImageMixExt on DecorationImage {
+  /// Converts this [DecorationImage] to a [DecorationImageDto].
   DecorationImageDto toDto() {
     return DecorationImageDto(
       image: image,
@@ -167,7 +169,9 @@ extension DecorationImageMixExt on DecorationImage {
   }
 }
 
+/// Extension methods to convert List<[DecorationImage]> to List<[DecorationImageDto]>.
 extension ListDecorationImageMixExt on List<DecorationImage> {
+  /// Converts this List<[DecorationImage]> to a List<[DecorationImageDto]>.
   List<DecorationImageDto> toDto() {
     return map((e) => e.toDto()).toList();
   }

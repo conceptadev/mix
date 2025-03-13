@@ -8,6 +8,7 @@ import '../type_registry.dart';
 import '../utils/annotation_utils.dart';
 import '../utils/constructor_utils.dart';
 import '../utils/dart_type_utils.dart';
+import '../utils/extensions.dart';
 
 /// Represents metadata about a field or parameter for code generation.
 ///
@@ -125,23 +126,23 @@ class FieldMetadata {
   bool get isDynamic => dartType is DynamicType;
 
   /// Checks if the field type is a List
-  bool get isListType => dartType.isDartCoreList;
+  bool get isListType => dartType.isList;
 
   /// Checks if the field type is a Map
-  bool get isMapType => dartType.isDartCoreMap;
+  bool get isMapType => dartType.isMap;
 
   /// Checks if the field type is a Set
-  bool get isSetType => dartType.isDartCoreSet;
+  bool get isSetType => dartType.isSet;
 
-  /// Gets the representation type (DTO or Attribute) for this field
+  /// Gets the representation type for this field
   TypeReference? get representationType {
-    // First check if a specific type is defined in the annotation
-    if (annotation.dto?.typeAsString != null) {
+    // Check for manually specified DTO in the annotation
+    if (annotation.dto != null && annotation.dto!.typeAsString != null) {
       return TypeReference(annotation.dto!.typeAsString!);
     }
 
     // Otherwise, use the registry
-    return typeRegistry.getRepresentationType(dartType);
+    return typeRegistry.getRepresentationForType(dartType);
   }
 
   bool get isSpec => TypeUtils.isSpec(dartType);
@@ -167,7 +168,7 @@ class FieldMetadata {
     }
 
     // Otherwise use the type registry
-    return typeRegistry.getUtilityType(dartType)?.name ?? '';
+    return typeRegistry.getUtilityForType(dartType)?.name ?? '';
   }
 
   /// Checks if this field has a representation (DTO or Attribute)

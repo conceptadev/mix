@@ -1,11 +1,12 @@
 import 'package:mix_generator/src/core/type_registry.dart';
+import 'package:mix_generator/src/core/utils/dart_type_utils.dart';
 import 'package:test/test.dart';
 
 import '../helpers/test_helpers.dart';
 
 void main() {
   group('TypeRegistry', () {
-    test('detects and registers Spec classes correctly', () async {
+    test('handles Spec classes correctly', () async {
       // Define test code with a Spec class
       const testCode = '''
         class TestSpec extends Spec<TestSpec> {
@@ -18,26 +19,25 @@ void main() {
       // Resolve the library with our test code
       final library = await resolveMixTestLibrary(testCode);
 
-      // Create a new TypeRegistry for testing
+      // Get the TypeRegistry instance
       final registry = TypeRegistry.instance;
-
-      // Scan the library to populate the registry
-      registry.scanLibrary(library);
 
       // Get the class element and its type
       final classElement = library.getClass('TestSpec')!;
       final dartType = classElement.thisType;
 
-      // Verify the mapping was created correctly
-      final mapping = registry.getMappingForType(dartType);
-      expect(mapping, isNotNull);
-      expect(mapping!.isSpec, isTrue);
-      expect(mapping.reference.name, equals('TestSpec'));
-      expect(mapping.representation.name, equals('TestSpecAttribute'));
-      expect(mapping.utility.name, equals('TestSpecUtility'));
+      // Verify the utility is created correctly
+      final utility = registry.getUtilityForType(dartType);
+      expect(utility, isNotNull);
+      expect(utility!.name, equals('TestSpecUtility'));
+
+      // Verify the representation is created correctly
+      final representation = registry.getRepresentationForType(dartType);
+      expect(representation, isNotNull);
+      expect(representation!.name, equals('TestSpecAttribute'));
     });
 
-    test('detects and registers Dto classes correctly', () async {
+    test('handles Dto classes correctly', () async {
       // Define test code with a Dto class
       const testCode = '''
         class ValueType {}
@@ -52,30 +52,69 @@ void main() {
       // Resolve the library with our test code
       final library = await resolveMixTestLibrary(testCode);
 
-      // Create a new TypeRegistry for testing
+      // Get the TypeRegistry instance
       final registry = TypeRegistry.instance;
 
-      // Scan the library to populate the registry
-      registry.scanLibrary(library);
+      // Get the class elements and their types
+      final dtoElement = library.getClass('TestDto')!;
+      final dtoDartType = dtoElement.thisType;
 
-      // Get the class element and its type
-      final classElement = library.getClass('TestDto')!;
-      final dartType = classElement.thisType;
-
-      // Get the ValueType class element and its type
       final valueTypeElement = library.getClass('ValueType')!;
       final valueType = valueTypeElement.thisType;
 
-      // Verify the mapping was created correctly
-      final mapping = registry.getMappingForType(valueType);
-      expect(mapping, isNotNull);
-      expect(mapping!.isSpec, isFalse);
-      expect(mapping.reference.name, equals('ValueType'));
-      expect(mapping.representation.name, equals('TestDto'));
-      expect(mapping.utility.name, equals('TestDtoUtility'));
+      // Verify the utility for the DTO type
+      final dtoUtility = registry.getUtilityForType(dtoDartType);
+      expect(dtoUtility, isNotNull);
+      expect(dtoUtility!.name, equals('TestUtility'));
+
+      // Verify the representation for the DTO type
+      final dtoRepresentation = registry.getRepresentationForType(dtoDartType);
+      expect(dtoRepresentation, isNotNull);
+      expect(dtoRepresentation!.name, equals('TestDto'));
+
+      // Verify the DTO type is correctly identified
+      expect(TypeUtils.isDto(dtoDartType), isTrue);
     });
 
-    test('getRepresentationType returns correct representation type', () async {
+    test('removes Dto suffix when getting utility type for DTO classes',
+        () async {
+      // Define test code with a Dto class that has a Dto suffix
+      const testCode = '''
+        class Color {}
+        
+        class ColorDto extends Dto<Color> {
+          final int value;
+          
+          const ColorDto({required this.value});
+        }
+      ''';
+
+      // Resolve the library with our test code
+      final library = await resolveMixTestLibrary(testCode);
+
+      // Get the TypeRegistry instance
+      final registry = TypeRegistry.instance;
+
+      // Get the class element and its type
+      final dtoElement = library.getClass('ColorDto')!;
+      final dtoDartType = dtoElement.thisType;
+
+      // Verify the utility for the DTO type has the Dto suffix removed
+      final dtoUtility = registry.getUtilityForType(dtoDartType);
+      expect(dtoUtility, isNotNull);
+      expect(dtoUtility!.name, equals('ColorUtility'));
+    });
+
+    test('ignoredUtilities contains expected values', () {
+      // Verify that the ignoredUtilities list contains the expected values
+      expect(ignoredUtilities, contains('SpacingSideUtility'));
+      expect(ignoredUtilities, contains('FontFamilyUtility'));
+      expect(ignoredUtilities, contains('GapUtility'));
+      expect(ignoredUtilities.length, equals(3));
+    });
+
+    test('getRepresentationForType returns correct representation type',
+        () async {
       // Define test code with a Spec class
       const testCode = '''
         class TestSpec extends Spec<TestSpec> {
@@ -88,23 +127,20 @@ void main() {
       // Resolve the library with our test code
       final library = await resolveMixTestLibrary(testCode);
 
-      // Create a new TypeRegistry for testing
+      // Get the TypeRegistry instance
       final registry = TypeRegistry.instance;
-
-      // Scan the library to populate the registry
-      registry.scanLibrary(library);
 
       // Get the class element and its type
       final classElement = library.getClass('TestSpec')!;
       final dartType = classElement.thisType;
 
-      // Verify getRepresentationType returns the correct type
-      final representationType = registry.getRepresentationType(dartType);
+      // Verify getRepresentationForType returns the correct type
+      final representationType = registry.getRepresentationForType(dartType);
       expect(representationType, isNotNull);
       expect(representationType!.name, equals('TestSpecAttribute'));
     });
 
-    test('getUtilityType returns correct utility type', () async {
+    test('getUtilityForType returns correct utility type', () async {
       // Define test code with a Spec class
       const testCode = '''
         class TestSpec extends Spec<TestSpec> {
@@ -117,18 +153,15 @@ void main() {
       // Resolve the library with our test code
       final library = await resolveMixTestLibrary(testCode);
 
-      // Create a new TypeRegistry for testing
+      // Get the TypeRegistry instance
       final registry = TypeRegistry.instance;
-
-      // Scan the library to populate the registry
-      registry.scanLibrary(library);
 
       // Get the class element and its type
       final classElement = library.getClass('TestSpec')!;
       final dartType = classElement.thisType;
 
-      // Verify getUtilityType returns the correct type
-      final utilityType = registry.getUtilityType(dartType);
+      // Verify getUtilityForType returns the correct type
+      final utilityType = registry.getUtilityForType(dartType);
       expect(utilityType, isNotNull);
       expect(utilityType!.name, equals('TestSpecUtility'));
     });
@@ -157,49 +190,21 @@ void main() {
           registry.getUtilityNameFromTypeName('color'), equals('ColorUtility'));
     });
 
-    test('scans imported libraries', () async {
-      // Define test code with imports
-      const testCode = '''
-        import 'package:test_package/imported.dart';
-        
-        class LocalSpec extends Spec<LocalSpec> {
-          final String name;
-          
-          const LocalSpec({required this.name});
-        }
-      ''';
-
-      const importedCode = '''
-        import 'package:mix/mix.dart';
-        
-        class ImportedSpec extends Spec<ImportedSpec> {
-          final int value;
-          
-          const ImportedSpec({required this.value});
-        }
-      ''';
-
-      // Use the simpler approach with resolveMixTestLibrary
-      final library = await resolveMixTestLibrary(testCode);
-
-      // Create a new TypeRegistry for testing
+    test('handles hardcoded utility mappings', () {
       final registry = TypeRegistry.instance;
 
-      // Scan the library to populate the registry
-      registry.scanLibrary(library);
+      // Test a few hardcoded mappings from the utilities map
+      for (final entry in utilities.entries.take(5)) {
+        final utilityName = entry.key;
+        final typeName = entry.value;
 
-      // Get the class element and its type
-      final classElement = library.getClass('LocalSpec')!;
-      final dartType = classElement.thisType;
+        expect(utilityName.endsWith('Utility'), isTrue,
+            reason: 'Utility name should end with Utility');
 
-      // Verify the mapping was created correctly
-      final mapping = registry.getMappingForType(dartType);
-      expect(mapping, isNotNull);
-      expect(mapping!.isSpec, isTrue);
-      expect(mapping.reference.name, equals('LocalSpec'));
-
-      // Since we can't easily test imported libraries with resolveMixTestLibrary,
-      // we'll focus on testing that the local library is scanned correctly
+        // For this test, we can't easily create DartType instances,
+        // so we'll just verify the utilities map structure
+        expect(typeName, isNotNull);
+      }
     });
   });
 
@@ -244,50 +249,6 @@ void main() {
       // Verify the TypeReference was created correctly
       expect(typeRef.name, equals('List'));
       expect(typeRef.type, equals(fieldType));
-    });
-  });
-
-  group('TypeMapping', () {
-    test('key returns reference name', () {
-      // Create TypeReferences
-      final reference = TypeReference('TestClass');
-      final representation = TypeReference('TestClassAttribute');
-      final utility = TypeReference('TestClassUtility');
-
-      // Create TypeMapping
-      final mapping = TypeMapping(
-        reference: reference,
-        representation: representation,
-        utility: utility,
-        isSpec: true,
-      );
-
-      // Verify key returns reference name
-      expect(mapping.key, equals('TestClass'));
-    });
-
-    test('toString returns formatted string', () {
-      // Create TypeReferences
-      final reference = TypeReference('TestClass');
-      final representation = TypeReference('TestClassAttribute');
-      final utility = TypeReference('TestClassUtility');
-
-      // Create TypeMapping
-      final mapping = TypeMapping(
-        reference: reference,
-        representation: representation,
-        utility: utility,
-        isSpec: true,
-      );
-
-      // Verify toString returns formatted string
-      expect(
-        mapping.toString(),
-        equals('TypeMapping(reference: TypeReference(name: TestClass, type: ), '
-            'representation: TypeReference(name: TestClassAttribute, type: ), '
-            'utility: TypeReference(name: TestClassUtility, type: ), '
-            'isSpec: true)'),
-      );
     });
   });
 }

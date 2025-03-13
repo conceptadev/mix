@@ -4,8 +4,6 @@ import 'package:dart_style/dart_style.dart';
 import 'package:logging/logging.dart';
 import 'package:source_gen/source_gen.dart';
 
-import '../type_registry.dart';
-
 /// Base class for all mix generators.
 ///
 /// This class handles common functionality like type scanning, error handling,
@@ -53,9 +51,6 @@ abstract class BaseMixGenerator<T, M> extends Generator {
 
   @override
   Future<String?> generate(LibraryReader library, BuildStep buildStep) async {
-    // Scan for type relationships
-    await TypeRegistry.instance.scanBuildStep(buildStep);
-
     // Find annotated elements
     final elements = library
         .annotatedWith(typeChecker)

@@ -122,7 +122,8 @@ List<String> generateUtilityFields(
   for (final field in fields) {
     final annotatedUtilities = field.annotation.utilities ?? [];
     final propertyName = field.name;
-    final utilityType = typeRefs.getUtilityType(field.dartType);
+    final utilityType =
+        typeRefs.getUtilityForField(propertyName, field.dartType);
     final utilityName = utilityType?.name ?? 'DynamicUtility';
 
     if (annotatedUtilities.isEmpty) {
@@ -287,7 +288,7 @@ String utilityMethodCallBuilder(List<FieldMetadata> fields) {
   final fieldStatements = fields.map((field) {
     final fieldName = field.name;
 
-    if (field.hasDto) {
+    if (field.isDto) {
       if (field.isListType) {
         return '$fieldName: $fieldName?.map((e) => e.toDto()).toList(),';
       }
