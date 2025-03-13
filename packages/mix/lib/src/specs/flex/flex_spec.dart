@@ -22,9 +22,9 @@ part 'flex_spec.g.dart';
 
 @MixableSpec()
 final class FlexSpec extends Spec<FlexSpec> with _$FlexSpec, Diagnosticable {
-  @MixableProperty(
+  @MixableField(
     utilities: [
-      MixableUtility(
+      MixableFieldUtility(
         properties: [
           (path: 'horizontal', alias: 'row'),
           (path: 'vertical', alias: 'column'),
@@ -40,9 +40,9 @@ final class FlexSpec extends Spec<FlexSpec> with _$FlexSpec, Diagnosticable {
   final TextDirection? textDirection;
   final TextBaseline? textBaseline;
   final Clip? clipBehavior;
-  @MixableProperty(
+  @MixableField(
     dto: MixableFieldDto(type: SpacingSideDto),
-    utilities: [MixableUtility(type: GapUtility)],
+    utilities: [MixableFieldUtility(type: GapUtility)],
   )
   final double? gap;
 

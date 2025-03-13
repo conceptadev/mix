@@ -14,8 +14,8 @@ import 'factory/mix_data.dart';
 abstract class Spec<T extends Spec<T>> with EqualityMixin {
   final AnimatedData? animated;
 
-  @MixableProperty(
-    utilities: [MixableUtility(alias: 'wrap')],
+  @MixableField(
+    utilities: [MixableFieldUtility(alias: 'wrap')],
     isLerpable: false,
   )
   final WidgetModifiersData? modifiers;

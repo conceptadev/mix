@@ -39,6 +39,9 @@ class MixableConstructor {
   const MixableConstructor();
 }
 
+@Deprecated('Use MixableField instead')
+typedef MixableProperty = MixableField;
+
 /// Annotation of `MixableDto` with the specified options.
 ///
 /// Indicates the generator to generate code for this class.
@@ -80,10 +83,10 @@ class MixableDto {
 ///
 /// Example usage:
 /// ```dart
-/// @MixableProperty(
+/// @MixableField(
 ///   dto: MixableFieldDto(type: BoxConstraintsDto),
 ///   utilities: [
-///     MixableUtility(
+///     MixableFieldUtility(
 ///       properties: [
 ///         (path: 'minWidth', alias: 'minWidth'),
 ///         (path: 'maxWidth', alias: 'maxWidth'),
@@ -93,7 +96,7 @@ class MixableDto {
 /// )
 /// final BoxConstraints? constraints;
 /// ```
-class MixableProperty {
+class MixableField {
   /// The associated `MixableFieldDto` for this property.
   ///
   /// This property represents the data transfer object (DTO) associated with
@@ -106,7 +109,7 @@ class MixableProperty {
   /// This property represents the utilities that provide additional options for
   /// code generation. Each utility can specify a set of properties with their
   /// corresponding paths and aliases.
-  final List<MixableUtility>? utilities;
+  final List<MixableFieldUtility>? utilities;
 
   /// Determines whether the property can be linearly interpolated (lerped).
   ///
@@ -135,9 +138,7 @@ class MixableProperty {
   /// which can be smoothly interpolated between two states.
   final bool isLerpable;
 
-  /// Creates a new instance of `MixableProperty` with the specified [dto] and
-  /// [utilities].
-  const MixableProperty({this.dto, this.utilities, this.isLerpable = true});
+  const MixableField({this.dto, this.utilities, this.isLerpable = true});
 }
 
 /// An annotation class used to specify a mixable field DTO for code generation.
@@ -179,8 +180,8 @@ typedef MixableUtilityProps = ({String path, String alias});
 ///
 /// Example usage:
 /// ```dart
-///  @MixableProperty(
-///    utilities: MixableUtility(
+///  @MixableField(
+///    utilities: MixableFieldUtility(
 ///      type: BoxDecoration,
 ///      properties: [
 ///        (path: 'color', alias: 'color'),
@@ -190,7 +191,7 @@ typedef MixableUtilityProps = ({String path, String alias});
 /// );
 /// final Decoration? decoration;
 /// ```
-class MixableUtility {
+class MixableFieldUtility {
   /// The alias for this utility.
   ///
   /// This property represents an alternative name or identifier for the
@@ -210,9 +211,11 @@ class MixableUtility {
   /// generation.
   final List<MixableUtilityProps> properties;
 
-  /// Creates a new instance of `MixableUtility` with the specified [alias],
-  /// [type], and [properties].
-  const MixableUtility({this.alias, this.type, this.properties = const []});
+  const MixableFieldUtility({
+    this.alias,
+    this.type,
+    this.properties = const [],
+  });
 
   /// Returns the string representation of the type.
   ///

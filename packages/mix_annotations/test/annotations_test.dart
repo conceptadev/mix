@@ -24,15 +24,15 @@ void main() {
 
     group('MixableProperty', () {
       test('should create instance with default values', () {
-        const property = MixableProperty();
+        const property = MixableField();
         expect(property.dto, isNull);
         expect(property.utilities, isNull);
       });
 
       test('should create instance with provided values', () {
         const dto = MixableFieldDto(type: String);
-        final utilities = [const MixableUtility(alias: 'util', type: int)];
-        final property = MixableProperty(dto: dto, utilities: utilities);
+        final utilities = [const MixableFieldUtility(alias: 'util', type: int)];
+        final property = MixableField(dto: dto, utilities: utilities);
         expect(property.dto, equals(dto));
         expect(property.utilities, equals(utilities));
       });
@@ -60,7 +60,7 @@ void main() {
 
     group('MixableUtility', () {
       test('should create instance with default values', () {
-        const utility = MixableUtility();
+        const utility = MixableFieldUtility();
         expect(utility.alias, isNull);
         expect(utility.type, isNull);
         expect(utility.properties, isEmpty);
@@ -68,18 +68,18 @@ void main() {
 
       test('should create instance with provided values', () {
         final properties = [(path: 'path', alias: 'alias')];
-        final utility =
-            MixableUtility(alias: 'util', type: int, properties: properties);
+        final utility = MixableFieldUtility(
+            alias: 'util', type: int, properties: properties);
         expect(utility.alias, equals('util'));
         expect(utility.type, equals(int));
         expect(utility.properties, equals(properties));
       });
 
       test('typeAsString should return string representation of type', () {
-        const utility1 = MixableUtility(type: 'String');
+        const utility1 = MixableFieldUtility(type: 'String');
         expect(utility1.typeAsString, equals('String'));
 
-        const utility2 = MixableUtility(type: int);
+        const utility2 = MixableFieldUtility(type: int);
         expect(utility2.typeAsString, equals('int'));
       });
     });

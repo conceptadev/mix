@@ -18,7 +18,7 @@ import 'flexbox_widget.dart';
 
 part 'flexbox_spec.g.dart';
 
-const _boxUtility = MixableUtility(
+const _boxUtility = MixableFieldUtility(
   properties: [
     (path: 'alignment', alias: 'alignment'),
     (path: 'padding', alias: 'padding'),
@@ -59,7 +59,7 @@ const _boxUtility = MixableUtility(
 @MixableSpec()
 final class FlexBoxSpec extends Spec<FlexBoxSpec>
     with _$FlexBoxSpec, Diagnosticable {
-  @MixableProperty(utilities: [_boxUtility])
+  @MixableField(utilities: [_boxUtility])
   final BoxSpec box;
 
   final FlexSpec flex;

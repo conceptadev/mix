@@ -30,13 +30,13 @@ sealed class DecorationDto<T extends Decoration> extends Dto<T>
   final ColorDto? color;
   final GradientDto? gradient;
   final DecorationImageDto? image;
-  @MixableProperty(
+  @MixableField(
     utilities: [
-      MixableUtility(
+      MixableFieldUtility(
         alias: 'boxShadows',
         properties: [(path: 'add', alias: 'boxShadow')],
       ),
-      MixableUtility(alias: 'elevation', type: 'ElevationUtility'),
+      MixableFieldUtility(alias: 'elevation', type: 'ElevationUtility'),
     ],
   )
   final List<BoxShadowDto>? boxShadow;
@@ -95,18 +95,18 @@ sealed class DecorationDto<T extends Decoration> extends Dto<T>
 @MixableDto()
 final class BoxDecorationDto extends DecorationDto<BoxDecoration>
     with _$BoxDecorationDto {
-  @MixableProperty(
+  @MixableField(
     utilities: [
-      MixableUtility(
+      MixableFieldUtility(
         properties: [(path: 'directional', alias: 'borderDirectional')],
       ),
     ],
   )
   final BoxBorderDto? border;
 
-  @MixableProperty(
+  @MixableField(
     utilities: [
-      MixableUtility(
+      MixableFieldUtility(
         properties: [(path: 'directional', alias: 'borderRadiusDirectional')],
       ),
     ],

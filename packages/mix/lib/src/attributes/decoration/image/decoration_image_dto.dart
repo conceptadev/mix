@@ -8,7 +8,7 @@ part 'decoration_image_dto.g.dart';
 @MixableDto()
 final class DecorationImageDto extends Dto<DecorationImage>
     with _$DecorationImageDto {
-  @MixableProperty(utilities: [MixableUtility(alias: 'provider')])
+  @MixableField(utilities: [MixableFieldUtility(alias: 'provider')])
   final ImageProvider? image;
   final BoxFit? fit;
   final AlignmentGeometry? alignment;
