@@ -25,12 +25,6 @@ Builder dtoDefinition(BuilderOptions options) => SharedPartBuilder(
 //       allowSyntaxErrors: true,
 //     );
 
-// Builder enumUtilityDefinition(BuilderOptions options) => SharedPartBuilder(
-//       [MixableEnumUtilityGenerator()],
-//       'enum_utility',
-//       allowSyntaxErrors: true,
-//     );
-
 Builder utilityDefinition(BuilderOptions options) => SharedPartBuilder(
       [MixableUtilityGenerator()],
       'utility',

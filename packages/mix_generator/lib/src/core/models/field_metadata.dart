@@ -22,7 +22,7 @@ class FieldMetadata {
   final DartType dartType;
 
   /// The annotation associated with this field
-  final MixableProperty annotation;
+  final MixableField annotation;
 
   /// Documentation comment for the field, if any
   final String? documentationComment;

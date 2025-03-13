@@ -10,50 +10,6 @@ const String _mixAnnotationsDefinitions = '''
 // @dart=3.0
 library mix_annotations;
 
-
-
-/// Annotation for specification attributes
-class SpecAttribute {
-  const SpecAttribute();
-}
-
-/// Annotation for mixable properties
-class MixableProperty {
-  final bool isLerpable;
-  final List<MixableFieldUtility>? utilities;
-  
-  const MixableField({this.utilities, this.isLerpable = true});
-}
-
-/// Utility configuration for mixable properties
-class MixableFieldUtility {
-  final String? alias;
-  final Object? type;
-  final List<dynamic> properties;
-  final bool generateCallMethod;
-  
-  const MixableFieldUtility({
-    this.alias, 
-    this.type, 
-    this.properties = const [],
-    this.generateCallMethod = true,
-  });
-}
-
-/// Annotation for mixable DTOs
-class MixableDto {
-  final bool mergeLists;
-  final bool generateValueExtension;
-  final bool generateUtility;
-  
-  const MixableDto({
-    this.mergeLists = true,
-    this.generateValueExtension = true,
-    this.generateUtility = true,
-  });
-}
-
-/// Annotation for mixable specifications
 class MixableSpec {
   final bool withCopyWith;
   final bool withEquality;
@@ -69,13 +25,135 @@ class MixableSpec {
     this.prefix = '',
   });
 }
+
+class Mixable {
+  final int generateHelpers;
+  const Mixable({
+    this.generateHelpers = _allHelpers,
+  });
+}
+
+class MixableConstructor {
+  const MixableConstructor();
+}
+
+class MixableUtility {
+  final int generateHelpers;
+  const MixableUtility({this.generateHelpers = _allHelpers});
+}
+
+typedef MixableUtilityProps = ({String path, String alias});
+
+class MixableDto {
+  final bool mergeLists;
+  final bool generateValueExtension;
+  final bool generateUtility;
+  
+  const MixableDto({
+    this.mergeLists = true,
+    this.generateValueExtension = true,
+    this.generateUtility = true,
+  });
+}
+
+class MixableField {
+  final MixableFieldDto? dto;
+  final List<MixableFieldUtility>? utilities;
+  final bool isLerpable;
+  
+  const MixableField({this.dto, this.utilities, this.isLerpable = true});
+}
+
+class MixableFieldDto {
+  final Object? type;
+  
+  const MixableFieldDto({this.type});
+  
+  String? get typeAsString {
+    return type is String ? type as String : type?.toString();
+  }
+}
+
+class MixableFieldUtility {
+  final String? alias;
+  final Object? type;
+  final List<MixableUtilityProps> properties;
+  
+  const MixableFieldUtility({
+    this.alias,
+    this.type,
+    this.properties = const [],
+  });
+  
+  String? get typeAsString {
+    return type is String ? type as String : type?.toString();
+  }
+}
+
+class MixableClassUtility {
+  final Type? type;
+  final bool generateCallMethod;
+  
+  const MixableClassUtility({this.type, this.generateCallMethod = true});
+}
+
+class MixableEnumUtility {
+  final bool generateCallMethod;
+  
+  const MixableEnumUtility({this.generateCallMethod = true});
+}
+
+class MixableToken {
+  final Object type;
+  final String? namespace;
+  final bool utilityExtension;
+  final bool contextExtension;
+  
+  const MixableToken(
+    this.type, {
+    this.namespace,
+    this.utilityExtension = true,
+    this.contextExtension = true,
+  });
+}
+
+class MixableSwatchColorToken {
+  final int scale;
+  final int defaultValue;
+  
+  const MixableSwatchColorToken({this.scale = 3, this.defaultValue = 1});
+}
+
+const _allHelpers = 0;
+
+class GenerateSpecHelpers {
+  const GenerateSpecHelpers._();
+  static const all = copyWithMethod | equalsMethod | lerpMethod;
+  static const copyWithMethod = 1;
+  static const equalsMethod = 2;
+  static const lerpMethod = 3;
+  static const utilityClass = 4;
+  static const attributeClass = 5;
+}
+
+class GenerateDtoHelpers {
+  const GenerateDtoHelpers._();
+  static const all = utilityClass | toDtoExtension;
+  static const utilityClass = 1;
+  static const toDtoExtension = 2;
+}
+
+class GenerateUtilityHelpers {
+  const GenerateUtilityHelpers._();
+  static const all = callMethod;
+  static const callMethod = 1;
+}
 ''';
 
 const String _mixDefinitions = '''
 // @dart=3.0
 library mix;
 
-import 'package:mix_annotations/mix_annotations.dart';
 import 'package:flutter/widgets.dart';
 
 /// Base class for all widget modifier specifications

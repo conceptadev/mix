@@ -10,7 +10,7 @@ import '../core/models/utility_metadata.dart';
 import '../core/utils/base_generator.dart';
 import '../core/utils/extensions.dart';
 
-/// Generator for classes annotated with [MixableFieldUtility].
+/// Generator for classes annotated with [MixableFieldUtility] or [MixableUtility].
 ///
 /// This generator produces a mixin with utility methods for:
 /// - Enum values (when the utility type is an enum)
@@ -228,7 +228,9 @@ T $methodName($parameters) => builder($constructorCall);
 
     return UtilityMetadata.fromAnnotation(
       element,
-      ConstantReader(typeChecker.firstAnnotationOfExact(element)),
+      ConstantReader(typeChecker.firstAnnotationOfExact(element) ??
+          const TypeChecker.fromRuntime(MixableUtility)
+              .firstAnnotationOfExact(element)),
     );
   }
 
@@ -237,7 +239,7 @@ T $methodName($parameters) => builder($constructorCall);
     final output = StringBuffer();
 
     // Generate the appropriate utility based on the type
-    if (metadata.utilityType == UtilityType.enumUtility) {
+    if (metadata.isEnumUtility) {
       output.writeln(_generateEnumUtilityMixin(metadata));
     } else {
       output.writeln(_generateClassUtilityMixin(metadata));

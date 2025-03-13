@@ -78,7 +78,7 @@ final class ValueDto<Value> extends Dto<Value> with _$MyDto {
 }
 ```
 
-### MixableProperty
+### MixableField
 
 The `@MixableField()` annotation specifies a mixable property for code generation. Here's an example:
 
@@ -99,9 +99,9 @@ import 'package:mix_generator/mix_generator.dart';
 final BoxConstraints? constraints;
 ```
 
-### MixablePropertyUtility
+### MixableFieldUtility
 
-The `@MixablePropertyUtility()` annotation generates utility methods for both enum values and class constants. It can be used in two main ways:
+The `@MixableFieldUtility()` annotation generates utility methods for both enum values and class constants. It can be used in two main ways:
 
 #### Options
 

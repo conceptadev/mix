@@ -9,6 +9,7 @@
 /// ```dart
 /// const mixable = MixableSpec();
 /// ```
+@Deprecated('Use Mixable instead')
 class MixableSpec {
   /// Whether to generate a `copyWith` method for the class.
   final bool withCopyWith;
@@ -35,8 +36,38 @@ class MixableSpec {
   });
 }
 
+class Mixable {
+  final int generateHelpers;
+  const Mixable({
+    this.generateHelpers = _allHelpers,
+  });
+}
+
+/// An annotation class used to mark a constructor for code generation.
+///
+/// The `MixableConstructor` annotation is used to indicate that a constructor
+/// should be included in the generated code. This allows for specific constructors
+/// to be recognized by the code generator.
 class MixableConstructor {
+  /// Creates a new instance of `MixableConstructor`.
+  ///
+  /// Use this annotation on constructors that should be processed by the code generator.
   const MixableConstructor();
+}
+
+/// An annotation class used to mark a utility class for code generation.
+///
+/// The `MixableUtility` annotation is used to indicate that a class should be
+/// treated as a utility class during code generation. Utility classes typically
+/// provide helper methods and functionality that can be used by the generated code.
+class MixableUtility {
+  final int generateHelpers;
+
+  /// Creates a new instance of `MixableUtility`.
+  ///
+  /// Use this annotation on classes that should be treated as utility classes
+  /// by the code generator.
+  const MixableUtility({this.generateHelpers = _allHelpers});
 }
 
 @Deprecated('Use MixableField instead')
@@ -56,6 +87,7 @@ typedef MixableProperty = MixableField;
 /// class for the DTO. It defaults to `true`.
 ///
 /// If the annotated class contains a merge method, it will not be generated
+@Deprecated('Use Mixable instead')
 class MixableDto {
   /// If true it will merge the items in the list in its position
   /// if false list items will just be added to the list
@@ -76,9 +108,9 @@ class MixableDto {
 
 /// An annotation class used to specify a mixable property for code generation.
 ///
-/// The `MixableProperty` annotation is used to mark a property as mixable
+/// The `MixableField` annotation is used to mark a property as mixable
 /// during code generation. It allows specifying an associated `MixableFieldDto`
-/// and a list of `MixableUtility` instances that provide additional options for
+/// and a list of `MixableFieldUtility` instances that provide additional options for
 /// code generation.
 ///
 /// Example usage:
@@ -138,6 +170,12 @@ class MixableField {
   /// which can be smoothly interpolated between two states.
   final bool isLerpable;
 
+  /// Creates a new instance of `MixableField` with the specified options.
+  ///
+  /// The [dto] parameter specifies the data transfer object associated with this field.
+  /// The [utilities] parameter provides a list of utility configurations for this field.
+  /// The [isLerpable] parameter determines whether this field can be linearly interpolated,
+  /// defaulting to `true`.
   const MixableField({this.dto, this.utilities, this.isLerpable = true});
 }
 
@@ -211,6 +249,12 @@ class MixableFieldUtility {
   /// generation.
   final List<MixableUtilityProps> properties;
 
+  /// Creates a new instance of `MixableFieldUtility` with the specified options.
+  ///
+  /// The [alias] parameter provides an alternative name for this utility.
+  /// The [type] parameter specifies the type associated with this utility.
+  /// The [properties] parameter defines the mapping between property paths and aliases,
+  /// defaulting to an empty list.
   const MixableFieldUtility({
     this.alias,
     this.type,
@@ -226,42 +270,68 @@ class MixableFieldUtility {
   }
 }
 
+/// An annotation class used to specify utility generation for a class.
+///
+/// The `MixableClassUtility` annotation is used to configure utility generation
+/// for a class. It allows specifying a type to map field utilities and whether
+/// to generate a call method.
 class MixableClassUtility {
   /// Map you should use to map the field utilities
   final Type? type;
+
+  /// Whether to generate a call method for this utility class.
   final bool generateCallMethod;
+
+  /// Creates a new instance of `MixableClassUtility` with the specified options.
+  ///
+  /// The [type] parameter specifies the type to map field utilities.
+  /// The [generateCallMethod] parameter determines whether to generate a call method,
+  /// defaulting to `true`.
   const MixableClassUtility({this.type, this.generateCallMethod = true});
 }
 
+/// An annotation class used to specify utility generation for an enum.
+///
+/// The `MixableEnumUtility` annotation is used to configure utility generation
+/// for an enum. It allows specifying whether to generate a call method.
 class MixableEnumUtility {
   /// Map you should use to map the field utilities
 
+  /// Whether to generate a call method for this utility enum.
   final bool generateCallMethod;
+
+  /// Creates a new instance of `MixableEnumUtility` with the specified options.
+  ///
+  /// The [generateCallMethod] parameter determines whether to generate a call method,
+  /// defaulting to `true`.
   const MixableEnumUtility({this.generateCallMethod = true});
 }
 
-sealed class MixDeprecated {
-  const MixDeprecated();
-}
-
-class MixDeprecatedRenamed extends MixDeprecated {
-  final String updatedName;
-  final String version;
-  final String message;
-
-  const MixDeprecatedRenamed({
-    required this.message,
-    required this.version,
-    required this.updatedName,
-  });
-}
-
+/// An annotation class used to specify a mixable token for code generation.
+///
+/// The `MixableToken` annotation is used to mark a token for code generation.
+/// It allows specifying the type, namespace, and extension generation options.
 class MixableToken {
+  /// The type of the token.
   final Object type;
+
+  /// The namespace for the token.
   final String? namespace;
+
+  /// Whether to generate a utility extension for this token.
   final bool utilityExtension;
+
+  /// Whether to generate a context extension for this token.
   final bool contextExtension;
 
+  /// Creates a new instance of `MixableToken` with the specified options.
+  ///
+  /// The [type] parameter specifies the type of the token.
+  /// The [namespace] parameter provides a namespace for the token.
+  /// The [utilityExtension] parameter determines whether to generate a utility extension,
+  /// defaulting to `true`.
+  /// The [contextExtension] parameter determines whether to generate a context extension,
+  /// defaulting to `true`.
   const MixableToken(
     this.type, {
     this.namespace,
@@ -270,9 +340,46 @@ class MixableToken {
   });
 }
 
+/// An annotation class used to specify a swatch color token for code generation.
+///
+/// The `MixableSwatchColorToken` annotation is used to configure a swatch color token
+/// for code generation. It allows specifying the scale and default value.
 class MixableSwatchColorToken {
+  /// The scale of the swatch color.
   final int scale;
+
+  /// The default value of the swatch color.
   final int defaultValue;
 
+  /// Creates a new instance of `MixableSwatchColorToken` with the specified options.
+  ///
+  /// The [scale] parameter specifies the scale of the swatch color, defaulting to 3.
+  /// The [defaultValue] parameter specifies the default value, defaulting to 1.
   const MixableSwatchColorToken({this.scale = 3, this.defaultValue = 1});
+}
+
+const _allHelpers = 0;
+
+/// Collection of constants to indicate which methods and extensions to generate for a specific class.
+class GenerateSpecHelpers {
+  const GenerateSpecHelpers._();
+  static const all = copyWithMethod | equalsMethod | lerpMethod;
+  static const copyWithMethod = 1;
+  static const equalsMethod = 2;
+  static const lerpMethod = 3;
+  static const utilityClass = 4;
+  static const attributeClass = 5;
+}
+
+class GenerateDtoHelpers {
+  const GenerateDtoHelpers._();
+  static const all = utilityClass | toDtoExtension;
+  static const utilityClass = 1;
+  static const toDtoExtension = 2;
+}
+
+class GenerateUtilityHelpers {
+  const GenerateUtilityHelpers._();
+  static const all = callMethod;
+  static const callMethod = 1;
 }

@@ -1,5 +1,6 @@
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/type.dart';
+import 'package:mix_annotations/mix_annotations.dart';
 import 'package:source_gen/source_gen.dart';
 
 import '../utils/annotation_utils.dart';
@@ -7,20 +8,8 @@ import '../utils/constructor_utils.dart';
 import '../utils/extensions.dart';
 import 'base_metadata.dart';
 
-/// Type of utility being generated
-enum UtilityType {
-  /// Utility for an enum type
-  enumUtility,
-
-  /// Utility for a class type
-  classUtility,
-}
-
-/// Metadata for utility classes, extracted from MixableFieldUtility annotations.
+/// Metadata for utility classes, extracted from MixableUtility annotations.
 class UtilityMetadata extends BaseMetadata {
-  /// The type of utility (enum or class)
-  final UtilityType utilityType;
-
   /// The enum element if this is an enum utility
   final EnumElement? enumElement;
 
@@ -41,7 +30,6 @@ class UtilityMetadata extends BaseMetadata {
     required super.isDiagnosticable,
     required super.constructor,
     required super.isAbstract,
-    required this.utilityType,
     this.enumElement,
     this.valueElement,
     this.mappingElement,
@@ -53,7 +41,12 @@ class UtilityMetadata extends BaseMetadata {
     ClassElement element,
     ConstantReader annotation,
   ) {
-    final mixableUtility = readMixableFieldUtility(element);
+    // Check for MixableUtility annotation and get the generateHelpers value
+    final generateHelpers = readMixableUtilityHelpers(element);
+
+    // Determine if we should generate the call method based on the GenerateUtilityHelpers flags
+    final shouldGenerateCallMethod = (generateHelpers == 0) ||
+        ((generateHelpers & GenerateUtilityHelpers.callMethod) != 0);
 
     // First, try to get the utility type from the class
     final utilityType = _getUtilityType(element);
@@ -72,51 +65,59 @@ class UtilityMetadata extends BaseMetadata {
       return UtilityMetadata(
         element: element,
         name: element.name,
-        fields: [], // Enum utilities don't have fields
+        fields: [], // Utilities don't have fields
         isConst: element.unnamedConstructor?.isConst ?? false,
         isDiagnosticable: false, // Utilities don't need diagnostics
         constructor: findTargetConstructor(element),
         isAbstract: element.isAbstract,
-        utilityType: UtilityType.enumUtility,
         enumElement: enumElement,
-        generateCallMethod: mixableUtility.generateCallMethod,
+        generateCallMethod: shouldGenerateCallMethod,
       );
     }
+
+    // It's a class utility
     final valueElement = utilityType.element as ClassElement;
 
     // Check if there's a mapping type specified in the annotation
     ClassElement? mappingElement;
-    final mappingType = mixableUtility.type;
 
-    if (mappingType != null) {
-      final mappingTypeElement = annotation.read('type').typeValue.element;
-      if (mappingTypeElement is! ClassElement) {
-        throw InvalidGenerationSourceError(
-          'The mapping type must be a class',
-          element: element,
-        );
+    // Only try to get mapping type from MixableFieldUtility annotation
+    if (!hasMixableUtility(element)) {
+      final mixableUtility = readMixableFieldUtility(element);
+      final mappingType = mixableUtility.type;
+
+      if (mappingType != null) {
+        final mappingTypeElement = annotation.read('type').typeValue.element;
+        if (mappingTypeElement is! ClassElement) {
+          throw InvalidGenerationSourceError(
+            'The mapping type must be a class',
+            element: element,
+          );
+        }
+        mappingElement = mappingTypeElement;
       }
-      mappingElement = mappingTypeElement;
     }
 
     return UtilityMetadata(
       element: element,
       name: element.name,
-      fields: [], // Class utilities don't have fields
+      fields: [], // Utilities don't have fields
       isConst: element.unnamedConstructor?.isConst ?? false,
       isDiagnosticable: false, // Utilities don't need diagnostics
       constructor: findTargetConstructor(element),
       isAbstract: element.isAbstract,
-      utilityType: UtilityType.classUtility,
       valueElement: valueElement,
       mappingElement: mappingElement,
-      generateCallMethod: mixableUtility.generateCallMethod,
+      generateCallMethod: shouldGenerateCallMethod,
     );
   }
 
+  /// Checks if this is an enum utility
+  bool get isEnumUtility => enumElement != null;
+
   /// Gets the enum values as strings if this is an enum utility
   List<String> get enumValues {
-    if (utilityType != UtilityType.enumUtility || enumElement == null) {
+    if (!isEnumUtility || enumElement == null) {
       return [];
     }
 
@@ -128,7 +129,7 @@ class UtilityMetadata extends BaseMetadata {
 
   /// Gets the effective value element (either valueElement or enumElement)
   Element? get effectiveValueElement {
-    if (utilityType == UtilityType.enumUtility) {
+    if (isEnumUtility) {
       return enumElement;
     }
 
@@ -137,7 +138,7 @@ class UtilityMetadata extends BaseMetadata {
 
   /// Gets the effective mapping element (either mappingElement or valueElement)
   ClassElement? get effectiveMappingElement {
-    if (utilityType == UtilityType.classUtility) {
+    if (!isEnumUtility && valueElement != null) {
       return mappingElement ?? valueElement;
     }
 
@@ -153,6 +154,21 @@ DartType? _getUtilityType(ClassElement element) {
     if (utilityTypes.contains(supertype.element.name) &&
         supertype.typeArguments.length == 2) {
       return supertype.typeArguments[1];
+    }
+  }
+
+  return null;
+}
+
+/// Gets the enum type from a utility class
+EnumElement? getEnumTypeFromUtility(ClassElement element) {
+  for (var supertype in element.allSupertypes) {
+    if (supertype.element.name == 'MixUtility' &&
+        supertype.typeArguments.length == 2) {
+      final enumType = supertype.typeArguments[1];
+      if (enumType.isEnum) {
+        return enumType.element as EnumElement;
+      }
     }
   }
 

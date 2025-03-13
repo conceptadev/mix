@@ -22,7 +22,7 @@ void main() {
       });
     });
 
-    group('MixableProperty', () {
+    group('MixableField', () {
       test('should create instance with default values', () {
         const property = MixableField();
         expect(property.dto, isNull);

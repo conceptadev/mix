@@ -3,9 +3,9 @@ import 'package:analyzer/dart/element/element.dart';
 import 'package:mix_annotations/mix_annotations.dart';
 import 'package:source_gen/source_gen.dart';
 
-/// Reads the [MixableProperty] annotation from a field element
-MixableProperty readMixableField(FieldElement element) {
-  const checker = TypeChecker.fromRuntime(MixableProperty);
+/// Reads the [MixableField] annotation from a field element
+MixableField readMixableField(FieldElement element) {
+  const checker = TypeChecker.fromRuntime(MixableField);
   final annotation = checker.firstAnnotationOf(element);
 
   if (annotation is! DartObject) {
@@ -75,26 +75,37 @@ MixableFieldUtility readMixableFieldUtility(ClassElement element) {
   final reader = ConstantReader(annotation);
   final type = reader.peek('type')?.typeValue;
 
-  return MixableFieldUtility(type: type);
+  // Read the properties from the annotation
+  final properties = reader
+          .peek('properties')
+          ?.listValue
+          .map((e) => _getMixableUtilityProps(ConstantReader(e)))
+          .toList() ??
+      [];
+
+  return MixableFieldUtility(type: type, properties: properties);
 }
 
-/// Reads the [MixableEnumUtility] annotation from a class element
-MixableEnumUtility readMixableEnumUtility(ClassElement element) {
-  const checker = TypeChecker.fromRuntime(MixableEnumUtility);
+/// Reads the [MixableUtility] annotation from a class element and returns the generateHelpers value
+int readMixableUtilityHelpers(ClassElement element) {
+  const checker = TypeChecker.fromRuntime(MixableUtility);
   final annotation = checker.firstAnnotationOfExact(element);
 
   if (annotation == null) {
-    throw InvalidGenerationSourceError(
-      'No MixableEnumUtility annotation found on the class',
-      element: element,
-    );
+    // If no MixableUtility annotation is found, return the default value (all helpers)
+    return 0; // _allHelpers value in the annotations.dart file
   }
 
   final reader = ConstantReader(annotation);
 
-  return MixableEnumUtility(
-    generateCallMethod: reader.read('generateCallMethod').boolValue,
-  );
+  return reader.read('generateHelpers').intValue;
+}
+
+/// Checks if a class has the [MixableUtility] annotation
+bool hasMixableUtility(ClassElement element) {
+  const checker = TypeChecker.fromRuntime(MixableUtility);
+
+  return checker.hasAnnotationOfExact(element);
 }
 
 /// Reads the [MixableToken] annotation from a class element
@@ -121,8 +132,8 @@ MixableToken readMixableToken(ClassElement element) {
   );
 }
 
-/// Extracts [MixableProperty] data from a [ConstantReader]
-MixableProperty _getMixableField(ConstantReader reader) {
+/// Extracts [MixableField] data from a [ConstantReader]
+MixableField _getMixableField(ConstantReader reader) {
   final dtoReader = reader.peek('dto');
 
   final utilities = reader
@@ -209,7 +220,7 @@ List<DartObject> getAnnotations(Element element, Type annotationType) {
 
 /// Reads the list of [MixableFieldUtility] annotations from a field element
 List<MixableFieldUtility>? readMixableFieldUtilities(FieldElement element) {
-  final annotations = getAnnotations(element, MixableProperty);
+  final annotations = getAnnotations(element, MixableField);
   if (annotations.isEmpty) return null;
 
   final reader = ConstantReader(annotations.first);

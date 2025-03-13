@@ -341,8 +341,8 @@ void main() {
     test('correctly identifies Dto types from mix_annotations package',
         () async {
       final library = await resolveMixTestLibrary('''
-        @Dto<String>()
-        class UserDto {
+        @Mixable()
+        class UserDto extends Dto<String> {
           final String name;
           final int age;
           
@@ -364,7 +364,7 @@ void main() {
 
       // Check that the annotation is from the mix_annotations package
       final enclosingElement = dtoElement!.enclosingElement!;
-      expect(enclosingElement.name, equals('Dto'));
+      expect(enclosingElement.name, equals('Mixable'));
 
       final source = enclosingElement.source!;
       expect(source.uri.scheme, equals('package'));
@@ -374,7 +374,7 @@ void main() {
     test('correctly identifies Spec types from mix_annotations package',
         () async {
       final library = await resolveMixTestLibrary('''
-        class ColorSpec extends Spec {
+        class ColorSpec extends Spec<ColorSpec> {
           final int red;
           final int green;
           final int blue;
@@ -395,7 +395,7 @@ void main() {
       final specElement = specSupertype!.element;
       final source = specElement.source;
       expect(source.uri.scheme, equals('package'));
-      expect(source.uri.path, equals('mix_annotations/mix_annotations.dart'));
+      expect(source.uri.path, equals('mix/mix.dart'));
     });
 
     test('correctly identifies types from mix package', () async {
@@ -494,8 +494,7 @@ void main() {
       final specElement = specSupertype!.element;
       final specSource = specElement.source;
       expect(specSource.uri.scheme, equals('package'));
-      expect(
-          specSource.uri.path, equals('mix_annotations/mix_annotations.dart'));
+      expect(specSource.uri.path, equals('mix/mix.dart'));
     });
   });
 }
