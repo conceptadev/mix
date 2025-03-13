@@ -67,7 +67,7 @@ class FieldMetadata {
     return FieldMetadata(
       name: element.name,
       dartType: element.type,
-      annotation: readMixableProperty(element),
+      annotation: readMixableField(element),
       documentationComment: element.documentationComment,
       hasDeprecated: element.hasDeprecated,
       nullable: element.type.nullabilitySuffix == NullabilitySuffix.question,
@@ -88,7 +88,7 @@ class FieldMetadata {
     return FieldMetadata(
       name: parameter.name,
       dartType: parameter.type,
-      annotation: existingFieldInfo?.annotation ?? const MixableProperty(),
+      annotation: existingFieldInfo?.annotation ?? const MixableField(),
       documentationComment: existingFieldInfo?.documentationComment,
       hasDeprecated:
           existingFieldInfo?.hasDeprecated ?? parameter.hasDeprecated,

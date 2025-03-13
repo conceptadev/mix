@@ -86,7 +86,8 @@ class MixableDtoGenerator extends BaseMixGenerator<MixableDto, DtoMetadata> {
       try {
         // Skip extension generation for now as DtoExtensionBuilder is not available
         print(
-            'Value extension generation is not currently supported for ${metadata.name}');
+          'Value extension generation is not currently supported for ${metadata.name}',
+        );
       } catch (e) {
         // Skip extension generation if it fails
         print('Error generating value extension for ${metadata.name}: $e');

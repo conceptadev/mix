@@ -80,15 +80,15 @@ final class ValueDto<Value> extends Dto<Value> with _$MyDto {
 
 ### MixableProperty
 
-The `@MixableProperty()` annotation specifies a mixable property for code generation. Here's an example:
+The `@MixableField()` annotation specifies a mixable property for code generation. Here's an example:
 
 ```dart
 import 'package:mix_generator/mix_generator.dart';
 
-@MixableProperty(
+@MixableField(
   dto: MixableFieldDto(type: BoxConstraintsDto),
   utilities: [
-    MixableUtility(
+    MixableFieldUtility(
       properties: [
         (path: 'minWidth', alias: 'minWidth'),
         (path: 'maxWidth', alias: 'maxWidth'),
@@ -99,24 +99,91 @@ import 'package:mix_generator/mix_generator.dart';
 final BoxConstraints? constraints;
 ```
 
-### MixableUtility
+### MixablePropertyUtility
 
-The `@MixableUtility()` annotation specifies a mixable utility for code generation. Here's an example:
+The `@MixablePropertyUtility()` annotation generates utility methods for both enum values and class constants. It can be used in two main ways:
+
+#### Options
+
+- `alias` - Optional name for the generated utility.
+- `type` - Optional type to use for mapping constants (useful for separate constant classes).
+- `properties` - List of properties to include in the utility.
+- `generateCallMethod` - Defaults to true, generates a call method for the utility.
+
+#### Example 1: Enum Utility
 
 ```dart
-import 'package:mix_generator/mix_generator.dart';
+// Define an enum
+enum Color {
+  red,
+  green,
+  blue,
+}
 
-@MixableProperty(
-  utilities: MixableUtility(
-    type: BoxDecoration,
-    properties: [
-      (path: 'color', alias: 'color'),
-      (path: 'border', alias: 'border'),
-      (path: 'borderRadius', alias: 'borderRadius'),
-    ],
-  ),
-)
-final Decoration? decoration;
+// Create a utility class for the enum
+@MixableFieldUtility()
+class ColorUtility extends MixUtility<ColorAttribute, Color> {
+  const ColorUtility(super.builder);
+}
+
+// After generation, you can use it like:
+final colorUtility = ColorUtility((color) => ColorAttribute(color));
+final redAttribute = colorUtility.red();
+final greenAttribute = colorUtility.green();
+```
+
+#### Example 2: Class Utility with Constants
+
+```dart
+// Define a class with constants
+class BorderRadius {
+  final double radius;
+  
+  const BorderRadius(this.radius);
+  
+  static const BorderRadius none = BorderRadius(0);
+  static const BorderRadius small = BorderRadius(4);
+  static const BorderRadius large = BorderRadius(16);
+}
+
+// Create a utility class for the class constants
+@MixableFieldUtility()
+class BorderRadiusUtility extends MixUtility<BorderRadiusAttribute, BorderRadius> {
+  const BorderRadiusUtility(super.builder);
+}
+
+// After generation, you can use it like:
+final radiusUtility = BorderRadiusUtility((radius) => BorderRadiusAttribute(radius));
+final smallRadius = radiusUtility.small();
+final largeRadius = radiusUtility.large();
+```
+
+#### Example 3: Class Utility with Mapping
+
+```dart
+// Define a value class
+class Spacing {
+  final double value;
+  const Spacing(this.value);
+}
+
+// Define a class with constants
+class Spacings {
+  static const Spacing none = Spacing(0);
+  static const Spacing small = Spacing(8);
+  static const Spacing large = Spacing(24);
+}
+
+// Create a utility class with mapping to the constants class
+@MixableFieldUtility(type: Spacings)
+class SpacingUtility extends MixUtility<SpacingAttribute, Spacing> {
+  const SpacingUtility(super.builder);
+}
+
+// After generation, you can use it like:
+final spacingUtility = SpacingUtility((spacing) => SpacingAttribute(spacing));
+final smallSpacing = spacingUtility.small();
+final largeSpacing = spacingUtility.large();
 ```
 
 ### Code Generation

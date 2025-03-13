@@ -1,6 +1,7 @@
 // test/src/core/utils/dart_type_utils_test.dart
 import 'package:analyzer/dart/element/type.dart';
 import 'package:mix_generator/src/core/utils/dart_type_utils.dart';
+import 'package:mix_generator/src/core/utils/extensions.dart';
 import 'package:test/test.dart';
 
 import '../../../src/helpers/test_helpers.dart';

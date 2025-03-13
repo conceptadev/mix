@@ -20,18 +20,24 @@ class SpecAttribute {
 /// Annotation for mixable properties
 class MixableProperty {
   final bool isLerpable;
-  final List<MixableUtility>? utilities;
+  final List<MixableFieldUtility>? utilities;
   
-  const MixableProperty({this.utilities, this.isLerpable = true});
+  const MixableField({this.utilities, this.isLerpable = true});
 }
 
 /// Utility configuration for mixable properties
-class MixableUtility {
+class MixableFieldUtility {
   final String? alias;
   final Object? type;
   final List<dynamic> properties;
+  final bool generateCallMethod;
   
-  const MixableUtility({this.alias, this.type, this.properties = const []});
+  const MixableFieldUtility({
+    this.alias, 
+    this.type, 
+    this.properties = const [],
+    this.generateCallMethod = true,
+  });
 }
 
 /// Annotation for mixable DTOs
@@ -129,6 +135,14 @@ abstract class Attribute {
 /// Base class for styled attributes
 abstract class StyledAttribute extends Attribute {
   const StyledAttribute();
+}
+
+/// Base utility class for creating attributes
+abstract class MixUtility<T extends Attribute, V> {
+  final T Function(V) builder;
+  final bool mutable;
+  
+  const MixUtility(this.builder, {this.mutable = false});
 }
 ''';
 

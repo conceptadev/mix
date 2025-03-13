@@ -4,15 +4,15 @@ import 'package:mix_annotations/mix_annotations.dart';
 import 'package:source_gen/source_gen.dart';
 
 /// Reads the [MixableProperty] annotation from a field element
-MixableProperty readMixableProperty(FieldElement element) {
+MixableProperty readMixableField(FieldElement element) {
   const checker = TypeChecker.fromRuntime(MixableProperty);
   final annotation = checker.firstAnnotationOf(element);
-  
+
   if (annotation is! DartObject) {
-    return const MixableProperty();
+    return const MixableField();
   }
-  
-  return _getMixableProperty(ConstantReader(annotation));
+
+  return _getMixableField(ConstantReader(annotation));
 }
 
 /// Reads the [MixableSpec] annotation from a class element
@@ -60,6 +60,43 @@ MixableDto readMixableDto(ClassElement element) {
   );
 }
 
+/// Reads the [MixableFieldUtility] annotation from a class element
+MixableFieldUtility readMixableFieldUtility(ClassElement element) {
+  const checker = TypeChecker.fromRuntime(MixableFieldUtility);
+  final annotation = checker.firstAnnotationOfExact(element);
+
+  if (annotation == null) {
+    throw InvalidGenerationSourceError(
+      'No MixableFieldUtility annotation found on the class',
+      element: element,
+    );
+  }
+
+  final reader = ConstantReader(annotation);
+  final type = reader.peek('type')?.typeValue;
+
+  return MixableFieldUtility(type: type);
+}
+
+/// Reads the [MixableEnumUtility] annotation from a class element
+MixableEnumUtility readMixableEnumUtility(ClassElement element) {
+  const checker = TypeChecker.fromRuntime(MixableEnumUtility);
+  final annotation = checker.firstAnnotationOfExact(element);
+
+  if (annotation == null) {
+    throw InvalidGenerationSourceError(
+      'No MixableEnumUtility annotation found on the class',
+      element: element,
+    );
+  }
+
+  final reader = ConstantReader(annotation);
+
+  return MixableEnumUtility(
+    generateCallMethod: reader.read('generateCallMethod').boolValue,
+  );
+}
+
 /// Reads the [MixableToken] annotation from a class element
 MixableToken readMixableToken(ClassElement element) {
   const checker = TypeChecker.fromRuntime(MixableToken);
@@ -85,18 +122,18 @@ MixableToken readMixableToken(ClassElement element) {
 }
 
 /// Extracts [MixableProperty] data from a [ConstantReader]
-MixableProperty _getMixableProperty(ConstantReader reader) {
+MixableProperty _getMixableField(ConstantReader reader) {
   final dtoReader = reader.peek('dto');
-  
+
   final utilities = reader
       .peek('utilities')
       ?.listValue
-      .map((e) => _readMixableUtility(ConstantReader(e)))
+      .map((e) => _readMixableFieldUtility(ConstantReader(e)))
       .toList();
-  
+
   final isLerpable = reader.peek('isLerpable')?.boolValue ?? true;
-  
-  return MixableProperty(
+
+  return MixableField(
     dto: dtoReader != null ? _getMixableDto(dtoReader) : null,
     utilities: utilities,
     isLerpable: isLerpable,
@@ -105,34 +142,35 @@ MixableProperty _getMixableProperty(ConstantReader reader) {
 
 /// Extracts [MixableFieldDto] data from a [ConstantReader]
 MixableFieldDto? _getMixableDto(ConstantReader reader) {
-  final typeString = reader.peek('type')?.typeAsString ?? 
-                     reader.peek('type')?.stringValue;
-  
+  final typeString =
+      reader.peek('type')?.typeAsString ?? reader.peek('type')?.stringValue;
+
   if (typeString == null) return null;
-  
+
   return MixableFieldDto(type: typeString);
 }
 
-/// Reads a [MixableUtility] from a [ConstantReader]
-MixableUtility _readMixableUtility(ConstantReader reader) {
+/// Reads a [MixableFieldUtility] from a [ConstantReader]
+MixableFieldUtility _readMixableFieldUtility(ConstantReader reader) {
   String? utilityName;
-  
+
   final typeReader = reader.peek('type');
   if (typeReader?.isString == true) {
     utilityName = typeReader!.stringValue;
   } else if (typeReader?.isType == true) {
     utilityName = typeReader!.typeValue.element!.name!;
   }
-  
+
   final utilityAlias = reader.peek('alias')?.stringValue;
-  
+
   final properties = reader
-      .peek('properties')
-      ?.listValue
-      .map((e) => _getMixableUtilityProps(ConstantReader(e)))
-      .toList() ?? [];
-  
-  return MixableUtility(
+          .peek('properties')
+          ?.listValue
+          .map((e) => _getMixableUtilityProps(ConstantReader(e)))
+          .toList() ??
+      [];
+
+  return MixableFieldUtility(
     alias: utilityAlias,
     type: utilityName,
     properties: properties,
@@ -143,7 +181,7 @@ MixableUtility _readMixableUtility(ConstantReader reader) {
 MixableUtilityProps _getMixableUtilityProps(ConstantReader reader) {
   final path = reader.read('path').stringValue;
   final alias = reader.read('alias').stringValue;
-  
+
   return (path: path, alias: alias);
 }
 
@@ -151,13 +189,37 @@ MixableUtilityProps _getMixableUtilityProps(ConstantReader reader) {
 extension ConstantReaderX on ConstantReader {
   String? get typeAsString {
     final peakedType = peek('type');
-    
+
     if (peakedType?.isString == true) {
       return peakedType!.stringValue;
     } else if (peakedType?.isType == true) {
       return peakedType!.typeValue.element!.name;
     }
-    
+
     return null;
   }
+}
+
+/// Gets all annotations of a specific type from an element
+List<DartObject> getAnnotations(Element element, Type annotationType) {
+  final checker = TypeChecker.fromRuntime(annotationType);
+
+  return checker.annotationsOf(element).toList();
+}
+
+/// Reads the list of [MixableFieldUtility] annotations from a field element
+List<MixableFieldUtility>? readMixableFieldUtilities(FieldElement element) {
+  final annotations = getAnnotations(element, MixableProperty);
+  if (annotations.isEmpty) return null;
+
+  final reader = ConstantReader(annotations.first);
+  final utilities = reader.peek('utilities')?.listValue;
+
+  if (utilities == null || utilities.isEmpty) {
+    return null;
+  }
+
+  return utilities
+      .map((e) => _readMixableFieldUtility(ConstantReader(e)))
+      .toList();
 }

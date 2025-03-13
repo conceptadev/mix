@@ -93,9 +93,9 @@ class TestSpecUtility<T extends Attribute> extends SpecUtility<T, TestSpecAttrib
       // Define test code for a spec with custom utilities
       const testCode = '''
         class CustomUtilSpec extends Spec<CustomUtilSpec> {
-          @MixableProperty(utilities: [
-            MixableUtility(alias: 'customColor', type: 'ColorUtility'),
-            MixableUtility(alias: 'padding', properties: [
+          @MixableField(utilities: [
+            MixableFieldUtility(alias: 'customColor', type: 'ColorUtility'),
+            MixableFieldUtility(alias: 'padding', properties: [
               {'path': 'all', 'alias': 'allPadding'},
               {'path': 'horizontal', 'alias': 'horizontalPadding'},
             ]),

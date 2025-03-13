@@ -4,6 +4,7 @@ import 'package:build/build.dart';
 import 'package:logging/logging.dart';
 
 import 'utils/dart_type_utils.dart';
+import 'utils/extensions.dart';
 
 /// A unified registry for managing type mappings based on MixUtility type parameters.
 ///
