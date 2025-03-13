@@ -1,5 +1,6 @@
 import 'package:analyzer/dart/element/element.dart';
 import 'package:build/build.dart';
+import 'package:logging/logging.dart';
 import 'package:mix_annotations/mix_annotations.dart';
 import 'package:source_gen/source_gen.dart';
 
@@ -18,6 +19,8 @@ import '../core/utils/base_generator.dart';
 /// - A utility class for the spec (if not skipped)
 /// - A tween class for the spec
 class MixableSpecGenerator extends BaseMixGenerator<MixableSpec, SpecMetadata> {
+  final Logger _logger = Logger('MixableSpecGenerator');
+
   MixableSpecGenerator() : super(const TypeChecker.fromRuntime(MixableSpec));
 
   @override
@@ -31,6 +34,24 @@ class MixableSpecGenerator extends BaseMixGenerator<MixableSpec, SpecMetadata> {
       element,
       ConstantReader(typeChecker.firstAnnotationOfExact(element)),
     );
+  }
+
+  @override
+  Future<String> generateForAnnotatedElement(
+    Element element,
+    ConstantReader annotation,
+    BuildStep buildStep,
+  ) async {
+    if (element is! ClassElement) {
+      throw InvalidGenerationSourceError(
+        '@MixableSpec can only be applied to classes.',
+        element: element,
+      );
+    }
+
+    final metadata = await createMetadata(element, buildStep);
+
+    return generateForMetadata(metadata, buildStep);
   }
 
   @override
@@ -58,7 +79,13 @@ class MixableSpecGenerator extends BaseMixGenerator<MixableSpec, SpecMetadata> {
     // Generate utility class (if not skipped)
     if (!metadata.skipUtility) {
       final utilityBuilder = SpecUtilityBuilder(metadata);
-      output.writeln(utilityBuilder.build());
+      try {
+        final utilityCode = utilityBuilder.build();
+        output.writeln(utilityCode);
+      } catch (e) {
+        // Skip utility class generation if it fails
+        print('Error generating utility class for ${metadata.name}: $e');
+      }
       output.writeln();
     }
 

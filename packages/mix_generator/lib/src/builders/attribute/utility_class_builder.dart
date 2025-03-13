@@ -122,7 +122,8 @@ List<String> generateUtilityFields(
   for (final field in fields) {
     final annotatedUtilities = field.annotation.utilities ?? [];
     final propertyName = field.name;
-    final utilityName = typeRefs.getUtilityType(field.dartType)?.name;
+    final utilityType = typeRefs.getUtilityType(field.dartType);
+    final utilityName = utilityType?.name ?? 'DynamicUtility';
 
     if (annotatedUtilities.isEmpty) {
       expressions.add(
@@ -131,7 +132,7 @@ List<String> generateUtilityFields(
           aliasName: field.name,
           utilityExpression: _utilityExpression(
             fieldName: propertyName,
-            utilityName: utilityName!,
+            utilityName: utilityName,
           ),
         ),
       );
@@ -145,7 +146,7 @@ List<String> generateUtilityFields(
           aliasUtilityName =
               typeRefs.getUtilityNameFromTypeName(extraUtil.typeAsString!);
         } else {
-          aliasUtilityName = utilityName!;
+          aliasUtilityName = utilityName;
         }
 
         expressions.add(_generateUtilityField(
@@ -160,8 +161,42 @@ List<String> generateUtilityFields(
         final nestedUtilities = extraUtil.properties;
 
         for (final nestedUtility in nestedUtilities) {
-          final pathName = nestedUtility.path;
-          final nestedAliasName = nestedUtility.alias;
+          // Extract path and alias using a simpler approach
+          String? pathName;
+          String? nestedAliasName;
+
+          // Convert to string and parse
+          final String utilityStr = nestedUtility.toString();
+
+          // Parse the record format: (path: 'value', alias: 'value')
+          if (utilityStr.startsWith('(') && utilityStr.endsWith(')')) {
+            final content = utilityStr.substring(1, utilityStr.length - 1);
+            final parts = content.split(',');
+
+            for (final part in parts) {
+              final keyValue = part.trim().split(':');
+              if (keyValue.length == 2) {
+                final key = keyValue[0].trim();
+                final value = keyValue[1].trim();
+
+                // Remove quotes if present
+                final cleanValue = value.startsWith("'") && value.endsWith("'")
+                    ? value.substring(1, value.length - 1)
+                    : value;
+
+                if (key == 'path') {
+                  pathName = cleanValue;
+                } else if (key == 'alias') {
+                  nestedAliasName = cleanValue;
+                }
+              }
+            }
+          }
+
+          // Skip if we couldn't extract both path and alias
+          if (pathName == null || nestedAliasName == null) {
+            continue;
+          }
 
           expressions.add(_generateUtilityField(
             docPath: '$className.$aliasName.$pathName',

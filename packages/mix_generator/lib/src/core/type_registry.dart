@@ -22,19 +22,24 @@ class TypeRegistry {
 
   /// Detects if a class is a representation (DTO or Attribute) and registers it
   void _detectRepresentationFromClass(ClassElement classElement) {
-    final type = _getClassType(classElement);
-    if (type == null) return;
-
-    final isSpec = type.$1 == $Spec;
+    final isSpec = TypeUtils.isSpec(classElement.thisType);
+    final isDto = TypeUtils.isDto(classElement.thisType);
+    if (!isSpec && !isDto) return;
 
     TypeReference representationType;
-    final referenceType = TypeReference.fromType(type.$2);
+    TypeReference referenceType;
 
-    final utilityType = TypeReference('${referenceType.name}Utility');
+    final typeName = classElement.name;
+
+    final utilityType = TypeReference('${typeName}Utility');
 
     if (isSpec) {
-      representationType = TypeReference('${referenceType.name}Attribute');
+      representationType = TypeReference('${typeName}Attribute');
+      referenceType = TypeReference.fromType(classElement.thisType);
     } else {
+      final typeArg = TypeUtils.extractDtoTypeArgument(classElement);
+      if (typeArg == null) return;
+      referenceType = TypeReference.fromType(typeArg);
       representationType = TypeReference.fromType(classElement.thisType);
     }
     // Register the DTO mapping using the resolved key.
@@ -46,20 +51,6 @@ class TypeRegistry {
     );
 
     _mappings[typing.key] = typing;
-  }
-
-  (String, DartType)? _getClassType(ClassElement classElement) {
-    final typesToCheck = [$Spec, $Dto];
-
-    for (final type in typesToCheck) {
-      final referenceType =
-          TypeUtils.getGenericFromSupertype(classElement, type);
-      if (referenceType != null) {
-        return (type, referenceType);
-      }
-    }
-
-    return null;
   }
 
   /// Scans a library for types and their relationships
@@ -144,17 +135,6 @@ class TypeMapping {
 
   String get key => reference.name;
 
-  TypeMapping copyWith({
-    TypeReference? representation,
-    TypeReference? utility,
-  }) =>
-      TypeMapping(
-        reference: reference,
-        representation: representation ?? this.representation,
-        utility: utility ?? this.utility,
-        isSpec: isSpec,
-      );
-
   @override
   String toString() =>
       'TypeMapping(reference: $reference, representation: $representation, utility: $utility, isSpec: $isSpec)';
@@ -169,13 +149,8 @@ class TypeReference {
   static TypeReference fromType(DartType type) =>
       TypeReference(type.getTypeAsString(), type: type);
 
-  TypeReference copyWith({String? name, DartType? type}) => TypeReference(
-        name ?? this.name,
-        type: type ?? this.type,
-      );
-
   @override
-  String toString() => 'TypeReference(name: $name, type: $type)';
+  String toString() => 'TypeReference(name: $name, type: ${type ?? ''})';
 }
 
 String _getSimpleTypeName(String typeName) {

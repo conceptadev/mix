@@ -1,33 +1,9 @@
 // test/src/core/utils/dart_type_utils_test.dart
-import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/type.dart';
-import 'package:build_test/build_test.dart';
 import 'package:mix_generator/src/core/utils/dart_type_utils.dart';
 import 'package:test/test.dart';
 
-/// Helper function to resolve code in tests with improved error handling
-Future<LibraryElement> resolveTestLibrary(String code) async {
-  try {
-    final resolvedLib = await resolveSource(
-      '''
-      // @dart=2.12
-      library test_lib;
-      
-      $code
-      ''',
-      (resolver) async {
-        final library = await resolver.findLibraryByName('test_lib');
-        if (library == null) {
-          fail('Could not find library "test_lib"');
-        }
-        return library;
-      },
-    );
-    return resolvedLib;
-  } catch (e) {
-    fail('Exception during library resolution: $e');
-  }
-}
+import '../../../src/helpers/test_helpers.dart';
 
 void main() {
   //----------------------------------------------------------------------------
@@ -35,7 +11,7 @@ void main() {
   //----------------------------------------------------------------------------
   group('Core Type Utilities', () {
     test('resolveTypeToClass handles interface types', () async {
-      final library = await resolveTestLibrary('''
+      final library = await resolveSimpleTestLibrary('''
         class TestClass {}
         class TestUser {
           TestClass field;
@@ -61,7 +37,7 @@ void main() {
     });
 
     test('resolveTypeToClass handles type parameters with bounds', () async {
-      final library = await resolveTestLibrary('''
+      final library = await resolveSimpleTestLibrary('''
         class Base {}
         class TestClass<T extends Base> {
           T field;
@@ -86,7 +62,7 @@ void main() {
     });
 
     test('findSupertype correctly identifies supertype', () async {
-      final library = await resolveTestLibrary('''
+      final library = await resolveSimpleTestLibrary('''
         class Parent {}
         class Child extends Parent {}
       ''');
@@ -104,7 +80,7 @@ void main() {
     });
 
     test('getGenericFromSupertype extracts generic type correctly', () async {
-      final library = await resolveTestLibrary('''
+      final library = await resolveSimpleTestLibrary('''
         class Generic<T> {}
         class User {}
         class UserGeneric extends Generic<User> {}
@@ -122,7 +98,7 @@ void main() {
     });
 
     test('resolveGenericType resolves type parameters to bounds', () async {
-      final library = await resolveTestLibrary('''
+      final library = await resolveSimpleTestLibrary('''
         class Base {}
         class Child extends Base {}
         class Container<T extends Base> {
@@ -155,7 +131,7 @@ void main() {
   //----------------------------------------------------------------------------
   group('DartType Extensions', () {
     test('type property checks work correctly', () async {
-      final library = await resolveTestLibrary('''
+      final library = await resolveSimpleTestLibrary('''
         import 'dart:async';
         
         class TestClass {
@@ -238,7 +214,7 @@ void main() {
     });
 
     test('getTypeArguments extracts type arguments correctly', () async {
-      final library = await resolveTestLibrary('''
+      final library = await resolveSimpleTestLibrary('''
         class TestClass {
           List<String> stringList = [];
           Map<int, bool> intBoolMap = {};
@@ -282,7 +258,7 @@ void main() {
     });
 
     test('handles nested generic types correctly', () async {
-      final library = await resolveTestLibrary('''
+      final library = await resolveSimpleTestLibrary('''
         class TestClass {
           List<Map<String, int>> nestedGeneric = [];
           Future<List<String>> futureList = Future.value([]);
@@ -322,7 +298,7 @@ void main() {
     });
 
     test('handles complex type hierarchies correctly', () async {
-      final library = await resolveTestLibrary('''
+      final library = await resolveSimpleTestLibrary('''
         abstract class Animal {}
         class Dog extends Animal {}
         class Cat extends Animal {}
@@ -354,6 +330,171 @@ void main() {
       final dogClass = library.getClass('Dog');
 
       expect(dogClass!.supertype!.element, equals(animalClass));
+    });
+  });
+
+  //----------------------------------------------------------------------------
+  // MIX PACKAGE TYPE TESTS
+  //----------------------------------------------------------------------------
+  group('Mix Package Type Tests', () {
+    test('correctly identifies Dto types from mix_annotations package',
+        () async {
+      final library = await resolveMixTestLibrary('''
+        @Dto<String>()
+        class UserDto {
+          final String name;
+          final int age;
+          
+          UserDto(this.name, this.age);
+        }
+      ''');
+
+      final userDtoClass = library.getClass('UserDto');
+      expect(userDtoClass, isNotNull, reason: 'UserDto class not found');
+
+      // Check for the Dto annotation
+      final annotations = userDtoClass!.metadata;
+      expect(annotations, isNotEmpty,
+          reason: 'No annotations found on UserDto');
+
+      final dtoAnnotation = annotations.first;
+      final dtoElement = dtoAnnotation.element;
+      expect(dtoElement, isNotNull, reason: 'Annotation element is null');
+
+      // Check that the annotation is from the mix_annotations package
+      final enclosingElement = dtoElement!.enclosingElement!;
+      expect(enclosingElement.name, equals('Dto'));
+
+      final source = enclosingElement.source!;
+      expect(source.uri.scheme, equals('package'));
+      expect(source.uri.path, equals('mix_annotations/mix_annotations.dart'));
+    });
+
+    test('correctly identifies Spec types from mix_annotations package',
+        () async {
+      final library = await resolveMixTestLibrary('''
+        class ColorSpec extends Spec {
+          final int red;
+          final int green;
+          final int blue;
+          
+          ColorSpec(this.red, this.green, this.blue);
+        }
+      ''');
+
+      final colorSpecClass = library.getClass('ColorSpec');
+      expect(colorSpecClass, isNotNull, reason: 'ColorSpec class not found');
+
+      // Check inheritance
+      final specSupertype = TypeUtils.findSupertype(colorSpecClass!, 'Spec');
+      expect(specSupertype, isNotNull,
+          reason: 'Spec supertype not found for ColorSpec');
+
+      // Verify the supertype is from the mix_annotations package
+      final specElement = specSupertype!.element;
+      final source = specElement.source;
+      expect(source.uri.scheme, equals('package'));
+      expect(source.uri.path, equals('mix_annotations/mix_annotations.dart'));
+    });
+
+    test('correctly identifies types from mix package', () async {
+      final library = await resolveMixTestLibrary('''
+        class CustomWidgetModifier extends WidgetModifierSpec {
+          final String value;
+          
+          CustomWidgetModifier(this.value);
+        }
+      ''');
+
+      final modifierClass = library.getClass('CustomWidgetModifier');
+      expect(modifierClass, isNotNull,
+          reason: 'CustomWidgetModifier class not found');
+
+      // Check inheritance
+      final widgetModifierSupertype =
+          TypeUtils.findSupertype(modifierClass!, 'WidgetModifierSpec');
+      expect(widgetModifierSupertype, isNotNull,
+          reason:
+              'WidgetModifierSpec supertype not found for CustomWidgetModifier');
+
+      // Verify the supertype is from the mix package
+      final widgetModifierElement = widgetModifierSupertype!.element;
+      final source = widgetModifierElement.source;
+      expect(source.uri.scheme, equals('package'));
+      expect(source.uri.path, equals('mix/mix.dart'));
+
+      // Check transitive inheritance to Spec from mix_annotations
+      final specSupertype = TypeUtils.findSupertype(modifierClass, 'Spec');
+      expect(specSupertype, isNotNull,
+          reason: 'Spec supertype not found for CustomWidgetModifier');
+    });
+
+    test('can work with complex type hierarchies across packages', () async {
+      final library = await resolveMixTestLibrary('''
+        // Base classes
+        abstract class Animal {}
+        class Dog extends Animal {}
+        
+        // User classes with Mix types
+        @Dto<Dog>()
+        class DogDto {
+          final String name;
+          DogDto(this.name);
+        }
+        
+        class AnimalSpec<T extends Animal> extends Spec {
+          final T animal;
+          AnimalSpec(this.animal);
+        }
+        
+        class DogSpec extends AnimalSpec<Dog> {
+          DogSpec(Dog dog) : super(dog);
+        }
+        
+        class DogModifier extends WidgetModifierSpec {
+          final DogSpec dogSpec;
+          
+          DogModifier(this.dogSpec);
+        }
+      ''');
+
+      final dogDtoClass = library.getClass('DogDto');
+      expect(dogDtoClass, isNotNull, reason: 'DogDto class not found');
+
+      final dogSpecClass = library.getClass('DogSpec');
+      expect(dogSpecClass, isNotNull, reason: 'DogSpec class not found');
+
+      final dogModifierClass = library.getClass('DogModifier');
+      expect(dogModifierClass, isNotNull,
+          reason: 'DogModifier class not found');
+
+      // Check inheritance
+      final animalSpecSupertype =
+          TypeUtils.findSupertype(dogSpecClass!, 'AnimalSpec');
+      expect(animalSpecSupertype, isNotNull,
+          reason: 'AnimalSpec supertype not found for DogSpec');
+
+      final widgetModifierSupertype =
+          TypeUtils.findSupertype(dogModifierClass!, 'WidgetModifierSpec');
+      expect(widgetModifierSupertype, isNotNull,
+          reason: 'WidgetModifierSpec supertype not found for DogModifier');
+
+      // Check that WidgetModifierSpec is from mix package
+      final widgetModifierElement = widgetModifierSupertype!.element;
+      final widgetModifierSource = widgetModifierElement.source;
+      expect(widgetModifierSource.uri.scheme, equals('package'));
+      expect(widgetModifierSource.uri.path, equals('mix/mix.dart'));
+
+      // Check that Spec is from mix_annotations package
+      final specSupertype = TypeUtils.findSupertype(dogSpecClass, 'Spec');
+      expect(specSupertype, isNotNull,
+          reason: 'Spec supertype not found for DogSpec');
+
+      final specElement = specSupertype!.element;
+      final specSource = specElement.source;
+      expect(specSource.uri.scheme, equals('package'));
+      expect(
+          specSource.uri.path, equals('mix_annotations/mix_annotations.dart'));
     });
   });
 }
