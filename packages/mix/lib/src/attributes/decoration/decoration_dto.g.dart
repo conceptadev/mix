@@ -172,7 +172,9 @@ class BoxDecorationUtility<T extends Attribute>
   }
 }
 
+/// Extension methods to convert [BoxDecoration] to [BoxDecorationDto].
 extension BoxDecorationMixExt on BoxDecoration {
+  /// Converts this [BoxDecoration] to a [BoxDecorationDto].
   BoxDecorationDto toDto() {
     return BoxDecorationDto(
       border: border?.toDto(),

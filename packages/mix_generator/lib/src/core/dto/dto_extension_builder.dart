@@ -1,7 +1,7 @@
-import 'package:analyzer/dart/element/nullability_suffix.dart';
-
 import '../models/dto_metadata.dart';
 import '../utils/code_builder.dart';
+import '../utils/dart_type_utils.dart';
+import '../utils/extensions.dart';
 
 /// Builder for generating extension methods to convert between value types and DTOs.
 class DtoExtensionBuilder extends CodeBuilder {
@@ -15,26 +15,15 @@ class DtoExtensionBuilder extends CodeBuilder {
   String build() {
     final className = metadata.name;
     final resolvedTypeName = metadata.resolvedType.name;
-    final resolvedElement = metadata.resolvedType;
-
-    // Get the fields from the resolved type
-    final resolvedFields = resolvedElement.fields;
 
     final fieldStatements = metadata.fields.map((field) {
       final fieldName = field.name;
 
-      // Check if the field exists in the resolved type and if it's nullable
-      final resolvedField =
-          resolvedFields.where((f) => f.name == fieldName).firstOrNull;
-      final isNullableInResolvedType =
-          resolvedField?.type.nullabilitySuffix == NullabilitySuffix.question;
-
-      // Always use the nullability from the resolved type if available
-      final paramIsNullable =
-          resolvedField != null ? isNullableInResolvedType : field.nullable;
-
-      if (field.isDto) {
-        final fieldNameRef = paramIsNullable ? '$fieldName?' : fieldName;
+      if (field.hasDto) {
+        final resolvedFiieldType =
+            TypeUtils.extractDtoTypeArgument(field.dartType.asClassElement!);
+        final fieldNameRef =
+            resolvedFiieldType?.isNullable == true ? '$fieldName?' : fieldName;
 
         if (field.isListType) {
           return '$fieldName: $fieldNameRef.map((e) => e.toDto()).toList(),';

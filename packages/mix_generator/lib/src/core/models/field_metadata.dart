@@ -128,6 +128,9 @@ class FieldMetadata {
   /// Checks if the field type is a List
   bool get isListType => dartType.isList;
 
+  bool get isDtoListType =>
+      isListType && TypeUtils.isDto(dartType.firstTypeArgument!);
+
   /// Checks if the field type is a Map
   bool get isMapType => dartType.isMap;
 

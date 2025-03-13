@@ -38,9 +38,7 @@ class MixableSpec {
 
 class Mixable {
   final int generateHelpers;
-  const Mixable({
-    this.generateHelpers = _allHelpers,
-  });
+  const Mixable({this.generateHelpers = GenerateHelpers.all});
 }
 
 /// An annotation class used to mark a constructor for code generation.
@@ -63,15 +61,18 @@ class MixableConstructor {
 class MixableUtility {
   final int generateHelpers;
 
+  /// Type will be used to create constructors for the same API as the reference type
+  final Type? referenceType;
+
   /// Creates a new instance of `MixableUtility`.
   ///
   /// Use this annotation on classes that should be treated as utility classes
   /// by the code generator.
-  const MixableUtility({this.generateHelpers = _allHelpers});
+  const MixableUtility({
+    this.generateHelpers = GenerateHelpers.all,
+    this.referenceType,
+  });
 }
-
-@Deprecated('Use MixableField instead')
-typedef MixableProperty = MixableField;
 
 /// Annotation of `MixableDto` with the specified options.
 ///
@@ -358,28 +359,31 @@ class MixableSwatchColorToken {
   const MixableSwatchColorToken({this.scale = 3, this.defaultValue = 1});
 }
 
-const _allHelpers = 0;
-
 /// Collection of constants to indicate which methods and extensions to generate for a specific class.
 class GenerateSpecHelpers {
-  const GenerateSpecHelpers._();
-  static const all = copyWithMethod | equalsMethod | lerpMethod;
   static const copyWithMethod = 1;
   static const equalsMethod = 2;
   static const lerpMethod = 3;
   static const utilityClass = 4;
   static const attributeClass = 5;
+  const GenerateSpecHelpers._();
+}
+
+class GenerateHelpers {
+  static const none = 0;
+  // needs to be as high as the highest helpers
+  static const all = 0 | 1 | 2 | 3 | 4 | 5;
+
+  const GenerateHelpers._();
 }
 
 class GenerateDtoHelpers {
-  const GenerateDtoHelpers._();
-  static const all = utilityClass | toDtoExtension;
   static const utilityClass = 1;
   static const toDtoExtension = 2;
+  const GenerateDtoHelpers._();
 }
 
 class GenerateUtilityHelpers {
-  const GenerateUtilityHelpers._();
-  static const all = callMethod;
   static const callMethod = 1;
+  const GenerateUtilityHelpers._();
 }

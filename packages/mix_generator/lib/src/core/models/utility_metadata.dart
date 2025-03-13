@@ -1,6 +1,5 @@
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/type.dart';
-import 'package:mix_annotations/mix_annotations.dart';
 import 'package:source_gen/source_gen.dart';
 
 import '../utils/annotation_utils.dart';
@@ -19,8 +18,7 @@ class UtilityMetadata extends BaseMetadata {
   /// The mapping element if this is a class utility with a mapping type
   final ClassElement? mappingElement;
 
-  /// Whether to generate a call method
-  final bool generateCallMethod;
+  final int generateHelpers;
 
   UtilityMetadata({
     required super.element,
@@ -33,7 +31,7 @@ class UtilityMetadata extends BaseMetadata {
     this.enumElement,
     this.valueElement,
     this.mappingElement,
-    required this.generateCallMethod,
+    required this.generateHelpers,
   });
 
   /// Creates a UtilityMetadata from a class element and its annotation
@@ -42,11 +40,6 @@ class UtilityMetadata extends BaseMetadata {
     ConstantReader annotation,
   ) {
     // Check for MixableUtility annotation and get the generateHelpers value
-    final generateHelpers = readMixableUtilityHelpers(element);
-
-    // Determine if we should generate the call method based on the GenerateUtilityHelpers flags
-    final shouldGenerateCallMethod = (generateHelpers == 0) ||
-        ((generateHelpers & GenerateUtilityHelpers.callMethod) != 0);
 
     // First, try to get the utility type from the class
     final utilityType = _getUtilityType(element);
@@ -71,7 +64,7 @@ class UtilityMetadata extends BaseMetadata {
         constructor: findTargetConstructor(element),
         isAbstract: element.isAbstract,
         enumElement: enumElement,
-        generateCallMethod: shouldGenerateCallMethod,
+        generateHelpers: readMixableUtilityHelpers(element),
       );
     }
 
@@ -108,7 +101,7 @@ class UtilityMetadata extends BaseMetadata {
       isAbstract: element.isAbstract,
       valueElement: valueElement,
       mappingElement: mappingElement,
-      generateCallMethod: shouldGenerateCallMethod,
+      generateHelpers: readMixableUtilityHelpers(element),
     );
   }
 
@@ -125,15 +118,6 @@ class UtilityMetadata extends BaseMetadata {
         .where((field) => field.isEnumConstant)
         .map((field) => field.name)
         .toList();
-  }
-
-  /// Gets the effective value element (either valueElement or enumElement)
-  Element? get effectiveValueElement {
-    if (isEnumUtility) {
-      return enumElement;
-    }
-
-    return valueElement;
   }
 
   /// Gets the effective mapping element (either mappingElement or valueElement)
@@ -154,21 +138,6 @@ DartType? _getUtilityType(ClassElement element) {
     if (utilityTypes.contains(supertype.element.name) &&
         supertype.typeArguments.length == 2) {
       return supertype.typeArguments[1];
-    }
-  }
-
-  return null;
-}
-
-/// Gets the enum type from a utility class
-EnumElement? getEnumTypeFromUtility(ClassElement element) {
-  for (var supertype in element.allSupertypes) {
-    if (supertype.element.name == 'MixUtility' &&
-        supertype.typeArguments.length == 2) {
-      final enumType = supertype.typeArguments[1];
-      if (enumType.isEnum) {
-        return enumType.element as EnumElement;
-      }
     }
   }
 

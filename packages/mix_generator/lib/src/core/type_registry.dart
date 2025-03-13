@@ -13,23 +13,21 @@ class TypeRegistry {
 
   TypeRegistry._();
 
+  bool hasTryToMerge(String typeName) {
+    print('typeName: $typeName');
+    final hasTryToMerge = tryToMerge.contains(typeName);
+    if (!hasTryToMerge) {
+      return tryToMerge.contains('${typeName}Dto');
+    }
+
+    return hasTryToMerge;
+  }
+
   /// Gets the utility type for a DartType
   TypeReference? getUtilityForType(DartType type) {
     final typeString = type.getTypeAsString();
 
     // Check if it's a list type
-    if (type.isList && type.firstTypeArgument != null) {
-      final elementType = type.firstTypeArgument!;
-      final elementTypeName = elementType.getTypeAsString();
-
-      // Look for a list utility that handles this element type
-      for (final entry in utilities.entries) {
-        if (entry.value == 'List<$elementTypeName>' ||
-            entry.value == 'List<${elementTypeName}Dto>') {
-          return TypeReference(entry.key);
-        }
-      }
-    }
 
     // Special handling for Spec types
     if (TypeUtils.isSpec(type)) {
@@ -56,17 +54,24 @@ class TypeRegistry {
       }
     }
 
+    if (type.isList) {
+      final elementType = type.firstTypeArgument!;
+      final elementTypeName = elementType.getTypeAsString();
+
+      return TypeReference('ListUtility<T, $elementTypeName>');
+    }
+
     // If no mapping found, use DynamicUtility
     _logger.warning(
       'No utility found for type: $typeString, using DynamicUtility',
     );
 
-    return TypeReference('DynamicUtility');
+    return null;
   }
 
   /// Gets the representation type (DTO or Attribute) for a DartType
   TypeReference? getRepresentationForType(DartType type) {
-    final typeString = type.getDisplayString(withNullability: false);
+    final typeString = type.getTypeAsString();
 
     // Special handling for Spec types
     if (TypeUtils.isSpec(type)) {
@@ -88,7 +93,7 @@ class TypeRegistry {
     }
 
     // If no specific representation, return the type itself
-    return TypeReference(typeString);
+    return null;
   }
 
   /// Gets the utility for a field with a specific name and type
@@ -124,23 +129,13 @@ class TypeReference {
   final String name;
   final DartType? type;
 
-  TypeReference(String name, {this.type}) : name = _getSimpleTypeName(name);
+  const TypeReference(this.name, {this.type});
 
   static TypeReference fromType(DartType type) =>
       TypeReference(type.getTypeAsString(), type: type);
 
   @override
   String toString() => 'TypeReference(name: $name, type: ${type ?? ''})';
-}
-
-String _getSimpleTypeName(String typeName) {
-  final genericIndex = typeName.indexOf('<');
-
-  if (genericIndex > 0) {
-    return typeName.substring(0, genericIndex);
-  }
-
-  return typeName;
 }
 
 /// List of utility types that should be ignored in certain contexts
@@ -151,83 +146,96 @@ final ignoredUtilities = [
 ];
 
 /// Map of DTO class names to their corresponding Flutter type names
+/// Map of DTO class names to their corresponding Flutter type names
 final dtos = {
-  'SpacingSideDto': 'SpacingSide',
-  'EdgeInsetsGeometryDto': 'EdgeInsetsGeometry',
-  'StrutStyleDto': 'StrutStyle',
   'AnimatedDataDto': 'AnimatedData',
-  'TextHeightBehaviorDto': 'TextHeightBehavior',
-  'GradientDto': 'Gradient',
-  'TextStyleData': 'TextStyle',
-  'TextStyleDto': 'TextStyle',
-  'ConstraintsDto': 'Constraints',
-  'WidgetModifiersDataDto': 'WidgetModifiersData',
-  'ColorDto': 'Color',
-  'ShadowDto': 'Shadow',
-  'ShapeBorderDto': 'ShapeBorder',
-  'LinearBorderEdgeDto': 'LinearBorderEdge',
-  'TextDirectiveDto': 'TextDirective',
   'BoxBorderDto': 'BoxBorder',
-  'BorderSideDto': 'BorderSide',
   'BorderRadiusGeometryDto': 'BorderRadiusGeometry',
+  'BorderSideDto': 'BorderSide',
+  'ColorDto': 'Color',
+  'ConstraintsDto': 'Constraints',
   'DecorationDto': 'Decoration',
   'DecorationImageDto': 'DecorationImage',
+  'EdgeInsetsGeometryDto': 'EdgeInsetsGeometry',
+  'GradientDto': 'Gradient',
+  'LinearBorderEdgeDto': 'LinearBorderEdge',
+  'ShadowDto': 'Shadow',
+  'ShapeBorderDto': 'ShapeBorder',
+  'SpacingSideDto': 'SpacingSide',
+  'StrutStyleDto': 'StrutStyle',
+  'TextDirectiveDto': 'TextDirective',
+  'TextHeightBehaviorDto': 'TextHeightBehavior',
+  'TextStyleData': 'TextStyle',
+  'TextStyleDto': 'TextStyle',
+  'WidgetModifiersDataDto': 'WidgetModifiersData',
 };
 
 /// Map of utility class names to their corresponding value types
+/// Map of utility class names to their corresponding value types
 final utilities = {
-  'TextDirectivesUtility': 'TextDirectiveDto',
-  'ShadowListUtility': 'List<ShadowDto>',
-  'DoubleUtility': 'double',
-  'IntUtility': 'int',
-  'StringUtility': 'String',
+  'AlignmentUtility': 'Alignment',
+  'AlignmentDirectionalUtility': 'AlignmentDirectional',
+  'AlignmentGeometryUtility': 'AlignmentGeometry',
+  'AxisUtility': 'Axis',
   'BoolUtility': 'bool',
-  'ListUtility': 'List',
+  'BlendModeUtility': 'BlendMode',
+  'BorderStyleUtility': 'BorderStyle',
+  'BoxFitUtility': 'BoxFit',
   'BoxShadowListUtility': 'List<BoxShadowDto>',
+  'BoxShapeUtility': 'BoxShape',
+  'ClipUtility': 'Clip',
   'ColorUtility': 'ColorDto',
   'ColorListUtility': 'List<ColorDto>',
-  'VerticalDirectionUtility': 'VerticalDirection',
-  'BorderStyleUtility': 'BorderStyle',
-  'ClipUtility': 'Clip',
-  'AxisUtility': 'Axis',
-  'FlexFitUtility': 'FlexFit',
-  'StackFitUtility': 'StackFit',
-  'ImageRepeatUtility': 'ImageRepeat',
-  'TextDirectionUtility': 'TextDirection',
-  'TextLeadingDistributionUtility': 'TextLeadingDistribution',
-  'TileModeUtility': 'TileMode',
-  'MainAxisAlignmentUtility': 'MainAxisAlignment',
   'CrossAxisAlignmentUtility': 'CrossAxisAlignment',
-  'MainAxisSizeUtility': 'MainAxisSize',
-  'BoxFitUtility': 'BoxFit',
-  'BlendModeUtility': 'BlendMode',
-  'BoxShapeUtility': 'BoxShape',
-  'FontStyleUtility': 'FontStyle',
-  'TextDecorationStyleUtility': 'TextDecorationStyle',
-  'TextBaselineUtility': 'TextBaseline',
-  'TextOverflowUtility': 'TextOverflow',
-  'TextWidthBasisUtility': 'TextWidthBasis',
-  'TextAlignUtility': 'TextAlign',
-  'FilterQualityUtility': 'FilterQuality',
-  'WrapAlignmentUtility': 'WrapAlignment',
-  'TableCellVerticalAlignmentUtility': 'TableCellVerticalAlignment',
-  'ShapeBorderUtility': 'ShapeBorderDto',
-  'AlignmentUtility': 'AlignmentGeometry',
-  'AlignmentDirectionalUtility': 'AlignmentDirectional',
-  'FontFeatureUtility': 'FontFeature',
-  'DurationUtility': 'Duration',
-  'FontWeightUtility': 'FontWeight',
-  'TextDecorationUtility': 'TextDecoration',
   'CurveUtility': 'Curve',
+  'DoubleUtility': 'double',
+  'DurationUtility': 'Duration',
+  'FlexFitUtility': 'FlexFit',
+  'FontFeatureUtility': 'FontFeature',
+  'FontStyleUtility': 'FontStyle',
+  'FontWeightUtility': 'FontWeight',
+  'GradientUtility': 'GradientDto',
+  'GradientTransformUtility': 'GradientTransform',
+  'ImageProviderUtility': 'ImageProvider<Object>',
+  'ImageRepeatUtility': 'ImageRepeat',
+  'IntUtility': 'int',
+  'ListUtility': 'List',
+  'MainAxisAlignmentUtility': 'MainAxisAlignment',
+  'MainAxisSizeUtility': 'MainAxisSize',
+  'Matrix4Utility': 'Matrix4',
   'OffsetUtility': 'Offset',
   'RadiusUtility': 'Radius',
   'RectUtility': 'Rect',
-  'ImageProviderUtility': 'ImageProvider',
-  'GradientTransformUtility': 'GradientTransform',
-  'Matrix4Utility': 'Matrix4',
-  'TextScalerUtility': 'TextScaler',
-  'TableColumnWidthUtility': 'TableColumnWidth',
+  'ShadowListUtility': 'List<ShadowDto>',
+  'StackFitUtility': 'StackFit',
+  'ShapeBorderUtility': 'ShapeBorderDto',
   'TableBorderUtility': 'TableBorder',
-  'DecorationUtility': 'DecorationDto',
-  'GradientUtility': 'GradientDto',
+  'TableCellVerticalAlignmentUtility': 'TableCellVerticalAlignment',
+  'TableColumnWidthUtility': 'TableColumnWidth',
+  'TextAlignUtility': 'TextAlign',
+  'TextBaselineUtility': 'TextBaseline',
+  'TextDecorationUtility': 'TextDecoration',
+  'TextDecorationStyleUtility': 'TextDecorationStyle',
+  'TextDirectionUtility': 'TextDirection',
+  'TextDirectivesUtility': 'TextDirectiveDto',
+  'TextLeadingDistributionUtility': 'TextLeadingDistribution',
+  'TextOverflowUtility': 'TextOverflow',
+  'TextScalerUtility': 'TextScaler',
+  'TextWidthBasisUtility': 'TextWidthBasis',
+  'VerticalDirectionUtility': 'VerticalDirection',
+  'WrapAlignmentUtility': 'WrapAlignment',
+};
+
+/// Map of DTO class names to whether they have a tryToMerge method
+final tryToMerge = {
+  'BoxBorderDto',
+  'BorderRadiusGeometryDto',
+  'BorderSideDto',
+  'DecorationDto',
+  'EdgeInsetsGeometryDto',
+  'GradientDto',
+  'OutlinedBorderDto',
+  'ShapeBorderDto',
+  'ShadowDto',
+  'TextStyleDto',
 };

@@ -6,8 +6,10 @@ import 'package:logging/logging.dart';
 import 'package:mix_annotations/mix_annotations.dart';
 import 'package:source_gen/source_gen.dart';
 
+import '../builders/attribute/utility_class_builder.dart';
 import '../core/models/utility_metadata.dart';
 import '../core/utils/base_generator.dart';
+import '../core/utils/constructor_utils.dart';
 import '../core/utils/extensions.dart';
 
 /// Generator for classes annotated with [MixableFieldUtility] or [MixableUtility].
@@ -20,7 +22,7 @@ class MixableUtilityGenerator
   final Logger _logger = Logger('MixableUtilityGenerator');
 
   MixableUtilityGenerator()
-      : super(const TypeChecker.fromRuntime(MixableFieldUtility));
+      : super(const TypeChecker.fromRuntime(MixableUtility));
 
   /// Generates the utility mixin code for an enum utility.
   String _generateEnumUtilityMixin(UtilityMetadata metadata) {
@@ -29,7 +31,8 @@ class MixableUtilityGenerator
     final enumElement = metadata.enumElement!;
     final enumTypeName = enumElement.name;
     final enumValues = metadata.enumValues;
-    final shouldGenerateCallMethod = metadata.generateCallMethod;
+    final shouldGenerateCallMethod =
+        metadata.generateHelpers == GenerateUtilityHelpers.callMethod;
 
     final callMethod = shouldGenerateCallMethod
         ? '''
@@ -71,7 +74,8 @@ $callMethod
     final valueElement = metadata.valueElement!;
     final valueName = valueElement.name;
     final mappingElement = metadata.effectiveMappingElement!;
-    final shouldGenerateCallMethod = metadata.generateCallMethod;
+    final shouldGenerateCallMethod =
+        metadata.generateHelpers == GenerateUtilityHelpers.callMethod;
 
     // Generate call method if requested
     final callMethod = shouldGenerateCallMethod
@@ -99,7 +103,7 @@ T $name() => builder($type.$name);
     // Generate utility methods for constructors
     final constructorStatements = <String>[];
     final constructors = mappingElement.constructors.where((constructor) {
-      return _isValidConstructor(constructor);
+      return isValidConstructor(constructor);
     });
 
     for (var constructor in constructors) {
@@ -108,9 +112,10 @@ T $name() => builder($type.$name);
         continue;
       }
 
-      final statement = _generateUtilityForConstructor(
+      final statement = generateUtilityForConstructor(
         constructor,
-        mappingElement: mappingElement,
+        skipCallMethod: !shouldGenerateCallMethod,
+        mappedEl: mappingElement,
       );
 
       if (statement.isNotEmpty) {
@@ -136,86 +141,6 @@ ${constructorStatements.join('\n')}
 
 $callMethod
 }
-''';
-  }
-
-  /// Checks if a constructor is valid for code generation
-  bool _isValidConstructor(ConstructorElement constructor) {
-    final isPublic = constructor.isPublic;
-
-    final hasUndefinedParamTypes = constructor.parameters.any((param) {
-      final library = param.type.element?.library;
-
-      return library != null &&
-          !library.isDartCore &&
-          !library.name.startsWith('dart.');
-    });
-
-    final hasAnyPrivateParams = constructor.parameters.any((param) {
-      return param.isPrivate;
-    });
-
-    return isPublic && !hasUndefinedParamTypes && !hasAnyPrivateParams;
-  }
-
-  /// Generates a utility method for a constructor
-  String _generateUtilityForConstructor(
-    ConstructorElement constructor, {
-    required ClassElement mappingElement,
-  }) {
-    final className = mappingElement.name;
-    final constructorName = constructor.name;
-
-    // Skip factory constructors
-    if (constructor.isFactory) {
-      return '';
-    }
-
-    // Generate method name
-    final methodName = constructorName.isEmpty ? 'create' : constructorName;
-
-    // Generate parameter list
-    final parameters = constructor.parameters.map((param) {
-      final paramType = param.type.getDisplayString(withNullability: true);
-      final paramName = param.name;
-      final defaultValue = param.defaultValueCode;
-      final isNamed = param.isNamed;
-      final isRequired = param.isRequired;
-
-      if (isNamed) {
-        if (isRequired) {
-          return 'required $paramType $paramName';
-        } else if (defaultValue != null) {
-          return '$paramType $paramName = $defaultValue';
-        }
-
-        return '$paramType? $paramName';
-      }
-      if (defaultValue != null) {
-        return '$paramType $paramName = $defaultValue';
-      }
-
-      return '$paramType $paramName';
-    }).join(', ');
-
-    // Generate argument list
-    final arguments = constructor.parameters.map((param) {
-      final paramName = param.name;
-      if (param.isNamed) {
-        return '$paramName: $paramName';
-      }
-
-      return paramName;
-    }).join(', ');
-
-    // Generate constructor call
-    final constructorCall = constructorName.isEmpty
-        ? '$className($arguments)'
-        : '$className.$constructorName($arguments)';
-
-    return '''
-/// Creates an [Attribute] instance using the [$className${constructorName.isEmpty ? '' : '.$constructorName'}] constructor.
-T $methodName($parameters) => builder($constructorCall);
 ''';
   }
 

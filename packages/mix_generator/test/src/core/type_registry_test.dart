@@ -211,16 +211,16 @@ void main() {
   group('TypeReference', () {
     test('constructor handles generic types correctly', () {
       // Test with a simple type name
-      final simpleRef = TypeReference('TestClass');
+      const simpleRef = TypeReference('TestClass');
       expect(simpleRef.name, equals('TestClass'));
 
       // Test with a generic type name
-      final genericRef = TypeReference('List<String>');
-      expect(genericRef.name, equals('List'));
+      const genericRef = TypeReference('List<String>');
+      expect(genericRef.name, equals('List<String>'));
 
       // Test with a nested generic type name
-      final nestedGenericRef = TypeReference('Map<String, List<int>>');
-      expect(nestedGenericRef.name, equals('Map'));
+      const nestedGenericRef = TypeReference('Map<String, List<int>>');
+      expect(nestedGenericRef.name, equals('Map<String, List<int>>'));
     });
 
     test('fromType creates TypeReference from DartType', () async {
@@ -247,7 +247,7 @@ void main() {
       final typeRef = TypeReference.fromType(fieldType);
 
       // Verify the TypeReference was created correctly
-      expect(typeRef.name, equals('List'));
+      expect(typeRef.name, equals('List<T>'));
       expect(typeRef.type, equals(fieldType));
     });
   });

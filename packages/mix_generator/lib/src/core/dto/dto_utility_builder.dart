@@ -10,8 +10,6 @@ class DtoUtilityBuilder implements CodeBuilder {
   DtoUtilityBuilder(this.metadata, {TypeRegistry? typeRegistry})
       : typeRegistry = typeRegistry ?? TypeRegistry.instance;
 
-  /// Creates a getter to enable chained configuration.
-
   @override
   String build() {
     final dtoName = metadata.name;
@@ -45,6 +43,7 @@ class DtoUtilityBuilder implements CodeBuilder {
 
       // The methods you want in the generated class, reintroducing call()
       methods: [
+        ...generateUtilityFieldsFromClass(metadata.element),
         utilityMethodChainGetter(utilityName),
         utilityMethodOnlyBuilder(
           utilityType: dtoName,

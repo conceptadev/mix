@@ -1,8 +1,8 @@
 import 'package:analyzer/dart/element/element.dart';
 
 import '../models/field_metadata.dart';
+import '../type_registry.dart';
 import 'dart_type_utils.dart';
-import 'extensions.dart';
 import 'helpers.dart';
 import 'string_utils.dart';
 
@@ -39,7 +39,9 @@ class MethodGenerators {
         }
 
         // Check if a custom merge method (e.g., tryToMerge) exists for this element
-        final hasCustomMerge = _checkIfHasTryToMerge(representationElement);
+        final hasCustomMerge = TypeRegistry.instance.hasTryToMerge(
+          representationElement.name ?? '',
+        );
 
         // Use the custom merge if available; otherwise, fall back to the default merge
         return hasCustomMerge
@@ -89,18 +91,12 @@ class MethodGenerators {
           ? ' ?? defaultValue.${field.name}'
           : '';
 
-      if (field.isDto || field.isSpecAttribute) {
-        if (field.isListType) {
-          return '$fieldName?.map((e) => e.resolve(mix)).toList()$fallbackExpression';
-        }
+      if (field.isDtoListType) {
+        return '$fieldName?.map((e) => e.resolve(mix)).toList()$fallbackExpression';
+      }
 
+      if (field.isDto || field.isSpecAttribute) {
         return '$fieldName?.resolve(mix)$fallbackExpression';
-      } else if (field.isListType) {
-        // Check if the list's generic type is a DTO
-        final genericType = field.dartType.firstTypeArgument;
-        if (genericType != null && TypeUtils.isDto(genericType)) {
-          return '$fieldName?.map((e) => e.resolve(mix)).toList()$fallbackExpression';
-        }
       }
 
       return '$fieldName$fallbackExpression';
@@ -368,30 +364,6 @@ bool _hasLerpMethodWithSignature(
       method.isStatic == isStatic &&
       method.parameters.length == (isStatic ? 3 : 2) &&
       method.parameters.last.type.isDartCoreDouble);
-}
-
-bool _checkIfHasTryToMerge(Element element) {
-  if (element is! ClassElement) {
-    return false;
-  }
-
-  for (final type in [
-    element,
-    ...element.allSupertypes
-        .where((e) => !e.isDartCoreObject)
-        .map((e) => e.element),
-  ]) {
-    for (final method in type.methods) {
-      if (method.name == 'tryToMerge' &&
-          method.isStatic &&
-          method.isPublic &&
-          method.parameters.length == 2) {
-        return true;
-      }
-    }
-  }
-
-  return false;
 }
 
 /// Gets the appropriate lerp method name for a field

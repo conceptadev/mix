@@ -4,6 +4,7 @@ import '../../core/models/field_metadata.dart';
 import '../../core/type_registry.dart';
 import '../../core/utils/constructor_utils.dart';
 import '../../core/utils/dart_type_utils.dart';
+import '../../core/utils/extensions.dart';
 
 /// Generates the utility statements for public consts
 /// static methods of `mappingElement` in the context
@@ -126,15 +127,14 @@ List<String> generateUtilityFields(
         typeRefs.getUtilityForField(propertyName, field.dartType);
     final utilityName = utilityType?.name ?? 'DynamicUtility';
 
+    final utilityExpression = '$utilityName((v) => only($propertyName: v))';
+
     if (annotatedUtilities.isEmpty) {
       expressions.add(
         _generateUtilityField(
           docPath: '$className.${field.name}',
           aliasName: field.name,
-          utilityExpression: _utilityExpression(
-            fieldName: propertyName,
-            utilityName: utilityName,
-          ),
+          utilityExpression: utilityExpression,
         ),
       );
     } else {
@@ -153,10 +153,7 @@ List<String> generateUtilityFields(
         expressions.add(_generateUtilityField(
           docPath: '$className.$propertyName',
           aliasName: aliasName,
-          utilityExpression: _utilityExpression(
-            fieldName: propertyName,
-            utilityName: aliasUtilityName,
-          ),
+          utilityExpression: utilityExpression,
         ));
 
         final nestedUtilities = extraUtil.properties;
@@ -224,13 +221,6 @@ late final $aliasName = $utilityExpression;
 ''';
 }
 
-String _utilityExpression({
-  required String fieldName,
-  required String utilityName,
-}) {
-  return '$utilityName((v) => only($fieldName: v))';
-}
-
 String utilityMethodOnlyBuilder({
   required String utilityType,
   required List<FieldMetadata> fields,
@@ -278,9 +268,11 @@ String utilityMethodSelfGetter(String utilityName, String attributeName) {
 
 String utilityMethodCallBuilder(List<FieldMetadata> fields) {
   final optionalParameters = fields.map((field) {
-    final fieldType = field.hasDto
+    final fieldType = field.isDto
         ? TypeUtils.getResolvedTypeFromDto(field.dartType)
-        : field.type;
+        : field.isDtoListType
+            ? 'List<${TypeUtils.getResolvedTypeFromDto(field.dartType.firstTypeArgument!)}>'
+            : field.type;
 
     return '$fieldType? ${field.name},';
   }).join('\n');
@@ -288,11 +280,11 @@ String utilityMethodCallBuilder(List<FieldMetadata> fields) {
   final fieldStatements = fields.map((field) {
     final fieldName = field.name;
 
-    if (field.isDto) {
-      if (field.isListType) {
-        return '$fieldName: $fieldName?.map((e) => e.toDto()).toList(),';
-      }
+    if (field.isDtoListType) {
+      return '$fieldName: $fieldName?.map((e) => e.toDto()).toList(),';
+    }
 
+    if (field.isDto) {
       return '$fieldName: $fieldName?.toDto(),';
     }
 
@@ -309,78 +301,3 @@ T call({
 }
 ''';
 }
-
-// ClassBuilder utilityClassBuilder({
-//   required AnnotatedClassBuilderContext context,
-//   required bool isDto,
-//   required bool isSpec,
-// }) {
-//   final attributeOrDtoName = context.name + (isSpec ? $Attribute : '');
-
-//   final resolvedType = context.genericSuperType;
-
-//   final utilityDefinition = ClassDefinition(
-//     name: '$resolvedType${$Utility}',
-//     extendTypes: isDto
-//         ? '${$DtoUtility}<T, $attributeOrDtoName, $resolvedType>'
-//         : '${$SpecUtility}<T, $attributeOrDtoName>',
-//     genericType: '<T extends ${$Attribute}>',
-//   );
-
-//   final utilityName = MixHelper.defineUtilityName(resolvedType);
-
-//   final fields = generateUtilityFields(attributeOrDtoName, context.fields);
-
-//   final onlyMethod = utilityMethodOnlyBuilder(
-//     utilityType: attributeOrDtoName,
-//     fields: context.fields,
-//   );
-
-//   final valueClassFields = generateUtilityFieldsFromClass(context.classElement);
-
-//   final callMethodDefinition =
-//       isDto ? utilityMethodCallBuilder(context.fields) : '';
-
-//   final chainGetterDefinition = isDto
-//       ? ''
-//       : '''
-//   $utilityName<T> get chain => $utilityName(attributeBuilder, mutable: true);
-//   ''';
-
-//   final selfGetterDefinition = isDto
-//       ? ''
-//       : '''
-//   static $utilityName<$attributeOrDtoName> get self => $utilityName((v) => v);
-//   ''';
-
-//   final constructorDefinition = (isDto
-//       ? utilityDefinition.writeConstructor(
-//           'super.builder',
-//           'valueToDto: (v) => v.toDto()',
-//         )
-//       : utilityDefinition.writeConstructor('super.builder, {super.mutable}'));
-
-//   final body = '''
-// /// Utility class for configuring [$resolvedType] properties.
-// ///
-// /// This class provides methods to set individual properties of a [$resolvedType].
-// /// Use the methods of this class to configure specific properties of a [$resolvedType].
-// ${utilityDefinition.writeDeclaration()} {
-//   $fields
-
-//   $valueClassFields
-
-//   $constructorDefinition
-
-//   $chainGetterDefinition
-
-//   $selfGetterDefinition
-
-//   $onlyMethod
-
-//   $callMethodDefinition
-// }
-// ''';
-
-//   return ClassBuilder(utilityDefinition, body);
-// }
