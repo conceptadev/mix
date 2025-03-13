@@ -6,7 +6,6 @@ part of 'scroll_view_widget_modifier.dart';
 // MixableSpecGenerator
 // **************************************************************************
 
-/// A mixin that provides spec functionality for [ScrollViewModifierSpec].
 mixin _$ScrollViewModifierSpec on WidgetModifierSpec<ScrollViewModifierSpec> {
   /// Creates a copy of this [ScrollViewModifierSpec] but with the given fields
   /// replaced with the new values.
@@ -24,6 +23,38 @@ mixin _$ScrollViewModifierSpec on WidgetModifierSpec<ScrollViewModifierSpec> {
       padding: padding ?? _$this.padding,
       physics: physics ?? _$this.physics,
       clipBehavior: clipBehavior ?? _$this.clipBehavior,
+    );
+  }
+
+  /// Linearly interpolates between this [ScrollViewModifierSpec] and another [ScrollViewModifierSpec] based on the given parameter [t].
+  ///
+  /// The parameter [t] represents the interpolation factor, typically ranging from 0.0 to 1.0.
+  /// When [t] is 0.0, the current [ScrollViewModifierSpec] is returned. When [t] is 1.0, the [other] [ScrollViewModifierSpec] is returned.
+  /// For values of [t] between 0.0 and 1.0, an interpolated [ScrollViewModifierSpec] is returned.
+  ///
+  /// If [other] is null, this method returns the current [ScrollViewModifierSpec] instance.
+  ///
+  /// The interpolation is performed on each property of the [ScrollViewModifierSpec] using the appropriate
+  /// interpolation method:
+  ///
+  /// - [EdgeInsetsGeometry.lerp] for [padding].
+
+  /// For [scrollDirection] and [reverse] and [physics] and [clipBehavior], the interpolation is performed using a step function.
+  /// If [t] is less than 0.5, the value from the current [ScrollViewModifierSpec] is used. Otherwise, the value
+  /// from the [other] [ScrollViewModifierSpec] is used.
+  ///
+  /// This method is typically used in animations to smoothly transition between
+  /// different [ScrollViewModifierSpec] configurations.
+  @override
+  ScrollViewModifierSpec lerp(ScrollViewModifierSpec? other, double t) {
+    if (other == null) return _$this;
+
+    return ScrollViewModifierSpec(
+      scrollDirection: t < 0.5 ? _$this.scrollDirection : other.scrollDirection,
+      reverse: t < 0.5 ? _$this.reverse : other.reverse,
+      padding: EdgeInsetsGeometry.lerp(_$this.padding, other.padding, t),
+      physics: t < 0.5 ? _$this.physics : other.physics,
+      clipBehavior: t < 0.5 ? _$this.clipBehavior : other.clipBehavior,
     );
   }
 
@@ -64,12 +95,12 @@ mixin _$ScrollViewModifierSpec on WidgetModifierSpec<ScrollViewModifierSpec> {
 ///
 /// Use this class to configure the attributes of a [ScrollViewModifierSpec] and pass it to
 /// the [ScrollViewModifierSpec] constructor.
-class ScrollViewModifierSpecAttribute
+final class ScrollViewModifierSpecAttribute
     extends WidgetModifierSpecAttribute<ScrollViewModifierSpec>
     with Diagnosticable {
   final Axis? scrollDirection;
   final bool? reverse;
-  final EdgeInsetsGeometryDto? padding;
+  final SpacingDto? padding;
   final ScrollPhysics? physics;
   final Clip? clipBehavior;
 
@@ -94,7 +125,7 @@ class ScrollViewModifierSpecAttribute
     return ScrollViewModifierSpec(
       scrollDirection: scrollDirection,
       reverse: reverse,
-      padding: padding,
+      padding: padding?.resolve(mix),
       physics: physics,
       clipBehavior: clipBehavior,
     );
@@ -116,7 +147,7 @@ class ScrollViewModifierSpecAttribute
     return ScrollViewModifierSpecAttribute(
       scrollDirection: other.scrollDirection ?? scrollDirection,
       reverse: other.reverse ?? reverse,
-      padding: other.padding ?? padding,
+      padding: padding?.merge(other.padding) ?? other.padding,
       physics: other.physics ?? physics,
       clipBehavior: other.clipBehavior ?? clipBehavior,
     );

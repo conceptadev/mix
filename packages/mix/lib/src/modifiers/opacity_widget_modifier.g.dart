@@ -6,7 +6,6 @@ part of 'opacity_widget_modifier.dart';
 // MixableSpecGenerator
 // **************************************************************************
 
-/// A mixin that provides spec functionality for [OpacityModifierSpec].
 mixin _$OpacityModifierSpec on WidgetModifierSpec<OpacityModifierSpec> {
   /// Creates a copy of this [OpacityModifierSpec] but with the given fields
   /// replaced with the new values.
@@ -29,8 +28,13 @@ mixin _$OpacityModifierSpec on WidgetModifierSpec<OpacityModifierSpec> {
   ///
   /// The interpolation is performed on each property of the [OpacityModifierSpec] using the appropriate
   /// interpolation method:
+  ///
   /// - [MixHelpers.lerpDouble] for [opacity].
 
+  /// For , the interpolation is performed using a step function.
+  /// If [t] is less than 0.5, the value from the current [OpacityModifierSpec] is used. Otherwise, the value
+  /// from the [other] [OpacityModifierSpec] is used.
+  ///
   /// This method is typically used in animations to smoothly transition between
   /// different [OpacityModifierSpec] configurations.
   @override
@@ -66,7 +70,7 @@ mixin _$OpacityModifierSpec on WidgetModifierSpec<OpacityModifierSpec> {
 ///
 /// Use this class to configure the attributes of a [OpacityModifierSpec] and pass it to
 /// the [OpacityModifierSpec] constructor.
-class OpacityModifierSpecAttribute
+final class OpacityModifierSpecAttribute
     extends WidgetModifierSpecAttribute<OpacityModifierSpec>
     with Diagnosticable {
   final double? opacity;

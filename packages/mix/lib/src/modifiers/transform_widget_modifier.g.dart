@@ -6,7 +6,6 @@ part of 'transform_widget_modifier.dart';
 // MixableSpecGenerator
 // **************************************************************************
 
-/// A mixin that provides spec functionality for [TransformModifierSpec].
 mixin _$TransformModifierSpec on WidgetModifierSpec<TransformModifierSpec> {
   /// Creates a copy of this [TransformModifierSpec] but with the given fields
   /// replaced with the new values.
@@ -31,9 +30,14 @@ mixin _$TransformModifierSpec on WidgetModifierSpec<TransformModifierSpec> {
   ///
   /// The interpolation is performed on each property of the [TransformModifierSpec] using the appropriate
   /// interpolation method:
+  ///
   /// - [MixHelpers.lerpMatrix4] for [transform].
   /// - [Alignment.lerp] for [alignment].
 
+  /// For , the interpolation is performed using a step function.
+  /// If [t] is less than 0.5, the value from the current [TransformModifierSpec] is used. Otherwise, the value
+  /// from the [other] [TransformModifierSpec] is used.
+  ///
   /// This method is typically used in animations to smoothly transition between
   /// different [TransformModifierSpec] configurations.
   @override
@@ -73,7 +77,7 @@ mixin _$TransformModifierSpec on WidgetModifierSpec<TransformModifierSpec> {
 ///
 /// Use this class to configure the attributes of a [TransformModifierSpec] and pass it to
 /// the [TransformModifierSpec] constructor.
-class TransformModifierSpecAttribute
+final class TransformModifierSpecAttribute
     extends WidgetModifierSpecAttribute<TransformModifierSpec>
     with Diagnosticable {
   final Matrix4? transform;

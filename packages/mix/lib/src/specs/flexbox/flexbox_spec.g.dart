@@ -6,7 +6,6 @@ part of 'flexbox_spec.dart';
 // MixableSpecGenerator
 // **************************************************************************
 
-/// A mixin that provides spec functionality for [FlexBoxSpec].
 mixin _$FlexBoxSpec on Spec<FlexBoxSpec> {
   static FlexBoxSpec from(MixData mix) {
     return mix.attributeOf<FlexBoxSpecAttribute>()?.resolve(mix) ??
@@ -57,6 +56,8 @@ mixin _$FlexBoxSpec on Spec<FlexBoxSpec> {
   ///
   /// The interpolation is performed on each property of the [FlexBoxSpec] using the appropriate
   /// interpolation method:
+  ///
+
   /// For [animated] and [modifiers] and [box] and [flex], the interpolation is performed using a step function.
   /// If [t] is less than 0.5, the value from the current [FlexBoxSpec] is used. Otherwise, the value
   /// from the [other] [FlexBoxSpec] is used.
@@ -107,7 +108,7 @@ mixin _$FlexBoxSpec on Spec<FlexBoxSpec> {
 ///
 /// Use this class to configure the attributes of a [FlexBoxSpec] and pass it to
 /// the [FlexBoxSpec] constructor.
-class FlexBoxSpecAttribute extends SpecAttribute<FlexBoxSpec>
+final class FlexBoxSpecAttribute extends SpecAttribute<FlexBoxSpec>
     with Diagnosticable {
   final BoxSpecAttribute? box;
   final FlexSpecAttribute? flex;
@@ -130,10 +131,10 @@ class FlexBoxSpecAttribute extends SpecAttribute<FlexBoxSpec>
   @override
   FlexBoxSpec resolve(MixData mix) {
     return FlexBoxSpec(
-      animated: animated,
-      modifiers: modifiers,
-      box: box,
-      flex: flex,
+      animated: animated?.resolve(mix) ?? mix.animation,
+      modifiers: modifiers?.resolve(mix),
+      box: box?.resolve(mix),
+      flex: flex?.resolve(mix),
     );
   }
 
@@ -150,10 +151,10 @@ class FlexBoxSpecAttribute extends SpecAttribute<FlexBoxSpec>
     if (other == null) return this;
 
     return FlexBoxSpecAttribute(
-      animated: other.animated ?? animated,
-      modifiers: other.modifiers ?? modifiers,
-      box: other.box ?? box,
-      flex: other.flex ?? flex,
+      animated: animated?.merge(other.animated) ?? other.animated,
+      modifiers: modifiers?.merge(other.modifiers) ?? other.modifiers,
+      box: box?.merge(other.box) ?? other.box,
+      flex: flex?.merge(other.flex) ?? other.flex,
     );
   }
 
@@ -188,10 +189,10 @@ class FlexBoxSpecAttribute extends SpecAttribute<FlexBoxSpec>
 class FlexBoxSpecUtility<T extends Attribute>
     extends SpecUtility<T, FlexBoxSpecAttribute> {
   /// Utility for defining [FlexBoxSpecAttribute.animated]
-  late final animated = AnimatedDataUtility((v) => only(animated: v));
+  late final animated = AnimatedUtility((v) => only(animated: v));
 
   /// Utility for defining [FlexBoxSpecAttribute.modifiers]
-  late final wrap = WidgetModifiersDataUtility((v) => only(modifiers: v));
+  late final wrap = SpecModifierUtility((v) => only(modifiers: v));
 
   /// Utility for defining [FlexBoxSpecAttribute.box]
   late final box = BoxSpecUtility((v) => only(box: v));

@@ -7,11 +7,11 @@ targets:
           - lib/**/*_modifier.dart
       mix_generator|dto:
         generate_for:
-          - lib/**/shape_border_dto.dart
+          - lib/**/*_dto.dart
           
-      # mix_generator|enum_utility:
-      #   generate_for:
-      #     - lib/**/*_util.dart
-      # mix_generator|class_utility:
-      #   generate_for:
-      #     - lib/**/*_util.dart
+      mix_generator|enum_utility:
+        generate_for:
+          - lib/**/*_util.dart
+      mix_generator|class_utility:
+        generate_for:
+          - lib/**/*_util.dart

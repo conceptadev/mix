@@ -6,7 +6,6 @@ part of 'intrinsic_widget_modifier.dart';
 // MixableSpecGenerator
 // **************************************************************************
 
-/// A mixin that provides spec functionality for [IntrinsicHeightModifierSpec].
 mixin _$IntrinsicHeightModifierSpec
     on WidgetModifierSpec<IntrinsicHeightModifierSpec> {
   /// Creates a copy of this [IntrinsicHeightModifierSpec] but with the given fields
@@ -26,7 +25,12 @@ mixin _$IntrinsicHeightModifierSpec
   ///
   /// The interpolation is performed on each property of the [IntrinsicHeightModifierSpec] using the appropriate
   /// interpolation method:
+  ///
 
+  /// For , the interpolation is performed using a step function.
+  /// If [t] is less than 0.5, the value from the current [IntrinsicHeightModifierSpec] is used. Otherwise, the value
+  /// from the [other] [IntrinsicHeightModifierSpec] is used.
+  ///
   /// This method is typically used in animations to smoothly transition between
   /// different [IntrinsicHeightModifierSpec] configurations.
   @override
@@ -56,7 +60,7 @@ mixin _$IntrinsicHeightModifierSpec
 ///
 /// Use this class to configure the attributes of a [IntrinsicHeightModifierSpec] and pass it to
 /// the [IntrinsicHeightModifierSpec] constructor.
-class IntrinsicHeightModifierSpecAttribute
+final class IntrinsicHeightModifierSpecAttribute
     extends WidgetModifierSpecAttribute<IntrinsicHeightModifierSpec>
     with Diagnosticable {
   const IntrinsicHeightModifierSpecAttribute();
@@ -71,7 +75,8 @@ class IntrinsicHeightModifierSpecAttribute
   /// ```
   @override
   IntrinsicHeightModifierSpec resolve(MixData mix) {
-    return const IntrinsicHeightModifierSpec();
+    // ignore: prefer_const_constructors
+    return IntrinsicHeightModifierSpec();
   }
 
   /// Merges the properties of this [IntrinsicHeightModifierSpecAttribute] with the properties of [other].
@@ -128,7 +133,6 @@ class IntrinsicHeightModifierSpecTween
   }
 }
 
-/// A mixin that provides spec functionality for [IntrinsicWidthModifierSpec].
 mixin _$IntrinsicWidthModifierSpec
     on WidgetModifierSpec<IntrinsicWidthModifierSpec> {
   /// Creates a copy of this [IntrinsicWidthModifierSpec] but with the given fields
@@ -148,7 +152,12 @@ mixin _$IntrinsicWidthModifierSpec
   ///
   /// The interpolation is performed on each property of the [IntrinsicWidthModifierSpec] using the appropriate
   /// interpolation method:
+  ///
 
+  /// For , the interpolation is performed using a step function.
+  /// If [t] is less than 0.5, the value from the current [IntrinsicWidthModifierSpec] is used. Otherwise, the value
+  /// from the [other] [IntrinsicWidthModifierSpec] is used.
+  ///
   /// This method is typically used in animations to smoothly transition between
   /// different [IntrinsicWidthModifierSpec] configurations.
   @override
@@ -177,7 +186,7 @@ mixin _$IntrinsicWidthModifierSpec
 ///
 /// Use this class to configure the attributes of a [IntrinsicWidthModifierSpec] and pass it to
 /// the [IntrinsicWidthModifierSpec] constructor.
-class IntrinsicWidthModifierSpecAttribute
+final class IntrinsicWidthModifierSpecAttribute
     extends WidgetModifierSpecAttribute<IntrinsicWidthModifierSpec>
     with Diagnosticable {
   const IntrinsicWidthModifierSpecAttribute();
@@ -192,7 +201,8 @@ class IntrinsicWidthModifierSpecAttribute
   /// ```
   @override
   IntrinsicWidthModifierSpec resolve(MixData mix) {
-    return const IntrinsicWidthModifierSpec();
+    // ignore: prefer_const_constructors
+    return IntrinsicWidthModifierSpec();
   }
 
   /// Merges the properties of this [IntrinsicWidthModifierSpecAttribute] with the properties of [other].
