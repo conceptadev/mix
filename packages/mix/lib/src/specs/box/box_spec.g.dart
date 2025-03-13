@@ -6,6 +6,7 @@ part of 'box_spec.dart';
 // MixableSpecGenerator
 // **************************************************************************
 
+/// A mixin that provides spec functionality for [BoxSpec].
 mixin _$BoxSpec on Spec<BoxSpec> {
   static BoxSpec from(MixData mix) {
     return mix.attributeOf<BoxSpecAttribute>()?.resolve(mix) ?? const BoxSpec();
@@ -73,14 +74,12 @@ mixin _$BoxSpec on Spec<BoxSpec> {
   ///
   /// The interpolation is performed on each property of the [BoxSpec] using the appropriate
   /// interpolation method:
-  ///
   /// - [AlignmentGeometry.lerp] for [alignment] and [transformAlignment].
   /// - [EdgeInsetsGeometry.lerp] for [padding] and [margin].
   /// - [BoxConstraints.lerp] for [constraints].
   /// - [Decoration.lerp] for [decoration] and [foregroundDecoration].
   /// - [MixHelpers.lerpMatrix4] for [transform].
   /// - [MixHelpers.lerpDouble] for [width] and [height].
-
   /// For [clipBehavior] and [modifiers] and [animated], the interpolation is performed using a step function.
   /// If [t] is less than 0.5, the value from the current [BoxSpec] is used. Otherwise, the value
   /// from the [other] [BoxSpec] is used.

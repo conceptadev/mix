@@ -6,6 +6,7 @@ part of 'edge_insets_dto.dart';
 // MixableDtoGenerator
 // **************************************************************************
 
+/// A mixin that provides DTO functionality for [EdgeInsetsDto].
 mixin _$EdgeInsetsDto on Dto<EdgeInsets> {
   /// Merges the properties of this [EdgeInsetsDto] with the properties of [other].
   ///
@@ -39,6 +40,7 @@ mixin _$EdgeInsetsDto on Dto<EdgeInsets> {
         _$this.right,
       ];
 
+  /// Returns this instance as a [EdgeInsetsDto].
   EdgeInsetsDto get _$this => this as EdgeInsetsDto;
 }
 
@@ -99,7 +101,9 @@ class EdgeInsetsUtility<T extends Attribute>
   }
 }
 
+/// Extension methods to convert [EdgeInsets] to [EdgeInsetsDto].
 extension EdgeInsetsMixExt on EdgeInsets {
+  /// Converts this [EdgeInsets] to a [EdgeInsetsDto].
   EdgeInsetsDto toDto() {
     return EdgeInsetsDto(
       top: top,
@@ -110,12 +114,15 @@ extension EdgeInsetsMixExt on EdgeInsets {
   }
 }
 
+/// Extension methods to convert List<[EdgeInsets]> to List<[EdgeInsetsDto]>.
 extension ListEdgeInsetsMixExt on List<EdgeInsets> {
+  /// Converts this List<[EdgeInsets]> to a List<[EdgeInsetsDto]>.
   List<EdgeInsetsDto> toDto() {
     return map((e) => e.toDto()).toList();
   }
 }
 
+/// A mixin that provides DTO functionality for [EdgeInsetsDirectionalDto].
 mixin _$EdgeInsetsDirectionalDto on Dto<EdgeInsetsDirectional> {
   /// Merges the properties of this [EdgeInsetsDirectionalDto] with the properties of [other].
   ///
@@ -149,6 +156,7 @@ mixin _$EdgeInsetsDirectionalDto on Dto<EdgeInsetsDirectional> {
         _$this.end,
       ];
 
+  /// Returns this instance as a [EdgeInsetsDirectionalDto].
   EdgeInsetsDirectionalDto get _$this => this as EdgeInsetsDirectionalDto;
 }
 
@@ -210,7 +218,9 @@ class EdgeInsetsDirectionalUtility<T extends Attribute>
   }
 }
 
+/// Extension methods to convert [EdgeInsetsDirectional] to [EdgeInsetsDirectionalDto].
 extension EdgeInsetsDirectionalMixExt on EdgeInsetsDirectional {
+  /// Converts this [EdgeInsetsDirectional] to a [EdgeInsetsDirectionalDto].
   EdgeInsetsDirectionalDto toDto() {
     return EdgeInsetsDirectionalDto(
       top: top,
@@ -221,7 +231,9 @@ extension EdgeInsetsDirectionalMixExt on EdgeInsetsDirectional {
   }
 }
 
+/// Extension methods to convert List<[EdgeInsetsDirectional]> to List<[EdgeInsetsDirectionalDto]>.
 extension ListEdgeInsetsDirectionalMixExt on List<EdgeInsetsDirectional> {
+  /// Converts this List<[EdgeInsetsDirectional]> to a List<[EdgeInsetsDirectionalDto]>.
   List<EdgeInsetsDirectionalDto> toDto() {
     return map((e) => e.toDto()).toList();
   }

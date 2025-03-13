@@ -6,6 +6,7 @@ part of 'strut_style_dto.dart';
 // MixableDtoGenerator
 // **************************************************************************
 
+/// A mixin that provides DTO functionality for [StrutStyleDto].
 mixin _$StrutStyleDto on Dto<StrutStyle> {
   /// Resolves to [StrutStyle] using the provided [MixData].
   ///
@@ -72,6 +73,7 @@ mixin _$StrutStyleDto on Dto<StrutStyle> {
         _$this.forceStrutHeight,
       ];
 
+  /// Returns this instance as a [StrutStyleDto].
   StrutStyleDto get _$this => this as StrutStyleDto;
 }
 
@@ -155,7 +157,9 @@ class StrutStyleUtility<T extends Attribute>
   }
 }
 
+/// Extension methods to convert [StrutStyle] to [StrutStyleDto].
 extension StrutStyleMixExt on StrutStyle {
+  /// Converts this [StrutStyle] to a [StrutStyleDto].
   StrutStyleDto toDto() {
     return StrutStyleDto(
       fontFamily: fontFamily,
@@ -170,7 +174,9 @@ extension StrutStyleMixExt on StrutStyle {
   }
 }
 
+/// Extension methods to convert List<[StrutStyle]> to List<[StrutStyleDto]>.
 extension ListStrutStyleMixExt on List<StrutStyle> {
+  /// Converts this List<[StrutStyle]> to a List<[StrutStyleDto]>.
   List<StrutStyleDto> toDto() {
     return map((e) => e.toDto()).toList();
   }

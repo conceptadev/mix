@@ -6,6 +6,7 @@ part of 'text_height_behavior_dto.dart';
 // MixableDtoGenerator
 // **************************************************************************
 
+/// A mixin that provides DTO functionality for [TextHeightBehaviorDto].
 mixin _$TextHeightBehaviorDto on Dto<TextHeightBehavior> {
   /// Resolves to [TextHeightBehavior] using the provided [MixData].
   ///
@@ -60,10 +61,13 @@ mixin _$TextHeightBehaviorDto on Dto<TextHeightBehavior> {
         _$this.leadingDistribution,
       ];
 
+  /// Returns this instance as a [TextHeightBehaviorDto].
   TextHeightBehaviorDto get _$this => this as TextHeightBehaviorDto;
 }
 
+/// Extension methods to convert [TextHeightBehavior] to [TextHeightBehaviorDto].
 extension TextHeightBehaviorMixExt on TextHeightBehavior {
+  /// Converts this [TextHeightBehavior] to a [TextHeightBehaviorDto].
   TextHeightBehaviorDto toDto() {
     return TextHeightBehaviorDto(
       applyHeightToFirstAscent: applyHeightToFirstAscent,
@@ -73,7 +77,9 @@ extension TextHeightBehaviorMixExt on TextHeightBehavior {
   }
 }
 
+/// Extension methods to convert List<[TextHeightBehavior]> to List<[TextHeightBehaviorDto]>.
 extension ListTextHeightBehaviorMixExt on List<TextHeightBehavior> {
+  /// Converts this List<[TextHeightBehavior]> to a List<[TextHeightBehaviorDto]>.
   List<TextHeightBehaviorDto> toDto() {
     return map((e) => e.toDto()).toList();
   }

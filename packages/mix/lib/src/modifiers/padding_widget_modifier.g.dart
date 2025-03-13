@@ -6,6 +6,7 @@ part of 'padding_widget_modifier.dart';
 // MixableSpecGenerator
 // **************************************************************************
 
+/// A mixin that provides spec functionality for [PaddingModifierSpec].
 mixin _$PaddingModifierSpec on WidgetModifierSpec<PaddingModifierSpec> {
   /// Creates a copy of this [PaddingModifierSpec] but with the given fields
   /// replaced with the new values.
@@ -28,13 +29,8 @@ mixin _$PaddingModifierSpec on WidgetModifierSpec<PaddingModifierSpec> {
   ///
   /// The interpolation is performed on each property of the [PaddingModifierSpec] using the appropriate
   /// interpolation method:
-  ///
   /// - [EdgeInsetsGeometry.lerp] for [padding].
 
-  /// For , the interpolation is performed using a step function.
-  /// If [t] is less than 0.5, the value from the current [PaddingModifierSpec] is used. Otherwise, the value
-  /// from the [other] [PaddingModifierSpec] is used.
-  ///
   /// This method is typically used in animations to smoothly transition between
   /// different [PaddingModifierSpec] configurations.
   @override

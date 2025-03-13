@@ -6,6 +6,7 @@ part of 'decoration_image_dto.dart';
 // MixableDtoGenerator
 // **************************************************************************
 
+/// A mixin that provides DTO functionality for [DecorationImageDto].
 mixin _$DecorationImageDto on Dto<DecorationImage> {
   /// Resolves to [DecorationImage] using the provided [MixData].
   ///
@@ -69,6 +70,7 @@ mixin _$DecorationImageDto on Dto<DecorationImage> {
         _$this.isAntiAlias,
       ];
 
+  /// Returns this instance as a [DecorationImageDto].
   DecorationImageDto get _$this => this as DecorationImageDto;
 }
 

@@ -6,6 +6,7 @@ part of 'scroll_view_widget_modifier.dart';
 // MixableSpecGenerator
 // **************************************************************************
 
+/// A mixin that provides spec functionality for [ScrollViewModifierSpec].
 mixin _$ScrollViewModifierSpec on WidgetModifierSpec<ScrollViewModifierSpec> {
   /// Creates a copy of this [ScrollViewModifierSpec] but with the given fields
   /// replaced with the new values.
@@ -95,7 +96,7 @@ mixin _$ScrollViewModifierSpec on WidgetModifierSpec<ScrollViewModifierSpec> {
 ///
 /// Use this class to configure the attributes of a [ScrollViewModifierSpec] and pass it to
 /// the [ScrollViewModifierSpec] constructor.
-final class ScrollViewModifierSpecAttribute
+class ScrollViewModifierSpecAttribute
     extends WidgetModifierSpecAttribute<ScrollViewModifierSpec>
     with Diagnosticable {
   final Axis? scrollDirection;

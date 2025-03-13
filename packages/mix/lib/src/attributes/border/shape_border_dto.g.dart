@@ -110,6 +110,8 @@ extension ListRoundedRectangleBorderMixExt on List<RoundedRectangleBorder> {
   }
 }
 
+// Error generating code for RoundedRectangleBorderDto: FormatException: Not an instance of String.
+/// A mixin that provides DTO functionality for [BeveledRectangleBorderDto].
 mixin _$BeveledRectangleBorderDto on Dto<BeveledRectangleBorder> {
   /// Resolves to [BeveledRectangleBorder] using the provided [MixData].
   ///
@@ -157,6 +159,7 @@ mixin _$BeveledRectangleBorderDto on Dto<BeveledRectangleBorder> {
         _$this.side,
       ];
 
+  /// Returns this instance as a [BeveledRectangleBorderDto].
   BeveledRectangleBorderDto get _$this => this as BeveledRectangleBorderDto;
 }
 
@@ -199,7 +202,9 @@ class BeveledRectangleBorderUtility<T extends Attribute>
   }
 }
 
+/// Extension methods to convert [BeveledRectangleBorder] to [BeveledRectangleBorderDto].
 extension BeveledRectangleBorderMixExt on BeveledRectangleBorder {
+  /// Converts this [BeveledRectangleBorder] to a [BeveledRectangleBorderDto].
   BeveledRectangleBorderDto toDto() {
     return BeveledRectangleBorderDto(
       borderRadius: borderRadius.toDto(),
@@ -208,12 +213,15 @@ extension BeveledRectangleBorderMixExt on BeveledRectangleBorder {
   }
 }
 
+/// Extension methods to convert List<[BeveledRectangleBorder]> to List<[BeveledRectangleBorderDto]>.
 extension ListBeveledRectangleBorderMixExt on List<BeveledRectangleBorder> {
+  /// Converts this List<[BeveledRectangleBorder]> to a List<[BeveledRectangleBorderDto]>.
   List<BeveledRectangleBorderDto> toDto() {
     return map((e) => e.toDto()).toList();
   }
 }
 
+/// A mixin that provides DTO functionality for [ContinuousRectangleBorderDto].
 mixin _$ContinuousRectangleBorderDto on Dto<ContinuousRectangleBorder> {
   /// Resolves to [ContinuousRectangleBorder] using the provided [MixData].
   ///
@@ -261,6 +269,7 @@ mixin _$ContinuousRectangleBorderDto on Dto<ContinuousRectangleBorder> {
         _$this.side,
       ];
 
+  /// Returns this instance as a [ContinuousRectangleBorderDto].
   ContinuousRectangleBorderDto get _$this =>
       this as ContinuousRectangleBorderDto;
 }
@@ -304,7 +313,9 @@ class ContinuousRectangleBorderUtility<T extends Attribute> extends DtoUtility<
   }
 }
 
+/// Extension methods to convert [ContinuousRectangleBorder] to [ContinuousRectangleBorderDto].
 extension ContinuousRectangleBorderMixExt on ContinuousRectangleBorder {
+  /// Converts this [ContinuousRectangleBorder] to a [ContinuousRectangleBorderDto].
   ContinuousRectangleBorderDto toDto() {
     return ContinuousRectangleBorderDto(
       borderRadius: borderRadius.toDto(),
@@ -313,13 +324,16 @@ extension ContinuousRectangleBorderMixExt on ContinuousRectangleBorder {
   }
 }
 
+/// Extension methods to convert List<[ContinuousRectangleBorder]> to List<[ContinuousRectangleBorderDto]>.
 extension ListContinuousRectangleBorderMixExt
     on List<ContinuousRectangleBorder> {
+  /// Converts this List<[ContinuousRectangleBorder]> to a List<[ContinuousRectangleBorderDto]>.
   List<ContinuousRectangleBorderDto> toDto() {
     return map((e) => e.toDto()).toList();
   }
 }
 
+/// A mixin that provides DTO functionality for [CircleBorderDto].
 mixin _$CircleBorderDto on Dto<CircleBorder> {
   /// Resolves to [CircleBorder] using the provided [MixData].
   ///
@@ -365,6 +379,7 @@ mixin _$CircleBorderDto on Dto<CircleBorder> {
         _$this.eccentricity,
       ];
 
+  /// Returns this instance as a [CircleBorderDto].
   CircleBorderDto get _$this => this as CircleBorderDto;
 }
 
@@ -405,7 +420,9 @@ class CircleBorderUtility<T extends Attribute>
   }
 }
 
+/// Extension methods to convert [CircleBorder] to [CircleBorderDto].
 extension CircleBorderMixExt on CircleBorder {
+  /// Converts this [CircleBorder] to a [CircleBorderDto].
   CircleBorderDto toDto() {
     return CircleBorderDto(
       side: side.toDto(),
@@ -414,12 +431,15 @@ extension CircleBorderMixExt on CircleBorder {
   }
 }
 
+/// Extension methods to convert List<[CircleBorder]> to List<[CircleBorderDto]>.
 extension ListCircleBorderMixExt on List<CircleBorder> {
+  /// Converts this List<[CircleBorder]> to a List<[CircleBorderDto]>.
   List<CircleBorderDto> toDto() {
     return map((e) => e.toDto()).toList();
   }
 }
 
+/// A mixin that provides DTO functionality for [StarBorderDto].
 mixin _$StarBorderDto on Dto<StarBorder> {
   /// Resolves to [StarBorder] using the provided [MixData].
   ///
@@ -481,6 +501,7 @@ mixin _$StarBorderDto on Dto<StarBorder> {
         _$this.squash,
       ];
 
+  /// Returns this instance as a [StarBorderDto].
   StarBorderDto get _$this => this as StarBorderDto;
 }
 
@@ -556,7 +577,9 @@ class StarBorderUtility<T extends Attribute>
   }
 }
 
+/// Extension methods to convert [StarBorder] to [StarBorderDto].
 extension StarBorderMixExt on StarBorder {
+  /// Converts this [StarBorder] to a [StarBorderDto].
   StarBorderDto toDto() {
     return StarBorderDto(
       side: side.toDto(),
@@ -570,12 +593,15 @@ extension StarBorderMixExt on StarBorder {
   }
 }
 
+/// Extension methods to convert List<[StarBorder]> to List<[StarBorderDto]>.
 extension ListStarBorderMixExt on List<StarBorder> {
+  /// Converts this List<[StarBorder]> to a List<[StarBorderDto]>.
   List<StarBorderDto> toDto() {
     return map((e) => e.toDto()).toList();
   }
 }
 
+/// A mixin that provides DTO functionality for [LinearBorderDto].
 mixin _$LinearBorderDto on Dto<LinearBorder> {
   /// Resolves to [LinearBorder] using the provided [MixData].
   ///
@@ -630,6 +656,7 @@ mixin _$LinearBorderDto on Dto<LinearBorder> {
         _$this.bottom,
       ];
 
+  /// Returns this instance as a [LinearBorderDto].
   LinearBorderDto get _$this => this as LinearBorderDto;
 }
 
@@ -691,7 +718,9 @@ class LinearBorderUtility<T extends Attribute>
   }
 }
 
+/// Extension methods to convert [LinearBorder] to [LinearBorderDto].
 extension LinearBorderMixExt on LinearBorder {
+  /// Converts this [LinearBorder] to a [LinearBorderDto].
   LinearBorderDto toDto() {
     return LinearBorderDto(
       side: side.toDto(),
@@ -703,12 +732,15 @@ extension LinearBorderMixExt on LinearBorder {
   }
 }
 
+/// Extension methods to convert List<[LinearBorder]> to List<[LinearBorderDto]>.
 extension ListLinearBorderMixExt on List<LinearBorder> {
+  /// Converts this List<[LinearBorder]> to a List<[LinearBorderDto]>.
   List<LinearBorderDto> toDto() {
     return map((e) => e.toDto()).toList();
   }
 }
 
+/// A mixin that provides DTO functionality for [LinearBorderEdgeDto].
 mixin _$LinearBorderEdgeDto on Dto<LinearBorderEdge> {
   /// Resolves to [LinearBorderEdge] using the provided [MixData].
   ///
@@ -754,6 +786,7 @@ mixin _$LinearBorderEdgeDto on Dto<LinearBorderEdge> {
         _$this.alignment,
       ];
 
+  /// Returns this instance as a [LinearBorderEdgeDto].
   LinearBorderEdgeDto get _$this => this as LinearBorderEdgeDto;
 }
 
@@ -794,7 +827,9 @@ class LinearBorderEdgeUtility<T extends Attribute>
   }
 }
 
+/// Extension methods to convert [LinearBorderEdge] to [LinearBorderEdgeDto].
 extension LinearBorderEdgeMixExt on LinearBorderEdge {
+  /// Converts this [LinearBorderEdge] to a [LinearBorderEdgeDto].
   LinearBorderEdgeDto toDto() {
     return LinearBorderEdgeDto(
       size: size,
@@ -803,12 +838,15 @@ extension LinearBorderEdgeMixExt on LinearBorderEdge {
   }
 }
 
+/// Extension methods to convert List<[LinearBorderEdge]> to List<[LinearBorderEdgeDto]>.
 extension ListLinearBorderEdgeMixExt on List<LinearBorderEdge> {
+  /// Converts this List<[LinearBorderEdge]> to a List<[LinearBorderEdgeDto]>.
   List<LinearBorderEdgeDto> toDto() {
     return map((e) => e.toDto()).toList();
   }
 }
 
+/// A mixin that provides DTO functionality for [StadiumBorderDto].
 mixin _$StadiumBorderDto on Dto<StadiumBorder> {
   /// Resolves to [StadiumBorder] using the provided [MixData].
   ///
@@ -851,6 +889,7 @@ mixin _$StadiumBorderDto on Dto<StadiumBorder> {
         _$this.side,
       ];
 
+  /// Returns this instance as a [StadiumBorderDto].
   StadiumBorderDto get _$this => this as StadiumBorderDto;
 }
 
@@ -884,7 +923,9 @@ class StadiumBorderUtility<T extends Attribute>
   }
 }
 
+/// Extension methods to convert [StadiumBorder] to [StadiumBorderDto].
 extension StadiumBorderMixExt on StadiumBorder {
+  /// Converts this [StadiumBorder] to a [StadiumBorderDto].
   StadiumBorderDto toDto() {
     return StadiumBorderDto(
       side: side.toDto(),
@@ -892,7 +933,9 @@ extension StadiumBorderMixExt on StadiumBorder {
   }
 }
 
+/// Extension methods to convert List<[StadiumBorder]> to List<[StadiumBorderDto]>.
 extension ListStadiumBorderMixExt on List<StadiumBorder> {
+  /// Converts this List<[StadiumBorder]> to a List<[StadiumBorderDto]>.
   List<StadiumBorderDto> toDto() {
     return map((e) => e.toDto()).toList();
   }
