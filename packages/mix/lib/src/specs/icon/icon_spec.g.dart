@@ -6,6 +6,7 @@ part of 'icon_spec.dart';
 // MixableSpecGenerator
 // **************************************************************************
 
+/// A mixin that provides spec functionality for [IconSpec].
 mixin _$IconSpec on Spec<IconSpec> {
   static IconSpec from(MixData mix) {
     return mix.attributeOf<IconSpecAttribute>()?.resolve(mix) ??
@@ -70,11 +71,9 @@ mixin _$IconSpec on Spec<IconSpec> {
   ///
   /// The interpolation is performed on each property of the [IconSpec] using the appropriate
   /// interpolation method:
-  ///
   /// - [Color.lerp] for [color].
   /// - [MixHelpers.lerpDouble] for [size] and [weight] and [grade] and [opticalSize] and [fill].
   /// - [MixHelpers.lerpShadowList] for [shadows].
-
   /// For [textDirection] and [applyTextScaling] and [animated] and [modifiers], the interpolation is performed using a step function.
   /// If [t] is less than 0.5, the value from the current [IconSpec] is used. Otherwise, the value
   /// from the [other] [IconSpec] is used.

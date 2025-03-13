@@ -2,6 +2,7 @@ import 'package:analyzer/dart/element/element.dart';
 
 import '../models/field_metadata.dart';
 import 'dart_type_utils.dart';
+import 'extensions.dart';
 import 'helpers.dart';
 import 'string_utils.dart';
 
@@ -94,6 +95,12 @@ class MethodGenerators {
         }
 
         return '$fieldName?.resolve(mix)$fallbackExpression';
+      } else if (field.isListType) {
+        // Check if the list's generic type is a DTO
+        final genericType = field.dartType.firstTypeArgument;
+        if (genericType != null && TypeUtils.isDto(genericType)) {
+          return '$fieldName?.map((e) => e.resolve(mix)).toList()$fallbackExpression';
+        }
       }
 
       return '$fieldName$fallbackExpression';

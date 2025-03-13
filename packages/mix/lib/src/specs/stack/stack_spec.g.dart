@@ -6,6 +6,7 @@ part of 'stack_spec.dart';
 // MixableSpecGenerator
 // **************************************************************************
 
+/// A mixin that provides spec functionality for [StackSpec].
 mixin _$StackSpec on Spec<StackSpec> {
   static StackSpec from(MixData mix) {
     return mix.attributeOf<StackSpecAttribute>()?.resolve(mix) ??
@@ -60,9 +61,7 @@ mixin _$StackSpec on Spec<StackSpec> {
   ///
   /// The interpolation is performed on each property of the [StackSpec] using the appropriate
   /// interpolation method:
-  ///
   /// - [AlignmentGeometry.lerp] for [alignment].
-
   /// For [fit] and [textDirection] and [clipBehavior] and [animated] and [modifiers], the interpolation is performed using a step function.
   /// If [t] is less than 0.5, the value from the current [StackSpec] is used. Otherwise, the value
   /// from the [other] [StackSpec] is used.
