@@ -1,59 +1,71 @@
-// ignore_for_file: non_constant_identifier_names
-
 import 'package:analyzer/dart/element/element.dart';
+import 'package:build/build.dart';
 import 'package:mix_annotations/mix_annotations.dart';
 import 'package:source_gen/source_gen.dart';
 
-import '../builders/attribute/extension_value.dart';
-import '../builders/attribute/mixin_dto.dart';
-import '../builders/attribute/utility_class_builder.dart';
-import '../helpers/base_generator.dart';
-import '../helpers/field_info.dart';
-import '../helpers/helpers.dart';
+import '../core/dto/dto_mixin_builder.dart';
+import '../core/dto/dto_utility_builder.dart';
+import '../core/models/dto_metadata.dart';
+import '../core/utils/base_generator.dart';
 
-class MixableDtoGenerator extends BaseMixGenerator<MixableDto> {
-  const MixableDtoGenerator();
+/// Generator for classes annotated with [MixableDto].
+///
+/// This generator produces:
+/// - A mixin with DTO functionality
+/// - A utility class for the DTO (if not skipped)
+/// - A value extension (if enabled)
+class MixableDtoGenerator extends BaseMixGenerator<MixableDto, DtoMetadata> {
+  MixableDtoGenerator() : super(const TypeChecker.fromRuntime(MixableDto));
 
   @override
-  AnnotatedClassBuilderContext<MixableDto> createClassContext(
+  Future<DtoMetadata> createMetadata(
     ClassElement element,
-    ConstantReader annotation,
-  ) {
-    return AnnotatedClassBuilderContext(
-      element: element,
-      annotation: MixableDto(
-        mergeLists: annotation.read('mergeLists').boolValue,
-        generateValueExtension:
-            annotation.read('generateValueExtension').boolValue,
-        generateUtility: annotation.read('generateUtility').boolValue,
-      ),
+    BuildStep buildStep,
+  ) async {
+    validateClassElement(element);
+
+    return DtoMetadata.fromAnnotation(
+      element,
+      ConstantReader(typeChecker.firstAnnotationOfExact(element)),
     );
   }
 
   @override
-  String generateCode(AnnotatedClassBuilderContext<MixableDto> context) {
-    final generateUtility = context.annotation.generateUtility;
-    final generateValueExtension = context.annotation.generateValueExtension;
-
-    final mixinBuilder = DtoMixinBuilder(
-      context: context,
-      type: MixinType.dto,
-    );
-
+  String generateForMetadata(DtoMetadata metadata, BuildStep buildStep) {
     final output = StringBuffer();
 
+    // Add warning ignore if necessary
+    if (metadata.fields.any((field) => field.hasDeprecated)) {
+      output.writeln(
+        '// ignore_for_file: deprecated_member_use_from_same_package',
+      );
+      output.writeln();
+    }
+
+    // Generate mixin
+    final mixinBuilder = DtoMixinBuilder(metadata);
     output.writeln(mixinBuilder.build());
+    output.writeln();
 
-    if (generateUtility) {
-      final utilityClass =
-          utilityClassBuilder(context: context, isDto: true, isSpec: false);
-      output.writeln(utilityClass.build());
+    // Generate utility class (if not skipped)
+    if (metadata.generateUtility) {
+      final utilityBuilder = DtoUtilityBuilder(metadata);
+      output.writeln(utilityBuilder.build());
+      output.writeln();
     }
 
-    if (generateValueExtension) {
-      output.writeln(toRefTypeExtension(context));
+    // Generate value extension (if enabled)
+    if (metadata.generateValueExtension) {
+      final extensionBuilder = DtoExtensionBuilder(metadata);
+      output.writeln(extensionBuilder.build());
     }
 
-    return dartFormat(output.toString());
+    return output.toString();
   }
+
+  @override
+  bool get allowAbstractClasses => false;
+
+  @override
+  String get annotationName => 'MixableDto';
 }

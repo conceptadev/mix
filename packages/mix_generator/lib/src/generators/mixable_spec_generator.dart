@@ -1,67 +1,77 @@
-// ignore_for_file: non_constant_identifier_names
-
 import 'package:analyzer/dart/element/element.dart';
+import 'package:build/build.dart';
 import 'package:mix_annotations/mix_annotations.dart';
 import 'package:source_gen/source_gen.dart';
 
-import '../builders/attribute/mixin_spec.dart';
-import '../builders/attribute/utility_class_builder.dart';
-import '../builders/spec/class_tween_spec.dart';
-import '../builders/spec/spec_attribute_builder.dart';
-import '../helpers/annotation_helpers.dart';
-import '../helpers/base_generator.dart';
-import '../helpers/field_info.dart';
-import '../helpers/helpers.dart';
+import '../core/models/spec_metadata.dart';
+import '../core/spec/spec_attribute_builder.dart';
+import '../core/spec/spec_mixin_builder.dart';
+import '../core/spec/spec_tween_builder.dart';
+import '../core/spec/spec_utility_builder.dart';
+import '../core/utils/base_generator.dart';
 
-class MixableSpecGenerator extends BaseMixGenerator<MixableSpec> {
-  const MixableSpecGenerator();
+/// Generator for classes annotated with [MixableSpec].
+///
+/// This generator produces:
+/// - A mixin with spec functionality
+/// - An attribute class for the spec
+/// - A utility class for the spec (if not skipped)
+/// - A tween class for the spec
+class MixableSpecGenerator extends BaseMixGenerator<MixableSpec, SpecMetadata> {
+  MixableSpecGenerator() : super(const TypeChecker.fromRuntime(MixableSpec));
 
   @override
-  AnnotatedClassBuilderContext<MixableSpec> createClassContext(
+  Future<SpecMetadata> createMetadata(
     ClassElement element,
-    ConstantReader annotation,
-  ) {
-    return AnnotatedClassBuilderContext(
-      element: element,
-      annotation: readMixableSpec(element),
+    BuildStep buildStep,
+  ) async {
+    validateClassElement(element);
+
+    return SpecMetadata.fromAnnotation(
+      element,
+      ConstantReader(typeChecker.firstAnnotationOfExact(element)),
     );
   }
 
   @override
-  String generateCode(AnnotatedClassBuilderContext<MixableSpec> context) {
-    final deprecatedRule = context.fields.any((e) => e.hasDeprecated)
-        ? '// ignore_for_file: deprecated_member_use_from_same_package'
-        : '';
+  String generateForMetadata(SpecMetadata metadata, BuildStep buildStep) {
+    final output = StringBuffer();
 
-    final skipUtility = context.annotation.skipUtility;
+    // Add warning ignore if necessary
+    if (metadata.fields.any((field) => field.hasDeprecated)) {
+      output.writeln(
+        '// ignore_for_file: deprecated_member_use_from_same_package',
+      );
+      output.writeln();
+    }
 
-    final specAttribute = specAttributeBuilder(
-      context: context,
-      shouldMergeLists: true,
-    );
+    // Generate mixin
+    final mixinBuilder = SpecMixinBuilder(metadata);
+    output.writeln(mixinBuilder.build());
+    output.writeln();
 
-    final utilityBuilder =
-        utilityClassBuilder(context: context, isDto: false, isSpec: true);
+    // Generate attribute class
+    final attributeBuilder = SpecAttributeBuilder(metadata);
+    output.writeln(attributeBuilder.build());
+    output.writeln();
 
-    final utilityDefinition = skipUtility ? '' : utilityBuilder.build();
+    // Generate utility class (if not skipped)
+    if (!metadata.skipUtility) {
+      final utilityBuilder = SpecUtilityBuilder(metadata);
+      output.writeln(utilityBuilder.build());
+      output.writeln();
+    }
 
-    final specMixin = specMixinBuilder(
-      context: context,
-      specAttributeName: specAttribute.definition.name,
-    );
+    // Generate tween class
+    final tweenBuilder = SpecTweenBuilder(metadata);
+    output.writeln(tweenBuilder.build());
 
-    final output = '''
-    $deprecatedRule
-    
-    $specMixin
-
-    ${specAttribute.build()}
-
-    $utilityDefinition
-
-    ${specTweenClass(context.definition)}
-    ''';
-
-    return dartFormat(output);
+    return output.toString();
   }
+
+  @override
+  bool get allowAbstractClasses => false;
+
+  @override
+  String get annotationName => 'MixableSpec';
 }

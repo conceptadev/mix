@@ -9,6 +9,7 @@ import '../../internal/mix_error.dart';
 
 part 'edge_insets_dto.g.dart';
 
+@Deprecated('Use EdgeInsetsGeometryDto instead')
 typedef SpacingDto = EdgeInsetsGeometryDto<EdgeInsetsGeometry>;
 
 @immutable

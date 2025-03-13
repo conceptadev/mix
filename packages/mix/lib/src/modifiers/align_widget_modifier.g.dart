@@ -6,6 +6,7 @@ part of 'align_widget_modifier.dart';
 // MixableSpecGenerator
 // **************************************************************************
 
+/// A mixin that provides spec functionality for [AlignModifierSpec].
 mixin _$AlignModifierSpec on WidgetModifierSpec<AlignModifierSpec> {
   /// Creates a copy of this [AlignModifierSpec] but with the given fields
   /// replaced with the new values.
@@ -32,14 +33,9 @@ mixin _$AlignModifierSpec on WidgetModifierSpec<AlignModifierSpec> {
   ///
   /// The interpolation is performed on each property of the [AlignModifierSpec] using the appropriate
   /// interpolation method:
-  ///
   /// - [AlignmentGeometry.lerp] for [alignment].
   /// - [MixHelpers.lerpDouble] for [widthFactor] and [heightFactor].
 
-  /// For , the interpolation is performed using a step function.
-  /// If [t] is less than 0.5, the value from the current [AlignModifierSpec] is used. Otherwise, the value
-  /// from the [other] [AlignModifierSpec] is used.
-  ///
   /// This method is typically used in animations to smoothly transition between
   /// different [AlignModifierSpec] configurations.
   @override
@@ -85,7 +81,7 @@ mixin _$AlignModifierSpec on WidgetModifierSpec<AlignModifierSpec> {
 ///
 /// Use this class to configure the attributes of a [AlignModifierSpec] and pass it to
 /// the [AlignModifierSpec] constructor.
-final class AlignModifierSpecAttribute
+class AlignModifierSpecAttribute
     extends WidgetModifierSpecAttribute<AlignModifierSpec> with Diagnosticable {
   final AlignmentGeometry? alignment;
   final double? widthFactor;

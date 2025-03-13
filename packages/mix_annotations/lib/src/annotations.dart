@@ -35,6 +35,10 @@ class MixableSpec {
   });
 }
 
+class MixableConstructor {
+  const MixableConstructor();
+}
+
 /// Annotation of `MixableDto` with the specified options.
 ///
 /// Indicates the generator to generate code for this class.

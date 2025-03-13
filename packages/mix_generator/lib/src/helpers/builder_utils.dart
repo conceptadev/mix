@@ -1,246 +1,154 @@
-// ignore_for_file: unnecessary-trailing-comma
+// // ignore_for_file: unnecessary-trailing-comma
 
-import 'package:analyzer/dart/element/element.dart';
-import 'package:analyzer/dart/element/type.dart';
-import 'package:build/build.dart';
-import 'package:collection/collection.dart';
-import 'package:mix_annotations/mix_annotations.dart';
-import 'package:source_gen/source_gen.dart';
+// import 'package:analyzer/dart/element/element.dart';
+// import 'package:analyzer/dart/element/type.dart';
+// import 'package:build/build.dart';
+// import 'package:collection/collection.dart';
 
-import 'field_info.dart';
-import 'type_extension.dart';
+// import 'type_extension.dart';
 
-class MixHelperRef {
-  const MixHelperRef._();
+// class MixHelperRef {
+//   const MixHelperRef._();
 
-  static String get _refName => 'MixHelpers';
+//   static String get _refName => 'MixHelpers';
 
-  static String get deepEquality => '$_refName.deepEquality';
+//   static String get deepEquality => '$_refName.deepEquality';
 
-  static String get lerpDouble => '$_refName.lerpDouble';
+//   static String get lerpDouble => '$_refName.lerpDouble';
 
-  static String get mergeList => '$_refName.mergeList';
+//   static String get mergeList => '$_refName.mergeList';
 
-  static String get lerpStrutStyle => '$_refName.lerpStrutStyle';
+//   static String get lerpStrutStyle => '$_refName.lerpStrutStyle';
 
-  static String get lerpMatrix4 => '$_refName.lerpMatrix4';
+//   static String get lerpMatrix4 => '$_refName.lerpMatrix4';
 
-  static String get lerpTextStyle => '$_refName.lerpTextStyle';
+//   static String get lerpTextStyle => '$_refName.lerpTextStyle';
 
-  static String get lerpInt => '$_refName.lerpInt';
+//   static String get lerpInt => '$_refName.lerpInt';
 
-  static String get lerpShadowList => '$_refName.lerpShadowList';
-}
+//   static String get lerpShadowList => '$_refName.lerpShadowList';
+// }
 
-Future<List<ClassElement>> getAnnotatedClasses(
-  BuildStep buildStep,
-  TypeChecker annotationTypeChecker,
-) async {
-  final resolver = buildStep.resolver;
-  final libraryElement = await resolver.libraryFor(buildStep.inputId);
+// abstract class AnnotationContext<T> {
+//   final ClassElement element;
 
-  return libraryElement.units
-      .expand((unit) => unit.classes)
-      .where((classElement) =>
-          annotationTypeChecker.hasAnnotationOfExact(classElement))
-      .toList();
-}
+//   AnnotationContext({
+//     required this.element,
+//   });
+// }
 
-abstract class AnnotationContext<T> {
-  final ClassElement element;
+// class EnumUtilityAnnotationContext extends AnnotationContext {
+//   final EnumElement enumElement;
+//   final bool generateCallMethod;
+//   EnumUtilityAnnotationContext({
+//     required super.element,
+//     required this.enumElement,
+//     required this.generateCallMethod,
+//   });
 
-  AnnotationContext({
-    required this.element,
-  });
-}
+//   String get name => element.name;
 
-sealed class ClassVisitorAnnotationContext<T> extends AnnotationContext {
-  final AnnotatedClassBuilderContext classInfo;
+//   String get generatedName => element.generatedName;
+// }
 
-  final T annotation;
-  ClassVisitorAnnotationContext({
-    required this.annotation,
-    required this.classInfo,
-    required super.element,
-  });
+// class ClassUtilityAnnotationContext extends AnnotationContext {
+//   final ClassElement valueElement;
+//   final ClassElement? mappingElement;
+//   final bool generateCallMethod;
+//   ClassUtilityAnnotationContext({
+//     required super.element,
+//     required this.valueElement,
+//     required this.mappingElement,
+//     required this.generateCallMethod,
+//   });
+// }
 
-  // String buildContructor(String params) =>
-  //     '${element.name}${_classVisitor.constructorElement.name}($params)';
-}
+// extension EnumElementX on EnumElement {
+//   List<String> get values {
+//     final valuesField = getField('values');
+//     final valuesObject = valuesField?.computeConstantValue();
 
-class SpecAnnotationContext extends ClassVisitorAnnotationContext<MixableSpec> {
-  SpecAnnotationContext({
-    required super.classInfo,
-    required super.annotation,
-    required super.element,
-  });
-}
+//     if (valuesObject != null && valuesObject.toListValue() != null) {
+//       return valuesObject
+//           .toListValue()!
+//           .map((obj) {
+//             final enumField = obj.getField('_name');
 
-class DtoAnnotationContext extends ClassVisitorAnnotationContext<MixableDto> {
-  DtoAnnotationContext({
-    required super.classInfo,
-    required super.annotation,
-    required super.element,
-  });
-}
+//             return enumField?.toStringValue();
+//           })
+//           .whereType<String>()
+//           .toList();
+//     }
 
-class EnumUtilityAnnotationContext extends AnnotationContext {
-  final EnumElement enumElement;
-  final bool generateCallMethod;
-  EnumUtilityAnnotationContext({
-    required super.element,
-    required this.enumElement,
-    required this.generateCallMethod,
-  });
+//     return [];
+//   }
+// }
 
-  String get name => element.name;
+// extension ClassElementX on ClassElement {
+//   bool get isConst => unnamedConstructor?.isConst ?? false;
 
-  String get generatedName => element.generatedName;
-}
+//   bool get hasUnamedConstructor => unnamedConstructor != null;
 
-class ClassUtilityAnnotationContext extends AnnotationContext {
-  final ClassElement valueElement;
-  final ClassElement? mappingElement;
-  final bool generateCallMethod;
-  ClassUtilityAnnotationContext({
-    required super.element,
-    required this.valueElement,
-    required this.mappingElement,
-    required this.generateCallMethod,
-  });
-}
+//   ClassElement get genericSuperType =>
+//       getGenericTypeOfSuperclass()!.element as ClassElement;
 
-extension EnumElementX on EnumElement {
-  List<String> get values {
-    final valuesField = getField('values');
-    final valuesObject = valuesField?.computeConstantValue();
+//   bool get hasDiagnosticable =>
+//       allSupertypes.any((e) => e.element.name == 'Diagnosticable');
 
-    if (valuesObject != null && valuesObject.toListValue() != null) {
-      return valuesObject
-          .toListValue()!
-          .map((obj) {
-            final enumField = obj.getField('_name');
+//   ConstructorElement get defaultConstructor {
+//     final selectedConstructor = constructors.firstWhereOrNull((element) {
+//       return element.isDefaultConstructor ||
+//           element.isUnamedConstructor ||
+//           element.isPrivateConstructor;
+//     });
+//     if (selectedConstructor == null) {
+//       throw Exception('No default constructor found for class $name');
+//     }
 
-            return enumField?.toStringValue();
-          })
-          .whereType<String>()
-          .toList();
-    }
+//     return selectedConstructor;
+//   }
 
-    return [];
-  }
-}
+//   List<String> get methodNames => methods.map((e) => e.name).toList();
 
-extension ClassElementX on ClassElement {
-  bool get isConst => unnamedConstructor?.isConst ?? false;
+//   List<String> get mixinNames => mixins.map((e) => e.displayType).toList();
 
-  bool get hasUnamedConstructor => unnamedConstructor != null;
+//   List<String> get interfaceNames =>
+//       interfaces.map((e) => e.displayType).toList();
 
-  ClassElement get genericSuperType =>
-      getGenericTypeOfSuperclass()!.element as ClassElement;
+//   DartType? getGenericTypeOfSuperclass() {
+//     final supertype = this.supertype;
+//     if (supertype != null) {
+//       return supertype.typeArguments.firstOrNull;
+//     }
 
-  bool get hasDiagnosticable =>
-      allSupertypes.any((e) => e.element.name == 'Diagnosticable');
+//     return null;
+//   }
 
-  ConstructorElement get defaultConstructor {
-    final selectedConstructor = constructors.firstWhereOrNull((element) {
-      return element.isDefaultConstructor ||
-          element.isUnamedConstructor ||
-          element.isPrivateConstructor;
-    });
-    if (selectedConstructor == null) {
-      throw Exception('No default constructor found for class $name');
-    }
+//   String get generatedName => '_\$$name';
+// }
 
-    return selectedConstructor;
-  }
+// Future<ClassElement?> getClassElementForTypeName(
+//   BuildStep buildStep,
+//   String typeName,
+// ) async {
+//   final libraryElement = await buildStep.inputLibrary;
 
-  List<String> get methodNames => methods.map((e) => e.name).toList();
+//   // Look for the type in the current library
+//   var classElement = libraryElement.getClass(typeName);
+//   if (classElement != null) {
+//     return classElement;
+//   }
 
-  List<String> get mixinNames => mixins.map((e) => e.displayType).toList();
+//   // If not found, search in the imported libraries
+//   for (var importedLibrary in libraryElement.importedLibraries) {
+//     classElement = importedLibrary.getClass(typeName);
+//     if (classElement != null) {
+//       return classElement;
+//     }
+//   }
 
-  List<String> get interfaceNames =>
-      interfaces.map((e) => e.displayType).toList();
+//   // Type not found in the current library or its imports
+//   return null;
+// }
 
-  DartType? getGenericTypeOfSuperclass() {
-    final supertype = this.supertype;
-    if (supertype != null) {
-      return supertype.typeArguments.firstOrNull;
-    }
-
-    return null;
-  }
-
-  String get generatedName => '_\$$name';
-}
-
-extension InterfaceElementX on InterfaceElement {
-  Uri get _mixUri => Uri(scheme: 'package', path: 'mix/');
-  bool get isMixRef =>
-      source.uri.scheme == _mixUri.scheme &&
-      source.uri.path.startsWith(_mixUri.path);
-}
-
-Future<ClassElement?> getClassElementForTypeName(
-  BuildStep buildStep,
-  String typeName,
-) async {
-  final libraryElement = await buildStep.inputLibrary;
-
-  // Look for the type in the current library
-  var classElement = libraryElement.getClass(typeName);
-  if (classElement != null) {
-    return classElement;
-  }
-
-  // If not found, search in the imported libraries
-  for (var importedLibrary in libraryElement.importedLibraries) {
-    classElement = importedLibrary.getClass(typeName);
-    if (classElement != null) {
-      return classElement;
-    }
-  }
-
-  // Type not found in the current library or its imports
-  return null;
-}
-
-String kDefaultValueRef = 'defaultValue';
-
-DartType? extractDtoTypeArgument(ClassElement classElement) {
-  // Check if the class itself is Dto<T>
-  if (classElement.name == 'Dto' && classElement.typeParameters.length == 1) {
-    DartType typeArgument = classElement.thisType.typeArguments.first;
-
-    return resolveTypeArgument(typeArgument);
-  }
-
-  // Traverse the class hierarchy
-  for (InterfaceType interface in classElement.allSupertypes) {
-    if (interface.element.name == 'Dto') {
-      List<DartType> typeArguments = interface.typeArguments;
-      if (typeArguments.length == 1) {
-        DartType typeArgument = typeArguments.first;
-
-        return resolveTypeArgument(typeArgument);
-      }
-    }
-  }
-
-  return null; // Type argument not found
-}
-
-DartType? resolveTypeArgument(DartType type) {
-  if (type is TypeParameterType) {
-    // If the type is a generic type parameter, resolve its bound
-    var bound = type.element.bound;
-    if (bound != null) {
-      return resolveTypeArgument(bound);
-    }
-  } else if (type is InterfaceType) {
-    // If the type is an interface type, return it as the resolved type
-    return type;
-  }
-
-  return null;
-}
+// String kDefaultValueRef = 'defaultValue';

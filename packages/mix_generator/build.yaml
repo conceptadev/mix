@@ -29,24 +29,24 @@ builders:
     auto_apply: dependents
     build_to: cache
     applies_builders: ["source_gen|combining_builder"]
-  enum_utility:
-    import: "package:mix_generator/mix_generator.dart"
-    builder_factories: ["enumUtilityDefinition"]
-    build_extensions: { ".dart": ["enum_utility.g.part"] }
-    auto_apply: dependents
-    build_to: cache
-    applies_builders: ["source_gen|combining_builder"]
-  class_utility:
-    import: "package:mix_generator/mix_generator.dart"
-    builder_factories: ["classUtilityDefinition"]
-    build_extensions: { ".dart": ["class_utility.g.part"] }
-    auto_apply: dependents
-    build_to: cache
-    applies_builders: ["source_gen|combining_builder"]
-  tokens:
-    import: "package:mix_generator/mix_generator.dart"
-    builder_factories: ["tokensDefinition"]
-    build_extensions: { ".dart": ["tokens.g.part"] }
-    auto_apply: dependents
-    build_to: cache
-    applies_builders: ["source_gen|combining_builder"]
+  # enum_utility:
+  #   import: "package:mix_generator/mix_generator.dart"
+  #   builder_factories: ["enumUtilityDefinition"]
+  #   build_extensions: { ".dart": ["enum_utility.g.part"] }
+  #   auto_apply: dependents
+  #   build_to: cache
+  #   applies_builders: ["source_gen|combining_builder"]
+  # class_utility:
+  #   import: "package:mix_generator/mix_generator.dart"
+  #   builder_factories: ["classUtilityDefinition"]
+  #   build_extensions: { ".dart": ["class_utility.g.part"] }
+  #   auto_apply: dependents
+  #   build_to: cache
+  #   applies_builders: ["source_gen|combining_builder"]
+  # tokens:
+  #   import: "package:mix_generator/mix_generator.dart"
+  #   builder_factories: ["tokensDefinition"]
+  #   build_extensions: { ".dart": ["tokens.g.part"] }
+  #   auto_apply: dependents
+  #   build_to: cache
+  #   applies_builders: ["source_gen|combining_builder"]

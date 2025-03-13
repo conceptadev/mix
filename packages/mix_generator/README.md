@@ -126,3 +126,34 @@ To generate the code for your mixable classes and Dtos, run the following comman
 ```bash
 flutter pub run build_runner build
 ```
+
+## Debugging Code Generators
+
+To debug the code generators, follow these steps:
+
+### Option 1: Using VS Code
+
+1. Open the project in VS Code.
+2. Set breakpoints in the generator code, such as:
+   - `lib/src/generators/mixable_spec_generator.dart`
+   - `lib/src/generators/mixable_dto_generator.dart`
+   - `lib/src/helpers/base_generator.dart`
+
+3. Select the "Debug build_runner" launch configuration from the Run panel.
+4. Press F5 to start debugging.
+
+### Option 2: Manual Debugging
+
+1. Run build_runner with the VM service enabled:
+   ```bash
+   dart --enable-vm-service=8888 --pause-isolates-on-start run build_runner build --verbose
+   ```
+
+2. Connect your debugger to localhost:8888.
+
+3. Resume execution once your debugger is connected.
+
+### Common Issues
+
+- Code generation for test files is disabled by default in build.yaml.
+- If you need to test generation with files in the test directory, you can temporarily modify build.yaml or use the debug_build_runner.dart script.

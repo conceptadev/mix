@@ -6,6 +6,7 @@ part of 'sized_box_widget_modifier.dart';
 // MixableSpecGenerator
 // **************************************************************************
 
+/// A mixin that provides spec functionality for [SizedBoxModifierSpec].
 mixin _$SizedBoxModifierSpec on WidgetModifierSpec<SizedBoxModifierSpec> {
   /// Creates a copy of this [SizedBoxModifierSpec] but with the given fields
   /// replaced with the new values.
@@ -30,13 +31,8 @@ mixin _$SizedBoxModifierSpec on WidgetModifierSpec<SizedBoxModifierSpec> {
   ///
   /// The interpolation is performed on each property of the [SizedBoxModifierSpec] using the appropriate
   /// interpolation method:
-  ///
   /// - [MixHelpers.lerpDouble] for [width] and [height].
 
-  /// For , the interpolation is performed using a step function.
-  /// If [t] is less than 0.5, the value from the current [SizedBoxModifierSpec] is used. Otherwise, the value
-  /// from the [other] [SizedBoxModifierSpec] is used.
-  ///
   /// This method is typically used in animations to smoothly transition between
   /// different [SizedBoxModifierSpec] configurations.
   @override
@@ -76,7 +72,7 @@ mixin _$SizedBoxModifierSpec on WidgetModifierSpec<SizedBoxModifierSpec> {
 ///
 /// Use this class to configure the attributes of a [SizedBoxModifierSpec] and pass it to
 /// the [SizedBoxModifierSpec] constructor.
-final class SizedBoxModifierSpecAttribute
+class SizedBoxModifierSpecAttribute
     extends WidgetModifierSpecAttribute<SizedBoxModifierSpec>
     with Diagnosticable {
   final double? width;
