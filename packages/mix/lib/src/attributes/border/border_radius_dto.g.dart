@@ -6,6 +6,7 @@ part of 'border_radius_dto.dart';
 // MixableDtoGenerator
 // **************************************************************************
 
+/// A mixin that provides DTO functionality for [BorderRadiusDto].
 mixin _$BorderRadiusDto on Dto<BorderRadius> {
   /// Merges the properties of this [BorderRadiusDto] with the properties of [other].
   ///
@@ -39,10 +40,13 @@ mixin _$BorderRadiusDto on Dto<BorderRadius> {
         _$this.bottomRight,
       ];
 
+  /// Returns this instance as a [BorderRadiusDto].
   BorderRadiusDto get _$this => this as BorderRadiusDto;
 }
 
+/// Extension methods to convert [BorderRadius] to [BorderRadiusDto].
 extension BorderRadiusMixExt on BorderRadius {
+  /// Converts this [BorderRadius] to a [BorderRadiusDto].
   BorderRadiusDto toDto() {
     return BorderRadiusDto(
       topLeft: topLeft,
@@ -53,12 +57,15 @@ extension BorderRadiusMixExt on BorderRadius {
   }
 }
 
+/// Extension methods to convert List<[BorderRadius]> to List<[BorderRadiusDto]>.
 extension ListBorderRadiusMixExt on List<BorderRadius> {
+  /// Converts this List<[BorderRadius]> to a List<[BorderRadiusDto]>.
   List<BorderRadiusDto> toDto() {
     return map((e) => e.toDto()).toList();
   }
 }
 
+/// A mixin that provides DTO functionality for [BorderRadiusDirectionalDto].
 mixin _$BorderRadiusDirectionalDto on Dto<BorderRadiusDirectional> {
   /// Merges the properties of this [BorderRadiusDirectionalDto] with the properties of [other].
   ///
@@ -92,10 +99,13 @@ mixin _$BorderRadiusDirectionalDto on Dto<BorderRadiusDirectional> {
         _$this.bottomEnd,
       ];
 
+  /// Returns this instance as a [BorderRadiusDirectionalDto].
   BorderRadiusDirectionalDto get _$this => this as BorderRadiusDirectionalDto;
 }
 
+/// Extension methods to convert [BorderRadiusDirectional] to [BorderRadiusDirectionalDto].
 extension BorderRadiusDirectionalMixExt on BorderRadiusDirectional {
+  /// Converts this [BorderRadiusDirectional] to a [BorderRadiusDirectionalDto].
   BorderRadiusDirectionalDto toDto() {
     return BorderRadiusDirectionalDto(
       topStart: topStart,
@@ -106,7 +116,9 @@ extension BorderRadiusDirectionalMixExt on BorderRadiusDirectional {
   }
 }
 
+/// Extension methods to convert List<[BorderRadiusDirectional]> to List<[BorderRadiusDirectionalDto]>.
 extension ListBorderRadiusDirectionalMixExt on List<BorderRadiusDirectional> {
+  /// Converts this List<[BorderRadiusDirectional]> to a List<[BorderRadiusDirectionalDto]>.
   List<BorderRadiusDirectionalDto> toDto() {
     return map((e) => e.toDto()).toList();
   }
