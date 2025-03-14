@@ -6,6 +6,7 @@ part of 'shape_border_dto.dart';
 // MixableDtoGenerator
 // **************************************************************************
 
+/// A mixin that provides DTO functionality for [RoundedRectangleBorderDto].
 mixin _$RoundedRectangleBorderDto on Dto<RoundedRectangleBorder> {
   /// Resolves to [RoundedRectangleBorder] using the provided [MixData].
   ///
@@ -53,6 +54,7 @@ mixin _$RoundedRectangleBorderDto on Dto<RoundedRectangleBorder> {
         _$this.side,
       ];
 
+  /// Returns this instance as a [RoundedRectangleBorderDto].
   RoundedRectangleBorderDto get _$this => this as RoundedRectangleBorderDto;
 }
 
@@ -95,7 +97,9 @@ class RoundedRectangleBorderUtility<T extends Attribute>
   }
 }
 
+/// Extension methods to convert [RoundedRectangleBorder] to [RoundedRectangleBorderDto].
 extension RoundedRectangleBorderMixExt on RoundedRectangleBorder {
+  /// Converts this [RoundedRectangleBorder] to a [RoundedRectangleBorderDto].
   RoundedRectangleBorderDto toDto() {
     return RoundedRectangleBorderDto(
       borderRadius: borderRadius.toDto(),
@@ -104,13 +108,14 @@ extension RoundedRectangleBorderMixExt on RoundedRectangleBorder {
   }
 }
 
+/// Extension methods to convert List<[RoundedRectangleBorder]> to List<[RoundedRectangleBorderDto]>.
 extension ListRoundedRectangleBorderMixExt on List<RoundedRectangleBorder> {
+  /// Converts this List<[RoundedRectangleBorder]> to a List<[RoundedRectangleBorderDto]>.
   List<RoundedRectangleBorderDto> toDto() {
     return map((e) => e.toDto()).toList();
   }
 }
 
-// Error generating code for RoundedRectangleBorderDto: FormatException: Not an instance of String.
 /// A mixin that provides DTO functionality for [BeveledRectangleBorderDto].
 mixin _$BeveledRectangleBorderDto on Dto<BeveledRectangleBorder> {
   /// Resolves to [BeveledRectangleBorder] using the provided [MixData].
