@@ -1,7 +1,7 @@
-import '../../builders/attribute/utility_class_builder.dart';
 import '../metadata/dto_metadata.dart';
 import '../type_registry.dart';
 import '../utils/code_builder.dart';
+import '../utils/utility_method_builder.dart';
 
 class DtoUtilityBuilder implements CodeBuilder {
   final DtoMetadata metadata;
@@ -18,7 +18,7 @@ class DtoUtilityBuilder implements CodeBuilder {
     final utilityName = '${resolvedTypeName}Utility';
 
     // Use old or new logic to generate utility fields from the ClassElement:
-    final generatedFields = MixUtilityMethods.generateUtilityFields(
+    final generatedFields = UtilityMethods.generateUtilityFields(
       dtoName,
       metadata.fields,
       typeRegistry,
@@ -43,12 +43,12 @@ class DtoUtilityBuilder implements CodeBuilder {
 
       // The methods you want in the generated class, reintroducing call()
       methods: [
-        MixUtilityMethods.generateUtilityFieldsFromClass(metadata.element),
-        MixUtilityMethods.methodOnly(
+        UtilityMethods.generateUtilityFieldsFromClass(metadata.element),
+        UtilityMethods.methodOnly(
           utilityType: dtoName,
           fields: metadata.fields,
         ),
-        MixUtilityMethods.methodCall(metadata.fields),
+        UtilityMethods.methodCall(metadata.fields),
       ],
     );
 

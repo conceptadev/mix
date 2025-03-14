@@ -23,7 +23,7 @@ class SpecAttributeBuilder implements CodeBuilder {
     final methods = <String>[];
 
     // Add resolve method
-    methods.add(MethodGenerators.generateResolveMethod(
+    methods.add(SpecMethods.generateResolveMethod(
       className: attributeName,
       constructorRef: '',
       fields: metadata.fields,
@@ -34,7 +34,7 @@ class SpecAttributeBuilder implements CodeBuilder {
     ));
 
     // Add merge method
-    methods.add(MethodGenerators.generateMergeMethod(
+    methods.add(SpecMethods.generateMergeMethod(
       className: attributeName,
       fields: metadata.fields,
       isAbstract: metadata.isAbstract,
@@ -43,7 +43,7 @@ class SpecAttributeBuilder implements CodeBuilder {
     ));
 
     // Add props getter
-    methods.add(MethodGenerators.generatePropsGetter(
+    methods.add(SpecMethods.generatePropsGetter(
       className: attributeName,
       fields: metadata.fields,
       useInternalRef: false,
@@ -51,7 +51,7 @@ class SpecAttributeBuilder implements CodeBuilder {
 
     // Add debug fill properties if needed
     if (metadata.isDiagnosticable) {
-      methods.add(MethodGenerators.generateDebugFillPropertiesMethod(
+      methods.add(SpecMethods.generateDebugFillPropertiesMethod(
         fields: metadata.fields,
         useInternalRef: false,
       ));

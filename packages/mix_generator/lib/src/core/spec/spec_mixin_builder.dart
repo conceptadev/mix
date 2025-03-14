@@ -67,7 +67,7 @@ static $className of(BuildContext context) {
     methods.add(staticMethods);
 
     if (metadata.withCopyWith && !hasCopyWith) {
-      methods.add(MethodGenerators.generateCopyWithMethod(
+      methods.add(SpecMethods.generateCopyWithMethod(
         className: className,
         constructorRef: metadata.constructorRef,
         fields: metadata.fields,
@@ -77,7 +77,7 @@ static $className of(BuildContext context) {
     }
 
     if (metadata.withLerp && !hasLerp) {
-      methods.add(MethodGenerators.generateLerpMethod(
+      methods.add(SpecMethods.generateLerpMethod(
         className: className,
         constructorRef: metadata.constructorRef,
         fields: metadata.fields,
@@ -87,7 +87,7 @@ static $className of(BuildContext context) {
     }
 
     if (metadata.withEquality && !hasProps) {
-      methods.add(MethodGenerators.generatePropsGetter(
+      methods.add(SpecMethods.generatePropsGetter(
         className: className,
         fields: metadata.fields,
         useInternalRef: true,
@@ -99,7 +99,7 @@ static $className of(BuildContext context) {
 
     // Add diagnostics methods if needed
     if (metadata.isDiagnosticable) {
-      methods.add(MethodGenerators.generateDebugFillPropertiesMethod(
+      methods.add(SpecMethods.generateDebugFillPropertiesMethod(
         fields: metadata.fields,
         useInternalRef: true,
       ));

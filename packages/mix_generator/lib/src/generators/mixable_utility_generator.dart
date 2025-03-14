@@ -6,11 +6,11 @@ import 'package:logging/logging.dart';
 import 'package:mix_annotations/mix_annotations.dart';
 import 'package:source_gen/source_gen.dart';
 
-import '../builders/attribute/utility_class_builder.dart';
 import '../core/metadata/utility_metadata.dart';
 import '../core/utils/base_generator.dart';
 import '../core/utils/constructor_utils.dart';
 import '../core/utils/extensions.dart';
+import '../core/utils/utility_method_builder.dart';
 
 /// Generator for classes annotated with [MixableFieldUtility] or [MixableUtility].
 ///
@@ -112,7 +112,7 @@ T $name() => builder($type.$name);
         continue;
       }
 
-      final statement = MixUtilityMethods.generateUtilityForConstructor(
+      final statement = UtilityMethods.generateUtilityForConstructor(
         constructor,
         skipCallMethod: !shouldGenerateCallMethod,
         mappedEl: mappingElement,

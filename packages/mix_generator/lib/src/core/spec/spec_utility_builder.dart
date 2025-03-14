@@ -1,7 +1,7 @@
-import '../../builders/attribute/utility_class_builder.dart';
 import '../metadata/spec_metadata.dart';
 import '../type_registry.dart';
 import '../utils/code_builder.dart';
+import '../utils/utility_method_builder.dart';
 
 class SpecUtilityBuilder implements CodeBuilder {
   final SpecMetadata metadata;
@@ -17,7 +17,7 @@ class SpecUtilityBuilder implements CodeBuilder {
     final utilityName = '${specName}Utility';
 
     // Use old or new logic to generate utility fields from the ClassElement:
-    final generatedFields = MixUtilityMethods.generateUtilityFields(
+    final generatedFields = UtilityMethods.generateUtilityFields(
       attributeName,
       metadata.fields,
       typeRegistry,
@@ -41,9 +41,9 @@ class SpecUtilityBuilder implements CodeBuilder {
 
       // The methods you want in the generated class, reintroducing call()
       methods: [
-        MixUtilityMethods.chainGetter(utilityName),
-        MixUtilityMethods.selfGetter(utilityName, attributeName),
-        MixUtilityMethods.methodOnly(
+        UtilityMethods.chainGetter(utilityName),
+        UtilityMethods.selfGetter(utilityName, attributeName),
+        UtilityMethods.methodOnly(
           utilityType: attributeName,
           fields: metadata.fields,
         ),

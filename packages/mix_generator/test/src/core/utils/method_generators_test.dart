@@ -42,7 +42,7 @@ void main() {
         );
 
         // Generate the merge method with all field types
-        final result = MethodGenerators.generateMergeMethod(
+        final result = SpecMethods.generateMergeMethod(
           className: 'TestClass',
           fields: [
             dtoWithTryToMerge,
@@ -108,7 +108,7 @@ void main() {
         );
 
         // Generate the merge method with both decoration fields
-        final result = MethodGenerators.generateMergeMethod(
+        final result = SpecMethods.generateMergeMethod(
           className: 'TestClass',
           fields: [boxDecorationField, shapeDecorationField],
           isAbstract: false,

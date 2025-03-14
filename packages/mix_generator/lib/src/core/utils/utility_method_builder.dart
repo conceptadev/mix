@@ -1,13 +1,13 @@
 import 'package:analyzer/dart/element/element.dart';
 
-import '../../core/metadata/field_metadata.dart';
-import '../../core/type_registry.dart';
-import '../../core/utils/constructor_utils.dart';
-import '../../core/utils/dart_type_utils.dart';
+import '../metadata/field_metadata.dart';
+import '../type_registry.dart';
+import 'constructor_utils.dart';
+import 'dart_type_utils.dart';
 
 /// Utility methods for generating attribute utility classes
-class MixUtilityMethods {
-  const MixUtilityMethods._();
+class UtilityMethods {
+  const UtilityMethods._();
 
   /// Generates the utility statements for public consts
   /// static methods of `mappingElement` in the context

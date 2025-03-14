@@ -1,7 +1,8 @@
 // lib/src/builders/dto/dto_mixin_builder.dart
 import '../metadata/dto_metadata.dart';
 import '../utils/code_builder.dart';
-import '../utils/method_generators.dart';
+import '../utils/common_method_builder.dart';
+import '../utils/dto_method_builder.dart';
 
 class DtoMixinBuilder extends CodeBuilder {
   final DtoMetadata metadata;
@@ -28,7 +29,7 @@ class DtoMixinBuilder extends CodeBuilder {
 
     // Only generate methods that aren't already defined
     final resolveMethod = !hasResolve
-        ? MethodGenerators.generateResolveMethod(
+        ? DtoMethods.generateResolveMethod(
             className: metadata.name,
             constructorRef: '',
             fields: metadata.fields,
@@ -40,7 +41,7 @@ class DtoMixinBuilder extends CodeBuilder {
         : '';
 
     final mergeMethod = !hasMerge
-        ? MethodGenerators.generateMergeMethod(
+        ? DtoMethods.generateMergeMethod(
             className: metadata.name,
             fields: metadata.fields,
             isAbstract: false,
@@ -56,7 +57,7 @@ class DtoMixinBuilder extends CodeBuilder {
     }
 
     final propsGetter = !hasProps
-        ? MethodGenerators.generatePropsGetter(
+        ? CommonMethods.generatePropsGetter(
             className: metadata.name,
             fields: metadata.fields,
             useInternalRef: true,

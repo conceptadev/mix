@@ -9,7 +9,6 @@
 /// ```dart
 /// const mixable = MixableSpec();
 /// ```
-@Deprecated('Use Mixable instead')
 class MixableSpec {
   /// Whether to generate a `copyWith` method for the class.
   final bool withCopyWith;
@@ -88,7 +87,6 @@ class MixableUtility {
 /// class for the DTO. It defaults to `true`.
 ///
 /// If the annotated class contains a merge method, it will not be generated
-@Deprecated('Use Mixable instead')
 class MixableDto {
   /// If true it will merge the items in the list in its position
   /// if false list items will just be added to the list
