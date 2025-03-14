@@ -1,245 +1,250 @@
 import 'package:analyzer/dart/element/element.dart';
 
-import '../../core/models/field_metadata.dart';
+import '../../core/metadata/field_metadata.dart';
 import '../../core/type_registry.dart';
 import '../../core/utils/constructor_utils.dart';
 import '../../core/utils/dart_type_utils.dart';
-import '../../core/utils/extensions.dart';
 
-/// Generates the utility statements for public consts
-/// static methods of `mappingElement` in the context
-///
-/// For example:
-/// T staticValue() => builder(ClassElement.staticValue);
-List<String> generateUtilityFieldsFromClass(ClassElement classElement) {
-  final fieldStatements = <String>[];
+/// Utility methods for generating attribute utility classes
+class MixUtilityMethods {
+  const MixUtilityMethods._();
 
-  final constructors = classElement.constructors.where((constructor) {
-    return isValidConstructor(constructor);
-  });
+  /// Generates the utility statements for public consts
+  /// static methods of `mappingElement` in the context
+  ///
+  /// For example:
+  /// T staticValue() => builder(ClassElement.staticValue);
+  static String generateUtilityFieldsFromClass(ClassElement classElement) {
+    final fieldStatements = <String>[];
 
-  for (var constructor in constructors) {
-    final utilityConstructor = generateUtilityForConstructor(
-      constructor,
-      skipCallMethod: true,
-    );
-    if (utilityConstructor.isNotEmpty) {
-      fieldStatements.add(utilityConstructor);
-    }
-  }
+    final constructors = classElement.constructors.where((constructor) {
+      return isValidConstructor(constructor);
+    });
 
-  return fieldStatements;
-}
-
-String generateUtilityForConstructor(
-  ConstructorElement constructor, {
-  bool skipCallMethod = false,
-  ClassElement? mappedEl,
-}) {
-  final isConst = constructor.isConst;
-  final isUnamed = constructor.name.isEmpty;
-
-  mappedEl ??= constructor.enclosingElement as ClassElement;
-
-  if (isUnamed && skipCallMethod) return '';
-
-  final name = constructor.name.isEmpty ? '' : '.${constructor.name}';
-  final methodName = constructor.name.isEmpty ? 'call' : constructor.name;
-  final type = mappedEl.name;
-
-  final parameters = constructor.parameters;
-
-  final constStatement = isConst && parameters.isEmpty ? 'const' : '';
-
-  final signatureRequiredParams = <String>[];
-  final invocationRequiredParams = <String>[];
-  final signatureOptionalParams = <String>[];
-  final invocationOptionalParams = <String>[];
-  final signatureNamedParams = <String>[];
-  final invocationNamedParams = <String>[];
-
-  for (var param in parameters) {
-    final paramName = param.name;
-    final paramType = param.type.getDisplayString(withNullability: true);
-    final defaultValue =
-        param.defaultValueCode != null ? ' = ${param.defaultValueCode}' : '';
-
-    if (param.isPositional) {
-      if (param.isRequiredPositional) {
-        signatureRequiredParams.add('$paramType $paramName$defaultValue');
-        invocationRequiredParams.add(paramName);
-      } else {
-        signatureOptionalParams.add('$paramType $paramName$defaultValue');
-        invocationOptionalParams.add(paramName);
+    for (var constructor in constructors) {
+      final utilityConstructor = generateUtilityForConstructor(
+        constructor,
+        skipCallMethod: true,
+      );
+      if (utilityConstructor.isNotEmpty) {
+        fieldStatements.add(utilityConstructor);
       }
-    } else if (param.isNamed) {
-      final requiredParam = param.isRequiredNamed ? 'required' : '';
-      signatureNamedParams
-          .add('$requiredParam $paramType $paramName$defaultValue');
-      invocationNamedParams.add('$paramName: $paramName');
     }
+
+    return fieldStatements.join('\n');
   }
 
-  final signatureParams = [
-    ...signatureRequiredParams,
-    if (signatureOptionalParams.isNotEmpty)
-      '[${signatureOptionalParams.join(', ')}]',
-    if (signatureNamedParams.isNotEmpty) '{${signatureNamedParams.join(', ')}}',
-  ].join(', ');
+  static String generateUtilityForConstructor(
+    ConstructorElement constructor, {
+    bool skipCallMethod = false,
+    ClassElement? mappedEl,
+  }) {
+    final isConst = constructor.isConst;
+    final isUnamed = constructor.name.isEmpty;
 
-  final invocationParams = [
-    ...invocationRequiredParams,
-    if (invocationOptionalParams.isNotEmpty)
-      invocationOptionalParams.join(', '),
-    if (invocationNamedParams.isNotEmpty) invocationNamedParams.join(', '),
-  ].join(', ');
+    mappedEl ??= constructor.enclosingElement as ClassElement;
 
-  final signature = 'T $methodName($signatureParams)';
-  final invocation = 'builder($constStatement $type$name($invocationParams))';
+    if (isUnamed && skipCallMethod) return '';
 
-  final totalCharacters = signature.length + invocation.length;
-  String signatureLine;
+    final name = constructor.name.isEmpty ? '' : '.${constructor.name}';
+    final methodName = constructor.name.isEmpty ? 'call' : constructor.name;
+    final type = mappedEl.name;
 
-  if (totalCharacters > 80) {
-    signatureLine = '$signature { return $invocation;} ';
-  } else {
-    signatureLine = '$signature => $invocation;';
-  }
+    final parameters = constructor.parameters;
 
-  return '''
+    final constStatement = isConst && parameters.isEmpty ? 'const' : '';
+
+    final signatureRequiredParams = <String>[];
+    final invocationRequiredParams = <String>[];
+    final signatureOptionalParams = <String>[];
+    final invocationOptionalParams = <String>[];
+    final signatureNamedParams = <String>[];
+    final invocationNamedParams = <String>[];
+
+    for (var param in parameters) {
+      final paramName = param.name;
+      final paramType = param.type.getDisplayString(withNullability: true);
+      final defaultValue =
+          param.defaultValueCode != null ? ' = ${param.defaultValueCode}' : '';
+
+      if (param.isPositional) {
+        if (param.isRequiredPositional) {
+          signatureRequiredParams.add('$paramType $paramName$defaultValue');
+          invocationRequiredParams.add(paramName);
+        } else {
+          signatureOptionalParams.add('$paramType $paramName$defaultValue');
+          invocationOptionalParams.add(paramName);
+        }
+      } else if (param.isNamed) {
+        final requiredParam = param.isRequiredNamed ? 'required' : '';
+        signatureNamedParams
+            .add('$requiredParam $paramType $paramName$defaultValue');
+        invocationNamedParams.add('$paramName: $paramName');
+      }
+    }
+
+    final signatureParams = [
+      ...signatureRequiredParams,
+      if (signatureOptionalParams.isNotEmpty)
+        '[${signatureOptionalParams.join(', ')}]',
+      if (signatureNamedParams.isNotEmpty)
+        '{${signatureNamedParams.join(', ')}}',
+    ].join(', ');
+
+    final invocationParams = [
+      ...invocationRequiredParams,
+      if (invocationOptionalParams.isNotEmpty)
+        invocationOptionalParams.join(', '),
+      if (invocationNamedParams.isNotEmpty) invocationNamedParams.join(', '),
+    ].join(', ');
+
+    final signature = 'T $methodName($signatureParams)';
+    final invocation = 'builder($constStatement $type$name($invocationParams))';
+
+    final totalCharacters = signature.length + invocation.length;
+    String signatureLine;
+
+    if (totalCharacters > 80) {
+      signatureLine = '$signature { return $invocation;} ';
+    } else {
+      signatureLine = '$signature => $invocation;';
+    }
+
+    return '''
 /// Creates an [Attribute] instance using the [$type$name] constructor.
 $signatureLine
 ''';
-}
+  }
 
-/// Generates utility fields for the given attribute class and fields.
-List<String> generateUtilityFields(
-  String className,
-  List<FieldMetadata> fields,
-  TypeRegistry typeRefs,
-) {
-  final expressions = <String>[];
+  /// Generates utility fields for the given attribute class and fields.
+  static List<String> generateUtilityFields(
+    String className,
+    List<FieldMetadata> fields,
+    TypeRegistry typeRefs,
+  ) {
+    final expressions = <String>[];
 
-  for (final field in fields) {
-    final annotatedUtilities = field.annotation.utilities ?? [];
-    final propertyName = field.name;
-    final utilityType =
-        typeRefs.getUtilityForField(propertyName, field.dartType);
-    final utilityName = utilityType?.name ?? 'DynamicUtility';
+    for (final field in fields) {
+      final annotatedUtilities = field.annotation.utilities ?? [];
+      final propertyName = field.name;
+      final utilityType =
+          typeRefs.getUtilityForField(propertyName, field.dartType);
+      final utilityName = utilityType?.name ?? 'DynamicUtility';
 
-    final utilityExpression = '$utilityName((v) => only($propertyName: v))';
+      final utilityExpression = '$utilityName((v) => only($propertyName: v))';
 
-    if (annotatedUtilities.isEmpty) {
-      expressions.add(
-        _generateUtilityField(
-          docPath: '$className.${field.name}',
-          aliasName: field.name,
-          utilityExpression: utilityExpression,
-        ),
-      );
-    } else {
-      for (final extraUtil in annotatedUtilities) {
-        final aliasName = extraUtil.alias ?? propertyName;
+      if (annotatedUtilities.isEmpty) {
+        expressions.add(
+          _generateUtilityField(
+            docPath: '$className.${field.name}',
+            aliasName: field.name,
+            utilityExpression: utilityExpression,
+          ),
+        );
+      } else {
+        for (final extraUtil in annotatedUtilities) {
+          final aliasName = extraUtil.alias ?? propertyName;
 
-        String aliasUtilityName;
+          String aliasUtilityName;
 
-        if (extraUtil.typeAsString != null) {
-          aliasUtilityName =
-              typeRefs.getUtilityNameFromTypeName(extraUtil.typeAsString!);
-        } else {
-          aliasUtilityName = utilityName;
-        }
-
-        expressions.add(_generateUtilityField(
-          docPath: '$className.$propertyName',
-          aliasName: aliasName,
-          utilityExpression: utilityExpression,
-        ));
-
-        final nestedUtilities = extraUtil.properties;
-
-        for (final nestedUtility in nestedUtilities) {
-          // Extract path and alias using a simpler approach
-          String? pathName;
-          String? nestedAliasName;
-
-          // Convert to string and parse
-          final String utilityStr = nestedUtility.toString();
-
-          // Parse the record format: (path: 'value', alias: 'value')
-          if (utilityStr.startsWith('(') && utilityStr.endsWith(')')) {
-            final content = utilityStr.substring(1, utilityStr.length - 1);
-            final parts = content.split(',');
-
-            for (final part in parts) {
-              final keyValue = part.trim().split(':');
-              if (keyValue.length == 2) {
-                final key = keyValue[0].trim();
-                final value = keyValue[1].trim();
-
-                // Remove quotes if present
-                final cleanValue = value.startsWith("'") && value.endsWith("'")
-                    ? value.substring(1, value.length - 1)
-                    : value;
-
-                if (key == 'path') {
-                  pathName = cleanValue;
-                } else if (key == 'alias') {
-                  nestedAliasName = cleanValue;
-                }
-              }
-            }
-          }
-
-          // Skip if we couldn't extract both path and alias
-          if (pathName == null || nestedAliasName == null) {
-            continue;
+          if (extraUtil.typeAsString != null) {
+            aliasUtilityName =
+                typeRefs.getUtilityNameFromTypeName(extraUtil.typeAsString!);
+          } else {
+            aliasUtilityName = utilityName;
           }
 
           expressions.add(_generateUtilityField(
-            docPath: '$className.$aliasName.$pathName',
-            aliasName: nestedAliasName,
-            utilityExpression: '$aliasName.$pathName',
+            docPath: '$className.$propertyName',
+            aliasName: aliasName,
+            utilityExpression: utilityExpression,
           ));
+
+          final nestedUtilities = extraUtil.properties;
+
+          for (final nestedUtility in nestedUtilities) {
+            // Extract path and alias using a simpler approach
+            String? pathName;
+            String? nestedAliasName;
+
+            // Convert to string and parse
+            final String utilityStr = nestedUtility.toString();
+
+            // Parse the record format: (path: 'value', alias: 'value')
+            if (utilityStr.startsWith('(') && utilityStr.endsWith(')')) {
+              final content = utilityStr.substring(1, utilityStr.length - 1);
+              final parts = content.split(',');
+
+              for (final part in parts) {
+                final keyValue = part.trim().split(':');
+                if (keyValue.length == 2) {
+                  final key = keyValue[0].trim();
+                  final value = keyValue[1].trim();
+
+                  // Remove quotes if present
+                  final cleanValue =
+                      value.startsWith("'") && value.endsWith("'")
+                          ? value.substring(1, value.length - 1)
+                          : value;
+
+                  if (key == 'path') {
+                    pathName = cleanValue;
+                  } else if (key == 'alias') {
+                    nestedAliasName = cleanValue;
+                  }
+                }
+              }
+            }
+
+            // Skip if we couldn't extract both path and alias
+            if (pathName == null || nestedAliasName == null) {
+              continue;
+            }
+
+            expressions.add(_generateUtilityField(
+              docPath: '$className.$aliasName.$pathName',
+              aliasName: nestedAliasName,
+              utilityExpression: '$aliasName.$pathName',
+            ));
+          }
         }
       }
     }
+
+    return expressions;
   }
 
-  return expressions;
-}
-
-/// Generates a utility field string based on the provided parameters.
-String _generateUtilityField({
-  required String docPath,
-  required String aliasName,
-  required String utilityExpression,
-}) {
-  return '''
+  /// Generates a utility field string based on the provided parameters.
+  static String _generateUtilityField({
+    required String docPath,
+    required String aliasName,
+    required String utilityExpression,
+  }) {
+    return '''
 /// Utility for defining [$docPath]
 late final $aliasName = $utilityExpression;
 ''';
-}
+  }
 
-String utilityMethodOnlyBuilder({
-  required String utilityType,
-  required List<FieldMetadata> fields,
-}) {
-  final fieldStatements = fields.map((e) {
-    final fieldName = e.name;
+  static String methodOnly({
+    required String utilityType,
+    required List<FieldMetadata> fields,
+  }) {
+    final fieldStatements = fields.map((e) {
+      final fieldName = e.name;
 
-    return '$fieldName: $fieldName,';
-  }).join('\n');
+      return '$fieldName: $fieldName,';
+    }).join('\n');
 
-  final optionalParameters = fields.map((e) {
-    final fieldType = e.representationType?.name ?? e.type;
+    final optionalParameters = fields.map((e) {
+      final fieldType = e.representationType?.name ?? e.type;
 
-    return '$fieldType? ${e.name},';
-  }).join('\n');
+      return '$fieldType? ${e.name},';
+    }).join('\n');
 
-  final onlyParams = fields.isEmpty ? '' : '{$optionalParameters}';
+    final onlyParams = fields.isEmpty ? '' : '{$optionalParameters}';
 
-  return '''
+    return '''
   /// Returns a new [$utilityType] with the specified properties.
   @override
   T only($onlyParams) {
@@ -248,50 +253,46 @@ String utilityMethodOnlyBuilder({
     ));
   }
 ''';
-}
+  }
 
-/// Creates a getter to enable chained configuration.
-String utilityMethodChainGetter(String utilityName) {
-  // This one-liner might not need wrapping, but you could apply `_wrapIfLong`.
-  return '''
+  /// Creates a getter to enable chained configuration.
+  static String chainGetter(String utilityName) {
+    // This one-liner might not need wrapping, but you could apply `_wrapIfLong`.
+    return '''
   $utilityName<T> get chain => $utilityName(attributeBuilder, mutable: true);
   ''';
-}
+  }
 
-/// Creates a static getter that returns the self utility.
-String utilityMethodSelfGetter(String utilityName, String attributeName) {
-  // Also short, but you can wrap if you prefer consistent formatting.
-  return '''
+  /// Creates a static getter that returns the self utility.
+  static String selfGetter(String utilityName, String attributeName) {
+    // Also short, but you can wrap if you prefer consistent formatting.
+    return '''
   static $utilityName<$attributeName> get self => $utilityName((v) => v);
   ''';
-}
+  }
 
-String utilityMethodCallBuilder(List<FieldMetadata> fields) {
-  final optionalParameters = fields.map((field) {
-    final fieldType = field.isDto
-        ? TypeUtils.getResolvedTypeFromDto(field.dartType)
-        : field.isDtoListType
-            ? 'List<${TypeUtils.getResolvedTypeFromDto(field.dartType.firstTypeArgument!)}>'
-            : field.type;
+  static String methodCall(List<FieldMetadata> fields) {
+    final optionalParameters = fields.map((field) {
+      final fieldType = TypeUtils.getResolvedTypeFromDto(field.dartType);
 
-    return '$fieldType? ${field.name},';
-  }).join('\n');
+      return '$fieldType? ${field.name},';
+    }).join('\n');
 
-  final fieldStatements = fields.map((field) {
-    final fieldName = field.name;
+    final fieldStatements = fields.map((field) {
+      final fieldName = field.name;
 
-    if (field.isDtoListType) {
-      return '$fieldName: $fieldName?.map((e) => e.toDto()).toList(),';
-    }
+      if (field.isDtoListType) {
+        return '$fieldName: $fieldName?.map((e) => e.toDto()).toList(),';
+      }
 
-    if (field.isDto) {
-      return '$fieldName: $fieldName?.toDto(),';
-    }
+      if (field.isDto) {
+        return '$fieldName: $fieldName?.toDto(),';
+      }
 
-    return '$fieldName: $fieldName,';
-  }).join('\n');
+      return '$fieldName: $fieldName,';
+    }).join('\n');
 
-  return '''
+    return '''
 T call({
   $optionalParameters
 }) {
@@ -300,4 +301,5 @@ T call({
   );
 }
 ''';
+  }
 }

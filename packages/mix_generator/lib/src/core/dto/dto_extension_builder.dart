@@ -1,4 +1,4 @@
-import '../models/dto_metadata.dart';
+import '../metadata/dto_metadata.dart';
 import '../utils/code_builder.dart';
 import '../utils/dart_type_utils.dart';
 import '../utils/extensions.dart';

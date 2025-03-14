@@ -14,13 +14,36 @@ class TypeRegistry {
   TypeRegistry._();
 
   bool hasTryToMerge(String typeName) {
-    print('typeName: $typeName');
-    final hasTryToMerge = tryToMerge.contains(typeName);
-    if (!hasTryToMerge) {
-      return tryToMerge.contains('${typeName}Dto');
+    print('hasTryToMerge checking: $typeName');
+
+    // Check if the exact type name is in the set
+    if (tryToMerge.contains(typeName)) {
+      print('  Found exact match for $typeName in tryToMerge set');
+
+      return true;
     }
 
-    return hasTryToMerge;
+    // Check if the type name with 'Dto' suffix is in the set
+    if (tryToMerge.contains('${typeName}Dto')) {
+      print('  Found ${typeName}Dto in tryToMerge set');
+
+      return true;
+    }
+
+    // Check if the type is a subclass of a type in the set
+    // For example, BoxDecorationDto is a subclass of DecorationDto
+    if (typeName == 'BoxDecorationDto' || typeName == 'ShapeDecorationDto') {
+      final result = tryToMerge.contains('DecorationDto');
+      print(
+        '  $typeName is a subclass of DecorationDto, which ${result ? 'is' : 'is not'} in tryToMerge set',
+      );
+
+      return result;
+    }
+
+    print('  No match found for $typeName in tryToMerge set');
+
+    return false;
   }
 
   /// Gets the utility type for a DartType
@@ -143,9 +166,10 @@ final ignoredUtilities = [
   'SpacingSideUtility',
   'FontFamilyUtility',
   'GapUtility',
+  'FontSizeUtility',
+  'StrokeAlignUtility',
 ];
 
-/// Map of DTO class names to their corresponding Flutter type names
 /// Map of DTO class names to their corresponding Flutter type names
 final dtos = {
   'AnimatedDataDto': 'AnimatedData',
@@ -159,6 +183,8 @@ final dtos = {
   'EdgeInsetsGeometryDto': 'EdgeInsetsGeometry',
   'GradientDto': 'Gradient',
   'LinearBorderEdgeDto': 'LinearBorderEdge',
+  'OutlinedBorderDto': 'OutlinedBorder',
+  'RoundedRectangleBorderDto': 'RoundedRectangleBorder',
   'ShadowDto': 'Shadow',
   'ShapeBorderDto': 'ShapeBorder',
   'SpacingSideDto': 'SpacingSide',
@@ -168,14 +194,19 @@ final dtos = {
   'TextStyleData': 'TextStyle',
   'TextStyleDto': 'TextStyle',
   'WidgetModifiersDataDto': 'WidgetModifiersData',
+  'BorderDto': 'Border',
+  'BorderRadiusDto': 'BorderRadius',
+  'EdgeInsetsDto': 'EdgeInsets',
+  'BoxConstraintsDto': 'BoxConstraints',
+  'FilterQualityDto': 'FilterQuality',
 };
 
-/// Map of utility class names to their corresponding value types
 /// Map of utility class names to their corresponding value types
 final utilities = {
   'AlignmentUtility': 'Alignment',
   'AlignmentDirectionalUtility': 'AlignmentDirectional',
   'AlignmentGeometryUtility': 'AlignmentGeometry',
+  'AnimatedUtility': 'AnimatedDataDto',
   'AxisUtility': 'Axis',
   'BoolUtility': 'bool',
   'BlendModeUtility': 'BlendMode',
@@ -186,14 +217,18 @@ final utilities = {
   'ClipUtility': 'Clip',
   'ColorUtility': 'ColorDto',
   'ColorListUtility': 'List<ColorDto>',
+  'ConstraintsUtility': 'ConstraintsDto',
   'CrossAxisAlignmentUtility': 'CrossAxisAlignment',
   'CurveUtility': 'Curve',
+  'DecorationUtility': 'DecorationDto',
   'DoubleUtility': 'double',
   'DurationUtility': 'Duration',
+  'EdgeInsetsGeometryUtility': 'EdgeInsetsGeometryDto',
   'FlexFitUtility': 'FlexFit',
   'FontFeatureUtility': 'FontFeature',
   'FontStyleUtility': 'FontStyle',
   'FontWeightUtility': 'FontWeight',
+  'GapUtility': 'SpacingSideDto',
   'GradientUtility': 'GradientDto',
   'GradientTransformUtility': 'GradientTransform',
   'ImageProviderUtility': 'ImageProvider<Object>',
@@ -207,8 +242,11 @@ final utilities = {
   'RadiusUtility': 'Radius',
   'RectUtility': 'Rect',
   'ShadowListUtility': 'List<ShadowDto>',
+  'SpecModifierUtility': 'WidgetModifiersDataDto',
   'StackFitUtility': 'StackFit',
   'ShapeBorderUtility': 'ShapeBorderDto',
+  'SpacingUtility': 'EdgeInsetsGeometryDto',
+  'StringUtility': 'String',
   'TableBorderUtility': 'TableBorder',
   'TableCellVerticalAlignmentUtility': 'TableCellVerticalAlignment',
   'TableColumnWidthUtility': 'TableColumnWidth',
@@ -222,8 +260,11 @@ final utilities = {
   'TextOverflowUtility': 'TextOverflow',
   'TextScalerUtility': 'TextScaler',
   'TextWidthBasisUtility': 'TextWidthBasis',
+  'TileModeUtility': 'TileMode',
   'VerticalDirectionUtility': 'VerticalDirection',
+  'WidgetModifiersUtility': 'WidgetModifiersDataDto',
   'WrapAlignmentUtility': 'WrapAlignment',
+  'FilterQualityUtility': 'FilterQuality',
 };
 
 /// Map of DTO class names to whether they have a tryToMerge method
@@ -234,7 +275,6 @@ final tryToMerge = {
   'DecorationDto',
   'EdgeInsetsGeometryDto',
   'GradientDto',
-  'OutlinedBorderDto',
   'ShapeBorderDto',
   'ShadowDto',
   'TextStyleDto',

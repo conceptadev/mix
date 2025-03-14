@@ -1,4 +1,4 @@
-import '../models/spec_metadata.dart';
+import '../metadata/spec_metadata.dart';
 import '../utils/code_builder.dart';
 
 /// Builds a tween class for a spec.

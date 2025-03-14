@@ -7,7 +7,7 @@ import 'package:mix_annotations/mix_annotations.dart';
 import 'package:source_gen/source_gen.dart';
 
 import '../builders/attribute/utility_class_builder.dart';
-import '../core/models/utility_metadata.dart';
+import '../core/metadata/utility_metadata.dart';
 import '../core/utils/base_generator.dart';
 import '../core/utils/constructor_utils.dart';
 import '../core/utils/extensions.dart';
@@ -112,7 +112,7 @@ T $name() => builder($type.$name);
         continue;
       }
 
-      final statement = generateUtilityForConstructor(
+      final statement = MixUtilityMethods.generateUtilityForConstructor(
         constructor,
         skipCallMethod: !shouldGenerateCallMethod,
         mappedEl: mappingElement,

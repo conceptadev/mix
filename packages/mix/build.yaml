@@ -9,9 +9,6 @@ targets:
         generate_for:
           - lib/**/*_dto.dart
           
-      mix_generator|enum_utility:
-        generate_for:
-          - lib/**/*_util.dart
-      mix_generator|class_utility:
+      mix_generator|utility:
         generate_for:
           - lib/**/*_util.dart

@@ -110,7 +110,9 @@ void main() {
       expect(ignoredUtilities, contains('SpacingSideUtility'));
       expect(ignoredUtilities, contains('FontFamilyUtility'));
       expect(ignoredUtilities, contains('GapUtility'));
-      expect(ignoredUtilities.length, equals(3));
+      expect(ignoredUtilities, contains('FontSizeUtility'));
+      expect(ignoredUtilities, contains('StrokeAlignUtility'));
+      expect(ignoredUtilities.length, equals(5));
     });
 
     test('getRepresentationForType returns correct representation type',
@@ -188,6 +190,47 @@ void main() {
       // Test with lowercase first letter
       expect(
           registry.getUtilityNameFromTypeName('color'), equals('ColorUtility'));
+    });
+
+    test('hasTryToMerge correctly identifies types with tryToMerge method',
+        () async {
+      // Define test code with a DTO class that has a static tryToMerge method
+      const testCode = '''
+        class TestDto extends Dto<Object> {
+          final String value;
+          
+          const TestDto({required this.value});
+          
+          static TestDto tryToMerge(TestDto? a, TestDto b) {
+            return a ?? b;
+          }
+        }
+      ''';
+
+      // Resolve the library with our test code
+      final library = await resolveMixTestLibrary(testCode);
+
+      // Get the TypeRegistry instance
+      final registry = TypeRegistry.instance;
+
+      // Add TestDto to the tryToMerge set temporarily for the test
+      final originalTryToMerge = Set<String>.from(tryToMerge);
+      tryToMerge.add('TestDto');
+
+      try {
+        // Verify hasTryToMerge returns true for TestDto
+        expect(registry.hasTryToMerge('TestDto'), isTrue);
+
+        // Verify hasTryToMerge returns true for Test (without Dto suffix)
+        expect(registry.hasTryToMerge('Test'), isTrue);
+
+        // Verify hasTryToMerge returns false for an unrelated type
+        expect(registry.hasTryToMerge('UnrelatedType'), isFalse);
+      } finally {
+        // Restore the original tryToMerge set
+        tryToMerge.clear();
+        tryToMerge.addAll(originalTryToMerge);
+      }
     });
 
     test('handles hardcoded utility mappings', () {

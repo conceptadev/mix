@@ -1,5 +1,5 @@
 // lib/src/builders/dto/dto_mixin_builder.dart
-import '../models/dto_metadata.dart';
+import '../metadata/dto_metadata.dart';
 import '../utils/code_builder.dart';
 import '../utils/method_generators.dart';
 
@@ -13,10 +13,18 @@ class DtoMixinBuilder extends CodeBuilder {
     final mixinName = '_\$${metadata.name}';
     final resolvedTypeName = metadata.resolvedType.name;
 
+    print(
+      'Building DTO mixin for ${metadata.name} (resolved type: $resolvedTypeName)',
+    );
+
     // Check if custom methods are already defined
     final hasResolve = metadata.element.methods.any((m) => m.name == 'resolve');
     final hasMerge = metadata.element.methods.any((m) => m.name == 'merge');
     final hasProps = metadata.element.methods.any((m) => m.name == 'props');
+
+    print(
+      '  Custom methods defined: resolve=$hasResolve, merge=$hasMerge, props=$hasProps',
+    );
 
     // Only generate methods that aren't already defined
     final resolveMethod = !hasResolve
@@ -41,6 +49,12 @@ class DtoMixinBuilder extends CodeBuilder {
           )
         : '';
 
+    if (hasMerge) {
+      print('  Using custom merge method defined in ${metadata.name}');
+    } else {
+      print('  Generated merge method for ${metadata.name}');
+    }
+
     final propsGetter = !hasProps
         ? MethodGenerators.generatePropsGetter(
             className: metadata.name,
@@ -48,6 +62,8 @@ class DtoMixinBuilder extends CodeBuilder {
             useInternalRef: true,
           )
         : '';
+
+    print('  Mixin generation complete for ${metadata.name}');
 
     return '''
 /// A mixin that provides DTO functionality for [${metadata.name}].

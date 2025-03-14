@@ -1,6 +1,6 @@
 import 'package:analyzer/dart/element/element.dart';
 
-import '../models/field_metadata.dart';
+import 'field_metadata.dart';
 
 /// Base class for metadata used in code generation.
 ///

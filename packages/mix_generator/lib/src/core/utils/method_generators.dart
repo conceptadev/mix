@@ -1,6 +1,6 @@
 import 'package:analyzer/dart/element/element.dart';
 
-import '../models/field_metadata.dart';
+import '../metadata/field_metadata.dart';
 import '../type_registry.dart';
 import 'dart_type_utils.dart';
 import 'helpers.dart';
@@ -18,15 +18,25 @@ class MethodGenerators {
     required bool shouldMergeLists,
     required bool useInternalRef,
   }) {
+    print('Generating merge method for $className');
+    print('  Fields: ${fields.map((f) => f.name).join(', ')}');
+
     final mergeStatements = fields.map((field) {
       final fieldName = field.name;
       final fieldNameRef = useInternalRef ? field.asInternalRef : fieldName;
+      print(
+        '  Processing field: $fieldName (isDto: ${field.isDto}, isSpecAttribute: ${field.isSpecAttribute}, isListType: ${field.isListType})',
+      );
+
       // Handle list fields with proper null-aware spread
       if (field.isListType) {
+        print('    Field is a list type');
+
         return shouldMergeLists
             ? '$fieldName: MixHelpers.mergeList($fieldNameRef, other.$fieldName),'
             : '$fieldName: [...? $fieldNameRef, ...? other.$fieldName],';
       } else if (field.isDto || field.isSpecAttribute) {
+        print('    Field is a DTO or SpecAttribute');
         final representationType = field.representationType;
         // Build a default merge statement using the merge() method if available
         final defaultMerge =
@@ -35,27 +45,49 @@ class MethodGenerators {
         // Extract the element from the representation type (if it exists)
         final representationElement = representationType?.type?.element;
         if (representationElement == null) {
+          print('    No representation element found, using default merge');
+
           return defaultMerge;
         }
 
+        final elementName = representationElement.name ?? '';
+        print('    Representation element name: $elementName');
+
+        // Special case for BoxDecorationDto and ShapeDecorationDto
+        // They should use DecorationDto.tryToMerge
+        if (elementName == 'BoxDecorationDto' ||
+            elementName == 'ShapeDecorationDto') {
+          print('    Using DecorationDto.tryToMerge for $elementName');
+
+          return '$fieldName: DecorationDto.tryToMerge($fieldNameRef, other.$fieldName),';
+        }
+
         // Check if a custom merge method (e.g., tryToMerge) exists for this element
-        final hasCustomMerge = TypeRegistry.instance.hasTryToMerge(
-          representationElement.name ?? '',
-        );
+        final hasCustomMerge = TypeRegistry.instance.hasTryToMerge(elementName);
+        print('    Has custom merge (tryToMerge): $hasCustomMerge');
 
         // Use the custom merge if available; otherwise, fall back to the default merge
-        return hasCustomMerge
-            ? '$fieldName: ${representationElement.name ?? ''}.tryToMerge($fieldNameRef, other.$fieldName),'
-            : defaultMerge;
+        if (hasCustomMerge) {
+          print('    Using custom tryToMerge method');
+
+          return '$fieldName: $elementName.tryToMerge($fieldNameRef, other.$fieldName),';
+        }
+        print('    Using default merge method');
+
+        return defaultMerge;
       }
 
       // Default: use the value from other if non-null, otherwise fallback to this value
+      print('    Using simple merge (other ?? this)');
+
       return '$fieldName: other.$fieldName ?? $fieldNameRef,';
     }).join('\n');
 
     final thisRef = useInternalRef ? '_\$this' : 'this';
     final returnCode =
         fields.isEmpty ? 'other' : '$className($mergeStatements)';
+
+    print('Generated merge method for $className');
 
     return '''
     /// Merges the properties of this [$className] with the properties of [other].

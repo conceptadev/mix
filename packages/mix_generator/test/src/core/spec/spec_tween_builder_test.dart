@@ -1,5 +1,5 @@
-import 'package:mix_generator/src/core/models/field_metadata.dart';
-import 'package:mix_generator/src/core/models/spec_metadata.dart';
+import 'package:mix_generator/src/core/metadata/field_metadata.dart';
+import 'package:mix_generator/src/core/metadata/spec_metadata.dart';
 import 'package:mix_generator/src/core/spec/spec_tween_builder.dart';
 import 'package:test/test.dart';
 

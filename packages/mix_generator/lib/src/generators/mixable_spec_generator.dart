@@ -4,7 +4,7 @@ import 'package:logging/logging.dart';
 import 'package:mix_annotations/mix_annotations.dart';
 import 'package:source_gen/source_gen.dart';
 
-import '../core/models/spec_metadata.dart';
+import '../core/metadata/spec_metadata.dart';
 import '../core/spec/spec_attribute_builder.dart';
 import '../core/spec/spec_mixin_builder.dart';
 import '../core/spec/spec_tween_builder.dart';

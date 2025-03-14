@@ -1,4 +1,4 @@
-import '../models/spec_metadata.dart';
+import '../metadata/spec_metadata.dart';
 import '../utils/code_builder.dart';
 import '../utils/helpers.dart';
 import '../utils/method_generators.dart';
