@@ -143,7 +143,7 @@ mixin _$BoxSpec on Spec<BoxSpec> {
     properties.add(DiagnosticsProperty('constraints', _$this.constraints,
         defaultValue: null));
     properties.add(DiagnosticsProperty('decoration', _$this.decoration,
-        defaultValue: null));
+        expandableValue: true, defaultValue: null));
     properties.add(DiagnosticsProperty(
         'foregroundDecoration', _$this.foregroundDecoration,
         defaultValue: null));
@@ -172,11 +172,10 @@ mixin _$BoxSpec on Spec<BoxSpec> {
 ///
 /// Use this class to configure the attributes of a [BoxSpec] and pass it to
 /// the [BoxSpec] constructor.
-final class BoxSpecAttribute extends SpecAttribute<BoxSpec>
-    with Diagnosticable {
+class BoxSpecAttribute extends SpecAttribute<BoxSpec> with Diagnosticable {
   final AlignmentGeometry? alignment;
-  final SpacingDto? padding;
-  final SpacingDto? margin;
+  final EdgeInsetsGeometryDto? padding;
+  final EdgeInsetsGeometryDto? margin;
   final BoxConstraintsDto? constraints;
   final DecorationDto? decoration;
   final DecorationDto? foregroundDecoration;
@@ -243,8 +242,8 @@ final class BoxSpecAttribute extends SpecAttribute<BoxSpec>
 
     return BoxSpecAttribute(
       alignment: other.alignment ?? alignment,
-      padding: padding?.merge(other.padding) ?? other.padding,
-      margin: margin?.merge(other.margin) ?? other.margin,
+      padding: EdgeInsetsGeometryDto.tryToMerge(padding, other.padding),
+      margin: EdgeInsetsGeometryDto.tryToMerge(margin, other.margin),
       constraints: constraints?.merge(other.constraints) ?? other.constraints,
       decoration: DecorationDto.tryToMerge(decoration, other.decoration),
       foregroundDecoration: DecorationDto.tryToMerge(
@@ -319,10 +318,10 @@ class BoxSpecUtility<T extends Attribute>
   late final alignment = AlignmentGeometryUtility((v) => only(alignment: v));
 
   /// Utility for defining [BoxSpecAttribute.padding]
-  late final padding = SpacingUtility((v) => only(padding: v));
+  late final padding = EdgeInsetsGeometryUtility((v) => only(padding: v));
 
   /// Utility for defining [BoxSpecAttribute.margin]
-  late final margin = SpacingUtility((v) => only(margin: v));
+  late final margin = EdgeInsetsGeometryUtility((v) => only(margin: v));
 
   /// Utility for defining [BoxSpecAttribute.constraints]
   late final constraints = BoxConstraintsUtility((v) => only(constraints: v));
@@ -422,8 +421,8 @@ class BoxSpecUtility<T extends Attribute>
   @override
   T only({
     AlignmentGeometry? alignment,
-    SpacingDto? padding,
-    SpacingDto? margin,
+    EdgeInsetsGeometryDto? padding,
+    EdgeInsetsGeometryDto? margin,
     BoxConstraintsDto? constraints,
     DecorationDto? decoration,
     DecorationDto? foregroundDecoration,

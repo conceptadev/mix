@@ -57,7 +57,7 @@ mixin _$TextStyleData on Dto<TextStyle> {
   /// Properties from [other] that are null will fall back
   /// to the values from this instance.
   @override
-  TextStyleData merge(covariant TextStyleData? other) {
+  TextStyleData merge(TextStyleData? other) {
     if (other == null) return _$this;
 
     return TextStyleData(
