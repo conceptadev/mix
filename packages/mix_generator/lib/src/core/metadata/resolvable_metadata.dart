@@ -1,7 +1,6 @@
 import 'package:analyzer/dart/element/element.dart';
-import 'package:source_gen/source_gen.dart';
+import 'package:mix_annotations/mix_annotations.dart';
 
-import '../utils/annotation_utils.dart';
 import '../utils/constructor_utils.dart';
 import '../utils/dart_type_utils.dart';
 import 'base_metadata.dart';
@@ -42,9 +41,8 @@ class ResolvableMetadata extends BaseMetadata {
   /// Creates a ResolvableMetadata from a class element and its annotation
   static ResolvableMetadata fromAnnotation(
     ClassElement element,
-    ConstantReader annotation,
+    MixableDto annotation,
   ) {
-    final mixableDto = readMixableDto(element);
     final constructor = findTargetConstructor(element);
     final parameters = ParameterMetadata.extractFromConstructor(element);
     final resolvedElement = _getResolvedType(element);
@@ -76,9 +74,9 @@ class ResolvableMetadata extends BaseMetadata {
       ),
       constructor: constructor,
       isAbstract: element.isAbstract,
-      mergeLists: mixableDto.mergeLists,
-      generateValueExtension: mixableDto.generateValueExtension,
-      generateUtility: mixableDto.generateUtility,
+      mergeLists: annotation.mergeLists,
+      generateValueExtension: annotation.generateValueExtension,
+      generateUtility: annotation.generateUtility,
       resolvedElement: resolvedElement,
       resolvableFields: resolvedFields,
     );

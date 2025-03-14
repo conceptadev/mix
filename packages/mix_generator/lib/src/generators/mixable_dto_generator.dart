@@ -8,6 +8,7 @@ import '../core/metadata/resolvable_metadata.dart';
 import '../core/resolvable/resolvable_extension_builder.dart';
 import '../core/resolvable/resolvable_mixin_builder.dart';
 import '../core/resolvable/resolvable_utility_builder.dart';
+import '../core/utils/annotation_utils.dart';
 import '../core/utils/base_generator.dart';
 
 /// Generator for classes annotated with [MixableDto].
@@ -29,10 +30,9 @@ class MixableDtoGenerator
   ) async {
     validateClassElement(element);
 
-    final metadata = ResolvableMetadata.fromAnnotation(
-      element,
-      ConstantReader(typeChecker.firstAnnotationOfExact(element)),
-    );
+    final annotation = readMixableDto(element);
+
+    final metadata = ResolvableMetadata.fromAnnotation(element, annotation);
 
     return metadata;
   }
