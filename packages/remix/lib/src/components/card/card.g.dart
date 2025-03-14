@@ -104,7 +104,7 @@ mixin _$CardSpec on Spec<CardSpec> {
 ///
 /// Use this class to configure the attributes of a [CardSpec] and pass it to
 /// the [CardSpec] constructor.
-base class CardSpecAttribute extends SpecAttribute<CardSpec>
+base class CardSpecAttribute extends StyleAttribute<CardSpec>
     with Diagnosticable {
   final BoxSpecAttribute? container;
 

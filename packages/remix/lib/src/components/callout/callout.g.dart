@@ -105,7 +105,7 @@ mixin _$CalloutSpec on Spec<CalloutSpec> {
 ///
 /// Use this class to configure the attributes of a [CalloutSpec] and pass it to
 /// the [CalloutSpec] constructor.
-base class CalloutSpecAttribute extends SpecAttribute<CalloutSpec> {
+base class CalloutSpecAttribute extends StyleAttribute<CalloutSpec> {
   final FlexBoxSpecAttribute? container;
   final IconSpecAttribute? icon;
   final TextSpecAttribute? text;

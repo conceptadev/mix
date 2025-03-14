@@ -129,7 +129,7 @@ mixin _$SegmentedControlSpec on Spec<SegmentedControlSpec> {
 ///
 /// Use this class to configure the attributes of a [SegmentedControlSpec] and pass it to
 /// the [SegmentedControlSpec] constructor.
-class SegmentedControlSpecAttribute extends SpecAttribute<SegmentedControlSpec>
+class SegmentedControlSpecAttribute extends StyleAttribute<SegmentedControlSpec>
     with Diagnosticable {
   final BoxSpecAttribute? container;
   final FlexSpecAttribute? flex;
@@ -425,7 +425,7 @@ mixin _$SegmentButtonSpec on Spec<SegmentButtonSpec> {
 ///
 /// Use this class to configure the attributes of a [SegmentButtonSpec] and pass it to
 /// the [SegmentButtonSpec] constructor.
-class SegmentButtonSpecAttribute extends SpecAttribute<SegmentButtonSpec>
+class SegmentButtonSpecAttribute extends StyleAttribute<SegmentButtonSpec>
     with Diagnosticable {
   final BoxSpecAttribute? container;
   final FlexSpecAttribute? flex;

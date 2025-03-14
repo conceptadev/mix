@@ -306,7 +306,7 @@ mixin _$TextFieldSpec on Spec<TextFieldSpec> {
 ///
 /// Use this class to configure the attributes of a [TextFieldSpec] and pass it to
 /// the [TextFieldSpec] constructor.
-class TextFieldSpecAttribute extends SpecAttribute<TextFieldSpec>
+class TextFieldSpecAttribute extends StyleAttribute<TextFieldSpec>
     with Diagnosticable {
   final TextStyleDto? style;
   final TextAlign? textAlign;

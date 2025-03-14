@@ -118,7 +118,7 @@ mixin _$ChipSpec on Spec<ChipSpec> {
 ///
 /// Use this class to configure the attributes of a [ChipSpec] and pass it to
 /// the [ChipSpec] constructor.
-class ChipSpecAttribute extends SpecAttribute<ChipSpec> with Diagnosticable {
+class ChipSpecAttribute extends StyleAttribute<ChipSpec> with Diagnosticable {
   final FlexBoxSpecAttribute? container;
   final IconSpecAttribute? icon;
   final TextSpecAttribute? label;

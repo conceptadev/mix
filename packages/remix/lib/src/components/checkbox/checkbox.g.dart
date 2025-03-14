@@ -127,7 +127,7 @@ mixin _$CheckboxSpec on Spec<CheckboxSpec> {
 ///
 /// Use this class to configure the attributes of a [CheckboxSpec] and pass it to
 /// the [CheckboxSpec] constructor.
-base class CheckboxSpecAttribute extends SpecAttribute<CheckboxSpec>
+base class CheckboxSpecAttribute extends StyleAttribute<CheckboxSpec>
     with Diagnosticable {
   final BoxSpecAttribute? indicatorContainer;
   final IconSpecAttribute? indicator;

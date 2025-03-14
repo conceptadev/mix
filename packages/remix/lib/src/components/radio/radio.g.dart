@@ -126,7 +126,7 @@ mixin _$RadioSpec on Spec<RadioSpec> {
 ///
 /// Use this class to configure the attributes of a [RadioSpec] and pass it to
 /// the [RadioSpec] constructor.
-base class RadioSpecAttribute extends SpecAttribute<RadioSpec>
+base class RadioSpecAttribute extends StyleAttribute<RadioSpec>
     with Diagnosticable {
   final BoxSpecAttribute? indicatorContainer;
   final BoxSpecAttribute? indicator;

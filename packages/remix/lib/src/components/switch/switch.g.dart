@@ -110,7 +110,7 @@ mixin _$SwitchSpec on Spec<SwitchSpec> {
 ///
 /// Use this class to configure the attributes of a [SwitchSpec] and pass it to
 /// the [SwitchSpec] constructor.
-base class SwitchSpecAttribute extends SpecAttribute<SwitchSpec>
+base class SwitchSpecAttribute extends StyleAttribute<SwitchSpec>
     with Diagnosticable {
   final BoxSpecAttribute? container;
   final BoxSpecAttribute? indicator;

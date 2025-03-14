@@ -96,7 +96,7 @@ mixin _$BadgeSpec on Spec<BadgeSpec> {
 ///
 /// Use this class to configure the attributes of a [BadgeSpec] and pass it to
 /// the [BadgeSpec] constructor.
-base class BadgeSpecAttribute extends SpecAttribute<BadgeSpec> {
+base class BadgeSpecAttribute extends StyleAttribute<BadgeSpec> {
   final BoxSpecAttribute? container;
   final TextSpecAttribute? label;
 

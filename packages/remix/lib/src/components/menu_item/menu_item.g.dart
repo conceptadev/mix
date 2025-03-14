@@ -133,7 +133,7 @@ mixin _$MenuItemSpec on Spec<MenuItemSpec> {
 ///
 /// Use this class to configure the attributes of a [MenuItemSpec] and pass it to
 /// the [MenuItemSpec] constructor.
-class MenuItemSpecAttribute extends SpecAttribute<MenuItemSpec>
+class MenuItemSpecAttribute extends StyleAttribute<MenuItemSpec>
     with Diagnosticable {
   final FlexBoxSpecAttribute? container;
   final FlexBoxSpecAttribute? titleSubtitleContainer;

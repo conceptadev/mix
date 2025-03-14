@@ -122,7 +122,7 @@ mixin _$ProgressSpec on Spec<ProgressSpec> {
 ///
 /// Use this class to configure the attributes of a [ProgressSpec] and pass it to
 /// the [ProgressSpec] constructor.
-base class ProgressSpecAttribute extends SpecAttribute<ProgressSpec>
+base class ProgressSpecAttribute extends StyleAttribute<ProgressSpec>
     with Diagnosticable {
   final BoxSpecAttribute? container;
   final BoxSpecAttribute? track;

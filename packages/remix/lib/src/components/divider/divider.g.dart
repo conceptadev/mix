@@ -104,7 +104,7 @@ mixin _$DividerSpec on Spec<DividerSpec> {
 ///
 /// Use this class to configure the attributes of a [DividerSpec] and pass it to
 /// the [DividerSpec] constructor.
-base class DividerSpecAttribute extends SpecAttribute<DividerSpec>
+base class DividerSpecAttribute extends StyleAttribute<DividerSpec>
     with Diagnosticable {
   final BoxSpecAttribute? container;
 

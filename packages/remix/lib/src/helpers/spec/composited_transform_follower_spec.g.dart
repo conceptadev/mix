@@ -125,7 +125,8 @@ mixin _$CompositedTransformFollowerSpec
 /// Use this class to configure the attributes of a [CompositedTransformFollowerSpec] and pass it to
 /// the [CompositedTransformFollowerSpec] constructor.
 class CompositedTransformFollowerSpecAttribute
-    extends SpecAttribute<CompositedTransformFollowerSpec> with Diagnosticable {
+    extends StyleAttribute<CompositedTransformFollowerSpec>
+    with Diagnosticable {
   final Offset? offset;
   final AlignmentGeometry? targetAnchor;
   final AlignmentGeometry? followerAnchor;
