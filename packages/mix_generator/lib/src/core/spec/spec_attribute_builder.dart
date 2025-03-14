@@ -24,7 +24,7 @@ class SpecAttributeBuilder implements CodeBuilder {
     final methods = <String>[];
 
     // Add resolve method
-    methods.add(ResolvableStyleMethods.generateResolveMethod(
+    methods.add(ResolvableMethods.generateResolveMethod(
       className: attributeName,
       constructorRef: '',
       fields: metadata.parameters,
@@ -35,7 +35,7 @@ class SpecAttributeBuilder implements CodeBuilder {
     ));
 
     // Add merge method
-    methods.add(ResolvableStyleMethods.generateMergeMethod(
+    methods.add(ResolvableMethods.generateMergeMethod(
       className: attributeName,
       fields: metadata.parameters,
       isAbstract: metadata.isAbstract,

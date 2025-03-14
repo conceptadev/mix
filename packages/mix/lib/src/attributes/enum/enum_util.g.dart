@@ -3,7 +3,7 @@
 part of 'enum_util.dart';
 
 // **************************************************************************
-// MixableEnumUtilityGenerator
+// MixableUtilityGenerator
 // **************************************************************************
 
 /// {@template vertical_direction_utility}

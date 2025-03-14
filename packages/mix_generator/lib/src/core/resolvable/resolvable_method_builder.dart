@@ -2,8 +2,8 @@ import '../metadata/field_metadata.dart';
 import '../utils/helpers.dart';
 import '../utils/string_utils.dart';
 
-class ResolvableStyleMethods {
-  const ResolvableStyleMethods._();
+class ResolvableMethods {
+  const ResolvableMethods._();
 
   /// Generates a resolve method implementation
   static String generateResolveMethod({
@@ -26,7 +26,7 @@ class ResolvableStyleMethods {
         return '$fieldName?.map((e) => e.resolve(mix)).toList()$fallbackExpression';
       }
 
-      if (field.isResolvable) {
+      if (field.hasResolvable) {
         return '$fieldName?.resolve(mix)$fallbackExpression';
       }
 
@@ -73,7 +73,7 @@ class ResolvableStyleMethods {
         return shouldMergeLists
             ? '$fieldName: MixHelpers.mergeList($fieldNameRef, other.$fieldName),'
             : '$fieldName: [...? $fieldNameRef, ...? other.$fieldName],';
-      } else if (field.isResolvable) {
+      } else if (field.hasResolvable) {
         final resolvable = field.resolvable;
         // Build a default merge statement using the merge() method if available
         final defaultMerge =

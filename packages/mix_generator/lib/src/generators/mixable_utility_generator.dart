@@ -26,29 +26,30 @@ class MixableUtilityGenerator
 
   /// Generates the utility mixin code for an enum utility.
   String _generateEnumUtilityMixin(UtilityMetadata metadata) {
-    final className = metadata.name;
-    final generatedClassName = metadata.element.generatedName;
-    final enumElement = metadata.enumElement!;
-    final enumTypeName = enumElement.name;
-    final enumValues = metadata.enumValues;
-    final shouldGenerateCallMethod =
-        metadata.generateHelpers == GenerateUtilityHelpers.callMethod;
+    try {
+      final className = metadata.name;
+      final generatedClassName = metadata.element.generatedName;
+      final enumElement = metadata.enumElement!;
+      final enumTypeName = enumElement.name;
+      final enumValues = metadata.enumValues;
+      final shouldGenerateCallMethod =
+          (metadata.generateHelpers & GenerateHelpers.all) != 0;
 
-    final callMethod = shouldGenerateCallMethod
-        ? '''
+      final callMethod = shouldGenerateCallMethod
+          ? '''
 /// Creates an [Attribute] instance with the specified $enumTypeName value.
 T call($enumTypeName value) => builder(value);
 '''
-        : '';
+          : '';
 
-    final fieldStatements = enumValues.map((fieldName) {
-      return '''
-/// Creates an [Attribute] instance with [$enumTypeName.$fieldName] value.
-T $fieldName() => builder($enumTypeName.$fieldName);
+      final enumMethods = enumValues.map((value) {
+        return '''
+/// Creates an [Attribute] instance with [$enumTypeName.$value] value.
+T $value() => builder($enumTypeName.$value);
 ''';
-    }).join('\n');
+      }).join('\n');
 
-    final comments = '''
+      final comments = '''
 /// {@template ${className.snakecase}}
 /// A utility class for creating [Attribute] instances from [$enumTypeName] values.
 ///
@@ -56,15 +57,18 @@ T $fieldName() => builder($enumTypeName.$fieldName);
 /// from predefined [$enumTypeName] values.
 /// {@endtemplate}''';
 
-    return '''
+      return '''
 $comments
-mixin $generatedClassName<T extends Attribute> on MixUtility<T,$enumTypeName> {
-
-$fieldStatements
-
+mixin $generatedClassName<T extends Attribute> on MixUtility<T, $enumTypeName> {
+$enumMethods
 $callMethod
 }
 ''';
+    } catch (e) {
+      _logger.warning('Error generating code for ${metadata.name}: $e');
+
+      return '// Error generating code for ${metadata.name}: $e';
+    }
   }
 
   /// Generates the utility mixin code for a class utility.

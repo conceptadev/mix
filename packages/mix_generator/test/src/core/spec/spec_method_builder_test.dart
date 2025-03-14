@@ -42,7 +42,7 @@ void main() {
         );
 
         // Generate the merge method with all field types
-        final result = ResolvableStyleMethods.generateMergeMethod(
+        final result = ResolvableMethods.generateMergeMethod(
           className: 'TestClass',
           fields: [
             dtoWithTryToMerge,
@@ -108,7 +108,7 @@ void main() {
         );
 
         // Generate the merge method with both decoration fields
-        final result = ResolvableStyleMethods.generateMergeMethod(
+        final result = ResolvableMethods.generateMergeMethod(
           className: 'TestClass',
           fields: [boxDecorationField, shapeDecorationField],
           isAbstract: false,
@@ -199,6 +199,24 @@ class _TestFieldMetadata implements ParameterMetadata {
 
   @override
   DartType get dartType => _TestDartType(isList: _isList);
+
+  @override
+  bool get hasResolvable => _isDto;
+
+  @override
+  FieldResolvableMetadata? get resolvable =>
+      _isDto && _representationElementName != null
+          ? FieldResolvableMetadata(
+              name: _name,
+              type: _representationElementName.endsWith('DecorationDto')
+                  ? 'DecorationDto'
+                  : _representationElementName,
+              tryToMergeType:
+                  _representationElementName.endsWith('DecorationDto') ||
+                      TypeRegistry.instance
+                          .hasTryToMerge(_representationElementName),
+            )
+          : null;
 
   @override
   dynamic noSuchMethod(Invocation invocation) => null;

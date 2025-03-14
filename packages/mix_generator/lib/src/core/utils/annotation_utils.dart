@@ -1,6 +1,7 @@
 import 'package:analyzer/dart/constant/value.dart';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/type.dart';
+import 'package:logging/logging.dart';
 import 'package:mix_annotations/mix_annotations.dart';
 import 'package:source_gen/source_gen.dart';
 
@@ -69,15 +70,8 @@ MixableFieldUtility? readMixableFieldUtility(Element element) {
 
 /// Reads a [MixableFieldUtility] from a [ConstantReader]
 MixableFieldUtility _readMixableFieldUtility(ConstantReader reader) {
-  String? utilityName;
-
   final typeReader = reader.peek('type');
-  if (typeReader?.isString == true) {
-    utilityName = typeReader!.stringValue;
-  } else if (typeReader?.isType == true) {
-    utilityName = typeReader!.typeValue.element!.name!;
-  }
-
+  final utilityName = _getUtilityTypeNameFromReader(typeReader);
   final utilityAlias = reader.peek('alias')?.stringValue;
 
   final properties = reader
@@ -92,6 +86,26 @@ MixableFieldUtility _readMixableFieldUtility(ConstantReader reader) {
     type: utilityName,
     properties: properties,
   );
+}
+
+/// Extracts a utility type name from a reader
+String? _getUtilityTypeNameFromReader(ConstantReader? typeReader) {
+  if (typeReader == null) return null;
+
+  if (typeReader.isString) {
+    return typeReader.stringValue;
+  } else if (typeReader.isType) {
+    final typeName = typeReader.typeValue.element?.name;
+
+    return typeName != null ? _ensureUtilitySuffix(typeName) : null;
+  }
+
+  return null;
+}
+
+/// Ensures a type name has the 'Utility' suffix
+String _ensureUtilitySuffix(String typeName) {
+  return typeName.endsWith('Utility') ? typeName : '${typeName}Utility';
 }
 
 /// Reads the [MixableFieldDto] annotation from an element
@@ -240,15 +254,37 @@ FieldUtilityMetadata? createFieldUtilityMetadata({
 }) {
   final typeRegistry = TypeRegistry.instance;
 
+  // If we have a utility annotation with a type, use that directly
+  if (utilityAnnotation?.type != null) {
+    final utilityName = utilityAnnotation?.alias ?? name;
+    String utilityType;
+
+    if (utilityAnnotation!.typeAsString != null) {
+      utilityType = utilityAnnotation.typeAsString!;
+    } else {
+      final typeObj = utilityAnnotation.type!;
+      final typeStr = typeObj.toString();
+      utilityType = _ensureUtilitySuffix(typeStr);
+    }
+
+    return FieldUtilityMetadata(name: utilityName, type: utilityType);
+  }
+
   // Get utility type from registry
   final utilityTypeName = typeRegistry.getUtilityForType(dartType);
-  final hasUtility = utilityTypeName != null || utilityAnnotation != null;
-
-  if (!hasUtility) return null;
+  if (utilityTypeName == null && utilityAnnotation == null) return null;
 
   // Determine name and type from annotations or defaults
   final utilityName = utilityAnnotation?.alias ?? name;
-  final utilityType = utilityAnnotation?.typeAsString ?? utilityTypeName ?? '';
+  String utilityType;
+
+  if (utilityAnnotation?.typeAsString != null) {
+    utilityType = utilityAnnotation!.typeAsString!;
+  } else if (utilityTypeName != null) {
+    utilityType = utilityTypeName;
+  } else {
+    utilityType = 'DynamicUtility';
+  }
 
   return FieldUtilityMetadata(name: utilityName, type: utilityType);
 }
@@ -257,21 +293,44 @@ FieldUtilityMetadata? createFieldUtilityMetadata({
 FieldResolvableMetadata? createFieldResolvableMetadata({
   required String name,
   required DartType dartType,
-  MixableFieldDto? resolvableAnnotation,
+  required MixableFieldDto? resolvableAnnotation,
 }) {
-  final typeRegistry = TypeRegistry.instance;
+  try {
+    final typeRegistry = TypeRegistry.instance;
 
-  // Get resolvable type from registry or annotation
-  final registryType = typeRegistry.getResolvableForType(dartType);
-  final resolvableTypeName = resolvableAnnotation?.typeAsString ?? registryType;
+    // Get resolvable type from registry or annotation
+    final registryType = typeRegistry.getResolvableForType(dartType);
 
-  if (resolvableTypeName == null) return null;
+    String? resolvableTypeName;
+    if (resolvableAnnotation?.type != null) {
+      if (resolvableAnnotation!.type is Type) {
+        resolvableTypeName = (resolvableAnnotation.type as Type).toString();
+      } else if (resolvableAnnotation.type is String) {
+        resolvableTypeName = resolvableAnnotation.type as String;
+      } else {
+        // Log a warning if the type is not a Type or String
+        Logger('AnnotationUtils').warning(
+          'Unexpected type for MixableFieldDto.type: ${resolvableAnnotation.type.runtimeType}',
+        );
+      }
+    } else {
+      resolvableTypeName = registryType;
+    }
 
-  return FieldResolvableMetadata(
-    name: name,
-    type: resolvableTypeName,
-    tryToMergeType: typeRegistry.hasTryToMerge(resolvableTypeName),
-  );
+    if (resolvableTypeName == null) return null;
+
+    return FieldResolvableMetadata(
+      name: name,
+      type: resolvableTypeName,
+      tryToMergeType: typeRegistry.hasTryToMerge(resolvableTypeName),
+    );
+  } catch (e) {
+    Logger('AnnotationUtils').warning(
+      'Error creating resolvable metadata for $name: $e',
+    );
+
+    return null;
+  }
 }
 
 /// Creates utility properties for a field

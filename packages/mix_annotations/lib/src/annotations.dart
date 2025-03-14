@@ -191,14 +191,6 @@ class MixableFieldDto {
 
   /// Creates a new instance of `MixableFieldDto` with the specified [type].
   const MixableFieldDto({this.type});
-
-  /// Returns the string representation of the type.
-  ///
-  /// If the type is a `String`, it is returned as is. Otherwise, the
-  /// `toString()` method is called on the type.
-  String? get typeAsString {
-    return type is String ? type as String : type?.toString();
-  }
 }
 
 /// A typedef representing a utility property for code generation.
@@ -274,6 +266,7 @@ class MixableFieldUtility {
 /// The `MixableClassUtility` annotation is used to configure utility generation
 /// for a class. It allows specifying a type to map field utilities and whether
 /// to generate a call method.
+@Deprecated('Use MixableUtility instead')
 class MixableClassUtility {
   /// Map you should use to map the field utilities
   final Type? type;
@@ -293,6 +286,7 @@ class MixableClassUtility {
 ///
 /// The `MixableEnumUtility` annotation is used to configure utility generation
 /// for an enum. It allows specifying whether to generate a call method.
+@Deprecated('Use MixableUtility instead')
 class MixableEnumUtility {
   /// Map you should use to map the field utilities
 
@@ -370,7 +364,7 @@ class GenerateSpecHelpers {
 class GenerateHelpers {
   static const none = 0;
   // needs to be as high as the highest helpers
-  static const all = 0 | 1 | 2 | 3 | 4 | 5;
+  static const all = 1 | 2 | 3 | 4 | 5;
 
   const GenerateHelpers._();
 }

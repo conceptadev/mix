@@ -21,7 +21,7 @@ class ResolvableMixinBuilder extends CodeBuilder {
 
     // Only generate methods that aren't already defined
     final resolveMethod = !hasResolve
-        ? ResolvableStyleMethods.generateResolveMethod(
+        ? ResolvableMethods.generateResolveMethod(
             className: metadata.name,
             constructorRef: '',
             fields: metadata.parameters,
@@ -33,7 +33,7 @@ class ResolvableMixinBuilder extends CodeBuilder {
         : '';
 
     final mergeMethod = !hasMerge
-        ? ResolvableStyleMethods.generateMergeMethod(
+        ? ResolvableMethods.generateMergeMethod(
             className: metadata.name,
             fields: metadata.parameters,
             isAbstract: false,

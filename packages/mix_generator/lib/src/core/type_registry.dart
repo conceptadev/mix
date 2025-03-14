@@ -21,8 +21,6 @@ class TypeRegistry {
   String? getUtilityForType(DartType type) {
     final typeString = type.getTypeAsString();
 
-    // Check if it's a list type
-
     // Special handling for Spec types
     if (TypeUtils.isSpec(type)) {
       final typeName = typeString;
@@ -30,34 +28,52 @@ class TypeRegistry {
       return '${typeName}Utility';
     }
 
-    // Special handling for DTO types
-    if (TypeUtils.isResolvable(type)) {
-      final dtoName = type.element!.name!;
-      // Remove the Dto suffix if present
-      final baseName = dtoName.endsWith('Dto')
-          ? dtoName.substring(0, dtoName.length - 3)
-          : dtoName;
-
-      return '${baseName}Utility';
-    }
-
-    // Check for a direct utility mapping
-    for (final entry in utilities.entries) {
-      if (entry.value == typeString) {
-        return entry.key;
-      }
-    }
-
+    // Handle List types specially
     if (type.isList) {
       final elementType = type.firstTypeArgument!;
       final elementTypeName = elementType.getTypeAsString();
 
+      // Check if this is a list of DTOs
+      if (TypeUtils.isResolvable(elementType)) {
+        // For lists of DTOs, we need to keep the DTO type in the utility
+        // because the code is designed to work with DTO types
+        return 'ListUtility<T, $elementTypeName>';
+      }
+
+      // For other list types, check for a direct utility mapping
+      final listTypeString = 'List<$elementTypeName>';
+      for (final entry in utilities.entries) {
+        if (entry.value == listTypeString) {
+          return entry.key;
+        }
+      }
+
       return 'ListUtility<T, $elementTypeName>';
+    }
+
+    // For DTO types, get the resolved type for utility mapping
+    String resolvedTypeString = typeString;
+    if (TypeUtils.isResolvable(type)) {
+      final dtoName = type.element!.name!;
+      // Get the resolved type from the resolvables map
+      for (final entry in resolvables.entries) {
+        if (entry.key == dtoName) {
+          resolvedTypeString = entry.value;
+          break;
+        }
+      }
+    }
+
+    // Check for a direct utility mapping using the resolved type
+    for (final entry in utilities.entries) {
+      if (entry.value == resolvedTypeString) {
+        return entry.key;
+      }
     }
 
     // If no mapping found, use DynamicUtility
     _logger.warning(
-      'No utility found for type: $typeString, using DynamicUtility',
+      'No utility found for type: $typeString (resolved: $resolvedTypeString), using DynamicUtility',
     );
 
     return null;
@@ -190,25 +206,26 @@ final utilities = {
   'BoolUtility': 'bool',
   'BlendModeUtility': 'BlendMode',
   'BorderStyleUtility': 'BorderStyle',
+  'BoxConstraintsUtility': 'BoxConstraints',
   'BoxFitUtility': 'BoxFit',
-  'BoxShadowListUtility': 'List<BoxShadowDto>',
+  'BoxShadowListUtility': 'List<BoxShadow>',
   'BoxShapeUtility': 'BoxShape',
   'ClipUtility': 'Clip',
   'ColorUtility': 'Color',
   'ColorListUtility': 'List<Color>',
-  'ConstraintsUtility': 'ConstraintsDto',
+  'ConstraintsUtility': 'Constraints',
   'CrossAxisAlignmentUtility': 'CrossAxisAlignment',
   'CurveUtility': 'Curve',
-  'DecorationUtility': 'DecorationDto',
+  'DecorationUtility': 'Decoration',
   'DoubleUtility': 'double',
   'DurationUtility': 'Duration',
-  'EdgeInsetsGeometryUtility': 'EdgeInsetsGeometryDto',
+  'EdgeInsetsGeometryUtility': 'EdgeInsetsGeometry',
   'FlexFitUtility': 'FlexFit',
   'FontFeatureUtility': 'FontFeature',
   'FontStyleUtility': 'FontStyle',
   'FontWeightUtility': 'FontWeight',
-  'GapUtility': 'SpacingSideDto',
-  'GradientUtility': 'GradientDto',
+  'GapUtility': 'SpacingSide',
+  'GradientUtility': 'Gradient',
   'GradientTransformUtility': 'GradientTransform',
   'ImageProviderUtility': 'ImageProvider<Object>',
   'ImageRepeatUtility': 'ImageRepeat',
@@ -221,10 +238,10 @@ final utilities = {
   'RadiusUtility': 'Radius',
   'RectUtility': 'Rect',
   'ShadowListUtility': 'List<ShadowDto>',
-  'SpecModifierUtility': 'WidgetModifiersDataDto',
+  'SpecModifierUtility': 'WidgetModifiersData',
   'StackFitUtility': 'StackFit',
-  'ShapeBorderUtility': 'ShapeBorderDto',
-  'SpacingUtility': 'EdgeInsetsGeometryDto',
+  'ShapeBorderUtility': 'ShapeBorder',
+  'SpacingUtility': 'EdgeInsetsGeometry',
   'StringUtility': 'String',
   'TableBorderUtility': 'TableBorder',
   'TableCellVerticalAlignmentUtility': 'TableCellVerticalAlignment',
@@ -234,16 +251,27 @@ final utilities = {
   'TextDecorationUtility': 'TextDecoration',
   'TextDecorationStyleUtility': 'TextDecorationStyle',
   'TextDirectionUtility': 'TextDirection',
-  'TextDirectivesUtility': 'TextDirectiveDto',
+  'TextDirectivesUtility': 'TextDirective',
   'TextLeadingDistributionUtility': 'TextLeadingDistribution',
   'TextOverflowUtility': 'TextOverflow',
   'TextScalerUtility': 'TextScaler',
   'TextWidthBasisUtility': 'TextWidthBasis',
   'TileModeUtility': 'TileMode',
   'VerticalDirectionUtility': 'VerticalDirection',
-  'WidgetModifiersUtility': 'WidgetModifiersDataDto',
+  'WidgetModifiersUtility': 'WidgetModifiersData',
   'WrapAlignmentUtility': 'WrapAlignment',
   'FilterQualityUtility': 'FilterQuality',
+  'BorderRadiusGeometryUtility': 'BorderRadiusGeometry',
+  'BorderSideUtility': 'BorderSide',
+  'BoxBorderUtility': 'BoxBorder',
+  'DecorationImageUtility': 'DecorationImage',
+  'LinearBorderEdgeUtility': 'LinearBorderEdge',
+  'StrutStyleUtility': 'StrutStyle',
+  'TextHeightBehaviorUtility': 'TextHeightBehavior',
+  'TextStyleUtility': 'TextStyle',
+  'PaintUtility': 'Paint',
+  'ScrollPhysicsUtility': 'ScrollPhysics',
+  'MouseCursorUtility': 'MouseCursor',
 };
 
 /// Map of DTO class names to whether they have a tryToMerge method
