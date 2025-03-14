@@ -1,7 +1,8 @@
 import '../metadata/spec_metadata.dart';
+import '../resolvable/resolvable_method_builder.dart';
 import '../utils/code_builder.dart';
+import '../utils/common_method_builder.dart';
 import '../utils/helpers.dart';
-import '../utils/method_generators.dart';
 
 /// Builds the attribute class for a spec.
 class SpecAttributeBuilder implements CodeBuilder {
@@ -11,8 +12,8 @@ class SpecAttributeBuilder implements CodeBuilder {
 
   /// Builds the field declarations
   List<String> _buildFieldDeclarations() {
-    return metadata.fields.where((field) => !field.isSuper).map((field) {
-      final fieldType = field.representationType?.name ?? field.type;
+    return metadata.parameters.where((field) => !field.isSuper).map((field) {
+      final fieldType = field.resolvable?.type ?? field.type;
 
       return 'final $fieldType? ${field.name};';
     }).toList();
@@ -23,10 +24,10 @@ class SpecAttributeBuilder implements CodeBuilder {
     final methods = <String>[];
 
     // Add resolve method
-    methods.add(SpecMethods.generateResolveMethod(
+    methods.add(ResolvableStyleMethods.generateResolveMethod(
       className: attributeName,
       constructorRef: '',
-      fields: metadata.fields,
+      fields: metadata.parameters,
       isConst: metadata.isConst,
       resolvedType: metadata.name,
       withDefaults: false,
@@ -34,25 +35,25 @@ class SpecAttributeBuilder implements CodeBuilder {
     ));
 
     // Add merge method
-    methods.add(SpecMethods.generateMergeMethod(
+    methods.add(ResolvableStyleMethods.generateMergeMethod(
       className: attributeName,
-      fields: metadata.fields,
+      fields: metadata.parameters,
       isAbstract: metadata.isAbstract,
       shouldMergeLists: true,
       useInternalRef: false,
     ));
 
     // Add props getter
-    methods.add(SpecMethods.generatePropsGetter(
+    methods.add(CommonMethods.generatePropsGetter(
       className: attributeName,
-      fields: metadata.fields,
+      fields: metadata.parameters,
       useInternalRef: false,
     ));
 
     // Add debug fill properties if needed
     if (metadata.isDiagnosticable) {
-      methods.add(SpecMethods.generateDebugFillPropertiesMethod(
-        fields: metadata.fields,
+      methods.add(CommonMethods.generateDebugFillPropertiesMethod(
+        fields: metadata.parameters,
         useInternalRef: false,
       ));
     }
@@ -62,7 +63,7 @@ class SpecAttributeBuilder implements CodeBuilder {
 
   @override
   String build() {
-    final params = buildArguments(metadata.fields, (field) {
+    final params = buildArguments(metadata.parameters, (field) {
       final fieldName = field.name;
 
       return field.isSuper ? 'super.$fieldName' : 'this.$fieldName';

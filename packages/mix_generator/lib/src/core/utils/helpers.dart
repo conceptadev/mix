@@ -12,8 +12,8 @@ String constructorFor(String typeAnnotation, String? namedConstructor) =>
 /// [buildParam] - Function to transform each field into a parameter string
 /// [addTrailingComma] - Whether to add a trailing comma (defaults to true)
 String buildParameters(
-  List<FieldMetadata> params,
-  String Function(FieldMetadata) buildParam,
+  List<ParameterMetadata> params,
+  String Function(ParameterMetadata) buildParam,
 ) {
   if (params.isEmpty) return '';
 
@@ -44,8 +44,8 @@ String buildParameters(
 }
 
 String buildArguments(
-  List<FieldMetadata> params,
-  String Function(FieldMetadata) buildParam,
+  List<ParameterMetadata> params,
+  String Function(ParameterMetadata) buildParam,
 ) {
   if (params.isEmpty) return '';
 

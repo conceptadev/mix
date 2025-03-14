@@ -1,8 +1,8 @@
 import 'package:analyzer/dart/element/element.dart';
 
 import '../metadata/field_metadata.dart';
-import 'dart_type_utils.dart';
-import 'helpers.dart';
+import '../utils/dart_type_utils.dart';
+import '../utils/helpers.dart';
 
 /// Utilities for generating common method implementations.
 class SpecMethods {

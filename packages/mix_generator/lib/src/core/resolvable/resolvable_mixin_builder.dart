@@ -1,38 +1,30 @@
 // lib/src/builders/dto/dto_mixin_builder.dart
-import '../metadata/dto_metadata.dart';
+import '../metadata/resolvable_metadata.dart';
 import '../utils/code_builder.dart';
 import '../utils/common_method_builder.dart';
-import '../utils/dto_method_builder.dart';
+import 'resolvable_method_builder.dart';
 
-class DtoMixinBuilder extends CodeBuilder {
-  final DtoMetadata metadata;
+class ResolvableMixinBuilder extends CodeBuilder {
+  final ResolvableMetadata metadata;
 
-  DtoMixinBuilder(this.metadata);
+  ResolvableMixinBuilder(this.metadata);
 
   @override
   String build() {
     final mixinName = '_\$${metadata.name}';
-    final resolvedTypeName = metadata.resolvedType.name;
-
-    print(
-      'Building DTO mixin for ${metadata.name} (resolved type: $resolvedTypeName)',
-    );
+    final resolvedTypeName = metadata.resolvedElement.name;
 
     // Check if custom methods are already defined
     final hasResolve = metadata.element.methods.any((m) => m.name == 'resolve');
     final hasMerge = metadata.element.methods.any((m) => m.name == 'merge');
     final hasProps = metadata.element.methods.any((m) => m.name == 'props');
 
-    print(
-      '  Custom methods defined: resolve=$hasResolve, merge=$hasMerge, props=$hasProps',
-    );
-
     // Only generate methods that aren't already defined
     final resolveMethod = !hasResolve
-        ? DtoMethods.generateResolveMethod(
+        ? ResolvableStyleMethods.generateResolveMethod(
             className: metadata.name,
             constructorRef: '',
-            fields: metadata.fields,
+            fields: metadata.parameters,
             isConst: metadata.isConst,
             resolvedType: resolvedTypeName,
             withDefaults: true,
@@ -41,30 +33,22 @@ class DtoMixinBuilder extends CodeBuilder {
         : '';
 
     final mergeMethod = !hasMerge
-        ? DtoMethods.generateMergeMethod(
+        ? ResolvableStyleMethods.generateMergeMethod(
             className: metadata.name,
-            fields: metadata.fields,
+            fields: metadata.parameters,
             isAbstract: false,
             shouldMergeLists: metadata.mergeLists,
             useInternalRef: true,
           )
         : '';
 
-    if (hasMerge) {
-      print('  Using custom merge method defined in ${metadata.name}');
-    } else {
-      print('  Generated merge method for ${metadata.name}');
-    }
-
     final propsGetter = !hasProps
         ? CommonMethods.generatePropsGetter(
             className: metadata.name,
-            fields: metadata.fields,
+            fields: metadata.parameters,
             useInternalRef: true,
           )
         : '';
-
-    print('  Mixin generation complete for ${metadata.name}');
 
     return '''
 /// A mixin that provides DTO functionality for [${metadata.name}].

@@ -138,7 +138,7 @@ class TypeUtils {
       resolvedType = type.firstTypeArgument!;
     }
 
-    if (isDto(resolvedType)) {
+    if (isResolvable(resolvedType)) {
       final dtoType = extractDtoTypeArgument(resolvedType.asClassElement!);
       if (dtoType != null) {
         resolvedType = dtoType;
@@ -153,17 +153,14 @@ class TypeUtils {
   }
 
   /// Checks if a type is a Dto.
-  static bool isDto(DartType type) {
+  static bool isResolvable(DartType type) {
     if (type.element == null) return false;
+
+    if (type.isList) {
+      return isResolvable(type.firstTypeArgument!);
+    }
 
     return findSupertype(type.element!, $Dto) != null;
-  }
-
-  /// Checks if a type is a SpecAttribute.
-  static bool isSpecAttribute(DartType type) {
-    if (type.element == null) return false;
-
-    return findSupertype(type.element!, $SpecAttribute) != null;
   }
 
   /// Checks if a type is a Spec.
@@ -287,4 +284,62 @@ class MixHelperRef {
 
   /// Reference to the Shadow list interpolation function.
   static String get lerpShadowList => '$_refName.lerpShadowList';
+}
+
+class ClassMemberCollection {
+  final List<FieldElement> fields;
+  final List<PropertyAccessorElement> accessors;
+  final Map<String, FieldElement> fieldsByName;
+  final Map<String, PropertyAccessorElement> accessorsByName;
+
+  ClassMemberCollection({required this.fields, required this.accessors})
+      : fieldsByName = {for (var f in fields) f.name: f},
+        accessorsByName = {for (var a in accessors) a.name: a};
+
+  /// Get a field by name, returns null if not found
+  FieldElement? getField(String name) => fieldsByName[name];
+
+  /// Get an accessor by name, returns null if not found
+  PropertyAccessorElement? getAccessor(String name) => accessorsByName[name];
+}
+
+/// Collects all fields and accessors from a class and its superclasses
+ClassMemberCollection collectClassMembers(InterfaceElement classElement) {
+  final fields = <FieldElement>[];
+  final accessors = <PropertyAccessorElement>[];
+  final processedClasses = <String>{};
+
+  void processClass(InterfaceElement element) {
+    // Skip if already processed to avoid duplicates
+    final elementId = element.displayName;
+    if (processedClasses.contains(elementId)) return;
+    processedClasses.add(elementId);
+
+    // Add fields and accessors from this class
+    fields.addAll(element.fields);
+    accessors.addAll(element.accessors);
+
+    // Process superclass if exists
+    if (element.supertype != null &&
+        element.supertype!.element.name != 'Object') {
+      processClass(element.supertype!.element);
+    }
+
+    // Process mixins
+    for (final mixin in element.mixins) {
+      processClass(mixin.element);
+    }
+
+    // Process interfaces if needed
+    // Uncomment if you need interface members too
+    /*
+    for (final interface in element.interfaces) {
+      processClass(interface.element);
+    }
+    */
+  }
+
+  processClass(classElement);
+
+  return ClassMemberCollection(fields: fields, accessors: accessors);
 }

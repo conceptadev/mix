@@ -1,7 +1,8 @@
 import '../metadata/spec_metadata.dart';
 import '../utils/code_builder.dart';
-import '../utils/method_generators.dart';
+import '../utils/common_method_builder.dart';
 import '../utils/string_utils.dart';
+import 'spec_method_builder.dart';
 
 /// Builds the mixin for a Spec class.
 class SpecMixinBuilder implements CodeBuilder {
@@ -70,7 +71,7 @@ static $className of(BuildContext context) {
       methods.add(SpecMethods.generateCopyWithMethod(
         className: className,
         constructorRef: metadata.constructorRef,
-        fields: metadata.fields,
+        fields: metadata.parameters,
         isConst: metadata.isConst,
         useInternalRef: true,
       ));
@@ -80,16 +81,16 @@ static $className of(BuildContext context) {
       methods.add(SpecMethods.generateLerpMethod(
         className: className,
         constructorRef: metadata.constructorRef,
-        fields: metadata.fields,
+        fields: metadata.parameters,
         isConst: metadata.isConst,
         useInternalRef: true,
       ));
     }
 
     if (metadata.withEquality && !hasProps) {
-      methods.add(SpecMethods.generatePropsGetter(
+      methods.add(CommonMethods.generatePropsGetter(
         className: className,
-        fields: metadata.fields,
+        fields: metadata.parameters,
         useInternalRef: true,
       ));
     }
@@ -99,8 +100,8 @@ static $className of(BuildContext context) {
 
     // Add diagnostics methods if needed
     if (metadata.isDiagnosticable) {
-      methods.add(SpecMethods.generateDebugFillPropertiesMethod(
-        fields: metadata.fields,
+      methods.add(CommonMethods.generateDebugFillPropertiesMethod(
+        fields: metadata.parameters,
         useInternalRef: true,
       ));
     }

@@ -10,11 +10,41 @@ import '../utils/constructor_utils.dart';
 import '../utils/dart_type_utils.dart';
 import '../utils/extensions.dart';
 
-/// Represents metadata about a field or parameter for code generation.
-///
-/// This class encapsulates all information about a field needed for code
-/// generation, including its type, nullability, annotations, and relationships
-/// to other types (like DTO mappings).
+/// Stores utility metadata for a field
+class FieldUtilityMetadata {
+  final String name;
+  final String type;
+
+  const FieldUtilityMetadata({required this.name, required this.type});
+}
+
+/// Stores resolvable type metadata for a field
+class FieldResolvableMetadata {
+  final String name;
+  final String type;
+  final bool tryToMergeType;
+
+  const FieldResolvableMetadata({
+    required this.name,
+    required this.type,
+    required this.tryToMergeType,
+  });
+}
+
+/// Represents utility property mapping for code generation
+class UtilityProperty {
+  final String name;
+  final String path;
+  final String? utilityName;
+
+  const UtilityProperty({
+    required this.name,
+    required this.path,
+    required this.utilityName,
+  });
+}
+
+/// Represents metadata about a field or property for code generation.
 class FieldMetadata {
   /// The name of the field
   final String name;
@@ -34,6 +64,147 @@ class FieldMetadata {
   /// Whether the field is nullable
   final bool nullable;
 
+  /// Resolved type metadata for this field (if applicable)
+  final FieldResolvableMetadata? resolvable;
+
+  /// Utility metadata for this field (if applicable)
+  final FieldUtilityMetadata? utility;
+
+  /// Creates a new [FieldMetadata] instance
+  const FieldMetadata({
+    required this.name,
+    required this.dartType,
+    required this.annotation,
+    this.documentationComment,
+    required this.hasDeprecated,
+    required this.nullable,
+    required this.resolvable,
+    required this.utility,
+  });
+
+  /// Creates a [FieldMetadata] from a class field
+  factory FieldMetadata.fromField(FieldElement element) {
+    final annotation = readMixableField(element);
+    final utilityAnnotation = readMixableFieldUtility(element);
+    final resolvableAnnotation = readMixableFieldResolvable(element);
+
+    return FieldMetadata(
+      name: element.name,
+      dartType: element.type,
+      annotation: annotation,
+      documentationComment: element.documentationComment,
+      hasDeprecated: element.hasDeprecated,
+      nullable: element.type.nullabilitySuffix == NullabilitySuffix.question,
+      resolvable: createFieldResolvableMetadata(
+        name: element.name,
+        dartType: element.type,
+        resolvableAnnotation: resolvableAnnotation,
+      ),
+      utility: createFieldUtilityMetadata(
+        name: element.name,
+        dartType: element.type,
+        utilityAnnotation: utilityAnnotation,
+      ),
+    );
+  }
+
+  /// Creates a [FieldMetadata] from a property accessor (getter)
+  factory FieldMetadata.fromPropertyAccessor(PropertyAccessorElement element) {
+    final utilityAnnotation = readMixableFieldUtility(element);
+    final resolvableAnnotation = readMixableFieldResolvable(element);
+
+    return FieldMetadata(
+      name: element.name,
+      dartType: element.returnType,
+      annotation: const MixableField(),
+      documentationComment: element.documentationComment,
+      hasDeprecated: element.hasDeprecated,
+      nullable:
+          element.returnType.nullabilitySuffix == NullabilitySuffix.question,
+      resolvable: createFieldResolvableMetadata(
+        name: element.name,
+        dartType: element.returnType,
+        resolvableAnnotation: resolvableAnnotation,
+      ),
+      utility: createFieldUtilityMetadata(
+        name: element.name,
+        dartType: element.returnType,
+        utilityAnnotation: utilityAnnotation,
+      ),
+    );
+  }
+
+  /// Gets the field type as a string (without nullability marker)
+  String get type => dartType.getTypeAsString();
+
+  /// Gets the field type with nullability marker
+  String get typeWithNullability => '$type${nullable ? '?' : ''}';
+
+  /// Checks if the field type is a List
+  bool get isListType => dartType.isList;
+
+  bool get isDtoListType => isListType && isResolvable;
+
+  /// Checks if the field type is a Map
+  bool get isMapType => dartType.isMap;
+
+  /// Checks if the field type is a Set
+  bool get isSetType => dartType.isSet;
+
+  bool get isSpec => TypeUtils.isSpec(dartType);
+
+  bool get isResolvable => TypeUtils.isResolvable(dartType);
+
+  /// Gets the utility name for this field, using pre-computed value when available
+  String? get utilityName {
+    if (utility != null) return utility!.type;
+
+    // Fallback to computing
+    final utilities = annotation.utilities ?? [];
+    if (utilities.isNotEmpty) {
+      final firstUtility = utilities.first;
+      if (firstUtility.typeAsString != null) {
+        return firstUtility.typeAsString!;
+      }
+
+      if (firstUtility.alias != null) {
+        return firstUtility.alias!;
+      }
+    }
+
+    return TypeRegistry.instance.getUtilityForType(dartType);
+  }
+
+  bool get hasResolvable => resolvable != null;
+
+  /// Gets the internal reference for this field
+  String get asInternalRef => '_\$this.$name';
+
+  /// Creates a list of utility properties specified in the annotation
+  List<UtilityProperty> get utilityProperties {
+    // If we have a pre-computed utility, prioritize that information
+    if (utility != null &&
+        (annotation.utilities == null || annotation.utilities!.isEmpty)) {
+      return [
+        UtilityProperty(
+          name: utility!.name,
+          path: name,
+          utilityName: utility!.type,
+        ),
+      ];
+    }
+
+    // Use the utility function from annotation_utils.dart
+    return createUtilityProperties(
+      name: name,
+      utilities: annotation.utilities,
+      defaultUtilityName: utilityName,
+    );
+  }
+}
+
+/// Represents metadata about a constructor parameter, extending field metadata.
+class ParameterMetadata extends FieldMetadata {
   /// Whether this is a super parameter
   final bool isSuper;
 
@@ -43,197 +214,79 @@ class FieldMetadata {
   /// Whether this parameter is required (named or positional)
   final bool isRequired;
 
-  /// The type registry to use for type resolution
-  final TypeRegistry typeRegistry;
+  /// Creates a new [ParameterMetadata] instance
+  const ParameterMetadata({
+    required super.name,
+    required super.dartType,
+    required super.annotation,
+    super.documentationComment,
+    required super.hasDeprecated,
+    required super.nullable,
+    required super.utility,
+    required super.resolvable,
+    required this.isSuper,
+    required this.isPositional,
+    required this.isRequired,
+  });
 
-  /// Creates a new [FieldMetadata] instance
-  FieldMetadata({
-    required this.name,
-    required this.dartType,
-    required this.annotation,
-    this.documentationComment,
-    required this.hasDeprecated,
-    required this.nullable,
-    this.isSuper = false,
-    this.isPositional = false,
-    this.isRequired = false,
-    TypeRegistry? typeRegistry,
-  }) : typeRegistry = typeRegistry ?? TypeRegistry.instance;
-
-  /// Creates a [FieldMetadata] from a class field
-  factory FieldMetadata.fromField(
-    FieldElement element, {
-    TypeRegistry? typeRegistry,
-  }) {
-    return FieldMetadata(
-      name: element.name,
-      dartType: element.type,
-      annotation: readMixableField(element),
-      documentationComment: element.documentationComment,
-      hasDeprecated: element.hasDeprecated,
-      nullable: element.type.nullabilitySuffix == NullabilitySuffix.question,
-      typeRegistry: typeRegistry ?? TypeRegistry.instance,
-    );
-  }
-
-  /// Creates a [FieldMetadata] from a constructor parameter
-  factory FieldMetadata.fromParameter(
-    ParameterElement parameter, {
-    TypeRegistry? typeRegistry,
-  }) {
+  /// Creates a [ParameterMetadata] from a constructor parameter
+  factory ParameterMetadata.fromParameter(ParameterElement parameter) {
     final existingFieldInfo = _getFieldFromParameter(parameter);
 
+    // If we have existing field info, use that as the basis
+    if (existingFieldInfo != null) {
+      return ParameterMetadata(
+        name: parameter.name,
+        dartType: parameter.type,
+        annotation: existingFieldInfo.annotation,
+        documentationComment: existingFieldInfo.documentationComment,
+        hasDeprecated: existingFieldInfo.hasDeprecated,
+        nullable: existingFieldInfo.nullable,
+        utility: existingFieldInfo.utility,
+        resolvable: existingFieldInfo.resolvable,
+        isSuper: parameter.isSuperFormal,
+        isPositional: parameter.isPositional,
+        isRequired: parameter.isRequiredNamed || parameter.isRequiredPositional,
+      );
+    }
+
+    // Otherwise compute from scratch
     final isNullable =
         parameter.type.nullabilitySuffix == NullabilitySuffix.question;
+    final utilityAnnotation = readMixableFieldUtility(parameter);
+    final resolvableAnnotation = readMixableFieldResolvable(parameter);
 
-    return FieldMetadata(
+    return ParameterMetadata(
       name: parameter.name,
       dartType: parameter.type,
-      annotation: existingFieldInfo?.annotation ?? const MixableField(),
-      documentationComment: existingFieldInfo?.documentationComment,
-      hasDeprecated:
-          existingFieldInfo?.hasDeprecated ?? parameter.hasDeprecated,
-      nullable: existingFieldInfo?.nullable ?? isNullable,
+      annotation: const MixableField(),
+      documentationComment: null,
+      hasDeprecated: parameter.hasDeprecated,
+      nullable: isNullable,
+      utility: createFieldUtilityMetadata(
+        name: parameter.name,
+        dartType: parameter.type,
+        utilityAnnotation: utilityAnnotation,
+      ),
+      resolvable: createFieldResolvableMetadata(
+        name: parameter.name,
+        dartType: parameter.type,
+        resolvableAnnotation: resolvableAnnotation,
+      ),
       isSuper: parameter.isSuperFormal,
       isPositional: parameter.isPositional,
       isRequired: parameter.isRequiredNamed || parameter.isRequiredPositional,
-      typeRegistry: typeRegistry ?? TypeRegistry.instance,
     );
   }
 
-  /// Extracts field metadata from a class
-  static List<FieldMetadata> extractFromClass(
-    ClassElement element, {
-    TypeRegistry? typeRegistry,
-  }) {
+  /// Extracts parameter metadata from a class constructor
+  static List<ParameterMetadata> extractFromConstructor(ClassElement element) {
     final targetConstructor = findTargetConstructor(element);
 
     return targetConstructor.parameters
-        .map((param) => FieldMetadata.fromParameter(
-              param,
-              typeRegistry: typeRegistry,
-            ))
+        .map((param) => ParameterMetadata.fromParameter(param))
         .toList();
   }
-
-  /// Gets the field type as a string (without nullability marker)
-  String get type => dartType.getDisplayString(withNullability: false);
-
-  /// Gets the field type with nullability marker
-  String get typeWithNullability => '$type${nullable ? '?' : ''}';
-
-  /// Checks if the field type is dynamic
-  bool get isDynamic => dartType is DynamicType;
-
-  /// Checks if the field type is a List
-  bool get isListType => dartType.isList;
-
-  bool get isDtoListType =>
-      isListType && TypeUtils.isDto(dartType.firstTypeArgument!);
-
-  /// Checks if the field type is a Map
-  bool get isMapType => dartType.isMap;
-
-  /// Checks if the field type is a Set
-  bool get isSetType => dartType.isSet;
-
-  /// Gets the representation type for this field
-  TypeReference? get representationType {
-    // Check for manually specified DTO in the annotation
-    if (annotation.dto != null && annotation.dto!.typeAsString != null) {
-      return TypeReference(annotation.dto!.typeAsString!);
-    }
-
-    // Otherwise, use the registry
-    return typeRegistry.getRepresentationForType(dartType);
-  }
-
-  bool get isSpec => TypeUtils.isSpec(dartType);
-
-  bool get isDto => TypeUtils.isDto(dartType);
-
-  bool get isSpecAttribute => TypeUtils.isSpecAttribute(dartType);
-
-  /// Gets the utility name for this field
-  String get utilityName {
-    // Check for manually specified utility in the annotation
-    final utilities = annotation.utilities;
-    if (utilities != null && utilities.isNotEmpty) {
-      final firstUtility = utilities.first;
-      if (firstUtility.typeAsString != null) {
-        return typeRegistry
-            .getUtilityNameFromTypeName(firstUtility.typeAsString!);
-      }
-
-      if (firstUtility.alias != null) {
-        return firstUtility.alias!;
-      }
-    }
-
-    // Otherwise use the type registry
-    return typeRegistry.getUtilityForType(dartType)?.name ?? '';
-  }
-
-  /// Checks if this field has a representation (DTO or Attribute)
-  bool get hasRepresentation => representationType != null;
-
-  bool get hasDto => hasRepresentation;
-
-  /// Gets the internal reference for this field
-  String get asInternalRef => '_\$this.$name';
-
-  /// Creates a list of utility properties specified in the annotation
-  List<UtilityProperty> get utilityProperties {
-    final result = <UtilityProperty>[];
-
-    final utilities = annotation.utilities;
-    if (utilities == null || utilities.isEmpty) {
-      return [
-        UtilityProperty(name: name, path: name, utilityName: utilityName),
-      ];
-    }
-
-    for (final util in utilities) {
-      final aliasName = util.alias ?? name;
-      final utilType = util.typeAsString != null
-          ? typeRegistry.getUtilityNameFromTypeName(util.typeAsString!)
-          : utilityName;
-
-      result.add(UtilityProperty(
-        name: aliasName,
-        path: name,
-        utilityName: utilType,
-      ));
-
-      // Add nested properties
-      for (final nested in util.properties) {
-        result.add(UtilityProperty(
-          name: nested.alias,
-          path: '$aliasName.${nested.path}',
-          utilityName: utilType,
-        ));
-      }
-    }
-
-    return result;
-  }
-
-  /// Gets the field reference based on whether to use internal refs
-  String getReference(bool useInternalRef) =>
-      useInternalRef ? asInternalRef : name;
-}
-
-/// Represents a utility property mapping for code generation
-class UtilityProperty {
-  final String name;
-  final String path;
-  final String utilityName;
-
-  const UtilityProperty({
-    required this.name,
-    required this.path,
-    required this.utilityName,
-  });
 }
 
 /// Attempts to get the corresponding field for a constructor parameter

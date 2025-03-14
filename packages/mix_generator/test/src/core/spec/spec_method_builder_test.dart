@@ -1,8 +1,8 @@
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:mix_generator/src/core/metadata/field_metadata.dart';
+import 'package:mix_generator/src/core/resolvable/resolvable_method_builder.dart';
 import 'package:mix_generator/src/core/type_registry.dart';
-import 'package:mix_generator/src/core/utils/method_generators.dart';
 import 'package:test/test.dart';
 
 void main() {
@@ -42,7 +42,7 @@ void main() {
         );
 
         // Generate the merge method with all field types
-        final result = SpecMethods.generateMergeMethod(
+        final result = ResolvableStyleMethods.generateMergeMethod(
           className: 'TestClass',
           fields: [
             dtoWithTryToMerge,
@@ -108,25 +108,13 @@ void main() {
         );
 
         // Generate the merge method with both decoration fields
-        final result = SpecMethods.generateMergeMethod(
+        final result = ResolvableStyleMethods.generateMergeMethod(
           className: 'TestClass',
           fields: [boxDecorationField, shapeDecorationField],
           isAbstract: false,
           shouldMergeLists: true,
           useInternalRef: false,
         );
-
-        // Print the hasTryToMerge results for debugging
-        print(
-            'hasTryToMerge("BoxDecorationDto"): ${TypeRegistry.instance.hasTryToMerge("BoxDecorationDto")}');
-        print(
-            'hasTryToMerge("ShapeDecorationDto"): ${TypeRegistry.instance.hasTryToMerge("ShapeDecorationDto")}');
-        print(
-            'hasTryToMerge("DecorationDto"): ${TypeRegistry.instance.hasTryToMerge("DecorationDto")}');
-
-        // Print the generated merge method for debugging
-        print('Generated merge method:');
-        print(result);
 
         // If DecorationDto is in the tryToMerge set, both BoxDecorationDto and ShapeDecorationDto
         // should use DecorationDto.tryToMerge
@@ -172,7 +160,7 @@ void main() {
 }
 
 /// A minimal implementation of FieldMetadata for testing
-class _TestFieldMetadata implements FieldMetadata {
+class _TestFieldMetadata implements ParameterMetadata {
   final String _name;
   final bool _isDto;
   final String? _representationElementName;
@@ -192,7 +180,7 @@ class _TestFieldMetadata implements FieldMetadata {
   String get name => _name;
 
   @override
-  bool get isDto => _isDto;
+  bool get isResolvable => _isDto;
 
   @override
   bool get isSpecAttribute => false;
@@ -204,7 +192,7 @@ class _TestFieldMetadata implements FieldMetadata {
   String get asInternalRef => '_$name';
 
   @override
-  TypeReference? get representationType => _representationElementName != null
+  TypeReference? get resolvableType => _representationElementName != null
       ? TypeReference(_representationElementName,
           type: _TestDartTypeWithElement(_representationElementName))
       : null;

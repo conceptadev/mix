@@ -25,13 +25,13 @@ void main() {
       final classElement = library.getClass('TestSpec')!;
 
       // Extract fields from the class element
-      final fields = FieldMetadata.extractFromClass(classElement);
+      final parameters = ParameterMetadata.extractFromConstructor(classElement);
 
       // Create spec metadata
       final metadata = SpecMetadata(
         element: classElement,
         name: 'TestSpec',
-        fields: fields,
+        parameters: parameters,
         isConst: true,
         isDiagnosticable: false,
         constructor: classElement.unnamedConstructor!,
@@ -167,13 +167,13 @@ _\$this.age,
       final classElement = library.getClass('TestWidgetModifierSpec')!;
 
       // Extract fields from the class element
-      final fields = FieldMetadata.extractFromClass(classElement);
+      final parameters = ParameterMetadata.extractFromConstructor(classElement);
 
       // Create spec metadata
       final metadata = SpecMetadata(
         element: classElement,
         name: 'TestWidgetModifierSpec',
-        fields: fields,
+        parameters: parameters,
         isConst: true,
         isDiagnosticable: false,
         constructor: classElement.unnamedConstructor!,
@@ -232,13 +232,13 @@ _\$this.animated,
       final classElement = library.getClass('DiagnosticableSpec')!;
 
       // Extract fields from the class element
-      final fields = FieldMetadata.extractFromClass(classElement);
+      final parameters = ParameterMetadata.extractFromConstructor(classElement);
 
       // Create spec metadata
       final metadata = SpecMetadata(
         element: classElement,
         name: 'DiagnosticableSpec',
-        fields: fields,
+        parameters: parameters,
         isConst: true,
         isDiagnosticable: true,
         constructor: classElement.unnamedConstructor!,
@@ -364,13 +364,13 @@ _\$this.label,
       final classElement = library.getClass('ExistingMethodsSpec')!;
 
       // Extract fields from the class element
-      final fields = FieldMetadata.extractFromClass(classElement);
+      final parameters = ParameterMetadata.extractFromConstructor(classElement);
 
       // Create a custom SpecMetadata subclass that overrides hasMethod
       final metadata = _TestSpecMetadata(
         element: classElement,
         name: 'ExistingMethodsSpec',
-        fields: fields,
+        parameters: parameters,
         isConst: true,
         isDiagnosticable: false,
         constructor: classElement.unnamedConstructor!,
@@ -452,7 +452,7 @@ class _TestSpecMetadata extends SpecMetadata {
   _TestSpecMetadata({
     required super.element,
     required super.name,
-    required super.fields,
+    required super.parameters,
     required super.isConst,
     required super.isDiagnosticable,
     required super.constructor,

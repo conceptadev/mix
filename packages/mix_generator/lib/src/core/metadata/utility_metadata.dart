@@ -23,7 +23,7 @@ class UtilityMetadata extends BaseMetadata {
   UtilityMetadata({
     required super.element,
     required super.name,
-    required super.fields,
+    required super.parameters,
     required super.isConst,
     required super.isDiagnosticable,
     required super.constructor,
@@ -56,10 +56,10 @@ class UtilityMetadata extends BaseMetadata {
       final enumElement = utilityType.element as EnumElement;
 
       return UtilityMetadata(
+        // Utilities don't have fields
         element: element,
         name: element.name,
-        fields: [], // Utilities don't have fields
-        isConst: element.unnamedConstructor?.isConst ?? false,
+        parameters: [], isConst: element.unnamedConstructor?.isConst ?? false,
         isDiagnosticable: false, // Utilities don't need diagnostics
         constructor: findTargetConstructor(element),
         isAbstract: element.isAbstract,
@@ -77,7 +77,7 @@ class UtilityMetadata extends BaseMetadata {
     // Only try to get mapping type from MixableFieldUtility annotation
     if (!hasMixableUtility(element)) {
       final mixableUtility = readMixableFieldUtility(element);
-      final mappingType = mixableUtility.type;
+      final mappingType = mixableUtility?.type;
 
       if (mappingType != null) {
         final mappingTypeElement = annotation.read('type').typeValue.element;
@@ -92,9 +92,10 @@ class UtilityMetadata extends BaseMetadata {
     }
 
     return UtilityMetadata(
+      // Utilities don't have fields
       element: element,
       name: element.name,
-      fields: [], // Utilities don't have fields
+      parameters: [],
       isConst: element.unnamedConstructor?.isConst ?? false,
       isDiagnosticable: false, // Utilities don't need diagnostics
       constructor: findTargetConstructor(element),

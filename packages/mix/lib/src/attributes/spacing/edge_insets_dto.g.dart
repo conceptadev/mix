@@ -62,13 +62,13 @@ class EdgeInsetsUtility<T extends Attribute>
   /// Utility for defining [EdgeInsetsDto.right]
   late final right = DoubleUtility((v) => only(right: v));
 
+  EdgeInsetsUtility(super.builder) : super(valueToDto: (v) => v.toDto());
+
   /// Creates an [Attribute] instance using the [EdgeInsetsDto.all] constructor.
   T all(double value) => builder(EdgeInsetsDto.all(value));
 
   /// Creates an [Attribute] instance using the [EdgeInsetsDto.none] constructor.
   T none() => builder(const EdgeInsetsDto.none());
-
-  EdgeInsetsUtility(super.builder) : super(valueToDto: (v) => v.toDto());
 
   /// Returns a new [EdgeInsetsDto] with the specified properties.
   @override
@@ -178,14 +178,14 @@ class EdgeInsetsDirectionalUtility<T extends Attribute>
   /// Utility for defining [EdgeInsetsDirectionalDto.end]
   late final end = DoubleUtility((v) => only(end: v));
 
+  EdgeInsetsDirectionalUtility(super.builder)
+      : super(valueToDto: (v) => v.toDto());
+
   /// Creates an [Attribute] instance using the [EdgeInsetsDirectionalDto.all] constructor.
   T all(double value) => builder(EdgeInsetsDirectionalDto.all(value));
 
   /// Creates an [Attribute] instance using the [EdgeInsetsDirectionalDto.none] constructor.
   T none() => builder(const EdgeInsetsDirectionalDto.none());
-
-  EdgeInsetsDirectionalUtility(super.builder)
-      : super(valueToDto: (v) => v.toDto());
 
   /// Returns a new [EdgeInsetsDirectionalDto] with the specified properties.
   @override

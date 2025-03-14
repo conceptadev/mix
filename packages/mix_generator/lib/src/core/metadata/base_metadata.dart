@@ -14,7 +14,7 @@ abstract class BaseMetadata {
   final String name;
 
   /// The fields/parameters of the class
-  final List<FieldMetadata> fields;
+  final List<ParameterMetadata> parameters;
 
   /// Whether the class has a const constructor
   final bool isConst;
@@ -31,7 +31,7 @@ abstract class BaseMetadata {
   BaseMetadata({
     required this.element,
     required this.name,
-    required this.fields,
+    required this.parameters,
     required this.isConst,
     required this.isDiagnosticable,
     required this.constructor,

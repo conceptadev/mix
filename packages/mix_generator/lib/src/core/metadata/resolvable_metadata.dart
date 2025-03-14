@@ -8,7 +8,7 @@ import 'base_metadata.dart';
 import 'field_metadata.dart';
 
 /// Metadata for DTO classes, extracted from MixableDto annotations.
-class DtoMetadata extends BaseMetadata {
+class ResolvableMetadata extends BaseMetadata {
   /// Whether to merge lists when merging DTOs
   final bool mergeLists;
 
@@ -19,12 +19,15 @@ class DtoMetadata extends BaseMetadata {
   final bool generateUtility;
 
   /// The resolved value type (from Dto<T>)
-  final ClassElement resolvedType;
+  final ClassElement resolvedElement;
 
-  DtoMetadata({
+  /// The resolved field accessors
+  final List<FieldMetadata> resolvableFields;
+
+  ResolvableMetadata({
     required super.element,
     required super.name,
-    required super.fields,
+    required super.parameters,
     required super.isConst,
     required super.isDiagnosticable,
     required super.constructor,
@@ -32,22 +35,41 @@ class DtoMetadata extends BaseMetadata {
     required this.mergeLists,
     required this.generateValueExtension,
     required this.generateUtility,
-    required this.resolvedType,
+    required this.resolvedElement,
+    required this.resolvableFields,
   });
 
-  /// Creates a DtoMetadata from a class element and its annotation
-  static DtoMetadata fromAnnotation(
+  /// Creates a ResolvableMetadata from a class element and its annotation
+  static ResolvableMetadata fromAnnotation(
     ClassElement element,
     ConstantReader annotation,
   ) {
     final mixableDto = readMixableDto(element);
     final constructor = findTargetConstructor(element);
-    final fields = FieldMetadata.extractFromClass(element);
+    final parameters = ParameterMetadata.extractFromConstructor(element);
+    final resolvedElement = _getResolvedType(element);
+    final resolvedFieldsAndAccessors = collectClassMembers(resolvedElement);
+    final List<FieldMetadata> resolvedFields = [];
 
-    return DtoMetadata(
+    for (final param in parameters) {
+      // Check for field first
+      final field = resolvedFieldsAndAccessors.getField(param.name);
+      if (field != null) {
+        resolvedFields.add(FieldMetadata.fromField(field));
+        continue; // Skip accessor check if field exists
+      }
+
+      // Check for accessor if no field was found
+      final accessor = resolvedFieldsAndAccessors.getAccessor(param.name);
+      if (accessor != null) {
+        resolvedFields.add(FieldMetadata.fromPropertyAccessor(accessor));
+      }
+    }
+
+    return ResolvableMetadata(
       element: element,
       name: element.name,
-      fields: fields,
+      parameters: parameters,
       isConst: element.unnamedConstructor?.isConst ?? false,
       isDiagnosticable: element.allSupertypes.any(
         (e) => e.element.name == 'Diagnosticable',
@@ -57,7 +79,8 @@ class DtoMetadata extends BaseMetadata {
       mergeLists: mixableDto.mergeLists,
       generateValueExtension: mixableDto.generateValueExtension,
       generateUtility: mixableDto.generateUtility,
-      resolvedType: _getResolvedType(element),
+      resolvedElement: resolvedElement,
+      resolvableFields: resolvedFields,
     );
   }
 

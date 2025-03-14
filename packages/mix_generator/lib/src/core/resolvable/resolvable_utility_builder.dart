@@ -1,27 +1,23 @@
-import '../metadata/dto_metadata.dart';
-import '../type_registry.dart';
+import '../metadata/resolvable_metadata.dart';
 import '../utils/code_builder.dart';
 import '../utils/utility_method_builder.dart';
 
-class DtoUtilityBuilder implements CodeBuilder {
-  final DtoMetadata metadata;
-  final TypeRegistry typeRegistry;
+class ResolvableUtilityBuilder implements CodeBuilder {
+  final ResolvableMetadata metadata;
 
-  DtoUtilityBuilder(this.metadata, {TypeRegistry? typeRegistry})
-      : typeRegistry = typeRegistry ?? TypeRegistry.instance;
+  const ResolvableUtilityBuilder(this.metadata);
 
   @override
   String build() {
     final dtoName = metadata.name;
-    final resolvedTypeName = metadata.resolvedType.name;
+    final resolvedTypeName = metadata.resolvedElement.name;
 
     final utilityName = '${resolvedTypeName}Utility';
 
     // Use old or new logic to generate utility fields from the ClassElement:
     final generatedFields = UtilityMethods.generateUtilityFields(
       dtoName,
-      metadata.fields,
-      typeRegistry,
+      metadata.parameters,
     );
 
     // Build your class using a ClassBuilder or do it manually:
@@ -46,9 +42,9 @@ class DtoUtilityBuilder implements CodeBuilder {
         UtilityMethods.generateUtilityFieldsFromClass(metadata.element),
         UtilityMethods.methodOnly(
           utilityType: dtoName,
-          fields: metadata.fields,
+          fields: metadata.parameters,
         ),
-        UtilityMethods.methodCall(metadata.fields),
+        UtilityMethods.methodCall(metadata.parameters),
       ],
     );
 

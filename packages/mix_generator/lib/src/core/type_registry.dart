@@ -14,40 +14,11 @@ class TypeRegistry {
   TypeRegistry._();
 
   bool hasTryToMerge(String typeName) {
-    print('hasTryToMerge checking: $typeName');
-
-    // Check if the exact type name is in the set
-    if (tryToMerge.contains(typeName)) {
-      print('  Found exact match for $typeName in tryToMerge set');
-
-      return true;
-    }
-
-    // Check if the type name with 'Dto' suffix is in the set
-    if (tryToMerge.contains('${typeName}Dto')) {
-      print('  Found ${typeName}Dto in tryToMerge set');
-
-      return true;
-    }
-
-    // Check if the type is a subclass of a type in the set
-    // For example, BoxDecorationDto is a subclass of DecorationDto
-    if (typeName == 'BoxDecorationDto' || typeName == 'ShapeDecorationDto') {
-      final result = tryToMerge.contains('DecorationDto');
-      print(
-        '  $typeName is a subclass of DecorationDto, which ${result ? 'is' : 'is not'} in tryToMerge set',
-      );
-
-      return result;
-    }
-
-    print('  No match found for $typeName in tryToMerge set');
-
-    return false;
+    return tryToMerge.contains(typeName);
   }
 
   /// Gets the utility type for a DartType
-  TypeReference? getUtilityForType(DartType type) {
+  String? getUtilityForType(DartType type) {
     final typeString = type.getTypeAsString();
 
     // Check if it's a list type
@@ -56,24 +27,24 @@ class TypeRegistry {
     if (TypeUtils.isSpec(type)) {
       final typeName = typeString;
 
-      return TypeReference('${typeName}Utility');
+      return '${typeName}Utility';
     }
 
     // Special handling for DTO types
-    if (TypeUtils.isDto(type)) {
+    if (TypeUtils.isResolvable(type)) {
       final dtoName = type.element!.name!;
       // Remove the Dto suffix if present
       final baseName = dtoName.endsWith('Dto')
           ? dtoName.substring(0, dtoName.length - 3)
           : dtoName;
 
-      return TypeReference('${baseName}Utility');
+      return '${baseName}Utility';
     }
 
     // Check for a direct utility mapping
     for (final entry in utilities.entries) {
       if (entry.value == typeString) {
-        return TypeReference(entry.key);
+        return entry.key;
       }
     }
 
@@ -81,7 +52,7 @@ class TypeRegistry {
       final elementType = type.firstTypeArgument!;
       final elementTypeName = elementType.getTypeAsString();
 
-      return TypeReference('ListUtility<T, $elementTypeName>');
+      return 'ListUtility<T, $elementTypeName>';
     }
 
     // If no mapping found, use DynamicUtility
@@ -93,37 +64,41 @@ class TypeRegistry {
   }
 
   /// Gets the representation type (DTO or Attribute) for a DartType
-  TypeReference? getRepresentationForType(DartType type) {
+  String? getResolvableForType(DartType type) {
     final typeString = type.getTypeAsString();
 
     // Special handling for Spec types
     if (TypeUtils.isSpec(type)) {
       final typeName = typeString;
 
-      return TypeReference('${typeName}Attribute');
+      return '${typeName}Attribute';
+    }
+
+    if (type.isList) {
+      final elementType = type.firstTypeArgument!;
+      final valueType = getResolvableForType(elementType);
+
+      if (valueType == null) {
+        return null;
+      }
+
+      return 'List<$valueType>';
     }
 
     // Special handling for DTO types
-    if (TypeUtils.isDto(type)) {
-      return TypeReference(type.element!.name!);
+    if (TypeUtils.isResolvable(type)) {
+      return type.element!.name!;
     }
 
     // Check for a direct DTO mapping
-    for (final dtoEntry in dtos.entries) {
+    for (final dtoEntry in resolvables.entries) {
       if (dtoEntry.value == typeString) {
-        return TypeReference(dtoEntry.key);
+        return dtoEntry.key;
       }
     }
 
     // If no specific representation, return the type itself
     return null;
-  }
-
-  /// Gets the utility for a field with a specific name and type
-  TypeReference? getUtilityForField(String fieldName, DartType type) {
-    // For now, just delegate to the type utility
-    // In the future, this could be enhanced to handle field-specific utilities
-    return getUtilityForType(type);
   }
 
   /// Gets the utility name from a type name string
@@ -170,8 +145,12 @@ final ignoredUtilities = [
   'StrokeAlignUtility',
 ];
 
-/// Map of DTO class names to their corresponding Flutter type names
-final dtos = {
+/// Map of resolvable class names to their corresponding Flutter type names
+final resolvables = {
+  'BoxSpecAttribute': 'BoxSpec',
+  'ImageSpecAttribute': 'ImageSpec',
+  'TextSpecAttribute': 'TextSpec',
+  'FlexSpecAttribute': 'FlexSpec',
   'AnimatedDataDto': 'AnimatedData',
   'BoxBorderDto': 'BoxBorder',
   'BorderRadiusGeometryDto': 'BorderRadiusGeometry',
@@ -198,7 +177,7 @@ final dtos = {
   'BorderRadiusDto': 'BorderRadius',
   'EdgeInsetsDto': 'EdgeInsets',
   'BoxConstraintsDto': 'BoxConstraints',
-  'FilterQualityDto': 'FilterQuality',
+  'TextStyleDataDto': 'TextStyleData',
 };
 
 /// Map of utility class names to their corresponding value types
@@ -206,7 +185,7 @@ final utilities = {
   'AlignmentUtility': 'Alignment',
   'AlignmentDirectionalUtility': 'AlignmentDirectional',
   'AlignmentGeometryUtility': 'AlignmentGeometry',
-  'AnimatedUtility': 'AnimatedDataDto',
+  'AnimatedUtility': 'AnimatedData',
   'AxisUtility': 'Axis',
   'BoolUtility': 'bool',
   'BlendModeUtility': 'BlendMode',
@@ -215,8 +194,8 @@ final utilities = {
   'BoxShadowListUtility': 'List<BoxShadowDto>',
   'BoxShapeUtility': 'BoxShape',
   'ClipUtility': 'Clip',
-  'ColorUtility': 'ColorDto',
-  'ColorListUtility': 'List<ColorDto>',
+  'ColorUtility': 'Color',
+  'ColorListUtility': 'List<Color>',
   'ConstraintsUtility': 'ConstraintsDto',
   'CrossAxisAlignmentUtility': 'CrossAxisAlignment',
   'CurveUtility': 'Curve',
@@ -270,12 +249,8 @@ final utilities = {
 /// Map of DTO class names to whether they have a tryToMerge method
 final tryToMerge = {
   'BoxBorderDto',
-  'BorderRadiusGeometryDto',
-  'BorderSideDto',
   'DecorationDto',
   'EdgeInsetsGeometryDto',
   'GradientDto',
   'ShapeBorderDto',
-  'ShadowDto',
-  'TextStyleDto',
 };

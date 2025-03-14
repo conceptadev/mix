@@ -82,9 +82,6 @@ class BoxConstraintsUtility<T extends Attribute>
 
   BoxConstraintsUtility(super.builder) : super(valueToDto: (v) => v.toDto());
 
-  BoxConstraintsUtility<T> get chain =>
-      BoxConstraintsUtility(attributeBuilder, mutable: true);
-
   /// Returns a new [BoxConstraintsDto] with the specified properties.
   @override
   T only({

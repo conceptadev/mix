@@ -1,7 +1,103 @@
 import 'package:analyzer/dart/constant/value.dart';
 import 'package:analyzer/dart/element/element.dart';
+import 'package:analyzer/dart/element/type.dart';
 import 'package:mix_annotations/mix_annotations.dart';
 import 'package:source_gen/source_gen.dart';
+
+import '../metadata/field_metadata.dart';
+import '../type_registry.dart';
+
+/// Extension to get typeAsString from a ConstantReader
+extension ConstantReaderX on ConstantReader {
+  String? get typeAsString {
+    final peakedType = peek('type');
+
+    if (peakedType?.isString == true) {
+      return peakedType!.stringValue;
+    } else if (peakedType?.isType == true) {
+      return peakedType!.typeValue.element!.name;
+    }
+
+    return null;
+  }
+}
+
+/// Reads annotations of the specified type from an element
+T? readAnnotation<T>(Element element) {
+  Type runtimeType;
+
+  // Map annotation class to its runtime type
+  if (T == MixableFieldUtility) {
+    runtimeType = MixableFieldUtility;
+  } else if (T == MixableFieldDto) {
+    runtimeType = MixableFieldDto;
+  } else if (T == MixableField) {
+    runtimeType = MixableField;
+  } else if (T == MixableSpec) {
+    runtimeType = MixableSpec;
+  } else if (T == MixableDto) {
+    runtimeType = MixableDto;
+  } else if (T == MixableToken) {
+    runtimeType = MixableToken;
+  } else if (T == MixableUtility) {
+    runtimeType = MixableUtility;
+  } else {
+    return null;
+  }
+
+  final checker = TypeChecker.fromRuntime(runtimeType);
+  final annotation = checker.firstAnnotationOfExact(element);
+  if (annotation == null) return null;
+
+  return parseAnnotation(annotation);
+}
+
+/// Parses a DartObject into the specified annotation type
+T? parseAnnotation<T>(DartObject annotation) {
+  final reader = ConstantReader(annotation);
+
+  if (T == MixableFieldUtility) {
+    final type = reader.peek('type')?.typeValue;
+    final alias = reader.peek('alias')?.stringValue;
+    final properties = reader
+            .peek('properties')
+            ?.listValue
+            .map((e) => parseMixableUtilityProps(ConstantReader(e)))
+            .toList() ??
+        [];
+
+    return MixableFieldUtility(
+      alias: alias,
+      type: type,
+      properties: properties,
+    ) as T;
+  } else if (T == MixableFieldDto) {
+    final typeString = reader.typeAsString;
+    if (typeString == null) return null;
+
+    return MixableFieldDto(type: typeString) as T;
+  } else if (T == MixableField) {
+    final dtoReader = reader.peek('dto');
+    final dto = dtoReader != null ? _getMixableDto(dtoReader) : null;
+
+    final utilities = reader
+        .peek('utilities')
+        ?.listValue
+        .map((e) => _readMixableFieldUtility(ConstantReader(e)))
+        .toList();
+
+    final isLerpable = reader.peek('isLerpable')?.boolValue ?? true;
+
+    return MixableField(
+      dto: dto,
+      utilities: utilities,
+      isLerpable: isLerpable,
+    ) as T;
+  }
+  // Add other annotation types as needed
+
+  return null;
+}
 
 /// Reads the [MixableField] annotation from a field element
 MixableField readMixableField(FieldElement element) {
@@ -12,153 +108,25 @@ MixableField readMixableField(FieldElement element) {
     return const MixableField();
   }
 
-  return _getMixableField(ConstantReader(annotation));
+  return parseAnnotation(annotation) ?? const MixableField();
 }
 
-/// Reads the [MixableSpec] annotation from a class element
-MixableSpec readMixableSpec(ClassElement element) {
-  const checker = TypeChecker.fromRuntime(MixableSpec);
-  final annotation = checker.firstAnnotationOfExact(element);
-
-  if (annotation == null) {
-    throw InvalidGenerationSourceError(
-      'No MixableSpec annotation found on the class',
-      element: element,
-    );
-  }
-
-  final reader = ConstantReader(annotation);
-  final prefix = reader.read('prefix').stringValue;
-
-  return MixableSpec(
-    withCopyWith: reader.read('withCopyWith').boolValue,
-    withEquality: reader.read('withEquality').boolValue,
-    withLerp: reader.read('withLerp').boolValue,
-    skipUtility: reader.read('skipUtility').boolValue,
-    prefix: prefix.isEmpty ? element.name : prefix,
-  );
+/// Reads the [MixableFieldUtility] annotation from an element
+MixableFieldUtility? readMixableFieldUtility(Element element) {
+  return readAnnotation(element);
 }
 
-/// Reads the [MixableDto] annotation from a class element
-MixableDto readMixableDto(ClassElement element) {
-  const checker = TypeChecker.fromRuntime(MixableDto);
-  final annotation = checker.firstAnnotationOfExact(element);
-
-  if (annotation == null) {
-    throw InvalidGenerationSourceError(
-      'No MixableDto annotation found on the class',
-      element: element,
-    );
-  }
-
-  final reader = ConstantReader(annotation);
-
-  return MixableDto(
-    mergeLists: reader.read('mergeLists').boolValue,
-    generateValueExtension: reader.read('generateValueExtension').boolValue,
-    generateUtility: reader.read('generateUtility').boolValue,
-  );
+/// Reads the [MixableFieldDto] annotation from an element
+MixableFieldDto? readMixableFieldResolvable(Element element) {
+  return readAnnotation(element);
 }
 
-/// Reads the [MixableFieldUtility] annotation from a class element
-MixableFieldUtility readMixableFieldUtility(ClassElement element) {
-  const checker = TypeChecker.fromRuntime(MixableFieldUtility);
-  final annotation = checker.firstAnnotationOfExact(element);
+/// Parse utility properties from annotation reader
+MixableUtilityProps parseMixableUtilityProps(ConstantReader reader) {
+  final path = reader.read('path').stringValue;
+  final alias = reader.read('alias').stringValue;
 
-  if (annotation == null) {
-    throw InvalidGenerationSourceError(
-      'No MixableFieldUtility annotation found on the class',
-      element: element,
-    );
-  }
-
-  final reader = ConstantReader(annotation);
-  final type = reader.peek('type')?.typeValue;
-
-  // Read the properties from the annotation
-  final properties = reader
-          .peek('properties')
-          ?.listValue
-          .map((e) => _getMixableUtilityProps(ConstantReader(e)))
-          .toList() ??
-      [];
-
-  return MixableFieldUtility(type: type, properties: properties);
-}
-
-/// Reads the [MixableUtility] annotation from a class element and returns the generateHelpers value
-int readMixableUtilityHelpers(ClassElement element) {
-  const checker = TypeChecker.fromRuntime(MixableUtility);
-  final annotation = checker.firstAnnotationOfExact(element);
-
-  if (annotation == null) {
-    // If no MixableUtility annotation is found, return the default value (all helpers)
-    return 0; // _allHelpers value in the annotations.dart file
-  }
-
-  final reader = ConstantReader(annotation);
-
-  return reader.read('generateHelpers').intValue;
-}
-
-/// Checks if a class has the [MixableUtility] annotation
-bool hasMixableUtility(ClassElement element) {
-  const checker = TypeChecker.fromRuntime(MixableUtility);
-
-  return checker.hasAnnotationOfExact(element);
-}
-
-/// Reads the [MixableToken] annotation from a class element
-MixableToken readMixableToken(ClassElement element) {
-  const checker = TypeChecker.fromRuntime(MixableToken);
-  final annotation = checker.firstAnnotationOfExact(element);
-
-  if (annotation == null) {
-    throw InvalidGenerationSourceError(
-      'No MixableToken annotation found on the class',
-      element: element,
-    );
-  }
-  final reader = ConstantReader(annotation);
-  final type = reader.read('type').typeValue;
-
-  return MixableToken(
-    type,
-    namespace: reader.read('namespace').isNull
-        ? null
-        : reader.read('namespace').stringValue,
-    utilityExtension: reader.read('utilityExtension').boolValue,
-    contextExtension: reader.read('contextExtension').boolValue,
-  );
-}
-
-/// Extracts [MixableField] data from a [ConstantReader]
-MixableField _getMixableField(ConstantReader reader) {
-  final dtoReader = reader.peek('dto');
-
-  final utilities = reader
-      .peek('utilities')
-      ?.listValue
-      .map((e) => _readMixableFieldUtility(ConstantReader(e)))
-      .toList();
-
-  final isLerpable = reader.peek('isLerpable')?.boolValue ?? true;
-
-  return MixableField(
-    dto: dtoReader != null ? _getMixableDto(dtoReader) : null,
-    utilities: utilities,
-    isLerpable: isLerpable,
-  );
-}
-
-/// Extracts [MixableFieldDto] data from a [ConstantReader]
-MixableFieldDto? _getMixableDto(ConstantReader reader) {
-  final typeString =
-      reader.peek('type')?.typeAsString ?? reader.peek('type')?.stringValue;
-
-  if (typeString == null) return null;
-
-  return MixableFieldDto(type: typeString);
+  return (path: path, alias: alias);
 }
 
 /// Reads a [MixableFieldUtility] from a [ConstantReader]
@@ -177,7 +145,7 @@ MixableFieldUtility _readMixableFieldUtility(ConstantReader reader) {
   final properties = reader
           .peek('properties')
           ?.listValue
-          .map((e) => _getMixableUtilityProps(ConstantReader(e)))
+          .map((e) => parseMixableUtilityProps(ConstantReader(e)))
           .toList() ??
       [];
 
@@ -188,27 +156,135 @@ MixableFieldUtility _readMixableFieldUtility(ConstantReader reader) {
   );
 }
 
-/// Extracts [MixableUtilityProps] data from a [ConstantReader]
-MixableUtilityProps _getMixableUtilityProps(ConstantReader reader) {
-  final path = reader.read('path').stringValue;
-  final alias = reader.read('alias').stringValue;
+/// Extracts [MixableFieldDto] data from a [ConstantReader]
+MixableFieldDto? _getMixableDto(ConstantReader reader) {
+  final typeString = reader.typeAsString;
+  if (typeString == null) return null;
 
-  return (path: path, alias: alias);
+  return MixableFieldDto(type: typeString);
 }
 
-/// Extension to get typeAsString from a ConstantReader
-extension ConstantReaderX on ConstantReader {
-  String? get typeAsString {
-    final peakedType = peek('type');
+/// Creates utility metadata for a field/parameter
+FieldUtilityMetadata? createFieldUtilityMetadata({
+  required String name,
+  required DartType dartType,
+  MixableFieldUtility? utilityAnnotation,
+}) {
+  final typeRegistry = TypeRegistry.instance;
 
-    if (peakedType?.isString == true) {
-      return peakedType!.stringValue;
-    } else if (peakedType?.isType == true) {
-      return peakedType!.typeValue.element!.name;
-    }
+  // Get utility type from registry
+  final utilityTypeName = typeRegistry.getUtilityForType(dartType);
+  final hasUtility = utilityTypeName != null || utilityAnnotation != null;
 
-    return null;
+  if (!hasUtility) return null;
+
+  // Determine name and type from annotations or defaults
+  final utilityName = utilityAnnotation?.alias ?? name;
+  final utilityType = utilityAnnotation?.typeAsString ?? utilityTypeName ?? '';
+
+  return FieldUtilityMetadata(name: utilityName, type: utilityType);
+}
+
+/// Creates resolvable metadata for a field/parameter
+FieldResolvableMetadata? createFieldResolvableMetadata({
+  required String name,
+  required DartType dartType,
+  MixableFieldDto? resolvableAnnotation,
+}) {
+  final typeRegistry = TypeRegistry.instance;
+
+  // Get resolvable type from registry or annotation
+  final registryType = typeRegistry.getResolvableForType(dartType);
+  final resolvableTypeName = resolvableAnnotation?.typeAsString ?? registryType;
+
+  if (resolvableTypeName == null) return null;
+
+  return FieldResolvableMetadata(
+    name: name,
+    type: resolvableTypeName,
+    tryToMergeType: typeRegistry.hasTryToMerge(resolvableTypeName),
+  );
+}
+
+/// Creates utility properties for a field
+List<UtilityProperty> createUtilityProperties({
+  required String name,
+  required List<MixableFieldUtility>? utilities,
+  required String? defaultUtilityName,
+}) {
+  final result = <UtilityProperty>[];
+
+  if (utilities == null || utilities.isEmpty) {
+    return [
+      UtilityProperty(name: name, path: name, utilityName: defaultUtilityName),
+    ];
   }
+
+  for (final util in utilities) {
+    final aliasName = util.alias ?? name;
+    final utilType = util.typeAsString ?? defaultUtilityName;
+
+    result.add(UtilityProperty(
+      name: aliasName,
+      path: name,
+      utilityName: utilType,
+    ));
+
+    // Add nested properties
+    for (final nested in util.properties) {
+      result.add(UtilityProperty(
+        name: nested.alias,
+        path: '$aliasName.${nested.path}',
+        utilityName: utilType,
+      ));
+    }
+  }
+
+  return result;
+}
+
+/// Reads the [MixableSpec] annotation from a class element
+MixableSpec readMixableSpec(ClassElement element) {
+  return readAnnotation<MixableSpec>(element) ??
+      (throw InvalidGenerationSourceError(
+        'No MixableSpec annotation found on the class',
+        element: element,
+      ));
+}
+
+/// Reads the [MixableDto] annotation from a class element
+MixableDto readMixableDto(ClassElement element) {
+  return readAnnotation<MixableDto>(element) ??
+      (throw InvalidGenerationSourceError(
+        'No MixableDto annotation found on the class',
+        element: element,
+      ));
+}
+
+/// Reads the [MixableToken] annotation from a class element
+MixableToken readMixableToken(ClassElement element) {
+  return readAnnotation<MixableToken>(element) ??
+      (throw InvalidGenerationSourceError(
+        'No MixableToken annotation found on the class',
+        element: element,
+      ));
+}
+
+/// Reads the [MixableUtility] annotation from a class element and returns the generateHelpers value
+int readMixableUtilityHelpers(ClassElement element) {
+  final annotation = readAnnotation<MixableUtility>(element);
+  if (annotation == null) {
+    return 0; // Default value (all helpers)
+  }
+
+  return annotation.generateHelpers;
+}
+
+/// Checks if a class has the [MixableUtility] annotation
+bool hasMixableUtility(ClassElement element) {
+  const checker = TypeChecker.fromRuntime(MixableUtility);
+
+  return checker.hasAnnotationOfExact(element);
 }
 
 /// Gets all annotations of a specific type from an element

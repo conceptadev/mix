@@ -1,14 +1,11 @@
 import '../metadata/spec_metadata.dart';
-import '../type_registry.dart';
 import '../utils/code_builder.dart';
 import '../utils/utility_method_builder.dart';
 
 class SpecUtilityBuilder implements CodeBuilder {
   final SpecMetadata metadata;
-  final TypeRegistry typeRegistry;
 
-  SpecUtilityBuilder(this.metadata, {TypeRegistry? typeRegistry})
-      : typeRegistry = typeRegistry ?? TypeRegistry.instance;
+  const SpecUtilityBuilder(this.metadata);
 
   @override
   String build() {
@@ -19,8 +16,7 @@ class SpecUtilityBuilder implements CodeBuilder {
     // Use old or new logic to generate utility fields from the ClassElement:
     final generatedFields = UtilityMethods.generateUtilityFields(
       attributeName,
-      metadata.fields,
-      typeRegistry,
+      metadata.parameters,
     );
 
     // Build your class using a ClassBuilder or do it manually:
@@ -45,7 +41,7 @@ class SpecUtilityBuilder implements CodeBuilder {
         UtilityMethods.selfGetter(utilityName, attributeName),
         UtilityMethods.methodOnly(
           utilityType: attributeName,
-          fields: metadata.fields,
+          fields: metadata.parameters,
         ),
       ],
     );

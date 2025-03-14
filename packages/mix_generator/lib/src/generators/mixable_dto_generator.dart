@@ -4,10 +4,10 @@ import 'package:logging/logging.dart';
 import 'package:mix_annotations/mix_annotations.dart';
 import 'package:source_gen/source_gen.dart';
 
-import '../core/dto/dto_extension_builder.dart';
-import '../core/dto/dto_mixin_builder.dart';
-import '../core/dto/dto_utility_builder.dart';
-import '../core/metadata/dto_metadata.dart';
+import '../core/metadata/resolvable_metadata.dart';
+import '../core/resolvable/resolvable_extension_builder.dart';
+import '../core/resolvable/resolvable_mixin_builder.dart';
+import '../core/resolvable/resolvable_utility_builder.dart';
 import '../core/utils/base_generator.dart';
 
 /// Generator for classes annotated with [MixableDto].
@@ -16,40 +16,36 @@ import '../core/utils/base_generator.dart';
 /// - A mixin with DTO functionality
 /// - A utility class for the DTO (if not skipped)
 /// - A value extension (if enabled)
-class MixableDtoGenerator extends BaseMixGenerator<MixableDto, DtoMetadata> {
+class MixableDtoGenerator
+    extends BaseMixGenerator<MixableDto, ResolvableMetadata> {
   final Logger _logger = Logger('MixableDtoGenerator');
 
   MixableDtoGenerator() : super(const TypeChecker.fromRuntime(MixableDto));
 
   @override
-  Future<DtoMetadata> createMetadata(
+  Future<ResolvableMetadata> createMetadata(
     ClassElement element,
     BuildStep buildStep,
   ) async {
     validateClassElement(element);
-    print('Creating metadata for ${element.name}');
 
-    final metadata = DtoMetadata.fromAnnotation(
+    final metadata = ResolvableMetadata.fromAnnotation(
       element,
       ConstantReader(typeChecker.firstAnnotationOfExact(element)),
-    );
-
-    print('  Created metadata for ${metadata.name}');
-    print('  Fields: ${metadata.fields.map((f) => f.name).join(', ')}');
-    print(
-      '  Has custom merge method: ${element.methods.any((m) => m.name == 'merge')}',
     );
 
     return metadata;
   }
 
   @override
-  String generateForMetadata(DtoMetadata metadata, BuildStep buildStep) {
-    print('Generating code for ${metadata.name}');
+  String generateForMetadata(
+    ResolvableMetadata metadata,
+    BuildStep buildStep,
+  ) {
     final output = StringBuffer();
 
     // Add warning ignore if necessary
-    if (metadata.fields.any((field) => field.hasDeprecated)) {
+    if (metadata.parameters.any((field) => field.hasDeprecated)) {
       output.writeln(
         '// ignore_for_file: deprecated_member_use_from_same_package',
       );
@@ -57,15 +53,14 @@ class MixableDtoGenerator extends BaseMixGenerator<MixableDto, DtoMetadata> {
     }
 
     // Generate mixin
-    print('  Generating mixin for ${metadata.name}');
-    final mixinBuilder = DtoMixinBuilder(metadata);
+
+    final mixinBuilder = ResolvableMixinBuilder(metadata);
     output.writeln(mixinBuilder.build());
     output.writeln();
 
     // Generate utility class (if not skipped)
     if (metadata.generateUtility) {
-      print('  Generating utility class for ${metadata.name}');
-      final utilityBuilder = DtoUtilityBuilder(metadata);
+      final utilityBuilder = ResolvableUtilityBuilder(metadata);
       try {
         final utilityCode = utilityBuilder.build();
         output.writeln(utilityCode);
@@ -73,16 +68,14 @@ class MixableDtoGenerator extends BaseMixGenerator<MixableDto, DtoMetadata> {
         // Skip utility class generation if it fails
         _logger
             .warning('Error generating utility class for ${metadata.name}: $e');
-        print('  Error generating utility class: $e');
       }
       output.writeln();
     }
 
     // Generate value extension (if enabled)
     if (metadata.generateValueExtension) {
-      print('  Generating value extension for ${metadata.name}');
       try {
-        final extensionBuilder = DtoExtensionBuilder(metadata);
+        final extensionBuilder = ResolvableExtensionBuilder(metadata);
         final extensionCode = extensionBuilder.build();
         output.writeln(extensionCode);
       } catch (e) {
@@ -90,11 +83,8 @@ class MixableDtoGenerator extends BaseMixGenerator<MixableDto, DtoMetadata> {
         _logger.warning(
           'Error generating value extension for ${metadata.name}: $e',
         );
-        print('  Error generating value extension: $e');
       }
     }
-
-    print('  Code generation complete for ${metadata.name}');
 
     return output.toString();
   }

@@ -234,10 +234,10 @@ class BorderSideUtility<T extends Attribute>
   /// Utility for defining [BorderSideDto.width]
   late final width = DoubleUtility((v) => only(width: v));
 
+  BorderSideUtility(super.builder) : super(valueToDto: (v) => v.toDto());
+
   /// Creates an [Attribute] instance using the [BorderSideDto.none] constructor.
   T none() => builder(const BorderSideDto.none());
-
-  BorderSideUtility(super.builder) : super(valueToDto: (v) => v.toDto());
 
   /// Returns a new [BorderSideDto] with the specified properties.
   @override

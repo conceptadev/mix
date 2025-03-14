@@ -1,7 +1,6 @@
 import 'package:analyzer/dart/element/element.dart';
 
 import '../metadata/field_metadata.dart';
-import '../type_registry.dart';
 import 'constructor_utils.dart';
 import 'dart_type_utils.dart';
 
@@ -119,94 +118,33 @@ $signatureLine
   /// Generates utility fields for the given attribute class and fields.
   static List<String> generateUtilityFields(
     String className,
-    List<FieldMetadata> fields,
-    TypeRegistry typeRefs,
+    List<ParameterMetadata> fields,
   ) {
     final expressions = <String>[];
 
     for (final field in fields) {
-      final annotatedUtilities = field.annotation.utilities ?? [];
       final propertyName = field.name;
-      final utilityType =
-          typeRefs.getUtilityForField(propertyName, field.dartType);
-      final utilityName = utilityType?.name ?? 'DynamicUtility';
+      final utilityProps = field.utilityProperties;
 
-      final utilityExpression = '$utilityName((v) => only($propertyName: v))';
-
-      if (annotatedUtilities.isEmpty) {
-        expressions.add(
-          _generateUtilityField(
-            docPath: '$className.${field.name}',
-            aliasName: field.name,
-            utilityExpression: utilityExpression,
-          ),
-        );
-      } else {
-        for (final extraUtil in annotatedUtilities) {
-          final aliasName = extraUtil.alias ?? propertyName;
-
-          String aliasUtilityName;
-
-          if (extraUtil.typeAsString != null) {
-            aliasUtilityName =
-                typeRefs.getUtilityNameFromTypeName(extraUtil.typeAsString!);
-          } else {
-            aliasUtilityName = utilityName;
-          }
+      for (final prop in utilityProps) {
+        if (prop.path == propertyName) {
+          // Top-level utility (main field or with an alias)
+          final utilityName = prop.utilityName ?? 'DynamicUtility';
+          final utilityExpression =
+              '$utilityName((v) => only($propertyName: v))';
 
           expressions.add(_generateUtilityField(
             docPath: '$className.$propertyName',
-            aliasName: aliasName,
+            aliasName: prop.name,
             utilityExpression: utilityExpression,
           ));
-
-          final nestedUtilities = extraUtil.properties;
-
-          for (final nestedUtility in nestedUtilities) {
-            // Extract path and alias using a simpler approach
-            String? pathName;
-            String? nestedAliasName;
-
-            // Convert to string and parse
-            final String utilityStr = nestedUtility.toString();
-
-            // Parse the record format: (path: 'value', alias: 'value')
-            if (utilityStr.startsWith('(') && utilityStr.endsWith(')')) {
-              final content = utilityStr.substring(1, utilityStr.length - 1);
-              final parts = content.split(',');
-
-              for (final part in parts) {
-                final keyValue = part.trim().split(':');
-                if (keyValue.length == 2) {
-                  final key = keyValue[0].trim();
-                  final value = keyValue[1].trim();
-
-                  // Remove quotes if present
-                  final cleanValue =
-                      value.startsWith("'") && value.endsWith("'")
-                          ? value.substring(1, value.length - 1)
-                          : value;
-
-                  if (key == 'path') {
-                    pathName = cleanValue;
-                  } else if (key == 'alias') {
-                    nestedAliasName = cleanValue;
-                  }
-                }
-              }
-            }
-
-            // Skip if we couldn't extract both path and alias
-            if (pathName == null || nestedAliasName == null) {
-              continue;
-            }
-
-            expressions.add(_generateUtilityField(
-              docPath: '$className.$aliasName.$pathName',
-              aliasName: nestedAliasName,
-              utilityExpression: '$aliasName.$pathName',
-            ));
-          }
+        } else {
+          // Nested utility
+          expressions.add(_generateUtilityField(
+            docPath: '$className.${prop.path}',
+            aliasName: prop.name,
+            utilityExpression: prop.path,
+          ));
         }
       }
     }
@@ -228,7 +166,7 @@ late final $aliasName = $utilityExpression;
 
   static String methodOnly({
     required String utilityType,
-    required List<FieldMetadata> fields,
+    required List<ParameterMetadata> fields,
   }) {
     final fieldStatements = fields.map((e) {
       final fieldName = e.name;
@@ -237,7 +175,7 @@ late final $aliasName = $utilityExpression;
     }).join('\n');
 
     final optionalParameters = fields.map((e) {
-      final fieldType = e.representationType?.name ?? e.type;
+      final fieldType = e.resolvable?.type ?? e.type;
 
       return '$fieldType? ${e.name},';
     }).join('\n');
@@ -271,7 +209,7 @@ late final $aliasName = $utilityExpression;
   ''';
   }
 
-  static String methodCall(List<FieldMetadata> fields) {
+  static String methodCall(List<ParameterMetadata> fields) {
     final optionalParameters = fields.map((field) {
       final fieldType = TypeUtils.getResolvedTypeFromDto(field.dartType);
 
@@ -285,7 +223,7 @@ late final $aliasName = $utilityExpression;
         return '$fieldName: $fieldName?.map((e) => e.toDto()).toList(),';
       }
 
-      if (field.isDto) {
+      if (field.isResolvable) {
         return '$fieldName: $fieldName?.toDto(),';
       }
 

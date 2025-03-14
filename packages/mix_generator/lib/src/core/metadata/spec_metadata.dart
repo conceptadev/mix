@@ -29,7 +29,7 @@ class SpecMetadata extends BaseMetadata {
   SpecMetadata({
     required super.element,
     required super.name,
-    required super.fields,
+    required super.parameters,
     required super.isConst,
     required super.isDiagnosticable,
     required super.constructor,
@@ -45,11 +45,11 @@ class SpecMetadata extends BaseMetadata {
   /// Creates a SpecMetadata from a class element and its annotation
   static SpecMetadata fromAnnotation(
     ClassElement element,
-    ConstantReader annotation,
+    ConstantReader reader,
   ) {
     final mixableSpec = readMixableSpec(element);
     final constructor = findTargetConstructor(element);
-    final fields = FieldMetadata.extractFromClass(element);
+    final parameters = ParameterMetadata.extractFromConstructor(element);
 
     // Check for WidgetModifierSpec
     bool isWidgetModifier = false;
@@ -63,7 +63,7 @@ class SpecMetadata extends BaseMetadata {
     return SpecMetadata(
       element: element,
       name: element.name,
-      fields: fields,
+      parameters: parameters,
       isConst: element.unnamedConstructor?.isConst ?? false,
       isDiagnosticable: element.allSupertypes.any(
         (e) => e.element.name == 'Diagnosticable',

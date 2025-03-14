@@ -37,7 +37,7 @@ mixin _$TextHeightBehaviorDto on Dto<TextHeightBehavior> {
   /// Properties from [other] that are null will fall back
   /// to the values from this instance.
   @override
-  TextHeightBehaviorDto merge(covariant TextHeightBehaviorDto? other) {
+  TextHeightBehaviorDto merge(TextHeightBehaviorDto? other) {
     if (other == null) return _$this;
 
     return TextHeightBehaviorDto(

@@ -6,7 +6,7 @@ class CommonMethods {
   /// Generates a props getter for equality comparison
   static String generatePropsGetter({
     required String className,
-    required List<FieldMetadata> fields,
+    required List<ParameterMetadata> fields,
     required bool useInternalRef,
   }) {
     final propsFields = fields.map((field) {
@@ -28,7 +28,7 @@ $propsFields
 
   /// Generates a debugFillProperties method
   static String generateDebugFillPropertiesMethod({
-    required List<FieldMetadata> fields,
+    required List<ParameterMetadata> fields,
     required bool useInternalRef,
   }) {
     final expandableFields = {'decoration', 'style'};

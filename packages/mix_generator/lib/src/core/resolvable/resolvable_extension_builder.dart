@@ -1,29 +1,24 @@
-import '../metadata/dto_metadata.dart';
+import '../metadata/resolvable_metadata.dart';
 import '../utils/code_builder.dart';
-import '../utils/dart_type_utils.dart';
-import '../utils/extensions.dart';
 
 /// Builder for generating extension methods to convert between value types and DTOs.
-class DtoExtensionBuilder extends CodeBuilder {
+class ResolvableExtensionBuilder extends CodeBuilder {
   /// The metadata for the DTO class
-  final DtoMetadata metadata;
+  final ResolvableMetadata metadata;
 
   /// Creates a new DtoExtensionBuilder
-  DtoExtensionBuilder(this.metadata);
+  ResolvableExtensionBuilder(this.metadata);
 
   @override
   String build() {
     final className = metadata.name;
-    final resolvedTypeName = metadata.resolvedType.name;
+    final resolvedTypeName = metadata.resolvedElement.name;
 
-    final fieldStatements = metadata.fields.map((field) {
+    final fieldStatements = metadata.resolvableFields.map((field) {
       final fieldName = field.name;
 
-      if (field.hasDto) {
-        final resolvedFiieldType =
-            TypeUtils.extractDtoTypeArgument(field.dartType.asClassElement!);
-        final fieldNameRef =
-            resolvedFiieldType?.isNullable == true ? '$fieldName?' : fieldName;
+      if (field.hasResolvable) {
+        final fieldNameRef = field.nullable ? '$fieldName?' : fieldName;
 
         if (field.isListType) {
           return '$fieldName: $fieldNameRef.map((e) => e.toDto()).toList(),';

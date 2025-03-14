@@ -59,7 +59,7 @@ class MixableSpecGenerator extends BaseMixGenerator<MixableSpec, SpecMetadata> {
     final output = StringBuffer();
 
     // Add warning ignore if necessary
-    if (metadata.fields.any((field) => field.hasDeprecated)) {
+    if (metadata.parameters.any((field) => field.hasDeprecated)) {
       output.writeln(
         '// ignore_for_file: deprecated_member_use_from_same_package',
       );

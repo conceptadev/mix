@@ -29,12 +29,12 @@ void main() {
       // Verify the utility is created correctly
       final utility = registry.getUtilityForType(dartType);
       expect(utility, isNotNull);
-      expect(utility!.name, equals('TestSpecUtility'));
+      expect(utility, equals('TestSpecUtility'));
 
       // Verify the representation is created correctly
-      final representation = registry.getRepresentationForType(dartType);
+      final representation = registry.getResolvableForType(dartType);
       expect(representation, isNotNull);
-      expect(representation!.name, equals('TestSpecAttribute'));
+      expect(representation, equals('TestSpecAttribute'));
     });
 
     test('handles Dto classes correctly', () async {
@@ -65,15 +65,15 @@ void main() {
       // Verify the utility for the DTO type
       final dtoUtility = registry.getUtilityForType(dtoDartType);
       expect(dtoUtility, isNotNull);
-      expect(dtoUtility!.name, equals('TestUtility'));
+      expect(dtoUtility, equals('TestUtility'));
 
       // Verify the representation for the DTO type
-      final dtoRepresentation = registry.getRepresentationForType(dtoDartType);
+      final dtoRepresentation = registry.getResolvableForType(dtoDartType);
       expect(dtoRepresentation, isNotNull);
-      expect(dtoRepresentation!.name, equals('TestDto'));
+      expect(dtoRepresentation, equals('TestDto'));
 
       // Verify the DTO type is correctly identified
-      expect(TypeUtils.isDto(dtoDartType), isTrue);
+      expect(TypeUtils.isResolvable(dtoDartType), isTrue);
     });
 
     test('removes Dto suffix when getting utility type for DTO classes',
@@ -102,7 +102,7 @@ void main() {
       // Verify the utility for the DTO type has the Dto suffix removed
       final dtoUtility = registry.getUtilityForType(dtoDartType);
       expect(dtoUtility, isNotNull);
-      expect(dtoUtility!.name, equals('ColorUtility'));
+      expect(dtoUtility, equals('ColorUtility'));
     });
 
     test('ignoredUtilities contains expected values', () {
@@ -137,9 +137,9 @@ void main() {
       final dartType = classElement.thisType;
 
       // Verify getRepresentationForType returns the correct type
-      final representationType = registry.getRepresentationForType(dartType);
+      final representationType = registry.getResolvableForType(dartType);
       expect(representationType, isNotNull);
-      expect(representationType!.name, equals('TestSpecAttribute'));
+      expect(representationType, equals('TestSpecAttribute'));
     });
 
     test('getUtilityForType returns correct utility type', () async {
@@ -165,7 +165,7 @@ void main() {
       // Verify getUtilityForType returns the correct type
       final utilityType = registry.getUtilityForType(dartType);
       expect(utilityType, isNotNull);
-      expect(utilityType!.name, equals('TestSpecUtility'));
+      expect(utilityType, equals('TestSpecUtility'));
     });
 
     test('getUtilityNameFromTypeName handles different input formats', () {

@@ -25,13 +25,13 @@ void main() {
       final classElement = library.getClass('TestSpec')!;
 
       // Extract fields from the class element
-      final fields = FieldMetadata.extractFromClass(classElement);
+      final parameters = ParameterMetadata.extractFromConstructor(classElement);
 
       // Create spec metadata
       final metadata = SpecMetadata(
         element: classElement,
         name: 'TestSpec',
-        fields: fields,
+        parameters: parameters,
         isConst: true,
         isDiagnosticable: false,
         constructor: classElement.unnamedConstructor!,
@@ -98,13 +98,13 @@ class TestSpecTween extends Tween<TestSpec?> {
       final classElement = library.getClass('NonConstSpec')!;
 
       // Extract fields from the class element
-      final fields = FieldMetadata.extractFromClass(classElement);
+      final parameters = ParameterMetadata.extractFromConstructor(classElement);
 
       // Create spec metadata with isConst = false
       final metadata = SpecMetadata(
         element: classElement,
         name: 'NonConstSpec',
-        fields: fields,
+        parameters: parameters,
         isConst: false,
         isDiagnosticable: false,
         constructor: classElement.unnamedConstructor!,
@@ -172,13 +172,13 @@ class NonConstSpecTween extends Tween<NonConstSpec?> {
       final classElement = library.getClass('NamedConstructorSpec')!;
 
       // Extract fields from the class element
-      final fields = FieldMetadata.extractFromClass(classElement);
+      final parameters = ParameterMetadata.extractFromConstructor(classElement);
 
       // Create a custom spec metadata with a constructor reference
       final metadata = _TestSpecMetadata(
         element: classElement,
         name: 'NamedConstructorSpec',
-        fields: fields,
+        parameters: parameters,
         isConst: true,
         isDiagnosticable: false,
         constructor: classElement.unnamedConstructor!,
@@ -238,7 +238,7 @@ class _TestSpecMetadata extends SpecMetadata {
   _TestSpecMetadata({
     required super.element,
     required super.name,
-    required super.fields,
+    required super.parameters,
     required super.isConst,
     required super.isDiagnosticable,
     required super.constructor,

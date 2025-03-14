@@ -76,8 +76,6 @@ class ShadowUtility<T extends Attribute>
 
   ShadowUtility(super.builder) : super(valueToDto: (v) => v.toDto());
 
-  ShadowUtility<T> get chain => ShadowUtility(attributeBuilder, mutable: true);
-
   /// Returns a new [ShadowDto] with the specified properties.
   @override
   T only({
@@ -200,9 +198,6 @@ class BoxShadowUtility<T extends Attribute>
   late final spreadRadius = DoubleUtility((v) => only(spreadRadius: v));
 
   BoxShadowUtility(super.builder) : super(valueToDto: (v) => v.toDto());
-
-  BoxShadowUtility<T> get chain =>
-      BoxShadowUtility(attributeBuilder, mutable: true);
 
   /// Returns a new [BoxShadowDto] with the specified properties.
   @override

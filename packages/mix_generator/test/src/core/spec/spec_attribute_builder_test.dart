@@ -25,13 +25,13 @@ void main() {
       final classElement = library.getClass('TestSpec')!;
 
       // Extract fields from the class element
-      final fields = FieldMetadata.extractFromClass(classElement);
+      final parameters = ParameterMetadata.extractFromConstructor(classElement);
 
       // Create spec metadata
       final metadata = SpecMetadata(
         element: classElement,
         name: 'TestSpec',
-        fields: fields,
+        parameters: parameters,
         isConst: true,
         isDiagnosticable: false,
         constructor: classElement.unnamedConstructor!,
@@ -106,13 +106,13 @@ void main() {
       final classElement = library.getClass('TestWidgetModifierSpec')!;
 
       // Extract fields from the class element
-      final fields = FieldMetadata.extractFromClass(classElement);
+      final parameters = ParameterMetadata.extractFromConstructor(classElement);
 
       // Create spec metadata
       final metadata = SpecMetadata(
         element: classElement,
         name: 'TestWidgetModifierSpec',
-        fields: fields,
+        parameters: parameters,
         isConst: true,
         isDiagnosticable: false,
         constructor: classElement.unnamedConstructor!,
@@ -166,13 +166,13 @@ void main() {
       final classElement = library.getClass('DiagnosticableSpec')!;
 
       // Extract fields from the class element
-      final fields = FieldMetadata.extractFromClass(classElement);
+      final parameters = ParameterMetadata.extractFromConstructor(classElement);
 
       // Create spec metadata
       final metadata = SpecMetadata(
         element: classElement,
         name: 'DiagnosticableSpec',
-        fields: fields,
+        parameters: parameters,
         isConst: true,
         isDiagnosticable: true,
         constructor: classElement.unnamedConstructor!,
