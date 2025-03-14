@@ -106,7 +106,7 @@ mixin _$AvatarSpec on Spec<AvatarSpec> {
 ///
 /// Use this class to configure the attributes of a [AvatarSpec] and pass it to
 /// the [AvatarSpec] constructor.
-base class AvatarSpecAttribute extends SpecAttribute<AvatarSpec> {
+base class AvatarSpecAttribute extends StyleAttribute<AvatarSpec> {
   final BoxSpecAttribute? container;
   final ImageSpecAttribute? image;
   final TextSpecAttribute? fallback;

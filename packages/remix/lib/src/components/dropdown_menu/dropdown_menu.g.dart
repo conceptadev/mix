@@ -109,7 +109,7 @@ mixin _$DropdownMenuSpec on Spec<DropdownMenuSpec> {
 ///
 /// Use this class to configure the attributes of a [DropdownMenuSpec] and pass it to
 /// the [DropdownMenuSpec] constructor.
-class DropdownMenuSpecAttribute extends SpecAttribute<DropdownMenuSpec>
+class DropdownMenuSpecAttribute extends StyleAttribute<DropdownMenuSpec>
     with Diagnosticable {
   final DropdownMenuContainerSpecAttribute? menu;
   final DropdownMenuItemSpecAttribute? item;
@@ -357,7 +357,7 @@ mixin _$DropdownMenuContainerSpec on Spec<DropdownMenuContainerSpec> {
 /// Use this class to configure the attributes of a [DropdownMenuContainerSpec] and pass it to
 /// the [DropdownMenuContainerSpec] constructor.
 base class DropdownMenuContainerSpecAttribute
-    extends SpecAttribute<DropdownMenuContainerSpec> with Diagnosticable {
+    extends StyleAttribute<DropdownMenuContainerSpec> with Diagnosticable {
   final FlexBoxSpecAttribute? container;
   final bool? autoWidth;
 
@@ -612,7 +612,7 @@ mixin _$DropdownMenuItemSpec on Spec<DropdownMenuItemSpec> {
 ///
 /// Use this class to configure the attributes of a [DropdownMenuItemSpec] and pass it to
 /// the [DropdownMenuItemSpec] constructor.
-class DropdownMenuItemSpecAttribute extends SpecAttribute<DropdownMenuItemSpec>
+class DropdownMenuItemSpecAttribute extends StyleAttribute<DropdownMenuItemSpec>
     with Diagnosticable {
   final IconSpecAttribute? icon;
   final TextSpecAttribute? text;

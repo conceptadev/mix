@@ -121,7 +121,7 @@ mixin _$SliderSpec on Spec<SliderSpec> {
 ///
 /// Use this class to configure the attributes of a [SliderSpec] and pass it to
 /// the [SliderSpec] constructor.
-class SliderSpecAttribute extends SpecAttribute<SliderSpec>
+class SliderSpecAttribute extends StyleAttribute<SliderSpec>
     with Diagnosticable {
   final BoxSpecAttribute? thumb;
   final BoxSpecAttribute? track;

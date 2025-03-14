@@ -100,7 +100,7 @@ mixin _$AccordionSpec on Spec<AccordionSpec> {
 ///
 /// Use this class to configure the attributes of a [AccordionSpec] and pass it to
 /// the [AccordionSpec] constructor.
-base class AccordionSpecAttribute extends SpecAttribute<AccordionSpec> {
+base class AccordionSpecAttribute extends StyleAttribute<AccordionSpec> {
   final AccordionHeaderSpecAttribute? header;
   final FlexBoxSpecAttribute? container;
   final BoxSpecAttribute? contentContainer;
@@ -332,7 +332,7 @@ mixin _$AccordionHeaderSpec on Spec<AccordionHeaderSpec> {
 /// Use this class to configure the attributes of a [AccordionHeaderSpec] and pass it to
 /// the [AccordionHeaderSpec] constructor.
 base class AccordionHeaderSpecAttribute
-    extends SpecAttribute<AccordionHeaderSpec> {
+    extends StyleAttribute<AccordionHeaderSpec> {
   final FlexBoxSpecAttribute? container;
   final IconSpecAttribute? leadingIcon;
   final TextSpecAttribute? text;

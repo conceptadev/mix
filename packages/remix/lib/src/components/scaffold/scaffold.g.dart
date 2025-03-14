@@ -104,7 +104,7 @@ mixin _$ScaffoldSpec on Spec<ScaffoldSpec> {
 ///
 /// Use this class to configure the attributes of a [ScaffoldSpec] and pass it to
 /// the [ScaffoldSpec] constructor.
-base class ScaffoldSpecAttribute extends SpecAttribute<ScaffoldSpec>
+base class ScaffoldSpecAttribute extends StyleAttribute<ScaffoldSpec>
     with Diagnosticable {
   final BoxSpecAttribute? container;
 

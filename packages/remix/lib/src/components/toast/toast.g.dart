@@ -126,7 +126,7 @@ mixin _$ToastSpec on Spec<ToastSpec> {
 ///
 /// Use this class to configure the attributes of a [ToastSpec] and pass it to
 /// the [ToastSpec] constructor.
-base class ToastSpecAttribute extends SpecAttribute<ToastSpec>
+base class ToastSpecAttribute extends StyleAttribute<ToastSpec>
     with Diagnosticable {
   final FlexBoxSpecAttribute? container;
   final FlexBoxSpecAttribute? titleSubtitleContainer;

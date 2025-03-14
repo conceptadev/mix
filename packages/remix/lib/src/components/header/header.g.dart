@@ -124,7 +124,7 @@ mixin _$HeaderSpec on Spec<HeaderSpec> {
 ///
 /// Use this class to configure the attributes of a [HeaderSpec] and pass it to
 /// the [HeaderSpec] constructor.
-base class HeaderSpecAttribute extends SpecAttribute<HeaderSpec>
+base class HeaderSpecAttribute extends StyleAttribute<HeaderSpec>
     with Diagnosticable {
   final FlexBoxSpecAttribute? container;
   final FlexSpecAttribute? titleGroup;

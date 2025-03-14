@@ -121,7 +121,7 @@ mixin _$SelectSpec on Spec<SelectSpec> {
 ///
 /// Use this class to configure the attributes of a [SelectSpec] and pass it to
 /// the [SelectSpec] constructor.
-class SelectSpecAttribute extends SpecAttribute<SelectSpec>
+class SelectSpecAttribute extends StyleAttribute<SelectSpec>
     with Diagnosticable {
   final SelectTriggerSpecAttribute? button;
   final SelectMenuSpecAttribute? menu;
@@ -390,7 +390,7 @@ mixin _$SelectMenuSpec on Spec<SelectMenuSpec> {
 ///
 /// Use this class to configure the attributes of a [SelectMenuSpec] and pass it to
 /// the [SelectMenuSpec] constructor.
-base class SelectMenuSpecAttribute extends SpecAttribute<SelectMenuSpec>
+base class SelectMenuSpecAttribute extends StyleAttribute<SelectMenuSpec>
     with Diagnosticable {
   final FlexBoxSpecAttribute? container;
   final bool? autoWidth;
@@ -645,8 +645,8 @@ mixin _$SelectMenuItemSpec on Spec<SelectMenuItemSpec> {
 ///
 /// Use this class to configure the attributes of a [SelectMenuItemSpec] and pass it to
 /// the [SelectMenuItemSpec] constructor.
-base class SelectMenuItemSpecAttribute extends SpecAttribute<SelectMenuItemSpec>
-    with Diagnosticable {
+base class SelectMenuItemSpecAttribute
+    extends StyleAttribute<SelectMenuItemSpec> with Diagnosticable {
   final IconSpecAttribute? icon;
   final TextSpecAttribute? text;
   final FlexBoxSpecAttribute? container;
@@ -911,7 +911,7 @@ mixin _$SelectTriggerSpec on Spec<SelectTriggerSpec> {
 ///
 /// Use this class to configure the attributes of a [SelectTriggerSpec] and pass it to
 /// the [SelectTriggerSpec] constructor.
-class SelectTriggerSpecAttribute extends SpecAttribute<SelectTriggerSpec>
+class SelectTriggerSpecAttribute extends StyleAttribute<SelectTriggerSpec>
     with Diagnosticable {
   final FlexBoxSpecAttribute? container;
   final IconSpecAttribute? icon;

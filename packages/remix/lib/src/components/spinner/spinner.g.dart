@@ -130,7 +130,7 @@ mixin _$SpinnerSpec on Spec<SpinnerSpec> {
 ///
 /// Use this class to configure the attributes of a [SpinnerSpec] and pass it to
 /// the [SpinnerSpec] constructor.
-final class SpinnerSpecAttribute extends SpecAttribute<SpinnerSpec>
+final class SpinnerSpecAttribute extends StyleAttribute<SpinnerSpec>
     with Diagnosticable {
   final double? size;
   final double? strokeWidth;

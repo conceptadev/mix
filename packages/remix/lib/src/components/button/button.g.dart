@@ -124,7 +124,7 @@ mixin _$ButtonSpec on Spec<ButtonSpec> {
 ///
 /// Use this class to configure the attributes of a [ButtonSpec] and pass it to
 /// the [ButtonSpec] constructor.
-class ButtonSpecAttribute extends SpecAttribute<ButtonSpec>
+class ButtonSpecAttribute extends StyleAttribute<ButtonSpec>
     with Diagnosticable {
   final FlexBoxSpecAttribute? container;
   final IconSpecAttribute? icon;

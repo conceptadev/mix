@@ -117,7 +117,7 @@ mixin _$IconButtonSpec on Spec<IconButtonSpec> {
 ///
 /// Use this class to configure the attributes of a [IconButtonSpec] and pass it to
 /// the [IconButtonSpec] constructor.
-class IconButtonSpecAttribute extends SpecAttribute<IconButtonSpec>
+class IconButtonSpecAttribute extends StyleAttribute<IconButtonSpec>
     with Diagnosticable {
   final BoxSpecAttribute? container;
   final IconSpecAttribute? icon;
