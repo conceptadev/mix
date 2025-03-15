@@ -43,7 +43,7 @@ mixin _$RotatedBoxModifierSpec on WidgetModifierSpec<RotatedBoxModifierSpec> {
 ///
 /// Use this class to configure the attributes of a [RotatedBoxModifierSpec] and pass it to
 /// the [RotatedBoxModifierSpec] constructor.
-final class RotatedBoxModifierSpecAttribute
+class RotatedBoxModifierSpecAttribute
     extends WidgetModifierSpecAttribute<RotatedBoxModifierSpec>
     with Diagnosticable {
   final int? quarterTurns;

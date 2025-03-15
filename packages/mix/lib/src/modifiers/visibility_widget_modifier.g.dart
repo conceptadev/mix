@@ -68,7 +68,7 @@ mixin _$VisibilityModifierSpec on WidgetModifierSpec<VisibilityModifierSpec> {
 ///
 /// Use this class to configure the attributes of a [VisibilityModifierSpec] and pass it to
 /// the [VisibilityModifierSpec] constructor.
-final class VisibilityModifierSpecAttribute
+class VisibilityModifierSpecAttribute
     extends WidgetModifierSpecAttribute<VisibilityModifierSpec>
     with Diagnosticable {
   final bool? visible;

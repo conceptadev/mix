@@ -64,7 +64,7 @@ mixin _$MouseCursorDecoratorSpec
 ///
 /// Use this class to configure the attributes of a [MouseCursorDecoratorSpec] and pass it to
 /// the [MouseCursorDecoratorSpec] constructor.
-final class MouseCursorDecoratorSpecAttribute
+class MouseCursorDecoratorSpecAttribute
     extends WidgetModifierSpecAttribute<MouseCursorDecoratorSpec> {
   final MouseCursor? mouseCursor;
 
@@ -97,7 +97,7 @@ final class MouseCursorDecoratorSpecAttribute
   /// to the values from this instance.
   @override
   MouseCursorDecoratorSpecAttribute merge(
-      covariant MouseCursorDecoratorSpecAttribute? other) {
+      MouseCursorDecoratorSpecAttribute? other) {
     if (other == null) return this;
 
     return MouseCursorDecoratorSpecAttribute(

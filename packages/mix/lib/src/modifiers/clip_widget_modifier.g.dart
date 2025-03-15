@@ -74,7 +74,7 @@ mixin _$ClipOvalModifierSpec on WidgetModifierSpec<ClipOvalModifierSpec> {
 ///
 /// Use this class to configure the attributes of a [ClipOvalModifierSpec] and pass it to
 /// the [ClipOvalModifierSpec] constructor.
-final class ClipOvalModifierSpecAttribute
+class ClipOvalModifierSpecAttribute
     extends WidgetModifierSpecAttribute<ClipOvalModifierSpec>
     with Diagnosticable {
   final CustomClipper<Rect>? clipper;
@@ -230,7 +230,7 @@ mixin _$ClipRectModifierSpec on WidgetModifierSpec<ClipRectModifierSpec> {
 ///
 /// Use this class to configure the attributes of a [ClipRectModifierSpec] and pass it to
 /// the [ClipRectModifierSpec] constructor.
-final class ClipRectModifierSpecAttribute
+class ClipRectModifierSpecAttribute
     extends WidgetModifierSpecAttribute<ClipRectModifierSpec>
     with Diagnosticable {
   final CustomClipper<Rect>? clipper;
@@ -394,7 +394,7 @@ mixin _$ClipRRectModifierSpec on WidgetModifierSpec<ClipRRectModifierSpec> {
 ///
 /// Use this class to configure the attributes of a [ClipRRectModifierSpec] and pass it to
 /// the [ClipRRectModifierSpec] constructor.
-final class ClipRRectModifierSpecAttribute
+class ClipRRectModifierSpecAttribute
     extends WidgetModifierSpecAttribute<ClipRRectModifierSpec>
     with Diagnosticable {
   final BorderRadiusGeometryDto? borderRadius;
@@ -558,7 +558,7 @@ mixin _$ClipPathModifierSpec on WidgetModifierSpec<ClipPathModifierSpec> {
 ///
 /// Use this class to configure the attributes of a [ClipPathModifierSpec] and pass it to
 /// the [ClipPathModifierSpec] constructor.
-final class ClipPathModifierSpecAttribute
+class ClipPathModifierSpecAttribute
     extends WidgetModifierSpecAttribute<ClipPathModifierSpec>
     with Diagnosticable {
   final CustomClipper<Path>? clipper;
@@ -709,7 +709,7 @@ mixin _$ClipTriangleModifierSpec
 ///
 /// Use this class to configure the attributes of a [ClipTriangleModifierSpec] and pass it to
 /// the [ClipTriangleModifierSpec] constructor.
-final class ClipTriangleModifierSpecAttribute
+class ClipTriangleModifierSpecAttribute
     extends WidgetModifierSpecAttribute<ClipTriangleModifierSpec>
     with Diagnosticable {
   final Clip? clipBehavior;

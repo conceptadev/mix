@@ -54,7 +54,7 @@ mixin _$ResetModifierSpec on WidgetModifierSpec<ResetModifierSpec> {
 ///
 /// Use this class to configure the attributes of a [ResetModifierSpec] and pass it to
 /// the [ResetModifierSpec] constructor.
-final class ResetModifierSpecAttribute
+class ResetModifierSpecAttribute
     extends WidgetModifierSpecAttribute<ResetModifierSpec> with Diagnosticable {
   const ResetModifierSpecAttribute();
 

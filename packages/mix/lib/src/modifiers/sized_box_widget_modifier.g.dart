@@ -72,7 +72,7 @@ mixin _$SizedBoxModifierSpec on WidgetModifierSpec<SizedBoxModifierSpec> {
 ///
 /// Use this class to configure the attributes of a [SizedBoxModifierSpec] and pass it to
 /// the [SizedBoxModifierSpec] constructor.
-final class SizedBoxModifierSpecAttribute
+class SizedBoxModifierSpecAttribute
     extends WidgetModifierSpecAttribute<SizedBoxModifierSpec>
     with Diagnosticable {
   final double? width;

@@ -73,7 +73,7 @@ mixin _$TransformModifierSpec on WidgetModifierSpec<TransformModifierSpec> {
 ///
 /// Use this class to configure the attributes of a [TransformModifierSpec] and pass it to
 /// the [TransformModifierSpec] constructor.
-final class TransformModifierSpecAttribute
+class TransformModifierSpecAttribute
     extends WidgetModifierSpecAttribute<TransformModifierSpec>
     with Diagnosticable {
   final Matrix4? transform;

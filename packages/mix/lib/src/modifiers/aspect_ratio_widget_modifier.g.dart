@@ -66,7 +66,7 @@ mixin _$AspectRatioModifierSpec on WidgetModifierSpec<AspectRatioModifierSpec> {
 ///
 /// Use this class to configure the attributes of a [AspectRatioModifierSpec] and pass it to
 /// the [AspectRatioModifierSpec] constructor.
-final class AspectRatioModifierSpecAttribute
+class AspectRatioModifierSpecAttribute
     extends WidgetModifierSpecAttribute<AspectRatioModifierSpec>
     with Diagnosticable {
   final double? aspectRatio;

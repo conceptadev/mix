@@ -81,7 +81,7 @@ mixin _$AlignModifierSpec on WidgetModifierSpec<AlignModifierSpec> {
 ///
 /// Use this class to configure the attributes of a [AlignModifierSpec] and pass it to
 /// the [AlignModifierSpec] constructor.
-final class AlignModifierSpecAttribute
+class AlignModifierSpecAttribute
     extends WidgetModifierSpecAttribute<AlignModifierSpec> with Diagnosticable {
   final AlignmentGeometry? alignment;
   final double? widthFactor;

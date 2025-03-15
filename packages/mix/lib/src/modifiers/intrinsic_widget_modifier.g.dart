@@ -56,7 +56,7 @@ mixin _$IntrinsicHeightModifierSpec
 ///
 /// Use this class to configure the attributes of a [IntrinsicHeightModifierSpec] and pass it to
 /// the [IntrinsicHeightModifierSpec] constructor.
-final class IntrinsicHeightModifierSpecAttribute
+class IntrinsicHeightModifierSpecAttribute
     extends WidgetModifierSpecAttribute<IntrinsicHeightModifierSpec>
     with Diagnosticable {
   const IntrinsicHeightModifierSpecAttribute();
@@ -178,7 +178,7 @@ mixin _$IntrinsicWidthModifierSpec
 ///
 /// Use this class to configure the attributes of a [IntrinsicWidthModifierSpec] and pass it to
 /// the [IntrinsicWidthModifierSpec] constructor.
-final class IntrinsicWidthModifierSpecAttribute
+class IntrinsicWidthModifierSpecAttribute
     extends WidgetModifierSpecAttribute<IntrinsicWidthModifierSpec>
     with Diagnosticable {
   const IntrinsicWidthModifierSpecAttribute();

@@ -84,7 +84,7 @@ mixin _$FractionallySizedBoxModifierSpec
 ///
 /// Use this class to configure the attributes of a [FractionallySizedBoxModifierSpec] and pass it to
 /// the [FractionallySizedBoxModifierSpec] constructor.
-final class FractionallySizedBoxModifierSpecAttribute
+class FractionallySizedBoxModifierSpecAttribute
     extends WidgetModifierSpecAttribute<FractionallySizedBoxModifierSpec>
     with Diagnosticable {
   final double? widthFactor;

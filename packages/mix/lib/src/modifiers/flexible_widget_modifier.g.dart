@@ -73,7 +73,7 @@ mixin _$FlexibleModifierSpec on WidgetModifierSpec<FlexibleModifierSpec> {
 ///
 /// Use this class to configure the attributes of a [FlexibleModifierSpec] and pass it to
 /// the [FlexibleModifierSpec] constructor.
-final class FlexibleModifierSpecAttribute
+class FlexibleModifierSpecAttribute
     extends WidgetModifierSpecAttribute<FlexibleModifierSpec>
     with Diagnosticable {
   final int? flex;
