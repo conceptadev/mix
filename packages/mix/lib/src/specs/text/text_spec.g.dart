@@ -305,8 +305,7 @@ class TextSpecAttribute extends SpecAttribute<TextSpec> with Diagnosticable {
         .add(DiagnosticsProperty('textScaler', textScaler, defaultValue: null));
     properties
         .add(DiagnosticsProperty('maxLines', maxLines, defaultValue: null));
-    properties.add(DiagnosticsProperty('style', style,
-        expandableValue: true, defaultValue: null));
+    properties.add(DiagnosticsProperty('style', style, defaultValue: null));
     properties.add(DiagnosticsProperty('textWidthBasis', textWidthBasis,
         defaultValue: null));
     properties.add(DiagnosticsProperty('textHeightBehavior', textHeightBehavior,

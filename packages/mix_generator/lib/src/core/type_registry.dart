@@ -19,11 +19,31 @@ class TypeRegistry {
     final elementTypeName =
         getResolvableForType(elementType) ?? elementType.getTypeAsString();
 
+    // If it's a DTO, get the corresponding Flutter type
+    String? dartType;
+    if (TypeUtils.isResolvable(elementType) && elementType.element != null) {
+      final dtoName = elementType.element!.name!;
+      // Check if the DTO name exists in the resolvables map
+      if (resolvables.containsKey(dtoName)) {
+        dartType = resolvables[dtoName]!;
+      } else {
+        _logger.fine('No Flutter type found for DTO: $dtoName');
+      }
+    }
+
+    // Construct list type strings for both DTO and Flutter types
     final listTypeString = 'List<$elementTypeName>';
+    final flutterListTypeString = dartType != null ? 'List<$dartType>' : null;
 
     // First check for a direct utility mapping for the list type
     for (final entry in utilities.entries) {
+      // Check against both DTO and Flutter type list strings
       if (entry.value == listTypeString) {
+        return entry.key;
+      }
+
+      if (flutterListTypeString != null &&
+          entry.value == flutterListTypeString) {
         return entry.key;
       }
     }
@@ -55,7 +75,13 @@ class TypeRegistry {
     if (TypeUtils.isResolvable(type)) {
       final dtoName = type.element!.name!;
       // Get the resolved type from the resolvables map
-      resolvedTypeString = resolvables[dtoName] ?? typeString;
+      if (resolvables.containsKey(dtoName)) {
+        resolvedTypeString = resolvables[dtoName]!;
+      } else {
+        _logger.fine(
+          'No Flutter type found for DTO: $dtoName in getUtilityForType',
+        );
+      }
     }
 
     // Check for a direct utility mapping using the resolved type
@@ -165,6 +191,7 @@ final resolvables = {
   'BoxBorderDto': 'BoxBorder',
   'BorderRadiusGeometryDto': 'BorderRadiusGeometry',
   'BorderSideDto': 'BorderSide',
+  'BoxShadowDto': 'BoxShadow',
   'ColorDto': 'Color',
   'ConstraintsDto': 'Constraints',
   'DecorationDto': 'Decoration',

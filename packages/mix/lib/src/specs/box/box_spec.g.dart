@@ -288,8 +288,8 @@ class BoxSpecAttribute extends SpecAttribute<BoxSpec> with Diagnosticable {
     properties.add(DiagnosticsProperty('margin', margin, defaultValue: null));
     properties.add(
         DiagnosticsProperty('constraints', constraints, defaultValue: null));
-    properties.add(DiagnosticsProperty('decoration', decoration,
-        expandableValue: true, defaultValue: null));
+    properties
+        .add(DiagnosticsProperty('decoration', decoration, defaultValue: null));
     properties.add(DiagnosticsProperty(
         'foregroundDecoration', foregroundDecoration,
         defaultValue: null));

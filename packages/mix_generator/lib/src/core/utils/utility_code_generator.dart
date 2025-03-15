@@ -194,9 +194,11 @@ $callMethod
       final fieldName = field.name;
       final fieldType = field.type.element?.name ?? 'dynamic';
 
+      final typeValue = '${fieldElement.name}.$fieldName';
+
       fieldStatements.add('''
-  /// Creates an [Attribute] instance with [$fieldType.$fieldName] value.
-  T $fieldName() => builder(${fieldElement.name}.$fieldName);''');
+  /// Creates an [Attribute] instance with [$typeValue] value.
+  T $fieldName() => builder($typeValue);''');
     }
 
     return fieldStatements;

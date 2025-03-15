@@ -16,8 +16,6 @@ ConstructorElement findTargetConstructor(ClassElement classElement) {
 
   for (final constructor in classElement.constructors) {
     if (constructorChecker.hasAnnotationOf(constructor)) {
-      print('Found constructor: ${constructor.name}');
-
       return constructor;
     }
   }

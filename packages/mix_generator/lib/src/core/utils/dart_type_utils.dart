@@ -213,11 +213,6 @@ class TypeUtils {
     }
   }
 
-  /// Creates a tween name for an attribute or property.
-  static String defineTweenName(String name) {
-    return '${name}Tween';
-  }
-
   /// Checks if a type is assignable to another type.
   ///
   /// This is a utility method to check if one type can be assigned to another.
@@ -344,6 +339,7 @@ class TypeUtils {
   /// Returns true if all parameter types are available, false otherwise.
   static bool areAllParameterTypesAvailable(List<ParameterElement> parameters) {
     for (var param in parameters) {
+      if (param.isPrivate) return false;
       if (!isTypeAvailable(param.type)) {
         return false;
       }
