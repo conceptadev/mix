@@ -1,6 +1,6 @@
 import '../metadata/resolvable_metadata.dart';
 import '../utils/code_builder.dart';
-import '../utils/utility_method_builder.dart';
+import '../utils/utility_code_generator.dart';
 
 class ResolvableUtilityBuilder implements CodeBuilder {
   final ResolvableMetadata metadata;
@@ -14,8 +14,8 @@ class ResolvableUtilityBuilder implements CodeBuilder {
 
     final utilityName = '${resolvedTypeName}Utility';
 
-    // Use old or new logic to generate utility fields from the ClassElement:
-    final generatedFields = UtilityMethods.generateUtilityFields(
+    // Generate utility fields using UtilityCodeGenerator:
+    final generatedFields = UtilityCodeGenerator.generateUtilityFields(
       dtoName,
       metadata.parameters,
     );
@@ -39,12 +39,12 @@ class ResolvableUtilityBuilder implements CodeBuilder {
 
       // The methods you want in the generated class, reintroducing call()
       methods: [
-        UtilityMethods.generateUtilityFieldsFromClass(metadata.element),
-        UtilityMethods.methodOnly(
+        UtilityCodeGenerator.generateUtilityFieldsFromClass(metadata.element),
+        UtilityCodeGenerator.methodOnly(
           utilityType: dtoName,
           fields: metadata.parameters,
         ),
-        UtilityMethods.methodCall(metadata.parameters),
+        UtilityCodeGenerator.methodCall(metadata.parameters),
       ],
     );
 

@@ -135,6 +135,7 @@ base class TextStyleData extends Dto<TextStyle>
 final class TextStyleDto extends Dto<TextStyle>
     with _$TextStyleDto, Diagnosticable {
   final List<TextStyleData> value;
+  @MixableConstructor()
   const TextStyleDto._({this.value = const []});
 
   factory TextStyleDto({

@@ -8,15 +8,14 @@ import 'package:source_gen/source_gen.dart';
 
 import '../core/metadata/utility_metadata.dart';
 import '../core/utils/base_generator.dart';
-import '../core/utils/constructor_utils.dart';
-import '../core/utils/extensions.dart';
-import '../core/utils/utility_method_builder.dart';
+import '../core/utils/utility_code_generator.dart';
 
-/// Generator for classes annotated with [MixableFieldUtility] or [MixableUtility].
+/// Generates utility mixins for classes and enums.
 ///
-/// This generator produces a mixin with utility methods for:
+/// This generator creates utility mixins that provide:
+/// - Static constants (when the utility type has static constants)
+/// - Constructors (when the utility type has constructors)
 /// - Enum values (when the utility type is an enum)
-/// - Class constants and constructors (when the utility type is a class)
 class MixableUtilityGenerator
     extends BaseMixGenerator<MixableFieldUtility, UtilityMetadata> {
   final Logger _logger = Logger('MixableUtilityGenerator');
@@ -24,128 +23,18 @@ class MixableUtilityGenerator
   MixableUtilityGenerator()
       : super(const TypeChecker.fromRuntime(MixableUtility));
 
-  /// Generates the utility mixin code for an enum utility.
-  String _generateEnumUtilityMixin(UtilityMetadata metadata) {
-    try {
-      final className = metadata.name;
-      final generatedClassName = metadata.element.generatedName;
-      final enumElement = metadata.enumElement!;
-      final enumTypeName = enumElement.name;
-      final enumValues = metadata.enumValues;
-      final shouldGenerateCallMethod =
-          (metadata.generateHelpers & GenerateHelpers.all) != 0;
+  @override
+  String generateForMetadata(UtilityMetadata metadata, BuildStep buildStep) {
+    final output = StringBuffer();
 
-      final callMethod = shouldGenerateCallMethod
-          ? '''
-/// Creates an [Attribute] instance with the specified $enumTypeName value.
-T call($enumTypeName value) => builder(value);
-'''
-          : '';
-
-      final enumMethods = enumValues.map((value) {
-        return '''
-/// Creates an [Attribute] instance with [$enumTypeName.$value] value.
-T $value() => builder($enumTypeName.$value);
-''';
-      }).join('\n');
-
-      final comments = '''
-/// {@template ${className.snakecase}}
-/// A utility class for creating [Attribute] instances from [$enumTypeName] values.
-///
-/// This class extends [MixUtility] and provides methods to create [Attribute] instances
-/// from predefined [$enumTypeName] values.
-/// {@endtemplate}''';
-
-      return '''
-$comments
-mixin $generatedClassName<T extends Attribute> on MixUtility<T, $enumTypeName> {
-$enumMethods
-$callMethod
-}
-''';
-    } catch (e) {
-      _logger.warning('Error generating code for ${metadata.name}: $e');
-
-      return '// Error generating code for ${metadata.name}: $e';
-    }
-  }
-
-  /// Generates the utility mixin code for a class utility.
-  String _generateClassUtilityMixin(UtilityMetadata metadata) {
-    final className = metadata.name;
-    final generatedClassName = metadata.element.generatedName;
-    final valueElement = metadata.valueElement!;
-    final valueName = valueElement.name;
-    final mappingElement = metadata.effectiveMappingElement!;
-    final shouldGenerateCallMethod =
-        metadata.generateHelpers == GenerateUtilityHelpers.callMethod;
-
-    // Generate call method if requested
-    final callMethod = shouldGenerateCallMethod
-        ? '''
-/// Creates an [Attribute] instance with the specified $valueName value.
-T call($valueName value) => builder(value);
-'''
-        : '';
-
-    // Generate utility methods for static constants
-    final fieldStatements = <String>[];
-    for (var field in mappingElement.fields) {
-      final isSameType = field.type.isAssignableTo(valueElement.thisType);
-
-      if (field.isStatic && field.isConst && isSameType) {
-        final name = field.name;
-        final type = mappingElement.name;
-        fieldStatements.add('''
-/// Creates an [Attribute] instance with [${mappingElement.name}.$name] value.
-T $name() => builder($type.$name);
-''');
-      }
+    // Generate the appropriate utility based on the type
+    if (metadata.isEnumUtility) {
+      output.writeln(UtilityCodeGenerator.generateEnumUtilityMixin(metadata));
+    } else {
+      output.writeln(UtilityCodeGenerator.generateClassUtilityMixin(metadata));
     }
 
-    // Generate utility methods for constructors
-    final constructorStatements = <String>[];
-    final constructors = mappingElement.constructors.where((constructor) {
-      return isValidConstructor(constructor);
-    });
-
-    for (var constructor in constructors) {
-      // Skip unnamed constructors if we have a call method
-      if (constructor.name.isEmpty && shouldGenerateCallMethod) {
-        continue;
-      }
-
-      final statement = UtilityMethods.generateUtilityForConstructor(
-        constructor,
-        skipCallMethod: !shouldGenerateCallMethod,
-        mappedEl: mappingElement,
-      );
-
-      if (statement.isNotEmpty) {
-        constructorStatements.add(statement);
-      }
-    }
-
-    final comments = '''
-/// {@template ${className.snakecase}}
-/// A utility class for creating [Attribute] instances from [$valueName] values.
-///
-/// This class extends [MixUtility] and provides methods to create [Attribute] instances
-/// from predefined [$valueName] values.
-/// {@endtemplate}''';
-
-    return '''
-$comments
-mixin $generatedClassName<T extends Attribute> on MixUtility<T,$valueName> {
-
-${fieldStatements.join('\n')}
-
-${constructorStatements.join('\n')}
-
-$callMethod
-}
-''';
+    return output.toString();
   }
 
   @override
@@ -161,19 +50,5 @@ $callMethod
           const TypeChecker.fromRuntime(MixableUtility)
               .firstAnnotationOfExact(element)),
     );
-  }
-
-  @override
-  String generateForMetadata(UtilityMetadata metadata, BuildStep buildStep) {
-    final output = StringBuffer();
-
-    // Generate the appropriate utility based on the type
-    if (metadata.isEnumUtility) {
-      output.writeln(_generateEnumUtilityMixin(metadata));
-    } else {
-      output.writeln(_generateClassUtilityMixin(metadata));
-    }
-
-    return output.toString();
   }
 }

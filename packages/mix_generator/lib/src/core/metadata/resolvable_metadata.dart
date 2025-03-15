@@ -68,7 +68,7 @@ class ResolvableMetadata extends BaseMetadata {
       element: element,
       name: element.name,
       parameters: parameters,
-      isConst: element.unnamedConstructor?.isConst ?? false,
+      isConst: constructor.isConst,
       isDiagnosticable: element.allSupertypes.any(
         (e) => e.element.name == 'Diagnosticable',
       ),

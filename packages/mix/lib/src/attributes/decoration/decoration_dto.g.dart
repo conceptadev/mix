@@ -115,7 +115,8 @@ class BoxDecorationUtility<T extends Attribute>
   late final gradient = GradientUtility((v) => only(gradient: v));
 
   /// Utility for defining [BoxDecorationDto.boxShadow]
-  late final boxShadows = BoxShadowListUtility((v) => only(boxShadow: v));
+  late final boxShadows =
+      ListUtility<T, BoxShadowDto>((v) => only(boxShadow: v));
 
   /// Utility for defining [BoxDecorationDto.boxShadows.add]
   late final boxShadow = boxShadows.add;
@@ -184,7 +185,7 @@ extension BoxDecorationMixExt on BoxDecoration {
       color: color?.toDto(),
       image: image?.toDto(),
       gradient: gradient?.toDto(),
-      boxShadow: boxShadow?.map((e) => e.toDto()).toList(),
+      boxShadow: boxShadow,
     );
   }
 }
@@ -276,7 +277,7 @@ class ShapeDecorationUtility<T extends Attribute>
   late final gradient = GradientUtility((v) => only(gradient: v));
 
   /// Utility for defining [ShapeDecorationDto.shadows]
-  late final shadows = BoxShadowListUtility((v) => only(shadows: v));
+  late final shadows = ListUtility<T, BoxShadowDto>((v) => only(shadows: v));
 
   ShapeDecorationUtility(super.builder) : super(valueToDto: (v) => v.toDto());
 
@@ -324,7 +325,7 @@ extension ShapeDecorationMixExt on ShapeDecoration {
       color: color?.toDto(),
       image: image?.toDto(),
       gradient: gradient?.toDto(),
-      shadows: shadows?.map((e) => e.toDto()).toList(),
+      shadows: shadows,
     );
   }
 }

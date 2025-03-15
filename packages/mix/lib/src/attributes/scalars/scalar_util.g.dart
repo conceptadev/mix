@@ -273,133 +273,133 @@ mixin _$TextDecorationUtility<T extends Attribute>
 /// from predefined [Curve] values.
 /// {@endtemplate}
 mixin _$CurveUtility<T extends Attribute> on MixUtility<T, Curve> {
-  /// Creates an [Attribute] instance with [Curves.linear] value.
+  /// Creates an [Attribute] instance with [Curve.linear] value.
   T linear() => builder(Curves.linear);
 
-  /// Creates an [Attribute] instance with [Curves.decelerate] value.
+  /// Creates an [Attribute] instance with [Curve.decelerate] value.
   T decelerate() => builder(Curves.decelerate);
 
-  /// Creates an [Attribute] instance with [Curves.fastLinearToSlowEaseIn] value.
+  /// Creates an [Attribute] instance with [Cubic.fastLinearToSlowEaseIn] value.
   T fastLinearToSlowEaseIn() => builder(Curves.fastLinearToSlowEaseIn);
 
-  /// Creates an [Attribute] instance with [Curves.fastEaseInToSlowEaseOut] value.
+  /// Creates an [Attribute] instance with [ThreePointCubic.fastEaseInToSlowEaseOut] value.
   T fastEaseInToSlowEaseOut() => builder(Curves.fastEaseInToSlowEaseOut);
 
-  /// Creates an [Attribute] instance with [Curves.ease] value.
+  /// Creates an [Attribute] instance with [Cubic.ease] value.
   T ease() => builder(Curves.ease);
 
-  /// Creates an [Attribute] instance with [Curves.easeIn] value.
+  /// Creates an [Attribute] instance with [Cubic.easeIn] value.
   T easeIn() => builder(Curves.easeIn);
 
-  /// Creates an [Attribute] instance with [Curves.easeInToLinear] value.
+  /// Creates an [Attribute] instance with [Cubic.easeInToLinear] value.
   T easeInToLinear() => builder(Curves.easeInToLinear);
 
-  /// Creates an [Attribute] instance with [Curves.easeInSine] value.
+  /// Creates an [Attribute] instance with [Cubic.easeInSine] value.
   T easeInSine() => builder(Curves.easeInSine);
 
-  /// Creates an [Attribute] instance with [Curves.easeInQuad] value.
+  /// Creates an [Attribute] instance with [Cubic.easeInQuad] value.
   T easeInQuad() => builder(Curves.easeInQuad);
 
-  /// Creates an [Attribute] instance with [Curves.easeInCubic] value.
+  /// Creates an [Attribute] instance with [Cubic.easeInCubic] value.
   T easeInCubic() => builder(Curves.easeInCubic);
 
-  /// Creates an [Attribute] instance with [Curves.easeInQuart] value.
+  /// Creates an [Attribute] instance with [Cubic.easeInQuart] value.
   T easeInQuart() => builder(Curves.easeInQuart);
 
-  /// Creates an [Attribute] instance with [Curves.easeInQuint] value.
+  /// Creates an [Attribute] instance with [Cubic.easeInQuint] value.
   T easeInQuint() => builder(Curves.easeInQuint);
 
-  /// Creates an [Attribute] instance with [Curves.easeInExpo] value.
+  /// Creates an [Attribute] instance with [Cubic.easeInExpo] value.
   T easeInExpo() => builder(Curves.easeInExpo);
 
-  /// Creates an [Attribute] instance with [Curves.easeInCirc] value.
+  /// Creates an [Attribute] instance with [Cubic.easeInCirc] value.
   T easeInCirc() => builder(Curves.easeInCirc);
 
-  /// Creates an [Attribute] instance with [Curves.easeInBack] value.
+  /// Creates an [Attribute] instance with [Cubic.easeInBack] value.
   T easeInBack() => builder(Curves.easeInBack);
 
-  /// Creates an [Attribute] instance with [Curves.easeOut] value.
+  /// Creates an [Attribute] instance with [Cubic.easeOut] value.
   T easeOut() => builder(Curves.easeOut);
 
-  /// Creates an [Attribute] instance with [Curves.linearToEaseOut] value.
+  /// Creates an [Attribute] instance with [Cubic.linearToEaseOut] value.
   T linearToEaseOut() => builder(Curves.linearToEaseOut);
 
-  /// Creates an [Attribute] instance with [Curves.easeOutSine] value.
+  /// Creates an [Attribute] instance with [Cubic.easeOutSine] value.
   T easeOutSine() => builder(Curves.easeOutSine);
 
-  /// Creates an [Attribute] instance with [Curves.easeOutQuad] value.
+  /// Creates an [Attribute] instance with [Cubic.easeOutQuad] value.
   T easeOutQuad() => builder(Curves.easeOutQuad);
 
-  /// Creates an [Attribute] instance with [Curves.easeOutCubic] value.
+  /// Creates an [Attribute] instance with [Cubic.easeOutCubic] value.
   T easeOutCubic() => builder(Curves.easeOutCubic);
 
-  /// Creates an [Attribute] instance with [Curves.easeOutQuart] value.
+  /// Creates an [Attribute] instance with [Cubic.easeOutQuart] value.
   T easeOutQuart() => builder(Curves.easeOutQuart);
 
-  /// Creates an [Attribute] instance with [Curves.easeOutQuint] value.
+  /// Creates an [Attribute] instance with [Cubic.easeOutQuint] value.
   T easeOutQuint() => builder(Curves.easeOutQuint);
 
-  /// Creates an [Attribute] instance with [Curves.easeOutExpo] value.
+  /// Creates an [Attribute] instance with [Cubic.easeOutExpo] value.
   T easeOutExpo() => builder(Curves.easeOutExpo);
 
-  /// Creates an [Attribute] instance with [Curves.easeOutCirc] value.
+  /// Creates an [Attribute] instance with [Cubic.easeOutCirc] value.
   T easeOutCirc() => builder(Curves.easeOutCirc);
 
-  /// Creates an [Attribute] instance with [Curves.easeOutBack] value.
+  /// Creates an [Attribute] instance with [Cubic.easeOutBack] value.
   T easeOutBack() => builder(Curves.easeOutBack);
 
-  /// Creates an [Attribute] instance with [Curves.easeInOut] value.
+  /// Creates an [Attribute] instance with [Cubic.easeInOut] value.
   T easeInOut() => builder(Curves.easeInOut);
 
-  /// Creates an [Attribute] instance with [Curves.easeInOutSine] value.
+  /// Creates an [Attribute] instance with [Cubic.easeInOutSine] value.
   T easeInOutSine() => builder(Curves.easeInOutSine);
 
-  /// Creates an [Attribute] instance with [Curves.easeInOutQuad] value.
+  /// Creates an [Attribute] instance with [Cubic.easeInOutQuad] value.
   T easeInOutQuad() => builder(Curves.easeInOutQuad);
 
-  /// Creates an [Attribute] instance with [Curves.easeInOutCubic] value.
+  /// Creates an [Attribute] instance with [Cubic.easeInOutCubic] value.
   T easeInOutCubic() => builder(Curves.easeInOutCubic);
 
-  /// Creates an [Attribute] instance with [Curves.easeInOutCubicEmphasized] value.
+  /// Creates an [Attribute] instance with [ThreePointCubic.easeInOutCubicEmphasized] value.
   T easeInOutCubicEmphasized() => builder(Curves.easeInOutCubicEmphasized);
 
-  /// Creates an [Attribute] instance with [Curves.easeInOutQuart] value.
+  /// Creates an [Attribute] instance with [Cubic.easeInOutQuart] value.
   T easeInOutQuart() => builder(Curves.easeInOutQuart);
 
-  /// Creates an [Attribute] instance with [Curves.easeInOutQuint] value.
+  /// Creates an [Attribute] instance with [Cubic.easeInOutQuint] value.
   T easeInOutQuint() => builder(Curves.easeInOutQuint);
 
-  /// Creates an [Attribute] instance with [Curves.easeInOutExpo] value.
+  /// Creates an [Attribute] instance with [Cubic.easeInOutExpo] value.
   T easeInOutExpo() => builder(Curves.easeInOutExpo);
 
-  /// Creates an [Attribute] instance with [Curves.easeInOutCirc] value.
+  /// Creates an [Attribute] instance with [Cubic.easeInOutCirc] value.
   T easeInOutCirc() => builder(Curves.easeInOutCirc);
 
-  /// Creates an [Attribute] instance with [Curves.easeInOutBack] value.
+  /// Creates an [Attribute] instance with [Cubic.easeInOutBack] value.
   T easeInOutBack() => builder(Curves.easeInOutBack);
 
-  /// Creates an [Attribute] instance with [Curves.fastOutSlowIn] value.
+  /// Creates an [Attribute] instance with [Cubic.fastOutSlowIn] value.
   T fastOutSlowIn() => builder(Curves.fastOutSlowIn);
 
-  /// Creates an [Attribute] instance with [Curves.slowMiddle] value.
+  /// Creates an [Attribute] instance with [Cubic.slowMiddle] value.
   T slowMiddle() => builder(Curves.slowMiddle);
 
-  /// Creates an [Attribute] instance with [Curves.bounceIn] value.
+  /// Creates an [Attribute] instance with [Curve.bounceIn] value.
   T bounceIn() => builder(Curves.bounceIn);
 
-  /// Creates an [Attribute] instance with [Curves.bounceOut] value.
+  /// Creates an [Attribute] instance with [Curve.bounceOut] value.
   T bounceOut() => builder(Curves.bounceOut);
 
-  /// Creates an [Attribute] instance with [Curves.bounceInOut] value.
+  /// Creates an [Attribute] instance with [Curve.bounceInOut] value.
   T bounceInOut() => builder(Curves.bounceInOut);
 
-  /// Creates an [Attribute] instance with [Curves.elasticIn] value.
+  /// Creates an [Attribute] instance with [ElasticInCurve.elasticIn] value.
   T elasticIn() => builder(Curves.elasticIn);
 
-  /// Creates an [Attribute] instance with [Curves.elasticOut] value.
+  /// Creates an [Attribute] instance with [ElasticOutCurve.elasticOut] value.
   T elasticOut() => builder(Curves.elasticOut);
 
-  /// Creates an [Attribute] instance with [Curves.elasticInOut] value.
+  /// Creates an [Attribute] instance with [ElasticInOutCurve.elasticInOut] value.
   T elasticInOut() => builder(Curves.elasticInOut);
 
   /// Creates an [Attribute] instance with the specified Curve value.

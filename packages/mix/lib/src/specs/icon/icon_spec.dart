@@ -12,7 +12,6 @@ import '../../attributes/modifiers/widget_modifiers_data.dart';
 import '../../attributes/modifiers/widget_modifiers_data_dto.dart';
 import '../../attributes/modifiers/widget_modifiers_util.dart';
 import '../../attributes/shadow/shadow_dto.dart';
-import '../../attributes/shadow/shadow_util.dart';
 import '../../core/attribute.dart';
 import '../../core/factory/mix_data.dart';
 import '../../core/factory/mix_provider.dart';

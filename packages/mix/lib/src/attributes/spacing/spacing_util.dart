@@ -6,6 +6,8 @@ import '../../core/utility.dart';
 import '../../theme/tokens/space_token.dart';
 import 'edge_insets_dto.dart';
 
+typedef EdgeInsetsGeometryUtility = SpacingUtility;
+
 @immutable
 final class SpacingUtility<T extends Attribute>
     extends DtoUtility<T, EdgeInsetsGeometryDto, EdgeInsetsGeometry> {

@@ -1,6 +1,6 @@
 import '../metadata/spec_metadata.dart';
 import '../utils/code_builder.dart';
-import '../utils/utility_method_builder.dart';
+import '../utils/utility_code_generator.dart';
 
 class SpecUtilityBuilder implements CodeBuilder {
   final SpecMetadata metadata;
@@ -13,8 +13,8 @@ class SpecUtilityBuilder implements CodeBuilder {
     final attributeName = '${specName}Attribute';
     final utilityName = '${specName}Utility';
 
-    // Use old or new logic to generate utility fields from the ClassElement:
-    final generatedFields = UtilityMethods.generateUtilityFields(
+    // Generate utility fields using UtilityCodeGenerator:
+    final generatedFields = UtilityCodeGenerator.generateUtilityFields(
       attributeName,
       metadata.parameters,
     );
@@ -37,9 +37,9 @@ class SpecUtilityBuilder implements CodeBuilder {
 
       // The methods you want in the generated class, reintroducing call()
       methods: [
-        UtilityMethods.chainGetter(utilityName),
-        UtilityMethods.selfGetter(utilityName, attributeName),
-        UtilityMethods.methodOnly(
+        UtilityCodeGenerator.chainGetter(utilityName),
+        UtilityCodeGenerator.selfGetter(utilityName, attributeName),
+        UtilityCodeGenerator.methodOnly(
           utilityType: attributeName,
           fields: metadata.parameters,
         ),

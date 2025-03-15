@@ -8,6 +8,7 @@ import 'package:flutter/widgets.dart' as w;
 
 import '../internal/deep_collection_equality.dart';
 import 'dto.dart';
+import 'factory/mix_data.dart';
 
 /// Class to provide some helpers without conflicting
 /// name space with other libraries.

@@ -217,6 +217,20 @@ class TypeUtils {
   static String defineTweenName(String name) {
     return '${name}Tween';
   }
+
+  /// Checks if a type is assignable to another type.
+  ///
+  /// This is a utility method to check if one type can be assigned to another.
+  /// It's similar to the isAssignableTo method on DartType, but handles null cases.
+  static bool isAssignableTo(DartType? type, DartType? targetType) {
+    if (type == null || targetType == null) return false;
+
+    if (type is InterfaceType && targetType is InterfaceType) {
+      return type.element.thisType.isAssignableTo(targetType);
+    }
+
+    return false;
+  }
 }
 
 //------------------------------------------------------------------------------

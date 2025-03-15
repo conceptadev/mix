@@ -186,14 +186,12 @@ final resolvables = {
   'StrutStyleDto': 'StrutStyle',
   'TextDirectiveDto': 'TextDirective',
   'TextHeightBehaviorDto': 'TextHeightBehavior',
-  'TextStyleData': 'TextStyle',
   'TextStyleDto': 'TextStyle',
   'WidgetModifiersDataDto': 'WidgetModifiersData',
   'BorderDto': 'Border',
   'BorderRadiusDto': 'BorderRadius',
   'EdgeInsetsDto': 'EdgeInsets',
   'BoxConstraintsDto': 'BoxConstraints',
-  'TextStyleDataDto': 'TextStyleData',
 };
 
 /// Map of utility class names to their corresponding value types

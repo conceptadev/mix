@@ -17,6 +17,9 @@ class UtilityMetadata extends BaseMetadata {
   /// The mapping element if this is a class utility with a mapping type
   final ClassElement? mappingElement;
 
+  /// The reference element if this is a class utility with a reference type
+  final ClassElement? referenceElement;
+
   final int generateHelpers;
 
   UtilityMetadata({
@@ -30,6 +33,7 @@ class UtilityMetadata extends BaseMetadata {
     this.enumElement,
     this.valueElement,
     this.mappingElement,
+    this.referenceElement,
     required this.generateHelpers,
   });
 
@@ -71,6 +75,7 @@ class UtilityMetadata extends BaseMetadata {
         enumElement: enumElement,
         valueElement: valueElement,
         mappingElement: null, // No mapping element for fromElement
+        referenceElement: null, // No reference element for fromElement
         generateHelpers: readMixableUtilityHelpers(element),
       );
     } catch (e) {
@@ -133,6 +138,16 @@ class UtilityMetadata extends BaseMetadata {
         }
       }
 
+      // Check if there's a reference type specified in the annotation
+      ClassElement? referenceElement;
+      final referenceTypeValue = annotation.peek('referenceType');
+      if (referenceTypeValue != null && !referenceTypeValue.isNull) {
+        final referenceTypeElement = referenceTypeValue.typeValue.element;
+        if (referenceTypeElement is ClassElement) {
+          referenceElement = referenceTypeElement;
+        }
+      }
+
       return UtilityMetadata(
         // Utilities don't have fields
         element: element,
@@ -145,6 +160,7 @@ class UtilityMetadata extends BaseMetadata {
         enumElement: enumElement,
         valueElement: valueElement,
         mappingElement: mappingElement,
+        referenceElement: referenceElement,
         generateHelpers: readMixableUtilityHelpers(element),
       );
     } catch (e) {
