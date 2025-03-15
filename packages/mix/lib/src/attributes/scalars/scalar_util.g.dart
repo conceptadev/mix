@@ -3,7 +3,7 @@
 part of 'scalar_util.dart';
 
 // **************************************************************************
-// MixableClassUtilityGenerator
+// MixableUtilityGenerator
 // **************************************************************************
 
 /// {@template alignment_utility}

@@ -6,6 +6,7 @@ part of 'edge_insets_dto.dart';
 // MixableDtoGenerator
 // **************************************************************************
 
+/// A mixin that provides DTO functionality for [EdgeInsetsDto].
 mixin _$EdgeInsetsDto on Dto<EdgeInsets> {
   /// Merges the properties of this [EdgeInsetsDto] with the properties of [other].
   ///
@@ -39,6 +40,7 @@ mixin _$EdgeInsetsDto on Dto<EdgeInsets> {
         _$this.right,
       ];
 
+  /// Returns this instance as a [EdgeInsetsDto].
   EdgeInsetsDto get _$this => this as EdgeInsetsDto;
 }
 
@@ -60,13 +62,13 @@ class EdgeInsetsUtility<T extends Attribute>
   /// Utility for defining [EdgeInsetsDto.right]
   late final right = DoubleUtility((v) => only(right: v));
 
+  EdgeInsetsUtility(super.builder) : super(valueToDto: (v) => v.toDto());
+
   /// Creates an [Attribute] instance using the [EdgeInsetsDto.all] constructor.
   T all(double value) => builder(EdgeInsetsDto.all(value));
 
   /// Creates an [Attribute] instance using the [EdgeInsetsDto.none] constructor.
   T none() => builder(const EdgeInsetsDto.none());
-
-  EdgeInsetsUtility(super.builder) : super(valueToDto: (v) => v.toDto());
 
   /// Returns a new [EdgeInsetsDto] with the specified properties.
   @override
@@ -99,7 +101,9 @@ class EdgeInsetsUtility<T extends Attribute>
   }
 }
 
+/// Extension methods to convert [EdgeInsets] to [EdgeInsetsDto].
 extension EdgeInsetsMixExt on EdgeInsets {
+  /// Converts this [EdgeInsets] to a [EdgeInsetsDto].
   EdgeInsetsDto toDto() {
     return EdgeInsetsDto(
       top: top,
@@ -110,12 +114,15 @@ extension EdgeInsetsMixExt on EdgeInsets {
   }
 }
 
+/// Extension methods to convert List<[EdgeInsets]> to List<[EdgeInsetsDto]>.
 extension ListEdgeInsetsMixExt on List<EdgeInsets> {
+  /// Converts this List<[EdgeInsets]> to a List<[EdgeInsetsDto]>.
   List<EdgeInsetsDto> toDto() {
     return map((e) => e.toDto()).toList();
   }
 }
 
+/// A mixin that provides DTO functionality for [EdgeInsetsDirectionalDto].
 mixin _$EdgeInsetsDirectionalDto on Dto<EdgeInsetsDirectional> {
   /// Merges the properties of this [EdgeInsetsDirectionalDto] with the properties of [other].
   ///
@@ -149,6 +156,7 @@ mixin _$EdgeInsetsDirectionalDto on Dto<EdgeInsetsDirectional> {
         _$this.end,
       ];
 
+  /// Returns this instance as a [EdgeInsetsDirectionalDto].
   EdgeInsetsDirectionalDto get _$this => this as EdgeInsetsDirectionalDto;
 }
 
@@ -170,14 +178,14 @@ class EdgeInsetsDirectionalUtility<T extends Attribute>
   /// Utility for defining [EdgeInsetsDirectionalDto.end]
   late final end = DoubleUtility((v) => only(end: v));
 
+  EdgeInsetsDirectionalUtility(super.builder)
+      : super(valueToDto: (v) => v.toDto());
+
   /// Creates an [Attribute] instance using the [EdgeInsetsDirectionalDto.all] constructor.
   T all(double value) => builder(EdgeInsetsDirectionalDto.all(value));
 
   /// Creates an [Attribute] instance using the [EdgeInsetsDirectionalDto.none] constructor.
   T none() => builder(const EdgeInsetsDirectionalDto.none());
-
-  EdgeInsetsDirectionalUtility(super.builder)
-      : super(valueToDto: (v) => v.toDto());
 
   /// Returns a new [EdgeInsetsDirectionalDto] with the specified properties.
   @override
@@ -210,7 +218,9 @@ class EdgeInsetsDirectionalUtility<T extends Attribute>
   }
 }
 
+/// Extension methods to convert [EdgeInsetsDirectional] to [EdgeInsetsDirectionalDto].
 extension EdgeInsetsDirectionalMixExt on EdgeInsetsDirectional {
+  /// Converts this [EdgeInsetsDirectional] to a [EdgeInsetsDirectionalDto].
   EdgeInsetsDirectionalDto toDto() {
     return EdgeInsetsDirectionalDto(
       top: top,
@@ -221,7 +231,9 @@ extension EdgeInsetsDirectionalMixExt on EdgeInsetsDirectional {
   }
 }
 
+/// Extension methods to convert List<[EdgeInsetsDirectional]> to List<[EdgeInsetsDirectionalDto]>.
 extension ListEdgeInsetsDirectionalMixExt on List<EdgeInsetsDirectional> {
+  /// Converts this List<[EdgeInsetsDirectional]> to a List<[EdgeInsetsDirectionalDto]>.
   List<EdgeInsetsDirectionalDto> toDto() {
     return map((e) => e.toDto()).toList();
   }
