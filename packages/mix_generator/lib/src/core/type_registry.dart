@@ -13,6 +13,25 @@ class TypeRegistry {
 
   TypeRegistry._();
 
+  /// Helper method to get utility for list types
+  String _getUtilityForListType(DartType type) {
+    final elementType = type.firstTypeArgument!;
+    final elementTypeName =
+        getResolvableForType(elementType) ?? elementType.getTypeAsString();
+
+    final listTypeString = 'List<$elementTypeName>';
+
+    // First check for a direct utility mapping for the list type
+    for (final entry in utilities.entries) {
+      if (entry.value == listTypeString) {
+        return entry.key;
+      }
+    }
+
+    // Default to generic list utility
+    return 'ListUtility<T, $elementTypeName>';
+  }
+
   bool hasTryToMerge(String typeName) {
     return tryToMerge.contains(typeName);
   }
@@ -23,32 +42,12 @@ class TypeRegistry {
 
     // Special handling for Spec types
     if (TypeUtils.isSpec(type)) {
-      final typeName = typeString;
-
-      return '${typeName}Utility';
+      return '${typeString}Utility';
     }
 
     // Handle List types specially
     if (type.isList) {
-      final elementType = type.firstTypeArgument!;
-      final elementTypeName = elementType.getTypeAsString();
-
-      // Check if this is a list of DTOs
-      if (TypeUtils.isResolvable(elementType)) {
-        // For lists of DTOs, we need to keep the DTO type in the utility
-        // because the code is designed to work with DTO types
-        return 'ListUtility<T, $elementTypeName>';
-      }
-
-      // For other list types, check for a direct utility mapping
-      final listTypeString = 'List<$elementTypeName>';
-      for (final entry in utilities.entries) {
-        if (entry.value == listTypeString) {
-          return entry.key;
-        }
-      }
-
-      return 'ListUtility<T, $elementTypeName>';
+      return _getUtilityForListType(type);
     }
 
     // For DTO types, get the resolved type for utility mapping
@@ -56,12 +55,7 @@ class TypeRegistry {
     if (TypeUtils.isResolvable(type)) {
       final dtoName = type.element!.name!;
       // Get the resolved type from the resolvables map
-      for (final entry in resolvables.entries) {
-        if (entry.key == dtoName) {
-          resolvedTypeString = entry.value;
-          break;
-        }
-      }
+      resolvedTypeString = resolvables[dtoName] ?? typeString;
     }
 
     // Check for a direct utility mapping using the resolved type
@@ -71,7 +65,7 @@ class TypeRegistry {
       }
     }
 
-    // If no mapping found, use DynamicUtility
+    // If no mapping found, log warning
     _logger.warning(
       'No utility found for type: $typeString (resolved: $resolvedTypeString), using DynamicUtility',
     );
@@ -210,7 +204,7 @@ final utilities = {
   'BoxShapeUtility': 'BoxShape',
   'ClipUtility': 'Clip',
   'ColorUtility': 'Color',
-  'ColorListUtility': 'List<Color>',
+  'ColorListUtility': 'List<ColorDto>',
   'ConstraintsUtility': 'Constraints',
   'CrossAxisAlignmentUtility': 'CrossAxisAlignment',
   'CurveUtility': 'Curve',
@@ -249,7 +243,7 @@ final utilities = {
   'TextDecorationUtility': 'TextDecoration',
   'TextDecorationStyleUtility': 'TextDecorationStyle',
   'TextDirectionUtility': 'TextDirection',
-  'TextDirectivesUtility': 'TextDirective',
+  'TextDirectiveUtility': 'TextDirective',
   'TextLeadingDistributionUtility': 'TextLeadingDistribution',
   'TextOverflowUtility': 'TextOverflow',
   'TextScalerUtility': 'TextScaler',

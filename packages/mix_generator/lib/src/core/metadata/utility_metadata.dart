@@ -1,5 +1,6 @@
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/type.dart';
+import 'package:logging/logging.dart';
 import 'package:source_gen/source_gen.dart';
 
 import '../utils/annotation_utils.dart';
@@ -22,6 +23,8 @@ class UtilityMetadata extends BaseMetadata {
 
   final int generateHelpers;
 
+  static final _logger = Logger('UtilityMetadata');
+
   UtilityMetadata({
     required super.element,
     required super.name,
@@ -37,10 +40,13 @@ class UtilityMetadata extends BaseMetadata {
     required this.generateHelpers,
   });
 
-  /// Creates a UtilityMetadata from a class element
-  factory UtilityMetadata.fromElement(ClassElement element) {
+  /// Creates a UtilityMetadata from a class element with optional annotation data
+  factory UtilityMetadata.create(
+    ClassElement element, {
+    ConstantReader? annotation,
+  }) {
     try {
-      // Check if it's an enum utility
+      // Extract utility type info
       final utilityType = _getUtilityType(element);
 
       if (utilityType == null) {
@@ -50,109 +56,55 @@ class UtilityMetadata extends BaseMetadata {
         );
       }
 
-      // Check if it's an enum utility
+      // Parse type information
       EnumElement? enumElement;
+      ClassElement? valueElement;
+
       if (utilityType.element is EnumElement) {
         enumElement = utilityType.element as EnumElement;
-      }
-
-      // It's a class utility
-      ClassElement? valueElement;
-      if (utilityType.element is ClassElement &&
+      } else if (utilityType.element is ClassElement &&
           utilityType.element is! EnumElement) {
         valueElement = utilityType.element as ClassElement;
       }
 
-      return UtilityMetadata(
-        // Utilities don't have fields
-        element: element,
-        name: element.name,
-        parameters: [],
-        isConst: element.unnamedConstructor?.isConst ?? false,
-        isDiagnosticable: false, // Utilities don't need diagnostics
-        constructor: findTargetConstructor(element),
-        isAbstract: element.isAbstract,
-        enumElement: enumElement,
-        valueElement: valueElement,
-        mappingElement: null, // No mapping element for fromElement
-        referenceElement: null, // No reference element for fromElement
-        generateHelpers: readMixableUtilityHelpers(element),
-      );
-    } catch (e) {
-      if (e is InvalidGenerationSourceError) {
-        rethrow;
-      }
-      throw InvalidGenerationSourceError(
-        'Error creating utility metadata: $e',
-        element: element,
-      );
-    }
-  }
-
-  /// Creates a UtilityMetadata from a class element and its annotation
-  static UtilityMetadata fromAnnotation(
-    ClassElement element,
-    ConstantReader annotation,
-  ) {
-    try {
-      // First, try to get the utility type from the class
-      final utilityType = _getUtilityType(element);
-
-      if (utilityType == null) {
-        throw InvalidGenerationSourceError(
-          'The class must extend MixUtility<Attribute, ValueType>',
-          element: element,
-        );
-      }
-
-      // Check if it's an enum utility
-      EnumElement? enumElement;
-      if (utilityType.element is EnumElement) {
-        enumElement = utilityType.element as EnumElement;
-      }
-
-      // It's a class utility
-      ClassElement? valueElement;
-      if (utilityType.element is ClassElement &&
-          utilityType.element is! EnumElement) {
-        valueElement = utilityType.element as ClassElement;
-      }
-
-      // Check if there's a mapping type specified in the annotation
+      // Initialize annotation-specific fields
       ClassElement? mappingElement;
-
-      // Only try to get mapping type from MixableFieldUtility annotation
-      if (!hasMixableUtility(element)) {
-        final mixableUtility = readMixableFieldUtility(element);
-        final mappingType = mixableUtility?.type;
-
-        if (mappingType != null) {
-          final mappingTypeElement = annotation.read('type').typeValue.element;
-          if (mappingTypeElement is! ClassElement) {
-            throw InvalidGenerationSourceError(
-              'The mapping type must be a class',
-              element: element,
-            );
-          }
-          mappingElement = mappingTypeElement;
-        }
-      }
-
-      // Check if there's a reference type specified in the annotation
       ClassElement? referenceElement;
-      final referenceTypeValue = annotation.peek('referenceType');
-      if (referenceTypeValue != null && !referenceTypeValue.isNull) {
-        final referenceTypeElement = referenceTypeValue.typeValue.element;
-        if (referenceTypeElement is ClassElement) {
-          referenceElement = referenceTypeElement;
+
+      // If we have annotation data, extract mapping and reference types
+      if (annotation != null) {
+        // Handle mapping type
+        if (!hasMixableUtility(element)) {
+          final mixableUtility = readMixableFieldUtility(element);
+          final mappingType = mixableUtility?.type;
+
+          if (mappingType != null) {
+            final mappingTypeElement =
+                annotation.read('type').typeValue.element;
+            if (mappingTypeElement is! ClassElement) {
+              throw InvalidGenerationSourceError(
+                'The mapping type must be a class',
+                element: element,
+              );
+            }
+            mappingElement = mappingTypeElement;
+          }
+        }
+
+        // Handle reference type
+        final referenceTypeValue = annotation.peek('referenceType');
+        if (referenceTypeValue != null && !referenceTypeValue.isNull) {
+          final referenceTypeElement = referenceTypeValue.typeValue.element;
+          if (referenceTypeElement is ClassElement) {
+            referenceElement = referenceTypeElement;
+          }
         }
       }
 
       return UtilityMetadata(
-        // Utilities don't have fields
         element: element,
         name: element.name,
-        parameters: [],
+        parameters: [], // Utilities don't have fields
         isConst: element.unnamedConstructor?.isConst ?? false,
         isDiagnosticable: false, // Utilities don't need diagnostics
         constructor: findTargetConstructor(element),
@@ -164,6 +116,8 @@ class UtilityMetadata extends BaseMetadata {
         generateHelpers: readMixableUtilityHelpers(element),
       );
     } catch (e) {
+      _logger.warning('Error creating utility metadata: $e');
+
       if (e is InvalidGenerationSourceError) {
         rethrow;
       }
@@ -172,6 +126,19 @@ class UtilityMetadata extends BaseMetadata {
         element: element,
       );
     }
+  }
+
+  /// Creates a UtilityMetadata from a class element
+  factory UtilityMetadata.fromElement(ClassElement element) {
+    return UtilityMetadata.create(element);
+  }
+
+  /// Creates a UtilityMetadata from a class element and its annotation
+  static UtilityMetadata fromAnnotation(
+    ClassElement element,
+    ConstantReader annotation,
+  ) {
+    return UtilityMetadata.create(element, annotation: annotation);
   }
 
   /// Checks if this is an enum utility

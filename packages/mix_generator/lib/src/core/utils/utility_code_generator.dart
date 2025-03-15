@@ -8,33 +8,28 @@ import '../metadata/utility_metadata.dart';
 import 'constructor_utils.dart';
 import 'dart_type_utils.dart';
 import 'string_utils.dart';
-
-/// Helper class to store element information for code generation
-class _ElementInfo {
-  final ClassElement fieldElement;
-  final ClassElement constructorElement;
-  final ClassElement mappingElement;
-
-  const _ElementInfo({
-    required this.fieldElement,
-    required this.constructorElement,
-    required this.mappingElement,
-  });
-}
-
-/// Helper class to store parameter information
-class _ParameterInfo {
-  final String signature;
-  final String invocation;
-
-  const _ParameterInfo({required this.signature, required this.invocation});
-}
+import 'utility_code_helpers.dart';
 
 /// Responsible for generating all utility code
 class UtilityCodeGenerator {
   static final _logger = Logger('UtilityCodeGenerator');
 
   const UtilityCodeGenerator._();
+
+  /// Main entry point for utility mixin generation
+  static String generateUtilityMixin(UtilityMetadata metadata) {
+    try {
+      if (metadata.isEnumUtility) {
+        return generateEnumUtilityMixin(metadata);
+      }
+
+      return generateClassUtilityMixin(metadata);
+    } catch (e) {
+      _logger.warning('Error generating code for ${metadata.name}: $e');
+
+      return '// Error generating code for ${metadata.name}: $e';
+    }
+  }
 
   /// Generates the utility mixin code for an enum utility.
   static String generateEnumUtilityMixin(UtilityMetadata metadata) {
@@ -141,7 +136,7 @@ $callMethod
   }
 
   /// Determines which elements to use for fields, constructors, and mapping
-  static _ElementInfo _getElementInfo(UtilityMetadata metadata) {
+  static ElementInfo _getElementInfo(UtilityMetadata metadata) {
     final valueElement = metadata.valueElement!;
     final referenceElement = metadata.referenceElement;
     final mappingElement = metadata.mappingElement;
@@ -155,11 +150,31 @@ $callMethod
     // Use mapping element if available, otherwise use constructor element
     final effectiveMappingElement = mappingElement ?? constructorElement;
 
-    return _ElementInfo(
+    return ElementInfo(
       fieldElement: fieldElement,
       constructorElement: constructorElement,
       mappingElement: effectiveMappingElement,
     );
+  }
+
+  /// Validates and filters static fields for utility methods
+  static bool _isValidStaticField(
+    FieldElement field,
+    ClassElement valueElement,
+    ClassElement? referenceElement,
+  ) {
+    // Only use static, public, const fields
+    if (!field.isStatic || !field.isPublic || !field.isConst) {
+      return false;
+    }
+
+    // Check if the field type is assignable to the value type
+    final isAssignable =
+        TypeUtils.isAssignableTo(field.type, valueElement.thisType) ||
+            (referenceElement != null &&
+                field.type.element?.name == referenceElement.name);
+
+    return isAssignable;
   }
 
   /// Generates statements for static fields
@@ -172,25 +187,16 @@ $callMethod
 
     // Get all static fields that are public and const
     for (var field in fieldElement.fields) {
-      if (field.isStatic && field.isPublic && field.isConst) {
-        final fieldName = field.name;
-        final fieldType = field.type.element?.name ?? 'dynamic';
+      if (!_isValidStaticField(field, valueElement, referenceElement)) {
+        continue;
+      }
 
-        // Check if the field type is assignable to the value type
-        // This is important for cases like Alignment (field type) and AlignmentGeometry (value type)
-        final isAssignable =
-            TypeUtils.isAssignableTo(field.type, valueElement.thisType) ||
-                (referenceElement != null &&
-                    field.type.element?.name == referenceElement.name);
+      final fieldName = field.name;
+      final fieldType = field.type.element?.name ?? 'dynamic';
 
-        if (!isAssignable) {
-          continue;
-        }
-
-        fieldStatements.add('''
+      fieldStatements.add('''
   /// Creates an [Attribute] instance with [$fieldType.$fieldName] value.
   T $fieldName() => builder(${fieldElement.name}.$fieldName);''');
-      }
     }
 
     return fieldStatements;
@@ -308,7 +314,7 @@ $signatureLine
   }
 
   /// Processes constructor parameters and returns signature and invocation strings
-  static _ParameterInfo _processConstructorParameters(
+  static ParameterInfo _processConstructorParameters(
     List<ParameterElement> parameters,
   ) {
     final signatureRequiredParams = <String>[];
@@ -355,7 +361,7 @@ $signatureLine
       if (invocationNamedParams.isNotEmpty) invocationNamedParams.join(', '),
     ].join(', ');
 
-    return _ParameterInfo(
+    return ParameterInfo(
       signature: signatureParams,
       invocation: invocationParams,
     );

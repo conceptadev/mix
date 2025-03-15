@@ -25,16 +25,18 @@ class MixableUtilityGenerator
 
   @override
   String generateForMetadata(UtilityMetadata metadata, BuildStep buildStep) {
-    final output = StringBuffer();
+    try {
+      // Use the unified generator
+      return UtilityCodeGenerator.generateUtilityMixin(metadata);
+    } catch (e, stackTrace) {
+      _logger.severe(
+        'Error generating utility mixin for ${metadata.name}',
+        e,
+        stackTrace,
+      );
 
-    // Generate the appropriate utility based on the type
-    if (metadata.isEnumUtility) {
-      output.writeln(UtilityCodeGenerator.generateEnumUtilityMixin(metadata));
-    } else {
-      output.writeln(UtilityCodeGenerator.generateClassUtilityMixin(metadata));
+      return '// Error generating utility mixin for ${metadata.name}: $e';
     }
-
-    return output.toString();
   }
 
   @override
@@ -44,11 +46,19 @@ class MixableUtilityGenerator
   ) async {
     validateClassElement(element);
 
+    final annotation = typeChecker.firstAnnotationOfExact(element);
+
+    if (annotation == null) {
+      _logger.warning(
+        'No MixableUtility annotation found for ${element.name}. Using basic metadata.',
+      );
+
+      return UtilityMetadata.fromElement(element);
+    }
+
     return UtilityMetadata.fromAnnotation(
       element,
-      ConstantReader(typeChecker.firstAnnotationOfExact(element) ??
-          const TypeChecker.fromRuntime(MixableUtility)
-              .firstAnnotationOfExact(element)),
+      ConstantReader(annotation),
     );
   }
 }

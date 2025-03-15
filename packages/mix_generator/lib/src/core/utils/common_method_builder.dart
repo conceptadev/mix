@@ -31,16 +31,9 @@ $propsFields
     required List<ParameterMetadata> fields,
     required bool useInternalRef,
   }) {
-    final expandableFields = {'decoration', 'style'};
-
     final propertyStatements = fields.map((field) {
       final fieldName = field.name;
       final fieldRef = useInternalRef ? field.asInternalRef : fieldName;
-
-      final isExpandable = expandableFields.contains(fieldName);
-      if (isExpandable) {
-        return 'properties.add(DiagnosticsProperty(\'$fieldName\', $fieldRef, expandableValue: true, defaultValue: null));';
-      }
 
       return 'properties.add(DiagnosticsProperty(\'$fieldName\', $fieldRef, defaultValue: null));';
     }).join('\n    ');

@@ -8,6 +8,7 @@ part of 'text_spec.dart';
 
 // ignore_for_file: deprecated_member_use_from_same_package
 
+/// A mixin that provides spec functionality for [TextSpec].
 mixin _$TextSpec on Spec<TextSpec> {
   static TextSpec from(MixData mix) {
     return mix.attributeOf<TextSpecAttribute>()?.resolve(mix) ??
@@ -304,8 +305,7 @@ class TextSpecAttribute extends SpecAttribute<TextSpec> with Diagnosticable {
         .add(DiagnosticsProperty('textScaler', textScaler, defaultValue: null));
     properties
         .add(DiagnosticsProperty('maxLines', maxLines, defaultValue: null));
-    properties.add(DiagnosticsProperty('style', style,
-        expandableValue: true, defaultValue: null));
+    properties.add(DiagnosticsProperty('style', style, defaultValue: null));
     properties.add(DiagnosticsProperty('textWidthBasis', textWidthBasis,
         defaultValue: null));
     properties.add(DiagnosticsProperty('textHeightBehavior', textHeightBehavior,

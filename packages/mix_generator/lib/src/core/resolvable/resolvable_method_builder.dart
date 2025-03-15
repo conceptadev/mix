@@ -17,6 +17,12 @@ class ResolvableMethods {
   }) {
     final params = buildParameters(fields, (field) {
       final fieldName = useInternalRef ? field.asInternalRef : field.name;
+
+      // Special handling for AnimatedDataDto
+      if (field.resolvable?.type == 'AnimatedDataDto') {
+        return '$fieldName?.resolve(mix) ?? mix.animation';
+      }
+
       // Use the default constant (e.g. $kDefaultValueRef) as in the old implementation
       final fallbackExpression = field.nullable && withDefaults
           ? ' ?? defaultValue.${field.name}'

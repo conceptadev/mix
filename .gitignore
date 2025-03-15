@@ -102,3 +102,4 @@ pubspec.lock
 packages/remix/context.md
 packages/mix/.cody/ignore
 
+.cursor
