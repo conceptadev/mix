@@ -285,6 +285,11 @@ $callMethod
 
     if (isUnamed && skipCallMethod) return '';
 
+    // Check if all parameter types are available
+    if (!TypeUtils.areAllParameterTypesAvailable(constructor.parameters)) {
+      return ''; // Skip this constructor if any parameter type is not available
+    }
+
     final name = constructor.name.isEmpty ? '' : '.${constructor.name}';
     final methodName = constructor.name.isEmpty ? 'call' : constructor.name;
     final type = mappedEl.name;

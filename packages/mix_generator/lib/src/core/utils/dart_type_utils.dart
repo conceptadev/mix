@@ -231,6 +231,126 @@ class TypeUtils {
 
     return false;
   }
+
+  //----------------------------------------------------------------------------
+  // TYPE AVAILABILITY UTILITIES
+  //----------------------------------------------------------------------------
+
+  /// Checks if a type is available in the current context for code generation.
+  ///
+  /// This method determines if a type can be safely used in generated code by checking:
+  /// 1. If it's a primitive or core Dart type (always available)
+  /// 2. If it's from a known problematic package (like vector_math)
+  /// 3. If it can be properly resolved by the analyzer
+  /// 4. If it's from a library that's likely to be available (Flutter, dart:ui, etc.)
+  ///
+  /// Returns true if the type is available, false otherwise.
+  static bool isTypeAvailable(DartType type) {
+    final typeName = type.getDisplayString(withNullability: false);
+
+    // Known problematic types that should be skipped
+    final knownProblematicTypes = [
+      'Vector3', 'Vector4', 'Quaternion',
+      // Add other known problematic types here
+    ];
+
+    if (knownProblematicTypes.contains(typeName)) {
+      _logger.fine('Skipping known problematic type: $typeName');
+
+      return false;
+    }
+
+    // Primitive and core types are always available
+    if (type.isDartCoreBool ||
+        type.isDartCoreDouble ||
+        type.isDartCoreInt ||
+        type.isDartCoreString ||
+        type.isDartCoreList ||
+        type.isDartCoreMap ||
+        type.isDartCoreSet ||
+        type.isDartCoreIterable ||
+        type.isDartCoreFunction ||
+        type.isDartCoreObject) {
+      return true;
+    }
+
+    // Check if the type element is available
+    if (type.element == null) {
+      _logger.fine('Type element not available for: $typeName');
+
+      return false;
+    }
+
+    // Check if the type is from a library that's likely to be available
+    final element = type.element;
+    if (element != null && element.library != null) {
+      final libraryUri = element.library!.source.uri.toString();
+
+      // Safe libraries that are likely to be available
+      final safeLibraries = [
+        'dart:core',
+        'dart:ui',
+        'dart:async',
+        'dart:collection',
+        'dart:convert',
+        'dart:math',
+        'package:flutter/',
+      ];
+
+      // Problematic libraries that might not be available
+      final problematicLibraries = [
+        'dart:ffi',
+        'dart:js',
+        'dart:io',
+        'package:vector_math/',
+      ];
+
+      // Check if the library is in the problematic list
+      for (final lib in problematicLibraries) {
+        if (libraryUri.startsWith(lib)) {
+          _logger
+              .fine('Type from problematic library: $typeName ($libraryUri)');
+
+          return false;
+        }
+      }
+
+      // Check if the library is in the safe list
+      for (final lib in safeLibraries) {
+        if (libraryUri.startsWith(lib)) {
+          return true;
+        }
+      }
+
+      // For other libraries, try to resolve the type
+      try {
+        final resolvedType = resolveTypeToClass(type);
+
+        return resolvedType != null;
+      } catch (e) {
+        _logger.fine('Failed to resolve type: $typeName', e);
+
+        return false;
+      }
+    }
+
+    // Default to false for safety
+    return false;
+  }
+
+  /// Checks if all parameter types in a list are available in the current context.
+  ///
+  /// This is useful for determining if a constructor can be safely used in generated code.
+  /// Returns true if all parameter types are available, false otherwise.
+  static bool areAllParameterTypesAvailable(List<ParameterElement> parameters) {
+    for (var param in parameters) {
+      if (!isTypeAvailable(param.type)) {
+        return false;
+      }
+    }
+
+    return true;
+  }
 }
 
 //------------------------------------------------------------------------------
@@ -241,30 +361,10 @@ class TypeUtils {
 final Uri _mixUri = Uri(scheme: 'package', path: 'mix/');
 
 /// Class name constants used throughout the code generator
-const $MixData = 'MixData';
-const $Mix = 'Mix';
-const $Attribute = 'Attribute';
-const $Spec = 'Spec';
-const $SpecAttribute = 'SpecAttribute';
-const $WidgetModifierSpecAttribute = 'WidgetModifierSpecAttribute';
-const $Dto = 'Dto';
-const $DtoList = 'DtoList';
-const $Utility = 'Utility';
-const $DtoUtility = 'DtoUtility';
-const $SpecUtility = 'SpecUtility';
-const $WidgetModifierSpec = 'WidgetModifierSpec';
 
-/// Enum defining different Mix component types.
-enum MixType {
-  mixUtility,
-  dto,
-  dtoUtility,
-  spec,
-  specAttribute,
-  specUtility,
-  widgetModifierSpec,
-  widgetModifierSpecAttribute,
-}
+const $Spec = 'Spec';
+
+const $Dto = 'Dto';
 
 /// References to Mix helper functions used in generated code.
 ///
