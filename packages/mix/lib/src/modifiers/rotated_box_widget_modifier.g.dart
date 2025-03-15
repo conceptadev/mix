@@ -6,6 +6,7 @@ part of 'rotated_box_widget_modifier.dart';
 // MixableSpecGenerator
 // **************************************************************************
 
+/// A mixin that provides spec functionality for [RotatedBoxModifierSpec].
 mixin _$RotatedBoxModifierSpec on WidgetModifierSpec<RotatedBoxModifierSpec> {
   /// Creates a copy of this [RotatedBoxModifierSpec] but with the given fields
   /// replaced with the new values.

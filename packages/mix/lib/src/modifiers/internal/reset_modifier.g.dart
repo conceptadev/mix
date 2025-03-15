@@ -6,6 +6,7 @@ part of 'reset_modifier.dart';
 // MixableSpecGenerator
 // **************************************************************************
 
+/// A mixin that provides spec functionality for [ResetModifierSpec].
 mixin _$ResetModifierSpec on WidgetModifierSpec<ResetModifierSpec> {
   /// Creates a copy of this [ResetModifierSpec] but with the given fields
   /// replaced with the new values.
@@ -24,12 +25,7 @@ mixin _$ResetModifierSpec on WidgetModifierSpec<ResetModifierSpec> {
   ///
   /// The interpolation is performed on each property of the [ResetModifierSpec] using the appropriate
   /// interpolation method:
-  ///
 
-  /// For , the interpolation is performed using a step function.
-  /// If [t] is less than 0.5, the value from the current [ResetModifierSpec] is used. Otherwise, the value
-  /// from the [other] [ResetModifierSpec] is used.
-  ///
   /// This method is typically used in animations to smoothly transition between
   /// different [ResetModifierSpec] configurations.
   @override

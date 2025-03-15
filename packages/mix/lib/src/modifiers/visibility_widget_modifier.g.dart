@@ -6,6 +6,7 @@ part of 'visibility_widget_modifier.dart';
 // MixableSpecGenerator
 // **************************************************************************
 
+/// A mixin that provides spec functionality for [VisibilityModifierSpec].
 mixin _$VisibilityModifierSpec on WidgetModifierSpec<VisibilityModifierSpec> {
   /// Creates a copy of this [VisibilityModifierSpec] but with the given fields
   /// replaced with the new values.
@@ -28,8 +29,6 @@ mixin _$VisibilityModifierSpec on WidgetModifierSpec<VisibilityModifierSpec> {
   ///
   /// The interpolation is performed on each property of the [VisibilityModifierSpec] using the appropriate
   /// interpolation method:
-  ///
-
   /// For [visible], the interpolation is performed using a step function.
   /// If [t] is less than 0.5, the value from the current [VisibilityModifierSpec] is used. Otherwise, the value
   /// from the [other] [VisibilityModifierSpec] is used.

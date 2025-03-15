@@ -6,6 +6,7 @@ part of 'flex_spec.dart';
 // MixableSpecGenerator
 // **************************************************************************
 
+/// A mixin that provides spec functionality for [FlexSpec].
 mixin _$FlexSpec on Spec<FlexSpec> {
   static FlexSpec from(MixData mix) {
     return mix.attributeOf<FlexSpecAttribute>()?.resolve(mix) ??
@@ -70,9 +71,7 @@ mixin _$FlexSpec on Spec<FlexSpec> {
   ///
   /// The interpolation is performed on each property of the [FlexSpec] using the appropriate
   /// interpolation method:
-  ///
   /// - [MixHelpers.lerpDouble] for [gap].
-
   /// For [crossAxisAlignment] and [mainAxisAlignment] and [mainAxisSize] and [verticalDirection] and [direction] and [textDirection] and [textBaseline] and [clipBehavior] and [animated] and [modifiers], the interpolation is performed using a step function.
   /// If [t] is less than 0.5, the value from the current [FlexSpec] is used. Otherwise, the value
   /// from the [other] [FlexSpec] is used.
@@ -157,8 +156,7 @@ mixin _$FlexSpec on Spec<FlexSpec> {
 ///
 /// Use this class to configure the attributes of a [FlexSpec] and pass it to
 /// the [FlexSpec] constructor.
-final class FlexSpecAttribute extends SpecAttribute<FlexSpec>
-    with Diagnosticable {
+final class FlexSpecAttribute extends SpecAttribute<FlexSpec> with Diagnosticable {
   final CrossAxisAlignment? crossAxisAlignment;
   final MainAxisAlignment? mainAxisAlignment;
   final MainAxisSize? mainAxisSize;

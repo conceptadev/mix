@@ -6,6 +6,7 @@ part of 'image_spec.dart';
 // MixableSpecGenerator
 // **************************************************************************
 
+/// A mixin that provides spec functionality for [ImageSpec].
 mixin _$ImageSpec on Spec<ImageSpec> {
   static ImageSpec from(MixData mix) {
     return mix.attributeOf<ImageSpecAttribute>()?.resolve(mix) ??
@@ -70,12 +71,10 @@ mixin _$ImageSpec on Spec<ImageSpec> {
   ///
   /// The interpolation is performed on each property of the [ImageSpec] using the appropriate
   /// interpolation method:
-  ///
   /// - [MixHelpers.lerpDouble] for [width] and [height].
   /// - [Color.lerp] for [color].
   /// - [AlignmentGeometry.lerp] for [alignment].
   /// - [Rect.lerp] for [centerSlice].
-
   /// For [repeat] and [fit] and [filterQuality] and [colorBlendMode] and [animated] and [modifiers], the interpolation is performed using a step function.
   /// If [t] is less than 0.5, the value from the current [ImageSpec] is used. Otherwise, the value
   /// from the [other] [ImageSpec] is used.
@@ -154,8 +153,7 @@ mixin _$ImageSpec on Spec<ImageSpec> {
 ///
 /// Use this class to configure the attributes of a [ImageSpec] and pass it to
 /// the [ImageSpec] constructor.
-final class ImageSpecAttribute extends SpecAttribute<ImageSpec>
-    with Diagnosticable {
+final class ImageSpecAttribute extends SpecAttribute<ImageSpec> with Diagnosticable {
   final double? width;
   final double? height;
   final ColorDto? color;
