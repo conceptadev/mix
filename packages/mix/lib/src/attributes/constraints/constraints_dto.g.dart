@@ -6,7 +6,6 @@ part of 'constraints_dto.dart';
 // MixableDtoGenerator
 // **************************************************************************
 
-/// A mixin that provides DTO functionality for [BoxConstraintsDto].
 mixin _$BoxConstraintsDto on Dto<BoxConstraints> {
   /// Resolves to [BoxConstraints] using the provided [MixData].
   ///
@@ -58,7 +57,6 @@ mixin _$BoxConstraintsDto on Dto<BoxConstraints> {
         _$this.maxHeight,
       ];
 
-  /// Returns this instance as a [BoxConstraintsDto].
   BoxConstraintsDto get _$this => this as BoxConstraintsDto;
 }
 
@@ -113,9 +111,7 @@ class BoxConstraintsUtility<T extends Attribute>
   }
 }
 
-/// Extension methods to convert [BoxConstraints] to [BoxConstraintsDto].
 extension BoxConstraintsMixExt on BoxConstraints {
-  /// Converts this [BoxConstraints] to a [BoxConstraintsDto].
   BoxConstraintsDto toDto() {
     return BoxConstraintsDto(
       minWidth: minWidth,
@@ -126,9 +122,7 @@ extension BoxConstraintsMixExt on BoxConstraints {
   }
 }
 
-/// Extension methods to convert List<[BoxConstraints]> to List<[BoxConstraintsDto]>.
 extension ListBoxConstraintsMixExt on List<BoxConstraints> {
-  /// Converts this List<[BoxConstraints]> to a List<[BoxConstraintsDto]>.
   List<BoxConstraintsDto> toDto() {
     return map((e) => e.toDto()).toList();
   }

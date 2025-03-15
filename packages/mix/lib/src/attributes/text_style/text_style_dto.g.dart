@@ -6,7 +6,6 @@ part of 'text_style_dto.dart';
 // MixableDtoGenerator
 // **************************************************************************
 
-/// A mixin that provides DTO functionality for [TextStyleData].
 mixin _$TextStyleData on Dto<TextStyle> {
   /// Resolves to [TextStyle] using the provided [MixData].
   ///
@@ -57,7 +56,7 @@ mixin _$TextStyleData on Dto<TextStyle> {
   /// Properties from [other] that are null will fall back
   /// to the values from this instance.
   @override
-  TextStyleData merge(TextStyleData? other) {
+  TextStyleData merge(covariant TextStyleData? other) {
     if (other == null) return _$this;
 
     return TextStyleData(
@@ -120,11 +119,9 @@ mixin _$TextStyleData on Dto<TextStyle> {
         _$this.wordSpacing,
       ];
 
-  /// Returns this instance as a [TextStyleData].
   TextStyleData get _$this => this as TextStyleData;
 }
 
-/// A mixin that provides DTO functionality for [TextStyleDto].
 mixin _$TextStyleDto on Dto<TextStyle> {
   /// Merges the properties of this [TextStyleDto] with the properties of [other].
   ///
@@ -152,6 +149,5 @@ mixin _$TextStyleDto on Dto<TextStyle> {
         _$this.value,
       ];
 
-  /// Returns this instance as a [TextStyleDto].
   TextStyleDto get _$this => this as TextStyleDto;
 }

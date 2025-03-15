@@ -6,7 +6,6 @@ part of 'flexbox_spec.dart';
 // MixableSpecGenerator
 // **************************************************************************
 
-/// A mixin that provides spec functionality for [FlexBoxSpec].
 mixin _$FlexBoxSpec on Spec<FlexBoxSpec> {
   static FlexBoxSpec from(MixData mix) {
     return mix.attributeOf<FlexBoxSpecAttribute>()?.resolve(mix) ??
@@ -57,6 +56,8 @@ mixin _$FlexBoxSpec on Spec<FlexBoxSpec> {
   ///
   /// The interpolation is performed on each property of the [FlexBoxSpec] using the appropriate
   /// interpolation method:
+  ///
+
   /// For [animated] and [modifiers] and [box] and [flex], the interpolation is performed using a step function.
   /// If [t] is less than 0.5, the value from the current [FlexBoxSpec] is used. Otherwise, the value
   /// from the [other] [FlexBoxSpec] is used.
@@ -107,7 +108,7 @@ mixin _$FlexBoxSpec on Spec<FlexBoxSpec> {
 ///
 /// Use this class to configure the attributes of a [FlexBoxSpec] and pass it to
 /// the [FlexBoxSpec] constructor.
-class FlexBoxSpecAttribute extends SpecAttribute<FlexBoxSpec>
+final class FlexBoxSpecAttribute extends SpecAttribute<FlexBoxSpec>
     with Diagnosticable {
   final BoxSpecAttribute? box;
   final FlexSpecAttribute? flex;

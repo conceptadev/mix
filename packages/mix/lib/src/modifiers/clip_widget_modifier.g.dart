@@ -6,7 +6,6 @@ part of 'clip_widget_modifier.dart';
 // MixableSpecGenerator
 // **************************************************************************
 
-/// A mixin that provides spec functionality for [ClipOvalModifierSpec].
 mixin _$ClipOvalModifierSpec on WidgetModifierSpec<ClipOvalModifierSpec> {
   /// Creates a copy of this [ClipOvalModifierSpec] but with the given fields
   /// replaced with the new values.
@@ -31,6 +30,8 @@ mixin _$ClipOvalModifierSpec on WidgetModifierSpec<ClipOvalModifierSpec> {
   ///
   /// The interpolation is performed on each property of the [ClipOvalModifierSpec] using the appropriate
   /// interpolation method:
+  ///
+
   /// For [clipper] and [clipBehavior], the interpolation is performed using a step function.
   /// If [t] is less than 0.5, the value from the current [ClipOvalModifierSpec] is used. Otherwise, the value
   /// from the [other] [ClipOvalModifierSpec] is used.
@@ -74,7 +75,7 @@ mixin _$ClipOvalModifierSpec on WidgetModifierSpec<ClipOvalModifierSpec> {
 ///
 /// Use this class to configure the attributes of a [ClipOvalModifierSpec] and pass it to
 /// the [ClipOvalModifierSpec] constructor.
-class ClipOvalModifierSpecAttribute
+final class ClipOvalModifierSpecAttribute
     extends WidgetModifierSpecAttribute<ClipOvalModifierSpec>
     with Diagnosticable {
   final CustomClipper<Rect>? clipper;
@@ -162,7 +163,6 @@ class ClipOvalModifierSpecTween extends Tween<ClipOvalModifierSpec?> {
   }
 }
 
-/// A mixin that provides spec functionality for [ClipRectModifierSpec].
 mixin _$ClipRectModifierSpec on WidgetModifierSpec<ClipRectModifierSpec> {
   /// Creates a copy of this [ClipRectModifierSpec] but with the given fields
   /// replaced with the new values.
@@ -187,6 +187,8 @@ mixin _$ClipRectModifierSpec on WidgetModifierSpec<ClipRectModifierSpec> {
   ///
   /// The interpolation is performed on each property of the [ClipRectModifierSpec] using the appropriate
   /// interpolation method:
+  ///
+
   /// For [clipper] and [clipBehavior], the interpolation is performed using a step function.
   /// If [t] is less than 0.5, the value from the current [ClipRectModifierSpec] is used. Otherwise, the value
   /// from the [other] [ClipRectModifierSpec] is used.
@@ -230,7 +232,7 @@ mixin _$ClipRectModifierSpec on WidgetModifierSpec<ClipRectModifierSpec> {
 ///
 /// Use this class to configure the attributes of a [ClipRectModifierSpec] and pass it to
 /// the [ClipRectModifierSpec] constructor.
-class ClipRectModifierSpecAttribute
+final class ClipRectModifierSpecAttribute
     extends WidgetModifierSpecAttribute<ClipRectModifierSpec>
     with Diagnosticable {
   final CustomClipper<Rect>? clipper;
@@ -318,7 +320,6 @@ class ClipRectModifierSpecTween extends Tween<ClipRectModifierSpec?> {
   }
 }
 
-/// A mixin that provides spec functionality for [ClipRRectModifierSpec].
 mixin _$ClipRRectModifierSpec on WidgetModifierSpec<ClipRRectModifierSpec> {
   /// Creates a copy of this [ClipRRectModifierSpec] but with the given fields
   /// replaced with the new values.
@@ -345,7 +346,9 @@ mixin _$ClipRRectModifierSpec on WidgetModifierSpec<ClipRRectModifierSpec> {
   ///
   /// The interpolation is performed on each property of the [ClipRRectModifierSpec] using the appropriate
   /// interpolation method:
+  ///
   /// - [BorderRadiusGeometry.lerp] for [borderRadius].
+
   /// For [clipper] and [clipBehavior], the interpolation is performed using a step function.
   /// If [t] is less than 0.5, the value from the current [ClipRRectModifierSpec] is used. Otherwise, the value
   /// from the [other] [ClipRRectModifierSpec] is used.
@@ -394,7 +397,7 @@ mixin _$ClipRRectModifierSpec on WidgetModifierSpec<ClipRRectModifierSpec> {
 ///
 /// Use this class to configure the attributes of a [ClipRRectModifierSpec] and pass it to
 /// the [ClipRRectModifierSpec] constructor.
-class ClipRRectModifierSpecAttribute
+final class ClipRRectModifierSpecAttribute
     extends WidgetModifierSpecAttribute<ClipRRectModifierSpec>
     with Diagnosticable {
   final BorderRadiusGeometryDto? borderRadius;
@@ -490,7 +493,6 @@ class ClipRRectModifierSpecTween extends Tween<ClipRRectModifierSpec?> {
   }
 }
 
-/// A mixin that provides spec functionality for [ClipPathModifierSpec].
 mixin _$ClipPathModifierSpec on WidgetModifierSpec<ClipPathModifierSpec> {
   /// Creates a copy of this [ClipPathModifierSpec] but with the given fields
   /// replaced with the new values.
@@ -515,6 +517,8 @@ mixin _$ClipPathModifierSpec on WidgetModifierSpec<ClipPathModifierSpec> {
   ///
   /// The interpolation is performed on each property of the [ClipPathModifierSpec] using the appropriate
   /// interpolation method:
+  ///
+
   /// For [clipper] and [clipBehavior], the interpolation is performed using a step function.
   /// If [t] is less than 0.5, the value from the current [ClipPathModifierSpec] is used. Otherwise, the value
   /// from the [other] [ClipPathModifierSpec] is used.
@@ -558,7 +562,7 @@ mixin _$ClipPathModifierSpec on WidgetModifierSpec<ClipPathModifierSpec> {
 ///
 /// Use this class to configure the attributes of a [ClipPathModifierSpec] and pass it to
 /// the [ClipPathModifierSpec] constructor.
-class ClipPathModifierSpecAttribute
+final class ClipPathModifierSpecAttribute
     extends WidgetModifierSpecAttribute<ClipPathModifierSpec>
     with Diagnosticable {
   final CustomClipper<Path>? clipper;
@@ -646,7 +650,6 @@ class ClipPathModifierSpecTween extends Tween<ClipPathModifierSpec?> {
   }
 }
 
-/// A mixin that provides spec functionality for [ClipTriangleModifierSpec].
 mixin _$ClipTriangleModifierSpec
     on WidgetModifierSpec<ClipTriangleModifierSpec> {
   /// Creates a copy of this [ClipTriangleModifierSpec] but with the given fields
@@ -670,6 +673,8 @@ mixin _$ClipTriangleModifierSpec
   ///
   /// The interpolation is performed on each property of the [ClipTriangleModifierSpec] using the appropriate
   /// interpolation method:
+  ///
+
   /// For [clipBehavior], the interpolation is performed using a step function.
   /// If [t] is less than 0.5, the value from the current [ClipTriangleModifierSpec] is used. Otherwise, the value
   /// from the [other] [ClipTriangleModifierSpec] is used.
@@ -709,7 +714,7 @@ mixin _$ClipTriangleModifierSpec
 ///
 /// Use this class to configure the attributes of a [ClipTriangleModifierSpec] and pass it to
 /// the [ClipTriangleModifierSpec] constructor.
-class ClipTriangleModifierSpecAttribute
+final class ClipTriangleModifierSpecAttribute
     extends WidgetModifierSpecAttribute<ClipTriangleModifierSpec>
     with Diagnosticable {
   final Clip? clipBehavior;

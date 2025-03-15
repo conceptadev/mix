@@ -6,7 +6,6 @@ part of 'aspect_ratio_widget_modifier.dart';
 // MixableSpecGenerator
 // **************************************************************************
 
-/// A mixin that provides spec functionality for [AspectRatioModifierSpec].
 mixin _$AspectRatioModifierSpec on WidgetModifierSpec<AspectRatioModifierSpec> {
   /// Creates a copy of this [AspectRatioModifierSpec] but with the given fields
   /// replaced with the new values.
@@ -29,8 +28,13 @@ mixin _$AspectRatioModifierSpec on WidgetModifierSpec<AspectRatioModifierSpec> {
   ///
   /// The interpolation is performed on each property of the [AspectRatioModifierSpec] using the appropriate
   /// interpolation method:
+  ///
   /// - [MixHelpers.lerpDouble] for [aspectRatio].
 
+  /// For , the interpolation is performed using a step function.
+  /// If [t] is less than 0.5, the value from the current [AspectRatioModifierSpec] is used. Otherwise, the value
+  /// from the [other] [AspectRatioModifierSpec] is used.
+  ///
   /// This method is typically used in animations to smoothly transition between
   /// different [AspectRatioModifierSpec] configurations.
   @override
@@ -66,7 +70,7 @@ mixin _$AspectRatioModifierSpec on WidgetModifierSpec<AspectRatioModifierSpec> {
 ///
 /// Use this class to configure the attributes of a [AspectRatioModifierSpec] and pass it to
 /// the [AspectRatioModifierSpec] constructor.
-class AspectRatioModifierSpecAttribute
+final class AspectRatioModifierSpecAttribute
     extends WidgetModifierSpecAttribute<AspectRatioModifierSpec>
     with Diagnosticable {
   final double? aspectRatio;

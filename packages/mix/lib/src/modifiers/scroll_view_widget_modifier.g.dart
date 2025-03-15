@@ -6,7 +6,6 @@ part of 'scroll_view_widget_modifier.dart';
 // MixableSpecGenerator
 // **************************************************************************
 
-/// A mixin that provides spec functionality for [ScrollViewModifierSpec].
 mixin _$ScrollViewModifierSpec on WidgetModifierSpec<ScrollViewModifierSpec> {
   /// Creates a copy of this [ScrollViewModifierSpec] but with the given fields
   /// replaced with the new values.
@@ -37,7 +36,9 @@ mixin _$ScrollViewModifierSpec on WidgetModifierSpec<ScrollViewModifierSpec> {
   ///
   /// The interpolation is performed on each property of the [ScrollViewModifierSpec] using the appropriate
   /// interpolation method:
+  ///
   /// - [EdgeInsetsGeometry.lerp] for [padding].
+
   /// For [scrollDirection] and [reverse] and [physics] and [clipBehavior], the interpolation is performed using a step function.
   /// If [t] is less than 0.5, the value from the current [ScrollViewModifierSpec] is used. Otherwise, the value
   /// from the [other] [ScrollViewModifierSpec] is used.
@@ -94,12 +95,12 @@ mixin _$ScrollViewModifierSpec on WidgetModifierSpec<ScrollViewModifierSpec> {
 ///
 /// Use this class to configure the attributes of a [ScrollViewModifierSpec] and pass it to
 /// the [ScrollViewModifierSpec] constructor.
-class ScrollViewModifierSpecAttribute
+final class ScrollViewModifierSpecAttribute
     extends WidgetModifierSpecAttribute<ScrollViewModifierSpec>
     with Diagnosticable {
   final Axis? scrollDirection;
   final bool? reverse;
-  final EdgeInsetsGeometryDto? padding;
+  final SpacingDto? padding;
   final ScrollPhysics? physics;
   final Clip? clipBehavior;
 
@@ -146,7 +147,7 @@ class ScrollViewModifierSpecAttribute
     return ScrollViewModifierSpecAttribute(
       scrollDirection: other.scrollDirection ?? scrollDirection,
       reverse: other.reverse ?? reverse,
-      padding: EdgeInsetsGeometryDto.tryToMerge(padding, other.padding),
+      padding: padding?.merge(other.padding) ?? other.padding,
       physics: other.physics ?? physics,
       clipBehavior: other.clipBehavior ?? clipBehavior,
     );

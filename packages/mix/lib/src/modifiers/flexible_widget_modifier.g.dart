@@ -6,7 +6,6 @@ part of 'flexible_widget_modifier.dart';
 // MixableSpecGenerator
 // **************************************************************************
 
-/// A mixin that provides spec functionality for [FlexibleModifierSpec].
 mixin _$FlexibleModifierSpec on WidgetModifierSpec<FlexibleModifierSpec> {
   /// Creates a copy of this [FlexibleModifierSpec] but with the given fields
   /// replaced with the new values.
@@ -31,6 +30,8 @@ mixin _$FlexibleModifierSpec on WidgetModifierSpec<FlexibleModifierSpec> {
   ///
   /// The interpolation is performed on each property of the [FlexibleModifierSpec] using the appropriate
   /// interpolation method:
+  ///
+
   /// For [flex] and [fit], the interpolation is performed using a step function.
   /// If [t] is less than 0.5, the value from the current [FlexibleModifierSpec] is used. Otherwise, the value
   /// from the [other] [FlexibleModifierSpec] is used.
@@ -73,7 +74,7 @@ mixin _$FlexibleModifierSpec on WidgetModifierSpec<FlexibleModifierSpec> {
 ///
 /// Use this class to configure the attributes of a [FlexibleModifierSpec] and pass it to
 /// the [FlexibleModifierSpec] constructor.
-class FlexibleModifierSpecAttribute
+final class FlexibleModifierSpecAttribute
     extends WidgetModifierSpecAttribute<FlexibleModifierSpec>
     with Diagnosticable {
   final int? flex;

@@ -6,7 +6,6 @@ part of 'decoration_dto.dart';
 // MixableDtoGenerator
 // **************************************************************************
 
-/// A mixin that provides DTO functionality for [BoxDecorationDto].
 mixin _$BoxDecorationDto on Dto<BoxDecoration> {
   /// Resolves to [BoxDecoration] using the provided [MixData].
   ///
@@ -75,7 +74,6 @@ mixin _$BoxDecorationDto on Dto<BoxDecoration> {
         _$this.boxShadow,
       ];
 
-  /// Returns this instance as a [BoxDecorationDto].
   BoxDecorationDto get _$this => this as BoxDecorationDto;
 }
 
@@ -172,9 +170,7 @@ class BoxDecorationUtility<T extends Attribute>
   }
 }
 
-/// Extension methods to convert [BoxDecoration] to [BoxDecorationDto].
 extension BoxDecorationMixExt on BoxDecoration {
-  /// Converts this [BoxDecoration] to a [BoxDecorationDto].
   BoxDecorationDto toDto() {
     return BoxDecorationDto(
       border: border?.toDto(),
@@ -189,15 +185,12 @@ extension BoxDecorationMixExt on BoxDecoration {
   }
 }
 
-/// Extension methods to convert List<[BoxDecoration]> to List<[BoxDecorationDto]>.
 extension ListBoxDecorationMixExt on List<BoxDecoration> {
-  /// Converts this List<[BoxDecoration]> to a List<[BoxDecorationDto]>.
   List<BoxDecorationDto> toDto() {
     return map((e) => e.toDto()).toList();
   }
 }
 
-/// A mixin that provides DTO functionality for [ShapeDecorationDto].
 mixin _$ShapeDecorationDto on Dto<ShapeDecoration> {
   /// Resolves to [ShapeDecoration] using the provided [MixData].
   ///
@@ -253,7 +246,6 @@ mixin _$ShapeDecorationDto on Dto<ShapeDecoration> {
         _$this.shadows,
       ];
 
-  /// Returns this instance as a [ShapeDecorationDto].
   ShapeDecorationDto get _$this => this as ShapeDecorationDto;
 }
 
@@ -276,7 +268,7 @@ class ShapeDecorationUtility<T extends Attribute>
   late final gradient = GradientUtility((v) => only(gradient: v));
 
   /// Utility for defining [ShapeDecorationDto.shadows]
-  late final shadows = ListUtility<T, BoxShadowDto>((v) => only(shadows: v));
+  late final shadows = BoxShadowListUtility((v) => only(shadows: v));
 
   ShapeDecorationUtility(super.builder) : super(valueToDto: (v) => v.toDto());
 
@@ -315,9 +307,7 @@ class ShapeDecorationUtility<T extends Attribute>
   }
 }
 
-/// Extension methods to convert [ShapeDecoration] to [ShapeDecorationDto].
 extension ShapeDecorationMixExt on ShapeDecoration {
-  /// Converts this [ShapeDecoration] to a [ShapeDecorationDto].
   ShapeDecorationDto toDto() {
     return ShapeDecorationDto(
       shape: shape.toDto(),
@@ -329,9 +319,7 @@ extension ShapeDecorationMixExt on ShapeDecoration {
   }
 }
 
-/// Extension methods to convert List<[ShapeDecoration]> to List<[ShapeDecorationDto]>.
 extension ListShapeDecorationMixExt on List<ShapeDecoration> {
-  /// Converts this List<[ShapeDecoration]> to a List<[ShapeDecorationDto]>.
   List<ShapeDecorationDto> toDto() {
     return map((e) => e.toDto()).toList();
   }

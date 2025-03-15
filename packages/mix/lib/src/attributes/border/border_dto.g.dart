@@ -6,7 +6,6 @@ part of 'border_dto.dart';
 // MixableDtoGenerator
 // **************************************************************************
 
-/// A mixin that provides DTO functionality for [BorderDto].
 mixin _$BorderDto on Dto<Border> {
   /// Resolves to [Border] using the provided [MixData].
   ///
@@ -58,13 +57,10 @@ mixin _$BorderDto on Dto<Border> {
         _$this.right,
       ];
 
-  /// Returns this instance as a [BorderDto].
   BorderDto get _$this => this as BorderDto;
 }
 
-/// Extension methods to convert [Border] to [BorderDto].
 extension BorderMixExt on Border {
-  /// Converts this [Border] to a [BorderDto].
   BorderDto toDto() {
     return BorderDto(
       top: top.toDto(),
@@ -75,15 +71,12 @@ extension BorderMixExt on Border {
   }
 }
 
-/// Extension methods to convert List<[Border]> to List<[BorderDto]>.
 extension ListBorderMixExt on List<Border> {
-  /// Converts this List<[Border]> to a List<[BorderDto]>.
   List<BorderDto> toDto() {
     return map((e) => e.toDto()).toList();
   }
 }
 
-/// A mixin that provides DTO functionality for [BorderDirectionalDto].
 mixin _$BorderDirectionalDto on Dto<BorderDirectional> {
   /// Resolves to [BorderDirectional] using the provided [MixData].
   ///
@@ -135,13 +128,10 @@ mixin _$BorderDirectionalDto on Dto<BorderDirectional> {
         _$this.end,
       ];
 
-  /// Returns this instance as a [BorderDirectionalDto].
   BorderDirectionalDto get _$this => this as BorderDirectionalDto;
 }
 
-/// Extension methods to convert [BorderDirectional] to [BorderDirectionalDto].
 extension BorderDirectionalMixExt on BorderDirectional {
-  /// Converts this [BorderDirectional] to a [BorderDirectionalDto].
   BorderDirectionalDto toDto() {
     return BorderDirectionalDto(
       top: top.toDto(),
@@ -152,15 +142,12 @@ extension BorderDirectionalMixExt on BorderDirectional {
   }
 }
 
-/// Extension methods to convert List<[BorderDirectional]> to List<[BorderDirectionalDto]>.
 extension ListBorderDirectionalMixExt on List<BorderDirectional> {
-  /// Converts this List<[BorderDirectional]> to a List<[BorderDirectionalDto]>.
   List<BorderDirectionalDto> toDto() {
     return map((e) => e.toDto()).toList();
   }
 }
 
-/// A mixin that provides DTO functionality for [BorderSideDto].
 mixin _$BorderSideDto on Dto<BorderSide> {
   /// Resolves to [BorderSide] using the provided [MixData].
   ///
@@ -212,7 +199,6 @@ mixin _$BorderSideDto on Dto<BorderSide> {
         _$this.width,
       ];
 
-  /// Returns this instance as a [BorderSideDto].
   BorderSideDto get _$this => this as BorderSideDto;
 }
 
@@ -234,10 +220,10 @@ class BorderSideUtility<T extends Attribute>
   /// Utility for defining [BorderSideDto.width]
   late final width = DoubleUtility((v) => only(width: v));
 
-  BorderSideUtility(super.builder) : super(valueToDto: (v) => v.toDto());
-
   /// Creates an [Attribute] instance using the [BorderSideDto.none] constructor.
   T none() => builder(const BorderSideDto.none());
+
+  BorderSideUtility(super.builder) : super(valueToDto: (v) => v.toDto());
 
   /// Returns a new [BorderSideDto] with the specified properties.
   @override
@@ -270,9 +256,7 @@ class BorderSideUtility<T extends Attribute>
   }
 }
 
-/// Extension methods to convert [BorderSide] to [BorderSideDto].
 extension BorderSideMixExt on BorderSide {
-  /// Converts this [BorderSide] to a [BorderSideDto].
   BorderSideDto toDto() {
     return BorderSideDto(
       color: color.toDto(),
@@ -283,9 +267,7 @@ extension BorderSideMixExt on BorderSide {
   }
 }
 
-/// Extension methods to convert List<[BorderSide]> to List<[BorderSideDto]>.
 extension ListBorderSideMixExt on List<BorderSide> {
-  /// Converts this List<[BorderSide]> to a List<[BorderSideDto]>.
   List<BorderSideDto> toDto() {
     return map((e) => e.toDto()).toList();
   }

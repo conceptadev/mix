@@ -6,7 +6,6 @@ part of 'box_spec.dart';
 // MixableSpecGenerator
 // **************************************************************************
 
-/// A mixin that provides spec functionality for [BoxSpec].
 mixin _$BoxSpec on Spec<BoxSpec> {
   static BoxSpec from(MixData mix) {
     return mix.attributeOf<BoxSpecAttribute>()?.resolve(mix) ?? const BoxSpec();
@@ -74,12 +73,14 @@ mixin _$BoxSpec on Spec<BoxSpec> {
   ///
   /// The interpolation is performed on each property of the [BoxSpec] using the appropriate
   /// interpolation method:
+  ///
   /// - [AlignmentGeometry.lerp] for [alignment] and [transformAlignment].
   /// - [EdgeInsetsGeometry.lerp] for [padding] and [margin].
   /// - [BoxConstraints.lerp] for [constraints].
   /// - [Decoration.lerp] for [decoration] and [foregroundDecoration].
   /// - [MixHelpers.lerpMatrix4] for [transform].
   /// - [MixHelpers.lerpDouble] for [width] and [height].
+
   /// For [clipBehavior] and [modifiers] and [animated], the interpolation is performed using a step function.
   /// If [t] is less than 0.5, the value from the current [BoxSpec] is used. Otherwise, the value
   /// from the [other] [BoxSpec] is used.
@@ -172,10 +173,11 @@ mixin _$BoxSpec on Spec<BoxSpec> {
 ///
 /// Use this class to configure the attributes of a [BoxSpec] and pass it to
 /// the [BoxSpec] constructor.
-class BoxSpecAttribute extends SpecAttribute<BoxSpec> with Diagnosticable {
+final class BoxSpecAttribute extends SpecAttribute<BoxSpec>
+    with Diagnosticable {
   final AlignmentGeometry? alignment;
-  final EdgeInsetsGeometryDto? padding;
-  final EdgeInsetsGeometryDto? margin;
+  final SpacingDto? padding;
+  final SpacingDto? margin;
   final BoxConstraintsDto? constraints;
   final DecorationDto? decoration;
   final DecorationDto? foregroundDecoration;
@@ -242,8 +244,8 @@ class BoxSpecAttribute extends SpecAttribute<BoxSpec> with Diagnosticable {
 
     return BoxSpecAttribute(
       alignment: other.alignment ?? alignment,
-      padding: EdgeInsetsGeometryDto.tryToMerge(padding, other.padding),
-      margin: EdgeInsetsGeometryDto.tryToMerge(margin, other.margin),
+      padding: padding?.merge(other.padding) ?? other.padding,
+      margin: margin?.merge(other.margin) ?? other.margin,
       constraints: constraints?.merge(other.constraints) ?? other.constraints,
       decoration: DecorationDto.tryToMerge(decoration, other.decoration),
       foregroundDecoration: DecorationDto.tryToMerge(
@@ -288,8 +290,8 @@ class BoxSpecAttribute extends SpecAttribute<BoxSpec> with Diagnosticable {
     properties.add(DiagnosticsProperty('margin', margin, defaultValue: null));
     properties.add(
         DiagnosticsProperty('constraints', constraints, defaultValue: null));
-    properties
-        .add(DiagnosticsProperty('decoration', decoration, defaultValue: null));
+    properties.add(DiagnosticsProperty('decoration', decoration,
+        expandableValue: true, defaultValue: null));
     properties.add(DiagnosticsProperty(
         'foregroundDecoration', foregroundDecoration,
         defaultValue: null));
@@ -318,10 +320,10 @@ class BoxSpecUtility<T extends Attribute>
   late final alignment = AlignmentGeometryUtility((v) => only(alignment: v));
 
   /// Utility for defining [BoxSpecAttribute.padding]
-  late final padding = EdgeInsetsGeometryUtility((v) => only(padding: v));
+  late final padding = SpacingUtility((v) => only(padding: v));
 
   /// Utility for defining [BoxSpecAttribute.margin]
-  late final margin = EdgeInsetsGeometryUtility((v) => only(margin: v));
+  late final margin = SpacingUtility((v) => only(margin: v));
 
   /// Utility for defining [BoxSpecAttribute.constraints]
   late final constraints = BoxConstraintsUtility((v) => only(constraints: v));
@@ -421,8 +423,8 @@ class BoxSpecUtility<T extends Attribute>
   @override
   T only({
     AlignmentGeometry? alignment,
-    EdgeInsetsGeometryDto? padding,
-    EdgeInsetsGeometryDto? margin,
+    SpacingDto? padding,
+    SpacingDto? margin,
     BoxConstraintsDto? constraints,
     DecorationDto? decoration,
     DecorationDto? foregroundDecoration,

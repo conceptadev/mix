@@ -6,7 +6,6 @@ part of 'gradient_dto.dart';
 // MixableDtoGenerator
 // **************************************************************************
 
-/// A mixin that provides DTO functionality for [LinearGradientDto].
 mixin _$LinearGradientDto on Dto<LinearGradient> {
   /// Resolves to [LinearGradient] using the provided [MixData].
   ///
@@ -65,7 +64,6 @@ mixin _$LinearGradientDto on Dto<LinearGradient> {
         _$this.stops,
       ];
 
-  /// Returns this instance as a [LinearGradientDto].
   LinearGradientDto get _$this => this as LinearGradientDto;
 }
 
@@ -134,9 +132,7 @@ class LinearGradientUtility<T extends Attribute>
   }
 }
 
-/// Extension methods to convert [LinearGradient] to [LinearGradientDto].
 extension LinearGradientMixExt on LinearGradient {
-  /// Converts this [LinearGradient] to a [LinearGradientDto].
   LinearGradientDto toDto() {
     return LinearGradientDto(
       begin: begin,
@@ -149,15 +145,12 @@ extension LinearGradientMixExt on LinearGradient {
   }
 }
 
-/// Extension methods to convert List<[LinearGradient]> to List<[LinearGradientDto]>.
 extension ListLinearGradientMixExt on List<LinearGradient> {
-  /// Converts this List<[LinearGradient]> to a List<[LinearGradientDto]>.
   List<LinearGradientDto> toDto() {
     return map((e) => e.toDto()).toList();
   }
 }
 
-/// A mixin that provides DTO functionality for [RadialGradientDto].
 mixin _$RadialGradientDto on Dto<RadialGradient> {
   /// Resolves to [RadialGradient] using the provided [MixData].
   ///
@@ -222,7 +215,6 @@ mixin _$RadialGradientDto on Dto<RadialGradient> {
         _$this.stops,
       ];
 
-  /// Returns this instance as a [RadialGradientDto].
   RadialGradientDto get _$this => this as RadialGradientDto;
 }
 
@@ -305,9 +297,7 @@ class RadialGradientUtility<T extends Attribute>
   }
 }
 
-/// Extension methods to convert [RadialGradient] to [RadialGradientDto].
 extension RadialGradientMixExt on RadialGradient {
-  /// Converts this [RadialGradient] to a [RadialGradientDto].
   RadialGradientDto toDto() {
     return RadialGradientDto(
       center: center,
@@ -322,15 +312,12 @@ extension RadialGradientMixExt on RadialGradient {
   }
 }
 
-/// Extension methods to convert List<[RadialGradient]> to List<[RadialGradientDto]>.
 extension ListRadialGradientMixExt on List<RadialGradient> {
-  /// Converts this List<[RadialGradient]> to a List<[RadialGradientDto]>.
   List<RadialGradientDto> toDto() {
     return map((e) => e.toDto()).toList();
   }
 }
 
-/// A mixin that provides DTO functionality for [SweepGradientDto].
 mixin _$SweepGradientDto on Dto<SweepGradient> {
   /// Resolves to [SweepGradient] using the provided [MixData].
   ///
@@ -392,7 +379,6 @@ mixin _$SweepGradientDto on Dto<SweepGradient> {
         _$this.stops,
       ];
 
-  /// Returns this instance as a [SweepGradientDto].
   SweepGradientDto get _$this => this as SweepGradientDto;
 }
 
@@ -468,9 +454,7 @@ class SweepGradientUtility<T extends Attribute>
   }
 }
 
-/// Extension methods to convert [SweepGradient] to [SweepGradientDto].
 extension SweepGradientMixExt on SweepGradient {
-  /// Converts this [SweepGradient] to a [SweepGradientDto].
   SweepGradientDto toDto() {
     return SweepGradientDto(
       center: center,
@@ -484,9 +468,7 @@ extension SweepGradientMixExt on SweepGradient {
   }
 }
 
-/// Extension methods to convert List<[SweepGradient]> to List<[SweepGradientDto]>.
 extension ListSweepGradientMixExt on List<SweepGradient> {
-  /// Converts this List<[SweepGradient]> to a List<[SweepGradientDto]>.
   List<SweepGradientDto> toDto() {
     return map((e) => e.toDto()).toList();
   }
