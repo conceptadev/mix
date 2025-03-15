@@ -86,7 +86,10 @@ class FieldMetadata {
   factory FieldMetadata.fromField(FieldElement element) {
     final annotation = readMixableField(element);
     final utilityAnnotation = readMixableFieldUtility(element);
-    final resolvableAnnotation = readMixableFieldResolvable(element);
+
+    // Use the DTO from the MixableField annotation
+    // This is more correct as the DTO is a property of the MixableField annotation
+    final resolvableAnnotation = annotation.dto;
 
     return FieldMetadata(
       name: element.name,
@@ -110,13 +113,17 @@ class FieldMetadata {
 
   /// Creates a [FieldMetadata] from a property accessor (getter)
   factory FieldMetadata.fromPropertyAccessor(PropertyAccessorElement element) {
+    final annotation = readMixableField(element);
     final utilityAnnotation = readMixableFieldUtility(element);
-    final resolvableAnnotation = readMixableFieldResolvable(element);
+
+    // Use the DTO from the MixableField annotation
+    // This is more correct as the DTO is a property of the MixableField annotation
+    final resolvableAnnotation = annotation.dto;
 
     return FieldMetadata(
       name: element.name,
       dartType: element.returnType,
-      annotation: const MixableField(),
+      annotation: annotation,
       documentationComment: element.documentationComment,
       hasDeprecated: element.hasDeprecated,
       nullable:
@@ -253,13 +260,17 @@ class ParameterMetadata extends FieldMetadata {
     // Otherwise compute from scratch
     final isNullable =
         parameter.type.nullabilitySuffix == NullabilitySuffix.question;
+    final annotation = readMixableField(parameter);
     final utilityAnnotation = readMixableFieldUtility(parameter);
-    final resolvableAnnotation = readMixableFieldResolvable(parameter);
+
+    // Use the DTO from the MixableField annotation
+    // This is more correct as the DTO is a property of the MixableField annotation
+    final resolvableAnnotation = annotation.dto;
 
     return ParameterMetadata(
       name: parameter.name,
       dartType: parameter.type,
-      annotation: const MixableField(),
+      annotation: annotation,
       documentationComment: null,
       hasDeprecated: parameter.hasDeprecated,
       nullable: isNullable,

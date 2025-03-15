@@ -28,8 +28,13 @@ class ResolvableMethods {
           ? ' ?? defaultValue.${field.name}'
           : '';
 
-      if (field.isDtoListType) {
-        return '$fieldName?.map((e) => e.resolve(mix)).toList()$fallbackExpression';
+      if (field.isListType) {
+        // Check if the list elements are resolvable
+        if (field.isDtoListType || field.hasResolvable) {
+          return '$fieldName?.map((e) => e.resolve(mix)).toList()$fallbackExpression';
+        }
+
+        return '$fieldName$fallbackExpression';
       }
 
       if (field.hasResolvable) {
@@ -69,6 +74,7 @@ class ResolvableMethods {
     required bool isAbstract,
     required bool shouldMergeLists,
     required bool useInternalRef,
+    String constructorRef = '',
   }) {
     final mergeStatements = fields.map((field) {
       final fieldName = field.name;
@@ -76,9 +82,13 @@ class ResolvableMethods {
 
       // Handle list fields with proper null-aware spread
       if (field.isListType) {
+        // Check if the field has a default value (not nullable)
+        final hasDefaultValue = !field.nullable;
+        final spreadOperator = hasDefaultValue ? '...' : '...?';
+
         return shouldMergeLists
             ? '$fieldName: MixHelpers.mergeList($fieldNameRef, other.$fieldName),'
-            : '$fieldName: [...? $fieldNameRef, ...? other.$fieldName],';
+            : '$fieldName: [$spreadOperator $fieldNameRef, $spreadOperator other.$fieldName],';
       } else if (field.hasResolvable) {
         final resolvable = field.resolvable;
         // Build a default merge statement using the merge() method if available
@@ -104,8 +114,11 @@ class ResolvableMethods {
     }).join('\n');
 
     final thisRef = useInternalRef ? '_\$this' : 'this';
-    final returnCode =
-        fields.isEmpty ? 'other' : '$className($mergeStatements)';
+
+    // Use the constructor reference directly
+    final returnCode = fields.isEmpty
+        ? 'other'
+        : '$className$constructorRef($mergeStatements)';
 
     return '''
     /// Merges the properties of this [$className] with the properties of [other].

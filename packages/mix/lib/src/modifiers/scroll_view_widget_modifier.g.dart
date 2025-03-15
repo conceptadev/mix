@@ -37,9 +37,7 @@ mixin _$ScrollViewModifierSpec on WidgetModifierSpec<ScrollViewModifierSpec> {
   ///
   /// The interpolation is performed on each property of the [ScrollViewModifierSpec] using the appropriate
   /// interpolation method:
-  ///
   /// - [EdgeInsetsGeometry.lerp] for [padding].
-
   /// For [scrollDirection] and [reverse] and [physics] and [clipBehavior], the interpolation is performed using a step function.
   /// If [t] is less than 0.5, the value from the current [ScrollViewModifierSpec] is used. Otherwise, the value
   /// from the [other] [ScrollViewModifierSpec] is used.

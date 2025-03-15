@@ -23,7 +23,7 @@ class ResolvableMixinBuilder extends CodeBuilder {
     final resolveMethod = !hasResolve
         ? ResolvableMethods.generateResolveMethod(
             className: metadata.name,
-            constructorRef: '',
+            constructorRef: metadata.constructorRef,
             fields: metadata.parameters,
             isConst: metadata.isConst,
             resolvedType: resolvedTypeName,
@@ -39,6 +39,7 @@ class ResolvableMixinBuilder extends CodeBuilder {
             isAbstract: false,
             shouldMergeLists: metadata.mergeLists,
             useInternalRef: true,
+            constructorRef: metadata.constructorRef,
           )
         : '';
 

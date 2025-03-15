@@ -527,6 +527,20 @@ mixin _$Matrix4Utility<T extends Attribute> on MixUtility<T, Matrix4> {
   /// Creates an [Attribute] instance using the [Matrix4.identity] constructor.
   T identity() => builder(Matrix4.identity());
 
+  /// Creates an [Attribute] instance using the [Matrix4.copy] constructor.
+  T copy(Matrix4 other) => builder(Matrix4.copy(other));
+
+  /// Creates an [Attribute] instance using the [Matrix4.inverted] constructor.
+  T inverted(Matrix4 other) => builder(Matrix4.inverted(other));
+
+  /// Creates an [Attribute] instance using the [Matrix4.columns] constructor.
+  T columns(Vector4 arg0, Vector4 arg1, Vector4 arg2, Vector4 arg3) {
+    return builder(Matrix4.columns(arg0, arg1, arg2, arg3));
+  }
+
+  /// Creates an [Attribute] instance using the [Matrix4.outer] constructor.
+  T outer(Vector4 u, Vector4 v) => builder(Matrix4.outer(u, v));
+
   /// Creates an [Attribute] instance using the [Matrix4.rotationX] constructor.
   T rotationX(double radians) => builder(Matrix4.rotationX(radians));
 
@@ -536,10 +550,17 @@ mixin _$Matrix4Utility<T extends Attribute> on MixUtility<T, Matrix4> {
   /// Creates an [Attribute] instance using the [Matrix4.rotationZ] constructor.
   T rotationZ(double radians) => builder(Matrix4.rotationZ(radians));
 
+  /// Creates an [Attribute] instance using the [Matrix4.translation] constructor.
+  T translation(Vector3 translation) =>
+      builder(Matrix4.translation(translation));
+
   /// Creates an [Attribute] instance using the [Matrix4.translationValues] constructor.
   T translationValues(double x, double y, double z) {
     return builder(Matrix4.translationValues(x, y, z));
   }
+
+  /// Creates an [Attribute] instance using the [Matrix4.diagonal3] constructor.
+  T diagonal3(Vector3 scale) => builder(Matrix4.diagonal3(scale));
 
   /// Creates an [Attribute] instance using the [Matrix4.diagonal3Values] constructor.
   T diagonal3Values(double x, double y, double z) {
@@ -555,9 +576,19 @@ mixin _$Matrix4Utility<T extends Attribute> on MixUtility<T, Matrix4> {
   /// Creates an [Attribute] instance using the [Matrix4.skew] constructor.
   T skew(double alpha, double beta) => builder(Matrix4.skew(alpha, beta));
 
+  /// Creates an [Attribute] instance using the [Matrix4.fromFloat64List] constructor.
+  T fromFloat64List(Float64List _m4storage) {
+    return builder(Matrix4.fromFloat64List(_m4storage));
+  }
+
   /// Creates an [Attribute] instance using the [Matrix4.fromBuffer] constructor.
   T fromBuffer(ByteBuffer buffer, int offset) {
     return builder(Matrix4.fromBuffer(buffer, offset));
+  }
+
+  /// Creates an [Attribute] instance using the [Matrix4.compose] constructor.
+  T compose(Vector3 translation, Quaternion rotation, Vector3 scale) {
+    return builder(Matrix4.compose(translation, rotation, scale));
   }
 
   /// Creates an [Attribute] instance with the specified Matrix4 value.

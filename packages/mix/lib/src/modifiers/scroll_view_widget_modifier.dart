@@ -12,7 +12,7 @@ import '../core/utility.dart';
 
 part 'scroll_view_widget_modifier.g.dart';
 
-@MixableSpec(skipUtility: true, withLerp: false)
+@MixableSpec(skipUtility: true)
 final class ScrollViewModifierSpec
     extends WidgetModifierSpec<ScrollViewModifierSpec>
     with _$ScrollViewModifierSpec, Diagnosticable {
@@ -87,7 +87,7 @@ final class ScrollViewModifierSpecUtility<T extends Attribute>
   T call({
     Axis? scrollDirection,
     bool? reverse,
-    SpacingDto? padding,
+    EdgeInsetsGeometryDto? padding,
     ScrollPhysics? physics,
     Clip? clipBehavior,
   }) =>
