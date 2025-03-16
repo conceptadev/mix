@@ -121,13 +121,21 @@ String _getLerpExpression(ParameterMetadata field, bool isInternalRef) {
   final otherFieldName = 'other.${field.name}';
   final stepExpression = 't < 0.5 ? $thisFieldName : $otherFieldName';
 
+  // If the field is a Spec type, use its lerp method
+  if (field.isSpec) {
+    final nullableDot = field.nullable ? '?' : '';
+    final nullFallback = field.nullable ? ' ?? $otherFieldName' : '';
+
+    return '$thisFieldName$nullableDot.lerp($otherFieldName, t)$nullFallback';
+  }
+
   // If no element is available, use step interpolation
   if (field.dartType.element == null) {
     return stepExpression;
   }
 
   // Check if field type has an instance lerp method
-  if (_hasInstanceLerpMethod(field.dartType.element) || field.isSpec) {
+  if (_hasInstanceLerpMethod(field.dartType.element)) {
     final nullableDot = field.nullable ? '?' : '';
     final nullFallback = field.nullable ? ' ?? $otherFieldName' : '';
 
@@ -197,9 +205,19 @@ bool _hasLerpMethodWithSignature(
 
 /// Gets the appropriate lerp method name for a field
 String? _getLerpMethodName(ParameterMetadata field) {
+  // If the field is not lerpable, return null immediately
+  if (!field.annotation.isLerpable) {
+    return null;
+  }
+
   // Special case handling
   if (field.type == 'TextStyle') {
     return MixHelperRef.lerpTextStyle;
+  }
+
+  // Check if the field is a Spec type
+  if (field.isSpec) {
+    return '${field.type}.lerp';
   }
 
   // Check if the field has a custom lerp method
