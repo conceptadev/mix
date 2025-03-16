@@ -54,9 +54,9 @@ Transform.scale(
 
 ### Creating a modifier
 
-We can achieve the same effect by creating a custom `**WidgetModifier**`.
+We can achieve the same effect by creating a custom `WidgetModifier`.
 
-Creating a modifier is like creating a `**StatelessWidget**`. Extend `**WidgetModifier**`. Define the properties you want to modify and the widget you want to decorate.
+Creating a modifier is like creating a `StatelessWidget`. Extend `WidgetModifier`. Define the properties you want to modify and the widget you want to decorate.
 
 ```dart {2, 15-19}
 class ScaleModifier extends WidgetModifier<ScaleModifier> {
