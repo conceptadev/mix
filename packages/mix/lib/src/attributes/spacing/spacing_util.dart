@@ -6,10 +6,11 @@ import '../../core/utility.dart';
 import '../../theme/tokens/space_token.dart';
 import 'edge_insets_dto.dart';
 
-typedef EdgeInsetsGeometryUtility = SpacingUtility;
+@Deprecated('Use EdgeInsetsGeometryUtility instead')
+typedef SpacingUtility<T extends Attribute> = EdgeInsetsGeometryUtility<T>;
 
 @immutable
-final class SpacingUtility<T extends Attribute>
+final class EdgeInsetsGeometryUtility<T extends Attribute>
     extends DtoUtility<T, EdgeInsetsGeometryDto, EdgeInsetsGeometry> {
   late final directional = SpacingDirectionalUtility(builder);
 
@@ -29,7 +30,8 @@ final class SpacingUtility<T extends Attribute>
 
   late final right = SpacingSideUtility((v) => only(right: v));
 
-  SpacingUtility(super.builder) : super(valueToDto: (value) => value.toDto());
+  EdgeInsetsGeometryUtility(super.builder)
+      : super(valueToDto: (value) => value.toDto());
 
   T call(double p1, [double? p2, double? p3, double? p4]) {
     return only(
