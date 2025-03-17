@@ -105,8 +105,8 @@ final class TestModifierSpecAttribute
   List<Object?> get props => [value];
 
   @override
-  SpecAttribute<TestModifierSpec> merge(
-      covariant SpecAttribute<TestModifierSpec>? other) {
+  StyleAttribute<TestModifierSpec> merge(
+      covariant StyleAttribute<TestModifierSpec>? other) {
     return other ?? this;
   }
 

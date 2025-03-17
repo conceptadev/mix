@@ -1,7 +1,6 @@
 import 'package:flutter/widgets.dart';
 
-import '../../core/attribute.dart';
-import '../../core/dto.dart';
+import '../../core/element.dart';
 import '../../core/utility.dart';
 import '../../theme/tokens/space_token.dart';
 import 'edge_insets_dto.dart';

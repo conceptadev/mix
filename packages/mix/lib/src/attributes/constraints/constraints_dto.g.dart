@@ -7,7 +7,7 @@ part of 'constraints_dto.dart';
 // **************************************************************************
 
 /// A mixin that provides DTO functionality for [BoxConstraintsDto].
-mixin _$BoxConstraintsDto on Dto<BoxConstraints> {
+mixin _$BoxConstraintsDto on StyleProperty<BoxConstraints> {
   /// Resolves to [BoxConstraints] using the provided [MixData].
   ///
   /// If a property is null in the [MixData], it falls back to the

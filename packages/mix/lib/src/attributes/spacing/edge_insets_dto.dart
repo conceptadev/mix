@@ -14,7 +14,7 @@ typedef SpacingDto = EdgeInsetsGeometryDto<EdgeInsetsGeometry>;
 
 @immutable
 sealed class EdgeInsetsGeometryDto<T extends EdgeInsetsGeometry>
-    extends Dto<T> {
+    extends StyleProperty<T> {
   final double? top;
   final double? bottom;
 
@@ -86,7 +86,7 @@ sealed class EdgeInsetsGeometryDto<T extends EdgeInsetsGeometry>
   EdgeInsetsGeometryDto<T> merge(covariant EdgeInsetsGeometryDto<T>? other);
 }
 
-@MixableDto()
+@MixableResolvable()
 final class EdgeInsetsDto extends EdgeInsetsGeometryDto<EdgeInsets>
     with _$EdgeInsetsDto, Diagnosticable {
   final double? left;
@@ -123,7 +123,7 @@ final class EdgeInsetsDto extends EdgeInsetsGeometryDto<EdgeInsets>
   }
 }
 
-@MixableDto()
+@MixableResolvable()
 final class EdgeInsetsDirectionalDto
     extends EdgeInsetsGeometryDto<EdgeInsetsDirectional>
     with _$EdgeInsetsDirectionalDto {
@@ -157,7 +157,7 @@ final class EdgeInsetsDirectionalDto
 }
 
 extension EdgeInsetsGeometryExt on EdgeInsetsGeometry {
-  SpacingDto toDto() {
+  EdgeInsetsGeometryDto toDto() {
     final self = this;
     if (self is EdgeInsetsDirectional) return self.toDto();
     if (self is EdgeInsets) return self.toDto();

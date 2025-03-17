@@ -7,8 +7,9 @@ import '../../../mix.dart';
 
 part 'strut_style_dto.g.dart';
 
-@MixableDto()
-final class StrutStyleDto extends Dto<StrutStyle> with _$StrutStyleDto {
+@MixableResolvable()
+final class StrutStyleDto extends StyleProperty<StrutStyle>
+    with _$StrutStyleDto {
   @MixableField(utilities: [MixableFieldUtility(type: FontFamilyUtility)])
   final String? fontFamily;
   final List<String>? fontFamilyFallback;

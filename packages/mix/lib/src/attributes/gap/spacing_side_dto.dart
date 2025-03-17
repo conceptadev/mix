@@ -1,7 +1,7 @@
-import '../../core/dto.dart';
+import '../../core/element.dart';
 import '../../core/factory/mix_data.dart';
 
-class SpacingSideDto extends Dto<double> {
+class SpacingSideDto extends StyleProperty<double> {
   final double? value;
 
   const SpacingSideDto(this.value);

@@ -178,7 +178,8 @@ mixin _$TextSpec on Spec<TextSpec> {
 ///
 /// Use this class to configure the attributes of a [TextSpec] and pass it to
 /// the [TextSpec] constructor.
-class TextSpecAttribute extends SpecAttribute<TextSpec> with Diagnosticable {
+final class TextSpecAttribute extends StyleAttribute<TextSpec>
+    with Diagnosticable {
   final TextOverflow? overflow;
   final StrutStyleDto? strutStyle;
   final TextAlign? textAlign;

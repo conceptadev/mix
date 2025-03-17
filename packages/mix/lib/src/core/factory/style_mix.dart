@@ -8,8 +8,8 @@ import '../../internal/compare_mixin.dart';
 import '../../internal/helper_util.dart';
 import '../../specs/spec_util.dart';
 import '../../variants/variant_attribute.dart';
-import '../attribute.dart';
 import '../attributes_map.dart';
+import '../element.dart';
 import '../spec.dart';
 import '../variant.dart';
 import 'mix_data.dart';
@@ -28,7 +28,7 @@ import 'mix_data.dart';
 /// ```
 class Style with EqualityMixin {
   /// Visual attributes contained in this mix.
-  final AttributeMap<StyledAttribute> styles;
+  final AttributeMap<StyleAttribute> styles;
 
   /// The variant attributes contained in this mix.
   final AttributeMap<VariantAttribute> variants;
@@ -98,11 +98,11 @@ class Style with EqualityMixin {
   /// ```
   factory Style.create(Iterable<Attribute> attributes) {
     final applyVariants = <VariantAttribute>[];
-    final styleList = <StyledAttribute>[];
+    final styleList = <StyleAttribute>[];
 
     for (final attribute in attributes) {
       switch (attribute) {
-        case StyledAttribute():
+        case StyleAttribute():
           styleList.add(attribute);
         case VariantAttribute():
           applyVariants.add(attribute);
@@ -212,7 +212,7 @@ class Style with EqualityMixin {
   ///
   /// If [styles] or [variants] is null, the corresponding attribute map of this mix is used.
   Style copyWith({
-    AttributeMap<StyledAttribute>? styles,
+    AttributeMap<StyleAttribute>? styles,
     AttributeMap<VariantAttribute>? variants,
   }) {
     return Style._(
@@ -399,7 +399,7 @@ class AnimatedStyle extends Style {
   /// If [styles] or [variants] is null, the corresponding attribute map of this mix is used.
   @override
   AnimatedStyle copyWith({
-    AttributeMap<StyledAttribute>? styles,
+    AttributeMap<StyleAttribute>? styles,
     AttributeMap<VariantAttribute>? variants,
     AnimatedData? animated,
   }) {

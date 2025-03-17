@@ -7,7 +7,7 @@ part of 'border_dto.dart';
 // **************************************************************************
 
 /// A mixin that provides DTO functionality for [BorderDto].
-mixin _$BorderDto on Dto<Border> {
+mixin _$BorderDto on StyleProperty<Border> {
   /// Resolves to [Border] using the provided [MixData].
   ///
   /// If a property is null in the [MixData], it falls back to the
@@ -84,7 +84,7 @@ extension ListBorderMixExt on List<Border> {
 }
 
 /// A mixin that provides DTO functionality for [BorderDirectionalDto].
-mixin _$BorderDirectionalDto on Dto<BorderDirectional> {
+mixin _$BorderDirectionalDto on StyleProperty<BorderDirectional> {
   /// Resolves to [BorderDirectional] using the provided [MixData].
   ///
   /// If a property is null in the [MixData], it falls back to the
@@ -161,7 +161,7 @@ extension ListBorderDirectionalMixExt on List<BorderDirectional> {
 }
 
 /// A mixin that provides DTO functionality for [BorderSideDto].
-mixin _$BorderSideDto on Dto<BorderSide> {
+mixin _$BorderSideDto on StyleProperty<BorderSide> {
   /// Resolves to [BorderSide] using the provided [MixData].
   ///
   /// If a property is null in the [MixData], it falls back to the

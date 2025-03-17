@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../core/attribute.dart';
+import '../../core/element.dart';
 import '../../core/utility.dart';
 import 'shadow_dto.dart';
 

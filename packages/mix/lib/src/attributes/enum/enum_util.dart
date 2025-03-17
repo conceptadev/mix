@@ -3,7 +3,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:mix_annotations/mix_annotations.dart';
 
-import '../../core/attribute.dart';
+import '../../core/element.dart';
 import '../../core/utility.dart';
 
 part 'enum_util.g.dart';

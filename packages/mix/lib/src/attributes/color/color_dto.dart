@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 
-import '../../core/dto.dart';
+import '../../core/element.dart';
 import '../../core/factory/mix_data.dart';
 import '../../theme/tokens/color_token.dart';
 import 'color_directives.dart';
@@ -17,7 +17,7 @@ import 'color_directives_impl.dart';
 /// * [Color], which is the Flutter equivalent class.
 /// {@category DTO}
 @immutable
-class ColorDto extends Dto<Color> with Diagnosticable {
+class ColorDto extends StyleProperty<Color> with Diagnosticable {
   final Color? value;
   final List<ColorDirective> directives;
 

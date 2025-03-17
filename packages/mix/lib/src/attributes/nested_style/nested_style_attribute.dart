@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
 
-import '../../core/attribute.dart';
+import '../../core/element.dart';
 import '../../core/factory/style_mix.dart';
 
 /// Allows to pass down Mixes as attributes for use with helpers.

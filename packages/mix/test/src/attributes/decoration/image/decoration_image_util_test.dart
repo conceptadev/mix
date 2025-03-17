@@ -2,12 +2,38 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
 
-final class _TestAttribute extends StyledAttribute {
+final class _TestSpec extends Spec<_TestSpec> {
+  final DecorationImage? dto;
+
+  // lerp
+  @override
+  _TestSpec lerp(covariant _TestSpec? other, double t) {
+    return const _TestSpec();
+  }
+
+  @override
+  //copyWith
+  _TestSpec copyWith({DecorationImage? dto}) {
+    return _TestSpec(dto: dto ?? this.dto);
+  }
+
+  @override
+  get props => [dto];
+
+  const _TestSpec({this.dto});
+}
+
+final class _TestAttribute extends StyleAttribute<_TestSpec> {
   final DecorationImageDto? dto;
 
   @override
   _TestAttribute merge(covariant _TestAttribute? other) {
     return other == null ? this : _TestAttribute(dto?.merge(other.dto));
+  }
+
+  @override
+  _TestSpec resolve(MixData mix) {
+    return _TestSpec(dto: dto?.resolve(mix));
   }
 
   @override

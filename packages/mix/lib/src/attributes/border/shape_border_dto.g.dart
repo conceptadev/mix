@@ -6,8 +6,7 @@ part of 'shape_border_dto.dart';
 // MixableResolvableGenerator
 // **************************************************************************
 
-/// A mixin that provides DTO functionality for [RoundedRectangleBorderDto].
-mixin _$RoundedRectangleBorderDto on Dto<RoundedRectangleBorder> {
+mixin _$RoundedRectangleBorderDto on StyleProperty<RoundedRectangleBorder> {
   /// Resolves to [RoundedRectangleBorder] using the provided [MixData].
   ///
   /// If a property is null in the [MixData], it falls back to the
@@ -117,7 +116,7 @@ extension ListRoundedRectangleBorderMixExt on List<RoundedRectangleBorder> {
 }
 
 /// A mixin that provides DTO functionality for [BeveledRectangleBorderDto].
-mixin _$BeveledRectangleBorderDto on Dto<BeveledRectangleBorder> {
+mixin _$BeveledRectangleBorderDto on StyleProperty<BeveledRectangleBorder> {
   /// Resolves to [BeveledRectangleBorder] using the provided [MixData].
   ///
   /// If a property is null in the [MixData], it falls back to the
@@ -227,7 +226,8 @@ extension ListBeveledRectangleBorderMixExt on List<BeveledRectangleBorder> {
 }
 
 /// A mixin that provides DTO functionality for [ContinuousRectangleBorderDto].
-mixin _$ContinuousRectangleBorderDto on Dto<ContinuousRectangleBorder> {
+mixin _$ContinuousRectangleBorderDto
+    on StyleProperty<ContinuousRectangleBorder> {
   /// Resolves to [ContinuousRectangleBorder] using the provided [MixData].
   ///
   /// If a property is null in the [MixData], it falls back to the
@@ -339,7 +339,7 @@ extension ListContinuousRectangleBorderMixExt
 }
 
 /// A mixin that provides DTO functionality for [CircleBorderDto].
-mixin _$CircleBorderDto on Dto<CircleBorder> {
+mixin _$CircleBorderDto on StyleProperty<CircleBorder> {
   /// Resolves to [CircleBorder] using the provided [MixData].
   ///
   /// If a property is null in the [MixData], it falls back to the
@@ -445,7 +445,7 @@ extension ListCircleBorderMixExt on List<CircleBorder> {
 }
 
 /// A mixin that provides DTO functionality for [StarBorderDto].
-mixin _$StarBorderDto on Dto<StarBorder> {
+mixin _$StarBorderDto on StyleProperty<StarBorder> {
   /// Resolves to [StarBorder] using the provided [MixData].
   ///
   /// If a property is null in the [MixData], it falls back to the
@@ -607,7 +607,7 @@ extension ListStarBorderMixExt on List<StarBorder> {
 }
 
 /// A mixin that provides DTO functionality for [LinearBorderDto].
-mixin _$LinearBorderDto on Dto<LinearBorder> {
+mixin _$LinearBorderDto on StyleProperty<LinearBorder> {
   /// Resolves to [LinearBorder] using the provided [MixData].
   ///
   /// If a property is null in the [MixData], it falls back to the
@@ -746,7 +746,7 @@ extension ListLinearBorderMixExt on List<LinearBorder> {
 }
 
 /// A mixin that provides DTO functionality for [LinearBorderEdgeDto].
-mixin _$LinearBorderEdgeDto on Dto<LinearBorderEdge> {
+mixin _$LinearBorderEdgeDto on StyleProperty<LinearBorderEdge> {
   /// Resolves to [LinearBorderEdge] using the provided [MixData].
   ///
   /// If a property is null in the [MixData], it falls back to the
@@ -852,7 +852,7 @@ extension ListLinearBorderEdgeMixExt on List<LinearBorderEdge> {
 }
 
 /// A mixin that provides DTO functionality for [StadiumBorderDto].
-mixin _$StadiumBorderDto on Dto<StadiumBorder> {
+mixin _$StadiumBorderDto on StyleProperty<StadiumBorder> {
   /// Resolves to [StadiumBorder] using the provided [MixData].
   ///
   /// If a property is null in the [MixData], it falls back to the

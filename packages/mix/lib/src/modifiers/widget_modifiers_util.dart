@@ -1,4 +1,4 @@
-import '../core/attribute.dart';
+import '../core/element.dart';
 import '../core/modifier.dart';
 import '../core/utility.dart';
 import 'align_widget_modifier.dart';

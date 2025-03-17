@@ -14,7 +14,8 @@ void main() {
         maxHeight: 100,
       );
 
-      final spacing = SpacingDto.only(top: 10, bottom: 10, left: 10, right: 10);
+      final spacing =
+          EdgeInsetsGeometryDto.only(top: 10, bottom: 10, left: 10, right: 10);
 
       final container = boxUtility.only(
         alignment: Alignment.center,
@@ -75,11 +76,11 @@ void main() {
     });
 
     test('margin() returns correct instance', () {
-      expect(boxUtility.margin, isA<SpacingUtility>());
+      expect(boxUtility.margin, isA<EdgeInsetsGeometryUtility>());
     });
 
     test('padding() returns correct instance', () {
-      expect(boxUtility.padding, isA<SpacingUtility>());
+      expect(boxUtility.padding, isA<EdgeInsetsGeometryUtility>());
     });
 
     test('transform() returns correct instance', () {

@@ -49,7 +49,7 @@ final class TextStyleDataRef extends TextStyleData {
 // to be resolved once we have a context. We can merge the values directly, simplifying the code,
 // and this will allow more predictable behavior overall.
 @MixableResolvable(components: GeneratedResolvableComponents.none)
-base class TextStyleData extends Dto<TextStyle>
+base class TextStyleData extends StyleProperty<TextStyle>
     with _$TextStyleData, Diagnosticable {
   final String? fontFamily;
   final FontWeight? fontWeight;
@@ -131,7 +131,7 @@ base class TextStyleData extends Dto<TextStyle>
   components: GeneratedResolvableComponents.none,
   mergeLists: false,
 )
-final class TextStyleDto extends Dto<TextStyle>
+final class TextStyleDto extends StyleProperty<TextStyle>
     with _$TextStyleDto, Diagnosticable {
   final List<TextStyleData> value;
   @MixableConstructor()

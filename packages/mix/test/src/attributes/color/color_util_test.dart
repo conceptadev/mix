@@ -4,7 +4,7 @@ import 'package:mix/mix.dart';
 
 import '../../../helpers/testing_utils.dart';
 
-final class TestColorAttribute extends SpecAttribute<Color> {
+final class TestColorAttribute extends StyleAttribute<Color> {
   final ColorDto? value;
   const TestColorAttribute([this.value]);
 

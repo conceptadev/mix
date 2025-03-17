@@ -7,7 +7,7 @@ import '../attributes/modifiers/widget_modifiers_data.dart';
 import '../attributes/modifiers/widget_modifiers_data_dto.dart';
 import '../internal/compare_mixin.dart';
 import '../variants/context_variant_util/on_util.dart';
-import 'attribute.dart';
+import 'element.dart';
 import 'factory/mix_data.dart';
 
 @immutable
@@ -36,17 +36,20 @@ abstract class Spec<T extends Spec<T>> with EqualityMixin {
 
 /// An abstract class representing a resolvable attribute.
 ///
-/// This class extends the [StyledAttribute] class and provides a generic type [Self] and [Value].
+/// This class extends the [Attribute] class and provides a generic type [Self] and [Value].
 /// The [Self] type represents the concrete implementation of the attribute, while the [Value] type represents the resolvable value.
-abstract class SpecAttribute<Value> extends StyledAttribute {
+abstract class StyleAttribute<Value> extends Attribute
+    with ResolvableStyleElement<Value> {
   final AnimatedDataDto? animated;
   final WidgetModifiersDataDto? modifiers;
 
-  const SpecAttribute({this.animated, this.modifiers});
+  const StyleAttribute({this.animated, this.modifiers});
 
-  Value resolve(MixData mix);
   @override
-  SpecAttribute<Value> merge(covariant SpecAttribute<Value>? other);
+  Value resolve(MixData mix);
+
+  @override
+  StyleAttribute<Value> merge(covariant StyleAttribute<Value>? other);
 }
 
 abstract class SpecUtility<T extends Attribute, V> extends Attribute {

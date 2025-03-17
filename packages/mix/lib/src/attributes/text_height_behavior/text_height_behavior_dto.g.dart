@@ -7,7 +7,7 @@ part of 'text_height_behavior_dto.dart';
 // **************************************************************************
 
 /// A mixin that provides DTO functionality for [TextHeightBehaviorDto].
-mixin _$TextHeightBehaviorDto on Dto<TextHeightBehavior> {
+mixin _$TextHeightBehaviorDto on StyleProperty<TextHeightBehavior> {
   /// Resolves to [TextHeightBehavior] using the provided [MixData].
   ///
   /// If a property is null in the [MixData], it falls back to the

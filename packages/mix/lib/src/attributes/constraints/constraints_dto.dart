@@ -5,7 +5,7 @@ import 'package:mix_annotations/mix_annotations.dart';
 
 part 'constraints_dto.g.dart';
 
-sealed class ConstraintsDto<T extends Constraints> extends Dto<T> {
+sealed class ConstraintsDto<T extends Constraints> extends StyleProperty<T> {
   const ConstraintsDto();
 }
 
@@ -13,7 +13,7 @@ sealed class ConstraintsDto<T extends Constraints> extends Dto<T> {
 ///
 /// This is used to allow for resolvable value tokens, and also the correct
 /// merge and combining behavior. It allows to be merged, and resolved to a `[BoxConstraints]
-@MixableDto()
+@MixableResolvable()
 final class BoxConstraintsDto extends ConstraintsDto<BoxConstraints>
     with _$BoxConstraintsDto {
   final double? minWidth;

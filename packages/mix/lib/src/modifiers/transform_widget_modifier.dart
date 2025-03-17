@@ -6,8 +6,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:mix_annotations/mix_annotations.dart';
 
-import '../core/attribute.dart';
+import '../core/element.dart';
 import '../core/factory/mix_data.dart';
+import '../core/helpers.dart';
 import '../core/modifier.dart';
 import '../core/utility.dart';
 

@@ -9,7 +9,6 @@ import '../../internal/string_ext.dart';
 import '../../theme/tokens/token_resolver.dart';
 import '../../variants/context_variant.dart';
 import '../../variants/variant_attribute.dart';
-import '../attribute.dart';
 import '../attributes_map.dart';
 import '../modifier.dart';
 import '../spec.dart';
@@ -79,7 +78,7 @@ class MixData with Diagnosticable {
   }
 
   /// Finds and returns an [VisualAttribute] of type [A], or null if not found.
-  A? attributeOf<A extends SpecAttribute>() {
+  A? attributeOf<A extends StyleAttribute>() {
     final attributes = _attributes.whereType<A>();
     if (attributes.isEmpty) return null;
 
@@ -91,7 +90,7 @@ class MixData with Diagnosticable {
     return modifiers.whereType<M>().toList();
   }
 
-  Iterable<A> whereType<A extends StyledAttribute>() {
+  Iterable<A> whereType<A extends StyleAttribute>() {
     return _attributes.whereType();
   }
 
@@ -99,7 +98,7 @@ class MixData with Diagnosticable {
     return _attributes.values.any((attr) => attr is T);
   }
 
-  Value? resolvableOf<Value, A extends SpecAttribute<Value>>() {
+  Value? resolvableOf<Value, A extends StyleAttribute<Value>>() {
     final attribute = _attributes.attributeOfType<A>();
 
     return attribute?.resolve(this);
@@ -155,7 +154,7 @@ class MixData with Diagnosticable {
 }
 
 @visibleForTesting
-List<StyledAttribute> applyContextToVisualAttributes(
+List<StyleAttribute> applyContextToVisualAttributes(
   BuildContext context,
   Style mix,
 ) {
@@ -190,7 +189,7 @@ Style _applyVariants(
       : style;
 }
 
-M? _mergeAttributes<M extends SpecAttribute>(Iterable<M> mergeables) {
+M? _mergeAttributes<M extends StyleAttribute>(Iterable<M> mergeables) {
   if (mergeables.isEmpty) return null;
 
   return mergeables.reduce((a, b) {

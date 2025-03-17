@@ -5,7 +5,7 @@ import 'package:mix_annotations/mix_annotations.dart';
 import '../attributes/enum/enum_util.dart';
 import '../attributes/spacing/edge_insets_dto.dart';
 import '../attributes/spacing/spacing_util.dart';
-import '../core/attribute.dart';
+import '../core/element.dart';
 import '../core/factory/mix_data.dart';
 import '../core/modifier.dart';
 import '../core/utility.dart';
@@ -55,7 +55,8 @@ final class ScrollViewModifierSpecUtility<T extends Attribute>
   late final reverse = BoolUtility((reverse) => call(reverse: reverse));
 
   /// Set the padding of the scroll view.
-  late final padding = SpacingUtility((padding) => call(padding: padding));
+  late final padding =
+      EdgeInsetsGeometryUtility((padding) => call(padding: padding));
 
   /// Set the clip behavior of the scroll view.
   late final clipBehavior = ClipUtility((clip) => call(clipBehavior: clip));

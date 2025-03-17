@@ -25,7 +25,7 @@ typedef _BaseDecorProperties = ({
 /// This class needs to have the different properties that are not found in the [Modifiers] class.
 /// In order to support merging of [Decoration] values, and reusable of common properties.
 @immutable
-sealed class DecorationDto<T extends Decoration> extends Dto<T>
+sealed class DecorationDto<T extends Decoration> extends StyleProperty<T>
     with Diagnosticable {
   final ColorDto? color;
   final GradientDto? gradient;
@@ -92,7 +92,7 @@ sealed class DecorationDto<T extends Decoration> extends Dto<T>
 ///
 /// This is used to allow for resolvable value tokens, and also the correct
 /// merge and combining behavior. It allows to be merged, and resolved to a `[BoxDecoration]
-@MixableDto()
+@MixableResolvable()
 final class BoxDecorationDto extends DecorationDto<BoxDecoration>
     with _$BoxDecorationDto {
   @MixableField(
@@ -178,7 +178,7 @@ final class BoxDecorationDto extends DecorationDto<BoxDecoration>
   BoxDecoration get defaultValue => const BoxDecoration();
 }
 
-@MixableDto()
+@MixableResolvable()
 final class ShapeDecorationDto extends DecorationDto<ShapeDecoration>
     with _$ShapeDecorationDto {
   final ShapeBorderDto? shape;

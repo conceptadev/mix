@@ -221,7 +221,7 @@ final class MockBooleanScalarAttribute
   const MockBooleanScalarAttribute(super.value);
 }
 
-abstract class _MockSpecAttribute<T> extends SpecAttribute<T> {
+abstract class _MockSpecAttribute<T> extends StyleAttribute<T> {
   final T _value;
   const _MockSpecAttribute(this._value);
 
@@ -295,7 +295,7 @@ final class UtilityTestAttribute<T>
   const UtilityTestAttribute(super.value);
 }
 
-final class UtilityTestDtoAttribute<T extends Dto<V>, V>
+final class UtilityTestDtoAttribute<T extends StyleProperty<V>, V>
     extends TestScalarAttribute<UtilityTestDtoAttribute<T, V>, T> {
   const UtilityTestDtoAttribute(super.value);
 
@@ -373,8 +373,7 @@ class WidgetWithTestableBuild extends StyledWidget {
 }
 
 abstract class TestScalarAttribute<
-    Self extends TestScalarAttribute<Self, Value>,
-    Value> extends StyledAttribute {
+    Self extends TestScalarAttribute<Self, Value>, Value> extends Attribute {
   final Value value;
   const TestScalarAttribute(this.value);
 

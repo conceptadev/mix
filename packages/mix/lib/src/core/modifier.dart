@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 
-import 'attribute.dart';
+import 'element.dart';
 import 'spec.dart';
 import 'utility.dart';
 
@@ -30,7 +30,7 @@ abstract class WidgetModifierSpec<Self extends WidgetModifierSpec<Self>>
 }
 
 abstract class WidgetModifierSpecAttribute<
-        Value extends WidgetModifierSpec<Value>> extends SpecAttribute<Value>
+        Value extends WidgetModifierSpec<Value>> extends StyleAttribute<Value>
     with Diagnosticable {
   const WidgetModifierSpecAttribute();
 }

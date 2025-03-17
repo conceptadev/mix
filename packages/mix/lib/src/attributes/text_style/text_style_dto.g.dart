@@ -7,7 +7,7 @@ part of 'text_style_dto.dart';
 // **************************************************************************
 
 /// A mixin that provides DTO functionality for [TextStyleData].
-mixin _$TextStyleData on Dto<TextStyle> {
+mixin _$TextStyleData on StyleProperty<TextStyle> {
   /// Resolves to [TextStyle] using the provided [MixData].
   ///
   /// If a property is null in the [MixData], it falls back to the
@@ -19,32 +19,27 @@ mixin _$TextStyleData on Dto<TextStyle> {
   @override
   TextStyle resolve(MixData mix) {
     return TextStyle(
-      background: _$this.background ?? defaultValue.background,
-      backgroundColor:
-          _$this.backgroundColor?.resolve(mix) ?? defaultValue.backgroundColor,
-      color: _$this.color?.resolve(mix) ?? defaultValue.color,
-      debugLabel: _$this.debugLabel ?? defaultValue.debugLabel,
-      decoration: _$this.decoration ?? defaultValue.decoration,
-      decorationColor:
-          _$this.decorationColor?.resolve(mix) ?? defaultValue.decorationColor,
-      decorationStyle: _$this.decorationStyle ?? defaultValue.decorationStyle,
-      decorationThickness:
-          _$this.decorationThickness ?? defaultValue.decorationThickness,
-      fontFamily: _$this.fontFamily ?? defaultValue.fontFamily,
-      fontFamilyFallback:
-          _$this.fontFamilyFallback ?? defaultValue.fontFamilyFallback,
-      fontVariations: _$this.fontVariations ?? defaultValue.fontVariations,
-      fontFeatures: _$this.fontFeatures ?? defaultValue.fontFeatures,
-      fontSize: _$this.fontSize ?? defaultValue.fontSize,
-      fontStyle: _$this.fontStyle ?? defaultValue.fontStyle,
-      fontWeight: _$this.fontWeight ?? defaultValue.fontWeight,
-      foreground: _$this.foreground ?? defaultValue.foreground,
-      height: _$this.height ?? defaultValue.height,
-      letterSpacing: _$this.letterSpacing ?? defaultValue.letterSpacing,
-      shadows: _$this.shadows?.map((e) => e.resolve(mix)).toList() ??
-          defaultValue.shadows,
-      textBaseline: _$this.textBaseline ?? defaultValue.textBaseline,
-      wordSpacing: _$this.wordSpacing ?? defaultValue.wordSpacing,
+      background: _$this.background,
+      backgroundColor: _$this.backgroundColor?.resolve(mix),
+      color: _$this.color?.resolve(mix),
+      debugLabel: _$this.debugLabel,
+      decoration: _$this.decoration,
+      decorationColor: _$this.decorationColor?.resolve(mix),
+      decorationStyle: _$this.decorationStyle,
+      decorationThickness: _$this.decorationThickness,
+      fontFamily: _$this.fontFamily,
+      fontFamilyFallback: _$this.fontFamilyFallback,
+      fontVariations: _$this.fontVariations,
+      fontFeatures: _$this.fontFeatures,
+      fontSize: _$this.fontSize,
+      fontStyle: _$this.fontStyle,
+      fontWeight: _$this.fontWeight,
+      foreground: _$this.foreground,
+      height: _$this.height,
+      letterSpacing: _$this.letterSpacing,
+      shadows: _$this.shadows?.map((e) => e.resolve(mix)).toList(),
+      textBaseline: _$this.textBaseline,
+      wordSpacing: _$this.wordSpacing,
     );
   }
 
@@ -125,7 +120,7 @@ mixin _$TextStyleData on Dto<TextStyle> {
 }
 
 /// A mixin that provides DTO functionality for [TextStyleDto].
-mixin _$TextStyleDto on Dto<TextStyle> {
+mixin _$TextStyleDto on StyleProperty<TextStyle> {
   /// Merges the properties of this [TextStyleDto] with the properties of [other].
   ///
   /// If [other] is null, returns this instance unchanged. Otherwise, returns a new

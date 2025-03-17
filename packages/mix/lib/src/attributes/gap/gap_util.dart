@@ -1,4 +1,4 @@
-import '../../core/attribute.dart';
+import '../../core/element.dart';
 import '../../core/utility.dart';
 import '../../theme/tokens/space_token.dart';
 import 'spacing_side_dto.dart';

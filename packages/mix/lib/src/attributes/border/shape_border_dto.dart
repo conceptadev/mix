@@ -7,7 +7,7 @@ import 'package:mix_annotations/mix_annotations.dart';
 part 'shape_border_dto.g.dart';
 
 @immutable
-sealed class ShapeBorderDto<T extends ShapeBorder> extends Dto<T> {
+sealed class ShapeBorderDto<T extends ShapeBorder> extends StyleProperty<T> {
   const ShapeBorderDto();
 
   static ShapeBorderDto? tryToMerge(ShapeBorderDto? a, ShapeBorderDto? b) {
@@ -85,7 +85,7 @@ abstract class OutlinedBorderDto<T extends OutlinedBorder>
   OutlinedBorderDto<T> merge(covariant OutlinedBorderDto<T>? other);
 }
 
-@MixableDto()
+@MixableResolvable()
 final class RoundedRectangleBorderDto
     extends OutlinedBorderDto<RoundedRectangleBorder>
     with _$RoundedRectangleBorderDto {
@@ -111,7 +111,7 @@ final class RoundedRectangleBorderDto
   RoundedRectangleBorder get defaultValue => const RoundedRectangleBorder();
 }
 
-@MixableDto()
+@MixableResolvable()
 final class BeveledRectangleBorderDto
     extends OutlinedBorderDto<BeveledRectangleBorder>
     with _$BeveledRectangleBorderDto {
@@ -136,7 +136,7 @@ final class BeveledRectangleBorderDto
   BeveledRectangleBorder get defaultValue => const BeveledRectangleBorder();
 }
 
-@MixableDto()
+@MixableResolvable()
 final class ContinuousRectangleBorderDto
     extends OutlinedBorderDto<ContinuousRectangleBorder>
     with _$ContinuousRectangleBorderDto {
@@ -163,7 +163,7 @@ final class ContinuousRectangleBorderDto
       const ContinuousRectangleBorder();
 }
 
-@MixableDto()
+@MixableResolvable()
 final class CircleBorderDto extends OutlinedBorderDto<CircleBorder>
     with _$CircleBorderDto {
   final double? eccentricity;
@@ -185,7 +185,7 @@ final class CircleBorderDto extends OutlinedBorderDto<CircleBorder>
   CircleBorder get defaultValue => const CircleBorder();
 }
 
-@MixableDto()
+@MixableResolvable()
 final class StarBorderDto extends OutlinedBorderDto<StarBorder>
     with _$StarBorderDto {
   final double? points;
@@ -216,7 +216,7 @@ final class StarBorderDto extends OutlinedBorderDto<StarBorder>
   StarBorder get defaultValue => const StarBorder();
 }
 
-@MixableDto()
+@MixableResolvable()
 final class LinearBorderDto extends OutlinedBorderDto<LinearBorder>
     with _$LinearBorderDto {
   final LinearBorderEdgeDto? start;
@@ -247,8 +247,8 @@ final class LinearBorderDto extends OutlinedBorderDto<LinearBorder>
   LinearBorder get defaultValue => const LinearBorder();
 }
 
-@MixableDto()
-final class LinearBorderEdgeDto extends Dto<LinearBorderEdge>
+@MixableResolvable()
+final class LinearBorderEdgeDto extends StyleProperty<LinearBorderEdge>
     with _$LinearBorderEdgeDto {
   final double? size;
   final double? alignment;
@@ -259,7 +259,7 @@ final class LinearBorderEdgeDto extends Dto<LinearBorderEdge>
   LinearBorderEdge get defaultValue => const LinearBorderEdge();
 }
 
-@MixableDto()
+@MixableResolvable()
 final class StadiumBorderDto extends OutlinedBorderDto<StadiumBorder>
     with _$StadiumBorderDto {
   const StadiumBorderDto({super.side});

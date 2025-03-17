@@ -13,7 +13,7 @@ part 'gradient_dto.g.dart';
 /// This is used to allow for resolvable value tokens, and also the correct
 /// merge and combining behavior. It allows to be merged, and resolved to a `[Gradient]
 @immutable
-sealed class GradientDto<T extends Gradient> extends Dto<T> {
+sealed class GradientDto<T extends Gradient> extends StyleProperty<T> {
   final List<double>? stops;
   final List<ColorDto>? colors;
   final GradientTransform? transform;
@@ -72,7 +72,7 @@ sealed class GradientDto<T extends Gradient> extends Dto<T> {
 /// This is used to allow for resolvable value tokens, and also the correct
 /// merge and combining behavior. It allows to be merged, and resolved to a `[LinearGradient]
 
-@MixableDto()
+@MixableResolvable()
 final class LinearGradientDto extends GradientDto<LinearGradient>
     with _$LinearGradientDto {
   final AlignmentGeometry? begin;
@@ -95,7 +95,7 @@ final class LinearGradientDto extends GradientDto<LinearGradient>
 ///
 /// This is used to allow for resolvable value tokens, and also the correct
 /// merge and combining behavior. It allows to be merged, and resolved to a `[RadialGradient]
-@MixableDto()
+@MixableResolvable()
 final class RadialGradientDto extends GradientDto<RadialGradient>
     with _$RadialGradientDto {
   final AlignmentGeometry? center;
@@ -126,7 +126,7 @@ final class RadialGradientDto extends GradientDto<RadialGradient>
 /// This is used to allow for resolvable value tokens, and also the correct
 /// merge and combining behavior. It allows to be merged, and resolved to a `[SweepGradient]
 
-@MixableDto()
+@MixableResolvable()
 final class SweepGradientDto extends GradientDto<SweepGradient>
     with _$SweepGradientDto {
   final AlignmentGeometry? center;
