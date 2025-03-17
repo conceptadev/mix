@@ -108,9 +108,9 @@ String _ensureUtilitySuffix(String typeName) {
   return typeName.endsWith('Utility') ? typeName : '${typeName}Utility';
 }
 
-/// Reads the [MixableFieldDto] annotation from an element
-MixableFieldDto? readMixableFieldResolvable(Element element) {
-  const checker = TypeChecker.fromRuntime(MixableFieldDto);
+/// Reads the [MixableFieldResolvable] annotation from an element
+MixableFieldResolvable? readMixableFieldResolvable(Element element) {
+  const checker = TypeChecker.fromRuntime(MixableFieldResolvable);
   final annotation = checker.firstAnnotationOfExact(element);
 
   if (annotation == null) return null;
@@ -120,15 +120,15 @@ MixableFieldDto? readMixableFieldResolvable(Element element) {
 
   if (typeString == null) return null;
 
-  return MixableFieldDto(type: typeString);
+  return MixableFieldResolvable(type: typeString);
 }
 
-/// Extracts [MixableFieldDto] data from a [ConstantReader]
-MixableFieldDto? _getMixableDto(ConstantReader reader) {
+/// Extracts [MixableFieldResolvable] data from a [ConstantReader]
+MixableFieldResolvable? _getMixableDto(ConstantReader reader) {
   final typeString = reader.typeAsString;
   if (typeString == null) return null;
 
-  return MixableFieldDto(type: typeString);
+  return MixableFieldResolvable(type: typeString);
 }
 
 /// Reads the [MixableSpec] annotation from a class element
@@ -144,20 +144,16 @@ MixableSpec readMixableSpec(ClassElement element) {
   }
 
   final reader = ConstantReader(annotation);
-  final prefix = reader.read('prefix').stringValue;
 
   return MixableSpec(
-    withCopyWith: reader.read('withCopyWith').boolValue,
-    withEquality: reader.read('withEquality').boolValue,
-    withLerp: reader.read('withLerp').boolValue,
-    skipUtility: reader.read('skipUtility').boolValue,
-    prefix: prefix.isEmpty ? element.name : prefix,
+    methods: reader.read('methods').intValue,
+    components: reader.read('components').intValue,
   );
 }
 
-/// Reads the [MixableDto] annotation from a class element
-MixableDto readMixableDto(ClassElement element) {
-  const checker = TypeChecker.fromRuntime(MixableDto);
+/// Reads the [MixableResolvable] annotation from a class element
+MixableResolvable readMixableResolvable(ClassElement element) {
+  const checker = TypeChecker.fromRuntime(MixableResolvable);
   final annotation = checker.firstAnnotationOfExact(element);
 
   if (annotation == null) {
@@ -169,11 +165,30 @@ MixableDto readMixableDto(ClassElement element) {
 
   final reader = ConstantReader(annotation);
 
-  return MixableDto(
+  return MixableResolvable(
+    components: reader.read('components').intValue,
     mergeLists: reader.read('mergeLists').boolValue,
-    generateValueExtension: reader.read('generateValueExtension').boolValue,
-    generateUtility: reader.read('generateUtility').boolValue,
   );
+}
+
+MixableUtility readMixableUtility(ClassElement element) {
+  const checker = TypeChecker.fromRuntime(MixableUtility);
+  final annotation = checker.firstAnnotationOfExact(element);
+
+  if (annotation == null) return const MixableUtility();
+
+  final reader = ConstantReader(annotation);
+  final methodsValue = reader.read('methods').intValue;
+
+  // Safely handle the referenceType field, which might not be a Type
+  final referenceTypeReader = reader.peek('referenceType');
+  final referenceType = referenceTypeReader != null &&
+          !referenceTypeReader.isNull &&
+          referenceTypeReader.isType
+      ? referenceTypeReader.typeValue
+      : null;
+
+  return MixableUtility(methods: methodsValue, referenceType: referenceType);
 }
 
 /// Reads the [MixableToken] annotation from a class element
@@ -199,20 +214,6 @@ MixableToken readMixableToken(ClassElement element) {
     utilityExtension: reader.read('utilityExtension').boolValue,
     contextExtension: reader.read('contextExtension').boolValue,
   );
-}
-
-/// Reads the [MixableUtility] annotation from a class element and returns the generateHelpers value
-int readMixableUtilityHelpers(ClassElement element) {
-  const checker = TypeChecker.fromRuntime(MixableUtility);
-  final annotation = checker.firstAnnotationOfExact(element);
-
-  if (annotation == null) {
-    return 0; // Default value (all helpers)
-  }
-
-  final reader = ConstantReader(annotation);
-
-  return reader.read('generateHelpers').intValue;
 }
 
 /// Checks if a class has the [MixableUtility] annotation
@@ -293,7 +294,7 @@ FieldUtilityMetadata? createFieldUtilityMetadata({
 FieldResolvableMetadata? createFieldResolvableMetadata({
   required String name,
   required DartType dartType,
-  required MixableFieldDto? resolvableAnnotation,
+  required MixableFieldResolvable? resolvableAnnotation,
 }) {
   try {
     final typeRegistry = TypeRegistry.instance;
@@ -308,10 +309,8 @@ FieldResolvableMetadata? createFieldResolvableMetadata({
       } else if (resolvableAnnotation.type is String) {
         resolvableTypeName = resolvableAnnotation.type as String;
       } else {
-        // Log a warning if the type is not a Type or String
-        Logger('AnnotationUtils').warning(
-          'Unexpected type for MixableFieldDto.type: ${resolvableAnnotation.type.runtimeType}',
-        );
+        final logger = Logger('AnnotationUtils');
+        logger.warning('Resolvable type is not a Type or String');
       }
     } else {
       resolvableTypeName = registryType;
@@ -368,4 +367,9 @@ List<UtilityProperty> createUtilityProperties({
   }
 
   return result;
+}
+
+/// Check if a list is of a specific element type
+bool _isListOfType<T>(List<dynamic> list) {
+  return list.every((element) => element is T);
 }

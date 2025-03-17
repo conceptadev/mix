@@ -4,24 +4,25 @@ import 'package:logging/logging.dart';
 import 'package:mix_annotations/mix_annotations.dart';
 import 'package:source_gen/source_gen.dart';
 
+import '../core/metadata/base_metadata.dart';
 import '../core/metadata/resolvable_metadata.dart';
 import '../core/resolvable/resolvable_extension_builder.dart';
 import '../core/resolvable/resolvable_mixin_builder.dart';
 import '../core/resolvable/resolvable_utility_builder.dart';
-import '../core/utils/annotation_utils.dart';
-import '../core/utils/base_generator.dart';
+import '../core/utils/utils.dart';
 
-/// Generator for classes annotated with [MixableDto].
+/// Generator for classes annotated with [MixableResolvable].
 ///
 /// This generator produces:
-/// - A mixin with DTO functionality
+/// - A mixin with Resolvable functionality
 /// - A utility class for the DTO (if not skipped)
 /// - A value extension (if enabled)
-class MixableDtoGenerator
-    extends BaseMixGenerator<MixableDto, ResolvableMetadata> {
-  final Logger _logger = Logger('MixableDtoGenerator');
+class MixableResolvableGenerator
+    extends BaseMixGenerator<MixableResolvable, ResolvableMetadata> {
+  final Logger _logger = Logger('MixableResolvableGenerator');
 
-  MixableDtoGenerator() : super(const TypeChecker.fromRuntime(MixableDto));
+  MixableResolvableGenerator()
+      : super(const TypeChecker.fromRuntime(MixableResolvable));
 
   @override
   Future<ResolvableMetadata> createMetadata(
@@ -30,7 +31,7 @@ class MixableDtoGenerator
   ) async {
     validateClassElement(element);
 
-    final annotation = readMixableDto(element);
+    final annotation = readMixableResolvable(element);
 
     final metadata = ResolvableMetadata.fromAnnotation(element, annotation);
 
@@ -59,7 +60,9 @@ class MixableDtoGenerator
     output.writeln();
 
     // Generate utility class (if not skipped)
-    if (metadata.generateUtility) {
+    if (metadata.generatedComponents.hasFlag(
+      GeneratedResolvableComponents.utility,
+    )) {
       final utilityBuilder = ResolvableUtilityBuilder(metadata);
       try {
         final utilityCode = utilityBuilder.build();
@@ -73,7 +76,9 @@ class MixableDtoGenerator
     }
 
     // Generate value extension (if enabled)
-    if (metadata.generateValueExtension) {
+    if (metadata.generatedComponents.hasFlag(
+      GeneratedResolvableComponents.resolvableExtension,
+    )) {
       try {
         final extensionBuilder = ResolvableExtensionBuilder(metadata);
         final extensionCode = extensionBuilder.build();
@@ -93,5 +98,5 @@ class MixableDtoGenerator
   bool get allowAbstractClasses => false;
 
   @override
-  String get annotationName => 'MixableDto';
+  String get annotationName => 'MixableResolvable';
 }

@@ -57,7 +57,9 @@ mixin _$FlexBoxSpec on Spec<FlexBoxSpec> {
   ///
   /// The interpolation is performed on each property of the [FlexBoxSpec] using the appropriate
   /// interpolation method:
-  /// For [animated] and [modifiers] and [box] and [flex], the interpolation is performed using a step function.
+  /// - [BoxSpec.lerp] for [box].
+  /// - [FlexSpec.lerp] for [flex].
+  /// For [animated] and [modifiers], the interpolation is performed using a step function.
   /// If [t] is less than 0.5, the value from the current [FlexBoxSpec] is used. Otherwise, the value
   /// from the [other] [FlexBoxSpec] is used.
   ///

@@ -3,6 +3,7 @@ import 'package:logging/logging.dart';
 import 'package:mix_annotations/mix_annotations.dart';
 import 'package:source_gen/source_gen.dart';
 
+import '../metadata/base_metadata.dart';
 import '../metadata/field_metadata.dart';
 import '../metadata/utility_metadata.dart';
 import 'constructor_utils.dart';
@@ -39,10 +40,10 @@ class UtilityCodeGenerator {
       final enumElement = metadata.enumElement!;
       final enumTypeName = enumElement.name;
       final enumValues = metadata.enumValues;
-      final shouldGenerateCallMethod =
-          (metadata.generateHelpers & GenerateHelpers.all) != 0;
 
-      final callMethod = shouldGenerateCallMethod
+      final callMethod = metadata.generatedMethods.hasFlag(
+        GeneratedUtilityMethods.callMethod,
+      )
           ? '''
   /// Creates an [Attribute] instance with the specified $enumTypeName value.
   T call($enumTypeName value) => builder(value);
@@ -88,8 +89,9 @@ $enumMethods
       }
 
       final valueName = valueElement.name;
-      final shouldGenerateCallMethod =
-          (metadata.generateHelpers & GenerateHelpers.all) != 0;
+      final shouldGenerateCallMethod = metadata.generatedMethods.hasFlag(
+        GeneratedUtilityMethods.callMethod,
+      );
 
       // Determine which elements to use for fields and constructors
       final elementInfo = _getElementInfo(metadata);

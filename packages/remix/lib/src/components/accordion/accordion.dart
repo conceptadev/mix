@@ -16,7 +16,8 @@ part 'header/accordion_header_spec_widget.dart';
 base class AccordionSpec extends Spec<AccordionSpec> with _$AccordionSpec {
   final FlexBoxSpec container;
 
-  @MixableField(dto: MixableFieldDto(type: 'AccordionHeaderSpecAttribute'))
+  @MixableField(
+      dto: MixableFieldResolvable(type: 'AccordionHeaderSpecAttribute'))
   final AccordionHeaderSpec header;
 
   final BoxSpec contentContainer;

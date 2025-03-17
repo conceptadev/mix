@@ -1,3 +1,4 @@
+import 'package:mix_annotations/mix_annotations.dart';
 import 'package:mix_generator/src/core/metadata/field_metadata.dart';
 import 'package:mix_generator/src/core/metadata/spec_metadata.dart';
 import 'package:mix_generator/src/core/spec/spec_tween_builder.dart';
@@ -36,11 +37,8 @@ void main() {
         isDiagnosticable: false,
         constructor: classElement.unnamedConstructor!,
         isAbstract: false,
-        withCopyWith: true,
-        withEquality: true,
-        withLerp: true,
-        skipUtility: false,
-        prefix: '',
+        generatedMethods: GeneratedSpecMethods.all,
+        generatedComponents: GeneratedSpecComponents.all,
         isWidgetModifier: false,
       );
 
@@ -109,11 +107,8 @@ class TestSpecTween extends Tween<TestSpec?> {
         isDiagnosticable: false,
         constructor: classElement.unnamedConstructor!,
         isAbstract: false,
-        withCopyWith: true,
-        withEquality: true,
-        withLerp: true,
-        skipUtility: false,
-        prefix: '',
+        generatedMethods: GeneratedSpecMethods.all,
+        generatedComponents: GeneratedSpecComponents.all,
         isWidgetModifier: false,
       );
 
@@ -183,11 +178,8 @@ class NonConstSpecTween extends Tween<NonConstSpec?> {
         isDiagnosticable: false,
         constructor: classElement.unnamedConstructor!,
         isAbstract: false,
-        withCopyWith: true,
-        withEquality: true,
-        withLerp: true,
-        skipUtility: false,
-        prefix: '',
+        generatedMethods: GeneratedSpecMethods.all,
+        generatedComponents: GeneratedSpecComponents.all,
         isWidgetModifier: false,
         constructorRef: '.named',
       );
@@ -243,11 +235,8 @@ class _TestSpecMetadata extends SpecMetadata {
     required super.isDiagnosticable,
     required super.constructor,
     required super.isAbstract,
-    required super.withCopyWith,
-    required super.withEquality,
-    required super.withLerp,
-    required super.skipUtility,
-    required super.prefix,
+    required super.generatedMethods,
+    required super.generatedComponents,
     required super.isWidgetModifier,
     required this.constructorRef,
   });

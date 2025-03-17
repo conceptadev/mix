@@ -11,11 +11,7 @@ class ResolvableMetadata extends BaseMetadata {
   /// Whether to merge lists when merging DTOs
   final bool mergeLists;
 
-  /// Whether to generate an extension for converting the value type to DTO
-  final bool generateValueExtension;
-
-  /// Whether to generate a utility class
-  final bool generateUtility;
+  final int generatedComponents;
 
   /// The resolved value type (from Dto<T>)
   final ClassElement resolvedElement;
@@ -32,8 +28,7 @@ class ResolvableMetadata extends BaseMetadata {
     required super.constructor,
     required super.isAbstract,
     required this.mergeLists,
-    required this.generateValueExtension,
-    required this.generateUtility,
+    required this.generatedComponents,
     required this.resolvedElement,
     required this.resolvableFields,
   });
@@ -41,7 +36,7 @@ class ResolvableMetadata extends BaseMetadata {
   /// Creates a ResolvableMetadata from a class element and its annotation
   static ResolvableMetadata fromAnnotation(
     ClassElement element,
-    MixableDto annotation,
+    MixableResolvable annotation,
   ) {
     final constructor = findTargetConstructor(element);
     final parameters = ParameterMetadata.extractFromConstructor(element);
@@ -75,8 +70,7 @@ class ResolvableMetadata extends BaseMetadata {
       constructor: constructor,
       isAbstract: element.isAbstract,
       mergeLists: annotation.mergeLists,
-      generateValueExtension: annotation.generateValueExtension,
-      generateUtility: annotation.generateUtility,
+      generatedComponents: annotation.components,
       resolvedElement: resolvedElement,
       resolvableFields: resolvedFields,
     );

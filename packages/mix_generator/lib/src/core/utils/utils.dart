@@ -13,7 +13,6 @@ export 'constructor_utils.dart';
 export 'dart_type_utils.dart';
 export 'extensions.dart';
 export 'helpers.dart';
-export 'method_generators.dart';
 export 'string_utils.dart';
 // Code generation utilities
 export 'utility_code_generator.dart';

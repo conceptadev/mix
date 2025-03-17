@@ -8,20 +8,9 @@ import 'field_metadata.dart';
 
 /// Metadata for Spec classes, extracted from MixableSpec annotations.
 class SpecMetadata extends BaseMetadata {
-  /// Whether to generate a copyWith method
-  final bool withCopyWith;
+  final int generatedMethods;
 
-  /// Whether to generate equality methods (== and hashCode)
-  final bool withEquality;
-
-  /// Whether to generate a lerp method
-  final bool withLerp;
-
-  /// Whether to skip generating a utility class
-  final bool skipUtility;
-
-  /// The prefix for the spec
-  final String prefix;
+  final int generatedComponents;
 
   /// Whether this is a widget modifier spec
   final bool isWidgetModifier;
@@ -34,11 +23,8 @@ class SpecMetadata extends BaseMetadata {
     required super.isDiagnosticable,
     required super.constructor,
     required super.isAbstract,
-    required this.withCopyWith,
-    required this.withEquality,
-    required this.withLerp,
-    required this.skipUtility,
-    required this.prefix,
+    required this.generatedMethods,
+    required this.generatedComponents,
     required this.isWidgetModifier,
   });
 
@@ -70,11 +56,8 @@ class SpecMetadata extends BaseMetadata {
       ),
       constructor: constructor,
       isAbstract: element.isAbstract,
-      withCopyWith: mixableSpec.withCopyWith,
-      withEquality: mixableSpec.withEquality,
-      withLerp: mixableSpec.withLerp,
-      skipUtility: mixableSpec.skipUtility,
-      prefix: mixableSpec.prefix,
+      generatedMethods: mixableSpec.methods,
+      generatedComponents: mixableSpec.components,
       isWidgetModifier: isWidgetModifier,
     );
   }

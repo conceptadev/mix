@@ -17,7 +17,7 @@ class IconButtonSpec extends Spec<IconButtonSpec>
   final BoxSpec container;
   final IconSpec icon;
 
-  @MixableField(dto: MixableFieldDto(type: 'SpinnerSpecAttribute'))
+  @MixableField(dto: MixableFieldResolvable(type: 'SpinnerSpecAttribute'))
   final SpinnerSpec spinner;
 
   /// {@macro icon_button_spec_of}

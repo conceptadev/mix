@@ -11,7 +11,7 @@ import 'src/generators/mixable_utility_generator.dart';
 Builder mixBuilder(BuilderOptions options) => LibraryBuilder(
       MultiGenerator([
         MixableSpecGenerator(),
-        MixableDtoGenerator(),
+        MixableResolvableGenerator(),
         MixableUtilityGenerator(),
       ]),
       generatedExtension: '.g.dart',
@@ -25,7 +25,7 @@ Builder specDefinition(BuilderOptions options) => SharedPartBuilder(
     );
 
 Builder dtoDefinition(BuilderOptions options) => SharedPartBuilder(
-      [MixableDtoGenerator()],
+      [MixableResolvableGenerator()],
       'dto',
       allowSyntaxErrors: true,
     );

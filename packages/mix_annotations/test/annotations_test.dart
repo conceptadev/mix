@@ -3,22 +3,16 @@ import 'package:test/test.dart';
 
 void main() {
   group('MixableSpec', () {
-    group('MixableDto', () {
+    group('MixableResolvable', () {
       test('should create instance with default values', () {
-        const dto = MixableDto();
-        expect(dto.mergeLists, isTrue);
-        expect(dto.generateValueExtension, isTrue);
-        expect(dto.generateUtility, isTrue);
+        const dto = MixableResolvable();
+        expect(dto.components, equals(GeneratedResolvableComponents.all));
       });
 
       test('should create instance with provided values', () {
-        const dto = MixableDto(
-            mergeLists: false,
-            generateValueExtension: false,
-            generateUtility: false);
-        expect(dto.mergeLists, isFalse);
-        expect(dto.generateValueExtension, isFalse);
-        expect(dto.generateUtility, isFalse);
+        const dto =
+            MixableResolvable(components: GeneratedResolvableComponents.none);
+        expect(dto.components, equals(GeneratedResolvableComponents.none));
       });
     });
 
@@ -30,7 +24,7 @@ void main() {
       });
 
       test('should create instance with provided values', () {
-        const dto = MixableFieldDto(type: String);
+        const dto = MixableFieldResolvable(type: String);
         final utilities = [const MixableFieldUtility(alias: 'util', type: int)];
         final property = MixableField(dto: dto, utilities: utilities);
         expect(property.dto, equals(dto));
@@ -40,21 +34,13 @@ void main() {
 
     group('MixableFieldDto', () {
       test('should create instance with default values', () {
-        const dto = MixableFieldDto();
+        const dto = MixableFieldResolvable();
         expect(dto.type, isNull);
       });
 
       test('should create instance with provided values', () {
-        const dto = MixableFieldDto(type: int);
+        const dto = MixableFieldResolvable(type: int);
         expect(dto.type, equals(int));
-      });
-
-      test('typeAsString should return string representation of type', () {
-        const dto1 = MixableFieldDto(type: 'String');
-        expect(dto1.typeAsString, equals('String'));
-
-        const dto2 = MixableFieldDto(type: int);
-        expect(dto2.typeAsString, equals('int'));
       });
     });
 

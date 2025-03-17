@@ -4,6 +4,7 @@ import 'package:logging/logging.dart';
 import 'package:mix_annotations/mix_annotations.dart';
 import 'package:source_gen/source_gen.dart';
 
+import '../core/metadata/base_metadata.dart';
 import '../core/metadata/spec_metadata.dart';
 import '../core/spec/spec_attribute_builder.dart';
 import '../core/spec/spec_mixin_builder.dart';
@@ -23,20 +24,6 @@ class MixableSpecGenerator extends BaseMixGenerator<MixableSpec, SpecMetadata> {
 
   MixableSpecGenerator() : super(const TypeChecker.fromRuntime(MixableSpec));
 
-  @override
-  Future<SpecMetadata> createMetadata(
-    ClassElement element,
-    BuildStep buildStep,
-  ) async {
-    validateClassElement(element);
-
-    return SpecMetadata.fromAnnotation(
-      element,
-      ConstantReader(typeChecker.firstAnnotationOfExact(element)),
-    );
-  }
-
-  @override
   Future<String> generateForAnnotatedElement(
     Element element,
     ConstantReader annotation,
@@ -52,6 +39,19 @@ class MixableSpecGenerator extends BaseMixGenerator<MixableSpec, SpecMetadata> {
     final metadata = await createMetadata(element, buildStep);
 
     return generateForMetadata(metadata, buildStep);
+  }
+
+  @override
+  Future<SpecMetadata> createMetadata(
+    ClassElement element,
+    BuildStep buildStep,
+  ) async {
+    validateClassElement(element);
+
+    return SpecMetadata.fromAnnotation(
+      element,
+      ConstantReader(typeChecker.firstAnnotationOfExact(element)),
+    );
   }
 
   @override
@@ -72,12 +72,15 @@ class MixableSpecGenerator extends BaseMixGenerator<MixableSpec, SpecMetadata> {
     output.writeln();
 
     // Generate attribute class
-    final attributeBuilder = SpecAttributeBuilder(metadata);
-    output.writeln(attributeBuilder.build());
-    output.writeln();
+    if (metadata.generatedComponents
+        .hasFlag(GeneratedSpecComponents.attribute)) {
+      final attributeBuilder = SpecAttributeBuilder(metadata);
+      output.writeln(attributeBuilder.build());
+      output.writeln();
+    }
 
     // Generate utility class (if not skipped)
-    if (!metadata.skipUtility) {
+    if (metadata.generatedComponents.hasFlag(GeneratedSpecComponents.utility)) {
       final utilityBuilder = SpecUtilityBuilder(metadata);
       try {
         final utilityCode = utilityBuilder.build();
@@ -90,8 +93,10 @@ class MixableSpecGenerator extends BaseMixGenerator<MixableSpec, SpecMetadata> {
     }
 
     // Generate tween class
-    final tweenBuilder = SpecTweenBuilder(metadata);
-    output.writeln(tweenBuilder.build());
+    if (metadata.generatedComponents.hasFlag(GeneratedSpecComponents.tween)) {
+      final tweenBuilder = SpecTweenBuilder(metadata);
+      output.writeln(tweenBuilder.build());
+    }
 
     return output.toString();
   }

@@ -18,17 +18,19 @@ part 'trigger/select_trigger_widget.dart';
 
 @MixableSpec()
 class SelectSpec extends Spec<SelectSpec> with _$SelectSpec, Diagnosticable {
-  @MixableField(dto: MixableFieldDto(type: 'SelectTriggerSpecAttribute'))
+  @MixableField(dto: MixableFieldResolvable(type: 'SelectTriggerSpecAttribute'))
   final SelectTriggerSpec button;
 
-  @MixableField(dto: MixableFieldDto(type: 'SelectMenuSpecAttribute'))
+  @MixableField(dto: MixableFieldResolvable(type: 'SelectMenuSpecAttribute'))
   final SelectMenuSpec menu;
 
-  @MixableField(dto: MixableFieldDto(type: 'SelectMenuItemSpecAttribute'))
+  @MixableField(
+      dto: MixableFieldResolvable(type: 'SelectMenuItemSpecAttribute'))
   final SelectMenuItemSpec item;
 
   @MixableField(
-    dto: MixableFieldDto(type: 'CompositedTransformFollowerSpecAttribute'),
+    dto: MixableFieldResolvable(
+        type: 'CompositedTransformFollowerSpecAttribute'),
   )
   final CompositedTransformFollowerSpec position;
 

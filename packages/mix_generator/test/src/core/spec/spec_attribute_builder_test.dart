@@ -1,3 +1,4 @@
+import 'package:mix_annotations/mix_annotations.dart';
 import 'package:mix_generator/src/core/metadata/field_metadata.dart';
 import 'package:mix_generator/src/core/metadata/spec_metadata.dart';
 import 'package:mix_generator/src/core/spec/spec_attribute_builder.dart';
@@ -36,11 +37,8 @@ void main() {
         isDiagnosticable: false,
         constructor: classElement.unnamedConstructor!,
         isAbstract: false,
-        withCopyWith: true,
-        withEquality: true,
-        withLerp: true,
-        skipUtility: false,
-        prefix: '',
+        generatedMethods: GeneratedSpecMethods.all,
+        generatedComponents: GeneratedSpecComponents.all,
         isWidgetModifier: false,
       );
 
@@ -117,11 +115,8 @@ void main() {
         isDiagnosticable: false,
         constructor: classElement.unnamedConstructor!,
         isAbstract: false,
-        withCopyWith: true,
-        withEquality: true,
-        withLerp: true,
-        skipUtility: false,
-        prefix: '',
+        generatedMethods: GeneratedSpecMethods.all,
+        generatedComponents: GeneratedSpecComponents.all,
         isWidgetModifier: true,
       );
 
@@ -177,11 +172,8 @@ void main() {
         isDiagnosticable: true,
         constructor: classElement.unnamedConstructor!,
         isAbstract: false,
-        withCopyWith: true,
-        withEquality: true,
-        withLerp: true,
-        skipUtility: false,
-        prefix: '',
+        generatedMethods: GeneratedSpecMethods.all,
+        generatedComponents: GeneratedSpecComponents.all,
         isWidgetModifier: false,
       );
 

@@ -1,3 +1,6 @@
+import 'package:mix_annotations/mix_annotations.dart';
+
+import '../metadata/base_metadata.dart';
 import '../metadata/spec_metadata.dart';
 import '../utils/code_builder.dart';
 import '../utils/common_method_builder.dart';
@@ -67,7 +70,8 @@ static $className of(BuildContext context) {
 
     methods.add(staticMethods);
 
-    if (metadata.withCopyWith && !hasCopyWith) {
+    if (metadata.generatedMethods.hasFlag(GeneratedSpecMethods.copyWith) &&
+        !hasCopyWith) {
       methods.add(SpecMethods.generateCopyWithMethod(
         className: className,
         constructorRef: metadata.constructorRef,
@@ -77,7 +81,8 @@ static $className of(BuildContext context) {
       ));
     }
 
-    if (metadata.withLerp && !hasLerp) {
+    if (metadata.generatedMethods.hasFlag(GeneratedSpecMethods.lerp) &&
+        !hasLerp) {
       methods.add(SpecMethods.generateLerpMethod(
         className: className,
         constructorRef: metadata.constructorRef,
@@ -87,7 +92,8 @@ static $className of(BuildContext context) {
       ));
     }
 
-    if (metadata.withEquality && !hasProps) {
+    if (metadata.generatedMethods.hasFlag(GeneratedSpecMethods.equals) &&
+        !hasProps) {
       methods.add(CommonMethods.generatePropsGetter(
         className: className,
         fields: metadata.parameters,

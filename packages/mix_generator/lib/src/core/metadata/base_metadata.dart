@@ -46,3 +46,7 @@ abstract class BaseMetadata {
   bool hasMethod(String methodName) =>
       element.methods.any((m) => m.name == methodName);
 }
+
+extension GeneratedFlagExtension on int {
+  bool hasFlag(int flag) => (this & flag) != 0;
+}

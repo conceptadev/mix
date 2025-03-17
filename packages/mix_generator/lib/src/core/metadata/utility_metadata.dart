@@ -21,7 +21,7 @@ class UtilityMetadata extends BaseMetadata {
   /// The reference element if this is a class utility with a reference type
   final ClassElement? referenceElement;
 
-  final int generateHelpers;
+  final int generatedMethods;
 
   static final _logger = Logger('UtilityMetadata');
 
@@ -37,7 +37,7 @@ class UtilityMetadata extends BaseMetadata {
     this.valueElement,
     this.mappingElement,
     this.referenceElement,
-    required this.generateHelpers,
+    required this.generatedMethods,
   });
 
   /// Creates a UtilityMetadata from a class element with optional annotation data
@@ -91,15 +91,19 @@ class UtilityMetadata extends BaseMetadata {
           }
         }
 
-        // Handle reference type
+        // Handle reference type - safely check if it's a valid type
         final referenceTypeValue = annotation.peek('referenceType');
-        if (referenceTypeValue != null && !referenceTypeValue.isNull) {
+        if (referenceTypeValue != null &&
+            !referenceTypeValue.isNull &&
+            referenceTypeValue.isType) {
           final referenceTypeElement = referenceTypeValue.typeValue.element;
           if (referenceTypeElement is ClassElement) {
             referenceElement = referenceTypeElement;
           }
         }
       }
+
+      final mixableUtility = readMixableUtility(element);
 
       return UtilityMetadata(
         element: element,
@@ -113,7 +117,7 @@ class UtilityMetadata extends BaseMetadata {
         valueElement: valueElement,
         mappingElement: mappingElement,
         referenceElement: referenceElement,
-        generateHelpers: readMixableUtilityHelpers(element),
+        generatedMethods: mixableUtility.methods,
       );
     } catch (e) {
       _logger.warning('Error creating utility metadata: $e');
@@ -138,7 +142,14 @@ class UtilityMetadata extends BaseMetadata {
     ClassElement element,
     ConstantReader annotation,
   ) {
-    return UtilityMetadata.create(element, annotation: annotation);
+    try {
+      return UtilityMetadata.create(element, annotation: annotation);
+    } catch (e) {
+      _logger.warning('Error creating utility metadata from annotation: $e');
+
+      // Fallback to basic metadata if annotation parsing fails
+      return UtilityMetadata.fromElement(element);
+    }
   }
 
   /// Checks if this is an enum utility

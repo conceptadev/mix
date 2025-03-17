@@ -27,9 +27,9 @@ class MixableSpec {
 }
 
 class Mixable {
-  final int generateHelpers;
+  final int generators;
   const Mixable({
-    this.generateHelpers = _allHelpers,
+    this.generators = _allHelpers,
   });
 }
 
@@ -38,8 +38,8 @@ class MixableConstructor {
 }
 
 class MixableUtility {
-  final int generateHelpers;
-  const MixableUtility({this.generateHelpers = _allHelpers});
+  final int generators;
+  const MixableUtility({this.generators = _allHelpers});
 }
 
 typedef MixableUtilityProps = ({String path, String alias});
