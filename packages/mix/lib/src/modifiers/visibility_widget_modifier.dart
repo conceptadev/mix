@@ -11,7 +11,7 @@ import '../core/utility.dart';
 
 part 'visibility_widget_modifier.g.dart';
 
-@MixableSpec(skipUtility: true)
+@MixableSpec(components: GeneratedSpecComponents.skipUtility)
 final class VisibilityModifierSpec
     extends WidgetModifierSpec<VisibilityModifierSpec>
     with _$VisibilityModifierSpec, Diagnosticable {

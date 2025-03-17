@@ -3,7 +3,7 @@
 part of 'shadow_dto.dart';
 
 // **************************************************************************
-// MixableDtoGenerator
+// MixableResolvableGenerator
 // **************************************************************************
 
 /// A mixin that provides DTO functionality for [ShadowDto].

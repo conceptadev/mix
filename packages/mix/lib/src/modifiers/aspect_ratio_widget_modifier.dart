@@ -6,13 +6,12 @@ import 'package:mix_annotations/mix_annotations.dart';
 
 import '../core/attribute.dart';
 import '../core/factory/mix_data.dart';
-import '../core/helpers.dart';
 import '../core/modifier.dart';
 import '../core/utility.dart';
 
 part 'aspect_ratio_widget_modifier.g.dart';
 
-@MixableSpec(skipUtility: true)
+@MixableSpec(components: GeneratedSpecComponents.skipUtility)
 final class AspectRatioModifierSpec
     extends WidgetModifierSpec<AspectRatioModifierSpec>
     with _$AspectRatioModifierSpec, Diagnosticable {

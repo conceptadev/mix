@@ -54,7 +54,7 @@ sealed class BoxBorderDto<T extends BoxBorder> extends Dto<T> {
   BoxBorderDto<T> merge(covariant BoxBorderDto<T>? other);
 }
 
-@MixableDto(generateUtility: false)
+@MixableResolvable(components: GeneratedResolvableComponents.skipUtility)
 final class BorderDto extends BoxBorderDto<Border> with _$BorderDto {
   final BorderSideDto? left;
   final BorderSideDto? right;
@@ -88,7 +88,7 @@ final class BorderDto extends BoxBorderDto<Border> with _$BorderDto {
   Border get defaultValue => const Border();
 }
 
-@MixableDto(generateUtility: false)
+@MixableResolvable(components: GeneratedResolvableComponents.skipUtility)
 final class BorderDirectionalDto extends BoxBorderDto<BorderDirectional>
     with _$BorderDirectionalDto {
   final BorderSideDto? start;

@@ -103,7 +103,7 @@ final class CurveUtility<T extends Attribute> extends MixUtility<T, Curve>
       );
 }
 
-@MixableUtility(generateHelpers: GenerateHelpers.none)
+@MixableUtility(methods: GeneratedUtilityMethods.skipCallMethod)
 final class OffsetUtility<T extends Attribute> extends MixUtility<T, Offset>
     with _$OffsetUtility {
   const OffsetUtility(super.builder);
@@ -111,7 +111,7 @@ final class OffsetUtility<T extends Attribute> extends MixUtility<T, Offset>
   T as(Offset offset) => builder(offset);
 }
 
-@MixableUtility(generateHelpers: GenerateHelpers.none)
+@MixableUtility(methods: GeneratedUtilityMethods.skipCallMethod)
 final class RadiusUtility<T extends Attribute> extends MixUtility<T, Radius>
     with _$RadiusUtility {
   const RadiusUtility(super.builder);

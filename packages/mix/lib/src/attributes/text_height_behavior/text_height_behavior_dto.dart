@@ -7,7 +7,7 @@ import 'package:mix_annotations/mix_annotations.dart';
 
 part 'text_height_behavior_dto.g.dart';
 
-@MixableDto(generateUtility: false)
+@MixableResolvable(components: GeneratedResolvableComponents.skipUtility)
 base class TextHeightBehaviorDto extends Dto<TextHeightBehavior>
     with _$TextHeightBehaviorDto, Diagnosticable {
   final bool? applyHeightToFirstAscent;

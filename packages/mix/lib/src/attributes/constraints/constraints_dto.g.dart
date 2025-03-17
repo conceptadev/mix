@@ -3,7 +3,7 @@
 part of 'constraints_dto.dart';
 
 // **************************************************************************
-// MixableDtoGenerator
+// MixableResolvableGenerator
 // **************************************************************************
 
 /// A mixin that provides DTO functionality for [BoxConstraintsDto].

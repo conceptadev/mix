@@ -3,7 +3,7 @@
 part of 'decoration_image_dto.dart';
 
 // **************************************************************************
-// MixableDtoGenerator
+// MixableResolvableGenerator
 // **************************************************************************
 
 /// A mixin that provides DTO functionality for [DecorationImageDto].

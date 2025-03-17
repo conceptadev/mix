@@ -6,7 +6,6 @@ import 'package:mix_annotations/mix_annotations.dart';
 
 import '../core/attribute.dart';
 import '../core/factory/mix_data.dart';
-import '../core/helpers.dart';
 import '../core/modifier.dart';
 import '../core/utility.dart';
 
@@ -15,7 +14,7 @@ part 'opacity_widget_modifier.g.dart';
 /// A modifier that wraps a widget with the [Opacity] widget.
 ///
 /// The [Opacity] widget is used to make a widget partially transparent.
-@MixableSpec(skipUtility: true)
+@MixableSpec(components: GeneratedSpecComponents.skipUtility)
 final class OpacityModifierSpec extends WidgetModifierSpec<OpacityModifierSpec>
     with _$OpacityModifierSpec, Diagnosticable {
   /// The [opacity] argument must not be null and

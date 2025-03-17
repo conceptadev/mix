@@ -12,7 +12,7 @@ import '../core/utility.dart';
 
 part 'flexible_widget_modifier.g.dart';
 
-@MixableSpec(skipUtility: true)
+@MixableSpec(components: GeneratedSpecComponents.skipUtility)
 final class FlexibleModifierSpec
     extends WidgetModifierSpec<FlexibleModifierSpec>
     with _$FlexibleModifierSpec, Diagnosticable {

@@ -11,7 +11,7 @@ import '../../core/utility.dart';
 
 part 'reset_modifier.g.dart';
 
-@MixableSpec(skipUtility: true)
+@MixableSpec(components: GeneratedSpecComponents.skipUtility)
 final class ResetModifierSpec extends WidgetModifierSpec<ResetModifierSpec>
     with _$ResetModifierSpec, Diagnosticable {
   const ResetModifierSpec();

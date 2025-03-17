@@ -3,7 +3,7 @@
 part of 'edge_insets_dto.dart';
 
 // **************************************************************************
-// MixableDtoGenerator
+// MixableResolvableGenerator
 // **************************************************************************
 
 /// A mixin that provides DTO functionality for [EdgeInsetsDto].

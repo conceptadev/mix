@@ -51,7 +51,7 @@ final class StackFitUtility<T extends Attribute> extends MixUtility<T, StackFit>
 }
 
 /// {@macro image_repeat_utility}
-@MixableUtility(generateHelpers: GenerateHelpers.none)
+@MixableUtility(methods: GeneratedUtilityMethods.skipCallMethod)
 final class ImageRepeatUtility<T extends Attribute>
     extends MixUtility<T, ImageRepeat> with _$ImageRepeatUtility {
   const ImageRepeatUtility(super.builder);

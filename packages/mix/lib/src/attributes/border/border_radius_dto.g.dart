@@ -3,7 +3,7 @@
 part of 'border_radius_dto.dart';
 
 // **************************************************************************
-// MixableDtoGenerator
+// MixableResolvableGenerator
 // **************************************************************************
 
 /// A mixin that provides DTO functionality for [BorderRadiusDto].

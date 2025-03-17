@@ -58,7 +58,7 @@ sealed class BorderRadiusGeometryDto<T extends BorderRadiusGeometry>
   }
 }
 
-@MixableDto(generateUtility: false)
+@MixableResolvable(components: GeneratedResolvableComponents.skipUtility)
 final class BorderRadiusDto extends BorderRadiusGeometryDto<BorderRadius>
     with _$BorderRadiusDto {
   @override
@@ -100,7 +100,7 @@ final class BorderRadiusDto extends BorderRadiusGeometryDto<BorderRadius>
   BorderRadius get defaultValue => BorderRadius.zero;
 }
 
-@MixableDto(generateUtility: false)
+@MixableResolvable(components: GeneratedResolvableComponents.skipUtility)
 final class BorderRadiusDirectionalDto
     extends BorderRadiusGeometryDto<BorderRadiusDirectional>
     with _$BorderRadiusDirectionalDto {

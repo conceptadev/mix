@@ -12,7 +12,7 @@ import '../core/utility.dart';
 
 part 'rotated_box_widget_modifier.g.dart';
 
-@MixableSpec(skipUtility: true)
+@MixableSpec(components: GeneratedSpecComponents.skipUtility)
 final class RotatedBoxModifierSpec
     extends WidgetModifierSpec<RotatedBoxModifierSpec>
     with _$RotatedBoxModifierSpec, Diagnosticable {
