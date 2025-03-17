@@ -54,9 +54,9 @@ Transform.scale(
 
 ### Creating a modifier
 
-We can achieve the same effect by creating a custom `**WidgetModifier**`.
+We can achieve the same effect by creating a custom `WidgetModifier`.
 
-Creating a modifier is like creating a `**StatelessWidget**`. Extend `**WidgetModifier**`. Define the properties you want to modify and the widget you want to decorate.
+Creating a modifier is like creating a `StatelessWidget`. Extend `WidgetModifier`. Define the properties you want to modify and the widget you want to decorate.
 
 ```dart {2, 15-19}
 class ScaleModifier extends WidgetModifier<ScaleModifier> {
@@ -136,7 +136,7 @@ Transform.scale(
 
 Decorates a `Box` with an `Opacity` widget
 
-
+```dart
 final modifier = Style(
   $with.opacity(0.5),
 );
@@ -152,45 +152,45 @@ Opacity(
     child: const Text('Half transparent box'),
   ),
 );
-
+```
 
 ### Rotate Modifier
 
-Decorates a `Box` with a `Transform.rotate` widget. The parameter is quarter turns.
+Decorates a `Box` with a `Transform.rotate` widget. The parameter is the amount of quarter turns (90 degrees) for the rotation.
 
-
+```dart
 final modifier = Style(
-  $with.rotate(1),
+  // 270 degress (90 * 3)
+  $with.rotate(3),
 );
 
 final specModifier = Style(
-  $box.wrap.rotate(1),
+  $box.wrap.rotate(3),
 );
 
 // Equivalent to
 RotatedBox(
-  quarterTurns: 1,
+  quarterTurns: 3,
   child: Box(
     child: const Text('Rotated box'),
   ),
 );
-
+```
 
 **Helper methods**
-All helpers are also available for SpecModifiers.
 
-- `$with.rotate(1)`: 90 degrees
-- `$with.rotate.d90()`: 90 degrees
-- `$with.rotate(2)`: 180 degrees
-- `$with.rotate.d180()`: 180 degrees
-- `$with.rotate(3)`: 270 degrees
-- `$with.rotate.d270()`: 270 degrees
+Alternative syntax to explicit any of the 3 possible rotations in degrees.
+- `$with.rotate.d90()`
+- `$with.rotate.d180()`
+- `$with.rotate.d270()`
+
+All helpers are also available for SpecModifiers.
 
 ### Aspect Ratio Modifier
 
 Decorates a `Box` with an `AspectRatio` widget
 
-
+```dart
 final modifier = Style(
   $with.aspectRatio(6/9),
 );
@@ -206,13 +206,13 @@ AspectRatio(
     child: const Text('Aspect ratio box'),
   ),
 );
-
+```
 
 ### Clip Modifier
 
 Decorates a `Box` with different types of `Clip` widgets
 
-
+```dart
 final modifier = Style(
   $with.clipOval(),
 );
@@ -221,33 +221,29 @@ final specModifier = Style(
   $box.wrap.clipOval(),
 );
 
-Box(
-  style: modifier,
-  child: const Text('Oval box'),
-);
-
 // Equivalent to
 ClipOval(
   child: Box(
     child: const Text('Oval box'),
   ),
 );
-
+```
 
 **Helper methods**
+
 All helpers are also available for SpecModifiers.
 
-- `$with.clipOval()`: Wraps with a **ClipOval** widget
-- `$with.clipRrect()`: Wraps with a **ClipRRect** widget
-- `$with.clipRect()`: Wraps with a **ClipRect** widget
-- `$with.clipPath()`: Wraps with a **ClipPath** widget
-- `$with.clipTriangle()`: Wraps with a **ClipPath** widget that clips to a triangle
+- `$with.clipOval()`: Wraps with a `ClipOval` widget
+- `$with.clipRrect()`: Wraps with a `ClipRRect` widget
+- `$with.clipRect()`: Wraps with a `ClipRect` widget
+- `$with.clipPath()`: Wraps with a `ClipPath` widget
+- `$with.clipTriangle()`: Wraps with a `ClipPath` widget that clips to a triangle
 
 ### Visibility Modifier
 
 Decorates a `Box` with a `Visibility` widget
 
-
+```dart
 final modifier = Style(
   $with.visibility(false),
 );
@@ -263,13 +259,13 @@ Visibility(
     child: const Text('Invisible box'),
   ),
 );
-
+```
 
 ### IntrinsicHeight and IntrinsicWidth Modifier
 
 Decorates a `Box` with a `IntrinsicHeight` or `IntrinsicWidth` widget
 
-
+```dart
 final modifier = Style(
   $with.intrinsicHeight(), // or intrinsicWidth()
 );
@@ -284,21 +280,22 @@ IntrinsicHeight( // or IntrinsicWidth
     child: const Text('Invisible box'),
   ),
 );
-
+```
 
 **Helper methods**
+
 All helpers are also available for SpecModifiers.
 
-- `$with.show()`: Wraps the **Box** with a **Visibility** widget that is visible
-- `$with.hide()`: Wraps the **Box** with a **Visibility** widget that is invisible
-- `$with.visibility.on()`: Wraps the **Box** with a **Visibility** widget that is visible
-- `$with.visibility.off()`: Wraps the **Box** with a **Visibility** widget that is invisible
+- `$with.show()`: Wraps the `Box` with a `Visibility` widget that is visible
+- `$with.hide()`: Wraps the `Box` with a `Visibility` widget that is invisible
+- `$with.visibility.on()`: Wraps the `Box` with a `Visibility` widget that is visible
+- `$with.visibility.off()`: Wraps the `Box` with a `Visibility` widget that is invisible
 
 ### Flexible Modifier
 
 Decorates a `Flex` Styled widget like `FlexBox`, `HBox`, `VBox`, with a `Flexible` widget
 
-
+```dart
 final modifier = Style(
   $with.flexible(flex:1, fit: FlexFit.tight),
 );
@@ -306,21 +303,21 @@ final modifier = Style(
 final specModifier = Style(
   $box.wrap.flexible(flex:1, fit: FlexFit.tight),
 );
-
-
-- `$with.flexible(flex:1, fit: FlexFit.tight)`: Wraps the `Flex` Styled widget with a `Flexible` widget
+```
 
 **Helper methods**
+
 All helpers are also available for SpecModifiers.
 
-- `$with.flexible.expanded()`: Equivalent to **Expanded** widget, or `flexible(fit: FlexFit.tight)`
-- `$with.flexible.loose()`: Equivalent to **Flexible** widget, or `flexible(fit: FlexFit.loose)`
+- `$with.flexible(flex:1, fit: FlexFit.tight)`: Wraps the `Flex` Styled widget with a `Flexible` widget
+- `$with.flexible.expanded()`: Equivalent to `Expanded` widget, or `flexible(fit: FlexFit.tight)`
+- `$with.flexible.loose()`: Equivalent to `Flexible` widget, or `flexible(fit: FlexFit.loose)`
 - `$with.flexible.tight()`: Equivalent to `flexible(fit: FlexFit.tight)`
-- `$with.expanded()`: Equivalent to **Expanded** widget, or `flexible(fit: FlexFit.tight)`
+- `$with.expanded()`: Equivalent to `Expanded` widget, or `flexible(fit: FlexFit.tight)`
 
 This is equivalent to wrapping the `Flex` Styled widget with a `Flexible` widget.
 
-
+```dart
 Flexible(
   flex: 1,
   fit: FlexFit.tight,
@@ -331,6 +328,7 @@ Flexible(
   ),
 );
 ```
+
 ### Mouse Cursor
 
 Decorates the `StyledWidget` with a `MouseRegion` widget but applying only the `cursor` property.
