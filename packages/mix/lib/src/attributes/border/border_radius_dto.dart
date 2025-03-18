@@ -95,9 +95,6 @@ final class BorderRadiusDto extends BorderRadiusGeometryDto<BorderRadius>
   Radius? get bottomStart => null;
   @override
   Radius? get bottomEnd => null;
-
-  @override
-  BorderRadius get defaultValue => BorderRadius.zero;
 }
 
 @MixableResolvable(components: GeneratedResolvableComponents.skipUtility)
@@ -138,9 +135,6 @@ final class BorderRadiusDirectionalDto
   Radius? get bottomLeft => null;
   @override
   Radius? get bottomRight => null;
-
-  @override
-  BorderRadiusDirectional get defaultValue => BorderRadiusDirectional.zero;
 }
 
 extension BorderRadiusGeometryMixExt on BorderRadiusGeometry {

@@ -35,8 +35,5 @@ class AnimatedDataDto extends StyleProperty<AnimatedData> {
   }
 
   @override
-  AnimatedData get defaultValue => const AnimatedData.withDefaults();
-
-  @override
   get props => [duration, curve];
 }

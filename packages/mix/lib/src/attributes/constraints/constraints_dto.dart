@@ -27,6 +27,4 @@ final class BoxConstraintsDto extends ConstraintsDto<BoxConstraints>
     this.minHeight,
     this.maxHeight,
   });
-  @override
-  BoxConstraints get defaultValue => const BoxConstraints();
 }

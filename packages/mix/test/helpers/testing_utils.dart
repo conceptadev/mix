@@ -311,13 +311,22 @@ final class UtilityTestAttribute<T>
 }
 
 final class UtilityTestDtoAttribute<T extends StyleProperty<V>, V>
-    extends TestScalarAttribute<UtilityTestDtoAttribute<T, V>, T> {
-  const UtilityTestDtoAttribute(super.value);
+    extends StyleAttribute<V> {
+  final T value;
+  const UtilityTestDtoAttribute(this.value);
 
   @override
-  T resolve(MixData mix) {
-    return value;
+  V resolve(MixData mix) {
+    return value.resolve(mix);
   }
+
+  @override
+  UtilityTestDtoAttribute<T, V> merge(UtilityTestDtoAttribute<T, V>? other) {
+    return UtilityTestDtoAttribute(other?.value ?? value);
+  }
+
+  @override
+  get props => [value];
 }
 
 final class CustomWidgetModifierSpec

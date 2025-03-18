@@ -45,8 +45,5 @@ class WidgetModifiersDataDto extends StyleProperty<WidgetModifiersData>
   }
 
   @override
-  WidgetModifiersData get defaultValue => const WidgetModifiersData([]);
-
-  @override
   List<Object?> get props => [value];
 }

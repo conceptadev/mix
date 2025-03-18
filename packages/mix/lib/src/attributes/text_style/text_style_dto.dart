@@ -122,9 +122,6 @@ base class TextStyleData extends StyleProperty<TextStyle>
     properties.addUsingDefault('textBaseline', textBaseline);
     properties.addUsingDefault('wordSpacing', wordSpacing);
   }
-
-  @override
-  TextStyle get defaultValue => const TextStyle();
 }
 
 @MixableResolvable(
@@ -222,9 +219,6 @@ final class TextStyleDto extends StyleProperty<TextStyle>
       );
     }
   }
-
-  @override
-  TextStyle get defaultValue => const TextStyle();
 }
 
 extension TextStyleExt on TextStyle {

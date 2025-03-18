@@ -36,9 +36,11 @@ class ColorDto extends StyleProperty<Color> with Diagnosticable {
         : directives.sublist(lastResetIndex);
   }
 
+  Color get defaultColor => const Color(0x00000000);
+
   @override
   Color resolve(MixData mix) {
-    Color color = value ?? defaultValue;
+    Color color = value ?? defaultColor;
 
     if (color is ColorRef) {
       color = mix.tokens.colorRef(color);
@@ -65,7 +67,7 @@ class ColorDto extends StyleProperty<Color> with Diagnosticable {
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
 
-    Color color = value ?? defaultValue;
+    Color color = value ?? defaultColor;
 
     if (color is ColorRef) {
       properties.add(DiagnosticsProperty('token', color.token.name));
@@ -73,9 +75,6 @@ class ColorDto extends StyleProperty<Color> with Diagnosticable {
 
     properties.add(ColorProperty('color', color));
   }
-
-  @override
-  Color get defaultValue => const Color(0x00000000);
 
   @override
   List<Object?> get props => [value, directives];

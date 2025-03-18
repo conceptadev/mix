@@ -106,9 +106,6 @@ final class RoundedRectangleBorderDto
 
   @override
   BorderRadiusGeometryDto? get borderRadiusGetter => borderRadius;
-
-  @override
-  RoundedRectangleBorder get defaultValue => const RoundedRectangleBorder();
 }
 
 @MixableResolvable()
@@ -131,9 +128,6 @@ final class BeveledRectangleBorderDto
 
   @override
   BorderRadiusGeometryDto? get borderRadiusGetter => borderRadius;
-
-  @override
-  BeveledRectangleBorder get defaultValue => const BeveledRectangleBorder();
 }
 
 @MixableResolvable()
@@ -158,9 +152,6 @@ final class ContinuousRectangleBorderDto
 
   @override
   BorderRadiusGeometryDto? get borderRadiusGetter => borderRadius;
-  @override
-  ContinuousRectangleBorder get defaultValue =>
-      const ContinuousRectangleBorder();
 }
 
 @MixableResolvable()
@@ -181,8 +172,6 @@ final class CircleBorderDto extends OutlinedBorderDto<CircleBorder>
 
   @override
   BorderRadiusGeometryDto? get borderRadiusGetter => null;
-  @override
-  CircleBorder get defaultValue => const CircleBorder();
 }
 
 @MixableResolvable()
@@ -212,8 +201,6 @@ final class StarBorderDto extends OutlinedBorderDto<StarBorder>
 
   @override
   BorderRadiusGeometryDto? get borderRadiusGetter => null;
-  @override
-  StarBorder get defaultValue => const StarBorder();
 }
 
 @MixableResolvable()
@@ -243,8 +230,6 @@ final class LinearBorderDto extends OutlinedBorderDto<LinearBorder>
 
   @override
   BorderRadiusGeometryDto? get borderRadiusGetter => null;
-  @override
-  LinearBorder get defaultValue => const LinearBorder();
 }
 
 @MixableResolvable()
@@ -254,9 +239,6 @@ final class LinearBorderEdgeDto extends StyleProperty<LinearBorderEdge>
   final double? alignment;
 
   const LinearBorderEdgeDto({this.size, this.alignment});
-
-  @override
-  LinearBorderEdge get defaultValue => const LinearBorderEdge();
 }
 
 @MixableResolvable()
@@ -275,8 +257,6 @@ final class StadiumBorderDto extends OutlinedBorderDto<StadiumBorder>
 
   @override
   BorderRadiusGeometryDto? get borderRadiusGetter => null;
-  @override
-  StadiumBorder get defaultValue => const StadiumBorder();
 }
 
 abstract class MixOutlinedBorder<T extends OutlinedBorderDto>

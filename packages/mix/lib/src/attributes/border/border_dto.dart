@@ -83,9 +83,6 @@ final class BorderDto extends BoxBorderDto<Border> with _$BorderDto {
 
   @override
   bool get isUniform => top == bottom && top == left && top == right;
-
-  @override
-  Border get defaultValue => const Border();
 }
 
 @MixableResolvable(components: GeneratedResolvableComponents.skipUtility)
@@ -122,9 +119,6 @@ final class BorderDirectionalDto extends BoxBorderDto<BorderDirectional>
 
   @override
   bool get isUniform => top == bottom && top == start && top == end;
-
-  @override
-  BorderDirectional get defaultValue => const BorderDirectional();
 }
 
 @MixableResolvable()

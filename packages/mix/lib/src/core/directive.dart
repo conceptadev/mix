@@ -28,9 +28,6 @@ class TextDirectiveDto extends StyleProperty<TextDirective> {
   }
 
   @override
-  TextDirective get defaultValue => TextDirective((String content) => content);
-
-  @override
   get props => [_modifiers];
 }
 

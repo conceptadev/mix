@@ -13,11 +13,8 @@ class SpacingSideDto extends StyleProperty<double> {
 
   @override
   double resolve(MixData mix) {
-    return mix.tokens.spaceTokenRef(value ?? defaultValue);
+    return mix.tokens.spaceTokenRef(value ?? 0);
   }
-
-  @override
-  double get defaultValue => 0;
 
   @override
   List<Object?> get props => [value];

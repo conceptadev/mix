@@ -34,6 +34,9 @@ abstract class Spec<T extends Spec<T>> with EqualityMixin {
   T lerp(covariant T? other, double t);
 }
 
+@Deprecated('Use StyleAttribute instead')
+typedef SpecAttribute<T> = StyleAttribute<T>;
+
 /// An abstract class representing a resolvable attribute.
 ///
 /// This class extends the [Attribute] class and provides a generic type [Self] and [Value].

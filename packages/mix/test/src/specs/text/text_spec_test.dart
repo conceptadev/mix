@@ -330,7 +330,7 @@ void main() {
 
       expect(textSpec.overflow, TextOverflow.ellipsis);
       expect(textSpec.textAlign, TextAlign.center);
-      expect(textSpec.textScaler, const TextScaler.linear(1.5));
+      expect(textSpec.textScaleFactor, 1.5);
       expect(textSpec.maxLines, 3);
       expect(textSpec.style?.color, Colors.blue);
       expect(textSpec.textWidthBasis, TextWidthBasis.longestLine);

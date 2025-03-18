@@ -19,9 +19,6 @@ base class TextHeightBehaviorDto extends StyleProperty<TextHeightBehavior>
     this.applyHeightToLastDescent,
     this.leadingDistribution,
   });
-
-  @override
-  TextHeightBehavior get defaultValue => const TextHeightBehavior();
 }
 
 final class TextHeightBehaviorUtility<T extends Attribute>

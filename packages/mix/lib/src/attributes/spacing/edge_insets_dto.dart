@@ -92,9 +92,6 @@ final class EdgeInsetsDto extends EdgeInsetsGeometryDto<EdgeInsets>
   final double? left;
   final double? right;
 
-  @override
-  final defaultValue = EdgeInsets.zero;
-
   const EdgeInsetsDto({super.top, super.bottom, this.left, this.right});
 
   const EdgeInsetsDto.all(double value)
@@ -129,9 +126,6 @@ final class EdgeInsetsDirectionalDto
     with _$EdgeInsetsDirectionalDto {
   final double? start;
   final double? end;
-
-  @override
-  final defaultValue = EdgeInsetsDirectional.zero;
 
   const EdgeInsetsDirectionalDto.all(double value)
       : this(top: value, bottom: value, start: value, end: value);

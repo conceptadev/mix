@@ -71,8 +71,8 @@ int _lerpInt(int? a, int? b, double t) {
   return (a + (b - a) * t).round();
 }
 
-List<T> _mergeList<T>(List<T>? a, List<T>? b) {
-  if (b == null) return a ?? [];
+List<T>? _mergeList<T>(List<T>? a, List<T>? b) {
+  if (b == null) return a;
   if (a == null) return b;
 
   if (a.isEmpty) return b;
