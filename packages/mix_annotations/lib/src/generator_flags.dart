@@ -25,6 +25,10 @@ class GeneratedSpecMethods {
 
   static const int all = copyWith | equals | lerp;
 
+  static const skipCopyWith = all & ~copyWith;
+  static const skipEquals = all & ~equals;
+  static const skipLerp = all & ~lerp;
+
   const GeneratedSpecMethods._();
 }
 

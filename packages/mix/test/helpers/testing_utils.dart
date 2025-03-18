@@ -183,6 +183,9 @@ class WrapMixThemeWidget extends StatelessWidget {
 final class MockDoubleScalarAttribute
     extends TestScalarAttribute<MockDoubleScalarAttribute, double> {
   const MockDoubleScalarAttribute(super.value);
+
+  @override
+  double resolve(MixData mix) => value;
 }
 
 class MockContextVariantCondition extends ContextVariant {
@@ -205,6 +208,9 @@ class MockContextVariantCondition extends ContextVariant {
 final class MockIntScalarAttribute
     extends TestScalarAttribute<MockIntScalarAttribute, int> {
   const MockIntScalarAttribute(super.value);
+
+  @override
+  int resolve(MixData mix) => value;
 }
 
 class MockContextVariant extends ContextVariant {
@@ -219,6 +225,9 @@ class MockContextVariant extends ContextVariant {
 final class MockBooleanScalarAttribute
     extends TestScalarAttribute<MockBooleanScalarAttribute, bool> {
   const MockBooleanScalarAttribute(super.value);
+
+  @override
+  bool resolve(MixData mix) => value;
 }
 
 abstract class _MockSpecAttribute<T> extends StyleAttribute<T> {
@@ -274,6 +283,9 @@ final class MockSpecStringAttribute extends _MockSpecAttribute<String> {
 final class MockStringScalarAttribute
     extends TestScalarAttribute<MockStringScalarAttribute, String> {
   const MockStringScalarAttribute(super.value);
+
+  @override
+  String resolve(MixData mix) => value;
 }
 
 final class MockInvalidAttribute extends Attribute {
@@ -299,6 +311,7 @@ final class UtilityTestDtoAttribute<T extends StyleProperty<V>, V>
     extends TestScalarAttribute<UtilityTestDtoAttribute<T, V>, T> {
   const UtilityTestDtoAttribute(super.value);
 
+  @override
   V resolve(MixData mix) {
     return value.resolve(mix);
   }
@@ -373,7 +386,8 @@ class WidgetWithTestableBuild extends StyledWidget {
 }
 
 abstract class TestScalarAttribute<
-    Self extends TestScalarAttribute<Self, Value>, Value> extends Attribute {
+    Self extends TestScalarAttribute<Self, Value>,
+    Value> extends StyleAttribute<Value> {
   final Value value;
   const TestScalarAttribute(this.value);
 

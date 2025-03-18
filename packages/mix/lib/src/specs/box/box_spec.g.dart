@@ -172,8 +172,7 @@ mixin _$BoxSpec on Spec<BoxSpec> {
 ///
 /// Use this class to configure the attributes of a [BoxSpec] and pass it to
 /// the [BoxSpec] constructor.
-final class BoxSpecAttribute extends StyleAttribute<BoxSpec>
-    with Diagnosticable {
+class BoxSpecAttribute extends StyleAttribute<BoxSpec> with Diagnosticable {
   final AlignmentGeometry? alignment;
   final EdgeInsetsGeometryDto? padding;
   final EdgeInsetsGeometryDto? margin;

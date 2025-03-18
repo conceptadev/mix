@@ -7,7 +7,8 @@ part of 'decoration_image_dto.dart';
 // **************************************************************************
 
 /// A mixin that provides DTO functionality for [DecorationImageDto].
-mixin _$DecorationImageDto on StyleProperty<DecorationImage> {
+mixin _$DecorationImageDto
+    on StyleProperty<DecorationImage>, HasDefaultValue<DecorationImage> {
   /// Resolves to [DecorationImage] using the provided [MixData].
   ///
   /// If a property is null in the [MixData], it falls back to the

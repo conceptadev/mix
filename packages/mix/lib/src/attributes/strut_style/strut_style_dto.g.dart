@@ -19,16 +19,14 @@ mixin _$StrutStyleDto on StyleProperty<StrutStyle> {
   @override
   StrutStyle resolve(MixData mix) {
     return StrutStyle(
-      fontFamily: _$this.fontFamily ?? defaultValue.fontFamily,
-      fontFamilyFallback:
-          _$this.fontFamilyFallback ?? defaultValue.fontFamilyFallback,
-      fontSize: _$this.fontSize ?? defaultValue.fontSize,
-      fontWeight: _$this.fontWeight ?? defaultValue.fontWeight,
-      fontStyle: _$this.fontStyle ?? defaultValue.fontStyle,
-      height: _$this.height ?? defaultValue.height,
-      leading: _$this.leading ?? defaultValue.leading,
-      forceStrutHeight:
-          _$this.forceStrutHeight ?? defaultValue.forceStrutHeight,
+      fontFamily: _$this.fontFamily,
+      fontFamilyFallback: _$this.fontFamilyFallback,
+      fontSize: _$this.fontSize,
+      fontWeight: _$this.fontWeight,
+      fontStyle: _$this.fontStyle,
+      height: _$this.height,
+      leading: _$this.leading,
+      forceStrutHeight: _$this.forceStrutHeight,
     );
   }
 

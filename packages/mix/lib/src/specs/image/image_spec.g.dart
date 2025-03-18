@@ -153,8 +153,7 @@ mixin _$ImageSpec on Spec<ImageSpec> {
 ///
 /// Use this class to configure the attributes of a [ImageSpec] and pass it to
 /// the [ImageSpec] constructor.
-final class ImageSpecAttribute extends StyleAttribute<ImageSpec>
-    with Diagnosticable {
+class ImageSpecAttribute extends StyleAttribute<ImageSpec> with Diagnosticable {
   final double? width;
   final double? height;
   final ColorDto? color;

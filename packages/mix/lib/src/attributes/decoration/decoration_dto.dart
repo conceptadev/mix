@@ -173,14 +173,11 @@ final class BoxDecorationDto extends DecorationDto<BoxDecoration>
 
   @override
   bool get isMergeable => backgroundBlendMode == null;
-
-  @override
-  BoxDecoration get defaultValue => const BoxDecoration();
 }
 
 @MixableResolvable()
 final class ShapeDecorationDto extends DecorationDto<ShapeDecoration>
-    with _$ShapeDecorationDto {
+    with HasDefaultValue<ShapeDecoration>, _$ShapeDecorationDto {
   final ShapeBorderDto? shape;
 
   const ShapeDecorationDto({

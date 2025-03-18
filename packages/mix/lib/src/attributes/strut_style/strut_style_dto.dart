@@ -32,7 +32,4 @@ final class StrutStyleDto extends StyleProperty<StrutStyle>
     this.leading,
     this.forceStrutHeight,
   });
-
-  @override
-  StrutStyle get defaultValue => const StrutStyle();
 }

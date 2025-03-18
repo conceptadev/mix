@@ -6,7 +6,7 @@ import 'package:mix_annotations/mix_annotations.dart';
 
 part 'shadow_dto.g.dart';
 
-abstract base class ShadowDtoImpl<T extends Shadow> extends StyleProperty<T> {
+sealed class ShadowDtoImpl<T extends Shadow> extends StyleProperty<T> {
   final ColorDto? color;
   final Offset? offset;
   final double? blurRadius;
@@ -19,7 +19,8 @@ abstract base class ShadowDtoImpl<T extends Shadow> extends StyleProperty<T> {
 /// This is used to allow for resolvable value tokens, and also the correct
 /// merge and combining behavior. It allows to be merged, and resolved to a [Shadow]
 @MixableResolvable()
-final class ShadowDto extends ShadowDtoImpl<Shadow> with _$ShadowDto {
+class ShadowDto extends ShadowDtoImpl<Shadow>
+    with HasDefaultValue<Shadow>, _$ShadowDto {
   const ShadowDto({super.blurRadius, super.color, super.offset});
 
   @override
@@ -31,7 +32,8 @@ final class ShadowDto extends ShadowDtoImpl<Shadow> with _$ShadowDto {
 /// This is used to allow for resolvable value tokens, and also the correct
 /// merge and combining behavior. It allows to be merged, and resolved to a `[BoxShadow]
 @MixableResolvable()
-final class BoxShadowDto extends ShadowDtoImpl<BoxShadow> with _$BoxShadowDto {
+class BoxShadowDto extends ShadowDtoImpl<BoxShadow>
+    with HasDefaultValue<BoxShadow>, _$BoxShadowDto {
   final double? spreadRadius;
 
   const BoxShadowDto({

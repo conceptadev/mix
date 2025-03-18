@@ -19,10 +19,10 @@ mixin _$BorderDto on StyleProperty<Border> {
   @override
   Border resolve(MixData mix) {
     return Border(
-      top: _$this.top?.resolve(mix) ?? defaultValue.top,
-      bottom: _$this.bottom?.resolve(mix) ?? defaultValue.bottom,
-      left: _$this.left?.resolve(mix) ?? defaultValue.left,
-      right: _$this.right?.resolve(mix) ?? defaultValue.right,
+      top: _$this.top?.resolve(mix) ?? BorderSide.none,
+      bottom: _$this.bottom?.resolve(mix) ?? BorderSide.none,
+      left: _$this.left?.resolve(mix) ?? BorderSide.none,
+      right: _$this.right?.resolve(mix) ?? BorderSide.none,
     );
   }
 
@@ -96,10 +96,10 @@ mixin _$BorderDirectionalDto on StyleProperty<BorderDirectional> {
   @override
   BorderDirectional resolve(MixData mix) {
     return BorderDirectional(
-      top: _$this.top?.resolve(mix) ?? defaultValue.top,
-      bottom: _$this.bottom?.resolve(mix) ?? defaultValue.bottom,
-      start: _$this.start?.resolve(mix) ?? defaultValue.start,
-      end: _$this.end?.resolve(mix) ?? defaultValue.end,
+      top: _$this.top?.resolve(mix) ?? BorderSide.none,
+      bottom: _$this.bottom?.resolve(mix) ?? BorderSide.none,
+      start: _$this.start?.resolve(mix) ?? BorderSide.none,
+      end: _$this.end?.resolve(mix) ?? BorderSide.none,
     );
   }
 
@@ -161,7 +161,8 @@ extension ListBorderDirectionalMixExt on List<BorderDirectional> {
 }
 
 /// A mixin that provides DTO functionality for [BorderSideDto].
-mixin _$BorderSideDto on StyleProperty<BorderSide> {
+mixin _$BorderSideDto
+    on StyleProperty<BorderSide>, HasDefaultValue<BorderSide> {
   /// Resolves to [BorderSide] using the provided [MixData].
   ///
   /// If a property is null in the [MixData], it falls back to the

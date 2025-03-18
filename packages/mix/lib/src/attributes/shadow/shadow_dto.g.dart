@@ -7,7 +7,7 @@ part of 'shadow_dto.dart';
 // **************************************************************************
 
 /// A mixin that provides DTO functionality for [ShadowDto].
-mixin _$ShadowDto on StyleProperty<Shadow> {
+mixin _$ShadowDto on StyleProperty<Shadow>, HasDefaultValue<Shadow> {
   /// Resolves to [Shadow] using the provided [MixData].
   ///
   /// If a property is null in the [MixData], it falls back to the
@@ -124,7 +124,7 @@ extension ListShadowMixExt on List<Shadow> {
 }
 
 /// A mixin that provides DTO functionality for [BoxShadowDto].
-mixin _$BoxShadowDto on StyleProperty<BoxShadow> {
+mixin _$BoxShadowDto on StyleProperty<BoxShadow>, HasDefaultValue<BoxShadow> {
   /// Resolves to [BoxShadow] using the provided [MixData].
   ///
   /// If a property is null in the [MixData], it falls back to the

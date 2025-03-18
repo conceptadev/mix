@@ -2,6 +2,7 @@ import '../metadata/spec_metadata.dart';
 import '../resolvable/resolvable_method_builder.dart';
 import '../utils/code_builder.dart';
 import '../utils/common_method_builder.dart';
+import '../utils/constructor_utils.dart';
 import '../utils/helpers.dart';
 
 /// Builds the attribute class for a spec.
@@ -23,6 +24,20 @@ class SpecAttributeBuilder implements CodeBuilder {
   List<String> _buildMethods(String attributeName) {
     final methods = <String>[];
 
+    // Extract constructor defaults from the target class
+    final targetConstructor = findTargetConstructor(metadata.element);
+    final constructorDefaults =
+        extractConstructorDefaults(targetConstructor.parameters);
+
+    // Check if the class has the HasDefaultValue mixin
+    final hasDefaultValue = metadata.element.mixins
+            .any((mixin) => mixin.element.name == 'HasDefaultValue') ||
+        metadata.element.allSupertypes.any((type) =>
+            type.element.name == 'HasDefaultValue' ||
+            type
+                .getDisplayString(withNullability: false)
+                .startsWith('HasDefaultValue<'));
+
     // Add resolve method
     methods.add(ResolvableMethods.generateResolveMethod(
       className: attributeName,
@@ -30,8 +45,9 @@ class SpecAttributeBuilder implements CodeBuilder {
       fields: metadata.parameters,
       isConst: metadata.isConst,
       resolvedType: metadata.name,
-      withDefaults: false,
       useInternalRef: false,
+      constructorDefaults: constructorDefaults,
+      hasDefaultValue: hasDefaultValue,
     ));
 
     // Add merge method

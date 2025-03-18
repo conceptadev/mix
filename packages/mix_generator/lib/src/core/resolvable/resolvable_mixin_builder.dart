@@ -19,6 +19,9 @@ class ResolvableMixinBuilder extends CodeBuilder {
     final hasMerge = metadata.element.methods.any((m) => m.name == 'merge');
     final hasProps = metadata.element.methods.any((m) => m.name == 'props');
 
+    final defaultValueMixin =
+        metadata.hasDefaultValue ? ', HasDefaultValue<$resolvedTypeName>' : '';
+
     // Only generate methods that aren't already defined
     final resolveMethod = !hasResolve
         ? ResolvableMethods.generateResolveMethod(
@@ -27,8 +30,9 @@ class ResolvableMixinBuilder extends CodeBuilder {
             fields: metadata.parameters,
             isConst: metadata.isConst,
             resolvedType: resolvedTypeName,
-            withDefaults: true,
             useInternalRef: true,
+            constructorDefaults: metadata.constructorDefaults,
+            hasDefaultValue: metadata.hasDefaultValue,
           )
         : '';
 
@@ -53,7 +57,7 @@ class ResolvableMixinBuilder extends CodeBuilder {
 
     return '''
 /// A mixin that provides DTO functionality for [${metadata.name}].
-mixin $mixinName on Dto<$resolvedTypeName> {
+mixin $mixinName on StyleProperty<$resolvedTypeName> $defaultValueMixin {
   $resolveMethod
 
   $mergeMethod

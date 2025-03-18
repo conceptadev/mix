@@ -19,10 +19,10 @@ mixin _$BoxConstraintsDto on StyleProperty<BoxConstraints> {
   @override
   BoxConstraints resolve(MixData mix) {
     return BoxConstraints(
-      minWidth: _$this.minWidth ?? defaultValue.minWidth,
-      maxWidth: _$this.maxWidth ?? defaultValue.maxWidth,
-      minHeight: _$this.minHeight ?? defaultValue.minHeight,
-      maxHeight: _$this.maxHeight ?? defaultValue.maxHeight,
+      minWidth: _$this.minWidth ?? 0.0,
+      maxWidth: _$this.maxWidth ?? double.infinity,
+      minHeight: _$this.minHeight ?? 0.0,
+      maxHeight: _$this.maxHeight ?? double.infinity,
     );
   }
 

@@ -7,7 +7,7 @@ part 'decoration_image_dto.g.dart';
 
 @MixableResolvable()
 final class DecorationImageDto extends StyleProperty<DecorationImage>
-    with _$DecorationImageDto {
+    with HasDefaultValue<DecorationImage>, _$DecorationImageDto {
   @MixableField(utilities: [MixableFieldUtility(alias: 'provider')])
   final ImageProvider? image;
   final BoxFit? fit;

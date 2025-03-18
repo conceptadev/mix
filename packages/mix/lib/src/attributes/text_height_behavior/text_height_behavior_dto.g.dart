@@ -19,12 +19,10 @@ mixin _$TextHeightBehaviorDto on StyleProperty<TextHeightBehavior> {
   @override
   TextHeightBehavior resolve(MixData mix) {
     return TextHeightBehavior(
-      applyHeightToFirstAscent: _$this.applyHeightToFirstAscent ??
-          defaultValue.applyHeightToFirstAscent,
-      applyHeightToLastDescent: _$this.applyHeightToLastDescent ??
-          defaultValue.applyHeightToLastDescent,
+      applyHeightToFirstAscent: _$this.applyHeightToFirstAscent ?? true,
+      applyHeightToLastDescent: _$this.applyHeightToLastDescent ?? true,
       leadingDistribution:
-          _$this.leadingDistribution ?? defaultValue.leadingDistribution,
+          _$this.leadingDistribution ?? TextLeadingDistribution.proportional,
     );
   }
 

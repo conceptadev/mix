@@ -1,3 +1,5 @@
+import 'package:flutter/foundation.dart';
+
 import '../internal/compare_mixin.dart';
 import 'factory/mix_data.dart';
 import 'spec.dart';
@@ -19,10 +21,6 @@ abstract class Attribute extends StyleElement {
   const Attribute();
 }
 
-mixin ResolvableStyleElement<Value> {
-  Value resolve(MixData mix);
-}
-
 @Deprecated('Use StyleAttribute instead')
 typedef StyledAttribute = StyleAttribute;
 
@@ -32,9 +30,15 @@ typedef SpecAttribute<Value> = StyleAttribute<Value>;
 @Deprecated('Use StyleProperty instead')
 typedef Dto<Value> = StyleProperty<Value>;
 
-abstract class StyleProperty<Value> extends StyleElement
-    with ResolvableStyleElement<Value> {
+abstract class StyleProperty<Value> extends StyleElement {
   const StyleProperty();
+
+  Value resolve(MixData mix);
+}
+
+// Define a mixin for properties that have default values
+mixin HasDefaultValue<Value> on StyleProperty<Value> {
+  @protected
   Value get defaultValue;
 }
 

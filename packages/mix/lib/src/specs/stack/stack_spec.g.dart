@@ -120,8 +120,7 @@ mixin _$StackSpec on Spec<StackSpec> {
 ///
 /// Use this class to configure the attributes of a [StackSpec] and pass it to
 /// the [StackSpec] constructor.
-final class StackSpecAttribute extends StyleAttribute<StackSpec>
-    with Diagnosticable {
+class StackSpecAttribute extends StyleAttribute<StackSpec> with Diagnosticable {
   final AlignmentGeometry? alignment;
   final StackFit? fit;
   final TextDirection? textDirection;

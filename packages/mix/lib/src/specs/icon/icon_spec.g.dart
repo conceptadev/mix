@@ -156,8 +156,7 @@ mixin _$IconSpec on Spec<IconSpec> {
 ///
 /// Use this class to configure the attributes of a [IconSpec] and pass it to
 /// the [IconSpec] constructor.
-final class IconSpecAttribute extends StyleAttribute<IconSpec>
-    with Diagnosticable {
+class IconSpecAttribute extends StyleAttribute<IconSpec> with Diagnosticable {
   final ColorDto? color;
   final double? size;
   final double? weight;

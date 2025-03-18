@@ -64,7 +64,7 @@ class SpecMetadata extends BaseMetadata {
 
   String get extendsAttributeOfType => isWidgetModifier
       ? 'WidgetModifierSpecAttribute<$name>'
-      : 'SpecAttribute<$name>';
+      : 'StyleAttribute<$name>';
 
   String get attributeName => '${name}Attribute';
 

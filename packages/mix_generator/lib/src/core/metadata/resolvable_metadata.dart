@@ -1,6 +1,7 @@
 import 'package:analyzer/dart/element/element.dart';
 import 'package:mix_annotations/mix_annotations.dart';
 
+import '../resolvable/resolvable_method_builder.dart';
 import '../utils/constructor_utils.dart';
 import '../utils/dart_type_utils.dart';
 import 'base_metadata.dart';
@@ -19,6 +20,12 @@ class ResolvableMetadata extends BaseMetadata {
   /// The resolved field accessors
   final List<FieldMetadata> resolvableFields;
 
+  /// Default values extracted from the resolved type's constructor
+  final Map<String, String?> constructorDefaults;
+
+  /// Whether this type implements HasDefaultValue mixin
+  final bool hasDefaultValue;
+
   ResolvableMetadata({
     required super.element,
     required super.name,
@@ -31,6 +38,8 @@ class ResolvableMetadata extends BaseMetadata {
     required this.generatedComponents,
     required this.resolvedElement,
     required this.resolvableFields,
+    required this.constructorDefaults,
+    required this.hasDefaultValue,
   });
 
   /// Creates a ResolvableMetadata from a class element and its annotation
@@ -41,6 +50,15 @@ class ResolvableMetadata extends BaseMetadata {
     final constructor = findTargetConstructor(element);
     final parameters = ParameterMetadata.extractFromConstructor(element);
     final resolvedElement = _getResolvedType(element);
+
+    // Extract constructor defaults from resolved type
+    final resolvedConstructor = findTargetConstructor(resolvedElement);
+    final constructorDefaults =
+        extractConstructorDefaults(resolvedConstructor.parameters);
+
+    // Check if the class has the HasDefaultValue mixin using utility method
+    final hasDefaultValue = TypeUtils.hasDefaultValueMixin(element);
+
     final resolvedFieldsAndAccessors = collectClassMembers(resolvedElement);
     final List<FieldMetadata> resolvedFields = [];
 
@@ -73,6 +91,8 @@ class ResolvableMetadata extends BaseMetadata {
       generatedComponents: annotation.components,
       resolvedElement: resolvedElement,
       resolvableFields: resolvedFields,
+      constructorDefaults: constructorDefaults,
+      hasDefaultValue: hasDefaultValue,
     );
   }
 

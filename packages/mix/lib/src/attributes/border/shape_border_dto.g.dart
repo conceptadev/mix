@@ -6,6 +6,7 @@ part of 'shape_border_dto.dart';
 // MixableResolvableGenerator
 // **************************************************************************
 
+/// A mixin that provides DTO functionality for [RoundedRectangleBorderDto].
 mixin _$RoundedRectangleBorderDto on StyleProperty<RoundedRectangleBorder> {
   /// Resolves to [RoundedRectangleBorder] using the provided [MixData].
   ///
@@ -18,9 +19,8 @@ mixin _$RoundedRectangleBorderDto on StyleProperty<RoundedRectangleBorder> {
   @override
   RoundedRectangleBorder resolve(MixData mix) {
     return RoundedRectangleBorder(
-      borderRadius:
-          _$this.borderRadius?.resolve(mix) ?? defaultValue.borderRadius,
-      side: _$this.side?.resolve(mix) ?? defaultValue.side,
+      borderRadius: _$this.borderRadius?.resolve(mix) ?? BorderRadius.zero,
+      side: _$this.side?.resolve(mix) ?? BorderSide.none,
     );
   }
 
@@ -128,9 +128,8 @@ mixin _$BeveledRectangleBorderDto on StyleProperty<BeveledRectangleBorder> {
   @override
   BeveledRectangleBorder resolve(MixData mix) {
     return BeveledRectangleBorder(
-      borderRadius:
-          _$this.borderRadius?.resolve(mix) ?? defaultValue.borderRadius,
-      side: _$this.side?.resolve(mix) ?? defaultValue.side,
+      borderRadius: _$this.borderRadius?.resolve(mix) ?? BorderRadius.zero,
+      side: _$this.side?.resolve(mix) ?? BorderSide.none,
     );
   }
 
@@ -239,9 +238,8 @@ mixin _$ContinuousRectangleBorderDto
   @override
   ContinuousRectangleBorder resolve(MixData mix) {
     return ContinuousRectangleBorder(
-      borderRadius:
-          _$this.borderRadius?.resolve(mix) ?? defaultValue.borderRadius,
-      side: _$this.side?.resolve(mix) ?? defaultValue.side,
+      borderRadius: _$this.borderRadius?.resolve(mix) ?? BorderRadius.zero,
+      side: _$this.side?.resolve(mix) ?? BorderSide.none,
     );
   }
 
@@ -351,8 +349,8 @@ mixin _$CircleBorderDto on StyleProperty<CircleBorder> {
   @override
   CircleBorder resolve(MixData mix) {
     return CircleBorder(
-      side: _$this.side?.resolve(mix) ?? defaultValue.side,
-      eccentricity: _$this.eccentricity ?? defaultValue.eccentricity,
+      side: _$this.side?.resolve(mix) ?? BorderSide.none,
+      eccentricity: _$this.eccentricity ?? 0.0,
     );
   }
 
@@ -457,14 +455,13 @@ mixin _$StarBorderDto on StyleProperty<StarBorder> {
   @override
   StarBorder resolve(MixData mix) {
     return StarBorder(
-      side: _$this.side?.resolve(mix) ?? defaultValue.side,
-      points: _$this.points ?? defaultValue.points,
-      innerRadiusRatio:
-          _$this.innerRadiusRatio ?? defaultValue.innerRadiusRatio,
-      pointRounding: _$this.pointRounding ?? defaultValue.pointRounding,
-      valleyRounding: _$this.valleyRounding ?? defaultValue.valleyRounding,
-      rotation: _$this.rotation ?? defaultValue.rotation,
-      squash: _$this.squash ?? defaultValue.squash,
+      side: _$this.side?.resolve(mix) ?? BorderSide.none,
+      points: _$this.points ?? 5,
+      innerRadiusRatio: _$this.innerRadiusRatio ?? 0.4,
+      pointRounding: _$this.pointRounding ?? 0,
+      valleyRounding: _$this.valleyRounding ?? 0,
+      rotation: _$this.rotation ?? 0,
+      squash: _$this.squash ?? 0,
     );
   }
 
@@ -619,11 +616,11 @@ mixin _$LinearBorderDto on StyleProperty<LinearBorder> {
   @override
   LinearBorder resolve(MixData mix) {
     return LinearBorder(
-      side: _$this.side?.resolve(mix) ?? defaultValue.side,
-      start: _$this.start?.resolve(mix) ?? defaultValue.start,
-      end: _$this.end?.resolve(mix) ?? defaultValue.end,
-      top: _$this.top?.resolve(mix) ?? defaultValue.top,
-      bottom: _$this.bottom?.resolve(mix) ?? defaultValue.bottom,
+      side: _$this.side?.resolve(mix) ?? BorderSide.none,
+      start: _$this.start?.resolve(mix),
+      end: _$this.end?.resolve(mix),
+      top: _$this.top?.resolve(mix),
+      bottom: _$this.bottom?.resolve(mix),
     );
   }
 
@@ -758,8 +755,8 @@ mixin _$LinearBorderEdgeDto on StyleProperty<LinearBorderEdge> {
   @override
   LinearBorderEdge resolve(MixData mix) {
     return LinearBorderEdge(
-      size: _$this.size ?? defaultValue.size,
-      alignment: _$this.alignment ?? defaultValue.alignment,
+      size: _$this.size ?? 1.0,
+      alignment: _$this.alignment ?? 0.0,
     );
   }
 
@@ -864,7 +861,7 @@ mixin _$StadiumBorderDto on StyleProperty<StadiumBorder> {
   @override
   StadiumBorder resolve(MixData mix) {
     return StadiumBorder(
-      side: _$this.side?.resolve(mix) ?? defaultValue.side,
+      side: _$this.side?.resolve(mix) ?? BorderSide.none,
     );
   }
 

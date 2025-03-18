@@ -42,6 +42,36 @@ class TypeUtils {
     }
   }
 
+  static bool hasDefaultValueMixin(ClassElement element) {
+    // Check for a direct implementation of the mixin
+    bool hasDirectMixin = element.mixins.any((mixin) {
+      final name = mixin.element.name;
+
+      return name == 'HasDefaultValue' || name.startsWith('HasDefaultValue<');
+    });
+
+    if (hasDirectMixin) return true;
+
+    // Recursively check supertypes for the mixin
+    for (final supertype in element.allSupertypes) {
+      if (supertype.element is ClassElement) {
+        if (hasDefaultValueMixin(supertype.element as ClassElement)) {
+          return true;
+        }
+      }
+    }
+
+    // Check if any of the interfaces is the HasDefaultValue mixin
+    bool hasInterfaceMixin = element.interfaces.any((interface) {
+      final name = interface.element.name;
+
+      return name == 'HasDefaultValue' ||
+          interface.getTypeAsString().contains('HasDefaultValue<');
+    });
+
+    return hasDirectMixin || hasInterfaceMixin;
+  }
+
   /// Finds a specific supertype of a class by name.
   ///
   /// Returns the [InterfaceType] of the supertype if found, or null otherwise.
@@ -160,7 +190,7 @@ class TypeUtils {
       return isResolvable(type.firstTypeArgument!);
     }
 
-    return findSupertype(type.element!, $Dto) != null;
+    return findSupertype(type.element!, $StyleProperty) != null;
   }
 
   /// Checks if a type is a Spec.
@@ -183,7 +213,7 @@ class TypeUtils {
   static DartType? extractDtoTypeArgument(ClassElement classElement) {
     try {
       // Check if the class itself is Dto<T>
-      if (classElement.name == $Dto &&
+      if (classElement.name == $StyleProperty &&
           classElement.typeParameters.length == 1) {
         final typeArgument = classElement.thisType.typeArguments.first;
 
@@ -192,7 +222,7 @@ class TypeUtils {
 
       // Traverse the class hierarchy
       for (final interface in classElement.allSupertypes) {
-        if (interface.element.name == $Dto) {
+        if (interface.element.name == $StyleProperty) {
           final typeArguments = interface.typeArguments;
           if (typeArguments.length == 1) {
             final typeArgument = typeArguments.first;
@@ -360,7 +390,7 @@ final Uri _mixUri = Uri(scheme: 'package', path: 'mix/');
 
 const $Spec = 'Spec';
 
-const $Dto = 'Dto';
+const $StyleProperty = 'StyleProperty';
 
 /// References to Mix helper functions used in generated code.
 ///

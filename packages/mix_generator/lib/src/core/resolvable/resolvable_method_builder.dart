@@ -1,6 +1,29 @@
+import 'package:analyzer/dart/element/element.dart';
+
 import '../metadata/field_metadata.dart';
+import '../utils/extensions.dart';
 import '../utils/helpers.dart';
 import '../utils/string_utils.dart';
+
+/// Utility to extract default values from constructor parameters
+Map<String, String?> extractConstructorDefaults(
+  List<ParameterElement> parameters,
+) {
+  final defaults = <String, String?>{};
+
+  for (final param in parameters) {
+    // Check if parameter has a default value
+    if (param.hasDefaultValue && param.defaultValueCode != null) {
+      defaults[param.name] = param.defaultValueCode;
+    }
+    // If it's a required parameter with no default value and is a list type, set empty list as default
+    else if (param.isRequired && param.type.isList) {
+      defaults[param.name] = '[]';
+    }
+  }
+
+  return defaults;
+}
 
 class ResolvableMethods {
   const ResolvableMethods._();
@@ -12,8 +35,9 @@ class ResolvableMethods {
     required List<ParameterMetadata> fields,
     required bool isConst,
     required String resolvedType,
-    required bool withDefaults,
     required bool useInternalRef,
+    Map<String, String?>? constructorDefaults,
+    bool hasDefaultValue = false,
   }) {
     final params = buildParameters(fields, (field) {
       final fieldName = useInternalRef ? field.asInternalRef : field.name;
@@ -23,10 +47,24 @@ class ResolvableMethods {
         return '$fieldName?.resolve(mix) ?? mix.animation';
       }
 
-      // Use the default constant (e.g. $kDefaultValueRef) as in the old implementation
-      final fallbackExpression = field.nullable && withDefaults
-          ? ' ?? defaultValue.${field.name}'
+      // Prepare fallback expressions in order of priority:
+      // 1. If the field is nullable, try to use constructor default if available
+      // 2. If the type has HasDefaultValue mixin, use defaultValue.fieldName
+
+      // Default value from constructor if available
+      final constructorDefault = (field.nullable &&
+              constructorDefaults != null &&
+              constructorDefaults.containsKey(field.name))
+          ? ' ?? ${constructorDefaults[field.name]!}'
           : '';
+
+      // Default value from HasDefaultValue mixin if available
+      final defaultValueFallback =
+          hasDefaultValue ? ' ?? defaultValue.${field.name}' : '';
+
+      // Combine fallbacks in order of priority
+      final fallbackExpression =
+          hasDefaultValue ? defaultValueFallback : constructorDefault;
 
       if (field.isListType) {
         // Check if the list elements are resolvable

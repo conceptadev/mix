@@ -129,7 +129,7 @@ final class BorderDirectionalDto extends BoxBorderDto<BorderDirectional>
 
 @MixableResolvable()
 final class BorderSideDto extends StyleProperty<BorderSide>
-    with _$BorderSideDto {
+    with HasDefaultValue<BorderSide>, _$BorderSideDto {
   final ColorDto? color;
   final double? width;
 

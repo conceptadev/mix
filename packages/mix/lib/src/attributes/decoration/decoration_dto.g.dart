@@ -19,17 +19,14 @@ mixin _$BoxDecorationDto on StyleProperty<BoxDecoration> {
   @override
   BoxDecoration resolve(MixData mix) {
     return BoxDecoration(
-      border: _$this.border?.resolve(mix) ?? defaultValue.border,
-      borderRadius:
-          _$this.borderRadius?.resolve(mix) ?? defaultValue.borderRadius,
-      shape: _$this.shape ?? defaultValue.shape,
-      backgroundBlendMode:
-          _$this.backgroundBlendMode ?? defaultValue.backgroundBlendMode,
-      color: _$this.color?.resolve(mix) ?? defaultValue.color,
-      image: _$this.image?.resolve(mix) ?? defaultValue.image,
-      gradient: _$this.gradient?.resolve(mix) ?? defaultValue.gradient,
-      boxShadow: _$this.boxShadow?.map((e) => e.resolve(mix)).toList() ??
-          defaultValue.boxShadow,
+      border: _$this.border?.resolve(mix),
+      borderRadius: _$this.borderRadius?.resolve(mix),
+      shape: _$this.shape ?? BoxShape.rectangle,
+      backgroundBlendMode: _$this.backgroundBlendMode,
+      color: _$this.color?.resolve(mix),
+      image: _$this.image?.resolve(mix),
+      gradient: _$this.gradient?.resolve(mix),
+      boxShadow: _$this.boxShadow?.map((e) => e.resolve(mix)).toList(),
     );
   }
 
@@ -198,7 +195,8 @@ extension ListBoxDecorationMixExt on List<BoxDecoration> {
 }
 
 /// A mixin that provides DTO functionality for [ShapeDecorationDto].
-mixin _$ShapeDecorationDto on StyleProperty<ShapeDecoration> {
+mixin _$ShapeDecorationDto
+    on StyleProperty<ShapeDecoration>, HasDefaultValue<ShapeDecoration> {
   /// Resolves to [ShapeDecoration] using the provided [MixData].
   ///
   /// If a property is null in the [MixData], it falls back to the
