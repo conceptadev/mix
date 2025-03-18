@@ -30,7 +30,7 @@ abstract class WidgetModifierSpec<Self extends WidgetModifierSpec<Self>>
 }
 
 abstract class WidgetModifierSpecAttribute<
-        Value extends WidgetModifierSpec<Value>> extends StyleAttribute<Value>
+        Value extends WidgetModifierSpec<Value>> extends SpecAttribute<Value>
     with Diagnosticable {
   const WidgetModifierSpecAttribute();
 }

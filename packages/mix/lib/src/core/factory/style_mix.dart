@@ -28,7 +28,7 @@ import 'mix_data.dart';
 /// ```
 class Style with EqualityMixin {
   /// Visual attributes contained in this mix.
-  final AttributeMap<StyleAttribute> styles;
+  final AttributeMap<SpecAttribute> styles;
 
   /// The variant attributes contained in this mix.
   final AttributeMap<VariantAttribute> variants;
@@ -98,11 +98,11 @@ class Style with EqualityMixin {
   /// ```
   factory Style.create(Iterable<Attribute> attributes) {
     final applyVariants = <VariantAttribute>[];
-    final styleList = <StyleAttribute>[];
+    final styleList = <SpecAttribute>[];
 
     for (final attribute in attributes) {
       switch (attribute) {
-        case StyleAttribute():
+        case SpecAttribute():
           styleList.add(attribute);
         case VariantAttribute():
           applyVariants.add(attribute);
@@ -212,7 +212,7 @@ class Style with EqualityMixin {
   ///
   /// If [styles] or [variants] is null, the corresponding attribute map of this mix is used.
   Style copyWith({
-    AttributeMap<StyleAttribute>? styles,
+    AttributeMap<SpecAttribute>? styles,
     AttributeMap<VariantAttribute>? variants,
   }) {
     return Style._(
@@ -399,7 +399,7 @@ class AnimatedStyle extends Style {
   /// If [styles] or [variants] is null, the corresponding attribute map of this mix is used.
   @override
   AnimatedStyle copyWith({
-    AttributeMap<StyleAttribute>? styles,
+    AttributeMap<SpecAttribute>? styles,
     AttributeMap<VariantAttribute>? variants,
     AnimatedData? animated,
   }) {

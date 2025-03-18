@@ -22,10 +22,7 @@ abstract class Attribute extends StyleElement {
 }
 
 @Deprecated('Use StyleAttribute instead')
-typedef StyledAttribute = StyleAttribute;
-
-@Deprecated('Use StyleAttribute instead')
-typedef SpecAttribute<Value> = StyleAttribute<Value>;
+typedef StyledAttribute = SpecAttribute;
 
 @Deprecated('Use StyleProperty instead')
 typedef Dto<Value> = StyleProperty<Value>;

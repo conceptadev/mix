@@ -23,7 +23,7 @@ final class _TestSpec extends Spec<_TestSpec> {
   const _TestSpec({this.dto});
 }
 
-final class _TestAttribute extends StyleAttribute<_TestSpec> {
+final class _TestAttribute extends SpecAttribute<_TestSpec> {
   final DecorationImageDto? dto;
 
   @override

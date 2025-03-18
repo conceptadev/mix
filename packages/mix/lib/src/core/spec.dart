@@ -9,6 +9,7 @@ import '../internal/compare_mixin.dart';
 import '../variants/context_variant_util/on_util.dart';
 import 'element.dart';
 import 'factory/mix_data.dart';
+import 'factory/style_mix.dart';
 
 @immutable
 abstract class Spec<T extends Spec<T>> with EqualityMixin {
@@ -34,25 +35,22 @@ abstract class Spec<T extends Spec<T>> with EqualityMixin {
   T lerp(covariant T? other, double t);
 }
 
-@Deprecated('Use StyleAttribute instead')
-typedef SpecAttribute<T> = StyleAttribute<T>;
-
 /// An abstract class representing a resolvable attribute.
 ///
 /// This class extends the [Attribute] class and provides a generic type [Self] and [Value].
 /// The [Self] type represents the concrete implementation of the attribute, while the [Value] type represents the resolvable value.
-abstract class StyleAttribute<Value> extends StyleProperty<Value>
+abstract class SpecAttribute<Value> extends StyleProperty<Value>
     implements Attribute {
   final AnimatedDataDto? animated;
   final WidgetModifiersDataDto? modifiers;
 
-  const StyleAttribute({this.animated, this.modifiers});
+  const SpecAttribute({this.animated, this.modifiers});
 
   @override
   Value resolve(MixData mix);
 
   @override
-  StyleAttribute<Value> merge(covariant StyleAttribute<Value>? other);
+  SpecAttribute<Value> merge(covariant SpecAttribute<Value>? other);
 }
 
 abstract class SpecUtility<T extends Attribute, V> extends Attribute {
@@ -101,4 +99,10 @@ class SpecConfiguration<U extends SpecUtility> {
   OnContextVariantUtility get on => OnContextVariantUtility.self;
 
   U get utilities => _utility;
+}
+
+abstract class SpecStyle<U extends SpecUtility> {
+  const SpecStyle();
+
+  Style makeStyle(SpecConfiguration<U> spec);
 }

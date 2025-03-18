@@ -109,7 +109,7 @@ mixin _$FlexBoxSpec on Spec<FlexBoxSpec> {
 ///
 /// Use this class to configure the attributes of a [FlexBoxSpec] and pass it to
 /// the [FlexBoxSpec] constructor.
-class FlexBoxSpecAttribute extends StyleAttribute<FlexBoxSpec>
+class FlexBoxSpecAttribute extends SpecAttribute<FlexBoxSpec>
     with Diagnosticable {
   final BoxSpecAttribute? box;
   final FlexSpecAttribute? flex;

@@ -78,7 +78,7 @@ class MixData with Diagnosticable {
   }
 
   /// Finds and returns an [VisualAttribute] of type [A], or null if not found.
-  A? attributeOf<A extends StyleAttribute>() {
+  A? attributeOf<A extends SpecAttribute>() {
     final attributes = _attributes.whereType<A>();
     if (attributes.isEmpty) return null;
 
@@ -90,7 +90,7 @@ class MixData with Diagnosticable {
     return modifiers.whereType<M>().toList();
   }
 
-  Iterable<A> whereType<A extends StyleAttribute>() {
+  Iterable<A> whereType<A extends SpecAttribute>() {
     return _attributes.whereType();
   }
 
@@ -98,7 +98,7 @@ class MixData with Diagnosticable {
     return _attributes.values.any((attr) => attr is T);
   }
 
-  Value? resolvableOf<Value, A extends StyleAttribute<Value>>() {
+  Value? resolvableOf<Value, A extends SpecAttribute<Value>>() {
     final attribute = _attributes.attributeOfType<A>();
 
     return attribute?.resolve(this);
@@ -154,7 +154,7 @@ class MixData with Diagnosticable {
 }
 
 @visibleForTesting
-List<StyleAttribute> applyContextToVisualAttributes(
+List<SpecAttribute> applyContextToVisualAttributes(
   BuildContext context,
   Style mix,
 ) {
@@ -189,7 +189,7 @@ Style _applyVariants(
       : style;
 }
 
-M? _mergeAttributes<M extends StyleAttribute>(Iterable<M> mergeables) {
+M? _mergeAttributes<M extends SpecAttribute>(Iterable<M> mergeables) {
   if (mergeables.isEmpty) return null;
 
   return mergeables.reduce((a, b) {

@@ -5,6 +5,7 @@ import 'package:source_gen/source_gen.dart';
 
 import 'src/generators/mixable_dto_generator.dart';
 import 'src/generators/mixable_spec_generator.dart';
+import 'src/generators/mixable_tokens_generator.dart';
 import 'src/generators/mixable_utility_generator.dart';
 
 Builder specDefinition(BuilderOptions options) => SharedPartBuilder(
@@ -28,5 +29,11 @@ Builder dtoDefinition(BuilderOptions options) => SharedPartBuilder(
 Builder utilityDefinition(BuilderOptions options) => SharedPartBuilder(
       [MixableUtilityGenerator()],
       'utility',
+      allowSyntaxErrors: true,
+    );
+
+Builder tokensDefinition(BuilderOptions options) => SharedPartBuilder(
+      [MixableTokensGenerator()],
+      'tokens',
       allowSyntaxErrors: true,
     );

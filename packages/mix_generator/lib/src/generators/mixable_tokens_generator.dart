@@ -1,245 +1,188 @@
-// import 'package:analyzer/dart/element/element.dart';
-// import 'package:build/build.dart';
-// import 'package:mix_annotations/mix_annotations.dart';
-// import 'package:source_gen/source_gen.dart';
+import 'package:analyzer/dart/element/element.dart';
+import 'package:build/build.dart';
+import 'package:logging/logging.dart';
+import 'package:mix_annotations/mix_annotations.dart';
+import 'package:source_gen/source_gen.dart';
 
-// import '../helpers/annotation_helpers.dart';
-// import '../helpers/field_info.dart';
-// import '../helpers/helpers.dart';
+import '../core/metadata/tokens_metadata.dart';
+import '../core/utils/annotation_utils.dart';
+import '../core/utils/base_generator.dart';
 
-// class MixableTokensGenerator extends GeneratorForAnnotation<MixableToken> {
-//   const MixableTokensGenerator();
+/// Generator for classes annotated with [MixableToken].
+///
+/// This generator produces:
+/// - A token struct class with token definitions
+/// - A method to convert token instances to token-value maps
+/// - Optional utility extensions
+/// - Optional build context extensions
+class MixableTokensGenerator
+    extends BaseMixGenerator<MixableToken, TokensMetadata> {
+  final Logger _logger = Logger('MixableTokensGenerator');
 
-//   AnnotatedClassBuilderContext<MixableToken> _loadContext(Element element) {
-//     if (element is! ClassElement) {
-//       throw InvalidGenerationSourceError(
-//         'The annotation can only be applied to a class.',
-//         element: element,
-//       );
-//     }
+  MixableTokensGenerator() : super(const TypeChecker.fromRuntime(MixableToken));
 
-//     return AnnotatedClassBuilderContext(
-//       element: element,
-//       annotation: readMixableToken(element),
-//     );
-//   }
+  // Helper methods for code generation
 
-//   @override
-//   Future<String> generateForAnnotatedElement(
-//     Element element,
-//     ConstantReader annotation,
-//     BuildStep buildStep,
-//   ) async {
-//     final context = _loadContext(element);
-//     verifyIfIsValidClass(context);
-//     final output = StringBuffer();
+  String _generateTokenStruct(TokensMetadata metadata) {
+    final settings = metadata.tokenSettings;
+    final swatchTokens = metadata.swatchColorTokens;
+    final tokenFields = metadata.tokenFields;
 
-//     output.writeln(_generateTokenStruct(context));
-//     output.writeln(_generateTokenToDataMethod(context));
+    final buffer = StringBuffer();
+    buffer.writeln('class ${_kTokenStructName(metadata.name)} {');
+    buffer.writeln('  ${_kTokenStructName(metadata.name)}();');
+    buffer.writeln();
 
-//     if (context.annotation.utilityExtension) {
-//       output.writeln(_generateTokenUtilityExtension(context));
-//     }
-//     if (context.annotation.contextExtension) {
-//       output.writeln(_generateBuildContextMethods(context));
-//       output.writeln(_generateBuildContextExtension(context));
-//     }
+    for (final field in tokenFields) {
+      final annotation = swatchTokens[field];
+      if (annotation != null) {
+        buffer.writeln(
+          '  final ColorSwatchToken ${field.name} = ColorSwatchToken.scale(\'${field.name}\', ${annotation.scale});',
+        );
+      } else {
+        buffer.writeln(
+          '  final ${settings.token} ${field.name} = const ${settings.token}(\'${field.name}\');',
+        );
+      }
+    }
 
-//     return dartFormat(output.toString());
-//   }
-// }
+    buffer.writeln('}');
+    buffer.writeln();
+    buffer.writeln(
+      'final ${_kVariableStructName(metadata.name)} = ${_kTokenStructName(metadata.name)}();',
+    );
 
-// void verifyIfIsValidClass(AnnotatedClassBuilderContext<MixableToken> context) {
-//   if (context.classElement.fields.isEmpty) {
-//     throw InvalidGenerationSourceError(
-//       'The class must have at least one field.',
-//       element: context.classElement,
-//     );
-//   }
-//   if (context.classElement.constructors.isEmpty) {
-//     throw InvalidGenerationSourceError(
-//       'The class must have at least one constructor.',
-//       element: context.classElement,
-//     );
-//   }
+    return buffer.toString();
+  }
 
-//   for (final param in context.classElement.fields) {
-//     final typeFromAnnotation = context.annotation.type.toString();
+  String _generateTokenToDataMethod(TokensMetadata metadata) {
+    final settings = metadata.tokenSettings;
+    final typeStr = metadata.type.toString();
+    final tokenFields = metadata.tokenFields;
 
-//     if (!param.type.toString().contains(typeFromAnnotation)) {
-//       throw InvalidGenerationSourceError(
-//         'The constructor parameters must have the same type as the class annotation.',
-//         element: param,
-//       );
-//     }
-//   }
-// }
+    return '''
 
-// const _predefinedTokens = {
-//   'Color': (
-//     token: 'ColorToken',
-//     utilities: ['ColorUtility'],
-//     defaultNamespace: 'color',
-//   ),
-//   'TextStyle': (
-//     token: 'TextStyleToken',
-//     utilities: ['TextStyleUtility'],
-//     defaultNamespace: 'textStyle',
-//   ),
-//   'double': (
-//     token: 'SpaceToken',
-//     utilities: ['SpacingSideUtility', 'GapUtility'],
-//     defaultNamespace: 'space',
-//   ),
-//   'Radius': (
-//     token: 'RadiusToken',
-//     utilities: ['RadiusUtility'],
-//     defaultNamespace: 'radius',
-//   ),
-// };
+Map<${settings.token}, $typeStr> ${_kFunctionToMapName(metadata.name)}(${metadata.name} tokens) {
+  return {
+    ${tokenFields.map((e) => '${_kVariableStructName(metadata.name)}.${e.name}: tokens.${e.name},').join('\n    ')}
+  };
+}
+''';
+  }
 
-// String _kTokenStructName(String name) => '_\$${name}Struct';
-// String _kVariableStructName(String name) => '_struct$name';
-// String _kFunctionToMapName(String name) => '_\$${name}ToMap';
-// String _kUtilityExtensionName(String name, String utility) =>
-//     '\$$name${utility}X';
-// String _kBuildContextMethodsClassName(String name) =>
-//     'BuildContext${name}Methods';
-// String _kBuildContextExtensionName(String name) => '\$BuildContext${name}X';
+  String _generateTokenUtilityExtension(TokensMetadata metadata) {
+    final settings = metadata.tokenSettings;
+    final swatchTokens = metadata.swatchColorTokens;
+    final tokenFields = metadata.tokenFields;
+    final buffer = StringBuffer();
 
-// String _generateTokenStruct(
-//   AnnotatedClassBuilderContext<MixableToken> context,
-// ) {
-//   final type = context.annotation.type.toString();
-//   final settings = _predefinedTokens[type]!;
+    String generateMethod(FieldElement field) {
+      final annotation = swatchTokens[field];
 
-//   final buffer = StringBuffer();
-//   buffer.writeln('class ${_kTokenStructName(context.name)} {');
-//   buffer.writeln('  ${_kTokenStructName(context.name)}();');
-//   buffer.writeln();
+      if (annotation != null) {
+        return 'T \$${field.name}([int step = ${annotation.defaultValue}]) => ref(${_kVariableStructName(metadata.name)}.${field.name}[step]);';
+      }
 
-//   for (var i = 0; i < context.fields.length; i++) {
-//     final field = context.classElement.fields[i];
+      return 'T \$${field.name}() => ref(${_kVariableStructName(metadata.name)}.${field.name});';
+    }
 
-//     final annotation = getMixableSwatchColorToken(field);
-//     if (annotation != null) {
-//       buffer.writeln(
-//         '  final ColorSwatchToken ${field.name} = ColorSwatchToken.scale(\'${field.name}\', ${annotation.scale});',
-//       );
-//     } else {
-//       buffer.writeln(
-//         '  final ${settings.token} ${field.name} = const ${settings.token}(\'${field.name}\');',
-//       );
-//     }
-//   }
+    for (final utility in settings.utilities) {
+      buffer.writeln('''
+extension ${_kUtilityExtensionName(metadata.name, utility)}<T extends Attribute> on $utility<T> {
+  ${tokenFields.map(generateMethod).join('\n  ')}
+}
+''');
+    }
 
-//   buffer.writeln('}');
-//   buffer.writeln();
-//   buffer.writeln(
-//     'final ${_kVariableStructName(context.name)} = ${_kTokenStructName(context.name)}();',
-//   );
+    return buffer.toString();
+  }
 
-//   return buffer.toString();
-// }
+  String _generateBuildContextMethods(TokensMetadata metadata) {
+    final swatchTokens = metadata.swatchColorTokens;
+    final tokenFields = metadata.tokenFields;
 
-// String _generateTokenToDataMethod(
-//   AnnotatedClassBuilderContext<MixableToken> context,
-// ) {
-//   final type = context.annotation.type.toString();
-//   final settings = _predefinedTokens[type]!;
+    String generateMethod(FieldElement field) {
+      final annotation = swatchTokens[field];
 
-//   return '''
+      if (annotation != null) {
+        return '${field.type} ${field.name}([int step = ${annotation.defaultValue}]) => ${_kVariableStructName(metadata.name)}.${field.name}[step].resolve(context);';
+      }
 
-// Map<${settings.token}, $type> ${_kFunctionToMapName(context.name)}(${context.name} tokens) {
-//   return {
-//     ${context.fields.map((e) => '${_kVariableStructName(context.name)}.${e.name}: tokens.${e.name},').join('\n')}
-//   };
-// }
-// ''';
-// }
+      return '${field.type} ${field.name}() => ${_kVariableStructName(metadata.name)}.${field.name}.resolve(context);';
+    }
 
-// String _generateTokenUtilityExtension(
-//   AnnotatedClassBuilderContext<MixableToken> context,
-// ) {
-//   final type = context.annotation.type.toString();
-//   final settings = _predefinedTokens[type]!;
-//   String result = '';
+    return '''
+class ${_kBuildContextMethodsClassName(metadata.name)} {
+  const ${_kBuildContextMethodsClassName(metadata.name)}(this.context);
 
-//   String generateMethod(int index) {
-//     final field = context.classElement.fields[index];
+  final BuildContext context;
+  ${tokenFields.map(generateMethod).join('\n  ')}
+}
+''';
+  }
 
-//     final annotation = getMixableSwatchColorToken(field);
+  String _generateBuildContextExtension(TokensMetadata metadata) {
+    final settings = metadata.tokenSettings;
 
-//     if (annotation != null) {
-//       return 'T \$${field.name}([int step = ${annotation.defaultValue}]) => ref(${_kVariableStructName(context.name)}.${field.name}[step]);';
-//     }
+    return '''
+extension ${_kBuildContextExtensionName(metadata.name)} on BuildContext {
+  ${_kBuildContextMethodsClassName(metadata.name)} get \$${metadata.namespace ?? settings.defaultNamespace} =>
+      ${_kBuildContextMethodsClassName(metadata.name)}(this);
+}
+''';
+  }
 
-//     return 'T \$${field.name}() => ref(${_kVariableStructName(context.name)}.${field.name});';
-//   }
+  @override
+  Future<TokensMetadata> createMetadata(
+    ClassElement element,
+    BuildStep buildStep,
+  ) async {
+    validateClassElement(element);
 
-//   for (final utility in settings.utilities) {
-//     result += '''
-// extension ${_kUtilityExtensionName(context.name, utility)}<T extends Attribute> on $utility<T> {
-//     ${[
-//       for (var i = 0; i < context.fields.length; i++) generateMethod(i),
-//     ].join('\n')}
-// }
-// ''';
-//   }
+    final annotation = readMixableToken(element);
+    final metadata = TokensMetadata.fromAnnotation(element, annotation);
+    metadata.validate();
 
-//   return result;
-// }
+    return metadata;
+  }
 
-// String _generateBuildContextMethods(
-//   AnnotatedClassBuilderContext<MixableToken> context,
-// ) {
-//   String generateMethod(int index) {
-//     final field = context.classElement.fields[index];
+  @override
+  String generateForMetadata(TokensMetadata metadata, BuildStep buildStep) {
+    final output = StringBuffer();
 
-//     final annotation = getMixableSwatchColorToken(field);
+    // Generate token struct
+    output.writeln(_generateTokenStruct(metadata));
 
-//     if (annotation != null) {
-//       return '${field.type} ${field.name}([int step = ${annotation.defaultValue}]) => ${_kVariableStructName(context.name)}.${field.name}[step].resolve(context);';
-//     }
+    // Generate token to data method
+    output.writeln(_generateTokenToDataMethod(metadata));
 
-//     return '${field.type} ${field.name}() => ${_kVariableStructName(context.name)}.${field.name}.resolve(context);';
-//   }
+    // Generate utility extension if enabled
+    if (metadata.utilityExtension) {
+      output.writeln(_generateTokenUtilityExtension(metadata));
+    }
 
-//   return '''
-// class ${_kBuildContextMethodsClassName(context.name)} {
-//   const ${_kBuildContextMethodsClassName(context.name)}(this.context);
+    // Generate context extensions if enabled
+    if (metadata.contextExtension) {
+      output.writeln(_generateBuildContextMethods(metadata));
+      output.writeln(_generateBuildContextExtension(metadata));
+    }
 
-//   final BuildContext context;
-//   ${[
-//     for (var i = 0; i < context.fields.length; i++) generateMethod(i),
-//   ].join('\n')}
-// }
-// ''';
-// }
+    return output.toString();
+  }
 
-// String _generateBuildContextExtension(
-//   AnnotatedClassBuilderContext<MixableToken> context,
-// ) {
-//   final type = context.annotation.type.toString();
-//   final settings = _predefinedTokens[type]!;
+  @override
+  bool get allowAbstractClasses => false;
 
-//   return '''
-// extension ${_kBuildContextExtensionName(context.name)} on BuildContext {
-//   ${_kBuildContextMethodsClassName(context.name)} get \$${context.annotation.namespace ?? settings.defaultNamespace} =>
-//       ${_kBuildContextMethodsClassName(context.name)}(this);
-// }
-// ''';
-// }
+  @override
+  String get annotationName => 'MixableToken';
+}
 
-// const _tokenChecker = TypeChecker.fromRuntime(MixableSwatchColorToken);
-
-// MixableSwatchColorToken? getMixableSwatchColorToken(FieldElement element) {
-//   final annotation = _tokenChecker.firstAnnotationOfExact(element);
-//   if (annotation == null) return null;
-
-//   final reader = ConstantReader(annotation);
-//   final scale = reader.read('scale').intValue;
-//   final defaultValue = reader.read('defaultValue').intValue;
-
-//   return MixableSwatchColorToken(scale: scale, defaultValue: defaultValue);
-// }
+// Helper string formatters for consistent naming
+String _kTokenStructName(String name) => '_\$${name}Struct';
+String _kVariableStructName(String name) => '_struct$name';
+String _kFunctionToMapName(String name) => '_\$${name}ToMap';
+String _kUtilityExtensionName(String name, String utility) =>
+    '\$$name${utility}X';
+String _kBuildContextMethodsClassName(String name) =>
+    'BuildContext${name}Methods';
+String _kBuildContextExtensionName(String name) => '\$BuildContext${name}X';

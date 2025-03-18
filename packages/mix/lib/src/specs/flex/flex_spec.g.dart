@@ -156,7 +156,7 @@ mixin _$FlexSpec on Spec<FlexSpec> {
 ///
 /// Use this class to configure the attributes of a [FlexSpec] and pass it to
 /// the [FlexSpec] constructor.
-class FlexSpecAttribute extends StyleAttribute<FlexSpec> with Diagnosticable {
+class FlexSpecAttribute extends SpecAttribute<FlexSpec> with Diagnosticable {
   final CrossAxisAlignment? crossAxisAlignment;
   final MainAxisAlignment? mainAxisAlignment;
   final MainAxisSize? mainAxisSize;

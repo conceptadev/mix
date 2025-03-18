@@ -230,7 +230,7 @@ final class MockBooleanScalarAttribute
   bool resolve(MixData mix) => value;
 }
 
-abstract class _MockSpecAttribute<T> extends StyleAttribute<T> {
+abstract class _MockSpecAttribute<T> extends SpecAttribute<T> {
   final T _value;
   const _MockSpecAttribute(this._value);
 
@@ -311,7 +311,7 @@ final class UtilityTestAttribute<T>
 }
 
 final class UtilityTestDtoAttribute<T extends StyleProperty<V>, V>
-    extends StyleAttribute<V> {
+    extends SpecAttribute<V> {
   final T value;
   const UtilityTestDtoAttribute(this.value);
 
@@ -399,7 +399,7 @@ class WidgetWithTestableBuild extends StyledWidget {
 
 abstract class TestScalarAttribute<
     Self extends TestScalarAttribute<Self, Value>,
-    Value> extends StyleAttribute<Value> {
+    Value> extends SpecAttribute<Value> {
   final Value value;
   const TestScalarAttribute(this.value);
 
