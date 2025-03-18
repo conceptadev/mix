@@ -3,7 +3,7 @@
 part of 'attributes.dart';
 
 // **************************************************************************
-// MixableEnumUtilityGenerator
+// MixableUtilityGenerator
 // **************************************************************************
 
 /// {@template box_height_style_utility}
@@ -14,6 +14,9 @@ part of 'attributes.dart';
 /// {@endtemplate}
 mixin _$BoxHeightStyleUtility<T extends Attribute>
     on MixUtility<T, BoxHeightStyle> {
+  /// Creates an [Attribute] instance with the specified BoxHeightStyle value.
+  T call(BoxHeightStyle value) => builder(value);
+
   /// Creates an [Attribute] instance with [BoxHeightStyle.tight] value.
   T tight() => builder(BoxHeightStyle.tight);
 
@@ -33,9 +36,6 @@ mixin _$BoxHeightStyleUtility<T extends Attribute>
 
   /// Creates an [Attribute] instance with [BoxHeightStyle.strut] value.
   T strut() => builder(BoxHeightStyle.strut);
-
-  /// Creates an [Attribute] instance with the specified BoxHeightStyle value.
-  T call(BoxHeightStyle value) => builder(value);
 }
 
 /// {@template box_width_style_utility}
@@ -46,14 +46,14 @@ mixin _$BoxHeightStyleUtility<T extends Attribute>
 /// {@endtemplate}
 mixin _$BoxWidthStyleUtility<T extends Attribute>
     on MixUtility<T, BoxWidthStyle> {
+  /// Creates an [Attribute] instance with the specified BoxWidthStyle value.
+  T call(BoxWidthStyle value) => builder(value);
+
   /// Creates an [Attribute] instance with [BoxWidthStyle.tight] value.
   T tight() => builder(BoxWidthStyle.tight);
 
   /// Creates an [Attribute] instance with [BoxWidthStyle.max] value.
   T max() => builder(BoxWidthStyle.max);
-
-  /// Creates an [Attribute] instance with the specified BoxWidthStyle value.
-  T call(BoxWidthStyle value) => builder(value);
 }
 
 /// {@template brightness_utility}
@@ -63,12 +63,12 @@ mixin _$BoxWidthStyleUtility<T extends Attribute>
 /// from predefined [Brightness] values.
 /// {@endtemplate}
 mixin _$BrightnessUtility<T extends Attribute> on MixUtility<T, Brightness> {
+  /// Creates an [Attribute] instance with the specified Brightness value.
+  T call(Brightness value) => builder(value);
+
   /// Creates an [Attribute] instance with [Brightness.dark] value.
   T dark() => builder(Brightness.dark);
 
   /// Creates an [Attribute] instance with [Brightness.light] value.
   T light() => builder(Brightness.light);
-
-  /// Creates an [Attribute] instance with the specified Brightness value.
-  T call(Brightness value) => builder(value);
 }

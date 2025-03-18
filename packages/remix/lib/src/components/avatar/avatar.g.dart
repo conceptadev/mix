@@ -6,6 +6,7 @@ part of 'avatar.dart';
 // MixableSpecGenerator
 // **************************************************************************
 
+/// A mixin that provides spec functionality for [AvatarSpec].
 mixin _$AvatarSpec on Spec<AvatarSpec> {
   static AvatarSpec from(MixData mix) {
     return mix.attributeOf<AvatarSpecAttribute>()?.resolve(mix) ??
@@ -58,12 +59,10 @@ mixin _$AvatarSpec on Spec<AvatarSpec> {
   ///
   /// The interpolation is performed on each property of the [AvatarSpec] using the appropriate
   /// interpolation method:
-  ///
   /// - [BoxSpec.lerp] for [container].
   /// - [ImageSpec.lerp] for [image].
   /// - [TextSpec.lerp] for [fallback].
   /// - [StackSpec.lerp] for [stack].
-
   /// For [animated], the interpolation is performed using a step function.
   /// If [t] is less than 0.5, the value from the current [AvatarSpec] is used. Otherwise, the value
   /// from the [other] [AvatarSpec] is used.
@@ -106,7 +105,7 @@ mixin _$AvatarSpec on Spec<AvatarSpec> {
 ///
 /// Use this class to configure the attributes of a [AvatarSpec] and pass it to
 /// the [AvatarSpec] constructor.
-base class AvatarSpecAttribute extends StyleAttribute<AvatarSpec> {
+class AvatarSpecAttribute extends SpecAttribute<AvatarSpec> {
   final BoxSpecAttribute? container;
   final ImageSpecAttribute? image;
   final TextSpecAttribute? fallback;
@@ -148,7 +147,7 @@ base class AvatarSpecAttribute extends StyleAttribute<AvatarSpec> {
   /// Properties from [other] that are null will fall back
   /// to the values from this instance.
   @override
-  AvatarSpecAttribute merge(covariant AvatarSpecAttribute? other) {
+  AvatarSpecAttribute merge(AvatarSpecAttribute? other) {
     if (other == null) return this;
 
     return AvatarSpecAttribute(

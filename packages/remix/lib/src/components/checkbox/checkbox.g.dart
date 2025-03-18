@@ -6,6 +6,7 @@ part of 'checkbox.dart';
 // MixableSpecGenerator
 // **************************************************************************
 
+/// A mixin that provides spec functionality for [CheckboxSpec].
 mixin _$CheckboxSpec on Spec<CheckboxSpec> {
   static CheckboxSpec from(MixData mix) {
     return mix.attributeOf<CheckboxSpecAttribute>()?.resolve(mix) ??
@@ -60,12 +61,10 @@ mixin _$CheckboxSpec on Spec<CheckboxSpec> {
   ///
   /// The interpolation is performed on each property of the [CheckboxSpec] using the appropriate
   /// interpolation method:
-  ///
   /// - [BoxSpec.lerp] for [indicatorContainer].
   /// - [IconSpec.lerp] for [indicator].
   /// - [FlexBoxSpec.lerp] for [container].
   /// - [TextSpec.lerp] for [label].
-
   /// For [modifiers] and [animated], the interpolation is performed using a step function.
   /// If [t] is less than 0.5, the value from the current [CheckboxSpec] is used. Otherwise, the value
   /// from the [other] [CheckboxSpec] is used.
@@ -127,7 +126,7 @@ mixin _$CheckboxSpec on Spec<CheckboxSpec> {
 ///
 /// Use this class to configure the attributes of a [CheckboxSpec] and pass it to
 /// the [CheckboxSpec] constructor.
-base class CheckboxSpecAttribute extends StyleAttribute<CheckboxSpec>
+class CheckboxSpecAttribute extends SpecAttribute<CheckboxSpec>
     with Diagnosticable {
   final BoxSpecAttribute? indicatorContainer;
   final IconSpecAttribute? indicator;
@@ -172,7 +171,7 @@ base class CheckboxSpecAttribute extends StyleAttribute<CheckboxSpec>
   /// Properties from [other] that are null will fall back
   /// to the values from this instance.
   @override
-  CheckboxSpecAttribute merge(covariant CheckboxSpecAttribute? other) {
+  CheckboxSpecAttribute merge(CheckboxSpecAttribute? other) {
     if (other == null) return this;
 
     return CheckboxSpecAttribute(

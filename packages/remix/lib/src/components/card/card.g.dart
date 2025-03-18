@@ -6,6 +6,7 @@ part of 'card.dart';
 // MixableSpecGenerator
 // **************************************************************************
 
+/// A mixin that provides spec functionality for [CardSpec].
 mixin _$CardSpec on Spec<CardSpec> {
   static CardSpec from(MixData mix) {
     return mix.attributeOf<CardSpecAttribute>()?.resolve(mix) ??
@@ -54,9 +55,7 @@ mixin _$CardSpec on Spec<CardSpec> {
   ///
   /// The interpolation is performed on each property of the [CardSpec] using the appropriate
   /// interpolation method:
-  ///
   /// - [BoxSpec.lerp] for [container].
-
   /// For [modifiers] and [animated], the interpolation is performed using a step function.
   /// If [t] is less than 0.5, the value from the current [CardSpec] is used. Otherwise, the value
   /// from the [other] [CardSpec] is used.
@@ -104,8 +103,7 @@ mixin _$CardSpec on Spec<CardSpec> {
 ///
 /// Use this class to configure the attributes of a [CardSpec] and pass it to
 /// the [CardSpec] constructor.
-base class CardSpecAttribute extends StyleAttribute<CardSpec>
-    with Diagnosticable {
+class CardSpecAttribute extends SpecAttribute<CardSpec> with Diagnosticable {
   final BoxSpecAttribute? container;
 
   const CardSpecAttribute({
@@ -140,7 +138,7 @@ base class CardSpecAttribute extends StyleAttribute<CardSpec>
   /// Properties from [other] that are null will fall back
   /// to the values from this instance.
   @override
-  CardSpecAttribute merge(covariant CardSpecAttribute? other) {
+  CardSpecAttribute merge(CardSpecAttribute? other) {
     if (other == null) return this;
 
     return CardSpecAttribute(

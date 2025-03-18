@@ -6,6 +6,7 @@ part of 'toast.dart';
 // MixableSpecGenerator
 // **************************************************************************
 
+/// A mixin that provides spec functionality for [ToastSpec].
 mixin _$ToastSpec on Spec<ToastSpec> {
   static ToastSpec from(MixData mix) {
     return mix.attributeOf<ToastSpecAttribute>()?.resolve(mix) ??
@@ -61,10 +62,8 @@ mixin _$ToastSpec on Spec<ToastSpec> {
   ///
   /// The interpolation is performed on each property of the [ToastSpec] using the appropriate
   /// interpolation method:
-  ///
   /// - [FlexBoxSpec.lerp] for [container] and [titleSubtitleContainer].
   /// - [TextSpec.lerp] for [title] and [subtitle].
-
   /// For [modifiers] and [animated], the interpolation is performed using a step function.
   /// If [t] is less than 0.5, the value from the current [ToastSpec] is used. Otherwise, the value
   /// from the [other] [ToastSpec] is used.
@@ -126,8 +125,7 @@ mixin _$ToastSpec on Spec<ToastSpec> {
 ///
 /// Use this class to configure the attributes of a [ToastSpec] and pass it to
 /// the [ToastSpec] constructor.
-base class ToastSpecAttribute extends StyleAttribute<ToastSpec>
-    with Diagnosticable {
+class ToastSpecAttribute extends SpecAttribute<ToastSpec> with Diagnosticable {
   final FlexBoxSpecAttribute? container;
   final FlexBoxSpecAttribute? titleSubtitleContainer;
   final TextSpecAttribute? title;
@@ -171,7 +169,7 @@ base class ToastSpecAttribute extends StyleAttribute<ToastSpec>
   /// Properties from [other] that are null will fall back
   /// to the values from this instance.
   @override
-  ToastSpecAttribute merge(covariant ToastSpecAttribute? other) {
+  ToastSpecAttribute merge(ToastSpecAttribute? other) {
     if (other == null) return this;
 
     return ToastSpecAttribute(

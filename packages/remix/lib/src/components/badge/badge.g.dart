@@ -6,6 +6,7 @@ part of 'badge.dart';
 // MixableSpecGenerator
 // **************************************************************************
 
+/// A mixin that provides spec functionality for [BadgeSpec].
 mixin _$BadgeSpec on Spec<BadgeSpec> {
   static BadgeSpec from(MixData mix) {
     return mix.attributeOf<BadgeSpecAttribute>()?.resolve(mix) ??
@@ -54,10 +55,8 @@ mixin _$BadgeSpec on Spec<BadgeSpec> {
   ///
   /// The interpolation is performed on each property of the [BadgeSpec] using the appropriate
   /// interpolation method:
-  ///
   /// - [BoxSpec.lerp] for [container].
   /// - [TextSpec.lerp] for [label].
-
   /// For [animated], the interpolation is performed using a step function.
   /// If [t] is less than 0.5, the value from the current [BadgeSpec] is used. Otherwise, the value
   /// from the [other] [BadgeSpec] is used.
@@ -96,7 +95,7 @@ mixin _$BadgeSpec on Spec<BadgeSpec> {
 ///
 /// Use this class to configure the attributes of a [BadgeSpec] and pass it to
 /// the [BadgeSpec] constructor.
-base class BadgeSpecAttribute extends StyleAttribute<BadgeSpec> {
+class BadgeSpecAttribute extends SpecAttribute<BadgeSpec> {
   final BoxSpecAttribute? container;
   final TextSpecAttribute? label;
 
@@ -132,7 +131,7 @@ base class BadgeSpecAttribute extends StyleAttribute<BadgeSpec> {
   /// Properties from [other] that are null will fall back
   /// to the values from this instance.
   @override
-  BadgeSpecAttribute merge(covariant BadgeSpecAttribute? other) {
+  BadgeSpecAttribute merge(BadgeSpecAttribute? other) {
     if (other == null) return this;
 
     return BadgeSpecAttribute(

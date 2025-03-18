@@ -6,6 +6,7 @@ part of 'callout.dart';
 // MixableSpecGenerator
 // **************************************************************************
 
+/// A mixin that provides spec functionality for [CalloutSpec].
 mixin _$CalloutSpec on Spec<CalloutSpec> {
   static CalloutSpec from(MixData mix) {
     return mix.attributeOf<CalloutSpecAttribute>()?.resolve(mix) ??
@@ -58,11 +59,9 @@ mixin _$CalloutSpec on Spec<CalloutSpec> {
   ///
   /// The interpolation is performed on each property of the [CalloutSpec] using the appropriate
   /// interpolation method:
-  ///
   /// - [FlexBoxSpec.lerp] for [container].
   /// - [IconSpec.lerp] for [icon].
   /// - [TextSpec.lerp] for [text].
-
   /// For [modifiers] and [animated], the interpolation is performed using a step function.
   /// If [t] is less than 0.5, the value from the current [CalloutSpec] is used. Otherwise, the value
   /// from the [other] [CalloutSpec] is used.
@@ -105,7 +104,7 @@ mixin _$CalloutSpec on Spec<CalloutSpec> {
 ///
 /// Use this class to configure the attributes of a [CalloutSpec] and pass it to
 /// the [CalloutSpec] constructor.
-base class CalloutSpecAttribute extends StyleAttribute<CalloutSpec> {
+class CalloutSpecAttribute extends SpecAttribute<CalloutSpec> {
   final FlexBoxSpecAttribute? container;
   final IconSpecAttribute? icon;
   final TextSpecAttribute? text;
@@ -146,7 +145,7 @@ base class CalloutSpecAttribute extends StyleAttribute<CalloutSpec> {
   /// Properties from [other] that are null will fall back
   /// to the values from this instance.
   @override
-  CalloutSpecAttribute merge(covariant CalloutSpecAttribute? other) {
+  CalloutSpecAttribute merge(CalloutSpecAttribute? other) {
     if (other == null) return this;
 
     return CalloutSpecAttribute(

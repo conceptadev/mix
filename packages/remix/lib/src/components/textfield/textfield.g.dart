@@ -6,6 +6,7 @@ part of 'textfield.dart';
 // MixableSpecGenerator
 // **************************************************************************
 
+/// A mixin that provides spec functionality for [TextFieldSpec].
 mixin _$TextFieldSpec on Spec<TextFieldSpec> {
   static TextFieldSpec from(MixData mix) {
     return mix.attributeOf<TextFieldSpecAttribute>()?.resolve(mix) ??
@@ -111,7 +112,6 @@ mixin _$TextFieldSpec on Spec<TextFieldSpec> {
   ///
   /// The interpolation is performed on each property of the [TextFieldSpec] using the appropriate
   /// interpolation method:
-  ///
   /// - [MixHelpers.lerpTextStyle] for [style] and [hintTextStyle] and [floatingLabelStyle].
   /// - [MixHelpers.lerpStrutStyle] for [strutStyle].
   /// - [MixHelpers.lerpDouble] for [cursorWidth] and [cursorHeight] and [floatingLabelHeight].
@@ -122,7 +122,6 @@ mixin _$TextFieldSpec on Spec<TextFieldSpec> {
   /// - [FlexBoxSpec.lerp] for [outerContainer] and [container].
   /// - [TextSpec.lerp] for [helperText].
   /// - [IconSpec.lerp] for [icon].
-
   /// For [textAlign] and [textHeightBehavior] and [textWidthBasis] and [paintCursorAboveText] and [selectionHeightStyle] and [selectionWidthStyle] and [clipBehavior] and [keyboardAppearance] and [cursorOpacityAnimates] and [floatingLabel] and [animated] and [modifiers], the interpolation is performed using a step function.
   /// If [t] is less than 0.5, the value from the current [TextFieldSpec] is used. Otherwise, the value
   /// from the [other] [TextFieldSpec] is used.
@@ -306,7 +305,7 @@ mixin _$TextFieldSpec on Spec<TextFieldSpec> {
 ///
 /// Use this class to configure the attributes of a [TextFieldSpec] and pass it to
 /// the [TextFieldSpec] constructor.
-class TextFieldSpecAttribute extends StyleAttribute<TextFieldSpec>
+class TextFieldSpecAttribute extends SpecAttribute<TextFieldSpec>
     with Diagnosticable {
   final TextStyleDto? style;
   final TextAlign? textAlign;
@@ -423,7 +422,7 @@ class TextFieldSpecAttribute extends StyleAttribute<TextFieldSpec>
   /// Properties from [other] that are null will fall back
   /// to the values from this instance.
   @override
-  TextFieldSpecAttribute merge(covariant TextFieldSpecAttribute? other) {
+  TextFieldSpecAttribute merge(TextFieldSpecAttribute? other) {
     if (other == null) return this;
 
     return TextFieldSpecAttribute(
@@ -512,8 +511,7 @@ class TextFieldSpecAttribute extends StyleAttribute<TextFieldSpec>
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty('style', style,
-        expandableValue: true, defaultValue: null));
+    properties.add(DiagnosticsProperty('style', style, defaultValue: null));
     properties
         .add(DiagnosticsProperty('textAlign', textAlign, defaultValue: null));
     properties
@@ -632,11 +630,11 @@ class TextFieldSpecUtility<T extends Attribute>
 
   /// Utility for defining [TextFieldSpecAttribute.selectionHeightStyle]
   late final selectionHeightStyle =
-      BoxHeightStyleUtility((v) => only(selectionHeightStyle: v));
+      DynamicUtility((v) => only(selectionHeightStyle: v));
 
   /// Utility for defining [TextFieldSpecAttribute.selectionWidthStyle]
   late final selectionWidthStyle =
-      BoxWidthStyleUtility((v) => only(selectionWidthStyle: v));
+      DynamicUtility((v) => only(selectionWidthStyle: v));
 
   /// Utility for defining [TextFieldSpecAttribute.scrollPadding]
   late final scrollPadding = EdgeInsetsUtility((v) => only(scrollPadding: v));
@@ -646,7 +644,7 @@ class TextFieldSpecUtility<T extends Attribute>
 
   /// Utility for defining [TextFieldSpecAttribute.keyboardAppearance]
   late final keyboardAppearance =
-      BrightnessUtility((v) => only(keyboardAppearance: v));
+      DynamicUtility((v) => only(keyboardAppearance: v));
 
   /// Utility for defining [TextFieldSpecAttribute.autocorrectionTextRectColor]
   late final autocorrectionTextRectColor =

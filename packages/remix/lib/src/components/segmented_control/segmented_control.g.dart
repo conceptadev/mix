@@ -6,6 +6,7 @@ part of 'segmented_control.dart';
 // MixableSpecGenerator
 // **************************************************************************
 
+/// A mixin that provides spec functionality for [SegmentedControlSpec].
 mixin _$SegmentedControlSpec on Spec<SegmentedControlSpec> {
   static SegmentedControlSpec from(MixData mix) {
     return mix.attributeOf<SegmentedControlSpecAttribute>()?.resolve(mix) ??
@@ -62,11 +63,10 @@ mixin _$SegmentedControlSpec on Spec<SegmentedControlSpec> {
   ///
   /// The interpolation is performed on each property of the [SegmentedControlSpec] using the appropriate
   /// interpolation method:
-  ///
   /// - [BoxSpec.lerp] for [container] and [divider].
   /// - [FlexSpec.lerp] for [flex].
-
-  /// For [showDivider] and [item] and [modifiers] and [animated], the interpolation is performed using a step function.
+  /// - [SegmentButtonSpec.lerp] for [item].
+  /// For [showDivider] and [modifiers] and [animated], the interpolation is performed using a step function.
   /// If [t] is less than 0.5, the value from the current [SegmentedControlSpec] is used. Otherwise, the value
   /// from the [other] [SegmentedControlSpec] is used.
   ///
@@ -129,7 +129,7 @@ mixin _$SegmentedControlSpec on Spec<SegmentedControlSpec> {
 ///
 /// Use this class to configure the attributes of a [SegmentedControlSpec] and pass it to
 /// the [SegmentedControlSpec] constructor.
-class SegmentedControlSpecAttribute extends StyleAttribute<SegmentedControlSpec>
+class SegmentedControlSpecAttribute extends SpecAttribute<SegmentedControlSpec>
     with Diagnosticable {
   final BoxSpecAttribute? container;
   final FlexSpecAttribute? flex;
@@ -177,8 +177,7 @@ class SegmentedControlSpecAttribute extends StyleAttribute<SegmentedControlSpec>
   /// Properties from [other] that are null will fall back
   /// to the values from this instance.
   @override
-  SegmentedControlSpecAttribute merge(
-      covariant SegmentedControlSpecAttribute? other) {
+  SegmentedControlSpecAttribute merge(SegmentedControlSpecAttribute? other) {
     if (other == null) return this;
 
     return SegmentedControlSpecAttribute(
@@ -306,6 +305,7 @@ class SegmentedControlSpecTween extends Tween<SegmentedControlSpec?> {
   }
 }
 
+/// A mixin that provides spec functionality for [SegmentButtonSpec].
 mixin _$SegmentButtonSpec on Spec<SegmentButtonSpec> {
   static SegmentButtonSpec from(MixData mix) {
     return mix.attributeOf<SegmentButtonSpecAttribute>()?.resolve(mix) ??
@@ -360,12 +360,10 @@ mixin _$SegmentButtonSpec on Spec<SegmentButtonSpec> {
   ///
   /// The interpolation is performed on each property of the [SegmentButtonSpec] using the appropriate
   /// interpolation method:
-  ///
   /// - [BoxSpec.lerp] for [container].
   /// - [FlexSpec.lerp] for [flex].
   /// - [IconSpec.lerp] for [icon].
   /// - [TextSpec.lerp] for [label].
-
   /// For [modifiers] and [animated], the interpolation is performed using a step function.
   /// If [t] is less than 0.5, the value from the current [SegmentButtonSpec] is used. Otherwise, the value
   /// from the [other] [SegmentButtonSpec] is used.
@@ -425,7 +423,7 @@ mixin _$SegmentButtonSpec on Spec<SegmentButtonSpec> {
 ///
 /// Use this class to configure the attributes of a [SegmentButtonSpec] and pass it to
 /// the [SegmentButtonSpec] constructor.
-class SegmentButtonSpecAttribute extends StyleAttribute<SegmentButtonSpec>
+class SegmentButtonSpecAttribute extends SpecAttribute<SegmentButtonSpec>
     with Diagnosticable {
   final BoxSpecAttribute? container;
   final FlexSpecAttribute? flex;
@@ -470,8 +468,7 @@ class SegmentButtonSpecAttribute extends StyleAttribute<SegmentButtonSpec>
   /// Properties from [other] that are null will fall back
   /// to the values from this instance.
   @override
-  SegmentButtonSpecAttribute merge(
-      covariant SegmentButtonSpecAttribute? other) {
+  SegmentButtonSpecAttribute merge(SegmentButtonSpecAttribute? other) {
     if (other == null) return this;
 
     return SegmentButtonSpecAttribute(

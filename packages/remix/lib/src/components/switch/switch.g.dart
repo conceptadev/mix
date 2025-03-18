@@ -6,6 +6,7 @@ part of 'switch.dart';
 // MixableSpecGenerator
 // **************************************************************************
 
+/// A mixin that provides spec functionality for [SwitchSpec].
 mixin _$SwitchSpec on Spec<SwitchSpec> {
   static SwitchSpec from(MixData mix) {
     return mix.attributeOf<SwitchSpecAttribute>()?.resolve(mix) ??
@@ -56,9 +57,7 @@ mixin _$SwitchSpec on Spec<SwitchSpec> {
   ///
   /// The interpolation is performed on each property of the [SwitchSpec] using the appropriate
   /// interpolation method:
-  ///
   /// - [BoxSpec.lerp] for [container] and [indicator].
-
   /// For [animated] and [modifiers], the interpolation is performed using a step function.
   /// If [t] is less than 0.5, the value from the current [SwitchSpec] is used. Otherwise, the value
   /// from the [other] [SwitchSpec] is used.
@@ -110,7 +109,7 @@ mixin _$SwitchSpec on Spec<SwitchSpec> {
 ///
 /// Use this class to configure the attributes of a [SwitchSpec] and pass it to
 /// the [SwitchSpec] constructor.
-base class SwitchSpecAttribute extends StyleAttribute<SwitchSpec>
+class SwitchSpecAttribute extends SpecAttribute<SwitchSpec>
     with Diagnosticable {
   final BoxSpecAttribute? container;
   final BoxSpecAttribute? indicator;
@@ -149,7 +148,7 @@ base class SwitchSpecAttribute extends StyleAttribute<SwitchSpec>
   /// Properties from [other] that are null will fall back
   /// to the values from this instance.
   @override
-  SwitchSpecAttribute merge(covariant SwitchSpecAttribute? other) {
+  SwitchSpecAttribute merge(SwitchSpecAttribute? other) {
     if (other == null) return this;
 
     return SwitchSpecAttribute(

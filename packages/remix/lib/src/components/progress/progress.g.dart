@@ -6,6 +6,7 @@ part of 'progress.dart';
 // MixableSpecGenerator
 // **************************************************************************
 
+/// A mixin that provides spec functionality for [ProgressSpec].
 mixin _$ProgressSpec on Spec<ProgressSpec> {
   static ProgressSpec from(MixData mix) {
     return mix.attributeOf<ProgressSpecAttribute>()?.resolve(mix) ??
@@ -60,9 +61,7 @@ mixin _$ProgressSpec on Spec<ProgressSpec> {
   ///
   /// The interpolation is performed on each property of the [ProgressSpec] using the appropriate
   /// interpolation method:
-  ///
   /// - [BoxSpec.lerp] for [container] and [track] and [fill] and [outerContainer].
-
   /// For [animated] and [modifiers], the interpolation is performed using a step function.
   /// If [t] is less than 0.5, the value from the current [ProgressSpec] is used. Otherwise, the value
   /// from the [other] [ProgressSpec] is used.
@@ -122,7 +121,7 @@ mixin _$ProgressSpec on Spec<ProgressSpec> {
 ///
 /// Use this class to configure the attributes of a [ProgressSpec] and pass it to
 /// the [ProgressSpec] constructor.
-base class ProgressSpecAttribute extends StyleAttribute<ProgressSpec>
+class ProgressSpecAttribute extends SpecAttribute<ProgressSpec>
     with Diagnosticable {
   final BoxSpecAttribute? container;
   final BoxSpecAttribute? track;
@@ -167,7 +166,7 @@ base class ProgressSpecAttribute extends StyleAttribute<ProgressSpec>
   /// Properties from [other] that are null will fall back
   /// to the values from this instance.
   @override
-  ProgressSpecAttribute merge(covariant ProgressSpecAttribute? other) {
+  ProgressSpecAttribute merge(ProgressSpecAttribute? other) {
     if (other == null) return this;
 
     return ProgressSpecAttribute(
