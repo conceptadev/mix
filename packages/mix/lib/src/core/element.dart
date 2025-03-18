@@ -34,10 +34,13 @@ abstract class StyleProperty<Value> extends StyleElement {
   const StyleProperty();
 
   Value resolve(MixData mix);
+
+  @override
+  StyleProperty<Value> merge(covariant StyleProperty<Value>? other);
 }
 
 // Define a mixin for properties that have default values
-mixin HasDefaultValue<Value> on StyleProperty<Value> {
+mixin HasDefaultValue<Value> {
   @protected
   Value get defaultValue;
 }

@@ -305,6 +305,9 @@ const mockVariant = Variant('mock-variant');
 final class UtilityTestAttribute<T>
     extends TestScalarAttribute<UtilityTestAttribute<T>, T> {
   const UtilityTestAttribute(super.value);
+
+  @override
+  T resolve(MixData mix) => value;
 }
 
 final class UtilityTestDtoAttribute<T extends StyleProperty<V>, V>
@@ -312,8 +315,8 @@ final class UtilityTestDtoAttribute<T extends StyleProperty<V>, V>
   const UtilityTestDtoAttribute(super.value);
 
   @override
-  V resolve(MixData mix) {
-    return value.resolve(mix);
+  T resolve(MixData mix) {
+    return value;
   }
 }
 

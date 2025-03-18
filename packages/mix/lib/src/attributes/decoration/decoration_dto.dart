@@ -189,6 +189,20 @@ final class ShapeDecorationDto extends DecorationDto<ShapeDecoration>
   }) : super(boxShadow: shadows);
 
   List<BoxShadowDto>? get shadows => boxShadow;
+
+  @override
+  ShapeDecorationDto merge(covariant ShapeDecorationDto? other) {
+    if (other == null) return this;
+
+    return ShapeDecorationDto(
+      shape: other.shape ?? shape,
+      color: other.color ?? color,
+      image: other.image ?? image,
+      gradient: other.gradient ?? gradient,
+      shadows: other.shadows ?? shadows,
+    );
+  }
+
   @override
   ShapeDecorationDto mergeableDecor(BoxDecorationDto? other) {
     if (other == null) return this;
