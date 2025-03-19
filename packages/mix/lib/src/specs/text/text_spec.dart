@@ -14,8 +14,8 @@ import '../../attributes/strut_style/strut_style_dto.dart';
 import '../../attributes/text_height_behavior/text_height_behavior_dto.dart';
 import '../../attributes/text_style/text_style_dto.dart';
 import '../../attributes/text_style/text_style_util.dart';
-import '../../core/attribute.dart';
 import '../../core/directive.dart';
+import '../../core/element.dart';
 import '../../core/factory/mix_data.dart';
 import '../../core/factory/mix_provider.dart';
 import '../../core/helpers.dart';
@@ -26,7 +26,7 @@ import 'text_widget.dart';
 
 part 'text_spec.g.dart';
 
-const _style = MixableUtility(
+const _style = MixableFieldUtility(
   type: TextStyle,
   properties: [
     (path: 'color', alias: 'color'),
@@ -62,7 +62,7 @@ final class TextSpec extends Spec<TextSpec> with _$TextSpec, Diagnosticable {
   final TextWidthBasis? textWidthBasis;
   final TextScaler? textScaler;
 
-  @MixableProperty(utilities: [_style])
+  @MixableField(utilities: [_style])
   final TextStyle? style;
   final TextDirection? textDirection;
   final bool? softWrap;
@@ -70,12 +70,12 @@ final class TextSpec extends Spec<TextSpec> with _$TextSpec, Diagnosticable {
   @Deprecated('Use textScaler instead')
   final double? textScaleFactor;
 
-  @MixableProperty(dto: MixableFieldDto(type: TextHeightBehaviorDto))
+  @MixableField(dto: MixableFieldProperty(type: TextHeightBehaviorDto))
   final TextHeightBehavior? textHeightBehavior;
 
-  @MixableProperty(
+  @MixableField(
     utilities: [
-      MixableUtility(
+      MixableFieldUtility(
         properties: [
           (path: 'uppercase', alias: 'uppercase'),
           (path: 'lowercase', alias: 'lowercase'),

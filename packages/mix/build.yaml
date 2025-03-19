@@ -1,17 +1,9 @@
 targets:
   $default:
     builders:
-      mix_generator|spec:
+      mix_generator:
+        enabled: true
         generate_for:
-          - lib/**/*_spec.dart
-          - lib/**/*_modifier.dart
-      mix_generator|dto:
-        generate_for:
-          - lib/**/*_dto.dart
-          
-      mix_generator|enum_utility:
-        generate_for:
-          - lib/**/*_util.dart
-      mix_generator|class_utility:
-        generate_for:
-          - lib/**/*_util.dart
+          - lib/**/*.dart
+        options:
+          debug: false

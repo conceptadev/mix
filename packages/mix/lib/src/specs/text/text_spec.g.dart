@@ -3,11 +3,14 @@
 part of 'text_spec.dart';
 
 // **************************************************************************
-// MixableSpecGenerator
+// MixGenerator
 // **************************************************************************
 
 // ignore_for_file: deprecated_member_use_from_same_package
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
+
+/// A mixin that provides spec functionality for [TextSpec].
 mixin _$TextSpec on Spec<TextSpec> {
   static TextSpec from(MixData mix) {
     return mix.attributeOf<TextSpecAttribute>()?.resolve(mix) ??
@@ -78,11 +81,9 @@ mixin _$TextSpec on Spec<TextSpec> {
   ///
   /// The interpolation is performed on each property of the [TextSpec] using the appropriate
   /// interpolation method:
-  ///
   /// - [MixHelpers.lerpStrutStyle] for [strutStyle].
   /// - [MixHelpers.lerpDouble] for [textScaleFactor].
   /// - [MixHelpers.lerpTextStyle] for [style].
-
   /// For [overflow] and [textAlign] and [textScaler] and [maxLines] and [textWidthBasis] and [textHeightBehavior] and [textDirection] and [softWrap] and [directive] and [animated] and [modifiers], the interpolation is performed using a step function.
   /// If [t] is less than 0.5, the value from the current [TextSpec] is used. Otherwise, the value
   /// from the [other] [TextSpec] is used.
@@ -179,8 +180,7 @@ mixin _$TextSpec on Spec<TextSpec> {
 ///
 /// Use this class to configure the attributes of a [TextSpec] and pass it to
 /// the [TextSpec] constructor.
-final class TextSpecAttribute extends SpecAttribute<TextSpec>
-    with Diagnosticable {
+class TextSpecAttribute extends SpecAttribute<TextSpec> with Diagnosticable {
   final TextOverflow? overflow;
   final StrutStyleDto? strutStyle;
   final TextAlign? textAlign;
@@ -307,8 +307,7 @@ final class TextSpecAttribute extends SpecAttribute<TextSpec>
         .add(DiagnosticsProperty('textScaler', textScaler, defaultValue: null));
     properties
         .add(DiagnosticsProperty('maxLines', maxLines, defaultValue: null));
-    properties.add(DiagnosticsProperty('style', style,
-        expandableValue: true, defaultValue: null));
+    properties.add(DiagnosticsProperty('style', style, defaultValue: null));
     properties.add(DiagnosticsProperty('textWidthBasis', textWidthBasis,
         defaultValue: null));
     properties.add(DiagnosticsProperty('textHeightBehavior', textHeightBehavior,

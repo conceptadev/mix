@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 
-import '../core/attribute.dart';
+import '../core/element.dart';
 import '../core/factory/style_mix.dart';
 import '../core/variant.dart';
 

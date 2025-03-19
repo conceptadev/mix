@@ -9,7 +9,6 @@ import '../../internal/string_ext.dart';
 import '../../theme/tokens/token_resolver.dart';
 import '../../variants/context_variant.dart';
 import '../../variants/variant_attribute.dart';
-import '../attribute.dart';
 import '../attributes_map.dart';
 import '../modifier.dart';
 import '../spec.dart';
@@ -91,7 +90,7 @@ class MixData with Diagnosticable {
     return modifiers.whereType<M>().toList();
   }
 
-  Iterable<A> whereType<A extends StyledAttribute>() {
+  Iterable<A> whereType<A extends SpecAttribute>() {
     return _attributes.whereType();
   }
 
@@ -155,7 +154,7 @@ class MixData with Diagnosticable {
 }
 
 @visibleForTesting
-List<StyledAttribute> applyContextToVisualAttributes(
+List<SpecAttribute> applyContextToVisualAttributes(
   BuildContext context,
   Style mix,
 ) {

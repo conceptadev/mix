@@ -6,6 +6,7 @@ part of 'dropdown_menu.dart';
 // MixableSpecGenerator
 // **************************************************************************
 
+/// A mixin that provides spec functionality for [DropdownMenuSpec].
 mixin _$DropdownMenuSpec on Spec<DropdownMenuSpec> {
   static DropdownMenuSpec from(MixData mix) {
     return mix.attributeOf<DropdownMenuSpecAttribute>()?.resolve(mix) ??
@@ -56,9 +57,9 @@ mixin _$DropdownMenuSpec on Spec<DropdownMenuSpec> {
   ///
   /// The interpolation is performed on each property of the [DropdownMenuSpec] using the appropriate
   /// interpolation method:
-  ///
-
-  /// For [menu] and [item] and [modifiers] and [animated], the interpolation is performed using a step function.
+  /// - [DropdownMenuContainerSpec.lerp] for [menu].
+  /// - [DropdownMenuItemSpec.lerp] for [item].
+  /// For [modifiers] and [animated], the interpolation is performed using a step function.
   /// If [t] is less than 0.5, the value from the current [DropdownMenuSpec] is used. Otherwise, the value
   /// from the [other] [DropdownMenuSpec] is used.
   ///
@@ -148,7 +149,7 @@ class DropdownMenuSpecAttribute extends SpecAttribute<DropdownMenuSpec>
   /// Properties from [other] that are null will fall back
   /// to the values from this instance.
   @override
-  DropdownMenuSpecAttribute merge(covariant DropdownMenuSpecAttribute? other) {
+  DropdownMenuSpecAttribute merge(DropdownMenuSpecAttribute? other) {
     if (other == null) return this;
 
     return DropdownMenuSpecAttribute(
@@ -250,6 +251,7 @@ class DropdownMenuSpecTween extends Tween<DropdownMenuSpec?> {
   }
 }
 
+/// A mixin that provides spec functionality for [DropdownMenuContainerSpec].
 mixin _$DropdownMenuContainerSpec on Spec<DropdownMenuContainerSpec> {
   static DropdownMenuContainerSpec from(MixData mix) {
     return mix
@@ -302,9 +304,7 @@ mixin _$DropdownMenuContainerSpec on Spec<DropdownMenuContainerSpec> {
   ///
   /// The interpolation is performed on each property of the [DropdownMenuContainerSpec] using the appropriate
   /// interpolation method:
-  ///
   /// - [FlexBoxSpec.lerp] for [container].
-
   /// For [autoWidth] and [modifiers] and [animated], the interpolation is performed using a step function.
   /// If [t] is less than 0.5, the value from the current [DropdownMenuContainerSpec] is used. Otherwise, the value
   /// from the [other] [DropdownMenuContainerSpec] is used.
@@ -356,7 +356,7 @@ mixin _$DropdownMenuContainerSpec on Spec<DropdownMenuContainerSpec> {
 ///
 /// Use this class to configure the attributes of a [DropdownMenuContainerSpec] and pass it to
 /// the [DropdownMenuContainerSpec] constructor.
-base class DropdownMenuContainerSpecAttribute
+class DropdownMenuContainerSpecAttribute
     extends SpecAttribute<DropdownMenuContainerSpec> with Diagnosticable {
   final FlexBoxSpecAttribute? container;
   final bool? autoWidth;
@@ -396,7 +396,7 @@ base class DropdownMenuContainerSpecAttribute
   /// to the values from this instance.
   @override
   DropdownMenuContainerSpecAttribute merge(
-      covariant DropdownMenuContainerSpecAttribute? other) {
+      DropdownMenuContainerSpecAttribute? other) {
     if (other == null) return this;
 
     return DropdownMenuContainerSpecAttribute(
@@ -500,6 +500,7 @@ class DropdownMenuContainerSpecTween extends Tween<DropdownMenuContainerSpec?> {
   }
 }
 
+/// A mixin that provides spec functionality for [DropdownMenuItemSpec].
 mixin _$DropdownMenuItemSpec on Spec<DropdownMenuItemSpec> {
   static DropdownMenuItemSpec from(MixData mix) {
     return mix.attributeOf<DropdownMenuItemSpecAttribute>()?.resolve(mix) ??
@@ -552,11 +553,9 @@ mixin _$DropdownMenuItemSpec on Spec<DropdownMenuItemSpec> {
   ///
   /// The interpolation is performed on each property of the [DropdownMenuItemSpec] using the appropriate
   /// interpolation method:
-  ///
   /// - [IconSpec.lerp] for [icon].
   /// - [TextSpec.lerp] for [text].
   /// - [FlexBoxSpec.lerp] for [container].
-
   /// For [modifiers] and [animated], the interpolation is performed using a step function.
   /// If [t] is less than 0.5, the value from the current [DropdownMenuItemSpec] is used. Otherwise, the value
   /// from the [other] [DropdownMenuItemSpec] is used.
@@ -654,8 +653,7 @@ class DropdownMenuItemSpecAttribute extends SpecAttribute<DropdownMenuItemSpec>
   /// Properties from [other] that are null will fall back
   /// to the values from this instance.
   @override
-  DropdownMenuItemSpecAttribute merge(
-      covariant DropdownMenuItemSpecAttribute? other) {
+  DropdownMenuItemSpecAttribute merge(DropdownMenuItemSpecAttribute? other) {
     if (other == null) return this;
 
     return DropdownMenuItemSpecAttribute(

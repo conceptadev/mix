@@ -3,9 +3,12 @@
 part of 'rotated_box_widget_modifier.dart';
 
 // **************************************************************************
-// MixableSpecGenerator
+// MixGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
+
+/// A mixin that provides spec functionality for [RotatedBoxModifierSpec].
 mixin _$RotatedBoxModifierSpec on WidgetModifierSpec<RotatedBoxModifierSpec> {
   /// Creates a copy of this [RotatedBoxModifierSpec] but with the given fields
   /// replaced with the new values.
@@ -42,7 +45,7 @@ mixin _$RotatedBoxModifierSpec on WidgetModifierSpec<RotatedBoxModifierSpec> {
 ///
 /// Use this class to configure the attributes of a [RotatedBoxModifierSpec] and pass it to
 /// the [RotatedBoxModifierSpec] constructor.
-final class RotatedBoxModifierSpecAttribute
+class RotatedBoxModifierSpecAttribute
     extends WidgetModifierSpecAttribute<RotatedBoxModifierSpec>
     with Diagnosticable {
   final int? quarterTurns;

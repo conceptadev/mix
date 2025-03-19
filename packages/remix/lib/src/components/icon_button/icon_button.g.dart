@@ -6,6 +6,7 @@ part of 'icon_button.dart';
 // MixableSpecGenerator
 // **************************************************************************
 
+/// A mixin that provides spec functionality for [IconButtonSpec].
 mixin _$IconButtonSpec on Spec<IconButtonSpec> {
   static IconButtonSpec from(MixData mix) {
     return mix.attributeOf<IconButtonSpecAttribute>()?.resolve(mix) ??
@@ -58,11 +59,10 @@ mixin _$IconButtonSpec on Spec<IconButtonSpec> {
   ///
   /// The interpolation is performed on each property of the [IconButtonSpec] using the appropriate
   /// interpolation method:
-  ///
   /// - [BoxSpec.lerp] for [container].
   /// - [IconSpec.lerp] for [icon].
-
-  /// For [modifiers] and [spinner] and [animated], the interpolation is performed using a step function.
+  /// - [SpinnerSpec.lerp] for [spinner].
+  /// For [modifiers] and [animated], the interpolation is performed using a step function.
   /// If [t] is less than 0.5, the value from the current [IconButtonSpec] is used. Otherwise, the value
   /// from the [other] [IconButtonSpec] is used.
   ///
@@ -159,7 +159,7 @@ class IconButtonSpecAttribute extends SpecAttribute<IconButtonSpec>
   /// Properties from [other] that are null will fall back
   /// to the values from this instance.
   @override
-  IconButtonSpecAttribute merge(covariant IconButtonSpecAttribute? other) {
+  IconButtonSpecAttribute merge(IconButtonSpecAttribute? other) {
     if (other == null) return this;
 
     return IconButtonSpecAttribute(

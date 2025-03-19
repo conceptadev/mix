@@ -3,9 +3,12 @@
 part of 'mouse_cursor_modifier.dart';
 
 // **************************************************************************
-// MixableSpecGenerator
+// MixGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
+
+/// A mixin that provides spec functionality for [MouseCursorDecoratorSpec].
 mixin _$MouseCursorDecoratorSpec
     on WidgetModifierSpec<MouseCursorDecoratorSpec> {
   /// Creates a copy of this [MouseCursorDecoratorSpec] but with the given fields
@@ -29,8 +32,6 @@ mixin _$MouseCursorDecoratorSpec
   ///
   /// The interpolation is performed on each property of the [MouseCursorDecoratorSpec] using the appropriate
   /// interpolation method:
-  ///
-
   /// For [mouseCursor], the interpolation is performed using a step function.
   /// If [t] is less than 0.5, the value from the current [MouseCursorDecoratorSpec] is used. Otherwise, the value
   /// from the [other] [MouseCursorDecoratorSpec] is used.
@@ -98,7 +99,7 @@ class MouseCursorDecoratorSpecAttribute
   /// to the values from this instance.
   @override
   MouseCursorDecoratorSpecAttribute merge(
-      covariant MouseCursorDecoratorSpecAttribute? other) {
+      MouseCursorDecoratorSpecAttribute? other) {
     if (other == null) return this;
 
     return MouseCursorDecoratorSpecAttribute(

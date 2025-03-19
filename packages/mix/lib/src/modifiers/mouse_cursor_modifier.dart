@@ -3,14 +3,14 @@
 import 'package:flutter/material.dart';
 import 'package:mix_annotations/mix_annotations.dart';
 
-import '../core/attribute.dart';
+import '../core/element.dart';
 import '../core/factory/mix_data.dart';
 import '../core/modifier.dart';
 import '../core/utility.dart';
 
 part 'mouse_cursor_modifier.g.dart';
 
-@MixableSpec(skipUtility: true)
+@MixableSpec(components: GeneratedSpecComponents.skipUtility)
 class MouseCursorDecoratorSpec
     extends WidgetModifierSpec<MouseCursorDecoratorSpec>
     with _$MouseCursorDecoratorSpec {

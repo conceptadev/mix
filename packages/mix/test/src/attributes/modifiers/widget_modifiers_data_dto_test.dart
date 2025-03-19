@@ -84,12 +84,6 @@ void main() {
       );
     });
 
-    test('defaultValue returns empty WidgetModifiersData', () {
-      const dto = WidgetModifiersDataDto([]);
-
-      expect(dto.defaultValue.value, isEmpty);
-    });
-
     test('props returns list containing value', () {
       final List<WidgetModifierSpecAttribute> modifiers = [
         TransformModifierSpecAttribute(transform: Matrix4.identity()),

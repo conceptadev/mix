@@ -8,7 +8,7 @@ import 'package:mix_annotations/mix_annotations.dart';
 
 part 'box_spec.g.dart';
 
-const _constraints = MixableUtility(
+const _constraints = MixableFieldUtility(
   type: BoxConstraints,
   properties: [
     (path: 'minWidth', alias: 'minWidth'),
@@ -18,8 +18,8 @@ const _constraints = MixableUtility(
   ],
 );
 
-const _foreground = MixableUtility(type: BoxDecoration);
-const _boxDecor = MixableUtility(
+const _foreground = MixableFieldUtility(type: BoxDecoration);
+const _boxDecor = MixableFieldUtility(
   type: BoxDecoration,
   properties: [
     (path: 'color', alias: 'color'),
@@ -37,7 +37,7 @@ const _boxDecor = MixableUtility(
   ],
 );
 
-const _shapeDecor = MixableUtility(
+const _shapeDecor = MixableFieldUtility(
   alias: 'shapeDecoration',
   type: ShapeDecoration,
 );
@@ -59,15 +59,15 @@ final class BoxSpec extends Spec<BoxSpec> with _$BoxSpec {
   final EdgeInsetsGeometry? margin;
 
   /// Applies additional constraints to the child.
-  @MixableProperty(utilities: [_constraints])
+  @MixableField(utilities: [_constraints])
   final BoxConstraints? constraints;
 
   /// Paints a decoration behind the child.
-  @MixableProperty(utilities: [_boxDecor, _shapeDecor])
+  @MixableField(utilities: [_boxDecor, _shapeDecor])
   final Decoration? decoration;
 
   /// Paints a decoration in front of the child.
-  @MixableProperty(utilities: [_foreground])
+  @MixableField(utilities: [_foreground])
   final Decoration? foregroundDecoration;
 
   /// Applies a transformation matrix before painting the box.

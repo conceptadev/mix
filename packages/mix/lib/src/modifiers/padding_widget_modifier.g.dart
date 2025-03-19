@@ -3,9 +3,12 @@
 part of 'padding_widget_modifier.dart';
 
 // **************************************************************************
-// MixableSpecGenerator
+// MixGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
+
+/// A mixin that provides spec functionality for [PaddingModifierSpec].
 mixin _$PaddingModifierSpec on WidgetModifierSpec<PaddingModifierSpec> {
   /// Creates a copy of this [PaddingModifierSpec] but with the given fields
   /// replaced with the new values.
@@ -28,13 +31,8 @@ mixin _$PaddingModifierSpec on WidgetModifierSpec<PaddingModifierSpec> {
   ///
   /// The interpolation is performed on each property of the [PaddingModifierSpec] using the appropriate
   /// interpolation method:
-  ///
   /// - [EdgeInsetsGeometry.lerp] for [padding].
 
-  /// For , the interpolation is performed using a step function.
-  /// If [t] is less than 0.5, the value from the current [PaddingModifierSpec] is used. Otherwise, the value
-  /// from the [other] [PaddingModifierSpec] is used.
-  ///
   /// This method is typically used in animations to smoothly transition between
   /// different [PaddingModifierSpec] configurations.
   @override
@@ -70,10 +68,10 @@ mixin _$PaddingModifierSpec on WidgetModifierSpec<PaddingModifierSpec> {
 ///
 /// Use this class to configure the attributes of a [PaddingModifierSpec] and pass it to
 /// the [PaddingModifierSpec] constructor.
-final class PaddingModifierSpecAttribute
+class PaddingModifierSpecAttribute
     extends WidgetModifierSpecAttribute<PaddingModifierSpec>
     with Diagnosticable {
-  final SpacingDto? padding;
+  final EdgeInsetsGeometryDto? padding;
 
   const PaddingModifierSpecAttribute({
     this.padding,
@@ -107,7 +105,7 @@ final class PaddingModifierSpecAttribute
     if (other == null) return this;
 
     return PaddingModifierSpecAttribute(
-      padding: padding?.merge(other.padding) ?? other.padding,
+      padding: EdgeInsetsGeometryDto.tryToMerge(padding, other.padding),
     );
   }
 
@@ -134,7 +132,7 @@ final class PaddingModifierSpecAttribute
 class PaddingModifierSpecUtility<T extends Attribute>
     extends SpecUtility<T, PaddingModifierSpecAttribute> {
   /// Utility for defining [PaddingModifierSpecAttribute.padding]
-  late final padding = SpacingUtility((v) => only(padding: v));
+  late final padding = EdgeInsetsGeometryUtility((v) => only(padding: v));
 
   PaddingModifierSpecUtility(super.builder, {super.mutable});
 
@@ -147,7 +145,7 @@ class PaddingModifierSpecUtility<T extends Attribute>
   /// Returns a new [PaddingModifierSpecAttribute] with the specified properties.
   @override
   T only({
-    SpacingDto? padding,
+    EdgeInsetsGeometryDto? padding,
   }) {
     return builder(PaddingModifierSpecAttribute(
       padding: padding,

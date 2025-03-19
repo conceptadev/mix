@@ -298,11 +298,6 @@ void main() {
       expect(resolved, BorderRadiusDirectional.zero);
     });
 
-    test('defaultValue returns BorderRadiusDirectional.zero', () {
-      const dto = BorderRadiusDirectionalDto();
-      expect(dto.defaultValue, BorderRadiusDirectional.zero);
-    });
-
     test('topLeft, topRight, bottomLeft, and bottomRight are always null', () {
       const dto = BorderRadiusDirectionalDto(
         topStart: Radius.circular(1),

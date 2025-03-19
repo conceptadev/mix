@@ -1,3 +1,0 @@
-class Settings {
-  const Settings();
-}

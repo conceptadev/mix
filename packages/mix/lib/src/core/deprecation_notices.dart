@@ -17,7 +17,7 @@ import '../modifiers/transform_widget_modifier.dart';
 import '../modifiers/visibility_widget_modifier.dart';
 import '../specs/image/image_spec.dart';
 import '../variants/widget_state_variant.dart';
-import 'attribute.dart';
+import 'element.dart';
 import 'modifier.dart';
 
 extension ImageSpecUtilityDeprecationX<T extends Attribute>

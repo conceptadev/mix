@@ -155,7 +155,7 @@ void main() {
     const value = EdgeInsets.all(10.0);
     final dto = value.toDto();
 
-    expect(dto, isA<SpacingDto>());
+    expect(dto, isA<EdgeInsetsGeometryDto>());
     expect(dto.resolve(EmptyMixData), value);
   });
 

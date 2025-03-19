@@ -4,6 +4,6 @@ targets:
       mix_generator|spec:
         generate_for:
           - lib/**/*.dart
-      mix_generator|dto:
+      mix_generator|property:
         generate_for:
           - lib/components/**/*.dart

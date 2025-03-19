@@ -9,8 +9,9 @@ void main() {
     test('Constructor assigns correct properties', () {
       final containerSpecAttribute = BoxSpecAttribute(
         alignment: Alignment.center,
-        padding: SpacingDto.only(top: 20, bottom: 20, left: 20, right: 20),
-        margin: SpacingDto.only(
+        padding: EdgeInsetsGeometryDto.only(
+            top: 20, bottom: 20, left: 20, right: 20),
+        margin: EdgeInsetsGeometryDto.only(
           top: 10,
           bottom: 10,
           left: 10,
@@ -43,11 +44,11 @@ void main() {
       expect(containerSpecAttribute.height, 100);
       expect(
         containerSpecAttribute.margin,
-        SpacingDto.only(top: 10, bottom: 10, left: 10, right: 10),
+        EdgeInsetsGeometryDto.only(top: 10, bottom: 10, left: 10, right: 10),
       );
       expect(
         containerSpecAttribute.padding,
-        SpacingDto.only(top: 20, bottom: 20, left: 20, right: 20),
+        EdgeInsetsGeometryDto.only(top: 20, bottom: 20, left: 20, right: 20),
       );
       expect(containerSpecAttribute.transform, Matrix4.identity());
       expect(containerSpecAttribute.width, 100);
@@ -63,8 +64,9 @@ void main() {
     test('resolve() returns correct instance', () {
       final containerSpecAttribute = BoxSpecAttribute(
           alignment: Alignment.center,
-          padding: SpacingDto.only(top: 20, bottom: 20, left: 20, right: 20),
-          margin: SpacingDto.only(
+          padding: EdgeInsetsGeometryDto.only(
+              top: 20, bottom: 20, left: 20, right: 20),
+          margin: EdgeInsetsGeometryDto.only(
             top: 10,
             bottom: 10,
             left: 10,
@@ -113,8 +115,9 @@ void main() {
     test('merge() returns correct instance', () {
       final containerSpecAttribute = BoxSpecAttribute(
           alignment: Alignment.center,
-          padding: SpacingDto.only(top: 20, bottom: 20, left: 20, right: 20),
-          margin: SpacingDto.only(
+          padding: EdgeInsetsGeometryDto.only(
+              top: 20, bottom: 20, left: 20, right: 20),
+          margin: EdgeInsetsGeometryDto.only(
             top: 10,
             bottom: 10,
             left: 10,
@@ -134,8 +137,9 @@ void main() {
       final mergedBoxSpecAttribute = containerSpecAttribute.merge(
         BoxSpecAttribute(
           alignment: Alignment.centerLeft,
-          padding: SpacingDto.only(top: 30, bottom: 30, left: 30, right: 30),
-          margin: SpacingDto.only(
+          padding: EdgeInsetsGeometryDto.only(
+              top: 30, bottom: 30, left: 30, right: 30),
+          margin: EdgeInsetsGeometryDto.only(
             top: 20,
             bottom: 20,
             left: 20,
@@ -168,11 +172,11 @@ void main() {
       expect(mergedBoxSpecAttribute.height, 200);
       expect(
         mergedBoxSpecAttribute.margin,
-        SpacingDto.only(top: 20, bottom: 20, left: 20, right: 20),
+        EdgeInsetsGeometryDto.only(top: 20, bottom: 20, left: 20, right: 20),
       );
       expect(
         mergedBoxSpecAttribute.padding,
-        SpacingDto.only(top: 30, bottom: 30, left: 30, right: 30),
+        EdgeInsetsGeometryDto.only(top: 30, bottom: 30, left: 30, right: 30),
       );
       expect(mergedBoxSpecAttribute.transform, Matrix4.identity());
       expect(mergedBoxSpecAttribute.width, 200);
@@ -188,8 +192,9 @@ void main() {
     test('equality', () {
       final containerSpecAttribute = BoxSpecAttribute(
           alignment: Alignment.center,
-          padding: SpacingDto.only(top: 20, bottom: 20, left: 20, right: 20),
-          margin: SpacingDto.only(
+          padding: EdgeInsetsGeometryDto.only(
+              top: 20, bottom: 20, left: 20, right: 20),
+          margin: EdgeInsetsGeometryDto.only(
             top: 10,
             bottom: 10,
             left: 10,
@@ -211,8 +216,9 @@ void main() {
         equals(
           BoxSpecAttribute(
             alignment: Alignment.center,
-            padding: SpacingDto.only(top: 20, bottom: 20, left: 20, right: 20),
-            margin: SpacingDto.only(
+            padding: EdgeInsetsGeometryDto.only(
+                top: 20, bottom: 20, left: 20, right: 20),
+            margin: EdgeInsetsGeometryDto.only(
               top: 10,
               bottom: 10,
               left: 10,
@@ -239,8 +245,9 @@ void main() {
     test('not equals', () {
       final containerSpecAttribute = BoxSpecAttribute(
         alignment: Alignment.center,
-        padding: SpacingDto.only(top: 20, bottom: 20, left: 20, right: 20),
-        margin: SpacingDto.only(
+        padding: EdgeInsetsGeometryDto.only(
+            top: 20, bottom: 20, left: 20, right: 20),
+        margin: EdgeInsetsGeometryDto.only(
           top: 10,
           bottom: 10,
           left: 10,
@@ -260,13 +267,13 @@ void main() {
           equals(
             BoxSpecAttribute(
               alignment: Alignment.centerLeft,
-              padding: SpacingDto.only(
+              padding: EdgeInsetsGeometryDto.only(
                 top: 30,
                 bottom: 30,
                 left: 30,
                 right: 30,
               ),
-              margin: SpacingDto.only(
+              margin: EdgeInsetsGeometryDto.only(
                 top: 20,
                 bottom: 20,
                 left: 20,

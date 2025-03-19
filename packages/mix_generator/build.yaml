@@ -1,52 +1,18 @@
 targets:
   $default:
     builders:
-      spec:
+      mix_generator:
         enabled: true
         generate_for:
-          exclude:
-            - test
-            - example
-      dto:
-        enabled: true
-        generate_for:
-          exclude:
-            - test
-            - example
+          - lib/**/*.dart
+        options:
+          debug: false
 
 builders:
-  spec:
-    import: "package:mix_generator/mix_generator.dart"
-    builder_factories: ["specDefinition"]
-    build_extensions: { ".dart": ["spec.g.part"] }
+  mix_generator:
+    import: 'package:mix_generator/mix_generator.dart'
+    builder_factories: ['mixGenerator']
+    build_extensions: {'.dart': ['.mix.dart']}
     auto_apply: dependents
-    build_to: cache
-    applies_builders: ["source_gen|combining_builder"]
-  dto:
-    import: "package:mix_generator/mix_generator.dart"
-    builder_factories: ["dtoDefinition"]
-    build_extensions: { ".dart": ["dto.g.part"] }
-    auto_apply: dependents
-    build_to: cache
-    applies_builders: ["source_gen|combining_builder"]
-  enum_utility:
-    import: "package:mix_generator/mix_generator.dart"
-    builder_factories: ["enumUtilityDefinition"]
-    build_extensions: { ".dart": ["enum_utility.g.part"] }
-    auto_apply: dependents
-    build_to: cache
-    applies_builders: ["source_gen|combining_builder"]
-  class_utility:
-    import: "package:mix_generator/mix_generator.dart"
-    builder_factories: ["classUtilityDefinition"]
-    build_extensions: { ".dart": ["class_utility.g.part"] }
-    auto_apply: dependents
-    build_to: cache
-    applies_builders: ["source_gen|combining_builder"]
-  tokens:
-    import: "package:mix_generator/mix_generator.dart"
-    builder_factories: ["tokensDefinition"]
-    build_extensions: { ".dart": ["tokens.g.part"] }
-    auto_apply: dependents
-    build_to: cache
-    applies_builders: ["source_gen|combining_builder"]
+    build_to: source
+    applies_builders: []

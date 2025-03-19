@@ -14,7 +14,7 @@ import '../../attributes/modifiers/widget_modifiers_util.dart';
 import '../../attributes/scalars/scalar_util.dart';
 import '../../attributes/spacing/edge_insets_dto.dart';
 import '../../attributes/spacing/spacing_util.dart';
-import '../../core/attribute.dart';
+import '../../core/element.dart';
 import '../../core/factory/mix_data.dart';
 import '../../core/factory/mix_provider.dart';
 import '../../core/helpers.dart';
@@ -24,7 +24,7 @@ import 'box_widget.dart';
 
 part 'box_spec.g.dart';
 
-const _constraints = MixableUtility(
+const _constraints = MixableFieldUtility(
   type: BoxConstraints,
   properties: [
     (path: 'minWidth', alias: 'minWidth'),
@@ -34,8 +34,8 @@ const _constraints = MixableUtility(
   ],
 );
 
-const _foreground = MixableUtility(type: BoxDecoration);
-const _boxDecor = MixableUtility(
+const _foreground = MixableFieldUtility(type: BoxDecoration);
+const _boxDecor = MixableFieldUtility(
   type: BoxDecoration,
   properties: [
     (path: 'color', alias: 'color'),
@@ -53,7 +53,7 @@ const _boxDecor = MixableUtility(
   ],
 );
 
-const _shapeDecor = MixableUtility(
+const _shapeDecor = MixableFieldUtility(
   alias: 'shapeDecoration',
   type: ShapeDecoration,
   properties: [(path: 'shape', alias: 'shape')],
@@ -76,15 +76,15 @@ final class BoxSpec extends Spec<BoxSpec> with _$BoxSpec, Diagnosticable {
   final EdgeInsetsGeometry? margin;
 
   /// Applies additional constraints to the child.
-  @MixableProperty(utilities: [_constraints])
+  @MixableField(utilities: [_constraints])
   final BoxConstraints? constraints;
 
   /// Paints a decoration behind the child.
-  @MixableProperty(utilities: [_boxDecor, _shapeDecor])
+  @MixableField(utilities: [_boxDecor, _shapeDecor])
   final Decoration? decoration;
 
   /// Paints a decoration in front of the child.
-  @MixableProperty(utilities: [_foreground])
+  @MixableField(utilities: [_foreground])
   final Decoration? foregroundDecoration;
 
   /// Applies a transformation matrix before painting the box.
