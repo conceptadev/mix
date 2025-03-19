@@ -3,7 +3,7 @@ import 'package:mix_annotations/mix_annotations.dart';
 import '../../core/element.dart';
 import '../../core/factory/mix_data.dart';
 
-part 'spacing_side_dto.g.dart';
+part 'space_dto.g.dart';
 
 @Deprecated('Use SpaceDto instead')
 typedef SpacingSideDto = SpaceDto;

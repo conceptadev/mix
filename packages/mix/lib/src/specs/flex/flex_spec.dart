@@ -7,7 +7,7 @@ import '../../attributes/animated/animated_data_dto.dart';
 import '../../attributes/animated/animated_util.dart';
 import '../../attributes/enum/enum_util.dart';
 import '../../attributes/gap/gap_util.dart';
-import '../../attributes/gap/spacing_side_dto.dart';
+import '../../attributes/gap/space_dto.dart';
 import '../../attributes/modifiers/widget_modifiers_data.dart';
 import '../../attributes/modifiers/widget_modifiers_data_dto.dart';
 import '../../attributes/modifiers/widget_modifiers_util.dart';

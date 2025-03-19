@@ -1,7 +1,7 @@
 import '../../core/element.dart';
 import '../../core/utility.dart';
 import '../../theme/tokens/space_token.dart';
-import 'spacing_side_dto.dart';
+import 'space_dto.dart';
 
 final class GapUtility<T extends Attribute> extends MixUtility<T, SpaceDto> {
   const GapUtility(super.builder);

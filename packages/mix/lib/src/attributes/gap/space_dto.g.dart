@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'spacing_side_dto.dart';
+part of 'space_dto.dart';
 
 // **************************************************************************
 // MixGenerator
