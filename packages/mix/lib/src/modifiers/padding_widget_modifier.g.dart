@@ -3,8 +3,10 @@
 part of 'padding_widget_modifier.dart';
 
 // **************************************************************************
-// MixableSpecGenerator
+// MixGenerator
 // **************************************************************************
+
+// GENERATED CODE - DO NOT MODIFY BY HAND
 
 /// A mixin that provides spec functionality for [PaddingModifierSpec].
 mixin _$PaddingModifierSpec on WidgetModifierSpec<PaddingModifierSpec> {

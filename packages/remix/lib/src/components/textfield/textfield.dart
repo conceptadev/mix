@@ -15,7 +15,6 @@ import 'package:mix_annotations/mix_annotations.dart';
 
 import '../../core/theme/remix_theme.dart';
 import '../../helpers/component_builder.dart';
-import 'attributes/attributes.dart';
 
 part 'textfield.g.dart';
 part 'textfield_style.dart';
@@ -58,7 +57,11 @@ class TextFieldSpec extends Spec<TextFieldSpec>
   final double floatingLabelHeight;
   final TextStyle? floatingLabelStyle;
 
-  @MixableField(dto: MixableFieldResolvable(type: TextHeightBehaviorDto))
+  @MixableField(
+    dto: MixableFieldProperty(
+      type: TextHeightBehaviorDto,
+    ),
+  )
   final TextHeightBehavior? textHeightBehavior;
 
   static const of = _$TextFieldSpec.of;

@@ -3,8 +3,10 @@
 part of 'scroll_view_widget_modifier.dart';
 
 // **************************************************************************
-// MixableSpecGenerator
+// MixGenerator
 // **************************************************************************
+
+// GENERATED CODE - DO NOT MODIFY BY HAND
 
 /// A mixin that provides spec functionality for [ScrollViewModifierSpec].
 mixin _$ScrollViewModifierSpec on WidgetModifierSpec<ScrollViewModifierSpec> {

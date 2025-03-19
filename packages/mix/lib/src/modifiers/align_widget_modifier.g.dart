@@ -3,8 +3,10 @@
 part of 'align_widget_modifier.dart';
 
 // **************************************************************************
-// MixableSpecGenerator
+// MixGenerator
 // **************************************************************************
+
+// GENERATED CODE - DO NOT MODIFY BY HAND
 
 /// A mixin that provides spec functionality for [AlignModifierSpec].
 mixin _$AlignModifierSpec on WidgetModifierSpec<AlignModifierSpec> {

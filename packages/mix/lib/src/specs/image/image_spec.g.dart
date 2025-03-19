@@ -3,8 +3,10 @@
 part of 'image_spec.dart';
 
 // **************************************************************************
-// MixableSpecGenerator
+// MixGenerator
 // **************************************************************************
+
+// GENERATED CODE - DO NOT MODIFY BY HAND
 
 /// A mixin that provides spec functionality for [ImageSpec].
 mixin _$ImageSpec on Spec<ImageSpec> {

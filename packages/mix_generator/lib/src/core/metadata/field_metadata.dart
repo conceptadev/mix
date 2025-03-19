@@ -101,7 +101,7 @@ class FieldMetadata {
       resolvable: createFieldResolvableMetadata(
         name: element.name,
         dartType: element.type,
-        resolvableAnnotation: resolvableAnnotation,
+        propertyAnnotation: resolvableAnnotation,
       ),
       utility: createFieldUtilityMetadata(
         name: element.name,
@@ -131,7 +131,7 @@ class FieldMetadata {
       resolvable: createFieldResolvableMetadata(
         name: element.name,
         dartType: element.returnType,
-        resolvableAnnotation: resolvableAnnotation,
+        propertyAnnotation: resolvableAnnotation,
       ),
       utility: createFieldUtilityMetadata(
         name: element.name,
@@ -282,7 +282,7 @@ class ParameterMetadata extends FieldMetadata {
       resolvable: createFieldResolvableMetadata(
         name: parameter.name,
         dartType: parameter.type,
-        resolvableAnnotation: resolvableAnnotation,
+        propertyAnnotation: resolvableAnnotation,
       ),
       isSuper: parameter.isSuperFormal,
       isPositional: parameter.isPositional,

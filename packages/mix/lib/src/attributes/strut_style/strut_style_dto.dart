@@ -7,7 +7,7 @@ import '../../../mix.dart';
 
 part 'strut_style_dto.g.dart';
 
-@MixableResolvable()
+@MixableProperty()
 final class StrutStyleDto extends StyleProperty<StrutStyle>
     with _$StrutStyleDto {
   @MixableField(utilities: [MixableFieldUtility(type: FontFamilyUtility)])

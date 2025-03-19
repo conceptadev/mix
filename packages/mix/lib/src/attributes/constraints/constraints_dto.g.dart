@@ -3,8 +3,10 @@
 part of 'constraints_dto.dart';
 
 // **************************************************************************
-// MixableResolvableGenerator
+// MixGenerator
 // **************************************************************************
+
+// GENERATED CODE - DO NOT MODIFY BY HAND
 
 /// A mixin that provides DTO functionality for [BoxConstraintsDto].
 mixin _$BoxConstraintsDto on StyleProperty<BoxConstraints> {

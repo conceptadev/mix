@@ -3,8 +3,10 @@
 part of 'opacity_widget_modifier.dart';
 
 // **************************************************************************
-// MixableSpecGenerator
+// MixGenerator
 // **************************************************************************
+
+// GENERATED CODE - DO NOT MODIFY BY HAND
 
 /// A mixin that provides spec functionality for [OpacityModifierSpec].
 mixin _$OpacityModifierSpec on WidgetModifierSpec<OpacityModifierSpec> {

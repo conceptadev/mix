@@ -3,8 +3,10 @@
 part of 'shape_border_dto.dart';
 
 // **************************************************************************
-// MixableResolvableGenerator
+// MixGenerator
 // **************************************************************************
+
+// GENERATED CODE - DO NOT MODIFY BY HAND
 
 /// A mixin that provides DTO functionality for [RoundedRectangleBorderDto].
 mixin _$RoundedRectangleBorderDto on StyleProperty<RoundedRectangleBorder> {

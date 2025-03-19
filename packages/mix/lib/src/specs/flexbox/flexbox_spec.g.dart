@@ -3,8 +3,10 @@
 part of 'flexbox_spec.dart';
 
 // **************************************************************************
-// MixableSpecGenerator
+// MixGenerator
 // **************************************************************************
+
+// GENERATED CODE - DO NOT MODIFY BY HAND
 
 /// A mixin that provides spec functionality for [FlexBoxSpec].
 mixin _$FlexBoxSpec on Spec<FlexBoxSpec> {

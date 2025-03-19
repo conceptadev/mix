@@ -390,7 +390,8 @@ $signatureLine
       for (final prop in utilityProps) {
         if (prop.path == propertyName) {
           // Top-level utility (main field or with an alias)
-          final utilityName = prop.utilityName ?? 'DynamicUtility';
+          final utilityName =
+              prop.utilityName ?? 'GenericUtility<T, ${field.type}>';
           final utilityExpression =
               '$utilityName((v) => only($propertyName: v))';
 

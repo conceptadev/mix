@@ -3,8 +3,10 @@
 part of 'text_height_behavior_dto.dart';
 
 // **************************************************************************
-// MixableResolvableGenerator
+// MixGenerator
 // **************************************************************************
+
+// GENERATED CODE - DO NOT MODIFY BY HAND
 
 /// A mixin that provides DTO functionality for [TextHeightBehaviorDto].
 mixin _$TextHeightBehaviorDto on StyleProperty<TextHeightBehavior> {

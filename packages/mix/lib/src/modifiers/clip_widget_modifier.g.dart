@@ -3,8 +3,10 @@
 part of 'clip_widget_modifier.dart';
 
 // **************************************************************************
-// MixableSpecGenerator
+// MixGenerator
 // **************************************************************************
+
+// GENERATED CODE - DO NOT MODIFY BY HAND
 
 /// A mixin that provides spec functionality for [ClipOvalModifierSpec].
 mixin _$ClipOvalModifierSpec on WidgetModifierSpec<ClipOvalModifierSpec> {

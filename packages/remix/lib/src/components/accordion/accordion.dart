@@ -17,7 +17,10 @@ base class AccordionSpec extends Spec<AccordionSpec> with _$AccordionSpec {
   final FlexBoxSpec container;
 
   @MixableField(
-      dto: MixableFieldResolvable(type: 'AccordionHeaderSpecAttribute'))
+    dto: MixableFieldProperty(
+      type: 'AccordionHeaderSpecAttribute',
+    ),
+  )
   final AccordionHeaderSpec header;
 
   final BoxSpec contentContainer;

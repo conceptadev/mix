@@ -3,8 +3,10 @@
 part of 'decoration_dto.dart';
 
 // **************************************************************************
-// MixableResolvableGenerator
+// MixGenerator
 // **************************************************************************
+
+// GENERATED CODE - DO NOT MODIFY BY HAND
 
 /// A mixin that provides DTO functionality for [BoxDecorationDto].
 mixin _$BoxDecorationDto on StyleProperty<BoxDecoration> {

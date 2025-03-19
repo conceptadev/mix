@@ -1,13 +1,13 @@
-import '../metadata/resolvable_metadata.dart';
+import '../metadata/property_metadata.dart';
 import '../utils/code_builder.dart';
 
 /// Builder for generating extension methods to convert between value types and DTOs.
-class ResolvableExtensionBuilder extends CodeBuilder {
+class MixablePropertyExtensionBuilder extends CodeBuilder {
   /// The metadata for the DTO class
-  final ResolvableMetadata metadata;
+  final MixablePropertyMetadata metadata;
 
   /// Creates a new DtoExtensionBuilder
-  ResolvableExtensionBuilder(this.metadata);
+  MixablePropertyExtensionBuilder(this.metadata);
 
   @override
   String build() {

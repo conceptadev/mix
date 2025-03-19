@@ -42,6 +42,15 @@ class TypeUtils {
     }
   }
 
+  /// Gets all type arguments for a type
+  static List<DartType> getTypeArguments(DartType type) {
+    if (type is InterfaceType) {
+      return type.typeArguments;
+    }
+
+    return const [];
+  }
+
   static bool hasDefaultValueMixin(ClassElement element) {
     // Check for a direct implementation of the mixin
     bool hasDirectMixin = element.mixins.any((mixin) {
@@ -235,7 +244,7 @@ class TypeUtils {
       return null;
     } catch (e) {
       _logger.warning(
-        'Failed to extract DTO type argument from ${classElement.name}',
+        'Failed to extract StyleProperty type argument from ${classElement.name}',
         e,
       );
 
@@ -376,6 +385,24 @@ class TypeUtils {
     }
 
     return true;
+  }
+
+  /// Removes the 'Utility' suffix from a type name if present
+  static String removeUtilitySuffix(String typeName) {
+    if (typeName.endsWith('Utility')) {
+      return typeName.substring(0, typeName.length - 'Utility'.length);
+    }
+
+    return typeName;
+  }
+
+  /// Removes the 'Dto' suffix from a type name if present
+  static String removeDtoSuffix(String typeName) {
+    if (typeName.endsWith('Dto')) {
+      return typeName.substring(0, typeName.length - 'Dto'.length);
+    }
+
+    return typeName;
   }
 }
 

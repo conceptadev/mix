@@ -1,11 +1,11 @@
-import '../metadata/resolvable_metadata.dart';
+import '../metadata/property_metadata.dart';
 import '../utils/code_builder.dart';
 import '../utils/utility_code_generator.dart';
 
-class ResolvableUtilityBuilder implements CodeBuilder {
-  final ResolvableMetadata metadata;
+class MixablePropertyUtilityBuilder implements CodeBuilder {
+  final MixablePropertyMetadata metadata;
 
-  const ResolvableUtilityBuilder(this.metadata);
+  const MixablePropertyUtilityBuilder(this.metadata);
 
   @override
   String build() {

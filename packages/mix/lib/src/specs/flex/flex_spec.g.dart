@@ -3,8 +3,10 @@
 part of 'flex_spec.dart';
 
 // **************************************************************************
-// MixableSpecGenerator
+// MixGenerator
 // **************************************************************************
+
+// GENERATED CODE - DO NOT MODIFY BY HAND
 
 /// A mixin that provides spec functionality for [FlexSpec].
 mixin _$FlexSpec on Spec<FlexSpec> {
@@ -165,7 +167,7 @@ class FlexSpecAttribute extends SpecAttribute<FlexSpec> with Diagnosticable {
   final TextDirection? textDirection;
   final TextBaseline? textBaseline;
   final Clip? clipBehavior;
-  final SpacingSideDto? gap;
+  final SpaceDto? gap;
 
   const FlexSpecAttribute({
     this.crossAxisAlignment,
@@ -347,7 +349,7 @@ class FlexSpecUtility<T extends Attribute>
     TextDirection? textDirection,
     TextBaseline? textBaseline,
     Clip? clipBehavior,
-    SpacingSideDto? gap,
+    SpaceDto? gap,
     AnimatedDataDto? animated,
     WidgetModifiersDataDto? modifiers,
   }) {

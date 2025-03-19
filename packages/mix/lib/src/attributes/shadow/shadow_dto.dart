@@ -18,7 +18,7 @@ sealed class ShadowDtoImpl<T extends Shadow> extends StyleProperty<T> {
 ///
 /// This is used to allow for resolvable value tokens, and also the correct
 /// merge and combining behavior. It allows to be merged, and resolved to a [Shadow]
-@MixableResolvable()
+@MixableProperty()
 class ShadowDto extends ShadowDtoImpl<Shadow>
     with HasDefaultValue<Shadow>, _$ShadowDto {
   const ShadowDto({super.blurRadius, super.color, super.offset});
@@ -31,7 +31,7 @@ class ShadowDto extends ShadowDtoImpl<Shadow>
 ///
 /// This is used to allow for resolvable value tokens, and also the correct
 /// merge and combining behavior. It allows to be merged, and resolved to a `[BoxShadow]
-@MixableResolvable()
+@MixableProperty()
 class BoxShadowDto extends ShadowDtoImpl<BoxShadow>
     with HasDefaultValue<BoxShadow>, _$BoxShadowDto {
   final double? spreadRadius;

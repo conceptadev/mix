@@ -3,8 +3,10 @@
 part of 'shadow_dto.dart';
 
 // **************************************************************************
-// MixableResolvableGenerator
+// MixGenerator
 // **************************************************************************
+
+// GENERATED CODE - DO NOT MODIFY BY HAND
 
 /// A mixin that provides DTO functionality for [ShadowDto].
 mixin _$ShadowDto on StyleProperty<Shadow>, HasDefaultValue<Shadow> {

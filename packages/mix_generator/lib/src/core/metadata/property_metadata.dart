@@ -1,14 +1,14 @@
 import 'package:analyzer/dart/element/element.dart';
 import 'package:mix_annotations/mix_annotations.dart';
 
-import '../resolvable/resolvable_method_builder.dart';
+import '../property/property_method_builder.dart';
 import '../utils/constructor_utils.dart';
 import '../utils/dart_type_utils.dart';
 import 'base_metadata.dart';
 import 'field_metadata.dart';
 
-/// Metadata for DTO classes, extracted from MixableDto annotations.
-class ResolvableMetadata extends BaseMetadata {
+/// Metadata for MixableProperty classes, extracted from MixableDto annotations.
+class MixablePropertyMetadata extends BaseMetadata {
   /// Whether to merge lists when merging DTOs
   final bool mergeLists;
 
@@ -26,7 +26,7 @@ class ResolvableMetadata extends BaseMetadata {
   /// Whether this type implements HasDefaultValue mixin
   final bool hasDefaultValue;
 
-  ResolvableMetadata({
+  MixablePropertyMetadata({
     required super.element,
     required super.name,
     required super.parameters,
@@ -43,9 +43,9 @@ class ResolvableMetadata extends BaseMetadata {
   });
 
   /// Creates a ResolvableMetadata from a class element and its annotation
-  static ResolvableMetadata fromAnnotation(
+  static MixablePropertyMetadata fromAnnotation(
     ClassElement element,
-    MixableResolvable annotation,
+    MixableProperty annotation,
   ) {
     final constructor = findTargetConstructor(element);
     final parameters = ParameterMetadata.extractFromConstructor(element);
@@ -77,7 +77,7 @@ class ResolvableMetadata extends BaseMetadata {
       }
     }
 
-    return ResolvableMetadata(
+    return MixablePropertyMetadata(
       element: element,
       name: element.name,
       parameters: parameters,

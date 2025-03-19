@@ -1,13 +1,13 @@
 // lib/src/builders/dto/dto_mixin_builder.dart
-import '../metadata/resolvable_metadata.dart';
+import '../metadata/property_metadata.dart';
 import '../utils/code_builder.dart';
 import '../utils/common_method_builder.dart';
-import 'resolvable_method_builder.dart';
+import 'property_method_builder.dart';
 
-class ResolvableMixinBuilder extends CodeBuilder {
-  final ResolvableMetadata metadata;
+class MixablePropertyMixinBuilder extends CodeBuilder {
+  final MixablePropertyMetadata metadata;
 
-  ResolvableMixinBuilder(this.metadata);
+  MixablePropertyMixinBuilder(this.metadata);
 
   @override
   String build() {
@@ -24,7 +24,7 @@ class ResolvableMixinBuilder extends CodeBuilder {
 
     // Only generate methods that aren't already defined
     final resolveMethod = !hasResolve
-        ? ResolvableMethods.generateResolveMethod(
+        ? MixablePropertyMethods.generateResolveMethod(
             className: metadata.name,
             constructorRef: metadata.constructorRef,
             fields: metadata.parameters,
@@ -37,7 +37,7 @@ class ResolvableMixinBuilder extends CodeBuilder {
         : '';
 
     final mergeMethod = !hasMerge
-        ? ResolvableMethods.generateMergeMethod(
+        ? MixablePropertyMethods.generateMergeMethod(
             className: metadata.name,
             fields: metadata.parameters,
             isAbstract: false,

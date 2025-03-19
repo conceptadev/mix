@@ -3,8 +3,10 @@
 part of 'aspect_ratio_widget_modifier.dart';
 
 // **************************************************************************
-// MixableSpecGenerator
+// MixGenerator
 // **************************************************************************
+
+// GENERATED CODE - DO NOT MODIFY BY HAND
 
 /// A mixin that provides spec functionality for [AspectRatioModifierSpec].
 mixin _$AspectRatioModifierSpec on WidgetModifierSpec<AspectRatioModifierSpec> {

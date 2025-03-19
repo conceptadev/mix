@@ -44,7 +44,7 @@ class GeneratedUtilityMethods {
 }
 
 /// Flags specifying resolvable (DTO) generation options.
-class GeneratedResolvableComponents {
+class GeneratedPropertyComponents {
   static const int none = 0x00;
   static const int utility = 0x01;
   static const int resolvableExtension = 0x02;
@@ -55,5 +55,5 @@ class GeneratedResolvableComponents {
   /// Combines all available components.
   static const int all = utility | resolvableExtension;
 
-  const GeneratedResolvableComponents._();
+  const GeneratedPropertyComponents._();
 }

@@ -3,8 +3,10 @@
 part of 'border_dto.dart';
 
 // **************************************************************************
-// MixableResolvableGenerator
+// MixGenerator
 // **************************************************************************
+
+// GENERATED CODE - DO NOT MODIFY BY HAND
 
 /// A mixin that provides DTO functionality for [BorderDto].
 mixin _$BorderDto on StyleProperty<Border> {

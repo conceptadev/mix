@@ -13,7 +13,7 @@ sealed class ConstraintsDto<T extends Constraints> extends StyleProperty<T> {
 ///
 /// This is used to allow for resolvable value tokens, and also the correct
 /// merge and combining behavior. It allows to be merged, and resolved to a `[BoxConstraints]
-@MixableResolvable()
+@MixableProperty()
 final class BoxConstraintsDto extends ConstraintsDto<BoxConstraints>
     with _$BoxConstraintsDto {
   final double? minWidth;

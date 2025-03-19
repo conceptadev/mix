@@ -630,11 +630,11 @@ class TextFieldSpecUtility<T extends Attribute>
 
   /// Utility for defining [TextFieldSpecAttribute.selectionHeightStyle]
   late final selectionHeightStyle =
-      DynamicUtility((v) => only(selectionHeightStyle: v));
+      GenericUtility<T, BoxHeightStyle>((v) => only(selectionHeightStyle: v));
 
   /// Utility for defining [TextFieldSpecAttribute.selectionWidthStyle]
   late final selectionWidthStyle =
-      DynamicUtility((v) => only(selectionWidthStyle: v));
+      GenericUtility<T, BoxWidthStyle>((v) => only(selectionWidthStyle: v));
 
   /// Utility for defining [TextFieldSpecAttribute.scrollPadding]
   late final scrollPadding = EdgeInsetsUtility((v) => only(scrollPadding: v));
@@ -644,7 +644,7 @@ class TextFieldSpecUtility<T extends Attribute>
 
   /// Utility for defining [TextFieldSpecAttribute.keyboardAppearance]
   late final keyboardAppearance =
-      DynamicUtility((v) => only(keyboardAppearance: v));
+      GenericUtility<T, Brightness>((v) => only(keyboardAppearance: v));
 
   /// Utility for defining [TextFieldSpecAttribute.autocorrectionTextRectColor]
   late final autocorrectionTextRectColor =

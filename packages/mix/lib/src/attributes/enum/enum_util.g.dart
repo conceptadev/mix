@@ -3,8 +3,10 @@
 part of 'enum_util.dart';
 
 // **************************************************************************
-// MixableUtilityGenerator
+// MixGenerator
 // **************************************************************************
+
+// GENERATED CODE - DO NOT MODIFY BY HAND
 
 /// {@template vertical_direction_utility}
 /// A utility class for creating [Attribute] instances from [VerticalDirection] values.

@@ -61,12 +61,12 @@ class MixableUtility {
 /// class for the DTO. It defaults to `true`.
 ///
 /// If the annotated class contains a merge method, it will not be generated
-class MixableResolvable {
+class MixableProperty {
   final bool mergeLists;
   final int components;
 
-  const MixableResolvable({
-    this.components = GeneratedResolvableComponents.all,
+  const MixableProperty({
+    this.components = GeneratedPropertyComponents.all,
     this.mergeLists = true,
   });
 }
@@ -74,14 +74,14 @@ class MixableResolvable {
 /// An annotation class used to specify a mixable property for code generation.
 ///
 /// The `MixableField` annotation is used to mark a property as mixable
-/// during code generation. It allows specifying an associated `MixableFieldResolvable`
+/// during code generation. It allows specifying an associated `MixableFieldProperty`
 /// and a list of `MixableFieldUtility` instances that provide additional options for
 /// code generation.
 ///
 /// Example usage:
 /// ```dart
 /// @MixableField(
-///   dto: MixableFieldResolvable(type: BoxConstraintsDto),
+///   dto: MixableFieldProperty(type: BoxConstraintsDto),
 ///   utilities: [
 ///     MixableFieldUtility(
 ///       properties: [
@@ -94,12 +94,12 @@ class MixableResolvable {
 /// final BoxConstraints? constraints;
 /// ```
 class MixableField {
-  /// The associated `MixableFieldResolvable` for this property.
+  /// The associated `MixableFieldProperty` for this property.
   ///
   /// This property represents the data transfer object (DTO) associated with
   /// the mixable property. It provides options for code generation, such as
   /// specifying the type of the generated field.
-  final MixableFieldResolvable? dto;
+  final MixableFieldProperty? dto;
 
   /// The list of `MixableUtility` instances associated with this property.
   ///
@@ -146,17 +146,17 @@ class MixableField {
 
 /// An annotation class used to specify a mixable field DTO for code generation.
 ///
-/// The `MixableFieldResolvable` annotation is used to provide options for generating
+/// The `MixableFieldProperty` annotation is used to provide options for generating
 /// a mixable field. It allows specifying the type of the generated field.
-class MixableFieldResolvable {
+class MixableFieldProperty {
   /// The type of the generated field.
   ///
   /// This property represents the type that will be used for the generated
   /// field during code generation.
   final Object? type;
 
-  /// Creates a new instance of `MixableFieldResolvable` with the specified [type].
-  const MixableFieldResolvable({this.type});
+  /// Creates a new instance of `MixableFieldProperty` with the specified [type].
+  const MixableFieldProperty({this.type});
 }
 
 /// A typedef representing a utility property for code generation.

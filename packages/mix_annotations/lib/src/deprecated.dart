@@ -41,11 +41,8 @@ class MixableEnumUtility {
   const MixableEnumUtility({this.generateCallMethod = true});
 }
 
-@Deprecated('Use MixableResolvable instead')
-typedef MixableDto = MixableResolvable;
+@Deprecated('Use MixableProperty instead')
+typedef MixableDto = MixableProperty;
 
-@Deprecated('Use MixableField instead')
-typedef MixableProperty = MixableField;
-
-@Deprecated('Use MixableFieldResolvable instead')
-typedef MixableFieldDto = MixableFieldResolvable;
+@Deprecated('Use MixableFieldProperty instead')
+typedef MixableFieldDto = MixableFieldProperty;

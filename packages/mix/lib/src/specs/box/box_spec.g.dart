@@ -3,8 +3,10 @@
 part of 'box_spec.dart';
 
 // **************************************************************************
-// MixableSpecGenerator
+// MixGenerator
 // **************************************************************************
+
+// GENERATED CODE - DO NOT MODIFY BY HAND
 
 /// A mixin that provides spec functionality for [BoxSpec].
 mixin _$BoxSpec on Spec<BoxSpec> {

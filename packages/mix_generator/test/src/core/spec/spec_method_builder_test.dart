@@ -1,7 +1,7 @@
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:mix_generator/src/core/metadata/field_metadata.dart';
-import 'package:mix_generator/src/core/resolvable/resolvable_method_builder.dart';
+import 'package:mix_generator/src/core/property/property_method_builder.dart';
 import 'package:mix_generator/src/core/type_registry.dart';
 import 'package:test/test.dart';
 
@@ -42,7 +42,7 @@ void main() {
         );
 
         // Generate the merge method with all field types
-        final result = ResolvableMethods.generateMergeMethod(
+        final result = MixablePropertyMethods.generateMergeMethod(
           className: 'TestClass',
           fields: [
             dtoWithTryToMerge,
@@ -108,7 +108,7 @@ void main() {
         );
 
         // Generate the merge method with both decoration fields
-        final result = ResolvableMethods.generateMergeMethod(
+        final result = MixablePropertyMethods.generateMergeMethod(
           className: 'TestClass',
           fields: [boxDecorationField, shapeDecorationField],
           isAbstract: false,

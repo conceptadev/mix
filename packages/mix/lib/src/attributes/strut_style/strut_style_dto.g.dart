@@ -3,8 +3,10 @@
 part of 'strut_style_dto.dart';
 
 // **************************************************************************
-// MixableResolvableGenerator
+// MixGenerator
 // **************************************************************************
+
+// GENERATED CODE - DO NOT MODIFY BY HAND
 
 /// A mixin that provides DTO functionality for [StrutStyleDto].
 mixin _$StrutStyleDto on StyleProperty<StrutStyle> {

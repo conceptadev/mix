@@ -25,8 +25,8 @@ Map<String, String?> extractConstructorDefaults(
   return defaults;
 }
 
-class ResolvableMethods {
-  const ResolvableMethods._();
+class MixablePropertyMethods {
+  const MixablePropertyMethods._();
 
   /// Generates a resolve method implementation
   static String generateResolveMethod({

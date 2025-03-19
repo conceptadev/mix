@@ -1,5 +1,5 @@
 import '../metadata/spec_metadata.dart';
-import '../resolvable/resolvable_method_builder.dart';
+import '../property/property_method_builder.dart';
 import '../utils/code_builder.dart';
 import '../utils/common_method_builder.dart';
 import '../utils/constructor_utils.dart';
@@ -39,7 +39,7 @@ class SpecAttributeBuilder implements CodeBuilder {
                 .startsWith('HasDefaultValue<'));
 
     // Add resolve method
-    methods.add(ResolvableMethods.generateResolveMethod(
+    methods.add(MixablePropertyMethods.generateResolveMethod(
       className: attributeName,
       constructorRef: '',
       fields: metadata.parameters,
@@ -51,7 +51,7 @@ class SpecAttributeBuilder implements CodeBuilder {
     ));
 
     // Add merge method
-    methods.add(ResolvableMethods.generateMergeMethod(
+    methods.add(MixablePropertyMethods.generateMergeMethod(
       className: attributeName,
       fields: metadata.parameters,
       isAbstract: metadata.isAbstract,

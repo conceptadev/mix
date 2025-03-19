@@ -3,8 +3,10 @@
 part of 'mouse_cursor_modifier.dart';
 
 // **************************************************************************
-// MixableSpecGenerator
+// MixGenerator
 // **************************************************************************
+
+// GENERATED CODE - DO NOT MODIFY BY HAND
 
 /// A mixin that provides spec functionality for [MouseCursorDecoratorSpec].
 mixin _$MouseCursorDecoratorSpec

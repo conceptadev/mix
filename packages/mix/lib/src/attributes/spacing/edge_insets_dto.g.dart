@@ -3,8 +3,10 @@
 part of 'edge_insets_dto.dart';
 
 // **************************************************************************
-// MixableResolvableGenerator
+// MixGenerator
 // **************************************************************************
+
+// GENERATED CODE - DO NOT MODIFY BY HAND
 
 /// A mixin that provides DTO functionality for [EdgeInsetsDto].
 mixin _$EdgeInsetsDto on StyleProperty<EdgeInsets> {

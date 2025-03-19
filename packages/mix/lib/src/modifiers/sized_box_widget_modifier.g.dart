@@ -3,8 +3,10 @@
 part of 'sized_box_widget_modifier.dart';
 
 // **************************************************************************
-// MixableSpecGenerator
+// MixGenerator
 // **************************************************************************
+
+// GENERATED CODE - DO NOT MODIFY BY HAND
 
 /// A mixin that provides spec functionality for [SizedBoxModifierSpec].
 mixin _$SizedBoxModifierSpec on WidgetModifierSpec<SizedBoxModifierSpec> {

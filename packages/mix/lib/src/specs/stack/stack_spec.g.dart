@@ -3,8 +3,10 @@
 part of 'stack_spec.dart';
 
 // **************************************************************************
-// MixableSpecGenerator
+// MixGenerator
 // **************************************************************************
+
+// GENERATED CODE - DO NOT MODIFY BY HAND
 
 /// A mixin that provides spec functionality for [StackSpec].
 mixin _$StackSpec on Spec<StackSpec> {

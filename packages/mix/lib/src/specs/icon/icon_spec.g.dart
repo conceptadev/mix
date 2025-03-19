@@ -3,8 +3,10 @@
 part of 'icon_spec.dart';
 
 // **************************************************************************
-// MixableSpecGenerator
+// MixGenerator
 // **************************************************************************
+
+// GENERATED CODE - DO NOT MODIFY BY HAND
 
 /// A mixin that provides spec functionality for [IconSpec].
 mixin _$IconSpec on Spec<IconSpec> {

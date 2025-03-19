@@ -15,7 +15,7 @@ targets:
       # Disable individual builders since we're using the consolidated one
       mix_generator|spec:
         enabled: false
-      mix_generator|dto:
+      mix_generator|property:
         enabled: false
       mix_generator|utility:
         enabled: false 

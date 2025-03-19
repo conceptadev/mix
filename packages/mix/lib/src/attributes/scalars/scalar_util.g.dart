@@ -3,8 +3,10 @@
 part of 'scalar_util.dart';
 
 // **************************************************************************
-// MixableUtilityGenerator
+// MixGenerator
 // **************************************************************************
+
+// GENERATED CODE - DO NOT MODIFY BY HAND
 
 /// {@template alignment_utility}
 /// A utility class for creating [Attribute] instances from [AlignmentGeometry] values.
@@ -638,8 +640,10 @@ mixin _$TableBorderUtility<T extends Attribute> on MixUtility<T, TableBorder> {
   /// Creates an [Attribute] instance using the [TableBorder.symmetric] constructor.
   T symmetric(
       {BorderSide inside = BorderSide.none,
-      BorderSide outside = BorderSide.none}) {
-    return builder(TableBorder.symmetric(inside: inside, outside: outside));
+      BorderSide outside = BorderSide.none,
+      BorderRadius borderRadius = BorderRadius.zero}) {
+    return builder(TableBorder.symmetric(
+        inside: inside, outside: outside, borderRadius: borderRadius));
   }
 
   /// Creates an [Attribute] instance with the specified TableBorder value.

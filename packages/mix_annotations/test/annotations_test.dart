@@ -3,16 +3,16 @@ import 'package:test/test.dart';
 
 void main() {
   group('MixableSpec', () {
-    group('MixableResolvable', () {
+    group('MixableProperty', () {
       test('should create instance with default values', () {
-        const dto = MixableResolvable();
-        expect(dto.components, equals(GeneratedResolvableComponents.all));
+        const dto = MixableProperty();
+        expect(dto.components, equals(GeneratedPropertyComponents.all));
       });
 
       test('should create instance with provided values', () {
         const dto =
-            MixableResolvable(components: GeneratedResolvableComponents.none);
-        expect(dto.components, equals(GeneratedResolvableComponents.none));
+            MixableProperty(components: GeneratedPropertyComponents.none);
+        expect(dto.components, equals(GeneratedPropertyComponents.none));
       });
     });
 
@@ -24,7 +24,7 @@ void main() {
       });
 
       test('should create instance with provided values', () {
-        const dto = MixableFieldResolvable(type: String);
+        const dto = MixableFieldProperty(type: String);
         final utilities = [const MixableFieldUtility(alias: 'util', type: int)];
         final property = MixableField(dto: dto, utilities: utilities);
         expect(property.dto, equals(dto));
@@ -34,12 +34,12 @@ void main() {
 
     group('MixableFieldDto', () {
       test('should create instance with default values', () {
-        const dto = MixableFieldResolvable();
+        const dto = MixableFieldProperty();
         expect(dto.type, isNull);
       });
 
       test('should create instance with provided values', () {
-        const dto = MixableFieldResolvable(type: int);
+        const dto = MixableFieldProperty(type: int);
         expect(dto.type, equals(int));
       });
     });

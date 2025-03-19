@@ -70,7 +70,7 @@ final class TextSpec extends Spec<TextSpec> with _$TextSpec, Diagnosticable {
   @Deprecated('Use textScaler instead')
   final double? textScaleFactor;
 
-  @MixableField(dto: MixableFieldResolvable(type: TextHeightBehaviorDto))
+  @MixableField(dto: MixableFieldProperty(type: TextHeightBehaviorDto))
   final TextHeightBehavior? textHeightBehavior;
 
   @MixableField(

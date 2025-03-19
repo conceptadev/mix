@@ -3,8 +3,10 @@
 part of 'border_radius_dto.dart';
 
 // **************************************************************************
-// MixableResolvableGenerator
+// MixGenerator
 // **************************************************************************
+
+// GENERATED CODE - DO NOT MODIFY BY HAND
 
 /// A mixin that provides DTO functionality for [BorderRadiusDto].
 mixin _$BorderRadiusDto on StyleProperty<BorderRadius> {

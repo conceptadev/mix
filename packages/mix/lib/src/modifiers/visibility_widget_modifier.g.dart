@@ -3,8 +3,10 @@
 part of 'visibility_widget_modifier.dart';
 
 // **************************************************************************
-// MixableSpecGenerator
+// MixGenerator
 // **************************************************************************
+
+// GENERATED CODE - DO NOT MODIFY BY HAND
 
 /// A mixin that provides spec functionality for [VisibilityModifierSpec].
 mixin _$VisibilityModifierSpec on WidgetModifierSpec<VisibilityModifierSpec> {
