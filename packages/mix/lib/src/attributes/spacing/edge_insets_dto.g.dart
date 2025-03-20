@@ -9,7 +9,7 @@ part of 'edge_insets_dto.dart';
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
 /// A mixin that provides DTO functionality for [EdgeInsetsDto].
-mixin _$EdgeInsetsDto on StyleProperty<EdgeInsets> {
+mixin _$EdgeInsetsDto on Mixable<EdgeInsets> {
   /// Merges the properties of this [EdgeInsetsDto] with the properties of [other].
   ///
   /// If [other] is null, returns this instance unchanged. Otherwise, returns a new
@@ -125,7 +125,7 @@ extension ListEdgeInsetsMixExt on List<EdgeInsets> {
 }
 
 /// A mixin that provides DTO functionality for [EdgeInsetsDirectionalDto].
-mixin _$EdgeInsetsDirectionalDto on StyleProperty<EdgeInsetsDirectional> {
+mixin _$EdgeInsetsDirectionalDto on Mixable<EdgeInsetsDirectional> {
   /// Merges the properties of this [EdgeInsetsDirectionalDto] with the properties of [other].
   ///
   /// If [other] is null, returns this instance unchanged. Otherwise, returns a new

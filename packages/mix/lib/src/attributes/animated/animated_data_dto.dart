@@ -5,7 +5,7 @@ import '../../core/factory/mix_data.dart';
 import '../../internal/constants.dart';
 import 'animated_data.dart';
 
-class AnimatedDataDto extends StyleProperty<AnimatedData> {
+class AnimatedDataDto extends Mixable<AnimatedData> {
   final Duration? duration;
   final Curve? curve;
   final VoidCallback? onEnd;

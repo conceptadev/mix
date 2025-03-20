@@ -9,7 +9,7 @@ part 'space_dto.g.dart';
 typedef SpacingSideDto = SpaceDto;
 
 @MixableProperty(components: GeneratedPropertyComponents.none)
-class SpaceDto extends StyleProperty<double> with _$SpaceDto {
+class SpaceDto extends Mixable<double> with _$SpaceDto {
   final double? value;
   @MixableConstructor()
   const SpaceDto._({this.value});

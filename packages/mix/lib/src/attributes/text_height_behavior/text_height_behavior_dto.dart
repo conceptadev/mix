@@ -8,7 +8,7 @@ import 'package:mix_annotations/mix_annotations.dart';
 part 'text_height_behavior_dto.g.dart';
 
 @MixableProperty(components: GeneratedPropertyComponents.skipUtility)
-base class TextHeightBehaviorDto extends StyleProperty<TextHeightBehavior>
+base class TextHeightBehaviorDto extends Mixable<TextHeightBehavior>
     with _$TextHeightBehaviorDto, Diagnosticable {
   final bool? applyHeightToFirstAscent;
   final bool? applyHeightToLastDescent;

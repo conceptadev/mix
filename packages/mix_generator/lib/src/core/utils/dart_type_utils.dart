@@ -199,7 +199,7 @@ class TypeUtils {
       return isResolvable(type.firstTypeArgument!);
     }
 
-    return findSupertype(type.element!, $StyleProperty) != null;
+    return findSupertype(type.element!, $Mixable) != null;
   }
 
   /// Checks if a type is a Spec.
@@ -222,7 +222,7 @@ class TypeUtils {
   static DartType? extractDtoTypeArgument(ClassElement classElement) {
     try {
       // Check if the class itself is Dto<T>
-      if (classElement.name == $StyleProperty &&
+      if (classElement.name == $Mixable &&
           classElement.typeParameters.length == 1) {
         final typeArgument = classElement.thisType.typeArguments.first;
 
@@ -231,7 +231,7 @@ class TypeUtils {
 
       // Traverse the class hierarchy
       for (final interface in classElement.allSupertypes) {
-        if (interface.element.name == $StyleProperty) {
+        if (interface.element.name == $Mixable) {
           final typeArguments = interface.typeArguments;
           if (typeArguments.length == 1) {
             final typeArgument = typeArguments.first;
@@ -244,7 +244,7 @@ class TypeUtils {
       return null;
     } catch (e) {
       _logger.warning(
-        'Failed to extract StyleProperty type argument from ${classElement.name}',
+        'Failed to extract Mixable type argument from ${classElement.name}',
         e,
       );
 
@@ -417,7 +417,7 @@ final Uri _mixUri = Uri(scheme: 'package', path: 'mix/');
 
 const $Spec = 'Spec';
 
-const $StyleProperty = 'StyleProperty';
+const $Mixable = 'Mixable';
 
 /// References to Mix helper functions used in generated code.
 ///

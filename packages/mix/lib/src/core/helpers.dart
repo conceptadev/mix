@@ -87,7 +87,7 @@ List<T>? _mergeList<T>(List<T>? a, List<T>? b) {
       final currentValue = a[index];
       final otherValue = b[index];
 
-      if (currentValue is StyleProperty && otherValue is StyleProperty) {
+      if (currentValue is Mixable && otherValue is Mixable) {
         return currentValue.merge(otherValue) as T;
       }
 
@@ -100,7 +100,7 @@ List<T>? _mergeList<T>(List<T>? a, List<T>? b) {
   });
 }
 
-List<V> _resolveList<T extends StyleProperty<V>, V>(List<T>? a, MixData mix) {
+List<V> _resolveList<T extends Mixable<V>, V>(List<T>? a, MixData mix) {
   if (a == null) return [];
 
   return a.map((e) => e.resolve(mix)).toList();

@@ -6,7 +6,7 @@ import 'package:mix_annotations/mix_annotations.dart';
 
 part 'shadow_dto.g.dart';
 
-sealed class ShadowDtoImpl<T extends Shadow> extends StyleProperty<T> {
+sealed class ShadowDtoImpl<T extends Shadow> extends Mixable<T> {
   final ColorDto? color;
   final Offset? offset;
   final double? blurRadius;
@@ -14,7 +14,7 @@ sealed class ShadowDtoImpl<T extends Shadow> extends StyleProperty<T> {
   const ShadowDtoImpl({this.blurRadius, this.color, this.offset});
 }
 
-/// Represents a [StyleProperty] Data transfer object of [Shadow]
+/// Represents a [Mixable] Data transfer object of [Shadow]
 ///
 /// This is used to allow for resolvable value tokens, and also the correct
 /// merge and combining behavior. It allows to be merged, and resolved to a [Shadow]
@@ -27,7 +27,7 @@ class ShadowDto extends ShadowDtoImpl<Shadow>
   Shadow get defaultValue => const Shadow();
 }
 
-/// Represents a [StyleProperty] Data transfer object of [BoxShadow]
+/// Represents a [Mixable] Data transfer object of [BoxShadow]
 ///
 /// This is used to allow for resolvable value tokens, and also the correct
 /// merge and combining behavior. It allows to be merged, and resolved to a `[BoxShadow]

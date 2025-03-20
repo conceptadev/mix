@@ -8,7 +8,7 @@ import '../../internal/mix_error.dart';
 part 'border_dto.g.dart';
 
 @immutable
-sealed class BoxBorderDto<T extends BoxBorder> extends StyleProperty<T> {
+sealed class BoxBorderDto<T extends BoxBorder> extends Mixable<T> {
   final BorderSideDto? top;
   final BorderSideDto? bottom;
 
@@ -122,7 +122,7 @@ final class BorderDirectionalDto extends BoxBorderDto<BorderDirectional>
 }
 
 @MixableProperty()
-final class BorderSideDto extends StyleProperty<BorderSide>
+final class BorderSideDto extends Mixable<BorderSide>
     with HasDefaultValue<BorderSide>, _$BorderSideDto {
   final ColorDto? color;
   final double? width;

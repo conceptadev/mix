@@ -5,7 +5,7 @@ import 'package:mix_annotations/mix_annotations.dart';
 
 part 'constraints_dto.g.dart';
 
-sealed class ConstraintsDto<T extends Constraints> extends StyleProperty<T> {
+sealed class ConstraintsDto<T extends Constraints> extends Mixable<T> {
   const ConstraintsDto();
 }
 
