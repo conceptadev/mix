@@ -22,8 +22,8 @@ void main() {
         padding: spacing,
         margin: spacing,
         constraints: constraints,
-        width: 10,
-        height: 10,
+        width: MixDouble(10),
+        height: MixDouble(10),
         transform: Matrix4.identity(),
         clipBehavior: Clip.antiAlias,
       );
@@ -33,11 +33,11 @@ void main() {
 
       expect(container.constraints, constraints);
 
-      expect(container.height, 10);
+      expect(container.height, MixDouble(10));
       expect(container.margin, spacing);
       expect(container.padding, spacing);
       expect(container.transform, Matrix4.identity());
-      expect(container.width, 10);
+      expect(container.width, MixDouble(10));
     });
 
     test('alignment() returns correct instance', () {
@@ -72,7 +72,7 @@ void main() {
     test('height() returns correct instance', () {
       final container = boxUtility.height(10);
 
-      expect(container.height, 10);
+      expect(container.height, MixDouble(10));
     });
 
     test('margin() returns correct instance', () {
@@ -92,7 +92,7 @@ void main() {
     test('width() returns correct instance', () {
       final container = boxUtility.width(10);
 
-      expect(container.width, 10);
+      expect(container.width, MixDouble(10));
     });
 
     test('decoration() returns correct instance', () {

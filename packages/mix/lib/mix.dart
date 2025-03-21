@@ -35,6 +35,7 @@ export 'src/attributes/color/material_colors_util.dart';
 export 'src/attributes/constraints/constraints_dto.dart';
 export 'src/attributes/decoration/decoration_dto.dart';
 export 'src/attributes/decoration/image/decoration_image_dto.dart';
+export 'src/attributes/double/double.dart';
 export 'src/attributes/enum/enum_util.dart';
 export 'src/attributes/gap/gap_util.dart';
 export 'src/attributes/gap/space_dto.dart';

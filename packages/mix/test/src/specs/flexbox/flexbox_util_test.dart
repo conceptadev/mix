@@ -25,11 +25,11 @@ void main() {
       expect(attr.box!.alignment, Alignment.center);
       expect(attr.box!.clipBehavior, Clip.antiAlias);
       expect(attr.box!.constraints!.maxWidth, 200);
-      expect(attr.box!.height, 10);
+      expect(attr.box!.height, MixDouble(10));
       expect(attr.box!.margin, const EdgeInsets.all(10).toDto());
       expect(attr.box!.padding, const EdgeInsets.all(10).toDto());
       expect(attr.box!.transform, Matrix4.identity());
-      expect(attr.box!.width, 10);
+      expect(attr.box!.width, MixDouble(10));
       expect(attr.flex!.mainAxisAlignment, MainAxisAlignment.center);
       expect(attr.flex!.crossAxisAlignment, CrossAxisAlignment.center);
     });
@@ -62,7 +62,7 @@ void main() {
 
     test('box height returns correct instance', () {
       final flexBox = flexBoxUtility.chain..box.height(10);
-      expect(flexBox.attributeValue!.box!.height, 10);
+      expect(flexBox.attributeValue!.box!.height, MixDouble(10));
     });
 
     test('box margin returns correct instance', () {
@@ -80,7 +80,7 @@ void main() {
 
     test('box width returns correct instance', () {
       final flexBox = flexBoxUtility.chain..box.width(10);
-      expect(flexBox.attributeValue!.box!.width, 10);
+      expect(flexBox.attributeValue!.box!.width, MixDouble(10));
     });
 
     test('box decoration returns correct instance', () {

@@ -25,8 +25,8 @@ void main() {
               OpacityModifierSpecAttribute(opacity: 1),
               SizedBoxModifierSpecAttribute(height: 10, width: 10),
             ]),
-            width: 300,
-            height: 200,
+            width: MixDouble(300),
+            height: MixDouble(200),
           ),
         ),
       );
@@ -303,8 +303,8 @@ void main() {
             const BoxDecorationDto(color: ColorDto(Colors.blue)),
         transform: Matrix4.identity(),
         clipBehavior: Clip.antiAlias,
-        width: 100,
-        height: 100,
+        width: MixDouble(100),
+        height: MixDouble(100),
         modifiers: const WidgetModifiersDataDto([
           OpacityModifierSpecAttribute(opacity: 0.5),
           SizedBoxModifierSpecAttribute(height: 10, width: 10),
@@ -328,8 +328,8 @@ void main() {
               const BoxDecorationDto(color: ColorDto(Colors.amber)),
           transform: Matrix4.identity(),
           clipBehavior: Clip.antiAliasWithSaveLayer,
-          width: 200,
-          height: 200,
+          width: MixDouble(200),
+          height: MixDouble(200),
           modifiers: const WidgetModifiersDataDto([
             SizedBoxModifierSpecAttribute(width: 100),
           ]),
@@ -351,7 +351,7 @@ void main() {
         mergedBoxSpecAttribute.foregroundDecoration,
         const BoxDecorationDto(color: ColorDto(Colors.amber)),
       );
-      expect(mergedBoxSpecAttribute.height, 200);
+      expect(mergedBoxSpecAttribute.height, MixDouble(200));
       expect(
         mergedBoxSpecAttribute.margin,
         EdgeInsetsGeometryDto.only(top: 20, bottom: 20, left: 20, right: 20),
@@ -361,7 +361,7 @@ void main() {
         EdgeInsetsGeometryDto.only(top: 30, bottom: 30, left: 30, right: 30),
       );
       expect(mergedBoxSpecAttribute.transform, Matrix4.identity());
-      expect(mergedBoxSpecAttribute.width, 200);
+      expect(mergedBoxSpecAttribute.width, MixDouble(200));
       expect(
         mergedBoxSpecAttribute.modifiers!.value,
         [

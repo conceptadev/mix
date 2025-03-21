@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 
+import '../attributes/double/double.dart';
 import 'element.dart';
 
 abstract class MixUtility<Attr extends Attribute, Value> {
@@ -14,6 +15,13 @@ abstract class MixUtility<Attr extends Attribute, Value> {
 abstract class ScalarUtility<Return extends Attribute, V>
     extends MixUtility<Return, V> {
   const ScalarUtility(super.builder);
+
+  Return call(V value) => builder(value);
+}
+
+abstract class MixScalarUtility<Return extends Attribute, V>
+    extends MixUtility<Return, V> {
+  const MixScalarUtility(super.builder);
 
   Return call(V value) => builder(value);
 }
@@ -33,8 +41,21 @@ final class StringUtility<T extends Attribute>
 ///
 /// This class extends [ScalarUtility] and provides methods to create [Attribute] instances
 /// from predefined [double] values or custom [double] values.
+final class MixDoubleUtility<T extends Attribute>
+    extends MixUtility<T, MixDouble> {
+  const MixDoubleUtility(super.builder);
+
+  T call(double value) => builder(MixDouble(value));
+
+  /// Creates an [Attribute] instance with a value of 0.
+  T zero() => builder(const MixDouble.zero());
+
+  /// Creates an [Attribute] instance with a value of [double.infinity].
+  T infinity() => builder(const MixDouble.infinity());
+}
+
 final class DoubleUtility<T extends Attribute>
-    extends ScalarUtility<T, double> {
+    extends MixScalarUtility<T, double> {
   const DoubleUtility(super.builder);
 
   /// Creates an [Attribute] instance with a value of 0.
