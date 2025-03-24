@@ -29,8 +29,8 @@ class AnimatedData {
 
   VoidCallback? get onEnd => _onEnd;
 
-  AnimatedDataDto toDto() {
-    return AnimatedDataDto(duration: duration, curve: curve, onEnd: _onEnd);
+  AnimatedDataMix toDto() {
+    return AnimatedDataMix(duration: duration, curve: curve, onEnd: _onEnd);
   }
 
   AnimatedData copyWith({
