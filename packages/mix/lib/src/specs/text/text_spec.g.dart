@@ -192,7 +192,7 @@ class TextSpecAttribute extends SpecAttribute<TextSpec> with Diagnosticable {
   final TextHeightBehaviorMix? textHeightBehavior;
   final TextDirection? textDirection;
   final bool? softWrap;
-  final TextDirectiveDto? directive;
+  final TextDirectiveMix? directive;
 
   const TextSpecAttribute({
     this.overflow,
@@ -431,7 +431,7 @@ class TextSpecUtility<T extends Attribute>
   late final softWrap = BoolUtility((v) => only(softWrap: v));
 
   /// Utility for defining [TextSpecAttribute.directive]
-  late final directive = TextDirectiveUtility((v) => only(directive: v));
+  late final directive = TextDirectiveMixUtility((v) => only(directive: v));
 
   /// Utility for defining [TextSpecAttribute.directive.uppercase]
   late final uppercase = directive.uppercase;
@@ -476,7 +476,7 @@ class TextSpecUtility<T extends Attribute>
     TextHeightBehaviorMix? textHeightBehavior,
     TextDirection? textDirection,
     bool? softWrap,
-    TextDirectiveDto? directive,
+    TextDirectiveMix? directive,
     AnimatedDataMix? animated,
     WidgetModifiersDataMix? modifiers,
   }) {

@@ -172,3 +172,6 @@ typedef TextStyleUtility<T extends Attribute> = TextStyleMixUtility<T>;
 
 @Deprecated('Use `TextStyleDto` instead.')
 typedef TextStyleDto = TextStyleMix;
+
+@Deprecated('Use `TextDirectiveMix` instead.')
+typedef TextDirectiveDto = TextDirectiveMix;
