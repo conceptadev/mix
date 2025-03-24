@@ -309,7 +309,7 @@ class TextFieldSpecAttribute extends SpecAttribute<TextFieldSpec>
     with Diagnosticable {
   final TextStyleDto? style;
   final TextAlign? textAlign;
-  final StrutStyleDto? strutStyle;
+  final StrutStyleMix? strutStyle;
   final TextHeightBehaviorDto? textHeightBehavior;
   final TextWidthBasis? textWidthBasis;
   final double? cursorWidth;
@@ -700,7 +700,7 @@ class TextFieldSpecUtility<T extends Attribute>
   T only({
     TextStyleDto? style,
     TextAlign? textAlign,
-    StrutStyleDto? strutStyle,
+    StrutStyleMix? strutStyle,
     TextHeightBehaviorDto? textHeightBehavior,
     TextWidthBasis? textWidthBasis,
     double? cursorWidth,

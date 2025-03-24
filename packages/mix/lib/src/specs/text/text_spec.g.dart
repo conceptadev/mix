@@ -182,7 +182,7 @@ mixin _$TextSpec on Spec<TextSpec> {
 /// the [TextSpec] constructor.
 class TextSpecAttribute extends SpecAttribute<TextSpec> with Diagnosticable {
   final TextOverflow? overflow;
-  final StrutStyleDto? strutStyle;
+  final StrutStyleMix? strutStyle;
   final TextAlign? textAlign;
   final double? textScaleFactor;
   final TextScaler? textScaler;
@@ -335,7 +335,7 @@ class TextSpecUtility<T extends Attribute>
   late final overflow = TextOverflowUtility((v) => only(overflow: v));
 
   /// Utility for defining [TextSpecAttribute.strutStyle]
-  late final strutStyle = StrutStyleUtility((v) => only(strutStyle: v));
+  late final strutStyle = StrutStyleMixUtility((v) => only(strutStyle: v));
 
   /// Utility for defining [TextSpecAttribute.textAlign]
   late final textAlign = TextAlignUtility((v) => only(textAlign: v));
@@ -466,7 +466,7 @@ class TextSpecUtility<T extends Attribute>
   @override
   T only({
     TextOverflow? overflow,
-    StrutStyleDto? strutStyle,
+    StrutStyleMix? strutStyle,
     TextAlign? textAlign,
     double? textScaleFactor,
     TextScaler? textScaler,

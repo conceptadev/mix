@@ -25,7 +25,7 @@ final class TextStyleUtility<T extends Attribute>
 
   late final decorationColor = ColorUtility((v) => only(decorationColor: v));
 
-  late final shadow = ShadowUtility((v) => only(shadows: [v]));
+  late final shadow = ShadowMixUtility((v) => only(shadows: [v]));
 
   late final decorationStyle =
       TextDecorationStyleUtility((v) => only(decorationStyle: v));
@@ -128,7 +128,7 @@ final class TextStyleUtility<T extends Attribute>
     TextDecorationStyle? decorationStyle,
     TextBaseline? textBaseline,
     List<FontVariation>? fontVariations,
-    List<ShadowDto>? shadows,
+    List<ShadowMix>? shadows,
     List<FontFeature>? fontFeatures,
     Paint? foreground,
     Paint? background,

@@ -164,7 +164,7 @@ class IconSpecAttribute extends SpecAttribute<IconSpec> with Diagnosticable {
   final double? weight;
   final double? grade;
   final double? opticalSize;
-  final List<ShadowDto>? shadows;
+  final List<ShadowMix>? shadows;
   final TextDirection? textDirection;
   final bool? applyTextScaling;
   final double? fill;
@@ -298,7 +298,7 @@ class IconSpecUtility<T extends Attribute>
   late final opticalSize = DoubleUtility((v) => only(opticalSize: v));
 
   /// Utility for defining [IconSpecAttribute.shadows]
-  late final shadows = ShadowListUtility((v) => only(shadows: v));
+  late final shadows = ListUtility<T, ShadowMix>((v) => only(shadows: v));
 
   /// Utility for defining [IconSpecAttribute.textDirection]
   late final textDirection =
@@ -332,7 +332,7 @@ class IconSpecUtility<T extends Attribute>
     double? weight,
     double? grade,
     double? opticalSize,
-    List<ShadowDto>? shadows,
+    List<ShadowMix>? shadows,
     TextDirection? textDirection,
     bool? applyTextScaling,
     double? fill,

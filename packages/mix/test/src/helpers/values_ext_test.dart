@@ -33,7 +33,7 @@ void main() {
 
       final dto = value.toDto();
 
-      expect(dto, isA<ShapeDecorationDto>());
+      expect(dto, isA<ShapeDecorationMix>());
       expect(dto.resolve(EmptyMixData), value);
     });
 
@@ -47,7 +47,7 @@ void main() {
 
       final dto = value.toDto();
 
-      expect(dto, isA<BoxConstraintsDto>());
+      expect(dto, isA<BoxConstraintsMix>());
       expect(dto.resolve(EmptyMixData), value);
     });
 
@@ -62,7 +62,7 @@ void main() {
 
       final dto = value.toDto();
 
-      expect(dto, isA<BoxDecorationDto>());
+      expect(dto, isA<BoxDecorationMix>());
       expect(dto.resolve(EmptyMixData), value);
     });
 
@@ -71,7 +71,7 @@ void main() {
 
       final dto = value.toDto();
 
-      expect(dto, isA<BorderRadiusGeometryDto>());
+      expect(dto, isA<BorderRadiusGeometryMix>());
       expect(dto.resolve(EmptyMixData), value);
     });
 
@@ -84,7 +84,7 @@ void main() {
 
       final dto = value.toDto();
 
-      expect(dto, isA<BorderSideDto>());
+      expect(dto, isA<BorderSideMix>());
       expect(dto.color, const ColorDto(Colors.blue));
       expect(dto.width, 2.0);
       expect(dto.style, BorderStyle.solid);
@@ -100,7 +100,7 @@ void main() {
         bottom: BorderSide(color: Colors.blue),
       );
 
-      expect(value.toDto(), isA<BoxBorderDto>());
+      expect(value.toDto(), isA<BoxBorderMix>());
 
       // BorderDirectional
       const value2 = BorderDirectional(
@@ -108,7 +108,7 @@ void main() {
         bottom: BorderSide(color: Colors.blue),
       );
 
-      expect(value2.toDto(), isA<BoxBorderDto>());
+      expect(value2.toDto(), isA<BoxBorderMix>());
     });
 
     test('Shadow', () {
@@ -116,7 +116,7 @@ void main() {
 
       final dto = value.toDto();
 
-      expect(dto, isA<BoxShadowDto>());
+      expect(dto, isA<BoxShadowMix>());
       expect(dto.blurRadius, 10.0);
       expect(dto.color, const ColorDto(Colors.black));
 
@@ -129,7 +129,7 @@ void main() {
 
       final dto = value.toDto();
 
-      expect(dto, isA<BoxShadowDto>());
+      expect(dto, isA<BoxShadowMix>());
       expect(dto.blurRadius, 5.0);
       expect(dto.color, const ColorDto(Colors.grey));
 
@@ -194,7 +194,7 @@ void main() {
 
     final dtos = shadows.toDto();
 
-    expect(dtos, isA<List<ShadowDto>>());
+    expect(dtos, isA<List<ShadowMix>>());
     expect(dtos.length, equals(shadows.length));
     expect(dtos.map((e) => e.resolve(EmptyMixData)), equals(shadows));
   });
@@ -207,7 +207,7 @@ void main() {
 
     final dtos = boxShadows.toDto();
 
-    expect(dtos, isA<List<BoxShadowDto>>());
+    expect(dtos, isA<List<BoxShadowMix>>());
     expect(dtos.length, equals(boxShadows.length));
     expect(dtos.map((e) => e.resolve(EmptyMixData)), equals(boxShadows));
   });
@@ -224,7 +224,7 @@ void main() {
     final value = BorderRadius.circular(10.0);
     final dto = value.toDto();
 
-    expect(dto, isA<BorderRadiusGeometryDto>());
+    expect(dto, isA<BorderRadiusGeometryMix>());
     expect(dto.resolve(EmptyMixData), value);
   });
 }

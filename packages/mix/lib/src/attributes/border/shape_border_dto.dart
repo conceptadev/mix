@@ -7,27 +7,27 @@ import 'package:mix_annotations/mix_annotations.dart';
 part 'shape_border_dto.g.dart';
 
 @immutable
-sealed class ShapeBorderDto<T extends ShapeBorder> extends Mixable<T> {
-  const ShapeBorderDto();
+sealed class ShapeBorderMix<T extends ShapeBorder> extends Mixable<T> {
+  const ShapeBorderMix();
 
-  static ShapeBorderDto? tryToMerge(ShapeBorderDto? a, ShapeBorderDto? b) {
+  static ShapeBorderMix? tryToMerge(ShapeBorderMix? a, ShapeBorderMix? b) {
     if (b == null) return a;
     if (a == null) return b;
 
-    if (b is! OutlinedBorderDto || a is! OutlinedBorderDto) {
+    if (b is! OutlinedBorderMix || a is! OutlinedBorderMix) {
       // Not merge anything besides OutlinedBorderDto
       return b;
     }
 
-    return OutlinedBorderDto.tryToMerge(a, b);
+    return OutlinedBorderMix.tryToMerge(a, b);
   }
 
   static ({
-    BorderSideDto? side,
-    BorderRadiusGeometryDto? borderRadius,
+    BorderSideMix? side,
+    BorderRadiusGeometryMix? borderRadius,
     BoxShape? boxShape,
-  }) extract(ShapeBorderDto? dto) {
-    return dto is OutlinedBorderDto
+  }) extract(ShapeBorderMix? dto) {
+    return dto is OutlinedBorderMix
         ? (
             side: dto.side,
             borderRadius: dto.borderRadiusGetter,
@@ -37,19 +37,19 @@ sealed class ShapeBorderDto<T extends ShapeBorder> extends Mixable<T> {
   }
 
   @override
-  ShapeBorderDto<T> merge(covariant ShapeBorderDto<T>? other);
+  ShapeBorderMix<T> merge(covariant ShapeBorderMix<T>? other);
 }
 
 @immutable
-abstract class OutlinedBorderDto<T extends OutlinedBorder>
-    extends ShapeBorderDto<T> {
-  final BorderSideDto? side;
+abstract class OutlinedBorderMix<T extends OutlinedBorder>
+    extends ShapeBorderMix<T> {
+  final BorderSideMix? side;
 
-  const OutlinedBorderDto({this.side});
+  const OutlinedBorderMix({this.side});
 
-  static OutlinedBorderDto? tryToMerge(
-    OutlinedBorderDto? a,
-    OutlinedBorderDto? b,
+  static OutlinedBorderMix? tryToMerge(
+    OutlinedBorderMix? a,
+    OutlinedBorderMix? b,
   ) {
     if (b == null) return a;
     if (a == null) return b;
@@ -57,8 +57,8 @@ abstract class OutlinedBorderDto<T extends OutlinedBorder>
     return _exhaustiveMerge(a, b);
   }
 
-  static B _exhaustiveMerge<A extends OutlinedBorderDto,
-      B extends OutlinedBorderDto>(A a, B b) {
+  static B _exhaustiveMerge<A extends OutlinedBorderMix,
+      B extends OutlinedBorderMix>(A a, B b) {
     if (a.runtimeType == b.runtimeType) return a.merge(b) as B;
 
     final adaptedA = b.adapt(a) as B;
@@ -67,9 +67,9 @@ abstract class OutlinedBorderDto<T extends OutlinedBorder>
   }
 
   BoxShape? _toBoxShape() {
-    if (this is CircleBorderDto) {
+    if (this is CircleBorderMix) {
       return BoxShape.circle;
-    } else if (this is RoundedRectangleBorderDto) {
+    } else if (this is RoundedRectangleBorderMix) {
       return BoxShape.rectangle;
     }
 
@@ -77,106 +77,106 @@ abstract class OutlinedBorderDto<T extends OutlinedBorder>
   }
 
   @protected
-  BorderRadiusGeometryDto? get borderRadiusGetter;
+  BorderRadiusGeometryMix? get borderRadiusGetter;
 
-  OutlinedBorderDto<T> adapt(OutlinedBorderDto other);
+  OutlinedBorderMix<T> adapt(OutlinedBorderMix other);
 
   @override
-  OutlinedBorderDto<T> merge(covariant OutlinedBorderDto<T>? other);
+  OutlinedBorderMix<T> merge(covariant OutlinedBorderMix<T>? other);
 }
 
 @MixableProperty()
-final class RoundedRectangleBorderDto
-    extends OutlinedBorderDto<RoundedRectangleBorder>
-    with _$RoundedRectangleBorderDto {
-  @MixableField(dto: MixableFieldProperty(type: BorderRadiusGeometryDto))
-  final BorderRadiusGeometryDto? borderRadius;
+final class RoundedRectangleBorderMix
+    extends OutlinedBorderMix<RoundedRectangleBorder>
+    with _$RoundedRectangleBorderMix {
+  @MixableField(dto: MixableFieldProperty(type: BorderRadiusGeometryMix))
+  final BorderRadiusGeometryMix? borderRadius;
 
-  const RoundedRectangleBorderDto({this.borderRadius, super.side});
+  const RoundedRectangleBorderMix({this.borderRadius, super.side});
 
   @override
-  RoundedRectangleBorderDto adapt(OutlinedBorderDto other) {
-    if (other is RoundedRectangleBorderDto) return other;
+  RoundedRectangleBorderMix adapt(OutlinedBorderMix other) {
+    if (other is RoundedRectangleBorderMix) return other;
 
-    return RoundedRectangleBorderDto(
+    return RoundedRectangleBorderMix(
       borderRadius: other.borderRadiusGetter,
       side: other.side,
     );
   }
 
   @override
-  BorderRadiusGeometryDto? get borderRadiusGetter => borderRadius;
+  BorderRadiusGeometryMix? get borderRadiusGetter => borderRadius;
 }
 
 @MixableProperty()
-final class BeveledRectangleBorderDto
-    extends OutlinedBorderDto<BeveledRectangleBorder>
-    with _$BeveledRectangleBorderDto {
-  final BorderRadiusGeometryDto? borderRadius;
+final class BeveledRectangleBorderMix
+    extends OutlinedBorderMix<BeveledRectangleBorder>
+    with _$BeveledRectangleBorderMix {
+  final BorderRadiusGeometryMix? borderRadius;
 
-  const BeveledRectangleBorderDto({this.borderRadius, super.side});
+  const BeveledRectangleBorderMix({this.borderRadius, super.side});
 
   @override
-  BeveledRectangleBorderDto adapt(OutlinedBorderDto other) {
-    if (other is BeveledRectangleBorderDto) return other;
+  BeveledRectangleBorderMix adapt(OutlinedBorderMix other) {
+    if (other is BeveledRectangleBorderMix) return other;
 
-    return BeveledRectangleBorderDto(
+    return BeveledRectangleBorderMix(
       borderRadius: other.borderRadiusGetter,
       side: other.side,
     );
   }
 
   @override
-  BorderRadiusGeometryDto? get borderRadiusGetter => borderRadius;
+  BorderRadiusGeometryMix? get borderRadiusGetter => borderRadius;
 }
 
 @MixableProperty()
-final class ContinuousRectangleBorderDto
-    extends OutlinedBorderDto<ContinuousRectangleBorder>
-    with _$ContinuousRectangleBorderDto {
-  final BorderRadiusGeometryDto? borderRadius;
+final class ContinuousRectangleBorderMix
+    extends OutlinedBorderMix<ContinuousRectangleBorder>
+    with _$ContinuousRectangleBorderMix {
+  final BorderRadiusGeometryMix? borderRadius;
 
-  const ContinuousRectangleBorderDto({this.borderRadius, super.side});
+  const ContinuousRectangleBorderMix({this.borderRadius, super.side});
 
   @override
-  ContinuousRectangleBorderDto adapt(OutlinedBorderDto other) {
-    if (other is ContinuousRectangleBorderDto) {
+  ContinuousRectangleBorderMix adapt(OutlinedBorderMix other) {
+    if (other is ContinuousRectangleBorderMix) {
       return other;
     }
 
-    return ContinuousRectangleBorderDto(
+    return ContinuousRectangleBorderMix(
       borderRadius: other.borderRadiusGetter,
       side: other.side,
     );
   }
 
   @override
-  BorderRadiusGeometryDto? get borderRadiusGetter => borderRadius;
+  BorderRadiusGeometryMix? get borderRadiusGetter => borderRadius;
 }
 
 @MixableProperty()
-final class CircleBorderDto extends OutlinedBorderDto<CircleBorder>
-    with _$CircleBorderDto {
+final class CircleBorderMix extends OutlinedBorderMix<CircleBorder>
+    with _$CircleBorderMix {
   final double? eccentricity;
 
-  const CircleBorderDto({super.side, this.eccentricity});
+  const CircleBorderMix({super.side, this.eccentricity});
 
   @override
-  CircleBorderDto adapt(OutlinedBorderDto other) {
-    if (other is CircleBorderDto) {
+  CircleBorderMix adapt(OutlinedBorderMix other) {
+    if (other is CircleBorderMix) {
       return other;
     }
 
-    return CircleBorderDto(side: other.side);
+    return CircleBorderMix(side: other.side);
   }
 
   @override
-  BorderRadiusGeometryDto? get borderRadiusGetter => null;
+  BorderRadiusGeometryMix? get borderRadiusGetter => null;
 }
 
 @MixableProperty()
-final class StarBorderDto extends OutlinedBorderDto<StarBorder>
-    with _$StarBorderDto {
+final class StarBorderMix extends OutlinedBorderMix<StarBorder>
+    with _$StarBorderMix {
   final double? points;
   final double? innerRadiusRatio;
   final double? pointRounding;
@@ -184,7 +184,7 @@ final class StarBorderDto extends OutlinedBorderDto<StarBorder>
   final double? rotation;
   final double? squash;
 
-  const StarBorderDto({
+  const StarBorderMix({
     super.side,
     this.points,
     this.innerRadiusRatio,
@@ -195,23 +195,23 @@ final class StarBorderDto extends OutlinedBorderDto<StarBorder>
   });
 
   @override
-  StarBorderDto adapt(OutlinedBorderDto other) {
-    return StarBorderDto(side: other.side);
+  StarBorderMix adapt(OutlinedBorderMix other) {
+    return StarBorderMix(side: other.side);
   }
 
   @override
-  BorderRadiusGeometryDto? get borderRadiusGetter => null;
+  BorderRadiusGeometryMix? get borderRadiusGetter => null;
 }
 
 @MixableProperty()
-final class LinearBorderDto extends OutlinedBorderDto<LinearBorder>
-    with _$LinearBorderDto {
-  final LinearBorderEdgeDto? start;
-  final LinearBorderEdgeDto? end;
-  final LinearBorderEdgeDto? top;
-  final LinearBorderEdgeDto? bottom;
+final class LinearBorderMix extends OutlinedBorderMix<LinearBorder>
+    with _$LinearBorderMix {
+  final LinearBorderEdgeMix? start;
+  final LinearBorderEdgeMix? end;
+  final LinearBorderEdgeMix? top;
+  final LinearBorderEdgeMix? bottom;
 
-  const LinearBorderDto({
+  const LinearBorderMix({
     super.side,
     this.start,
     this.end,
@@ -220,53 +220,53 @@ final class LinearBorderDto extends OutlinedBorderDto<LinearBorder>
   });
 
   @override
-  LinearBorderDto adapt(OutlinedBorderDto other) {
-    if (other is LinearBorderDto) {
+  LinearBorderMix adapt(OutlinedBorderMix other) {
+    if (other is LinearBorderMix) {
       return other;
     }
 
-    return LinearBorderDto(side: other.side);
+    return LinearBorderMix(side: other.side);
   }
 
   @override
-  BorderRadiusGeometryDto? get borderRadiusGetter => null;
+  BorderRadiusGeometryMix? get borderRadiusGetter => null;
 }
 
 @MixableProperty()
-final class LinearBorderEdgeDto extends Mixable<LinearBorderEdge>
-    with _$LinearBorderEdgeDto {
+final class LinearBorderEdgeMix extends Mixable<LinearBorderEdge>
+    with _$LinearBorderEdgeMix {
   final double? size;
   final double? alignment;
 
-  const LinearBorderEdgeDto({this.size, this.alignment});
+  const LinearBorderEdgeMix({this.size, this.alignment});
 }
 
 @MixableProperty()
-final class StadiumBorderDto extends OutlinedBorderDto<StadiumBorder>
-    with _$StadiumBorderDto {
-  const StadiumBorderDto({super.side});
+final class StadiumBorderMix extends OutlinedBorderMix<StadiumBorder>
+    with _$StadiumBorderMix {
+  const StadiumBorderMix({super.side});
 
   @override
-  StadiumBorderDto adapt(OutlinedBorderDto other) {
-    if (other is StadiumBorderDto) {
+  StadiumBorderMix adapt(OutlinedBorderMix other) {
+    if (other is StadiumBorderMix) {
       return other;
     }
 
-    return StadiumBorderDto(side: other.side);
+    return StadiumBorderMix(side: other.side);
   }
 
   @override
-  BorderRadiusGeometryDto? get borderRadiusGetter => null;
+  BorderRadiusGeometryMix? get borderRadiusGetter => null;
 }
 
-abstract class MixOutlinedBorder<T extends OutlinedBorderDto>
+abstract class MixOutlinedBorder<T extends OutlinedBorderMix>
     extends OutlinedBorder {
   const MixOutlinedBorder({super.side = BorderSide.none});
   T toDto();
 }
 
 extension ShapeBorderExt on ShapeBorder {
-  ShapeBorderDto toDto() {
+  ShapeBorderMix toDto() {
     final self = this;
     if (self is BeveledRectangleBorder) return (self).toDto();
     if (self is CircleBorder) return (self).toDto();
@@ -292,8 +292,8 @@ extension ShapeBorderExt on ShapeBorder {
   }
 }
 
-class ShapeBorderUtility<T extends Attribute>
-    extends MixUtility<T, ShapeBorderDto> {
+class ShapeBorderMixUtility<T extends Attribute>
+    extends MixUtility<T, ShapeBorderMix> {
   late final beveledRectangle = BeveledRectangleBorderUtility(builder);
 
   late final circle = CircleBorderUtility(builder);
@@ -302,7 +302,7 @@ class ShapeBorderUtility<T extends Attribute>
 
   late final linear = LinearBorderUtility(builder);
 
-  late final roundedRectangle = RoundedRectangleBorderUtility(builder);
+  late final roundedRectangle = RoundedRectangleBorderMixUtility(builder);
 
   late final stadium = StadiumBorderUtility(builder);
 
@@ -310,5 +310,5 @@ class ShapeBorderUtility<T extends Attribute>
 
   late final shapeBuilder = builder;
 
-  ShapeBorderUtility(super.builder);
+  ShapeBorderMixUtility(super.builder);
 }

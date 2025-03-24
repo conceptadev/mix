@@ -7,7 +7,7 @@ import '../../../helpers/testing_utils.dart';
 void main() {
   // ShadowUtility
   group('ShadowUtility', () {
-    final shadowUtility = ShadowUtility(UtilityTestAttribute.new);
+    final shadowUtility = ShadowMixUtility(UtilityTestAttribute.new);
 
     test('call() returns correct instance', () {
       final shadow = shadowUtility(
@@ -38,7 +38,7 @@ void main() {
 
   // BoxShadowUtility
   group('BoxShadowUtility', () {
-    final boxShadowUtility = BoxShadowUtility(UtilityTestAttribute.new);
+    final boxShadowUtility = BoxShadowMixUtility(UtilityTestAttribute.new);
 
     test('call() returns correct instance', () {
       final boxShadow = boxShadowUtility(

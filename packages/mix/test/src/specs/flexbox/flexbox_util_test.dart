@@ -47,13 +47,13 @@ void main() {
     test('box color returns correct instance', () {
       final flexBox = flexBoxUtility.chain..box.color.blue();
       expect(
-        (flexBox.attributeValue!.box!.decoration as BoxDecorationDto).color,
+        (flexBox.attributeValue!.box!.decoration as BoxDecorationMix).color,
         const ColorDto(Colors.blue),
       );
     });
 
     test('box constraints returns correct instance', () {
-      expect(flexBoxUtility.box.constraints, isA<BoxConstraintsUtility>());
+      expect(flexBoxUtility.box.constraints, isA<BoxConstraintsMixUtility>());
     });
 
     test('box shape returns correct instance', () {
@@ -91,7 +91,7 @@ void main() {
         );
 
       final decoration =
-          flexBox.attributeValue!.box!.decoration as BoxDecorationDto;
+          flexBox.attributeValue!.box!.decoration as BoxDecorationMix;
       expect(decoration.color, const ColorDto(Colors.amber));
       expect(
         decoration.borderRadius,
@@ -107,7 +107,7 @@ void main() {
         );
 
       final foregroundDecoration =
-          flexBox.attributeValue!.box!.foregroundDecoration as BoxDecorationDto;
+          flexBox.attributeValue!.box!.foregroundDecoration as BoxDecorationMix;
       expect(
         foregroundDecoration.color,
         const ColorDto(Colors.amber),

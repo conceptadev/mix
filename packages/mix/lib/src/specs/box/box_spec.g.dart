@@ -178,9 +178,9 @@ class BoxSpecAttribute extends SpecAttribute<BoxSpec> with Diagnosticable {
   final AlignmentGeometry? alignment;
   final EdgeInsetsGeometryDto? padding;
   final EdgeInsetsGeometryDto? margin;
-  final BoxConstraintsDto? constraints;
-  final DecorationDto? decoration;
-  final DecorationDto? foregroundDecoration;
+  final BoxConstraintsMix? constraints;
+  final DecorationMix? decoration;
+  final DecorationMix? foregroundDecoration;
   final Matrix4? transform;
   final AlignmentGeometry? transformAlignment;
   final Clip? clipBehavior;
@@ -247,9 +247,10 @@ class BoxSpecAttribute extends SpecAttribute<BoxSpec> with Diagnosticable {
       padding: EdgeInsetsGeometryDto.tryToMerge(padding, other.padding),
       margin: EdgeInsetsGeometryDto.tryToMerge(margin, other.margin),
       constraints: constraints?.merge(other.constraints) ?? other.constraints,
-      decoration: DecorationDto.tryToMerge(decoration, other.decoration),
-      foregroundDecoration: DecorationDto.tryToMerge(
-          foregroundDecoration, other.foregroundDecoration),
+      decoration: decoration?.merge(other.decoration) ?? other.decoration,
+      foregroundDecoration:
+          foregroundDecoration?.merge(other.foregroundDecoration) ??
+              other.foregroundDecoration,
       transform: other.transform ?? transform,
       transformAlignment: other.transformAlignment ?? transformAlignment,
       clipBehavior: other.clipBehavior ?? clipBehavior,
@@ -326,7 +327,8 @@ class BoxSpecUtility<T extends Attribute>
   late final margin = EdgeInsetsGeometryUtility((v) => only(margin: v));
 
   /// Utility for defining [BoxSpecAttribute.constraints]
-  late final constraints = BoxConstraintsUtility((v) => only(constraints: v));
+  late final constraints =
+      BoxConstraintsMixUtility((v) => only(constraints: v));
 
   /// Utility for defining [BoxSpecAttribute.constraints.minWidth]
   late final minWidth = constraints.minWidth;
@@ -341,7 +343,7 @@ class BoxSpecUtility<T extends Attribute>
   late final maxHeight = constraints.maxHeight;
 
   /// Utility for defining [BoxSpecAttribute.decoration]
-  late final decoration = BoxDecorationUtility((v) => only(decoration: v));
+  late final decoration = BoxDecorationMixUtility((v) => only(decoration: v));
 
   /// Utility for defining [BoxSpecAttribute.decoration.color]
   late final color = decoration.color;
@@ -388,7 +390,7 @@ class BoxSpecUtility<T extends Attribute>
 
   /// Utility for defining [BoxSpecAttribute.foregroundDecoration]
   late final foregroundDecoration =
-      BoxDecorationUtility((v) => only(foregroundDecoration: v));
+      BoxDecorationMixUtility((v) => only(foregroundDecoration: v));
 
   /// Utility for defining [BoxSpecAttribute.transform]
   late final transform = Matrix4Utility((v) => only(transform: v));
@@ -425,9 +427,9 @@ class BoxSpecUtility<T extends Attribute>
     AlignmentGeometry? alignment,
     EdgeInsetsGeometryDto? padding,
     EdgeInsetsGeometryDto? margin,
-    BoxConstraintsDto? constraints,
-    DecorationDto? decoration,
-    DecorationDto? foregroundDecoration,
+    BoxConstraintsMix? constraints,
+    DecorationMix? decoration,
+    DecorationMix? foregroundDecoration,
     Matrix4? transform,
     AlignmentGeometry? transformAlignment,
     Clip? clipBehavior,

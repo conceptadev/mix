@@ -25,7 +25,7 @@ import 'box_widget.dart';
 part 'box_spec.g.dart';
 
 const _constraints = MixableFieldUtility(
-  type: BoxConstraints,
+  type: BoxConstraintsMix,
   properties: [
     (path: 'minWidth', alias: 'minWidth'),
     (path: 'maxWidth', alias: 'maxWidth'),
@@ -34,9 +34,9 @@ const _constraints = MixableFieldUtility(
   ],
 );
 
-const _foreground = MixableFieldUtility(type: BoxDecoration);
+const _foreground = MixableFieldUtility(type: BoxDecorationMix);
 const _boxDecor = MixableFieldUtility(
-  type: BoxDecoration,
+  type: BoxDecorationMix,
   properties: [
     (path: 'color', alias: 'color'),
     (path: 'border', alias: 'border'),

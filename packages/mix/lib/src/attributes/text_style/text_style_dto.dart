@@ -60,7 +60,7 @@ base class TextStyleData extends Mixable<TextStyle>
   final TextBaseline? textBaseline;
   final ColorDto? color;
   final ColorDto? backgroundColor;
-  final List<ShadowDto>? shadows;
+  final List<ShadowMix>? shadows;
   final List<FontFeature>? fontFeatures;
   final List<FontVariation>? fontVariations;
   final TextDecoration? decoration;
@@ -144,7 +144,7 @@ final class TextStyleDto extends Mixable<TextStyle>
     String? debugLabel,
     double? wordSpacing,
     TextBaseline? textBaseline,
-    List<ShadowDto>? shadows,
+    List<ShadowMix>? shadows,
     List<FontFeature>? fontFeatures,
     TextDecoration? decoration,
     ColorDto? decorationColor,

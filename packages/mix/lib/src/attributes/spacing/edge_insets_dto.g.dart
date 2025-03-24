@@ -50,7 +50,7 @@ mixin _$EdgeInsetsDto on Mixable<EdgeInsets> {
 ///
 /// This class provides methods to set individual properties of a [EdgeInsets].
 /// Use the methods of this class to configure specific properties of a [EdgeInsets].
-class EdgeInsetsUtility<T extends Attribute>
+class EdgeInsetsDtoUtility<T extends Attribute>
     extends DtoUtility<T, EdgeInsetsDto, EdgeInsets> {
   /// Utility for defining [EdgeInsetsDto.top]
   late final top = DoubleUtility((v) => only(top: v));
@@ -64,7 +64,7 @@ class EdgeInsetsUtility<T extends Attribute>
   /// Utility for defining [EdgeInsetsDto.right]
   late final right = DoubleUtility((v) => only(right: v));
 
-  EdgeInsetsUtility(super.builder) : super(valueToDto: (v) => v.toDto());
+  EdgeInsetsDtoUtility(super.builder) : super(valueToDto: (v) => v.toDto());
 
   /// Creates an [Attribute] instance using the [EdgeInsetsDto.all] constructor.
   T all(double value) => builder(EdgeInsetsDto.all(value));

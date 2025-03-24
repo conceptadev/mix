@@ -14,12 +14,12 @@ void main() {
 
     test('merge should return a new instance of IconSpecAttribute', () {
       const shadows = [
-        ShadowDto(
+        ShadowMix(
           color: ColorDto(
             Colors.black,
           ),
         ),
-        ShadowDto(
+        ShadowMix(
           color: ColorDto(Colors.black),
         ),
       ];
@@ -43,12 +43,12 @@ void main() {
         grade: 32,
         opticalSize: 32,
         shadows: [
-          ShadowDto(
+          ShadowMix(
             color: ColorDto(
               Colors.black,
             ),
           ),
-          ShadowDto(
+          ShadowMix(
             color: ColorDto(Colors.white),
           ),
         ],
@@ -72,12 +72,12 @@ void main() {
         mergedAttribute.shadows,
         equals(
           [
-            const ShadowDto(
+            const ShadowMix(
               color: ColorDto(
                 Colors.black,
               ),
             ),
-            const ShadowDto(
+            const ShadowMix(
               color: ColorDto(Colors.white),
             ),
           ],
@@ -93,12 +93,12 @@ void main() {
       const grade = 2.0;
       const opticalSize = 2.0;
       const shadows = [
-        ShadowDto(
+        ShadowMix(
           color: ColorDto(
             Colors.black,
           ),
         ),
-        ShadowDto(
+        ShadowMix(
           color: ColorDto(Colors.black),
         ),
       ];

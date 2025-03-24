@@ -7,7 +7,7 @@ import '../../../helpers/testing_utils.dart';
 
 void main() {
   group('BoxDecorationUtility', () {
-    final boxDecoration = BoxDecorationUtility(UtilityTestAttribute.new);
+    final boxDecoration = BoxDecorationMixUtility(UtilityTestAttribute.new);
     test('call', () {
       final refBoxDecoration = RandomGenerator.boxDecoration();
 
@@ -22,10 +22,10 @@ void main() {
 
       expect(result.value, equals(refBoxDecoration.toDto()));
 
-      expect(result.value, isA<BoxDecorationDto>());
-      expect(result.value.border, isA<BoxBorderDto>());
-      expect(result.value.borderRadius, isA<BorderRadiusGeometryDto>());
-      expect(result.value.boxShadow, isA<List<BoxShadowDto>>());
+      expect(result.value, isA<BoxDecorationMix>());
+      expect(result.value.border, isA<BoxBorderMix>());
+      expect(result.value.borderRadius, isA<BorderRadiusGeometryMix>());
+      expect(result.value.boxShadow, isA<List<BoxShadowMix>>());
       expect(result.value.color, isA<ColorDto>());
       expect(result.value.gradient, isA<GradientDto>());
       expect(result.value.shape, isA<BoxShape>());
@@ -179,7 +179,7 @@ void main() {
     test('shape() returns correct instance', () {
       final result = shapeDecoration.shape.circle();
 
-      expect(result.value.shape, equals(const CircleBorderDto()));
+      expect(result.value.shape, equals(const CircleBorderMix()));
     });
   });
 }
