@@ -27,7 +27,7 @@ void main() {
       expect(result.value.borderRadius, isA<BorderRadiusGeometryMix>());
       expect(result.value.boxShadow, isA<List<BoxShadowMix>>());
       expect(result.value.color, isA<ColorMix>());
-      expect(result.value.gradient, isA<GradientDto>());
+      expect(result.value.gradient, isA<GradientMix>());
       expect(result.value.shape, isA<BoxShape>());
 
       expect(

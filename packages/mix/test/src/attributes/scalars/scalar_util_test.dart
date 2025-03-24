@@ -308,7 +308,7 @@ void main() {
   });
 
   group('GradientTransformUtility Tests', () {
-    const utility = GradientTransformUtility(UtilityTestAttribute.new);
+    const utility = GradientTransformMixUtility(UtilityTestAttribute.new);
     test('rotate', () {
       expect(utility.rotate(20).value, isA<GradientTransform>());
       expect(utility.rotate(20).value, const GradientRotation(20));

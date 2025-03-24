@@ -13,7 +13,7 @@ part 'decoration_dto.g.dart';
 
 typedef _BaseDecorProperties = ({
   ColorMix? color,
-  GradientDto? gradient,
+  GradientMix? gradient,
   List<BoxShadowMix>? boxShadow,
   DecorationImageMix? image,
 });
@@ -28,7 +28,7 @@ typedef _BaseDecorProperties = ({
 sealed class DecorationMix<T extends Decoration> extends Mixable<T>
     with Diagnosticable {
   final ColorMix? color;
-  final GradientDto? gradient;
+  final GradientMix? gradient;
   final DecorationImageMix? image;
   @MixableField(
     utilities: [

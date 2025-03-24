@@ -141,3 +141,18 @@ typedef ColorListUtility<T extends Attribute> = ColorListMixUtility<T>;
 
 @Deprecated('Use `SpaceMix` instead.')
 typedef SpaceDto = SpaceMix;
+
+@Deprecated('Use `GradientMix` instead.')
+typedef GradientDto = GradientMix;
+
+@Deprecated('Use `LinearGradientMix` instead.')
+typedef LinearGradientDto = LinearGradientMix;
+
+@Deprecated('Use `RadialGradientMix` instead.')
+typedef RadialGradientDto = RadialGradientMix;
+
+@Deprecated('Use `SweepGradientMix` instead.')
+typedef SweepGradientDto = SweepGradientMix;
+
+@Deprecated('Use `GradientMixUtility` instead.')
+typedef GradientUtility<T extends Attribute> = GradientMixUtility<T>;

@@ -53,7 +53,7 @@ mixin _$BoxDecorationMix on Mixable<BoxDecoration> {
           other.backgroundBlendMode ?? _$this.backgroundBlendMode,
       color: _$this.color?.merge(other.color) ?? other.color,
       image: _$this.image?.merge(other.image) ?? other.image,
-      gradient: GradientDto.tryToMerge(_$this.gradient, other.gradient),
+      gradient: GradientMix.tryToMerge(_$this.gradient, other.gradient),
       boxShadow: MixHelpers.mergeList(_$this.boxShadow, other.boxShadow),
     );
   }
@@ -111,7 +111,7 @@ class BoxDecorationMixUtility<T extends Attribute>
   late final image = DecorationImageMixUtility((v) => only(image: v));
 
   /// Utility for defining [BoxDecorationMix.gradient]
-  late final gradient = GradientUtility((v) => only(gradient: v));
+  late final gradient = GradientMixUtility((v) => only(gradient: v));
 
   /// Utility for defining [BoxDecorationMix.boxShadow]
   late final boxShadows = BoxShadowListUtility((v) => only(boxShadow: v));
@@ -133,7 +133,7 @@ class BoxDecorationMixUtility<T extends Attribute>
     BlendMode? backgroundBlendMode,
     ColorMix? color,
     DecorationImageMix? image,
-    GradientDto? gradient,
+    GradientMix? gradient,
     List<BoxShadowMix>? boxShadow,
   }) {
     return builder(BoxDecorationMix(
@@ -235,7 +235,7 @@ mixin _$ShapeDecorationMix
       shape: ShapeBorderMix.tryToMerge(_$this.shape, other.shape),
       color: _$this.color?.merge(other.color) ?? other.color,
       image: _$this.image?.merge(other.image) ?? other.image,
-      gradient: GradientDto.tryToMerge(_$this.gradient, other.gradient),
+      gradient: GradientMix.tryToMerge(_$this.gradient, other.gradient),
       shadows: MixHelpers.mergeList(_$this.shadows, other.shadows),
     );
   }
@@ -273,7 +273,7 @@ class ShapeDecorationUtility<T extends Attribute>
   late final image = DecorationImageMixUtility((v) => only(image: v));
 
   /// Utility for defining [ShapeDecorationMix.gradient]
-  late final gradient = GradientUtility((v) => only(gradient: v));
+  late final gradient = GradientMixUtility((v) => only(gradient: v));
 
   /// Utility for defining [ShapeDecorationMix.shadows]
   late final shadows = BoxShadowListUtility((v) => only(shadows: v));
@@ -286,7 +286,7 @@ class ShapeDecorationUtility<T extends Attribute>
     ShapeBorderMix? shape,
     ColorMix? color,
     DecorationImageMix? image,
-    GradientDto? gradient,
+    GradientMix? gradient,
     List<BoxShadowMix>? shadows,
   }) {
     return builder(ShapeDecorationMix(

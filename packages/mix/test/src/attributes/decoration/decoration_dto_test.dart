@@ -8,7 +8,7 @@ import '../../../helpers/testing_utils.dart';
 void main() {
   const linearGradient = LinearGradient(colors: Colors.accents);
 
-  final linearGradientDto = LinearGradientDto(
+  final linearGradientDto = LinearGradientMix(
     colors: Colors.accents.map(ColorMix.new).toList(),
   );
   const boxShadowDto = BoxShadowMix(
@@ -112,10 +112,10 @@ void main() {
   });
 
   group('DecorationDto Merge Tests', () {
-    const linearGradientDto = LinearGradientDto(
+    const linearGradientDto = LinearGradientMix(
       colors: [ColorMix(Colors.red), ColorMix(Colors.blue)],
     );
-    const otherLinearGradientDto = LinearGradientDto(
+    const otherLinearGradientDto = LinearGradientMix(
       colors: [ColorMix(Colors.yellow), ColorMix(Colors.green)],
     );
 
@@ -172,7 +172,7 @@ void main() {
         );
         const shapeDeco2 = ShapeDecorationMix(
           color: ColorMix(Colors.blue),
-          gradient: LinearGradientDto(
+          gradient: LinearGradientMix(
             colors: [ColorMix(Colors.yellow), ColorMix(Colors.green)],
           ),
         );
@@ -271,7 +271,7 @@ void main() {
         );
         final boxDeco2 = BoxDecorationMix(
           color: const ColorMix(Colors.blue),
-          gradient: const LinearGradientDto(
+          gradient: const LinearGradientMix(
             colors: [ColorMix(Colors.yellow), ColorMix(Colors.green)],
           ),
           border: const BorderMix(

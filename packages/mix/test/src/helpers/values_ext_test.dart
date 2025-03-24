@@ -162,17 +162,17 @@ void main() {
   test('Gradient toDto', () {
     const linearGradient = LinearGradient(colors: [Colors.red, Colors.blue]);
     final linearGradientDto = linearGradient.toDto();
-    expect(linearGradientDto, isA<LinearGradientDto>());
+    expect(linearGradientDto, isA<LinearGradientMix>());
     expect(linearGradientDto.resolve(EmptyMixData), linearGradient);
 
     const radialGradient = RadialGradient(colors: [Colors.red, Colors.blue]);
     final radialGradientDto = radialGradient.toDto();
-    expect(radialGradientDto, isA<RadialGradientDto>());
+    expect(radialGradientDto, isA<RadialGradientMix>());
     expect(radialGradientDto.resolve(EmptyMixData), radialGradient);
 
     const sweepGradient = SweepGradient(colors: [Colors.red, Colors.blue]);
     final sweepGradientDto = sweepGradient.toDto();
-    expect(sweepGradientDto, isA<SweepGradientDto>());
+    expect(sweepGradientDto, isA<SweepGradientMix>());
     expect(sweepGradientDto.resolve(EmptyMixData), sweepGradient);
   });
 
