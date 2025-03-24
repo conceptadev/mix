@@ -138,3 +138,6 @@ typedef ColorUtility<T extends Attribute> = ColorMixUtility<T>;
 
 @Deprecated('Use `ColorListMixUtility` instead.')
 typedef ColorListUtility<T extends Attribute> = ColorListMixUtility<T>;
+
+@Deprecated('Use `SpaceMix` instead.')
+typedef SpaceDto = SpaceMix;
