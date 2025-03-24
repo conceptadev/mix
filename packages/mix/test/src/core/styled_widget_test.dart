@@ -19,8 +19,7 @@ void main() {
             inherit: true,
             builder: (context) {
               final mix = Mix.of(context);
-              expect(
-                  mix.attributeOf<BoxSpecAttribute>()!.height, MixDouble(100));
+              expect(mix.attributeOf<BoxSpecAttribute>()!.height, 100);
               return const SizedBox();
             },
           ),

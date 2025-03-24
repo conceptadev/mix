@@ -7,7 +7,6 @@ import '../../attributes/animated/animated_util.dart';
 import '../../attributes/animated/mix_animated_data.dart';
 import '../../attributes/constraints/constraints_dto.dart';
 import '../../attributes/decoration/decoration_dto.dart';
-import '../../attributes/double/double.dart';
 import '../../attributes/enum/enum_util.dart';
 import '../../attributes/modifiers/widget_modifiers_data.dart';
 import '../../attributes/modifiers/widget_modifiers_data_dto.dart';

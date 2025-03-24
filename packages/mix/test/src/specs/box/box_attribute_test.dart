@@ -21,8 +21,8 @@ void main() {
         decoration: const BoxDecorationDto(color: ColorDto(Colors.blue)),
         transform: Matrix4.identity(),
         clipBehavior: Clip.antiAlias,
-        width: MixDouble(100),
-        height: MixDouble(100),
+        width: 100,
+        height: 100,
         modifiers: const WidgetModifiersDataDto([
           OpacityModifierSpecAttribute(opacity: 0.5),
           SizedBoxModifierSpecAttribute(height: 10, width: 10),
@@ -41,7 +41,7 @@ void main() {
         const BoxDecorationDto(color: ColorDto(Colors.blue)),
       );
 
-      expect(containerSpecAttribute.height, MixDouble(100));
+      expect(containerSpecAttribute.height, 100);
       expect(
         containerSpecAttribute.margin,
         EdgeInsetsGeometryDto.only(top: 10, bottom: 10, left: 10, right: 10),
@@ -51,7 +51,7 @@ void main() {
         EdgeInsetsGeometryDto.only(top: 20, bottom: 20, left: 20, right: 20),
       );
       expect(containerSpecAttribute.transform, Matrix4.identity());
-      expect(containerSpecAttribute.width, MixDouble(100));
+      expect(containerSpecAttribute.width, 100);
       expect(
           containerSpecAttribute.modifiers,
           const WidgetModifiersDataDto([
@@ -76,8 +76,8 @@ void main() {
           decoration: const BoxDecorationDto(color: ColorDto(Colors.blue)),
           transform: Matrix4.identity(),
           clipBehavior: Clip.antiAlias,
-          width: MixDouble(100),
-          height: MixDouble(100),
+          width: 100,
+          height: 100,
           modifiers: const WidgetModifiersDataDto([
             OpacityModifierSpecAttribute(opacity: 0.5),
             SizedBoxModifierSpecAttribute(height: 10, width: 10),
@@ -127,8 +127,8 @@ void main() {
           decoration: const BoxDecorationDto(color: ColorDto(Colors.blue)),
           transform: Matrix4.identity(),
           clipBehavior: Clip.antiAlias,
-          width: MixDouble(100),
-          height: MixDouble(100),
+          width: 100,
+          height: 100,
           modifiers: const WidgetModifiersDataDto([
             OpacityModifierSpecAttribute(opacity: 0.5),
             SizedBoxModifierSpecAttribute(height: 10, width: 10),
@@ -149,8 +149,8 @@ void main() {
           decoration: const BoxDecorationDto(color: ColorDto(Colors.red)),
           transform: Matrix4.identity(),
           clipBehavior: Clip.antiAliasWithSaveLayer,
-          width: MixDouble(200),
-          height: MixDouble(200),
+          width: 200,
+          height: 200,
           modifiers: const WidgetModifiersDataDto([
             SizedBoxModifierSpecAttribute(width: 20),
           ]),
@@ -169,7 +169,7 @@ void main() {
         const BoxDecorationDto(color: ColorDto(Colors.red)),
       );
 
-      expect(mergedBoxSpecAttribute.height, MixDouble(200));
+      expect(mergedBoxSpecAttribute.height, 200);
       expect(
         mergedBoxSpecAttribute.margin,
         EdgeInsetsGeometryDto.only(top: 20, bottom: 20, left: 20, right: 20),
@@ -179,7 +179,7 @@ void main() {
         EdgeInsetsGeometryDto.only(top: 30, bottom: 30, left: 30, right: 30),
       );
       expect(mergedBoxSpecAttribute.transform, Matrix4.identity());
-      expect(mergedBoxSpecAttribute.width, MixDouble(200));
+      expect(mergedBoxSpecAttribute.width, 200);
       expect(
           mergedBoxSpecAttribute.modifiers,
           const WidgetModifiersDataDto([
@@ -204,8 +204,8 @@ void main() {
           decoration: const BoxDecorationDto(color: ColorDto(Colors.blue)),
           transform: Matrix4.identity(),
           clipBehavior: Clip.antiAlias,
-          width: MixDouble(100),
-          height: MixDouble(100),
+          width: 100,
+          height: 100,
           modifiers: const WidgetModifiersDataDto([
             OpacityModifierSpecAttribute(opacity: 0.5),
             SizedBoxModifierSpecAttribute(height: 10, width: 10),
@@ -228,8 +228,8 @@ void main() {
             decoration: const BoxDecorationDto(color: ColorDto(Colors.blue)),
             transform: Matrix4.identity(),
             clipBehavior: Clip.antiAlias,
-            width: MixDouble(100),
-            height: MixDouble(100),
+            width: 100,
+            height: 100,
             modifiers: const WidgetModifiersDataDto(
               [
                 OpacityModifierSpecAttribute(opacity: 0.5),
@@ -257,8 +257,8 @@ void main() {
         decoration: const BoxDecorationDto(color: ColorDto(Colors.blue)),
         transform: Matrix4.identity(),
         clipBehavior: Clip.antiAlias,
-        width: MixDouble(100),
-        height: MixDouble(100),
+        width: 100,
+        height: 100,
       );
 
       expect(
@@ -283,8 +283,8 @@ void main() {
               decoration: const BoxDecorationDto(color: ColorDto(Colors.red)),
               transform: Matrix4.identity(),
               clipBehavior: Clip.antiAliasWithSaveLayer,
-              width: MixDouble(200),
-              height: MixDouble(200),
+              width: 200,
+              height: 200,
               modifiers: const WidgetModifiersDataDto(
                 [
                   OpacityModifierSpecAttribute(opacity: 0.4),

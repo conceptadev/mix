@@ -184,8 +184,8 @@ class BoxSpecAttribute extends SpecAttribute<BoxSpec> with Diagnosticable {
   final Matrix4? transform;
   final AlignmentGeometry? transformAlignment;
   final Clip? clipBehavior;
-  final MixDouble? width;
-  final MixDouble? height;
+  final double? width;
+  final double? height;
 
   const BoxSpecAttribute({
     this.alignment,
@@ -223,8 +223,8 @@ class BoxSpecAttribute extends SpecAttribute<BoxSpec> with Diagnosticable {
       transform: transform,
       transformAlignment: transformAlignment,
       clipBehavior: clipBehavior,
-      width: width?.resolve(mix),
-      height: height?.resolve(mix),
+      width: width,
+      height: height,
       modifiers: modifiers?.resolve(mix),
       animated: animated?.resolve(mix) ?? mix.animation,
     );
@@ -401,10 +401,10 @@ class BoxSpecUtility<T extends Attribute>
   late final clipBehavior = ClipUtility((v) => only(clipBehavior: v));
 
   /// Utility for defining [BoxSpecAttribute.width]
-  late final width = MixDoubleUtility((v) => only(width: v));
+  late final width = DoubleUtility((v) => only(width: v));
 
   /// Utility for defining [BoxSpecAttribute.height]
-  late final height = MixDoubleUtility((v) => only(height: v));
+  late final height = DoubleUtility((v) => only(height: v));
 
   /// Utility for defining [BoxSpecAttribute.modifiers]
   late final wrap = SpecModifierUtility((v) => only(modifiers: v));
@@ -431,8 +431,8 @@ class BoxSpecUtility<T extends Attribute>
     Matrix4? transform,
     AlignmentGeometry? transformAlignment,
     Clip? clipBehavior,
-    MixDouble? width,
-    MixDouble? height,
+    double? width,
+    double? height,
     WidgetModifiersDataDto? modifiers,
     AnimatedDataDto? animated,
   }) {
