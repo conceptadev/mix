@@ -189,7 +189,7 @@ class TextSpecAttribute extends SpecAttribute<TextSpec> with Diagnosticable {
   final int? maxLines;
   final TextStyleDto? style;
   final TextWidthBasis? textWidthBasis;
-  final TextHeightBehaviorDto? textHeightBehavior;
+  final TextHeightBehaviorMix? textHeightBehavior;
   final TextDirection? textDirection;
   final bool? softWrap;
   final TextDirectiveDto? directive;
@@ -421,7 +421,7 @@ class TextSpecUtility<T extends Attribute>
 
   /// Utility for defining [TextSpecAttribute.textHeightBehavior]
   late final textHeightBehavior =
-      TextHeightBehaviorUtility((v) => only(textHeightBehavior: v));
+      TextHeightBehaviorMixUtility((v) => only(textHeightBehavior: v));
 
   /// Utility for defining [TextSpecAttribute.textDirection]
   late final textDirection =
@@ -473,7 +473,7 @@ class TextSpecUtility<T extends Attribute>
     int? maxLines,
     TextStyleDto? style,
     TextWidthBasis? textWidthBasis,
-    TextHeightBehaviorDto? textHeightBehavior,
+    TextHeightBehaviorMix? textHeightBehavior,
     TextDirection? textDirection,
     bool? softWrap,
     TextDirectiveDto? directive,

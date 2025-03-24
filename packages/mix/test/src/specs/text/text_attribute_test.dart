@@ -22,7 +22,7 @@ void main() {
         fontFamily: 'Roboto',
       ),
       textWidthBasis: TextWidthBasis.longestLine,
-      textHeightBehavior: const TextHeightBehaviorDto(
+      textHeightBehavior: const TextHeightBehaviorMix(
         applyHeightToFirstAscent: true,
         applyHeightToLastDescent: true,
       ),
@@ -40,7 +40,7 @@ void main() {
       expect(textSpecAttribute.style, isA<TextStyleDto>());
       expect(textSpecAttribute.textWidthBasis, TextWidthBasis.longestLine);
       expect(
-          textSpecAttribute.textHeightBehavior, isA<TextHeightBehaviorDto>());
+          textSpecAttribute.textHeightBehavior, isA<TextHeightBehaviorMix>());
       expect(textSpecAttribute.textDirection, TextDirection.rtl);
       expect(textSpecAttribute.softWrap, true);
     });
@@ -63,7 +63,7 @@ void main() {
           fontFamily: 'Helvetica',
         ),
         textWidthBasis: TextWidthBasis.longestLine,
-        textHeightBehavior: const TextHeightBehaviorDto(
+        textHeightBehavior: const TextHeightBehaviorMix(
           applyHeightToFirstAscent: false,
           applyHeightToLastDescent: false,
         ),

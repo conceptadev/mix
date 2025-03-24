@@ -310,7 +310,7 @@ class TextFieldSpecAttribute extends SpecAttribute<TextFieldSpec>
   final TextStyleDto? style;
   final TextAlign? textAlign;
   final StrutStyleMix? strutStyle;
-  final TextHeightBehaviorDto? textHeightBehavior;
+  final TextHeightBehaviorMix? textHeightBehavior;
   final TextWidthBasis? textWidthBasis;
   final double? cursorWidth;
   final double? cursorHeight;
@@ -596,7 +596,7 @@ class TextFieldSpecUtility<T extends Attribute>
 
   /// Utility for defining [TextFieldSpecAttribute.textHeightBehavior]
   late final textHeightBehavior =
-      TextHeightBehaviorUtility((v) => only(textHeightBehavior: v));
+      TextHeightBehaviorMixUtility((v) => only(textHeightBehavior: v));
 
   /// Utility for defining [TextFieldSpecAttribute.textWidthBasis]
   late final textWidthBasis =
@@ -701,7 +701,7 @@ class TextFieldSpecUtility<T extends Attribute>
     TextStyleDto? style,
     TextAlign? textAlign,
     StrutStyleMix? strutStyle,
-    TextHeightBehaviorDto? textHeightBehavior,
+    TextHeightBehaviorMix? textHeightBehavior,
     TextWidthBasis? textWidthBasis,
     double? cursorWidth,
     double? cursorHeight,

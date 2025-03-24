@@ -59,7 +59,7 @@ class TextFieldSpec extends Spec<TextFieldSpec>
 
   @MixableField(
     dto: MixableFieldProperty(
-      type: TextHeightBehaviorDto,
+      type: TextHeightBehaviorMix,
     ),
   )
   final TextHeightBehavior? textHeightBehavior;

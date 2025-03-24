@@ -7,14 +7,14 @@ import '../../../helpers/testing_utils.dart';
 void main() {
   group('TextHeightBehaviorDto', () {
     test('creates with default values', () {
-      const dto = TextHeightBehaviorDto();
+      const dto = TextHeightBehaviorMix();
       expect(dto.applyHeightToFirstAscent, isNull);
       expect(dto.applyHeightToLastDescent, isNull);
       expect(dto.leadingDistribution, isNull);
     });
 
     test('creates with custom values', () {
-      const dto = TextHeightBehaviorDto(
+      const dto = TextHeightBehaviorMix(
         applyHeightToFirstAscent: true,
         applyHeightToLastDescent: false,
         leadingDistribution: TextLeadingDistribution.even,
@@ -26,15 +26,15 @@ void main() {
   });
 
   group('TextHeightBehaviorUtility', () {
-    late TextHeightBehaviorUtility utility;
+    late TextHeightBehaviorMixUtility utility;
 
     setUp(() {
-      utility = TextHeightBehaviorUtility(UtilityTestAttribute.new);
+      utility = TextHeightBehaviorMixUtility(UtilityTestAttribute.new);
     });
 
     test('heightToFirstAscent sets applyHeightToFirstAscent', () {
       final result = utility.heightToFirstAscent(true)
-          as UtilityTestAttribute<TextHeightBehaviorDto>;
+          as UtilityTestAttribute<TextHeightBehaviorMix>;
       expect(result.value.applyHeightToFirstAscent, isTrue);
       expect(result.value.applyHeightToLastDescent, isNull);
       expect(result.value.leadingDistribution, isNull);
@@ -42,7 +42,7 @@ void main() {
 
     test('heightToLastDescent sets applyHeightToLastDescent', () {
       final result = utility.heightToLastDescent(false)
-          as UtilityTestAttribute<TextHeightBehaviorDto>;
+          as UtilityTestAttribute<TextHeightBehaviorMix>;
       expect(result.value.applyHeightToFirstAscent, isNull);
       expect(result.value.applyHeightToLastDescent, isFalse);
       expect(result.value.leadingDistribution, isNull);
@@ -51,7 +51,7 @@ void main() {
     test('leadingDistribution sets leadingDistribution', () {
       final result =
           utility.leadingDistribution(TextLeadingDistribution.proportional)
-              as UtilityTestAttribute<TextHeightBehaviorDto>;
+              as UtilityTestAttribute<TextHeightBehaviorMix>;
       expect(result.value.applyHeightToFirstAscent, isNull);
       expect(result.value.applyHeightToLastDescent, isNull);
       expect(result.value.leadingDistribution,
@@ -63,7 +63,7 @@ void main() {
         applyHeightToFirstAscent: true,
         applyHeightToLastDescent: false,
         leadingDistribution: TextLeadingDistribution.even,
-      ) as UtilityTestAttribute<TextHeightBehaviorDto>;
+      ) as UtilityTestAttribute<TextHeightBehaviorMix>;
       expect(result.value.applyHeightToFirstAscent, isTrue);
       expect(result.value.applyHeightToLastDescent, isFalse);
       expect(result.value.leadingDistribution, TextLeadingDistribution.even);

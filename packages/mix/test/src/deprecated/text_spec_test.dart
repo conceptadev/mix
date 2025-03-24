@@ -19,7 +19,7 @@ void main() {
             maxLines: 2,
             style: TextStyleDto(color: const ColorMix(Colors.red)),
             textWidthBasis: TextWidthBasis.longestLine,
-            textHeightBehavior: const TextHeightBehaviorDto(
+            textHeightBehavior: const TextHeightBehaviorMix(
               applyHeightToFirstAscent: true,
               applyHeightToLastDescent: true,
             ),
@@ -195,7 +195,7 @@ void main() {
             maxLines: 2,
             style: TextStyleDto(color: const ColorMix(Colors.red)),
             textWidthBasis: TextWidthBasis.longestLine,
-            textHeightBehavior: const TextHeightBehaviorDto(
+            textHeightBehavior: const TextHeightBehaviorMix(
               applyHeightToFirstAscent: true,
               applyHeightToLastDescent: true,
             ),

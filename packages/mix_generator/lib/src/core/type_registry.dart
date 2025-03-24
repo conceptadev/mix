@@ -344,12 +344,12 @@ final resolvables = {
   'SpacingSideDto': 'SpacingSide',
   'StrutStyleMix': 'StrutStyle',
   'TextDirectiveDto': 'TextDirective',
-  'TextHeightBehaviorDto': 'TextHeightBehavior',
   'TextStyleDto': 'TextStyle',
   'WidgetModifiersDataMix': 'WidgetModifiersData',
   'BorderMix': 'Border',
   'BorderRadiusMix': 'BorderRadius',
   'EdgeInsetsMix': 'EdgeInsets',
+  'TextHeightBehaviorMix': 'TextHeightBehavior',
 };
 
 /// Map of utility class names to their corresponding value types
@@ -430,11 +430,11 @@ final utilities = {
   'DecorationImageMixUtility': 'DecorationImage',
   'LinearBorderEdgeMixUtility': 'LinearBorderEdge',
   'StrutStyleMixUtility': 'StrutStyle',
-  'TextHeightBehaviorUtility': 'TextHeightBehavior',
   'TextStyleUtility': 'TextStyle',
   'PaintUtility': 'Paint',
   'ScrollPhysicsUtility': 'ScrollPhysics',
   'MouseCursorUtility': 'MouseCursor',
+  'TextHeightBehaviorMixUtility': 'TextHeightBehavior',
 };
 
 /// Map of DTO class names to whether they have a tryToMerge method

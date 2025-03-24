@@ -159,3 +159,10 @@ typedef GradientUtility<T extends Attribute> = GradientMixUtility<T>;
 
 @Deprecated('Use `WidgetModifiersDataMix` instead.')
 typedef WidgetModifiersDataDto = WidgetModifiersDataMix;
+
+@Deprecated('Use `TextHeightBehaviorMix` instead.')
+typedef TextHeightBehaviorDto = TextHeightBehaviorMix;
+
+@Deprecated('Use `TextHeightBehaviorUtility` instead.')
+typedef TextHeightBehaviorUtility<T extends Attribute>
+    = TextHeightBehaviorMixUtility<T>;
