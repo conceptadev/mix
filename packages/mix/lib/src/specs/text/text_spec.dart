@@ -27,7 +27,7 @@ import 'text_widget.dart';
 part 'text_spec.g.dart';
 
 const _style = MixableFieldUtility(
-  type: TextStyle,
+  type: TextStyleMix,
   properties: [
     (path: 'color', alias: 'color'),
     (path: 'fontFamily', alias: 'fontFamily'),

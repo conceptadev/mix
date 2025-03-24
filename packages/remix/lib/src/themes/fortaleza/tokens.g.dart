@@ -223,7 +223,7 @@ Map<TextStyleToken, TextStyle> _$FortalezaTextStyleToMap(
 }
 
 extension $FortalezaTextStyleTextStyleUtilityX<T extends Attribute>
-    on TextStyleUtility<T> {
+    on TextStyleMixUtility<T> {
   T $text1() => ref(_structFortalezaTextStyle.text1);
   T $text2() => ref(_structFortalezaTextStyle.text2);
   T $text3() => ref(_structFortalezaTextStyle.text3);

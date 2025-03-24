@@ -16,7 +16,7 @@ void main() {
       textAlign: TextAlign.center,
       textScaleFactor: 1.5,
       maxLines: 2,
-      style: TextStyleDto(
+      style: TextStyleMix(
         fontSize: 12,
         fontWeight: FontWeight.w500,
         fontFamily: 'Roboto',
@@ -37,7 +37,7 @@ void main() {
       expect(textSpecAttribute.textAlign, TextAlign.center);
       expect(textSpecAttribute.textScaleFactor, 1.5);
       expect(textSpecAttribute.maxLines, 2);
-      expect(textSpecAttribute.style, isA<TextStyleDto>());
+      expect(textSpecAttribute.style, isA<TextStyleMix>());
       expect(textSpecAttribute.textWidthBasis, TextWidthBasis.longestLine);
       expect(
           textSpecAttribute.textHeightBehavior, isA<TextHeightBehaviorMix>());
@@ -57,7 +57,7 @@ void main() {
         textAlign: TextAlign.center,
         textScaleFactor: 1.5,
         maxLines: 2,
-        style: TextStyleDto(
+        style: TextStyleMix(
           fontSize: 16,
           fontWeight: FontWeight.w200,
           fontFamily: 'Helvetica',

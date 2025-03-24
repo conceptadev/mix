@@ -166,3 +166,9 @@ typedef TextHeightBehaviorDto = TextHeightBehaviorMix;
 @Deprecated('Use `TextHeightBehaviorUtility` instead.')
 typedef TextHeightBehaviorUtility<T extends Attribute>
     = TextHeightBehaviorMixUtility<T>;
+
+@Deprecated('Use `TextStyleMixUtility` instead.')
+typedef TextStyleUtility<T extends Attribute> = TextStyleMixUtility<T>;
+
+@Deprecated('Use `TextStyleDto` instead.')
+typedef TextStyleDto = TextStyleMix;

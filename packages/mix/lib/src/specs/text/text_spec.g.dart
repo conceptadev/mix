@@ -187,7 +187,7 @@ class TextSpecAttribute extends SpecAttribute<TextSpec> with Diagnosticable {
   final double? textScaleFactor;
   final TextScaler? textScaler;
   final int? maxLines;
-  final TextStyleDto? style;
+  final TextStyleMix? style;
   final TextWidthBasis? textWidthBasis;
   final TextHeightBehaviorMix? textHeightBehavior;
   final TextDirection? textDirection;
@@ -350,7 +350,7 @@ class TextSpecUtility<T extends Attribute>
   late final maxLines = IntUtility((v) => only(maxLines: v));
 
   /// Utility for defining [TextSpecAttribute.style]
-  late final style = TextStyleUtility((v) => only(style: v));
+  late final style = TextStyleMixUtility((v) => only(style: v));
 
   /// Utility for defining [TextSpecAttribute.style.color]
   late final color = style.color;
@@ -471,7 +471,7 @@ class TextSpecUtility<T extends Attribute>
     double? textScaleFactor,
     TextScaler? textScaler,
     int? maxLines,
-    TextStyleDto? style,
+    TextStyleMix? style,
     TextWidthBasis? textWidthBasis,
     TextHeightBehaviorMix? textHeightBehavior,
     TextDirection? textDirection,

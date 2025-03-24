@@ -146,7 +146,7 @@ void main() {
 
       final dto = value.toDto();
 
-      expect(dto, isA<TextStyleDto>());
+      expect(dto, isA<TextStyleMix>());
       expect(dto.resolve(EmptyMixData), value);
     });
   });

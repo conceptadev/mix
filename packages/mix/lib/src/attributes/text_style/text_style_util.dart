@@ -9,8 +9,8 @@ import '../scalars/scalar_util.dart';
 import '../shadow/shadow_dto.dart';
 import 'text_style_dto.dart';
 
-final class TextStyleUtility<T extends Attribute>
-    extends DtoUtility<T, TextStyleDto, TextStyle> {
+final class TextStyleMixUtility<T extends Attribute>
+    extends DtoUtility<T, TextStyleMix, TextStyle> {
   late final color = ColorMixUtility((v) => only(color: v));
 
   late final fontWeight = FontWeightUtility((v) => only(fontWeight: v));
@@ -34,7 +34,7 @@ final class TextStyleUtility<T extends Attribute>
 
   late final fontFamily = FontFamilyUtility((v) => call(fontFamily: v));
 
-  TextStyleUtility(super.builder) : super(valueToDto: (v) => v.toDto());
+  TextStyleMixUtility(super.builder) : super(valueToDto: (v) => v.toDto());
 
   T height(double v) => only(height: v);
 
@@ -64,7 +64,7 @@ final class TextStyleUtility<T extends Attribute>
 
   T fontFamilyFallback(List<String> v) => call(fontFamilyFallback: v);
 
-  T ref(TextStyleToken token) => builder(TextStyleDto.ref(token));
+  T ref(TextStyleToken token) => builder(TextStyleMix.ref(token));
 
   T call({
     String? fontFamily,
@@ -138,7 +138,7 @@ final class TextStyleUtility<T extends Attribute>
     double? height,
     String? fontFamily,
   }) {
-    final textStyle = TextStyleDto(
+    final textStyle = TextStyleMix(
       color: color,
       backgroundColor: backgroundColor,
       fontSize: fontSize,

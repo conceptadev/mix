@@ -307,7 +307,7 @@ mixin _$TextFieldSpec on Spec<TextFieldSpec> {
 /// the [TextFieldSpec] constructor.
 class TextFieldSpecAttribute extends SpecAttribute<TextFieldSpec>
     with Diagnosticable {
-  final TextStyleDto? style;
+  final TextStyleMix? style;
   final TextAlign? textAlign;
   final StrutStyleMix? strutStyle;
   final TextHeightBehaviorMix? textHeightBehavior;
@@ -329,12 +329,12 @@ class TextFieldSpecAttribute extends SpecAttribute<TextFieldSpec>
   final bool? cursorOpacityAnimates;
   final FlexBoxSpecAttribute? outerContainer;
   final FlexBoxSpecAttribute? container;
-  final TextStyleDto? hintTextStyle;
+  final TextStyleMix? hintTextStyle;
   final TextSpecAttribute? helperText;
   final IconSpecAttribute? icon;
   final bool? floatingLabel;
   final double? floatingLabelHeight;
-  final TextStyleDto? floatingLabelStyle;
+  final TextStyleMix? floatingLabelStyle;
 
   const TextFieldSpecAttribute({
     this.style,
@@ -586,7 +586,7 @@ class TextFieldSpecAttribute extends SpecAttribute<TextFieldSpec>
 class TextFieldSpecUtility<T extends Attribute>
     extends SpecUtility<T, TextFieldSpecAttribute> {
   /// Utility for defining [TextFieldSpecAttribute.style]
-  late final style = TextStyleUtility((v) => only(style: v));
+  late final style = TextStyleMixUtility((v) => only(style: v));
 
   /// Utility for defining [TextFieldSpecAttribute.textAlign]
   late final textAlign = TextAlignUtility((v) => only(textAlign: v));
@@ -662,7 +662,7 @@ class TextFieldSpecUtility<T extends Attribute>
   late final container = FlexBoxSpecUtility((v) => only(container: v));
 
   /// Utility for defining [TextFieldSpecAttribute.hintTextStyle]
-  late final hintTextStyle = TextStyleUtility((v) => only(hintTextStyle: v));
+  late final hintTextStyle = TextStyleMixUtility((v) => only(hintTextStyle: v));
 
   /// Utility for defining [TextFieldSpecAttribute.helperText]
   late final helperText = TextSpecUtility((v) => only(helperText: v));
@@ -679,7 +679,7 @@ class TextFieldSpecUtility<T extends Attribute>
 
   /// Utility for defining [TextFieldSpecAttribute.floatingLabelStyle]
   late final floatingLabelStyle =
-      TextStyleUtility((v) => only(floatingLabelStyle: v));
+      TextStyleMixUtility((v) => only(floatingLabelStyle: v));
 
   /// Utility for defining [TextFieldSpecAttribute.animated]
   late final animated = AnimatedUtility((v) => only(animated: v));
@@ -698,7 +698,7 @@ class TextFieldSpecUtility<T extends Attribute>
   /// Returns a new [TextFieldSpecAttribute] with the specified properties.
   @override
   T only({
-    TextStyleDto? style,
+    TextStyleMix? style,
     TextAlign? textAlign,
     StrutStyleMix? strutStyle,
     TextHeightBehaviorMix? textHeightBehavior,
@@ -720,12 +720,12 @@ class TextFieldSpecUtility<T extends Attribute>
     bool? cursorOpacityAnimates,
     FlexBoxSpecAttribute? outerContainer,
     FlexBoxSpecAttribute? container,
-    TextStyleDto? hintTextStyle,
+    TextStyleMix? hintTextStyle,
     TextSpecAttribute? helperText,
     IconSpecAttribute? icon,
     bool? floatingLabel,
     double? floatingLabelHeight,
-    TextStyleDto? floatingLabelStyle,
+    TextStyleMix? floatingLabelStyle,
     AnimatedDataDto? animated,
     WidgetModifiersDataMix? modifiers,
   }) {

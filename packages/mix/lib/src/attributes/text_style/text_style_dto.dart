@@ -128,13 +128,13 @@ base class TextStyleData extends Mixable<TextStyle>
   components: GeneratedPropertyComponents.none,
   mergeLists: false,
 )
-final class TextStyleDto extends Mixable<TextStyle>
-    with _$TextStyleDto, Diagnosticable {
+final class TextStyleMix extends Mixable<TextStyle>
+    with _$TextStyleMix, Diagnosticable {
   final List<TextStyleData> value;
   @MixableConstructor()
-  const TextStyleDto._({this.value = const []});
+  const TextStyleMix._({this.value = const []});
 
-  factory TextStyleDto({
+  factory TextStyleMix({
     ColorMix? color,
     ColorMix? backgroundColor,
     double? fontSize,
@@ -157,7 +157,7 @@ final class TextStyleDto extends Mixable<TextStyle>
     String? fontFamily,
     List<String>? fontFamilyFallback,
   }) {
-    return TextStyleDto._(value: [
+    return TextStyleMix._(value: [
       TextStyleData(
         background: background,
         backgroundColor: backgroundColor,
@@ -184,11 +184,11 @@ final class TextStyleDto extends Mixable<TextStyle>
     ]);
   }
 
-  factory TextStyleDto.ref(TextStyleToken token) {
-    return TextStyleDto._(value: [TextStyleDataRef(ref: token())]);
+  factory TextStyleMix.ref(TextStyleToken token) {
+    return TextStyleMix._(value: [TextStyleDataRef(ref: token())]);
   }
 
-  /// This method resolves the [TextStyleDto] to a TextStyle.
+  /// This method resolves the [TextStyleMix] to a TextStyle.
   /// It maps over the values list and checks if each TextStyleDto is a token reference.
   /// If it is, it resolves the token reference and converts it to a [TextStyleData].
   /// If it's not a token reference, it leaves the [TextStyleData] as is.
@@ -222,12 +222,12 @@ final class TextStyleDto extends Mixable<TextStyle>
 }
 
 extension TextStyleExt on TextStyle {
-  TextStyleDto toDto() {
+  TextStyleMix toDto() {
     if (this is TextStyleRef) {
-      return TextStyleDto.ref((this as TextStyleRef).token);
+      return TextStyleMix.ref((this as TextStyleRef).token);
     }
 
-    return TextStyleDto._(value: [_toData()]);
+    return TextStyleMix._(value: [_toData()]);
   }
 
   TextStyleData _toData() => TextStyleData(
