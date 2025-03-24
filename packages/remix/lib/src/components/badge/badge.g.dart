@@ -166,7 +166,7 @@ class BadgeSpecUtility<T extends Attribute>
   late final label = TextSpecUtility((v) => only(label: v));
 
   /// Utility for defining [BadgeSpecAttribute.animated]
-  late final animated = AnimatedUtility((v) => only(animated: v));
+  late final animated = AnimatedMixUtility((v) => only(animated: v));
 
   BadgeSpecUtility(super.builder, {super.mutable});
 

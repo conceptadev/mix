@@ -309,7 +309,7 @@ class ImageSpecUtility<T extends Attribute>
   late final colorBlendMode = BlendModeUtility((v) => only(colorBlendMode: v));
 
   /// Utility for defining [ImageSpecAttribute.animated]
-  late final animated = AnimatedUtility((v) => only(animated: v));
+  late final animated = AnimatedMixUtility((v) => only(animated: v));
 
   /// Utility for defining [ImageSpecAttribute.modifiers]
   late final wrap = SpecModifierUtility((v) => only(modifiers: v));
@@ -334,7 +334,7 @@ class ImageSpecUtility<T extends Attribute>
     Rect? centerSlice,
     FilterQuality? filterQuality,
     BlendMode? colorBlendMode,
-    AnimatedDataDto? animated,
+    AnimatedDataMix? animated,
     WidgetModifiersDataMix? modifiers,
   }) {
     return builder(ImageSpecAttribute(

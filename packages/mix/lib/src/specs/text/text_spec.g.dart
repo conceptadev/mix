@@ -449,7 +449,7 @@ class TextSpecUtility<T extends Attribute>
   late final sentenceCase = directive.sentenceCase;
 
   /// Utility for defining [TextSpecAttribute.animated]
-  late final animated = AnimatedUtility((v) => only(animated: v));
+  late final animated = AnimatedMixUtility((v) => only(animated: v));
 
   /// Utility for defining [TextSpecAttribute.modifiers]
   late final wrap = SpecModifierUtility((v) => only(modifiers: v));
@@ -477,7 +477,7 @@ class TextSpecUtility<T extends Attribute>
     TextDirection? textDirection,
     bool? softWrap,
     TextDirectiveDto? directive,
-    AnimatedDataDto? animated,
+    AnimatedDataMix? animated,
     WidgetModifiersDataMix? modifiers,
   }) {
     return builder(TextSpecAttribute(

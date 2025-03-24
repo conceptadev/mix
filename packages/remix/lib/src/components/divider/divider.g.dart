@@ -182,7 +182,7 @@ class DividerSpecUtility<T extends Attribute>
   late final container = BoxSpecUtility((v) => only(container: v));
 
   /// Utility for defining [DividerSpecAttribute.animated]
-  late final animated = AnimatedUtility((v) => only(animated: v));
+  late final animated = AnimatedMixUtility((v) => only(animated: v));
 
   /// Utility for defining [DividerSpecAttribute.modifiers]
   late final wrap = SpecModifierUtility((v) => only(modifiers: v));

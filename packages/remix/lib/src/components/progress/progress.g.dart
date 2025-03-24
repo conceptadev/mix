@@ -229,7 +229,7 @@ class ProgressSpecUtility<T extends Attribute>
   late final outerContainer = BoxSpecUtility((v) => only(outerContainer: v));
 
   /// Utility for defining [ProgressSpecAttribute.animated]
-  late final animated = AnimatedUtility((v) => only(animated: v));
+  late final animated = AnimatedMixUtility((v) => only(animated: v));
 
   /// Utility for defining [ProgressSpecAttribute.modifiers]
   late final wrap = SpecModifierUtility((v) => only(modifiers: v));

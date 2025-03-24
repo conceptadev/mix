@@ -217,7 +217,7 @@ class IconButtonSpecUtility<T extends Attribute>
   late final spinner = SpinnerSpecUtility((v) => only(spinner: v));
 
   /// Utility for defining [IconButtonSpecAttribute.animated]
-  late final animated = AnimatedUtility((v) => only(animated: v));
+  late final animated = AnimatedMixUtility((v) => only(animated: v));
 
   IconButtonSpecUtility(super.builder, {super.mutable});
 

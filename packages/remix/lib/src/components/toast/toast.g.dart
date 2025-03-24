@@ -239,7 +239,7 @@ class ToastSpecUtility<T extends Attribute>
   late final wrap = SpecModifierUtility((v) => only(modifiers: v));
 
   /// Utility for defining [ToastSpecAttribute.animated]
-  late final animated = AnimatedUtility((v) => only(animated: v));
+  late final animated = AnimatedMixUtility((v) => only(animated: v));
 
   ToastSpecUtility(super.builder, {super.mutable});
 

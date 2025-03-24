@@ -411,7 +411,7 @@ class BoxSpecUtility<T extends Attribute>
   late final wrap = SpecModifierUtility((v) => only(modifiers: v));
 
   /// Utility for defining [BoxSpecAttribute.animated]
-  late final animated = AnimatedUtility((v) => only(animated: v));
+  late final animated = AnimatedMixUtility((v) => only(animated: v));
 
   BoxSpecUtility(super.builder, {super.mutable});
 
@@ -435,7 +435,7 @@ class BoxSpecUtility<T extends Attribute>
     double? width,
     double? height,
     WidgetModifiersDataMix? modifiers,
-    AnimatedDataDto? animated,
+    AnimatedDataMix? animated,
   }) {
     return builder(BoxSpecAttribute(
       alignment: alignment,

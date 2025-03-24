@@ -230,7 +230,7 @@ class SliderSpecUtility<T extends Attribute>
   late final wrap = SpecModifierUtility((v) => only(modifiers: v));
 
   /// Utility for defining [SliderSpecAttribute.animated]
-  late final animated = AnimatedUtility((v) => only(animated: v));
+  late final animated = AnimatedMixUtility((v) => only(animated: v));
 
   SliderSpecUtility(super.builder, {super.mutable});
 

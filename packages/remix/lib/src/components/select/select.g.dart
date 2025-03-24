@@ -234,7 +234,7 @@ class SelectSpecUtility<T extends Attribute>
   late final wrap = SpecModifierUtility((v) => only(modifiers: v));
 
   /// Utility for defining [SelectSpecAttribute.animated]
-  late final animated = AnimatedUtility((v) => only(animated: v));
+  late final animated = AnimatedMixUtility((v) => only(animated: v));
 
   SelectSpecUtility(super.builder, {super.mutable});
 
@@ -484,7 +484,7 @@ class SelectMenuSpecUtility<T extends Attribute>
   late final wrap = SpecModifierUtility((v) => only(modifiers: v));
 
   /// Utility for defining [SelectMenuSpecAttribute.animated]
-  late final animated = AnimatedUtility((v) => only(animated: v));
+  late final animated = AnimatedMixUtility((v) => only(animated: v));
 
   SelectMenuSpecUtility(super.builder, {super.mutable});
 
@@ -746,7 +746,7 @@ class SelectMenuItemSpecUtility<T extends Attribute>
   late final wrap = SpecModifierUtility((v) => only(modifiers: v));
 
   /// Utility for defining [SelectMenuItemSpecAttribute.animated]
-  late final animated = AnimatedUtility((v) => only(animated: v));
+  late final animated = AnimatedMixUtility((v) => only(animated: v));
 
   SelectMenuItemSpecUtility(super.builder, {super.mutable});
 
@@ -1010,7 +1010,7 @@ class SelectTriggerSpecUtility<T extends Attribute>
   late final wrap = SpecModifierUtility((v) => only(modifiers: v));
 
   /// Utility for defining [SelectTriggerSpecAttribute.animated]
-  late final animated = AnimatedUtility((v) => only(animated: v));
+  late final animated = AnimatedMixUtility((v) => only(animated: v));
 
   SelectTriggerSpecUtility(super.builder, {super.mutable});
 

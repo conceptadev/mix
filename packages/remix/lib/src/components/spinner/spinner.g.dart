@@ -248,7 +248,7 @@ class SpinnerSpecUtility<T extends Attribute>
   late final wrap = SpecModifierUtility((v) => only(modifiers: v));
 
   /// Utility for defining [SpinnerSpecAttribute.animated]
-  late final animated = AnimatedUtility((v) => only(animated: v));
+  late final animated = AnimatedMixUtility((v) => only(animated: v));
 
   SpinnerSpecUtility(super.builder, {super.mutable});
 

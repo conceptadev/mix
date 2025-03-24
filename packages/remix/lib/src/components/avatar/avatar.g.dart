@@ -192,7 +192,7 @@ class AvatarSpecUtility<T extends Attribute>
   late final stack = StackSpecUtility((v) => only(stack: v));
 
   /// Utility for defining [AvatarSpecAttribute.animated]
-  late final animated = AnimatedUtility((v) => only(animated: v));
+  late final animated = AnimatedMixUtility((v) => only(animated: v));
 
   AvatarSpecUtility(super.builder, {super.mutable});
 

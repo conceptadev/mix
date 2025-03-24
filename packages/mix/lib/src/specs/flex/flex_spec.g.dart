@@ -325,7 +325,7 @@ class FlexSpecUtility<T extends Attribute>
   late final gap = GapUtility((v) => only(gap: v));
 
   /// Utility for defining [FlexSpecAttribute.animated]
-  late final animated = AnimatedUtility((v) => only(animated: v));
+  late final animated = AnimatedMixUtility((v) => only(animated: v));
 
   /// Utility for defining [FlexSpecAttribute.modifiers]
   late final wrap = SpecModifierUtility((v) => only(modifiers: v));
@@ -350,7 +350,7 @@ class FlexSpecUtility<T extends Attribute>
     TextBaseline? textBaseline,
     Clip? clipBehavior,
     SpaceMix? gap,
-    AnimatedDataDto? animated,
+    AnimatedDataMix? animated,
     WidgetModifiersDataMix? modifiers,
   }) {
     return builder(FlexSpecAttribute(

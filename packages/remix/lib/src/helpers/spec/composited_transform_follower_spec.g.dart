@@ -227,7 +227,7 @@ class CompositedTransformFollowerSpecUtility<T extends Attribute>
   late final wrap = SpecModifierUtility((v) => only(modifiers: v));
 
   /// Utility for defining [CompositedTransformFollowerSpecAttribute.animated]
-  late final animated = AnimatedUtility((v) => only(animated: v));
+  late final animated = AnimatedMixUtility((v) => only(animated: v));
 
   CompositedTransformFollowerSpecUtility(super.builder, {super.mutable});
 

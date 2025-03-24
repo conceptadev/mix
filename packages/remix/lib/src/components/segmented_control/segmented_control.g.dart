@@ -248,7 +248,7 @@ class SegmentedControlSpecUtility<T extends Attribute>
   late final wrap = SpecModifierUtility((v) => only(modifiers: v));
 
   /// Utility for defining [SegmentedControlSpecAttribute.animated]
-  late final animated = AnimatedUtility((v) => only(animated: v));
+  late final animated = AnimatedMixUtility((v) => only(animated: v));
 
   SegmentedControlSpecUtility(super.builder, {super.mutable});
 
@@ -532,7 +532,7 @@ class SegmentButtonSpecUtility<T extends Attribute>
   late final wrap = SpecModifierUtility((v) => only(modifiers: v));
 
   /// Utility for defining [SegmentButtonSpecAttribute.animated]
-  late final animated = AnimatedUtility((v) => only(animated: v));
+  late final animated = AnimatedMixUtility((v) => only(animated: v));
 
   SegmentButtonSpecUtility(super.builder, {super.mutable});
 

@@ -311,7 +311,7 @@ class IconSpecUtility<T extends Attribute>
   late final fill = DoubleUtility((v) => only(fill: v));
 
   /// Utility for defining [IconSpecAttribute.animated]
-  late final animated = AnimatedUtility((v) => only(animated: v));
+  late final animated = AnimatedMixUtility((v) => only(animated: v));
 
   /// Utility for defining [IconSpecAttribute.modifiers]
   late final wrap = SpecModifierUtility((v) => only(modifiers: v));
@@ -336,7 +336,7 @@ class IconSpecUtility<T extends Attribute>
     TextDirection? textDirection,
     bool? applyTextScaling,
     double? fill,
-    AnimatedDataDto? animated,
+    AnimatedDataMix? animated,
     WidgetModifiersDataMix? modifiers,
   }) {
     return builder(IconSpecAttribute(

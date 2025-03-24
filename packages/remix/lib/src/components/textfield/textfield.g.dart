@@ -682,7 +682,7 @@ class TextFieldSpecUtility<T extends Attribute>
       TextStyleMixUtility((v) => only(floatingLabelStyle: v));
 
   /// Utility for defining [TextFieldSpecAttribute.animated]
-  late final animated = AnimatedUtility((v) => only(animated: v));
+  late final animated = AnimatedMixUtility((v) => only(animated: v));
 
   /// Utility for defining [TextFieldSpecAttribute.modifiers]
   late final wrap = SpecModifierUtility((v) => only(modifiers: v));

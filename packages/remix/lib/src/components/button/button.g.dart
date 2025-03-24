@@ -233,7 +233,7 @@ class ButtonSpecUtility<T extends Attribute>
   late final spinner = SpinnerSpecUtility((v) => only(spinner: v));
 
   /// Utility for defining [ButtonSpecAttribute.animated]
-  late final animated = AnimatedUtility((v) => only(animated: v));
+  late final animated = AnimatedMixUtility((v) => only(animated: v));
 
   ButtonSpecUtility(super.builder, {super.mutable});
 

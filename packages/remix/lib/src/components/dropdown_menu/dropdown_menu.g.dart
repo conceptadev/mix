@@ -200,7 +200,7 @@ class DropdownMenuSpecUtility<T extends Attribute>
   late final wrap = SpecModifierUtility((v) => only(modifiers: v));
 
   /// Utility for defining [DropdownMenuSpecAttribute.animated]
-  late final animated = AnimatedUtility((v) => only(animated: v));
+  late final animated = AnimatedMixUtility((v) => only(animated: v));
 
   DropdownMenuSpecUtility(super.builder, {super.mutable});
 
@@ -449,7 +449,7 @@ class DropdownMenuContainerSpecUtility<T extends Attribute>
   late final wrap = SpecModifierUtility((v) => only(modifiers: v));
 
   /// Utility for defining [DropdownMenuContainerSpecAttribute.animated]
-  late final animated = AnimatedUtility((v) => only(animated: v));
+  late final animated = AnimatedMixUtility((v) => only(animated: v));
 
   DropdownMenuContainerSpecUtility(super.builder, {super.mutable});
 
@@ -711,7 +711,7 @@ class DropdownMenuItemSpecUtility<T extends Attribute>
   late final wrap = SpecModifierUtility((v) => only(modifiers: v));
 
   /// Utility for defining [DropdownMenuItemSpecAttribute.animated]
-  late final animated = AnimatedUtility((v) => only(animated: v));
+  late final animated = AnimatedMixUtility((v) => only(animated: v));
 
   DropdownMenuItemSpecUtility(super.builder, {super.mutable});
 

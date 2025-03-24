@@ -234,7 +234,7 @@ class HeaderSpecUtility<T extends Attribute>
   late final subtitle = TextSpecUtility((v) => only(subtitle: v));
 
   /// Utility for defining [HeaderSpecAttribute.animated]
-  late final animated = AnimatedUtility((v) => only(animated: v));
+  late final animated = AnimatedMixUtility((v) => only(animated: v));
 
   HeaderSpecUtility(super.builder, {super.mutable});
 

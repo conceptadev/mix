@@ -198,7 +198,7 @@ class SwitchSpecUtility<T extends Attribute>
   late final indicator = BoxSpecUtility((v) => only(indicator: v));
 
   /// Utility for defining [SwitchSpecAttribute.animated]
-  late final animated = AnimatedUtility((v) => only(animated: v));
+  late final animated = AnimatedMixUtility((v) => only(animated: v));
 
   /// Utility for defining [SwitchSpecAttribute.modifiers]
   late final wrap = SpecModifierUtility((v) => only(modifiers: v));
