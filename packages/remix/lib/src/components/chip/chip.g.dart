@@ -232,7 +232,7 @@ class ChipSpecUtility<T extends Attribute>
     FlexBoxSpecAttribute? container,
     IconSpecAttribute? icon,
     TextSpecAttribute? label,
-    WidgetModifiersDataDto? modifiers,
+    WidgetModifiersDataMix? modifiers,
     AnimatedDataDto? animated,
   }) {
     return builder(ChipSpecAttribute(

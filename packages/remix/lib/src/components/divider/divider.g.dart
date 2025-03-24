@@ -200,7 +200,7 @@ class DividerSpecUtility<T extends Attribute>
   T only({
     BoxSpecAttribute? container,
     AnimatedDataDto? animated,
-    WidgetModifiersDataDto? modifiers,
+    WidgetModifiersDataMix? modifiers,
   }) {
     return builder(DividerSpecAttribute(
       container: container,

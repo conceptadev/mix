@@ -206,7 +206,7 @@ class CalloutSpecUtility<T extends Attribute>
     FlexBoxSpecAttribute? container,
     IconSpecAttribute? icon,
     TextSpecAttribute? text,
-    WidgetModifiersDataDto? modifiers,
+    WidgetModifiersDataMix? modifiers,
     AnimatedDataDto? animated,
   }) {
     return builder(CalloutSpecAttribute(

@@ -21,7 +21,7 @@ void main() {
             decoration: const BoxDecorationMix(color: ColorMix(Colors.blue)),
             transform: Matrix4.translationValues(10.0, 10.0, 0.0),
             clipBehavior: Clip.antiAlias,
-            modifiers: const WidgetModifiersDataDto([
+            modifiers: const WidgetModifiersDataMix([
               OpacityModifierSpecAttribute(opacity: 1),
               SizedBoxModifierSpecAttribute(height: 10, width: 10),
             ]),
@@ -305,7 +305,7 @@ void main() {
         clipBehavior: Clip.antiAlias,
         width: 100,
         height: 100,
-        modifiers: const WidgetModifiersDataDto([
+        modifiers: const WidgetModifiersDataMix([
           OpacityModifierSpecAttribute(opacity: 0.5),
           SizedBoxModifierSpecAttribute(height: 10, width: 10),
         ]),
@@ -330,7 +330,7 @@ void main() {
           clipBehavior: Clip.antiAliasWithSaveLayer,
           width: 200,
           height: 200,
-          modifiers: const WidgetModifiersDataDto([
+          modifiers: const WidgetModifiersDataMix([
             SizedBoxModifierSpecAttribute(width: 100),
           ]),
         ),

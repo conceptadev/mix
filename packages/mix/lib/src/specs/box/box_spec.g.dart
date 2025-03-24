@@ -435,7 +435,7 @@ class BoxSpecUtility<T extends Attribute>
     Clip? clipBehavior,
     double? width,
     double? height,
-    WidgetModifiersDataDto? modifiers,
+    WidgetModifiersDataMix? modifiers,
     AnimatedDataDto? animated,
   }) {
     return builder(BoxSpecAttribute(

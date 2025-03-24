@@ -256,7 +256,7 @@ class CheckboxSpecUtility<T extends Attribute>
     IconSpecAttribute? indicator,
     FlexBoxSpecAttribute? container,
     TextSpecAttribute? label,
-    WidgetModifiersDataDto? modifiers,
+    WidgetModifiersDataMix? modifiers,
     AnimatedDataDto? animated,
   }) {
     return builder(CheckboxSpecAttribute(

@@ -727,7 +727,7 @@ class TextFieldSpecUtility<T extends Attribute>
     double? floatingLabelHeight,
     TextStyleDto? floatingLabelStyle,
     AnimatedDataDto? animated,
-    WidgetModifiersDataDto? modifiers,
+    WidgetModifiersDataMix? modifiers,
   }) {
     return builder(TextFieldSpecAttribute(
       style: style,

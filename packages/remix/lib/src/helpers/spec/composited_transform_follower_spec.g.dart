@@ -244,7 +244,7 @@ class CompositedTransformFollowerSpecUtility<T extends Attribute>
     Offset? offset,
     AlignmentGeometry? targetAnchor,
     AlignmentGeometry? followerAnchor,
-    WidgetModifiersDataDto? modifiers,
+    WidgetModifiersDataMix? modifiers,
     AnimatedDataDto? animated,
   }) {
     return builder(CompositedTransformFollowerSpecAttribute(

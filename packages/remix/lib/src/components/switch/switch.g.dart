@@ -217,7 +217,7 @@ class SwitchSpecUtility<T extends Attribute>
     BoxSpecAttribute? container,
     BoxSpecAttribute? indicator,
     AnimatedDataDto? animated,
-    WidgetModifiersDataDto? modifiers,
+    WidgetModifiersDataMix? modifiers,
   }) {
     return builder(SwitchSpecAttribute(
       container: container,

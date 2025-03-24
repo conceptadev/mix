@@ -266,7 +266,7 @@ class SpinnerSpecUtility<T extends Attribute>
     ColorMix? color,
     Duration? duration,
     SpinnerTypeStyle? style,
-    WidgetModifiersDataDto? modifiers,
+    WidgetModifiersDataMix? modifiers,
     AnimatedDataDto? animated,
   }) {
     return builder(SpinnerSpecAttribute(

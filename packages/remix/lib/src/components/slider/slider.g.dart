@@ -247,7 +247,7 @@ class SliderSpecUtility<T extends Attribute>
     BoxSpecAttribute? track,
     BoxSpecAttribute? activeTrack,
     BoxSpecAttribute? division,
-    WidgetModifiersDataDto? modifiers,
+    WidgetModifiersDataMix? modifiers,
     AnimatedDataDto? animated,
   }) {
     return builder(SliderSpecAttribute(

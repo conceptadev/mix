@@ -346,7 +346,7 @@ final resolvables = {
   'TextDirectiveDto': 'TextDirective',
   'TextHeightBehaviorDto': 'TextHeightBehavior',
   'TextStyleDto': 'TextStyle',
-  'WidgetModifiersDataDto': 'WidgetModifiersData',
+  'WidgetModifiersDataMix': 'WidgetModifiersData',
   'BorderMix': 'Border',
   'BorderRadiusMix': 'BorderRadius',
   'EdgeInsetsMix': 'EdgeInsets',

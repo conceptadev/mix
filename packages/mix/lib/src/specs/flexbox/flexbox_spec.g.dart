@@ -302,7 +302,7 @@ class FlexBoxSpecUtility<T extends Attribute>
   @override
   T only({
     AnimatedDataDto? animated,
-    WidgetModifiersDataDto? modifiers,
+    WidgetModifiersDataMix? modifiers,
     BoxSpecAttribute? box,
     FlexSpecAttribute? flex,
   }) {

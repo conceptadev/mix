@@ -248,7 +248,7 @@ class HeaderSpecUtility<T extends Attribute>
   @override
   T only({
     FlexBoxSpecAttribute? container,
-    WidgetModifiersDataDto? modifiers,
+    WidgetModifiersDataMix? modifiers,
     FlexSpecAttribute? titleGroup,
     TextSpecAttribute? title,
     TextSpecAttribute? subtitle,

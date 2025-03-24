@@ -351,7 +351,7 @@ class FlexSpecUtility<T extends Attribute>
     Clip? clipBehavior,
     SpaceMix? gap,
     AnimatedDataDto? animated,
-    WidgetModifiersDataDto? modifiers,
+    WidgetModifiersDataMix? modifiers,
   }) {
     return builder(FlexSpecAttribute(
       crossAxisAlignment: crossAxisAlignment,

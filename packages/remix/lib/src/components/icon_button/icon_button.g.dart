@@ -232,7 +232,7 @@ class IconButtonSpecUtility<T extends Attribute>
   T only({
     BoxSpecAttribute? container,
     IconSpecAttribute? icon,
-    WidgetModifiersDataDto? modifiers,
+    WidgetModifiersDataMix? modifiers,
     SpinnerSpecAttribute? spinner,
     AnimatedDataDto? animated,
   }) {

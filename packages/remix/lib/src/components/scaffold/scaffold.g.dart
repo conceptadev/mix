@@ -200,7 +200,7 @@ class ScaffoldSpecUtility<T extends Attribute>
   T only({
     BoxSpecAttribute? container,
     AnimatedDataDto? animated,
-    WidgetModifiersDataDto? modifiers,
+    WidgetModifiersDataMix? modifiers,
   }) {
     return builder(ScaffoldSpecAttribute(
       container: container,

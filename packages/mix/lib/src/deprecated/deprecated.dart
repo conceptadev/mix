@@ -156,3 +156,6 @@ typedef SweepGradientDto = SweepGradientMix;
 
 @Deprecated('Use `GradientMixUtility` instead.')
 typedef GradientUtility<T extends Attribute> = GradientMixUtility<T>;
+
+@Deprecated('Use `WidgetModifiersDataMix` instead.')
+typedef WidgetModifiersDataDto = WidgetModifiersDataMix;

@@ -251,7 +251,7 @@ class StackSpecUtility<T extends Attribute>
     TextDirection? textDirection,
     Clip? clipBehavior,
     AnimatedDataDto? animated,
-    WidgetModifiersDataDto? modifiers,
+    WidgetModifiersDataMix? modifiers,
   }) {
     return builder(StackSpecAttribute(
       alignment: alignment,

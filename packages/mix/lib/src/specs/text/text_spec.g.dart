@@ -478,7 +478,7 @@ class TextSpecUtility<T extends Attribute>
     bool? softWrap,
     TextDirectiveDto? directive,
     AnimatedDataDto? animated,
-    WidgetModifiersDataDto? modifiers,
+    WidgetModifiersDataMix? modifiers,
   }) {
     return builder(TextSpecAttribute(
       overflow: overflow,

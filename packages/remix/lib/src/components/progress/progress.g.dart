@@ -250,7 +250,7 @@ class ProgressSpecUtility<T extends Attribute>
     BoxSpecAttribute? fill,
     BoxSpecAttribute? outerContainer,
     AnimatedDataDto? animated,
-    WidgetModifiersDataDto? modifiers,
+    WidgetModifiersDataMix? modifiers,
   }) {
     return builder(ProgressSpecAttribute(
       container: container,

@@ -266,7 +266,7 @@ class SegmentedControlSpecUtility<T extends Attribute>
     bool? showDivider,
     BoxSpecAttribute? divider,
     SegmentButtonSpecAttribute? item,
-    WidgetModifiersDataDto? modifiers,
+    WidgetModifiersDataMix? modifiers,
     AnimatedDataDto? animated,
   }) {
     return builder(SegmentedControlSpecAttribute(
@@ -549,7 +549,7 @@ class SegmentButtonSpecUtility<T extends Attribute>
     FlexSpecAttribute? flex,
     IconSpecAttribute? icon,
     TextSpecAttribute? label,
-    WidgetModifiersDataDto? modifiers,
+    WidgetModifiersDataMix? modifiers,
     AnimatedDataDto? animated,
   }) {
     return builder(SegmentButtonSpecAttribute(

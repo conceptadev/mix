@@ -251,7 +251,7 @@ class SelectSpecUtility<T extends Attribute>
     SelectMenuSpecAttribute? menu,
     SelectMenuItemSpecAttribute? item,
     CompositedTransformFollowerSpecAttribute? position,
-    WidgetModifiersDataDto? modifiers,
+    WidgetModifiersDataMix? modifiers,
     AnimatedDataDto? animated,
   }) {
     return builder(SelectSpecAttribute(
@@ -499,7 +499,7 @@ class SelectMenuSpecUtility<T extends Attribute>
   T only({
     FlexBoxSpecAttribute? container,
     bool? autoWidth,
-    WidgetModifiersDataDto? modifiers,
+    WidgetModifiersDataMix? modifiers,
     AnimatedDataDto? animated,
   }) {
     return builder(SelectMenuSpecAttribute(
@@ -762,7 +762,7 @@ class SelectMenuItemSpecUtility<T extends Attribute>
     IconSpecAttribute? icon,
     TextSpecAttribute? text,
     FlexBoxSpecAttribute? container,
-    WidgetModifiersDataDto? modifiers,
+    WidgetModifiersDataMix? modifiers,
     AnimatedDataDto? animated,
   }) {
     return builder(SelectMenuItemSpecAttribute(
@@ -1026,7 +1026,7 @@ class SelectTriggerSpecUtility<T extends Attribute>
     FlexBoxSpecAttribute? container,
     IconSpecAttribute? icon,
     TextSpecAttribute? label,
-    WidgetModifiersDataDto? modifiers,
+    WidgetModifiersDataMix? modifiers,
     AnimatedDataDto? animated,
   }) {
     return builder(SelectTriggerSpecAttribute(

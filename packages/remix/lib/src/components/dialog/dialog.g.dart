@@ -254,7 +254,7 @@ class DialogSpecUtility<T extends Attribute>
     TextSpecAttribute? title,
     TextSpecAttribute? description,
     FlexSpecAttribute? actionsContainer,
-    WidgetModifiersDataDto? modifiers,
+    WidgetModifiersDataMix? modifiers,
     AnimatedDataDto? animated,
   }) {
     return builder(DialogSpecAttribute(

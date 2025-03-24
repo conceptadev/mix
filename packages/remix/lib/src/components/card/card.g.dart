@@ -198,7 +198,7 @@ class CardSpecUtility<T extends Attribute>
   @override
   T only({
     BoxSpecAttribute? container,
-    WidgetModifiersDataDto? modifiers,
+    WidgetModifiersDataMix? modifiers,
     AnimatedDataDto? animated,
   }) {
     return builder(CardSpecAttribute(

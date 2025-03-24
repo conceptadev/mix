@@ -249,7 +249,7 @@ class ButtonSpecUtility<T extends Attribute>
     FlexBoxSpecAttribute? container,
     IconSpecAttribute? icon,
     TextSpecAttribute? label,
-    WidgetModifiersDataDto? modifiers,
+    WidgetModifiersDataMix? modifiers,
     SpinnerSpecAttribute? spinner,
     AnimatedDataDto? animated,
   }) {

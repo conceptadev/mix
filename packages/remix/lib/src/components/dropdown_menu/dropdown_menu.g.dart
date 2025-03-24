@@ -215,7 +215,7 @@ class DropdownMenuSpecUtility<T extends Attribute>
   T only({
     DropdownMenuContainerSpecAttribute? menu,
     DropdownMenuItemSpecAttribute? item,
-    WidgetModifiersDataDto? modifiers,
+    WidgetModifiersDataMix? modifiers,
     AnimatedDataDto? animated,
   }) {
     return builder(DropdownMenuSpecAttribute(
@@ -464,7 +464,7 @@ class DropdownMenuContainerSpecUtility<T extends Attribute>
   T only({
     FlexBoxSpecAttribute? container,
     bool? autoWidth,
-    WidgetModifiersDataDto? modifiers,
+    WidgetModifiersDataMix? modifiers,
     AnimatedDataDto? animated,
   }) {
     return builder(DropdownMenuContainerSpecAttribute(
@@ -727,7 +727,7 @@ class DropdownMenuItemSpecUtility<T extends Attribute>
     IconSpecAttribute? icon,
     TextSpecAttribute? text,
     FlexBoxSpecAttribute? container,
-    WidgetModifiersDataDto? modifiers,
+    WidgetModifiersDataMix? modifiers,
     AnimatedDataDto? animated,
   }) {
     return builder(DropdownMenuItemSpecAttribute(

@@ -337,7 +337,7 @@ class IconSpecUtility<T extends Attribute>
     bool? applyTextScaling,
     double? fill,
     AnimatedDataDto? animated,
-    WidgetModifiersDataDto? modifiers,
+    WidgetModifiersDataMix? modifiers,
   }) {
     return builder(IconSpecAttribute(
       color: color,

@@ -335,7 +335,7 @@ class ImageSpecUtility<T extends Attribute>
     FilterQuality? filterQuality,
     BlendMode? colorBlendMode,
     AnimatedDataDto? animated,
-    WidgetModifiersDataDto? modifiers,
+    WidgetModifiersDataMix? modifiers,
   }) {
     return builder(ImageSpecAttribute(
       width: width,

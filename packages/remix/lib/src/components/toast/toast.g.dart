@@ -256,7 +256,7 @@ class ToastSpecUtility<T extends Attribute>
     FlexBoxSpecAttribute? titleSubtitleContainer,
     TextSpecAttribute? title,
     TextSpecAttribute? subtitle,
-    WidgetModifiersDataDto? modifiers,
+    WidgetModifiersDataMix? modifiers,
     AnimatedDataDto? animated,
   }) {
     return builder(ToastSpecAttribute(

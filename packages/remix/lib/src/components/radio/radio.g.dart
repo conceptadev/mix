@@ -254,7 +254,7 @@ class RadioSpecUtility<T extends Attribute>
     BoxSpecAttribute? indicator,
     FlexBoxSpecAttribute? container,
     TextSpecAttribute? text,
-    WidgetModifiersDataDto? modifiers,
+    WidgetModifiersDataMix? modifiers,
     AnimatedDataDto? animated,
   }) {
     return builder(RadioSpecAttribute(
