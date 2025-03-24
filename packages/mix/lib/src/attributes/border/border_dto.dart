@@ -124,7 +124,7 @@ final class BorderDirectionalMix extends BoxBorderMix<BorderDirectional>
 @MixableProperty()
 final class BorderSideMix extends Mixable<BorderSide>
     with HasDefaultValue<BorderSide>, _$BorderSideMix {
-  final ColorDto? color;
+  final ColorMix? color;
   final double? width;
 
   final BorderStyle? style;

@@ -32,7 +32,8 @@ Map<ColorToken, Color> _$FortalezaColorToMap(FortalezaColor tokens) {
   };
 }
 
-extension $FortalezaColorColorUtilityX<T extends Attribute> on ColorUtility<T> {
+extension $FortalezaColorColorUtilityX<T extends Attribute>
+    on ColorMixUtility<T> {
   T $black() => ref(_structFortalezaColor.black);
   T $white() => ref(_structFortalezaColor.white);
   T $accent([int step = 9]) => ref(_structFortalezaColor.accent[step]);

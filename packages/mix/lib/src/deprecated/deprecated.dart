@@ -129,3 +129,12 @@ typedef EdgeInsetsDirectionalDto = EdgeInsetsDirectionalMix;
 @Deprecated('Use `EdgeInsetsGeometryUtility` instead.')
 typedef EdgeInsetsGeometryUtility<T extends Attribute>
     = EdgeInsetsGeometryMixUtility<T>;
+
+@Deprecated('Use `ColorMix` instead.')
+typedef ColorDto = ColorMix;
+
+@Deprecated('Use `ColorMixUtility` instead.')
+typedef ColorUtility<T extends Attribute> = ColorMixUtility<T>;
+
+@Deprecated('Use `ColorListMixUtility` instead.')
+typedef ColorListUtility<T extends Attribute> = ColorListMixUtility<T>;

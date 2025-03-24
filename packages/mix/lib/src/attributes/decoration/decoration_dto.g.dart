@@ -105,7 +105,7 @@ class BoxDecorationMixUtility<T extends Attribute>
       BlendModeUtility((v) => only(backgroundBlendMode: v));
 
   /// Utility for defining [BoxDecorationMix.color]
-  late final color = ColorUtility((v) => only(color: v));
+  late final color = ColorMixUtility((v) => only(color: v));
 
   /// Utility for defining [BoxDecorationMix.image]
   late final image = DecorationImageMixUtility((v) => only(image: v));
@@ -131,7 +131,7 @@ class BoxDecorationMixUtility<T extends Attribute>
     BorderRadiusGeometryMix? borderRadius,
     BoxShape? shape,
     BlendMode? backgroundBlendMode,
-    ColorDto? color,
+    ColorMix? color,
     DecorationImageMix? image,
     GradientDto? gradient,
     List<BoxShadowMix>? boxShadow,
@@ -267,7 +267,7 @@ class ShapeDecorationUtility<T extends Attribute>
   late final shape = ShapeBorderMixUtility((v) => only(shape: v));
 
   /// Utility for defining [ShapeDecorationMix.color]
-  late final color = ColorUtility((v) => only(color: v));
+  late final color = ColorMixUtility((v) => only(color: v));
 
   /// Utility for defining [ShapeDecorationMix.image]
   late final image = DecorationImageMixUtility((v) => only(image: v));
@@ -284,7 +284,7 @@ class ShapeDecorationUtility<T extends Attribute>
   @override
   T only({
     ShapeBorderMix? shape,
-    ColorDto? color,
+    ColorMix? color,
     DecorationImageMix? image,
     GradientDto? gradient,
     List<BoxShadowMix>? shadows,

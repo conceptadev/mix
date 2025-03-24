@@ -91,7 +91,7 @@ class LinearGradientUtility<T extends Attribute>
   late final transform = GradientTransformUtility((v) => only(transform: v));
 
   /// Utility for defining [LinearGradientDto.colors]
-  late final colors = ColorListUtility((v) => only(colors: v));
+  late final colors = ColorListMixUtility((v) => only(colors: v));
 
   /// Utility for defining [LinearGradientDto.stops]
   late final stops = ListUtility<T, double>((v) => only(stops: v));
@@ -105,7 +105,7 @@ class LinearGradientUtility<T extends Attribute>
     AlignmentGeometry? end,
     TileMode? tileMode,
     GradientTransform? transform,
-    List<ColorDto>? colors,
+    List<ColorMix>? colors,
     List<double>? stops,
   }) {
     return builder(LinearGradientDto(
@@ -255,7 +255,7 @@ class RadialGradientUtility<T extends Attribute>
   late final transform = GradientTransformUtility((v) => only(transform: v));
 
   /// Utility for defining [RadialGradientDto.colors]
-  late final colors = ColorListUtility((v) => only(colors: v));
+  late final colors = ColorListMixUtility((v) => only(colors: v));
 
   /// Utility for defining [RadialGradientDto.stops]
   late final stops = ListUtility<T, double>((v) => only(stops: v));
@@ -271,7 +271,7 @@ class RadialGradientUtility<T extends Attribute>
     AlignmentGeometry? focal,
     double? focalRadius,
     GradientTransform? transform,
-    List<ColorDto>? colors,
+    List<ColorMix>? colors,
     List<double>? stops,
   }) {
     return builder(RadialGradientDto(
@@ -423,7 +423,7 @@ class SweepGradientUtility<T extends Attribute>
   late final transform = GradientTransformUtility((v) => only(transform: v));
 
   /// Utility for defining [SweepGradientDto.colors]
-  late final colors = ColorListUtility((v) => only(colors: v));
+  late final colors = ColorListMixUtility((v) => only(colors: v));
 
   /// Utility for defining [SweepGradientDto.stops]
   late final stops = ListUtility<T, double>((v) => only(stops: v));
@@ -438,7 +438,7 @@ class SweepGradientUtility<T extends Attribute>
     double? endAngle,
     TileMode? tileMode,
     GradientTransform? transform,
-    List<ColorDto>? colors,
+    List<ColorMix>? colors,
     List<double>? stops,
   }) {
     return builder(SweepGradientDto(

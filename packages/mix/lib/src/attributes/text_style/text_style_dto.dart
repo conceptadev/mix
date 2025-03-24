@@ -58,13 +58,13 @@ base class TextStyleData extends Mixable<TextStyle>
   final double? letterSpacing;
   final double? wordSpacing;
   final TextBaseline? textBaseline;
-  final ColorDto? color;
-  final ColorDto? backgroundColor;
+  final ColorMix? color;
+  final ColorMix? backgroundColor;
   final List<ShadowMix>? shadows;
   final List<FontFeature>? fontFeatures;
   final List<FontVariation>? fontVariations;
   final TextDecoration? decoration;
-  final ColorDto? decorationColor;
+  final ColorMix? decorationColor;
   final TextDecorationStyle? decorationStyle;
   final String? debugLabel;
   final double? height;
@@ -135,8 +135,8 @@ final class TextStyleDto extends Mixable<TextStyle>
   const TextStyleDto._({this.value = const []});
 
   factory TextStyleDto({
-    ColorDto? color,
-    ColorDto? backgroundColor,
+    ColorMix? color,
+    ColorMix? backgroundColor,
     double? fontSize,
     FontWeight? fontWeight,
     FontStyle? fontStyle,
@@ -147,7 +147,7 @@ final class TextStyleDto extends Mixable<TextStyle>
     List<ShadowMix>? shadows,
     List<FontFeature>? fontFeatures,
     TextDecoration? decoration,
-    ColorDto? decorationColor,
+    ColorMix? decorationColor,
     TextDecorationStyle? decorationStyle,
     List<FontVariation>? fontVariations,
     double? height,

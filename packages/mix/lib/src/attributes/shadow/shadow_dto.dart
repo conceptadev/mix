@@ -7,7 +7,7 @@ import 'package:mix_annotations/mix_annotations.dart';
 part 'shadow_dto.g.dart';
 
 sealed class ShadowMixImpl<T extends Shadow> extends Mixable<T> {
-  final ColorDto? color;
+  final ColorMix? color;
   final Offset? offset;
   final double? blurRadius;
 

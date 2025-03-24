@@ -73,7 +73,7 @@ void main() {
     // colors
     test('.colors', () {
       final colors = [Colors.red, Colors.blue];
-      final colorsDto = colors.map(ColorDto.new).toList();
+      final colorsDto = colors.map(ColorMix.new).toList();
 
       final attribute = radialUtility(colors: colors);
 
@@ -207,7 +207,7 @@ void main() {
           attribute.resolve(EmptyMixData) as RadialGradient;
       final dto = attribute.value;
 
-      expect(dto.colors, colors.map(ColorDto.new).toList());
+      expect(dto.colors, colors.map(ColorMix.new).toList());
       expect(dto.stops, stops);
       expect(dto.center, center);
       expect(dto.radius, radius);
@@ -267,7 +267,7 @@ void main() {
     // colors
     test('.colors', () {
       final colors = [Colors.red, Colors.blue];
-      final colorsDto = colors.map(ColorDto.new).toList();
+      final colorsDto = colors.map(ColorMix.new).toList();
 
       final attribute = linearUtility(colors: colors);
 
@@ -371,7 +371,7 @@ void main() {
           attribute.resolve(EmptyMixData) as LinearGradient;
       final dto = attribute.value;
 
-      expect(dto.colors, colors.map(ColorDto.new).toList());
+      expect(dto.colors, colors.map(ColorMix.new).toList());
       expect(dto.stops, stops);
       expect(dto.begin, begin);
       expect(dto.end, end);
@@ -426,7 +426,7 @@ void main() {
     // colors
     test('.colors', () {
       final colors = [Colors.red, Colors.blue];
-      final colorsDto = colors.map(ColorDto.new).toList();
+      final colorsDto = colors.map(ColorMix.new).toList();
 
       final attribute = sweepUtility(colors: colors);
 
@@ -536,7 +536,7 @@ void main() {
       final resolvedGradient = attribute.resolve(EmptyMixData) as SweepGradient;
       final dto = attribute.value;
 
-      expect(dto.colors, colors.map(ColorDto.new).toList());
+      expect(dto.colors, colors.map(ColorMix.new).toList());
       expect(dto.stops, stops);
       expect(dto.center, center);
       expect(dto.startAngle, startAngle);

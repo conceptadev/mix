@@ -158,7 +158,7 @@ mixin _$ImageSpec on Spec<ImageSpec> {
 class ImageSpecAttribute extends SpecAttribute<ImageSpec> with Diagnosticable {
   final double? width;
   final double? height;
-  final ColorDto? color;
+  final ColorMix? color;
   final ImageRepeat? repeat;
   final BoxFit? fit;
   final AlignmentGeometry? alignment;
@@ -287,7 +287,7 @@ class ImageSpecUtility<T extends Attribute>
   late final height = DoubleUtility((v) => only(height: v));
 
   /// Utility for defining [ImageSpecAttribute.color]
-  late final color = ColorUtility((v) => only(color: v));
+  late final color = ColorMixUtility((v) => only(color: v));
 
   /// Utility for defining [ImageSpecAttribute.repeat]
   late final repeat = ImageRepeatUtility((v) => only(repeat: v));
@@ -327,7 +327,7 @@ class ImageSpecUtility<T extends Attribute>
   T only({
     double? width,
     double? height,
-    ColorDto? color,
+    ColorMix? color,
     ImageRepeat? repeat,
     BoxFit? fit,
     AlignmentGeometry? alignment,

@@ -19,7 +19,7 @@ void main() {
               margin: EdgeInsetsGeometryMix.only(top: 10.0, bottom: 12.0),
               constraints:
                   const BoxConstraintsMix(maxWidth: 300.0, minHeight: 200.0),
-              decoration: const BoxDecorationMix(color: ColorDto(Colors.blue)),
+              decoration: const BoxDecorationMix(color: ColorMix(Colors.blue)),
               transform: Matrix4.translationValues(10.0, 10.0, 0.0),
               clipBehavior: Clip.antiAlias,
               width: 300,
@@ -226,7 +226,7 @@ void main() {
             right: 10,
           ),
           constraints: const BoxConstraintsMix(maxHeight: 100),
-          decoration: const BoxDecorationMix(color: ColorDto(Colors.blue)),
+          decoration: const BoxDecorationMix(color: ColorMix(Colors.blue)),
           transform: Matrix4.identity(),
           clipBehavior: Clip.antiAlias,
           width: 100,
@@ -255,7 +255,7 @@ void main() {
               right: 20,
             ),
             constraints: const BoxConstraintsMix(maxHeight: 200),
-            decoration: const BoxDecorationMix(color: ColorDto(Colors.red)),
+            decoration: const BoxDecorationMix(color: ColorMix(Colors.red)),
             transform: Matrix4.identity(),
             clipBehavior: Clip.antiAliasWithSaveLayer,
             width: 200,
@@ -278,7 +278,7 @@ void main() {
       expect(mergedFlexBoxSpecAttribute.box!.constraints,
           const BoxConstraintsMix(maxHeight: 200));
       expect(mergedFlexBoxSpecAttribute.box!.decoration,
-          const BoxDecorationMix(color: ColorDto(Colors.red)));
+          const BoxDecorationMix(color: ColorMix(Colors.red)));
       expect(mergedFlexBoxSpecAttribute.box!.height, 200);
       expect(
         mergedFlexBoxSpecAttribute.box!.margin,
@@ -408,7 +408,7 @@ void main() {
       expect(flexBoxAttribute.box!.padding, const EdgeInsets.all(10.0).toDto());
       expect(
         (flexBoxAttribute.box!.decoration as BoxDecorationMix).color,
-        const ColorDto(Colors.red),
+        const ColorMix(Colors.red),
       );
       expect(flexBoxAttribute.box!.alignment, Alignment.center);
       expect(

@@ -12,7 +12,7 @@ import '../../internal/mix_error.dart';
 part 'decoration_dto.g.dart';
 
 typedef _BaseDecorProperties = ({
-  ColorDto? color,
+  ColorMix? color,
   GradientDto? gradient,
   List<BoxShadowMix>? boxShadow,
   DecorationImageMix? image,
@@ -27,7 +27,7 @@ typedef _BaseDecorProperties = ({
 @immutable
 sealed class DecorationMix<T extends Decoration> extends Mixable<T>
     with Diagnosticable {
-  final ColorDto? color;
+  final ColorMix? color;
   final GradientDto? gradient;
   final DecorationImageMix? image;
   @MixableField(

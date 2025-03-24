@@ -17,7 +17,7 @@ part 'gradient_dto.g.dart';
 sealed class GradientDto<T extends Gradient> extends Mixable<T>
     with HasDefaultValue<T> {
   final List<double>? stops;
-  final List<ColorDto>? colors;
+  final List<ColorMix>? colors;
   final GradientTransform? transform;
   const GradientDto({this.stops, this.colors, this.transform});
 

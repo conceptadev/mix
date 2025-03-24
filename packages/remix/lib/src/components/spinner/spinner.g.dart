@@ -133,7 +133,7 @@ class SpinnerSpecAttribute extends SpecAttribute<SpinnerSpec>
     with Diagnosticable {
   final double? size;
   final double? strokeWidth;
-  final ColorDto? color;
+  final ColorMix? color;
   final Duration? duration;
   final SpinnerTypeStyle? style;
 
@@ -236,7 +236,7 @@ class SpinnerSpecUtility<T extends Attribute>
   late final strokeWidth = DoubleUtility((v) => only(strokeWidth: v));
 
   /// Utility for defining [SpinnerSpecAttribute.color]
-  late final color = ColorUtility((v) => only(color: v));
+  late final color = ColorMixUtility((v) => only(color: v));
 
   /// Utility for defining [SpinnerSpecAttribute.duration]
   late final duration = DurationUtility((v) => only(duration: v));
@@ -263,7 +263,7 @@ class SpinnerSpecUtility<T extends Attribute>
   T only({
     double? size,
     double? strokeWidth,
-    ColorDto? color,
+    ColorMix? color,
     Duration? duration,
     SpinnerTypeStyle? style,
     WidgetModifiersDataDto? modifiers,

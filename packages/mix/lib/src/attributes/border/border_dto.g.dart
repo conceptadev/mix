@@ -225,7 +225,7 @@ mixin _$BorderSideMix on Mixable<BorderSide>, HasDefaultValue<BorderSide> {
 class BorderSideMixUtility<T extends Attribute>
     extends DtoUtility<T, BorderSideMix, BorderSide> {
   /// Utility for defining [BorderSideMix.color]
-  late final color = ColorUtility((v) => only(color: v));
+  late final color = ColorMixUtility((v) => only(color: v));
 
   /// Utility for defining [BorderSideMix.strokeAlign]
   late final strokeAlign = StrokeAlignUtility((v) => only(strokeAlign: v));
@@ -244,7 +244,7 @@ class BorderSideMixUtility<T extends Attribute>
   /// Returns a new [BorderSideMix] with the specified properties.
   @override
   T only({
-    ColorDto? color,
+    ColorMix? color,
     double? strokeAlign,
     BorderStyle? style,
     double? width,

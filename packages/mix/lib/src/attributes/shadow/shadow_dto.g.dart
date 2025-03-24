@@ -71,7 +71,7 @@ class ShadowMixUtility<T extends Attribute>
   late final blurRadius = DoubleUtility((v) => only(blurRadius: v));
 
   /// Utility for defining [ShadowMix.color]
-  late final color = ColorUtility((v) => only(color: v));
+  late final color = ColorMixUtility((v) => only(color: v));
 
   /// Utility for defining [ShadowMix.offset]
   late final offset = OffsetUtility((v) => only(offset: v));
@@ -82,7 +82,7 @@ class ShadowMixUtility<T extends Attribute>
   @override
   T only({
     double? blurRadius,
-    ColorDto? color,
+    ColorMix? color,
     Offset? offset,
   }) {
     return builder(ShadowMix(
@@ -188,7 +188,7 @@ mixin _$BoxShadowMix on Mixable<BoxShadow>, HasDefaultValue<BoxShadow> {
 class BoxShadowMixUtility<T extends Attribute>
     extends DtoUtility<T, BoxShadowMix, BoxShadow> {
   /// Utility for defining [BoxShadowMix.color]
-  late final color = ColorUtility((v) => only(color: v));
+  late final color = ColorMixUtility((v) => only(color: v));
 
   /// Utility for defining [BoxShadowMix.offset]
   late final offset = OffsetUtility((v) => only(offset: v));
@@ -204,7 +204,7 @@ class BoxShadowMixUtility<T extends Attribute>
   /// Returns a new [BoxShadowMix] with the specified properties.
   @override
   T only({
-    ColorDto? color,
+    ColorMix? color,
     Offset? offset,
     double? blurRadius,
     double? spreadRadius,

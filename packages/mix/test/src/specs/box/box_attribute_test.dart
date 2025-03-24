@@ -18,7 +18,7 @@ void main() {
           right: 10,
         ),
         constraints: const BoxConstraintsMix(maxHeight: 100),
-        decoration: const BoxDecorationMix(color: ColorDto(Colors.blue)),
+        decoration: const BoxDecorationMix(color: ColorMix(Colors.blue)),
         transform: Matrix4.identity(),
         clipBehavior: Clip.antiAlias,
         width: 100,
@@ -38,7 +38,7 @@ void main() {
       );
       expect(
         containerSpecAttribute.decoration,
-        const BoxDecorationMix(color: ColorDto(Colors.blue)),
+        const BoxDecorationMix(color: ColorMix(Colors.blue)),
       );
 
       expect(containerSpecAttribute.height, 100);
@@ -73,7 +73,7 @@ void main() {
             right: 10,
           ),
           constraints: const BoxConstraintsMix(maxHeight: 100),
-          decoration: const BoxDecorationMix(color: ColorDto(Colors.blue)),
+          decoration: const BoxDecorationMix(color: ColorMix(Colors.blue)),
           transform: Matrix4.identity(),
           clipBehavior: Clip.antiAlias,
           width: 100,
@@ -124,7 +124,7 @@ void main() {
             right: 10,
           ),
           constraints: const BoxConstraintsMix(maxHeight: 100),
-          decoration: const BoxDecorationMix(color: ColorDto(Colors.blue)),
+          decoration: const BoxDecorationMix(color: ColorMix(Colors.blue)),
           transform: Matrix4.identity(),
           clipBehavior: Clip.antiAlias,
           width: 100,
@@ -146,7 +146,7 @@ void main() {
             right: 20,
           ),
           constraints: const BoxConstraintsMix(maxHeight: 200),
-          decoration: const BoxDecorationMix(color: ColorDto(Colors.red)),
+          decoration: const BoxDecorationMix(color: ColorMix(Colors.red)),
           transform: Matrix4.identity(),
           clipBehavior: Clip.antiAliasWithSaveLayer,
           width: 200,
@@ -166,7 +166,7 @@ void main() {
       );
       expect(
         mergedBoxSpecAttribute.decoration,
-        const BoxDecorationMix(color: ColorDto(Colors.red)),
+        const BoxDecorationMix(color: ColorMix(Colors.red)),
       );
 
       expect(mergedBoxSpecAttribute.height, 200);
@@ -201,7 +201,7 @@ void main() {
             right: 10,
           ),
           constraints: const BoxConstraintsMix(maxHeight: 100),
-          decoration: const BoxDecorationMix(color: ColorDto(Colors.blue)),
+          decoration: const BoxDecorationMix(color: ColorMix(Colors.blue)),
           transform: Matrix4.identity(),
           clipBehavior: Clip.antiAlias,
           width: 100,
@@ -225,7 +225,7 @@ void main() {
               right: 10,
             ),
             constraints: const BoxConstraintsMix(maxHeight: 100),
-            decoration: const BoxDecorationMix(color: ColorDto(Colors.blue)),
+            decoration: const BoxDecorationMix(color: ColorMix(Colors.blue)),
             transform: Matrix4.identity(),
             clipBehavior: Clip.antiAlias,
             width: 100,
@@ -254,7 +254,7 @@ void main() {
           right: 10,
         ),
         constraints: const BoxConstraintsMix(maxHeight: 100),
-        decoration: const BoxDecorationMix(color: ColorDto(Colors.blue)),
+        decoration: const BoxDecorationMix(color: ColorMix(Colors.blue)),
         transform: Matrix4.identity(),
         clipBehavior: Clip.antiAlias,
         width: 100,
@@ -280,7 +280,7 @@ void main() {
                 right: 20,
               ),
               constraints: const BoxConstraintsMix(maxHeight: 200),
-              decoration: const BoxDecorationMix(color: ColorDto(Colors.red)),
+              decoration: const BoxDecorationMix(color: ColorMix(Colors.red)),
               transform: Matrix4.identity(),
               clipBehavior: Clip.antiAliasWithSaveLayer,
               width: 200,

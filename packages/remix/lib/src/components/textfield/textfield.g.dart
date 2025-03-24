@@ -315,17 +315,17 @@ class TextFieldSpecAttribute extends SpecAttribute<TextFieldSpec>
   final double? cursorWidth;
   final double? cursorHeight;
   final Radius? cursorRadius;
-  final ColorDto? cursorColor;
+  final ColorMix? cursorColor;
   final Offset? cursorOffset;
   final bool? paintCursorAboveText;
-  final ColorDto? backgroundCursorColor;
-  final ColorDto? selectionColor;
+  final ColorMix? backgroundCursorColor;
+  final ColorMix? selectionColor;
   final BoxHeightStyle? selectionHeightStyle;
   final BoxWidthStyle? selectionWidthStyle;
   final EdgeInsetsMix? scrollPadding;
   final Clip? clipBehavior;
   final Brightness? keyboardAppearance;
-  final ColorDto? autocorrectionTextRectColor;
+  final ColorMix? autocorrectionTextRectColor;
   final bool? cursorOpacityAnimates;
   final FlexBoxSpecAttribute? outerContainer;
   final FlexBoxSpecAttribute? container;
@@ -612,7 +612,7 @@ class TextFieldSpecUtility<T extends Attribute>
   late final cursorRadius = RadiusUtility((v) => only(cursorRadius: v));
 
   /// Utility for defining [TextFieldSpecAttribute.cursorColor]
-  late final cursorColor = ColorUtility((v) => only(cursorColor: v));
+  late final cursorColor = ColorMixUtility((v) => only(cursorColor: v));
 
   /// Utility for defining [TextFieldSpecAttribute.cursorOffset]
   late final cursorOffset = OffsetUtility((v) => only(cursorOffset: v));
@@ -623,10 +623,10 @@ class TextFieldSpecUtility<T extends Attribute>
 
   /// Utility for defining [TextFieldSpecAttribute.backgroundCursorColor]
   late final backgroundCursorColor =
-      ColorUtility((v) => only(backgroundCursorColor: v));
+      ColorMixUtility((v) => only(backgroundCursorColor: v));
 
   /// Utility for defining [TextFieldSpecAttribute.selectionColor]
-  late final selectionColor = ColorUtility((v) => only(selectionColor: v));
+  late final selectionColor = ColorMixUtility((v) => only(selectionColor: v));
 
   /// Utility for defining [TextFieldSpecAttribute.selectionHeightStyle]
   late final selectionHeightStyle =
@@ -648,7 +648,7 @@ class TextFieldSpecUtility<T extends Attribute>
 
   /// Utility for defining [TextFieldSpecAttribute.autocorrectionTextRectColor]
   late final autocorrectionTextRectColor =
-      ColorUtility((v) => only(autocorrectionTextRectColor: v));
+      ColorMixUtility((v) => only(autocorrectionTextRectColor: v));
 
   /// Utility for defining [TextFieldSpecAttribute.cursorOpacityAnimates]
   late final cursorOpacityAnimates =
@@ -706,17 +706,17 @@ class TextFieldSpecUtility<T extends Attribute>
     double? cursorWidth,
     double? cursorHeight,
     Radius? cursorRadius,
-    ColorDto? cursorColor,
+    ColorMix? cursorColor,
     Offset? cursorOffset,
     bool? paintCursorAboveText,
-    ColorDto? backgroundCursorColor,
-    ColorDto? selectionColor,
+    ColorMix? backgroundCursorColor,
+    ColorMix? selectionColor,
     BoxHeightStyle? selectionHeightStyle,
     BoxWidthStyle? selectionWidthStyle,
     EdgeInsetsMix? scrollPadding,
     Clip? clipBehavior,
     Brightness? keyboardAppearance,
-    ColorDto? autocorrectionTextRectColor,
+    ColorMix? autocorrectionTextRectColor,
     bool? cursorOpacityAnimates,
     FlexBoxSpecAttribute? outerContainer,
     FlexBoxSpecAttribute? container,

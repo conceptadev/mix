@@ -159,7 +159,7 @@ mixin _$IconSpec on Spec<IconSpec> {
 /// Use this class to configure the attributes of a [IconSpec] and pass it to
 /// the [IconSpec] constructor.
 class IconSpecAttribute extends SpecAttribute<IconSpec> with Diagnosticable {
-  final ColorDto? color;
+  final ColorMix? color;
   final double? size;
   final double? weight;
   final double? grade;
@@ -283,7 +283,7 @@ class IconSpecAttribute extends SpecAttribute<IconSpec> with Diagnosticable {
 class IconSpecUtility<T extends Attribute>
     extends SpecUtility<T, IconSpecAttribute> {
   /// Utility for defining [IconSpecAttribute.color]
-  late final color = ColorUtility((v) => only(color: v));
+  late final color = ColorMixUtility((v) => only(color: v));
 
   /// Utility for defining [IconSpecAttribute.size]
   late final size = DoubleUtility((v) => only(size: v));
@@ -327,7 +327,7 @@ class IconSpecUtility<T extends Attribute>
   /// Returns a new [IconSpecAttribute] with the specified properties.
   @override
   T only({
-    ColorDto? color,
+    ColorMix? color,
     double? size,
     double? weight,
     double? grade,

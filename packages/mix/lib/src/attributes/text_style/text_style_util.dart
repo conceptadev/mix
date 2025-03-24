@@ -11,7 +11,7 @@ import 'text_style_dto.dart';
 
 final class TextStyleUtility<T extends Attribute>
     extends DtoUtility<T, TextStyleDto, TextStyle> {
-  late final color = ColorUtility((v) => only(color: v));
+  late final color = ColorMixUtility((v) => only(color: v));
 
   late final fontWeight = FontWeightUtility((v) => only(fontWeight: v));
 
@@ -21,9 +21,9 @@ final class TextStyleUtility<T extends Attribute>
 
   late final fontSize = FontSizeUtility((v) => only(fontSize: v));
 
-  late final backgroundColor = ColorUtility((v) => only(backgroundColor: v));
+  late final backgroundColor = ColorMixUtility((v) => only(backgroundColor: v));
 
-  late final decorationColor = ColorUtility((v) => only(decorationColor: v));
+  late final decorationColor = ColorMixUtility((v) => only(decorationColor: v));
 
   late final shadow = ShadowMixUtility((v) => only(shadows: [v]));
 
@@ -116,15 +116,15 @@ final class TextStyleUtility<T extends Attribute>
 
   @override
   T only({
-    ColorDto? color,
+    ColorMix? color,
     FontWeight? fontWeight,
     FontStyle? fontStyle,
     TextDecoration? decoration,
     double? fontSize,
     double? letterSpacing,
     double? wordSpacing,
-    ColorDto? backgroundColor,
-    ColorDto? decorationColor,
+    ColorMix? backgroundColor,
+    ColorMix? decorationColor,
     TextDecorationStyle? decorationStyle,
     TextBaseline? textBaseline,
     List<FontVariation>? fontVariations,

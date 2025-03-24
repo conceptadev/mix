@@ -18,7 +18,7 @@ void main() {
             margin: EdgeInsetsGeometryMix.only(top: 10.0, bottom: 12.0),
             constraints:
                 const BoxConstraintsMix(maxWidth: 300.0, minHeight: 200.0),
-            decoration: const BoxDecorationMix(color: ColorDto(Colors.blue)),
+            decoration: const BoxDecorationMix(color: ColorMix(Colors.blue)),
             transform: Matrix4.translationValues(10.0, 10.0, 0.0),
             clipBehavior: Clip.antiAlias,
             modifiers: const WidgetModifiersDataDto([
@@ -298,9 +298,9 @@ void main() {
           right: 10,
         ),
         constraints: const BoxConstraintsMix(maxHeight: 100),
-        decoration: const BoxDecorationMix(color: ColorDto(Colors.blue)),
+        decoration: const BoxDecorationMix(color: ColorMix(Colors.blue)),
         foregroundDecoration:
-            const BoxDecorationMix(color: ColorDto(Colors.blue)),
+            const BoxDecorationMix(color: ColorMix(Colors.blue)),
         transform: Matrix4.identity(),
         clipBehavior: Clip.antiAlias,
         width: 100,
@@ -323,9 +323,9 @@ void main() {
             right: 20,
           ),
           constraints: const BoxConstraintsMix(maxHeight: 200),
-          decoration: const BoxDecorationMix(color: ColorDto(Colors.red)),
+          decoration: const BoxDecorationMix(color: ColorMix(Colors.red)),
           foregroundDecoration:
-              const BoxDecorationMix(color: ColorDto(Colors.amber)),
+              const BoxDecorationMix(color: ColorMix(Colors.amber)),
           transform: Matrix4.identity(),
           clipBehavior: Clip.antiAliasWithSaveLayer,
           width: 200,
@@ -345,11 +345,11 @@ void main() {
       );
       expect(
         mergedBoxSpecAttribute.decoration,
-        const BoxDecorationMix(color: ColorDto(Colors.red)),
+        const BoxDecorationMix(color: ColorMix(Colors.red)),
       );
       expect(
         mergedBoxSpecAttribute.foregroundDecoration,
-        const BoxDecorationMix(color: ColorDto(Colors.amber)),
+        const BoxDecorationMix(color: ColorMix(Colors.amber)),
       );
       expect(mergedBoxSpecAttribute.height, 200);
       expect(
@@ -449,7 +449,7 @@ void main() {
       expect(boxAttribute.padding, const EdgeInsets.all(10.0).toDto());
       expect(
         (boxAttribute.decoration as BoxDecorationMix).color,
-        const ColorDto(
+        const ColorMix(
           Colors.red,
         ),
       );
