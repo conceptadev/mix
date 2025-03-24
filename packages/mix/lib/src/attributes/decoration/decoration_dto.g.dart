@@ -45,7 +45,7 @@ mixin _$BoxDecorationMix on Mixable<BoxDecoration> {
     if (other == null) return _$this;
 
     return BoxDecorationMix(
-      border: _$this.border?.merge(other.border) ?? other.border,
+      border: BoxBorderMix.tryToMerge(_$this.border, other.border),
       borderRadius:
           _$this.borderRadius?.merge(other.borderRadius) ?? other.borderRadius,
       shape: other.shape ?? _$this.shape,

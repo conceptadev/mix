@@ -439,8 +439,8 @@ final utilities = {
 
 /// Map of DTO class names to whether they have a tryToMerge method
 final tryToMerge = {
-  'BoxBorderDto',
-  'DecorationDto',
+  'BoxBorderMix',
+  'DecorationMix',
   'EdgeInsetsGeometryMix',
   'GradientMix',
   'ShapeBorderMix',

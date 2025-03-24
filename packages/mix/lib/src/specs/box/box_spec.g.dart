@@ -247,10 +247,9 @@ class BoxSpecAttribute extends SpecAttribute<BoxSpec> with Diagnosticable {
       padding: EdgeInsetsGeometryMix.tryToMerge(padding, other.padding),
       margin: EdgeInsetsGeometryMix.tryToMerge(margin, other.margin),
       constraints: constraints?.merge(other.constraints) ?? other.constraints,
-      decoration: decoration?.merge(other.decoration) ?? other.decoration,
-      foregroundDecoration:
-          foregroundDecoration?.merge(other.foregroundDecoration) ??
-              other.foregroundDecoration,
+      decoration: DecorationMix.tryToMerge(decoration, other.decoration),
+      foregroundDecoration: DecorationMix.tryToMerge(
+          foregroundDecoration, other.foregroundDecoration),
       transform: other.transform ?? transform,
       transformAlignment: other.transformAlignment ?? transformAlignment,
       clipBehavior: other.clipBehavior ?? clipBehavior,
