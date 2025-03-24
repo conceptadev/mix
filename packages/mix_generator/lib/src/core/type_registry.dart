@@ -331,7 +331,7 @@ final resolvables = {
   'BoxConstraintsMix': 'BoxConstraints',
   'DecorationMix': 'Decoration',
   'DecorationImageMix': 'DecorationImage',
-  'EdgeInsetsGeometryDto': 'EdgeInsetsGeometry',
+  'EdgeInsetsGeometryMix': 'EdgeInsetsGeometry',
   'GradientDto': 'Gradient',
   'LinearBorderEdgeMix': 'LinearBorderEdge',
   'OutlinedBorderMix': 'OutlinedBorder',
@@ -346,7 +346,7 @@ final resolvables = {
   'WidgetModifiersDataDto': 'WidgetModifiersData',
   'BorderMix': 'Border',
   'BorderRadiusMix': 'BorderRadius',
-  'EdgeInsetsDto': 'EdgeInsets',
+  'EdgeInsetsMix': 'EdgeInsets',
 };
 
 /// Map of utility class names to their corresponding value types
@@ -374,7 +374,7 @@ final utilities = {
   'DecorationMixUtility': 'Decoration',
   'DoubleUtility': 'double',
   'DurationUtility': 'Duration',
-  'EdgeInsetsGeometryUtility': 'EdgeInsetsGeometry',
+  'EdgeInsetsGeometryMixUtility': 'EdgeInsetsGeometry',
   'FlexFitUtility': 'FlexFit',
   'FontFeatureUtility': 'FontFeature',
   'FontStyleUtility': 'FontStyle',
@@ -397,7 +397,7 @@ final utilities = {
   'StackFitUtility': 'StackFit',
   'ShapeBorderMixUtility': 'ShapeBorder',
   'SpacingUtility': 'EdgeInsetsGeometry',
-  'EdgeInsetsUtility': 'EdgeInsets',
+  'EdgeInsetsMixUtility': 'EdgeInsets',
   'StringUtility': 'String',
   'TableBorderUtility': 'TableBorder',
   'TableCellVerticalAlignmentUtility': 'TableCellVerticalAlignment',
@@ -435,7 +435,7 @@ final utilities = {
 final tryToMerge = {
   'BoxBorderDto',
   'DecorationDto',
-  'EdgeInsetsGeometryDto',
+  'EdgeInsetsGeometryMix',
   'GradientDto',
   'ShapeBorderMix',
 };

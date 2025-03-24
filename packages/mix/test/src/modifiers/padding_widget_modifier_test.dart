@@ -71,8 +71,8 @@ void main() {
 
   group('PaddingModifierSpecAttribute', () {
     test('merge returns correct PaddingModifierSpecAttribute', () {
-      const padding1 = EdgeInsetsDto.all(10.0);
-      const padding2 = EdgeInsetsDto.all(20.0);
+      const padding1 = EdgeInsetsMix.all(10.0);
+      const padding2 = EdgeInsetsMix.all(20.0);
 
       const attribute1 = PaddingModifierSpecAttribute(padding: padding1);
       const attribute2 = PaddingModifierSpecAttribute(padding: padding2);
@@ -83,8 +83,8 @@ void main() {
     });
 
     test('deep merge returns correct PaddingModifierSpecAttribute', () {
-      const padding1 = EdgeInsetsDto(top: 1, bottom: 2, left: 3, right: 4);
-      const padding2 = EdgeInsetsDto(top: 4, bottom: 3);
+      const padding1 = EdgeInsetsMix(top: 1, bottom: 2, left: 3, right: 4);
+      const padding2 = EdgeInsetsMix(top: 4, bottom: 3);
 
       const attribute1 = PaddingModifierSpecAttribute(padding: padding1);
       const attribute2 = PaddingModifierSpecAttribute(padding: padding2);
@@ -94,7 +94,7 @@ void main() {
       expect(
         result.padding,
         equals(
-          const EdgeInsetsDto(top: 4, bottom: 3, left: 3, right: 4),
+          const EdgeInsetsMix(top: 4, bottom: 3, left: 3, right: 4),
         ),
       );
     });
@@ -102,7 +102,7 @@ void main() {
     test(
         'merge returns original PaddingModifierSpecAttribute when other is null',
         () {
-      const padding = EdgeInsetsDto.all(10.0);
+      const padding = EdgeInsetsMix.all(10.0);
       const attribute = PaddingModifierSpecAttribute(padding: padding);
 
       final result = attribute.merge(null);
@@ -111,7 +111,7 @@ void main() {
     });
 
     test('resolve returns correct PaddingSpec', () {
-      const padding = EdgeInsetsDto.all(10.0);
+      const padding = EdgeInsetsMix.all(10.0);
       const attribute = PaddingModifierSpecAttribute(padding: padding);
       final mixData = EmptyMixData;
 
@@ -121,7 +121,7 @@ void main() {
     });
 
     test('props returns list with padding', () {
-      const padding = EdgeInsetsDto.all(10.0);
+      const padding = EdgeInsetsMix.all(10.0);
       const attribute = PaddingModifierSpecAttribute(padding: padding);
 
       expect(attribute.props, equals([padding]));

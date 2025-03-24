@@ -94,3 +94,38 @@ typedef DecorationUtility<T extends Attribute> = DecorationMixUtility<T>;
 
 @Deprecated('Use `DecorationImageMix` instead.')
 typedef DecorationImageDto = DecorationImageMix;
+
+@Deprecated('Use `DecorationImageUtility` instead.')
+typedef DecorationImageUtility<T extends Attribute>
+    = DecorationImageMixUtility<T>;
+
+@Deprecated('Use `ShadowMixImpl` instead.')
+typedef ShadowDtoImpl = ShadowMixImpl;
+
+@Deprecated('Use `ShadowMix` instead.')
+typedef ShadowDto = ShadowMix;
+
+@Deprecated('Use `ShadowUtility` instead.')
+typedef ShadowUtility<T extends Attribute> = ShadowMixUtility<T>;
+
+@Deprecated('Use `EdgeInsetsMixUtility` instead.')
+typedef EdgeInsetsUtility<T extends Attribute> = EdgeInsetsMixUtility<T>;
+
+@Deprecated('Use `StrutStyleMix` instead.')
+typedef StrutStyleDto = StrutStyleMix;
+
+@Deprecated('Use `StrutStyleUtility` instead.')
+typedef StrutStyleUtility<T extends Attribute> = StrutStyleMixUtility<T>;
+
+@Deprecated('Use `EdgeInsetsGeometryMix` instead.')
+typedef EdgeInsetsGeometryDto = EdgeInsetsGeometryMix;
+
+@Deprecated('Use `EdgeInsetsMix` instead.')
+typedef EdgeInsetsDto = EdgeInsetsMix;
+
+@Deprecated('Use `EdgeInsetsDirectionalMix` instead.')
+typedef EdgeInsetsDirectionalDto = EdgeInsetsDirectionalMix;
+
+@Deprecated('Use `EdgeInsetsGeometryUtility` instead.')
+typedef EdgeInsetsGeometryUtility<T extends Attribute>
+    = EdgeInsetsGeometryMixUtility<T>;

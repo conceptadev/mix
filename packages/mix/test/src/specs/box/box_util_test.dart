@@ -15,7 +15,7 @@ void main() {
       );
 
       final spacing =
-          EdgeInsetsGeometryDto.only(top: 10, bottom: 10, left: 10, right: 10);
+          EdgeInsetsGeometryMix.only(top: 10, bottom: 10, left: 10, right: 10);
 
       final container = boxUtility.only(
         alignment: Alignment.center,
@@ -76,11 +76,11 @@ void main() {
     });
 
     test('margin() returns correct instance', () {
-      expect(boxUtility.margin, isA<EdgeInsetsGeometryUtility>());
+      expect(boxUtility.margin, isA<EdgeInsetsGeometryMixUtility>());
     });
 
     test('padding() returns correct instance', () {
-      expect(boxUtility.padding, isA<EdgeInsetsGeometryUtility>());
+      expect(boxUtility.padding, isA<EdgeInsetsGeometryMixUtility>());
     });
 
     test('transform() returns correct instance', () {

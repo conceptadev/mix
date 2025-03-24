@@ -322,7 +322,7 @@ class TextFieldSpecAttribute extends SpecAttribute<TextFieldSpec>
   final ColorDto? selectionColor;
   final BoxHeightStyle? selectionHeightStyle;
   final BoxWidthStyle? selectionWidthStyle;
-  final EdgeInsetsDto? scrollPadding;
+  final EdgeInsetsMix? scrollPadding;
   final Clip? clipBehavior;
   final Brightness? keyboardAppearance;
   final ColorDto? autocorrectionTextRectColor;
@@ -713,7 +713,7 @@ class TextFieldSpecUtility<T extends Attribute>
     ColorDto? selectionColor,
     BoxHeightStyle? selectionHeightStyle,
     BoxWidthStyle? selectionWidthStyle,
-    EdgeInsetsDto? scrollPadding,
+    EdgeInsetsMix? scrollPadding,
     Clip? clipBehavior,
     Brightness? keyboardAppearance,
     ColorDto? autocorrectionTextRectColor,

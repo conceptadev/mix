@@ -176,8 +176,8 @@ mixin _$BoxSpec on Spec<BoxSpec> {
 /// the [BoxSpec] constructor.
 class BoxSpecAttribute extends SpecAttribute<BoxSpec> with Diagnosticable {
   final AlignmentGeometry? alignment;
-  final EdgeInsetsGeometryDto? padding;
-  final EdgeInsetsGeometryDto? margin;
+  final EdgeInsetsGeometryMix? padding;
+  final EdgeInsetsGeometryMix? margin;
   final BoxConstraintsMix? constraints;
   final DecorationMix? decoration;
   final DecorationMix? foregroundDecoration;
@@ -244,8 +244,8 @@ class BoxSpecAttribute extends SpecAttribute<BoxSpec> with Diagnosticable {
 
     return BoxSpecAttribute(
       alignment: other.alignment ?? alignment,
-      padding: EdgeInsetsGeometryDto.tryToMerge(padding, other.padding),
-      margin: EdgeInsetsGeometryDto.tryToMerge(margin, other.margin),
+      padding: EdgeInsetsGeometryMix.tryToMerge(padding, other.padding),
+      margin: EdgeInsetsGeometryMix.tryToMerge(margin, other.margin),
       constraints: constraints?.merge(other.constraints) ?? other.constraints,
       decoration: decoration?.merge(other.decoration) ?? other.decoration,
       foregroundDecoration:
@@ -321,10 +321,10 @@ class BoxSpecUtility<T extends Attribute>
   late final alignment = AlignmentGeometryUtility((v) => only(alignment: v));
 
   /// Utility for defining [BoxSpecAttribute.padding]
-  late final padding = EdgeInsetsGeometryUtility((v) => only(padding: v));
+  late final padding = EdgeInsetsGeometryMixUtility((v) => only(padding: v));
 
   /// Utility for defining [BoxSpecAttribute.margin]
-  late final margin = EdgeInsetsGeometryUtility((v) => only(margin: v));
+  late final margin = EdgeInsetsGeometryMixUtility((v) => only(margin: v));
 
   /// Utility for defining [BoxSpecAttribute.constraints]
   late final constraints =
@@ -425,8 +425,8 @@ class BoxSpecUtility<T extends Attribute>
   @override
   T only({
     AlignmentGeometry? alignment,
-    EdgeInsetsGeometryDto? padding,
-    EdgeInsetsGeometryDto? margin,
+    EdgeInsetsGeometryMix? padding,
+    EdgeInsetsGeometryMix? margin,
     BoxConstraintsMix? constraints,
     DecorationMix? decoration,
     DecorationMix? foregroundDecoration,

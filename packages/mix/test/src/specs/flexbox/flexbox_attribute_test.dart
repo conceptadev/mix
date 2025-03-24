@@ -10,9 +10,9 @@ void main() {
       final flexBoxSpecAttribute = FlexBoxSpecAttribute(
         box: BoxSpecAttribute(
           alignment: Alignment.center,
-          padding: EdgeInsetsGeometryDto.only(
+          padding: EdgeInsetsGeometryMix.only(
               top: 20, bottom: 20, left: 20, right: 20),
-          margin: EdgeInsetsGeometryDto.only(
+          margin: EdgeInsetsGeometryMix.only(
             top: 10,
             bottom: 10,
             left: 10,
@@ -54,11 +54,11 @@ void main() {
       expect(flexBoxSpecAttribute.box!.height, 100);
       expect(
         flexBoxSpecAttribute.box!.margin,
-        EdgeInsetsGeometryDto.only(top: 10, bottom: 10, left: 10, right: 10),
+        EdgeInsetsGeometryMix.only(top: 10, bottom: 10, left: 10, right: 10),
       );
       expect(
         flexBoxSpecAttribute.box!.padding,
-        EdgeInsetsGeometryDto.only(top: 20, bottom: 20, left: 20, right: 20),
+        EdgeInsetsGeometryMix.only(top: 20, bottom: 20, left: 20, right: 20),
       );
       expect(flexBoxSpecAttribute.box!.transform, Matrix4.identity());
       expect(flexBoxSpecAttribute.box!.width, 100);
@@ -85,9 +85,9 @@ void main() {
       final flexBoxSpecAttribute = FlexBoxSpecAttribute(
         box: BoxSpecAttribute(
           alignment: Alignment.center,
-          padding: EdgeInsetsGeometryDto.only(
+          padding: EdgeInsetsGeometryMix.only(
               top: 20, bottom: 20, left: 20, right: 20),
-          margin: EdgeInsetsGeometryDto.only(
+          margin: EdgeInsetsGeometryMix.only(
             top: 10,
             bottom: 10,
             left: 10,
@@ -155,9 +155,9 @@ void main() {
       final flexBoxSpecAttribute = FlexBoxSpecAttribute(
         box: BoxSpecAttribute(
           alignment: Alignment.center,
-          padding: EdgeInsetsGeometryDto.only(
+          padding: EdgeInsetsGeometryMix.only(
               top: 20, bottom: 20, left: 20, right: 20),
-          margin: EdgeInsetsGeometryDto.only(
+          margin: EdgeInsetsGeometryMix.only(
             top: 10,
             bottom: 10,
             left: 10,
@@ -188,9 +188,9 @@ void main() {
         FlexBoxSpecAttribute(
           box: BoxSpecAttribute(
             alignment: Alignment.centerLeft,
-            padding: EdgeInsetsGeometryDto.only(
+            padding: EdgeInsetsGeometryMix.only(
                 top: 30, bottom: 30, left: 30, right: 30),
-            margin: EdgeInsetsGeometryDto.only(
+            margin: EdgeInsetsGeometryMix.only(
               top: 20,
               bottom: 20,
               left: 20,
@@ -233,11 +233,11 @@ void main() {
       expect(mergedFlexBoxSpecAttribute.box!.height, 200);
       expect(
         mergedFlexBoxSpecAttribute.box!.margin,
-        EdgeInsetsGeometryDto.only(top: 20, bottom: 20, left: 20, right: 20),
+        EdgeInsetsGeometryMix.only(top: 20, bottom: 20, left: 20, right: 20),
       );
       expect(
         mergedFlexBoxSpecAttribute.box!.padding,
-        EdgeInsetsGeometryDto.only(top: 30, bottom: 30, left: 30, right: 30),
+        EdgeInsetsGeometryMix.only(top: 30, bottom: 30, left: 30, right: 30),
       );
       expect(mergedFlexBoxSpecAttribute.box!.transform, Matrix4.identity());
       expect(mergedFlexBoxSpecAttribute.box!.width, 200);
@@ -265,9 +265,9 @@ void main() {
       final flexBoxSpecAttribute = FlexBoxSpecAttribute(
         box: BoxSpecAttribute(
           alignment: Alignment.center,
-          padding: EdgeInsetsGeometryDto.only(
+          padding: EdgeInsetsGeometryMix.only(
               top: 20, bottom: 20, left: 20, right: 20),
-          margin: EdgeInsetsGeometryDto.only(
+          margin: EdgeInsetsGeometryMix.only(
             top: 10,
             bottom: 10,
             left: 10,
@@ -300,9 +300,9 @@ void main() {
           FlexBoxSpecAttribute(
             box: BoxSpecAttribute(
               alignment: Alignment.center,
-              padding: EdgeInsetsGeometryDto.only(
+              padding: EdgeInsetsGeometryMix.only(
                   top: 20, bottom: 20, left: 20, right: 20),
-              margin: EdgeInsetsGeometryDto.only(
+              margin: EdgeInsetsGeometryMix.only(
                 top: 10,
                 bottom: 10,
                 left: 10,
@@ -339,9 +339,9 @@ void main() {
       final flexBoxSpecAttribute = FlexBoxSpecAttribute(
         box: BoxSpecAttribute(
           alignment: Alignment.center,
-          padding: EdgeInsetsGeometryDto.only(
+          padding: EdgeInsetsGeometryMix.only(
               top: 20, bottom: 20, left: 20, right: 20),
-          margin: EdgeInsetsGeometryDto.only(
+          margin: EdgeInsetsGeometryMix.only(
             top: 10,
             bottom: 10,
             left: 10,
@@ -371,13 +371,13 @@ void main() {
             FlexBoxSpecAttribute(
               box: BoxSpecAttribute(
                 alignment: Alignment.centerLeft,
-                padding: EdgeInsetsGeometryDto.only(
+                padding: EdgeInsetsGeometryMix.only(
                   top: 30,
                   bottom: 30,
                   left: 30,
                   right: 30,
                 ),
-                margin: EdgeInsetsGeometryDto.only(
+                margin: EdgeInsetsGeometryMix.only(
                   top: 20,
                   bottom: 20,
                   left: 20,

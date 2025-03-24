@@ -7,7 +7,7 @@ import '../../../helpers/testing_utils.dart';
 void main() {
   group('SpacingDto', () {
     test('resolves to EdgeInsets.only with correct values', () {
-      final spacingDto = EdgeInsetsGeometryDto.only(
+      final spacingDto = EdgeInsetsGeometryMix.only(
         top: 10,
         bottom: 20,
         left: 30,
@@ -21,13 +21,13 @@ void main() {
     });
 
     test('merges correctly with another SpacingDto', () {
-      final spacingDto1 = EdgeInsetsGeometryDto.only(
+      final spacingDto1 = EdgeInsetsGeometryMix.only(
         top: 10,
         bottom: 20,
         left: 30,
         right: 40,
       );
-      final spacingDto2 = EdgeInsetsGeometryDto.only(
+      final spacingDto2 = EdgeInsetsGeometryMix.only(
         top: 5,
         bottom: 15,
         left: 25,
@@ -36,7 +36,7 @@ void main() {
       final mergedSpacingDto = spacingDto1.merge(spacingDto2);
       expect(
         mergedSpacingDto,
-        EdgeInsetsGeometryDto.only(top: 5, bottom: 15, left: 25, right: 35),
+        EdgeInsetsGeometryMix.only(top: 5, bottom: 15, left: 25, right: 35),
       );
     });
   });
