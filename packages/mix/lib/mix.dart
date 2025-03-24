@@ -20,8 +20,8 @@ library mix;
 
 /// ATTRIBUTES
 export 'src/attributes/animated/animated_data.dart';
-export 'src/attributes/animated/animated_data_dto.dart';
 export 'src/attributes/animated/animated_util.dart';
+export 'src/attributes/animated/mix_animated_data.dart';
 export 'src/attributes/border/border_dto.dart';
 export 'src/attributes/border/border_radius_dto.dart';
 export 'src/attributes/border/border_radius_util.dart';

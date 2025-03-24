@@ -3,7 +3,7 @@ import 'package:flutter/widgets.dart';
 import '../../core/element.dart';
 import '../scalars/scalar_util.dart';
 import 'animated_data.dart';
-import 'animated_data_dto.dart';
+import 'mix_animated_data.dart';
 
 final class AnimatedUtility<T extends Attribute>
     extends DtoUtility<T, AnimatedDataDto, AnimatedData> {

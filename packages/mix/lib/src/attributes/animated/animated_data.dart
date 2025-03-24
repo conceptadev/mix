@@ -2,7 +2,7 @@ import 'package:flutter/animation.dart';
 import 'package:flutter/widgets.dart';
 
 import '../../internal/constants.dart';
-import 'animated_data_dto.dart';
+import 'mix_animated_data.dart';
 
 class AnimatedData {
   final VoidCallback? _onEnd;
