@@ -24,16 +24,16 @@ abstract class Attribute extends StyleElement {
 @Deprecated('Use StyleAttribute instead')
 typedef StyledAttribute = SpecAttribute;
 
-@Deprecated('Use StyleProperty instead')
-typedef Dto<Value> = StyleProperty<Value>;
+@Deprecated('Use Mixable instead')
+typedef Dto<Value> = Mixable<Value>;
 
-abstract class StyleProperty<Value> extends StyleElement {
-  const StyleProperty();
+abstract class Mixable<Value> extends StyleElement {
+  const Mixable();
 
   Value resolve(MixData mix);
 
   @override
-  StyleProperty<Value> merge(covariant StyleProperty<Value>? other);
+  Mixable<Value> merge(covariant Mixable<Value>? other);
 }
 
 // Define a mixin for properties that have default values
@@ -42,8 +42,8 @@ mixin HasDefaultValue<Value> {
   Value get defaultValue;
 }
 
-abstract class DtoUtility<A extends Attribute, D extends StyleProperty<Value>,
-    Value> extends MixUtility<A, D> {
+abstract class DtoUtility<A extends Attribute, D extends Mixable<Value>, Value>
+    extends MixUtility<A, D> {
   final D Function(Value) _fromValue;
   DtoUtility(super.builder, {required D Function(Value) valueToDto})
       : _fromValue = valueToDto;
@@ -58,7 +58,7 @@ abstract class DtoUtility<A extends Attribute, D extends StyleProperty<Value>,
 // /// Defines a single method, [merge], which takes another object of type [T]
 // /// and returns a new object representing the merged result.
 // ///
-// /// Typically used by classes like [StylePropertyDto] or [StyleAttribute] that need to merge
+// /// Typically used by classes like [MixableDto] or [StyleAttribute] that need to merge
 // /// instances of the same type.
 // mixin MergeableMixin<T> {
 //   /// Merges this object with [other], returning a new object of type [T].

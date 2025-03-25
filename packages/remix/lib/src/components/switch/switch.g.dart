@@ -3,8 +3,10 @@
 part of 'switch.dart';
 
 // **************************************************************************
-// MixableSpecGenerator
+// MixGenerator
 // **************************************************************************
+
+// GENERATED CODE - DO NOT MODIFY BY HAND
 
 /// A mixin that provides spec functionality for [SwitchSpec].
 mixin _$SwitchSpec on Spec<SwitchSpec> {

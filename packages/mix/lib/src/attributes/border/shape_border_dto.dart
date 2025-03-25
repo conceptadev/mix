@@ -7,7 +7,7 @@ import 'package:mix_annotations/mix_annotations.dart';
 part 'shape_border_dto.g.dart';
 
 @immutable
-sealed class ShapeBorderDto<T extends ShapeBorder> extends StyleProperty<T> {
+sealed class ShapeBorderDto<T extends ShapeBorder> extends Mixable<T> {
   const ShapeBorderDto();
 
   static ShapeBorderDto? tryToMerge(ShapeBorderDto? a, ShapeBorderDto? b) {
@@ -233,7 +233,7 @@ final class LinearBorderDto extends OutlinedBorderDto<LinearBorder>
 }
 
 @MixableProperty()
-final class LinearBorderEdgeDto extends StyleProperty<LinearBorderEdge>
+final class LinearBorderEdgeDto extends Mixable<LinearBorderEdge>
     with _$LinearBorderEdgeDto {
   final double? size;
   final double? alignment;

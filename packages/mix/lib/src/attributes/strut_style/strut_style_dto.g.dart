@@ -9,7 +9,7 @@ part of 'strut_style_dto.dart';
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
 /// A mixin that provides DTO functionality for [StrutStyleDto].
-mixin _$StrutStyleDto on StyleProperty<StrutStyle> {
+mixin _$StrutStyleDto on Mixable<StrutStyle> {
   /// Resolves to [StrutStyle] using the provided [MixData].
   ///
   /// If a property is null in the [MixData], it falls back to the

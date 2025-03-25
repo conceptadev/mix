@@ -3,8 +3,10 @@
 part of 'button.dart';
 
 // **************************************************************************
-// MixableSpecGenerator
+// MixGenerator
 // **************************************************************************
+
+// GENERATED CODE - DO NOT MODIFY BY HAND
 
 /// A mixin that provides spec functionality for [ButtonSpec].
 mixin _$ButtonSpec on Spec<ButtonSpec> {

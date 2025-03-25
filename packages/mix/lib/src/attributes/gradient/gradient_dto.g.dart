@@ -10,7 +10,7 @@ part of 'gradient_dto.dart';
 
 /// A mixin that provides DTO functionality for [LinearGradientDto].
 mixin _$LinearGradientDto
-    on StyleProperty<LinearGradient>, HasDefaultValue<LinearGradient> {
+    on Mixable<LinearGradient>, HasDefaultValue<LinearGradient> {
   /// Resolves to [LinearGradient] using the provided [MixData].
   ///
   /// If a property is null in the [MixData], it falls back to the
@@ -162,7 +162,7 @@ extension ListLinearGradientMixExt on List<LinearGradient> {
 
 /// A mixin that provides DTO functionality for [RadialGradientDto].
 mixin _$RadialGradientDto
-    on StyleProperty<RadialGradient>, HasDefaultValue<RadialGradient> {
+    on Mixable<RadialGradient>, HasDefaultValue<RadialGradient> {
   /// Resolves to [RadialGradient] using the provided [MixData].
   ///
   /// If a property is null in the [MixData], it falls back to the
@@ -336,7 +336,7 @@ extension ListRadialGradientMixExt on List<RadialGradient> {
 
 /// A mixin that provides DTO functionality for [SweepGradientDto].
 mixin _$SweepGradientDto
-    on StyleProperty<SweepGradient>, HasDefaultValue<SweepGradient> {
+    on Mixable<SweepGradient>, HasDefaultValue<SweepGradient> {
   /// Resolves to [SweepGradient] using the provided [MixData].
   ///
   /// If a property is null in the [MixData], it falls back to the

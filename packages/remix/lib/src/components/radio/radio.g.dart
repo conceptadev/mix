@@ -3,8 +3,10 @@
 part of 'radio.dart';
 
 // **************************************************************************
-// MixableSpecGenerator
+// MixGenerator
 // **************************************************************************
+
+// GENERATED CODE - DO NOT MODIFY BY HAND
 
 /// A mixin that provides spec functionality for [RadioSpec].
 mixin _$RadioSpec on Spec<RadioSpec> {

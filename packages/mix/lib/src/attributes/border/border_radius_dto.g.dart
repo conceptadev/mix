@@ -9,7 +9,7 @@ part of 'border_radius_dto.dart';
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
 /// A mixin that provides DTO functionality for [BorderRadiusDto].
-mixin _$BorderRadiusDto on StyleProperty<BorderRadius> {
+mixin _$BorderRadiusDto on Mixable<BorderRadius> {
   /// Merges the properties of this [BorderRadiusDto] with the properties of [other].
   ///
   /// If [other] is null, returns this instance unchanged. Otherwise, returns a new
@@ -68,7 +68,7 @@ extension ListBorderRadiusMixExt on List<BorderRadius> {
 }
 
 /// A mixin that provides DTO functionality for [BorderRadiusDirectionalDto].
-mixin _$BorderRadiusDirectionalDto on StyleProperty<BorderRadiusDirectional> {
+mixin _$BorderRadiusDirectionalDto on Mixable<BorderRadiusDirectional> {
   /// Merges the properties of this [BorderRadiusDirectionalDto] with the properties of [other].
   ///
   /// If [other] is null, returns this instance unchanged. Otherwise, returns a new

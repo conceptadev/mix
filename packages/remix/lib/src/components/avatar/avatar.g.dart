@@ -3,8 +3,10 @@
 part of 'avatar.dart';
 
 // **************************************************************************
-// MixableSpecGenerator
+// MixGenerator
 // **************************************************************************
+
+// GENERATED CODE - DO NOT MODIFY BY HAND
 
 /// A mixin that provides spec functionality for [AvatarSpec].
 mixin _$AvatarSpec on Spec<AvatarSpec> {

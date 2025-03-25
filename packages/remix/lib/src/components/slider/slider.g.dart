@@ -3,8 +3,10 @@
 part of 'slider.dart';
 
 // **************************************************************************
-// MixableSpecGenerator
+// MixGenerator
 // **************************************************************************
+
+// GENERATED CODE - DO NOT MODIFY BY HAND
 
 /// A mixin that provides spec functionality for [SliderSpec].
 mixin _$SliderSpec on Spec<SliderSpec> {

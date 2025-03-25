@@ -3,8 +3,10 @@
 part of 'attributes.dart';
 
 // **************************************************************************
-// MixableUtilityGenerator
+// MixGenerator
 // **************************************************************************
+
+// GENERATED CODE - DO NOT MODIFY BY HAND
 
 /// {@template box_height_style_utility}
 /// A utility class for creating [Attribute] instances from [BoxHeightStyle] values.

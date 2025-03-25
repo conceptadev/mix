@@ -3,8 +3,10 @@
 part of 'dropdown_menu.dart';
 
 // **************************************************************************
-// MixableSpecGenerator
+// MixGenerator
 // **************************************************************************
+
+// GENERATED CODE - DO NOT MODIFY BY HAND
 
 /// A mixin that provides spec functionality for [DropdownMenuSpec].
 mixin _$DropdownMenuSpec on Spec<DropdownMenuSpec> {

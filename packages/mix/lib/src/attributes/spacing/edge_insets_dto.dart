@@ -14,7 +14,7 @@ typedef SpacingDto = EdgeInsetsGeometryDto<EdgeInsetsGeometry>;
 
 @immutable
 sealed class EdgeInsetsGeometryDto<T extends EdgeInsetsGeometry>
-    extends StyleProperty<T> {
+    extends Mixable<T> {
   final double? top;
   final double? bottom;
 

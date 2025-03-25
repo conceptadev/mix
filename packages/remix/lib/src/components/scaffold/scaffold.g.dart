@@ -3,8 +3,10 @@
 part of 'scaffold.dart';
 
 // **************************************************************************
-// MixableSpecGenerator
+// MixGenerator
 // **************************************************************************
+
+// GENERATED CODE - DO NOT MODIFY BY HAND
 
 /// A mixin that provides spec functionality for [ScaffoldSpec].
 mixin _$ScaffoldSpec on Spec<ScaffoldSpec> {
