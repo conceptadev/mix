@@ -3,8 +3,10 @@
 part of 'progress.dart';
 
 // **************************************************************************
-// MixableSpecGenerator
+// MixGenerator
 // **************************************************************************
+
+// GENERATED CODE - DO NOT MODIFY BY HAND
 
 /// A mixin that provides spec functionality for [ProgressSpec].
 mixin _$ProgressSpec on Spec<ProgressSpec> {
@@ -249,7 +251,7 @@ class ProgressSpecUtility<T extends Attribute>
     BoxSpecAttribute? track,
     BoxSpecAttribute? fill,
     BoxSpecAttribute? outerContainer,
-    AnimatedDataDto? animated,
+    AnimatedDataMix? animated,
     WidgetModifiersDataMix? modifiers,
   }) {
     return builder(ProgressSpecAttribute(

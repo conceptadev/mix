@@ -3,8 +3,10 @@
 part of 'menu_item.dart';
 
 // **************************************************************************
-// MixableSpecGenerator
+// MixGenerator
 // **************************************************************************
+
+// GENERATED CODE - DO NOT MODIFY BY HAND
 
 /// A mixin that provides spec functionality for [MenuItemSpec].
 mixin _$MenuItemSpec on Spec<MenuItemSpec> {
@@ -275,7 +277,7 @@ class MenuItemSpecUtility<T extends Attribute>
     TextSpecAttribute? title,
     TextSpecAttribute? subtitle,
     WidgetModifiersDataMix? modifiers,
-    AnimatedDataDto? animated,
+    AnimatedDataMix? animated,
   }) {
     return builder(MenuItemSpecAttribute(
       container: container,

@@ -36,6 +36,7 @@ import 'core/utils/annotation_utils.dart';
 import 'core/utils/dart_type_utils.dart';
 import 'core/utils/extensions.dart';
 import 'core/utils/utility_code_generator.dart';
+import 'generators/mixable_tokens_generator.dart';
 
 /// A consolidated generator that processes all Mix annotations
 /// (MixableSpec, MixableProperty, MixableUtility, MixableToken)
@@ -535,11 +536,16 @@ class MixGenerator extends Generator {
     buffer.writeln();
   }
 
-  void _generateTokenCode(TokensMetadata metadata, StringBuffer buffer) {
+  void _generateTokenCode(
+    TokensMetadata metadata,
+    StringBuffer buffer,
+    BuildStep buildStep,
+  ) {
     // Generate token struct and methods
     // This is a placeholder - the actual implementation would depend on your token generation logic
     buffer.writeln("// Token code for ${metadata.name}");
-
+    final MixableTokensGenerator generator = MixableTokensGenerator();
+    buffer.writeln(generator.generateForMetadata(metadata, buildStep));
     // Logic to generate token classes and extensions would go here
     // This would likely involve extracting code from MixableTokensGenerator
 
@@ -837,7 +843,7 @@ class MixGenerator extends Generator {
         } else if (metadata is UtilityMetadata) {
           _generateUtilityCode(metadata, buffer);
         } else if (metadata is TokensMetadata) {
-          _generateTokenCode(metadata, buffer);
+          _generateTokenCode(metadata, buffer, buildStep);
         }
       }
 

@@ -3,8 +3,10 @@
 part of 'dropdown_menu.dart';
 
 // **************************************************************************
-// MixableSpecGenerator
+// MixGenerator
 // **************************************************************************
+
+// GENERATED CODE - DO NOT MODIFY BY HAND
 
 /// A mixin that provides spec functionality for [DropdownMenuSpec].
 mixin _$DropdownMenuSpec on Spec<DropdownMenuSpec> {
@@ -216,7 +218,7 @@ class DropdownMenuSpecUtility<T extends Attribute>
     DropdownMenuContainerSpecAttribute? menu,
     DropdownMenuItemSpecAttribute? item,
     WidgetModifiersDataMix? modifiers,
-    AnimatedDataDto? animated,
+    AnimatedDataMix? animated,
   }) {
     return builder(DropdownMenuSpecAttribute(
       menu: menu,
@@ -465,7 +467,7 @@ class DropdownMenuContainerSpecUtility<T extends Attribute>
     FlexBoxSpecAttribute? container,
     bool? autoWidth,
     WidgetModifiersDataMix? modifiers,
-    AnimatedDataDto? animated,
+    AnimatedDataMix? animated,
   }) {
     return builder(DropdownMenuContainerSpecAttribute(
       container: container,
@@ -728,7 +730,7 @@ class DropdownMenuItemSpecUtility<T extends Attribute>
     TextSpecAttribute? text,
     FlexBoxSpecAttribute? container,
     WidgetModifiersDataMix? modifiers,
-    AnimatedDataDto? animated,
+    AnimatedDataMix? animated,
   }) {
     return builder(DropdownMenuItemSpecAttribute(
       icon: icon,

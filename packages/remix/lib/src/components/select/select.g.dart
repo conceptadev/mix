@@ -3,8 +3,10 @@
 part of 'select.dart';
 
 // **************************************************************************
-// MixableSpecGenerator
+// MixGenerator
 // **************************************************************************
+
+// GENERATED CODE - DO NOT MODIFY BY HAND
 
 /// A mixin that provides spec functionality for [SelectSpec].
 mixin _$SelectSpec on Spec<SelectSpec> {
@@ -252,7 +254,7 @@ class SelectSpecUtility<T extends Attribute>
     SelectMenuItemSpecAttribute? item,
     CompositedTransformFollowerSpecAttribute? position,
     WidgetModifiersDataMix? modifiers,
-    AnimatedDataDto? animated,
+    AnimatedDataMix? animated,
   }) {
     return builder(SelectSpecAttribute(
       button: button,
@@ -500,7 +502,7 @@ class SelectMenuSpecUtility<T extends Attribute>
     FlexBoxSpecAttribute? container,
     bool? autoWidth,
     WidgetModifiersDataMix? modifiers,
-    AnimatedDataDto? animated,
+    AnimatedDataMix? animated,
   }) {
     return builder(SelectMenuSpecAttribute(
       container: container,
@@ -763,7 +765,7 @@ class SelectMenuItemSpecUtility<T extends Attribute>
     TextSpecAttribute? text,
     FlexBoxSpecAttribute? container,
     WidgetModifiersDataMix? modifiers,
-    AnimatedDataDto? animated,
+    AnimatedDataMix? animated,
   }) {
     return builder(SelectMenuItemSpecAttribute(
       icon: icon,
@@ -1027,7 +1029,7 @@ class SelectTriggerSpecUtility<T extends Attribute>
     IconSpecAttribute? icon,
     TextSpecAttribute? label,
     WidgetModifiersDataMix? modifiers,
-    AnimatedDataDto? animated,
+    AnimatedDataMix? animated,
   }) {
     return builder(SelectTriggerSpecAttribute(
       container: container,

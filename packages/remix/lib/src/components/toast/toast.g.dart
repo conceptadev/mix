@@ -3,8 +3,10 @@
 part of 'toast.dart';
 
 // **************************************************************************
-// MixableSpecGenerator
+// MixGenerator
 // **************************************************************************
+
+// GENERATED CODE - DO NOT MODIFY BY HAND
 
 /// A mixin that provides spec functionality for [ToastSpec].
 mixin _$ToastSpec on Spec<ToastSpec> {
@@ -257,7 +259,7 @@ class ToastSpecUtility<T extends Attribute>
     TextSpecAttribute? title,
     TextSpecAttribute? subtitle,
     WidgetModifiersDataMix? modifiers,
-    AnimatedDataDto? animated,
+    AnimatedDataMix? animated,
   }) {
     return builder(ToastSpecAttribute(
       container: container,

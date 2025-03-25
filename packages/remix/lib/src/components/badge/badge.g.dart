@@ -3,8 +3,10 @@
 part of 'badge.dart';
 
 // **************************************************************************
-// MixableSpecGenerator
+// MixGenerator
 // **************************************************************************
+
+// GENERATED CODE - DO NOT MODIFY BY HAND
 
 /// A mixin that provides spec functionality for [BadgeSpec].
 mixin _$BadgeSpec on Spec<BadgeSpec> {
@@ -181,7 +183,7 @@ class BadgeSpecUtility<T extends Attribute>
   T only({
     BoxSpecAttribute? container,
     TextSpecAttribute? label,
-    AnimatedDataDto? animated,
+    AnimatedDataMix? animated,
   }) {
     return builder(BadgeSpecAttribute(
       container: container,

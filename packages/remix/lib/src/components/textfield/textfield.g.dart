@@ -3,8 +3,10 @@
 part of 'textfield.dart';
 
 // **************************************************************************
-// MixableSpecGenerator
+// MixGenerator
 // **************************************************************************
+
+// GENERATED CODE - DO NOT MODIFY BY HAND
 
 /// A mixin that provides spec functionality for [TextFieldSpec].
 mixin _$TextFieldSpec on Spec<TextFieldSpec> {
@@ -592,7 +594,7 @@ class TextFieldSpecUtility<T extends Attribute>
   late final textAlign = TextAlignUtility((v) => only(textAlign: v));
 
   /// Utility for defining [TextFieldSpecAttribute.strutStyle]
-  late final strutStyle = StrutStyleUtility((v) => only(strutStyle: v));
+  late final strutStyle = StrutStyleMixUtility((v) => only(strutStyle: v));
 
   /// Utility for defining [TextFieldSpecAttribute.textHeightBehavior]
   late final textHeightBehavior =
@@ -630,21 +632,22 @@ class TextFieldSpecUtility<T extends Attribute>
 
   /// Utility for defining [TextFieldSpecAttribute.selectionHeightStyle]
   late final selectionHeightStyle =
-      GenericUtility<T, BoxHeightStyle>((v) => only(selectionHeightStyle: v));
+      BoxHeightStyleUtility((v) => only(selectionHeightStyle: v));
 
   /// Utility for defining [TextFieldSpecAttribute.selectionWidthStyle]
   late final selectionWidthStyle =
-      GenericUtility<T, BoxWidthStyle>((v) => only(selectionWidthStyle: v));
+      BoxWidthStyleUtility((v) => only(selectionWidthStyle: v));
 
   /// Utility for defining [TextFieldSpecAttribute.scrollPadding]
-  late final scrollPadding = EdgeInsetsUtility((v) => only(scrollPadding: v));
+  late final scrollPadding =
+      EdgeInsetsMixUtility((v) => only(scrollPadding: v));
 
   /// Utility for defining [TextFieldSpecAttribute.clipBehavior]
   late final clipBehavior = ClipUtility((v) => only(clipBehavior: v));
 
   /// Utility for defining [TextFieldSpecAttribute.keyboardAppearance]
   late final keyboardAppearance =
-      GenericUtility<T, Brightness>((v) => only(keyboardAppearance: v));
+      BrightnessUtility((v) => only(keyboardAppearance: v));
 
   /// Utility for defining [TextFieldSpecAttribute.autocorrectionTextRectColor]
   late final autocorrectionTextRectColor =
@@ -726,7 +729,7 @@ class TextFieldSpecUtility<T extends Attribute>
     bool? floatingLabel,
     double? floatingLabelHeight,
     TextStyleMix? floatingLabelStyle,
-    AnimatedDataDto? animated,
+    AnimatedDataMix? animated,
     WidgetModifiersDataMix? modifiers,
   }) {
     return builder(TextFieldSpecAttribute(

@@ -3,8 +3,10 @@
 part of 'accordion.dart';
 
 // **************************************************************************
-// MixableSpecGenerator
+// MixGenerator
 // **************************************************************************
+
+// GENERATED CODE - DO NOT MODIFY BY HAND
 
 /// A mixin that provides spec functionality for [AccordionSpec].
 mixin _$AccordionSpec on Spec<AccordionSpec> {
@@ -197,7 +199,7 @@ class AccordionSpecUtility<T extends Attribute>
     AccordionHeaderSpecAttribute? header,
     FlexBoxSpecAttribute? container,
     BoxSpecAttribute? contentContainer,
-    AnimatedDataDto? animated,
+    AnimatedDataMix? animated,
   }) {
     return builder(AccordionSpecAttribute(
       header: header,
@@ -435,7 +437,7 @@ class AccordionHeaderSpecUtility<T extends Attribute>
     IconSpecAttribute? leadingIcon,
     TextSpecAttribute? text,
     IconSpecAttribute? trailingIcon,
-    AnimatedDataDto? animated,
+    AnimatedDataMix? animated,
   }) {
     return builder(AccordionHeaderSpecAttribute(
       container: container,

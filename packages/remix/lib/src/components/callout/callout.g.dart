@@ -3,8 +3,10 @@
 part of 'callout.dart';
 
 // **************************************************************************
-// MixableSpecGenerator
+// MixGenerator
 // **************************************************************************
+
+// GENERATED CODE - DO NOT MODIFY BY HAND
 
 /// A mixin that provides spec functionality for [CalloutSpec].
 mixin _$CalloutSpec on Spec<CalloutSpec> {
@@ -207,7 +209,7 @@ class CalloutSpecUtility<T extends Attribute>
     IconSpecAttribute? icon,
     TextSpecAttribute? text,
     WidgetModifiersDataMix? modifiers,
-    AnimatedDataDto? animated,
+    AnimatedDataMix? animated,
   }) {
     return builder(CalloutSpecAttribute(
       container: container,

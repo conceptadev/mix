@@ -3,8 +3,10 @@
 part of 'checkbox.dart';
 
 // **************************************************************************
-// MixableSpecGenerator
+// MixGenerator
 // **************************************************************************
+
+// GENERATED CODE - DO NOT MODIFY BY HAND
 
 /// A mixin that provides spec functionality for [CheckboxSpec].
 mixin _$CheckboxSpec on Spec<CheckboxSpec> {
@@ -257,7 +259,7 @@ class CheckboxSpecUtility<T extends Attribute>
     FlexBoxSpecAttribute? container,
     TextSpecAttribute? label,
     WidgetModifiersDataMix? modifiers,
-    AnimatedDataDto? animated,
+    AnimatedDataMix? animated,
   }) {
     return builder(CheckboxSpecAttribute(
       indicatorContainer: indicatorContainer,

@@ -3,8 +3,10 @@
 part of 'segmented_control.dart';
 
 // **************************************************************************
-// MixableSpecGenerator
+// MixGenerator
 // **************************************************************************
+
+// GENERATED CODE - DO NOT MODIFY BY HAND
 
 /// A mixin that provides spec functionality for [SegmentedControlSpec].
 mixin _$SegmentedControlSpec on Spec<SegmentedControlSpec> {
@@ -267,7 +269,7 @@ class SegmentedControlSpecUtility<T extends Attribute>
     BoxSpecAttribute? divider,
     SegmentButtonSpecAttribute? item,
     WidgetModifiersDataMix? modifiers,
-    AnimatedDataDto? animated,
+    AnimatedDataMix? animated,
   }) {
     return builder(SegmentedControlSpecAttribute(
       container: container,
@@ -550,7 +552,7 @@ class SegmentButtonSpecUtility<T extends Attribute>
     IconSpecAttribute? icon,
     TextSpecAttribute? label,
     WidgetModifiersDataMix? modifiers,
-    AnimatedDataDto? animated,
+    AnimatedDataMix? animated,
   }) {
     return builder(SegmentButtonSpecAttribute(
       container: container,

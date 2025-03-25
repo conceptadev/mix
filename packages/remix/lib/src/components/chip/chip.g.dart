@@ -3,8 +3,10 @@
 part of 'chip.dart';
 
 // **************************************************************************
-// MixableSpecGenerator
+// MixGenerator
 // **************************************************************************
+
+// GENERATED CODE - DO NOT MODIFY BY HAND
 
 /// A mixin that provides spec functionality for [ChipSpec].
 mixin _$ChipSpec on Spec<ChipSpec> {
@@ -233,7 +235,7 @@ class ChipSpecUtility<T extends Attribute>
     IconSpecAttribute? icon,
     TextSpecAttribute? label,
     WidgetModifiersDataMix? modifiers,
-    AnimatedDataDto? animated,
+    AnimatedDataMix? animated,
   }) {
     return builder(ChipSpecAttribute(
       container: container,

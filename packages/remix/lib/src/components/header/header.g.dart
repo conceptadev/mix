@@ -3,8 +3,10 @@
 part of 'header.dart';
 
 // **************************************************************************
-// MixableSpecGenerator
+// MixGenerator
 // **************************************************************************
+
+// GENERATED CODE - DO NOT MODIFY BY HAND
 
 /// A mixin that provides spec functionality for [HeaderSpec].
 mixin _$HeaderSpec on Spec<HeaderSpec> {
@@ -252,7 +254,7 @@ class HeaderSpecUtility<T extends Attribute>
     FlexSpecAttribute? titleGroup,
     TextSpecAttribute? title,
     TextSpecAttribute? subtitle,
-    AnimatedDataDto? animated,
+    AnimatedDataMix? animated,
   }) {
     return builder(HeaderSpecAttribute(
       container: container,

@@ -3,8 +3,10 @@
 part of 'spinner.dart';
 
 // **************************************************************************
-// MixableSpecGenerator
+// MixGenerator
 // **************************************************************************
+
+// GENERATED CODE - DO NOT MODIFY BY HAND
 
 /// A mixin that provides spec functionality for [SpinnerSpec].
 mixin _$SpinnerSpec on Spec<SpinnerSpec> {
@@ -242,7 +244,7 @@ class SpinnerSpecUtility<T extends Attribute>
   late final duration = DurationUtility((v) => only(duration: v));
 
   /// Utility for defining [SpinnerSpecAttribute.style]
-  late final style = GenericUtility<T, SpinnerTypeStyle>((v) => only(style: v));
+  late final style = SpinnerTypeStyleUtility((v) => only(style: v));
 
   /// Utility for defining [SpinnerSpecAttribute.modifiers]
   late final wrap = SpecModifierUtility((v) => only(modifiers: v));
@@ -267,7 +269,7 @@ class SpinnerSpecUtility<T extends Attribute>
     Duration? duration,
     SpinnerTypeStyle? style,
     WidgetModifiersDataMix? modifiers,
-    AnimatedDataDto? animated,
+    AnimatedDataMix? animated,
   }) {
     return builder(SpinnerSpecAttribute(
       size: size,

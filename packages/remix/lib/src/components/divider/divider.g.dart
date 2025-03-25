@@ -3,8 +3,10 @@
 part of 'divider.dart';
 
 // **************************************************************************
-// MixableSpecGenerator
+// MixGenerator
 // **************************************************************************
+
+// GENERATED CODE - DO NOT MODIFY BY HAND
 
 /// A mixin that provides spec functionality for [DividerSpec].
 mixin _$DividerSpec on Spec<DividerSpec> {
@@ -199,7 +201,7 @@ class DividerSpecUtility<T extends Attribute>
   @override
   T only({
     BoxSpecAttribute? container,
-    AnimatedDataDto? animated,
+    AnimatedDataMix? animated,
     WidgetModifiersDataMix? modifiers,
   }) {
     return builder(DividerSpecAttribute(
