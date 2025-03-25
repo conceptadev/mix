@@ -134,7 +134,6 @@ class MixGenerator extends Generator {
     'SpecModifierUtility': 'WidgetModifiersData',
     'StackFitUtility': 'StackFit',
     'ShapeBorderUtility': 'ShapeBorder',
-    'SpacingUtility': 'EdgeInsetsGeometry',
     'EdgeInsetsUtility': 'EdgeInsets',
     'StringUtility': 'String',
     'TableBorderUtility': 'TableBorder',

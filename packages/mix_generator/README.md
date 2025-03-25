@@ -176,12 +176,12 @@ class Spacings {
 
 // Create a utility class with mapping to the constants class
 @MixableFieldUtility(type: Spacings)
-class SpacingUtility extends MixUtility<SpacingAttribute, Spacing> {
-  const SpacingUtility(super.builder);
+class EdgeInsetsGeometryUtility extends MixUtility<SpacingAttribute, Spacing> {
+  const EdgeInsetsGeometryUtility(super.builder);
 }
 
 // After generation, you can use it like:
-final spacingUtility = SpacingUtility((spacing) => SpacingAttribute(spacing));
+final spacingUtility = EdgeInsetsGeometryUtility((spacing) => SpacingAttribute(spacing));
 final smallSpacing = spacingUtility.small();
 final largeSpacing = spacingUtility.large();
 ```
