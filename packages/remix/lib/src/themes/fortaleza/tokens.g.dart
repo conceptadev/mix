@@ -3,9 +3,12 @@
 part of 'tokens.dart';
 
 // **************************************************************************
-// MixableTokensGenerator
+// MixGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
+
+// Token code for FortalezaColor
 class _$FortalezaColorStruct {
   _$FortalezaColorStruct();
 
@@ -32,7 +35,8 @@ Map<ColorToken, Color> _$FortalezaColorToMap(FortalezaColor tokens) {
   };
 }
 
-extension $FortalezaColorColorUtilityX<T extends Attribute> on ColorUtility<T> {
+extension $FortalezaColorColorMixUtilityX<T extends Attribute>
+    on ColorMixUtility<T> {
   T $black() => ref(_structFortalezaColor.black);
   T $white() => ref(_structFortalezaColor.white);
   T $accent([int step = 9]) => ref(_structFortalezaColor.accent[step]);
@@ -64,6 +68,7 @@ extension $BuildContextFortalezaColorX on BuildContext {
       BuildContextFortalezaColorMethods(this);
 }
 
+// Token code for FortalezaRadius
 class _$FortalezaRadiusStruct {
   _$FortalezaRadiusStruct();
 
@@ -115,6 +120,7 @@ extension $BuildContextFortalezaRadiusX on BuildContext {
       BuildContextFortalezaRadiusMethods(this);
 }
 
+// Token code for FortalezaSpace
 class _$FortalezaSpaceStruct {
   _$FortalezaSpaceStruct();
 
@@ -190,6 +196,7 @@ extension $BuildContextFortalezaSpaceX on BuildContext {
       BuildContextFortalezaSpaceMethods(this);
 }
 
+// Token code for FortalezaTextStyle
 class _$FortalezaTextStyleStruct {
   _$FortalezaTextStyleStruct();
 
@@ -221,8 +228,8 @@ Map<TextStyleToken, TextStyle> _$FortalezaTextStyleToMap(
   };
 }
 
-extension $FortalezaTextStyleTextStyleUtilityX<T extends Attribute>
-    on TextStyleUtility<T> {
+extension $FortalezaTextStyleTextStyleMixUtilityX<T extends Attribute>
+    on TextStyleMixUtility<T> {
   T $text1() => ref(_structFortalezaTextStyle.text1);
   T $text2() => ref(_structFortalezaTextStyle.text2);
   T $text3() => ref(_structFortalezaTextStyle.text3);

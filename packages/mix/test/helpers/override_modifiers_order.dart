@@ -15,7 +15,7 @@ testOverrideModifiersOrder(
     const AspectRatioModifierSpecAttribute(aspectRatio: 2),
     const ClipOvalModifierSpecAttribute(),
     const PaddingModifierSpecAttribute(
-        padding: EdgeInsetsDirectionalDto(top: 10)),
+        padding: EdgeInsetsDirectionalMix(top: 10)),
   );
   const orderOfModifiersOnlySpecs = [
     ClipOvalModifierSpec,

@@ -3,8 +3,10 @@
 part of 'textfield.dart';
 
 // **************************************************************************
-// MixableSpecGenerator
+// MixGenerator
 // **************************************************************************
+
+// GENERATED CODE - DO NOT MODIFY BY HAND
 
 /// A mixin that provides spec functionality for [TextFieldSpec].
 mixin _$TextFieldSpec on Spec<TextFieldSpec> {
@@ -307,34 +309,34 @@ mixin _$TextFieldSpec on Spec<TextFieldSpec> {
 /// the [TextFieldSpec] constructor.
 class TextFieldSpecAttribute extends SpecAttribute<TextFieldSpec>
     with Diagnosticable {
-  final TextStyleDto? style;
+  final TextStyleMix? style;
   final TextAlign? textAlign;
-  final StrutStyleDto? strutStyle;
-  final TextHeightBehaviorDto? textHeightBehavior;
+  final StrutStyleMix? strutStyle;
+  final TextHeightBehaviorMix? textHeightBehavior;
   final TextWidthBasis? textWidthBasis;
   final double? cursorWidth;
   final double? cursorHeight;
   final Radius? cursorRadius;
-  final ColorDto? cursorColor;
+  final ColorMix? cursorColor;
   final Offset? cursorOffset;
   final bool? paintCursorAboveText;
-  final ColorDto? backgroundCursorColor;
-  final ColorDto? selectionColor;
+  final ColorMix? backgroundCursorColor;
+  final ColorMix? selectionColor;
   final BoxHeightStyle? selectionHeightStyle;
   final BoxWidthStyle? selectionWidthStyle;
-  final EdgeInsetsDto? scrollPadding;
+  final EdgeInsetsMix? scrollPadding;
   final Clip? clipBehavior;
   final Brightness? keyboardAppearance;
-  final ColorDto? autocorrectionTextRectColor;
+  final ColorMix? autocorrectionTextRectColor;
   final bool? cursorOpacityAnimates;
   final FlexBoxSpecAttribute? outerContainer;
   final FlexBoxSpecAttribute? container;
-  final TextStyleDto? hintTextStyle;
+  final TextStyleMix? hintTextStyle;
   final TextSpecAttribute? helperText;
   final IconSpecAttribute? icon;
   final bool? floatingLabel;
   final double? floatingLabelHeight;
-  final TextStyleDto? floatingLabelStyle;
+  final TextStyleMix? floatingLabelStyle;
 
   const TextFieldSpecAttribute({
     this.style,
@@ -586,17 +588,17 @@ class TextFieldSpecAttribute extends SpecAttribute<TextFieldSpec>
 class TextFieldSpecUtility<T extends Attribute>
     extends SpecUtility<T, TextFieldSpecAttribute> {
   /// Utility for defining [TextFieldSpecAttribute.style]
-  late final style = TextStyleUtility((v) => only(style: v));
+  late final style = TextStyleMixUtility((v) => only(style: v));
 
   /// Utility for defining [TextFieldSpecAttribute.textAlign]
   late final textAlign = TextAlignUtility((v) => only(textAlign: v));
 
   /// Utility for defining [TextFieldSpecAttribute.strutStyle]
-  late final strutStyle = StrutStyleUtility((v) => only(strutStyle: v));
+  late final strutStyle = StrutStyleMixUtility((v) => only(strutStyle: v));
 
   /// Utility for defining [TextFieldSpecAttribute.textHeightBehavior]
   late final textHeightBehavior =
-      TextHeightBehaviorUtility((v) => only(textHeightBehavior: v));
+      TextHeightBehaviorMixUtility((v) => only(textHeightBehavior: v));
 
   /// Utility for defining [TextFieldSpecAttribute.textWidthBasis]
   late final textWidthBasis =
@@ -612,7 +614,7 @@ class TextFieldSpecUtility<T extends Attribute>
   late final cursorRadius = RadiusUtility((v) => only(cursorRadius: v));
 
   /// Utility for defining [TextFieldSpecAttribute.cursorColor]
-  late final cursorColor = ColorUtility((v) => only(cursorColor: v));
+  late final cursorColor = ColorMixUtility((v) => only(cursorColor: v));
 
   /// Utility for defining [TextFieldSpecAttribute.cursorOffset]
   late final cursorOffset = OffsetUtility((v) => only(cursorOffset: v));
@@ -623,32 +625,33 @@ class TextFieldSpecUtility<T extends Attribute>
 
   /// Utility for defining [TextFieldSpecAttribute.backgroundCursorColor]
   late final backgroundCursorColor =
-      ColorUtility((v) => only(backgroundCursorColor: v));
+      ColorMixUtility((v) => only(backgroundCursorColor: v));
 
   /// Utility for defining [TextFieldSpecAttribute.selectionColor]
-  late final selectionColor = ColorUtility((v) => only(selectionColor: v));
+  late final selectionColor = ColorMixUtility((v) => only(selectionColor: v));
 
   /// Utility for defining [TextFieldSpecAttribute.selectionHeightStyle]
   late final selectionHeightStyle =
-      GenericUtility<T, BoxHeightStyle>((v) => only(selectionHeightStyle: v));
+      BoxHeightStyleUtility((v) => only(selectionHeightStyle: v));
 
   /// Utility for defining [TextFieldSpecAttribute.selectionWidthStyle]
   late final selectionWidthStyle =
-      GenericUtility<T, BoxWidthStyle>((v) => only(selectionWidthStyle: v));
+      BoxWidthStyleUtility((v) => only(selectionWidthStyle: v));
 
   /// Utility for defining [TextFieldSpecAttribute.scrollPadding]
-  late final scrollPadding = EdgeInsetsUtility((v) => only(scrollPadding: v));
+  late final scrollPadding =
+      EdgeInsetsMixUtility((v) => only(scrollPadding: v));
 
   /// Utility for defining [TextFieldSpecAttribute.clipBehavior]
   late final clipBehavior = ClipUtility((v) => only(clipBehavior: v));
 
   /// Utility for defining [TextFieldSpecAttribute.keyboardAppearance]
   late final keyboardAppearance =
-      GenericUtility<T, Brightness>((v) => only(keyboardAppearance: v));
+      BrightnessUtility((v) => only(keyboardAppearance: v));
 
   /// Utility for defining [TextFieldSpecAttribute.autocorrectionTextRectColor]
   late final autocorrectionTextRectColor =
-      ColorUtility((v) => only(autocorrectionTextRectColor: v));
+      ColorMixUtility((v) => only(autocorrectionTextRectColor: v));
 
   /// Utility for defining [TextFieldSpecAttribute.cursorOpacityAnimates]
   late final cursorOpacityAnimates =
@@ -662,7 +665,7 @@ class TextFieldSpecUtility<T extends Attribute>
   late final container = FlexBoxSpecUtility((v) => only(container: v));
 
   /// Utility for defining [TextFieldSpecAttribute.hintTextStyle]
-  late final hintTextStyle = TextStyleUtility((v) => only(hintTextStyle: v));
+  late final hintTextStyle = TextStyleMixUtility((v) => only(hintTextStyle: v));
 
   /// Utility for defining [TextFieldSpecAttribute.helperText]
   late final helperText = TextSpecUtility((v) => only(helperText: v));
@@ -679,10 +682,10 @@ class TextFieldSpecUtility<T extends Attribute>
 
   /// Utility for defining [TextFieldSpecAttribute.floatingLabelStyle]
   late final floatingLabelStyle =
-      TextStyleUtility((v) => only(floatingLabelStyle: v));
+      TextStyleMixUtility((v) => only(floatingLabelStyle: v));
 
   /// Utility for defining [TextFieldSpecAttribute.animated]
-  late final animated = AnimatedUtility((v) => only(animated: v));
+  late final animated = AnimatedMixUtility((v) => only(animated: v));
 
   /// Utility for defining [TextFieldSpecAttribute.modifiers]
   late final wrap = SpecModifierUtility((v) => only(modifiers: v));
@@ -698,36 +701,36 @@ class TextFieldSpecUtility<T extends Attribute>
   /// Returns a new [TextFieldSpecAttribute] with the specified properties.
   @override
   T only({
-    TextStyleDto? style,
+    TextStyleMix? style,
     TextAlign? textAlign,
-    StrutStyleDto? strutStyle,
-    TextHeightBehaviorDto? textHeightBehavior,
+    StrutStyleMix? strutStyle,
+    TextHeightBehaviorMix? textHeightBehavior,
     TextWidthBasis? textWidthBasis,
     double? cursorWidth,
     double? cursorHeight,
     Radius? cursorRadius,
-    ColorDto? cursorColor,
+    ColorMix? cursorColor,
     Offset? cursorOffset,
     bool? paintCursorAboveText,
-    ColorDto? backgroundCursorColor,
-    ColorDto? selectionColor,
+    ColorMix? backgroundCursorColor,
+    ColorMix? selectionColor,
     BoxHeightStyle? selectionHeightStyle,
     BoxWidthStyle? selectionWidthStyle,
-    EdgeInsetsDto? scrollPadding,
+    EdgeInsetsMix? scrollPadding,
     Clip? clipBehavior,
     Brightness? keyboardAppearance,
-    ColorDto? autocorrectionTextRectColor,
+    ColorMix? autocorrectionTextRectColor,
     bool? cursorOpacityAnimates,
     FlexBoxSpecAttribute? outerContainer,
     FlexBoxSpecAttribute? container,
-    TextStyleDto? hintTextStyle,
+    TextStyleMix? hintTextStyle,
     TextSpecAttribute? helperText,
     IconSpecAttribute? icon,
     bool? floatingLabel,
     double? floatingLabelHeight,
-    TextStyleDto? floatingLabelStyle,
-    AnimatedDataDto? animated,
-    WidgetModifiersDataDto? modifiers,
+    TextStyleMix? floatingLabelStyle,
+    AnimatedDataMix? animated,
+    WidgetModifiersDataMix? modifiers,
   }) {
     return builder(TextFieldSpecAttribute(
       style: style,

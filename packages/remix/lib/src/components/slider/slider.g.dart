@@ -3,8 +3,10 @@
 part of 'slider.dart';
 
 // **************************************************************************
-// MixableSpecGenerator
+// MixGenerator
 // **************************************************************************
+
+// GENERATED CODE - DO NOT MODIFY BY HAND
 
 /// A mixin that provides spec functionality for [SliderSpec].
 mixin _$SliderSpec on Spec<SliderSpec> {
@@ -230,7 +232,7 @@ class SliderSpecUtility<T extends Attribute>
   late final wrap = SpecModifierUtility((v) => only(modifiers: v));
 
   /// Utility for defining [SliderSpecAttribute.animated]
-  late final animated = AnimatedUtility((v) => only(animated: v));
+  late final animated = AnimatedMixUtility((v) => only(animated: v));
 
   SliderSpecUtility(super.builder, {super.mutable});
 
@@ -247,8 +249,8 @@ class SliderSpecUtility<T extends Attribute>
     BoxSpecAttribute? track,
     BoxSpecAttribute? activeTrack,
     BoxSpecAttribute? division,
-    WidgetModifiersDataDto? modifiers,
-    AnimatedDataDto? animated,
+    WidgetModifiersDataMix? modifiers,
+    AnimatedDataMix? animated,
   }) {
     return builder(SliderSpecAttribute(
       thumb: thumb,

@@ -3,8 +3,10 @@
 part of 'card.dart';
 
 // **************************************************************************
-// MixableSpecGenerator
+// MixGenerator
 // **************************************************************************
+
+// GENERATED CODE - DO NOT MODIFY BY HAND
 
 /// A mixin that provides spec functionality for [CardSpec].
 mixin _$CardSpec on Spec<CardSpec> {
@@ -184,7 +186,7 @@ class CardSpecUtility<T extends Attribute>
   late final wrap = SpecModifierUtility((v) => only(modifiers: v));
 
   /// Utility for defining [CardSpecAttribute.animated]
-  late final animated = AnimatedUtility((v) => only(animated: v));
+  late final animated = AnimatedMixUtility((v) => only(animated: v));
 
   CardSpecUtility(super.builder, {super.mutable});
 
@@ -198,8 +200,8 @@ class CardSpecUtility<T extends Attribute>
   @override
   T only({
     BoxSpecAttribute? container,
-    WidgetModifiersDataDto? modifiers,
-    AnimatedDataDto? animated,
+    WidgetModifiersDataMix? modifiers,
+    AnimatedDataMix? animated,
   }) {
     return builder(CardSpecAttribute(
       container: container,

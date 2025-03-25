@@ -24,7 +24,7 @@ final class _TestSpec extends Spec<_TestSpec> {
 }
 
 final class _TestAttribute extends SpecAttribute<_TestSpec> {
-  final DecorationImageDto? dto;
+  final DecorationImageMix? dto;
 
   @override
   _TestAttribute merge(covariant _TestAttribute? other) {
@@ -44,11 +44,11 @@ final class _TestAttribute extends SpecAttribute<_TestSpec> {
 
 void main() {
   group('DecorationImageUtility', () {
-    late DecorationImageUtility<_TestAttribute> utility;
+    late DecorationImageMixUtility<_TestAttribute> utility;
 
     setUp(() {
-      utility =
-          DecorationImageUtility<_TestAttribute>((dto) => _TestAttribute(dto));
+      utility = DecorationImageMixUtility<_TestAttribute>(
+          (dto) => _TestAttribute(dto));
     });
 
     test('only method should create TestAttribute with provided values', () {

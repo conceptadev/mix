@@ -7,7 +7,7 @@ void main() {
   group('BoxUtility', () {
     final boxUtility = BoxSpecUtility(MixUtility.selfBuilder);
     test('call() returns correct instance', () {
-      const constraints = BoxConstraintsDto(
+      const constraints = BoxConstraintsMix(
         minWidth: 50,
         maxWidth: 200,
         minHeight: 40,
@@ -15,7 +15,7 @@ void main() {
       );
 
       final spacing =
-          EdgeInsetsGeometryDto.only(top: 10, bottom: 10, left: 10, right: 10);
+          EdgeInsetsGeometryMix.only(top: 10, bottom: 10, left: 10, right: 10);
 
       final container = boxUtility.only(
         alignment: Alignment.center,
@@ -56,13 +56,13 @@ void main() {
       final container = boxUtility.color(Colors.blue);
 
       expect(
-        (container.decoration as BoxDecorationDto).color,
-        const ColorDto(Colors.blue),
+        (container.decoration as BoxDecorationMix).color,
+        const ColorMix(Colors.blue),
       );
     });
 
     test('constraints() returns correct instance', () {
-      expect($box.constraints, isA<BoxConstraintsUtility>());
+      expect($box.constraints, isA<BoxConstraintsMixUtility>());
     });
 
     test('shape() returns correct instance', () {
@@ -76,11 +76,11 @@ void main() {
     });
 
     test('margin() returns correct instance', () {
-      expect(boxUtility.margin, isA<EdgeInsetsGeometryUtility>());
+      expect(boxUtility.margin, isA<EdgeInsetsGeometryMixUtility>());
     });
 
     test('padding() returns correct instance', () {
-      expect(boxUtility.padding, isA<EdgeInsetsGeometryUtility>());
+      expect(boxUtility.padding, isA<EdgeInsetsGeometryMixUtility>());
     });
 
     test('transform() returns correct instance', () {
@@ -101,9 +101,9 @@ void main() {
         color: Colors.amber,
       );
 
-      expect(container.decoration!.color, const ColorDto(Colors.amber));
+      expect(container.decoration!.color, const ColorMix(Colors.amber));
 
-      final decorationDTO = container.decoration as BoxDecorationDto;
+      final decorationDTO = container.decoration as BoxDecorationMix;
       expect(
         decorationDTO.borderRadius,
         BorderRadius.circular(10).toDto(),
@@ -118,12 +118,12 @@ void main() {
 
       expect(
         container.foregroundDecoration!.color,
-        const ColorDto(Colors.amber),
+        const ColorMix(Colors.amber),
         reason: 'The color is not correct',
       );
 
       final foregroundDecorationDTO =
-          container.foregroundDecoration as BoxDecorationDto;
+          container.foregroundDecoration as BoxDecorationMix;
       expect(
         foregroundDecorationDTO.borderRadius,
         BorderRadius.circular(10).toDto(),

@@ -9,9 +9,9 @@ import '../scalars/scalar_util.dart';
 import '../shadow/shadow_dto.dart';
 import 'text_style_dto.dart';
 
-final class TextStyleUtility<T extends Attribute>
-    extends DtoUtility<T, TextStyleDto, TextStyle> {
-  late final color = ColorUtility((v) => only(color: v));
+final class TextStyleMixUtility<T extends Attribute>
+    extends DtoUtility<T, TextStyleMix, TextStyle> {
+  late final color = ColorMixUtility((v) => only(color: v));
 
   late final fontWeight = FontWeightUtility((v) => only(fontWeight: v));
 
@@ -21,11 +21,11 @@ final class TextStyleUtility<T extends Attribute>
 
   late final fontSize = FontSizeUtility((v) => only(fontSize: v));
 
-  late final backgroundColor = ColorUtility((v) => only(backgroundColor: v));
+  late final backgroundColor = ColorMixUtility((v) => only(backgroundColor: v));
 
-  late final decorationColor = ColorUtility((v) => only(decorationColor: v));
+  late final decorationColor = ColorMixUtility((v) => only(decorationColor: v));
 
-  late final shadow = ShadowUtility((v) => only(shadows: [v]));
+  late final shadow = ShadowMixUtility((v) => only(shadows: [v]));
 
   late final decorationStyle =
       TextDecorationStyleUtility((v) => only(decorationStyle: v));
@@ -34,7 +34,7 @@ final class TextStyleUtility<T extends Attribute>
 
   late final fontFamily = FontFamilyUtility((v) => call(fontFamily: v));
 
-  TextStyleUtility(super.builder) : super(valueToDto: (v) => v.toDto());
+  TextStyleMixUtility(super.builder) : super(valueToDto: (v) => v.toDto());
 
   T height(double v) => only(height: v);
 
@@ -64,7 +64,7 @@ final class TextStyleUtility<T extends Attribute>
 
   T fontFamilyFallback(List<String> v) => call(fontFamilyFallback: v);
 
-  T ref(TextStyleToken token) => builder(TextStyleDto.ref(token));
+  T ref(TextStyleToken token) => builder(TextStyleMix.ref(token));
 
   T call({
     String? fontFamily,
@@ -116,19 +116,19 @@ final class TextStyleUtility<T extends Attribute>
 
   @override
   T only({
-    ColorDto? color,
+    ColorMix? color,
     FontWeight? fontWeight,
     FontStyle? fontStyle,
     TextDecoration? decoration,
     double? fontSize,
     double? letterSpacing,
     double? wordSpacing,
-    ColorDto? backgroundColor,
-    ColorDto? decorationColor,
+    ColorMix? backgroundColor,
+    ColorMix? decorationColor,
     TextDecorationStyle? decorationStyle,
     TextBaseline? textBaseline,
     List<FontVariation>? fontVariations,
-    List<ShadowDto>? shadows,
+    List<ShadowMix>? shadows,
     List<FontFeature>? fontFeatures,
     Paint? foreground,
     Paint? background,
@@ -138,7 +138,7 @@ final class TextStyleUtility<T extends Attribute>
     double? height,
     String? fontFamily,
   }) {
-    final textStyle = TextStyleDto(
+    final textStyle = TextStyleMix(
       color: color,
       backgroundColor: backgroundColor,
       fontSize: fontSize,

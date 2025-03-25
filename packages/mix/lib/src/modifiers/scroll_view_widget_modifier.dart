@@ -56,7 +56,7 @@ final class ScrollViewModifierSpecUtility<T extends Attribute>
 
   /// Set the padding of the scroll view.
   late final padding =
-      EdgeInsetsGeometryUtility((padding) => call(padding: padding));
+      EdgeInsetsGeometryMixUtility((padding) => call(padding: padding));
 
   /// Set the clip behavior of the scroll view.
   late final clipBehavior = ClipUtility((clip) => call(clipBehavior: clip));
@@ -88,7 +88,7 @@ final class ScrollViewModifierSpecUtility<T extends Attribute>
   T call({
     Axis? scrollDirection,
     bool? reverse,
-    EdgeInsetsGeometryDto? padding,
+    EdgeInsetsGeometryMix? padding,
     ScrollPhysics? physics,
     Clip? clipBehavior,
   }) =>

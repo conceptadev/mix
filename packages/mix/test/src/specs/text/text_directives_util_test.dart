@@ -5,7 +5,7 @@ import '../../../helpers/testing_utils.dart';
 
 void main() {
   group('TextDataDirectiveUtility', () {
-    final textDirective = TextDirectiveUtility(
+    final textDirective = TextDirectiveMixUtility(
         (directive) => TextSpecAttribute(directive: directive));
     test('merge returns merged object correctly', () {
       final attr1 = textDirective.uppercase();

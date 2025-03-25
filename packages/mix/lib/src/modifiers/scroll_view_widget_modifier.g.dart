@@ -101,7 +101,7 @@ class ScrollViewModifierSpecAttribute
     with Diagnosticable {
   final Axis? scrollDirection;
   final bool? reverse;
-  final EdgeInsetsGeometryDto? padding;
+  final EdgeInsetsGeometryMix? padding;
   final ScrollPhysics? physics;
   final Clip? clipBehavior;
 
@@ -148,7 +148,7 @@ class ScrollViewModifierSpecAttribute
     return ScrollViewModifierSpecAttribute(
       scrollDirection: other.scrollDirection ?? scrollDirection,
       reverse: other.reverse ?? reverse,
-      padding: EdgeInsetsGeometryDto.tryToMerge(padding, other.padding),
+      padding: EdgeInsetsGeometryMix.tryToMerge(padding, other.padding),
       physics: other.physics ?? physics,
       clipBehavior: other.clipBehavior ?? clipBehavior,
     );

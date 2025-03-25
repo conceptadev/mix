@@ -47,13 +47,13 @@ void main() {
     test('box color returns correct instance', () {
       final flexBox = flexBoxUtility.chain..box.color.blue();
       expect(
-        (flexBox.attributeValue!.box!.decoration as BoxDecorationDto).color,
-        const ColorDto(Colors.blue),
+        (flexBox.attributeValue!.box!.decoration as BoxDecorationMix).color,
+        const ColorMix(Colors.blue),
       );
     });
 
     test('box constraints returns correct instance', () {
-      expect(flexBoxUtility.box.constraints, isA<BoxConstraintsUtility>());
+      expect(flexBoxUtility.box.constraints, isA<BoxConstraintsMixUtility>());
     });
 
     test('box shape returns correct instance', () {
@@ -66,11 +66,11 @@ void main() {
     });
 
     test('box margin returns correct instance', () {
-      expect(flexBoxUtility.box.margin, isA<EdgeInsetsGeometryUtility>());
+      expect(flexBoxUtility.box.margin, isA<EdgeInsetsGeometryMixUtility>());
     });
 
     test('box padding returns correct instance', () {
-      expect(flexBoxUtility.box.padding, isA<EdgeInsetsGeometryUtility>());
+      expect(flexBoxUtility.box.padding, isA<EdgeInsetsGeometryMixUtility>());
     });
 
     test('box transform returns correct instance', () {
@@ -91,8 +91,8 @@ void main() {
         );
 
       final decoration =
-          flexBox.attributeValue!.box!.decoration as BoxDecorationDto;
-      expect(decoration.color, const ColorDto(Colors.amber));
+          flexBox.attributeValue!.box!.decoration as BoxDecorationMix;
+      expect(decoration.color, const ColorMix(Colors.amber));
       expect(
         decoration.borderRadius,
         BorderRadius.circular(10).toDto(),
@@ -107,10 +107,10 @@ void main() {
         );
 
       final foregroundDecoration =
-          flexBox.attributeValue!.box!.foregroundDecoration as BoxDecorationDto;
+          flexBox.attributeValue!.box!.foregroundDecoration as BoxDecorationMix;
       expect(
         foregroundDecoration.color,
-        const ColorDto(Colors.amber),
+        const ColorMix(Colors.amber),
         reason: 'The color is not correct',
       );
       expect(

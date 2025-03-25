@@ -25,12 +25,12 @@ class TokensMetadata extends BaseMetadata {
   static const _predefinedTokens = {
     'Color': (
       token: 'ColorToken',
-      utilities: ['ColorUtility'],
+      utilities: ['ColorMixUtility'],
       defaultNamespace: 'color',
     ),
     'TextStyle': (
       token: 'TextStyleToken',
-      utilities: ['TextStyleUtility'],
+      utilities: ['TextStyleMixUtility'],
       defaultNamespace: 'textStyle',
     ),
     'double': (

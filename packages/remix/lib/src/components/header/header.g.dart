@@ -3,8 +3,10 @@
 part of 'header.dart';
 
 // **************************************************************************
-// MixableSpecGenerator
+// MixGenerator
 // **************************************************************************
+
+// GENERATED CODE - DO NOT MODIFY BY HAND
 
 /// A mixin that provides spec functionality for [HeaderSpec].
 mixin _$HeaderSpec on Spec<HeaderSpec> {
@@ -234,7 +236,7 @@ class HeaderSpecUtility<T extends Attribute>
   late final subtitle = TextSpecUtility((v) => only(subtitle: v));
 
   /// Utility for defining [HeaderSpecAttribute.animated]
-  late final animated = AnimatedUtility((v) => only(animated: v));
+  late final animated = AnimatedMixUtility((v) => only(animated: v));
 
   HeaderSpecUtility(super.builder, {super.mutable});
 
@@ -248,11 +250,11 @@ class HeaderSpecUtility<T extends Attribute>
   @override
   T only({
     FlexBoxSpecAttribute? container,
-    WidgetModifiersDataDto? modifiers,
+    WidgetModifiersDataMix? modifiers,
     FlexSpecAttribute? titleGroup,
     TextSpecAttribute? title,
     TextSpecAttribute? subtitle,
-    AnimatedDataDto? animated,
+    AnimatedDataMix? animated,
   }) {
     return builder(HeaderSpecAttribute(
       container: container,

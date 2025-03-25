@@ -3,8 +3,10 @@
 part of 'dialog.dart';
 
 // **************************************************************************
-// MixableSpecGenerator
+// MixGenerator
 // **************************************************************************
+
+// GENERATED CODE - DO NOT MODIFY BY HAND
 
 /// A mixin that provides spec functionality for [DialogSpec].
 mixin _$DialogSpec on Spec<DialogSpec> {
@@ -237,7 +239,7 @@ class DialogSpecUtility<T extends Attribute>
   late final wrap = SpecModifierUtility((v) => only(modifiers: v));
 
   /// Utility for defining [DialogSpecAttribute.animated]
-  late final animated = AnimatedUtility((v) => only(animated: v));
+  late final animated = AnimatedMixUtility((v) => only(animated: v));
 
   DialogSpecUtility(super.builder, {super.mutable});
 
@@ -254,8 +256,8 @@ class DialogSpecUtility<T extends Attribute>
     TextSpecAttribute? title,
     TextSpecAttribute? description,
     FlexSpecAttribute? actionsContainer,
-    WidgetModifiersDataDto? modifiers,
-    AnimatedDataDto? animated,
+    WidgetModifiersDataMix? modifiers,
+    AnimatedDataMix? animated,
   }) {
     return builder(DialogSpecAttribute(
       container: container,

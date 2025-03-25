@@ -310,7 +310,7 @@ final class UtilityTestAttribute<T>
   T resolve(MixData mix) => value;
 }
 
-final class UtilityTestDtoAttribute<T extends StyleProperty<V>, V>
+final class UtilityTestDtoAttribute<T extends Mixable<V>, V>
     extends SpecAttribute<V> {
   final T value;
   const UtilityTestDtoAttribute(this.value);

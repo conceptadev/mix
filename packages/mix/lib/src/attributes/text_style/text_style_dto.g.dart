@@ -9,7 +9,7 @@ part of 'text_style_dto.dart';
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
 /// A mixin that provides DTO functionality for [TextStyleData].
-mixin _$TextStyleData on StyleProperty<TextStyle> {
+mixin _$TextStyleData on Mixable<TextStyle> {
   /// Resolves to [TextStyle] using the provided [MixData].
   ///
   /// If a property is null in the [MixData], it falls back to the
@@ -121,34 +121,34 @@ mixin _$TextStyleData on StyleProperty<TextStyle> {
   TextStyleData get _$this => this as TextStyleData;
 }
 
-/// A mixin that provides DTO functionality for [TextStyleDto].
-mixin _$TextStyleDto on StyleProperty<TextStyle> {
-  /// Merges the properties of this [TextStyleDto] with the properties of [other].
+/// A mixin that provides DTO functionality for [TextStyleMix].
+mixin _$TextStyleMix on Mixable<TextStyle> {
+  /// Merges the properties of this [TextStyleMix] with the properties of [other].
   ///
   /// If [other] is null, returns this instance unchanged. Otherwise, returns a new
-  /// [TextStyleDto] with the properties of [other] taking precedence over
+  /// [TextStyleMix] with the properties of [other] taking precedence over
   /// the corresponding properties of this instance.
   ///
   /// Properties from [other] that are null will fall back
   /// to the values from this instance.
   @override
-  TextStyleDto merge(TextStyleDto? other) {
+  TextStyleMix merge(TextStyleMix? other) {
     if (other == null) return _$this;
 
-    return TextStyleDto._(
+    return TextStyleMix._(
       value: [..._$this.value, ...other.value],
     );
   }
 
-  /// The list of properties that constitute the state of this [TextStyleDto].
+  /// The list of properties that constitute the state of this [TextStyleMix].
   ///
   /// This property is used by the [==] operator and the [hashCode] getter to
-  /// compare two [TextStyleDto] instances for equality.
+  /// compare two [TextStyleMix] instances for equality.
   @override
   List<Object?> get props => [
         _$this.value,
       ];
 
-  /// Returns this instance as a [TextStyleDto].
-  TextStyleDto get _$this => this as TextStyleDto;
+  /// Returns this instance as a [TextStyleMix].
+  TextStyleMix get _$this => this as TextStyleMix;
 }

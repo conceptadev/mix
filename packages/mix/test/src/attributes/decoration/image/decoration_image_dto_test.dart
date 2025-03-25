@@ -7,7 +7,7 @@ import '../../../../helpers/testing_utils.dart';
 void main() {
   group('DecorationImageDto', () {
     const imageProvider = AssetImage('assets/images/test.png');
-    const dto = DecorationImageDto(
+    const dto = DecorationImageMix(
       image: imageProvider,
       fit: BoxFit.cover,
       alignment: Alignment.topLeft,
@@ -42,7 +42,7 @@ void main() {
     });
 
     test('merge', () {
-      const otherDto = DecorationImageDto(
+      const otherDto = DecorationImageMix(
         image: imageProvider,
         fit: BoxFit.fill,
         alignment: Alignment.bottomRight,
@@ -69,7 +69,7 @@ void main() {
     });
 
     test('resolve with default values', () {
-      const dto = DecorationImageDto(image: imageProvider);
+      const dto = DecorationImageMix(image: imageProvider);
       final result = dto.resolve(EmptyMixData);
 
       expect(result.image, equals(imageProvider));
@@ -81,7 +81,7 @@ void main() {
     });
 
     test('resolve with custom values', () {
-      const dto = DecorationImageDto(
+      const dto = DecorationImageMix(
         image: imageProvider,
         fit: BoxFit.scaleDown,
         alignment: Alignment.bottomCenter,
@@ -104,7 +104,7 @@ void main() {
     });
 
     test('equality', () {
-      const dto1 = DecorationImageDto(
+      const dto1 = DecorationImageMix(
         image: imageProvider,
         fit: BoxFit.scaleDown,
         alignment: Alignment.bottomCenter,
@@ -115,7 +115,7 @@ void main() {
         isAntiAlias: true,
       );
 
-      const dto2 = DecorationImageDto(
+      const dto2 = DecorationImageMix(
         image: imageProvider,
         fit: BoxFit.scaleDown,
         alignment: Alignment.bottomCenter,
@@ -128,7 +128,7 @@ void main() {
 
       expect(dto1, equals(dto2));
 
-      const dto3 = DecorationImageDto(
+      const dto3 = DecorationImageMix(
         image: imageProvider,
         fit: BoxFit.scaleDown,
         alignment: Alignment.bottomCenter,

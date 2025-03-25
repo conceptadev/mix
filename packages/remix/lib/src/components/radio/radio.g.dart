@@ -3,8 +3,10 @@
 part of 'radio.dart';
 
 // **************************************************************************
-// MixableSpecGenerator
+// MixGenerator
 // **************************************************************************
+
+// GENERATED CODE - DO NOT MODIFY BY HAND
 
 /// A mixin that provides spec functionality for [RadioSpec].
 mixin _$RadioSpec on Spec<RadioSpec> {
@@ -237,7 +239,7 @@ class RadioSpecUtility<T extends Attribute>
   late final wrap = SpecModifierUtility((v) => only(modifiers: v));
 
   /// Utility for defining [RadioSpecAttribute.animated]
-  late final animated = AnimatedUtility((v) => only(animated: v));
+  late final animated = AnimatedMixUtility((v) => only(animated: v));
 
   RadioSpecUtility(super.builder, {super.mutable});
 
@@ -254,8 +256,8 @@ class RadioSpecUtility<T extends Attribute>
     BoxSpecAttribute? indicator,
     FlexBoxSpecAttribute? container,
     TextSpecAttribute? text,
-    WidgetModifiersDataDto? modifiers,
-    AnimatedDataDto? animated,
+    WidgetModifiersDataMix? modifiers,
+    AnimatedDataMix? animated,
   }) {
     return builder(RadioSpecAttribute(
       indicatorContainer: indicatorContainer,

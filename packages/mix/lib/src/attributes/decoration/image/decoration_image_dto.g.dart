@@ -8,16 +8,16 @@ part of 'decoration_image_dto.dart';
 
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-/// A mixin that provides DTO functionality for [DecorationImageDto].
-mixin _$DecorationImageDto
-    on StyleProperty<DecorationImage>, HasDefaultValue<DecorationImage> {
+/// A mixin that provides DTO functionality for [DecorationImageMix].
+mixin _$DecorationImageMix
+    on Mixable<DecorationImage>, HasDefaultValue<DecorationImage> {
   /// Resolves to [DecorationImage] using the provided [MixData].
   ///
   /// If a property is null in the [MixData], it falls back to the
   /// default value defined in the `defaultValue` for that property.
   ///
   /// ```dart
-  /// final decorationImage = DecorationImageDto(...).resolve(mix);
+  /// final decorationImage = DecorationImageMix(...).resolve(mix);
   /// ```
   @override
   DecorationImage resolve(MixData mix) {
@@ -33,19 +33,19 @@ mixin _$DecorationImageDto
     );
   }
 
-  /// Merges the properties of this [DecorationImageDto] with the properties of [other].
+  /// Merges the properties of this [DecorationImageMix] with the properties of [other].
   ///
   /// If [other] is null, returns this instance unchanged. Otherwise, returns a new
-  /// [DecorationImageDto] with the properties of [other] taking precedence over
+  /// [DecorationImageMix] with the properties of [other] taking precedence over
   /// the corresponding properties of this instance.
   ///
   /// Properties from [other] that are null will fall back
   /// to the values from this instance.
   @override
-  DecorationImageDto merge(DecorationImageDto? other) {
+  DecorationImageMix merge(DecorationImageMix? other) {
     if (other == null) return _$this;
 
-    return DecorationImageDto(
+    return DecorationImageMix(
       image: other.image ?? _$this.image,
       fit: other.fit ?? _$this.fit,
       alignment: other.alignment ?? _$this.alignment,
@@ -57,10 +57,10 @@ mixin _$DecorationImageDto
     );
   }
 
-  /// The list of properties that constitute the state of this [DecorationImageDto].
+  /// The list of properties that constitute the state of this [DecorationImageMix].
   ///
   /// This property is used by the [==] operator and the [hashCode] getter to
-  /// compare two [DecorationImageDto] instances for equality.
+  /// compare two [DecorationImageMix] instances for equality.
   @override
   List<Object?> get props => [
         _$this.image,
@@ -73,44 +73,45 @@ mixin _$DecorationImageDto
         _$this.isAntiAlias,
       ];
 
-  /// Returns this instance as a [DecorationImageDto].
-  DecorationImageDto get _$this => this as DecorationImageDto;
+  /// Returns this instance as a [DecorationImageMix].
+  DecorationImageMix get _$this => this as DecorationImageMix;
 }
 
 /// Utility class for configuring [DecorationImage] properties.
 ///
 /// This class provides methods to set individual properties of a [DecorationImage].
 /// Use the methods of this class to configure specific properties of a [DecorationImage].
-class DecorationImageUtility<T extends Attribute>
-    extends DtoUtility<T, DecorationImageDto, DecorationImage> {
-  /// Utility for defining [DecorationImageDto.image]
+class DecorationImageMixUtility<T extends Attribute>
+    extends DtoUtility<T, DecorationImageMix, DecorationImage> {
+  /// Utility for defining [DecorationImageMix.image]
   late final provider = ImageProviderUtility((v) => only(image: v));
 
-  /// Utility for defining [DecorationImageDto.fit]
+  /// Utility for defining [DecorationImageMix.fit]
   late final fit = BoxFitUtility((v) => only(fit: v));
 
-  /// Utility for defining [DecorationImageDto.alignment]
+  /// Utility for defining [DecorationImageMix.alignment]
   late final alignment = AlignmentGeometryUtility((v) => only(alignment: v));
 
-  /// Utility for defining [DecorationImageDto.centerSlice]
+  /// Utility for defining [DecorationImageMix.centerSlice]
   late final centerSlice = RectUtility((v) => only(centerSlice: v));
 
-  /// Utility for defining [DecorationImageDto.repeat]
+  /// Utility for defining [DecorationImageMix.repeat]
   late final repeat = ImageRepeatUtility((v) => only(repeat: v));
 
-  /// Utility for defining [DecorationImageDto.filterQuality]
+  /// Utility for defining [DecorationImageMix.filterQuality]
   late final filterQuality =
       FilterQualityUtility((v) => only(filterQuality: v));
 
-  /// Utility for defining [DecorationImageDto.invertColors]
+  /// Utility for defining [DecorationImageMix.invertColors]
   late final invertColors = BoolUtility((v) => only(invertColors: v));
 
-  /// Utility for defining [DecorationImageDto.isAntiAlias]
+  /// Utility for defining [DecorationImageMix.isAntiAlias]
   late final isAntiAlias = BoolUtility((v) => only(isAntiAlias: v));
 
-  DecorationImageUtility(super.builder) : super(valueToDto: (v) => v.toDto());
+  DecorationImageMixUtility(super.builder)
+      : super(valueToDto: (v) => v.toDto());
 
-  /// Returns a new [DecorationImageDto] with the specified properties.
+  /// Returns a new [DecorationImageMix] with the specified properties.
   @override
   T only({
     ImageProvider<Object>? image,
@@ -122,7 +123,7 @@ class DecorationImageUtility<T extends Attribute>
     bool? invertColors,
     bool? isAntiAlias,
   }) {
-    return builder(DecorationImageDto(
+    return builder(DecorationImageMix(
       image: image,
       fit: fit,
       alignment: alignment,
@@ -157,11 +158,11 @@ class DecorationImageUtility<T extends Attribute>
   }
 }
 
-/// Extension methods to convert [DecorationImage] to [DecorationImageDto].
+/// Extension methods to convert [DecorationImage] to [DecorationImageMix].
 extension DecorationImageMixExt on DecorationImage {
-  /// Converts this [DecorationImage] to a [DecorationImageDto].
-  DecorationImageDto toDto() {
-    return DecorationImageDto(
+  /// Converts this [DecorationImage] to a [DecorationImageMix].
+  DecorationImageMix toDto() {
+    return DecorationImageMix(
       image: image,
       fit: fit,
       alignment: alignment,
@@ -174,10 +175,10 @@ extension DecorationImageMixExt on DecorationImage {
   }
 }
 
-/// Extension methods to convert List<[DecorationImage]> to List<[DecorationImageDto]>.
+/// Extension methods to convert List<[DecorationImage]> to List<[DecorationImageMix]>.
 extension ListDecorationImageMixExt on List<DecorationImage> {
-  /// Converts this List<[DecorationImage]> to a List<[DecorationImageDto]>.
-  List<DecorationImageDto> toDto() {
+  /// Converts this List<[DecorationImage]> to a List<[DecorationImageMix]>.
+  List<DecorationImageMix> toDto() {
     return map((e) => e.toDto()).toList();
   }
 }

@@ -14,7 +14,7 @@ void main() {
       test(
         'ColorDto.resolve should return the same color as provided for $color',
         () {
-          final colorDto = ColorDto(color);
+          final colorDto = ColorMix(color);
           final resolvedValue = colorDto.resolve(EmptyMixData);
           expect(resolvedValue, color);
         },
@@ -37,7 +37,7 @@ void main() {
         final mockMixData = MixData.create(buildContext, Style());
 
         final colorRef = testColorToken();
-        final colorDto = ColorDto(colorRef);
+        final colorDto = ColorMix(colorRef);
         final resolvedValue = colorDto.resolve(mockMixData);
 
         expect(colorRef, isA<ColorRef>());
@@ -50,32 +50,32 @@ void main() {
     test('ColorDto.maybeFrom should return a ColorDto for non-null input', () {
       const color = Colors.red;
       final colorDto = color.toDto();
-      expect(colorDto, isA<ColorDto>());
+      expect(colorDto, isA<ColorMix>());
       expect(colorDto.value, color);
     });
 
     // Testing merge method
     test('ColorDto.merge should merge correctly with non-null other', () {
-      const colorDto1 = ColorDto(Colors.red);
-      const colorDto2 = ColorDto(Colors.green);
+      const colorDto1 = ColorMix(Colors.red);
+      const colorDto2 = ColorMix(Colors.green);
       final merged = colorDto1.merge(colorDto2);
-      expect(merged, isA<ColorDto>());
+      expect(merged, isA<ColorMix>());
       expect(merged.value, colorDto2.value);
     });
 
     test('ColorDto.merge should return the same instance for null other', () {
-      const colorDto = ColorDto(Colors.red);
+      const colorDto = ColorMix(Colors.red);
       final merged = colorDto.merge(null);
       expect(merged, same(colorDto));
     });
 
     test('ColorDirectiveCleaner', () {
-      var colorDto = const ColorDto.raw(value: Colors.red, directives: [
+      var colorDto = const ColorMix.raw(value: Colors.red, directives: [
         DarkenColorDirective(10),
       ]);
 
       colorDto =
-          colorDto.merge(ColorDto.directive(const ResetColorDirective()));
+          colorDto.merge(ColorMix.directive(const ResetColorDirective()));
       expect(
         Colors.red,
         colorDto.resolve(
@@ -87,7 +87,7 @@ void main() {
       );
 
       colorDto =
-          colorDto.merge(const ColorDto.raw(value: Colors.red, directives: [
+          colorDto.merge(const ColorMix.raw(value: Colors.red, directives: [
         DarkenColorDirective(20),
       ]));
 
@@ -102,13 +102,13 @@ void main() {
       );
 
       colorDto =
-          colorDto.merge(ColorDto.directive(const ResetColorDirective()));
+          colorDto.merge(ColorMix.directive(const ResetColorDirective()));
 
-      colorDto = colorDto.merge(ColorDto.directive(
+      colorDto = colorDto.merge(ColorMix.directive(
         const SaturateColorDirective(20),
       ));
 
-      colorDto = colorDto.merge(ColorDto.directive(
+      colorDto = colorDto.merge(ColorMix.directive(
         const DarkenColorDirective(20),
       ));
 
@@ -125,16 +125,16 @@ void main() {
 
     // Test equality
     test('ColorDto.equals should return true for equal instances', () {
-      const colorDto1 = ColorDto.raw(
+      const colorDto1 = ColorMix.raw(
         value: Colors.red,
         directives: [OpacityColorDirective(0.5)],
       );
-      const colorDto2 = ColorDto.raw(
+      const colorDto2 = ColorMix.raw(
         value: Colors.red,
         directives: [OpacityColorDirective(0.5)],
       );
 
-      const colorDto3 = ColorDto.raw(
+      const colorDto3 = ColorMix.raw(
         value: Colors.red,
         directives: [DarkenColorDirective(10)],
       );

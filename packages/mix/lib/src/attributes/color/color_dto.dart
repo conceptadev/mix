@@ -17,14 +17,14 @@ import 'color_directives_impl.dart';
 /// * [Color], which is the Flutter equivalent class.
 /// {@category DTO}
 @immutable
-class ColorDto extends StyleProperty<Color> with Diagnosticable {
+class ColorMix extends Mixable<Color> with Diagnosticable {
   final Color? value;
   final List<ColorDirective> directives;
 
-  const ColorDto.raw({this.value, this.directives = const []});
-  const ColorDto(Color value) : this.raw(value: value);
+  const ColorMix.raw({this.value, this.directives = const []});
+  const ColorMix(Color value) : this.raw(value: value);
 
-  ColorDto.directive(ColorDirective directive)
+  ColorMix.directive(ColorDirective directive)
       : this.raw(directives: [directive]);
 
   List<ColorDirective> _applyResetIfNeeded(List<ColorDirective> directives) {
@@ -54,10 +54,10 @@ class ColorDto extends StyleProperty<Color> with Diagnosticable {
   }
 
   @override
-  ColorDto merge(ColorDto? other) {
+  ColorMix merge(ColorMix? other) {
     if (other == null) return this;
 
-    return ColorDto.raw(
+    return ColorMix.raw(
       value: other.value ?? value,
       directives: _applyResetIfNeeded([...directives, ...other.directives]),
     );
@@ -81,5 +81,5 @@ class ColorDto extends StyleProperty<Color> with Diagnosticable {
 }
 
 extension ColorExt on Color {
-  ColorDto toDto() => ColorDto(this);
+  ColorMix toDto() => ColorMix(this);
 }

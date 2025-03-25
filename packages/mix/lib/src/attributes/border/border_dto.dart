@@ -8,67 +8,67 @@ import '../../internal/mix_error.dart';
 part 'border_dto.g.dart';
 
 @immutable
-sealed class BoxBorderDto<T extends BoxBorder> extends StyleProperty<T> {
-  final BorderSideDto? top;
-  final BorderSideDto? bottom;
+sealed class BoxBorderMix<T extends BoxBorder> extends Mixable<T> {
+  final BorderSideMix? top;
+  final BorderSideMix? bottom;
 
-  const BoxBorderDto({this.top, this.bottom});
+  const BoxBorderMix({this.top, this.bottom});
 
   /// Will try to merge two borders, the type will resolve to type of
   /// `b` if its not null and `a` otherwise.
-  static BoxBorderDto? tryToMerge(BoxBorderDto? a, BoxBorderDto? b) {
+  static BoxBorderMix? tryToMerge(BoxBorderMix? a, BoxBorderMix? b) {
     if (b == null) return a;
     if (a == null) return b;
 
     return a.runtimeType == b.runtimeType ? a.merge(b) : _exhaustiveMerge(a, b);
   }
 
-  static B _exhaustiveMerge<A extends BoxBorderDto, B extends BoxBorderDto>(
+  static B _exhaustiveMerge<A extends BoxBorderMix, B extends BoxBorderMix>(
     A a,
     B b,
   ) {
     if (a.runtimeType == b.runtimeType) return a.merge(b) as B;
 
     return switch (b) {
-      (BorderDto g) => a._asBorder().merge(g) as B,
-      (BorderDirectionalDto g) => a._asBorderDirectional().merge(g) as B,
+      (BorderMix g) => a._asBorder().merge(g) as B,
+      (BorderDirectionalMix g) => a._asBorderDirectional().merge(g) as B,
     };
   }
 
-  BorderDto _asBorder() {
-    if (this is BorderDto) return this as BorderDto;
+  BorderMix _asBorder() {
+    if (this is BorderMix) return this as BorderMix;
 
-    return BorderDto(top: top, bottom: bottom);
+    return BorderMix(top: top, bottom: bottom);
   }
 
-  BorderDirectionalDto _asBorderDirectional() {
-    if (this is BorderDirectionalDto) return this as BorderDirectionalDto;
+  BorderDirectionalMix _asBorderDirectional() {
+    if (this is BorderDirectionalMix) return this as BorderDirectionalMix;
 
-    return BorderDirectionalDto(top: top, bottom: bottom);
+    return BorderDirectionalMix(top: top, bottom: bottom);
   }
 
   bool get isUniform;
 
-  bool get isDirectional => this is BorderDirectionalDto;
+  bool get isDirectional => this is BorderDirectionalMix;
   @override
-  BoxBorderDto<T> merge(covariant BoxBorderDto<T>? other);
+  BoxBorderMix<T> merge(covariant BoxBorderMix<T>? other);
 }
 
 @MixableProperty(components: GeneratedPropertyComponents.skipUtility)
-final class BorderDto extends BoxBorderDto<Border> with _$BorderDto {
-  final BorderSideDto? left;
-  final BorderSideDto? right;
+final class BorderMix extends BoxBorderMix<Border> with _$BorderMix {
+  final BorderSideMix? left;
+  final BorderSideMix? right;
 
-  const BorderDto({super.top, super.bottom, this.left, this.right});
+  const BorderMix({super.top, super.bottom, this.left, this.right});
 
-  const BorderDto.all(BorderSideDto side)
+  const BorderMix.all(BorderSideMix side)
       : this(top: side, bottom: side, left: side, right: side);
 
-  const BorderDto.none() : this.all(const BorderSideDto.none());
+  const BorderMix.none() : this.all(const BorderSideMix.none());
 
-  const BorderDto.symmetric({
-    BorderSideDto? vertical,
-    BorderSideDto? horizontal,
+  const BorderMix.symmetric({
+    BorderSideMix? vertical,
+    BorderSideMix? horizontal,
   }) : this(
           top: horizontal,
           bottom: horizontal,
@@ -76,9 +76,9 @@ final class BorderDto extends BoxBorderDto<Border> with _$BorderDto {
           right: vertical,
         );
 
-  const BorderDto.vertical(BorderSideDto side) : this.symmetric(vertical: side);
+  const BorderMix.vertical(BorderSideMix side) : this.symmetric(vertical: side);
 
-  const BorderDto.horizontal(BorderSideDto side)
+  const BorderMix.horizontal(BorderSideMix side)
       : this.symmetric(horizontal: side);
 
   @override
@@ -86,23 +86,23 @@ final class BorderDto extends BoxBorderDto<Border> with _$BorderDto {
 }
 
 @MixableProperty(components: GeneratedPropertyComponents.skipUtility)
-final class BorderDirectionalDto extends BoxBorderDto<BorderDirectional>
-    with _$BorderDirectionalDto {
-  final BorderSideDto? start;
-  final BorderSideDto? end;
-  const BorderDirectionalDto({
+final class BorderDirectionalMix extends BoxBorderMix<BorderDirectional>
+    with _$BorderDirectionalMix {
+  final BorderSideMix? start;
+  final BorderSideMix? end;
+  const BorderDirectionalMix({
     super.top,
     super.bottom,
     this.start,
     this.end,
   });
 
-  const BorderDirectionalDto.all(BorderSideDto side)
+  const BorderDirectionalMix.all(BorderSideMix side)
       : this(top: side, bottom: side, start: side, end: side);
 
-  const BorderDirectionalDto.symmetric({
-    BorderSideDto? vertical,
-    BorderSideDto? horizontal,
+  const BorderDirectionalMix.symmetric({
+    BorderSideMix? vertical,
+    BorderSideMix? horizontal,
   }) : this(
           top: horizontal,
           bottom: horizontal,
@@ -110,11 +110,11 @@ final class BorderDirectionalDto extends BoxBorderDto<BorderDirectional>
           end: vertical,
         );
 
-  const BorderDirectionalDto.none() : this.all(const BorderSideDto.none());
-  const BorderDirectionalDto.vertical(BorderSideDto side)
+  const BorderDirectionalMix.none() : this.all(const BorderSideMix.none());
+  const BorderDirectionalMix.vertical(BorderSideMix side)
       : this.symmetric(vertical: side);
 
-  const BorderDirectionalDto.horizontal(BorderSideDto side)
+  const BorderDirectionalMix.horizontal(BorderSideMix side)
       : this.symmetric(horizontal: side);
 
   @override
@@ -122,30 +122,30 @@ final class BorderDirectionalDto extends BoxBorderDto<BorderDirectional>
 }
 
 @MixableProperty()
-final class BorderSideDto extends StyleProperty<BorderSide>
-    with HasDefaultValue<BorderSide>, _$BorderSideDto {
-  final ColorDto? color;
+final class BorderSideMix extends Mixable<BorderSide>
+    with HasDefaultValue<BorderSide>, _$BorderSideMix {
+  final ColorMix? color;
   final double? width;
 
   final BorderStyle? style;
   @MixableField(utilities: [MixableFieldUtility(type: StrokeAlignUtility)])
   final double? strokeAlign;
 
-  const BorderSideDto({
+  const BorderSideMix({
     this.color,
     this.strokeAlign,
     this.style,
     this.width,
   });
 
-  const BorderSideDto.none() : this(style: BorderStyle.none, width: 0.0);
+  const BorderSideMix.none() : this(style: BorderStyle.none, width: 0.0);
 
   @override
   BorderSide get defaultValue => const BorderSide();
 }
 
 extension BoxBorderExt on BoxBorder {
-  BoxBorderDto toDto() {
+  BoxBorderMix toDto() {
     final self = this;
     if (self is Border) return (self).toDto();
     if (self is BorderDirectional) return (self).toDto();

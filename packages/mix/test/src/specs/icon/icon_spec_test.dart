@@ -20,10 +20,10 @@ void main() {
             grade: 2,
             opticalSize: 2,
             shadows: [
-              ShadowDto(
+              ShadowMix(
                 color: Colors.black.toDto(),
               ),
-              ShadowDto(
+              ShadowMix(
                 color: Colors.black.toDto(),
               ),
             ],

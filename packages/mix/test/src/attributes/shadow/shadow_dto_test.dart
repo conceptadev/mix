@@ -9,9 +9,9 @@ void main() {
   //  ShadowDto
   group('ShadowDto', () {
     test('Constructor assigns correct properties', () {
-      const shadowDto = ShadowDto(
+      const shadowDto = ShadowMix(
         blurRadius: 10.0,
-        color: ColorDto(Colors.blue),
+        color: ColorMix(Colors.blue),
         offset: Offset(10, 10),
       );
 
@@ -49,9 +49,9 @@ void main() {
     });
 
     test('resolve() returns correct instance', () {
-      const shadowDto = ShadowDto(
+      const shadowDto = ShadowMix(
         blurRadius: 10.0,
-        color: ColorDto(Colors.blue),
+        color: ColorMix(Colors.blue),
         offset: Offset(10, 10),
       );
 
@@ -63,16 +63,16 @@ void main() {
     });
 
     test('merge() returns correct instance', () {
-      const shadowDto = ShadowDto(
+      const shadowDto = ShadowMix(
         blurRadius: 10.0,
-        color: ColorDto(Colors.blue),
+        color: ColorMix(Colors.blue),
         offset: Offset(10, 10),
       );
 
       final mergedShadowDto = shadowDto.merge(
-        const ShadowDto(
+        const ShadowMix(
           blurRadius: 20.0,
-          color: ColorDto(Colors.red),
+          color: ColorMix(Colors.red),
           offset: Offset(20, 20),
         ),
       );
@@ -85,8 +85,8 @@ void main() {
 
   group('BoxShadowDto', () {
     test('Constructor assigns correct properties', () {
-      const boxShadowDto = BoxShadowDto(
-        color: ColorDto(Colors.blue),
+      const boxShadowDto = BoxShadowMix(
+        color: ColorMix(Colors.blue),
         offset: Offset(10, 10),
         blurRadius: 10.0,
         spreadRadius: 5.0,
@@ -131,8 +131,8 @@ void main() {
     });
 
     test('resolve() returns correct instance', () {
-      const boxShadowDto = BoxShadowDto(
-        color: ColorDto(Colors.blue),
+      const boxShadowDto = BoxShadowMix(
+        color: ColorMix(Colors.blue),
         offset: Offset(10, 10),
         blurRadius: 10.0,
         spreadRadius: 5.0,
@@ -147,16 +147,16 @@ void main() {
     });
 
     test('merge() returns correct instance', () {
-      const boxShadowDto = BoxShadowDto(
-        color: ColorDto(Colors.blue),
+      const boxShadowDto = BoxShadowMix(
+        color: ColorMix(Colors.blue),
         offset: Offset(10, 10),
         blurRadius: 10.0,
         spreadRadius: 5.0,
       );
 
       final mergedBoxShadowDto = boxShadowDto.merge(
-        const BoxShadowDto(
-          color: ColorDto(Colors.red),
+        const BoxShadowMix(
+          color: ColorMix(Colors.red),
           offset: Offset(20, 20),
           blurRadius: 20.0,
           spreadRadius: 10.0,

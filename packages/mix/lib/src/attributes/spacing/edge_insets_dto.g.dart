@@ -8,21 +8,21 @@ part of 'edge_insets_dto.dart';
 
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-/// A mixin that provides DTO functionality for [EdgeInsetsDto].
-mixin _$EdgeInsetsDto on StyleProperty<EdgeInsets> {
-  /// Merges the properties of this [EdgeInsetsDto] with the properties of [other].
+/// A mixin that provides DTO functionality for [EdgeInsetsMix].
+mixin _$EdgeInsetsMix on Mixable<EdgeInsets> {
+  /// Merges the properties of this [EdgeInsetsMix] with the properties of [other].
   ///
   /// If [other] is null, returns this instance unchanged. Otherwise, returns a new
-  /// [EdgeInsetsDto] with the properties of [other] taking precedence over
+  /// [EdgeInsetsMix] with the properties of [other] taking precedence over
   /// the corresponding properties of this instance.
   ///
   /// Properties from [other] that are null will fall back
   /// to the values from this instance.
   @override
-  EdgeInsetsDto merge(EdgeInsetsDto? other) {
+  EdgeInsetsMix merge(EdgeInsetsMix? other) {
     if (other == null) return _$this;
 
-    return EdgeInsetsDto(
+    return EdgeInsetsMix(
       top: other.top ?? _$this.top,
       bottom: other.bottom ?? _$this.bottom,
       left: other.left ?? _$this.left,
@@ -30,10 +30,10 @@ mixin _$EdgeInsetsDto on StyleProperty<EdgeInsets> {
     );
   }
 
-  /// The list of properties that constitute the state of this [EdgeInsetsDto].
+  /// The list of properties that constitute the state of this [EdgeInsetsMix].
   ///
   /// This property is used by the [==] operator and the [hashCode] getter to
-  /// compare two [EdgeInsetsDto] instances for equality.
+  /// compare two [EdgeInsetsMix] instances for equality.
   @override
   List<Object?> get props => [
         _$this.top,
@@ -42,37 +42,37 @@ mixin _$EdgeInsetsDto on StyleProperty<EdgeInsets> {
         _$this.right,
       ];
 
-  /// Returns this instance as a [EdgeInsetsDto].
-  EdgeInsetsDto get _$this => this as EdgeInsetsDto;
+  /// Returns this instance as a [EdgeInsetsMix].
+  EdgeInsetsMix get _$this => this as EdgeInsetsMix;
 }
 
 /// Utility class for configuring [EdgeInsets] properties.
 ///
 /// This class provides methods to set individual properties of a [EdgeInsets].
 /// Use the methods of this class to configure specific properties of a [EdgeInsets].
-class EdgeInsetsUtility<T extends Attribute>
-    extends DtoUtility<T, EdgeInsetsDto, EdgeInsets> {
-  /// Utility for defining [EdgeInsetsDto.top]
+class EdgeInsetsMixUtility<T extends Attribute>
+    extends DtoUtility<T, EdgeInsetsMix, EdgeInsets> {
+  /// Utility for defining [EdgeInsetsMix.top]
   late final top = DoubleUtility((v) => only(top: v));
 
-  /// Utility for defining [EdgeInsetsDto.bottom]
+  /// Utility for defining [EdgeInsetsMix.bottom]
   late final bottom = DoubleUtility((v) => only(bottom: v));
 
-  /// Utility for defining [EdgeInsetsDto.left]
+  /// Utility for defining [EdgeInsetsMix.left]
   late final left = DoubleUtility((v) => only(left: v));
 
-  /// Utility for defining [EdgeInsetsDto.right]
+  /// Utility for defining [EdgeInsetsMix.right]
   late final right = DoubleUtility((v) => only(right: v));
 
-  EdgeInsetsUtility(super.builder) : super(valueToDto: (v) => v.toDto());
+  EdgeInsetsMixUtility(super.builder) : super(valueToDto: (v) => v.toDto());
 
-  /// Creates an [Attribute] instance using the [EdgeInsetsDto.all] constructor.
-  T all(double value) => builder(EdgeInsetsDto.all(value));
+  /// Creates an [Attribute] instance using the [EdgeInsetsMix.all] constructor.
+  T all(double value) => builder(EdgeInsetsMix.all(value));
 
-  /// Creates an [Attribute] instance using the [EdgeInsetsDto.none] constructor.
-  T none() => builder(const EdgeInsetsDto.none());
+  /// Creates an [Attribute] instance using the [EdgeInsetsMix.none] constructor.
+  T none() => builder(const EdgeInsetsMix.none());
 
-  /// Returns a new [EdgeInsetsDto] with the specified properties.
+  /// Returns a new [EdgeInsetsMix] with the specified properties.
   @override
   T only({
     double? top,
@@ -80,7 +80,7 @@ class EdgeInsetsUtility<T extends Attribute>
     double? left,
     double? right,
   }) {
-    return builder(EdgeInsetsDto(
+    return builder(EdgeInsetsMix(
       top: top,
       bottom: bottom,
       left: left,
@@ -103,11 +103,11 @@ class EdgeInsetsUtility<T extends Attribute>
   }
 }
 
-/// Extension methods to convert [EdgeInsets] to [EdgeInsetsDto].
+/// Extension methods to convert [EdgeInsets] to [EdgeInsetsMix].
 extension EdgeInsetsMixExt on EdgeInsets {
-  /// Converts this [EdgeInsets] to a [EdgeInsetsDto].
-  EdgeInsetsDto toDto() {
-    return EdgeInsetsDto(
+  /// Converts this [EdgeInsets] to a [EdgeInsetsMix].
+  EdgeInsetsMix toDto() {
+    return EdgeInsetsMix(
       top: top,
       bottom: bottom,
       left: left,
@@ -116,29 +116,29 @@ extension EdgeInsetsMixExt on EdgeInsets {
   }
 }
 
-/// Extension methods to convert List<[EdgeInsets]> to List<[EdgeInsetsDto]>.
+/// Extension methods to convert List<[EdgeInsets]> to List<[EdgeInsetsMix]>.
 extension ListEdgeInsetsMixExt on List<EdgeInsets> {
-  /// Converts this List<[EdgeInsets]> to a List<[EdgeInsetsDto]>.
-  List<EdgeInsetsDto> toDto() {
+  /// Converts this List<[EdgeInsets]> to a List<[EdgeInsetsMix]>.
+  List<EdgeInsetsMix> toDto() {
     return map((e) => e.toDto()).toList();
   }
 }
 
-/// A mixin that provides DTO functionality for [EdgeInsetsDirectionalDto].
-mixin _$EdgeInsetsDirectionalDto on StyleProperty<EdgeInsetsDirectional> {
-  /// Merges the properties of this [EdgeInsetsDirectionalDto] with the properties of [other].
+/// A mixin that provides DTO functionality for [EdgeInsetsDirectionalMix].
+mixin _$EdgeInsetsDirectionalMix on Mixable<EdgeInsetsDirectional> {
+  /// Merges the properties of this [EdgeInsetsDirectionalMix] with the properties of [other].
   ///
   /// If [other] is null, returns this instance unchanged. Otherwise, returns a new
-  /// [EdgeInsetsDirectionalDto] with the properties of [other] taking precedence over
+  /// [EdgeInsetsDirectionalMix] with the properties of [other] taking precedence over
   /// the corresponding properties of this instance.
   ///
   /// Properties from [other] that are null will fall back
   /// to the values from this instance.
   @override
-  EdgeInsetsDirectionalDto merge(EdgeInsetsDirectionalDto? other) {
+  EdgeInsetsDirectionalMix merge(EdgeInsetsDirectionalMix? other) {
     if (other == null) return _$this;
 
-    return EdgeInsetsDirectionalDto(
+    return EdgeInsetsDirectionalMix(
       top: other.top ?? _$this.top,
       bottom: other.bottom ?? _$this.bottom,
       start: other.start ?? _$this.start,
@@ -146,10 +146,10 @@ mixin _$EdgeInsetsDirectionalDto on StyleProperty<EdgeInsetsDirectional> {
     );
   }
 
-  /// The list of properties that constitute the state of this [EdgeInsetsDirectionalDto].
+  /// The list of properties that constitute the state of this [EdgeInsetsDirectionalMix].
   ///
   /// This property is used by the [==] operator and the [hashCode] getter to
-  /// compare two [EdgeInsetsDirectionalDto] instances for equality.
+  /// compare two [EdgeInsetsDirectionalMix] instances for equality.
   @override
   List<Object?> get props => [
         _$this.top,
@@ -158,8 +158,8 @@ mixin _$EdgeInsetsDirectionalDto on StyleProperty<EdgeInsetsDirectional> {
         _$this.end,
       ];
 
-  /// Returns this instance as a [EdgeInsetsDirectionalDto].
-  EdgeInsetsDirectionalDto get _$this => this as EdgeInsetsDirectionalDto;
+  /// Returns this instance as a [EdgeInsetsDirectionalMix].
+  EdgeInsetsDirectionalMix get _$this => this as EdgeInsetsDirectionalMix;
 }
 
 /// Utility class for configuring [EdgeInsetsDirectional] properties.
@@ -167,29 +167,29 @@ mixin _$EdgeInsetsDirectionalDto on StyleProperty<EdgeInsetsDirectional> {
 /// This class provides methods to set individual properties of a [EdgeInsetsDirectional].
 /// Use the methods of this class to configure specific properties of a [EdgeInsetsDirectional].
 class EdgeInsetsDirectionalUtility<T extends Attribute>
-    extends DtoUtility<T, EdgeInsetsDirectionalDto, EdgeInsetsDirectional> {
-  /// Utility for defining [EdgeInsetsDirectionalDto.top]
+    extends DtoUtility<T, EdgeInsetsDirectionalMix, EdgeInsetsDirectional> {
+  /// Utility for defining [EdgeInsetsDirectionalMix.top]
   late final top = DoubleUtility((v) => only(top: v));
 
-  /// Utility for defining [EdgeInsetsDirectionalDto.bottom]
+  /// Utility for defining [EdgeInsetsDirectionalMix.bottom]
   late final bottom = DoubleUtility((v) => only(bottom: v));
 
-  /// Utility for defining [EdgeInsetsDirectionalDto.start]
+  /// Utility for defining [EdgeInsetsDirectionalMix.start]
   late final start = DoubleUtility((v) => only(start: v));
 
-  /// Utility for defining [EdgeInsetsDirectionalDto.end]
+  /// Utility for defining [EdgeInsetsDirectionalMix.end]
   late final end = DoubleUtility((v) => only(end: v));
 
   EdgeInsetsDirectionalUtility(super.builder)
       : super(valueToDto: (v) => v.toDto());
 
-  /// Creates an [Attribute] instance using the [EdgeInsetsDirectionalDto.all] constructor.
-  T all(double value) => builder(EdgeInsetsDirectionalDto.all(value));
+  /// Creates an [Attribute] instance using the [EdgeInsetsDirectionalMix.all] constructor.
+  T all(double value) => builder(EdgeInsetsDirectionalMix.all(value));
 
-  /// Creates an [Attribute] instance using the [EdgeInsetsDirectionalDto.none] constructor.
-  T none() => builder(const EdgeInsetsDirectionalDto.none());
+  /// Creates an [Attribute] instance using the [EdgeInsetsDirectionalMix.none] constructor.
+  T none() => builder(const EdgeInsetsDirectionalMix.none());
 
-  /// Returns a new [EdgeInsetsDirectionalDto] with the specified properties.
+  /// Returns a new [EdgeInsetsDirectionalMix] with the specified properties.
   @override
   T only({
     double? top,
@@ -197,7 +197,7 @@ class EdgeInsetsDirectionalUtility<T extends Attribute>
     double? start,
     double? end,
   }) {
-    return builder(EdgeInsetsDirectionalDto(
+    return builder(EdgeInsetsDirectionalMix(
       top: top,
       bottom: bottom,
       start: start,
@@ -220,11 +220,11 @@ class EdgeInsetsDirectionalUtility<T extends Attribute>
   }
 }
 
-/// Extension methods to convert [EdgeInsetsDirectional] to [EdgeInsetsDirectionalDto].
+/// Extension methods to convert [EdgeInsetsDirectional] to [EdgeInsetsDirectionalMix].
 extension EdgeInsetsDirectionalMixExt on EdgeInsetsDirectional {
-  /// Converts this [EdgeInsetsDirectional] to a [EdgeInsetsDirectionalDto].
-  EdgeInsetsDirectionalDto toDto() {
-    return EdgeInsetsDirectionalDto(
+  /// Converts this [EdgeInsetsDirectional] to a [EdgeInsetsDirectionalMix].
+  EdgeInsetsDirectionalMix toDto() {
+    return EdgeInsetsDirectionalMix(
       top: top,
       bottom: bottom,
       start: start,
@@ -233,10 +233,10 @@ extension EdgeInsetsDirectionalMixExt on EdgeInsetsDirectional {
   }
 }
 
-/// Extension methods to convert List<[EdgeInsetsDirectional]> to List<[EdgeInsetsDirectionalDto]>.
+/// Extension methods to convert List<[EdgeInsetsDirectional]> to List<[EdgeInsetsDirectionalMix]>.
 extension ListEdgeInsetsDirectionalMixExt on List<EdgeInsetsDirectional> {
-  /// Converts this List<[EdgeInsetsDirectional]> to a List<[EdgeInsetsDirectionalDto]>.
-  List<EdgeInsetsDirectionalDto> toDto() {
+  /// Converts this List<[EdgeInsetsDirectional]> to a List<[EdgeInsetsDirectionalMix]>.
+  List<EdgeInsetsDirectionalMix> toDto() {
     return map((e) => e.toDto()).toList();
   }
 }

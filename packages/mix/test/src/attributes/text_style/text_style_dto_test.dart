@@ -8,12 +8,12 @@ void main() {
   group('TextStyleDto', () {
     test('from constructor sets all values correctly', () {
       final attr =
-          TextStyleDto(color: Colors.red.toDto(), fontVariations: const []);
+          TextStyleMix(color: Colors.red.toDto(), fontVariations: const []);
       final result = attr.resolve(EmptyMixData);
       expect(result.color, Colors.red);
     });
     test('merge returns merged object correctly', () {
-      final attr1 = TextStyleDto(
+      final attr1 = TextStyleMix(
         color: Colors.red.toDto(),
         fontSize: 24.0,
         fontWeight: FontWeight.bold,
@@ -30,7 +30,7 @@ void main() {
         height: 2.0,
       );
 
-      final attr2 = TextStyleDto(
+      final attr2 = TextStyleMix(
         color: Colors.blue.toDto(),
         fontSize: 30.0,
         fontWeight: FontWeight.w100,
@@ -63,7 +63,7 @@ void main() {
       expect(merged.textBaseline, TextBaseline.alphabetic);
     });
     test('resolve returns correct TextStyle with specific values', () {
-      final attr = TextStyleDto(
+      final attr = TextStyleMix(
         color: Colors.red.toDto(),
         fontSize: 24.0,
         fontWeight: FontWeight.bold,
@@ -97,22 +97,22 @@ void main() {
     });
     test('Equality holds when all attributes are the same', () {
       final attr1 =
-          TextStyleDto(color: Colors.red.toDto(), fontVariations: const []);
+          TextStyleMix(color: Colors.red.toDto(), fontVariations: const []);
       final attr2 =
-          TextStyleDto(color: Colors.red.toDto(), fontVariations: const []);
+          TextStyleMix(color: Colors.red.toDto(), fontVariations: const []);
       expect(attr1, attr2);
     });
     test('Equality fails when attributes are different', () {
       final attr1 =
-          TextStyleDto(color: Colors.red.toDto(), fontVariations: const []);
+          TextStyleMix(color: Colors.red.toDto(), fontVariations: const []);
       final attr2 =
-          TextStyleDto(color: Colors.blue.toDto(), fontVariations: const []);
+          TextStyleMix(color: Colors.blue.toDto(), fontVariations: const []);
       expect(attr1, isNot(attr2));
     });
   });
   test('TextStyleDto.ref creates a TextStyleDto with a TextStyleDataRef', () {
     const token = TextStyleToken('test_token');
-    final attr = TextStyleDto.ref(token);
+    final attr = TextStyleMix.ref(token);
     expect(attr.value.length, 1);
     expect(attr.value.first, isA<TextStyleDataRef>());
     expect((attr.value.first as TextStyleDataRef).ref.token, token);
@@ -136,7 +136,7 @@ void main() {
     const token = TextStyleToken('test_token');
     const style = TextStyleRef(token);
     final attr = style.toDto();
-    expect(attr, isA<TextStyleDto>());
+    expect(attr, isA<TextStyleMix>());
     expect(attr.value.length, 1);
     expect(attr.value.first, isA<TextStyleDataRef>());
     expect((attr.value.first as TextStyleDataRef).ref.token, token);

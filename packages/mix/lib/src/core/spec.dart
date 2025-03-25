@@ -2,7 +2,7 @@ import 'package:flutter/widgets.dart';
 import 'package:mix_annotations/mix_annotations.dart';
 
 import '../attributes/animated/animated_data.dart';
-import '../attributes/animated/animated_data_dto.dart';
+import '../attributes/animated/mix_animated_data.dart';
 import '../attributes/modifiers/widget_modifiers_data.dart';
 import '../attributes/modifiers/widget_modifiers_data_dto.dart';
 import '../internal/compare_mixin.dart';
@@ -39,10 +39,10 @@ abstract class Spec<T extends Spec<T>> with EqualityMixin {
 ///
 /// This class extends the [Attribute] class and provides a generic type [Self] and [Value].
 /// The [Self] type represents the concrete implementation of the attribute, while the [Value] type represents the resolvable value.
-abstract class SpecAttribute<Value> extends StyleProperty<Value>
+abstract class SpecAttribute<Value> extends Mixable<Value>
     implements Attribute {
   final AnimatedDataDto? animated;
-  final WidgetModifiersDataDto? modifiers;
+  final WidgetModifiersDataMix? modifiers;
 
   const SpecAttribute({this.animated, this.modifiers});
 

@@ -3,8 +3,8 @@ import 'package:flutter/widgets.dart';
 import 'package:mix_annotations/mix_annotations.dart';
 
 import '../../attributes/animated/animated_data.dart';
-import '../../attributes/animated/animated_data_dto.dart';
 import '../../attributes/animated/animated_util.dart';
+import '../../attributes/animated/mix_animated_data.dart';
 import '../../attributes/color/color_dto.dart';
 import '../../attributes/color/color_util.dart';
 import '../../attributes/enum/enum_util.dart';
@@ -12,7 +12,6 @@ import '../../attributes/modifiers/widget_modifiers_data.dart';
 import '../../attributes/modifiers/widget_modifiers_data_dto.dart';
 import '../../attributes/modifiers/widget_modifiers_util.dart';
 import '../../attributes/shadow/shadow_dto.dart';
-import '../../attributes/shadow/shadow_util.dart';
 import '../../core/element.dart';
 import '../../core/factory/mix_data.dart';
 import '../../core/factory/mix_provider.dart';
@@ -81,5 +80,5 @@ final class IconSpec extends Spec<IconSpec> with _$IconSpec, Diagnosticable {
 }
 
 extension IconSpecUtilityExt<T extends Attribute> on IconSpecUtility<T> {
-  ShadowUtility get shadow => ShadowUtility((v) => only(shadows: [v]));
+  ShadowMixUtility get shadow => ShadowMixUtility((v) => only(shadows: [v]));
 }

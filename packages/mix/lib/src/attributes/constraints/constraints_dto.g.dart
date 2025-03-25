@@ -8,15 +8,15 @@ part of 'constraints_dto.dart';
 
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-/// A mixin that provides DTO functionality for [BoxConstraintsDto].
-mixin _$BoxConstraintsDto on StyleProperty<BoxConstraints> {
+/// A mixin that provides DTO functionality for [BoxConstraintsMix].
+mixin _$BoxConstraintsMix on Mixable<BoxConstraints> {
   /// Resolves to [BoxConstraints] using the provided [MixData].
   ///
   /// If a property is null in the [MixData], it falls back to the
   /// default value defined in the `defaultValue` for that property.
   ///
   /// ```dart
-  /// final boxConstraints = BoxConstraintsDto(...).resolve(mix);
+  /// final boxConstraints = BoxConstraintsMix(...).resolve(mix);
   /// ```
   @override
   BoxConstraints resolve(MixData mix) {
@@ -28,19 +28,19 @@ mixin _$BoxConstraintsDto on StyleProperty<BoxConstraints> {
     );
   }
 
-  /// Merges the properties of this [BoxConstraintsDto] with the properties of [other].
+  /// Merges the properties of this [BoxConstraintsMix] with the properties of [other].
   ///
   /// If [other] is null, returns this instance unchanged. Otherwise, returns a new
-  /// [BoxConstraintsDto] with the properties of [other] taking precedence over
+  /// [BoxConstraintsMix] with the properties of [other] taking precedence over
   /// the corresponding properties of this instance.
   ///
   /// Properties from [other] that are null will fall back
   /// to the values from this instance.
   @override
-  BoxConstraintsDto merge(BoxConstraintsDto? other) {
+  BoxConstraintsMix merge(BoxConstraintsMix? other) {
     if (other == null) return _$this;
 
-    return BoxConstraintsDto(
+    return BoxConstraintsMix(
       minWidth: other.minWidth ?? _$this.minWidth,
       maxWidth: other.maxWidth ?? _$this.maxWidth,
       minHeight: other.minHeight ?? _$this.minHeight,
@@ -48,10 +48,10 @@ mixin _$BoxConstraintsDto on StyleProperty<BoxConstraints> {
     );
   }
 
-  /// The list of properties that constitute the state of this [BoxConstraintsDto].
+  /// The list of properties that constitute the state of this [BoxConstraintsMix].
   ///
   /// This property is used by the [==] operator and the [hashCode] getter to
-  /// compare two [BoxConstraintsDto] instances for equality.
+  /// compare two [BoxConstraintsMix] instances for equality.
   @override
   List<Object?> get props => [
         _$this.minWidth,
@@ -60,31 +60,31 @@ mixin _$BoxConstraintsDto on StyleProperty<BoxConstraints> {
         _$this.maxHeight,
       ];
 
-  /// Returns this instance as a [BoxConstraintsDto].
-  BoxConstraintsDto get _$this => this as BoxConstraintsDto;
+  /// Returns this instance as a [BoxConstraintsMix].
+  BoxConstraintsMix get _$this => this as BoxConstraintsMix;
 }
 
 /// Utility class for configuring [BoxConstraints] properties.
 ///
 /// This class provides methods to set individual properties of a [BoxConstraints].
 /// Use the methods of this class to configure specific properties of a [BoxConstraints].
-class BoxConstraintsUtility<T extends Attribute>
-    extends DtoUtility<T, BoxConstraintsDto, BoxConstraints> {
-  /// Utility for defining [BoxConstraintsDto.minWidth]
+class BoxConstraintsMixUtility<T extends Attribute>
+    extends DtoUtility<T, BoxConstraintsMix, BoxConstraints> {
+  /// Utility for defining [BoxConstraintsMix.minWidth]
   late final minWidth = DoubleUtility((v) => only(minWidth: v));
 
-  /// Utility for defining [BoxConstraintsDto.maxWidth]
+  /// Utility for defining [BoxConstraintsMix.maxWidth]
   late final maxWidth = DoubleUtility((v) => only(maxWidth: v));
 
-  /// Utility for defining [BoxConstraintsDto.minHeight]
+  /// Utility for defining [BoxConstraintsMix.minHeight]
   late final minHeight = DoubleUtility((v) => only(minHeight: v));
 
-  /// Utility for defining [BoxConstraintsDto.maxHeight]
+  /// Utility for defining [BoxConstraintsMix.maxHeight]
   late final maxHeight = DoubleUtility((v) => only(maxHeight: v));
 
-  BoxConstraintsUtility(super.builder) : super(valueToDto: (v) => v.toDto());
+  BoxConstraintsMixUtility(super.builder) : super(valueToDto: (v) => v.toDto());
 
-  /// Returns a new [BoxConstraintsDto] with the specified properties.
+  /// Returns a new [BoxConstraintsMix] with the specified properties.
   @override
   T only({
     double? minWidth,
@@ -92,7 +92,7 @@ class BoxConstraintsUtility<T extends Attribute>
     double? minHeight,
     double? maxHeight,
   }) {
-    return builder(BoxConstraintsDto(
+    return builder(BoxConstraintsMix(
       minWidth: minWidth,
       maxWidth: maxWidth,
       minHeight: minHeight,
@@ -115,11 +115,11 @@ class BoxConstraintsUtility<T extends Attribute>
   }
 }
 
-/// Extension methods to convert [BoxConstraints] to [BoxConstraintsDto].
+/// Extension methods to convert [BoxConstraints] to [BoxConstraintsMix].
 extension BoxConstraintsMixExt on BoxConstraints {
-  /// Converts this [BoxConstraints] to a [BoxConstraintsDto].
-  BoxConstraintsDto toDto() {
-    return BoxConstraintsDto(
+  /// Converts this [BoxConstraints] to a [BoxConstraintsMix].
+  BoxConstraintsMix toDto() {
+    return BoxConstraintsMix(
       minWidth: minWidth,
       maxWidth: maxWidth,
       minHeight: minHeight,
@@ -128,10 +128,10 @@ extension BoxConstraintsMixExt on BoxConstraints {
   }
 }
 
-/// Extension methods to convert List<[BoxConstraints]> to List<[BoxConstraintsDto]>.
+/// Extension methods to convert List<[BoxConstraints]> to List<[BoxConstraintsMix]>.
 extension ListBoxConstraintsMixExt on List<BoxConstraints> {
-  /// Converts this List<[BoxConstraints]> to a List<[BoxConstraintsDto]>.
-  List<BoxConstraintsDto> toDto() {
+  /// Converts this List<[BoxConstraints]> to a List<[BoxConstraintsMix]>.
+  List<BoxConstraintsMix> toDto() {
     return map((e) => e.toDto()).toList();
   }
 }

@@ -7,14 +7,14 @@ import '../../core/modifier.dart';
 import '../../modifiers/internal/reset_modifier.dart';
 import 'widget_modifiers_data.dart';
 
-class WidgetModifiersDataDto extends StyleProperty<WidgetModifiersData>
+class WidgetModifiersDataMix extends Mixable<WidgetModifiersData>
     with Diagnosticable {
   final List<WidgetModifierSpecAttribute> value;
 
-  const WidgetModifiersDataDto(this.value);
+  const WidgetModifiersDataMix(this.value);
 
   @override
-  WidgetModifiersDataDto merge(WidgetModifiersDataDto? other) {
+  WidgetModifiersDataMix merge(WidgetModifiersDataMix? other) {
     if (other == null) return this;
     final thisMap = AttributeMap(value);
 
@@ -22,13 +22,13 @@ class WidgetModifiersDataDto extends StyleProperty<WidgetModifiersData>
         other.value.lastIndexWhere((e) => e is ResetModifierSpecAttribute);
 
     if (resetIndex != -1) {
-      return WidgetModifiersDataDto(other.value.sublist(resetIndex));
+      return WidgetModifiersDataMix(other.value.sublist(resetIndex));
     }
 
     final otherMap = AttributeMap(other.value);
     final mergedMap = thisMap.merge(otherMap).values;
 
-    return WidgetModifiersDataDto(mergedMap);
+    return WidgetModifiersDataMix(mergedMap);
   }
 
   @override

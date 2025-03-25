@@ -230,7 +230,7 @@ class StackSpecUtility<T extends Attribute>
   late final clipBehavior = ClipUtility((v) => only(clipBehavior: v));
 
   /// Utility for defining [StackSpecAttribute.animated]
-  late final animated = AnimatedUtility((v) => only(animated: v));
+  late final animated = AnimatedMixUtility((v) => only(animated: v));
 
   /// Utility for defining [StackSpecAttribute.modifiers]
   late final wrap = SpecModifierUtility((v) => only(modifiers: v));
@@ -250,8 +250,8 @@ class StackSpecUtility<T extends Attribute>
     StackFit? fit,
     TextDirection? textDirection,
     Clip? clipBehavior,
-    AnimatedDataDto? animated,
-    WidgetModifiersDataDto? modifiers,
+    AnimatedDataMix? animated,
+    WidgetModifiersDataMix? modifiers,
   }) {
     return builder(StackSpecAttribute(
       alignment: alignment,

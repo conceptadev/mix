@@ -158,7 +158,7 @@ mixin _$ImageSpec on Spec<ImageSpec> {
 class ImageSpecAttribute extends SpecAttribute<ImageSpec> with Diagnosticable {
   final double? width;
   final double? height;
-  final ColorDto? color;
+  final ColorMix? color;
   final ImageRepeat? repeat;
   final BoxFit? fit;
   final AlignmentGeometry? alignment;
@@ -287,7 +287,7 @@ class ImageSpecUtility<T extends Attribute>
   late final height = DoubleUtility((v) => only(height: v));
 
   /// Utility for defining [ImageSpecAttribute.color]
-  late final color = ColorUtility((v) => only(color: v));
+  late final color = ColorMixUtility((v) => only(color: v));
 
   /// Utility for defining [ImageSpecAttribute.repeat]
   late final repeat = ImageRepeatUtility((v) => only(repeat: v));
@@ -309,7 +309,7 @@ class ImageSpecUtility<T extends Attribute>
   late final colorBlendMode = BlendModeUtility((v) => only(colorBlendMode: v));
 
   /// Utility for defining [ImageSpecAttribute.animated]
-  late final animated = AnimatedUtility((v) => only(animated: v));
+  late final animated = AnimatedMixUtility((v) => only(animated: v));
 
   /// Utility for defining [ImageSpecAttribute.modifiers]
   late final wrap = SpecModifierUtility((v) => only(modifiers: v));
@@ -327,15 +327,15 @@ class ImageSpecUtility<T extends Attribute>
   T only({
     double? width,
     double? height,
-    ColorDto? color,
+    ColorMix? color,
     ImageRepeat? repeat,
     BoxFit? fit,
     AlignmentGeometry? alignment,
     Rect? centerSlice,
     FilterQuality? filterQuality,
     BlendMode? colorBlendMode,
-    AnimatedDataDto? animated,
-    WidgetModifiersDataDto? modifiers,
+    AnimatedDataMix? animated,
+    WidgetModifiersDataMix? modifiers,
   }) {
     return builder(ImageSpecAttribute(
       width: width,

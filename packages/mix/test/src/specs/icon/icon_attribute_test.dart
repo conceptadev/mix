@@ -14,19 +14,19 @@ void main() {
 
     test('merge should return a new instance of IconSpecAttribute', () {
       const shadows = [
-        ShadowDto(
-          color: ColorDto(
+        ShadowMix(
+          color: ColorMix(
             Colors.black,
           ),
         ),
-        ShadowDto(
-          color: ColorDto(Colors.black),
+        ShadowMix(
+          color: ColorMix(Colors.black),
         ),
       ];
 
       const attribute1 = IconSpecAttribute(
         size: 24,
-        color: ColorDto(Colors.black),
+        color: ColorMix(Colors.black),
         weight: 24,
         grade: 24,
         opticalSize: 24,
@@ -38,18 +38,18 @@ void main() {
 
       const attribute2 = IconSpecAttribute(
         size: 32,
-        color: ColorDto(Colors.white),
+        color: ColorMix(Colors.white),
         weight: 32,
         grade: 32,
         opticalSize: 32,
         shadows: [
-          ShadowDto(
-            color: ColorDto(
+          ShadowMix(
+            color: ColorMix(
               Colors.black,
             ),
           ),
-          ShadowDto(
-            color: ColorDto(Colors.white),
+          ShadowMix(
+            color: ColorMix(Colors.white),
           ),
         ],
         fill: 32,
@@ -62,7 +62,7 @@ void main() {
       expect(mergedAttribute.size, equals(32));
       expect(mergedAttribute.weight, equals(32));
 
-      expect(mergedAttribute.color, equals(const ColorDto(Colors.white)));
+      expect(mergedAttribute.color, equals(const ColorMix(Colors.white)));
       expect(mergedAttribute.grade, equals(32));
       expect(mergedAttribute.opticalSize, equals(32));
       expect(mergedAttribute.fill, equals(32));
@@ -72,13 +72,13 @@ void main() {
         mergedAttribute.shadows,
         equals(
           [
-            const ShadowDto(
-              color: ColorDto(
+            const ShadowMix(
+              color: ColorMix(
                 Colors.black,
               ),
             ),
-            const ShadowDto(
-              color: ColorDto(Colors.white),
+            const ShadowMix(
+              color: ColorMix(Colors.white),
             ),
           ],
         ),
@@ -87,19 +87,19 @@ void main() {
 
     test('props should return a list of size and color', () {
       const size = 24.0;
-      const color = ColorDto(Colors.black);
+      const color = ColorMix(Colors.black);
       const applyTextScaling = true;
       const fill = 2.0;
       const grade = 2.0;
       const opticalSize = 2.0;
       const shadows = [
-        ShadowDto(
-          color: ColorDto(
+        ShadowMix(
+          color: ColorMix(
             Colors.black,
           ),
         ),
-        ShadowDto(
-          color: ColorDto(Colors.black),
+        ShadowMix(
+          color: ColorMix(Colors.black),
         ),
       ];
       const textDirection = TextDirection.ltr;

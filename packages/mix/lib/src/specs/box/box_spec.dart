@@ -3,8 +3,8 @@ import 'package:flutter/widgets.dart';
 import 'package:mix_annotations/mix_annotations.dart';
 
 import '../../attributes/animated/animated_data.dart';
-import '../../attributes/animated/animated_data_dto.dart';
 import '../../attributes/animated/animated_util.dart';
+import '../../attributes/animated/mix_animated_data.dart';
 import '../../attributes/constraints/constraints_dto.dart';
 import '../../attributes/decoration/decoration_dto.dart';
 import '../../attributes/enum/enum_util.dart';
@@ -25,7 +25,7 @@ import 'box_widget.dart';
 part 'box_spec.g.dart';
 
 const _constraints = MixableFieldUtility(
-  type: BoxConstraints,
+  type: BoxConstraintsMix,
   properties: [
     (path: 'minWidth', alias: 'minWidth'),
     (path: 'maxWidth', alias: 'maxWidth'),
@@ -34,9 +34,9 @@ const _constraints = MixableFieldUtility(
   ],
 );
 
-const _foreground = MixableFieldUtility(type: BoxDecoration);
+const _foreground = MixableFieldUtility(type: BoxDecorationMix);
 const _boxDecor = MixableFieldUtility(
-  type: BoxDecoration,
+  type: BoxDecorationMix,
   properties: [
     (path: 'color', alias: 'color'),
     (path: 'border', alias: 'border'),

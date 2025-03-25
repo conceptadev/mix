@@ -7,7 +7,7 @@ import '../../../helpers/testing_utils.dart';
 
 void main() {
   group('StrutStyleUtility', () {
-    final strutStyleUtility = StrutStyleUtility(UtilityTestAttribute.new);
+    final strutStyleUtility = StrutStyleMixUtility(UtilityTestAttribute.new);
     test('callable', () {
       final strutStyle = strutStyleUtility(
         fontFamily: 'Roboto',
@@ -20,7 +20,7 @@ void main() {
       );
 
       expect(strutStyleUtility(), isA<UtilityTestAttribute>());
-      expect(strutStyle.value, isA<StrutStyleDto>());
+      expect(strutStyle.value, isA<StrutStyleMix>());
       expect(strutStyle.value.fontFamily, 'Roboto');
       expect(strutStyle.value.fontSize, 24.0);
       expect(strutStyle.value.height, 2.0);
@@ -76,7 +76,7 @@ void main() {
       final strutStyle = RandomGenerator.strutStyle();
       final attribute = strutStyleUtility.as(strutStyle);
 
-      expect(attribute.value, isA<StrutStyleDto>());
+      expect(attribute.value, isA<StrutStyleMix>());
       expect(attribute.value, equals(strutStyle.toDto()));
       expect(attribute.value.resolve(EmptyMixData), equals(strutStyle));
     });

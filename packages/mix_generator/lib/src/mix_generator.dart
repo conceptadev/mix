@@ -31,10 +31,12 @@ import 'core/spec/spec_attribute_builder.dart';
 import 'core/spec/spec_mixin_builder.dart';
 import 'core/spec/spec_tween_builder.dart';
 import 'core/spec/spec_utility_builder.dart';
+import 'core/type_registry.dart';
 import 'core/utils/annotation_utils.dart';
 import 'core/utils/dart_type_utils.dart';
 import 'core/utils/extensions.dart';
 import 'core/utils/utility_code_generator.dart';
+import 'generators/mixable_tokens_generator.dart';
 
 /// A consolidated generator that processes all Mix annotations
 /// (MixableSpec, MixableProperty, MixableUtility, MixableToken)
@@ -53,127 +55,127 @@ class MixGenerator extends Generator {
 
   // Maps of resolvable class names and utility classes
   // These are extracted from type_registry.dart to maintain compatibility
-  final Map<String, String> _resolvables = {
-    'BoxSpecAttribute': 'BoxSpec',
-    'ImageSpecAttribute': 'ImageSpec',
-    'TextSpecAttribute': 'TextSpec',
-    'FlexSpecAttribute': 'FlexSpec',
-    'BoxDecorationDto': 'BoxDecoration',
-    'AnimatedDataDto': 'AnimatedData',
-    'BoxBorderDto': 'BoxBorder',
-    'BorderRadiusGeometryDto': 'BorderRadiusGeometry',
-    'BorderSideDto': 'BorderSide',
-    'BoxShadowDto': 'BoxShadow',
-    'ColorDto': 'Color',
-    'ConstraintsDto': 'Constraints',
-    'DecorationDto': 'Decoration',
-    'DecorationImageDto': 'DecorationImage',
-    'EdgeInsetsGeometryDto': 'EdgeInsetsGeometry',
-    'GradientDto': 'Gradient',
-    'LinearBorderEdgeDto': 'LinearBorderEdge',
-    'OutlinedBorderDto': 'OutlinedBorder',
-    'RoundedRectangleBorderDto': 'RoundedRectangleBorder',
-    'ShadowDto': 'Shadow',
-    'SpaceDto': 'Space',
-    'ShapeBorderDto': 'ShapeBorder',
-    'SpacingSideDto': 'SpacingSide',
-    'StrutStyleDto': 'StrutStyle',
-    'TextDirectiveDto': 'TextDirective',
-    'TextHeightBehaviorDto': 'TextHeightBehavior',
-    'TextStyleDto': 'TextStyle',
-    'WidgetModifiersDataDto': 'WidgetModifiersData',
-    'BorderDto': 'Border',
-    'BorderRadiusDto': 'BorderRadius',
-    'EdgeInsetsDto': 'EdgeInsets',
-    'BoxConstraintsDto': 'BoxConstraints',
-  };
+  // final Map<String, String> _resolvables = {
+  //   'BoxSpecAttribute': 'BoxSpec',
+  //   'ImageSpecAttribute': 'ImageSpec',
+  //   'TextSpecAttribute': 'TextSpec',
+  //   'FlexSpecAttribute': 'FlexSpec',
+  //   'BoxDecorationDto': 'BoxDecoration',
+  //   'AnimatedDataDto': 'AnimatedData',
+  //   'BoxBorderMix': 'BoxBorder',
+  //   'BorderRadiusGeometryMix': 'BorderRadiusGeometry',
+  //   'BorderSideMix': 'BorderSide',
+  //   'BoxShadowDto': 'BoxShadow',
+  //   'ColorDto': 'Color',
+  //   'ConstraintsDto': 'Constraints',
+  //   'DecorationDto': 'Decoration',
+  //   'DecorationImageDto': 'DecorationImage',
+  //   'EdgeInsetsGeometryDto': 'EdgeInsetsGeometry',
+  //   'GradientDto': 'Gradient',
+  //   'LinearBorderEdgeMix': 'LinearBorderEdge',
+  //   'OutlinedBorderMix': 'OutlinedBorder',
+  //   'RoundedRectangleBorderMix': 'RoundedRectangleBorder',
+  //   'ShadowDto': 'Shadow',
+  //   'SpaceDto': 'Space',
+  //   'ShapeBorderMix': 'ShapeBorder',
+  //   'SpacingSideDto': 'SpacingSide',
+  //   'StrutStyleDto': 'StrutStyle',
+  //   'TextDirectiveDto': 'TextDirective',
+  //   'TextHeightBehaviorDto': 'TextHeightBehavior',
+  //   'TextStyleDto': 'TextStyle',
+  //   'WidgetModifiersDataDto': 'WidgetModifiersData',
+  //   'BorderMix': 'Border',
+  //   'BorderRadiusMix': 'BorderRadius',
+  //   'EdgeInsetsDto': 'EdgeInsets',
+  //   'BoxConstraintsDto': 'BoxConstraints',
+  // };
 
-  final Map<String, String> _utilities = {
-    'AlignmentUtility': 'Alignment',
-    'AlignmentDirectionalUtility': 'AlignmentDirectional',
-    'AlignmentGeometryUtility': 'AlignmentGeometry',
-    'AnimatedUtility': 'AnimatedData',
-    'AxisUtility': 'Axis',
-    'BoolUtility': 'bool',
-    'BlendModeUtility': 'BlendMode',
-    'BorderStyleUtility': 'BorderStyle',
-    'BoxConstraintsUtility': 'BoxConstraints',
-    'BoxFitUtility': 'BoxFit',
-    'BoxDecorationUtility': 'BoxDecoration',
-    'BoxShadowListUtility': 'List<BoxShadow>',
-    'BoxShapeUtility': 'BoxShape',
-    'ClipUtility': 'Clip',
-    'ColorUtility': 'Color',
-    'ColorListUtility': 'List<ColorDto>',
-    'ConstraintsUtility': 'Constraints',
-    'CrossAxisAlignmentUtility': 'CrossAxisAlignment',
-    'CurveUtility': 'Curve',
-    'DecorationUtility': 'Decoration',
-    'DoubleUtility': 'double',
-    'DurationUtility': 'Duration',
-    'EdgeInsetsGeometryUtility': 'EdgeInsetsGeometry',
-    'FlexFitUtility': 'FlexFit',
-    'FontFeatureUtility': 'FontFeature',
-    'FontStyleUtility': 'FontStyle',
-    'FontWeightUtility': 'FontWeight',
-    'GapUtility': 'SpacingSide',
-    'GradientUtility': 'Gradient',
-    'GradientTransformUtility': 'GradientTransform',
-    'ImageProviderUtility': 'ImageProvider<Object>',
-    'ImageRepeatUtility': 'ImageRepeat',
-    'IntUtility': 'int',
-    'ListUtility': 'List',
-    'MainAxisAlignmentUtility': 'MainAxisAlignment',
-    'MainAxisSizeUtility': 'MainAxisSize',
-    'Matrix4Utility': 'Matrix4',
-    'OffsetUtility': 'Offset',
-    'RadiusUtility': 'Radius',
-    'RectUtility': 'Rect',
-    'ShadowListUtility': 'List<ShadowDto>',
-    'SpecModifierUtility': 'WidgetModifiersData',
-    'StackFitUtility': 'StackFit',
-    'ShapeBorderUtility': 'ShapeBorder',
-    'SpacingUtility': 'EdgeInsetsGeometry',
-    'EdgeInsetsUtility': 'EdgeInsets',
-    'StringUtility': 'String',
-    'TableBorderUtility': 'TableBorder',
-    'TableCellVerticalAlignmentUtility': 'TableCellVerticalAlignment',
-    'TableColumnWidthUtility': 'TableColumnWidth',
-    'TextAlignUtility': 'TextAlign',
-    'TextBaselineUtility': 'TextBaseline',
-    'TextDecorationUtility': 'TextDecoration',
-    'TextDecorationStyleUtility': 'TextDecorationStyle',
-    'TextDirectionUtility': 'TextDirection',
-    'TextDirectiveUtility': 'TextDirective',
-    'TextLeadingDistributionUtility': 'TextLeadingDistribution',
-    'TextOverflowUtility': 'TextOverflow',
-    'TextScalerUtility': 'TextScaler',
-    'TextWidthBasisUtility': 'TextWidthBasis',
-    'TileModeUtility': 'TileMode',
-    'VerticalDirectionUtility': 'VerticalDirection',
-    'WidgetModifiersUtility': 'WidgetModifiersData',
-    'WrapAlignmentUtility': 'WrapAlignment',
-    'FilterQualityUtility': 'FilterQuality',
-    'BorderRadiusGeometryUtility': 'BorderRadiusGeometry',
-    'BorderSideUtility': 'BorderSide',
-    'BoxBorderUtility': 'BoxBorder',
-    'DecorationImageUtility': 'DecorationImage',
-    'LinearBorderEdgeUtility': 'LinearBorderEdge',
-    'StrutStyleUtility': 'StrutStyle',
-    'TextHeightBehaviorUtility': 'TextHeightBehavior',
-    'TextStyleUtility': 'TextStyle',
-    'PaintUtility': 'Paint',
-    'ScrollPhysicsUtility': 'ScrollPhysics',
-    'MouseCursorUtility': 'MouseCursor',
-  };
+  // final Map<String, String> _utilities = {
+  //   'AlignmentUtility': 'Alignment',
+  //   'AlignmentDirectionalUtility': 'AlignmentDirectional',
+  //   'AlignmentGeometryUtility': 'AlignmentGeometry',
+  //   'AnimatedUtility': 'AnimatedData',
+  //   'AxisUtility': 'Axis',
+  //   'BoolUtility': 'bool',
+  //   'BlendModeUtility': 'BlendMode',
+  //   'BorderStyleUtility': 'BorderStyle',
+  //   'BoxConstraintsUtility': 'BoxConstraints',
+  //   'BoxFitUtility': 'BoxFit',
+  //   'BoxDecorationUtility': 'BoxDecoration',
+  //   'BoxShadowListUtility': 'List<BoxShadow>',
+  //   'BoxShapeUtility': 'BoxShape',
+  //   'ClipUtility': 'Clip',
+  //   'ColorUtility': 'Color',
+  //   'ColorListUtility': 'List<ColorDto>',
+  //   'ConstraintsUtility': 'Constraints',
+  //   'CrossAxisAlignmentUtility': 'CrossAxisAlignment',
+  //   'CurveUtility': 'Curve',
+  //   'DecorationUtility': 'Decoration',
+  //   'DoubleUtility': 'double',
+  //   'DurationUtility': 'Duration',
+  //   'EdgeInsetsGeometryUtility': 'EdgeInsetsGeometry',
+  //   'FlexFitUtility': 'FlexFit',
+  //   'FontFeatureUtility': 'FontFeature',
+  //   'FontStyleUtility': 'FontStyle',
+  //   'FontWeightUtility': 'FontWeight',
+  //   'GapUtility': 'SpacingSide',
+  //   'GradientUtility': 'Gradient',
+  //   'GradientTransformUtility': 'GradientTransform',
+  //   'ImageProviderUtility': 'ImageProvider<Object>',
+  //   'ImageRepeatUtility': 'ImageRepeat',
+  //   'IntUtility': 'int',
+  //   'ListUtility': 'List',
+  //   'MainAxisAlignmentUtility': 'MainAxisAlignment',
+  //   'MainAxisSizeUtility': 'MainAxisSize',
+  //   'Matrix4Utility': 'Matrix4',
+  //   'OffsetUtility': 'Offset',
+  //   'RadiusUtility': 'Radius',
+  //   'RectUtility': 'Rect',
+  //   'ShadowListUtility': 'List<ShadowDto>',
+  //   'SpecModifierUtility': 'WidgetModifiersData',
+  //   'StackFitUtility': 'StackFit',
+  //   'ShapeBorderMixUtility': 'ShapeBorder',
+  //   'SpacingUtility': 'EdgeInsetsGeometry',
+  //   'EdgeInsetsUtility': 'EdgeInsets',
+  //   'StringUtility': 'String',
+  //   'TableBorderUtility': 'TableBorder',
+  //   'TableCellVerticalAlignmentUtility': 'TableCellVerticalAlignment',
+  //   'TableColumnWidthUtility': 'TableColumnWidth',
+  //   'TextAlignUtility': 'TextAlign',
+  //   'TextBaselineUtility': 'TextBaseline',
+  //   'TextDecorationUtility': 'TextDecoration',
+  //   'TextDecorationStyleUtility': 'TextDecorationStyle',
+  //   'TextDirectionUtility': 'TextDirection',
+  //   'TextDirectiveUtility': 'TextDirective',
+  //   'TextLeadingDistributionUtility': 'TextLeadingDistribution',
+  //   'TextOverflowUtility': 'TextOverflow',
+  //   'TextScalerUtility': 'TextScaler',
+  //   'TextWidthBasisUtility': 'TextWidthBasis',
+  //   'TileModeUtility': 'TileMode',
+  //   'VerticalDirectionUtility': 'VerticalDirection',
+  //   'WidgetModifiersUtility': 'WidgetModifiersData',
+  //   'WrapAlignmentUtility': 'WrapAlignment',
+  //   'FilterQualityUtility': 'FilterQuality',
+  //   'BorderRadiusGeometryMixUtility': 'BorderRadiusGeometry',
+  //   'BorderSideMixUtility': 'BorderSide',
+  //   'BoxBorderMixUtility': 'BoxBorder',
+  //   'DecorationImageUtility': 'DecorationImage',
+  //   'LinearBorderEdgeMixUtility': 'LinearBorderEdge',
+  //   'StrutStyleUtility': 'StrutStyle',
+  //   'TextHeightBehaviorUtility': 'TextHeightBehavior',
+  //   'TextStyleUtility': 'TextStyle',
+  //   'PaintUtility': 'Paint',
+  //   'ScrollPhysicsUtility': 'ScrollPhysics',
+  //   'MouseCursorUtility': 'MouseCursor',
+  // };
 
-  final Set<String> _tryToMerge = {
-    'BoxBorderDto',
-    'DecorationDto',
-    'EdgeInsetsGeometryDto',
-    'GradientDto',
-    'ShapeBorderDto',
-  };
+  // final Set<String> _tryToMerge = {
+  //   'BoxBorderDto',
+  //   'DecorationDto',
+  //   'EdgeInsetsGeometryDto',
+  //   'GradientDto',
+  //   'ShapeBorderDto',
+  // };
 
   // Map to store types discovered during the generation phase
   final Map<String, String> _discoveredTypes = {};
@@ -448,19 +450,19 @@ class MixGenerator extends Generator {
     types.forEach((generatedType, baseType) {
       if (generatedType.endsWith('Utility')) {
         // Add to utilities map - Utility types map to their base type
-        _utilities[generatedType] = baseType;
+        utilities[generatedType] = baseType;
       } else if (generatedType.endsWith('Attribute')) {
         // Add to resolvables map - Attributes map to their Spec class
-        _resolvables[generatedType] = baseType;
+        resolvables[generatedType] = baseType;
       } else if (generatedType.endsWith('Dto')) {
         // Add to resolvables map - DTOs map to their Flutter type
         final flutterType = baseType;
-        _resolvables[generatedType] = flutterType;
+        resolvables[generatedType] = flutterType;
 
         // Also add a utility for this DTO if one doesn't already exist
         final utilityName = '${baseType}Utility';
-        if (!_utilities.containsKey(utilityName)) {
-          _utilities[utilityName] = baseType;
+        if (!utilities.containsKey(utilityName)) {
+          utilities[utilityName] = baseType;
         }
       }
     });
@@ -534,11 +536,16 @@ class MixGenerator extends Generator {
     buffer.writeln();
   }
 
-  void _generateTokenCode(TokensMetadata metadata, StringBuffer buffer) {
+  void _generateTokenCode(
+    TokensMetadata metadata,
+    StringBuffer buffer,
+    BuildStep buildStep,
+  ) {
     // Generate token struct and methods
     // This is a placeholder - the actual implementation would depend on your token generation logic
     buffer.writeln("// Token code for ${metadata.name}");
-
+    final MixableTokensGenerator generator = MixableTokensGenerator();
+    buffer.writeln(generator.generateForMetadata(metadata, buildStep));
     // Logic to generate token classes and extensions would go here
     // This would likely involve extracting code from MixableTokensGenerator
 
@@ -574,8 +581,8 @@ class MixGenerator extends Generator {
     if (TypeUtils.isResolvable(elementType) && elementType.element != null) {
       final dtoName = elementType.element!.name!;
       // Check if the DTO name exists in the resolvables map
-      if (_resolvables.containsKey(dtoName)) {
-        dartType = _resolvables[dtoName]!;
+      if (resolvables.containsKey(dtoName)) {
+        dartType = resolvables[dtoName]!;
       } else {
         _logger.fine('No Flutter type found for DTO: $dtoName');
       }
@@ -586,7 +593,7 @@ class MixGenerator extends Generator {
     final flutterListTypeString = dartType != null ? 'List<$dartType>' : null;
 
     // First check for a direct utility mapping for the list type
-    for (final entry in _utilities.entries) {
+    for (final entry in utilities.entries) {
       // Check against both DTO and Flutter type list strings
       if (entry.value == listTypeString) {
         return entry.key;
@@ -640,7 +647,7 @@ class MixGenerator extends Generator {
     }
 
     // Check for a direct DTO mapping
-    for (final entry in _resolvables.entries) {
+    for (final entry in resolvables.entries) {
       if (entry.value == typeString) {
         return entry.key;
       }
@@ -686,12 +693,12 @@ class MixGenerator extends Generator {
 
     // For DTO types, get the resolved type for utility mapping in real code
     String resolvedTypeString = typeString;
-    if (_resolvables.containsKey(typeString)) {
-      resolvedTypeString = _resolvables[typeString]!;
+    if (resolvables.containsKey(typeString)) {
+      resolvedTypeString = resolvables[typeString]!;
     }
 
     // Check for a direct utility mapping using the resolved type
-    for (final entry in _utilities.entries) {
+    for (final entry in utilities.entries) {
       if (entry.value == resolvedTypeString) {
         return entry.key;
       }
@@ -836,7 +843,7 @@ class MixGenerator extends Generator {
         } else if (metadata is UtilityMetadata) {
           _generateUtilityCode(metadata, buffer);
         } else if (metadata is TokensMetadata) {
-          _generateTokenCode(metadata, buffer);
+          _generateTokenCode(metadata, buffer, buildStep);
         }
       }
 

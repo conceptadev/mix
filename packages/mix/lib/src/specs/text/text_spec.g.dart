@@ -182,17 +182,17 @@ mixin _$TextSpec on Spec<TextSpec> {
 /// the [TextSpec] constructor.
 class TextSpecAttribute extends SpecAttribute<TextSpec> with Diagnosticable {
   final TextOverflow? overflow;
-  final StrutStyleDto? strutStyle;
+  final StrutStyleMix? strutStyle;
   final TextAlign? textAlign;
   final double? textScaleFactor;
   final TextScaler? textScaler;
   final int? maxLines;
-  final TextStyleDto? style;
+  final TextStyleMix? style;
   final TextWidthBasis? textWidthBasis;
-  final TextHeightBehaviorDto? textHeightBehavior;
+  final TextHeightBehaviorMix? textHeightBehavior;
   final TextDirection? textDirection;
   final bool? softWrap;
-  final TextDirectiveDto? directive;
+  final TextDirectiveMix? directive;
 
   const TextSpecAttribute({
     this.overflow,
@@ -335,7 +335,7 @@ class TextSpecUtility<T extends Attribute>
   late final overflow = TextOverflowUtility((v) => only(overflow: v));
 
   /// Utility for defining [TextSpecAttribute.strutStyle]
-  late final strutStyle = StrutStyleUtility((v) => only(strutStyle: v));
+  late final strutStyle = StrutStyleMixUtility((v) => only(strutStyle: v));
 
   /// Utility for defining [TextSpecAttribute.textAlign]
   late final textAlign = TextAlignUtility((v) => only(textAlign: v));
@@ -350,7 +350,7 @@ class TextSpecUtility<T extends Attribute>
   late final maxLines = IntUtility((v) => only(maxLines: v));
 
   /// Utility for defining [TextSpecAttribute.style]
-  late final style = TextStyleUtility((v) => only(style: v));
+  late final style = TextStyleMixUtility((v) => only(style: v));
 
   /// Utility for defining [TextSpecAttribute.style.color]
   late final color = style.color;
@@ -421,7 +421,7 @@ class TextSpecUtility<T extends Attribute>
 
   /// Utility for defining [TextSpecAttribute.textHeightBehavior]
   late final textHeightBehavior =
-      TextHeightBehaviorUtility((v) => only(textHeightBehavior: v));
+      TextHeightBehaviorMixUtility((v) => only(textHeightBehavior: v));
 
   /// Utility for defining [TextSpecAttribute.textDirection]
   late final textDirection =
@@ -431,7 +431,7 @@ class TextSpecUtility<T extends Attribute>
   late final softWrap = BoolUtility((v) => only(softWrap: v));
 
   /// Utility for defining [TextSpecAttribute.directive]
-  late final directive = TextDirectiveUtility((v) => only(directive: v));
+  late final directive = TextDirectiveMixUtility((v) => only(directive: v));
 
   /// Utility for defining [TextSpecAttribute.directive.uppercase]
   late final uppercase = directive.uppercase;
@@ -449,7 +449,7 @@ class TextSpecUtility<T extends Attribute>
   late final sentenceCase = directive.sentenceCase;
 
   /// Utility for defining [TextSpecAttribute.animated]
-  late final animated = AnimatedUtility((v) => only(animated: v));
+  late final animated = AnimatedMixUtility((v) => only(animated: v));
 
   /// Utility for defining [TextSpecAttribute.modifiers]
   late final wrap = SpecModifierUtility((v) => only(modifiers: v));
@@ -466,19 +466,19 @@ class TextSpecUtility<T extends Attribute>
   @override
   T only({
     TextOverflow? overflow,
-    StrutStyleDto? strutStyle,
+    StrutStyleMix? strutStyle,
     TextAlign? textAlign,
     double? textScaleFactor,
     TextScaler? textScaler,
     int? maxLines,
-    TextStyleDto? style,
+    TextStyleMix? style,
     TextWidthBasis? textWidthBasis,
-    TextHeightBehaviorDto? textHeightBehavior,
+    TextHeightBehaviorMix? textHeightBehavior,
     TextDirection? textDirection,
     bool? softWrap,
-    TextDirectiveDto? directive,
-    AnimatedDataDto? animated,
-    WidgetModifiersDataDto? modifiers,
+    TextDirectiveMix? directive,
+    AnimatedDataMix? animated,
+    WidgetModifiersDataMix? modifiers,
   }) {
     return builder(TextSpecAttribute(
       overflow: overflow,

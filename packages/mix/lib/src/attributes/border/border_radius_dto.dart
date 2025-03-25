@@ -10,7 +10,7 @@ import '../../internal/mix_error.dart';
 
 part 'border_radius_dto.g.dart';
 
-/// Represents a [StyleProperty] Data transfer object of [BorderRadiusGeometry]
+/// Represents a [Mixable] Data transfer object of [BorderRadiusGeometry]
 ///
 /// This is used to allow for resolvable value tokens, and also the correct
 /// merge and combining behavior. It allows to be merged, and resolved to a [BorderRadiusGeometry]
@@ -21,9 +21,9 @@ part 'border_radius_dto.g.dart';
 /// See also:
 /// - [BorderRadiusGeometry], which is the Flutter counterpart of this class.
 @immutable
-sealed class BorderRadiusGeometryDto<T extends BorderRadiusGeometry>
-    extends StyleProperty<T> with Diagnosticable {
-  const BorderRadiusGeometryDto();
+sealed class BorderRadiusGeometryMix<T extends BorderRadiusGeometry>
+    extends Mixable<T> with Diagnosticable {
+  const BorderRadiusGeometryMix();
 
   Radius? get topLeft;
   Radius? get topRight;
@@ -41,7 +41,7 @@ sealed class BorderRadiusGeometryDto<T extends BorderRadiusGeometry>
   }
 
   @override
-  BorderRadiusGeometryDto<T> merge(covariant BorderRadiusGeometryDto<T>? other);
+  BorderRadiusGeometryMix<T> merge(covariant BorderRadiusGeometryMix<T>? other);
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
@@ -59,8 +59,8 @@ sealed class BorderRadiusGeometryDto<T extends BorderRadiusGeometry>
 }
 
 @MixableProperty(components: GeneratedPropertyComponents.skipUtility)
-final class BorderRadiusDto extends BorderRadiusGeometryDto<BorderRadius>
-    with _$BorderRadiusDto {
+final class BorderRadiusMix extends BorderRadiusGeometryMix<BorderRadius>
+    with _$BorderRadiusMix {
   @override
   final Radius? topLeft;
   @override
@@ -70,7 +70,7 @@ final class BorderRadiusDto extends BorderRadiusGeometryDto<BorderRadius>
   @override
   final Radius? bottomRight;
 
-  const BorderRadiusDto({
+  const BorderRadiusMix({
     this.topLeft,
     this.topRight,
     this.bottomLeft,
@@ -98,9 +98,9 @@ final class BorderRadiusDto extends BorderRadiusGeometryDto<BorderRadius>
 }
 
 @MixableProperty(components: GeneratedPropertyComponents.skipUtility)
-final class BorderRadiusDirectionalDto
-    extends BorderRadiusGeometryDto<BorderRadiusDirectional>
-    with _$BorderRadiusDirectionalDto {
+final class BorderRadiusDirectionalMix
+    extends BorderRadiusGeometryMix<BorderRadiusDirectional>
+    with _$BorderRadiusDirectionalMix {
   @override
   final Radius? topStart;
   @override
@@ -110,7 +110,7 @@ final class BorderRadiusDirectionalDto
   @override
   final Radius? bottomEnd;
 
-  const BorderRadiusDirectionalDto({
+  const BorderRadiusDirectionalMix({
     this.topStart,
     this.topEnd,
     this.bottomStart,
@@ -138,7 +138,7 @@ final class BorderRadiusDirectionalDto
 }
 
 extension BorderRadiusGeometryMixExt on BorderRadiusGeometry {
-  BorderRadiusGeometryDto toDto() {
+  BorderRadiusGeometryMix toDto() {
     final self = this;
     if (self is BorderRadius) return self.toDto();
     if (self is BorderRadiusDirectional) return self.toDto();
