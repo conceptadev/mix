@@ -3,8 +3,10 @@
 part of 'segmented_control.dart';
 
 // **************************************************************************
-// MixableSpecGenerator
+// MixGenerator
 // **************************************************************************
+
+// GENERATED CODE - DO NOT MODIFY BY HAND
 
 /// A mixin that provides spec functionality for [SegmentedControlSpec].
 mixin _$SegmentedControlSpec on Spec<SegmentedControlSpec> {

@@ -3,8 +3,10 @@
 part of 'accordion.dart';
 
 // **************************************************************************
-// MixableSpecGenerator
+// MixGenerator
 // **************************************************************************
+
+// GENERATED CODE - DO NOT MODIFY BY HAND
 
 /// A mixin that provides spec functionality for [AccordionSpec].
 mixin _$AccordionSpec on Spec<AccordionSpec> {

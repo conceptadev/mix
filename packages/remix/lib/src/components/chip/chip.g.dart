@@ -3,8 +3,10 @@
 part of 'chip.dart';
 
 // **************************************************************************
-// MixableSpecGenerator
+// MixGenerator
 // **************************************************************************
+
+// GENERATED CODE - DO NOT MODIFY BY HAND
 
 /// A mixin that provides spec functionality for [ChipSpec].
 mixin _$ChipSpec on Spec<ChipSpec> {

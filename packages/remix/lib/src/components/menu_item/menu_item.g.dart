@@ -3,8 +3,10 @@
 part of 'menu_item.dart';
 
 // **************************************************************************
-// MixableSpecGenerator
+// MixGenerator
 // **************************************************************************
+
+// GENERATED CODE - DO NOT MODIFY BY HAND
 
 /// A mixin that provides spec functionality for [MenuItemSpec].
 mixin _$MenuItemSpec on Spec<MenuItemSpec> {

@@ -15,6 +15,7 @@ import 'package:mix_annotations/mix_annotations.dart';
 
 import '../../core/theme/remix_theme.dart';
 import '../../helpers/component_builder.dart';
+import 'attributes/attributes.dart';
 
 part 'textfield.g.dart';
 part 'textfield_style.dart';
@@ -41,12 +42,34 @@ class TextFieldSpec extends Spec<TextFieldSpec>
   final Color backgroundCursorColor;
   final Color? selectionColor;
 
+  @MixableField(
+    utilities: [
+      MixableFieldUtility(
+        type: BoxHeightStyleUtility,
+      ),
+    ],
+  )
   final BoxHeightStyle selectionHeightStyle;
+
+  @MixableField(
+    utilities: [
+      MixableFieldUtility(
+        type: BoxWidthStyleUtility,
+      ),
+    ],
+  )
   final BoxWidthStyle selectionWidthStyle;
 
   final EdgeInsets scrollPadding;
   final Clip clipBehavior;
 
+  @MixableField(
+    utilities: [
+      MixableFieldUtility(
+        type: Brightness,
+      ),
+    ],
+  )
   final Brightness keyboardAppearance;
   final Color? autocorrectionTextRectColor;
   final FlexBoxSpec outerContainer;

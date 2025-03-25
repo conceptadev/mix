@@ -170,6 +170,30 @@ extension ${_kBuildContextExtensionName(metadata.name)} on BuildContext {
     return output.toString();
   }
 
+  static String generateTokenCode(TokensMetadata metadata) {
+    final tokensGenerator = MixableTokensGenerator();
+    final output = StringBuffer();
+
+    // Generate token struct
+    output.writeln(tokensGenerator._generateTokenStruct(metadata));
+
+    // Generate token to data method
+    output.writeln(tokensGenerator._generateTokenToDataMethod(metadata));
+
+    // Generate utility extension if enabled
+    if (metadata.utilityExtension) {
+      output.writeln(tokensGenerator._generateTokenUtilityExtension(metadata));
+    }
+
+    // Generate context extensions if enabled
+    if (metadata.contextExtension) {
+      output.writeln(tokensGenerator._generateBuildContextMethods(metadata));
+      output.writeln(tokensGenerator._generateBuildContextExtension(metadata));
+    }
+
+    return output.toString();
+  }
+
   @override
   bool get allowAbstractClasses => false;
 
