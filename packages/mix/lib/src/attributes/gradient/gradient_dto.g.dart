@@ -8,16 +8,16 @@ part of 'gradient_dto.dart';
 
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-/// A mixin that provides DTO functionality for [LinearGradientMix].
-mixin _$LinearGradientMix
-    on Mixable<LinearGradient>, HasDefaultValue<LinearGradient> {
+/// A mixin that provides DTO functionality for [LinearGradientDto].
+mixin _$LinearGradientDto
+    on StyleProperty<LinearGradient>, HasDefaultValue<LinearGradient> {
   /// Resolves to [LinearGradient] using the provided [MixData].
   ///
   /// If a property is null in the [MixData], it falls back to the
   /// default value defined in the `defaultValue` for that property.
   ///
   /// ```dart
-  /// final linearGradient = LinearGradientMix(...).resolve(mix);
+  /// final linearGradient = LinearGradientDto(...).resolve(mix);
   /// ```
   @override
   LinearGradient resolve(MixData mix) {
@@ -32,19 +32,19 @@ mixin _$LinearGradientMix
     );
   }
 
-  /// Merges the properties of this [LinearGradientMix] with the properties of [other].
+  /// Merges the properties of this [LinearGradientDto] with the properties of [other].
   ///
   /// If [other] is null, returns this instance unchanged. Otherwise, returns a new
-  /// [LinearGradientMix] with the properties of [other] taking precedence over
+  /// [LinearGradientDto] with the properties of [other] taking precedence over
   /// the corresponding properties of this instance.
   ///
   /// Properties from [other] that are null will fall back
   /// to the values from this instance.
   @override
-  LinearGradientMix merge(LinearGradientMix? other) {
+  LinearGradientDto merge(LinearGradientDto? other) {
     if (other == null) return _$this;
 
-    return LinearGradientMix(
+    return LinearGradientDto(
       begin: other.begin ?? _$this.begin,
       end: other.end ?? _$this.end,
       tileMode: other.tileMode ?? _$this.tileMode,
@@ -54,10 +54,10 @@ mixin _$LinearGradientMix
     );
   }
 
-  /// The list of properties that constitute the state of this [LinearGradientMix].
+  /// The list of properties that constitute the state of this [LinearGradientDto].
   ///
   /// This property is used by the [==] operator and the [hashCode] getter to
-  /// compare two [LinearGradientMix] instances for equality.
+  /// compare two [LinearGradientDto] instances for equality.
   @override
   List<Object?> get props => [
         _$this.begin,
@@ -68,47 +68,47 @@ mixin _$LinearGradientMix
         _$this.stops,
       ];
 
-  /// Returns this instance as a [LinearGradientMix].
-  LinearGradientMix get _$this => this as LinearGradientMix;
+  /// Returns this instance as a [LinearGradientDto].
+  LinearGradientDto get _$this => this as LinearGradientDto;
 }
 
 /// Utility class for configuring [LinearGradient] properties.
 ///
 /// This class provides methods to set individual properties of a [LinearGradient].
 /// Use the methods of this class to configure specific properties of a [LinearGradient].
-class LinearGradientMixUtility<T extends Attribute>
-    extends DtoUtility<T, LinearGradientMix, LinearGradient> {
-  /// Utility for defining [LinearGradientMix.begin]
+class LinearGradientUtility<T extends Attribute>
+    extends DtoUtility<T, LinearGradientDto, LinearGradient> {
+  /// Utility for defining [LinearGradientDto.begin]
   late final begin = AlignmentGeometryUtility((v) => only(begin: v));
 
-  /// Utility for defining [LinearGradientMix.end]
+  /// Utility for defining [LinearGradientDto.end]
   late final end = AlignmentGeometryUtility((v) => only(end: v));
 
-  /// Utility for defining [LinearGradientMix.tileMode]
+  /// Utility for defining [LinearGradientDto.tileMode]
   late final tileMode = TileModeUtility((v) => only(tileMode: v));
 
-  /// Utility for defining [LinearGradientMix.transform]
-  late final transform = GradientTransformMixUtility((v) => only(transform: v));
+  /// Utility for defining [LinearGradientDto.transform]
+  late final transform = GradientTransformUtility((v) => only(transform: v));
 
-  /// Utility for defining [LinearGradientMix.colors]
-  late final colors = ColorListMixUtility((v) => only(colors: v));
+  /// Utility for defining [LinearGradientDto.colors]
+  late final colors = ColorListUtility((v) => only(colors: v));
 
-  /// Utility for defining [LinearGradientMix.stops]
+  /// Utility for defining [LinearGradientDto.stops]
   late final stops = ListUtility<T, double>((v) => only(stops: v));
 
-  LinearGradientMixUtility(super.builder) : super(valueToDto: (v) => v.toDto());
+  LinearGradientUtility(super.builder) : super(valueToDto: (v) => v.toDto());
 
-  /// Returns a new [LinearGradientMix] with the specified properties.
+  /// Returns a new [LinearGradientDto] with the specified properties.
   @override
   T only({
     AlignmentGeometry? begin,
     AlignmentGeometry? end,
     TileMode? tileMode,
     GradientTransform? transform,
-    List<ColorMix>? colors,
+    List<ColorDto>? colors,
     List<double>? stops,
   }) {
-    return builder(LinearGradientMix(
+    return builder(LinearGradientDto(
       begin: begin,
       end: end,
       tileMode: tileMode,
@@ -137,11 +137,11 @@ class LinearGradientMixUtility<T extends Attribute>
   }
 }
 
-/// Extension methods to convert [LinearGradient] to [LinearGradientMix].
+/// Extension methods to convert [LinearGradient] to [LinearGradientDto].
 extension LinearGradientMixExt on LinearGradient {
-  /// Converts this [LinearGradient] to a [LinearGradientMix].
-  LinearGradientMix toDto() {
-    return LinearGradientMix(
+  /// Converts this [LinearGradient] to a [LinearGradientDto].
+  LinearGradientDto toDto() {
+    return LinearGradientDto(
       begin: begin,
       end: end,
       tileMode: tileMode,
@@ -152,24 +152,24 @@ extension LinearGradientMixExt on LinearGradient {
   }
 }
 
-/// Extension methods to convert List<[LinearGradient]> to List<[LinearGradientMix]>.
+/// Extension methods to convert List<[LinearGradient]> to List<[LinearGradientDto]>.
 extension ListLinearGradientMixExt on List<LinearGradient> {
-  /// Converts this List<[LinearGradient]> to a List<[LinearGradientMix]>.
-  List<LinearGradientMix> toDto() {
+  /// Converts this List<[LinearGradient]> to a List<[LinearGradientDto]>.
+  List<LinearGradientDto> toDto() {
     return map((e) => e.toDto()).toList();
   }
 }
 
-/// A mixin that provides DTO functionality for [RadialGradientMix].
-mixin _$RadialGradientMix
-    on Mixable<RadialGradient>, HasDefaultValue<RadialGradient> {
+/// A mixin that provides DTO functionality for [RadialGradientDto].
+mixin _$RadialGradientDto
+    on StyleProperty<RadialGradient>, HasDefaultValue<RadialGradient> {
   /// Resolves to [RadialGradient] using the provided [MixData].
   ///
   /// If a property is null in the [MixData], it falls back to the
   /// default value defined in the `defaultValue` for that property.
   ///
   /// ```dart
-  /// final radialGradient = RadialGradientMix(...).resolve(mix);
+  /// final radialGradient = RadialGradientDto(...).resolve(mix);
   /// ```
   @override
   RadialGradient resolve(MixData mix) {
@@ -186,19 +186,19 @@ mixin _$RadialGradientMix
     );
   }
 
-  /// Merges the properties of this [RadialGradientMix] with the properties of [other].
+  /// Merges the properties of this [RadialGradientDto] with the properties of [other].
   ///
   /// If [other] is null, returns this instance unchanged. Otherwise, returns a new
-  /// [RadialGradientMix] with the properties of [other] taking precedence over
+  /// [RadialGradientDto] with the properties of [other] taking precedence over
   /// the corresponding properties of this instance.
   ///
   /// Properties from [other] that are null will fall back
   /// to the values from this instance.
   @override
-  RadialGradientMix merge(RadialGradientMix? other) {
+  RadialGradientDto merge(RadialGradientDto? other) {
     if (other == null) return _$this;
 
-    return RadialGradientMix(
+    return RadialGradientDto(
       center: other.center ?? _$this.center,
       radius: other.radius ?? _$this.radius,
       tileMode: other.tileMode ?? _$this.tileMode,
@@ -210,10 +210,10 @@ mixin _$RadialGradientMix
     );
   }
 
-  /// The list of properties that constitute the state of this [RadialGradientMix].
+  /// The list of properties that constitute the state of this [RadialGradientDto].
   ///
   /// This property is used by the [==] operator and the [hashCode] getter to
-  /// compare two [RadialGradientMix] instances for equality.
+  /// compare two [RadialGradientDto] instances for equality.
   @override
   List<Object?> get props => [
         _$this.center,
@@ -226,43 +226,43 @@ mixin _$RadialGradientMix
         _$this.stops,
       ];
 
-  /// Returns this instance as a [RadialGradientMix].
-  RadialGradientMix get _$this => this as RadialGradientMix;
+  /// Returns this instance as a [RadialGradientDto].
+  RadialGradientDto get _$this => this as RadialGradientDto;
 }
 
 /// Utility class for configuring [RadialGradient] properties.
 ///
 /// This class provides methods to set individual properties of a [RadialGradient].
 /// Use the methods of this class to configure specific properties of a [RadialGradient].
-class RadialGradientMixUtility<T extends Attribute>
-    extends DtoUtility<T, RadialGradientMix, RadialGradient> {
-  /// Utility for defining [RadialGradientMix.center]
+class RadialGradientUtility<T extends Attribute>
+    extends DtoUtility<T, RadialGradientDto, RadialGradient> {
+  /// Utility for defining [RadialGradientDto.center]
   late final center = AlignmentGeometryUtility((v) => only(center: v));
 
-  /// Utility for defining [RadialGradientMix.radius]
+  /// Utility for defining [RadialGradientDto.radius]
   late final radius = DoubleUtility((v) => only(radius: v));
 
-  /// Utility for defining [RadialGradientMix.tileMode]
+  /// Utility for defining [RadialGradientDto.tileMode]
   late final tileMode = TileModeUtility((v) => only(tileMode: v));
 
-  /// Utility for defining [RadialGradientMix.focal]
+  /// Utility for defining [RadialGradientDto.focal]
   late final focal = AlignmentGeometryUtility((v) => only(focal: v));
 
-  /// Utility for defining [RadialGradientMix.focalRadius]
+  /// Utility for defining [RadialGradientDto.focalRadius]
   late final focalRadius = DoubleUtility((v) => only(focalRadius: v));
 
-  /// Utility for defining [RadialGradientMix.transform]
-  late final transform = GradientTransformMixUtility((v) => only(transform: v));
+  /// Utility for defining [RadialGradientDto.transform]
+  late final transform = GradientTransformUtility((v) => only(transform: v));
 
-  /// Utility for defining [RadialGradientMix.colors]
-  late final colors = ColorListMixUtility((v) => only(colors: v));
+  /// Utility for defining [RadialGradientDto.colors]
+  late final colors = ColorListUtility((v) => only(colors: v));
 
-  /// Utility for defining [RadialGradientMix.stops]
+  /// Utility for defining [RadialGradientDto.stops]
   late final stops = ListUtility<T, double>((v) => only(stops: v));
 
-  RadialGradientMixUtility(super.builder) : super(valueToDto: (v) => v.toDto());
+  RadialGradientUtility(super.builder) : super(valueToDto: (v) => v.toDto());
 
-  /// Returns a new [RadialGradientMix] with the specified properties.
+  /// Returns a new [RadialGradientDto] with the specified properties.
   @override
   T only({
     AlignmentGeometry? center,
@@ -271,10 +271,10 @@ class RadialGradientMixUtility<T extends Attribute>
     AlignmentGeometry? focal,
     double? focalRadius,
     GradientTransform? transform,
-    List<ColorMix>? colors,
+    List<ColorDto>? colors,
     List<double>? stops,
   }) {
-    return builder(RadialGradientMix(
+    return builder(RadialGradientDto(
       center: center,
       radius: radius,
       tileMode: tileMode,
@@ -309,11 +309,11 @@ class RadialGradientMixUtility<T extends Attribute>
   }
 }
 
-/// Extension methods to convert [RadialGradient] to [RadialGradientMix].
+/// Extension methods to convert [RadialGradient] to [RadialGradientDto].
 extension RadialGradientMixExt on RadialGradient {
-  /// Converts this [RadialGradient] to a [RadialGradientMix].
-  RadialGradientMix toDto() {
-    return RadialGradientMix(
+  /// Converts this [RadialGradient] to a [RadialGradientDto].
+  RadialGradientDto toDto() {
+    return RadialGradientDto(
       center: center,
       radius: radius,
       tileMode: tileMode,
@@ -326,24 +326,24 @@ extension RadialGradientMixExt on RadialGradient {
   }
 }
 
-/// Extension methods to convert List<[RadialGradient]> to List<[RadialGradientMix]>.
+/// Extension methods to convert List<[RadialGradient]> to List<[RadialGradientDto]>.
 extension ListRadialGradientMixExt on List<RadialGradient> {
-  /// Converts this List<[RadialGradient]> to a List<[RadialGradientMix]>.
-  List<RadialGradientMix> toDto() {
+  /// Converts this List<[RadialGradient]> to a List<[RadialGradientDto]>.
+  List<RadialGradientDto> toDto() {
     return map((e) => e.toDto()).toList();
   }
 }
 
-/// A mixin that provides DTO functionality for [SweepGradientMix].
-mixin _$SweepGradientMix
-    on Mixable<SweepGradient>, HasDefaultValue<SweepGradient> {
+/// A mixin that provides DTO functionality for [SweepGradientDto].
+mixin _$SweepGradientDto
+    on StyleProperty<SweepGradient>, HasDefaultValue<SweepGradient> {
   /// Resolves to [SweepGradient] using the provided [MixData].
   ///
   /// If a property is null in the [MixData], it falls back to the
   /// default value defined in the `defaultValue` for that property.
   ///
   /// ```dart
-  /// final sweepGradient = SweepGradientMix(...).resolve(mix);
+  /// final sweepGradient = SweepGradientDto(...).resolve(mix);
   /// ```
   @override
   SweepGradient resolve(MixData mix) {
@@ -359,19 +359,19 @@ mixin _$SweepGradientMix
     );
   }
 
-  /// Merges the properties of this [SweepGradientMix] with the properties of [other].
+  /// Merges the properties of this [SweepGradientDto] with the properties of [other].
   ///
   /// If [other] is null, returns this instance unchanged. Otherwise, returns a new
-  /// [SweepGradientMix] with the properties of [other] taking precedence over
+  /// [SweepGradientDto] with the properties of [other] taking precedence over
   /// the corresponding properties of this instance.
   ///
   /// Properties from [other] that are null will fall back
   /// to the values from this instance.
   @override
-  SweepGradientMix merge(SweepGradientMix? other) {
+  SweepGradientDto merge(SweepGradientDto? other) {
     if (other == null) return _$this;
 
-    return SweepGradientMix(
+    return SweepGradientDto(
       center: other.center ?? _$this.center,
       startAngle: other.startAngle ?? _$this.startAngle,
       endAngle: other.endAngle ?? _$this.endAngle,
@@ -382,10 +382,10 @@ mixin _$SweepGradientMix
     );
   }
 
-  /// The list of properties that constitute the state of this [SweepGradientMix].
+  /// The list of properties that constitute the state of this [SweepGradientDto].
   ///
   /// This property is used by the [==] operator and the [hashCode] getter to
-  /// compare two [SweepGradientMix] instances for equality.
+  /// compare two [SweepGradientDto] instances for equality.
   @override
   List<Object?> get props => [
         _$this.center,
@@ -397,40 +397,40 @@ mixin _$SweepGradientMix
         _$this.stops,
       ];
 
-  /// Returns this instance as a [SweepGradientMix].
-  SweepGradientMix get _$this => this as SweepGradientMix;
+  /// Returns this instance as a [SweepGradientDto].
+  SweepGradientDto get _$this => this as SweepGradientDto;
 }
 
 /// Utility class for configuring [SweepGradient] properties.
 ///
 /// This class provides methods to set individual properties of a [SweepGradient].
 /// Use the methods of this class to configure specific properties of a [SweepGradient].
-class SweepGradientMixUtility<T extends Attribute>
-    extends DtoUtility<T, SweepGradientMix, SweepGradient> {
-  /// Utility for defining [SweepGradientMix.center]
+class SweepGradientUtility<T extends Attribute>
+    extends DtoUtility<T, SweepGradientDto, SweepGradient> {
+  /// Utility for defining [SweepGradientDto.center]
   late final center = AlignmentGeometryUtility((v) => only(center: v));
 
-  /// Utility for defining [SweepGradientMix.startAngle]
+  /// Utility for defining [SweepGradientDto.startAngle]
   late final startAngle = DoubleUtility((v) => only(startAngle: v));
 
-  /// Utility for defining [SweepGradientMix.endAngle]
+  /// Utility for defining [SweepGradientDto.endAngle]
   late final endAngle = DoubleUtility((v) => only(endAngle: v));
 
-  /// Utility for defining [SweepGradientMix.tileMode]
+  /// Utility for defining [SweepGradientDto.tileMode]
   late final tileMode = TileModeUtility((v) => only(tileMode: v));
 
-  /// Utility for defining [SweepGradientMix.transform]
-  late final transform = GradientTransformMixUtility((v) => only(transform: v));
+  /// Utility for defining [SweepGradientDto.transform]
+  late final transform = GradientTransformUtility((v) => only(transform: v));
 
-  /// Utility for defining [SweepGradientMix.colors]
-  late final colors = ColorListMixUtility((v) => only(colors: v));
+  /// Utility for defining [SweepGradientDto.colors]
+  late final colors = ColorListUtility((v) => only(colors: v));
 
-  /// Utility for defining [SweepGradientMix.stops]
+  /// Utility for defining [SweepGradientDto.stops]
   late final stops = ListUtility<T, double>((v) => only(stops: v));
 
-  SweepGradientMixUtility(super.builder) : super(valueToDto: (v) => v.toDto());
+  SweepGradientUtility(super.builder) : super(valueToDto: (v) => v.toDto());
 
-  /// Returns a new [SweepGradientMix] with the specified properties.
+  /// Returns a new [SweepGradientDto] with the specified properties.
   @override
   T only({
     AlignmentGeometry? center,
@@ -438,10 +438,10 @@ class SweepGradientMixUtility<T extends Attribute>
     double? endAngle,
     TileMode? tileMode,
     GradientTransform? transform,
-    List<ColorMix>? colors,
+    List<ColorDto>? colors,
     List<double>? stops,
   }) {
-    return builder(SweepGradientMix(
+    return builder(SweepGradientDto(
       center: center,
       startAngle: startAngle,
       endAngle: endAngle,
@@ -473,11 +473,11 @@ class SweepGradientMixUtility<T extends Attribute>
   }
 }
 
-/// Extension methods to convert [SweepGradient] to [SweepGradientMix].
+/// Extension methods to convert [SweepGradient] to [SweepGradientDto].
 extension SweepGradientMixExt on SweepGradient {
-  /// Converts this [SweepGradient] to a [SweepGradientMix].
-  SweepGradientMix toDto() {
-    return SweepGradientMix(
+  /// Converts this [SweepGradient] to a [SweepGradientDto].
+  SweepGradientDto toDto() {
+    return SweepGradientDto(
       center: center,
       startAngle: startAngle,
       endAngle: endAngle,
@@ -489,10 +489,10 @@ extension SweepGradientMixExt on SweepGradient {
   }
 }
 
-/// Extension methods to convert List<[SweepGradient]> to List<[SweepGradientMix]>.
+/// Extension methods to convert List<[SweepGradient]> to List<[SweepGradientDto]>.
 extension ListSweepGradientMixExt on List<SweepGradient> {
-  /// Converts this List<[SweepGradient]> to a List<[SweepGradientMix]>.
-  List<SweepGradientMix> toDto() {
+  /// Converts this List<[SweepGradient]> to a List<[SweepGradientDto]>.
+  List<SweepGradientDto> toDto() {
     return map((e) => e.toDto()).toList();
   }
 }

@@ -6,7 +6,7 @@ import '../../../helpers/testing_utils.dart';
 
 void main() {
   group('TextStyleUtility', () {
-    final textStyle = TextStyleMixUtility(UtilityTestAttribute.new);
+    final textStyle = TextStyleUtility(UtilityTestAttribute.new);
     test('call() creates TextStyleDto correctly', () {
       final yellowPaint = Paint()..color = Colors.yellow;
       final purplePaint = Paint()..color = Colors.purple;

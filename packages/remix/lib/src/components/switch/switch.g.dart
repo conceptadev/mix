@@ -3,10 +3,8 @@
 part of 'switch.dart';
 
 // **************************************************************************
-// MixGenerator
+// MixableSpecGenerator
 // **************************************************************************
-
-// GENERATED CODE - DO NOT MODIFY BY HAND
 
 /// A mixin that provides spec functionality for [SwitchSpec].
 mixin _$SwitchSpec on Spec<SwitchSpec> {
@@ -200,7 +198,7 @@ class SwitchSpecUtility<T extends Attribute>
   late final indicator = BoxSpecUtility((v) => only(indicator: v));
 
   /// Utility for defining [SwitchSpecAttribute.animated]
-  late final animated = AnimatedMixUtility((v) => only(animated: v));
+  late final animated = AnimatedUtility((v) => only(animated: v));
 
   /// Utility for defining [SwitchSpecAttribute.modifiers]
   late final wrap = SpecModifierUtility((v) => only(modifiers: v));
@@ -218,8 +216,8 @@ class SwitchSpecUtility<T extends Attribute>
   T only({
     BoxSpecAttribute? container,
     BoxSpecAttribute? indicator,
-    AnimatedDataMix? animated,
-    WidgetModifiersDataMix? modifiers,
+    AnimatedDataDto? animated,
+    WidgetModifiersDataDto? modifiers,
   }) {
     return builder(SwitchSpecAttribute(
       container: container,

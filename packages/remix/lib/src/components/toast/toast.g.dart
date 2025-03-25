@@ -3,10 +3,8 @@
 part of 'toast.dart';
 
 // **************************************************************************
-// MixGenerator
+// MixableSpecGenerator
 // **************************************************************************
-
-// GENERATED CODE - DO NOT MODIFY BY HAND
 
 /// A mixin that provides spec functionality for [ToastSpec].
 mixin _$ToastSpec on Spec<ToastSpec> {
@@ -241,7 +239,7 @@ class ToastSpecUtility<T extends Attribute>
   late final wrap = SpecModifierUtility((v) => only(modifiers: v));
 
   /// Utility for defining [ToastSpecAttribute.animated]
-  late final animated = AnimatedMixUtility((v) => only(animated: v));
+  late final animated = AnimatedUtility((v) => only(animated: v));
 
   ToastSpecUtility(super.builder, {super.mutable});
 
@@ -258,8 +256,8 @@ class ToastSpecUtility<T extends Attribute>
     FlexBoxSpecAttribute? titleSubtitleContainer,
     TextSpecAttribute? title,
     TextSpecAttribute? subtitle,
-    WidgetModifiersDataMix? modifiers,
-    AnimatedDataMix? animated,
+    WidgetModifiersDataDto? modifiers,
+    AnimatedDataDto? animated,
   }) {
     return builder(ToastSpecAttribute(
       container: container,

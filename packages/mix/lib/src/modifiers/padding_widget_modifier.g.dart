@@ -71,7 +71,7 @@ mixin _$PaddingModifierSpec on WidgetModifierSpec<PaddingModifierSpec> {
 class PaddingModifierSpecAttribute
     extends WidgetModifierSpecAttribute<PaddingModifierSpec>
     with Diagnosticable {
-  final EdgeInsetsGeometryMix? padding;
+  final EdgeInsetsGeometryDto? padding;
 
   const PaddingModifierSpecAttribute({
     this.padding,
@@ -105,7 +105,7 @@ class PaddingModifierSpecAttribute
     if (other == null) return this;
 
     return PaddingModifierSpecAttribute(
-      padding: EdgeInsetsGeometryMix.tryToMerge(padding, other.padding),
+      padding: EdgeInsetsGeometryDto.tryToMerge(padding, other.padding),
     );
   }
 
@@ -132,7 +132,7 @@ class PaddingModifierSpecAttribute
 class PaddingModifierSpecUtility<T extends Attribute>
     extends SpecUtility<T, PaddingModifierSpecAttribute> {
   /// Utility for defining [PaddingModifierSpecAttribute.padding]
-  late final padding = EdgeInsetsGeometryMixUtility((v) => only(padding: v));
+  late final padding = EdgeInsetsGeometryUtility((v) => only(padding: v));
 
   PaddingModifierSpecUtility(super.builder, {super.mutable});
 
@@ -145,7 +145,7 @@ class PaddingModifierSpecUtility<T extends Attribute>
   /// Returns a new [PaddingModifierSpecAttribute] with the specified properties.
   @override
   T only({
-    EdgeInsetsGeometryMix? padding,
+    EdgeInsetsGeometryDto? padding,
   }) {
     return builder(PaddingModifierSpecAttribute(
       padding: padding,

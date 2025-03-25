@@ -6,9 +6,9 @@ import 'factory/mix_data.dart';
 typedef Modifier<T> = T Function(T value);
 
 @immutable
-class TextDirectiveMix extends Mixable<TextDirective> {
+class TextDirectiveDto extends StyleProperty<TextDirective> {
   final List<Modifier<String>> _modifiers;
-  const TextDirectiveMix(this._modifiers);
+  const TextDirectiveDto(this._modifiers);
 
   @visibleForTesting
   int get length => _modifiers.length;
@@ -23,8 +23,8 @@ class TextDirectiveMix extends Mixable<TextDirective> {
   }
 
   @override
-  TextDirectiveMix merge(TextDirectiveMix? other) {
-    return TextDirectiveMix([..._modifiers, ...?other?._modifiers]);
+  TextDirectiveDto merge(TextDirectiveDto? other) {
+    return TextDirectiveDto([..._modifiers, ...?other?._modifiers]);
   }
 
   @override

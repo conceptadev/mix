@@ -3,10 +3,8 @@
 part of 'composited_transform_follower_spec.dart';
 
 // **************************************************************************
-// MixGenerator
+// MixableSpecGenerator
 // **************************************************************************
-
-// GENERATED CODE - DO NOT MODIFY BY HAND
 
 /// A mixin that provides spec functionality for [CompositedTransformFollowerSpec].
 mixin _$CompositedTransformFollowerSpec
@@ -229,7 +227,7 @@ class CompositedTransformFollowerSpecUtility<T extends Attribute>
   late final wrap = SpecModifierUtility((v) => only(modifiers: v));
 
   /// Utility for defining [CompositedTransformFollowerSpecAttribute.animated]
-  late final animated = AnimatedMixUtility((v) => only(animated: v));
+  late final animated = AnimatedUtility((v) => only(animated: v));
 
   CompositedTransformFollowerSpecUtility(super.builder, {super.mutable});
 
@@ -246,8 +244,8 @@ class CompositedTransformFollowerSpecUtility<T extends Attribute>
     Offset? offset,
     AlignmentGeometry? targetAnchor,
     AlignmentGeometry? followerAnchor,
-    WidgetModifiersDataMix? modifiers,
-    AnimatedDataMix? animated,
+    WidgetModifiersDataDto? modifiers,
+    AnimatedDataDto? animated,
   }) {
     return builder(CompositedTransformFollowerSpecAttribute(
       offset: offset,

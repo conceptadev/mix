@@ -3,10 +3,8 @@
 part of 'avatar.dart';
 
 // **************************************************************************
-// MixGenerator
+// MixableSpecGenerator
 // **************************************************************************
-
-// GENERATED CODE - DO NOT MODIFY BY HAND
 
 /// A mixin that provides spec functionality for [AvatarSpec].
 mixin _$AvatarSpec on Spec<AvatarSpec> {
@@ -194,7 +192,7 @@ class AvatarSpecUtility<T extends Attribute>
   late final stack = StackSpecUtility((v) => only(stack: v));
 
   /// Utility for defining [AvatarSpecAttribute.animated]
-  late final animated = AnimatedMixUtility((v) => only(animated: v));
+  late final animated = AnimatedUtility((v) => only(animated: v));
 
   AvatarSpecUtility(super.builder, {super.mutable});
 
@@ -211,7 +209,7 @@ class AvatarSpecUtility<T extends Attribute>
     ImageSpecAttribute? image,
     TextSpecAttribute? fallback,
     StackSpecAttribute? stack,
-    AnimatedDataMix? animated,
+    AnimatedDataDto? animated,
   }) {
     return builder(AvatarSpecAttribute(
       container: container,

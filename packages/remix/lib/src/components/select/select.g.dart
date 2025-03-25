@@ -3,10 +3,8 @@
 part of 'select.dart';
 
 // **************************************************************************
-// MixGenerator
+// MixableSpecGenerator
 // **************************************************************************
-
-// GENERATED CODE - DO NOT MODIFY BY HAND
 
 /// A mixin that provides spec functionality for [SelectSpec].
 mixin _$SelectSpec on Spec<SelectSpec> {
@@ -236,7 +234,7 @@ class SelectSpecUtility<T extends Attribute>
   late final wrap = SpecModifierUtility((v) => only(modifiers: v));
 
   /// Utility for defining [SelectSpecAttribute.animated]
-  late final animated = AnimatedMixUtility((v) => only(animated: v));
+  late final animated = AnimatedUtility((v) => only(animated: v));
 
   SelectSpecUtility(super.builder, {super.mutable});
 
@@ -253,8 +251,8 @@ class SelectSpecUtility<T extends Attribute>
     SelectMenuSpecAttribute? menu,
     SelectMenuItemSpecAttribute? item,
     CompositedTransformFollowerSpecAttribute? position,
-    WidgetModifiersDataMix? modifiers,
-    AnimatedDataMix? animated,
+    WidgetModifiersDataDto? modifiers,
+    AnimatedDataDto? animated,
   }) {
     return builder(SelectSpecAttribute(
       button: button,
@@ -486,7 +484,7 @@ class SelectMenuSpecUtility<T extends Attribute>
   late final wrap = SpecModifierUtility((v) => only(modifiers: v));
 
   /// Utility for defining [SelectMenuSpecAttribute.animated]
-  late final animated = AnimatedMixUtility((v) => only(animated: v));
+  late final animated = AnimatedUtility((v) => only(animated: v));
 
   SelectMenuSpecUtility(super.builder, {super.mutable});
 
@@ -501,8 +499,8 @@ class SelectMenuSpecUtility<T extends Attribute>
   T only({
     FlexBoxSpecAttribute? container,
     bool? autoWidth,
-    WidgetModifiersDataMix? modifiers,
-    AnimatedDataMix? animated,
+    WidgetModifiersDataDto? modifiers,
+    AnimatedDataDto? animated,
   }) {
     return builder(SelectMenuSpecAttribute(
       container: container,
@@ -748,7 +746,7 @@ class SelectMenuItemSpecUtility<T extends Attribute>
   late final wrap = SpecModifierUtility((v) => only(modifiers: v));
 
   /// Utility for defining [SelectMenuItemSpecAttribute.animated]
-  late final animated = AnimatedMixUtility((v) => only(animated: v));
+  late final animated = AnimatedUtility((v) => only(animated: v));
 
   SelectMenuItemSpecUtility(super.builder, {super.mutable});
 
@@ -764,8 +762,8 @@ class SelectMenuItemSpecUtility<T extends Attribute>
     IconSpecAttribute? icon,
     TextSpecAttribute? text,
     FlexBoxSpecAttribute? container,
-    WidgetModifiersDataMix? modifiers,
-    AnimatedDataMix? animated,
+    WidgetModifiersDataDto? modifiers,
+    AnimatedDataDto? animated,
   }) {
     return builder(SelectMenuItemSpecAttribute(
       icon: icon,
@@ -1012,7 +1010,7 @@ class SelectTriggerSpecUtility<T extends Attribute>
   late final wrap = SpecModifierUtility((v) => only(modifiers: v));
 
   /// Utility for defining [SelectTriggerSpecAttribute.animated]
-  late final animated = AnimatedMixUtility((v) => only(animated: v));
+  late final animated = AnimatedUtility((v) => only(animated: v));
 
   SelectTriggerSpecUtility(super.builder, {super.mutable});
 
@@ -1028,8 +1026,8 @@ class SelectTriggerSpecUtility<T extends Attribute>
     FlexBoxSpecAttribute? container,
     IconSpecAttribute? icon,
     TextSpecAttribute? label,
-    WidgetModifiersDataMix? modifiers,
-    AnimatedDataMix? animated,
+    WidgetModifiersDataDto? modifiers,
+    AnimatedDataDto? animated,
   }) {
     return builder(SelectTriggerSpecAttribute(
       container: container,

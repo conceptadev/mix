@@ -5,21 +5,18 @@ import '../../core/factory/mix_data.dart';
 import '../../internal/constants.dart';
 import 'animated_data.dart';
 
-@Deprecated('Use MixAnimatedData instead')
-typedef AnimatedDataDto = AnimatedDataMix;
-
-class AnimatedDataMix extends Mixable<AnimatedData> {
+class AnimatedDataDto extends StyleProperty<AnimatedData> {
   final Duration? duration;
   final Curve? curve;
   final VoidCallback? onEnd;
 
-  const AnimatedDataMix({
+  const AnimatedDataDto({
     required this.duration,
     required this.curve,
     this.onEnd,
   });
 
-  const AnimatedDataMix.withDefaults()
+  const AnimatedDataDto.withDefaults()
       : duration = kDefaultAnimationDuration,
         curve = Curves.linear,
         onEnd = null;
@@ -30,8 +27,8 @@ class AnimatedDataMix extends Mixable<AnimatedData> {
   }
 
   @override
-  AnimatedDataMix merge(AnimatedDataMix? other) {
-    return AnimatedDataMix(
+  AnimatedDataDto merge(AnimatedDataDto? other) {
+    return AnimatedDataDto(
       duration: other?.duration ?? duration,
       curve: other?.curve ?? curve,
     );

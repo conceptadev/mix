@@ -8,15 +8,15 @@ part of 'text_height_behavior_dto.dart';
 
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-/// A mixin that provides DTO functionality for [TextHeightBehaviorMix].
-mixin _$TextHeightBehaviorMix on Mixable<TextHeightBehavior> {
+/// A mixin that provides DTO functionality for [TextHeightBehaviorDto].
+mixin _$TextHeightBehaviorDto on StyleProperty<TextHeightBehavior> {
   /// Resolves to [TextHeightBehavior] using the provided [MixData].
   ///
   /// If a property is null in the [MixData], it falls back to the
   /// default value defined in the `defaultValue` for that property.
   ///
   /// ```dart
-  /// final textHeightBehavior = TextHeightBehaviorMix(...).resolve(mix);
+  /// final textHeightBehavior = TextHeightBehaviorDto(...).resolve(mix);
   /// ```
   @override
   TextHeightBehavior resolve(MixData mix) {
@@ -28,19 +28,19 @@ mixin _$TextHeightBehaviorMix on Mixable<TextHeightBehavior> {
     );
   }
 
-  /// Merges the properties of this [TextHeightBehaviorMix] with the properties of [other].
+  /// Merges the properties of this [TextHeightBehaviorDto] with the properties of [other].
   ///
   /// If [other] is null, returns this instance unchanged. Otherwise, returns a new
-  /// [TextHeightBehaviorMix] with the properties of [other] taking precedence over
+  /// [TextHeightBehaviorDto] with the properties of [other] taking precedence over
   /// the corresponding properties of this instance.
   ///
   /// Properties from [other] that are null will fall back
   /// to the values from this instance.
   @override
-  TextHeightBehaviorMix merge(TextHeightBehaviorMix? other) {
+  TextHeightBehaviorDto merge(TextHeightBehaviorDto? other) {
     if (other == null) return _$this;
 
-    return TextHeightBehaviorMix(
+    return TextHeightBehaviorDto(
       applyHeightToFirstAscent:
           other.applyHeightToFirstAscent ?? _$this.applyHeightToFirstAscent,
       applyHeightToLastDescent:
@@ -50,10 +50,10 @@ mixin _$TextHeightBehaviorMix on Mixable<TextHeightBehavior> {
     );
   }
 
-  /// The list of properties that constitute the state of this [TextHeightBehaviorMix].
+  /// The list of properties that constitute the state of this [TextHeightBehaviorDto].
   ///
   /// This property is used by the [==] operator and the [hashCode] getter to
-  /// compare two [TextHeightBehaviorMix] instances for equality.
+  /// compare two [TextHeightBehaviorDto] instances for equality.
   @override
   List<Object?> get props => [
         _$this.applyHeightToFirstAscent,
@@ -61,15 +61,15 @@ mixin _$TextHeightBehaviorMix on Mixable<TextHeightBehavior> {
         _$this.leadingDistribution,
       ];
 
-  /// Returns this instance as a [TextHeightBehaviorMix].
-  TextHeightBehaviorMix get _$this => this as TextHeightBehaviorMix;
+  /// Returns this instance as a [TextHeightBehaviorDto].
+  TextHeightBehaviorDto get _$this => this as TextHeightBehaviorDto;
 }
 
-/// Extension methods to convert [TextHeightBehavior] to [TextHeightBehaviorMix].
+/// Extension methods to convert [TextHeightBehavior] to [TextHeightBehaviorDto].
 extension TextHeightBehaviorMixExt on TextHeightBehavior {
-  /// Converts this [TextHeightBehavior] to a [TextHeightBehaviorMix].
-  TextHeightBehaviorMix toDto() {
-    return TextHeightBehaviorMix(
+  /// Converts this [TextHeightBehavior] to a [TextHeightBehaviorDto].
+  TextHeightBehaviorDto toDto() {
+    return TextHeightBehaviorDto(
       applyHeightToFirstAscent: applyHeightToFirstAscent,
       applyHeightToLastDescent: applyHeightToLastDescent,
       leadingDistribution: leadingDistribution,
@@ -77,10 +77,10 @@ extension TextHeightBehaviorMixExt on TextHeightBehavior {
   }
 }
 
-/// Extension methods to convert List<[TextHeightBehavior]> to List<[TextHeightBehaviorMix]>.
+/// Extension methods to convert List<[TextHeightBehavior]> to List<[TextHeightBehaviorDto]>.
 extension ListTextHeightBehaviorMixExt on List<TextHeightBehavior> {
-  /// Converts this List<[TextHeightBehavior]> to a List<[TextHeightBehaviorMix]>.
-  List<TextHeightBehaviorMix> toDto() {
+  /// Converts this List<[TextHeightBehavior]> to a List<[TextHeightBehaviorDto]>.
+  List<TextHeightBehaviorDto> toDto() {
     return map((e) => e.toDto()).toList();
   }
 }

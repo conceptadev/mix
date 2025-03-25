@@ -15,11 +15,11 @@ void main() {
           FlexBoxSpecAttribute(
             box: BoxSpecAttribute(
               alignment: Alignment.center,
-              padding: EdgeInsetsGeometryMix.only(top: 8, bottom: 16),
-              margin: EdgeInsetsGeometryMix.only(top: 10.0, bottom: 12.0),
+              padding: EdgeInsetsGeometryDto.only(top: 8, bottom: 16),
+              margin: EdgeInsetsGeometryDto.only(top: 10.0, bottom: 12.0),
               constraints:
-                  const BoxConstraintsMix(maxWidth: 300.0, minHeight: 200.0),
-              decoration: const BoxDecorationMix(color: ColorMix(Colors.blue)),
+                  const BoxConstraintsDto(maxWidth: 300.0, minHeight: 200.0),
+              decoration: const BoxDecorationDto(color: ColorDto(Colors.blue)),
               transform: Matrix4.translationValues(10.0, 10.0, 0.0),
               clipBehavior: Clip.antiAlias,
               width: 300,
@@ -217,16 +217,16 @@ void main() {
       final flexBoxSpecAttribute = FlexBoxSpecAttribute(
         box: BoxSpecAttribute(
           alignment: Alignment.center,
-          padding: EdgeInsetsGeometryMix.only(
+          padding: EdgeInsetsGeometryDto.only(
               top: 20, bottom: 20, left: 20, right: 20),
-          margin: EdgeInsetsGeometryMix.only(
+          margin: EdgeInsetsGeometryDto.only(
             top: 10,
             bottom: 10,
             left: 10,
             right: 10,
           ),
-          constraints: const BoxConstraintsMix(maxHeight: 100),
-          decoration: const BoxDecorationMix(color: ColorMix(Colors.blue)),
+          constraints: const BoxConstraintsDto(maxHeight: 100),
+          decoration: const BoxDecorationDto(color: ColorDto(Colors.blue)),
           transform: Matrix4.identity(),
           clipBehavior: Clip.antiAlias,
           width: 100,
@@ -246,16 +246,16 @@ void main() {
         FlexBoxSpecAttribute(
           box: BoxSpecAttribute(
             alignment: Alignment.centerLeft,
-            padding: EdgeInsetsGeometryMix.only(
+            padding: EdgeInsetsGeometryDto.only(
                 top: 30, bottom: 30, left: 30, right: 30),
-            margin: EdgeInsetsGeometryMix.only(
+            margin: EdgeInsetsGeometryDto.only(
               top: 20,
               bottom: 20,
               left: 20,
               right: 20,
             ),
-            constraints: const BoxConstraintsMix(maxHeight: 200),
-            decoration: const BoxDecorationMix(color: ColorMix(Colors.red)),
+            constraints: const BoxConstraintsDto(maxHeight: 200),
+            decoration: const BoxDecorationDto(color: ColorDto(Colors.red)),
             transform: Matrix4.identity(),
             clipBehavior: Clip.antiAliasWithSaveLayer,
             width: 200,
@@ -276,17 +276,17 @@ void main() {
       expect(mergedFlexBoxSpecAttribute.box!.clipBehavior,
           Clip.antiAliasWithSaveLayer);
       expect(mergedFlexBoxSpecAttribute.box!.constraints,
-          const BoxConstraintsMix(maxHeight: 200));
+          const BoxConstraintsDto(maxHeight: 200));
       expect(mergedFlexBoxSpecAttribute.box!.decoration,
-          const BoxDecorationMix(color: ColorMix(Colors.red)));
+          const BoxDecorationDto(color: ColorDto(Colors.red)));
       expect(mergedFlexBoxSpecAttribute.box!.height, 200);
       expect(
         mergedFlexBoxSpecAttribute.box!.margin,
-        EdgeInsetsGeometryMix.only(top: 20, bottom: 20, left: 20, right: 20),
+        EdgeInsetsGeometryDto.only(top: 20, bottom: 20, left: 20, right: 20),
       );
       expect(
         mergedFlexBoxSpecAttribute.box!.padding,
-        EdgeInsetsGeometryMix.only(top: 30, bottom: 30, left: 30, right: 30),
+        EdgeInsetsGeometryDto.only(top: 30, bottom: 30, left: 30, right: 30),
       );
       expect(mergedFlexBoxSpecAttribute.box!.transform, Matrix4.identity());
       expect(mergedFlexBoxSpecAttribute.box!.width, 200);
@@ -407,8 +407,8 @@ void main() {
 
       expect(flexBoxAttribute.box!.padding, const EdgeInsets.all(10.0).toDto());
       expect(
-        (flexBoxAttribute.box!.decoration as BoxDecorationMix).color,
-        const ColorMix(Colors.red),
+        (flexBoxAttribute.box!.decoration as BoxDecorationDto).color,
+        const ColorDto(Colors.red),
       );
       expect(flexBoxAttribute.box!.alignment, Alignment.center);
       expect(
@@ -418,7 +418,7 @@ void main() {
 
       expect(
           flexBoxAttribute2.box!.padding, const EdgeInsets.all(20.0).toDto());
-      expect((flexBoxAttribute2.box!.decoration as BoxDecorationMix?)?.color,
+      expect((flexBoxAttribute2.box!.decoration as BoxDecorationDto?)?.color,
           isNull);
       expect(flexBoxAttribute2.box!.alignment, isNull);
     });

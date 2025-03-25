@@ -3,8 +3,8 @@ import 'package:flutter/widgets.dart';
 import 'package:mix_annotations/mix_annotations.dart';
 
 import '../../attributes/animated/animated_data.dart';
+import '../../attributes/animated/animated_data_dto.dart';
 import '../../attributes/animated/animated_util.dart';
-import '../../attributes/animated/mix_animated_data.dart';
 import '../../attributes/modifiers/widget_modifiers_data.dart';
 import '../../attributes/modifiers/widget_modifiers_data_dto.dart';
 import '../../attributes/modifiers/widget_modifiers_util.dart';

@@ -2,7 +2,7 @@ import 'package:flutter/animation.dart';
 import 'package:flutter/widgets.dart';
 
 import '../../internal/constants.dart';
-import 'mix_animated_data.dart';
+import 'animated_data_dto.dart';
 
 class AnimatedData {
   final VoidCallback? _onEnd;
@@ -29,8 +29,8 @@ class AnimatedData {
 
   VoidCallback? get onEnd => _onEnd;
 
-  AnimatedDataMix toDto() {
-    return AnimatedDataMix(duration: duration, curve: curve, onEnd: _onEnd);
+  AnimatedDataDto toDto() {
+    return AnimatedDataDto(duration: duration, curve: curve, onEnd: _onEnd);
   }
 
   AnimatedData copyWith({

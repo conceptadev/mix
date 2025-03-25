@@ -5,7 +5,7 @@ import 'package:mix/mix.dart';
 import '../../../helpers/testing_utils.dart';
 
 final class TestColorAttribute extends SpecAttribute<Color> {
-  final ColorMix? value;
+  final ColorDto? value;
   const TestColorAttribute([this.value]);
 
   @override
@@ -24,7 +24,7 @@ final class TestColorAttribute extends SpecAttribute<Color> {
 
 void main() {
   group('ColorUtility directives', () {
-    final colorUtility = ColorMixUtility(TestColorAttribute.new);
+    final colorUtility = ColorUtility(TestColorAttribute.new);
     // withOpacity
     test('withOpacity should return a new ColorDirective', () {
       final attribute = colorUtility.withOpacity(0.5);
@@ -312,7 +312,7 @@ void main() {
   });
   // group MaterialColorUtility
   group('MaterialColorUtility directives', () {
-    final colorUtility = ColorMixUtility(TestColorAttribute.new);
+    final colorUtility = ColorUtility(TestColorAttribute.new);
 
     // shade
     test('shade should return a new ColorDirective', () {
@@ -464,7 +464,7 @@ void main() {
     // Use the .values to compare against Material colors
     test('call should return a new TestColorAttribute with the primary color',
         () {
-      final colorUtil = ColorMixUtility(TestColorAttribute.new);
+      final colorUtil = ColorUtility(TestColorAttribute.new);
 
       expect(colorUtil.red().value?.value, Colors.red);
       expect(colorUtil.pink().value?.value, Colors.pink);
@@ -635,7 +635,7 @@ void main() {
       const color = Colors.blue;
       final colorDto = color.toDto();
 
-      expect(colorDto, equals(const ColorMix(color)));
+      expect(colorDto, equals(const ColorDto(color)));
     });
   });
 }

@@ -10,17 +10,17 @@ import '../../internal/mix_error.dart';
 part 'edge_insets_dto.g.dart';
 
 @Deprecated('Use EdgeInsetsGeometryDto instead')
-typedef SpacingDto = EdgeInsetsGeometryMix<EdgeInsetsGeometry>;
+typedef SpacingDto = EdgeInsetsGeometryDto<EdgeInsetsGeometry>;
 
 @immutable
-sealed class EdgeInsetsGeometryMix<T extends EdgeInsetsGeometry>
-    extends Mixable<T> {
+sealed class EdgeInsetsGeometryDto<T extends EdgeInsetsGeometry>
+    extends StyleProperty<T> {
   final double? top;
   final double? bottom;
 
-  const EdgeInsetsGeometryMix({this.top, this.bottom});
+  const EdgeInsetsGeometryDto({this.top, this.bottom});
 
-  static EdgeInsetsGeometryMix only({
+  static EdgeInsetsGeometryDto only({
     double? top,
     double? bottom,
     double? left,
@@ -37,7 +37,7 @@ sealed class EdgeInsetsGeometryMix<T extends EdgeInsetsGeometry>
       'Cannot provide both directional and non-directional values',
     );
     if (start != null || end != null) {
-      return EdgeInsetsDirectionalMix(
+      return EdgeInsetsDirectionalDto(
         top: top,
         bottom: bottom,
         start: start,
@@ -45,12 +45,12 @@ sealed class EdgeInsetsGeometryMix<T extends EdgeInsetsGeometry>
       );
     }
 
-    return EdgeInsetsMix(top: top, bottom: bottom, left: left, right: right);
+    return EdgeInsetsDto(top: top, bottom: bottom, left: left, right: right);
   }
 
-  static EdgeInsetsGeometryMix? tryToMerge(
-    EdgeInsetsGeometryMix? a,
-    EdgeInsetsGeometryMix? b,
+  static EdgeInsetsGeometryDto? tryToMerge(
+    EdgeInsetsGeometryDto? a,
+    EdgeInsetsGeometryDto? b,
   ) {
     if (b == null) return a;
     if (a == null) return b;
@@ -58,46 +58,46 @@ sealed class EdgeInsetsGeometryMix<T extends EdgeInsetsGeometry>
     return a.runtimeType == b.runtimeType ? a.merge(b) : _exhaustiveMerge(a, b);
   }
 
-  static B _exhaustiveMerge<A extends EdgeInsetsGeometryMix,
-      B extends EdgeInsetsGeometryMix>(A a, B b) {
+  static B _exhaustiveMerge<A extends EdgeInsetsGeometryDto,
+      B extends EdgeInsetsGeometryDto>(A a, B b) {
     if (a.runtimeType == b.runtimeType) return a.merge(b) as B;
 
     return switch (b) {
-      (EdgeInsetsMix g) => a._asEdgeInset().merge(g) as B,
-      (EdgeInsetsDirectionalMix g) => a._asEdgeInsetDirectional().merge(g) as B,
+      (EdgeInsetsDto g) => a._asEdgeInset().merge(g) as B,
+      (EdgeInsetsDirectionalDto g) => a._asEdgeInsetDirectional().merge(g) as B,
     };
   }
 
-  EdgeInsetsMix _asEdgeInset() {
-    if (this is EdgeInsetsMix) return this as EdgeInsetsMix;
+  EdgeInsetsDto _asEdgeInset() {
+    if (this is EdgeInsetsDto) return this as EdgeInsetsDto;
 
-    return EdgeInsetsMix(top: top, bottom: bottom);
+    return EdgeInsetsDto(top: top, bottom: bottom);
   }
 
-  EdgeInsetsDirectionalMix _asEdgeInsetDirectional() {
-    if (this is EdgeInsetsDirectionalMix) {
-      return this as EdgeInsetsDirectionalMix;
+  EdgeInsetsDirectionalDto _asEdgeInsetDirectional() {
+    if (this is EdgeInsetsDirectionalDto) {
+      return this as EdgeInsetsDirectionalDto;
     }
 
-    return EdgeInsetsDirectionalMix(top: top, bottom: bottom);
+    return EdgeInsetsDirectionalDto(top: top, bottom: bottom);
   }
 
   @override
-  EdgeInsetsGeometryMix<T> merge(covariant EdgeInsetsGeometryMix<T>? other);
+  EdgeInsetsGeometryDto<T> merge(covariant EdgeInsetsGeometryDto<T>? other);
 }
 
 @MixableProperty()
-final class EdgeInsetsMix extends EdgeInsetsGeometryMix<EdgeInsets>
-    with _$EdgeInsetsMix, Diagnosticable {
+final class EdgeInsetsDto extends EdgeInsetsGeometryDto<EdgeInsets>
+    with _$EdgeInsetsDto, Diagnosticable {
   final double? left;
   final double? right;
 
-  const EdgeInsetsMix({super.top, super.bottom, this.left, this.right});
+  const EdgeInsetsDto({super.top, super.bottom, this.left, this.right});
 
-  const EdgeInsetsMix.all(double value)
+  const EdgeInsetsDto.all(double value)
       : this(top: value, bottom: value, left: value, right: value);
 
-  const EdgeInsetsMix.none() : this.all(0);
+  const EdgeInsetsDto.none() : this.all(0);
 
   @override
   EdgeInsets resolve(MixData mix) {
@@ -121,18 +121,18 @@ final class EdgeInsetsMix extends EdgeInsetsGeometryMix<EdgeInsets>
 }
 
 @MixableProperty()
-final class EdgeInsetsDirectionalMix
-    extends EdgeInsetsGeometryMix<EdgeInsetsDirectional>
-    with _$EdgeInsetsDirectionalMix {
+final class EdgeInsetsDirectionalDto
+    extends EdgeInsetsGeometryDto<EdgeInsetsDirectional>
+    with _$EdgeInsetsDirectionalDto {
   final double? start;
   final double? end;
 
-  const EdgeInsetsDirectionalMix.all(double value)
+  const EdgeInsetsDirectionalDto.all(double value)
       : this(top: value, bottom: value, start: value, end: value);
 
-  const EdgeInsetsDirectionalMix.none() : this.all(0);
+  const EdgeInsetsDirectionalDto.none() : this.all(0);
 
-  const EdgeInsetsDirectionalMix({
+  const EdgeInsetsDirectionalDto({
     super.top,
     super.bottom,
     this.start,
@@ -151,7 +151,7 @@ final class EdgeInsetsDirectionalMix
 }
 
 extension EdgeInsetsGeometryExt on EdgeInsetsGeometry {
-  EdgeInsetsGeometryMix toDto() {
+  EdgeInsetsGeometryDto toDto() {
     final self = this;
     if (self is EdgeInsetsDirectional) return self.toDto();
     if (self is EdgeInsets) return self.toDto();

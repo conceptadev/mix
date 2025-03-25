@@ -9,21 +9,21 @@ void main() {
     test('Constructor assigns correct properties', () {
       final containerSpecAttribute = BoxSpecAttribute(
         alignment: Alignment.center,
-        padding: EdgeInsetsGeometryMix.only(
+        padding: EdgeInsetsGeometryDto.only(
             top: 20, bottom: 20, left: 20, right: 20),
-        margin: EdgeInsetsGeometryMix.only(
+        margin: EdgeInsetsGeometryDto.only(
           top: 10,
           bottom: 10,
           left: 10,
           right: 10,
         ),
-        constraints: const BoxConstraintsMix(maxHeight: 100),
-        decoration: const BoxDecorationMix(color: ColorMix(Colors.blue)),
+        constraints: const BoxConstraintsDto(maxHeight: 100),
+        decoration: const BoxDecorationDto(color: ColorDto(Colors.blue)),
         transform: Matrix4.identity(),
         clipBehavior: Clip.antiAlias,
         width: 100,
         height: 100,
-        modifiers: const WidgetModifiersDataMix([
+        modifiers: const WidgetModifiersDataDto([
           OpacityModifierSpecAttribute(opacity: 0.5),
           SizedBoxModifierSpecAttribute(height: 10, width: 10),
         ]),
@@ -34,27 +34,27 @@ void main() {
 
       expect(
         containerSpecAttribute.constraints,
-        const BoxConstraintsMix(maxHeight: 100),
+        const BoxConstraintsDto(maxHeight: 100),
       );
       expect(
         containerSpecAttribute.decoration,
-        const BoxDecorationMix(color: ColorMix(Colors.blue)),
+        const BoxDecorationDto(color: ColorDto(Colors.blue)),
       );
 
       expect(containerSpecAttribute.height, 100);
       expect(
         containerSpecAttribute.margin,
-        EdgeInsetsGeometryMix.only(top: 10, bottom: 10, left: 10, right: 10),
+        EdgeInsetsGeometryDto.only(top: 10, bottom: 10, left: 10, right: 10),
       );
       expect(
         containerSpecAttribute.padding,
-        EdgeInsetsGeometryMix.only(top: 20, bottom: 20, left: 20, right: 20),
+        EdgeInsetsGeometryDto.only(top: 20, bottom: 20, left: 20, right: 20),
       );
       expect(containerSpecAttribute.transform, Matrix4.identity());
       expect(containerSpecAttribute.width, 100);
       expect(
           containerSpecAttribute.modifiers,
-          const WidgetModifiersDataMix([
+          const WidgetModifiersDataDto([
             OpacityModifierSpecAttribute(opacity: 0.5),
             SizedBoxModifierSpecAttribute(height: 10, width: 10),
           ]));
@@ -64,21 +64,21 @@ void main() {
     test('resolve() returns correct instance', () {
       final containerSpecAttribute = BoxSpecAttribute(
           alignment: Alignment.center,
-          padding: EdgeInsetsGeometryMix.only(
+          padding: EdgeInsetsGeometryDto.only(
               top: 20, bottom: 20, left: 20, right: 20),
-          margin: EdgeInsetsGeometryMix.only(
+          margin: EdgeInsetsGeometryDto.only(
             top: 10,
             bottom: 10,
             left: 10,
             right: 10,
           ),
-          constraints: const BoxConstraintsMix(maxHeight: 100),
-          decoration: const BoxDecorationMix(color: ColorMix(Colors.blue)),
+          constraints: const BoxConstraintsDto(maxHeight: 100),
+          decoration: const BoxDecorationDto(color: ColorDto(Colors.blue)),
           transform: Matrix4.identity(),
           clipBehavior: Clip.antiAlias,
           width: 100,
           height: 100,
-          modifiers: const WidgetModifiersDataMix([
+          modifiers: const WidgetModifiersDataDto([
             OpacityModifierSpecAttribute(opacity: 0.5),
             SizedBoxModifierSpecAttribute(height: 10, width: 10),
           ]));
@@ -115,21 +115,21 @@ void main() {
     test('merge() returns correct instance', () {
       final containerSpecAttribute = BoxSpecAttribute(
           alignment: Alignment.center,
-          padding: EdgeInsetsGeometryMix.only(
+          padding: EdgeInsetsGeometryDto.only(
               top: 20, bottom: 20, left: 20, right: 20),
-          margin: EdgeInsetsGeometryMix.only(
+          margin: EdgeInsetsGeometryDto.only(
             top: 10,
             bottom: 10,
             left: 10,
             right: 10,
           ),
-          constraints: const BoxConstraintsMix(maxHeight: 100),
-          decoration: const BoxDecorationMix(color: ColorMix(Colors.blue)),
+          constraints: const BoxConstraintsDto(maxHeight: 100),
+          decoration: const BoxDecorationDto(color: ColorDto(Colors.blue)),
           transform: Matrix4.identity(),
           clipBehavior: Clip.antiAlias,
           width: 100,
           height: 100,
-          modifiers: const WidgetModifiersDataMix([
+          modifiers: const WidgetModifiersDataDto([
             OpacityModifierSpecAttribute(opacity: 0.5),
             SizedBoxModifierSpecAttribute(height: 10, width: 10),
           ]));
@@ -137,21 +137,21 @@ void main() {
       final mergedBoxSpecAttribute = containerSpecAttribute.merge(
         BoxSpecAttribute(
           alignment: Alignment.centerLeft,
-          padding: EdgeInsetsGeometryMix.only(
+          padding: EdgeInsetsGeometryDto.only(
               top: 30, bottom: 30, left: 30, right: 30),
-          margin: EdgeInsetsGeometryMix.only(
+          margin: EdgeInsetsGeometryDto.only(
             top: 20,
             bottom: 20,
             left: 20,
             right: 20,
           ),
-          constraints: const BoxConstraintsMix(maxHeight: 200),
-          decoration: const BoxDecorationMix(color: ColorMix(Colors.red)),
+          constraints: const BoxConstraintsDto(maxHeight: 200),
+          decoration: const BoxDecorationDto(color: ColorDto(Colors.red)),
           transform: Matrix4.identity(),
           clipBehavior: Clip.antiAliasWithSaveLayer,
           width: 200,
           height: 200,
-          modifiers: const WidgetModifiersDataMix([
+          modifiers: const WidgetModifiersDataDto([
             SizedBoxModifierSpecAttribute(width: 20),
           ]),
         ),
@@ -162,27 +162,27 @@ void main() {
 
       expect(
         mergedBoxSpecAttribute.constraints,
-        const BoxConstraintsMix(maxHeight: 200),
+        const BoxConstraintsDto(maxHeight: 200),
       );
       expect(
         mergedBoxSpecAttribute.decoration,
-        const BoxDecorationMix(color: ColorMix(Colors.red)),
+        const BoxDecorationDto(color: ColorDto(Colors.red)),
       );
 
       expect(mergedBoxSpecAttribute.height, 200);
       expect(
         mergedBoxSpecAttribute.margin,
-        EdgeInsetsGeometryMix.only(top: 20, bottom: 20, left: 20, right: 20),
+        EdgeInsetsGeometryDto.only(top: 20, bottom: 20, left: 20, right: 20),
       );
       expect(
         mergedBoxSpecAttribute.padding,
-        EdgeInsetsGeometryMix.only(top: 30, bottom: 30, left: 30, right: 30),
+        EdgeInsetsGeometryDto.only(top: 30, bottom: 30, left: 30, right: 30),
       );
       expect(mergedBoxSpecAttribute.transform, Matrix4.identity());
       expect(mergedBoxSpecAttribute.width, 200);
       expect(
           mergedBoxSpecAttribute.modifiers,
-          const WidgetModifiersDataMix([
+          const WidgetModifiersDataDto([
             OpacityModifierSpecAttribute(opacity: 0.5),
             SizedBoxModifierSpecAttribute(height: 10, width: 20),
           ]));
@@ -192,21 +192,21 @@ void main() {
     test('equality', () {
       final containerSpecAttribute = BoxSpecAttribute(
           alignment: Alignment.center,
-          padding: EdgeInsetsGeometryMix.only(
+          padding: EdgeInsetsGeometryDto.only(
               top: 20, bottom: 20, left: 20, right: 20),
-          margin: EdgeInsetsGeometryMix.only(
+          margin: EdgeInsetsGeometryDto.only(
             top: 10,
             bottom: 10,
             left: 10,
             right: 10,
           ),
-          constraints: const BoxConstraintsMix(maxHeight: 100),
-          decoration: const BoxDecorationMix(color: ColorMix(Colors.blue)),
+          constraints: const BoxConstraintsDto(maxHeight: 100),
+          decoration: const BoxDecorationDto(color: ColorDto(Colors.blue)),
           transform: Matrix4.identity(),
           clipBehavior: Clip.antiAlias,
           width: 100,
           height: 100,
-          modifiers: const WidgetModifiersDataMix([
+          modifiers: const WidgetModifiersDataDto([
             OpacityModifierSpecAttribute(opacity: 0.5),
             SizedBoxModifierSpecAttribute(height: 10, width: 10),
           ]));
@@ -216,21 +216,21 @@ void main() {
         equals(
           BoxSpecAttribute(
             alignment: Alignment.center,
-            padding: EdgeInsetsGeometryMix.only(
+            padding: EdgeInsetsGeometryDto.only(
                 top: 20, bottom: 20, left: 20, right: 20),
-            margin: EdgeInsetsGeometryMix.only(
+            margin: EdgeInsetsGeometryDto.only(
               top: 10,
               bottom: 10,
               left: 10,
               right: 10,
             ),
-            constraints: const BoxConstraintsMix(maxHeight: 100),
-            decoration: const BoxDecorationMix(color: ColorMix(Colors.blue)),
+            constraints: const BoxConstraintsDto(maxHeight: 100),
+            decoration: const BoxDecorationDto(color: ColorDto(Colors.blue)),
             transform: Matrix4.identity(),
             clipBehavior: Clip.antiAlias,
             width: 100,
             height: 100,
-            modifiers: const WidgetModifiersDataMix(
+            modifiers: const WidgetModifiersDataDto(
               [
                 OpacityModifierSpecAttribute(opacity: 0.5),
                 SizedBoxModifierSpecAttribute(height: 10, width: 10),
@@ -245,16 +245,16 @@ void main() {
     test('not equals', () {
       final containerSpecAttribute = BoxSpecAttribute(
         alignment: Alignment.center,
-        padding: EdgeInsetsGeometryMix.only(
+        padding: EdgeInsetsGeometryDto.only(
             top: 20, bottom: 20, left: 20, right: 20),
-        margin: EdgeInsetsGeometryMix.only(
+        margin: EdgeInsetsGeometryDto.only(
           top: 10,
           bottom: 10,
           left: 10,
           right: 10,
         ),
-        constraints: const BoxConstraintsMix(maxHeight: 100),
-        decoration: const BoxDecorationMix(color: ColorMix(Colors.blue)),
+        constraints: const BoxConstraintsDto(maxHeight: 100),
+        decoration: const BoxDecorationDto(color: ColorDto(Colors.blue)),
         transform: Matrix4.identity(),
         clipBehavior: Clip.antiAlias,
         width: 100,
@@ -267,25 +267,25 @@ void main() {
           equals(
             BoxSpecAttribute(
               alignment: Alignment.centerLeft,
-              padding: EdgeInsetsGeometryMix.only(
+              padding: EdgeInsetsGeometryDto.only(
                 top: 30,
                 bottom: 30,
                 left: 30,
                 right: 30,
               ),
-              margin: EdgeInsetsGeometryMix.only(
+              margin: EdgeInsetsGeometryDto.only(
                 top: 20,
                 bottom: 20,
                 left: 20,
                 right: 20,
               ),
-              constraints: const BoxConstraintsMix(maxHeight: 200),
-              decoration: const BoxDecorationMix(color: ColorMix(Colors.red)),
+              constraints: const BoxConstraintsDto(maxHeight: 200),
+              decoration: const BoxDecorationDto(color: ColorDto(Colors.red)),
               transform: Matrix4.identity(),
               clipBehavior: Clip.antiAliasWithSaveLayer,
               width: 200,
               height: 200,
-              modifiers: const WidgetModifiersDataMix(
+              modifiers: const WidgetModifiersDataDto(
                 [
                   OpacityModifierSpecAttribute(opacity: 0.4),
                   SizedBoxModifierSpecAttribute(height: 20, width: 10),

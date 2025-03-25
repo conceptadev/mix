@@ -7,7 +7,7 @@ import '../../../helpers/testing_utils.dart';
 void main() {
   // ShadowUtility
   group('ShadowUtility', () {
-    final shadowUtility = ShadowMixUtility(UtilityTestAttribute.new);
+    final shadowUtility = ShadowUtility(UtilityTestAttribute.new);
 
     test('call() returns correct instance', () {
       final shadow = shadowUtility(
@@ -17,7 +17,7 @@ void main() {
       );
 
       expect(shadow.value.blurRadius, 10.0);
-      expect(shadow.value.color, const ColorMix(Colors.blue));
+      expect(shadow.value.color, const ColorDto(Colors.blue));
       expect(shadow.value.offset, const Offset(10, 10));
     });
 
@@ -25,7 +25,7 @@ void main() {
     test('color() returns correct instance', () {
       final shadow = shadowUtility.color(Colors.blue);
 
-      expect(shadow.value.color, const ColorMix(Colors.blue));
+      expect(shadow.value.color, const ColorDto(Colors.blue));
     });
 
     // offset()
@@ -38,7 +38,7 @@ void main() {
 
   // BoxShadowUtility
   group('BoxShadowUtility', () {
-    final boxShadowUtility = BoxShadowMixUtility(UtilityTestAttribute.new);
+    final boxShadowUtility = BoxShadowUtility(UtilityTestAttribute.new);
 
     test('call() returns correct instance', () {
       final boxShadow = boxShadowUtility(
@@ -49,7 +49,7 @@ void main() {
       );
 
       expect(boxShadow.value.blurRadius, 10.0);
-      expect(boxShadow.value.color, const ColorMix(Colors.blue));
+      expect(boxShadow.value.color, const ColorDto(Colors.blue));
       expect(boxShadow.value.offset, const Offset(10, 10));
       expect(boxShadow.value.spreadRadius, 10.0);
     });
@@ -58,7 +58,7 @@ void main() {
     test('color() returns correct instance', () {
       final boxShadow = boxShadowUtility.color(Colors.blue);
 
-      expect(boxShadow.value.color, const ColorMix(Colors.blue));
+      expect(boxShadow.value.color, const ColorDto(Colors.blue));
     });
 
     // offset()

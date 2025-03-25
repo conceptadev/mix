@@ -14,51 +14,51 @@ part 'gradient_dto.g.dart';
 /// This is used to allow for resolvable value tokens, and also the correct
 /// merge and combining behavior. It allows to be merged, and resolved to a `[Gradient]
 @immutable
-sealed class GradientMix<T extends Gradient> extends Mixable<T>
+sealed class GradientDto<T extends Gradient> extends StyleProperty<T>
     with HasDefaultValue<T> {
   final List<double>? stops;
-  final List<ColorMix>? colors;
+  final List<ColorDto>? colors;
   final GradientTransform? transform;
-  const GradientMix({this.stops, this.colors, this.transform});
+  const GradientDto({this.stops, this.colors, this.transform});
 
-  static B _exhaustiveMerge<A extends GradientMix, B extends GradientMix>(
+  static B _exhaustiveMerge<A extends GradientDto, B extends GradientDto>(
     A a,
     B b,
   ) {
     if (a.runtimeType == b.runtimeType) return a.merge(b) as B;
 
     return switch (b) {
-      (LinearGradientMix g) => a.asLinearGradient().merge(g) as B,
-      (RadialGradientMix g) => a.asRadialGradient().merge(g) as B,
-      (SweepGradientMix g) => a.asSweepGradient().merge(g) as B,
+      (LinearGradientDto g) => a.asLinearGradient().merge(g) as B,
+      (RadialGradientDto g) => a.asRadialGradient().merge(g) as B,
+      (SweepGradientDto g) => a.asSweepGradient().merge(g) as B,
     };
   }
 
-  static GradientMix? tryToMerge(GradientMix? a, GradientMix? b) {
+  static GradientDto? tryToMerge(GradientDto? a, GradientDto? b) {
     if (b == null) return a;
     if (a == null) return b;
 
     return a.runtimeType == b.runtimeType ? a.merge(b) : _exhaustiveMerge(a, b);
   }
 
-  LinearGradientMix asLinearGradient() {
-    return LinearGradientMix(
+  LinearGradientDto asLinearGradient() {
+    return LinearGradientDto(
       transform: transform,
       colors: colors,
       stops: stops,
     );
   }
 
-  RadialGradientMix asRadialGradient() {
-    return RadialGradientMix(
+  RadialGradientDto asRadialGradient() {
+    return RadialGradientDto(
       transform: transform,
       colors: colors,
       stops: stops,
     );
   }
 
-  SweepGradientMix asSweepGradient() {
-    return SweepGradientMix(
+  SweepGradientDto asSweepGradient() {
+    return SweepGradientDto(
       transform: transform,
       colors: colors,
       stops: stops,
@@ -66,7 +66,7 @@ sealed class GradientMix<T extends Gradient> extends Mixable<T>
   }
 
   @override
-  GradientMix<T> merge(covariant GradientMix<T>? other);
+  GradientDto<T> merge(covariant GradientDto<T>? other);
 }
 
 /// Represents a Data transfer object of [LinearGradient]
@@ -75,13 +75,13 @@ sealed class GradientMix<T extends Gradient> extends Mixable<T>
 /// merge and combining behavior. It allows to be merged, and resolved to a `[LinearGradient]
 
 @MixableProperty()
-final class LinearGradientMix extends GradientMix<LinearGradient>
-    with _$LinearGradientMix {
+final class LinearGradientDto extends GradientDto<LinearGradient>
+    with _$LinearGradientDto {
   final AlignmentGeometry? begin;
   final AlignmentGeometry? end;
   final TileMode? tileMode;
 
-  const LinearGradientMix({
+  const LinearGradientDto({
     this.begin,
     this.end,
     this.tileMode,
@@ -98,8 +98,8 @@ final class LinearGradientMix extends GradientMix<LinearGradient>
 /// This is used to allow for resolvable value tokens, and also the correct
 /// merge and combining behavior. It allows to be merged, and resolved to a `[RadialGradient]
 @MixableProperty()
-final class RadialGradientMix extends GradientMix<RadialGradient>
-    with _$RadialGradientMix {
+final class RadialGradientDto extends GradientDto<RadialGradient>
+    with _$RadialGradientDto {
   final AlignmentGeometry? center;
   final double? radius;
 
@@ -109,7 +109,7 @@ final class RadialGradientMix extends GradientMix<RadialGradient>
 
   final double? focalRadius;
 
-  const RadialGradientMix({
+  const RadialGradientDto({
     this.center,
     this.radius,
     this.tileMode,
@@ -129,15 +129,15 @@ final class RadialGradientMix extends GradientMix<RadialGradient>
 /// merge and combining behavior. It allows to be merged, and resolved to a `[SweepGradient]
 
 @MixableProperty()
-final class SweepGradientMix extends GradientMix<SweepGradient>
-    with _$SweepGradientMix {
+final class SweepGradientDto extends GradientDto<SweepGradient>
+    with _$SweepGradientDto {
   final AlignmentGeometry? center;
   final double? startAngle;
   final double? endAngle;
 
   final TileMode? tileMode;
 
-  const SweepGradientMix({
+  const SweepGradientDto({
     this.center,
     this.startAngle,
     this.endAngle,
@@ -152,7 +152,7 @@ final class SweepGradientMix extends GradientMix<SweepGradient>
 
 extension GradientExt on Gradient {
   // toDto
-  GradientMix toDto() {
+  GradientDto toDto() {
     final self = this;
     if (self is LinearGradient) return (self).toDto();
     if (self is RadialGradient) return (self).toDto();
@@ -171,14 +171,14 @@ extension GradientExt on Gradient {
 /// such as radial gradients, linear gradients, and sweep gradients.
 /// It also provides a method for converting a generic [Gradient] object to a specific type [T].
 ///
-/// Accepts a [builder] function that takes a [GradientMix] and returns an object of type [T].
-final class GradientMixUtility<T extends Attribute>
-    extends MixUtility<T, GradientMix> {
-  late final radial = RadialGradientMixUtility(builder);
-  late final linear = LinearGradientMixUtility(builder);
-  late final sweep = SweepGradientMixUtility(builder);
+/// Accepts a [builder] function that takes a [GradientDto] and returns an object of type [T].
+final class GradientUtility<T extends Attribute>
+    extends MixUtility<T, GradientDto> {
+  late final radial = RadialGradientUtility(builder);
+  late final linear = LinearGradientUtility(builder);
+  late final sweep = SweepGradientUtility(builder);
 
-  GradientMixUtility(super.builder);
+  GradientUtility(super.builder);
 
   /// Converts a [Gradient] object to the specific type [T].
   ///

@@ -3,10 +3,10 @@ import '../../core/element.dart';
 import '../../core/utility.dart';
 import '../../internal/string_ext.dart';
 
-final class TextDirectiveMixUtility<T extends Attribute>
-    extends MixUtility<T, TextDirectiveMix> {
-  const TextDirectiveMixUtility(super.builder);
-  T _wrap(Modifier<String> modifier) => builder(TextDirectiveMix([modifier]));
+final class TextDirectiveUtility<T extends Attribute>
+    extends MixUtility<T, TextDirectiveDto> {
+  const TextDirectiveUtility(super.builder);
+  T _wrap(Modifier<String> modifier) => builder(TextDirectiveDto([modifier]));
 
   T capitalize() => _wrap(_capitalize);
   T uppercase() => _wrap(_uppercase);
@@ -14,7 +14,7 @@ final class TextDirectiveMixUtility<T extends Attribute>
   T titleCase() => _wrap(_titleCase);
   T sentenceCase() => _wrap(_sentenceCase);
 
-  T call(Modifier<String> modifier) => builder(TextDirectiveMix([modifier]));
+  T call(Modifier<String> modifier) => builder(TextDirectiveDto([modifier]));
 }
 
 String _capitalize(String value) => value.capitalize;

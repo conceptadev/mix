@@ -399,7 +399,7 @@ mixin _$ClipRRectModifierSpec on WidgetModifierSpec<ClipRRectModifierSpec> {
 class ClipRRectModifierSpecAttribute
     extends WidgetModifierSpecAttribute<ClipRRectModifierSpec>
     with Diagnosticable {
-  final BorderRadiusGeometryMix? borderRadius;
+  final BorderRadiusGeometryDto? borderRadius;
   final CustomClipper<RRect>? clipper;
   final Clip? clipBehavior;
 

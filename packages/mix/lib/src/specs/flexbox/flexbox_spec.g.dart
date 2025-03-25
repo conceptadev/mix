@@ -192,7 +192,7 @@ class FlexBoxSpecAttribute extends SpecAttribute<FlexBoxSpec>
 class FlexBoxSpecUtility<T extends Attribute>
     extends SpecUtility<T, FlexBoxSpecAttribute> {
   /// Utility for defining [FlexBoxSpecAttribute.animated]
-  late final animated = AnimatedMixUtility((v) => only(animated: v));
+  late final animated = AnimatedUtility((v) => only(animated: v));
 
   /// Utility for defining [FlexBoxSpecAttribute.modifiers]
   late final wrap = SpecModifierUtility((v) => only(modifiers: v));
@@ -301,8 +301,8 @@ class FlexBoxSpecUtility<T extends Attribute>
   /// Returns a new [FlexBoxSpecAttribute] with the specified properties.
   @override
   T only({
-    AnimatedDataMix? animated,
-    WidgetModifiersDataMix? modifiers,
+    AnimatedDataDto? animated,
+    WidgetModifiersDataDto? modifiers,
     BoxSpecAttribute? box,
     FlexSpecAttribute? flex,
   }) {

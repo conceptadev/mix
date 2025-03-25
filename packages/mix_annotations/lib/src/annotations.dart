@@ -116,7 +116,7 @@ class MixableField {
   ///
   /// This flag affects the behavior of the generated `lerp` method:
   ///
-  /// ```dart
+  ///
   /// @override
   /// ExampleSpec lerp(ExampleSpec? other, double t) {
   ///   if (other == null) return _$this;
@@ -128,7 +128,7 @@ class MixableField {
   ///     lerpableParameter: lerpableParameter.lerp(other.lerpableParameter, t),
   ///   );
   /// }
-  /// ```
+  ///
   ///
   /// Setting `isLerpable` to `true` is particularly useful for properties
   /// that represent continuous values (e.g., numbers, colors, or sizes)

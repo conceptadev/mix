@@ -6,8 +6,8 @@ import 'package:mix_annotations/mix_annotations.dart';
 part 'decoration_image_dto.g.dart';
 
 @MixableProperty()
-final class DecorationImageMix extends Mixable<DecorationImage>
-    with HasDefaultValue<DecorationImage>, _$DecorationImageMix {
+final class DecorationImageDto extends StyleProperty<DecorationImage>
+    with HasDefaultValue<DecorationImage>, _$DecorationImageDto {
   @MixableField(utilities: [MixableFieldUtility(alias: 'provider')])
   final ImageProvider? image;
   final BoxFit? fit;
@@ -18,7 +18,7 @@ final class DecorationImageMix extends Mixable<DecorationImage>
   final bool? invertColors;
   final bool? isAntiAlias;
 
-  const DecorationImageMix({
+  const DecorationImageDto({
     this.image,
     this.fit,
     this.alignment,

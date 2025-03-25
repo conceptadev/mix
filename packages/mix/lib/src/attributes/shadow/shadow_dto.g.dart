@@ -8,15 +8,15 @@ part of 'shadow_dto.dart';
 
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-/// A mixin that provides DTO functionality for [ShadowMix].
-mixin _$ShadowMix on Mixable<Shadow>, HasDefaultValue<Shadow> {
+/// A mixin that provides DTO functionality for [ShadowDto].
+mixin _$ShadowDto on StyleProperty<Shadow>, HasDefaultValue<Shadow> {
   /// Resolves to [Shadow] using the provided [MixData].
   ///
   /// If a property is null in the [MixData], it falls back to the
   /// default value defined in the `defaultValue` for that property.
   ///
   /// ```dart
-  /// final shadow = ShadowMix(...).resolve(mix);
+  /// final shadow = ShadowDto(...).resolve(mix);
   /// ```
   @override
   Shadow resolve(MixData mix) {
@@ -27,29 +27,29 @@ mixin _$ShadowMix on Mixable<Shadow>, HasDefaultValue<Shadow> {
     );
   }
 
-  /// Merges the properties of this [ShadowMix] with the properties of [other].
+  /// Merges the properties of this [ShadowDto] with the properties of [other].
   ///
   /// If [other] is null, returns this instance unchanged. Otherwise, returns a new
-  /// [ShadowMix] with the properties of [other] taking precedence over
+  /// [ShadowDto] with the properties of [other] taking precedence over
   /// the corresponding properties of this instance.
   ///
   /// Properties from [other] that are null will fall back
   /// to the values from this instance.
   @override
-  ShadowMix merge(ShadowMix? other) {
+  ShadowDto merge(ShadowDto? other) {
     if (other == null) return _$this;
 
-    return ShadowMix(
+    return ShadowDto(
       blurRadius: other.blurRadius ?? _$this.blurRadius,
       color: _$this.color?.merge(other.color) ?? other.color,
       offset: other.offset ?? _$this.offset,
     );
   }
 
-  /// The list of properties that constitute the state of this [ShadowMix].
+  /// The list of properties that constitute the state of this [ShadowDto].
   ///
   /// This property is used by the [==] operator and the [hashCode] getter to
-  /// compare two [ShadowMix] instances for equality.
+  /// compare two [ShadowDto] instances for equality.
   @override
   List<Object?> get props => [
         _$this.blurRadius,
@@ -57,35 +57,35 @@ mixin _$ShadowMix on Mixable<Shadow>, HasDefaultValue<Shadow> {
         _$this.offset,
       ];
 
-  /// Returns this instance as a [ShadowMix].
-  ShadowMix get _$this => this as ShadowMix;
+  /// Returns this instance as a [ShadowDto].
+  ShadowDto get _$this => this as ShadowDto;
 }
 
 /// Utility class for configuring [Shadow] properties.
 ///
 /// This class provides methods to set individual properties of a [Shadow].
 /// Use the methods of this class to configure specific properties of a [Shadow].
-class ShadowMixUtility<T extends Attribute>
-    extends DtoUtility<T, ShadowMix, Shadow> {
-  /// Utility for defining [ShadowMix.blurRadius]
+class ShadowUtility<T extends Attribute>
+    extends DtoUtility<T, ShadowDto, Shadow> {
+  /// Utility for defining [ShadowDto.blurRadius]
   late final blurRadius = DoubleUtility((v) => only(blurRadius: v));
 
-  /// Utility for defining [ShadowMix.color]
-  late final color = ColorMixUtility((v) => only(color: v));
+  /// Utility for defining [ShadowDto.color]
+  late final color = ColorUtility((v) => only(color: v));
 
-  /// Utility for defining [ShadowMix.offset]
+  /// Utility for defining [ShadowDto.offset]
   late final offset = OffsetUtility((v) => only(offset: v));
 
-  ShadowMixUtility(super.builder) : super(valueToDto: (v) => v.toDto());
+  ShadowUtility(super.builder) : super(valueToDto: (v) => v.toDto());
 
-  /// Returns a new [ShadowMix] with the specified properties.
+  /// Returns a new [ShadowDto] with the specified properties.
   @override
   T only({
     double? blurRadius,
-    ColorMix? color,
+    ColorDto? color,
     Offset? offset,
   }) {
-    return builder(ShadowMix(
+    return builder(ShadowDto(
       blurRadius: blurRadius,
       color: color,
       offset: offset,
@@ -105,11 +105,11 @@ class ShadowMixUtility<T extends Attribute>
   }
 }
 
-/// Extension methods to convert [Shadow] to [ShadowMix].
+/// Extension methods to convert [Shadow] to [ShadowDto].
 extension ShadowMixExt on Shadow {
-  /// Converts this [Shadow] to a [ShadowMix].
-  ShadowMix toDto() {
-    return ShadowMix(
+  /// Converts this [Shadow] to a [ShadowDto].
+  ShadowDto toDto() {
+    return ShadowDto(
       blurRadius: blurRadius,
       color: color.toDto(),
       offset: offset,
@@ -117,23 +117,23 @@ extension ShadowMixExt on Shadow {
   }
 }
 
-/// Extension methods to convert List<[Shadow]> to List<[ShadowMix]>.
+/// Extension methods to convert List<[Shadow]> to List<[ShadowDto]>.
 extension ListShadowMixExt on List<Shadow> {
-  /// Converts this List<[Shadow]> to a List<[ShadowMix]>.
-  List<ShadowMix> toDto() {
+  /// Converts this List<[Shadow]> to a List<[ShadowDto]>.
+  List<ShadowDto> toDto() {
     return map((e) => e.toDto()).toList();
   }
 }
 
-/// A mixin that provides DTO functionality for [BoxShadowMix].
-mixin _$BoxShadowMix on Mixable<BoxShadow>, HasDefaultValue<BoxShadow> {
+/// A mixin that provides DTO functionality for [BoxShadowDto].
+mixin _$BoxShadowDto on StyleProperty<BoxShadow>, HasDefaultValue<BoxShadow> {
   /// Resolves to [BoxShadow] using the provided [MixData].
   ///
   /// If a property is null in the [MixData], it falls back to the
   /// default value defined in the `defaultValue` for that property.
   ///
   /// ```dart
-  /// final boxShadow = BoxShadowMix(...).resolve(mix);
+  /// final boxShadow = BoxShadowDto(...).resolve(mix);
   /// ```
   @override
   BoxShadow resolve(MixData mix) {
@@ -145,19 +145,19 @@ mixin _$BoxShadowMix on Mixable<BoxShadow>, HasDefaultValue<BoxShadow> {
     );
   }
 
-  /// Merges the properties of this [BoxShadowMix] with the properties of [other].
+  /// Merges the properties of this [BoxShadowDto] with the properties of [other].
   ///
   /// If [other] is null, returns this instance unchanged. Otherwise, returns a new
-  /// [BoxShadowMix] with the properties of [other] taking precedence over
+  /// [BoxShadowDto] with the properties of [other] taking precedence over
   /// the corresponding properties of this instance.
   ///
   /// Properties from [other] that are null will fall back
   /// to the values from this instance.
   @override
-  BoxShadowMix merge(BoxShadowMix? other) {
+  BoxShadowDto merge(BoxShadowDto? other) {
     if (other == null) return _$this;
 
-    return BoxShadowMix(
+    return BoxShadowDto(
       color: _$this.color?.merge(other.color) ?? other.color,
       offset: other.offset ?? _$this.offset,
       blurRadius: other.blurRadius ?? _$this.blurRadius,
@@ -165,10 +165,10 @@ mixin _$BoxShadowMix on Mixable<BoxShadow>, HasDefaultValue<BoxShadow> {
     );
   }
 
-  /// The list of properties that constitute the state of this [BoxShadowMix].
+  /// The list of properties that constitute the state of this [BoxShadowDto].
   ///
   /// This property is used by the [==] operator and the [hashCode] getter to
-  /// compare two [BoxShadowMix] instances for equality.
+  /// compare two [BoxShadowDto] instances for equality.
   @override
   List<Object?> get props => [
         _$this.color,
@@ -177,39 +177,39 @@ mixin _$BoxShadowMix on Mixable<BoxShadow>, HasDefaultValue<BoxShadow> {
         _$this.spreadRadius,
       ];
 
-  /// Returns this instance as a [BoxShadowMix].
-  BoxShadowMix get _$this => this as BoxShadowMix;
+  /// Returns this instance as a [BoxShadowDto].
+  BoxShadowDto get _$this => this as BoxShadowDto;
 }
 
 /// Utility class for configuring [BoxShadow] properties.
 ///
 /// This class provides methods to set individual properties of a [BoxShadow].
 /// Use the methods of this class to configure specific properties of a [BoxShadow].
-class BoxShadowMixUtility<T extends Attribute>
-    extends DtoUtility<T, BoxShadowMix, BoxShadow> {
-  /// Utility for defining [BoxShadowMix.color]
-  late final color = ColorMixUtility((v) => only(color: v));
+class BoxShadowUtility<T extends Attribute>
+    extends DtoUtility<T, BoxShadowDto, BoxShadow> {
+  /// Utility for defining [BoxShadowDto.color]
+  late final color = ColorUtility((v) => only(color: v));
 
-  /// Utility for defining [BoxShadowMix.offset]
+  /// Utility for defining [BoxShadowDto.offset]
   late final offset = OffsetUtility((v) => only(offset: v));
 
-  /// Utility for defining [BoxShadowMix.blurRadius]
+  /// Utility for defining [BoxShadowDto.blurRadius]
   late final blurRadius = DoubleUtility((v) => only(blurRadius: v));
 
-  /// Utility for defining [BoxShadowMix.spreadRadius]
+  /// Utility for defining [BoxShadowDto.spreadRadius]
   late final spreadRadius = DoubleUtility((v) => only(spreadRadius: v));
 
-  BoxShadowMixUtility(super.builder) : super(valueToDto: (v) => v.toDto());
+  BoxShadowUtility(super.builder) : super(valueToDto: (v) => v.toDto());
 
-  /// Returns a new [BoxShadowMix] with the specified properties.
+  /// Returns a new [BoxShadowDto] with the specified properties.
   @override
   T only({
-    ColorMix? color,
+    ColorDto? color,
     Offset? offset,
     double? blurRadius,
     double? spreadRadius,
   }) {
-    return builder(BoxShadowMix(
+    return builder(BoxShadowDto(
       color: color,
       offset: offset,
       blurRadius: blurRadius,
@@ -232,11 +232,11 @@ class BoxShadowMixUtility<T extends Attribute>
   }
 }
 
-/// Extension methods to convert [BoxShadow] to [BoxShadowMix].
+/// Extension methods to convert [BoxShadow] to [BoxShadowDto].
 extension BoxShadowMixExt on BoxShadow {
-  /// Converts this [BoxShadow] to a [BoxShadowMix].
-  BoxShadowMix toDto() {
-    return BoxShadowMix(
+  /// Converts this [BoxShadow] to a [BoxShadowDto].
+  BoxShadowDto toDto() {
+    return BoxShadowDto(
       color: color.toDto(),
       offset: offset,
       blurRadius: blurRadius,
@@ -245,10 +245,10 @@ extension BoxShadowMixExt on BoxShadow {
   }
 }
 
-/// Extension methods to convert List<[BoxShadow]> to List<[BoxShadowMix]>.
+/// Extension methods to convert List<[BoxShadow]> to List<[BoxShadowDto]>.
 extension ListBoxShadowMixExt on List<BoxShadow> {
-  /// Converts this List<[BoxShadow]> to a List<[BoxShadowMix]>.
-  List<BoxShadowMix> toDto() {
+  /// Converts this List<[BoxShadow]> to a List<[BoxShadowDto]>.
+  List<BoxShadowDto> toDto() {
     return map((e) => e.toDto()).toList();
   }
 }

@@ -6,12 +6,12 @@ import '../../../helpers/testing_utils.dart';
 
 void main() {
   group('GradientUtility', () {
-    final utility = GradientMixUtility(UtilityTestDtoAttribute.new);
+    final utility = GradientUtility(UtilityTestDtoAttribute.new);
     test('GradientUtility.from for RadialGradient', () {
       const gradient = RadialGradient(colors: []);
       final attribute = utility.as(gradient);
 
-      expect(attribute.value, isA<RadialGradientMix>());
+      expect(attribute.value, isA<RadialGradientDto>());
       expect(attribute.resolve(EmptyMixData), isA<RadialGradient>());
     });
 
@@ -19,7 +19,7 @@ void main() {
       const gradient = LinearGradient(colors: []);
       final attribute = utility.as(gradient);
 
-      expect(attribute.value, isA<LinearGradientMix>());
+      expect(attribute.value, isA<LinearGradientDto>());
       expect(attribute.resolve(EmptyMixData), isA<LinearGradient>());
     });
 
@@ -27,13 +27,13 @@ void main() {
       const gradient = SweepGradient(colors: []);
       final attribute = utility.as(gradient);
 
-      expect(attribute.value, isA<SweepGradientMix>());
+      expect(attribute.value, isA<SweepGradientDto>());
       expect(attribute.resolve(EmptyMixData), isA<SweepGradient>());
     });
   });
 
   group('RadialGradientUtility', () {
-    final radialUtility = RadialGradientMixUtility(UtilityTestDtoAttribute.new);
+    final radialUtility = RadialGradientUtility(UtilityTestDtoAttribute.new);
 
     test('.from for RadialGradient', () {
       const gradient = RadialGradient(colors: []);
@@ -42,7 +42,7 @@ void main() {
       final resolvedGradient = attribute.resolve(EmptyMixData);
 
       expect(resolvedGradient, isA<RadialGradient>());
-      expect(attribute.value, isA<RadialGradientMix>());
+      expect(attribute.value, isA<RadialGradientDto>());
     });
 
     test('.call', () {
@@ -66,14 +66,14 @@ void main() {
         transform: transform,
       );
 
-      expect(attribute.value, isA<RadialGradientMix>());
+      expect(attribute.value, isA<RadialGradientDto>());
       expect(attribute.resolve(EmptyMixData), isA<RadialGradient>());
     });
 
     // colors
     test('.colors', () {
       final colors = [Colors.red, Colors.blue];
-      final colorsDto = colors.map(ColorMix.new).toList();
+      final colorsDto = colors.map(ColorDto.new).toList();
 
       final attribute = radialUtility(colors: colors);
 
@@ -207,7 +207,7 @@ void main() {
           attribute.resolve(EmptyMixData) as RadialGradient;
       final dto = attribute.value;
 
-      expect(dto.colors, colors.map(ColorMix.new).toList());
+      expect(dto.colors, colors.map(ColorDto.new).toList());
       expect(dto.stops, stops);
       expect(dto.center, center);
       expect(dto.radius, radius);
@@ -230,7 +230,7 @@ void main() {
 
   // LinearGradientUtility
   group('LinearGradientUtility', () {
-    final linearUtility = LinearGradientMixUtility(UtilityTestDtoAttribute.new);
+    final linearUtility = LinearGradientUtility(UtilityTestDtoAttribute.new);
 
     test('.from for LinearGradient', () {
       const gradient = LinearGradient(colors: []);
@@ -240,7 +240,7 @@ void main() {
       final dto = attribute.value;
 
       expect(resolvedGradient, isA<LinearGradient>());
-      expect(dto, isA<LinearGradientMix>());
+      expect(dto, isA<LinearGradientDto>());
     });
 
     test('.call', () {
@@ -260,14 +260,14 @@ void main() {
         transform: transform,
       );
 
-      expect(attribute.value, isA<LinearGradientMix>());
+      expect(attribute.value, isA<LinearGradientDto>());
       expect(attribute.resolve(EmptyMixData), isA<LinearGradient>());
     });
 
     // colors
     test('.colors', () {
       final colors = [Colors.red, Colors.blue];
-      final colorsDto = colors.map(ColorMix.new).toList();
+      final colorsDto = colors.map(ColorDto.new).toList();
 
       final attribute = linearUtility(colors: colors);
 
@@ -371,7 +371,7 @@ void main() {
           attribute.resolve(EmptyMixData) as LinearGradient;
       final dto = attribute.value;
 
-      expect(dto.colors, colors.map(ColorMix.new).toList());
+      expect(dto.colors, colors.map(ColorDto.new).toList());
       expect(dto.stops, stops);
       expect(dto.begin, begin);
       expect(dto.end, end);
@@ -390,13 +390,13 @@ void main() {
 
   // SweepGradientUtility
   group('SweepGradientUtility', () {
-    final sweepUtility = SweepGradientMixUtility(UtilityTestDtoAttribute.new);
+    final sweepUtility = SweepGradientUtility(UtilityTestDtoAttribute.new);
 
     test('.from for SweepGradient', () {
       const gradient = SweepGradient(colors: []);
       final attribute = sweepUtility.as(gradient);
 
-      expect(attribute.value, isA<SweepGradientMix>());
+      expect(attribute.value, isA<SweepGradientDto>());
       expect(attribute.resolve(EmptyMixData), isA<SweepGradient>());
     });
 
@@ -419,14 +419,14 @@ void main() {
         transform: transform,
       );
 
-      expect(attribute.value, isA<SweepGradientMix>());
+      expect(attribute.value, isA<SweepGradientDto>());
       expect(attribute.resolve(EmptyMixData), isA<SweepGradient>());
     });
 
     // colors
     test('.colors', () {
       final colors = [Colors.red, Colors.blue];
-      final colorsDto = colors.map(ColorMix.new).toList();
+      final colorsDto = colors.map(ColorDto.new).toList();
 
       final attribute = sweepUtility(colors: colors);
 
@@ -536,7 +536,7 @@ void main() {
       final resolvedGradient = attribute.resolve(EmptyMixData) as SweepGradient;
       final dto = attribute.value;
 
-      expect(dto.colors, colors.map(ColorMix.new).toList());
+      expect(dto.colors, colors.map(ColorDto.new).toList());
       expect(dto.stops, stops);
       expect(dto.center, center);
       expect(dto.startAngle, startAngle);

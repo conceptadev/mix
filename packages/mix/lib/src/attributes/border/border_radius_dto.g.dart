@@ -8,21 +8,21 @@ part of 'border_radius_dto.dart';
 
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-/// A mixin that provides DTO functionality for [BorderRadiusMix].
-mixin _$BorderRadiusMix on Mixable<BorderRadius> {
-  /// Merges the properties of this [BorderRadiusMix] with the properties of [other].
+/// A mixin that provides DTO functionality for [BorderRadiusDto].
+mixin _$BorderRadiusDto on StyleProperty<BorderRadius> {
+  /// Merges the properties of this [BorderRadiusDto] with the properties of [other].
   ///
   /// If [other] is null, returns this instance unchanged. Otherwise, returns a new
-  /// [BorderRadiusMix] with the properties of [other] taking precedence over
+  /// [BorderRadiusDto] with the properties of [other] taking precedence over
   /// the corresponding properties of this instance.
   ///
   /// Properties from [other] that are null will fall back
   /// to the values from this instance.
   @override
-  BorderRadiusMix merge(BorderRadiusMix? other) {
+  BorderRadiusDto merge(BorderRadiusDto? other) {
     if (other == null) return _$this;
 
-    return BorderRadiusMix(
+    return BorderRadiusDto(
       topLeft: other.topLeft ?? _$this.topLeft,
       topRight: other.topRight ?? _$this.topRight,
       bottomLeft: other.bottomLeft ?? _$this.bottomLeft,
@@ -30,10 +30,10 @@ mixin _$BorderRadiusMix on Mixable<BorderRadius> {
     );
   }
 
-  /// The list of properties that constitute the state of this [BorderRadiusMix].
+  /// The list of properties that constitute the state of this [BorderRadiusDto].
   ///
   /// This property is used by the [==] operator and the [hashCode] getter to
-  /// compare two [BorderRadiusMix] instances for equality.
+  /// compare two [BorderRadiusDto] instances for equality.
   @override
   List<Object?> get props => [
         _$this.topLeft,
@@ -42,15 +42,15 @@ mixin _$BorderRadiusMix on Mixable<BorderRadius> {
         _$this.bottomRight,
       ];
 
-  /// Returns this instance as a [BorderRadiusMix].
-  BorderRadiusMix get _$this => this as BorderRadiusMix;
+  /// Returns this instance as a [BorderRadiusDto].
+  BorderRadiusDto get _$this => this as BorderRadiusDto;
 }
 
-/// Extension methods to convert [BorderRadius] to [BorderRadiusMix].
+/// Extension methods to convert [BorderRadius] to [BorderRadiusDto].
 extension BorderRadiusMixExt on BorderRadius {
-  /// Converts this [BorderRadius] to a [BorderRadiusMix].
-  BorderRadiusMix toDto() {
-    return BorderRadiusMix(
+  /// Converts this [BorderRadius] to a [BorderRadiusDto].
+  BorderRadiusDto toDto() {
+    return BorderRadiusDto(
       topLeft: topLeft,
       topRight: topRight,
       bottomLeft: bottomLeft,
@@ -59,29 +59,29 @@ extension BorderRadiusMixExt on BorderRadius {
   }
 }
 
-/// Extension methods to convert List<[BorderRadius]> to List<[BorderRadiusMix]>.
+/// Extension methods to convert List<[BorderRadius]> to List<[BorderRadiusDto]>.
 extension ListBorderRadiusMixExt on List<BorderRadius> {
-  /// Converts this List<[BorderRadius]> to a List<[BorderRadiusMix]>.
-  List<BorderRadiusMix> toDto() {
+  /// Converts this List<[BorderRadius]> to a List<[BorderRadiusDto]>.
+  List<BorderRadiusDto> toDto() {
     return map((e) => e.toDto()).toList();
   }
 }
 
-/// A mixin that provides DTO functionality for [BorderRadiusDirectionalMix].
-mixin _$BorderRadiusDirectionalMix on Mixable<BorderRadiusDirectional> {
-  /// Merges the properties of this [BorderRadiusDirectionalMix] with the properties of [other].
+/// A mixin that provides DTO functionality for [BorderRadiusDirectionalDto].
+mixin _$BorderRadiusDirectionalDto on StyleProperty<BorderRadiusDirectional> {
+  /// Merges the properties of this [BorderRadiusDirectionalDto] with the properties of [other].
   ///
   /// If [other] is null, returns this instance unchanged. Otherwise, returns a new
-  /// [BorderRadiusDirectionalMix] with the properties of [other] taking precedence over
+  /// [BorderRadiusDirectionalDto] with the properties of [other] taking precedence over
   /// the corresponding properties of this instance.
   ///
   /// Properties from [other] that are null will fall back
   /// to the values from this instance.
   @override
-  BorderRadiusDirectionalMix merge(BorderRadiusDirectionalMix? other) {
+  BorderRadiusDirectionalDto merge(BorderRadiusDirectionalDto? other) {
     if (other == null) return _$this;
 
-    return BorderRadiusDirectionalMix(
+    return BorderRadiusDirectionalDto(
       topStart: other.topStart ?? _$this.topStart,
       topEnd: other.topEnd ?? _$this.topEnd,
       bottomStart: other.bottomStart ?? _$this.bottomStart,
@@ -89,10 +89,10 @@ mixin _$BorderRadiusDirectionalMix on Mixable<BorderRadiusDirectional> {
     );
   }
 
-  /// The list of properties that constitute the state of this [BorderRadiusDirectionalMix].
+  /// The list of properties that constitute the state of this [BorderRadiusDirectionalDto].
   ///
   /// This property is used by the [==] operator and the [hashCode] getter to
-  /// compare two [BorderRadiusDirectionalMix] instances for equality.
+  /// compare two [BorderRadiusDirectionalDto] instances for equality.
   @override
   List<Object?> get props => [
         _$this.topStart,
@@ -101,15 +101,15 @@ mixin _$BorderRadiusDirectionalMix on Mixable<BorderRadiusDirectional> {
         _$this.bottomEnd,
       ];
 
-  /// Returns this instance as a [BorderRadiusDirectionalMix].
-  BorderRadiusDirectionalMix get _$this => this as BorderRadiusDirectionalMix;
+  /// Returns this instance as a [BorderRadiusDirectionalDto].
+  BorderRadiusDirectionalDto get _$this => this as BorderRadiusDirectionalDto;
 }
 
-/// Extension methods to convert [BorderRadiusDirectional] to [BorderRadiusDirectionalMix].
+/// Extension methods to convert [BorderRadiusDirectional] to [BorderRadiusDirectionalDto].
 extension BorderRadiusDirectionalMixExt on BorderRadiusDirectional {
-  /// Converts this [BorderRadiusDirectional] to a [BorderRadiusDirectionalMix].
-  BorderRadiusDirectionalMix toDto() {
-    return BorderRadiusDirectionalMix(
+  /// Converts this [BorderRadiusDirectional] to a [BorderRadiusDirectionalDto].
+  BorderRadiusDirectionalDto toDto() {
+    return BorderRadiusDirectionalDto(
       topStart: topStart,
       topEnd: topEnd,
       bottomStart: bottomStart,
@@ -118,10 +118,10 @@ extension BorderRadiusDirectionalMixExt on BorderRadiusDirectional {
   }
 }
 
-/// Extension methods to convert List<[BorderRadiusDirectional]> to List<[BorderRadiusDirectionalMix]>.
+/// Extension methods to convert List<[BorderRadiusDirectional]> to List<[BorderRadiusDirectionalDto]>.
 extension ListBorderRadiusDirectionalMixExt on List<BorderRadiusDirectional> {
-  /// Converts this List<[BorderRadiusDirectional]> to a List<[BorderRadiusDirectionalMix]>.
-  List<BorderRadiusDirectionalMix> toDto() {
+  /// Converts this List<[BorderRadiusDirectional]> to a List<[BorderRadiusDirectionalDto]>.
+  List<BorderRadiusDirectionalDto> toDto() {
     return map((e) => e.toDto()).toList();
   }
 }

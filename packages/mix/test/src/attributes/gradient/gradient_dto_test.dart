@@ -34,9 +34,9 @@ void main() {
       final radialGradientDto = radialGradient.toDto();
       final sweepGradientDto = sweepGradient.toDto();
 
-      expect(linearGradientDto, isA<LinearGradientMix>());
-      expect(radialGradientDto, isA<RadialGradientMix>());
-      expect(sweepGradientDto, isA<SweepGradientMix>());
+      expect(linearGradientDto, isA<LinearGradientDto>());
+      expect(radialGradientDto, isA<RadialGradientDto>());
+      expect(sweepGradientDto, isA<SweepGradientDto>());
 
       final resolvedLinearGradient = linearGradientDto.resolve(EmptyMixData);
       final resolvedRadialGradient = radialGradientDto.resolve(EmptyMixData);
@@ -53,11 +53,11 @@ void main() {
 
   group('LinearGradientDto', () {
     test('Constructor assigns correct properties', () {
-      const gradientDto = LinearGradientMix(
+      const gradientDto = LinearGradientDto(
         begin: Alignment.topLeft,
         end: Alignment.bottomRight,
         tileMode: TileMode.clamp,
-        colors: [ColorMix(Colors.red), ColorMix(Colors.blue)],
+        colors: [ColorDto(Colors.red), ColorDto(Colors.blue)],
         stops: [0.0, 1.0],
       );
 
@@ -87,10 +87,10 @@ void main() {
     );
 
     test('resolve method returns correct LinearGradient', () {
-      const gradientDto = LinearGradientMix(
+      const gradientDto = LinearGradientDto(
         begin: Alignment.topLeft,
         end: Alignment.bottomRight,
-        colors: [ColorMix(Colors.red), ColorMix(Colors.blue)],
+        colors: [ColorDto(Colors.red), ColorDto(Colors.blue)],
         stops: [0.0, 1.0],
       );
 
@@ -101,16 +101,16 @@ void main() {
     });
 
     test('merge method correctly merges two LinearGradientDtos', () {
-      const gradientDto1 = LinearGradientMix(
+      const gradientDto1 = LinearGradientDto(
         begin: Alignment.topLeft,
         end: Alignment.bottomRight,
-        colors: [ColorMix(Colors.red), ColorMix(Colors.blue)],
+        colors: [ColorDto(Colors.red), ColorDto(Colors.blue)],
         stops: [0.0, 1.0],
       );
-      const gradientDto2 = LinearGradientMix(
+      const gradientDto2 = LinearGradientDto(
         begin: Alignment.centerLeft,
         end: Alignment.centerRight,
-        colors: [ColorMix(Colors.green), ColorMix(Colors.yellow)],
+        colors: [ColorDto(Colors.green), ColorDto(Colors.yellow)],
         stops: [0.25, 0.75],
       );
 
@@ -124,16 +124,16 @@ void main() {
     });
 
     test('== operator returns true for equal objects', () {
-      const gradientDto1 = LinearGradientMix(
+      const gradientDto1 = LinearGradientDto(
         begin: Alignment.topLeft,
         end: Alignment.bottomRight,
-        colors: [ColorMix(Colors.red), ColorMix(Colors.blue)],
+        colors: [ColorDto(Colors.red), ColorDto(Colors.blue)],
         stops: [0.0, 1.0],
       );
-      const gradientDto2 = LinearGradientMix(
+      const gradientDto2 = LinearGradientDto(
         begin: Alignment.topLeft,
         end: Alignment.bottomRight,
-        colors: [ColorMix(Colors.red), ColorMix(Colors.blue)],
+        colors: [ColorDto(Colors.red), ColorDto(Colors.blue)],
         stops: [0.0, 1.0],
       );
 
@@ -141,16 +141,16 @@ void main() {
     });
 
     test('== operator returns false for different objects', () {
-      const gradientDto1 = LinearGradientMix(
+      const gradientDto1 = LinearGradientDto(
         begin: Alignment.topLeft,
         end: Alignment.bottomRight,
-        colors: [ColorMix(Colors.red), ColorMix(Colors.blue)],
+        colors: [ColorDto(Colors.red), ColorDto(Colors.blue)],
         stops: [0.0, 1.0],
       );
-      const gradientDto2 = LinearGradientMix(
+      const gradientDto2 = LinearGradientDto(
         begin: Alignment.centerLeft,
         end: Alignment.centerRight,
-        colors: [ColorMix(Colors.green), ColorMix(Colors.yellow)],
+        colors: [ColorDto(Colors.green), ColorDto(Colors.yellow)],
         stops: [0.25, 0.75],
       );
 
@@ -161,11 +161,11 @@ void main() {
   // RadialGradientDto
   group('RadialGradientDto', () {
     test('Constructor assigns correct properties', () {
-      const gradientDto = RadialGradientMix(
+      const gradientDto = RadialGradientDto(
         center: Alignment.center,
         radius: 0.5,
         tileMode: TileMode.clamp,
-        colors: [ColorMix(Colors.red), ColorMix(Colors.blue)],
+        colors: [ColorDto(Colors.red), ColorDto(Colors.blue)],
         stops: [0.0, 1.0],
       );
 
@@ -195,10 +195,10 @@ void main() {
     );
 
     test('resolve method returns correct RadialGradient', () {
-      const gradientDto = RadialGradientMix(
+      const gradientDto = RadialGradientDto(
         center: Alignment.center,
         radius: 0.5,
-        colors: [ColorMix(Colors.red), ColorMix(Colors.blue)],
+        colors: [ColorDto(Colors.red), ColorDto(Colors.blue)],
         stops: [0.0, 1.0],
       );
 
@@ -209,16 +209,16 @@ void main() {
     });
 
     test('merge method correctly merges two RadialGradientDtos', () {
-      const gradientDto1 = RadialGradientMix(
+      const gradientDto1 = RadialGradientDto(
         center: Alignment.center,
         radius: 0.5,
-        colors: [ColorMix(Colors.red), ColorMix(Colors.blue)],
+        colors: [ColorDto(Colors.red), ColorDto(Colors.blue)],
         stops: [0.0, 1.0],
       );
-      const gradientDto2 = RadialGradientMix(
+      const gradientDto2 = RadialGradientDto(
         center: Alignment.centerLeft,
         radius: 0.75,
-        colors: [ColorMix(Colors.green), ColorMix(Colors.yellow)],
+        colors: [ColorDto(Colors.green), ColorDto(Colors.yellow)],
         stops: [0.25, 0.75],
       );
 
@@ -232,16 +232,16 @@ void main() {
     });
 
     test('== operator returns true for equal objects', () {
-      const gradientDto1 = RadialGradientMix(
+      const gradientDto1 = RadialGradientDto(
         center: Alignment.center,
         radius: 0.5,
-        colors: [ColorMix(Colors.red), ColorMix(Colors.blue)],
+        colors: [ColorDto(Colors.red), ColorDto(Colors.blue)],
         stops: [0.0, 1.0],
       );
-      const gradientDto2 = RadialGradientMix(
+      const gradientDto2 = RadialGradientDto(
         center: Alignment.center,
         radius: 0.5,
-        colors: [ColorMix(Colors.red), ColorMix(Colors.blue)],
+        colors: [ColorDto(Colors.red), ColorDto(Colors.blue)],
         stops: [0.0, 1.0],
       );
 
@@ -249,16 +249,16 @@ void main() {
     });
 
     test('== operator returns false for different objects', () {
-      const gradientDto1 = RadialGradientMix(
+      const gradientDto1 = RadialGradientDto(
         center: Alignment.center,
         radius: 0.5,
-        colors: [ColorMix(Colors.red), ColorMix(Colors.blue)],
+        colors: [ColorDto(Colors.red), ColorDto(Colors.blue)],
         stops: [0.0, 1.0],
       );
-      const gradientDto2 = RadialGradientMix(
+      const gradientDto2 = RadialGradientDto(
         center: Alignment.centerLeft,
         radius: 0.75,
-        colors: [ColorMix(Colors.green), ColorMix(Colors.yellow)],
+        colors: [ColorDto(Colors.green), ColorDto(Colors.yellow)],
         stops: [0.25, 0.75],
       );
 
@@ -269,12 +269,12 @@ void main() {
   // SweepGradientDto
   group('SweepGradientDto', () {
     test('Constructor assigns correct properties', () {
-      const gradientDto = SweepGradientMix(
+      const gradientDto = SweepGradientDto(
         center: Alignment.center,
         startAngle: 0.0,
         endAngle: 1.0,
         tileMode: TileMode.clamp,
-        colors: [ColorMix(Colors.red), ColorMix(Colors.blue)],
+        colors: [ColorDto(Colors.red), ColorDto(Colors.blue)],
         stops: [0.0, 1.0],
       );
       expect(gradientDto.center, Alignment.center);
@@ -306,11 +306,11 @@ void main() {
     );
 
     test('resolve method returns correct SweepGradient', () {
-      const gradientDto = SweepGradientMix(
+      const gradientDto = SweepGradientDto(
         center: Alignment.center,
         startAngle: 0.0,
         endAngle: 1.0,
-        colors: [ColorMix(Colors.red), ColorMix(Colors.blue)],
+        colors: [ColorDto(Colors.red), ColorDto(Colors.blue)],
         stops: [0.0, 1.0],
       );
 
@@ -321,19 +321,19 @@ void main() {
     });
 
     test('merge method correctly merges two SweepGradientDtos', () {
-      const gradientDto1 = SweepGradientMix(
+      const gradientDto1 = SweepGradientDto(
         center: Alignment.center,
         startAngle: 0.0,
         endAngle: 1.0,
-        colors: [ColorMix(Colors.red), ColorMix(Colors.blue)],
+        colors: [ColorDto(Colors.red), ColorDto(Colors.blue)],
         stops: [0.0, 1.0],
       );
 
-      const gradientDto2 = SweepGradientMix(
+      const gradientDto2 = SweepGradientDto(
         center: Alignment.centerLeft,
         startAngle: 0.25,
         endAngle: 0.75,
-        colors: [ColorMix(Colors.green), ColorMix(Colors.yellow)],
+        colors: [ColorDto(Colors.green), ColorDto(Colors.yellow)],
         stops: [0.25, 0.75],
       );
 
@@ -348,19 +348,19 @@ void main() {
     });
 
     test('== operator returns true for equal objects', () {
-      const gradientDto1 = SweepGradientMix(
+      const gradientDto1 = SweepGradientDto(
         center: Alignment.center,
         startAngle: 0.0,
         endAngle: 1.0,
-        colors: [ColorMix(Colors.red), ColorMix(Colors.blue)],
+        colors: [ColorDto(Colors.red), ColorDto(Colors.blue)],
         stops: [0.0, 1.0],
       );
 
-      const gradientDto2 = SweepGradientMix(
+      const gradientDto2 = SweepGradientDto(
         center: Alignment.center,
         startAngle: 0.0,
         endAngle: 1.0,
-        colors: [ColorMix(Colors.red), ColorMix(Colors.blue)],
+        colors: [ColorDto(Colors.red), ColorDto(Colors.blue)],
         stops: [0.0, 1.0],
       );
 
@@ -368,19 +368,19 @@ void main() {
     });
 
     test('== operator returns false for different objects', () {
-      const gradientDto1 = SweepGradientMix(
+      const gradientDto1 = SweepGradientDto(
         center: Alignment.center,
         startAngle: 0.0,
         endAngle: 1.0,
-        colors: [ColorMix(Colors.red), ColorMix(Colors.blue)],
+        colors: [ColorDto(Colors.red), ColorDto(Colors.blue)],
         stops: [0.0, 1.0],
       );
 
-      const gradientDto2 = SweepGradientMix(
+      const gradientDto2 = SweepGradientDto(
         center: Alignment.centerLeft,
         startAngle: 0.25,
         endAngle: 0.75,
-        colors: [ColorMix(Colors.green), ColorMix(Colors.yellow)],
+        colors: [ColorDto(Colors.green), ColorDto(Colors.yellow)],
         stops: [0.25, 0.75],
       );
 

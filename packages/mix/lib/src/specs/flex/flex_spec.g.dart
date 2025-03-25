@@ -167,7 +167,7 @@ class FlexSpecAttribute extends SpecAttribute<FlexSpec> with Diagnosticable {
   final TextDirection? textDirection;
   final TextBaseline? textBaseline;
   final Clip? clipBehavior;
-  final SpaceMix? gap;
+  final SpaceDto? gap;
 
   const FlexSpecAttribute({
     this.crossAxisAlignment,
@@ -325,7 +325,7 @@ class FlexSpecUtility<T extends Attribute>
   late final gap = GapUtility((v) => only(gap: v));
 
   /// Utility for defining [FlexSpecAttribute.animated]
-  late final animated = AnimatedMixUtility((v) => only(animated: v));
+  late final animated = AnimatedUtility((v) => only(animated: v));
 
   /// Utility for defining [FlexSpecAttribute.modifiers]
   late final wrap = SpecModifierUtility((v) => only(modifiers: v));
@@ -349,9 +349,9 @@ class FlexSpecUtility<T extends Attribute>
     TextDirection? textDirection,
     TextBaseline? textBaseline,
     Clip? clipBehavior,
-    SpaceMix? gap,
-    AnimatedDataMix? animated,
-    WidgetModifiersDataMix? modifiers,
+    SpaceDto? gap,
+    AnimatedDataDto? animated,
+    WidgetModifiersDataDto? modifiers,
   }) {
     return builder(FlexSpecAttribute(
       crossAxisAlignment: crossAxisAlignment,

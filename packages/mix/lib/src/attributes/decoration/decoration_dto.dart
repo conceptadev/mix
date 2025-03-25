@@ -12,10 +12,10 @@ import '../../internal/mix_error.dart';
 part 'decoration_dto.g.dart';
 
 typedef _BaseDecorProperties = ({
-  ColorMix? color,
-  GradientMix? gradient,
-  List<BoxShadowMix>? boxShadow,
-  DecorationImageMix? image,
+  ColorDto? color,
+  GradientDto? gradient,
+  List<BoxShadowDto>? boxShadow,
+  DecorationImageDto? image,
 });
 
 /// A Data transfer object that represents a [Decoration] value.
@@ -25,11 +25,11 @@ typedef _BaseDecorProperties = ({
 /// This class needs to have the different properties that are not found in the [Modifiers] class.
 /// In order to support merging of [Decoration] values, and reusable of common properties.
 @immutable
-sealed class DecorationMix<T extends Decoration> extends Mixable<T>
+sealed class DecorationDto<T extends Decoration> extends StyleProperty<T>
     with Diagnosticable {
-  final ColorMix? color;
-  final GradientMix? gradient;
-  final DecorationImageMix? image;
+  final ColorDto? color;
+  final GradientDto? gradient;
+  final DecorationImageDto? image;
   @MixableField(
     utilities: [
       MixableFieldUtility(
@@ -39,16 +39,16 @@ sealed class DecorationMix<T extends Decoration> extends Mixable<T>
       MixableFieldUtility(alias: 'elevation', type: 'ElevationUtility'),
     ],
   )
-  final List<BoxShadowMix>? boxShadow;
+  final List<BoxShadowDto>? boxShadow;
 
-  const DecorationMix({
+  const DecorationDto({
     required this.color,
     required this.gradient,
     required this.boxShadow,
     required this.image,
   });
 
-  static DecorationMix? tryToMerge(DecorationMix? a, DecorationMix? b) {
+  static DecorationDto? tryToMerge(DecorationDto? a, DecorationDto? b) {
     if (b == null) return a;
     if (a == null) return b;
 
@@ -60,12 +60,12 @@ sealed class DecorationMix<T extends Decoration> extends Mixable<T>
       return a.mergeableDecor(b);
     }
 
-    if (b is BoxDecorationMix) {
-      return _toBoxDecorationDto(a as ShapeDecorationMix).merge(b);
+    if (b is BoxDecorationDto) {
+      return _toBoxDecorationDto(a as ShapeDecorationDto).merge(b);
     }
 
-    if (b is ShapeDecorationMix) {
-      return _toShapeDecorationDto(a as BoxDecorationMix).merge(b);
+    if (b is ShapeDecorationDto) {
+      return _toShapeDecorationDto(a as BoxDecorationDto).merge(b);
     }
 
     throw UnimplementedError('Merging of $a and $b is not supported.');
@@ -82,10 +82,10 @@ sealed class DecorationMix<T extends Decoration> extends Mixable<T>
 
   bool get isMergeable;
 
-  DecorationMix? mergeableDecor(covariant DecorationMix? other);
+  DecorationDto? mergeableDecor(covariant DecorationDto? other);
 
   @override
-  DecorationMix<T> merge(covariant DecorationMix<T>? other);
+  DecorationDto<T> merge(covariant DecorationDto<T>? other);
 }
 
 /// Represents a Data transfer object of [BoxDecoration]
@@ -93,8 +93,8 @@ sealed class DecorationMix<T extends Decoration> extends Mixable<T>
 /// This is used to allow for resolvable value tokens, and also the correct
 /// merge and combining behavior. It allows to be merged, and resolved to a `[BoxDecoration]
 @MixableProperty()
-final class BoxDecorationMix extends DecorationMix<BoxDecoration>
-    with _$BoxDecorationMix {
+final class BoxDecorationDto extends DecorationDto<BoxDecoration>
+    with _$BoxDecorationDto {
   @MixableField(
     utilities: [
       MixableFieldUtility(
@@ -102,7 +102,7 @@ final class BoxDecorationMix extends DecorationMix<BoxDecoration>
       ),
     ],
   )
-  final BoxBorderMix? border;
+  final BoxBorderDto? border;
 
   @MixableField(
     utilities: [
@@ -111,11 +111,11 @@ final class BoxDecorationMix extends DecorationMix<BoxDecoration>
       ),
     ],
   )
-  final BorderRadiusGeometryMix? borderRadius;
+  final BorderRadiusGeometryDto? borderRadius;
   final BoxShape? shape;
   final BlendMode? backgroundBlendMode;
 
-  const BoxDecorationMix({
+  const BoxDecorationDto({
     this.border,
     this.borderRadius,
     this.shape,
@@ -126,17 +126,17 @@ final class BoxDecorationMix extends DecorationMix<BoxDecoration>
     super.boxShadow,
   });
   @override
-  BoxDecorationMix mergeableDecor(ShapeDecorationMix? other) {
+  BoxDecorationDto mergeableDecor(ShapeDecorationDto? other) {
     if (other == null) return this;
 
     final (:boxShadow, :color, :gradient, :image) = other._getBaseDecor();
 
     final (:borderRadius, :boxShape, :side) =
-        ShapeBorderMix.extract(other.shape);
+        ShapeBorderDto.extract(other.shape);
 
     return merge(
-      BoxDecorationMix(
-        border: side != null ? BorderMix.all(side) : null,
+      BoxDecorationDto(
+        border: side != null ? BorderDto.all(side) : null,
         borderRadius: borderRadius,
         shape: boxShape,
         color: color,
@@ -159,7 +159,7 @@ final class BoxDecorationMix extends DecorationMix<BoxDecoration>
     properties.addUsingDefault('border', border);
     properties.addUsingDefault('borderRadius', borderRadius);
     properties.addUsingDefault('gradient', gradient);
-    properties.add(IterableProperty<BoxShadowMix>(
+    properties.add(IterableProperty<BoxShadowDto>(
       'boxShadow',
       boxShadow,
       defaultValue: null,
@@ -176,21 +176,21 @@ final class BoxDecorationMix extends DecorationMix<BoxDecoration>
 }
 
 @MixableProperty()
-final class ShapeDecorationMix extends DecorationMix<ShapeDecoration>
-    with HasDefaultValue<ShapeDecoration>, _$ShapeDecorationMix {
-  final ShapeBorderMix? shape;
+final class ShapeDecorationDto extends DecorationDto<ShapeDecoration>
+    with HasDefaultValue<ShapeDecoration>, _$ShapeDecorationDto {
+  final ShapeBorderDto? shape;
 
-  const ShapeDecorationMix({
+  const ShapeDecorationDto({
     this.shape,
     super.color,
     super.image,
     super.gradient,
-    List<BoxShadowMix>? shadows,
+    List<BoxShadowDto>? shadows,
   }) : super(boxShadow: shadows);
 
-  List<BoxShadowMix>? get shadows => boxShadow;
+  List<BoxShadowDto>? get shadows => boxShadow;
   @override
-  ShapeDecorationMix mergeableDecor(BoxDecorationMix? other) {
+  ShapeDecorationDto mergeableDecor(BoxDecorationDto? other) {
     if (other == null) return this;
 
     assert(
@@ -207,7 +207,7 @@ final class ShapeDecorationMix extends DecorationMix<ShapeDecoration>
     );
 
     return merge(
-      ShapeDecorationMix(
+      ShapeDecorationDto(
         shape: shapeBorder,
         color: color,
         image: image,
@@ -219,22 +219,22 @@ final class ShapeDecorationMix extends DecorationMix<ShapeDecoration>
 
   @override
   bool get isMergeable => (shape == null ||
-      (shape is CircleBorderMix &&
-          ((shape as CircleBorderMix).eccentricity == null)) ||
-      shape is RoundedRectangleBorderMix);
+      (shape is CircleBorderDto &&
+          ((shape as CircleBorderDto).eccentricity == null)) ||
+      shape is RoundedRectangleBorderDto);
 
   @override
   ShapeDecoration get defaultValue =>
       const ShapeDecoration(shape: RoundedRectangleBorder());
 }
 
-/// Converts a [ShapeDecorationMix] to a [BoxDecorationMix].
-BoxDecorationMix _toBoxDecorationDto(ShapeDecorationMix dto) {
+/// Converts a [ShapeDecorationDto] to a [BoxDecorationDto].
+BoxDecorationDto _toBoxDecorationDto(ShapeDecorationDto dto) {
   final (:boxShadow, :color, :gradient, :image) = dto._getBaseDecor();
-  final (:borderRadius, :boxShape, :side) = ShapeBorderMix.extract(dto.shape);
+  final (:borderRadius, :boxShape, :side) = ShapeBorderDto.extract(dto.shape);
 
-  return BoxDecorationMix(
-    border: side != null ? BorderMix.all(side) : null,
+  return BoxDecorationDto(
+    border: side != null ? BorderDto.all(side) : null,
     borderRadius: borderRadius,
     shape: boxShape,
     color: color,
@@ -244,7 +244,7 @@ BoxDecorationMix _toBoxDecorationDto(ShapeDecorationMix dto) {
   );
 }
 
-ShapeDecorationMix _toShapeDecorationDto(BoxDecorationMix dto) {
+ShapeDecorationDto _toShapeDecorationDto(BoxDecorationDto dto) {
   final (:boxShadow, :color, :gradient, :image) = dto._getBaseDecor();
   final shapeBorder = _fromBoxShape(
     shape: dto.shape,
@@ -252,7 +252,7 @@ ShapeDecorationMix _toShapeDecorationDto(BoxDecorationMix dto) {
     borderRadius: dto.borderRadius,
   );
 
-  return ShapeDecorationMix(
+  return ShapeDecorationDto(
     shape: shapeBorder,
     color: color,
     image: image,
@@ -262,7 +262,7 @@ ShapeDecorationMix _toShapeDecorationDto(BoxDecorationMix dto) {
 }
 
 extension DecorationMixExt on Decoration {
-  DecorationMix toDto() {
+  DecorationDto toDto() {
     final self = this;
     if (self is BoxDecoration) return self.toDto();
     if (self is ShapeDecoration) return self.toDto();
@@ -274,19 +274,19 @@ extension DecorationMixExt on Decoration {
   }
 }
 
-ShapeBorderMix? _fromBoxShape({
+ShapeBorderDto? _fromBoxShape({
   required BoxShape? shape,
-  required BorderSideMix? side,
-  required BorderRadiusGeometryMix? borderRadius,
+  required BorderSideDto? side,
+  required BorderRadiusGeometryDto? borderRadius,
 }) {
   switch (shape) {
     case BoxShape.circle:
-      return CircleBorderMix(side: side);
+      return CircleBorderDto(side: side);
     case BoxShape.rectangle:
-      return RoundedRectangleBorderMix(borderRadius: borderRadius, side: side);
+      return RoundedRectangleBorderDto(borderRadius: borderRadius, side: side);
     default:
       if (side != null || borderRadius != null) {
-        return RoundedRectangleBorderMix(
+        return RoundedRectangleBorderDto(
           borderRadius: borderRadius,
           side: side,
         );
@@ -296,11 +296,11 @@ ShapeBorderMix? _fromBoxShape({
   }
 }
 
-class DecorationMixUtility<T extends Attribute>
-    extends MixUtility<T, DecorationMix> {
-  const DecorationMixUtility(super.builder);
+class DecorationUtility<T extends Attribute>
+    extends MixUtility<T, DecorationDto> {
+  const DecorationUtility(super.builder);
 
-  BoxDecorationMixUtility<T> get box => BoxDecorationMixUtility(builder);
+  BoxDecorationUtility<T> get box => BoxDecorationUtility(builder);
 
   ShapeDecorationUtility<T> get shape => ShapeDecorationUtility(builder);
 }

@@ -10,10 +10,10 @@ import 'material_colors_util.dart';
 
 @immutable
 abstract base class BaseColorUtility<T extends Attribute>
-    extends MixUtility<T, ColorMix> {
+    extends MixUtility<T, ColorDto> {
   const BaseColorUtility(super.builder);
 
-  T _buildColor(Color color) => builder(ColorMix(color));
+  T _buildColor(Color color) => builder(ColorDto(color));
 }
 
 @immutable
@@ -25,20 +25,20 @@ base class FoundationColorUtility<T extends Attribute, C extends Color>
   T call() => _buildColor(color);
   @override
   T directive(ColorDirective directive) =>
-      builder(ColorMix.raw(value: color, directives: [directive]));
+      builder(ColorDto.raw(value: color, directives: [directive]));
 }
 
-/// A utility class for building [Attribute] instances from a list of [ColorMix] objects.
+/// A utility class for building [Attribute] instances from a list of [ColorDto] objects.
 ///
 /// This class extends [MixUtility] and provides a convenient way to create [Attribute]
-/// instances by transforming a list of [Color] objects into a list of [ColorMix] objects.
-final class ColorListMixUtility<T extends Attribute>
-    extends MixUtility<T, List<ColorMix>> {
-  const ColorListMixUtility(super.builder);
+/// instances by transforming a list of [Color] objects into a list of [ColorDto] objects.
+final class ColorListUtility<T extends Attribute>
+    extends MixUtility<T, List<ColorDto>> {
+  const ColorListUtility(super.builder);
 
   /// Creates an [Attribute] instance from a list of [Color] objects.
   ///
-  /// This method maps each [Color] object to a [ColorMix] object and passes the
+  /// This method maps each [Color] object to a [ColorDto] object and passes the
   /// resulting list to the [builder] function to create the [Attribute] instance.
   T call(List<Color> colors) {
     return builder(colors.map((e) => e.toDto()).toList());
@@ -46,9 +46,9 @@ final class ColorListMixUtility<T extends Attribute>
 }
 
 @immutable
-final class ColorMixUtility<T extends Attribute> extends BaseColorUtility<T>
+final class ColorUtility<T extends Attribute> extends BaseColorUtility<T>
     with ColorDirectiveMixin<T>, MaterialColorsMixin<T>, BasicColorsMixin<T> {
-  ColorMixUtility(super.builder);
+  ColorUtility(super.builder);
 
   T ref(ColorToken ref) => _buildColor(ref());
 
@@ -95,7 +95,7 @@ base mixin BasicColorsMixin<T extends Attribute> on BaseColorUtility<T> {
 
 base mixin ColorDirectiveMixin<T extends Attribute> on BaseColorUtility<T> {
   T directive(ColorDirective directive) =>
-      builder(ColorMix.directive(directive));
+      builder(ColorDto.directive(directive));
   T withOpacity(double opacity) => directive(OpacityColorDirective(opacity));
   T withAlpha(int alpha) => directive(AlphaColorDirective(alpha));
   T darken(int percentage) => directive(DarkenColorDirective(percentage));

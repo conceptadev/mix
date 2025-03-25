@@ -1,5 +1,4 @@
 import '../metadata/property_metadata.dart';
-import '../type_registry.dart';
 import '../utils/code_builder.dart';
 import '../utils/utility_code_generator.dart';
 
@@ -13,12 +12,7 @@ class MixablePropertyUtilityBuilder implements CodeBuilder {
     final dtoName = metadata.name;
     final resolvedTypeName = metadata.resolvedElement.name;
 
-    final utilityType = resolvables.entries.firstWhere(
-      (e) => e.value == resolvedTypeName,
-      orElse: () => MapEntry(resolvedTypeName, resolvedTypeName),
-    );
-
-    final utilityName = '${utilityType.key}Utility';
+    final utilityName = '${resolvedTypeName}Utility';
 
     // Generate utility fields using UtilityCodeGenerator:
     final generatedFields = UtilityCodeGenerator.generateUtilityFields(

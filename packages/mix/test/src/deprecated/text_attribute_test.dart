@@ -9,7 +9,7 @@ void main() {
   group('TextSpecAttribute', () {
     final textSpecAttribute = TextSpecAttribute(
       overflow: TextOverflow.ellipsis,
-      strutStyle: const StrutStyleMix(
+      strutStyle: const StrutStyleDto(
         fontFamily: 'Roboto',
         fontSize: 12,
         fontWeight: FontWeight.w500,
@@ -17,13 +17,13 @@ void main() {
       textAlign: TextAlign.center,
       textScaleFactor: 1.5,
       maxLines: 2,
-      style: TextStyleMix(
+      style: TextStyleDto(
         fontSize: 12,
         fontWeight: FontWeight.w500,
         fontFamily: 'Roboto',
       ),
       textWidthBasis: TextWidthBasis.longestLine,
-      textHeightBehavior: const TextHeightBehaviorMix(
+      textHeightBehavior: const TextHeightBehaviorDto(
         applyHeightToFirstAscent: true,
         applyHeightToLastDescent: true,
       ),
@@ -34,14 +34,14 @@ void main() {
     // Constructor
     test('constructor', () {
       expect(textSpecAttribute.overflow, TextOverflow.ellipsis);
-      expect(textSpecAttribute.strutStyle, isA<StrutStyleMix>());
+      expect(textSpecAttribute.strutStyle, isA<StrutStyleDto>());
       expect(textSpecAttribute.textAlign, TextAlign.center);
       expect(textSpecAttribute.textScaleFactor, 1.5);
       expect(textSpecAttribute.maxLines, 2);
-      expect(textSpecAttribute.style, isA<TextStyleMix>());
+      expect(textSpecAttribute.style, isA<TextStyleDto>());
       expect(textSpecAttribute.textWidthBasis, TextWidthBasis.longestLine);
       expect(
-          textSpecAttribute.textHeightBehavior, isA<TextHeightBehaviorMix>());
+          textSpecAttribute.textHeightBehavior, isA<TextHeightBehaviorDto>());
       expect(textSpecAttribute.textDirection, TextDirection.rtl);
       expect(textSpecAttribute.softWrap, true);
     });
@@ -50,7 +50,7 @@ void main() {
     test('merge', () {
       final other = TextSpecAttribute(
         overflow: TextOverflow.clip,
-        strutStyle: const StrutStyleMix(
+        strutStyle: const StrutStyleDto(
           fontFamily: 'Helvetica',
           fontSize: 14,
           fontWeight: FontWeight.w500,
@@ -58,13 +58,13 @@ void main() {
         textAlign: TextAlign.center,
         textScaleFactor: 1.5,
         maxLines: 2,
-        style: TextStyleMix(
+        style: TextStyleDto(
           fontSize: 16,
           fontWeight: FontWeight.w200,
           fontFamily: 'Helvetica',
         ),
         textWidthBasis: TextWidthBasis.longestLine,
-        textHeightBehavior: const TextHeightBehaviorMix(
+        textHeightBehavior: const TextHeightBehaviorDto(
           applyHeightToFirstAscent: false,
           applyHeightToLastDescent: false,
         ),

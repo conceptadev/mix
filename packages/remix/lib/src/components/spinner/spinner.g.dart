@@ -3,10 +3,8 @@
 part of 'spinner.dart';
 
 // **************************************************************************
-// MixGenerator
+// MixableSpecGenerator
 // **************************************************************************
-
-// GENERATED CODE - DO NOT MODIFY BY HAND
 
 /// A mixin that provides spec functionality for [SpinnerSpec].
 mixin _$SpinnerSpec on Spec<SpinnerSpec> {
@@ -135,7 +133,7 @@ class SpinnerSpecAttribute extends SpecAttribute<SpinnerSpec>
     with Diagnosticable {
   final double? size;
   final double? strokeWidth;
-  final ColorMix? color;
+  final ColorDto? color;
   final Duration? duration;
   final SpinnerTypeStyle? style;
 
@@ -238,19 +236,19 @@ class SpinnerSpecUtility<T extends Attribute>
   late final strokeWidth = DoubleUtility((v) => only(strokeWidth: v));
 
   /// Utility for defining [SpinnerSpecAttribute.color]
-  late final color = ColorMixUtility((v) => only(color: v));
+  late final color = ColorUtility((v) => only(color: v));
 
   /// Utility for defining [SpinnerSpecAttribute.duration]
   late final duration = DurationUtility((v) => only(duration: v));
 
   /// Utility for defining [SpinnerSpecAttribute.style]
-  late final style = SpinnerTypeStyleUtility((v) => only(style: v));
+  late final style = GenericUtility<T, SpinnerTypeStyle>((v) => only(style: v));
 
   /// Utility for defining [SpinnerSpecAttribute.modifiers]
   late final wrap = SpecModifierUtility((v) => only(modifiers: v));
 
   /// Utility for defining [SpinnerSpecAttribute.animated]
-  late final animated = AnimatedMixUtility((v) => only(animated: v));
+  late final animated = AnimatedUtility((v) => only(animated: v));
 
   SpinnerSpecUtility(super.builder, {super.mutable});
 
@@ -265,11 +263,11 @@ class SpinnerSpecUtility<T extends Attribute>
   T only({
     double? size,
     double? strokeWidth,
-    ColorMix? color,
+    ColorDto? color,
     Duration? duration,
     SpinnerTypeStyle? style,
-    WidgetModifiersDataMix? modifiers,
-    AnimatedDataMix? animated,
+    WidgetModifiersDataDto? modifiers,
+    AnimatedDataDto? animated,
   }) {
     return builder(SpinnerSpecAttribute(
       size: size,

@@ -24,16 +24,16 @@ abstract class Attribute extends StyleElement {
 @Deprecated('Use StyleAttribute instead')
 typedef StyledAttribute = SpecAttribute;
 
-@Deprecated('Use Mixable instead')
-typedef Dto<Value> = Mixable<Value>;
+@Deprecated('Use StyleProperty instead')
+typedef Dto<Value> = StyleProperty<Value>;
 
-abstract class Mixable<Value> extends StyleElement {
-  const Mixable();
+abstract class StyleProperty<Value> extends StyleElement {
+  const StyleProperty();
 
   Value resolve(MixData mix);
 
   @override
-  Mixable<Value> merge(covariant Mixable<Value>? other);
+  StyleProperty<Value> merge(covariant StyleProperty<Value>? other);
 }
 
 // Define a mixin for properties that have default values
@@ -42,8 +42,8 @@ mixin HasDefaultValue<Value> {
   Value get defaultValue;
 }
 
-abstract class DtoUtility<A extends Attribute, D extends Mixable<Value>, Value>
-    extends MixUtility<A, D> {
+abstract class DtoUtility<A extends Attribute, D extends StyleProperty<Value>,
+    Value> extends MixUtility<A, D> {
   final D Function(Value) _fromValue;
   DtoUtility(super.builder, {required D Function(Value) valueToDto})
       : _fromValue = valueToDto;

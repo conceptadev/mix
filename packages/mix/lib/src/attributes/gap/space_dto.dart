@@ -6,14 +6,14 @@ import '../../core/factory/mix_data.dart';
 part 'space_dto.g.dart';
 
 @Deprecated('Use SpaceDto instead')
-typedef SpacingSideDto = SpaceMix;
+typedef SpacingSideDto = SpaceDto;
 
 @MixableProperty(components: GeneratedPropertyComponents.none)
-class SpaceMix extends Mixable<double> with _$SpaceMix {
+class SpaceDto extends StyleProperty<double> with _$SpaceDto {
   final double? value;
   @MixableConstructor()
-  const SpaceMix._({this.value});
-  const SpaceMix(this.value);
+  const SpaceDto._({this.value});
+  const SpaceDto(this.value);
 
   @override
   double resolve(MixData mix) {

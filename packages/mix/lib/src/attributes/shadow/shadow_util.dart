@@ -4,36 +4,36 @@ import '../../core/element.dart';
 import '../../core/utility.dart';
 import 'shadow_dto.dart';
 
-/// A utility class for building [Attribute] instances from a list of [ShadowMix] objects.
+/// A utility class for building [Attribute] instances from a list of [ShadowDto] objects.
 ///
 /// This class extends [MixUtility] and provides a convenient way to create [Attribute]
-/// instances by transforming a list of [BoxShadow] objects into a list of [ShadowMix] objects.
+/// instances by transforming a list of [BoxShadow] objects into a list of [ShadowDto] objects.
 final class ShadowListUtility<T extends Attribute>
-    extends MixUtility<T, List<ShadowMix>> {
+    extends MixUtility<T, List<ShadowDto>> {
   const ShadowListUtility(super.builder);
 
   /// Creates an [Attribute] instance from a list of [BoxShadow] objects.
   ///
-  /// This method maps each [BoxShadow] object to a [ShadowMix] object and passes the
+  /// This method maps each [BoxShadow] object to a [ShadowDto] object and passes the
   /// resulting list to the [builder] function to create the [Attribute] instance.
   T call(List<Shadow> shadows) {
     return builder(shadows.map((e) => e.toDto()).toList());
   }
 }
 
-/// A utility class for building [Attribute] instances from a list of [BoxShadowMix] objects.
+/// A utility class for building [Attribute] instances from a list of [BoxShadowDto] objects.
 ///
 /// This class extends [MixUtility] and provides a convenient way to create [Attribute]
-/// instances by transforming a list of [BoxShadow] objects into a list of [BoxShadowMix] objects.
+/// instances by transforming a list of [BoxShadow] objects into a list of [BoxShadowDto] objects.
 final class BoxShadowListUtility<T extends Attribute>
-    extends MixUtility<T, List<BoxShadowMix>> {
-  late final add = BoxShadowMixUtility((v) => builder([v]));
+    extends MixUtility<T, List<BoxShadowDto>> {
+  late final add = BoxShadowUtility((v) => builder([v]));
 
   BoxShadowListUtility(super.builder);
 
   /// Creates an [Attribute] instance from a list of [BoxShadow] objects.
   ///
-  /// This method maps each [BoxShadow] object to a [BoxShadowMix] object and passes the
+  /// This method maps each [BoxShadow] object to a [BoxShadowDto] object and passes the
   /// resulting list to the [builder] function to create the [Attribute] instance.
   T call(List<BoxShadow> shadows) {
     return builder(shadows.map((e) => e.toDto()).toList());
@@ -44,9 +44,9 @@ final class BoxShadowListUtility<T extends Attribute>
 ///
 /// This class extends [MixUtility] and provides methods to create [Attribute] instances
 /// based on predefined elevation values, which are mapped to corresponding lists of
-/// [BoxShadowMix] objects using the [kElevationToShadow] map.
+/// [BoxShadowDto] objects using the [kElevationToShadow] map.
 final class ElevationUtility<T extends Attribute>
-    extends MixUtility<T, List<BoxShadowMix>> {
+    extends MixUtility<T, List<BoxShadowDto>> {
   /// Creates an [T] instance with an elevation of 1.
   late final e1 = one;
 
@@ -82,7 +82,7 @@ final class ElevationUtility<T extends Attribute>
   /// Creates an [Attribute] instance from an elevation value.
   ///
   /// Retrieves the corresponding list of [BoxShadow] objects from the [kElevationToShadow]
-  /// map, maps each [BoxShadow] to a [BoxShadowMix], and passes the resulting list to
+  /// map, maps each [BoxShadow] to a [BoxShadowDto], and passes the resulting list to
   /// the [builder] function to create the [Attribute] instance.
   ///
   /// Throws an [AssertionError] if the provided [value] is not a valid elevation value.

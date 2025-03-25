@@ -3,10 +3,8 @@
 part of 'checkbox.dart';
 
 // **************************************************************************
-// MixGenerator
+// MixableSpecGenerator
 // **************************************************************************
-
-// GENERATED CODE - DO NOT MODIFY BY HAND
 
 /// A mixin that provides spec functionality for [CheckboxSpec].
 mixin _$CheckboxSpec on Spec<CheckboxSpec> {
@@ -241,7 +239,7 @@ class CheckboxSpecUtility<T extends Attribute>
   late final wrap = SpecModifierUtility((v) => only(modifiers: v));
 
   /// Utility for defining [CheckboxSpecAttribute.animated]
-  late final animated = AnimatedMixUtility((v) => only(animated: v));
+  late final animated = AnimatedUtility((v) => only(animated: v));
 
   CheckboxSpecUtility(super.builder, {super.mutable});
 
@@ -258,8 +256,8 @@ class CheckboxSpecUtility<T extends Attribute>
     IconSpecAttribute? indicator,
     FlexBoxSpecAttribute? container,
     TextSpecAttribute? label,
-    WidgetModifiersDataMix? modifiers,
-    AnimatedDataMix? animated,
+    WidgetModifiersDataDto? modifiers,
+    AnimatedDataDto? animated,
   }) {
     return builder(CheckboxSpecAttribute(
       indicatorContainer: indicatorContainer,

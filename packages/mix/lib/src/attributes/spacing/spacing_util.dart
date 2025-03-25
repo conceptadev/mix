@@ -6,11 +6,11 @@ import '../../theme/tokens/space_token.dart';
 import 'edge_insets_dto.dart';
 
 @Deprecated('Use EdgeInsetsGeometryUtility instead')
-typedef SpacingUtility<T extends Attribute> = EdgeInsetsGeometryMixUtility<T>;
+typedef SpacingUtility<T extends Attribute> = EdgeInsetsGeometryUtility<T>;
 
 @immutable
-final class EdgeInsetsGeometryMixUtility<T extends Attribute>
-    extends DtoUtility<T, EdgeInsetsGeometryMix, EdgeInsetsGeometry> {
+final class EdgeInsetsGeometryUtility<T extends Attribute>
+    extends DtoUtility<T, EdgeInsetsGeometryDto, EdgeInsetsGeometry> {
   late final directional = SpacingDirectionalUtility(builder);
 
   late final horizontal = SpacingSideUtility((v) => only(left: v, right: v));
@@ -29,7 +29,7 @@ final class EdgeInsetsGeometryMixUtility<T extends Attribute>
 
   late final right = SpacingSideUtility((v) => only(right: v));
 
-  EdgeInsetsGeometryMixUtility(super.builder)
+  EdgeInsetsGeometryUtility(super.builder)
       : super(valueToDto: (value) => value.toDto());
 
   T call(double p1, [double? p2, double? p3, double? p4]) {
@@ -51,7 +51,7 @@ final class EdgeInsetsGeometryMixUtility<T extends Attribute>
     double? end,
   }) {
     return builder(
-      EdgeInsetsGeometryMix.only(
+      EdgeInsetsGeometryDto.only(
         top: top,
         bottom: bottom,
         left: left,
@@ -65,7 +65,7 @@ final class EdgeInsetsGeometryMixUtility<T extends Attribute>
 
 @immutable
 final class SpacingDirectionalUtility<T extends Attribute>
-    extends DtoUtility<T, EdgeInsetsGeometryMix, EdgeInsetsGeometry> {
+    extends DtoUtility<T, EdgeInsetsGeometryDto, EdgeInsetsGeometry> {
   late final all = SpacingSideUtility(
     (v) => only(top: v, bottom: v, start: v, end: v),
   );
@@ -97,7 +97,7 @@ final class SpacingDirectionalUtility<T extends Attribute>
   @override
   T only({double? top, double? bottom, double? start, double? end}) {
     return builder(
-      EdgeInsetsGeometryMix.only(
+      EdgeInsetsGeometryDto.only(
         top: top,
         bottom: bottom,
         start: start,

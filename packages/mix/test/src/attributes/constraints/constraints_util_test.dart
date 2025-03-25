@@ -5,7 +5,7 @@ import '../../../helpers/testing_utils.dart';
 
 void main() {
   group('BoxConstraintsUtility', () {
-    final boxConstraints = BoxConstraintsMixUtility(UtilityTestAttribute.new);
+    final boxConstraints = BoxConstraintsUtility(UtilityTestAttribute.new);
     test('boxConstraints()', () {
       final result = boxConstraints(
         maxHeight: 200.0,
@@ -14,7 +14,7 @@ void main() {
         minWidth: 50.0,
       );
 
-      expect(result.value, isA<BoxConstraintsMix>());
+      expect(result.value, isA<BoxConstraintsDto>());
       expect(result.value.minWidth, 50.0);
       expect(result.value.maxWidth, 150.0);
       expect(result.value.minHeight, 100.0);

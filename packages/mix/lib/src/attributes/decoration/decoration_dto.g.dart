@@ -8,15 +8,15 @@ part of 'decoration_dto.dart';
 
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-/// A mixin that provides DTO functionality for [BoxDecorationMix].
-mixin _$BoxDecorationMix on Mixable<BoxDecoration> {
+/// A mixin that provides DTO functionality for [BoxDecorationDto].
+mixin _$BoxDecorationDto on StyleProperty<BoxDecoration> {
   /// Resolves to [BoxDecoration] using the provided [MixData].
   ///
   /// If a property is null in the [MixData], it falls back to the
   /// default value defined in the `defaultValue` for that property.
   ///
   /// ```dart
-  /// final boxDecoration = BoxDecorationMix(...).resolve(mix);
+  /// final boxDecoration = BoxDecorationDto(...).resolve(mix);
   /// ```
   @override
   BoxDecoration resolve(MixData mix) {
@@ -32,20 +32,20 @@ mixin _$BoxDecorationMix on Mixable<BoxDecoration> {
     );
   }
 
-  /// Merges the properties of this [BoxDecorationMix] with the properties of [other].
+  /// Merges the properties of this [BoxDecorationDto] with the properties of [other].
   ///
   /// If [other] is null, returns this instance unchanged. Otherwise, returns a new
-  /// [BoxDecorationMix] with the properties of [other] taking precedence over
+  /// [BoxDecorationDto] with the properties of [other] taking precedence over
   /// the corresponding properties of this instance.
   ///
   /// Properties from [other] that are null will fall back
   /// to the values from this instance.
   @override
-  BoxDecorationMix merge(BoxDecorationMix? other) {
+  BoxDecorationDto merge(BoxDecorationDto? other) {
     if (other == null) return _$this;
 
-    return BoxDecorationMix(
-      border: BoxBorderMix.tryToMerge(_$this.border, other.border),
+    return BoxDecorationDto(
+      border: BoxBorderDto.tryToMerge(_$this.border, other.border),
       borderRadius:
           _$this.borderRadius?.merge(other.borderRadius) ?? other.borderRadius,
       shape: other.shape ?? _$this.shape,
@@ -53,15 +53,15 @@ mixin _$BoxDecorationMix on Mixable<BoxDecoration> {
           other.backgroundBlendMode ?? _$this.backgroundBlendMode,
       color: _$this.color?.merge(other.color) ?? other.color,
       image: _$this.image?.merge(other.image) ?? other.image,
-      gradient: GradientMix.tryToMerge(_$this.gradient, other.gradient),
+      gradient: GradientDto.tryToMerge(_$this.gradient, other.gradient),
       boxShadow: MixHelpers.mergeList(_$this.boxShadow, other.boxShadow),
     );
   }
 
-  /// The list of properties that constitute the state of this [BoxDecorationMix].
+  /// The list of properties that constitute the state of this [BoxDecorationDto].
   ///
   /// This property is used by the [==] operator and the [hashCode] getter to
-  /// compare two [BoxDecorationMix] instances for equality.
+  /// compare two [BoxDecorationDto] instances for equality.
   @override
   List<Object?> get props => [
         _$this.border,
@@ -74,69 +74,69 @@ mixin _$BoxDecorationMix on Mixable<BoxDecoration> {
         _$this.boxShadow,
       ];
 
-  /// Returns this instance as a [BoxDecorationMix].
-  BoxDecorationMix get _$this => this as BoxDecorationMix;
+  /// Returns this instance as a [BoxDecorationDto].
+  BoxDecorationDto get _$this => this as BoxDecorationDto;
 }
 
 /// Utility class for configuring [BoxDecoration] properties.
 ///
 /// This class provides methods to set individual properties of a [BoxDecoration].
 /// Use the methods of this class to configure specific properties of a [BoxDecoration].
-class BoxDecorationMixUtility<T extends Attribute>
-    extends DtoUtility<T, BoxDecorationMix, BoxDecoration> {
-  /// Utility for defining [BoxDecorationMix.border]
-  late final border = BoxBorderMixUtility((v) => only(border: v));
+class BoxDecorationUtility<T extends Attribute>
+    extends DtoUtility<T, BoxDecorationDto, BoxDecoration> {
+  /// Utility for defining [BoxDecorationDto.border]
+  late final border = BoxBorderUtility((v) => only(border: v));
 
-  /// Utility for defining [BoxDecorationMix.border.directional]
+  /// Utility for defining [BoxDecorationDto.border.directional]
   late final borderDirectional = border.directional;
 
-  /// Utility for defining [BoxDecorationMix.borderRadius]
+  /// Utility for defining [BoxDecorationDto.borderRadius]
   late final borderRadius =
-      BorderRadiusGeometryMixUtility((v) => only(borderRadius: v));
+      BorderRadiusGeometryUtility((v) => only(borderRadius: v));
 
-  /// Utility for defining [BoxDecorationMix.borderRadius.directional]
+  /// Utility for defining [BoxDecorationDto.borderRadius.directional]
   late final borderRadiusDirectional = borderRadius.directional;
 
-  /// Utility for defining [BoxDecorationMix.shape]
+  /// Utility for defining [BoxDecorationDto.shape]
   late final shape = BoxShapeUtility((v) => only(shape: v));
 
-  /// Utility for defining [BoxDecorationMix.backgroundBlendMode]
+  /// Utility for defining [BoxDecorationDto.backgroundBlendMode]
   late final backgroundBlendMode =
       BlendModeUtility((v) => only(backgroundBlendMode: v));
 
-  /// Utility for defining [BoxDecorationMix.color]
-  late final color = ColorMixUtility((v) => only(color: v));
+  /// Utility for defining [BoxDecorationDto.color]
+  late final color = ColorUtility((v) => only(color: v));
 
-  /// Utility for defining [BoxDecorationMix.image]
-  late final image = DecorationImageMixUtility((v) => only(image: v));
+  /// Utility for defining [BoxDecorationDto.image]
+  late final image = DecorationImageUtility((v) => only(image: v));
 
-  /// Utility for defining [BoxDecorationMix.gradient]
-  late final gradient = GradientMixUtility((v) => only(gradient: v));
+  /// Utility for defining [BoxDecorationDto.gradient]
+  late final gradient = GradientUtility((v) => only(gradient: v));
 
-  /// Utility for defining [BoxDecorationMix.boxShadow]
+  /// Utility for defining [BoxDecorationDto.boxShadow]
   late final boxShadows = BoxShadowListUtility((v) => only(boxShadow: v));
 
-  /// Utility for defining [BoxDecorationMix.boxShadows.add]
+  /// Utility for defining [BoxDecorationDto.boxShadows.add]
   late final boxShadow = boxShadows.add;
 
-  /// Utility for defining [BoxDecorationMix.boxShadow]
+  /// Utility for defining [BoxDecorationDto.boxShadow]
   late final elevation = ElevationUtility((v) => only(boxShadow: v));
 
-  BoxDecorationMixUtility(super.builder) : super(valueToDto: (v) => v.toDto());
+  BoxDecorationUtility(super.builder) : super(valueToDto: (v) => v.toDto());
 
-  /// Returns a new [BoxDecorationMix] with the specified properties.
+  /// Returns a new [BoxDecorationDto] with the specified properties.
   @override
   T only({
-    BoxBorderMix? border,
-    BorderRadiusGeometryMix? borderRadius,
+    BoxBorderDto? border,
+    BorderRadiusGeometryDto? borderRadius,
     BoxShape? shape,
     BlendMode? backgroundBlendMode,
-    ColorMix? color,
-    DecorationImageMix? image,
-    GradientMix? gradient,
-    List<BoxShadowMix>? boxShadow,
+    ColorDto? color,
+    DecorationImageDto? image,
+    GradientDto? gradient,
+    List<BoxShadowDto>? boxShadow,
   }) {
-    return builder(BoxDecorationMix(
+    return builder(BoxDecorationDto(
       border: border,
       borderRadius: borderRadius,
       shape: shape,
@@ -171,11 +171,11 @@ class BoxDecorationMixUtility<T extends Attribute>
   }
 }
 
-/// Extension methods to convert [BoxDecoration] to [BoxDecorationMix].
+/// Extension methods to convert [BoxDecoration] to [BoxDecorationDto].
 extension BoxDecorationMixExt on BoxDecoration {
-  /// Converts this [BoxDecoration] to a [BoxDecorationMix].
-  BoxDecorationMix toDto() {
-    return BoxDecorationMix(
+  /// Converts this [BoxDecoration] to a [BoxDecorationDto].
+  BoxDecorationDto toDto() {
+    return BoxDecorationDto(
       border: border?.toDto(),
       borderRadius: borderRadius?.toDto(),
       shape: shape,
@@ -188,24 +188,24 @@ extension BoxDecorationMixExt on BoxDecoration {
   }
 }
 
-/// Extension methods to convert List<[BoxDecoration]> to List<[BoxDecorationMix]>.
+/// Extension methods to convert List<[BoxDecoration]> to List<[BoxDecorationDto]>.
 extension ListBoxDecorationMixExt on List<BoxDecoration> {
-  /// Converts this List<[BoxDecoration]> to a List<[BoxDecorationMix]>.
-  List<BoxDecorationMix> toDto() {
+  /// Converts this List<[BoxDecoration]> to a List<[BoxDecorationDto]>.
+  List<BoxDecorationDto> toDto() {
     return map((e) => e.toDto()).toList();
   }
 }
 
-/// A mixin that provides DTO functionality for [ShapeDecorationMix].
-mixin _$ShapeDecorationMix
-    on Mixable<ShapeDecoration>, HasDefaultValue<ShapeDecoration> {
+/// A mixin that provides DTO functionality for [ShapeDecorationDto].
+mixin _$ShapeDecorationDto
+    on StyleProperty<ShapeDecoration>, HasDefaultValue<ShapeDecoration> {
   /// Resolves to [ShapeDecoration] using the provided [MixData].
   ///
   /// If a property is null in the [MixData], it falls back to the
   /// default value defined in the `defaultValue` for that property.
   ///
   /// ```dart
-  /// final shapeDecoration = ShapeDecorationMix(...).resolve(mix);
+  /// final shapeDecoration = ShapeDecorationDto(...).resolve(mix);
   /// ```
   @override
   ShapeDecoration resolve(MixData mix) {
@@ -219,31 +219,31 @@ mixin _$ShapeDecorationMix
     );
   }
 
-  /// Merges the properties of this [ShapeDecorationMix] with the properties of [other].
+  /// Merges the properties of this [ShapeDecorationDto] with the properties of [other].
   ///
   /// If [other] is null, returns this instance unchanged. Otherwise, returns a new
-  /// [ShapeDecorationMix] with the properties of [other] taking precedence over
+  /// [ShapeDecorationDto] with the properties of [other] taking precedence over
   /// the corresponding properties of this instance.
   ///
   /// Properties from [other] that are null will fall back
   /// to the values from this instance.
   @override
-  ShapeDecorationMix merge(ShapeDecorationMix? other) {
+  ShapeDecorationDto merge(ShapeDecorationDto? other) {
     if (other == null) return _$this;
 
-    return ShapeDecorationMix(
-      shape: ShapeBorderMix.tryToMerge(_$this.shape, other.shape),
+    return ShapeDecorationDto(
+      shape: ShapeBorderDto.tryToMerge(_$this.shape, other.shape),
       color: _$this.color?.merge(other.color) ?? other.color,
       image: _$this.image?.merge(other.image) ?? other.image,
-      gradient: GradientMix.tryToMerge(_$this.gradient, other.gradient),
+      gradient: GradientDto.tryToMerge(_$this.gradient, other.gradient),
       shadows: MixHelpers.mergeList(_$this.shadows, other.shadows),
     );
   }
 
-  /// The list of properties that constitute the state of this [ShapeDecorationMix].
+  /// The list of properties that constitute the state of this [ShapeDecorationDto].
   ///
   /// This property is used by the [==] operator and the [hashCode] getter to
-  /// compare two [ShapeDecorationMix] instances for equality.
+  /// compare two [ShapeDecorationDto] instances for equality.
   @override
   List<Object?> get props => [
         _$this.shape,
@@ -253,8 +253,8 @@ mixin _$ShapeDecorationMix
         _$this.shadows,
       ];
 
-  /// Returns this instance as a [ShapeDecorationMix].
-  ShapeDecorationMix get _$this => this as ShapeDecorationMix;
+  /// Returns this instance as a [ShapeDecorationDto].
+  ShapeDecorationDto get _$this => this as ShapeDecorationDto;
 }
 
 /// Utility class for configuring [ShapeDecoration] properties.
@@ -262,34 +262,34 @@ mixin _$ShapeDecorationMix
 /// This class provides methods to set individual properties of a [ShapeDecoration].
 /// Use the methods of this class to configure specific properties of a [ShapeDecoration].
 class ShapeDecorationUtility<T extends Attribute>
-    extends DtoUtility<T, ShapeDecorationMix, ShapeDecoration> {
-  /// Utility for defining [ShapeDecorationMix.shape]
-  late final shape = ShapeBorderMixUtility((v) => only(shape: v));
+    extends DtoUtility<T, ShapeDecorationDto, ShapeDecoration> {
+  /// Utility for defining [ShapeDecorationDto.shape]
+  late final shape = ShapeBorderUtility((v) => only(shape: v));
 
-  /// Utility for defining [ShapeDecorationMix.color]
-  late final color = ColorMixUtility((v) => only(color: v));
+  /// Utility for defining [ShapeDecorationDto.color]
+  late final color = ColorUtility((v) => only(color: v));
 
-  /// Utility for defining [ShapeDecorationMix.image]
-  late final image = DecorationImageMixUtility((v) => only(image: v));
+  /// Utility for defining [ShapeDecorationDto.image]
+  late final image = DecorationImageUtility((v) => only(image: v));
 
-  /// Utility for defining [ShapeDecorationMix.gradient]
-  late final gradient = GradientMixUtility((v) => only(gradient: v));
+  /// Utility for defining [ShapeDecorationDto.gradient]
+  late final gradient = GradientUtility((v) => only(gradient: v));
 
-  /// Utility for defining [ShapeDecorationMix.shadows]
+  /// Utility for defining [ShapeDecorationDto.shadows]
   late final shadows = BoxShadowListUtility((v) => only(shadows: v));
 
   ShapeDecorationUtility(super.builder) : super(valueToDto: (v) => v.toDto());
 
-  /// Returns a new [ShapeDecorationMix] with the specified properties.
+  /// Returns a new [ShapeDecorationDto] with the specified properties.
   @override
   T only({
-    ShapeBorderMix? shape,
-    ColorMix? color,
-    DecorationImageMix? image,
-    GradientMix? gradient,
-    List<BoxShadowMix>? shadows,
+    ShapeBorderDto? shape,
+    ColorDto? color,
+    DecorationImageDto? image,
+    GradientDto? gradient,
+    List<BoxShadowDto>? shadows,
   }) {
-    return builder(ShapeDecorationMix(
+    return builder(ShapeDecorationDto(
       shape: shape,
       color: color,
       image: image,
@@ -315,11 +315,11 @@ class ShapeDecorationUtility<T extends Attribute>
   }
 }
 
-/// Extension methods to convert [ShapeDecoration] to [ShapeDecorationMix].
+/// Extension methods to convert [ShapeDecoration] to [ShapeDecorationDto].
 extension ShapeDecorationMixExt on ShapeDecoration {
-  /// Converts this [ShapeDecoration] to a [ShapeDecorationMix].
-  ShapeDecorationMix toDto() {
-    return ShapeDecorationMix(
+  /// Converts this [ShapeDecoration] to a [ShapeDecorationDto].
+  ShapeDecorationDto toDto() {
+    return ShapeDecorationDto(
       shape: shape.toDto(),
       color: color?.toDto(),
       image: image?.toDto(),
@@ -329,10 +329,10 @@ extension ShapeDecorationMixExt on ShapeDecoration {
   }
 }
 
-/// Extension methods to convert List<[ShapeDecoration]> to List<[ShapeDecorationMix]>.
+/// Extension methods to convert List<[ShapeDecoration]> to List<[ShapeDecorationDto]>.
 extension ListShapeDecorationMixExt on List<ShapeDecoration> {
-  /// Converts this List<[ShapeDecoration]> to a List<[ShapeDecorationMix]>.
-  List<ShapeDecorationMix> toDto() {
+  /// Converts this List<[ShapeDecoration]> to a List<[ShapeDecorationDto]>.
+  List<ShapeDecorationDto> toDto() {
     return map((e) => e.toDto()).toList();
   }
 }

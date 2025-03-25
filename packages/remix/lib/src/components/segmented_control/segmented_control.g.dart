@@ -3,10 +3,8 @@
 part of 'segmented_control.dart';
 
 // **************************************************************************
-// MixGenerator
+// MixableSpecGenerator
 // **************************************************************************
-
-// GENERATED CODE - DO NOT MODIFY BY HAND
 
 /// A mixin that provides spec functionality for [SegmentedControlSpec].
 mixin _$SegmentedControlSpec on Spec<SegmentedControlSpec> {
@@ -250,7 +248,7 @@ class SegmentedControlSpecUtility<T extends Attribute>
   late final wrap = SpecModifierUtility((v) => only(modifiers: v));
 
   /// Utility for defining [SegmentedControlSpecAttribute.animated]
-  late final animated = AnimatedMixUtility((v) => only(animated: v));
+  late final animated = AnimatedUtility((v) => only(animated: v));
 
   SegmentedControlSpecUtility(super.builder, {super.mutable});
 
@@ -268,8 +266,8 @@ class SegmentedControlSpecUtility<T extends Attribute>
     bool? showDivider,
     BoxSpecAttribute? divider,
     SegmentButtonSpecAttribute? item,
-    WidgetModifiersDataMix? modifiers,
-    AnimatedDataMix? animated,
+    WidgetModifiersDataDto? modifiers,
+    AnimatedDataDto? animated,
   }) {
     return builder(SegmentedControlSpecAttribute(
       container: container,
@@ -534,7 +532,7 @@ class SegmentButtonSpecUtility<T extends Attribute>
   late final wrap = SpecModifierUtility((v) => only(modifiers: v));
 
   /// Utility for defining [SegmentButtonSpecAttribute.animated]
-  late final animated = AnimatedMixUtility((v) => only(animated: v));
+  late final animated = AnimatedUtility((v) => only(animated: v));
 
   SegmentButtonSpecUtility(super.builder, {super.mutable});
 
@@ -551,8 +549,8 @@ class SegmentButtonSpecUtility<T extends Attribute>
     FlexSpecAttribute? flex,
     IconSpecAttribute? icon,
     TextSpecAttribute? label,
-    WidgetModifiersDataMix? modifiers,
-    AnimatedDataMix? animated,
+    WidgetModifiersDataDto? modifiers,
+    AnimatedDataDto? animated,
   }) {
     return builder(SegmentButtonSpecAttribute(
       container: container,

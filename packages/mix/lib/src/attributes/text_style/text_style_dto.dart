@@ -49,7 +49,7 @@ final class TextStyleDataRef extends TextStyleData {
 // to be resolved once we have a context. We can merge the values directly, simplifying the code,
 // and this will allow more predictable behavior overall.
 @MixableProperty(components: GeneratedPropertyComponents.none)
-base class TextStyleData extends Mixable<TextStyle>
+base class TextStyleData extends StyleProperty<TextStyle>
     with _$TextStyleData, Diagnosticable {
   final String? fontFamily;
   final FontWeight? fontWeight;
@@ -58,13 +58,13 @@ base class TextStyleData extends Mixable<TextStyle>
   final double? letterSpacing;
   final double? wordSpacing;
   final TextBaseline? textBaseline;
-  final ColorMix? color;
-  final ColorMix? backgroundColor;
-  final List<ShadowMix>? shadows;
+  final ColorDto? color;
+  final ColorDto? backgroundColor;
+  final List<ShadowDto>? shadows;
   final List<FontFeature>? fontFeatures;
   final List<FontVariation>? fontVariations;
   final TextDecoration? decoration;
-  final ColorMix? decorationColor;
+  final ColorDto? decorationColor;
   final TextDecorationStyle? decorationStyle;
   final String? debugLabel;
   final double? height;
@@ -128,15 +128,15 @@ base class TextStyleData extends Mixable<TextStyle>
   components: GeneratedPropertyComponents.none,
   mergeLists: false,
 )
-final class TextStyleMix extends Mixable<TextStyle>
-    with _$TextStyleMix, Diagnosticable {
+final class TextStyleDto extends StyleProperty<TextStyle>
+    with _$TextStyleDto, Diagnosticable {
   final List<TextStyleData> value;
   @MixableConstructor()
-  const TextStyleMix._({this.value = const []});
+  const TextStyleDto._({this.value = const []});
 
-  factory TextStyleMix({
-    ColorMix? color,
-    ColorMix? backgroundColor,
+  factory TextStyleDto({
+    ColorDto? color,
+    ColorDto? backgroundColor,
     double? fontSize,
     FontWeight? fontWeight,
     FontStyle? fontStyle,
@@ -144,10 +144,10 @@ final class TextStyleMix extends Mixable<TextStyle>
     String? debugLabel,
     double? wordSpacing,
     TextBaseline? textBaseline,
-    List<ShadowMix>? shadows,
+    List<ShadowDto>? shadows,
     List<FontFeature>? fontFeatures,
     TextDecoration? decoration,
-    ColorMix? decorationColor,
+    ColorDto? decorationColor,
     TextDecorationStyle? decorationStyle,
     List<FontVariation>? fontVariations,
     double? height,
@@ -157,7 +157,7 @@ final class TextStyleMix extends Mixable<TextStyle>
     String? fontFamily,
     List<String>? fontFamilyFallback,
   }) {
-    return TextStyleMix._(value: [
+    return TextStyleDto._(value: [
       TextStyleData(
         background: background,
         backgroundColor: backgroundColor,
@@ -184,11 +184,11 @@ final class TextStyleMix extends Mixable<TextStyle>
     ]);
   }
 
-  factory TextStyleMix.ref(TextStyleToken token) {
-    return TextStyleMix._(value: [TextStyleDataRef(ref: token())]);
+  factory TextStyleDto.ref(TextStyleToken token) {
+    return TextStyleDto._(value: [TextStyleDataRef(ref: token())]);
   }
 
-  /// This method resolves the [TextStyleMix] to a TextStyle.
+  /// This method resolves the [TextStyleDto] to a TextStyle.
   /// It maps over the values list and checks if each TextStyleDto is a token reference.
   /// If it is, it resolves the token reference and converts it to a [TextStyleData].
   /// If it's not a token reference, it leaves the [TextStyleData] as is.
@@ -222,12 +222,12 @@ final class TextStyleMix extends Mixable<TextStyle>
 }
 
 extension TextStyleExt on TextStyle {
-  TextStyleMix toDto() {
+  TextStyleDto toDto() {
     if (this is TextStyleRef) {
-      return TextStyleMix.ref((this as TextStyleRef).token);
+      return TextStyleDto.ref((this as TextStyleRef).token);
     }
 
-    return TextStyleMix._(value: [_toData()]);
+    return TextStyleDto._(value: [_toData()]);
   }
 
   TextStyleData _toData() => TextStyleData(

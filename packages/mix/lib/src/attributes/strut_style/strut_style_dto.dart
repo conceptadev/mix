@@ -8,7 +8,8 @@ import '../../../mix.dart';
 part 'strut_style_dto.g.dart';
 
 @MixableProperty()
-final class StrutStyleMix extends Mixable<StrutStyle> with _$StrutStyleMix {
+final class StrutStyleDto extends StyleProperty<StrutStyle>
+    with _$StrutStyleDto {
   @MixableField(utilities: [MixableFieldUtility(type: FontFamilyUtility)])
   final String? fontFamily;
   final List<String>? fontFamilyFallback;
@@ -21,7 +22,7 @@ final class StrutStyleMix extends Mixable<StrutStyle> with _$StrutStyleMix {
   final double? leading;
   final bool? forceStrutHeight;
 
-  const StrutStyleMix({
+  const StrutStyleDto({
     this.fontFamily,
     this.fontFamilyFallback,
     this.fontSize,

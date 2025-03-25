@@ -8,8 +8,8 @@ import 'border_radius_dto.dart';
 ///
 /// Extends the [BorderRadiusUtility] class to provide additional utility methods for creating and manipulating [BorderRadiusGeometry] attributes.
 /// adds a [directional] property that returns a [BorderRadiusDirectionalUtility] instance.
-final class BorderRadiusGeometryMixUtility<T extends Attribute>
-    extends DtoUtility<T, BorderRadiusGeometryMix, BorderRadiusGeometry> {
+final class BorderRadiusGeometryUtility<T extends Attribute>
+    extends DtoUtility<T, BorderRadiusGeometryDto, BorderRadiusGeometry> {
   /// Returns a directional utility for creating and manipulating attributes with [BorderRadiusDirectional]
   late final directional = BorderRadiusDirectionalUtility(builder);
 
@@ -51,7 +51,7 @@ final class BorderRadiusGeometryMixUtility<T extends Attribute>
 
   late final _bordeRadius = BorderRadiusUtility(builder);
 
-  BorderRadiusGeometryMixUtility(super.builder)
+  BorderRadiusGeometryUtility(super.builder)
       : super(valueToDto: (v) => v.toDto());
 
   T call(double p1, [double? p2, double? p3, double? p4]) {
@@ -78,9 +78,9 @@ final class BorderRadiusGeometryMixUtility<T extends Attribute>
 /// Utility class for creating and manipulating attributes with [BorderRadius]
 ///
 /// Allows setting of radius for a border. This class provides a convenient way to configure and apply border radius to [T]
-/// Accepts a builder function that returns [T] and takes a [BorderRadiusMix] as a parameter.
+/// Accepts a builder function that returns [T] and takes a [BorderRadiusDto] as a parameter.
 final class BorderRadiusUtility<T extends Attribute>
-    extends DtoUtility<T, BorderRadiusMix, BorderRadius> {
+    extends DtoUtility<T, BorderRadiusDto, BorderRadius> {
   /// Returns a [RadiusUtility] to manipulate [Radius] for bottomLeft corner.
   late final bottomLeft = RadiusUtility((radius) => only(bottomLeft: radius));
 
@@ -173,7 +173,7 @@ final class BorderRadiusUtility<T extends Attribute>
     Radius? bottomRight,
   }) {
     return builder(
-      BorderRadiusMix(
+      BorderRadiusDto(
         topLeft: topLeft,
         topRight: topRight,
         bottomLeft: bottomLeft,
@@ -184,7 +184,7 @@ final class BorderRadiusUtility<T extends Attribute>
 }
 
 final class BorderRadiusDirectionalUtility<T extends Attribute>
-    extends DtoUtility<T, BorderRadiusDirectionalMix, BorderRadiusDirectional> {
+    extends DtoUtility<T, BorderRadiusDirectionalDto, BorderRadiusDirectional> {
   BorderRadiusDirectionalUtility(super.builder)
       : super(valueToDto: (value) => value.toDto());
 
@@ -282,7 +282,7 @@ final class BorderRadiusDirectionalUtility<T extends Attribute>
     }
 
     return builder(
-      BorderRadiusDirectionalMix(
+      BorderRadiusDirectionalDto(
         topStart: Radius.circular(topStart),
         topEnd: Radius.circular(topEnd),
         bottomStart: Radius.circular(bottomStart),
@@ -291,7 +291,7 @@ final class BorderRadiusDirectionalUtility<T extends Attribute>
     );
   }
 
-  /// Creates a [BorderRadiusGeometryMix] with the specified radius values for each corner.
+  /// Creates a [BorderRadiusGeometryDto] with the specified radius values for each corner.
   ///
   /// The [topStart] parameter represents the radius of the top-left corner.
   /// The [topEnd] parameter represents the radius of the top-right corner.
@@ -307,7 +307,7 @@ final class BorderRadiusDirectionalUtility<T extends Attribute>
     Radius? bottomEnd,
   }) {
     return builder(
-      BorderRadiusDirectionalMix(
+      BorderRadiusDirectionalDto(
         topStart: topStart,
         topEnd: topEnd,
         bottomStart: bottomStart,

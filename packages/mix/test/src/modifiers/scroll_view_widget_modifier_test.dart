@@ -75,7 +75,7 @@ void main() {
       () {
         const axis = Axis.horizontal;
         const reverse = true;
-        const padding = EdgeInsetsMix.all(8.0);
+        const padding = EdgeInsetsDto.all(8.0);
         const clip = Clip.antiAlias;
         const physics = AlwaysScrollableScrollPhysics();
 
@@ -97,7 +97,7 @@ void main() {
 
     test('Spec utility methods sets correct values', () {
       const axis = Axis.horizontal;
-      const padding = EdgeInsetsMix.all(8.0);
+      const padding = EdgeInsetsDto.all(8.0);
       const clip = Clip.antiAlias;
       const physics = AlwaysScrollableScrollPhysics();
 

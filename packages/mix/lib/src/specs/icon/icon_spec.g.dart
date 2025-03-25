@@ -159,12 +159,12 @@ mixin _$IconSpec on Spec<IconSpec> {
 /// Use this class to configure the attributes of a [IconSpec] and pass it to
 /// the [IconSpec] constructor.
 class IconSpecAttribute extends SpecAttribute<IconSpec> with Diagnosticable {
-  final ColorMix? color;
+  final ColorDto? color;
   final double? size;
   final double? weight;
   final double? grade;
   final double? opticalSize;
-  final List<ShadowMix>? shadows;
+  final List<ShadowDto>? shadows;
   final TextDirection? textDirection;
   final bool? applyTextScaling;
   final double? fill;
@@ -283,7 +283,7 @@ class IconSpecAttribute extends SpecAttribute<IconSpec> with Diagnosticable {
 class IconSpecUtility<T extends Attribute>
     extends SpecUtility<T, IconSpecAttribute> {
   /// Utility for defining [IconSpecAttribute.color]
-  late final color = ColorMixUtility((v) => only(color: v));
+  late final color = ColorUtility((v) => only(color: v));
 
   /// Utility for defining [IconSpecAttribute.size]
   late final size = DoubleUtility((v) => only(size: v));
@@ -298,7 +298,7 @@ class IconSpecUtility<T extends Attribute>
   late final opticalSize = DoubleUtility((v) => only(opticalSize: v));
 
   /// Utility for defining [IconSpecAttribute.shadows]
-  late final shadows = ListUtility<T, ShadowMix>((v) => only(shadows: v));
+  late final shadows = ShadowListUtility((v) => only(shadows: v));
 
   /// Utility for defining [IconSpecAttribute.textDirection]
   late final textDirection =
@@ -311,7 +311,7 @@ class IconSpecUtility<T extends Attribute>
   late final fill = DoubleUtility((v) => only(fill: v));
 
   /// Utility for defining [IconSpecAttribute.animated]
-  late final animated = AnimatedMixUtility((v) => only(animated: v));
+  late final animated = AnimatedUtility((v) => only(animated: v));
 
   /// Utility for defining [IconSpecAttribute.modifiers]
   late final wrap = SpecModifierUtility((v) => only(modifiers: v));
@@ -327,17 +327,17 @@ class IconSpecUtility<T extends Attribute>
   /// Returns a new [IconSpecAttribute] with the specified properties.
   @override
   T only({
-    ColorMix? color,
+    ColorDto? color,
     double? size,
     double? weight,
     double? grade,
     double? opticalSize,
-    List<ShadowMix>? shadows,
+    List<ShadowDto>? shadows,
     TextDirection? textDirection,
     bool? applyTextScaling,
     double? fill,
-    AnimatedDataMix? animated,
-    WidgetModifiersDataMix? modifiers,
+    AnimatedDataDto? animated,
+    WidgetModifiersDataDto? modifiers,
   }) {
     return builder(IconSpecAttribute(
       color: color,

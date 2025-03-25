@@ -3,10 +3,8 @@
 part of 'icon_button.dart';
 
 // **************************************************************************
-// MixGenerator
+// MixableSpecGenerator
 // **************************************************************************
-
-// GENERATED CODE - DO NOT MODIFY BY HAND
 
 /// A mixin that provides spec functionality for [IconButtonSpec].
 mixin _$IconButtonSpec on Spec<IconButtonSpec> {
@@ -219,7 +217,7 @@ class IconButtonSpecUtility<T extends Attribute>
   late final spinner = SpinnerSpecUtility((v) => only(spinner: v));
 
   /// Utility for defining [IconButtonSpecAttribute.animated]
-  late final animated = AnimatedMixUtility((v) => only(animated: v));
+  late final animated = AnimatedUtility((v) => only(animated: v));
 
   IconButtonSpecUtility(super.builder, {super.mutable});
 
@@ -234,9 +232,9 @@ class IconButtonSpecUtility<T extends Attribute>
   T only({
     BoxSpecAttribute? container,
     IconSpecAttribute? icon,
-    WidgetModifiersDataMix? modifiers,
+    WidgetModifiersDataDto? modifiers,
     SpinnerSpecAttribute? spinner,
-    AnimatedDataMix? animated,
+    AnimatedDataDto? animated,
   }) {
     return builder(IconButtonSpecAttribute(
       container: container,

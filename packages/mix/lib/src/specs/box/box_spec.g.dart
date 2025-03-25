@@ -176,11 +176,11 @@ mixin _$BoxSpec on Spec<BoxSpec> {
 /// the [BoxSpec] constructor.
 class BoxSpecAttribute extends SpecAttribute<BoxSpec> with Diagnosticable {
   final AlignmentGeometry? alignment;
-  final EdgeInsetsGeometryMix? padding;
-  final EdgeInsetsGeometryMix? margin;
-  final BoxConstraintsMix? constraints;
-  final DecorationMix? decoration;
-  final DecorationMix? foregroundDecoration;
+  final EdgeInsetsGeometryDto? padding;
+  final EdgeInsetsGeometryDto? margin;
+  final BoxConstraintsDto? constraints;
+  final DecorationDto? decoration;
+  final DecorationDto? foregroundDecoration;
   final Matrix4? transform;
   final AlignmentGeometry? transformAlignment;
   final Clip? clipBehavior;
@@ -244,11 +244,11 @@ class BoxSpecAttribute extends SpecAttribute<BoxSpec> with Diagnosticable {
 
     return BoxSpecAttribute(
       alignment: other.alignment ?? alignment,
-      padding: EdgeInsetsGeometryMix.tryToMerge(padding, other.padding),
-      margin: EdgeInsetsGeometryMix.tryToMerge(margin, other.margin),
+      padding: EdgeInsetsGeometryDto.tryToMerge(padding, other.padding),
+      margin: EdgeInsetsGeometryDto.tryToMerge(margin, other.margin),
       constraints: constraints?.merge(other.constraints) ?? other.constraints,
-      decoration: DecorationMix.tryToMerge(decoration, other.decoration),
-      foregroundDecoration: DecorationMix.tryToMerge(
+      decoration: DecorationDto.tryToMerge(decoration, other.decoration),
+      foregroundDecoration: DecorationDto.tryToMerge(
           foregroundDecoration, other.foregroundDecoration),
       transform: other.transform ?? transform,
       transformAlignment: other.transformAlignment ?? transformAlignment,
@@ -320,14 +320,13 @@ class BoxSpecUtility<T extends Attribute>
   late final alignment = AlignmentGeometryUtility((v) => only(alignment: v));
 
   /// Utility for defining [BoxSpecAttribute.padding]
-  late final padding = EdgeInsetsGeometryMixUtility((v) => only(padding: v));
+  late final padding = EdgeInsetsGeometryUtility((v) => only(padding: v));
 
   /// Utility for defining [BoxSpecAttribute.margin]
-  late final margin = EdgeInsetsGeometryMixUtility((v) => only(margin: v));
+  late final margin = EdgeInsetsGeometryUtility((v) => only(margin: v));
 
   /// Utility for defining [BoxSpecAttribute.constraints]
-  late final constraints =
-      BoxConstraintsMixUtility((v) => only(constraints: v));
+  late final constraints = BoxConstraintsUtility((v) => only(constraints: v));
 
   /// Utility for defining [BoxSpecAttribute.constraints.minWidth]
   late final minWidth = constraints.minWidth;
@@ -342,7 +341,7 @@ class BoxSpecUtility<T extends Attribute>
   late final maxHeight = constraints.maxHeight;
 
   /// Utility for defining [BoxSpecAttribute.decoration]
-  late final decoration = BoxDecorationMixUtility((v) => only(decoration: v));
+  late final decoration = BoxDecorationUtility((v) => only(decoration: v));
 
   /// Utility for defining [BoxSpecAttribute.decoration.color]
   late final color = decoration.color;
@@ -389,7 +388,7 @@ class BoxSpecUtility<T extends Attribute>
 
   /// Utility for defining [BoxSpecAttribute.foregroundDecoration]
   late final foregroundDecoration =
-      BoxDecorationMixUtility((v) => only(foregroundDecoration: v));
+      BoxDecorationUtility((v) => only(foregroundDecoration: v));
 
   /// Utility for defining [BoxSpecAttribute.transform]
   late final transform = Matrix4Utility((v) => only(transform: v));
@@ -411,7 +410,7 @@ class BoxSpecUtility<T extends Attribute>
   late final wrap = SpecModifierUtility((v) => only(modifiers: v));
 
   /// Utility for defining [BoxSpecAttribute.animated]
-  late final animated = AnimatedMixUtility((v) => only(animated: v));
+  late final animated = AnimatedUtility((v) => only(animated: v));
 
   BoxSpecUtility(super.builder, {super.mutable});
 
@@ -424,18 +423,18 @@ class BoxSpecUtility<T extends Attribute>
   @override
   T only({
     AlignmentGeometry? alignment,
-    EdgeInsetsGeometryMix? padding,
-    EdgeInsetsGeometryMix? margin,
-    BoxConstraintsMix? constraints,
-    DecorationMix? decoration,
-    DecorationMix? foregroundDecoration,
+    EdgeInsetsGeometryDto? padding,
+    EdgeInsetsGeometryDto? margin,
+    BoxConstraintsDto? constraints,
+    DecorationDto? decoration,
+    DecorationDto? foregroundDecoration,
     Matrix4? transform,
     AlignmentGeometry? transformAlignment,
     Clip? clipBehavior,
     double? width,
     double? height,
-    WidgetModifiersDataMix? modifiers,
-    AnimatedDataMix? animated,
+    WidgetModifiersDataDto? modifiers,
+    AnimatedDataDto? animated,
   }) {
     return builder(BoxSpecAttribute(
       alignment: alignment,

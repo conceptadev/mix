@@ -8,7 +8,7 @@ import '../../../helpers/testing_utils.dart';
 void main() {
   group('StrutStyleDto', () {
     test('from constructor sets all values correctly', () {
-      const strutStyle = StrutStyleMix(
+      const strutStyle = StrutStyleDto(
         fontFamily: 'Roboto',
         fontSize: 24.0,
         fontWeight: FontWeight.bold,
@@ -29,9 +29,9 @@ void main() {
 
     // Test to check if the merge function returns a merged object correctly
     test('merge returns merged object correctly', () {
-      const strutStyle1 = StrutStyleMix(fontFamily: 'Roboto', fontSize: 24.0);
+      const strutStyle1 = StrutStyleDto(fontFamily: 'Roboto', fontSize: 24.0);
       const strutStyle2 =
-          StrutStyleMix(fontWeight: FontWeight.bold, height: 2.0, leading: 1.0);
+          StrutStyleDto(fontWeight: FontWeight.bold, height: 2.0, leading: 1.0);
       final merged = strutStyle1.merge(strutStyle2);
 
       expect(merged.fontFamily, 'Roboto');
@@ -43,7 +43,7 @@ void main() {
 
     // Test to check if the resolve function returns the correct StrutStyle
     test('resolve returns correct StrutStyle', () {
-      const strutStyle = StrutStyleMix(
+      const strutStyle = StrutStyleDto(
         fontFamily: 'Roboto',
         fontSize: 24.0,
         fontWeight: FontWeight.bold,
@@ -63,16 +63,16 @@ void main() {
 
     // Test to check if two StrutStyleDtos with the same properties are equal
     test('Equality holds when all properties are the same', () {
-      const strutStyle1 = StrutStyleMix(fontFamily: 'Roboto', fontSize: 24.0);
-      const strutStyle2 = StrutStyleMix(fontFamily: 'Roboto', fontSize: 24.0);
+      const strutStyle1 = StrutStyleDto(fontFamily: 'Roboto', fontSize: 24.0);
+      const strutStyle2 = StrutStyleDto(fontFamily: 'Roboto', fontSize: 24.0);
 
       expect(strutStyle1, strutStyle2);
     });
 
     // Test to check if two StrutStyleDtos with different properties are not equal
     test('Equality fails when properties are different', () {
-      const strutStyle1 = StrutStyleMix(fontFamily: 'Roboto', fontSize: 24.0);
-      const strutStyle2 = StrutStyleMix(fontFamily: 'Lato', fontSize: 24.0);
+      const strutStyle1 = StrutStyleDto(fontFamily: 'Roboto', fontSize: 24.0);
+      const strutStyle2 = StrutStyleDto(fontFamily: 'Lato', fontSize: 24.0);
 
       expect(strutStyle1, isNot(strutStyle2));
     });

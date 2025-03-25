@@ -57,7 +57,7 @@ class MixablePropertyMixinBuilder extends CodeBuilder {
 
     return '''
 /// A mixin that provides DTO functionality for [${metadata.name}].
-mixin $mixinName on Mixable<$resolvedTypeName> $defaultValueMixin {
+mixin $mixinName on StyleProperty<$resolvedTypeName> $defaultValueMixin {
   $resolveMethod
 
   $mergeMethod

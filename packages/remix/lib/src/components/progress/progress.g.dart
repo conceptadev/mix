@@ -3,10 +3,8 @@
 part of 'progress.dart';
 
 // **************************************************************************
-// MixGenerator
+// MixableSpecGenerator
 // **************************************************************************
-
-// GENERATED CODE - DO NOT MODIFY BY HAND
 
 /// A mixin that provides spec functionality for [ProgressSpec].
 mixin _$ProgressSpec on Spec<ProgressSpec> {
@@ -231,7 +229,7 @@ class ProgressSpecUtility<T extends Attribute>
   late final outerContainer = BoxSpecUtility((v) => only(outerContainer: v));
 
   /// Utility for defining [ProgressSpecAttribute.animated]
-  late final animated = AnimatedMixUtility((v) => only(animated: v));
+  late final animated = AnimatedUtility((v) => only(animated: v));
 
   /// Utility for defining [ProgressSpecAttribute.modifiers]
   late final wrap = SpecModifierUtility((v) => only(modifiers: v));
@@ -251,8 +249,8 @@ class ProgressSpecUtility<T extends Attribute>
     BoxSpecAttribute? track,
     BoxSpecAttribute? fill,
     BoxSpecAttribute? outerContainer,
-    AnimatedDataMix? animated,
-    WidgetModifiersDataMix? modifiers,
+    AnimatedDataDto? animated,
+    WidgetModifiersDataDto? modifiers,
   }) {
     return builder(ProgressSpecAttribute(
       container: container,

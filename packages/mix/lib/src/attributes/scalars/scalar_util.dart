@@ -150,10 +150,9 @@ final class ImageProviderUtility<T extends Attribute>
 }
 
 @MixableUtility()
-final class GradientTransformMixUtility<T extends Attribute>
-    extends MixUtility<T, GradientTransform>
-    with _$GradientTransformMixUtility {
-  const GradientTransformMixUtility(super.builder);
+final class GradientTransformUtility<T extends Attribute>
+    extends MixUtility<T, GradientTransform> with _$GradientTransformUtility {
+  const GradientTransformUtility(super.builder);
 
   /// Creates an [Attribute] instance with a [GradientRotation] value.
   T rotate(double radians) => builder(GradientRotation(radians));

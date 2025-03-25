@@ -5,13 +5,13 @@ import '../../modifiers/widget_modifiers_util.dart';
 import 'widget_modifiers_data_dto.dart';
 
 final class SpecModifierUtility<T extends Attribute>
-    extends ModifierUtility<T, WidgetModifiersDataMix> {
+    extends ModifierUtility<T, WidgetModifiersDataDto> {
   late final resetModifiers = ResetModifierSpecUtility(only);
 
   SpecModifierUtility(super.builder);
 
   @override
   T only(WidgetModifierSpecAttribute attribute) {
-    return builder(WidgetModifiersDataMix([attribute]));
+    return builder(WidgetModifiersDataDto([attribute]));
   }
 }

@@ -3,8 +3,8 @@
 import 'package:flutter/widgets.dart';
 import 'package:mix/mix.dart';
 
-final class BoxBorderMixUtility<T extends Attribute>
-    extends DtoUtility<T, BoxBorderMix, BoxBorder> {
+final class BoxBorderUtility<T extends Attribute>
+    extends DtoUtility<T, BoxBorderDto, BoxBorder> {
   late final directional = BorderDirectionalUtility(builder);
   late final all = _border.all;
   late final bottom = _border.bottom;
@@ -25,7 +25,7 @@ final class BoxBorderMixUtility<T extends Attribute>
 
   late final _border = BorderUtility(builder);
 
-  BoxBorderMixUtility(super.builder) : super(valueToDto: (v) => v.toDto());
+  BoxBorderUtility(super.builder) : super(valueToDto: (v) => v.toDto());
 
   T call({
     Color? color,
@@ -43,35 +43,35 @@ final class BoxBorderMixUtility<T extends Attribute>
 
   @override
   T only({
-    BorderSideMix? top,
-    BorderSideMix? bottom,
-    BorderSideMix? left,
-    BorderSideMix? right,
+    BorderSideDto? top,
+    BorderSideDto? bottom,
+    BorderSideDto? left,
+    BorderSideDto? right,
   }) {
     return builder(
-      BorderMix(top: top, bottom: bottom, left: left, right: right),
+      BorderDto(top: top, bottom: bottom, left: left, right: right),
     );
   }
 }
 
 final class BorderUtility<T extends Attribute>
-    extends DtoUtility<T, BorderMix, Border> {
-  late final all = BorderSideMixUtility((v) => builder(BorderMix.all(v)));
+    extends DtoUtility<T, BorderDto, Border> {
+  late final all = BorderSideUtility((v) => builder(BorderDto.all(v)));
 
-  late final bottom = BorderSideMixUtility((v) => only(bottom: v));
+  late final bottom = BorderSideUtility((v) => only(bottom: v));
 
-  late final top = BorderSideMixUtility((v) => only(top: v));
+  late final top = BorderSideUtility((v) => only(top: v));
 
-  late final left = BorderSideMixUtility((v) => only(left: v));
+  late final left = BorderSideUtility((v) => only(left: v));
 
-  late final right = BorderSideMixUtility((v) => only(right: v));
+  late final right = BorderSideUtility((v) => only(right: v));
 
-  late final vertical = BorderSideMixUtility(
-    (v) => builder(BorderMix.vertical(v)),
+  late final vertical = BorderSideUtility(
+    (v) => builder(BorderDto.vertical(v)),
   );
 
-  late final horizontal = BorderSideMixUtility(
-    (v) => builder(BorderMix.horizontal(v)),
+  late final horizontal = BorderSideUtility(
+    (v) => builder(BorderDto.horizontal(v)),
   );
 
   late final color = all.color;
@@ -84,7 +84,7 @@ final class BorderUtility<T extends Attribute>
 
   BorderUtility(super.builder) : super(valueToDto: (value) => value.toDto());
 
-  T none() => builder(const BorderMix.none());
+  T none() => builder(const BorderDto.none());
 
   T call({
     Color? color,
@@ -102,40 +102,40 @@ final class BorderUtility<T extends Attribute>
 
   @override
   T only({
-    BorderSideMix? top,
-    BorderSideMix? bottom,
-    BorderSideMix? left,
-    BorderSideMix? right,
+    BorderSideDto? top,
+    BorderSideDto? bottom,
+    BorderSideDto? left,
+    BorderSideDto? right,
   }) {
     return builder(
-      BorderMix(top: top, bottom: bottom, left: left, right: right),
+      BorderDto(top: top, bottom: bottom, left: left, right: right),
     );
   }
 }
 
 final class BorderDirectionalUtility<T extends Attribute>
-    extends DtoUtility<T, BorderDirectionalMix, BorderDirectional> {
+    extends DtoUtility<T, BorderDirectionalDto, BorderDirectional> {
   late final all =
-      BorderSideMixUtility((v) => builder(BorderDirectionalMix.all(v)));
+      BorderSideUtility((v) => builder(BorderDirectionalDto.all(v)));
 
-  late final bottom = BorderSideMixUtility((v) => only(bottom: v));
+  late final bottom = BorderSideUtility((v) => only(bottom: v));
 
-  late final top = BorderSideMixUtility((v) => only(top: v));
+  late final top = BorderSideUtility((v) => only(top: v));
 
-  late final start = BorderSideMixUtility((v) => only(start: v));
+  late final start = BorderSideUtility((v) => only(start: v));
 
-  late final end = BorderSideMixUtility((v) => only(end: v));
+  late final end = BorderSideUtility((v) => only(end: v));
 
   late final vertical =
-      BorderSideMixUtility((v) => builder(BorderDirectionalMix.vertical(v)));
+      BorderSideUtility((v) => builder(BorderDirectionalDto.vertical(v)));
 
   late final horizontal =
-      BorderSideMixUtility((v) => builder(BorderDirectionalMix.horizontal(v)));
+      BorderSideUtility((v) => builder(BorderDirectionalDto.horizontal(v)));
 
   BorderDirectionalUtility(super.builder)
       : super(valueToDto: (value) => value.toDto());
 
-  T none() => builder(const BorderDirectionalMix.none());
+  T none() => builder(const BorderDirectionalDto.none());
 
   T call({
     Color? color,
@@ -153,13 +153,13 @@ final class BorderDirectionalUtility<T extends Attribute>
 
   @override
   T only({
-    BorderSideMix? top,
-    BorderSideMix? bottom,
-    BorderSideMix? start,
-    BorderSideMix? end,
+    BorderSideDto? top,
+    BorderSideDto? bottom,
+    BorderSideDto? start,
+    BorderSideDto? end,
   }) {
     return builder(
-      BorderDirectionalMix(top: top, bottom: bottom, start: start, end: end),
+      BorderDirectionalDto(top: top, bottom: bottom, start: start, end: end),
     );
   }
 }

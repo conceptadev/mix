@@ -33,13 +33,6 @@ final class SpinnerSpec extends Spec<SpinnerSpec>
   /// Duration of a full cycle of spin
   final Duration duration;
 
-  @MixableField(
-    utilities: [
-      MixableFieldUtility(
-        type: SpinnerTypeStyleUtility,
-      ),
-    ],
-  )
   final SpinnerTypeStyle style;
 
   /// {@macro spinner_spec_of}

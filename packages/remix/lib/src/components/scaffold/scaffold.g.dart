@@ -3,10 +3,8 @@
 part of 'scaffold.dart';
 
 // **************************************************************************
-// MixGenerator
+// MixableSpecGenerator
 // **************************************************************************
-
-// GENERATED CODE - DO NOT MODIFY BY HAND
 
 /// A mixin that provides spec functionality for [ScaffoldSpec].
 mixin _$ScaffoldSpec on Spec<ScaffoldSpec> {
@@ -184,7 +182,7 @@ class ScaffoldSpecUtility<T extends Attribute>
   late final container = BoxSpecUtility((v) => only(container: v));
 
   /// Utility for defining [ScaffoldSpecAttribute.animated]
-  late final animated = AnimatedMixUtility((v) => only(animated: v));
+  late final animated = AnimatedUtility((v) => only(animated: v));
 
   /// Utility for defining [ScaffoldSpecAttribute.modifiers]
   late final wrap = SpecModifierUtility((v) => only(modifiers: v));
@@ -201,8 +199,8 @@ class ScaffoldSpecUtility<T extends Attribute>
   @override
   T only({
     BoxSpecAttribute? container,
-    AnimatedDataMix? animated,
-    WidgetModifiersDataMix? modifiers,
+    AnimatedDataDto? animated,
+    WidgetModifiersDataDto? modifiers,
   }) {
     return builder(ScaffoldSpecAttribute(
       container: container,

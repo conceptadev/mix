@@ -8,21 +8,21 @@ import 'package:mix_annotations/mix_annotations.dart';
 part 'text_height_behavior_dto.g.dart';
 
 @MixableProperty(components: GeneratedPropertyComponents.skipUtility)
-base class TextHeightBehaviorMix extends Mixable<TextHeightBehavior>
-    with _$TextHeightBehaviorMix, Diagnosticable {
+base class TextHeightBehaviorDto extends StyleProperty<TextHeightBehavior>
+    with _$TextHeightBehaviorDto, Diagnosticable {
   final bool? applyHeightToFirstAscent;
   final bool? applyHeightToLastDescent;
   final TextLeadingDistribution? leadingDistribution;
 
-  const TextHeightBehaviorMix({
+  const TextHeightBehaviorDto({
     this.applyHeightToFirstAscent,
     this.applyHeightToLastDescent,
     this.leadingDistribution,
   });
 }
 
-final class TextHeightBehaviorMixUtility<T extends Attribute>
-    extends DtoUtility<T, TextHeightBehaviorMix, TextHeightBehavior> {
+final class TextHeightBehaviorUtility<T extends Attribute>
+    extends DtoUtility<T, TextHeightBehaviorDto, TextHeightBehavior> {
   late final heightToFirstAscent = BoolUtility(
     (v) => only(applyHeightToFirstAscent: v),
   );
@@ -34,7 +34,7 @@ final class TextHeightBehaviorMixUtility<T extends Attribute>
     (v) => only(leadingDistribution: v),
   );
 
-  TextHeightBehaviorMixUtility(super.builder)
+  TextHeightBehaviorUtility(super.builder)
       : super(valueToDto: (v) => v.toDto());
 
   @Deprecated("Use the utilities instead")
@@ -47,7 +47,7 @@ final class TextHeightBehaviorMixUtility<T extends Attribute>
     TextLeadingDistribution? leadingDistribution,
   }) =>
       builder(
-        TextHeightBehaviorMix(
+        TextHeightBehaviorDto(
           applyHeightToFirstAscent: applyHeightToFirstAscent,
           applyHeightToLastDescent: applyHeightToLastDescent,
           leadingDistribution: leadingDistribution,

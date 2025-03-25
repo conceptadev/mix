@@ -223,26 +223,26 @@ void main() {
   });
 
   group('ShapeBorderUtility', () {
-    final utility = ShapeBorderMixUtility(UtilityTestAttribute.new);
+    final utility = ShapeBorderUtility(UtilityTestAttribute.new);
 
     test('circle() returns correct instance', () {
       final shapeBorder = utility.circle();
 
-      expect(shapeBorder.value, isA<CircleBorderMix>());
+      expect(shapeBorder.value, isA<CircleBorderDto>());
     });
 
     test('stadium() returns correct instance', () {
       final shapeBorder = utility.stadium();
 
-      expect(shapeBorder.value, isA<StadiumBorderMix>());
+      expect(shapeBorder.value, isA<StadiumBorderDto>());
     });
 
     test('rounded() returns correct instance', () {
       final shapeBorder = utility.roundedRectangle.borderRadius(20);
 
-      expect(shapeBorder.value, isA<RoundedRectangleBorderMix>());
+      expect(shapeBorder.value, isA<RoundedRectangleBorderDto>());
       expect(
-        (shapeBorder.value as RoundedRectangleBorderMix).borderRadius,
+        (shapeBorder.value as RoundedRectangleBorderDto).borderRadius,
         BorderRadius.circular(20).toDto(),
       );
     });
@@ -250,7 +250,7 @@ void main() {
     test('beveled() returns correct instance', () {
       final shapeBorder = utility.beveledRectangle();
 
-      expect(shapeBorder.value, isA<BeveledRectangleBorderMix>());
+      expect(shapeBorder.value, isA<BeveledRectangleBorderDto>());
     });
   });
   group('BoxFitUtility Tests', () {
@@ -308,7 +308,7 @@ void main() {
   });
 
   group('GradientTransformUtility Tests', () {
-    const utility = GradientTransformMixUtility(UtilityTestAttribute.new);
+    const utility = GradientTransformUtility(UtilityTestAttribute.new);
     test('rotate', () {
       expect(utility.rotate(20).value, isA<GradientTransform>());
       expect(utility.rotate(20).value, const GradientRotation(20));

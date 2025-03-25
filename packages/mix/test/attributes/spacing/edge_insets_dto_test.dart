@@ -9,11 +9,11 @@ void main() {
     test('only creates EdgeInsetsDto when directional values are not provided',
         () {
       final dto =
-          EdgeInsetsGeometryMix.only(top: 10, bottom: 20, left: 30, right: 40);
-      expect(dto, isA<EdgeInsetsMix>());
+          EdgeInsetsGeometryDto.only(top: 10, bottom: 20, left: 30, right: 40);
+      expect(dto, isA<EdgeInsetsDto>());
       expect(dto.top, equals(10));
       expect(dto.bottom, equals(20));
-      expect((dto as EdgeInsetsMix).left, equals(30));
+      expect((dto as EdgeInsetsDto).left, equals(30));
       expect((dto).right, equals(40));
     });
 
@@ -21,53 +21,53 @@ void main() {
         'only creates EdgeInsetsDirectionalDto when directional values are provided',
         () {
       final dto =
-          EdgeInsetsGeometryMix.only(top: 10, bottom: 20, start: 30, end: 40);
-      expect(dto, isA<EdgeInsetsDirectionalMix>());
+          EdgeInsetsGeometryDto.only(top: 10, bottom: 20, start: 30, end: 40);
+      expect(dto, isA<EdgeInsetsDirectionalDto>());
       expect(dto.top, equals(10));
       expect(dto.bottom, equals(20));
-      expect((dto as EdgeInsetsDirectionalMix).start, equals(30));
+      expect((dto as EdgeInsetsDirectionalDto).start, equals(30));
       expect((dto).end, equals(40));
     });
 
     test('tryToMerge returns first dto if second is null', () {
-      const dto1 = EdgeInsetsMix(top: 10, bottom: 20, left: 30, right: 40);
-      final merged = EdgeInsetsGeometryMix.tryToMerge(dto1, null);
+      const dto1 = EdgeInsetsDto(top: 10, bottom: 20, left: 30, right: 40);
+      final merged = EdgeInsetsGeometryDto.tryToMerge(dto1, null);
       expect(merged, equals(dto1));
     });
 
     test('tryToMerge returns second dto if first is null', () {
       const dto2 =
-          EdgeInsetsDirectionalMix(top: 10, bottom: 20, start: 30, end: 40);
-      final merged = EdgeInsetsGeometryMix.tryToMerge(null, dto2);
+          EdgeInsetsDirectionalDto(top: 10, bottom: 20, start: 30, end: 40);
+      final merged = EdgeInsetsGeometryDto.tryToMerge(null, dto2);
       expect(merged, equals(dto2));
     });
 
     test('tryToMerge merges dtos of the same type', () {
-      const dto1 = EdgeInsetsMix(top: 10, bottom: 20);
-      const dto2 = EdgeInsetsMix(left: 30, right: 40);
-      final merged = EdgeInsetsGeometryMix.tryToMerge(dto1, dto2);
-      expect(merged, isA<EdgeInsetsMix>());
+      const dto1 = EdgeInsetsDto(top: 10, bottom: 20);
+      const dto2 = EdgeInsetsDto(left: 30, right: 40);
+      final merged = EdgeInsetsGeometryDto.tryToMerge(dto1, dto2);
+      expect(merged, isA<EdgeInsetsDto>());
       expect(merged!.top, equals(10));
       expect(merged.bottom, equals(20));
-      expect((merged as EdgeInsetsMix).left, equals(30));
+      expect((merged as EdgeInsetsDto).left, equals(30));
       expect((merged).right, equals(40));
     });
 
     test('tryToMerge merges dtos of different types', () {
-      const dto1 = EdgeInsetsMix(top: 10, bottom: 20);
-      const dto2 = EdgeInsetsDirectionalMix(start: 30, end: 40);
-      final merged = EdgeInsetsGeometryMix.tryToMerge(dto1, dto2);
-      expect(merged, isA<EdgeInsetsDirectionalMix>());
+      const dto1 = EdgeInsetsDto(top: 10, bottom: 20);
+      const dto2 = EdgeInsetsDirectionalDto(start: 30, end: 40);
+      final merged = EdgeInsetsGeometryDto.tryToMerge(dto1, dto2);
+      expect(merged, isA<EdgeInsetsDirectionalDto>());
       expect(merged!.top, equals(10));
       expect(merged.bottom, equals(20));
-      expect((merged as EdgeInsetsDirectionalMix).start, equals(30));
+      expect((merged as EdgeInsetsDirectionalDto).start, equals(30));
       expect((merged).end, equals(40));
     });
   });
 
   group('EdgeInsetsDto', () {
     test('all constructor sets all values', () {
-      const dto = EdgeInsetsMix.all(10);
+      const dto = EdgeInsetsDto.all(10);
       expect(dto.top, equals(10));
       expect(dto.bottom, equals(10));
       expect(dto.left, equals(10));
@@ -75,7 +75,7 @@ void main() {
     });
 
     test('none constructor sets all values to 0', () {
-      const dto = EdgeInsetsMix.none();
+      const dto = EdgeInsetsDto.none();
       expect(dto.top, equals(0));
       expect(dto.bottom, equals(0));
       expect(dto.left, equals(0));
@@ -83,7 +83,7 @@ void main() {
     });
 
     test('resolve returns EdgeInsets with token values', () {
-      const dto = EdgeInsetsMix(top: 10, bottom: 20, left: 30, right: 40);
+      const dto = EdgeInsetsDto(top: 10, bottom: 20, left: 30, right: 40);
       final mix = EmptyMixData;
       final resolved = dto.resolve(mix);
       expect(resolved, isA<EdgeInsets>());
@@ -96,7 +96,7 @@ void main() {
 
   group('EdgeInsetsDirectionalDto', () {
     test('all constructor sets all values', () {
-      const dto = EdgeInsetsDirectionalMix.all(10);
+      const dto = EdgeInsetsDirectionalDto.all(10);
       expect(dto.top, equals(10));
       expect(dto.bottom, equals(10));
       expect(dto.start, equals(10));
@@ -104,7 +104,7 @@ void main() {
     });
 
     test('none constructor sets all values to 0', () {
-      const dto = EdgeInsetsDirectionalMix.none();
+      const dto = EdgeInsetsDirectionalDto.none();
       expect(dto.top, equals(0));
       expect(dto.bottom, equals(0));
       expect(dto.start, equals(0));
@@ -113,7 +113,7 @@ void main() {
 
     test('resolve returns EdgeInsetsDirectional with token values', () {
       const dto =
-          EdgeInsetsDirectionalMix(top: 10, bottom: 20, start: 30, end: 40);
+          EdgeInsetsDirectionalDto(top: 10, bottom: 20, start: 30, end: 40);
       final mix = EmptyMixData;
       final resolved = dto.resolve(mix);
       expect(resolved, isA<EdgeInsetsDirectional>());
@@ -129,7 +129,7 @@ void main() {
       const edgeInsets =
           EdgeInsets.only(top: 10, bottom: 20, left: 30, right: 40);
       final dto = edgeInsets.toDto();
-      expect(dto, isA<EdgeInsetsMix>());
+      expect(dto, isA<EdgeInsetsDto>());
       expect(dto.top, equals(10));
       expect(dto.bottom, equals(20));
       expect((dto).left, equals(30));
@@ -141,7 +141,7 @@ void main() {
       const edgeInsetsDirectional =
           EdgeInsetsDirectional.only(top: 10, bottom: 20, start: 30, end: 40);
       final dto = edgeInsetsDirectional.toDto();
-      expect(dto, isA<EdgeInsetsDirectionalMix>());
+      expect(dto, isA<EdgeInsetsDirectionalDto>());
       expect(dto.top, equals(10));
       expect(dto.bottom, equals(20));
       expect((dto).start, equals(30));

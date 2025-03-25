@@ -3,10 +3,8 @@
 part of 'accordion.dart';
 
 // **************************************************************************
-// MixGenerator
+// MixableSpecGenerator
 // **************************************************************************
-
-// GENERATED CODE - DO NOT MODIFY BY HAND
 
 /// A mixin that provides spec functionality for [AccordionSpec].
 mixin _$AccordionSpec on Spec<AccordionSpec> {
@@ -183,7 +181,7 @@ class AccordionSpecUtility<T extends Attribute>
       BoxSpecUtility((v) => only(contentContainer: v));
 
   /// Utility for defining [AccordionSpecAttribute.animated]
-  late final animated = AnimatedMixUtility((v) => only(animated: v));
+  late final animated = AnimatedUtility((v) => only(animated: v));
 
   AccordionSpecUtility(super.builder, {super.mutable});
 
@@ -199,7 +197,7 @@ class AccordionSpecUtility<T extends Attribute>
     AccordionHeaderSpecAttribute? header,
     FlexBoxSpecAttribute? container,
     BoxSpecAttribute? contentContainer,
-    AnimatedDataMix? animated,
+    AnimatedDataDto? animated,
   }) {
     return builder(AccordionSpecAttribute(
       header: header,
@@ -420,7 +418,7 @@ class AccordionHeaderSpecUtility<T extends Attribute>
   late final trailingIcon = IconSpecUtility((v) => only(trailingIcon: v));
 
   /// Utility for defining [AccordionHeaderSpecAttribute.animated]
-  late final animated = AnimatedMixUtility((v) => only(animated: v));
+  late final animated = AnimatedUtility((v) => only(animated: v));
 
   AccordionHeaderSpecUtility(super.builder, {super.mutable});
 
@@ -437,7 +435,7 @@ class AccordionHeaderSpecUtility<T extends Attribute>
     IconSpecAttribute? leadingIcon,
     TextSpecAttribute? text,
     IconSpecAttribute? trailingIcon,
-    AnimatedDataMix? animated,
+    AnimatedDataDto? animated,
   }) {
     return builder(AccordionHeaderSpecAttribute(
       container: container,

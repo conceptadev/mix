@@ -3,10 +3,8 @@
 part of 'button.dart';
 
 // **************************************************************************
-// MixGenerator
+// MixableSpecGenerator
 // **************************************************************************
-
-// GENERATED CODE - DO NOT MODIFY BY HAND
 
 /// A mixin that provides spec functionality for [ButtonSpec].
 mixin _$ButtonSpec on Spec<ButtonSpec> {
@@ -235,7 +233,7 @@ class ButtonSpecUtility<T extends Attribute>
   late final spinner = SpinnerSpecUtility((v) => only(spinner: v));
 
   /// Utility for defining [ButtonSpecAttribute.animated]
-  late final animated = AnimatedMixUtility((v) => only(animated: v));
+  late final animated = AnimatedUtility((v) => only(animated: v));
 
   ButtonSpecUtility(super.builder, {super.mutable});
 
@@ -251,9 +249,9 @@ class ButtonSpecUtility<T extends Attribute>
     FlexBoxSpecAttribute? container,
     IconSpecAttribute? icon,
     TextSpecAttribute? label,
-    WidgetModifiersDataMix? modifiers,
+    WidgetModifiersDataDto? modifiers,
     SpinnerSpecAttribute? spinner,
-    AnimatedDataMix? animated,
+    AnimatedDataDto? animated,
   }) {
     return builder(ButtonSpecAttribute(
       container: container,

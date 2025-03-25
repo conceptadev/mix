@@ -501,13 +501,13 @@ mixin _$ImageProviderUtility<T extends Attribute>
   T call(ImageProvider value) => builder(value);
 }
 
-/// {@template gradient_transform_mix_utility}
+/// {@template gradient_transform_utility}
 /// A utility class for creating [Attribute] instances from [GradientTransform] values.
 ///
 /// This class extends [MixUtility] and provides methods to create [Attribute] instances
 /// from predefined [GradientTransform] values.
 /// {@endtemplate}
-mixin _$GradientTransformMixUtility<T extends Attribute>
+mixin _$GradientTransformUtility<T extends Attribute>
     on MixUtility<T, GradientTransform> {
   /// Creates an [Attribute] instance with the specified GradientTransform value.
   T call(GradientTransform value) => builder(value);

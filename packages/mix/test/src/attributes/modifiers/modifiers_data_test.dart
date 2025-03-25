@@ -7,7 +7,7 @@ import '../../../helpers/testing_utils.dart';
 void main() {
   group('ModifiersDataDto', () {
     test('should create an instance with default values', () {
-      const dto = WidgetModifiersDataMix([]);
+      const dto = WidgetModifiersDataDto([]);
       expect(dto.value, isEmpty);
     });
 
@@ -15,13 +15,13 @@ void main() {
       const modifier1 = TestModifierSpecAttribute();
       const modifier2 = TestModifierSpecAttribute();
       // ignore: equal_elements_in_set
-      const dto = WidgetModifiersDataMix([modifier1, modifier2]);
+      const dto = WidgetModifiersDataDto([modifier1, modifier2]);
       expect(dto.value, contains(modifier1));
     });
 
     test('should merge with another instance', () {
-      const dto1 = WidgetModifiersDataMix([TestModifierSpecAttribute()]);
-      const dto2 = WidgetModifiersDataMix([TestModifierSpecAttribute(2)]);
+      const dto1 = WidgetModifiersDataDto([TestModifierSpecAttribute()]);
+      const dto2 = WidgetModifiersDataDto([TestModifierSpecAttribute(2)]);
       final merged = dto1.merge(dto2);
       expect(merged.value, hasLength(1));
       expect(merged.value.first, const TestModifierSpecAttribute(2));
@@ -29,7 +29,7 @@ void main() {
 
     test('should resolve to a ModifiersData instance', () {
       const modifier = TestModifierSpecAttribute();
-      const dto = WidgetModifiersDataMix([modifier]);
+      const dto = WidgetModifiersDataDto([modifier]);
       final modifiersData = dto.resolve(EmptyMixData);
       expect(modifiersData.value.length, 1);
       expect(modifiersData.value.first, const TestModifierSpec());
@@ -37,14 +37,14 @@ void main() {
 
     // test equality
     test('should be equal to another instance', () {
-      const dto1 = WidgetModifiersDataMix([TestModifierSpecAttribute()]);
-      const dto2 = WidgetModifiersDataMix([TestModifierSpecAttribute()]);
+      const dto1 = WidgetModifiersDataDto([TestModifierSpecAttribute()]);
+      const dto2 = WidgetModifiersDataDto([TestModifierSpecAttribute()]);
       expect(dto1, equals(dto2));
     });
 
     test('should not be equal to another instance', () {
-      const dto1 = WidgetModifiersDataMix([TestModifierSpecAttribute()]);
-      const dto2 = WidgetModifiersDataMix([TestModifierSpecAttribute(2)]);
+      const dto1 = WidgetModifiersDataDto([TestModifierSpecAttribute()]);
+      const dto2 = WidgetModifiersDataDto([TestModifierSpecAttribute(2)]);
       expect(dto1, isNot(equals(dto2)));
     });
   });
