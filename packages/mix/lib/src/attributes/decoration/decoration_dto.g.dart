@@ -9,7 +9,7 @@ part of 'decoration_dto.dart';
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
 /// A mixin that provides DTO functionality for [BoxDecorationDto].
-mixin _$BoxDecorationDto on StyleProperty<BoxDecoration> {
+mixin _$BoxDecorationDto on Mixable<BoxDecoration> {
   /// Resolves to [BoxDecoration] using the provided [MixData].
   ///
   /// If a property is null in the [MixData], it falls back to the
@@ -198,7 +198,7 @@ extension ListBoxDecorationMixExt on List<BoxDecoration> {
 
 /// A mixin that provides DTO functionality for [ShapeDecorationDto].
 mixin _$ShapeDecorationDto
-    on StyleProperty<ShapeDecoration>, HasDefaultValue<ShapeDecoration> {
+    on Mixable<ShapeDecoration>, HasDefaultValue<ShapeDecoration> {
   /// Resolves to [ShapeDecoration] using the provided [MixData].
   ///
   /// If a property is null in the [MixData], it falls back to the

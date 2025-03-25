@@ -6,7 +6,7 @@ import 'package:mix_annotations/mix_annotations.dart';
 part 'decoration_image_dto.g.dart';
 
 @MixableProperty()
-final class DecorationImageDto extends StyleProperty<DecorationImage>
+final class DecorationImageDto extends Mixable<DecorationImage>
     with HasDefaultValue<DecorationImage>, _$DecorationImageDto {
   @MixableField(utilities: [MixableFieldUtility(alias: 'provider')])
   final ImageProvider? image;

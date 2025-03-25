@@ -14,7 +14,7 @@ part 'gradient_dto.g.dart';
 /// This is used to allow for resolvable value tokens, and also the correct
 /// merge and combining behavior. It allows to be merged, and resolved to a `[Gradient]
 @immutable
-sealed class GradientDto<T extends Gradient> extends StyleProperty<T>
+sealed class GradientDto<T extends Gradient> extends Mixable<T>
     with HasDefaultValue<T> {
   final List<double>? stops;
   final List<ColorDto>? colors;

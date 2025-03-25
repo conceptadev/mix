@@ -9,7 +9,7 @@ part of 'space_dto.dart';
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
 /// A mixin that provides DTO functionality for [SpaceDto].
-mixin _$SpaceDto on StyleProperty<double> {
+mixin _$SpaceDto on Mixable<double> {
   /// Merges the properties of this [SpaceDto] with the properties of [other].
   ///
   /// If [other] is null, returns this instance unchanged. Otherwise, returns a new

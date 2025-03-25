@@ -17,7 +17,7 @@ import 'color_directives_impl.dart';
 /// * [Color], which is the Flutter equivalent class.
 /// {@category DTO}
 @immutable
-class ColorDto extends StyleProperty<Color> with Diagnosticable {
+class ColorDto extends Mixable<Color> with Diagnosticable {
   final Color? value;
   final List<ColorDirective> directives;
 

@@ -10,7 +10,7 @@ import '../../internal/mix_error.dart';
 
 part 'border_radius_dto.g.dart';
 
-/// Represents a [StyleProperty] Data transfer object of [BorderRadiusGeometry]
+/// Represents a [Mixable] Data transfer object of [BorderRadiusGeometry]
 ///
 /// This is used to allow for resolvable value tokens, and also the correct
 /// merge and combining behavior. It allows to be merged, and resolved to a [BorderRadiusGeometry]
@@ -22,7 +22,7 @@ part 'border_radius_dto.g.dart';
 /// - [BorderRadiusGeometry], which is the Flutter counterpart of this class.
 @immutable
 sealed class BorderRadiusGeometryDto<T extends BorderRadiusGeometry>
-    extends StyleProperty<T> with Diagnosticable {
+    extends Mixable<T> with Diagnosticable {
   const BorderRadiusGeometryDto();
 
   Radius? get topLeft;
