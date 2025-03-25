@@ -3,10 +3,8 @@
 part of 'textfield.dart';
 
 // **************************************************************************
-// MixGenerator
+// MixableSpecGenerator
 // **************************************************************************
-
-// GENERATED CODE - DO NOT MODIFY BY HAND
 
 /// A mixin that provides spec functionality for [TextFieldSpec].
 mixin _$TextFieldSpec on Spec<TextFieldSpec> {
@@ -632,11 +630,11 @@ class TextFieldSpecUtility<T extends Attribute>
 
   /// Utility for defining [TextFieldSpecAttribute.selectionHeightStyle]
   late final selectionHeightStyle =
-      BoxHeightStyleUtility((v) => only(selectionHeightStyle: v));
+      GenericUtility<T, BoxHeightStyle>((v) => only(selectionHeightStyle: v));
 
   /// Utility for defining [TextFieldSpecAttribute.selectionWidthStyle]
   late final selectionWidthStyle =
-      BoxWidthStyleUtility((v) => only(selectionWidthStyle: v));
+      GenericUtility<T, BoxWidthStyle>((v) => only(selectionWidthStyle: v));
 
   /// Utility for defining [TextFieldSpecAttribute.scrollPadding]
   late final scrollPadding = EdgeInsetsUtility((v) => only(scrollPadding: v));
@@ -646,7 +644,7 @@ class TextFieldSpecUtility<T extends Attribute>
 
   /// Utility for defining [TextFieldSpecAttribute.keyboardAppearance]
   late final keyboardAppearance =
-      BrightnessUtility((v) => only(keyboardAppearance: v));
+      GenericUtility<T, Brightness>((v) => only(keyboardAppearance: v));
 
   /// Utility for defining [TextFieldSpecAttribute.autocorrectionTextRectColor]
   late final autocorrectionTextRectColor =

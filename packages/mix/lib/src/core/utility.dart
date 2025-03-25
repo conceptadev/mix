@@ -11,6 +11,13 @@ abstract class MixUtility<Attr extends Attribute, Value> {
   static T selfBuilder<T>(T value) => value;
 }
 
+class GenericUtility<Attr extends Attribute, Value>
+    extends MixUtility<Attr, Value> {
+  GenericUtility(super.builder);
+
+  Attr call(Value value) => builder(value);
+}
+
 abstract class ScalarUtility<Return extends Attribute, V>
     extends MixUtility<Return, V> {
   const ScalarUtility(super.builder);
