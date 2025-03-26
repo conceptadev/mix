@@ -300,7 +300,6 @@ FieldResolvableMetadata? createFieldResolvableMetadata({
     final typeRegistry = TypeRegistry.instance;
 
     // Get resolvable type from registry or annotation
-    final registryType = typeRegistry.getResolvableForType(dartType);
 
     String? resolvableTypeName;
     if (propertyAnnotation?.type != null) {
@@ -313,7 +312,7 @@ FieldResolvableMetadata? createFieldResolvableMetadata({
         logger.warning('Resolvable type is not a Type or String');
       }
     } else {
-      resolvableTypeName = registryType;
+      resolvableTypeName = typeRegistry.getResolvableForType(dartType);
     }
 
     if (resolvableTypeName == null) return null;
