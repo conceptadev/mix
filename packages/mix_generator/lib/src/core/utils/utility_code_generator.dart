@@ -194,7 +194,6 @@ $callMethod
       }
 
       final fieldName = field.name;
-      final fieldType = field.type.element?.name ?? 'dynamic';
 
       final typeValue = '${fieldElement.name}.$fieldName';
 

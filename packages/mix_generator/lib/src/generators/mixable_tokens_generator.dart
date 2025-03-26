@@ -1,6 +1,5 @@
 import 'package:analyzer/dart/element/element.dart';
 import 'package:build/build.dart';
-import 'package:logging/logging.dart';
 import 'package:mix_annotations/mix_annotations.dart';
 import 'package:source_gen/source_gen.dart';
 
@@ -17,7 +16,7 @@ import '../core/utils/base_generator.dart';
 /// - Optional build context extensions
 class MixableTokensGenerator
     extends BaseMixGenerator<MixableToken, TokensMetadata> {
-  final Logger _logger = Logger('MixableTokensGenerator');
+  // final Logger _logger = Logger('MixableTokensGenerator');
 
   MixableTokensGenerator() : super(const TypeChecker.fromRuntime(MixableToken));
 

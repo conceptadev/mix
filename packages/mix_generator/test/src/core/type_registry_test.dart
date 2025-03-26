@@ -62,9 +62,6 @@ void main() {
       final dtoElement = library.getClass('TestDto')!;
       final dtoDartType = dtoElement.thisType;
 
-      final valueTypeElement = library.getClass('ValueType')!;
-      final valueType = valueTypeElement.thisType;
-
       // Verify the representation for the DTO type
       final dtoRepresentation = registry.getResolvableForType(dtoDartType);
       expect(dtoRepresentation, isNotNull);
@@ -198,20 +195,6 @@ void main() {
     test('hasTryToMerge correctly identifies types with tryToMerge method',
         () async {
       // Define test code with a DTO class that has a static tryToMerge method
-      const testCode = '''
-        class TestDto extends Dto<Object> {
-          final String value;
-          
-          const TestDto({required this.value});
-          
-          static TestDto tryToMerge(TestDto? a, TestDto b) {
-            return a ?? b;
-          }
-        }
-      ''';
-
-      // Resolve the library with our test code
-      final library = await resolveMixTestLibrary(testCode);
 
       // Get the TypeRegistry instance
       final registry = TypeRegistry.instance;
@@ -237,8 +220,6 @@ void main() {
     });
 
     test('handles hardcoded utility mappings', () {
-      final registry = TypeRegistry.instance;
-
       // Test a few hardcoded mappings from the utilities map
       for (final entry in utilities.entries.take(5)) {
         final utilityName = entry.key;

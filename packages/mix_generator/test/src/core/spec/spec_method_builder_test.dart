@@ -1,4 +1,3 @@
-import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:mix_generator/src/core/metadata/field_metadata.dart';
 import 'package:mix_generator/src/core/property/property_method_builder.dart';
@@ -183,19 +182,10 @@ class _TestFieldMetadata implements ParameterMetadata {
   bool get isResolvable => _isDto;
 
   @override
-  bool get isSpecAttribute => false;
-
-  @override
   bool get isListType => _isList;
 
   @override
   String get asInternalRef => '_$name';
-
-  @override
-  TypeReference? get resolvableType => _representationElementName != null
-      ? TypeReference(_representationElementName,
-          type: _TestDartTypeWithElement(_representationElementName))
-      : null;
 
   @override
   DartType get dartType => _TestDartType(isList: _isList);
@@ -222,19 +212,6 @@ class _TestFieldMetadata implements ParameterMetadata {
   dynamic noSuchMethod(Invocation invocation) => null;
 }
 
-/// A minimal implementation of Element for testing
-class _TestElement implements Element {
-  final String _name;
-
-  _TestElement({required String name}) : _name = name;
-
-  @override
-  String get name => _name;
-
-  @override
-  dynamic noSuchMethod(Invocation invocation) => null;
-}
-
 /// A minimal implementation of DartType for testing
 class _TestDartType implements DartType {
   final bool _isList;
@@ -255,14 +232,4 @@ class _TestDartType implements DartType {
 
   @override
   dynamic noSuchMethod(Invocation invocation) => null;
-}
-
-/// A minimal implementation of DartType with an element
-class _TestDartTypeWithElement extends _TestDartType {
-  final String _elementName;
-
-  _TestDartTypeWithElement(this._elementName);
-
-  @override
-  Element? get element => _TestElement(name: _elementName);
 }

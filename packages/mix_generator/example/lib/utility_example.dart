@@ -7,6 +7,8 @@
 // 2. Run the build_runner to generate the .g.dart file
 // 3. Implement the Attribute and MixUtility classes
 
+// ignore_for_file: unused_local_variable
+
 // Example 1: Enum Utility
 // Define an enum for colors
 enum Color {
