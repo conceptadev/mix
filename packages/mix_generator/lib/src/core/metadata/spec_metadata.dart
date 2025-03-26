@@ -1,5 +1,4 @@
 import 'package:analyzer/dart/element/element.dart';
-import 'package:source_gen/source_gen.dart';
 
 import '../utils/annotation_utils.dart';
 import '../utils/constructor_utils.dart';
@@ -29,10 +28,7 @@ class SpecMetadata extends BaseMetadata {
   });
 
   /// Creates a SpecMetadata from a class element and its annotation
-  static SpecMetadata fromAnnotation(
-    ClassElement element,
-    ConstantReader reader,
-  ) {
+  static SpecMetadata fromAnnotation(ClassElement element) {
     final mixableSpec = readMixableSpec(element);
     final constructor = findTargetConstructor(element);
     final parameters = ParameterMetadata.extractFromConstructor(element);
