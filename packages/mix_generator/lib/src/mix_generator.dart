@@ -72,9 +72,6 @@ class MixGenerator extends Generator {
 
   List<SpecMetadata> _createSpecMetadata(List<ClassElement> elements) {
     return elements.map((element) {
-      final reader =
-          ConstantReader(_specChecker.firstAnnotationOfExact(element));
-
       return SpecMetadata.fromAnnotation(element);
     }).toList();
   }
