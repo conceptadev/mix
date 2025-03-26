@@ -144,17 +144,14 @@ $callMethod
     final mappingElement = metadata.mappingElement;
 
     // Use reference element for fields if available, otherwise use value element
-    final fieldElement = referenceElement ?? valueElement;
-
-    // Use reference element for constructors if available, otherwise use value element
-    final constructorElement = referenceElement ?? valueElement;
+    final sourceElement = referenceElement ?? valueElement;
 
     // Use mapping element if available, otherwise use constructor element
-    final effectiveMappingElement = mappingElement ?? constructorElement;
+    final effectiveMappingElement = mappingElement ?? sourceElement;
 
     return ElementInfo(
-      fieldElement: fieldElement,
-      constructorElement: constructorElement,
+      fieldElement: sourceElement,
+      constructorElement: sourceElement,
       mappingElement: effectiveMappingElement,
     );
   }
