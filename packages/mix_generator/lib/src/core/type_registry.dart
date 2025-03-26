@@ -136,7 +136,7 @@ class TypeRegistry {
   }
 
   /// Gets the utility type for a DartType
-  String? getUtilityForType(DartType type) {
+  String getUtilityForType(DartType type) {
     final typeString = type.getTypeAsString();
 
     // Special handling for Spec types

@@ -272,8 +272,6 @@ FieldUtilityMetadata? createFieldUtilityMetadata({
   }
 
   // Get utility type from registry
-  final utilityTypeName = typeRegistry.getUtilityForType(dartType);
-  if (utilityTypeName == null && utilityAnnotation == null) return null;
 
   // Determine name and type from annotations or defaults
   final utilityName = utilityAnnotation?.alias ?? name;
@@ -281,10 +279,8 @@ FieldUtilityMetadata? createFieldUtilityMetadata({
 
   if (utilityAnnotation?.typeAsString != null) {
     utilityType = utilityAnnotation!.typeAsString!;
-  } else if (utilityTypeName != null) {
-    utilityType = utilityTypeName;
   } else {
-    utilityType = 'DynamicUtility';
+    utilityType = typeRegistry.getUtilityForType(dartType);
   }
 
   return FieldUtilityMetadata(name: utilityName, type: utilityType);
