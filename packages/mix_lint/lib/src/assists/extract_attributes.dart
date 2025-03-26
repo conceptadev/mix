@@ -4,6 +4,7 @@ import 'package:analyzer/dart/ast/ast.dart';
 import 'package:analyzer/source/source_range.dart';
 import 'package:analyzer_plugin/utilities/change_builder/change_builder_dart.dart';
 import 'package:custom_lint_builder/custom_lint_builder.dart';
+
 import '../utils/extensions/dart_file_edit_builder.dart';
 import '../utils/type_checker.dart';
 import '../utils/visitors.dart';
@@ -118,7 +119,9 @@ class ExtractAttributes extends DartAssist {
     context.registry.addInstanceCreationExpression((node) {
       if (!node.argumentList.sourceRange.covers(target)) return;
       if (node.staticType == null ||
-          !styleChecker.isAssignableFromType(node.staticType!)) return;
+          !styleChecker.isAssignableFromType(node.staticType!)) {
+        return;
+      }
 
       final extractor = _getExtractionInfo(node, target);
       if (extractor == null) return;

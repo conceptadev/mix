@@ -363,7 +363,7 @@ void main() {
       expect(dtoElement, isNotNull, reason: 'Annotation element is null');
 
       // Check that the annotation is from the mix_annotations package
-      final enclosingElement = dtoElement!.enclosingElement!;
+      final enclosingElement = dtoElement!.enclosingElement3!;
       expect(enclosingElement.name, equals('Mixable'));
 
       final source = enclosingElement.source!;

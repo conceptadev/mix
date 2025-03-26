@@ -1,5 +1,3 @@
-import 'package:dart_style/dart_style.dart';
-
 import '../metadata/field_metadata.dart';
 
 /// Returns constructor for the given type and optional named constructor name. E.g. "TestConstructor" or "TestConstructor._private" when "_private" constructor name is provided.
@@ -52,10 +50,4 @@ String buildArguments(
   final paramsStr = params.map((param) => buildParam(param)).join(', ');
 
   return '{$paramsStr,}';
-}
-
-final _formatter = DartFormatter(pageWidth: 80, fixes: StyleFix.all);
-
-String dartFormat(String contents) {
-  return _formatter.format(contents);
 }

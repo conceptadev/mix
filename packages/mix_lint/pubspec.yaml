@@ -4,12 +4,12 @@ version: 0.1.2
 repository: https://github.com/conceptadev/mix
 
 environment:
-  sdk: ">=3.3.0 <4.0.0"
+  sdk: ">=3.6.0 <4.0.0"
 
 dependencies:
-  analyzer: ^6.0.0
-  analyzer_plugin: ^0.11.2
-  custom_lint_builder: ^0.6.0
+  analyzer: ^7.3.0
+  analyzer_plugin: ^0.13.0
+  custom_lint_builder: ^0.7.5
 
 dev_dependencies:
   test: ^1.24.0
