@@ -22,9 +22,7 @@ class SegmentedControlSpec extends Spec<SegmentedControlSpec>
   final bool showDivider;
 
   @MixableField(
-    dto: MixableFieldProperty(
-      type: 'SegmentButtonSpecAttribute',
-    ),
+    dto: MixableFieldProperty(type: 'SegmentButtonSpecAttribute'),
   )
   final SegmentButtonSpec item;
 

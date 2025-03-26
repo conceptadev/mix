@@ -125,6 +125,7 @@ class UtilityMetadata extends BaseMetadata {
       if (e is InvalidGenerationSourceError) {
         rethrow;
       }
+      // ignore: avoid-throw-in-catch-block
       throw InvalidGenerationSourceError(
         'Error creating utility metadata: $e',
         element: element,

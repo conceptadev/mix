@@ -15,14 +15,14 @@ class FortalezaButtonStyle extends ButtonStyle {
   final EdgeInsets? padding;
   final double? radius;
 
-  static List<Variant> get variants => [soft, outline, surface, ghost];
-
   const FortalezaButtonStyle({
     this.color,
     this.textStyle,
     this.padding,
     this.radius,
   });
+
+  static List<Variant> get variants => [soft, outline, surface, ghost];
 
   @override
   Style makeStyle(SpecConfiguration<ButtonSpecUtility> spec) {
@@ -31,9 +31,7 @@ class FortalezaButtonStyle extends ButtonStyle {
     Style setColor() {
       final color = this.color ?? spec.context.$color.accent();
 
-      final disabled = Style(
-        $.container.color.$neutral(4),
-      );
+      final disabled = Style($.container.color.$neutral(4));
 
       final borderedDisabled = Style(
         disabled(),
@@ -42,18 +40,12 @@ class FortalezaButtonStyle extends ButtonStyle {
 
       return Style.create([
         $.container.color(color),
-        spec.on.hover(
-          $.container.color(color.withOpacity(0.8)),
-        ),
+        spec.on.hover($.container.color(color.withOpacity(0.8))),
         soft(
           $.container.color(color.withOpacity(0.1)),
           $.label.style.color(color),
-          spec.on.hover(
-            $.container.color(color.withOpacity(0.2)),
-          ),
-          spec.on.disabled(
-            disabled(),
-          ),
+          spec.on.hover($.container.color(color.withOpacity(0.2))),
+          spec.on.disabled(disabled()),
         ),
         outline(
           $.container.color.transparent(),
@@ -63,9 +55,7 @@ class FortalezaButtonStyle extends ButtonStyle {
             $.label.style.color.withOpacity(0.8),
             $.container.color.transparent(),
           ),
-          spec.on.disabled(
-            borderedDisabled(),
-          ),
+          spec.on.disabled(borderedDisabled()),
         ),
         surface(
           $.container.color(color.withOpacity(0.1)),
@@ -75,16 +65,12 @@ class FortalezaButtonStyle extends ButtonStyle {
             $.container.color(color.withOpacity(0.2)),
             $.container.border.color.withOpacity(0.8),
           ),
-          spec.on.disabled(
-            borderedDisabled(),
-          ),
+          spec.on.disabled(borderedDisabled()),
         ),
         ghost(
           $.container.color.transparent(),
           $.label.style.color(color),
-          spec.on.hover(
-            $.container.color.withOpacity(0.1),
-          ),
+          spec.on.hover($.container.color.withOpacity(0.1)),
         ),
       ]);
     }

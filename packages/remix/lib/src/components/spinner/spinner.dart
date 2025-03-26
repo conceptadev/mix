@@ -34,11 +34,7 @@ final class SpinnerSpec extends Spec<SpinnerSpec>
   final Duration duration;
 
   @MixableField(
-    utilities: [
-      MixableFieldUtility(
-        type: SpinnerTypeStyleUtility,
-      ),
-    ],
+    utilities: [MixableFieldUtility(type: SpinnerTypeStyleUtility)],
   )
   final SpinnerTypeStyle style;
 

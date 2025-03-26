@@ -269,7 +269,7 @@ class MixGenerator extends Generator {
       print('  ... and ${sortedNodes.length - 5} more nodes');
     }
 
-    return sortedNodes.cast();
+    return sortedNodes;
   }
 
   // Type registration
@@ -292,20 +292,17 @@ class MixGenerator extends Generator {
         debugSink.writeln('  Metadata type: $typeName, name: $name');
 
         if (metadata is SpecMetadata) {
-          final specName = metadata.name;
-          types['${specName}Attribute'] = specName;
-          types['${specName}Utility'] = specName;
+          types['${name}Attribute'] = name;
+          types['${name}Utility'] = name;
         } else if (metadata is MixablePropertyMetadata) {
-          final propertyName = metadata.name;
-          if (propertyName.endsWith('Dto')) {
-            final baseName = propertyName.substring(0, propertyName.length - 3);
+          if (name.endsWith('Dto')) {
+            final baseName = name.substring(0, name.length - 3);
             types['${baseName}Utility'] = baseName;
           } else {
-            types['${propertyName}Utility'] = propertyName;
+            types['${name}Utility'] = name;
           }
         } else if (metadata is UtilityMetadata) {
-          final utilityName = metadata.name;
-          types[utilityName] = TypeUtils.removeUtilitySuffix(utilityName);
+          types[name] = TypeUtils.removeUtilitySuffix(name);
         } else {
           debugSink.writeln('  Unknown metadata type: $typeName');
         }
@@ -533,7 +530,7 @@ class MixGenerator extends Generator {
     return null;
   }
 
-  String? getUtilityForType(DartType type) {
+  String getUtilityForType(DartType type) {
     final typeString = type.getTypeAsString();
 
     // Special handling for Spec types

@@ -248,13 +248,11 @@ List<MixableFieldUtility>? readMixableFieldUtilities(FieldElement element) {
 }
 
 /// Creates utility metadata for a field/parameter
-FieldUtilityMetadata? createFieldUtilityMetadata({
+FieldUtilityMetadata createFieldUtilityMetadata({
   required String name,
   required DartType dartType,
   MixableFieldUtility? utilityAnnotation,
 }) {
-  final typeRegistry = TypeRegistry.instance;
-
   // If we have a utility annotation with a type, use that directly
   if (utilityAnnotation?.type != null) {
     final utilityName = utilityAnnotation?.alias ?? name;
@@ -280,7 +278,7 @@ FieldUtilityMetadata? createFieldUtilityMetadata({
   if (utilityAnnotation?.typeAsString != null) {
     utilityType = utilityAnnotation!.typeAsString!;
   } else {
-    utilityType = typeRegistry.getUtilityForType(dartType);
+    utilityType = TypeRegistry.instance.getUtilityForType(dartType);
   }
 
   return FieldUtilityMetadata(name: utilityName, type: utilityType);

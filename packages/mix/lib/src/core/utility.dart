@@ -13,7 +13,7 @@ abstract class MixUtility<Attr extends Attribute, Value> {
 
 class GenericUtility<Attr extends Attribute, Value>
     extends MixUtility<Attr, Value> {
-  GenericUtility(super.builder);
+  const GenericUtility(super.builder);
 
   Attr call(Value value) => builder(value);
 }

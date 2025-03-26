@@ -43,33 +43,19 @@ class TextFieldSpec extends Spec<TextFieldSpec>
   final Color? selectionColor;
 
   @MixableField(
-    utilities: [
-      MixableFieldUtility(
-        type: BoxHeightStyleUtility,
-      ),
-    ],
+    utilities: [MixableFieldUtility(type: BoxHeightStyleUtility)],
   )
   final BoxHeightStyle selectionHeightStyle;
 
   @MixableField(
-    utilities: [
-      MixableFieldUtility(
-        type: BoxWidthStyleUtility,
-      ),
-    ],
+    utilities: [MixableFieldUtility(type: BoxWidthStyleUtility)],
   )
   final BoxWidthStyle selectionWidthStyle;
 
   final EdgeInsets scrollPadding;
   final Clip clipBehavior;
 
-  @MixableField(
-    utilities: [
-      MixableFieldUtility(
-        type: Brightness,
-      ),
-    ],
-  )
+  @MixableField(utilities: [MixableFieldUtility(type: Brightness)])
   final Brightness keyboardAppearance;
   final Color? autocorrectionTextRectColor;
   final FlexBoxSpec outerContainer;
@@ -80,11 +66,7 @@ class TextFieldSpec extends Spec<TextFieldSpec>
   final double floatingLabelHeight;
   final TextStyle? floatingLabelStyle;
 
-  @MixableField(
-    dto: MixableFieldProperty(
-      type: TextHeightBehaviorDto,
-    ),
-  )
+  @MixableField(dto: MixableFieldProperty(type: TextHeightBehaviorDto))
   final TextHeightBehavior? textHeightBehavior;
 
   static const of = _$TextFieldSpec.of;

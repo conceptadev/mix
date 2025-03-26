@@ -163,7 +163,7 @@ class FieldMetadata {
   bool get isResolvable => TypeUtils.isResolvable(dartType);
 
   /// Gets the utility name for this field, using pre-computed value when available
-  String? get utilityName {
+  String get utilityName {
     if (utility != null) return utility!.type;
 
     // Fallback to computing

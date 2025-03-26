@@ -22,7 +22,8 @@ class DropdownMenuSpec extends Spec<DropdownMenuSpec>
   final DropdownMenuContainerSpec menu;
 
   @MixableField(
-      dto: MixableFieldProperty(type: 'DropdownMenuItemSpecAttribute'))
+    dto: MixableFieldProperty(type: 'DropdownMenuItemSpecAttribute'),
+  )
   final DropdownMenuItemSpec item;
 
   /// {@macro select_spec_of}
