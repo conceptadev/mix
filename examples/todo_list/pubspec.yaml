@@ -16,7 +16,7 @@ dependencies:
     path: ../../packages/mix
   mix_annotations:
     path: ../../packages/mix_annotations
-  custom_lint: ^0.6.4
+  custom_lint: ^0.7.5
   google_fonts: ^6.0.0
 
   cupertino_icons: ^1.0.6
