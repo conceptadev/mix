@@ -194,6 +194,9 @@ class _TestFieldMetadata implements ParameterMetadata {
   bool get hasResolvable => _isDto;
 
   @override
+  bool get nullable => false;
+
+  @override
   FieldResolvableMetadata? get resolvable =>
       _isDto && _representationElementName != null
           ? FieldResolvableMetadata(

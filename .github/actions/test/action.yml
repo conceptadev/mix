@@ -51,7 +51,9 @@ runs:
       run: melos run brb
 
     - name: Run Test
-      run: melos run test
+      run: |
+        melos run test:flutter
+        melos run test:dart
       shell: bash
 
     - name: Install DCM

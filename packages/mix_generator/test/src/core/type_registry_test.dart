@@ -37,12 +37,12 @@ void main() {
       expect(representation, equals('TestSpecAttribute'));
     });
 
-    test('handles Dto classes correctly', () async {
-      // Define test code with a Dto class
+    test('handles Mixable classes correctly', () async {
+      // Define test code with a Mixable class
       const testCode = '''
         class ValueType {}
         
-        class TestDto extends Dto<ValueType> {
+        class TestDto extends Mixable<ValueType> {
           final String name;
           
           const TestDto({required this.name});
