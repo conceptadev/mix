@@ -7,11 +7,11 @@ import '../../attributes/animated/animated_data_dto.dart';
 import '../../attributes/animated/animated_util.dart';
 import '../../attributes/enum/enum_util.dart';
 import '../../attributes/gap/gap_util.dart';
-import '../../attributes/gap/spacing_side_dto.dart';
+import '../../attributes/gap/space_dto.dart';
 import '../../attributes/modifiers/widget_modifiers_data.dart';
 import '../../attributes/modifiers/widget_modifiers_data_dto.dart';
 import '../../attributes/modifiers/widget_modifiers_util.dart';
-import '../../core/attribute.dart';
+import '../../core/element.dart';
 import '../../core/factory/mix_data.dart';
 import '../../core/factory/mix_provider.dart';
 import '../../core/helpers.dart';
@@ -22,9 +22,9 @@ part 'flex_spec.g.dart';
 
 @MixableSpec()
 final class FlexSpec extends Spec<FlexSpec> with _$FlexSpec, Diagnosticable {
-  @MixableProperty(
+  @MixableField(
     utilities: [
-      MixableUtility(
+      MixableFieldUtility(
         properties: [
           (path: 'horizontal', alias: 'row'),
           (path: 'vertical', alias: 'column'),
@@ -40,9 +40,9 @@ final class FlexSpec extends Spec<FlexSpec> with _$FlexSpec, Diagnosticable {
   final TextDirection? textDirection;
   final TextBaseline? textBaseline;
   final Clip? clipBehavior;
-  @MixableProperty(
-    dto: MixableFieldDto(type: SpacingSideDto),
-    utilities: [MixableUtility(type: GapUtility)],
+  @MixableField(
+    dto: MixableFieldProperty(type: SpaceDto),
+    utilities: [MixableFieldUtility(type: GapUtility)],
   )
   final double? gap;
 

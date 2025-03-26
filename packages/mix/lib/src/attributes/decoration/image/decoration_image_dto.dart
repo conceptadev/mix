@@ -5,10 +5,10 @@ import 'package:mix_annotations/mix_annotations.dart';
 
 part 'decoration_image_dto.g.dart';
 
-@MixableDto()
-final class DecorationImageDto extends Dto<DecorationImage>
-    with _$DecorationImageDto {
-  @MixableProperty(utilities: [MixableUtility(alias: 'provider')])
+@MixableProperty()
+final class DecorationImageDto extends Mixable<DecorationImage>
+    with HasDefaultValue<DecorationImage>, _$DecorationImageDto {
+  @MixableField(utilities: [MixableFieldUtility(alias: 'provider')])
   final ImageProvider? image;
   final BoxFit? fit;
   final AlignmentGeometry? alignment;

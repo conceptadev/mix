@@ -6,7 +6,7 @@ import 'package:mix_annotations/mix_annotations.dart';
 
 part 'shadow_dto.g.dart';
 
-abstract base class ShadowDtoImpl<T extends Shadow> extends Dto<T> {
+sealed class ShadowDtoImpl<T extends Shadow> extends Mixable<T> {
   final ColorDto? color;
   final Offset? offset;
   final double? blurRadius;
@@ -14,24 +14,26 @@ abstract base class ShadowDtoImpl<T extends Shadow> extends Dto<T> {
   const ShadowDtoImpl({this.blurRadius, this.color, this.offset});
 }
 
-/// Represents a [Dto] Data transfer object of [Shadow]
+/// Represents a [Mixable] Data transfer object of [Shadow]
 ///
 /// This is used to allow for resolvable value tokens, and also the correct
 /// merge and combining behavior. It allows to be merged, and resolved to a [Shadow]
-@MixableDto()
-final class ShadowDto extends ShadowDtoImpl<Shadow> with _$ShadowDto {
+@MixableProperty()
+class ShadowDto extends ShadowDtoImpl<Shadow>
+    with HasDefaultValue<Shadow>, _$ShadowDto {
   const ShadowDto({super.blurRadius, super.color, super.offset});
 
   @override
   Shadow get defaultValue => const Shadow();
 }
 
-/// Represents a [Dto] Data transfer object of [BoxShadow]
+/// Represents a [Mixable] Data transfer object of [BoxShadow]
 ///
 /// This is used to allow for resolvable value tokens, and also the correct
 /// merge and combining behavior. It allows to be merged, and resolved to a `[BoxShadow]
-@MixableDto()
-final class BoxShadowDto extends ShadowDtoImpl<BoxShadow> with _$BoxShadowDto {
+@MixableProperty()
+class BoxShadowDto extends ShadowDtoImpl<BoxShadow>
+    with HasDefaultValue<BoxShadow>, _$BoxShadowDto {
   final double? spreadRadius;
 
   const BoxShadowDto({

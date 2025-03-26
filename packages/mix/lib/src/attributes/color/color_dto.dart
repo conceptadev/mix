@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 
-import '../../core/dto.dart';
+import '../../core/element.dart';
 import '../../core/factory/mix_data.dart';
 import '../../theme/tokens/color_token.dart';
 import 'color_directives.dart';
@@ -17,7 +17,7 @@ import 'color_directives_impl.dart';
 /// * [Color], which is the Flutter equivalent class.
 /// {@category DTO}
 @immutable
-class ColorDto extends Dto<Color> with Diagnosticable {
+class ColorDto extends Mixable<Color> with Diagnosticable {
   final Color? value;
   final List<ColorDirective> directives;
 
@@ -36,9 +36,11 @@ class ColorDto extends Dto<Color> with Diagnosticable {
         : directives.sublist(lastResetIndex);
   }
 
+  Color get defaultColor => const Color(0x00000000);
+
   @override
   Color resolve(MixData mix) {
-    Color color = value ?? defaultValue;
+    Color color = value ?? defaultColor;
 
     if (color is ColorRef) {
       color = mix.tokens.colorRef(color);
@@ -65,7 +67,7 @@ class ColorDto extends Dto<Color> with Diagnosticable {
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
 
-    Color color = value ?? defaultValue;
+    Color color = value ?? defaultColor;
 
     if (color is ColorRef) {
       properties.add(DiagnosticsProperty('token', color.token.name));
@@ -73,9 +75,6 @@ class ColorDto extends Dto<Color> with Diagnosticable {
 
     properties.add(ColorProperty('color', color));
   }
-
-  @override
-  Color get defaultValue => const Color(0x00000000);
 
   @override
   List<Object?> get props => [value, directives];

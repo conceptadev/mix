@@ -3,10 +3,13 @@
 part of 'strut_style_dto.dart';
 
 // **************************************************************************
-// MixableDtoGenerator
+// MixGenerator
 // **************************************************************************
 
-mixin _$StrutStyleDto on Dto<StrutStyle> {
+// GENERATED CODE - DO NOT MODIFY BY HAND
+
+/// A mixin that provides DTO functionality for [StrutStyleDto].
+mixin _$StrutStyleDto on Mixable<StrutStyle> {
   /// Resolves to [StrutStyle] using the provided [MixData].
   ///
   /// If a property is null in the [MixData], it falls back to the
@@ -18,16 +21,14 @@ mixin _$StrutStyleDto on Dto<StrutStyle> {
   @override
   StrutStyle resolve(MixData mix) {
     return StrutStyle(
-      fontFamily: _$this.fontFamily ?? defaultValue.fontFamily,
-      fontFamilyFallback:
-          _$this.fontFamilyFallback ?? defaultValue.fontFamilyFallback,
-      fontSize: _$this.fontSize ?? defaultValue.fontSize,
-      fontWeight: _$this.fontWeight ?? defaultValue.fontWeight,
-      fontStyle: _$this.fontStyle ?? defaultValue.fontStyle,
-      height: _$this.height ?? defaultValue.height,
-      leading: _$this.leading ?? defaultValue.leading,
-      forceStrutHeight:
-          _$this.forceStrutHeight ?? defaultValue.forceStrutHeight,
+      fontFamily: _$this.fontFamily,
+      fontFamilyFallback: _$this.fontFamilyFallback,
+      fontSize: _$this.fontSize,
+      fontWeight: _$this.fontWeight,
+      fontStyle: _$this.fontStyle,
+      height: _$this.height,
+      leading: _$this.leading,
+      forceStrutHeight: _$this.forceStrutHeight,
     );
   }
 
@@ -72,6 +73,7 @@ mixin _$StrutStyleDto on Dto<StrutStyle> {
         _$this.forceStrutHeight,
       ];
 
+  /// Returns this instance as a [StrutStyleDto].
   StrutStyleDto get _$this => this as StrutStyleDto;
 }
 
@@ -155,7 +157,9 @@ class StrutStyleUtility<T extends Attribute>
   }
 }
 
+/// Extension methods to convert [StrutStyle] to [StrutStyleDto].
 extension StrutStyleMixExt on StrutStyle {
+  /// Converts this [StrutStyle] to a [StrutStyleDto].
   StrutStyleDto toDto() {
     return StrutStyleDto(
       fontFamily: fontFamily,
@@ -170,7 +174,9 @@ extension StrutStyleMixExt on StrutStyle {
   }
 }
 
+/// Extension methods to convert List<[StrutStyle]> to List<[StrutStyleDto]>.
 extension ListStrutStyleMixExt on List<StrutStyle> {
+  /// Converts this List<[StrutStyle]> to a List<[StrutStyleDto]>.
   List<StrutStyleDto> toDto() {
     return map((e) => e.toDto()).toList();
   }

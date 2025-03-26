@@ -3,8 +3,10 @@
 part of 'scalar_util.dart';
 
 // **************************************************************************
-// MixableClassUtilityGenerator
+// MixGenerator
 // **************************************************************************
+
+// GENERATED CODE - DO NOT MODIFY BY HAND
 
 /// {@template alignment_utility}
 /// A utility class for creating [Attribute] instances from [AlignmentGeometry] values.

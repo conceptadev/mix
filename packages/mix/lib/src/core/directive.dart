@@ -1,12 +1,12 @@
 import 'package:flutter/widgets.dart';
 
-import 'dto.dart';
+import 'element.dart';
 import 'factory/mix_data.dart';
 
 typedef Modifier<T> = T Function(T value);
 
 @immutable
-class TextDirectiveDto extends Dto<TextDirective> {
+class TextDirectiveDto extends Mixable<TextDirective> {
   final List<Modifier<String>> _modifiers;
   const TextDirectiveDto(this._modifiers);
 
@@ -26,9 +26,6 @@ class TextDirectiveDto extends Dto<TextDirective> {
   TextDirectiveDto merge(TextDirectiveDto? other) {
     return TextDirectiveDto([..._modifiers, ...?other?._modifiers]);
   }
-
-  @override
-  TextDirective get defaultValue => TextDirective((String content) => content);
 
   @override
   get props => [_modifiers];

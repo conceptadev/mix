@@ -3,10 +3,13 @@
 part of 'shadow_dto.dart';
 
 // **************************************************************************
-// MixableDtoGenerator
+// MixGenerator
 // **************************************************************************
 
-mixin _$ShadowDto on Dto<Shadow> {
+// GENERATED CODE - DO NOT MODIFY BY HAND
+
+/// A mixin that provides DTO functionality for [ShadowDto].
+mixin _$ShadowDto on Mixable<Shadow>, HasDefaultValue<Shadow> {
   /// Resolves to [Shadow] using the provided [MixData].
   ///
   /// If a property is null in the [MixData], it falls back to the
@@ -54,6 +57,7 @@ mixin _$ShadowDto on Dto<Shadow> {
         _$this.offset,
       ];
 
+  /// Returns this instance as a [ShadowDto].
   ShadowDto get _$this => this as ShadowDto;
 }
 
@@ -101,7 +105,9 @@ class ShadowUtility<T extends Attribute>
   }
 }
 
+/// Extension methods to convert [Shadow] to [ShadowDto].
 extension ShadowMixExt on Shadow {
+  /// Converts this [Shadow] to a [ShadowDto].
   ShadowDto toDto() {
     return ShadowDto(
       blurRadius: blurRadius,
@@ -111,13 +117,16 @@ extension ShadowMixExt on Shadow {
   }
 }
 
+/// Extension methods to convert List<[Shadow]> to List<[ShadowDto]>.
 extension ListShadowMixExt on List<Shadow> {
+  /// Converts this List<[Shadow]> to a List<[ShadowDto]>.
   List<ShadowDto> toDto() {
     return map((e) => e.toDto()).toList();
   }
 }
 
-mixin _$BoxShadowDto on Dto<BoxShadow> {
+/// A mixin that provides DTO functionality for [BoxShadowDto].
+mixin _$BoxShadowDto on Mixable<BoxShadow>, HasDefaultValue<BoxShadow> {
   /// Resolves to [BoxShadow] using the provided [MixData].
   ///
   /// If a property is null in the [MixData], it falls back to the
@@ -168,6 +177,7 @@ mixin _$BoxShadowDto on Dto<BoxShadow> {
         _$this.spreadRadius,
       ];
 
+  /// Returns this instance as a [BoxShadowDto].
   BoxShadowDto get _$this => this as BoxShadowDto;
 }
 
@@ -222,7 +232,9 @@ class BoxShadowUtility<T extends Attribute>
   }
 }
 
+/// Extension methods to convert [BoxShadow] to [BoxShadowDto].
 extension BoxShadowMixExt on BoxShadow {
+  /// Converts this [BoxShadow] to a [BoxShadowDto].
   BoxShadowDto toDto() {
     return BoxShadowDto(
       color: color.toDto(),
@@ -233,7 +245,9 @@ extension BoxShadowMixExt on BoxShadow {
   }
 }
 
+/// Extension methods to convert List<[BoxShadow]> to List<[BoxShadowDto]>.
 extension ListBoxShadowMixExt on List<BoxShadow> {
+  /// Converts this List<[BoxShadow]> to a List<[BoxShadowDto]>.
   List<BoxShadowDto> toDto() {
     return map((e) => e.toDto()).toList();
   }

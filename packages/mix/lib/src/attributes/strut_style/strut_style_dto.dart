@@ -1,18 +1,19 @@
 // ignore_for_file: avoid-importing-entrypoint-exports, avoid-unused-ignores, prefer_relative_imports
 
 import 'package:flutter/material.dart';
-import '../../../mix.dart';
 import 'package:mix_annotations/mix_annotations.dart';
+
+import '../../../mix.dart';
 
 part 'strut_style_dto.g.dart';
 
-@MixableDto()
-final class StrutStyleDto extends Dto<StrutStyle> with _$StrutStyleDto {
-  @MixableProperty(utilities: [MixableUtility(type: FontFamilyUtility)])
+@MixableProperty()
+final class StrutStyleDto extends Mixable<StrutStyle> with _$StrutStyleDto {
+  @MixableField(utilities: [MixableFieldUtility(type: FontFamilyUtility)])
   final String? fontFamily;
   final List<String>? fontFamilyFallback;
 
-  @MixableProperty(utilities: [MixableUtility(type: FontSizeUtility)])
+  @MixableField(utilities: [MixableFieldUtility(type: FontSizeUtility)])
   final double? fontSize;
   final FontWeight? fontWeight;
   final FontStyle? fontStyle;
@@ -30,7 +31,4 @@ final class StrutStyleDto extends Dto<StrutStyle> with _$StrutStyleDto {
     this.leading,
     this.forceStrutHeight,
   });
-
-  @override
-  StrutStyle get defaultValue => const StrutStyle();
 }

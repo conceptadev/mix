@@ -8,7 +8,7 @@ import '../../internal/mix_error.dart';
 part 'border_dto.g.dart';
 
 @immutable
-sealed class BoxBorderDto<T extends BoxBorder> extends Dto<T> {
+sealed class BoxBorderDto<T extends BoxBorder> extends Mixable<T> {
   final BorderSideDto? top;
   final BorderSideDto? bottom;
 
@@ -54,7 +54,7 @@ sealed class BoxBorderDto<T extends BoxBorder> extends Dto<T> {
   BoxBorderDto<T> merge(covariant BoxBorderDto<T>? other);
 }
 
-@MixableDto(generateUtility: false)
+@MixableProperty(components: GeneratedPropertyComponents.skipUtility)
 final class BorderDto extends BoxBorderDto<Border> with _$BorderDto {
   final BorderSideDto? left;
   final BorderSideDto? right;
@@ -83,12 +83,9 @@ final class BorderDto extends BoxBorderDto<Border> with _$BorderDto {
 
   @override
   bool get isUniform => top == bottom && top == left && top == right;
-
-  @override
-  Border get defaultValue => const Border();
 }
 
-@MixableDto(generateUtility: false)
+@MixableProperty(components: GeneratedPropertyComponents.skipUtility)
 final class BorderDirectionalDto extends BoxBorderDto<BorderDirectional>
     with _$BorderDirectionalDto {
   final BorderSideDto? start;
@@ -122,18 +119,16 @@ final class BorderDirectionalDto extends BoxBorderDto<BorderDirectional>
 
   @override
   bool get isUniform => top == bottom && top == start && top == end;
-
-  @override
-  BorderDirectional get defaultValue => const BorderDirectional();
 }
 
-@MixableDto()
-final class BorderSideDto extends Dto<BorderSide> with _$BorderSideDto {
+@MixableProperty()
+final class BorderSideDto extends Mixable<BorderSide>
+    with HasDefaultValue<BorderSide>, _$BorderSideDto {
   final ColorDto? color;
   final double? width;
 
   final BorderStyle? style;
-  @MixableProperty(utilities: [MixableUtility(type: StrokeAlignUtility)])
+  @MixableField(utilities: [MixableFieldUtility(type: StrokeAlignUtility)])
   final double? strokeAlign;
 
   const BorderSideDto({

@@ -1,0 +1,19 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Debug Current File",
+      "program": "${file}",
+      "request": "launch",
+      "type": "dart"
+    },
+  
+    {
+      "name": "Debug build_runner",
+      "program": "${workspaceFolder}/test/debug_build_runner.dart",
+      "request": "launch",
+      "type": "dart",
+      "args": ["--enable-vm-service=8888"]
+    }
+  ]
+}

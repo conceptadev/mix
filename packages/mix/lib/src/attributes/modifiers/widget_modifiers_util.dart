@@ -1,4 +1,4 @@
-import '../../core/attribute.dart';
+import '../../core/element.dart';
 import '../../core/modifier.dart';
 import '../../modifiers/internal/reset_modifier.dart';
 import '../../modifiers/widget_modifiers_util.dart';

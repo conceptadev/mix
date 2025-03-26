@@ -64,14 +64,8 @@ class Scaffold extends StatelessWidget {
               delegate: _ScaffoldLayoutDelegate(),
               children: [
                 if (header != null)
-                  LayoutId(
-                    id: _ScaffoldElement.header,
-                    child: header!,
-                  ),
-                LayoutId(
-                  id: _ScaffoldElement.body,
-                  child: body,
-                ),
+                  LayoutId(id: _ScaffoldElement.header, child: header!),
+                LayoutId(id: _ScaffoldElement.body, child: body),
               ],
             ),
           ),

@@ -3,7 +3,7 @@ import 'package:flutter/widgets.dart';
 import '../internal/compare_mixin.dart';
 import '../variants/context_variant.dart';
 import '../variants/variant_attribute.dart';
-import 'attribute.dart';
+import 'element.dart';
 import 'factory/style_mix.dart';
 
 enum VariantPriority {

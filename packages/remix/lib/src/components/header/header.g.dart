@@ -3,9 +3,12 @@
 part of 'header.dart';
 
 // **************************************************************************
-// MixableSpecGenerator
+// MixGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
+
+/// A mixin that provides spec functionality for [HeaderSpec].
 mixin _$HeaderSpec on Spec<HeaderSpec> {
   static HeaderSpec from(MixData mix) {
     return mix.attributeOf<HeaderSpecAttribute>()?.resolve(mix) ??
@@ -60,11 +63,9 @@ mixin _$HeaderSpec on Spec<HeaderSpec> {
   ///
   /// The interpolation is performed on each property of the [HeaderSpec] using the appropriate
   /// interpolation method:
-  ///
   /// - [FlexBoxSpec.lerp] for [container].
   /// - [FlexSpec.lerp] for [titleGroup].
   /// - [TextSpec.lerp] for [title] and [subtitle].
-
   /// For [modifiers] and [animated], the interpolation is performed using a step function.
   /// If [t] is less than 0.5, the value from the current [HeaderSpec] is used. Otherwise, the value
   /// from the [other] [HeaderSpec] is used.
@@ -124,7 +125,7 @@ mixin _$HeaderSpec on Spec<HeaderSpec> {
 ///
 /// Use this class to configure the attributes of a [HeaderSpec] and pass it to
 /// the [HeaderSpec] constructor.
-base class HeaderSpecAttribute extends SpecAttribute<HeaderSpec>
+class HeaderSpecAttribute extends SpecAttribute<HeaderSpec>
     with Diagnosticable {
   final FlexBoxSpecAttribute? container;
   final FlexSpecAttribute? titleGroup;
@@ -169,7 +170,7 @@ base class HeaderSpecAttribute extends SpecAttribute<HeaderSpec>
   /// Properties from [other] that are null will fall back
   /// to the values from this instance.
   @override
-  HeaderSpecAttribute merge(covariant HeaderSpecAttribute? other) {
+  HeaderSpecAttribute merge(HeaderSpecAttribute? other) {
     if (other == null) return this;
 
     return HeaderSpecAttribute(

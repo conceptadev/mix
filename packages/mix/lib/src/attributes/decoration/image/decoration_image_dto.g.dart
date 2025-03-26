@@ -3,10 +3,14 @@
 part of 'decoration_image_dto.dart';
 
 // **************************************************************************
-// MixableDtoGenerator
+// MixGenerator
 // **************************************************************************
 
-mixin _$DecorationImageDto on Dto<DecorationImage> {
+// GENERATED CODE - DO NOT MODIFY BY HAND
+
+/// A mixin that provides DTO functionality for [DecorationImageDto].
+mixin _$DecorationImageDto
+    on Mixable<DecorationImage>, HasDefaultValue<DecorationImage> {
   /// Resolves to [DecorationImage] using the provided [MixData].
   ///
   /// If a property is null in the [MixData], it falls back to the
@@ -69,6 +73,7 @@ mixin _$DecorationImageDto on Dto<DecorationImage> {
         _$this.isAntiAlias,
       ];
 
+  /// Returns this instance as a [DecorationImageDto].
   DecorationImageDto get _$this => this as DecorationImageDto;
 }
 
@@ -152,7 +157,9 @@ class DecorationImageUtility<T extends Attribute>
   }
 }
 
+/// Extension methods to convert [DecorationImage] to [DecorationImageDto].
 extension DecorationImageMixExt on DecorationImage {
+  /// Converts this [DecorationImage] to a [DecorationImageDto].
   DecorationImageDto toDto() {
     return DecorationImageDto(
       image: image,
@@ -167,7 +174,9 @@ extension DecorationImageMixExt on DecorationImage {
   }
 }
 
+/// Extension methods to convert List<[DecorationImage]> to List<[DecorationImageDto]>.
 extension ListDecorationImageMixExt on List<DecorationImage> {
+  /// Converts this List<[DecorationImage]> to a List<[DecorationImageDto]>.
   List<DecorationImageDto> toDto() {
     return map((e) => e.toDto()).toList();
   }

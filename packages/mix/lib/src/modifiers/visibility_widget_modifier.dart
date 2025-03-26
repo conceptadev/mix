@@ -4,14 +4,14 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:mix_annotations/mix_annotations.dart';
 
-import '../core/attribute.dart';
+import '../core/element.dart';
 import '../core/factory/mix_data.dart';
 import '../core/modifier.dart';
 import '../core/utility.dart';
 
 part 'visibility_widget_modifier.g.dart';
 
-@MixableSpec(skipUtility: true)
+@MixableSpec(components: GeneratedSpecComponents.skipUtility)
 final class VisibilityModifierSpec
     extends WidgetModifierSpec<VisibilityModifierSpec>
     with _$VisibilityModifierSpec, Diagnosticable {

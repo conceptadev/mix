@@ -3,9 +3,12 @@
 part of 'spinner.dart';
 
 // **************************************************************************
-// MixableSpecGenerator
+// MixGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
+
+/// A mixin that provides spec functionality for [SpinnerSpec].
 mixin _$SpinnerSpec on Spec<SpinnerSpec> {
   static SpinnerSpec from(MixData mix) {
     return mix.attributeOf<SpinnerSpecAttribute>()?.resolve(mix) ??
@@ -62,10 +65,8 @@ mixin _$SpinnerSpec on Spec<SpinnerSpec> {
   ///
   /// The interpolation is performed on each property of the [SpinnerSpec] using the appropriate
   /// interpolation method:
-  ///
   /// - [MixHelpers.lerpDouble] for [size] and [strokeWidth].
   /// - [Color.lerp] for [color].
-
   /// For [duration] and [style] and [modifiers] and [animated], the interpolation is performed using a step function.
   /// If [t] is less than 0.5, the value from the current [SpinnerSpec] is used. Otherwise, the value
   /// from the [other] [SpinnerSpec] is used.
@@ -130,7 +131,7 @@ mixin _$SpinnerSpec on Spec<SpinnerSpec> {
 ///
 /// Use this class to configure the attributes of a [SpinnerSpec] and pass it to
 /// the [SpinnerSpec] constructor.
-final class SpinnerSpecAttribute extends SpecAttribute<SpinnerSpec>
+class SpinnerSpecAttribute extends SpecAttribute<SpinnerSpec>
     with Diagnosticable {
   final double? size;
   final double? strokeWidth;
@@ -216,8 +217,7 @@ final class SpinnerSpecAttribute extends SpecAttribute<SpinnerSpec>
     properties.add(DiagnosticsProperty('color', color, defaultValue: null));
     properties
         .add(DiagnosticsProperty('duration', duration, defaultValue: null));
-    properties.add(DiagnosticsProperty('style', style,
-        expandableValue: true, defaultValue: null));
+    properties.add(DiagnosticsProperty('style', style, defaultValue: null));
     properties
         .add(DiagnosticsProperty('modifiers', modifiers, defaultValue: null));
     properties

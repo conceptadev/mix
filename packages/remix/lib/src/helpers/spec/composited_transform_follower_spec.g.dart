@@ -3,9 +3,12 @@
 part of 'composited_transform_follower_spec.dart';
 
 // **************************************************************************
-// MixableSpecGenerator
+// MixGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
+
+/// A mixin that provides spec functionality for [CompositedTransformFollowerSpec].
 mixin _$CompositedTransformFollowerSpec
     on Spec<CompositedTransformFollowerSpec> {
   static CompositedTransformFollowerSpec from(MixData mix) {
@@ -61,10 +64,8 @@ mixin _$CompositedTransformFollowerSpec
   ///
   /// The interpolation is performed on each property of the [CompositedTransformFollowerSpec] using the appropriate
   /// interpolation method:
-  ///
   /// - [Offset.lerp] for [offset].
   /// - [AlignmentGeometry.lerp] for [targetAnchor] and [followerAnchor].
-
   /// For [modifiers] and [animated], the interpolation is performed using a step function.
   /// If [t] is less than 0.5, the value from the current [CompositedTransformFollowerSpec] is used. Otherwise, the value
   /// from the [other] [CompositedTransformFollowerSpec] is used.
@@ -167,7 +168,7 @@ class CompositedTransformFollowerSpecAttribute
   /// to the values from this instance.
   @override
   CompositedTransformFollowerSpecAttribute merge(
-      covariant CompositedTransformFollowerSpecAttribute? other) {
+      CompositedTransformFollowerSpecAttribute? other) {
     if (other == null) return this;
 
     return CompositedTransformFollowerSpecAttribute(

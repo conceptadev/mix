@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
 
-import 'attribute.dart';
+import 'element.dart';
 
 abstract class MixUtility<Attr extends Attribute, Value> {
   @protected
@@ -9,6 +9,13 @@ abstract class MixUtility<Attr extends Attribute, Value> {
   const MixUtility(this.builder);
 
   static T selfBuilder<T>(T value) => value;
+}
+
+class GenericUtility<Attr extends Attribute, Value>
+    extends MixUtility<Attr, Value> {
+  const GenericUtility(super.builder);
+
+  Attr call(Value value) => builder(value);
 }
 
 abstract class ScalarUtility<Return extends Attribute, V>

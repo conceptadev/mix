@@ -7,7 +7,7 @@ import 'package:mix_annotations/mix_annotations.dart';
 part 'shape_border_dto.g.dart';
 
 @immutable
-sealed class ShapeBorderDto<T extends ShapeBorder> extends Dto<T> {
+sealed class ShapeBorderDto<T extends ShapeBorder> extends Mixable<T> {
   const ShapeBorderDto();
 
   static ShapeBorderDto? tryToMerge(ShapeBorderDto? a, ShapeBorderDto? b) {
@@ -85,11 +85,11 @@ abstract class OutlinedBorderDto<T extends OutlinedBorder>
   OutlinedBorderDto<T> merge(covariant OutlinedBorderDto<T>? other);
 }
 
-@MixableDto()
+@MixableProperty()
 final class RoundedRectangleBorderDto
     extends OutlinedBorderDto<RoundedRectangleBorder>
     with _$RoundedRectangleBorderDto {
-  @MixableProperty(dto: MixableFieldDto(type: BorderRadiusGeometryDto))
+  @MixableField(dto: MixableFieldProperty(type: BorderRadiusGeometryDto))
   final BorderRadiusGeometryDto? borderRadius;
 
   const RoundedRectangleBorderDto({this.borderRadius, super.side});
@@ -106,12 +106,9 @@ final class RoundedRectangleBorderDto
 
   @override
   BorderRadiusGeometryDto? get borderRadiusGetter => borderRadius;
-
-  @override
-  RoundedRectangleBorder get defaultValue => const RoundedRectangleBorder();
 }
 
-@MixableDto()
+@MixableProperty()
 final class BeveledRectangleBorderDto
     extends OutlinedBorderDto<BeveledRectangleBorder>
     with _$BeveledRectangleBorderDto {
@@ -131,12 +128,9 @@ final class BeveledRectangleBorderDto
 
   @override
   BorderRadiusGeometryDto? get borderRadiusGetter => borderRadius;
-
-  @override
-  BeveledRectangleBorder get defaultValue => const BeveledRectangleBorder();
 }
 
-@MixableDto()
+@MixableProperty()
 final class ContinuousRectangleBorderDto
     extends OutlinedBorderDto<ContinuousRectangleBorder>
     with _$ContinuousRectangleBorderDto {
@@ -158,12 +152,9 @@ final class ContinuousRectangleBorderDto
 
   @override
   BorderRadiusGeometryDto? get borderRadiusGetter => borderRadius;
-  @override
-  ContinuousRectangleBorder get defaultValue =>
-      const ContinuousRectangleBorder();
 }
 
-@MixableDto()
+@MixableProperty()
 final class CircleBorderDto extends OutlinedBorderDto<CircleBorder>
     with _$CircleBorderDto {
   final double? eccentricity;
@@ -181,11 +172,9 @@ final class CircleBorderDto extends OutlinedBorderDto<CircleBorder>
 
   @override
   BorderRadiusGeometryDto? get borderRadiusGetter => null;
-  @override
-  CircleBorder get defaultValue => const CircleBorder();
 }
 
-@MixableDto()
+@MixableProperty()
 final class StarBorderDto extends OutlinedBorderDto<StarBorder>
     with _$StarBorderDto {
   final double? points;
@@ -212,11 +201,9 @@ final class StarBorderDto extends OutlinedBorderDto<StarBorder>
 
   @override
   BorderRadiusGeometryDto? get borderRadiusGetter => null;
-  @override
-  StarBorder get defaultValue => const StarBorder();
 }
 
-@MixableDto()
+@MixableProperty()
 final class LinearBorderDto extends OutlinedBorderDto<LinearBorder>
     with _$LinearBorderDto {
   final LinearBorderEdgeDto? start;
@@ -243,23 +230,18 @@ final class LinearBorderDto extends OutlinedBorderDto<LinearBorder>
 
   @override
   BorderRadiusGeometryDto? get borderRadiusGetter => null;
-  @override
-  LinearBorder get defaultValue => const LinearBorder();
 }
 
-@MixableDto()
-final class LinearBorderEdgeDto extends Dto<LinearBorderEdge>
+@MixableProperty()
+final class LinearBorderEdgeDto extends Mixable<LinearBorderEdge>
     with _$LinearBorderEdgeDto {
   final double? size;
   final double? alignment;
 
   const LinearBorderEdgeDto({this.size, this.alignment});
-
-  @override
-  LinearBorderEdge get defaultValue => const LinearBorderEdge();
 }
 
-@MixableDto()
+@MixableProperty()
 final class StadiumBorderDto extends OutlinedBorderDto<StadiumBorder>
     with _$StadiumBorderDto {
   const StadiumBorderDto({super.side});
@@ -275,8 +257,6 @@ final class StadiumBorderDto extends OutlinedBorderDto<StadiumBorder>
 
   @override
   BorderRadiusGeometryDto? get borderRadiusGetter => null;
-  @override
-  StadiumBorder get defaultValue => const StadiumBorder();
 }
 
 abstract class MixOutlinedBorder<T extends OutlinedBorderDto>

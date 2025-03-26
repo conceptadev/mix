@@ -3,10 +3,13 @@
 part of 'text_height_behavior_dto.dart';
 
 // **************************************************************************
-// MixableDtoGenerator
+// MixGenerator
 // **************************************************************************
 
-mixin _$TextHeightBehaviorDto on Dto<TextHeightBehavior> {
+// GENERATED CODE - DO NOT MODIFY BY HAND
+
+/// A mixin that provides DTO functionality for [TextHeightBehaviorDto].
+mixin _$TextHeightBehaviorDto on Mixable<TextHeightBehavior> {
   /// Resolves to [TextHeightBehavior] using the provided [MixData].
   ///
   /// If a property is null in the [MixData], it falls back to the
@@ -18,12 +21,10 @@ mixin _$TextHeightBehaviorDto on Dto<TextHeightBehavior> {
   @override
   TextHeightBehavior resolve(MixData mix) {
     return TextHeightBehavior(
-      applyHeightToFirstAscent: _$this.applyHeightToFirstAscent ??
-          defaultValue.applyHeightToFirstAscent,
-      applyHeightToLastDescent: _$this.applyHeightToLastDescent ??
-          defaultValue.applyHeightToLastDescent,
+      applyHeightToFirstAscent: _$this.applyHeightToFirstAscent ?? true,
+      applyHeightToLastDescent: _$this.applyHeightToLastDescent ?? true,
       leadingDistribution:
-          _$this.leadingDistribution ?? defaultValue.leadingDistribution,
+          _$this.leadingDistribution ?? TextLeadingDistribution.proportional,
     );
   }
 
@@ -36,7 +37,7 @@ mixin _$TextHeightBehaviorDto on Dto<TextHeightBehavior> {
   /// Properties from [other] that are null will fall back
   /// to the values from this instance.
   @override
-  TextHeightBehaviorDto merge(covariant TextHeightBehaviorDto? other) {
+  TextHeightBehaviorDto merge(TextHeightBehaviorDto? other) {
     if (other == null) return _$this;
 
     return TextHeightBehaviorDto(
@@ -60,10 +61,13 @@ mixin _$TextHeightBehaviorDto on Dto<TextHeightBehavior> {
         _$this.leadingDistribution,
       ];
 
+  /// Returns this instance as a [TextHeightBehaviorDto].
   TextHeightBehaviorDto get _$this => this as TextHeightBehaviorDto;
 }
 
+/// Extension methods to convert [TextHeightBehavior] to [TextHeightBehaviorDto].
 extension TextHeightBehaviorMixExt on TextHeightBehavior {
+  /// Converts this [TextHeightBehavior] to a [TextHeightBehaviorDto].
   TextHeightBehaviorDto toDto() {
     return TextHeightBehaviorDto(
       applyHeightToFirstAscent: applyHeightToFirstAscent,
@@ -73,7 +77,9 @@ extension TextHeightBehaviorMixExt on TextHeightBehavior {
   }
 }
 
+/// Extension methods to convert List<[TextHeightBehavior]> to List<[TextHeightBehaviorDto]>.
 extension ListTextHeightBehaviorMixExt on List<TextHeightBehavior> {
+  /// Converts this List<[TextHeightBehavior]> to a List<[TextHeightBehaviorDto]>.
   List<TextHeightBehaviorDto> toDto() {
     return map((e) => e.toDto()).toList();
   }

@@ -3,9 +3,12 @@
 part of 'accordion.dart';
 
 // **************************************************************************
-// MixableSpecGenerator
+// MixGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
+
+/// A mixin that provides spec functionality for [AccordionSpec].
 mixin _$AccordionSpec on Spec<AccordionSpec> {
   static AccordionSpec from(MixData mix) {
     return mix.attributeOf<AccordionSpecAttribute>()?.resolve(mix) ??
@@ -56,11 +59,10 @@ mixin _$AccordionSpec on Spec<AccordionSpec> {
   ///
   /// The interpolation is performed on each property of the [AccordionSpec] using the appropriate
   /// interpolation method:
-  ///
+  /// - [AccordionHeaderSpec.lerp] for [header].
   /// - [FlexBoxSpec.lerp] for [container].
   /// - [BoxSpec.lerp] for [contentContainer].
-
-  /// For [header] and [animated], the interpolation is performed using a step function.
+  /// For [animated], the interpolation is performed using a step function.
   /// If [t] is less than 0.5, the value from the current [AccordionSpec] is used. Otherwise, the value
   /// from the [other] [AccordionSpec] is used.
   ///
@@ -100,7 +102,7 @@ mixin _$AccordionSpec on Spec<AccordionSpec> {
 ///
 /// Use this class to configure the attributes of a [AccordionSpec] and pass it to
 /// the [AccordionSpec] constructor.
-base class AccordionSpecAttribute extends SpecAttribute<AccordionSpec> {
+class AccordionSpecAttribute extends SpecAttribute<AccordionSpec> {
   final AccordionHeaderSpecAttribute? header;
   final FlexBoxSpecAttribute? container;
   final BoxSpecAttribute? contentContainer;
@@ -139,7 +141,7 @@ base class AccordionSpecAttribute extends SpecAttribute<AccordionSpec> {
   /// Properties from [other] that are null will fall back
   /// to the values from this instance.
   @override
-  AccordionSpecAttribute merge(covariant AccordionSpecAttribute? other) {
+  AccordionSpecAttribute merge(AccordionSpecAttribute? other) {
     if (other == null) return this;
 
     return AccordionSpecAttribute(
@@ -232,6 +234,7 @@ class AccordionSpecTween extends Tween<AccordionSpec?> {
   }
 }
 
+/// A mixin that provides spec functionality for [AccordionHeaderSpec].
 mixin _$AccordionHeaderSpec on Spec<AccordionHeaderSpec> {
   static AccordionHeaderSpec from(MixData mix) {
     return mix.attributeOf<AccordionHeaderSpecAttribute>()?.resolve(mix) ??
@@ -284,11 +287,9 @@ mixin _$AccordionHeaderSpec on Spec<AccordionHeaderSpec> {
   ///
   /// The interpolation is performed on each property of the [AccordionHeaderSpec] using the appropriate
   /// interpolation method:
-  ///
   /// - [FlexBoxSpec.lerp] for [container].
   /// - [IconSpec.lerp] for [leadingIcon] and [trailingIcon].
   /// - [TextSpec.lerp] for [text].
-
   /// For [animated], the interpolation is performed using a step function.
   /// If [t] is less than 0.5, the value from the current [AccordionHeaderSpec] is used. Otherwise, the value
   /// from the [other] [AccordionHeaderSpec] is used.
@@ -331,8 +332,7 @@ mixin _$AccordionHeaderSpec on Spec<AccordionHeaderSpec> {
 ///
 /// Use this class to configure the attributes of a [AccordionHeaderSpec] and pass it to
 /// the [AccordionHeaderSpec] constructor.
-base class AccordionHeaderSpecAttribute
-    extends SpecAttribute<AccordionHeaderSpec> {
+class AccordionHeaderSpecAttribute extends SpecAttribute<AccordionHeaderSpec> {
   final FlexBoxSpecAttribute? container;
   final IconSpecAttribute? leadingIcon;
   final TextSpecAttribute? text;
@@ -374,8 +374,7 @@ base class AccordionHeaderSpecAttribute
   /// Properties from [other] that are null will fall back
   /// to the values from this instance.
   @override
-  AccordionHeaderSpecAttribute merge(
-      covariant AccordionHeaderSpecAttribute? other) {
+  AccordionHeaderSpecAttribute merge(AccordionHeaderSpecAttribute? other) {
     if (other == null) return this;
 
     return AccordionHeaderSpecAttribute(

@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
 
-import '../core/attribute.dart';
+import '../core/element.dart';
 import '../core/factory/style_mix.dart';
 import '../core/variant.dart';
 import 'variant_attribute.dart';

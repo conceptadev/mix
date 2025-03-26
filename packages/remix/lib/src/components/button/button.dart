@@ -18,7 +18,7 @@ class ButtonSpec extends Spec<ButtonSpec> with _$ButtonSpec, Diagnosticable {
   final IconSpec icon;
   final TextSpec label;
 
-  @MixableProperty(dto: MixableFieldDto(type: 'SpinnerSpecAttribute'))
+  @MixableField(dto: MixableFieldProperty(type: 'SpinnerSpecAttribute'))
   final SpinnerSpec spinner;
 
   /// {@macro button_spec_of}

@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 
-import 'attribute.dart';
+import 'element.dart';
 import 'spec.dart';
 import 'utility.dart';
 

@@ -3,9 +3,12 @@
 part of 'dialog.dart';
 
 // **************************************************************************
-// MixableSpecGenerator
+// MixGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
+
+/// A mixin that provides spec functionality for [DialogSpec].
 mixin _$DialogSpec on Spec<DialogSpec> {
   static DialogSpec from(MixData mix) {
     return mix.attributeOf<DialogSpecAttribute>()?.resolve(mix) ??
@@ -60,11 +63,9 @@ mixin _$DialogSpec on Spec<DialogSpec> {
   ///
   /// The interpolation is performed on each property of the [DialogSpec] using the appropriate
   /// interpolation method:
-  ///
   /// - [FlexBoxSpec.lerp] for [container].
   /// - [TextSpec.lerp] for [title] and [description].
   /// - [FlexSpec.lerp] for [actionsContainer].
-
   /// For [modifiers] and [animated], the interpolation is performed using a step function.
   /// If [t] is less than 0.5, the value from the current [DialogSpec] is used. Otherwise, the value
   /// from the [other] [DialogSpec] is used.
@@ -170,7 +171,7 @@ class DialogSpecAttribute extends SpecAttribute<DialogSpec>
   /// Properties from [other] that are null will fall back
   /// to the values from this instance.
   @override
-  DialogSpecAttribute merge(covariant DialogSpecAttribute? other) {
+  DialogSpecAttribute merge(DialogSpecAttribute? other) {
     if (other == null) return this;
 
     return DialogSpecAttribute(

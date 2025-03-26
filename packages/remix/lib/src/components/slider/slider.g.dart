@@ -3,9 +3,12 @@
 part of 'slider.dart';
 
 // **************************************************************************
-// MixableSpecGenerator
+// MixGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
+
+/// A mixin that provides spec functionality for [SliderSpec].
 mixin _$SliderSpec on Spec<SliderSpec> {
   static SliderSpec from(MixData mix) {
     return mix.attributeOf<SliderSpecAttribute>()?.resolve(mix) ?? SliderSpec();
@@ -59,9 +62,7 @@ mixin _$SliderSpec on Spec<SliderSpec> {
   ///
   /// The interpolation is performed on each property of the [SliderSpec] using the appropriate
   /// interpolation method:
-  ///
   /// - [BoxSpec.lerp] for [thumb] and [track] and [activeTrack] and [division].
-
   /// For [modifiers] and [animated], the interpolation is performed using a step function.
   /// If [t] is less than 0.5, the value from the current [SliderSpec] is used. Otherwise, the value
   /// from the [other] [SliderSpec] is used.
@@ -166,7 +167,7 @@ class SliderSpecAttribute extends SpecAttribute<SliderSpec>
   /// Properties from [other] that are null will fall back
   /// to the values from this instance.
   @override
-  SliderSpecAttribute merge(covariant SliderSpecAttribute? other) {
+  SliderSpecAttribute merge(SliderSpecAttribute? other) {
     if (other == null) return this;
 
     return SliderSpecAttribute(

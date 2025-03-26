@@ -3,9 +3,12 @@
 part of 'divider.dart';
 
 // **************************************************************************
-// MixableSpecGenerator
+// MixGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
+
+/// A mixin that provides spec functionality for [DividerSpec].
 mixin _$DividerSpec on Spec<DividerSpec> {
   static DividerSpec from(MixData mix) {
     return mix.attributeOf<DividerSpecAttribute>()?.resolve(mix) ??
@@ -54,9 +57,7 @@ mixin _$DividerSpec on Spec<DividerSpec> {
   ///
   /// The interpolation is performed on each property of the [DividerSpec] using the appropriate
   /// interpolation method:
-  ///
   /// - [BoxSpec.lerp] for [container].
-
   /// For [animated] and [modifiers], the interpolation is performed using a step function.
   /// If [t] is less than 0.5, the value from the current [DividerSpec] is used. Otherwise, the value
   /// from the [other] [DividerSpec] is used.
@@ -104,7 +105,7 @@ mixin _$DividerSpec on Spec<DividerSpec> {
 ///
 /// Use this class to configure the attributes of a [DividerSpec] and pass it to
 /// the [DividerSpec] constructor.
-base class DividerSpecAttribute extends SpecAttribute<DividerSpec>
+class DividerSpecAttribute extends SpecAttribute<DividerSpec>
     with Diagnosticable {
   final BoxSpecAttribute? container;
 
@@ -140,7 +141,7 @@ base class DividerSpecAttribute extends SpecAttribute<DividerSpec>
   /// Properties from [other] that are null will fall back
   /// to the values from this instance.
   @override
-  DividerSpecAttribute merge(covariant DividerSpecAttribute? other) {
+  DividerSpecAttribute merge(DividerSpecAttribute? other) {
     if (other == null) return this;
 
     return DividerSpecAttribute(

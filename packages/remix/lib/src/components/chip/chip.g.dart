@@ -3,9 +3,12 @@
 part of 'chip.dart';
 
 // **************************************************************************
-// MixableSpecGenerator
+// MixGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
+
+/// A mixin that provides spec functionality for [ChipSpec].
 mixin _$ChipSpec on Spec<ChipSpec> {
   static ChipSpec from(MixData mix) {
     return mix.attributeOf<ChipSpecAttribute>()?.resolve(mix) ??
@@ -58,11 +61,9 @@ mixin _$ChipSpec on Spec<ChipSpec> {
   ///
   /// The interpolation is performed on each property of the [ChipSpec] using the appropriate
   /// interpolation method:
-  ///
   /// - [FlexBoxSpec.lerp] for [container].
   /// - [IconSpec.lerp] for [icon].
   /// - [TextSpec.lerp] for [label].
-
   /// For [modifiers] and [animated], the interpolation is performed using a step function.
   /// If [t] is less than 0.5, the value from the current [ChipSpec] is used. Otherwise, the value
   /// from the [other] [ChipSpec] is used.
@@ -159,7 +160,7 @@ class ChipSpecAttribute extends SpecAttribute<ChipSpec> with Diagnosticable {
   /// Properties from [other] that are null will fall back
   /// to the values from this instance.
   @override
-  ChipSpecAttribute merge(covariant ChipSpecAttribute? other) {
+  ChipSpecAttribute merge(ChipSpecAttribute? other) {
     if (other == null) return this;
 
     return ChipSpecAttribute(

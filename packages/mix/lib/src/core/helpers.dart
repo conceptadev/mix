@@ -7,7 +7,8 @@ import 'package:flutter/rendering.dart' as r;
 import 'package:flutter/widgets.dart' as w;
 
 import '../internal/deep_collection_equality.dart';
-import 'dto.dart';
+import 'element.dart';
+import 'factory/mix_data.dart';
 
 /// Class to provide some helpers without conflicting
 /// name space with other libraries.
@@ -23,7 +24,9 @@ class MixHelpers {
 
   static const lerpDouble = ui.lerpDouble;
 
-  static const mergeList = _mergeDtoList;
+  static const mergeList = _mergeList;
+
+  static const resolveList = _resolveList;
 
   static const lerpStrutStyle = _lerpStrutStyle;
 
@@ -68,7 +71,7 @@ int _lerpInt(int? a, int? b, double t) {
   return (a + (b - a) * t).round();
 }
 
-List<T>? _mergeDtoList<T>(List<T>? a, List<T>? b) {
+List<T>? _mergeList<T>(List<T>? a, List<T>? b) {
   if (b == null) return a;
   if (a == null) return b;
 
@@ -84,7 +87,7 @@ List<T>? _mergeDtoList<T>(List<T>? a, List<T>? b) {
       final currentValue = a[index];
       final otherValue = b[index];
 
-      if (currentValue is Dto && otherValue is Dto) {
+      if (currentValue is Mixable && otherValue is Mixable) {
         return currentValue.merge(otherValue) as T;
       }
 
@@ -95,6 +98,12 @@ List<T>? _mergeDtoList<T>(List<T>? a, List<T>? b) {
 
     return b[index];
   });
+}
+
+List<V> _resolveList<T extends Mixable<V>, V>(List<T>? a, MixData mix) {
+  if (a == null) return [];
+
+  return a.map((e) => e.resolve(mix)).toList();
 }
 
 w.Matrix4? _lerpMatrix4(w.Matrix4? a, w.Matrix4? b, double t) {

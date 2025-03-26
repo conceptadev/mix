@@ -9,11 +9,12 @@ import '../../internal/mix_error.dart';
 
 part 'edge_insets_dto.g.dart';
 
+@Deprecated('Use EdgeInsetsGeometryDto instead')
 typedef SpacingDto = EdgeInsetsGeometryDto<EdgeInsetsGeometry>;
 
 @immutable
 sealed class EdgeInsetsGeometryDto<T extends EdgeInsetsGeometry>
-    extends Dto<T> {
+    extends Mixable<T> {
   final double? top;
   final double? bottom;
 
@@ -85,14 +86,11 @@ sealed class EdgeInsetsGeometryDto<T extends EdgeInsetsGeometry>
   EdgeInsetsGeometryDto<T> merge(covariant EdgeInsetsGeometryDto<T>? other);
 }
 
-@MixableDto()
+@MixableProperty()
 final class EdgeInsetsDto extends EdgeInsetsGeometryDto<EdgeInsets>
     with _$EdgeInsetsDto, Diagnosticable {
   final double? left;
   final double? right;
-
-  @override
-  final defaultValue = EdgeInsets.zero;
 
   const EdgeInsetsDto({super.top, super.bottom, this.left, this.right});
 
@@ -122,15 +120,12 @@ final class EdgeInsetsDto extends EdgeInsetsGeometryDto<EdgeInsets>
   }
 }
 
-@MixableDto()
+@MixableProperty()
 final class EdgeInsetsDirectionalDto
     extends EdgeInsetsGeometryDto<EdgeInsetsDirectional>
     with _$EdgeInsetsDirectionalDto {
   final double? start;
   final double? end;
-
-  @override
-  final defaultValue = EdgeInsetsDirectional.zero;
 
   const EdgeInsetsDirectionalDto.all(double value)
       : this(top: value, bottom: value, start: value, end: value);
@@ -156,7 +151,7 @@ final class EdgeInsetsDirectionalDto
 }
 
 extension EdgeInsetsGeometryExt on EdgeInsetsGeometry {
-  SpacingDto toDto() {
+  EdgeInsetsGeometryDto toDto() {
     final self = this;
     if (self is EdgeInsetsDirectional) return self.toDto();
     if (self is EdgeInsets) return self.toDto();

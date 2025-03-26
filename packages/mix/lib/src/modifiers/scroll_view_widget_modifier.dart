@@ -5,14 +5,14 @@ import 'package:mix_annotations/mix_annotations.dart';
 import '../attributes/enum/enum_util.dart';
 import '../attributes/spacing/edge_insets_dto.dart';
 import '../attributes/spacing/spacing_util.dart';
-import '../core/attribute.dart';
+import '../core/element.dart';
 import '../core/factory/mix_data.dart';
 import '../core/modifier.dart';
 import '../core/utility.dart';
 
 part 'scroll_view_widget_modifier.g.dart';
 
-@MixableSpec(skipUtility: true, withLerp: false)
+@MixableSpec(components: GeneratedSpecComponents.skipUtility)
 final class ScrollViewModifierSpec
     extends WidgetModifierSpec<ScrollViewModifierSpec>
     with _$ScrollViewModifierSpec, Diagnosticable {
@@ -55,7 +55,8 @@ final class ScrollViewModifierSpecUtility<T extends Attribute>
   late final reverse = BoolUtility((reverse) => call(reverse: reverse));
 
   /// Set the padding of the scroll view.
-  late final padding = SpacingUtility((padding) => call(padding: padding));
+  late final padding =
+      EdgeInsetsGeometryUtility((padding) => call(padding: padding));
 
   /// Set the clip behavior of the scroll view.
   late final clipBehavior = ClipUtility((clip) => call(clipBehavior: clip));
@@ -87,7 +88,7 @@ final class ScrollViewModifierSpecUtility<T extends Attribute>
   T call({
     Axis? scrollDirection,
     bool? reverse,
-    SpacingDto? padding,
+    EdgeInsetsGeometryDto? padding,
     ScrollPhysics? physics,
     Clip? clipBehavior,
   }) =>

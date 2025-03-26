@@ -3,9 +3,12 @@
 part of 'fractionally_sized_box_widget_modifier.dart';
 
 // **************************************************************************
-// MixableSpecGenerator
+// MixGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
+
+/// A mixin that provides spec functionality for [FractionallySizedBoxModifierSpec].
 mixin _$FractionallySizedBoxModifierSpec
     on WidgetModifierSpec<FractionallySizedBoxModifierSpec> {
   /// Creates a copy of this [FractionallySizedBoxModifierSpec] but with the given fields
@@ -33,14 +36,9 @@ mixin _$FractionallySizedBoxModifierSpec
   ///
   /// The interpolation is performed on each property of the [FractionallySizedBoxModifierSpec] using the appropriate
   /// interpolation method:
-  ///
   /// - [MixHelpers.lerpDouble] for [widthFactor] and [heightFactor].
   /// - [AlignmentGeometry.lerp] for [alignment].
 
-  /// For , the interpolation is performed using a step function.
-  /// If [t] is less than 0.5, the value from the current [FractionallySizedBoxModifierSpec] is used. Otherwise, the value
-  /// from the [other] [FractionallySizedBoxModifierSpec] is used.
-  ///
   /// This method is typically used in animations to smoothly transition between
   /// different [FractionallySizedBoxModifierSpec] configurations.
   @override
@@ -88,7 +86,7 @@ mixin _$FractionallySizedBoxModifierSpec
 ///
 /// Use this class to configure the attributes of a [FractionallySizedBoxModifierSpec] and pass it to
 /// the [FractionallySizedBoxModifierSpec] constructor.
-final class FractionallySizedBoxModifierSpecAttribute
+class FractionallySizedBoxModifierSpecAttribute
     extends WidgetModifierSpecAttribute<FractionallySizedBoxModifierSpec>
     with Diagnosticable {
   final double? widthFactor;

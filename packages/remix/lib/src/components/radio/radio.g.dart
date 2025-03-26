@@ -3,9 +3,12 @@
 part of 'radio.dart';
 
 // **************************************************************************
-// MixableSpecGenerator
+// MixGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
+
+/// A mixin that provides spec functionality for [RadioSpec].
 mixin _$RadioSpec on Spec<RadioSpec> {
   static RadioSpec from(MixData mix) {
     return mix.attributeOf<RadioSpecAttribute>()?.resolve(mix) ??
@@ -60,11 +63,9 @@ mixin _$RadioSpec on Spec<RadioSpec> {
   ///
   /// The interpolation is performed on each property of the [RadioSpec] using the appropriate
   /// interpolation method:
-  ///
   /// - [BoxSpec.lerp] for [indicatorContainer] and [indicator].
   /// - [FlexBoxSpec.lerp] for [container].
   /// - [TextSpec.lerp] for [text].
-
   /// For [modifiers] and [animated], the interpolation is performed using a step function.
   /// If [t] is less than 0.5, the value from the current [RadioSpec] is used. Otherwise, the value
   /// from the [other] [RadioSpec] is used.
@@ -126,8 +127,7 @@ mixin _$RadioSpec on Spec<RadioSpec> {
 ///
 /// Use this class to configure the attributes of a [RadioSpec] and pass it to
 /// the [RadioSpec] constructor.
-base class RadioSpecAttribute extends SpecAttribute<RadioSpec>
-    with Diagnosticable {
+class RadioSpecAttribute extends SpecAttribute<RadioSpec> with Diagnosticable {
   final BoxSpecAttribute? indicatorContainer;
   final BoxSpecAttribute? indicator;
   final FlexBoxSpecAttribute? container;
@@ -171,7 +171,7 @@ base class RadioSpecAttribute extends SpecAttribute<RadioSpec>
   /// Properties from [other] that are null will fall back
   /// to the values from this instance.
   @override
-  RadioSpecAttribute merge(covariant RadioSpecAttribute? other) {
+  RadioSpecAttribute merge(RadioSpecAttribute? other) {
     if (other == null) return this;
 
     return RadioSpecAttribute(

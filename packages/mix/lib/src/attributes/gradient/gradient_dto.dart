@@ -1,4 +1,5 @@
 // ignore_for_file: prefer_relative_imports,avoid-importing-entrypoint-exports
+
 import 'package:flutter/widgets.dart';
 import 'package:mix/mix.dart';
 import 'package:mix_annotations/mix_annotations.dart';
@@ -13,7 +14,8 @@ part 'gradient_dto.g.dart';
 /// This is used to allow for resolvable value tokens, and also the correct
 /// merge and combining behavior. It allows to be merged, and resolved to a `[Gradient]
 @immutable
-sealed class GradientDto<T extends Gradient> extends Dto<T> {
+sealed class GradientDto<T extends Gradient> extends Mixable<T>
+    with HasDefaultValue<T> {
   final List<double>? stops;
   final List<ColorDto>? colors;
   final GradientTransform? transform;
@@ -72,7 +74,7 @@ sealed class GradientDto<T extends Gradient> extends Dto<T> {
 /// This is used to allow for resolvable value tokens, and also the correct
 /// merge and combining behavior. It allows to be merged, and resolved to a `[LinearGradient]
 
-@MixableDto()
+@MixableProperty()
 final class LinearGradientDto extends GradientDto<LinearGradient>
     with _$LinearGradientDto {
   final AlignmentGeometry? begin;
@@ -95,7 +97,7 @@ final class LinearGradientDto extends GradientDto<LinearGradient>
 ///
 /// This is used to allow for resolvable value tokens, and also the correct
 /// merge and combining behavior. It allows to be merged, and resolved to a `[RadialGradient]
-@MixableDto()
+@MixableProperty()
 final class RadialGradientDto extends GradientDto<RadialGradient>
     with _$RadialGradientDto {
   final AlignmentGeometry? center;
@@ -126,7 +128,7 @@ final class RadialGradientDto extends GradientDto<RadialGradient>
 /// This is used to allow for resolvable value tokens, and also the correct
 /// merge and combining behavior. It allows to be merged, and resolved to a `[SweepGradient]
 
-@MixableDto()
+@MixableProperty()
 final class SweepGradientDto extends GradientDto<SweepGradient>
     with _$SweepGradientDto {
   final AlignmentGeometry? center;

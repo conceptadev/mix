@@ -183,6 +183,9 @@ class WrapMixThemeWidget extends StatelessWidget {
 final class MockDoubleScalarAttribute
     extends TestScalarAttribute<MockDoubleScalarAttribute, double> {
   const MockDoubleScalarAttribute(super.value);
+
+  @override
+  double resolve(MixData mix) => value;
 }
 
 class MockContextVariantCondition extends ContextVariant {
@@ -205,6 +208,9 @@ class MockContextVariantCondition extends ContextVariant {
 final class MockIntScalarAttribute
     extends TestScalarAttribute<MockIntScalarAttribute, int> {
   const MockIntScalarAttribute(super.value);
+
+  @override
+  int resolve(MixData mix) => value;
 }
 
 class MockContextVariant extends ContextVariant {
@@ -219,6 +225,9 @@ class MockContextVariant extends ContextVariant {
 final class MockBooleanScalarAttribute
     extends TestScalarAttribute<MockBooleanScalarAttribute, bool> {
   const MockBooleanScalarAttribute(super.value);
+
+  @override
+  bool resolve(MixData mix) => value;
 }
 
 abstract class _MockSpecAttribute<T> extends SpecAttribute<T> {
@@ -274,6 +283,9 @@ final class MockSpecStringAttribute extends _MockSpecAttribute<String> {
 final class MockStringScalarAttribute
     extends TestScalarAttribute<MockStringScalarAttribute, String> {
   const MockStringScalarAttribute(super.value);
+
+  @override
+  String resolve(MixData mix) => value;
 }
 
 final class MockInvalidAttribute extends Attribute {
@@ -293,15 +305,28 @@ const mockVariant = Variant('mock-variant');
 final class UtilityTestAttribute<T>
     extends TestScalarAttribute<UtilityTestAttribute<T>, T> {
   const UtilityTestAttribute(super.value);
+
+  @override
+  T resolve(MixData mix) => value;
 }
 
-final class UtilityTestDtoAttribute<T extends Dto<V>, V>
-    extends TestScalarAttribute<UtilityTestDtoAttribute<T, V>, T> {
-  const UtilityTestDtoAttribute(super.value);
+final class UtilityTestDtoAttribute<T extends Mixable<V>, V>
+    extends SpecAttribute<V> {
+  final T value;
+  const UtilityTestDtoAttribute(this.value);
 
+  @override
   V resolve(MixData mix) {
     return value.resolve(mix);
   }
+
+  @override
+  UtilityTestDtoAttribute<T, V> merge(UtilityTestDtoAttribute<T, V>? other) {
+    return UtilityTestDtoAttribute(other?.value ?? value);
+  }
+
+  @override
+  get props => [value];
 }
 
 final class CustomWidgetModifierSpec
@@ -374,7 +399,7 @@ class WidgetWithTestableBuild extends StyledWidget {
 
 abstract class TestScalarAttribute<
     Self extends TestScalarAttribute<Self, Value>,
-    Value> extends StyledAttribute {
+    Value> extends SpecAttribute<Value> {
   final Value value;
   const TestScalarAttribute(this.value);
 

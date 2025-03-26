@@ -21,7 +21,9 @@ class SegmentedControlSpec extends Spec<SegmentedControlSpec>
   final BoxSpec divider;
   final bool showDivider;
 
-  @MixableProperty(dto: MixableFieldDto(type: 'SegmentButtonSpecAttribute'))
+  @MixableField(
+    dto: MixableFieldProperty(type: 'SegmentButtonSpecAttribute'),
+  )
   final SegmentButtonSpec item;
 
   /// {@macro segmented_control_spec_of}

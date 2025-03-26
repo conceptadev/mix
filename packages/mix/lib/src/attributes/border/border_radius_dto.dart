@@ -10,7 +10,7 @@ import '../../internal/mix_error.dart';
 
 part 'border_radius_dto.g.dart';
 
-/// Represents a [Dto] Data transfer object of [BorderRadiusGeometry]
+/// Represents a [Mixable] Data transfer object of [BorderRadiusGeometry]
 ///
 /// This is used to allow for resolvable value tokens, and also the correct
 /// merge and combining behavior. It allows to be merged, and resolved to a [BorderRadiusGeometry]
@@ -22,7 +22,7 @@ part 'border_radius_dto.g.dart';
 /// - [BorderRadiusGeometry], which is the Flutter counterpart of this class.
 @immutable
 sealed class BorderRadiusGeometryDto<T extends BorderRadiusGeometry>
-    extends Dto<T> with Diagnosticable {
+    extends Mixable<T> with Diagnosticable {
   const BorderRadiusGeometryDto();
 
   Radius? get topLeft;
@@ -58,7 +58,7 @@ sealed class BorderRadiusGeometryDto<T extends BorderRadiusGeometry>
   }
 }
 
-@MixableDto(generateUtility: false)
+@MixableProperty(components: GeneratedPropertyComponents.skipUtility)
 final class BorderRadiusDto extends BorderRadiusGeometryDto<BorderRadius>
     with _$BorderRadiusDto {
   @override
@@ -95,12 +95,9 @@ final class BorderRadiusDto extends BorderRadiusGeometryDto<BorderRadius>
   Radius? get bottomStart => null;
   @override
   Radius? get bottomEnd => null;
-
-  @override
-  BorderRadius get defaultValue => BorderRadius.zero;
 }
 
-@MixableDto(generateUtility: false)
+@MixableProperty(components: GeneratedPropertyComponents.skipUtility)
 final class BorderRadiusDirectionalDto
     extends BorderRadiusGeometryDto<BorderRadiusDirectional>
     with _$BorderRadiusDirectionalDto {
@@ -138,9 +135,6 @@ final class BorderRadiusDirectionalDto
   Radius? get bottomLeft => null;
   @override
   Radius? get bottomRight => null;
-
-  @override
-  BorderRadiusDirectional get defaultValue => BorderRadiusDirectional.zero;
 }
 
 extension BorderRadiusGeometryMixExt on BorderRadiusGeometry {

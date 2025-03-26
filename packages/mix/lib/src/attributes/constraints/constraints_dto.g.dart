@@ -3,10 +3,13 @@
 part of 'constraints_dto.dart';
 
 // **************************************************************************
-// MixableDtoGenerator
+// MixGenerator
 // **************************************************************************
 
-mixin _$BoxConstraintsDto on Dto<BoxConstraints> {
+// GENERATED CODE - DO NOT MODIFY BY HAND
+
+/// A mixin that provides DTO functionality for [BoxConstraintsDto].
+mixin _$BoxConstraintsDto on Mixable<BoxConstraints> {
   /// Resolves to [BoxConstraints] using the provided [MixData].
   ///
   /// If a property is null in the [MixData], it falls back to the
@@ -18,10 +21,10 @@ mixin _$BoxConstraintsDto on Dto<BoxConstraints> {
   @override
   BoxConstraints resolve(MixData mix) {
     return BoxConstraints(
-      minWidth: _$this.minWidth ?? defaultValue.minWidth,
-      maxWidth: _$this.maxWidth ?? defaultValue.maxWidth,
-      minHeight: _$this.minHeight ?? defaultValue.minHeight,
-      maxHeight: _$this.maxHeight ?? defaultValue.maxHeight,
+      minWidth: _$this.minWidth ?? 0.0,
+      maxWidth: _$this.maxWidth ?? double.infinity,
+      minHeight: _$this.minHeight ?? 0.0,
+      maxHeight: _$this.maxHeight ?? double.infinity,
     );
   }
 
@@ -57,6 +60,7 @@ mixin _$BoxConstraintsDto on Dto<BoxConstraints> {
         _$this.maxHeight,
       ];
 
+  /// Returns this instance as a [BoxConstraintsDto].
   BoxConstraintsDto get _$this => this as BoxConstraintsDto;
 }
 
@@ -111,7 +115,9 @@ class BoxConstraintsUtility<T extends Attribute>
   }
 }
 
+/// Extension methods to convert [BoxConstraints] to [BoxConstraintsDto].
 extension BoxConstraintsMixExt on BoxConstraints {
+  /// Converts this [BoxConstraints] to a [BoxConstraintsDto].
   BoxConstraintsDto toDto() {
     return BoxConstraintsDto(
       minWidth: minWidth,
@@ -122,7 +128,9 @@ extension BoxConstraintsMixExt on BoxConstraints {
   }
 }
 
+/// Extension methods to convert List<[BoxConstraints]> to List<[BoxConstraintsDto]>.
 extension ListBoxConstraintsMixExt on List<BoxConstraints> {
+  /// Converts this List<[BoxConstraints]> to a List<[BoxConstraintsDto]>.
   List<BoxConstraintsDto> toDto() {
     return map((e) => e.toDto()).toList();
   }

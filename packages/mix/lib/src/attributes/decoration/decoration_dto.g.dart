@@ -3,10 +3,13 @@
 part of 'decoration_dto.dart';
 
 // **************************************************************************
-// MixableDtoGenerator
+// MixGenerator
 // **************************************************************************
 
-mixin _$BoxDecorationDto on Dto<BoxDecoration> {
+// GENERATED CODE - DO NOT MODIFY BY HAND
+
+/// A mixin that provides DTO functionality for [BoxDecorationDto].
+mixin _$BoxDecorationDto on Mixable<BoxDecoration> {
   /// Resolves to [BoxDecoration] using the provided [MixData].
   ///
   /// If a property is null in the [MixData], it falls back to the
@@ -18,17 +21,14 @@ mixin _$BoxDecorationDto on Dto<BoxDecoration> {
   @override
   BoxDecoration resolve(MixData mix) {
     return BoxDecoration(
-      border: _$this.border?.resolve(mix) ?? defaultValue.border,
-      borderRadius:
-          _$this.borderRadius?.resolve(mix) ?? defaultValue.borderRadius,
-      shape: _$this.shape ?? defaultValue.shape,
-      backgroundBlendMode:
-          _$this.backgroundBlendMode ?? defaultValue.backgroundBlendMode,
-      color: _$this.color?.resolve(mix) ?? defaultValue.color,
-      image: _$this.image?.resolve(mix) ?? defaultValue.image,
-      gradient: _$this.gradient?.resolve(mix) ?? defaultValue.gradient,
-      boxShadow: _$this.boxShadow?.map((e) => e.resolve(mix)).toList() ??
-          defaultValue.boxShadow,
+      border: _$this.border?.resolve(mix),
+      borderRadius: _$this.borderRadius?.resolve(mix),
+      shape: _$this.shape ?? BoxShape.rectangle,
+      backgroundBlendMode: _$this.backgroundBlendMode,
+      color: _$this.color?.resolve(mix),
+      image: _$this.image?.resolve(mix),
+      gradient: _$this.gradient?.resolve(mix),
+      boxShadow: _$this.boxShadow?.map((e) => e.resolve(mix)).toList(),
     );
   }
 
@@ -74,6 +74,7 @@ mixin _$BoxDecorationDto on Dto<BoxDecoration> {
         _$this.boxShadow,
       ];
 
+  /// Returns this instance as a [BoxDecorationDto].
   BoxDecorationDto get _$this => this as BoxDecorationDto;
 }
 
@@ -170,7 +171,9 @@ class BoxDecorationUtility<T extends Attribute>
   }
 }
 
+/// Extension methods to convert [BoxDecoration] to [BoxDecorationDto].
 extension BoxDecorationMixExt on BoxDecoration {
+  /// Converts this [BoxDecoration] to a [BoxDecorationDto].
   BoxDecorationDto toDto() {
     return BoxDecorationDto(
       border: border?.toDto(),
@@ -185,13 +188,17 @@ extension BoxDecorationMixExt on BoxDecoration {
   }
 }
 
+/// Extension methods to convert List<[BoxDecoration]> to List<[BoxDecorationDto]>.
 extension ListBoxDecorationMixExt on List<BoxDecoration> {
+  /// Converts this List<[BoxDecoration]> to a List<[BoxDecorationDto]>.
   List<BoxDecorationDto> toDto() {
     return map((e) => e.toDto()).toList();
   }
 }
 
-mixin _$ShapeDecorationDto on Dto<ShapeDecoration> {
+/// A mixin that provides DTO functionality for [ShapeDecorationDto].
+mixin _$ShapeDecorationDto
+    on Mixable<ShapeDecoration>, HasDefaultValue<ShapeDecoration> {
   /// Resolves to [ShapeDecoration] using the provided [MixData].
   ///
   /// If a property is null in the [MixData], it falls back to the
@@ -246,6 +253,7 @@ mixin _$ShapeDecorationDto on Dto<ShapeDecoration> {
         _$this.shadows,
       ];
 
+  /// Returns this instance as a [ShapeDecorationDto].
   ShapeDecorationDto get _$this => this as ShapeDecorationDto;
 }
 
@@ -307,7 +315,9 @@ class ShapeDecorationUtility<T extends Attribute>
   }
 }
 
+/// Extension methods to convert [ShapeDecoration] to [ShapeDecorationDto].
 extension ShapeDecorationMixExt on ShapeDecoration {
+  /// Converts this [ShapeDecoration] to a [ShapeDecorationDto].
   ShapeDecorationDto toDto() {
     return ShapeDecorationDto(
       shape: shape.toDto(),
@@ -319,7 +329,9 @@ extension ShapeDecorationMixExt on ShapeDecoration {
   }
 }
 
+/// Extension methods to convert List<[ShapeDecoration]> to List<[ShapeDecorationDto]>.
 extension ListShapeDecorationMixExt on List<ShapeDecoration> {
+  /// Converts this List<[ShapeDecoration]> to a List<[ShapeDecorationDto]>.
   List<ShapeDecorationDto> toDto() {
     return map((e) => e.toDto()).toList();
   }

@@ -3,9 +3,12 @@
 part of 'select.dart';
 
 // **************************************************************************
-// MixableSpecGenerator
+// MixGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
+
+/// A mixin that provides spec functionality for [SelectSpec].
 mixin _$SelectSpec on Spec<SelectSpec> {
   static SelectSpec from(MixData mix) {
     return mix.attributeOf<SelectSpecAttribute>()?.resolve(mix) ??
@@ -60,9 +63,11 @@ mixin _$SelectSpec on Spec<SelectSpec> {
   ///
   /// The interpolation is performed on each property of the [SelectSpec] using the appropriate
   /// interpolation method:
-  ///
-
-  /// For [button] and [menu] and [item] and [position] and [modifiers] and [animated], the interpolation is performed using a step function.
+  /// - [SelectTriggerSpec.lerp] for [button].
+  /// - [SelectMenuSpec.lerp] for [menu].
+  /// - [SelectMenuItemSpec.lerp] for [item].
+  /// - [CompositedTransformFollowerSpec.lerp] for [position].
+  /// For [modifiers] and [animated], the interpolation is performed using a step function.
   /// If [t] is less than 0.5, the value from the current [SelectSpec] is used. Otherwise, the value
   /// from the [other] [SelectSpec] is used.
   ///
@@ -166,7 +171,7 @@ class SelectSpecAttribute extends SpecAttribute<SelectSpec>
   /// Properties from [other] that are null will fall back
   /// to the values from this instance.
   @override
-  SelectSpecAttribute merge(covariant SelectSpecAttribute? other) {
+  SelectSpecAttribute merge(SelectSpecAttribute? other) {
     if (other == null) return this;
 
     return SelectSpecAttribute(
@@ -286,6 +291,7 @@ class SelectSpecTween extends Tween<SelectSpec?> {
   }
 }
 
+/// A mixin that provides spec functionality for [SelectMenuSpec].
 mixin _$SelectMenuSpec on Spec<SelectMenuSpec> {
   static SelectMenuSpec from(MixData mix) {
     return mix.attributeOf<SelectMenuSpecAttribute>()?.resolve(mix) ??
@@ -336,9 +342,7 @@ mixin _$SelectMenuSpec on Spec<SelectMenuSpec> {
   ///
   /// The interpolation is performed on each property of the [SelectMenuSpec] using the appropriate
   /// interpolation method:
-  ///
   /// - [FlexBoxSpec.lerp] for [container].
-
   /// For [autoWidth] and [modifiers] and [animated], the interpolation is performed using a step function.
   /// If [t] is less than 0.5, the value from the current [SelectMenuSpec] is used. Otherwise, the value
   /// from the [other] [SelectMenuSpec] is used.
@@ -390,7 +394,7 @@ mixin _$SelectMenuSpec on Spec<SelectMenuSpec> {
 ///
 /// Use this class to configure the attributes of a [SelectMenuSpec] and pass it to
 /// the [SelectMenuSpec] constructor.
-base class SelectMenuSpecAttribute extends SpecAttribute<SelectMenuSpec>
+class SelectMenuSpecAttribute extends SpecAttribute<SelectMenuSpec>
     with Diagnosticable {
   final FlexBoxSpecAttribute? container;
   final bool? autoWidth;
@@ -429,7 +433,7 @@ base class SelectMenuSpecAttribute extends SpecAttribute<SelectMenuSpec>
   /// Properties from [other] that are null will fall back
   /// to the values from this instance.
   @override
-  SelectMenuSpecAttribute merge(covariant SelectMenuSpecAttribute? other) {
+  SelectMenuSpecAttribute merge(SelectMenuSpecAttribute? other) {
     if (other == null) return this;
 
     return SelectMenuSpecAttribute(
@@ -533,6 +537,7 @@ class SelectMenuSpecTween extends Tween<SelectMenuSpec?> {
   }
 }
 
+/// A mixin that provides spec functionality for [SelectMenuItemSpec].
 mixin _$SelectMenuItemSpec on Spec<SelectMenuItemSpec> {
   static SelectMenuItemSpec from(MixData mix) {
     return mix.attributeOf<SelectMenuItemSpecAttribute>()?.resolve(mix) ??
@@ -585,11 +590,9 @@ mixin _$SelectMenuItemSpec on Spec<SelectMenuItemSpec> {
   ///
   /// The interpolation is performed on each property of the [SelectMenuItemSpec] using the appropriate
   /// interpolation method:
-  ///
   /// - [IconSpec.lerp] for [icon].
   /// - [TextSpec.lerp] for [text].
   /// - [FlexBoxSpec.lerp] for [container].
-
   /// For [modifiers] and [animated], the interpolation is performed using a step function.
   /// If [t] is less than 0.5, the value from the current [SelectMenuItemSpec] is used. Otherwise, the value
   /// from the [other] [SelectMenuItemSpec] is used.
@@ -645,7 +648,7 @@ mixin _$SelectMenuItemSpec on Spec<SelectMenuItemSpec> {
 ///
 /// Use this class to configure the attributes of a [SelectMenuItemSpec] and pass it to
 /// the [SelectMenuItemSpec] constructor.
-base class SelectMenuItemSpecAttribute extends SpecAttribute<SelectMenuItemSpec>
+class SelectMenuItemSpecAttribute extends SpecAttribute<SelectMenuItemSpec>
     with Diagnosticable {
   final IconSpecAttribute? icon;
   final TextSpecAttribute? text;
@@ -687,8 +690,7 @@ base class SelectMenuItemSpecAttribute extends SpecAttribute<SelectMenuItemSpec>
   /// Properties from [other] that are null will fall back
   /// to the values from this instance.
   @override
-  SelectMenuItemSpecAttribute merge(
-      covariant SelectMenuItemSpecAttribute? other) {
+  SelectMenuItemSpecAttribute merge(SelectMenuItemSpecAttribute? other) {
     if (other == null) return this;
 
     return SelectMenuItemSpecAttribute(
@@ -799,6 +801,7 @@ class SelectMenuItemSpecTween extends Tween<SelectMenuItemSpec?> {
   }
 }
 
+/// A mixin that provides spec functionality for [SelectTriggerSpec].
 mixin _$SelectTriggerSpec on Spec<SelectTriggerSpec> {
   static SelectTriggerSpec from(MixData mix) {
     return mix.attributeOf<SelectTriggerSpecAttribute>()?.resolve(mix) ??
@@ -851,11 +854,9 @@ mixin _$SelectTriggerSpec on Spec<SelectTriggerSpec> {
   ///
   /// The interpolation is performed on each property of the [SelectTriggerSpec] using the appropriate
   /// interpolation method:
-  ///
   /// - [FlexBoxSpec.lerp] for [container].
   /// - [IconSpec.lerp] for [icon].
   /// - [TextSpec.lerp] for [label].
-
   /// For [modifiers] and [animated], the interpolation is performed using a step function.
   /// If [t] is less than 0.5, the value from the current [SelectTriggerSpec] is used. Otherwise, the value
   /// from the [other] [SelectTriggerSpec] is used.
@@ -953,8 +954,7 @@ class SelectTriggerSpecAttribute extends SpecAttribute<SelectTriggerSpec>
   /// Properties from [other] that are null will fall back
   /// to the values from this instance.
   @override
-  SelectTriggerSpecAttribute merge(
-      covariant SelectTriggerSpecAttribute? other) {
+  SelectTriggerSpecAttribute merge(SelectTriggerSpecAttribute? other) {
     if (other == null) return this;
 
     return SelectTriggerSpecAttribute(

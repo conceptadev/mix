@@ -3,9 +3,12 @@
 part of 'tokens.dart';
 
 // **************************************************************************
-// MixableTokensGenerator
+// MixGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
+
+// Token code for FortalezaColor
 class _$FortalezaColorStruct {
   _$FortalezaColorStruct();
 
@@ -64,6 +67,7 @@ extension $BuildContextFortalezaColorX on BuildContext {
       BuildContextFortalezaColorMethods(this);
 }
 
+// Token code for FortalezaRadius
 class _$FortalezaRadiusStruct {
   _$FortalezaRadiusStruct();
 
@@ -115,6 +119,7 @@ extension $BuildContextFortalezaRadiusX on BuildContext {
       BuildContextFortalezaRadiusMethods(this);
 }
 
+// Token code for FortalezaSpace
 class _$FortalezaSpaceStruct {
   _$FortalezaSpaceStruct();
 
@@ -190,6 +195,7 @@ extension $BuildContextFortalezaSpaceX on BuildContext {
       BuildContextFortalezaSpaceMethods(this);
 }
 
+// Token code for FortalezaTextStyle
 class _$FortalezaTextStyleStruct {
   _$FortalezaTextStyleStruct();
 

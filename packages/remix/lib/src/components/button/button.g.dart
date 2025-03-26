@@ -3,9 +3,12 @@
 part of 'button.dart';
 
 // **************************************************************************
-// MixableSpecGenerator
+// MixGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
+
+/// A mixin that provides spec functionality for [ButtonSpec].
 mixin _$ButtonSpec on Spec<ButtonSpec> {
   static ButtonSpec from(MixData mix) {
     return mix.attributeOf<ButtonSpecAttribute>()?.resolve(mix) ??
@@ -60,12 +63,11 @@ mixin _$ButtonSpec on Spec<ButtonSpec> {
   ///
   /// The interpolation is performed on each property of the [ButtonSpec] using the appropriate
   /// interpolation method:
-  ///
   /// - [FlexBoxSpec.lerp] for [container].
   /// - [IconSpec.lerp] for [icon].
   /// - [TextSpec.lerp] for [label].
-
-  /// For [modifiers] and [spinner] and [animated], the interpolation is performed using a step function.
+  /// - [SpinnerSpec.lerp] for [spinner].
+  /// For [modifiers] and [animated], the interpolation is performed using a step function.
   /// If [t] is less than 0.5, the value from the current [ButtonSpec] is used. Otherwise, the value
   /// from the [other] [ButtonSpec] is used.
   ///
@@ -169,7 +171,7 @@ class ButtonSpecAttribute extends SpecAttribute<ButtonSpec>
   /// Properties from [other] that are null will fall back
   /// to the values from this instance.
   @override
-  ButtonSpecAttribute merge(covariant ButtonSpecAttribute? other) {
+  ButtonSpecAttribute merge(ButtonSpecAttribute? other) {
     if (other == null) return this;
 
     return ButtonSpecAttribute(

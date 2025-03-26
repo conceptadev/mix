@@ -66,11 +66,11 @@ void main() {
     });
 
     test('box margin returns correct instance', () {
-      expect(flexBoxUtility.box.margin, isA<SpacingUtility>());
+      expect(flexBoxUtility.box.margin, isA<EdgeInsetsGeometryUtility>());
     });
 
     test('box padding returns correct instance', () {
-      expect(flexBoxUtility.box.padding, isA<SpacingUtility>());
+      expect(flexBoxUtility.box.padding, isA<EdgeInsetsGeometryUtility>());
     });
 
     test('box transform returns correct instance', () {

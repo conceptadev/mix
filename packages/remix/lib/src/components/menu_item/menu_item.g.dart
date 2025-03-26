@@ -3,9 +3,12 @@
 part of 'menu_item.dart';
 
 // **************************************************************************
-// MixableSpecGenerator
+// MixGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
+
+/// A mixin that provides spec functionality for [MenuItemSpec].
 mixin _$MenuItemSpec on Spec<MenuItemSpec> {
   static MenuItemSpec from(MixData mix) {
     return mix.attributeOf<MenuItemSpecAttribute>()?.resolve(mix) ??
@@ -63,11 +66,9 @@ mixin _$MenuItemSpec on Spec<MenuItemSpec> {
   ///
   /// The interpolation is performed on each property of the [MenuItemSpec] using the appropriate
   /// interpolation method:
-  ///
   /// - [FlexBoxSpec.lerp] for [container] and [titleSubtitleContainer].
   /// - [IconSpec.lerp] for [icon].
   /// - [TextSpec.lerp] for [title] and [subtitle].
-
   /// For [modifiers] and [animated], the interpolation is performed using a step function.
   /// If [t] is less than 0.5, the value from the current [MenuItemSpec] is used. Otherwise, the value
   /// from the [other] [MenuItemSpec] is used.
@@ -181,7 +182,7 @@ class MenuItemSpecAttribute extends SpecAttribute<MenuItemSpec>
   /// Properties from [other] that are null will fall back
   /// to the values from this instance.
   @override
-  MenuItemSpecAttribute merge(covariant MenuItemSpecAttribute? other) {
+  MenuItemSpecAttribute merge(MenuItemSpecAttribute? other) {
     if (other == null) return this;
 
     return MenuItemSpecAttribute(

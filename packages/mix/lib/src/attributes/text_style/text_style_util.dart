@@ -1,7 +1,6 @@
 import 'package:flutter/widgets.dart';
 
-import '../../core/attribute.dart';
-import '../../core/dto.dart';
+import '../../core/element.dart';
 import '../../theme/tokens/text_style_token.dart';
 import '../color/color_dto.dart';
 import '../color/color_util.dart';

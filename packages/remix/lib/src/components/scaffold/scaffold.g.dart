@@ -3,9 +3,12 @@
 part of 'scaffold.dart';
 
 // **************************************************************************
-// MixableSpecGenerator
+// MixGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
+
+/// A mixin that provides spec functionality for [ScaffoldSpec].
 mixin _$ScaffoldSpec on Spec<ScaffoldSpec> {
   static ScaffoldSpec from(MixData mix) {
     return mix.attributeOf<ScaffoldSpecAttribute>()?.resolve(mix) ??
@@ -54,9 +57,7 @@ mixin _$ScaffoldSpec on Spec<ScaffoldSpec> {
   ///
   /// The interpolation is performed on each property of the [ScaffoldSpec] using the appropriate
   /// interpolation method:
-  ///
   /// - [BoxSpec.lerp] for [container].
-
   /// For [animated] and [modifiers], the interpolation is performed using a step function.
   /// If [t] is less than 0.5, the value from the current [ScaffoldSpec] is used. Otherwise, the value
   /// from the [other] [ScaffoldSpec] is used.
@@ -104,7 +105,7 @@ mixin _$ScaffoldSpec on Spec<ScaffoldSpec> {
 ///
 /// Use this class to configure the attributes of a [ScaffoldSpec] and pass it to
 /// the [ScaffoldSpec] constructor.
-base class ScaffoldSpecAttribute extends SpecAttribute<ScaffoldSpec>
+class ScaffoldSpecAttribute extends SpecAttribute<ScaffoldSpec>
     with Diagnosticable {
   final BoxSpecAttribute? container;
 
@@ -140,7 +141,7 @@ base class ScaffoldSpecAttribute extends SpecAttribute<ScaffoldSpec>
   /// Properties from [other] that are null will fall back
   /// to the values from this instance.
   @override
-  ScaffoldSpecAttribute merge(covariant ScaffoldSpecAttribute? other) {
+  ScaffoldSpecAttribute merge(ScaffoldSpecAttribute? other) {
     if (other == null) return this;
 
     return ScaffoldSpecAttribute(

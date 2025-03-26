@@ -1,11 +1,11 @@
 import 'package:flutter/animation.dart';
 
-import '../../core/dto.dart';
+import '../../core/element.dart';
 import '../../core/factory/mix_data.dart';
 import '../../internal/constants.dart';
 import 'animated_data.dart';
 
-class AnimatedDataDto extends Dto<AnimatedData> {
+class AnimatedDataDto extends Mixable<AnimatedData> {
   final Duration? duration;
   final Curve? curve;
   final VoidCallback? onEnd;
@@ -33,9 +33,6 @@ class AnimatedDataDto extends Dto<AnimatedData> {
       curve: other?.curve ?? curve,
     );
   }
-
-  @override
-  AnimatedData get defaultValue => const AnimatedData.withDefaults();
 
   @override
   get props => [duration, curve];

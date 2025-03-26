@@ -1,13 +1,13 @@
 import 'package:flutter/foundation.dart';
 
 import '../../core/attributes_map.dart';
-import '../../core/dto.dart';
+import '../../core/element.dart';
 import '../../core/factory/mix_data.dart';
 import '../../core/modifier.dart';
 import '../../modifiers/internal/reset_modifier.dart';
 import 'widget_modifiers_data.dart';
 
-class WidgetModifiersDataDto extends Dto<WidgetModifiersData>
+class WidgetModifiersDataDto extends Mixable<WidgetModifiersData>
     with Diagnosticable {
   final List<WidgetModifierSpecAttribute> value;
 
@@ -43,9 +43,6 @@ class WidgetModifiersDataDto extends Dto<WidgetModifiersData>
       properties.add(DiagnosticsProperty(attr.runtimeType.toString(), attr));
     }
   }
-
-  @override
-  WidgetModifiersData get defaultValue => const WidgetModifiersData([]);
 
   @override
   List<Object?> get props => [value];

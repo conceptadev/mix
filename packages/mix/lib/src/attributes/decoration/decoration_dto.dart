@@ -25,18 +25,18 @@ typedef _BaseDecorProperties = ({
 /// This class needs to have the different properties that are not found in the [Modifiers] class.
 /// In order to support merging of [Decoration] values, and reusable of common properties.
 @immutable
-sealed class DecorationDto<T extends Decoration> extends Dto<T>
+sealed class DecorationDto<T extends Decoration> extends Mixable<T>
     with Diagnosticable {
   final ColorDto? color;
   final GradientDto? gradient;
   final DecorationImageDto? image;
-  @MixableProperty(
+  @MixableField(
     utilities: [
-      MixableUtility(
+      MixableFieldUtility(
         alias: 'boxShadows',
         properties: [(path: 'add', alias: 'boxShadow')],
       ),
-      MixableUtility(alias: 'elevation', type: 'ElevationUtility'),
+      MixableFieldUtility(alias: 'elevation', type: 'ElevationUtility'),
     ],
   )
   final List<BoxShadowDto>? boxShadow;
@@ -92,21 +92,21 @@ sealed class DecorationDto<T extends Decoration> extends Dto<T>
 ///
 /// This is used to allow for resolvable value tokens, and also the correct
 /// merge and combining behavior. It allows to be merged, and resolved to a `[BoxDecoration]
-@MixableDto()
+@MixableProperty()
 final class BoxDecorationDto extends DecorationDto<BoxDecoration>
     with _$BoxDecorationDto {
-  @MixableProperty(
+  @MixableField(
     utilities: [
-      MixableUtility(
+      MixableFieldUtility(
         properties: [(path: 'directional', alias: 'borderDirectional')],
       ),
     ],
   )
   final BoxBorderDto? border;
 
-  @MixableProperty(
+  @MixableField(
     utilities: [
-      MixableUtility(
+      MixableFieldUtility(
         properties: [(path: 'directional', alias: 'borderRadiusDirectional')],
       ),
     ],
@@ -173,14 +173,11 @@ final class BoxDecorationDto extends DecorationDto<BoxDecoration>
 
   @override
   bool get isMergeable => backgroundBlendMode == null;
-
-  @override
-  BoxDecoration get defaultValue => const BoxDecoration();
 }
 
-@MixableDto()
+@MixableProperty()
 final class ShapeDecorationDto extends DecorationDto<ShapeDecoration>
-    with _$ShapeDecorationDto {
+    with HasDefaultValue<ShapeDecoration>, _$ShapeDecorationDto {
   final ShapeBorderDto? shape;
 
   const ShapeDecorationDto({
