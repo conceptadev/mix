@@ -1,5 +1,6 @@
 import 'package:analyzer/error/listener.dart';
 import 'package:custom_lint_builder/custom_lint_builder.dart';
+
 import '../utils/extensions/instance_creation_expression.dart';
 import '../utils/type_checker.dart';
 
@@ -23,7 +24,9 @@ class AvoidDefiningTokensWithinThemeData extends DartLintRule {
     context.registry.addInstanceCreationExpression((node) {
       final type = node.staticType;
       if (type == null || //
-          !mixTokenChecker.isAssignableFromType(type)) return;
+          !mixTokenChecker.isAssignableFromType(type)) {
+        return;
+      }
 
       if (!node.isDecendentOf(mixThemeDataChecker)) return;
 

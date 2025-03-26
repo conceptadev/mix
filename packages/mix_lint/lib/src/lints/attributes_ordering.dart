@@ -4,6 +4,7 @@ import 'package:analyzer/error/error.dart' hide LintCode;
 import 'package:analyzer/error/listener.dart';
 import 'package:analyzer/source/source_range.dart';
 import 'package:custom_lint_builder/custom_lint_builder.dart';
+
 import '../utils/type_checker.dart';
 
 const _whiteList = ['Style.asAttribute'];
@@ -28,7 +29,9 @@ class AttributesOrdering extends DartLintRule {
   ) {
     context.registry.addInstanceCreationExpression((node) {
       if (node.staticType == null ||
-          !styleChecker.isAssignableFromType(node.staticType!)) return;
+          !styleChecker.isAssignableFromType(node.staticType!)) {
+        return;
+      }
 
       final arguments = node.argumentList.arguments;
 

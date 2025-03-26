@@ -1,3 +1,4 @@
+// dart format width=80
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
 part of 'scalar_util.dart';
@@ -640,8 +641,10 @@ mixin _$TableBorderUtility<T extends Attribute> on MixUtility<T, TableBorder> {
   /// Creates an [Attribute] instance using the [TableBorder.symmetric] constructor.
   T symmetric(
       {BorderSide inside = BorderSide.none,
-      BorderSide outside = BorderSide.none}) {
-    return builder(TableBorder.symmetric(inside: inside, outside: outside));
+      BorderSide outside = BorderSide.none,
+      BorderRadius borderRadius = BorderRadius.zero}) {
+    return builder(TableBorder.symmetric(
+        inside: inside, outside: outside, borderRadius: borderRadius));
   }
 
   /// Creates an [Attribute] instance with the specified TableBorder value.

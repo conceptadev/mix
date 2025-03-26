@@ -281,7 +281,7 @@ $callMethod
     final isConst = constructor.isConst;
     final isUnamed = constructor.name.isEmpty;
 
-    mappedEl ??= constructor.enclosingElement as ClassElement;
+    mappedEl ??= constructor.enclosingElement3 as ClassElement;
 
     if (isUnamed && skipCallMethod) return '';
 

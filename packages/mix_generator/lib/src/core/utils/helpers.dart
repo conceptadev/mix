@@ -54,8 +54,11 @@ String buildArguments(
   return '{$paramsStr,}';
 }
 
-final _formatter = DartFormatter(pageWidth: 80, fixes: StyleFix.all);
-
 String dartFormat(String contents) {
   return _formatter.format(contents);
 }
+
+final _formatter = DartFormatter(
+  languageVersion: DartFormatter.latestShortStyleLanguageVersion,
+  pageWidth: 80,
+);

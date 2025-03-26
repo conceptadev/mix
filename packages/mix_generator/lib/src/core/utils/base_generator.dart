@@ -11,7 +11,10 @@ import 'package:source_gen/source_gen.dart';
 abstract class BaseMixGenerator<T, M> extends Generator {
   final TypeChecker typeChecker;
   final Logger _logger = Logger('BaseMixGenerator');
-  final DartFormatter _formatter = DartFormatter(pageWidth: 80);
+  final DartFormatter _formatter = DartFormatter(
+    languageVersion: DartFormatter.latestShortStyleLanguageVersion,
+    pageWidth: 80,
+  );
 
   /// Creates a base mix generator with the given type checker
   BaseMixGenerator(this.typeChecker);
