@@ -36,7 +36,7 @@ class AttributesOrdering extends DartLintRule {
       final arguments = node.argumentList.arguments;
 
       if (_hasAnyAttributeOutOfOrder(arguments)) {
-        reporter.reportErrorForNode(_code, node);
+        reporter.atNode(node, _code);
       }
     });
 
@@ -46,7 +46,7 @@ class AttributesOrdering extends DartLintRule {
         final arguments = expression.argumentList.arguments;
 
         if (_hasAnyAttributeOutOfOrder(arguments)) {
-          reporter.reportErrorForNode(_code, expression);
+          reporter.atNode(expression, _code);
         }
       }
 

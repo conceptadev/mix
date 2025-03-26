@@ -30,7 +30,7 @@ class AvoidDefiningTokensWithinThemeData extends DartLintRule {
 
       if (!node.isDecendentOf(mixThemeDataChecker)) return;
 
-      reporter.reportErrorForOffset(_code, node.offset, node.length);
+      reporter.atNode(node, _code);
     });
   }
 }

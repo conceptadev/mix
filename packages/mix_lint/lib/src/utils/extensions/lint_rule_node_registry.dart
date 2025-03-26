@@ -47,7 +47,11 @@ extension CustomLintContextExt on CustomLintContext {
     registry.addInstanceCreationExpressionFor(child, (node) {
       if (!node.isDecendentOf(parent)) return;
 
-      reporter.reportErrorForOffset(code, node.offset, node.length);
+      reporter.atOffset(
+        offset: node.offset,
+        length: node.length,
+        errorCode: code,
+      );
     });
   }
 }
