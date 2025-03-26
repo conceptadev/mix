@@ -53,6 +53,7 @@ class UtilityCodeGenerator {
       final enumMethods = enumValues.map((value) {
         return '''
   /// Creates an [Attribute] instance with [$enumTypeName.$value] value.
+  @Deprecated('Use the call method instead')
   T $value() => builder($enumTypeName.$value);
   ''';
       }).join('\n');
@@ -281,7 +282,7 @@ $callMethod
     final isConst = constructor.isConst;
     final isUnamed = constructor.name.isEmpty;
 
-    mappedEl ??= constructor.enclosingElement as ClassElement;
+    mappedEl ??= constructor.enclosingElement3 as ClassElement;
 
     if (isUnamed && skipCallMethod) return '';
 
