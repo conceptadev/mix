@@ -85,11 +85,11 @@ abstract class OutlinedBorderDto<T extends OutlinedBorder>
   OutlinedBorderDto<T> merge(covariant OutlinedBorderDto<T>? other);
 }
 
-@MixableProperty()
+@MixableType()
 final class RoundedRectangleBorderDto
     extends OutlinedBorderDto<RoundedRectangleBorder>
     with _$RoundedRectangleBorderDto {
-  @MixableField(dto: MixableFieldProperty(type: BorderRadiusGeometryDto))
+  @MixableField(dto: MixableFieldType(type: BorderRadiusGeometryDto))
   final BorderRadiusGeometryDto? borderRadius;
 
   const RoundedRectangleBorderDto({this.borderRadius, super.side});
@@ -108,7 +108,7 @@ final class RoundedRectangleBorderDto
   BorderRadiusGeometryDto? get borderRadiusGetter => borderRadius;
 }
 
-@MixableProperty()
+@MixableType()
 final class BeveledRectangleBorderDto
     extends OutlinedBorderDto<BeveledRectangleBorder>
     with _$BeveledRectangleBorderDto {
@@ -130,7 +130,7 @@ final class BeveledRectangleBorderDto
   BorderRadiusGeometryDto? get borderRadiusGetter => borderRadius;
 }
 
-@MixableProperty()
+@MixableType()
 final class ContinuousRectangleBorderDto
     extends OutlinedBorderDto<ContinuousRectangleBorder>
     with _$ContinuousRectangleBorderDto {
@@ -154,7 +154,7 @@ final class ContinuousRectangleBorderDto
   BorderRadiusGeometryDto? get borderRadiusGetter => borderRadius;
 }
 
-@MixableProperty()
+@MixableType()
 final class CircleBorderDto extends OutlinedBorderDto<CircleBorder>
     with _$CircleBorderDto {
   final double? eccentricity;
@@ -174,7 +174,7 @@ final class CircleBorderDto extends OutlinedBorderDto<CircleBorder>
   BorderRadiusGeometryDto? get borderRadiusGetter => null;
 }
 
-@MixableProperty()
+@MixableType()
 final class StarBorderDto extends OutlinedBorderDto<StarBorder>
     with _$StarBorderDto {
   final double? points;
@@ -203,7 +203,7 @@ final class StarBorderDto extends OutlinedBorderDto<StarBorder>
   BorderRadiusGeometryDto? get borderRadiusGetter => null;
 }
 
-@MixableProperty()
+@MixableType()
 final class LinearBorderDto extends OutlinedBorderDto<LinearBorder>
     with _$LinearBorderDto {
   final LinearBorderEdgeDto? start;
@@ -232,7 +232,7 @@ final class LinearBorderDto extends OutlinedBorderDto<LinearBorder>
   BorderRadiusGeometryDto? get borderRadiusGetter => null;
 }
 
-@MixableProperty()
+@MixableType()
 final class LinearBorderEdgeDto extends Mixable<LinearBorderEdge>
     with _$LinearBorderEdgeDto {
   final double? size;
@@ -241,7 +241,7 @@ final class LinearBorderEdgeDto extends Mixable<LinearBorderEdge>
   const LinearBorderEdgeDto({this.size, this.alignment});
 }
 
-@MixableProperty()
+@MixableType()
 final class StadiumBorderDto extends OutlinedBorderDto<StadiumBorder>
     with _$StadiumBorderDto {
   const StadiumBorderDto({super.side});

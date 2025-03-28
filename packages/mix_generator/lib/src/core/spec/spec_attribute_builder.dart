@@ -39,7 +39,7 @@ class SpecAttributeBuilder implements CodeBuilder {
                 .startsWith('HasDefaultValue<'));
 
     // Add resolve method
-    methods.add(MixablePropertyMethods.generateResolveMethod(
+    methods.add(MixableTypeMethods.generateResolveMethod(
       className: attributeName,
       constructorRef: '',
       fields: metadata.parameters,
@@ -51,7 +51,7 @@ class SpecAttributeBuilder implements CodeBuilder {
     ));
 
     // Add merge method
-    methods.add(MixablePropertyMethods.generateMergeMethod(
+    methods.add(MixableTypeMethods.generateMergeMethod(
       className: attributeName,
       fields: metadata.parameters,
       isAbstract: metadata.isAbstract,

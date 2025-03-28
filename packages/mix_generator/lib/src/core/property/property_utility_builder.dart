@@ -2,10 +2,10 @@ import '../metadata/property_metadata.dart';
 import '../utils/code_builder.dart';
 import '../utils/utility_code_generator.dart';
 
-class MixablePropertyUtilityBuilder implements CodeBuilder {
-  final MixablePropertyMetadata metadata;
+class MixableTypeUtilityBuilder implements CodeBuilder {
+  final MixableTypeMetadata metadata;
 
-  const MixablePropertyUtilityBuilder(this.metadata);
+  const MixableTypeUtilityBuilder(this.metadata);
 
   @override
   String build() {

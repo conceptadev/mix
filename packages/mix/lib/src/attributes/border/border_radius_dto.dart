@@ -58,7 +58,7 @@ sealed class BorderRadiusGeometryDto<T extends BorderRadiusGeometry>
   }
 }
 
-@MixableProperty(components: GeneratedPropertyComponents.skipUtility)
+@MixableType(components: GeneratedPropertyComponents.skipUtility)
 final class BorderRadiusDto extends BorderRadiusGeometryDto<BorderRadius>
     with _$BorderRadiusDto {
   @override
@@ -97,7 +97,7 @@ final class BorderRadiusDto extends BorderRadiusGeometryDto<BorderRadius>
   Radius? get bottomEnd => null;
 }
 
-@MixableProperty(components: GeneratedPropertyComponents.skipUtility)
+@MixableType(components: GeneratedPropertyComponents.skipUtility)
 final class BorderRadiusDirectionalDto
     extends BorderRadiusGeometryDto<BorderRadiusDirectional>
     with _$BorderRadiusDirectionalDto {

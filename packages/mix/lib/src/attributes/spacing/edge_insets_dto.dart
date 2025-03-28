@@ -86,7 +86,7 @@ sealed class EdgeInsetsGeometryDto<T extends EdgeInsetsGeometry>
   EdgeInsetsGeometryDto<T> merge(covariant EdgeInsetsGeometryDto<T>? other);
 }
 
-@MixableProperty()
+@MixableType()
 final class EdgeInsetsDto extends EdgeInsetsGeometryDto<EdgeInsets>
     with _$EdgeInsetsDto, Diagnosticable {
   final double? left;
@@ -120,7 +120,7 @@ final class EdgeInsetsDto extends EdgeInsetsGeometryDto<EdgeInsets>
   }
 }
 
-@MixableProperty()
+@MixableType()
 final class EdgeInsetsDirectionalDto
     extends EdgeInsetsGeometryDto<EdgeInsetsDirectional>
     with _$EdgeInsetsDirectionalDto {

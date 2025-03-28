@@ -66,7 +66,7 @@ class TextFieldSpec extends Spec<TextFieldSpec>
   final double floatingLabelHeight;
   final TextStyle? floatingLabelStyle;
 
-  @MixableField(dto: MixableFieldProperty(type: TextHeightBehaviorDto))
+  @MixableField(dto: MixableFieldType(type: TextHeightBehaviorDto))
   final TextHeightBehavior? textHeightBehavior;
 
   static const of = _$TextFieldSpec.of;

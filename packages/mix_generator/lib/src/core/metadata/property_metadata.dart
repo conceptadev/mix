@@ -7,8 +7,8 @@ import '../utils/dart_type_utils.dart';
 import 'base_metadata.dart';
 import 'field_metadata.dart';
 
-/// Metadata for MixableProperty classes, extracted from MixableDto annotations.
-class MixablePropertyMetadata extends BaseMetadata {
+/// Metadata for MixableType classes, extracted from MixableDto annotations.
+class MixableTypeMetadata extends BaseMetadata {
   /// Whether to merge lists when merging DTOs
   final bool mergeLists;
 
@@ -26,7 +26,7 @@ class MixablePropertyMetadata extends BaseMetadata {
   /// Whether this type implements HasDefaultValue mixin
   final bool hasDefaultValue;
 
-  MixablePropertyMetadata({
+  MixableTypeMetadata({
     required super.element,
     required super.name,
     required super.parameters,
@@ -43,9 +43,9 @@ class MixablePropertyMetadata extends BaseMetadata {
   });
 
   /// Creates a ResolvableMetadata from a class element and its annotation
-  static MixablePropertyMetadata fromAnnotation(
+  static MixableTypeMetadata fromAnnotation(
     ClassElement element,
-    MixableProperty annotation,
+    MixableType annotation,
   ) {
     final constructor = findTargetConstructor(element);
     final parameters = ParameterMetadata.extractFromConstructor(element);
@@ -77,7 +77,7 @@ class MixablePropertyMetadata extends BaseMetadata {
       }
     }
 
-    return MixablePropertyMetadata(
+    return MixableTypeMetadata(
       element: element,
       name: element.name,
       parameters: parameters,

@@ -52,7 +52,7 @@ MixableField readMixableField(Element element) {
   final isLerpable = reader.peek('isLerpable')?.boolValue ?? true;
 
   return MixableField(
-    dto: dtoReader != null ? _getMixableProperty(dtoReader) : null,
+    dto: dtoReader != null ? _getMixableType(dtoReader) : null,
     utilities: utilities,
     isLerpable: isLerpable,
   );
@@ -108,9 +108,9 @@ String _ensureUtilitySuffix(String typeName) {
   return typeName.endsWith('Utility') ? typeName : '${typeName}Utility';
 }
 
-/// Reads the [MixableFieldProperty] annotation from an element
-MixableFieldProperty? readMixableFieldProperty(Element element) {
-  const checker = TypeChecker.fromRuntime(MixableFieldProperty);
+/// Reads the [MixableFieldType] annotation from an element
+MixableFieldType? readMixableFieldType(Element element) {
+  const checker = TypeChecker.fromRuntime(MixableFieldType);
   final annotation = checker.firstAnnotationOfExact(element);
 
   if (annotation == null) return null;
@@ -120,15 +120,15 @@ MixableFieldProperty? readMixableFieldProperty(Element element) {
 
   if (typeString == null) return null;
 
-  return MixableFieldProperty(type: typeString);
+  return MixableFieldType(type: typeString);
 }
 
-/// Extracts [MixableFieldProperty] data from a [ConstantReader]
-MixableFieldProperty? _getMixableProperty(ConstantReader reader) {
+/// Extracts [MixableFieldType] data from a [ConstantReader]
+MixableFieldType? _getMixableType(ConstantReader reader) {
   final typeString = reader.typeAsString;
   if (typeString == null) return null;
 
-  return MixableFieldProperty(type: typeString);
+  return MixableFieldType(type: typeString);
 }
 
 /// Reads the [MixableSpec] annotation from a class element
@@ -151,21 +151,21 @@ MixableSpec readMixableSpec(ClassElement element) {
   );
 }
 
-/// Reads the [MixableProperty] annotation from a class element
-MixableProperty readMixableProperty(ClassElement element) {
-  const checker = TypeChecker.fromRuntime(MixableProperty);
+/// Reads the [MixableType] annotation from a class element
+MixableType readMixableType(ClassElement element) {
+  const checker = TypeChecker.fromRuntime(MixableType);
   final annotation = checker.firstAnnotationOfExact(element);
 
   if (annotation == null) {
     throw InvalidGenerationSourceError(
-      'No MixableProperty annotation found on the class',
+      'No MixableType annotation found on the class',
       element: element,
     );
   }
 
   final reader = ConstantReader(annotation);
 
-  return MixableProperty(
+  return MixableType(
     components: reader.read('components').intValue,
     mergeLists: reader.read('mergeLists').boolValue,
   );
@@ -288,7 +288,7 @@ FieldUtilityMetadata createFieldUtilityMetadata({
 FieldResolvableMetadata? createFieldResolvableMetadata({
   required String name,
   required DartType dartType,
-  required MixableFieldProperty? propertyAnnotation,
+  required MixableFieldType? propertyAnnotation,
 }) {
   try {
     final typeRegistry = TypeRegistry.instance;

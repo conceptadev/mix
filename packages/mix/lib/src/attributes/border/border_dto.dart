@@ -54,7 +54,7 @@ sealed class BoxBorderDto<T extends BoxBorder> extends Mixable<T> {
   BoxBorderDto<T> merge(covariant BoxBorderDto<T>? other);
 }
 
-@MixableProperty(components: GeneratedPropertyComponents.skipUtility)
+@MixableType(components: GeneratedPropertyComponents.skipUtility)
 final class BorderDto extends BoxBorderDto<Border> with _$BorderDto {
   final BorderSideDto? left;
   final BorderSideDto? right;
@@ -85,7 +85,7 @@ final class BorderDto extends BoxBorderDto<Border> with _$BorderDto {
   bool get isUniform => top == bottom && top == left && top == right;
 }
 
-@MixableProperty(components: GeneratedPropertyComponents.skipUtility)
+@MixableType(components: GeneratedPropertyComponents.skipUtility)
 final class BorderDirectionalDto extends BoxBorderDto<BorderDirectional>
     with _$BorderDirectionalDto {
   final BorderSideDto? start;
@@ -121,7 +121,7 @@ final class BorderDirectionalDto extends BoxBorderDto<BorderDirectional>
   bool get isUniform => top == bottom && top == start && top == end;
 }
 
-@MixableProperty()
+@MixableType()
 final class BorderSideDto extends Mixable<BorderSide>
     with HasDefaultValue<BorderSide>, _$BorderSideDto {
   final ColorDto? color;
