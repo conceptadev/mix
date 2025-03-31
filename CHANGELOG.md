@@ -3,6 +3,101 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2025-03-31
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`mix` - `v1.6.0`](#mix---v160)
+ - [`mix_annotations` - `v0.3.2`](#mix_annotations---v032)
+ - [`mix_generator` - `v0.3.3`](#mix_generator---v033)
+ - [`mix_lint` - `v0.1.3`](#mix_lint---v013)
+ - [`remix` - `v0.0.4+1`](#remix---v0041)
+
+Packages with dependency updates only:
+
+> Packages listed below depend on other packages in this workspace that have had changes. Their versions have been incremented to bump the minimum dependency versions of the packages they depend upon in this project.
+
+ - `remix` - `v0.0.4+1`
+
+---
+
+#### `mix` - `v1.6.0`
+
+ - **REFACTOR**: Rewrite all components in the new Archtecture (#467).
+ - **REFACTOR**: mix generator clean up and mix semantic changes (#569).
+ - **REFACTOR**: Rewrite Fortaleza theme using the new code gen for tokens (#528).
+ - **REFACTOR**: Solve dcm lint issues (#519).
+ - **REFACTOR**: Rename `MixableProperty` to `MixableType` (#574).
+ - **REFACTOR**: ShapeBorder merge (#490).
+ - **FIX**: Update OnBrightnessVariant to use `MediaQuery` instead of `Theme` (#471).
+ - **FIX**: Correct handling of individual border sides (#408).
+ - **FIX**: Order of modifiers implementation on Box, Image and Text (#529).
+ - **FIX**: reset modifiers and directives when using fluentAPI (#482).
+ - **FIX**: Style when merged with an AnimatedStyle should generate an AnimatedStyle (#472).
+ - **FIX**: Added missing widget state utilities (#411).
+ - **FIX**(docs): fix fn level docs for Style::applyVariants (#460).
+ - **FIX**: Shadow list animation (#445).
+ - **FIX**: HitTestBehavior when there is a Interectable in the tree (#437).
+ - **FIX**: Pressable disposes controller only if it creates it (#424).
+ - **FIX**: breakpoint utility merge exception (#421).
+ - **FIX**: FlexSpecWidget prioritizes the direction in spec (#414).
+ - **FEAT**: Accordion interaction based on open variable (#546).
+ - **FEAT**: Rewrite FlexBox as a Mix's primitive component (#517).
+ - **FEAT**: Slider component (#509).
+ - **FEAT**: Improve spring curve.
+ - **FEAT**: implement toast component (#503).
+ - **FEAT**: Create StrokeAlignUtility (#496).
+ - **FEAT**: Utilities for text height behavior (#495).
+ - **FEAT**: add error state to MixWidgetState (#489).
+ - **FEAT**: Add CustomOutlinedBorder's  (#487).
+ - **FEAT**: remix-styling-configuration (#483).
+ - **FEAT**: transform.translate (#484).
+ - **FEAT**: Improve error messages (#491).
+ - **FEAT**: Add more directives to Colors (#477).
+ - **FEAT**: implement a way to clear inline modifiers (#478).
+ - **FEAT**: Fluent API (#475).
+ - **FEAT**: Create code gen for design tokens (#521).
+ - **FEAT**: Create mouse cursor Decorator (#263).
+ - **FEAT**: Add parameter onEnd for AnimatedStyle (#458).
+ - **FEAT**: `SingleChildScrollView` widget modifier (#427).
+ - **FEAT**: Create a specific utility to Transform.rotate (#434).
+ - **FEAT**: TargetPlatform and web variants (#431).
+ - **FEAT**: Remix improvements and further improvements (#410).
+ - **FEAT**: Create Select component (#448).
+ - **DOCS**: Add section for `TokenResolver` (#537).
+ - **DOCS**: improve mix theme data features explanations (#404).
+
+#### `mix_annotations` - `v0.3.2`
+
+ - **REFACTOR**: Rename `MixableProperty` to `MixableType` (#574).
+ - **REFACTOR**: mix generator clean up and mix semantic changes (#569).
+ - **FEAT**: Create code gen for design tokens (#521).
+
+#### `mix_generator` - `v0.3.3`
+
+ - **REFACTOR**: Rename `MixableProperty` to `MixableType` (#574).
+ - **REFACTOR**: mix generator clean up and mix semantic changes (#569).
+ - **REFACTOR**: Rewrite Fortaleza theme using the new code gen for tokens (#528).
+ - **FIX**: Shadow list animation (#445).
+ - **FEAT**: Create code gen for design tokens (#521).
+ - **FEAT**: Rewrite FlexBox as a Mix's primitive component (#517).
+ - **FEAT**: Fluent API (#475).
+ - **FEAT**: Remix improvements and further improvements (#410).
+ - **DOCS**: improve mix theme data features explanations (#404).
+
+#### `mix_lint` - `v0.1.3`
+
+ - **FEAT**: Rewrite FlexBox as a Mix's primitive component (#517).
+
+
 ## 2025-02-07
 
 ### Changes

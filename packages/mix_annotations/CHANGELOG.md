@@ -1,3 +1,9 @@
+## 0.3.2
+
+ - **REFACTOR**: Rename `MixableProperty` to `MixableType` (#574).
+ - **REFACTOR**: mix generator clean up and mix semantic changes (#569).
+ - **FEAT**: Create code gen for design tokens (#521).
+
 ## 0.3.1
 
  - **FEAT**: Create code gen for design tokens (#521).
