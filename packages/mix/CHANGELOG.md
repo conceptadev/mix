@@ -1,3 +1,9 @@
+## 1.6.0
+
+ - **REFACTOR**: Rename `MixableProperty` to `MixableType` (#574)
+ - **REFACTOR**: mix generator clean up and mix semantic changes (#569)
+ - **CHORE**: Update min version compatibility (#572)
+
 ## 1.5.4
 
  - **FEAT**: Accordion interaction based on open variable (#546).

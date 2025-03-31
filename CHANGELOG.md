@@ -3,6 +3,54 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2025-03-31
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`mix` - `v1.6.0`](#mix---v160)
+ - [`mix_annotations` - `v0.3.2`](#mix_annotations---v032)
+ - [`mix_generator` - `v0.3.3`](#mix_generator---v033)
+ - [`mix_lint` - `v0.1.3`](#mix_lint---v013)
+ - [`remix` - `v0.0.4+1`](#remix---v0041)
+
+Packages with dependency updates only:
+
+> Packages listed below depend on other packages in this workspace that have had changes. Their versions have been incremented to bump the minimum dependency versions of the packages they depend upon in this project.
+
+ - `remix` - `v0.0.4+1`
+
+---
+
+#### `mix` - `v1.6.0`
+
+ - **REFACTOR**: Rename `MixableProperty` to `MixableType` (#574)
+ - **REFACTOR**: mix generator clean up and mix semantic changes (#569)
+ - **CHORE**: Update min version compatibility (#572)
+
+#### `mix_annotations` - `v0.3.2`
+
+ - **REFACTOR**: Rename `MixableProperty` to `MixableType` (#574).
+ - **REFACTOR**: mix generator clean up and mix semantic changes (#569).
+
+#### `mix_generator` - `v0.3.3`
+
+ - **REFACTOR**: Rename `MixableProperty` to `MixableType` (#574)
+ - **REFACTOR**: mix generator clean up and mix semantic changes (#569)
+ - **CHORE**: Update min version compatibility (#572)
+
+#### `mix_lint` - `v0.1.3`
+
+ - **CHORE**: Update min version compatibility (#572)
+
+
 ## 2025-02-07
 
 ### Changes

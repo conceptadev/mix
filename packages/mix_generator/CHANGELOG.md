@@ -1,3 +1,9 @@
+## 0.3.3
+
+ - **REFACTOR**: Rename `MixableProperty` to `MixableType` (#574)
+ - **REFACTOR**: mix generator clean up and mix semantic changes (#569)
+ - **CHORE**: Update min version compatibility (#572)
+
 ## 0.3.2
 
  - **REFACTOR**: Rewrite Fortaleza theme using the new code gen for tokens (#528).
