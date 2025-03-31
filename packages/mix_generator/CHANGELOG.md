@@ -1,4 +1,4 @@
-## 0.3.3
+## 0.4.0
 
  - **REFACTOR**: Rename `MixableProperty` to `MixableType` (#574)
  - **REFACTOR**: mix generator clean up and mix semantic changes (#569)

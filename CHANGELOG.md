@@ -16,8 +16,8 @@ Packages with breaking changes:
 Packages with other changes:
 
  - [`mix` - `v1.6.0`](#mix---v160)
- - [`mix_annotations` - `v0.3.2`](#mix_annotations---v032)
- - [`mix_generator` - `v0.3.3`](#mix_generator---v033)
+ - [`mix_annotations` - `v0.4.0`](#mix_annotations---v032)
+ - [`mix_generator` - `v0.4.0`](#mix_generator---v033)
  - [`mix_lint` - `v0.1.3`](#mix_lint---v013)
  - [`remix` - `v0.0.4+1`](#remix---v0041)
 
@@ -35,12 +35,12 @@ Packages with dependency updates only:
  - **REFACTOR**: mix generator clean up and mix semantic changes (#569)
  - **CHORE**: Update min version compatibility (#572)
 
-#### `mix_annotations` - `v0.3.2`
+#### `mix_annotations` - `v0.4.0`
 
  - **REFACTOR**: Rename `MixableProperty` to `MixableType` (#574).
  - **REFACTOR**: mix generator clean up and mix semantic changes (#569).
 
-#### `mix_generator` - `v0.3.3`
+#### `mix_generator` - `v0.4.0`
 
  - **REFACTOR**: Rename `MixableProperty` to `MixableType` (#574)
  - **REFACTOR**: mix generator clean up and mix semantic changes (#569)
