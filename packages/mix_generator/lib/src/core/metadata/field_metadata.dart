@@ -302,10 +302,10 @@ class ParameterMetadata extends FieldMetadata {
 
 /// Attempts to get the corresponding field for a constructor parameter
 FieldMetadata? _getFieldFromParameter(ParameterElement parameter) {
-  final element = parameter.enclosingElement;
+  final element = parameter.enclosingElement3;
   if (element is! ConstructorElement) return null;
 
-  final classElement = element.enclosingElement as ClassElement;
+  final classElement = element.enclosingElement3 as ClassElement;
 
   // Search up the class hierarchy for the field
   ClassElement? current = classElement;
