@@ -1,14 +1,8 @@
 ## 0.3.3
 
- - **REFACTOR**: Rename `MixableProperty` to `MixableType` (#574).
- - **REFACTOR**: mix generator clean up and mix semantic changes (#569).
- - **REFACTOR**: Rewrite Fortaleza theme using the new code gen for tokens (#528).
- - **FIX**: Shadow list animation (#445).
- - **FEAT**: Create code gen for design tokens (#521).
- - **FEAT**: Rewrite FlexBox as a Mix's primitive component (#517).
- - **FEAT**: Fluent API (#475).
- - **FEAT**: Remix improvements and further improvements (#410).
- - **DOCS**: improve mix theme data features explanations (#404).
+ - **REFACTOR**: Rename `MixableProperty` to `MixableType` (#574)
+ - **REFACTOR**: mix generator clean up and mix semantic changes (#569)
+ - **CHORE**: Update min version compatibility (#572)
 
 ## 0.3.2
 

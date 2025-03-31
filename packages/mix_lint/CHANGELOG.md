@@ -1,6 +1,6 @@
 ## 0.1.3
 
- - **FEAT**: Rewrite FlexBox as a Mix's primitive component (#517).
+ - **CHORE**: Update min version compatibility (#572)
 
 ## 0.1.2
 
