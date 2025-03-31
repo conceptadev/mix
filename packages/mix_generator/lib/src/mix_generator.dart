@@ -39,7 +39,7 @@ import 'core/utils/utility_code_generator.dart';
 import 'generators/mixable_tokens_generator.dart';
 
 /// A consolidated generator that processes all Mix annotations
-/// (MixableSpec, MixableProperty, MixableUtility, MixableToken)
+/// (MixableSpec, MixableType, MixableUtility, MixableToken)
 /// in a single pass with proper dependency handling.
 class MixGenerator extends Generator {
   final Logger _logger = Logger('MixGenerator');
@@ -47,7 +47,7 @@ class MixGenerator extends Generator {
   // Type checkers for all annotations
   final TypeChecker _specChecker = const TypeChecker.fromRuntime(MixableSpec);
   final TypeChecker _propertyChecker =
-      const TypeChecker.fromRuntime(MixableProperty);
+      const TypeChecker.fromRuntime(MixableType);
   final TypeChecker _utilityChecker =
       const TypeChecker.fromRuntime(MixableUtility);
   final TypeChecker _tokensChecker =
@@ -76,13 +76,13 @@ class MixGenerator extends Generator {
     }).toList();
   }
 
-  List<MixablePropertyMetadata> _createPropertyMetadata(
+  List<MixableTypeMetadata> _createPropertyMetadata(
     List<ClassElement> elements,
   ) {
     return elements.map((element) {
-      final annotation = readMixableProperty(element);
+      final annotation = readMixableType(element);
 
-      return MixablePropertyMetadata.fromAnnotation(element, annotation);
+      return MixableTypeMetadata.fromAnnotation(element, annotation);
     }).toList();
   }
 
@@ -107,7 +107,7 @@ class MixGenerator extends Generator {
 
   DependencyGraph _buildDependencyGraph(
     List<SpecMetadata> specMetadata,
-    List<MixablePropertyMetadata> propertyMetadata,
+    List<MixableTypeMetadata> propertyMetadata,
     List<UtilityMetadata> utilityMetadata,
     List<TokensMetadata> tokenMetadata,
   ) {
@@ -165,7 +165,7 @@ class MixGenerator extends Generator {
 
   void _addPropertyDependencies(
     DependencyGraph graph,
-    List<MixablePropertyMetadata> metadataList,
+    List<MixableTypeMetadata> metadataList,
   ) {
     // Similar pattern as _addSpecDependencies
     for (final metadata in metadataList) {
@@ -210,8 +210,7 @@ class MixGenerator extends Generator {
 
           for (final node in graph.getAllNodes()) {
             if ((node is SpecMetadata && node.element == valueElement) ||
-                (node is MixablePropertyMetadata &&
-                    node.element == valueElement)) {
+                (node is MixableTypeMetadata && node.element == valueElement)) {
               dependencyMetadata = node;
               break;
             }
@@ -294,7 +293,7 @@ class MixGenerator extends Generator {
         if (metadata is SpecMetadata) {
           types['${name}Attribute'] = name;
           types['${name}Utility'] = name;
-        } else if (metadata is MixablePropertyMetadata) {
+        } else if (metadata is MixableTypeMetadata) {
           if (name.endsWith('Dto')) {
             final baseName = name.substring(0, name.length - 3);
             types['${baseName}Utility'] = baseName;
@@ -374,18 +373,18 @@ class MixGenerator extends Generator {
   }
 
   void _generatePropertyCode(
-    MixablePropertyMetadata metadata,
+    MixableTypeMetadata metadata,
     StringBuffer buffer,
   ) {
     // Generate mixin
-    final mixinBuilder = MixablePropertyMixinBuilder(metadata);
+    final mixinBuilder = MixableTypeMixinBuilder(metadata);
     buffer.writeln(mixinBuilder.build());
     buffer.writeln();
 
     // Generate utility class
     if (metadata.generatedComponents
         .hasFlag(GeneratedPropertyComponents.utility)) {
-      final utilityBuilder = MixablePropertyUtilityBuilder(metadata);
+      final utilityBuilder = MixableTypeUtilityBuilder(metadata);
       buffer.writeln(utilityBuilder.build());
       buffer.writeln();
     }
@@ -393,7 +392,7 @@ class MixGenerator extends Generator {
     // Generate extension
     if (metadata.generatedComponents
         .hasFlag(GeneratedPropertyComponents.resolvableExtension)) {
-      final extensionBuilder = MixablePropertyExtensionBuilder(metadata);
+      final extensionBuilder = MixableTypeExtensionBuilder(metadata);
       buffer.writeln(extensionBuilder.build());
       buffer.writeln();
     }
@@ -421,7 +420,7 @@ class MixGenerator extends Generator {
 
   bool _needsDeprecationIgnore(
     List<SpecMetadata> specMetadata,
-    List<MixablePropertyMetadata> propertyMetadata,
+    List<MixableTypeMetadata> propertyMetadata,
   ) {
     for (final metadata in specMetadata) {
       if (metadata.parameters.any((field) => field.hasDeprecated)) {
@@ -705,7 +704,7 @@ class MixGenerator extends Generator {
 
         if (metadata is SpecMetadata) {
           _generateSpecCode(metadata, buffer);
-        } else if (metadata is MixablePropertyMetadata) {
+        } else if (metadata is MixableTypeMetadata) {
           _generatePropertyCode(metadata, buffer);
         } else if (metadata is UtilityMetadata) {
           _generateUtilityCode(metadata, buffer);

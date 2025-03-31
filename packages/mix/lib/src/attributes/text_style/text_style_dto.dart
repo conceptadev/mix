@@ -48,7 +48,7 @@ final class TextStyleDataRef extends TextStyleData {
 // If we remove TextStyle from tokens, it means we don't need a list of resolvable values
 // to be resolved once we have a context. We can merge the values directly, simplifying the code,
 // and this will allow more predictable behavior overall.
-@MixableProperty(components: GeneratedPropertyComponents.none)
+@MixableType(components: GeneratedPropertyComponents.none)
 base class TextStyleData extends Mixable<TextStyle>
     with _$TextStyleData, Diagnosticable {
   final String? fontFamily;
@@ -124,7 +124,7 @@ base class TextStyleData extends Mixable<TextStyle>
   }
 }
 
-@MixableProperty(
+@MixableType(
   components: GeneratedPropertyComponents.none,
   mergeLists: false,
 )

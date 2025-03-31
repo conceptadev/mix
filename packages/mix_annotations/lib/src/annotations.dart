@@ -61,11 +61,11 @@ class MixableUtility {
 /// class for the DTO. It defaults to `true`.
 ///
 /// If the annotated class contains a merge method, it will not be generated
-class MixableProperty {
+class MixableType {
   final bool mergeLists;
   final int components;
 
-  const MixableProperty({
+  const MixableType({
     this.components = GeneratedPropertyComponents.all,
     this.mergeLists = true,
   });
@@ -74,14 +74,14 @@ class MixableProperty {
 /// An annotation class used to specify a mixable property for code generation.
 ///
 /// The `MixableField` annotation is used to mark a property as mixable
-/// during code generation. It allows specifying an associated `MixableFieldProperty`
+/// during code generation. It allows specifying an associated `MixableFieldType`
 /// and a list of `MixableFieldUtility` instances that provide additional options for
 /// code generation.
 ///
 /// Example usage:
 /// ```dart
 /// @MixableField(
-///   dto: MixableFieldProperty(type: BoxConstraintsDto),
+///   dto: MixableFieldType(type: BoxConstraintsDto),
 ///   utilities: [
 ///     MixableFieldUtility(
 ///       properties: [
@@ -94,12 +94,12 @@ class MixableProperty {
 /// final BoxConstraints? constraints;
 /// ```
 class MixableField {
-  /// The associated `MixableFieldProperty` for this property.
+  /// The associated `MixableFieldType` for this property.
   ///
   /// This property represents the data transfer object (DTO) associated with
   /// the mixable property. It provides options for code generation, such as
   /// specifying the type of the generated field.
-  final MixableFieldProperty? dto;
+  final MixableFieldType? dto;
 
   /// The list of `MixableUtility` instances associated with this property.
   ///
@@ -146,17 +146,17 @@ class MixableField {
 
 /// An annotation class used to specify a mixable field DTO for code generation.
 ///
-/// The `MixableFieldProperty` annotation is used to provide options for generating
+/// The `MixableFieldType` annotation is used to provide options for generating
 /// a mixable field. It allows specifying the type of the generated field.
-class MixableFieldProperty {
+class MixableFieldType {
   /// The type of the generated field.
   ///
   /// This property represents the type that will be used for the generated
   /// field during code generation.
   final Object? type;
 
-  /// Creates a new instance of `MixableFieldProperty` with the specified [type].
-  const MixableFieldProperty({this.type});
+  /// Creates a new instance of `MixableFieldType` with the specified [type].
+  const MixableFieldType({this.type});
 }
 
 /// A typedef representing a utility property for code generation.

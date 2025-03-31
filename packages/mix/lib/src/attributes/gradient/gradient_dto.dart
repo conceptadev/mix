@@ -74,7 +74,7 @@ sealed class GradientDto<T extends Gradient> extends Mixable<T>
 /// This is used to allow for resolvable value tokens, and also the correct
 /// merge and combining behavior. It allows to be merged, and resolved to a `[LinearGradient]
 
-@MixableProperty()
+@MixableType()
 final class LinearGradientDto extends GradientDto<LinearGradient>
     with _$LinearGradientDto {
   final AlignmentGeometry? begin;
@@ -97,7 +97,7 @@ final class LinearGradientDto extends GradientDto<LinearGradient>
 ///
 /// This is used to allow for resolvable value tokens, and also the correct
 /// merge and combining behavior. It allows to be merged, and resolved to a `[RadialGradient]
-@MixableProperty()
+@MixableType()
 final class RadialGradientDto extends GradientDto<RadialGradient>
     with _$RadialGradientDto {
   final AlignmentGeometry? center;
@@ -128,7 +128,7 @@ final class RadialGradientDto extends GradientDto<RadialGradient>
 /// This is used to allow for resolvable value tokens, and also the correct
 /// merge and combining behavior. It allows to be merged, and resolved to a `[SweepGradient]
 
-@MixableProperty()
+@MixableType()
 final class SweepGradientDto extends GradientDto<SweepGradient>
     with _$SweepGradientDto {
   final AlignmentGeometry? center;

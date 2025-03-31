@@ -41,7 +41,7 @@ final class FlexSpec extends Spec<FlexSpec> with _$FlexSpec, Diagnosticable {
   final TextBaseline? textBaseline;
   final Clip? clipBehavior;
   @MixableField(
-    dto: MixableFieldProperty(type: SpaceDto),
+    dto: MixableFieldType(type: SpaceDto),
     utilities: [MixableFieldUtility(type: GapUtility)],
   )
   final double? gap;

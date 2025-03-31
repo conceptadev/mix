@@ -4,10 +4,10 @@ import '../utils/code_builder.dart';
 import '../utils/common_method_builder.dart';
 import 'property_method_builder.dart';
 
-class MixablePropertyMixinBuilder extends CodeBuilder {
-  final MixablePropertyMetadata metadata;
+class MixableTypeMixinBuilder extends CodeBuilder {
+  final MixableTypeMetadata metadata;
 
-  MixablePropertyMixinBuilder(this.metadata);
+  MixableTypeMixinBuilder(this.metadata);
 
   @override
   String build() {
@@ -24,7 +24,7 @@ class MixablePropertyMixinBuilder extends CodeBuilder {
 
     // Only generate methods that aren't already defined
     final resolveMethod = !hasResolve
-        ? MixablePropertyMethods.generateResolveMethod(
+        ? MixableTypeMethods.generateResolveMethod(
             className: metadata.name,
             constructorRef: metadata.constructorRef,
             fields: metadata.parameters,
@@ -37,7 +37,7 @@ class MixablePropertyMixinBuilder extends CodeBuilder {
         : '';
 
     final mergeMethod = !hasMerge
-        ? MixablePropertyMethods.generateMergeMethod(
+        ? MixableTypeMethods.generateMergeMethod(
             className: metadata.name,
             fields: metadata.parameters,
             isAbstract: false,

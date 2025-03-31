@@ -92,7 +92,7 @@ sealed class DecorationDto<T extends Decoration> extends Mixable<T>
 ///
 /// This is used to allow for resolvable value tokens, and also the correct
 /// merge and combining behavior. It allows to be merged, and resolved to a `[BoxDecoration]
-@MixableProperty()
+@MixableType()
 final class BoxDecorationDto extends DecorationDto<BoxDecoration>
     with _$BoxDecorationDto {
   @MixableField(
@@ -175,7 +175,7 @@ final class BoxDecorationDto extends DecorationDto<BoxDecoration>
   bool get isMergeable => backgroundBlendMode == null;
 }
 
-@MixableProperty()
+@MixableType()
 final class ShapeDecorationDto extends DecorationDto<ShapeDecoration>
     with HasDefaultValue<ShapeDecoration>, _$ShapeDecorationDto {
   final ShapeBorderDto? shape;

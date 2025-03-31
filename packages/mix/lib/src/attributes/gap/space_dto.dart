@@ -8,7 +8,7 @@ part 'space_dto.g.dart';
 @Deprecated('Use SpaceDto instead')
 typedef SpacingSideDto = SpaceDto;
 
-@MixableProperty(components: GeneratedPropertyComponents.none)
+@MixableType(components: GeneratedPropertyComponents.none)
 class SpaceDto extends Mixable<double> with _$SpaceDto {
   final double? value;
   @MixableConstructor()

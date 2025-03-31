@@ -17,12 +17,12 @@ part 'item/dropdown_menu_widget.dart';
 class DropdownMenuSpec extends Spec<DropdownMenuSpec>
     with _$DropdownMenuSpec, Diagnosticable {
   @MixableField(
-    dto: MixableFieldProperty(type: 'DropdownMenuContainerSpecAttribute'),
+    dto: MixableFieldType(type: 'DropdownMenuContainerSpecAttribute'),
   )
   final DropdownMenuContainerSpec menu;
 
   @MixableField(
-    dto: MixableFieldProperty(type: 'DropdownMenuItemSpecAttribute'),
+    dto: MixableFieldType(type: 'DropdownMenuItemSpecAttribute'),
   )
   final DropdownMenuItemSpec item;
 

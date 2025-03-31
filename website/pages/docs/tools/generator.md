@@ -53,9 +53,9 @@ final class MySpec extends Spec<MySpec> with _$MySpec {
 }
 ```
 
-### MixableProperty
+### MixableType
 
-The `@MixableProperty()` annotation generates code for a mixable. Here's an example:
+The `@MixableType()` annotation generates code for a mixable. Here's an example:
 
 #### Options
 
@@ -69,7 +69,7 @@ import 'package:mix_annotations/mix_annotations.dart';
 
 part 'value_dto.g.dart';
 
-@MixableProperty()
+@MixableType()
 final class ValueDto<Value> extends Mixable<Value> with _$ValueDto {
   final String? name;
   final int? age;
@@ -78,14 +78,14 @@ final class ValueDto<Value> extends Mixable<Value> with _$ValueDto {
 }
 ```
 
-### MixableProperty
+### MixableType
 
-The `@MixableProperty()` annotation specifies a mixable property for code generation. Here's an example:
+The `@MixableType()` annotation specifies a mixable property for code generation. Here's an example:
 
 ```dart
 import 'package:mix_generator/mix_generator.dart';
 
-@MixableProperty(
+@MixableType(
   dto: MixableFieldDto(type: BoxConstraintsDto),
   utilities: [
     MixableUtility(
@@ -106,7 +106,7 @@ The `@MixableUtility()` annotation specifies a mixable utility for code generati
 ```dart
 import 'package:mix_generator/mix_generator.dart';
 
-@MixableProperty(
+@MixableType(
   utilities: MixableUtility(
     type: BoxDecoration,
     properties: [
