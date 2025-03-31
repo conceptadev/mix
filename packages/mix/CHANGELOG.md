@@ -1,7 +1,3 @@
-## 1.6.1
-
- - Update a dependency to the latest release.
-
 ## 1.6.0
 
  - **REFACTOR**: Rename `MixableProperty` to `MixableType` (#574)
