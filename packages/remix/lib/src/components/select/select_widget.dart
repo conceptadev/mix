@@ -88,7 +88,7 @@ class SelectState<T> extends State<Select<T>> {
         child: SpecBuilder(
           controller: _menuStateController,
           style: appliedStyle,
-          builder: (context) {
+          builder: (context) { 
             final select = SelectSpec.of(context);
             final menu = select.menu;
 
