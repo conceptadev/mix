@@ -39,31 +39,31 @@ class _ComponentPageState extends State<ComponentPage> {
   List<Widget> get components {
     return [
       _buildPrimaryButton(
-        (alias: "Primary", variant: ButtonSizeVariant.sm),
+        (alias: "small", variant: ButtonSizeVariant.sm),
       ),
       _buildPrimaryButton(
-        (alias: "Primary", variant: ButtonSizeVariant.md),
+        (alias: "medium", variant: ButtonSizeVariant.md),
       ),
       _buildPrimaryButton(
-        (alias: "Primary", variant: ButtonSizeVariant.lg),
+        (alias: "large", variant: ButtonSizeVariant.lg),
       ),
       _buildSecondaryButton(
-        (alias: "Secondary", variant: ButtonSizeVariant.sm),
+        (alias: "small", variant: ButtonSizeVariant.sm),
       ),
       _buildSecondaryButton(
-        (alias: "Secondary", variant: ButtonSizeVariant.md),
+        (alias: "medium", variant: ButtonSizeVariant.md),
       ),
       _buildSecondaryButton(
-        (alias: "Secondary", variant: ButtonSizeVariant.lg),
+        (alias: "large", variant: ButtonSizeVariant.lg),
       ),
       _buildDestructiveButton(
-        (alias: "Destructive", variant: ButtonSizeVariant.sm),
+        (alias: "small", variant: ButtonSizeVariant.sm),
       ),
       _buildDestructiveButton(
-        (alias: "Destructive", variant: ButtonSizeVariant.md),
+        (alias: "medium", variant: ButtonSizeVariant.md),
       ),
       _buildDestructiveButton(
-        (alias: "Destructive", variant: ButtonSizeVariant.lg),
+        (alias: "large", variant: ButtonSizeVariant.lg),
       ),
       ListenableBuilder(
         listenable: checkbox,
