@@ -42,7 +42,7 @@ class SelectStyle extends SpecStyle<SelectSpecUtility> {
         ..box.wrap.intrinsicWidth()
         ..box.wrap.transform.scale(0.95)
         ..box.wrap.opacity(0)
-        ..box.margin.top(0)
+        ..box.wrap.padding.top(0)
         ..flex.mainAxisSize.min()
         ..flex.crossAxisAlignment.start(),
       $.menu.wrap.transform.scale(1.5),
@@ -51,7 +51,7 @@ class SelectStyle extends SpecStyle<SelectSpecUtility> {
         $.menu.container.chain
           ..box.wrap.transform.scale(1)
           ..box.wrap.opacity(1)
-          ..box.margin.top(4),
+          ..box.wrap.padding.top(4),
       ),
     ];
 
