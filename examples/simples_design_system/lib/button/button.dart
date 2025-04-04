@@ -5,6 +5,8 @@ import 'button.spec.dart';
 
 part 'button.style.dart';
 
+typedef ButtonStyle = SpecStyle<ButtonSpecUtility>;
+
 abstract class _BaseButton extends StatefulWidget {
   const _BaseButton({
     required this.label,
@@ -39,7 +41,7 @@ abstract class _BaseButton extends StatefulWidget {
   final List<Variant> variants;
 
   /// {@macro remix.component.style}
-  final Style style;
+  final ButtonStyle style;
 
   @override
   State<_BaseButton> createState() => _BaseButtonState();
@@ -62,21 +64,25 @@ class _BaseButtonState extends State<_BaseButton> {
       enabled: !isDisabled,
       controller: controller,
       onPress: widget.disabled || widget.loading ? null : widget.onPressed,
-      child: SpecBuilder(
-        style: widget.style.applyVariants(widget.variants),
-        builder: (context) {
-          final spec = ButtonSpec.of(context);
+      child: Builder(builder: (context) {
+        final config = SpecConfiguration(context, ButtonSpecUtility.self);
 
-          return spec.container(
-            direction: Axis.horizontal,
-            children: [
-              if (widget.iconLeft != null) spec.icon(widget.iconLeft),
-              spec.label(widget.label),
-              if (widget.iconRight != null) spec.icon(widget.iconRight),
-            ],
-          );
-        },
-      ),
+        return SpecBuilder(
+          style: widget.style.makeStyle(config).applyVariants(widget.variants),
+          builder: (context) {
+            final spec = ButtonSpec.of(context);
+
+            return spec.container(
+              direction: Axis.horizontal,
+              children: [
+                if (widget.iconLeft != null) spec.icon(widget.iconLeft),
+                spec.label(widget.label),
+                if (widget.iconRight != null) spec.icon(widget.iconRight),
+              ],
+            );
+          },
+        );
+      }),
     );
   }
 }
@@ -110,7 +116,7 @@ class SimplePrimaryButton extends _BaseButton {
       iconRight: iconRight,
       variants: [size.value, _primary],
       onPressed: onPressed,
-      style: _buttonStyle,
+      style: SimpleButtonStyle(),
     );
   }
 }
@@ -144,7 +150,7 @@ class SimpleSecondaryButton extends _BaseButton {
       iconRight: iconRight,
       variants: [size.value, _secondary],
       onPressed: onPressed,
-      style: _buttonStyle,
+      style: SimpleButtonStyle(),
     );
   }
 }
@@ -178,7 +184,7 @@ class SimpleDestructiveButton extends _BaseButton {
       iconRight: iconRight,
       variants: [size.value, _destructive],
       onPressed: onPressed,
-      style: _buttonStyle,
+      style: SimpleButtonStyle(),
     );
   }
 }

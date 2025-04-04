@@ -7,6 +7,8 @@ import 'checkbox.spec.dart';
 
 part 'checkbox.style.dart';
 
+typedef CheckboxStyle = SpecStyle<CheckboxSpecUtility>;
+
 class _BaseCheckbox extends StatefulWidget {
   const _BaseCheckbox({
     super.key,
@@ -35,7 +37,7 @@ class _BaseCheckbox extends StatefulWidget {
   /// The callback function that is called when the checkbox is tapped.
   final ValueChanged<bool>? onChanged;
 
-  final Style style;
+  final CheckboxStyle style;
 
   /// {@macro remix.component.variants}
   final List<Variant> variants;
@@ -87,26 +89,33 @@ class _BaseCheckboxState extends State<_BaseCheckbox> {
       enabled: !widget.disabled,
       onPress: widget.disabled ? null : _handleOnPress,
       controller: _controller,
-      child: SpecBuilder(
-        style: widget.style.applyVariants(widget.variants).animate(),
-        builder: (context) {
-          final spec = CheckboxSpec.of(context);
+      child: Builder(builder: (context) {
+        final config = SpecConfiguration(context, CheckboxSpecUtility.self);
 
-          return spec.container(
-            direction: Axis.horizontal,
-            children: [
-              spec.indicatorContainer(
-                child: spec.indicator(
-                  widget.value
-                      ? widget.iconChecked
-                      : (widget.iconUnchecked ?? widget.iconChecked),
+        return SpecBuilder(
+          style: widget.style
+              .makeStyle(config)
+              .applyVariants(widget.variants)
+              .animate(),
+          builder: (context) {
+            final spec = CheckboxSpec.of(context);
+
+            return spec.container(
+              direction: Axis.horizontal,
+              children: [
+                spec.indicatorContainer(
+                  child: spec.indicator(
+                    widget.value
+                        ? widget.iconChecked
+                        : (widget.iconUnchecked ?? widget.iconChecked),
+                  ),
                 ),
-              ),
-              if (widget.label != null) spec.label(widget.label!),
-            ],
-          );
-        },
-      ),
+                if (widget.label != null) spec.label(widget.label!),
+              ],
+            );
+          },
+        );
+      }),
     );
   }
 }
@@ -135,7 +144,7 @@ class SimpleCheckbox extends _BaseCheckbox {
       disabled: disabled,
       value: value,
       onChanged: onChanged,
-      style: _checkboxStyle,
+      style: SimpleCheckboxStyle(),
       variants: variants,
       label: label,
     );

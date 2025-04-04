@@ -1,14 +1,14 @@
 part of 'accordion.dart';
 
-final _c = AccordionSpecUtility.self;
-Style get _accordionStyle => Style(
-      _mainContainer(),
-      _contentContainer(),
-      _headerContainer(),
-    );
+class SimpleAccordionStyle extends AccordionStyle {
+  const SimpleAccordionStyle();
 
-Style get _mainContainer => Style(
-      _c.container.chain
+  @override
+  Style makeStyle(SpecConfiguration<AccordionSpecUtility> spec) {
+    final c = spec.utilities;
+
+    final mainContainer = Style(
+      c.container.chain
         ..flex.mainAxisSize.min()
         ..flex.mainAxisAlignment.start()
         ..flex.crossAxisAlignment.start()
@@ -21,16 +21,24 @@ Style get _mainContainer => Style(
         ..constraints.minWidth(200),
     );
 
-Style get _contentContainer => Style(
-      _c.contentContainer.chain
+    final contentContainer = Style(
+      c.contentContainer.chain
         ..color.grey.shade50()
         ..border.top.width(1)
         ..border.top.color.grey.shade300()
         ..padding(12),
     );
 
-Style get _headerContainer => Style(
-      _c.headerContainer.chain
+    final headerContainer = Style(
+      c.headerContainer.chain
         ..color.transparent()
         ..padding(12),
     );
+
+    return Style(
+      mainContainer(),
+      contentContainer(),
+      headerContainer(),
+    );
+  }
+}

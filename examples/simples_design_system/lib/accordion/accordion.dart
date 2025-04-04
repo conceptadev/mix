@@ -5,6 +5,8 @@ import 'accordion.spec.dart';
 
 part 'accordion.style.dart';
 
+typedef AccordionStyle = SpecStyle<AccordionSpecUtility>;
+
 class _BaseAccordion extends StatefulWidget {
   const _BaseAccordion({
     super.key,
@@ -20,7 +22,7 @@ class _BaseAccordion extends StatefulWidget {
 
   final Widget header;
   final Widget content;
-  final Style style;
+  final AccordionStyle style;
   final bool expanded;
   final List<Variant> variants;
   final Duration duration;
@@ -54,8 +56,9 @@ class _BaseAccordionState extends State<_BaseAccordion>
 
   @override
   Widget build(BuildContext context) {
+    final config = SpecConfiguration(context, AccordionSpecUtility.self);
     return SpecBuilder(
-      style: widget.style,
+      style: widget.style.makeStyle(config),
       builder: (context) {
         final spec = AccordionSpec.of(context);
 
@@ -129,7 +132,7 @@ class SimpleAccordion extends _BaseAccordion {
     return SimpleAccordion._(
       header: header,
       content: content,
-      style: _accordionStyle,
+      style: SimpleAccordionStyle(),
       expanded: expanded,
       onChanged: onChanged,
       duration: duration,
