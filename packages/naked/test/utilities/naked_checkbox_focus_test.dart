@@ -175,7 +175,7 @@ void main() {
               child: StatefulBuilder(builder: (context, setState) {
                 return NakedCheckbox(
                   focusNode: focusNode1,
-                  isChecked: checkbox1Value,
+                  checked: checkbox1Value,
                   onChanged: (value) {
                     setState(() {
                       checkbox1Value = value;
@@ -278,7 +278,7 @@ void main() {
                   return Column(
                     children: [
                       NakedCheckbox(
-                        isDisabled: checkboxDisabled,
+                        enabled: checkboxDisabled,
                         onChanged: (_) {},
                         child: Container(
                           width: 50,

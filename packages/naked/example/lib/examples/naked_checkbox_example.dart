@@ -185,8 +185,8 @@ class _BasicCheckboxStatesState extends State<BasicCheckboxStates> {
         Row(
           children: [
             NakedCheckbox(
-              isChecked: _isChecked,
-              isIndeterminate: _isIndeterminate,
+              checked: _isChecked,
+              indeterminate: _isIndeterminate,
               onChanged: (value) {
                 setState(() {
                   _isChecked = value;
@@ -292,9 +292,9 @@ class _BasicCheckboxStatesState extends State<BasicCheckboxStates> {
       child: Row(
         children: [
           NakedCheckbox(
-            isChecked: isChecked,
-            isIndeterminate: isIndeterminate,
-            isDisabled: isDisabled,
+            checked: isChecked,
+            indeterminate: isIndeterminate,
+            enabled: isDisabled,
             onChanged: isDisabled ? null : (v) {}, // No-op for demo
             // Web Reference (React/Tailwind): input element
             child: _buildDefaultCheckboxVisual(
@@ -520,8 +520,8 @@ class _ParentChildCheckboxesState extends State<ParentChildCheckboxes> {
           child: Row(
             children: [
               NakedCheckbox(
-                isChecked: _parentCheckedValue,
-                isIndeterminate: _isParentIndeterminate,
+                checked: _parentCheckedValue,
+                indeterminate: _isParentIndeterminate,
                 onChanged: (value) => _handleParentChange(value),
                 onHoverState: (value) =>
                     setState(() => _isParentHovered = value),
@@ -567,7 +567,7 @@ class _ParentChildCheckboxesState extends State<ParentChildCheckboxes> {
                 child: Row(
                   children: [
                     NakedCheckbox(
-                      isChecked: item.isChecked,
+                      checked: item.isChecked,
                       // Children are never indeterminate themselves
                       onChanged: (value) => _handleChildChange(item.id, value),
                       child: _buildDefaultCheckboxVisual(
@@ -801,8 +801,8 @@ class _StyledCheckboxVariantState extends State<StyledCheckboxVariant> {
           mainAxisSize: MainAxisSize.min,
           children: [
             NakedCheckbox(
-              isChecked: _isChecked,
-              isIndeterminate: _isIndeterminate,
+              checked: _isChecked,
+              indeterminate: _isIndeterminate,
               onChanged: (value) => _toggleChecked(), // Simplified toggle
               onHoverState: (value) => setState(() => _isHovered = value),
               onPressedState: (value) => setState(() => _isPressed = value),
@@ -1205,8 +1205,8 @@ class _SelectionExampleState extends State<SelectionExample> {
                     child: Row(
                       children: [
                         NakedCheckbox(
-                          isChecked: category.allItemsChecked,
-                          isIndeterminate: category.isIndeterminate,
+                          checked: category.allItemsChecked,
+                          indeterminate: category.isIndeterminate,
                           onChanged: (value) =>
                               _handleCategoryChange(category, value),
                           // Web Reference: w-5 h-5 rounded text-blue-600 focus:ring-blue-500
@@ -1248,7 +1248,7 @@ class _SelectionExampleState extends State<SelectionExample> {
                             const SizedBox(
                                 width: 28), // Indentation like the pl-6
                             NakedCheckbox(
-                              isChecked: item.isChecked,
+                              checked: item.isChecked,
                               onChanged: (value) =>
                                   _handleItemChange(category, item, value),
                               // Web Reference: w-5 h-5 rounded text-blue-500 focus:ring-blue-500
@@ -1527,7 +1527,7 @@ class _FocusCheckboxExampleState extends State<FocusCheckboxExample> {
     final bool isPressed = _pressStates[id] ?? false;
 
     return NakedCheckbox(
-      isChecked: value,
+      checked: value,
       onChanged: onChanged,
       onEscapePressed: () {
         setState(() {

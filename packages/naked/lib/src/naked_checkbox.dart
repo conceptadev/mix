@@ -88,14 +88,14 @@ class NakedCheckbox extends StatelessWidget {
   ///
   /// Use this to control the checked state of the checkbox.
   /// The checkbox will not change this value on its own.
-  final bool isChecked;
+  final bool checked;
 
   /// Whether the checkbox is in an indeterminate state.
   ///
   /// When true, the checkbox will be rendered in an indeterminate state,
   /// visually distinct from both checked and unchecked states.
   /// Typically used for representing partially selected states in hierarchical checkbox groups.
-  final bool isIndeterminate;
+  final bool indeterminate;
 
   /// Called when the checkbox is toggled.
   ///
@@ -125,7 +125,7 @@ class NakedCheckbox extends StatelessWidget {
   ///
   /// When true, the checkbox will not respond to user interaction
   /// and should be styled accordingly.
-  final bool isDisabled;
+  final bool enabled;
 
   /// Optional semantic label for accessibility.
   ///
@@ -163,30 +163,30 @@ class NakedCheckbox extends StatelessWidget {
   const NakedCheckbox({
     super.key,
     required this.child,
-    this.isChecked = false,
-    this.isIndeterminate = false,
+    this.checked = false,
+    this.indeterminate = false,
     this.onChanged,
     this.onHoverState,
     this.onPressedState,
     this.onFocusState,
-    this.isDisabled = false,
+    this.enabled = true,
     this.semanticLabel,
     this.cursor = SystemMouseCursors.click,
     this.enableHapticFeedback = true,
     this.focusNode,
     this.onEscapePressed,
-  }) : assert(!(isChecked && isIndeterminate),
+  }) : assert(!(checked && indeterminate),
             'Checkbox cannot be both checked and indeterminate');
 
   @override
   Widget build(BuildContext context) {
-    final isInteractive = !isDisabled && onChanged != null;
+    final isInteractive = enabled && onChanged != null;
     final effectiveFocusNode = focusNode ?? FocusNode();
 
     // Gets the current state of the checkbox
     bool? getCurrentValue() {
-      if (isIndeterminate) return null;
-      return isChecked;
+      if (indeterminate) return null;
+      return checked;
     }
 
     // Toggle functionality
@@ -214,8 +214,8 @@ class NakedCheckbox extends StatelessWidget {
     }
 
     return Semantics(
-      checked: isChecked,
-      toggled: isIndeterminate,
+      checked: checked,
+      toggled: indeterminate,
       enabled: isInteractive,
       label: semanticLabel,
       onTap: isInteractive ? toggleValue : null,

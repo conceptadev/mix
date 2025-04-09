@@ -1,8 +1,7 @@
+import 'package:example/examples/naked_avatar_example.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:naked/naked.dart';
-
-import '../../example/lib/examples/naked_avatar_example.dart';
 
 void main() {
   const refreshButtonKey = ValueKey('refresh_avatar_button');
