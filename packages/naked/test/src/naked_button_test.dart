@@ -6,7 +6,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:naked/naked.dart';
 
-extension WidgetTesterExtension on WidgetTester {
+extension _WidgetTesterX on WidgetTester {
   Future<void> pumpButton(Widget widget) async {
     await pumpWidget(Directionality(
       textDirection: TextDirection.ltr,

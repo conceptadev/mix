@@ -1,248 +1,94 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:naked/src/utilities/naked_focus_manager.dart';
 
-/// Defines the shape of the avatar.
-enum AvatarShape {
-  /// Circular avatar.
-  circle,
-
-  /// Square avatar.
-  square,
-
-  /// Rounded square avatar.
-  rounded,
-}
-
-/// A fully customizable avatar component with no default styling.
+/// A basic avatar component with no default styling.
 ///
-/// NakedAvatar provides interaction behavior, image loading states, and accessibility
-/// without imposing any visual styling, allowing complete design freedom.
-/// It uses direct callbacks for state changes, giving consumers control over
-/// their own state management.
+/// NakedAvatar provides a simple container for avatar content without any
+/// built-in interactions or state management. It allows you to fully customize
+/// the avatar's appearance through the imageWidgetBuilder.
 ///
-/// The component integrates with [NakedFocusManager] to provide enhanced
-/// keyboard accessibility and focus management. This includes:
-/// - Space/Enter key support for interactive avatars
-/// - Focus restoration when the component is removed
-/// - Improved screen reader announcements for loading and error states
+/// The widget accepts an optional [image] provider and requires an [imageWidgetBuilder]
+/// that determines how the avatar should be rendered. The builder receives both the
+/// build context and an optional child widget containing the loaded image.
 ///
 /// Example:
 /// ```dart
-/// class MyAvatar extends StatefulWidget {
-///   @override
-///   _MyAvatarState createState() => _MyAvatarState();
-/// }
-///
-/// class _MyAvatarState extends State<MyAvatar> {
-///   bool _isHovered = false;
-///   bool _isPressed = false;
-///   bool _isFocused = false;
-///   bool _isLoading = false;
-///   bool _hasError = false;
-///
-///   @override
-///   Widget build(BuildContext context) {
-///     return NakedAvatar(
-///       src: 'https://example.com/avatar.jpg',
-///       size: 48.0,
-///       onPressed: () {
-///         print('Avatar pressed');
-///       },
-///       onHoverState: (isHovered) => setState(() => _isHovered = isHovered),
-///       onPressedState: (isPressed) => setState(() => _isPressed = isPressed),
-///       onFocusState: (isFocused) => setState(() => _isFocused = isFocused),
-///       onLoadingState: (isLoading) => setState(() => _isLoading = isLoading),
-///       onErrorState: (hasError) => setState(() => _hasError = hasError),
-///       child: AnimatedContainer(
-///         duration: Duration(milliseconds: 150),
-///         decoration: BoxDecoration(
-///           shape: BoxShape.circle,
-///           border: Border.all(
-///             color: _hasError
-///               ? Colors.red
-///               : _isPressed
-///                 ? Colors.blue.shade800
-///                 : _isHovered
-///                   ? Colors.blue.shade600
-///                   : _isFocused
-///                     ? Colors.blue.shade400
-///                     : Colors.grey,
-///             width: 2.0,
-///           ),
-///         ),
-///         child: _hasError
-///           ? Icon(Icons.error_outline, color: Colors.red)
-///           : _isLoading
-///             ? CircularProgressIndicator()
-///             : null,
-///       ),
-///     );
-///   }
-/// }
+// NakedAvatar(
+//   image: NetworkImage(imageUrl),
+//   imageWidgetBuilder: (context, image) => Container(
+//     height: 80,
+//     width: 80,
+//     clipBehavior: Clip.hardEdge,
+//     decoration: BoxDecoration(
+//       color: Colors.grey.shade300,
+//       shape: BoxShape.circle,
+//     ),
+//     child: Stack(
+//       alignment: Alignment.center,
+//       children: [
+//         Text(
+//           'AB',
+//           style: TextStyle(
+//             fontSize: 26,
+//             fontWeight: FontWeight.bold,
+//             color: Colors.grey.shade700,
+//           ),
+//         ),
+//         image!,
+//       ],
+//     ),
+//   ),
+// ),
 /// ```
-class NakedAvatar extends StatefulWidget {
-  /// The child widget to display.
-  final Widget child;
+///
+/// If no image is provided, the imageWidgetBuilder will receive null as the child,
+/// allowing you to show a fallback or placeholder.
 
-  /// The source for the avatar image (URL, asset path, or File).
-  final dynamic src;
+typedef ImageWidgetBuilder = Widget Function(
+    BuildContext context, Widget? child);
 
-  /// The size of the avatar.
-  final double? size;
+class NakedAvatar extends StatelessWidget {
+  /// The image provider for the avatar image.
+  final ImageProvider? image;
 
-  /// The shape of the avatar.
-  final AvatarShape shape;
+  /// Builder that determines how the avatar should be rendered.
+  /// Receives the build context and an optional child widget containing the loaded image.
+  /// When no image is provided or while the image is loading, child will be null.
+  final ImageWidgetBuilder imageWidgetBuilder;
 
-  /// Called when the avatar is pressed/activated.
-  final VoidCallback? onPressed;
+  /// Optional callback when the image fails to load.
+  final ImageErrorListener? onError;
 
-  /// Called when hover state changes.
-  final ValueChanged<bool>? onHoverState;
-
-  /// Called when pressed state changes.
-  final ValueChanged<bool>? onPressedState;
-
-  /// Called when focus state changes.
-  final ValueChanged<bool>? onFocusState;
-
-  /// Called when loading state changes.
-  final ValueChanged<bool>? onLoadingState;
-
-  /// Called when error state occurs.
-  final ValueChanged<bool>? onErrorState;
-
-  /// Whether the avatar is disabled.
-  final bool isDisabled;
-
-  /// Optional semantic label for accessibility.
+  /// Optional semantic label for the avatar.
   final String? semanticLabel;
 
-  /// The cursor to show when hovering over the avatar.
-  final MouseCursor cursor;
-
-  /// Optional focus node to control focus behavior.
-  final FocusNode? focusNode;
-
-  /// How to clip the avatar content.
-  final Clip clipBehavior;
-
-  /// Whether to provide haptic feedback on tap.
-  final bool enableHapticFeedback;
-
-  /// Creates a naked avatar.
-  ///
-  /// The [child] parameter is required.
   const NakedAvatar({
     super.key,
-    required this.child,
-    this.src,
-    this.size,
-    this.shape = AvatarShape.circle,
-    this.onPressed,
-    this.onHoverState,
-    this.onPressedState,
-    this.onFocusState,
-    this.onLoadingState,
-    this.onErrorState,
-    this.isDisabled = false,
+    this.image,
+    required this.imageWidgetBuilder,
+    this.onError,
     this.semanticLabel,
-    this.cursor = SystemMouseCursors.click,
-    this.focusNode,
-    this.clipBehavior = Clip.antiAlias,
-    this.enableHapticFeedback = true,
   });
 
   @override
-  State<NakedAvatar> createState() => _NakedAvatarState();
-}
-
-class _NakedAvatarState extends State<NakedAvatar> {
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  void didUpdateWidget(NakedAvatar oldWidget) {
-    super.didUpdateWidget(oldWidget);
-  }
-
-  void _handleTap() {
-    final isInteractive = !widget.isDisabled && widget.onPressed != null;
-
-    if (isInteractive) {
-      if (widget.enableHapticFeedback) {
-        HapticFeedback.lightImpact();
-      }
-      widget.onPressed?.call();
-    }
-  }
-
-  @override
   Widget build(BuildContext context) {
-    final isInteractive = !widget.isDisabled && widget.onPressed != null;
-    final effectiveFocusNode = widget.focusNode ?? FocusNode();
-
-    // Consumer will determine loading/error state based on callbacks
-    final String? hintText = widget.semanticLabel; // Simplify hint
+    final child = image != null
+        ? Container(
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: image!,
+                onError: onError,
+                fit: BoxFit.cover,
+              ),
+            ),
+          )
+        : null;
 
     return Semantics(
-      button: widget.onPressed != null,
-      enabled: isInteractive,
-      label: widget.semanticLabel ?? 'Avatar',
-      image: true,
-      // hint: _isLoading ? 'Loading' : (_hasError ? 'Error loading image' : null), // Remove dependency on internal state
-      hint: hintText,
-      onTap: isInteractive ? _handleTap : null,
-      excludeSemantics: true,
-      child: NakedFocusManager(
-        trapFocus: false, // Avatar is a standalone component
-        restoreFocus: true, // Good UX to restore focus when removed
-        autofocus: false, // Let the consumer control autofocus
-        child: Focus(
-          focusNode: effectiveFocusNode,
-          onFocusChange: widget.onFocusState,
-          onKeyEvent: (node, event) {
-            if (!isInteractive) return KeyEventResult.ignored;
-
-            if (event is KeyDownEvent &&
-                (event.logicalKey == LogicalKeyboardKey.space ||
-                    event.logicalKey == LogicalKeyboardKey.enter)) {
-              widget.onPressedState?.call(true);
-              return KeyEventResult.handled;
-            } else if (event is KeyUpEvent &&
-                (event.logicalKey == LogicalKeyboardKey.space ||
-                    event.logicalKey == LogicalKeyboardKey.enter)) {
-              widget.onPressedState?.call(false);
-              _handleTap();
-              return KeyEventResult.handled;
-            }
-            return KeyEventResult.ignored;
-          },
-          child: MouseRegion(
-            cursor:
-                isInteractive ? widget.cursor : SystemMouseCursors.forbidden,
-            onEnter:
-                isInteractive ? (_) => widget.onHoverState?.call(true) : null,
-            onExit:
-                isInteractive ? (_) => widget.onHoverState?.call(false) : null,
-            child: GestureDetector(
-              behavior: HitTestBehavior.opaque,
-              onTapDown: isInteractive
-                  ? (_) => widget.onPressedState?.call(true)
-                  : null,
-              onTapUp: isInteractive
-                  ? (_) => widget.onPressedState?.call(false)
-                  : null,
-              onTapCancel: isInteractive
-                  ? () => widget.onPressedState?.call(false)
-                  : null,
-              onTap: isInteractive ? _handleTap : null,
-              child: widget.child,
-            ),
-          ),
-        ),
+      label: semanticLabel,
+      image: image != null,
+      child: imageWidgetBuilder(
+        context,
+        child,
       ),
     );
   }

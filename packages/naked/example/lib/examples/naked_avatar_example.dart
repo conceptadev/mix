@@ -33,36 +33,28 @@ class _NakedAvatarExampleState extends State<NakedAvatarExample> {
           children: <Widget>[
             _buildSectionTitle('Basic Avatar'),
             NakedAvatar(
-              size: 100,
-              child: ClipOval(
-                child: Image.network(
-                  imageUrl,
-                  key: ValueKey(
-                      imageUrl), // Use ValueKey to force rebuild on URL change
-                  fit: BoxFit.cover,
-                  width: 100,
-                  height: 100,
-                  loadingBuilder: (context, child, loadingProgress) {
-                    if (loadingProgress == null) return child;
-                    return const Center(
-                      child: CircularProgressIndicator(
-                        valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
+              image: NetworkImage(imageUrl),
+              imageWidgetBuilder: (context, image) => Container(
+                height: 200,
+                width: 200,
+                clipBehavior: Clip.hardEdge,
+                decoration: BoxDecoration(
+                  color: Colors.grey.shade300,
+                  shape: BoxShape.circle,
+                ),
+                child: Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    Text(
+                      'AB',
+                      style: TextStyle(
+                        fontSize: 50,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.grey.shade700,
                       ),
-                    );
-                  },
-                  errorBuilder: (context, error, stackTrace) {
-                    debugPrint('Error loading avatar: $error');
-                    return Container(
-                      width: 100,
-                      height: 100,
-                      decoration: BoxDecoration(
-                        color: Colors.grey.shade300,
-                        shape: BoxShape.circle,
-                      ),
-                      child: const Icon(Icons.person,
-                          size: 50, color: Colors.white),
-                    );
-                  },
+                    ),
+                    image!,
+                  ],
                 ),
               ),
             ),
@@ -76,36 +68,24 @@ class _NakedAvatarExampleState extends State<NakedAvatarExample> {
             const SizedBox(height: 40),
             _buildSectionTitle('Avatar with Fallback'),
             NakedAvatar(
-              size: 80,
-              child: ClipOval(
-                child: Image.network(
-                  'https://invalid-url-for-testing.xyz',
-                  fit: BoxFit.cover,
-                  width: 80,
-                  height: 80,
-                  errorBuilder: (context, error, stackTrace) {
-                    return Container(
-                      width: 80,
-                      height: 80,
-                      decoration: BoxDecoration(
-                        color: Colors.purple.shade100,
-                        shape: BoxShape.circle,
-                      ),
-                      alignment: Alignment.center,
-                      child: const Text(
-                        'AB',
-                        style: TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.purple,
-                        ),
-                      ),
-                    );
-                  },
-                  loadingBuilder: (context, child, loadingProgress) {
-                    if (loadingProgress == null) return child;
-                    return const Center(child: CircularProgressIndicator());
-                  },
+              // size: 80,
+              // image: const NetworkImage('https://invalid-url-for-testing.xyz'),
+              imageWidgetBuilder: (BuildContext context, Widget? widget) =>
+                  Container(
+                height: 80,
+                width: 80,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  color: Colors.purple.shade100,
+                  shape: BoxShape.circle,
+                ),
+                child: const Text(
+                  'AB',
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.purple,
+                  ),
                 ),
               ),
             ),
@@ -130,49 +110,22 @@ class _NakedAvatarExampleState extends State<NakedAvatarExample> {
                     left: leftPosition,
                     top: 0,
                     child: NakedAvatar(
-                      size: 50,
-                      child: ClipOval(
-                        child: Container(
-                          // Add a container for white border
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            border: Border.all(
-                                color: Colors.white, width: 2), // White border
-                          ),
-                          child: ClipOval(
-                            // Clip again inside the border
-                            child: Image.network(
-                              groupImageUrl,
-                              key: ValueKey(groupImageUrl),
-                              fit: BoxFit.cover,
-                              width: 50,
-                              height: 50,
-                              errorBuilder: (context, error, stackTrace) {
-                                return Container(
-                                  width: 50,
-                                  height: 50,
-                                  decoration: BoxDecoration(
-                                    color: Colors.grey.shade300,
-                                    shape: BoxShape.circle,
-                                    // Keep border for fallback consistency
-                                    border: Border.all(
-                                        color: Colors.white, width: 2),
-                                  ),
-                                  alignment: Alignment.center,
-                                  child: Icon(Icons.person_outline,
-                                      size: 25, color: Colors.grey.shade600),
-                                );
-                              },
-                              loadingBuilder:
-                                  (context, child, loadingProgress) {
-                                if (loadingProgress == null) return child;
-                                return const Center(
-                                    child: CircularProgressIndicator(
-                                        strokeWidth: 2));
-                              },
-                            ),
-                          ),
+                      image: NetworkImage(groupImageUrl),
+                      imageWidgetBuilder: (context, image) => Container(
+                        height: 50,
+                        width: 50,
+                        alignment: Alignment.center,
+                        clipBehavior: Clip.hardEdge,
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            color: Colors.white,
+                            strokeAlign: BorderSide.strokeAlignOutside,
+                            width: 3,
+                          ), // White border
+                          color: Colors.purple.shade100,
+                          shape: BoxShape.circle,
                         ),
+                        child: image,
                       ),
                     ),
                   );
@@ -186,38 +139,21 @@ class _NakedAvatarExampleState extends State<NakedAvatarExample> {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [40.0, 60.0, 80.0].map((size) {
                 // Construct URL for sized avatars
-                final sizedImageUrl =
-                    '$_baseUrl/${size.toInt()}?img=${_imageIndex + size.toInt()}';
+                final sizedImageUrl = '$_baseUrl/${size.toInt()}';
                 return Column(
                   children: [
                     NakedAvatar(
-                      size: size,
-                      child: ClipOval(
-                        child: Image.network(
-                          sizedImageUrl,
-                          key: ValueKey(sizedImageUrl),
-                          width: size,
-                          height: size,
-                          fit: BoxFit.cover,
-                          errorBuilder: (context, error, stackTrace) {
-                            return Container(
-                              width: size,
-                              height: size,
-                              decoration: BoxDecoration(
-                                color: Colors.grey.shade300,
-                                shape: BoxShape.circle,
-                              ),
-                              child: Icon(Icons.person,
-                                  size: size * 0.6, color: Colors.white),
-                            );
-                          },
-                          loadingBuilder: (context, child, loadingProgress) {
-                            if (loadingProgress == null) return child;
-                            return const Center(
-                                child:
-                                    CircularProgressIndicator(strokeWidth: 2));
-                          },
+                      image: NetworkImage(sizedImageUrl),
+                      imageWidgetBuilder: (context, image) => Container(
+                        height: size,
+                        width: size,
+                        alignment: Alignment.center,
+                        clipBehavior: Clip.hardEdge,
+                        decoration: BoxDecoration(
+                          color: Colors.purple.shade100,
+                          shape: BoxShape.circle,
                         ),
+                        child: image,
                       ),
                     ),
                     const SizedBox(height: 8),
