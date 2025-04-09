@@ -40,8 +40,8 @@ void main() {
                   Text('Pressed: $isPressed'),
                   NakedButton(
                     onPressed: () {},
-                    onStateHover: (hover) => setState(() => isHovered = hover),
-                    onStatePressed: (pressed) =>
+                    onHoverState: (hover) => setState(() => isHovered = hover),
+                    onPressedState: (pressed) =>
                         setState(() => isPressed = pressed),
                     child: const Text('Test Button'),
                   ),

@@ -38,9 +38,9 @@ import 'package:naked/src/utilities/naked_focus_manager.dart';
 ///           _isChecked = value;
 ///         });
 ///       },
-///       onStateHover: (isHovered) => setState(() => _isHovered = isHovered),
-///       onStatePressed: (isPressed) => setState(() => _isPressed = isPressed),
-///       onStateFocus: (isFocused) => setState(() => _isFocused = isFocused),
+///       onHoverState: (isHovered) => setState(() => _isHovered = isHovered),
+///       onPressedState: (isPressed) => setState(() => _isPressed = isPressed),
+///       onFocusState: (isFocused) => setState(() => _isFocused = isFocused),
 ///       child: Container(
 ///         height: 20,
 ///         width: 20,
@@ -68,12 +68,20 @@ import 'package:naked/src/utilities/naked_focus_manager.dart';
 ///   }
 /// }
 /// ```
+///
+/// See also:
+///
+///  * [NakedRadio], a component that allows users to select one option from a set.
+///  * [NakedSwitch], a component that allows users to toggle between two states.
+///  * The Flutter `Checkbox` widget, which provides a similar functionality with
+///    Material Design styling.
+///  * The Naked library documentation for more examples and customization options.
 class NakedCheckbox extends StatelessWidget {
   /// The child widget to display.
   ///
   /// This widget should represent the visual appearance of the checkbox.
   /// You're responsible for rendering different visual states based on
-  /// the callback properties (isChecked, onStateHover, etc.).
+  /// the callback properties (isChecked, onHoverState, etc.).
   final Widget child;
 
   /// Whether the checkbox is checked.
@@ -95,23 +103,23 @@ class NakedCheckbox extends StatelessWidget {
   /// If null, the checkbox will be considered disabled and will not respond to user interaction.
   final ValueChanged<bool>? onChanged;
 
-  /// Called when hover state changes.
+  /// Callback triggered when the checkbox's hover state changes.
   ///
-  /// The callback provides the current hover state (true when hovered, false otherwise).
-  /// Use this to update the visual appearance when the user hovers over the checkbox.
-  final ValueChanged<bool>? onStateHover;
+  /// Passes `true` when the pointer enters the checkbox bounds, and `false`
+  /// when it exits. Useful for implementing hover effects.
+  final ValueChanged<bool>? onHoverState;
 
-  /// Called when pressed state changes.
+  /// Callback triggered when the checkbox is pressed or released.
   ///
-  /// The callback provides the current pressed state (true when pressed, false otherwise).
-  /// Use this to update the visual appearance when the user presses on the checkbox.
-  final ValueChanged<bool>? onStatePressed;
+  /// Passes `true` when the checkbox is pressed down, and `false` when released.
+  /// Useful for implementing press effects.
+  final ValueChanged<bool>? onPressedState;
 
-  /// Called when focus state changes.
+  /// Callback triggered when the checkbox gains or loses focus.
   ///
-  /// The callback provides the current focus state (true when focused, false otherwise).
-  /// Use this to update the visual appearance when the checkbox receives or loses focus.
-  final ValueChanged<bool>? onStateFocus;
+  /// Passes `true` when the checkbox gains focus, and `false` when it loses focus.
+  /// Useful for implementing focus indicators.
+  final ValueChanged<bool>? onFocusState;
 
   /// Whether the checkbox is disabled.
   ///
@@ -158,9 +166,9 @@ class NakedCheckbox extends StatelessWidget {
     this.isChecked = false,
     this.isIndeterminate = false,
     this.onChanged,
-    this.onStateHover,
-    this.onStatePressed,
-    this.onStateFocus,
+    this.onHoverState,
+    this.onPressedState,
+    this.onFocusState,
     this.isDisabled = false,
     this.semanticLabel,
     this.cursor = SystemMouseCursors.click,
@@ -218,19 +226,19 @@ class NakedCheckbox extends StatelessWidget {
         onEscapePressed: onEscapePressed,
         child: Focus(
           focusNode: effectiveFocusNode,
-          onFocusChange: onStateFocus,
+          onFocusChange: onFocusState,
           onKeyEvent: (node, event) {
             if (!isInteractive) return KeyEventResult.ignored;
 
             if (event is KeyDownEvent &&
                 (event.logicalKey == LogicalKeyboardKey.space ||
                     event.logicalKey == LogicalKeyboardKey.enter)) {
-              onStatePressed?.call(true);
+              onPressedState?.call(true);
               return KeyEventResult.handled;
             } else if (event is KeyUpEvent &&
                 (event.logicalKey == LogicalKeyboardKey.space ||
                     event.logicalKey == LogicalKeyboardKey.enter)) {
-              onStatePressed?.call(false);
+              onPressedState?.call(false);
               toggleValue();
               return KeyEventResult.handled;
             }
@@ -238,16 +246,16 @@ class NakedCheckbox extends StatelessWidget {
           },
           child: MouseRegion(
             cursor: isInteractive ? cursor : SystemMouseCursors.forbidden,
-            onEnter: isInteractive ? (_) => onStateHover?.call(true) : null,
-            onExit: isInteractive ? (_) => onStateHover?.call(false) : null,
+            onEnter: isInteractive ? (_) => onHoverState?.call(true) : null,
+            onExit: isInteractive ? (_) => onHoverState?.call(false) : null,
             child: GestureDetector(
               behavior: HitTestBehavior.opaque,
               onTapDown:
-                  isInteractive ? (_) => onStatePressed?.call(true) : null,
+                  isInteractive ? (_) => onPressedState?.call(true) : null,
               onTapUp:
-                  isInteractive ? (_) => onStatePressed?.call(false) : null,
+                  isInteractive ? (_) => onPressedState?.call(false) : null,
               onTapCancel:
-                  isInteractive ? () => onStatePressed?.call(false) : null,
+                  isInteractive ? () => onPressedState?.call(false) : null,
               onTap: isInteractive ? toggleValue : null,
               child: child,
             ),

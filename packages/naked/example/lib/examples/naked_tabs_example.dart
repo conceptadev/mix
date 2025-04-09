@@ -156,11 +156,11 @@ class _BasicTabsState extends State<_BasicTabs> {
                       return Expanded(
                         child: NakedTab(
                           tabId: id,
-                          onStateHover: (hover) =>
+                          onHoverState: (hover) =>
                               setState(() => _hoverStates[id] = hover),
-                          onStateFocus: (focus) =>
+                          onFocusState: (focus) =>
                               setState(() => _focusStates[id] = focus),
-                          onStatePressed: (press) =>
+                          onPressedState: (press) =>
                               setState(() => _pressStates[id] = press),
                           child: Container(
                             padding: const EdgeInsets.symmetric(
@@ -307,11 +307,11 @@ class _TabsWithIconsState extends State<_TabsWithIcons> {
                       return Expanded(
                         child: NakedTab(
                           tabId: id,
-                          onStateHover: (hover) =>
+                          onHoverState: (hover) =>
                               setState(() => _hoverStates[id] = hover),
-                          onStateFocus: (focus) =>
+                          onFocusState: (focus) =>
                               setState(() => _focusStates[id] = focus),
-                          onStatePressed: (press) =>
+                          onPressedState: (press) =>
                               setState(() => _pressStates[id] = press),
                           child: Container(
                             padding: const EdgeInsets.symmetric(
@@ -450,11 +450,11 @@ class _UnderlinedTabsState extends State<_UnderlinedTabs> {
 
                       return NakedTab(
                         tabId: id,
-                        onStateHover: (hover) =>
+                        onHoverState: (hover) =>
                             setState(() => _hoverStates[id] = hover),
-                        onStateFocus: (focus) =>
+                        onFocusState: (focus) =>
                             setState(() => _focusStates[id] = focus),
-                        onStatePressed: (press) =>
+                        onPressedState: (press) =>
                             setState(() => _pressStates[id] = press),
                         child: Container(
                           padding: const EdgeInsets.symmetric(
@@ -584,11 +584,11 @@ class _VerticalTabsState extends State<_VerticalTabs> {
 
                     return NakedTab(
                       tabId: id,
-                      onStateHover: (hover) =>
+                      onHoverState: (hover) =>
                           setState(() => _hoverStates[id] = hover),
-                      onStateFocus: (focus) =>
+                      onFocusState: (focus) =>
                           setState(() => _focusStates[id] = focus),
-                      onStatePressed: (press) =>
+                      onPressedState: (press) =>
                           setState(() => _pressStates[id] = press),
                       child: Container(
                         padding: const EdgeInsets.symmetric(
@@ -726,11 +726,11 @@ class _CardTabsState extends State<_CardTabs> {
                         padding: const EdgeInsets.all(8.0),
                         child: NakedTab(
                           tabId: id,
-                          onStateHover: (hover) =>
+                          onHoverState: (hover) =>
                               setState(() => _hoverStates[id] = hover),
-                          onStateFocus: (focus) =>
+                          onFocusState: (focus) =>
                               setState(() => _focusStates[id] = focus),
-                          onStatePressed: (press) =>
+                          onPressedState: (press) =>
                               setState(() => _pressStates[id] = press),
                           child: Container(
                             padding: const EdgeInsets.all(16),
@@ -902,11 +902,11 @@ class _ButtonStyleTabsState extends State<_ButtonStyleTabs> {
 
                         return NakedTab(
                           tabId: id,
-                          onStateHover: (hover) =>
+                          onHoverState: (hover) =>
                               setState(() => _hoverStates[id] = hover),
-                          onStateFocus: (focus) =>
+                          onFocusState: (focus) =>
                               setState(() => _focusStates[id] = focus),
-                          onStatePressed: (press) =>
+                          onPressedState: (press) =>
                               setState(() => _pressStates[id] = press),
                           child: Container(
                             padding: const EdgeInsets.symmetric(
@@ -1215,11 +1215,11 @@ class _ResponsiveTabsGridState extends State<_ResponsiveTabsGrid> {
 
                   return NakedTab(
                     tabId: id,
-                    onStateHover: (hover) =>
+                    onHoverState: (hover) =>
                         setState(() => _hoverStates[id] = hover),
-                    onStateFocus: (focus) =>
+                    onFocusState: (focus) =>
                         setState(() => _focusStates[id] = focus),
-                    onStatePressed: (press) =>
+                    onPressedState: (press) =>
                         setState(() => _pressStates[id] = press),
                     child: Container(
                       padding: const EdgeInsets.symmetric(

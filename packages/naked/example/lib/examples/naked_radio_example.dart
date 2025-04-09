@@ -45,11 +45,11 @@ class _BasicRadioExampleState extends State<BasicRadioExample> {
           children: [
             NakedRadioButton<String>(
               value: value,
-              onStateHover: (isHovered) =>
+              onHoverState: (isHovered) =>
                   setInnerState(() => isHovered = isHovered),
-              onStatePressed: (isPressed) =>
+              onPressedState: (isPressed) =>
                   setInnerState(() => isPressed = isPressed),
-              onStateFocus: (isFocused) => {},
+              onFocusState: (isFocused) => {},
               child: Container(
                 width: 20,
                 height: 20,
@@ -137,11 +137,11 @@ class _StyledRadioExampleState extends State<StyledRadioExample> {
             NakedRadioButton<String>(
               value: value,
               semanticLabel: label,
-              onStateHover: (isHovered) =>
+              onHoverState: (isHovered) =>
                   setInnerState(() => isHovered = isHovered),
-              onStatePressed: (isPressed) =>
+              onPressedState: (isPressed) =>
                   setInnerState(() => isPressed = isPressed),
-              onStateFocus: (isFocused) =>
+              onFocusState: (isFocused) =>
                   setInnerState(() => isFocused = isFocused),
               child: AnimatedContainer(
                 duration: const Duration(milliseconds: 200),
@@ -300,9 +300,9 @@ class _FormRadioExampleState extends State<FormRadioExample> {
             NakedRadioButton<String>(
               value: value,
               semanticLabel: label,
-              onStateHover: (isHovered) =>
+              onHoverState: (isHovered) =>
                   setInnerState(() => isHovered = isHovered),
-              onStatePressed: (isPressed) =>
+              onPressedState: (isPressed) =>
                   setInnerState(() => isPressed = isPressed),
               child: Container(
                 width: 20,
@@ -1298,7 +1298,7 @@ class _FocusRadioExampleState extends State<FocusRadioExample> {
 
     return NakedRadioButton<String>(
       value: id,
-      onStateHover: (hover) {
+      onHoverState: (hover) {
         setState(() {
           _hoverStates[id] = hover;
           if (hover) {
@@ -1306,7 +1306,7 @@ class _FocusRadioExampleState extends State<FocusRadioExample> {
           }
         });
       },
-      onStateFocus: (focus) {
+      onFocusState: (focus) {
         setState(() {
           _focusStates[id] = focus;
           if (focus) {
@@ -1314,7 +1314,7 @@ class _FocusRadioExampleState extends State<FocusRadioExample> {
           }
         });
       },
-      onStatePressed: (press) {
+      onPressedState: (press) {
         setState(() {
           _pressStates[id] = press;
           if (press) {

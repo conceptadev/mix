@@ -53,7 +53,7 @@ void main() {
               builder: (context, setState) {
                 return NakedSlider(
                   value: 0.5,
-                  onStateHover: (hover) {
+                  onHoverState: (hover) {
                     setState(() {
                       isHovered = hover;
                     });
@@ -135,7 +135,7 @@ void main() {
                           value = newValue;
                         });
                       },
-                      onStateDragging: (dragging) {
+                      onDraggingState: (dragging) {
                         setState(() {
                           isDragging = dragging;
                         });

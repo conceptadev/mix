@@ -70,11 +70,11 @@ class _NakedMenuExampleState extends State<NakedMenuExample> {
             children: [
               NakedMenuTrigger(
                 // Use the state callbacks for styling the button
-                onStateHover: (isHovered) =>
+                onHoverState: (isHovered) =>
                     setState(() => _isTriggerHovered = isHovered),
-                onStateFocus: (isFocused) =>
+                onFocusState: (isFocused) =>
                     setState(() => _isTriggerFocused = isFocused),
-                onStatePressed: (isPressed) =>
+                onPressedState: (isPressed) =>
                     setState(() => _isTriggerPressed = isPressed),
                 // The child of the trigger is the button visual
                 child: _buildMenuButtonVisual(),
@@ -218,9 +218,9 @@ class _NakedMenuExampleState extends State<NakedMenuExample> {
     return NakedMenuItem(
       onPressed: onPressed,
       isDisabled: isDisabled,
-      onStateHover: (isHovered) =>
+      onHoverState: (isHovered) =>
           setState(() => _itemHoverStates[value] = isHovered),
-      onStateFocus: (isFocused) =>
+      onFocusState: (isFocused) =>
           setState(() => _itemFocusStates[value] = isFocused),
       // The child is the visual representation of the item
       child: Builder(
@@ -318,11 +318,11 @@ class __FocusMenuExampleState extends State<_FocusMenuExample> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               NakedMenuTrigger(
-                onStateHover: (isHovered) =>
+                onHoverState: (isHovered) =>
                     setState(() => _isTriggerHovered = isHovered),
-                onStateFocus: (isFocused) =>
+                onFocusState: (isFocused) =>
                     setState(() => _isTriggerFocused = isFocused),
-                onStatePressed: (isPressed) =>
+                onPressedState: (isPressed) =>
                     setState(() => _isTriggerPressed = isPressed),
                 child: _buildFocusMenuButtonVisual(),
               ),
@@ -403,9 +403,9 @@ class __FocusMenuExampleState extends State<_FocusMenuExample> {
     return NakedMenuItem(
       onPressed: onPressed,
       isDisabled: isDisabled,
-      onStateHover: (isHovered) =>
+      onHoverState: (isHovered) =>
           setState(() => _itemHoverStates[value] = isHovered),
-      onStateFocus: (isFocused) {
+      onFocusState: (isFocused) {
         setState(() => _itemFocusStates[value] = isFocused);
         // Provide feedback when item gains focus via keyboard
         if (isFocused) {
@@ -519,9 +519,9 @@ class __NestedMenuExampleState extends State<_NestedMenuExample> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               NakedMenuTrigger(
-                onStateHover: (h) => setState(() => _mainTriggerHovered = h),
-                onStateFocus: (f) => setState(() => _mainTriggerFocused = f),
-                onStatePressed: (p) => setState(() => _mainTriggerPressed = p),
+                onHoverState: (h) => setState(() => _mainTriggerHovered = h),
+                onFocusState: (f) => setState(() => _mainTriggerFocused = f),
+                onPressedState: (p) => setState(() => _mainTriggerPressed = p),
                 child: _buildNestedMenuTriggerVisual(),
               ),
               NakedMenuContent(
@@ -599,8 +599,8 @@ class __NestedMenuExampleState extends State<_NestedMenuExample> {
     // Adapt from previous _buildMenuItemVisual, using main state maps
     return NakedMenuItem(
         onPressed: onPressed,
-        onStateHover: (h) => setState(() => _mainItemHoverStates[value] = h),
-        onStateFocus: (f) => setState(() => _mainItemFocusStates[value] = f),
+        onHoverState: (h) => setState(() => _mainItemHoverStates[value] = h),
+        onFocusState: (f) => setState(() => _mainItemFocusStates[value] = f),
         child: Builder(builder: (context) {
           final isHovered = _mainItemHoverStates[value] ?? false;
           final isFocused = _mainItemFocusStates[value] ?? false;
@@ -615,7 +615,6 @@ class __NestedMenuExampleState extends State<_NestedMenuExample> {
                     : Colors.transparent,
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
             child: Row(children: [
-              /* ... Icon, Label ... */
               Icon(icon, size: 18, color: iconColor),
               const SizedBox(width: 12),
               Expanded(
@@ -648,8 +647,8 @@ class __NestedMenuExampleState extends State<_NestedMenuExample> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           NakedMenuTrigger(
-            onStateHover: (h) => setState(() => _subTriggerHovered = h),
-            onStateFocus: (f) => setState(() => _subTriggerFocused = f),
+            onHoverState: (h) => setState(() => _subTriggerHovered = h),
+            onFocusState: (f) => setState(() => _subTriggerFocused = f),
             // No onPressed here, hover/focus triggers open via onIsOpenChanged logic (can be added if click needed)
             child: Builder(builder: (context) {
               // Visually mimics a main menu item, potentially indicating nesting
@@ -719,8 +718,8 @@ class __NestedMenuExampleState extends State<_NestedMenuExample> {
     // Adapt from _buildMenuItemVisual, using sub state maps
     return NakedMenuItem(
         onPressed: onPressed,
-        onStateHover: (h) => setState(() => _subItemHoverStates[value] = h),
-        onStateFocus: (f) => setState(() => _subItemFocusStates[value] = f),
+        onHoverState: (h) => setState(() => _subItemHoverStates[value] = h),
+        onFocusState: (f) => setState(() => _subItemFocusStates[value] = f),
         child: Builder(builder: (context) {
           final isHovered = _subItemHoverStates[value] ?? false;
           final isFocused = _subItemFocusStates[value] ?? false;

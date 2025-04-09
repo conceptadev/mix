@@ -30,9 +30,9 @@ import 'package:naked/src/utilities/naked_focus_manager.dart';
 ///       onPressed: () {
 ///         print('Button pressed!');
 ///       },
-///       onStateHover: (isHovered) => setState(() => _isHovered = isHovered),
-///       onStatePressed: (isPressed) => setState(() => _isPressed = isPressed),
-///       onStateFocus: (isFocused) => setState(() => _isFocused = isFocused),
+///       onHoverState: (isHovered) => setState(() => _isHovered = isHovered),
+///       onPressedState: (isPressed) => setState(() => _isPressed = isPressed),
+///       onFocusState: (isFocused) => setState(() => _isFocused = isFocused),
 ///       child: Container(
 ///         padding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
 ///         decoration: BoxDecoration(
@@ -74,19 +74,19 @@ class NakedButton extends StatelessWidget {
   ///
   /// Provides the current hover state (true when hovered, false otherwise).
   /// Use this to update the visual appearance when the user hovers over the button.
-  final ValueChanged<bool>? onStateHover;
+  final ValueChanged<bool>? onHoverState;
 
   /// Called when pressed state changes.
   ///
   /// Provides the current pressed state (true when pressed, false otherwise).
   /// Use this to update the visual appearance when the user presses the button.
-  final ValueChanged<bool>? onStatePressed;
+  final ValueChanged<bool>? onPressedState;
 
   /// Called when focus state changes.
   ///
   /// Provides the current focus state (true when focused, false otherwise).
   /// Use this to update the visual appearance when the button receives or loses focus.
-  final ValueChanged<bool>? onStateFocus;
+  final ValueChanged<bool>? onFocusState;
 
   /// Whether the button is in a loading state.
   ///
@@ -136,9 +136,9 @@ class NakedButton extends StatelessWidget {
     super.key,
     required this.child,
     this.onPressed,
-    this.onStateHover,
-    this.onStatePressed,
-    this.onStateFocus,
+    this.onHoverState,
+    this.onPressedState,
+    this.onFocusState,
     this.isLoading = false,
     this.isDisabled = false,
     this.semanticLabel,
@@ -176,19 +176,19 @@ class NakedButton extends StatelessWidget {
         onEscapePressed: onEscapePressed,
         child: Focus(
           focusNode: effectiveFocusNode,
-          onFocusChange: onStateFocus,
+          onFocusChange: onFocusState,
           onKeyEvent: (node, event) {
             if (!isInteractive) return KeyEventResult.ignored;
 
             if (event is KeyDownEvent &&
                 (event.logicalKey == LogicalKeyboardKey.space ||
                     event.logicalKey == LogicalKeyboardKey.enter)) {
-              onStatePressed?.call(true);
+              onPressedState?.call(true);
               return KeyEventResult.handled;
             } else if (event is KeyUpEvent &&
                 (event.logicalKey == LogicalKeyboardKey.space ||
                     event.logicalKey == LogicalKeyboardKey.enter)) {
-              onStatePressed?.call(false);
+              onPressedState?.call(false);
               handleTap();
               return KeyEventResult.handled;
             }
@@ -196,16 +196,16 @@ class NakedButton extends StatelessWidget {
           },
           child: MouseRegion(
             cursor: isInteractive ? cursor : SystemMouseCursors.forbidden,
-            onEnter: isInteractive ? (_) => onStateHover?.call(true) : null,
-            onExit: isInteractive ? (_) => onStateHover?.call(false) : null,
+            onEnter: isInteractive ? (_) => onHoverState?.call(true) : null,
+            onExit: isInteractive ? (_) => onHoverState?.call(false) : null,
             child: GestureDetector(
               behavior: HitTestBehavior.opaque,
               onTapDown:
-                  isInteractive ? (_) => onStatePressed?.call(true) : null,
+                  isInteractive ? (_) => onPressedState?.call(true) : null,
               onTapUp:
-                  isInteractive ? (_) => onStatePressed?.call(false) : null,
+                  isInteractive ? (_) => onPressedState?.call(false) : null,
               onTapCancel:
-                  isInteractive ? () => onStatePressed?.call(false) : null,
+                  isInteractive ? () => onPressedState?.call(false) : null,
               onTap: isInteractive ? handleTap : null,
               child: child,
             ),

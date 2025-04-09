@@ -49,11 +49,11 @@ enum AvatarShape {
 ///       onPressed: () {
 ///         print('Avatar pressed');
 ///       },
-///       onStateHover: (isHovered) => setState(() => _isHovered = isHovered),
-///       onStatePressed: (isPressed) => setState(() => _isPressed = isPressed),
-///       onStateFocus: (isFocused) => setState(() => _isFocused = isFocused),
-///       onStateLoading: (isLoading) => setState(() => _isLoading = isLoading),
-///       onStateError: (hasError) => setState(() => _hasError = hasError),
+///       onHoverState: (isHovered) => setState(() => _isHovered = isHovered),
+///       onPressedState: (isPressed) => setState(() => _isPressed = isPressed),
+///       onFocusState: (isFocused) => setState(() => _isFocused = isFocused),
+///       onLoadingState: (isLoading) => setState(() => _isLoading = isLoading),
+///       onErrorState: (hasError) => setState(() => _hasError = hasError),
 ///       child: AnimatedContainer(
 ///         duration: Duration(milliseconds: 150),
 ///         decoration: BoxDecoration(
@@ -98,19 +98,19 @@ class NakedAvatar extends StatefulWidget {
   final VoidCallback? onPressed;
 
   /// Called when hover state changes.
-  final ValueChanged<bool>? onStateHover;
+  final ValueChanged<bool>? onHoverState;
 
   /// Called when pressed state changes.
-  final ValueChanged<bool>? onStatePressed;
+  final ValueChanged<bool>? onPressedState;
 
   /// Called when focus state changes.
-  final ValueChanged<bool>? onStateFocus;
+  final ValueChanged<bool>? onFocusState;
 
   /// Called when loading state changes.
-  final ValueChanged<bool>? onStateLoading;
+  final ValueChanged<bool>? onLoadingState;
 
   /// Called when error state occurs.
-  final ValueChanged<bool>? onStateError;
+  final ValueChanged<bool>? onErrorState;
 
   /// Whether the avatar is disabled.
   final bool isDisabled;
@@ -140,11 +140,11 @@ class NakedAvatar extends StatefulWidget {
     this.size,
     this.shape = AvatarShape.circle,
     this.onPressed,
-    this.onStateHover,
-    this.onStatePressed,
-    this.onStateFocus,
-    this.onStateLoading,
-    this.onStateError,
+    this.onHoverState,
+    this.onPressedState,
+    this.onFocusState,
+    this.onLoadingState,
+    this.onErrorState,
     this.isDisabled = false,
     this.semanticLabel,
     this.cursor = SystemMouseCursors.click,
@@ -202,19 +202,19 @@ class _NakedAvatarState extends State<NakedAvatar> {
         autofocus: false, // Let the consumer control autofocus
         child: Focus(
           focusNode: effectiveFocusNode,
-          onFocusChange: widget.onStateFocus,
+          onFocusChange: widget.onFocusState,
           onKeyEvent: (node, event) {
             if (!isInteractive) return KeyEventResult.ignored;
 
             if (event is KeyDownEvent &&
                 (event.logicalKey == LogicalKeyboardKey.space ||
                     event.logicalKey == LogicalKeyboardKey.enter)) {
-              widget.onStatePressed?.call(true);
+              widget.onPressedState?.call(true);
               return KeyEventResult.handled;
             } else if (event is KeyUpEvent &&
                 (event.logicalKey == LogicalKeyboardKey.space ||
                     event.logicalKey == LogicalKeyboardKey.enter)) {
-              widget.onStatePressed?.call(false);
+              widget.onPressedState?.call(false);
               _handleTap();
               return KeyEventResult.handled;
             }
@@ -224,19 +224,19 @@ class _NakedAvatarState extends State<NakedAvatar> {
             cursor:
                 isInteractive ? widget.cursor : SystemMouseCursors.forbidden,
             onEnter:
-                isInteractive ? (_) => widget.onStateHover?.call(true) : null,
+                isInteractive ? (_) => widget.onHoverState?.call(true) : null,
             onExit:
-                isInteractive ? (_) => widget.onStateHover?.call(false) : null,
+                isInteractive ? (_) => widget.onHoverState?.call(false) : null,
             child: GestureDetector(
               behavior: HitTestBehavior.opaque,
               onTapDown: isInteractive
-                  ? (_) => widget.onStatePressed?.call(true)
+                  ? (_) => widget.onPressedState?.call(true)
                   : null,
               onTapUp: isInteractive
-                  ? (_) => widget.onStatePressed?.call(false)
+                  ? (_) => widget.onPressedState?.call(false)
                   : null,
               onTapCancel: isInteractive
-                  ? () => widget.onStatePressed?.call(false)
+                  ? () => widget.onPressedState?.call(false)
                   : null,
               onTap: isInteractive ? _handleTap : null,
               child: widget.child,

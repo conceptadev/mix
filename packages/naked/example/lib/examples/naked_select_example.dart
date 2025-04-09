@@ -74,9 +74,9 @@ class _NakedSelectExampleState extends State<NakedSelectExample> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               NakedSelectTrigger(
-                onStateHover: (h) => setState(() => _isTrigger1Hovered = h),
-                onStateFocus: (f) => setState(() => _isTrigger1Focused = f),
-                onStatePressed: (p) => setState(() => _isTrigger1Pressed = p),
+                onHoverState: (h) => setState(() => _isTrigger1Hovered = h),
+                onFocusState: (f) => setState(() => _isTrigger1Focused = f),
+                onPressedState: (p) => setState(() => _isTrigger1Pressed = p),
                 child: _buildTriggerVisual(
                   value: _selectedValue1 ?? 'Select an option',
                   isOpen: _isOpen1,
@@ -112,9 +112,9 @@ class _NakedSelectExampleState extends State<NakedSelectExample> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               NakedSelectTrigger(
-                onStateHover: (h) => setState(() => _isTrigger2Hovered = h),
-                onStateFocus: (f) => setState(() => _isTrigger2Focused = f),
-                onStatePressed: (p) => setState(() => _isTrigger2Pressed = p),
+                onHoverState: (h) => setState(() => _isTrigger2Hovered = h),
+                onFocusState: (f) => setState(() => _isTrigger2Focused = f),
+                onPressedState: (p) => setState(() => _isTrigger2Pressed = p),
                 child: _buildTriggerVisual(
                   value: _selectedValue2?['name'] ?? 'Select a country',
                   isOpen: _isOpen2,
@@ -156,9 +156,9 @@ class _NakedSelectExampleState extends State<NakedSelectExample> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               NakedSelectTrigger(
-                onStateHover: (h) => setState(() => _isTrigger3Hovered = h),
-                onStateFocus: (f) => setState(() => _isTrigger3Focused = f),
-                onStatePressed: (p) => setState(() => _isTrigger3Pressed = p),
+                onHoverState: (h) => setState(() => _isTrigger3Hovered = h),
+                onFocusState: (f) => setState(() => _isTrigger3Focused = f),
+                onPressedState: (p) => setState(() => _isTrigger3Pressed = p),
                 child: _buildTriggerVisual(
                   value: _selectedValue3 ?? 'Select an item',
                   isOpen: _isOpen3,
@@ -335,9 +335,9 @@ class _NakedSelectExampleState extends State<NakedSelectExample> {
                   return NakedSelectItem<T>(
                     value: option,
                     isSelected: isSelected,
-                    onStateHover: (hovered) =>
+                    onHoverState: (hovered) =>
                         setState(() => itemHoverStates[itemValueKey] = hovered),
-                    onStateFocus: (focused) =>
+                    onFocusState: (focused) =>
                         setState(() => itemFocusStates[itemValueKey] = focused),
                     child: Container(
                       width: double.infinity,
@@ -452,11 +452,11 @@ class _FormSelectExampleState extends State<FormSelectExample> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         NakedSelectTrigger(
-                          onStateHover: (h) =>
+                          onHoverState: (h) =>
                               setState(() => _isTriggerHovered = h),
-                          onStateFocus: (f) =>
+                          onFocusState: (f) =>
                               setState(() => _isTriggerFocused = f),
-                          onStatePressed: (p) =>
+                          onPressedState: (p) =>
                               setState(() => _isTriggerPressed = p),
                           child: _buildTriggerVisual(
                             value: field.value ?? 'Select a fruit',
@@ -604,9 +604,9 @@ class _FormSelectExampleState extends State<FormSelectExample> {
             return NakedSelectItem<T>(
               value: option,
               isSelected: isSelected,
-              onStateHover: (hovered) =>
+              onHoverState: (hovered) =>
                   setState(() => itemHoverStates[itemValue] = hovered),
-              onStateFocus: (focused) =>
+              onFocusState: (focused) =>
                   setState(() => itemFocusStates[itemValue] = focused),
               child: Container(
                 width: double.infinity,
@@ -751,19 +751,19 @@ class _FocusSelectExampleState extends State<FocusSelectExample> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               NakedSelectTrigger(
-                onStateHover: (h) {
+                onHoverState: (h) {
                   setState(() {
                     _isTriggerHovered = h;
                     if (h) _lastAction = 'Trigger hovered';
                   });
                 },
-                onStateFocus: (f) {
+                onFocusState: (f) {
                   setState(() {
                     _isTriggerFocused = f;
                     if (f) _lastAction = 'Trigger focused';
                   });
                 },
-                onStatePressed: (p) {
+                onPressedState: (p) {
                   setState(() {
                     _isTriggerPressed = p;
                     if (p) _lastAction = 'Trigger pressed';
@@ -878,13 +878,13 @@ class _FocusSelectExampleState extends State<FocusSelectExample> {
 
           return NakedSelectItem(
             value: id,
-            onStateHover: (hover) {
+            onHoverState: (hover) {
               setState(() {
                 _itemHoverStates[id] = hover;
                 if (hover) _lastAction = 'Hovering: $label';
               });
             },
-            onStateFocus: (focus) {
+            onFocusState: (focus) {
               setState(() {
                 _itemFocusStates[id] = focus;
                 if (focus) _lastAction = 'Focus on: $label';

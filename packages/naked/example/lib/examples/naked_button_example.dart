@@ -229,10 +229,10 @@ class _BasicButtonsState extends State<BasicButtons> {
           //   Primary
           // </button>
           onPressed: () => widget.onButtonPressed('$label Button Pressed'),
-          onStateHover: (value) => setState(() => hoverStates[label] = value),
-          onStatePressed: (value) =>
+          onHoverState: (value) => setState(() => hoverStates[label] = value),
+          onPressedState: (value) =>
               setState(() => pressedStates[label] = value),
-          onStateFocus: (value) => setState(() => focusStates[label] = value),
+          onFocusState: (value) => setState(() => focusStates[label] = value),
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             decoration: BoxDecoration(
@@ -337,11 +337,11 @@ class _ButtonStatesState extends State<ButtonStates> {
             NakedButton(
               onPressed: () =>
                   widget.onButtonPressed('Hover Slide Effect Pressed'),
-              onStateHover: (value) =>
+              onHoverState: (value) =>
                   setState(() => _isHoverSlideHovered = value),
-              onStatePressed: (value) =>
+              onPressedState: (value) =>
                   setState(() => _isHoverSlidePressed = value),
-              onStateFocus: (value) =>
+              onFocusState: (value) =>
                   setState(() => _isHoverSlideFocused = value),
               child: Stack(
                 children: [
@@ -410,11 +410,11 @@ class _ButtonStatesState extends State<ButtonStates> {
             NakedButton(
               onPressed: () =>
                   widget.onButtonPressed('Color Change Button Pressed'),
-              onStateHover: (value) =>
+              onHoverState: (value) =>
                   setState(() => _isColorChangeHovered = value),
-              onStatePressed: (value) =>
+              onPressedState: (value) =>
                   setState(() => _isColorChangePressed = value),
-              onStateFocus: (value) =>
+              onFocusState: (value) =>
                   setState(() => _isColorChangeFocused = value),
               child: AnimatedContainer(
                 duration: const Duration(milliseconds: 300),
@@ -451,11 +451,11 @@ class _ButtonStatesState extends State<ButtonStates> {
             NakedButton(
               onPressed: () =>
                   widget.onButtonPressed('Elevation Button Pressed'),
-              onStateHover: (value) =>
+              onHoverState: (value) =>
                   setState(() => _isElevationHovered = value),
-              onStatePressed: (value) =>
+              onPressedState: (value) =>
                   setState(() => _isElevationPressed = value),
-              onStateFocus: (value) =>
+              onFocusState: (value) =>
                   setState(() => _isElevationFocused = value),
               child: AnimatedContainer(
                 duration: const Duration(milliseconds: 300),
@@ -509,10 +509,10 @@ class _ButtonStatesState extends State<ButtonStates> {
             // </button>
             NakedButton(
               onPressed: () => widget.onButtonPressed('Scale Button Pressed'),
-              onStateHover: (value) => setState(() => _isScaleHovered = value),
-              onStatePressed: (value) =>
+              onHoverState: (value) => setState(() => _isScaleHovered = value),
+              onPressedState: (value) =>
                   setState(() => _isScalePressed = value),
-              onStateFocus: (value) => setState(() => _isScaleFocused = value),
+              onFocusState: (value) => setState(() => _isScaleFocused = value),
               child: AnimatedContainer(
                 duration: const Duration(milliseconds: 100),
                 padding:
@@ -545,10 +545,10 @@ class _ButtonStatesState extends State<ButtonStates> {
             NakedButton(
               onPressed: () =>
                   widget.onButtonPressed('Inner Shadow Button Pressed'),
-              onStateHover: (value) => setState(() => _isShadowHovered = value),
-              onStatePressed: (value) =>
+              onHoverState: (value) => setState(() => _isShadowHovered = value),
+              onPressedState: (value) =>
                   setState(() => _isShadowPressed = value),
-              onStateFocus: (value) => setState(() => _isShadowFocused = value),
+              onFocusState: (value) => setState(() => _isShadowFocused = value),
               child: Container(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -588,11 +588,11 @@ class _ButtonStatesState extends State<ButtonStates> {
             NakedButton(
               onPressed: () =>
                   widget.onButtonPressed('Push Down Button Pressed'),
-              onStateHover: (value) =>
+              onHoverState: (value) =>
                   setState(() => _isPushDownHovered = value),
-              onStatePressed: (value) =>
+              onPressedState: (value) =>
                   setState(() => _isPushDownPressed = value),
-              onStateFocus: (value) =>
+              onFocusState: (value) =>
                   setState(() => _isPushDownFocused = value),
               child: AnimatedContainer(
                 duration: const Duration(milliseconds: 100),
@@ -776,11 +776,11 @@ class _ToggleButtonsState extends State<ToggleButtons> {
               widget.onButtonPressed(
                   'Simple Toggle: ${_simpleToggleState ? "ON" : "OFF"}');
             },
-            onStateHover: (value) =>
+            onHoverState: (value) =>
                 setState(() => _simpleToggleHovered = value),
-            onStatePressed: (value) =>
+            onPressedState: (value) =>
                 setState(() => _simpleTogglePressed = value),
-            onStateFocus: (value) =>
+            onFocusState: (value) =>
                 setState(() => _simpleToggleFocused = value),
             child: AnimatedContainer(
               duration: const Duration(milliseconds: 200),
@@ -826,10 +826,10 @@ class _ToggleButtonsState extends State<ToggleButtons> {
               widget.onButtonPressed(
                   'Icon Toggle: ${_iconToggleState ? "Enabled" : "Disabled"}');
             },
-            onStateHover: (value) => setState(() => _iconToggleHovered = value),
-            onStatePressed: (value) =>
+            onHoverState: (value) => setState(() => _iconToggleHovered = value),
+            onPressedState: (value) =>
                 setState(() => _iconTogglePressed = value),
-            onStateFocus: (value) => setState(() => _iconToggleFocused = value),
+            onFocusState: (value) => setState(() => _iconToggleFocused = value),
             child: AnimatedContainer(
               duration: const Duration(milliseconds: 200),
               width: double.infinity,
@@ -882,11 +882,11 @@ class _ToggleButtonsState extends State<ToggleButtons> {
               widget.onButtonPressed(
                   'Theme Toggle: ${_themeToggleState ? "Dark" : "Light"}');
             },
-            onStateHover: (value) =>
+            onHoverState: (value) =>
                 setState(() => _themeToggleHovered = value),
-            onStatePressed: (value) =>
+            onPressedState: (value) =>
                 setState(() => _themeTogglePressed = value),
-            onStateFocus: (value) =>
+            onFocusState: (value) =>
                 setState(() => _themeToggleFocused = value),
             child: AnimatedContainer(
               duration: const Duration(milliseconds: 200),
@@ -1043,10 +1043,10 @@ class _LoadingButtonsState extends State<LoadingButtons> {
             // </button>
             isLoading: _isSpinnerLoading,
             onPressed: _isSpinnerLoading ? null : handleSpinnerClick,
-            onStateHover: (value) => setState(() => _isSpinnerHovered = value),
-            onStatePressed: (value) =>
+            onHoverState: (value) => setState(() => _isSpinnerHovered = value),
+            onPressedState: (value) =>
                 setState(() => _isSpinnerPressed = value),
-            onStateFocus: (value) => setState(() => _isSpinnerFocused = value),
+            onFocusState: (value) => setState(() => _isSpinnerFocused = value),
             child: Container(
               width: double.infinity,
               padding: const EdgeInsets.symmetric(vertical: 8),
@@ -1118,10 +1118,10 @@ class _LoadingButtonsState extends State<LoadingButtons> {
             // </button>
             isLoading: _isProgressLoading,
             onPressed: _isProgressLoading ? null : handleProgressClick,
-            onStateHover: (value) => setState(() => _isProgressHovered = value),
-            onStatePressed: (value) =>
+            onHoverState: (value) => setState(() => _isProgressHovered = value),
+            onPressedState: (value) =>
                 setState(() => _isProgressPressed = value),
-            onStateFocus: (value) => setState(() => _isProgressFocused = value),
+            onFocusState: (value) => setState(() => _isProgressFocused = value),
             child: Stack(
               children: [
                 // Button container
@@ -1259,10 +1259,10 @@ class _StyledButtonsState extends State<StyledButtons> {
             //   Gradient Button
             // </button>
             onPressed: () => widget.onButtonPressed('Gradient Button Pressed'),
-            onStateHover: (value) => setState(() => _isGradientHovered = value),
-            onStatePressed: (value) =>
+            onHoverState: (value) => setState(() => _isGradientHovered = value),
+            onPressedState: (value) =>
                 setState(() => _isGradientPressed = value),
-            onStateFocus: (value) => setState(() => _isGradientFocused = value),
+            onFocusState: (value) => setState(() => _isGradientFocused = value),
             child: AnimatedContainer(
               duration: const Duration(milliseconds: 300),
               width: double.infinity,
@@ -1346,11 +1346,11 @@ class _StyledButtonsState extends State<StyledButtons> {
               // </button>
               NakedButton(
                 onPressed: () => widget.onButtonPressed('Glass Button Pressed'),
-                onStateHover: (value) =>
+                onHoverState: (value) =>
                     setState(() => _isGlassHovered = value),
-                onStatePressed: (value) =>
+                onPressedState: (value) =>
                     setState(() => _isGlassPressed = value),
-                onStateFocus: (value) =>
+                onFocusState: (value) =>
                     setState(() => _isGlassFocused = value),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(8),
@@ -1400,9 +1400,9 @@ class _StyledButtonsState extends State<StyledButtons> {
             //   <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             // </button>
             onPressed: () => widget.onButtonPressed('Arrow Button Pressed'),
-            onStateHover: (value) => setState(() => _isArrowHovered = value),
-            onStatePressed: (value) => setState(() => _isArrowPressed = value),
-            onStateFocus: (value) => setState(() => _isArrowFocused = value),
+            onHoverState: (value) => setState(() => _isArrowHovered = value),
+            onPressedState: (value) => setState(() => _isArrowPressed = value),
+            onFocusState: (value) => setState(() => _isArrowFocused = value),
             child: Container(
               width: double.infinity,
               padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),

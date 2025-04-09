@@ -243,8 +243,8 @@ void main() {
                   onChanged: (_) {},
                   child: NakedRadioButton<String>(
                     value: 'option1',
-                    onStateHover: (value) => setState(() => isHovered = value),
-                    onStatePressed: (value) =>
+                    onHoverState: (value) => setState(() => isHovered = value),
+                    onPressedState: (value) =>
                         setState(() => isPressed = value),
                     child: const SizedBox(width: 30, height: 30),
                   ),

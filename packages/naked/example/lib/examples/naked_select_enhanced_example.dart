@@ -111,15 +111,15 @@ class _NakedSelectEnhancedExampleState
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   NakedSelectTrigger(
-                    onStateHover: (isHovered) =>
+                    onHoverState: (isHovered) =>
                         setState(() => _isTriggerHovered = isHovered),
-                    onStateFocus: (isFocused) {
+                    onFocusState: (isFocused) {
                       setState(() => _isTriggerFocused = isFocused);
                       if (isFocused) {
                         setState(() => _lastKeyboardAction = 'Trigger focused');
                       }
                     },
-                    onStatePressed: (isPressed) =>
+                    onPressedState: (isPressed) =>
                         setState(() => _isTriggerPressed = isPressed),
                     child: _buildTrigger(),
                   ),
@@ -219,13 +219,21 @@ class _NakedSelectEnhancedExampleState
             return NakedSelectItem<String>(
               value: country,
               isSelected: isSelected,
-              onStateHover: (isHovered) => setState(
+              onHoverState: (isHovered) => setState(
                   () => _hoveredOptionIndex = isHovered ? index : null),
-              onStateFocus: (isFocused) {
+              onFocusState: (isFocused) {
                 setState(() {
                   _focusedOptionIndex = isFocused ? index : null;
                   if (isFocused) {
                     _lastKeyboardAction = "Focus on '$country'";
+                  }
+                });
+              },
+              onPressedState: (isPressed) {
+                // Add proper pressed state tracking
+                setState(() {
+                  if (isPressed) {
+                    _lastKeyboardAction = "Pressed '$country'";
                   }
                 });
               },

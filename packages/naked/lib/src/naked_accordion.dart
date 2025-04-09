@@ -282,13 +282,13 @@ class NakedAccordionTrigger extends StatefulWidget {
   final Widget child;
 
   /// Called when hover state changes (true if hovered, false otherwise).
-  final ValueChanged<bool>? onStateHover;
+  final ValueChanged<bool>? onHoverState;
 
   /// Called when pressed state changes (true if pressed, false otherwise).
-  final ValueChanged<bool>? onStatePressed;
+  final ValueChanged<bool>? onPressedState;
 
   /// Called when focus state changes (true if focused, false otherwise).
-  final ValueChanged<bool>? onStateFocus;
+  final ValueChanged<bool>? onFocusState;
 
   /// The cursor to display when hovering over the trigger.
   final MouseCursor cursor;
@@ -302,9 +302,9 @@ class NakedAccordionTrigger extends StatefulWidget {
     this.onTap,
     this.icon,
     required this.child,
-    this.onStateHover,
-    this.onStatePressed,
-    this.onStateFocus,
+    this.onHoverState,
+    this.onPressedState,
+    this.onFocusState,
     this.cursor = SystemMouseCursors.click, // Default cursor
   });
 
@@ -330,7 +330,7 @@ class _NakedAccordionTriggerState extends State<NakedAccordionTrigger> {
   }
 
   void _handleFocusChange() {
-    widget.onStateFocus?.call(_focusNode.hasFocus);
+    widget.onFocusState?.call(_focusNode.hasFocus);
   }
 
   void _handleTap() {
@@ -379,15 +379,15 @@ class _NakedAccordionTriggerState extends State<NakedAccordionTrigger> {
 
     return MouseRegion(
       cursor: isInteractive ? widget.cursor : SystemMouseCursors.forbidden,
-      onEnter: isInteractive ? (_) => widget.onStateHover?.call(true) : null,
-      onExit: isInteractive ? (_) => widget.onStateHover?.call(false) : null,
+      onEnter: isInteractive ? (_) => widget.onHoverState?.call(true) : null,
+      onExit: isInteractive ? (_) => widget.onHoverState?.call(false) : null,
       child: GestureDetector(
         onTapDown:
-            isInteractive ? (_) => widget.onStatePressed?.call(true) : null,
+            isInteractive ? (_) => widget.onPressedState?.call(true) : null,
         onTapUp:
-            isInteractive ? (_) => widget.onStatePressed?.call(false) : null,
+            isInteractive ? (_) => widget.onPressedState?.call(false) : null,
         onTapCancel:
-            isInteractive ? () => widget.onStatePressed?.call(false) : null,
+            isInteractive ? () => widget.onPressedState?.call(false) : null,
         onTap: isInteractive ? _handleTap : null,
         child: Focus(
           focusNode: _focusNode,

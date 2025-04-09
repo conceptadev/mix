@@ -62,10 +62,10 @@ void main() {
           body: NakedAvatar(
             src: 'https://example.com/avatar.jpg',
             onPressed: () {},
-            onStateHover: (isHovered) {
+            onHoverState: (isHovered) {
               hoverCalled = true;
             },
-            onStatePressed: (isPressed) {
+            onPressedState: (isPressed) {
               pressedCalled = true;
             },
             child: Container(
@@ -133,10 +133,10 @@ void main() {
         home: Scaffold(
           body: NakedAvatar(
             src: 'https://example.com/avatar.jpg',
-            onStateLoading: (isLoading) {
+            onLoadingState: (isLoading) {
               hasLoadingCallback = true;
             },
-            onStateError: (hasError) {
+            onErrorState: (hasError) {
               hasErrorCallback = true;
             },
             child: Container(

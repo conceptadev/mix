@@ -84,9 +84,9 @@ import 'package:naked/src/utilities/naked_focus_manager.dart';
 ///
 ///     return NakedTab(
 ///       tabId: tabId,
-///       onStateHover: (isHovered) => setState(() => _tabHoverStates[tabId] = isHovered),
-///       onStateFocus: (isFocused) => setState(() => _tabFocusStates[tabId] = isFocused),
-///       onStatePressed: (isPressed) => setState(() => _tabPressStates[tabId] = isPressed),
+///       onHoverState: (isHovered) => setState(() => _tabHoverStates[tabId] = isHovered),
+///       onFocusState: (isFocused) => setState(() => _tabFocusStates[tabId] = isFocused),
+///       onPressedState: (isPressed) => setState(() => _tabPressStates[tabId] = isPressed),
 ///       child: Container(
 ///         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
 ///         decoration: BoxDecoration(
@@ -384,13 +384,13 @@ class NakedTab extends StatefulWidget {
   final String tabId;
 
   /// Called when hover state changes.
-  final ValueChanged<bool>? onStateHover;
+  final ValueChanged<bool>? onHoverState;
 
   /// Called when pressed state changes.
-  final ValueChanged<bool>? onStatePressed;
+  final ValueChanged<bool>? onPressedState;
 
   /// Called when focus state changes.
-  final ValueChanged<bool>? onStateFocus;
+  final ValueChanged<bool>? onFocusState;
 
   /// Whether this tab is disabled.
   ///
@@ -419,9 +419,9 @@ class NakedTab extends StatefulWidget {
     super.key,
     required this.child,
     required this.tabId,
-    this.onStateHover,
-    this.onStatePressed,
-    this.onStateFocus,
+    this.onHoverState,
+    this.onPressedState,
+    this.onFocusState,
     this.isDisabled = false,
     this.semanticLabel,
     this.cursor = SystemMouseCursors.click,
@@ -506,13 +506,13 @@ class _NakedTabState extends State<NakedTab> {
     if (event is KeyDownEvent) {
       if (event.logicalKey == LogicalKeyboardKey.space ||
           event.logicalKey == LogicalKeyboardKey.enter) {
-        widget.onStatePressed?.call(true);
+        widget.onPressedState?.call(true);
         return KeyEventResult.handled;
       }
     } else if (event is KeyUpEvent) {
       if (event.logicalKey == LogicalKeyboardKey.space ||
           event.logicalKey == LogicalKeyboardKey.enter) {
-        widget.onStatePressed?.call(false);
+        widget.onPressedState?.call(false);
         _handleTap();
         return KeyEventResult.handled;
       }
@@ -542,25 +542,25 @@ class _NakedTabState extends State<NakedTab> {
         child: Focus(
           focusNode: _focusNode,
           canRequestFocus: isInteractive,
-          onFocusChange: widget.onStateFocus,
+          onFocusChange: widget.onFocusState,
           onKeyEvent: _handleKeyEvent,
           child: MouseRegion(
             cursor:
                 isInteractive ? widget.cursor : SystemMouseCursors.forbidden,
             onEnter:
-                isInteractive ? (_) => widget.onStateHover?.call(true) : null,
+                isInteractive ? (_) => widget.onHoverState?.call(true) : null,
             onExit:
-                isInteractive ? (_) => widget.onStateHover?.call(false) : null,
+                isInteractive ? (_) => widget.onHoverState?.call(false) : null,
             child: GestureDetector(
               behavior: HitTestBehavior.opaque,
               onTapDown: isInteractive
-                  ? (_) => widget.onStatePressed?.call(true)
+                  ? (_) => widget.onPressedState?.call(true)
                   : null,
               onTapUp: isInteractive
-                  ? (_) => widget.onStatePressed?.call(false)
+                  ? (_) => widget.onPressedState?.call(false)
                   : null,
               onTapCancel: isInteractive
-                  ? () => widget.onStatePressed?.call(false)
+                  ? () => widget.onPressedState?.call(false)
                   : null,
               onTap: isInteractive ? _handleTap : null,
               child: widget.child,

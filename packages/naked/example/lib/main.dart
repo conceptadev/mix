@@ -1,25 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
-// Uncomment the accordion example import
+// Import examples
 import 'examples/naked_accordion_example.dart';
-// import 'examples/naked_accordion_focus_example.dart';
 import 'examples/naked_avatar_example.dart';
 import 'examples/naked_button_example.dart';
 import 'examples/naked_checkbox_example.dart';
-// import 'examples/naked_checkbox_focus_example.dart';
 import 'examples/naked_menu_example.dart';
-// Assuming naked_positioning_example.dart is structured similarly
-// import 'examples/naked_positioning_example.dart';
 import 'examples/naked_radio_example.dart';
-// import 'examples/naked_radio_focus_example.dart';
 import 'examples/naked_select_example.dart';
-// import 'examples/naked_select_focus_example.dart';
-// Assuming naked_select_enhanced_example.dart exists and is a widget
-// import 'examples/naked_select_enhanced_example.dart';
 import 'examples/naked_slider_example.dart';
 import 'examples/naked_tabs_example.dart';
-// import 'examples/naked_tabs_focus_example.dart';
-// Conditionally import dart:js
+// Import URL strategy
 import 'url_strategy.dart';
 
 void main() {
@@ -34,23 +26,62 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Headless Widgets Showcase',
+      title: 'Naked Components',
       theme: ThemeData(
-          primarySwatch: Colors.blue,
-          useMaterial3: true,
-          visualDensity: VisualDensity.adaptivePlatformDensity,
-          navigationRailTheme: NavigationRailThemeData(
-            selectedIconTheme:
-                const IconThemeData(color: Colors.blue, size: 28),
-            unselectedIconTheme:
-                const IconThemeData(color: Colors.grey, size: 24),
-            selectedLabelTextStyle: const TextStyle(
-                color: Colors.blue, fontWeight: FontWeight.bold),
-            unselectedLabelTextStyle: const TextStyle(color: Colors.grey),
-            indicatorColor: Colors.blueGrey.withOpacity(0.1),
-          )),
+        useMaterial3: true,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+        // Use Inter font from Google Fonts
+        textTheme: GoogleFonts.interTextTheme(Theme.of(context).textTheme),
+        // Modern color scheme inspired by Vercel/shadcn
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: const Color(0xFF0070F3), // Vercel blue
+          brightness: Brightness.light,
+          surface: Colors.white,
+          onSurface: const Color(0xFF171717), // Near black
+          primary: const Color(0xFF0070F3), // Primary blue
+          secondary: const Color(0xFF6B7280), // Gray
+        ),
+        scaffoldBackgroundColor: Colors.white,
+        // App bar styling
+        appBarTheme: AppBarTheme(
+          backgroundColor: Colors.white,
+          elevation: 0,
+          centerTitle: false,
+          titleTextStyle: GoogleFonts.inter(
+            fontSize: 18,
+            fontWeight: FontWeight.w600,
+            color: const Color(0xFF171717),
+          ),
+          iconTheme: const IconThemeData(
+            color: Color(0xFF6B7280),
+          ),
+        ),
+        // Card styling
+        cardTheme: const CardTheme(
+          color: Colors.white,
+          elevation: 0,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(12)),
+            side: BorderSide(
+              color: Color(0xFFE5E7EB), // Light gray border
+              width: 1,
+            ),
+          ),
+        ),
+        // Button styling
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            foregroundColor: Colors.white,
+            backgroundColor: const Color(0xFF0070F3),
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8),
+            ),
+            elevation: 0,
+          ),
+        ),
+      ),
       debugShowCheckedModeBanner: false,
-      // Enable URL strategy for web
       initialRoute: '/',
       onGenerateRoute: (settings) {
         // Parse route name from URL path
@@ -90,67 +121,42 @@ class MyApp extends StatelessWidget {
 
 // Define destinations at the app level for route generation
 final List<NavDestination> destinations = [
-  // Uncomment the accordion destination
   NavDestination(
     label: 'Accordion',
-    icon: Icons.expand_more,
     widget: const NakedAccordionExample(),
   ),
   NavDestination(
-      label: 'Avatar',
-      icon: Icons.account_circle,
-      widget: const NakedAvatarExample()),
+    label: 'Avatar',
+    widget: const NakedAvatarExample(),
+  ),
   NavDestination(
-      label: 'Button',
-      icon: Icons.touch_app,
-      widget: const NakedButtonExample()),
+    label: 'Button',
+    widget: const NakedButtonExample(),
+  ),
   NavDestination(
-      label: 'Checkbox',
-      icon: Icons.check_box,
-      widget: const NakedCheckboxExample()),
+    label: 'Checkbox',
+    widget: const NakedCheckboxExample(),
+  ),
   NavDestination(
-      label: 'Menu', icon: Icons.menu, widget: const NakedMenuExample()),
-  // NavDestination(label: 'Positioning', icon: Icons.place, widget: const NakedPositioningExample()), // Uncomment if available
+    label: 'Menu',
+    widget: const NakedMenuExample(),
+  ),
   NavDestination(
-      label: 'Radio',
-      icon: Icons.radio_button_checked,
-      widget: const NakedRadioExample()),
+    label: 'Radio',
+    widget: const NakedRadioExample(),
+  ),
   NavDestination(
-      label: 'Select',
-      icon: Icons.arrow_drop_down_circle,
-      widget: const NakedSelectExample()),
+    label: 'Select',
+    widget: const NakedSelectExample(),
+  ),
   NavDestination(
-      label: 'Slider',
-      icon: Icons.linear_scale,
-      widget: const NakedSliderExample()),
+    label: 'Slider',
+    widget: const NakedSliderExample(),
+  ),
   NavDestination(
-      label: 'Tabs', icon: Icons.tab, widget: const NakedTabsExample()),
-
-  // Focus Examples (Use Icons.keyboard)
-  // Commented out because the accordion focus example was deleted
-  /*
-  NavDestination(
-      label: 'Accordion Focus',
-      icon: Icons.keyboard,
-      widget: const NakedAccordionFocusExample()),
-  */
-  // NavDestination(
-  //     label: 'Checkbox Focus',
-  //     icon: Icons.keyboard,
-  //     widget: const NakedCheckboxFocusExample()),
-  // NavDestination(
-  //     label: 'Radio Focus',
-  //     icon: Icons.keyboard,
-  //     widget: const NakedRadioFocusExample()),
-  // NavDestination(
-  //     label: 'Select Focus',
-  //     icon: Icons.keyboard,
-  //     widget: const NakedSelectFocusExample()),
-  // NavDestination(
-  //     label: 'Tabs Focus',
-  //     icon: Icons.keyboard,
-  //     widget: const NakedTabsFocusExample()),
-  // NavDestination(label: 'Select Enhanced', icon: Icons.arrow_drop_down_circle_outlined, widget: const NakedSelectEnhancedExample()), // Uncomment if available
+    label: 'Tabs',
+    widget: const NakedTabsExample(),
+  ),
 ];
 
 class ShowcaseApp extends StatefulWidget {
@@ -165,16 +171,14 @@ class ShowcaseApp extends StatefulWidget {
 // Helper class to define navigation destinations
 class NavDestination {
   final String label;
-  final IconData icon;
   final Widget widget;
 
-  NavDestination(
-      {required this.label, required this.icon, required this.widget});
+  NavDestination({required this.label, required this.widget});
 }
 
 class _ShowcaseAppState extends State<ShowcaseApp> {
   late int _selectedIndex;
-  bool _isExtended = false;
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
@@ -199,58 +203,125 @@ class _ShowcaseAppState extends State<ShowcaseApp> {
     final Widget selectedWidget = selectedDestination.widget;
 
     return Scaffold(
-      body: Row(
-        children: <Widget>[
-          NavigationRail(
-            selectedIndex: _selectedIndex,
-            extended: _isExtended,
-            minExtendedWidth: 180, // Adjust width when extended
-            onDestinationSelected: (int index) {
-              // Use a post-frame callback to update the state
-              // This prevents setState during layout/paint issues
-              WidgetsBinding.instance.addPostFrameCallback((_) {
-                if (mounted) {
-                  setState(() {
-                    _selectedIndex = index;
-                    // Update URL when tab changes
-                    _updateUrlForDestination(index);
-                  });
-                }
-              });
-            },
-            leading: FloatingActionButton(
-              elevation: 0,
-              onPressed: () {
-                // Use post-frame callback for UI state changes
-                WidgetsBinding.instance.addPostFrameCallback((_) {
-                  if (mounted) {
-                    setState(() {
-                      _isExtended = !_isExtended;
-                    });
-                  }
-                });
-              },
-              tooltip: _isExtended ? 'Collapse' : 'Expand',
-              child: Icon(_isExtended ? Icons.arrow_back : Icons.arrow_forward),
-            ),
-            destinations: destinations.map((destination) {
-              return NavigationRailDestination(
-                icon: Tooltip(
-                    message: destination.label, child: Icon(destination.icon)),
-                selectedIcon: Tooltip(
-                    message: destination.label, child: Icon(destination.icon)),
-                label: Text(destination.label),
-              );
-            }).toList(),
+      key: _scaffoldKey,
+      appBar: AppBar(
+        title: Text(
+          selectedDestination.label,
+          style: GoogleFonts.inter(
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
           ),
-          const VerticalDivider(thickness: 1, width: 1),
-          // Main content area
+        ),
+      ),
+      drawer: Container(
+        width: 260,
+        color: Colors.white,
+        child: SafeArea(
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Row(
+                  children: [
+                    Text(
+                      'COMPONENTS',
+                      style: GoogleFonts.inter(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w600,
+                        color: const Color(0xFF6B7280),
+                        letterSpacing: 1.2,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const Divider(height: 1, color: Color(0xFFE5E7EB)),
+              Expanded(
+                child: ListView(
+                  padding: EdgeInsets.zero,
+                  children: destinations.asMap().entries.map((entry) {
+                    final int index = entry.key;
+                    final NavDestination destination = entry.value;
+                    final bool isSelected = index == _selectedIndex;
+
+                    return ListTile(
+                      title: Text(
+                        destination.label,
+                        style: GoogleFonts.inter(
+                          color: isSelected
+                              ? const Color(0xFF0070F3)
+                              : const Color(0xFF6B7280),
+                          fontWeight:
+                              isSelected ? FontWeight.w600 : FontWeight.normal,
+                        ),
+                      ),
+                      tileColor: isSelected
+                          ? const Color(0xFFEFF6FF)
+                          : Colors.transparent,
+                      onTap: () {
+                        setState(() {
+                          _selectedIndex = index;
+                          _updateUrlForDestination(index);
+                          _scaffoldKey.currentState?.closeDrawer();
+                        });
+                      },
+                    );
+                  }).toList(),
+                ),
+              ),
+              const Divider(height: 1, color: Color(0xFFE5E7EB)),
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Naked Components',
+                      style: GoogleFonts.inter(
+                        fontSize: 12,
+                        color: const Color(0xFF6B7280),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Component description
+          Container(
+            padding: const EdgeInsets.fromLTRB(24, 8, 24, 24),
+            child: Text(
+              'Headless component with complete styling freedom and built-in accessibility',
+              style: GoogleFonts.inter(
+                fontSize: 16,
+                color: const Color(0xFF6B7280),
+              ),
+            ),
+          ),
+          // Component example content
           Expanded(
-            child: Padding(
-              padding: const EdgeInsets.all(20.0),
-              // Add SingleChildScrollView here to wrap the examples
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 24),
               child: SingleChildScrollView(
-                child: selectedWidget,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // Card to contain the example
+                    Card(
+                      margin: EdgeInsets.zero,
+                      child: Padding(
+                        padding: const EdgeInsets.all(24.0),
+                        child: selectedWidget,
+                      ),
+                    ),
+                    const SizedBox(height: 32),
+                  ],
+                ),
               ),
             ),
           ),

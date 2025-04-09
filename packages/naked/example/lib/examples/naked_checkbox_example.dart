@@ -195,9 +195,9 @@ class _BasicCheckboxStatesState extends State<BasicCheckboxStates> {
                 });
               },
               // Optional state tracking for visual feedback
-              onStateHover: (value) => setState(() => _isHovered = value),
-              onStatePressed: (value) => setState(() => _isPressed = value),
-              onStateFocus: (value) => setState(() => _isFocused = value),
+              onHoverState: (value) => setState(() => _isHovered = value),
+              onPressedState: (value) => setState(() => _isPressed = value),
+              onFocusState: (value) => setState(() => _isFocused = value),
               // Web Reference (React/Tailwind): input element with ref/checked/onChange
               // className="w-5 h-5 rounded text-blue-500 focus:ring-blue-500"
               child: _buildDefaultCheckboxVisual(
@@ -523,11 +523,11 @@ class _ParentChildCheckboxesState extends State<ParentChildCheckboxes> {
                 isChecked: _parentCheckedValue,
                 isIndeterminate: _isParentIndeterminate,
                 onChanged: (value) => _handleParentChange(value),
-                onStateHover: (value) =>
+                onHoverState: (value) =>
                     setState(() => _isParentHovered = value),
-                onStatePressed: (value) =>
+                onPressedState: (value) =>
                     setState(() => _isParentPressed = value),
-                onStateFocus: (value) =>
+                onFocusState: (value) =>
                     setState(() => _isParentFocused = value),
                 child: _buildDefaultCheckboxVisual(
                   isChecked: _parentCheckedValue,
@@ -804,9 +804,9 @@ class _StyledCheckboxVariantState extends State<StyledCheckboxVariant> {
               isChecked: _isChecked,
               isIndeterminate: _isIndeterminate,
               onChanged: (value) => _toggleChecked(), // Simplified toggle
-              onStateHover: (value) => setState(() => _isHovered = value),
-              onStatePressed: (value) => setState(() => _isPressed = value),
-              onStateFocus: (value) => setState(() => _isFocused = value),
+              onHoverState: (value) => setState(() => _isHovered = value),
+              onPressedState: (value) => setState(() => _isPressed = value),
+              onFocusState: (value) => setState(() => _isFocused = value),
               child: checkboxVisual,
             ),
             const SizedBox(width: 8),
@@ -1534,7 +1534,7 @@ class _FocusCheckboxExampleState extends State<FocusCheckboxExample> {
           _lastAction = 'Escape pressed on $label';
         });
       },
-      onStateHover: (hover) {
+      onHoverState: (hover) {
         setState(() {
           _hoverStates[id] = hover;
           if (hover) {
@@ -1542,7 +1542,7 @@ class _FocusCheckboxExampleState extends State<FocusCheckboxExample> {
           }
         });
       },
-      onStateFocus: (focus) {
+      onFocusState: (focus) {
         setState(() {
           _focusStates[id] = focus;
           if (focus) {
@@ -1550,7 +1550,7 @@ class _FocusCheckboxExampleState extends State<FocusCheckboxExample> {
           }
         });
       },
-      onStatePressed: (press) {
+      onPressedState: (press) {
         setState(() {
           _pressStates[id] = press;
           if (press) {

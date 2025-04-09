@@ -54,9 +54,9 @@ import 'utilities/naked_focus_manager.dart';
 ///           children: [
 ///             NakedRadioButton<String>(
 ///               value: value,
-///               onStateHover: (isHovered) => setInnerState(() => _isHovered = isHovered),
-///               onStatePressed: (isPressed) => setInnerState(() => _isPressed = isPressed),
-///               onStateFocus: (isFocused) => setInnerState(() => _isFocused = isFocused),
+///               onHoverState: (isHovered) => setInnerState(() => _isHovered = isHovered),
+///               onPressedState: (isPressed) => setInnerState(() => _isPressed = isPressed),
+///               onFocusState: (isFocused) => setInnerState(() => _isFocused = isFocused),
 ///               child: Container(
 ///                 width: 20,
 ///                 height: 20,
@@ -105,13 +105,13 @@ class NakedRadioButton<T> extends StatefulWidget {
   final T value;
 
   /// Called when hover state changes.
-  final ValueChanged<bool>? onStateHover;
+  final ValueChanged<bool>? onHoverState;
 
   /// Called when pressed state changes.
-  final ValueChanged<bool>? onStatePressed;
+  final ValueChanged<bool>? onPressedState;
 
   /// Called when focus state changes.
-  final ValueChanged<bool>? onStateFocus;
+  final ValueChanged<bool>? onFocusState;
 
   /// Whether this radio button is disabled.
   ///
@@ -141,9 +141,9 @@ class NakedRadioButton<T> extends StatefulWidget {
     super.key,
     required this.child,
     required this.value,
-    this.onStateHover,
-    this.onStatePressed,
-    this.onStateFocus,
+    this.onHoverState,
+    this.onPressedState,
+    this.onFocusState,
     this.isDisabled = false,
     this.semanticLabel,
     this.cursor = SystemMouseCursors.click,
@@ -242,12 +242,12 @@ class _NakedRadioButtonState<T> extends State<NakedRadioButton<T>> {
         child: MouseRegion(
           cursor: isInteractive ? widget.cursor : SystemMouseCursors.forbidden,
           onEnter:
-              isInteractive ? (_) => widget.onStateHover?.call(true) : null,
+              isInteractive ? (_) => widget.onHoverState?.call(true) : null,
           onExit:
-              isInteractive ? (_) => widget.onStateHover?.call(false) : null,
+              isInteractive ? (_) => widget.onHoverState?.call(false) : null,
           child: Focus(
             focusNode: _focusNode,
-            onFocusChange: widget.onStateFocus,
+            onFocusChange: widget.onFocusState,
             onKeyEvent: (node, event) {
               if (isInteractive) {
                 _handleKeyEvent(event);
@@ -257,13 +257,13 @@ class _NakedRadioButtonState<T> extends State<NakedRadioButton<T>> {
             child: GestureDetector(
               behavior: HitTestBehavior.opaque,
               onTapDown: isInteractive
-                  ? (_) => widget.onStatePressed?.call(true)
+                  ? (_) => widget.onPressedState?.call(true)
                   : null,
               onTapUp: isInteractive
-                  ? (_) => widget.onStatePressed?.call(false)
+                  ? (_) => widget.onPressedState?.call(false)
                   : null,
               onTapCancel: isInteractive
-                  ? () => widget.onStatePressed?.call(false)
+                  ? () => widget.onPressedState?.call(false)
                   : null,
               onTap: isInteractive ? _handleTap : null,
               child: widget.child,

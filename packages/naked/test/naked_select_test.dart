@@ -78,8 +78,8 @@ void main() {
           home: Scaffold(
             body: NakedSelectTrigger(
               key: triggerKey,
-              onStateHover: (hovered) => wasHovered = hovered,
-              onStatePressed: (pressed) => wasPressed = pressed,
+              onHoverState: (hovered) => wasHovered = hovered,
+              onPressedState: (pressed) => wasPressed = pressed,
               child: const Text('Trigger'),
             ),
           ),

@@ -57,9 +57,9 @@ class _CustomButtonState extends State<CustomButton> {
       onPressed: widget.onPressed,
       isLoading: widget.isLoading,
       semanticLabel: widget.text,
-      onStateHover: (isHovered) => setState(() => _isHovered = isHovered),
-      onStatePressed: (isPressed) => setState(() => _isPressed = isPressed),
-      onStateFocus: (isFocused) => setState(() => _isFocused = isFocused),
+      onHoverState: (isHovered) => setState(() => _isHovered = isHovered),
+      onPressedState: (isPressed) => setState(() => _isPressed = isPressed),
+      onFocusState: (isFocused) => setState(() => _isFocused = isFocused),
       child: AnimatedContainer(
         duration: Duration(milliseconds: 200),
         padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -110,7 +110,7 @@ This approach allows for unlimited visual customization while maintaining consis
 
 Naked components use a callback-driven approach where:
 
-1. **Direct Callbacks**: Components provide callbacks like `onStateHover`, `onStateFocus`, etc.
+1. **Direct Callbacks**: Components provide callbacks like `onHoverState`, `onFocusState`, etc.
 2. **Consumer-Managed State**: You maintain your own state variables using these callbacks
 3. **Full Styling Control**: You implement your own visual rendering using state variables
 

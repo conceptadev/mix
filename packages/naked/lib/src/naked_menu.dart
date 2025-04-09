@@ -52,9 +52,9 @@ import 'package:naked/src/utilities/naked_positioning.dart';
 ///         crossAxisAlignment: CrossAxisAlignment.start,
 ///         children: [
 ///           NakedMenuTrigger(
-///             onStateHover: (isHovered) => setState(() => _isTriggerHovered = isHovered),
-///             onStateFocus: (isFocused) => setState(() => _isTriggerFocused = isFocused),
-///             onStatePressed: (isPressed) => setState(() => _isTriggerPressed = isPressed),
+///             onHoverState: (isHovered) => setState(() => _isTriggerHovered = isHovered),
+///             onFocusState: (isFocused) => setState(() => _isTriggerFocused = isFocused),
+///             onPressedState: (isPressed) => setState(() => _isTriggerPressed = isPressed),
 ///             child: Container(
 ///               padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
 ///               decoration: BoxDecoration(
@@ -109,9 +109,9 @@ import 'package:naked/src/utilities/naked_positioning.dart';
 ///                       setState(() => _isOpen = false);
 ///                       print('Item 1 selected');
 ///                     },
-///                     onStateHover: (isHovered) =>
+///                     onHoverState: (isHovered) =>
 ///                       setState(() => _hoveredItemIndex = isHovered ? 0 : null),
-///                     onStateFocus: (isFocused) =>
+///                     onFocusState: (isFocused) =>
 ///                       setState(() => _focusedItemIndex = isFocused ? 0 : null),
 ///                     child: _buildMenuItem(
 ///                       'Item 1',
@@ -124,9 +124,9 @@ import 'package:naked/src/utilities/naked_positioning.dart';
 ///                       setState(() => _isOpen = false);
 ///                       print('Item 2 selected');
 ///                     },
-///                     onStateHover: (isHovered) =>
+///                     onHoverState: (isHovered) =>
 ///                       setState(() => _hoveredItemIndex = isHovered ? 1 : null),
-///                     onStateFocus: (isFocused) =>
+///                     onFocusState: (isFocused) =>
 ///                       setState(() => _focusedItemIndex = isFocused ? 1 : null),
 ///                     child: _buildMenuItem(
 ///                       'Item 2',
@@ -139,9 +139,9 @@ import 'package:naked/src/utilities/naked_positioning.dart';
 ///                       setState(() => _isOpen = false);
 ///                       print('Item 3 selected');
 ///                     },
-///                     onStateHover: (isHovered) =>
+///                     onHoverState: (isHovered) =>
 ///                       setState(() => _hoveredItemIndex = isHovered ? 2 : null),
-///                     onStateFocus: (isFocused) =>
+///                     onFocusState: (isFocused) =>
 ///                       setState(() => _focusedItemIndex = isFocused ? 2 : null),
 ///                     child: _buildMenuItem(
 ///                       'Item 3',
@@ -339,13 +339,13 @@ class NakedMenuTrigger extends StatelessWidget {
   final Widget child;
 
   /// Called when hover state changes.
-  final ValueChanged<bool>? onStateHover;
+  final ValueChanged<bool>? onHoverState;
 
   /// Called when pressed state changes.
-  final ValueChanged<bool>? onStatePressed;
+  final ValueChanged<bool>? onPressedState;
 
   /// Called when focus state changes.
-  final ValueChanged<bool>? onStateFocus;
+  final ValueChanged<bool>? onFocusState;
 
   /// Called when the trigger is pressed.
   final VoidCallback? onPressed;
@@ -371,9 +371,9 @@ class NakedMenuTrigger extends StatelessWidget {
   const NakedMenuTrigger({
     super.key,
     required this.child,
-    this.onStateHover,
-    this.onStatePressed,
-    this.onStateFocus,
+    this.onHoverState,
+    this.onPressedState,
+    this.onFocusState,
     this.onPressed,
     this.isDisabled = false,
     this.semanticLabel,
@@ -414,14 +414,14 @@ class NakedMenuTrigger extends StatelessWidget {
       excludeSemantics: true,
       child: Focus(
         focusNode: effectiveFocusNode,
-        onFocusChange: onStateFocus,
+        onFocusChange: onFocusState,
         onKeyEvent: (node, event) {
           if (!isInteractive) return KeyEventResult.ignored;
 
           if (event is KeyDownEvent) {
             if (event.logicalKey == LogicalKeyboardKey.space ||
                 event.logicalKey == LogicalKeyboardKey.enter) {
-              onStatePressed?.call(true);
+              onPressedState?.call(true);
               return KeyEventResult.handled;
             } else if (event.logicalKey == LogicalKeyboardKey.arrowDown ||
                 event.logicalKey == LogicalKeyboardKey.arrowUp) {
@@ -434,7 +434,7 @@ class NakedMenuTrigger extends StatelessWidget {
           } else if (event is KeyUpEvent) {
             if (event.logicalKey == LogicalKeyboardKey.space ||
                 event.logicalKey == LogicalKeyboardKey.enter) {
-              onStatePressed?.call(false);
+              onPressedState?.call(false);
               handleTap();
               return KeyEventResult.handled;
             }
@@ -443,14 +443,14 @@ class NakedMenuTrigger extends StatelessWidget {
         },
         child: MouseRegion(
           cursor: isInteractive ? cursor : SystemMouseCursors.forbidden,
-          onEnter: isInteractive ? (_) => onStateHover?.call(true) : null,
-          onExit: isInteractive ? (_) => onStateHover?.call(false) : null,
+          onEnter: isInteractive ? (_) => onHoverState?.call(true) : null,
+          onExit: isInteractive ? (_) => onHoverState?.call(false) : null,
           child: GestureDetector(
             behavior: HitTestBehavior.opaque,
-            onTapDown: isInteractive ? (_) => onStatePressed?.call(true) : null,
-            onTapUp: isInteractive ? (_) => onStatePressed?.call(false) : null,
+            onTapDown: isInteractive ? (_) => onPressedState?.call(true) : null,
+            onTapUp: isInteractive ? (_) => onPressedState?.call(false) : null,
             onTapCancel:
-                isInteractive ? () => onStatePressed?.call(false) : null,
+                isInteractive ? () => onPressedState?.call(false) : null,
             onTap: isInteractive ? handleTap : null,
             child: child,
           ),
@@ -547,13 +547,13 @@ class NakedMenuItem extends StatelessWidget {
   final Widget child;
 
   /// Called when hover state changes.
-  final ValueChanged<bool>? onStateHover;
+  final ValueChanged<bool>? onHoverState;
 
   /// Called when pressed state changes.
-  final ValueChanged<bool>? onStatePressed;
+  final ValueChanged<bool>? onPressedState;
 
   /// Called when focus state changes.
-  final ValueChanged<bool>? onStateFocus;
+  final ValueChanged<bool>? onFocusState;
 
   /// Called when the item is pressed.
   final VoidCallback? onPressed;
@@ -579,9 +579,9 @@ class NakedMenuItem extends StatelessWidget {
   const NakedMenuItem({
     super.key,
     required this.child,
-    this.onStateHover,
-    this.onStatePressed,
-    this.onStateFocus,
+    this.onHoverState,
+    this.onPressedState,
+    this.onFocusState,
     this.onPressed,
     this.isDisabled = false,
     this.semanticLabel,
@@ -622,19 +622,19 @@ class NakedMenuItem extends StatelessWidget {
       excludeSemantics: true,
       child: Focus(
         focusNode: effectiveFocusNode,
-        onFocusChange: onStateFocus,
+        onFocusChange: onFocusState,
         onKeyEvent: (node, event) {
           if (!isInteractive) return KeyEventResult.ignored;
 
           if (event is KeyDownEvent &&
               (event.logicalKey == LogicalKeyboardKey.space ||
                   event.logicalKey == LogicalKeyboardKey.enter)) {
-            onStatePressed?.call(true);
+            onPressedState?.call(true);
             return KeyEventResult.handled;
           } else if (event is KeyUpEvent &&
               (event.logicalKey == LogicalKeyboardKey.space ||
                   event.logicalKey == LogicalKeyboardKey.enter)) {
-            onStatePressed?.call(false);
+            onPressedState?.call(false);
             handleTap();
             return KeyEventResult.handled;
           }
@@ -642,14 +642,14 @@ class NakedMenuItem extends StatelessWidget {
         },
         child: MouseRegion(
           cursor: isInteractive ? cursor : SystemMouseCursors.forbidden,
-          onEnter: isInteractive ? (_) => onStateHover?.call(true) : null,
-          onExit: isInteractive ? (_) => onStateHover?.call(false) : null,
+          onEnter: isInteractive ? (_) => onHoverState?.call(true) : null,
+          onExit: isInteractive ? (_) => onHoverState?.call(false) : null,
           child: GestureDetector(
             behavior: HitTestBehavior.opaque,
-            onTapDown: isInteractive ? (_) => onStatePressed?.call(true) : null,
-            onTapUp: isInteractive ? (_) => onStatePressed?.call(false) : null,
+            onTapDown: isInteractive ? (_) => onPressedState?.call(true) : null,
+            onTapUp: isInteractive ? (_) => onPressedState?.call(false) : null,
             onTapCancel:
-                isInteractive ? () => onStatePressed?.call(false) : null,
+                isInteractive ? () => onPressedState?.call(false) : null,
             onTap: isInteractive ? handleTap : null,
             child: child,
           ),

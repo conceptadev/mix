@@ -16,7 +16,7 @@ void main() {
               src: 'https://example.com/avatar.jpg',
               focusNode: focusNode,
               onPressed: () {},
-              onStateFocus: (hasFocus) {
+              onFocusState: (hasFocus) {
                 focusChanged = true;
               },
               child: Container(

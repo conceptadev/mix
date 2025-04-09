@@ -16,7 +16,7 @@ void main() {
               child: NakedCheckbox(
                 focusNode: focusNode,
                 onChanged: (_) {},
-                onStateFocus: (hasFocus) {
+                onFocusState: (hasFocus) {
                   gotFocus = hasFocus;
                 },
                 child: Container(

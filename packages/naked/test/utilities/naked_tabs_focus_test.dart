@@ -29,7 +29,7 @@ void main() {
                           children: [
                             NakedTab(
                               tabId: 'tab1',
-                              onStateFocus: (focused) {
+                              onFocusState: (focused) {
                                 if (focused) focusEvents.add('tab1');
                               },
                               child: Container(
@@ -39,7 +39,7 @@ void main() {
                             ),
                             NakedTab(
                               tabId: 'tab2',
-                              onStateFocus: (focused) {
+                              onFocusState: (focused) {
                                 if (focused) focusEvents.add('tab2');
                               },
                               child: Container(
@@ -49,7 +49,7 @@ void main() {
                             ),
                             NakedTab(
                               tabId: 'tab3',
-                              onStateFocus: (focused) {
+                              onFocusState: (focused) {
                                 if (focused) focusEvents.add('tab3');
                               },
                               child: Container(

@@ -16,7 +16,7 @@ void main() {
             child: NakedButton(
               focusNode: focusNode,
               onPressed: () {},
-              onStateFocus: (hasFocus) {
+              onFocusState: (hasFocus) {
                 gotFocus = hasFocus;
               },
               child: const Text('Test Button'),

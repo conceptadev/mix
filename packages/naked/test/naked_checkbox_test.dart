@@ -83,7 +83,7 @@ void main() {
                 builder: (context, setState) {
                   return NakedCheckbox(
                     isChecked: false,
-                    onStateHover: (hover) {
+                    onHoverState: (hover) {
                       setState(() {
                         isHovered = hover;
                       });
@@ -137,7 +137,7 @@ void main() {
                 builder: (context, setState) {
                   return NakedCheckbox(
                     isChecked: false,
-                    onStatePressed: (pressed) {
+                    onPressedState: (pressed) {
                       setState(() {
                         isPressed = pressed;
                       });
@@ -195,12 +195,12 @@ void main() {
                       checkboxValue = value;
                     });
                   },
-                  onStateHover: (hover) {
+                  onHoverState: (hover) {
                     setState(() {
                       isHovered = hover;
                     });
                   },
-                  onStatePressed: (pressed) {
+                  onPressedState: (pressed) {
                     setState(() {
                       isPressed = pressed;
                     });

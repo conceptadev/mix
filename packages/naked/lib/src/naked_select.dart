@@ -22,16 +22,13 @@ import 'package:naked/src/utilities/naked_positioning.dart';
 ///
 /// Example:
 /// ```dart
-/// class MySelect extends StatefulWidget {
+/// class MySelectWidget extends StatefulWidget {
 ///   @override
-///   _MySelectState createState() => _MySelectState();
+///   _MySelectWidgetState createState() => _MySelectWidgetState();
 /// }
 ///
-/// class _MySelectState extends State<MySelect> {
+/// class _MySelectWidgetState extends State<MySelectWidget> {
 ///   String? _selectedValue;
-///   bool _isOpen = false;
-///
-///   // State variables for styling the trigger
 ///   bool _isTriggerHovered = false;
 ///   bool _isTriggerFocused = false;
 ///   bool _isTriggerPressed = false;
@@ -39,110 +36,57 @@ import 'package:naked/src/utilities/naked_positioning.dart';
 ///   @override
 ///   Widget build(BuildContext context) {
 ///     return NakedSelect<String>(
-///       isOpen: _isOpen,
-///       onIsOpenChanged: (isOpen) => setState(() => _isOpen = isOpen),
 ///       selectedValue: _selectedValue,
-///       onSelectedValueChanged: (value) => setState(() => _selectedValue = value),
-///       // Position dropdown menu relative to the trigger with these preferred positions
-///       preferredPositions: [AnchorPosition.bottomCenter, AnchorPosition.topCenter],
-///       // Enable focus trapping for keyboard navigation within dropdown
-///       trapFocus: true,
-///       // Automatically focus the dropdown menu when opened
-///       autofocus: true,
-///       child: Column(
-///         crossAxisAlignment: CrossAxisAlignment.start,
-///         children: [
-///           NakedSelectTrigger(
-///             onStateHover: (isHovered) => setState(() => _isTriggerHovered = isHovered),
-///             onStateFocus: (isFocused) => setState(() => _isTriggerFocused = isFocused),
-///             onStatePressed: (isPressed) => setState(() => _isTriggerPressed = isPressed),
-///             child: Container(
-///               padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+///       onSelected: (value) => setState(() => _selectedValue = value),
+///       options: const {
+///         'apple': 'Apple',
+///         'banana': 'Banana',
+///         'orange': 'Orange',
+///       },
+///       triggerBuilder: (context, controller, child) {
+///         return NakedMenuTrigger(
+///           controller: controller,
+///           isDisabled: false,
+///           builder: (context, states) {
+///             // Build your custom trigger UI based on states
+///             return Container(
+///               padding: EdgeInsets.all(10),
 ///               decoration: BoxDecoration(
-///                 color: _isTriggerPressed
-///                     ? Colors.blue.shade700
-///                     : _isTriggerHovered
-///                         ? Colors.blue.shade600
-///                         : Colors.blue.shade500,
-///                 borderRadius: BorderRadius.circular(4),
-///                 border: Border.all(
-///                   color: _isTriggerFocused ? Colors.white : Colors.transparent,
-///                   width: 2,
-///                 ),
+///                 border: Border.all(color: _isTriggerFocused ? Colors.blue : Colors.grey),
+///                 color: _isTriggerHovered ? Colors.grey[200] : Colors.white,
 ///               ),
-///               child: Row(
-///                 mainAxisSize: MainAxisSize.min,
-///                 children: [
-///                   Text(
-///                     _selectedValue ?? 'Select an option',
-///                     style: TextStyle(color: Colors.white),
-///                   ),
-///                   SizedBox(width: 8),
-///                   Icon(
-///                     _isOpen ? Icons.arrow_drop_up : Icons.arrow_drop_down,
-///                     color: Colors.white,
-///                   ),
-///                 ],
-///               ),
+///               child: Text(_selectedValue ?? 'Select an option'),
+///             );
+///           },
+///           onHoverState: (isHovered) => setState(() => _isTriggerHovered = isHovered),
+///           onFocusState: (isFocused) => setState(() => _isTriggerFocused = isFocused),
+///           onPressedState: (isPressed) => setState(() => _isTriggerPressed = isPressed),
+///         );
+///       },
+///       contentBuilder: (context, controller, child) {
+///         // Build your custom dropdown content UI
+///         return NakedMenuContent(
+///           controller: controller,
+///           child: Material(
+///             elevation: 4,
+///             child: Container(
+///               constraints: BoxConstraints(maxHeight: 200),
+///               child: child,
 ///             ),
 ///           ),
-///           // NakedSelectMenu will be rendered through NakedPortal in the app overlay
-///           // with optimal positioning relative to the trigger
-///           NakedSelectMenu(
-///             child: Container(
-///               margin: EdgeInsets.only(top: 4),
-///               decoration: BoxDecoration(
-///                 color: Colors.white,
-///                 borderRadius: BorderRadius.circular(4),
-///                 boxShadow: [
-///                   BoxShadow(
-///                     color: Colors.black.withOpacity(0.1),
-///                     blurRadius: 4,
-///                     offset: Offset(0, 2),
-///                   ),
-///                 ],
-///               ),
-///               child: Column(
-///                 mainAxisSize: MainAxisSize.min,
-///                 children: [
-///                   NakedSelectItem<String>(
-///                     value: 'option1',
-///                     isSelected: _selectedValue == 'option1',
-///                     child: _buildSelectItem('Option 1', _selectedValue == 'option1'),
-///                   ),
-///                   NakedSelectItem<String>(
-///                     value: 'option2',
-///                     isSelected: _selectedValue == 'option2',
-///                     child: _buildSelectItem('Option 2', _selectedValue == 'option2'),
-///                   ),
-///                   NakedSelectItem<String>(
-///                     value: 'option3',
-///                     isSelected: _selectedValue == 'option3',
-///                     child: _buildSelectItem('Option 3', _selectedValue == 'option3'),
-///                   ),
-///                 ],
-///               ),
-///             ),
+///         );
+///       },
+///       itemBuilder: (context, value, label, states) {
+///         // Build your custom item UI based on value, label, and states
+///         return NakedMenuItem(
+///           value: value,
+///           child: Container(
+///             padding: EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+///             color: states.isHovered ? Colors.blue.withOpacity(0.1) : Colors.transparent,
+///             child: Text(label),
 ///           ),
-///         ],
-///       ),
-///     );
-///   }
-///
-///   Widget _buildSelectItem(String label, bool isSelected) {
-///     return Container(
-///       padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-///       color: isSelected ? Colors.blue.withOpacity(0.1) : Colors.transparent,
-///       child: Row(
-///         children: [
-///           Text(label),
-///           if (isSelected)
-///             Padding(
-///               padding: EdgeInsets.only(left: 8),
-///               child: Icon(Icons.check, size: 16, color: Colors.blue),
-///             ),
-///         ],
-///       ),
+///         );
+///       },
 ///     );
 ///   }
 /// }
@@ -456,13 +400,13 @@ class NakedSelectTrigger extends StatelessWidget {
   final Widget child;
 
   /// Called when hover state changes.
-  final ValueChanged<bool>? onStateHover;
+  final ValueChanged<bool>? onHoverState;
 
   /// Called when pressed state changes.
-  final ValueChanged<bool>? onStatePressed;
+  final ValueChanged<bool>? onPressedState;
 
   /// Called when focus state changes.
-  final ValueChanged<bool>? onStateFocus;
+  final ValueChanged<bool>? onFocusState;
 
   /// Whether the trigger is disabled.
   final bool isDisabled;
@@ -485,9 +429,9 @@ class NakedSelectTrigger extends StatelessWidget {
   const NakedSelectTrigger({
     super.key,
     required this.child,
-    this.onStateHover,
-    this.onStatePressed,
-    this.onStateFocus,
+    this.onHoverState,
+    this.onPressedState,
+    this.onFocusState,
     this.isDisabled = false,
     this.semanticLabel,
     this.cursor = SystemMouseCursors.click,
@@ -520,14 +464,14 @@ class NakedSelectTrigger extends StatelessWidget {
       excludeSemantics: true,
       child: Focus(
         focusNode: effectiveFocusNode,
-        onFocusChange: onStateFocus,
+        onFocusChange: onFocusState,
         onKeyEvent: (node, event) {
           if (!isInteractive) return KeyEventResult.ignored;
 
           if (event is KeyDownEvent) {
             if (event.logicalKey == LogicalKeyboardKey.space ||
                 event.logicalKey == LogicalKeyboardKey.enter) {
-              onStatePressed?.call(true);
+              onPressedState?.call(true);
               return KeyEventResult.handled;
             } else if (event.logicalKey == LogicalKeyboardKey.arrowDown ||
                 event.logicalKey == LogicalKeyboardKey.arrowUp) {
@@ -541,7 +485,7 @@ class NakedSelectTrigger extends StatelessWidget {
           } else if (event is KeyUpEvent) {
             if (event.logicalKey == LogicalKeyboardKey.space ||
                 event.logicalKey == LogicalKeyboardKey.enter) {
-              onStatePressed?.call(false);
+              onPressedState?.call(false);
               handleTap();
               return KeyEventResult.handled;
             }
@@ -550,14 +494,14 @@ class NakedSelectTrigger extends StatelessWidget {
         },
         child: MouseRegion(
           cursor: isInteractive ? cursor : SystemMouseCursors.forbidden,
-          onEnter: isInteractive ? (_) => onStateHover?.call(true) : null,
-          onExit: isInteractive ? (_) => onStateHover?.call(false) : null,
+          onEnter: isInteractive ? (_) => onHoverState?.call(true) : null,
+          onExit: isInteractive ? (_) => onHoverState?.call(false) : null,
           child: GestureDetector(
             behavior: HitTestBehavior.opaque,
-            onTapDown: isInteractive ? (_) => onStatePressed?.call(true) : null,
-            onTapUp: isInteractive ? (_) => onStatePressed?.call(false) : null,
+            onTapDown: isInteractive ? (_) => onPressedState?.call(true) : null,
+            onTapUp: isInteractive ? (_) => onPressedState?.call(false) : null,
             onTapCancel:
-                isInteractive ? () => onStatePressed?.call(false) : null,
+                isInteractive ? () => onPressedState?.call(false) : null,
             onTap: isInteractive ? handleTap : null,
             child: child,
           ),
@@ -699,13 +643,13 @@ class NakedSelectItem<T> extends StatefulWidget {
   final bool isSelected;
 
   /// Called when hover state changes.
-  final ValueChanged<bool>? onStateHover;
+  final ValueChanged<bool>? onHoverState;
 
   /// Called when pressed state changes.
-  final ValueChanged<bool>? onStatePressed;
+  final ValueChanged<bool>? onPressedState;
 
   /// Called when focus state changes.
-  final ValueChanged<bool>? onStateFocus;
+  final ValueChanged<bool>? onFocusState;
 
   /// Whether this item is disabled.
   final bool isDisabled;
@@ -733,9 +677,9 @@ class NakedSelectItem<T> extends StatefulWidget {
     required this.child,
     required this.value,
     this.isSelected = false,
-    this.onStateHover,
-    this.onStatePressed,
-    this.onStateFocus,
+    this.onHoverState,
+    this.onPressedState,
+    this.onFocusState,
     this.isDisabled = false,
     this.semanticLabel,
     this.cursor = SystemMouseCursors.click,
@@ -850,19 +794,19 @@ class _NakedSelectItemState<T> extends State<NakedSelectItem<T>> {
       excludeSemantics: true,
       child: Focus(
         focusNode: _focusNode,
-        onFocusChange: widget.onStateFocus,
+        onFocusChange: widget.onFocusState,
         onKeyEvent: (node, event) {
           if (!isInteractive) return KeyEventResult.ignored;
 
           if (event is KeyDownEvent &&
               (event.logicalKey == LogicalKeyboardKey.space ||
                   event.logicalKey == LogicalKeyboardKey.enter)) {
-            widget.onStatePressed?.call(true);
+            widget.onPressedState?.call(true);
             return KeyEventResult.handled;
           } else if (event is KeyUpEvent &&
               (event.logicalKey == LogicalKeyboardKey.space ||
                   event.logicalKey == LogicalKeyboardKey.enter)) {
-            widget.onStatePressed?.call(false);
+            widget.onPressedState?.call(false);
             handleTap();
             return KeyEventResult.handled;
           }
@@ -871,18 +815,18 @@ class _NakedSelectItemState<T> extends State<NakedSelectItem<T>> {
         child: MouseRegion(
           cursor: isInteractive ? widget.cursor : SystemMouseCursors.forbidden,
           onEnter:
-              isInteractive ? (_) => widget.onStateHover?.call(true) : null,
+              isInteractive ? (_) => widget.onHoverState?.call(true) : null,
           onExit:
-              isInteractive ? (_) => widget.onStateHover?.call(false) : null,
+              isInteractive ? (_) => widget.onHoverState?.call(false) : null,
           child: GestureDetector(
             behavior: HitTestBehavior.opaque,
             onTapDown:
-                isInteractive ? (_) => widget.onStatePressed?.call(true) : null,
+                isInteractive ? (_) => widget.onPressedState?.call(true) : null,
             onTapUp: isInteractive
-                ? (_) => widget.onStatePressed?.call(false)
+                ? (_) => widget.onPressedState?.call(false)
                 : null,
             onTapCancel:
-                isInteractive ? () => widget.onStatePressed?.call(false) : null,
+                isInteractive ? () => widget.onPressedState?.call(false) : null,
             onTap: isInteractive ? handleTap : null,
             child: widget.child,
           ),

@@ -31,8 +31,8 @@ linter:
 #
 # Property naming conventions:
 # - Boolean state properties should use 'is' prefix (e.g., isDisabled, isChecked)
-# - Callbacks should use 'on' prefix (e.g., onPressed, onStateHover)
-# - State callbacks should use 'onState' prefix (e.g., onStateHover, onStateFocus)
+# - Callbacks should use 'on' prefix (e.g., onPressed, onHoverState)
+# - State callbacks should use 'on{State}State' prefix (e.g., onHoverState, onFocusState)
 
 analyzer:
   errors:

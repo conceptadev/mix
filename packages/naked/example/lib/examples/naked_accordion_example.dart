@@ -163,9 +163,9 @@ class _BasicAccordionState extends State<_BasicAccordion> {
               NakedAccordionItem(
                 value: id,
                 trigger: NakedAccordionTrigger(
-                  onStateHover: (hovered) =>
+                  onHoverState: (hovered) =>
                       setState(() => _hoveredItems[id] = hovered),
-                  onStateFocus: (focused) =>
+                  onFocusState: (focused) =>
                       setState(() => _focusedItems[id] = focused),
                   child: Container(
                     padding: const EdgeInsets.all(16),
@@ -268,9 +268,9 @@ class _ColoredAccordionState extends State<_ColoredAccordion> {
         return NakedAccordionItem(
           value: id,
           trigger: NakedAccordionTrigger(
-            onStateHover: (isHovered) =>
+            onHoverState: (isHovered) =>
                 setState(() => _hoverStates[id] = isHovered),
-            onStateFocus: (isFocused) =>
+            onFocusState: (isFocused) =>
                 setState(() => _focusStates[id] = isFocused),
             child: Builder(builder: (context) {
               final isExpanded = context
@@ -387,9 +387,9 @@ class _BorderedAccordionState extends State<_BorderedAccordion> {
         return NakedAccordionItem(
           value: id,
           trigger: NakedAccordionTrigger(
-            onStateHover: (isHovered) =>
+            onHoverState: (isHovered) =>
                 setState(() => _hoverStates[id] = isHovered),
-            onStateFocus: (isFocused) =>
+            onFocusState: (isFocused) =>
                 setState(() => _focusStates[id] = isFocused),
             child: Container(
               padding: const EdgeInsets.all(16),
