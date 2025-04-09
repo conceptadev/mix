@@ -214,7 +214,16 @@ Widget build(BuildContext context) {
 
 Naked components follow these property naming conventions:
 
-1. **State properties**: Use `is` prefix for boolean state (e.g., `isDisabled`, `isChecked`)
+1. **Boolean properties**: 
+   - For class properties: Prefer the "positive" name without a verb (e.g., `enabled` instead of `disabled` or `isEnabled`)
+   - For state tracking variables in consumers: Use descriptive names that clearly indicate state (e.g., `_isHovered`, `_isFocused`)
+
+   **Why prefer positive names without "is" prefix?**
+   - **Readability**: In named parameters, omitting verbs creates more readable call sites (e.g., `Button(enabled: false)` reads more naturally than `Button(isEnabled: false)`)
+   - **Consistency**: Following Dart's conventions makes our API feel native to Flutter developers
+   - **Conciseness**: Shorter names reduce verbosity while maintaining clarity
+   - **Positive framing**: Positive names are generally easier to reason about than negative ones (prefer `enabled` over `disabled`)
+
 2. **Callbacks**: 
    - Core functionality: `onAction` (e.g., `onPressed`, `onChanged`)
    - State changes: `onStateX` (e.g., `onStateHover`, `onStateFocus`)
