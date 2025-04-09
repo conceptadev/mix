@@ -92,13 +92,13 @@ class NakedButton extends StatelessWidget {
   ///
   /// When true, the button will not respond to user interaction.
   /// Use this to display a loading indicator or similar visual feedback.
-  final bool isLoading;
+  final bool loading;
 
   /// Whether the button is disabled.
   ///
   /// When true, the button will not respond to user interaction regardless of
   /// whether [onPressed] is provided.
-  final bool isDisabled;
+  final bool enabled;
 
   /// Optional semantic label for accessibility.
   ///
@@ -139,8 +139,8 @@ class NakedButton extends StatelessWidget {
     this.onHoverState,
     this.onPressedState,
     this.onFocusState,
-    this.isLoading = false,
-    this.isDisabled = false,
+    this.loading = false,
+    this.enabled = true,
     this.semanticLabel,
     this.cursor = SystemMouseCursors.click,
     this.enableHapticFeedback = true,
@@ -150,7 +150,7 @@ class NakedButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isInteractive = !isDisabled && !isLoading && onPressed != null;
+    final isInteractive = enabled && !loading && onPressed != null;
     final effectiveFocusNode = focusNode ?? FocusNode();
 
     void handleTap() {
@@ -166,7 +166,7 @@ class NakedButton extends StatelessWidget {
       button: true,
       enabled: isInteractive,
       label: semanticLabel,
-      hint: isLoading ? 'Loading' : null,
+      hint: loading ? 'Loading' : null,
       onTap: isInteractive ? handleTap : null,
       excludeSemantics: true,
       child: NakedFocusManager(

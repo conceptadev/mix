@@ -633,7 +633,7 @@ class _ButtonStatesState extends State<ButtonStates> {
             //   Disabled Primary
             // </button>
             NakedButton(
-              isDisabled: true,
+              enabled: false,
               onPressed: null,
               child: Opacity(
                 opacity: 0.6,
@@ -661,7 +661,7 @@ class _ButtonStatesState extends State<ButtonStates> {
             //   Disabled Secondary
             // </button>
             NakedButton(
-              isDisabled: true,
+              enabled: false,
               onPressed: null,
               child: Container(
                 padding:
@@ -686,7 +686,7 @@ class _ButtonStatesState extends State<ButtonStates> {
             //   Disabled Outline
             // </button>
             NakedButton(
-              isDisabled: true,
+              enabled: false,
               onPressed: null,
               child: Container(
                 padding:
@@ -1041,7 +1041,7 @@ class _LoadingButtonsState extends State<LoadingButtons> {
             //     <span>Click to Load</span>
             //   )}
             // </button>
-            isLoading: _isSpinnerLoading,
+            loading: _isSpinnerLoading,
             onPressed: _isSpinnerLoading ? null : handleSpinnerClick,
             onHoverState: (value) => setState(() => _isSpinnerHovered = value),
             onPressedState: (value) =>
@@ -1116,7 +1116,7 @@ class _LoadingButtonsState extends State<LoadingButtons> {
             //   )}
             //   <span className="relative z-10">{isLoading2 ? 'Processing...' : 'Submit'}</span>
             // </button>
-            isLoading: _isProgressLoading,
+            loading: _isProgressLoading,
             onPressed: _isProgressLoading ? null : handleProgressClick,
             onHoverState: (value) => setState(() => _isProgressHovered = value),
             onPressedState: (value) =>
