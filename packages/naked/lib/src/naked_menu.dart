@@ -177,13 +177,13 @@ class NakedMenu extends StatefulWidget {
   final Widget child;
 
   /// Whether the menu is open.
-  final bool isOpen;
+  final bool open;
 
   /// Called when the open state changes.
-  final ValueChanged<bool>? onIsOpenChanged;
+  final ValueChanged<bool>? onOpenChanged;
 
   /// Whether the menu is disabled.
-  final bool isDisabled;
+  final bool enabled;
 
   /// Optional semantic label for accessibility.
   final String? semanticLabel;
@@ -212,9 +212,9 @@ class NakedMenu extends StatefulWidget {
   const NakedMenu({
     super.key,
     required this.child,
-    this.isOpen = false,
-    this.onIsOpenChanged,
-    this.isDisabled = false,
+    this.open = false,
+    this.onOpenChanged,
+    this.enabled = true,
     this.semanticLabel,
     this.closeOnSelect = true,
     this.closeOnClickOutside = true,
@@ -250,8 +250,8 @@ class _NakedMenuState extends State<NakedMenu> {
   @override
   void didUpdateWidget(NakedMenu oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (oldWidget.isOpen != widget.isOpen) {
-      if (widget.isOpen) {
+    if (oldWidget.open != widget.open) {
+      if (widget.open) {
         // Update trigger rect when opening
         WidgetsBinding.instance.addPostFrameCallback((_) {
           _updateTriggerRect();
@@ -308,15 +308,15 @@ class _NakedMenuScope extends InheritedWidget {
 
   /// Toggles the menu open state.
   void toggleMenu() {
-    if (menu.onIsOpenChanged != null) {
-      menu.onIsOpenChanged!(!menu.isOpen);
+    if (menu.onOpenChanged != null) {
+      menu.onOpenChanged!(!menu.open);
     }
   }
 
   /// Closes the menu.
   void closeMenu() {
-    if (menu.onIsOpenChanged != null && menu.isOpen) {
-      menu.onIsOpenChanged!(false);
+    if (menu.onOpenChanged != null && menu.open) {
+      menu.onOpenChanged!(false);
     }
   }
 
@@ -326,8 +326,8 @@ class _NakedMenuScope extends InheritedWidget {
 
   @override
   bool updateShouldNotify(_NakedMenuScope oldWidget) {
-    return menu.isOpen != oldWidget.menu.isOpen ||
-        menu.isDisabled != oldWidget.menu.isDisabled;
+    return menu.open != oldWidget.menu.open ||
+        menu.enabled != oldWidget.menu.enabled;
   }
 }
 
@@ -351,7 +351,7 @@ class NakedMenuTrigger extends StatelessWidget {
   final VoidCallback? onPressed;
 
   /// Whether the trigger is disabled.
-  final bool isDisabled;
+  final bool enabled;
 
   /// Optional semantic label for accessibility.
   final String? semanticLabel;
@@ -375,7 +375,7 @@ class NakedMenuTrigger extends StatelessWidget {
     this.onPressedState,
     this.onFocusState,
     this.onPressed,
-    this.isDisabled = false,
+    this.enabled = true,
     this.semanticLabel,
     this.cursor = SystemMouseCursors.click,
     this.enableHapticFeedback = true,
@@ -385,11 +385,10 @@ class NakedMenuTrigger extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final menuScope = _NakedMenuScope.of(context);
-    final isMenuDisabled = menuScope?.menu.isDisabled ?? false;
-    final isEffectivelyDisabled = isDisabled || isMenuDisabled;
-    final isInteractive = !isEffectivelyDisabled;
+    final isMenuEnabled = menuScope?.menu.enabled ?? false;
+    final isInteractive = enabled || isMenuEnabled;
     final effectiveFocusNode = focusNode ?? FocusNode();
-    final isOpen = menuScope?.menu.isOpen ?? false;
+    final isOpen = menuScope?.menu.open ?? false;
 
     void handleTap() {
       if (isInteractive) {
@@ -505,32 +504,11 @@ class NakedMenuContent extends StatelessWidget {
         return NakedPortal(
           child: Material(
             color: Colors.transparent,
-            child: GestureDetector(
-              behavior: HitTestBehavior.opaque,
-              onTap: () {}, // Prevent taps from reaching background
-              child: NakedPositioning(
-                target: state._triggerRect!,
-                preferredPositions: menuWidget.preferredPositions,
-                offset: menuWidget.offset,
-                child: NakedFocusManager(
-                  trapFocus: menuWidget.trapFocus,
-                  autofocus: menuWidget.autofocus,
-                  restoreFocus: true,
-                  onEscapePressed: () {
-                    menuScope.closeMenu();
-                  },
-                  child: GestureDetector(
-                    behavior: HitTestBehavior.opaque,
-                    onTap: () {}, // Prevent tap from closing menu
-                    child: Semantics(
-                      explicitChildNodes: true,
-                      container: true,
-                      label: semanticLabel ?? 'Menu',
-                      child: child,
-                    ),
-                  ),
-                ),
-              ),
+            child: NakedPositioning(
+              target: state._triggerRect!,
+              preferredPositions: menuWidget.preferredPositions,
+              offset: menuWidget.offset,
+              child: const Text('data'),
             ),
           ),
         );
@@ -559,7 +537,7 @@ class NakedMenuItem extends StatelessWidget {
   final VoidCallback? onPressed;
 
   /// Whether the item is disabled.
-  final bool isDisabled;
+  final bool enabled;
 
   /// Optional semantic label for accessibility.
   final String? semanticLabel;
@@ -583,7 +561,7 @@ class NakedMenuItem extends StatelessWidget {
     this.onPressedState,
     this.onFocusState,
     this.onPressed,
-    this.isDisabled = false,
+    this.enabled = false,
     this.semanticLabel,
     this.cursor = SystemMouseCursors.click,
     this.enableHapticFeedback = true,
@@ -593,9 +571,8 @@ class NakedMenuItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final menuScope = _NakedMenuScope.of(context);
-    final isMenuDisabled = menuScope?.menu.isDisabled ?? false;
-    final isEffectivelyDisabled = isDisabled || isMenuDisabled;
-    final isInteractive = !isEffectivelyDisabled;
+    final isMenuEnabled = menuScope?.menu.enabled ?? false;
+    final isInteractive = enabled || isMenuEnabled;
     final effectiveFocusNode = focusNode ?? FocusNode();
 
     void handleTap() {

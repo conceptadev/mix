@@ -11,7 +11,7 @@ import 'examples/naked_radio_example.dart';
 import 'examples/naked_select_example.dart';
 import 'examples/naked_slider_example.dart';
 import 'examples/naked_tabs_example.dart';
-// Import URL strategy
+import 'examples/naked_tooltip_example.dart';
 import 'url_strategy.dart';
 
 void main() {
@@ -107,8 +107,9 @@ class MyApp extends StatelessWidget {
   static int _getDestinationIndex(String componentName) {
     final normalizedName = componentName.toLowerCase().replaceAll('-', '');
 
-    for (int i = 0; i < destinations.length; i++) {
-      final destName = destinations[i].label.toLowerCase().replaceAll(' ', '');
+    for (int i = 0; i < destinations().length; i++) {
+      final destName =
+          destinations()[i].label.toLowerCase().replaceAll(' ', '');
       if (destName == normalizedName) {
         return i;
       }
@@ -120,44 +121,48 @@ class MyApp extends StatelessWidget {
 }
 
 // Define destinations at the app level for route generation
-final List<NavDestination> destinations = [
-  NavDestination(
-    label: 'Accordion',
-    widget: const NakedAccordionExample(),
-  ),
-  NavDestination(
-    label: 'Avatar',
-    widget: const NakedAvatarExample(),
-  ),
-  NavDestination(
-    label: 'Button',
-    widget: const NakedButtonExample(),
-  ),
-  NavDestination(
-    label: 'Checkbox',
-    widget: const NakedCheckboxExample(),
-  ),
-  NavDestination(
-    label: 'Menu',
-    widget: const NakedMenuExample(),
-  ),
-  NavDestination(
-    label: 'Radio',
-    widget: const NakedRadioExample(),
-  ),
-  NavDestination(
-    label: 'Select',
-    widget: const NakedSelectExample(),
-  ),
-  NavDestination(
-    label: 'Slider',
-    widget: const NakedSliderExample(),
-  ),
-  NavDestination(
-    label: 'Tabs',
-    widget: const NakedTabsExample(),
-  ),
-];
+List<NavDestination> destinations() => [
+      NavDestination(
+        label: 'Tooltips',
+        widget: const NakedTooltipExample(),
+      ),
+      NavDestination(
+        label: 'Menu',
+        widget: const NakedMenuExample(),
+      ),
+      NavDestination(
+        label: 'Accordion',
+        widget: const NakedAccordionExample(),
+      ),
+      NavDestination(
+        label: 'Avatar',
+        widget: const NakedAvatarExample(),
+      ),
+      NavDestination(
+        label: 'Button',
+        widget: const NakedButtonExample(),
+      ),
+      NavDestination(
+        label: 'Checkbox',
+        widget: const NakedCheckboxExample(),
+      ),
+      NavDestination(
+        label: 'Radio',
+        widget: const NakedRadioExample(),
+      ),
+      NavDestination(
+        label: 'Select',
+        widget: const NakedSelectExample(),
+      ),
+      NavDestination(
+        label: 'Slider',
+        widget: const NakedSliderExample(),
+      ),
+      NavDestination(
+        label: 'Tabs',
+        widget: const NakedTabsExample(),
+      ),
+    ];
 
 class ShowcaseApp extends StatefulWidget {
   final int initialIndex;
@@ -188,7 +193,7 @@ class _ShowcaseAppState extends State<ShowcaseApp> {
 
   // Method to update URL path when tab changes
   void _updateUrlForDestination(int index) {
-    final destination = destinations[index];
+    final destination = destinations()[index];
     final path = '/${destination.label.toLowerCase().replaceAll(' ', '-')}';
 
     // Update browser URL without adding to history stack
@@ -198,7 +203,7 @@ class _ShowcaseAppState extends State<ShowcaseApp> {
   @override
   Widget build(BuildContext context) {
     // Get the selected destination
-    final NavDestination selectedDestination = destinations[_selectedIndex];
+    final NavDestination selectedDestination = destinations()[_selectedIndex];
     // Use the destination widget directly
     final Widget selectedWidget = selectedDestination.widget;
 
@@ -239,7 +244,7 @@ class _ShowcaseAppState extends State<ShowcaseApp> {
               Expanded(
                 child: ListView(
                   padding: EdgeInsets.zero,
-                  children: destinations.asMap().entries.map((entry) {
+                  children: destinations().asMap().entries.map((entry) {
                     final int index = entry.key;
                     final NavDestination destination = entry.value;
                     final bool isSelected = index == _selectedIndex;

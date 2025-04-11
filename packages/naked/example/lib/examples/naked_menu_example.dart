@@ -53,8 +53,8 @@ class _NakedMenuExampleState extends State<NakedMenuExample> {
         ),
         const SizedBox(height: 16),
         NakedMenu(
-          isOpen: _isMenuOpen,
-          onIsOpenChanged: (isOpen) => setState(() => _isMenuOpen = isOpen),
+          open: _isMenuOpen,
+          onOpenChanged: (isOpen) => setState(() => _isMenuOpen = isOpen),
           // No onItemSelected here
           preferredPositions: const [
             AnchorPosition.bottomLeft,
@@ -86,39 +86,39 @@ class _NakedMenuExampleState extends State<NakedMenuExample> {
             ],
           ),
         ),
-        const SizedBox(height: 200), // Add space at the bottom for menu
+        // const SizedBox(height: 200), // Add space at the bottom for menu
 
-        const Divider(height: 40, thickness: 1),
+        // const Divider(height: 40, thickness: 1),
 
-        // Focus/Keyboard Example Section
-        const Text(
-          'Focus & Keyboard Navigation Example',
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-        ),
-        const SizedBox(height: 8),
-        const Text(
-          'Use Tab to focus the trigger, Space/Enter to open/close.\n'
-          'Use Arrow keys to navigate items, Space/Enter to select.\n'
-          'Use Escape to close the menu.',
-          style: TextStyle(fontStyle: FontStyle.italic),
-        ),
-        const SizedBox(height: 16),
-        _FocusMenuExample(), // Add the focus example widget
+        // // Focus/Keyboard Example Section
+        // const Text(
+        //   'Focus & Keyboard Navigation Example',
+        //   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+        // ),
+        // const SizedBox(height: 8),
+        // const Text(
+        //   'Use Tab to focus the trigger, Space/Enter to open/close.\n'
+        //   'Use Arrow keys to navigate items, Space/Enter to select.\n'
+        //   'Use Escape to close the menu.',
+        //   style: TextStyle(fontStyle: FontStyle.italic),
+        // ),
+        // const SizedBox(height: 16),
+        // _FocusMenuExample(), // Add the focus example widget
 
-        const Divider(height: 40, thickness: 1),
+        // const Divider(height: 40, thickness: 1),
 
-        // Nested Menu Example Section
-        const Text(
-          'Nested Menu Example',
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-        ),
-        const SizedBox(height: 8),
-        const Text(
-          'Clicking "Share" opens a submenu.',
-          style: TextStyle(fontStyle: FontStyle.italic),
-        ),
-        const SizedBox(height: 16),
-        _NestedMenuExample(), // Add the nested menu example widget
+        // // Nested Menu Example Section
+        // const Text(
+        //   'Nested Menu Example',
+        //   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+        // ),
+        // const SizedBox(height: 8),
+        // const Text(
+        //   'Clicking "Share" opens a submenu.',
+        //   style: TextStyle(fontStyle: FontStyle.italic),
+        // ),
+        // const SizedBox(height: 16),
+        // _NestedMenuExample(), // Add the nested menu example widget
       ],
     );
   }
@@ -151,7 +151,7 @@ class _NakedMenuExampleState extends State<NakedMenuExample> {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          const Text('Actions', style: TextStyle(color: Colors.white)),
+          const Text('Actions ABC', style: TextStyle(color: Colors.white)),
           const SizedBox(width: 8),
           Icon(
             _isMenuOpen ? Icons.arrow_drop_up : Icons.arrow_drop_down,
@@ -217,7 +217,7 @@ class _NakedMenuExampleState extends State<NakedMenuExample> {
       bool isDisabled = false}) {
     return NakedMenuItem(
       onPressed: onPressed,
-      isDisabled: isDisabled,
+      enabled: isDisabled,
       onHoverState: (isHovered) =>
           setState(() => _itemHoverStates[value] = isHovered),
       onFocusState: (isFocused) =>
@@ -306,8 +306,8 @@ class __FocusMenuExampleState extends State<_FocusMenuExample> {
         Text('Last KB Action: $_lastAction'),
         const SizedBox(height: 16),
         NakedMenu(
-          isOpen: _isMenuOpen,
-          onIsOpenChanged: (isOpen) {
+          open: _isMenuOpen,
+          onOpenChanged: (isOpen) {
             setState(() => _isMenuOpen = isOpen);
             // Optionally provide feedback on open/close via KB
             if (!isOpen) {
@@ -402,7 +402,7 @@ class __FocusMenuExampleState extends State<_FocusMenuExample> {
       {bool isDestructive = false, bool isDisabled = false}) {
     return NakedMenuItem(
       onPressed: onPressed,
-      isDisabled: isDisabled,
+      enabled: isDisabled,
       onHoverState: (isHovered) =>
           setState(() => _itemHoverStates[value] = isHovered),
       onFocusState: (isFocused) {
@@ -506,8 +506,8 @@ class __NestedMenuExampleState extends State<_NestedMenuExample> {
         Text('Last Nested Action: $_lastAction'),
         const SizedBox(height: 16),
         NakedMenu(
-          isOpen: _isMainMenuOpen,
-          onIsOpenChanged: (isOpen) {
+          open: _isMainMenuOpen,
+          onOpenChanged: (isOpen) {
             setState(() {
               _isMainMenuOpen = isOpen;
               if (!isOpen)
@@ -633,8 +633,8 @@ class __NestedMenuExampleState extends State<_NestedMenuExample> {
     // This item visually looks like a menu item but contains a nested NakedMenu
     return NakedMenu(
       // Nested Menu
-      isOpen: _isSubmenuOpen,
-      onIsOpenChanged: (isOpen) => setState(() => _isSubmenuOpen = isOpen),
+      open: _isSubmenuOpen,
+      onOpenChanged: (isOpen) => setState(() => _isSubmenuOpen = isOpen),
       // Use known valid positions and remove const from list
       preferredPositions: const [
         AnchorPosition.bottomLeft,

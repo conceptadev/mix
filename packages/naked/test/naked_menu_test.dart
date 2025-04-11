@@ -12,7 +12,7 @@ void main() {
         MaterialApp(
           home: Scaffold(
             body: NakedMenu(
-              isOpen: false,
+              open: false,
               child: Container(
                 key: childKey,
                 child: const Text('Menu content'),
@@ -114,7 +114,7 @@ void main() {
                 return Column(
                   children: [
                     NakedMenu(
-                      isOpen: isOpen,
+                      open: isOpen,
                       // Disable positioning features for test
                       preferredPositions: const [],
                       offset: Offset.zero,
@@ -197,8 +197,8 @@ class _SimpleMenuTestState extends State<SimpleMenuTest> {
   @override
   Widget build(BuildContext context) {
     return NakedMenu(
-      isOpen: _isOpen,
-      onIsOpenChanged: (isOpen) {
+      open: _isOpen,
+      onOpenChanged: (isOpen) {
         setState(() {
           _isOpen = isOpen;
         });

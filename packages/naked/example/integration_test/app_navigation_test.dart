@@ -53,11 +53,11 @@ void main() {
       expect(find.text('Checkbox'), findsOneWidget);
 
       // Test tapping each destination
-      for (int i = 0; i < app.destinations.length; i++) {
+      for (int i = 0; i < app.destinations().length; i++) {
         // Skip Avatar example (index 1) as it makes network calls
         if (i == 1) continue;
 
-        final destination = app.destinations[i];
+        final destination = app.destinations()[i];
 
         // Skip examples causing layout issues in tests
         if (destination.label.contains('Focus')) {
