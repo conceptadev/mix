@@ -11,8 +11,8 @@ class NakedTooltipExample extends StatefulWidget {
 }
 
 class _NakedTooltipExampleState extends State<NakedTooltipExample> {
-  bool _isTooltipVisible = false;
   Timer? _hoverTimer;
+  final controller = OverlayPortalController();
 
   @override
   void dispose() {
@@ -22,65 +22,100 @@ class _NakedTooltipExampleState extends State<NakedTooltipExample> {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
+    return const Center(
       child: Padding(
-        padding: const EdgeInsets.all(24.0),
+        padding: EdgeInsets.all(24.0),
         child: Column(
           children: [
-            NakedTooltip(
-              visible: _isTooltipVisible,
-              tooltipWidget: Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                decoration: BoxDecoration(
-                  color: Colors.black87,
-                  borderRadius: BorderRadius.circular(6),
-                ),
-                child: const Text(
-                  'This tooltip appears after hovering for 2 seconds',
-                  style: TextStyle(color: Colors.white),
-                ),
-              ),
-              child: MouseRegion(
-                onEnter: (_) {
-                  _hoverTimer?.cancel();
-                  _hoverTimer = Timer(const Duration(seconds: 1), () {
-                    if (mounted) {
-                      setState(() {
-                        _isTooltipVisible = true;
-                      });
-                    }
-                  });
-                },
-                onExit: (_) {
-                  _hoverTimer?.cancel();
-                  setState(() {
-                    _isTooltipVisible = false;
-                  });
-                },
-                child: Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                  decoration: BoxDecoration(
-                    color: Colors.blue,
-                    borderRadius: BorderRadius.circular(8),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.1),
-                        blurRadius: 4,
-                        offset: const Offset(0, 2),
-                      ),
-                    ],
-                  ),
-                  child: const Text(
-                    'Hover me for 2 seconds',
-                    style: TextStyle(
-                        color: Colors.white, fontWeight: FontWeight.bold),
-                  ),
-                ),
-              ),
-            ),
+            MyTooltip(),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class MyTooltip extends StatefulWidget {
+  const MyTooltip({super.key});
+
+  @override
+  _MyTooltipState createState() => _MyTooltipState();
+}
+
+class _MyTooltipState extends State<MyTooltip>
+    with SingleTickerProviderStateMixin {
+  late final _controller = OverlayPortalController();
+  late final animationController = AnimationController(
+    duration: const Duration(milliseconds: 200),
+    vsync: this,
+  );
+  late final CurvedAnimation _animation;
+  Timer? _timer;
+
+  @override
+  void initState() {
+    super.initState();
+    _animation = CurvedAnimation(
+      parent: animationController,
+      curve: Curves.easeInOut,
+    );
+  }
+
+  @override
+  void dispose() {
+    animationController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return NakedTooltip(
+      fallbackAlignments: const [
+        AlignmentPair(
+          target: Alignment.topCenter,
+          follower: Alignment.bottomCenter,
+          offset: Offset(0, -8),
+        ),
+      ],
+      targetAnchor: Alignment.bottomCenter,
+      followerAnchor: Alignment.topCenter,
+      offset: const Offset(0, 8),
+      tooltipWidgetBuilder: (context) => FadeTransition(
+        opacity: _animation,
+        child: Container(
+          padding: const EdgeInsets.all(8),
+          decoration: BoxDecoration(
+            color: Colors.grey[800],
+            borderRadius: BorderRadius.circular(4),
+          ),
+          child: const Text(
+            'This is a tooltip',
+            style: TextStyle(color: Colors.white),
+          ),
+        ),
+      ),
+      controller: _controller,
+      child: MouseRegion(
+        onEnter: (_) {
+          _timer?.cancel();
+          _timer = Timer(const Duration(seconds: 2), () {
+            _controller.show();
+            animationController.forward();
+          });
+        },
+        onExit: (_) {
+          _timer?.cancel();
+          animationController.reverse().then((_) {
+            _controller.hide();
+          });
+        },
+        child: Container(
+          padding: const EdgeInsets.all(8),
+          decoration: BoxDecoration(
+            color: const Color(0xFF2196F3),
+            borderRadius: BorderRadius.circular(4),
+          ),
+          child: const Text('Hover me', style: TextStyle(color: Colors.white)),
         ),
       ),
     );

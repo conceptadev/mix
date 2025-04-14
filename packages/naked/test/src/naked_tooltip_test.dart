@@ -22,10 +22,10 @@ void main() {
   group('Basic Functionality', () {
     testWidgets('renders child widget', (WidgetTester tester) async {
       await tester.pumpTooltip(
-        const NakedTooltip(
-          tooltipWidget: Text('Tooltip Content'),
-          visible: false,
-          child: Text('Hover Me'),
+        NakedTooltip(
+          controller: OverlayPortalController(),
+          tooltipWidgetBuilder: (context) => const Text('Tooltip Content'),
+          child: const Text('Hover Me'),
         ),
       );
 
@@ -33,32 +33,40 @@ void main() {
       expect(find.text('Tooltip Content'), findsNothing);
     });
 
-    testWidgets('shows tooltip when visible is true',
+    testWidgets('shows tooltip when controller.show is called',
         (WidgetTester tester) async {
+      final controller = OverlayPortalController();
+
       await tester.pumpTooltip(
         NakedTooltip(
-          tooltipWidget: const Text('Tooltip Content'),
-          visible: true,
-          animationStyle: AnimationStyle.noAnimation,
+          tooltipWidgetBuilder: (context) => const Text('Tooltip Content'),
+          controller: controller,
           child: const Text('Hover Me'),
         ),
       );
 
+      controller.show();
       await tester.pump();
       expect(find.text('Tooltip Content'), findsOneWidget);
     });
 
-    testWidgets('hides tooltip when visible is false',
+    testWidgets('hides tooltip when controller.hide is called',
         (WidgetTester tester) async {
+      final controller = OverlayPortalController();
+
       await tester.pumpTooltip(
         NakedTooltip(
-          tooltipWidget: const Text('Tooltip Content'),
-          visible: false,
-          animationStyle: AnimationStyle.noAnimation,
+          tooltipWidgetBuilder: (context) => const Text('Tooltip Content'),
+          controller: controller,
           child: const Text('Hover Me'),
         ),
       );
 
+      controller.show();
+      await tester.pump();
+      expect(find.text('Tooltip Content'), findsOneWidget);
+
+      controller.hide();
       await tester.pump();
       expect(find.text('Tooltip Content'), findsNothing);
     });
@@ -69,21 +77,21 @@ void main() {
         (WidgetTester tester) async {
       final targetKey = GlobalKey();
       final tooltipKey = GlobalKey();
+      final controller = OverlayPortalController();
 
       await tester.pumpTooltip(
         Center(
           child: NakedTooltip(
-            tooltipWidget: SizedBox(
+            tooltipWidgetBuilder: (context) => SizedBox(
               key: tooltipKey,
               width: 100,
               height: 50,
               child: const Text('tooltip'),
             ),
-            visible: true,
+            controller: controller,
             targetAnchor: Alignment.topLeft,
             followerAnchor: Alignment.bottomLeft,
             offset: Offset.zero,
-            animationStyle: AnimationStyle.noAnimation,
             child: SizedBox(
               key: targetKey,
               width: 100,
@@ -94,6 +102,7 @@ void main() {
         ),
       );
 
+      controller.show();
       await tester.pump(const Duration(milliseconds: 100));
 
       final targetFinder = find.byKey(targetKey);
@@ -117,21 +126,21 @@ void main() {
     testWidgets('applies offset correctly', (WidgetTester tester) async {
       final targetKey = GlobalKey();
       final tooltipKey = GlobalKey();
+      final controller = OverlayPortalController();
 
       await tester.pumpTooltip(
         Center(
           child: NakedTooltip(
-            tooltipWidget: SizedBox(
+            tooltipWidgetBuilder: (context) => SizedBox(
               key: tooltipKey,
               width: 100,
               height: 50,
               child: const Text('Tooltip Content'),
             ),
-            visible: true,
+            controller: controller,
             targetAnchor: Alignment.topLeft,
             followerAnchor: Alignment.bottomLeft,
             offset: const Offset(0, 10),
-            animationStyle: AnimationStyle.noAnimation,
             child: SizedBox(
               key: targetKey,
               width: 100,
@@ -142,6 +151,7 @@ void main() {
         ),
       );
 
+      controller.show();
       await tester.pump();
 
       final targetFinder = find.byKey(targetKey);
@@ -155,56 +165,28 @@ void main() {
     });
   });
 
-  group('Animation', () {
-    testWidgets('applies transition builder', (WidgetTester tester) async {
+  group('Controller', () {
+    testWidgets('controller toggles tooltip visibility',
+        (WidgetTester tester) async {
+      final controller = OverlayPortalController();
+
       await tester.pumpTooltip(
         NakedTooltip(
-          tooltipWidget: const Text('Tooltip Content'),
-          visible: true,
-          transitionBuilder: (child, animation) {
-            return FadeTransition(opacity: animation, child: child);
-          },
+          tooltipWidgetBuilder: (context) => const Text('Tooltip Content'),
+          controller: controller,
           child: const Text('Hover Me'),
         ),
       );
 
+      expect(find.text('Tooltip Content'), findsNothing);
+
+      controller.show();
       await tester.pump();
-      await tester.pump(const Duration(milliseconds: 100));
       expect(find.text('Tooltip Content'), findsOneWidget);
+
+      controller.hide();
+      await tester.pump();
+      expect(find.text('Tooltip Content'), findsNothing);
     });
-  });
-
-  testWidgets('toggles tooltip visibility based on state',
-      (WidgetTester tester) async {
-    bool isHovered = false;
-
-    await tester.pumpTooltip(
-      StatefulBuilder(
-        builder: (context, setState) {
-          return GestureDetector(
-            onTap: () => setState(() => isHovered = !isHovered),
-            child: NakedTooltip(
-              tooltipWidget: const Text('Tooltip Content'),
-              visible: isHovered,
-              child: const Text('Press Me'),
-            ),
-          );
-        },
-      ),
-    );
-
-    expect(find.text('Tooltip Content'), findsNothing);
-
-    // Press
-    await tester.tap(find.text('Press Me'));
-    await tester.pumpAndSettle();
-
-    expect(find.text('Tooltip Content'), findsOneWidget);
-
-    // Press Again
-    await tester.tap(find.text('Press Me'));
-    await tester.pumpAndSettle();
-
-    expect(find.text('Tooltip Content'), findsNothing);
   });
 }

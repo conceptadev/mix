@@ -1,7 +1,4 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 /// A fully customizable tooltip with no default styling.
 ///
@@ -14,52 +11,97 @@ import 'package:flutter/widgets.dart';
 ///
 /// Example:
 /// ```dart
-/// class MyTooltip extends StatefulWidget {
-///   @override
-///   _MyTooltipState createState() => _MyTooltipState();
-/// }
-///
-/// class _MyTooltipState extends State<MyTooltip> {
-///   bool _isVisible = false;
-///
-///   @override
-///   Widget build(BuildContext context) {
-///     return NakedTooltip(
-///       tooltipWidget: Container(
-///         padding: EdgeInsets.all(8),
-///         decoration: BoxDecoration(
-///           color: Colors.grey[800],
-///           borderRadius: BorderRadius.circular(4),
-///         ),
-///         child: Text('This is a tooltip', style: TextStyle(color: Colors.white)),
-///       ),
-///       visible: _isVisible,
-///       showDuration: const Duration(seconds: 2),
-///       child: MouseRegion(
-///         onEnter: (_) => setState(() => _isVisible = true),
-///         onExit: (_) => setState(() => _isVisible = false),
-///         child: Container(
-///           padding: EdgeInsets.all(8),
-///           decoration: BoxDecoration(
-///             color: const Color(0xFF2196F3),
-///             borderRadius: BorderRadius.circular(4),
-///           ),
-///           child: Text('Hover me', style: TextStyle(color: Colors.white)),
-///         ),
-///       ),
-///     );
-///   }
-/// }
+// class MyTooltip extends StatefulWidget {
+//   @override
+//   _MyTooltipState createState() => _MyTooltipState();
+// }
+
+// class _MyTooltipState extends State<MyTooltip>
+//     with SingleTickerProviderStateMixin {
+//   late final _controller = OverlayPortalController();
+//   late final animationController = AnimationController(
+//     duration: const Duration(milliseconds: 2000),
+//     vsync: this,
+//   );
+//   late final CurvedAnimation _animation;
+
+//   @override
+//   void initState() {
+//     super.initState();
+//     _animation = CurvedAnimation(
+//       parent: animationController,
+//       curve: Curves.easeInOut,
+//     );
+//   }
+
+//   @override
+//   void dispose() {
+//     animationController.dispose();
+//     super.dispose();
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return NakedTooltip(
+//       fallbackAlignments: [
+//         AlignmentPair(
+//           target: Alignment.topCenter,
+//           follower: Alignment.bottomCenter,
+//           offset: const Offset(0, -8),
+//         ),
+//       ],
+//       targetAnchor: Alignment.bottomCenter,
+//       followerAnchor: Alignment.topCenter,
+//       offset: const Offset(0, 8),
+//       tooltipWidgetBuilder:
+//           (context) => FadeTransition(
+//             opacity: _animation,
+//             child: Container(
+//               padding: EdgeInsets.all(8),
+//               decoration: BoxDecoration(
+//                 color: Colors.grey[800],
+//                 borderRadius: BorderRadius.circular(4),
+//               ),
+//               child: Text(
+//                 'This is a tooltip',
+//                 style: TextStyle(color: Colors.white),
+//               ),
+//             ),
+//           ),
+//       controller: _controller,
+//       child: MouseRegion(
+//         onEnter: (_) {
+//           _controller.show();
+//           animationController.forward();
+//         },
+//         onExit: (_) {
+//           animationController.reverse().then((_) {
+//             _controller.hide();
+//           });
+//         },
+//         child: Container(
+//           padding: EdgeInsets.all(8),
+//           decoration: BoxDecoration(
+//             color: const Color(0xFF2196F3),
+//             borderRadius: BorderRadius.circular(4),
+//           ),
+//           child: Text('Hover me', style: TextStyle(color: Colors.white)),
+//         ),
+//       ),
+//     );
+//   }
+// }
 /// ```
+
 class NakedTooltip extends StatefulWidget {
   /// The widget that triggers the tooltip.
   final Widget child;
 
   /// The widget to display in the tooltip.
-  final Widget tooltipWidget;
+  final WidgetBuilder tooltipWidgetBuilder;
 
   /// Whether the tooltip is currently visible.
-  final bool visible;
+  final OverlayPortalController controller;
 
   /// The anchor point on the tooltip that should be aligned with the target.
   final Alignment followerAnchor;
@@ -73,29 +115,22 @@ class NakedTooltip extends StatefulWidget {
   /// Optional semantic label for accessibility.
   final String? semanticLabel;
 
-  /// The transition builder for the tooltip.
-  final AnimatedSwitcherTransitionBuilder transitionBuilder;
-
-  /// The animation style for the tooltip.
-  ///
-  /// Controls how the tooltip animates in and out.
-  final AnimationStyle? animationStyle;
+  /// The fallback alignments for the tooltip.
+  final List<AlignmentPair> fallbackAlignments;
 
   /// Creates a naked tooltip.
   ///
   /// The [child] and [tooltipWidget] parameters are required.
-  const 
-  NakedTooltip({
+  const NakedTooltip({
     super.key,
     required this.child,
-    required this.tooltipWidget,
-    required this.visible,
+    required this.tooltipWidgetBuilder,
+    required this.controller,
     this.followerAnchor = Alignment.bottomCenter,
     this.targetAnchor = Alignment.topCenter,
     this.offset = const Offset(0, -8),
-    this.transitionBuilder = AnimatedSwitcher.defaultTransitionBuilder,
-    this.animationStyle,
     this.semanticLabel,
+    this.fallbackAlignments = const [],
   });
 
   @override
@@ -104,105 +139,165 @@ class NakedTooltip extends StatefulWidget {
 
 class _NakedTooltipState extends State<NakedTooltip>
     with SingleTickerProviderStateMixin {
-  final LayerLink _layerLink = LayerLink();
-  final OverlayPortalController _overlayController = OverlayPortalController();
+  Widget _overlayTooltipBuilder(BuildContext context) {
+    final OverlayState overlayState = Overlay.of(
+      context,
+      debugRequiredFor: widget,
+    );
+    final RenderBox box = this.context.findRenderObject()! as RenderBox;
+    final Offset target = box.localToGlobal(
+      box.size.topLeft(Offset.zero),
+      ancestor: overlayState.context.findRenderObject(),
+    );
 
-  static const _duration = Duration(milliseconds: 200);
-  static const _curve = Curves.easeInOut;
-
-  bool _tooltipShouldBeVisible = false;
-  Timer? _timer;
-
-  @override
-  void initState() {
-    super.initState();
-
-    if (widget.visible) {
-      _overlayController.show();
-      _updateTooltipVisibility(true);
-    }
+    return Positioned.fill(
+      bottom: MediaQuery.of(context).viewInsets.bottom,
+      child: CustomSingleChildLayout(
+        delegate: _TooltipPositionDelegate(
+          target: target,
+          targetSize: box.size,
+          alignment: AlignmentPair(
+            target: widget.targetAnchor,
+            follower: widget.followerAnchor,
+            offset: widget.offset,
+          ),
+          fallbackAlignments: widget.fallbackAlignments,
+        ),
+        child: widget.tooltipWidgetBuilder(context),
+      ),
+    );
   }
 
   @override
   void dispose() {
-    if (_overlayController.isShowing) {
-      _overlayController.hide();
+    if (widget.controller.isShowing) {
+      widget.controller.hide();
     }
-    _timer?.cancel();
     super.dispose();
-  }
-
-  @override
-  void didUpdateWidget(NakedTooltip oldWidget) {
-    super.didUpdateWidget(oldWidget);
-
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      _timer?.cancel();
-      if (widget.visible) {
-        _overlayController.show();
-
-        WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-          _updateTooltipVisibility(true);
-        });
-      } else {
-        _timer = Timer(widget.animationStyle?.duration ?? _duration, () {
-          _overlayController.hide();
-        });
-        _updateTooltipVisibility(false);
-      }
-    });
-  }
-
-  void _updateTooltipVisibility(bool visible) {
-    setState(() {
-      _tooltipShouldBeVisible = visible;
-    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Semantics(
       container: true,
-      child: CompositedTransformTarget(
-        link: _layerLink,
-        child: OverlayPortal(
-          controller: _overlayController,
-          overlayChildBuilder: _overlayTooltipBuilder,
-          child: widget.child,
-        ),
+      child: OverlayPortal(
+        overlayChildBuilder: _overlayTooltipBuilder,
+        controller: widget.controller,
+        child: widget.child,
       ),
     );
   }
+}
 
-  Widget _overlayTooltipBuilder(BuildContext context) {
-    return Stack(
-      children: [
-        AnimatedSwitcher(
-          duration: widget.animationStyle?.duration ?? _duration,
-          reverseDuration: widget.animationStyle?.reverseDuration ?? _duration,
-          switchInCurve: widget.animationStyle?.curve ?? _curve,
-          switchOutCurve: widget.animationStyle?.reverseCurve ?? _curve,
-          transitionBuilder: widget.transitionBuilder,
-          child: _tooltipShouldBeVisible
-              ? Semantics(
-                  container: true,
-                  child: KeyedSubtree(
-                    key: const ValueKey(true),
-                    child: CompositedTransformFollower(
-                      targetAnchor: widget.targetAnchor,
-                      followerAnchor: widget.followerAnchor,
-                      offset: widget.offset,
-                      link: _layerLink,
-                      child: widget.tooltipWidget,
-                    ),
-                  ),
-                )
-              : const KeyedSubtree(
-                  key: ValueKey(false),
-                  child: SizedBox.shrink(),
-                ),
-        ),
-      ],
+class AlignmentPair {
+  final Alignment target;
+  final Alignment follower;
+  final Offset offset;
+
+  const AlignmentPair({
+    required this.target,
+    required this.follower,
+    this.offset = Offset.zero,
+  });
+}
+
+class _TooltipPositionDelegate extends SingleChildLayoutDelegate {
+  /// Creates a delegate for computing the layout of a tooltip.
+  _TooltipPositionDelegate({
+    required this.target,
+    required this.targetSize,
+    required this.alignment,
+    required this.fallbackAlignments,
+  });
+
+  /// The offset of the target the tooltip is positioned near in the global
+  /// coordinate system.
+  final Offset target;
+
+  /// The amount of vertical distance between the target and the displayed
+  /// tooltip.
+  final Size targetSize;
+
+  final AlignmentPair alignment;
+
+  final List<AlignmentPair> fallbackAlignments;
+
+  @override
+  BoxConstraints getConstraintsForChild(BoxConstraints constraints) =>
+      constraints.loosen();
+
+  @override
+  Offset getPositionForChild(Size size, Size childSize) {
+    return _calculateOverlayPosition(
+      screenSize: size,
+      targetSize: targetSize,
+      targetPosition: target,
+      overlaySize: childSize,
+      alignment: alignment,
+      fallbackAlignments: fallbackAlignments,
     );
   }
+
+  @override
+  bool shouldRelayout(_TooltipPositionDelegate oldDelegate) {
+    return target != oldDelegate.target || targetSize != oldDelegate.targetSize;
+  }
+}
+
+Offset _calculateOverlayPosition({
+  required Size screenSize,
+  required Size targetSize,
+  required Offset targetPosition,
+  required Size overlaySize,
+  required AlignmentPair alignment,
+  List<AlignmentPair> fallbackAlignments = const [],
+}) {
+  final allAlignments = [alignment, ...fallbackAlignments];
+
+  for (final pair in allAlignments) {
+    final candidate = _calculateAlignedOffset(
+      targetTopLeft: targetPosition,
+      targetSize: targetSize,
+      overlaySize: overlaySize,
+      alignment: pair,
+    );
+
+    if (_isOverlayFullyVisible(candidate, overlaySize, screenSize)) {
+      return candidate;
+    }
+  }
+
+  // Return first attempt even if it overflows
+  return _calculateAlignedOffset(
+    targetTopLeft: targetPosition,
+    targetSize: targetSize,
+    overlaySize: overlaySize,
+    alignment: alignment,
+  );
+}
+
+Offset _calculateAlignedOffset({
+  required Offset targetTopLeft,
+  required Size targetSize,
+  required Size overlaySize,
+  required AlignmentPair alignment,
+}) {
+  final targetAnchorOffset = alignment.target.alongSize(targetSize);
+  final followerAnchorOffset = alignment.follower.alongSize(overlaySize);
+
+  return targetTopLeft +
+      targetAnchorOffset -
+      followerAnchorOffset +
+      alignment.offset;
+}
+
+bool _isOverlayFullyVisible(
+  Offset overlayTopLeft,
+  Size overlaySize,
+  Size screenSize,
+) {
+  return overlayTopLeft.dx >= 0 &&
+      overlayTopLeft.dy >= 0 &&
+      overlayTopLeft.dx + overlaySize.width <= screenSize.width &&
+      overlayTopLeft.dy + overlaySize.height <= screenSize.height;
 }

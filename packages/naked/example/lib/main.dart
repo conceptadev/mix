@@ -1,3 +1,4 @@
+import 'package:example/examples/naked_tooltip_example.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -6,12 +7,9 @@ import 'examples/naked_accordion_example.dart';
 import 'examples/naked_avatar_example.dart';
 import 'examples/naked_button_example.dart';
 import 'examples/naked_checkbox_example.dart';
-import 'examples/naked_menu_example.dart';
 import 'examples/naked_radio_example.dart';
-import 'examples/naked_select_example.dart';
 import 'examples/naked_slider_example.dart';
 import 'examples/naked_tabs_example.dart';
-import 'examples/naked_tooltip_example.dart';
 import 'url_strategy.dart';
 
 void main() {
@@ -126,10 +124,10 @@ List<NavDestination> destinations() => [
         label: 'Tooltips',
         widget: const NakedTooltipExample(),
       ),
-      NavDestination(
-        label: 'Menu',
-        widget: const NakedMenuExample(),
-      ),
+      // NavDestination(
+      //   label: 'Menu',
+      //   widget: const NakedMenuExample(),
+      // ),
       NavDestination(
         label: 'Accordion',
         widget: const NakedAccordionExample(),
@@ -150,10 +148,10 @@ List<NavDestination> destinations() => [
         label: 'Radio',
         widget: const NakedRadioExample(),
       ),
-      NavDestination(
-        label: 'Select',
-        widget: const NakedSelectExample(),
-      ),
+      // NavDestination(
+      //   label: 'Select',
+      //   widget: const NakedSelectExample(),
+      // ),
       NavDestination(
         label: 'Slider',
         widget: const NakedSliderExample(),
