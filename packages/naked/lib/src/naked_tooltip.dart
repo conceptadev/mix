@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:naked/naked.dart';
 
 /// A fully customizable tooltip with no default styling.
 ///
@@ -137,37 +138,7 @@ class NakedTooltip extends StatefulWidget {
   State<NakedTooltip> createState() => _NakedTooltipState();
 }
 
-class _NakedTooltipState extends State<NakedTooltip>
-    with SingleTickerProviderStateMixin {
-  Widget _overlayTooltipBuilder(BuildContext context) {
-    final OverlayState overlayState = Overlay.of(
-      context,
-      debugRequiredFor: widget,
-    );
-    final RenderBox box = this.context.findRenderObject()! as RenderBox;
-    final Offset target = box.localToGlobal(
-      box.size.topLeft(Offset.zero),
-      ancestor: overlayState.context.findRenderObject(),
-    );
-
-    return Positioned.fill(
-      bottom: MediaQuery.of(context).viewInsets.bottom,
-      child: CustomSingleChildLayout(
-        delegate: _TooltipPositionDelegate(
-          target: target,
-          targetSize: box.size,
-          alignment: AlignmentPair(
-            target: widget.targetAnchor,
-            follower: widget.followerAnchor,
-            offset: widget.offset,
-          ),
-          fallbackAlignments: widget.fallbackAlignments,
-        ),
-        child: widget.tooltipWidgetBuilder(context),
-      ),
-    );
-  }
-
+class _NakedTooltipState extends State<NakedTooltip> {
   @override
   void dispose() {
     if (widget.controller.isShowing) {
@@ -180,124 +151,11 @@ class _NakedTooltipState extends State<NakedTooltip>
   Widget build(BuildContext context) {
     return Semantics(
       container: true,
-      child: OverlayPortal(
-        overlayChildBuilder: _overlayTooltipBuilder,
+      child: NakedPortal(
+        overlayChildBuilder: widget.tooltipWidgetBuilder,
         controller: widget.controller,
         child: widget.child,
       ),
     );
   }
-}
-
-class AlignmentPair {
-  final Alignment target;
-  final Alignment follower;
-  final Offset offset;
-
-  const AlignmentPair({
-    required this.target,
-    required this.follower,
-    this.offset = Offset.zero,
-  });
-}
-
-class _TooltipPositionDelegate extends SingleChildLayoutDelegate {
-  /// Creates a delegate for computing the layout of a tooltip.
-  _TooltipPositionDelegate({
-    required this.target,
-    required this.targetSize,
-    required this.alignment,
-    required this.fallbackAlignments,
-  });
-
-  /// The offset of the target the tooltip is positioned near in the global
-  /// coordinate system.
-  final Offset target;
-
-  /// The amount of vertical distance between the target and the displayed
-  /// tooltip.
-  final Size targetSize;
-
-  final AlignmentPair alignment;
-
-  final List<AlignmentPair> fallbackAlignments;
-
-  @override
-  BoxConstraints getConstraintsForChild(BoxConstraints constraints) =>
-      constraints.loosen();
-
-  @override
-  Offset getPositionForChild(Size size, Size childSize) {
-    return _calculateOverlayPosition(
-      screenSize: size,
-      targetSize: targetSize,
-      targetPosition: target,
-      overlaySize: childSize,
-      alignment: alignment,
-      fallbackAlignments: fallbackAlignments,
-    );
-  }
-
-  @override
-  bool shouldRelayout(_TooltipPositionDelegate oldDelegate) {
-    return target != oldDelegate.target || targetSize != oldDelegate.targetSize;
-  }
-}
-
-Offset _calculateOverlayPosition({
-  required Size screenSize,
-  required Size targetSize,
-  required Offset targetPosition,
-  required Size overlaySize,
-  required AlignmentPair alignment,
-  List<AlignmentPair> fallbackAlignments = const [],
-}) {
-  final allAlignments = [alignment, ...fallbackAlignments];
-
-  for (final pair in allAlignments) {
-    final candidate = _calculateAlignedOffset(
-      targetTopLeft: targetPosition,
-      targetSize: targetSize,
-      overlaySize: overlaySize,
-      alignment: pair,
-    );
-
-    if (_isOverlayFullyVisible(candidate, overlaySize, screenSize)) {
-      return candidate;
-    }
-  }
-
-  // Return first attempt even if it overflows
-  return _calculateAlignedOffset(
-    targetTopLeft: targetPosition,
-    targetSize: targetSize,
-    overlaySize: overlaySize,
-    alignment: alignment,
-  );
-}
-
-Offset _calculateAlignedOffset({
-  required Offset targetTopLeft,
-  required Size targetSize,
-  required Size overlaySize,
-  required AlignmentPair alignment,
-}) {
-  final targetAnchorOffset = alignment.target.alongSize(targetSize);
-  final followerAnchorOffset = alignment.follower.alongSize(overlaySize);
-
-  return targetTopLeft +
-      targetAnchorOffset -
-      followerAnchorOffset +
-      alignment.offset;
-}
-
-bool _isOverlayFullyVisible(
-  Offset overlayTopLeft,
-  Size overlaySize,
-  Size screenSize,
-) {
-  return overlayTopLeft.dx >= 0 &&
-      overlayTopLeft.dy >= 0 &&
-      overlayTopLeft.dx + overlaySize.width <= screenSize.width &&
-      overlayTopLeft.dy + overlaySize.height <= screenSize.height;
 }

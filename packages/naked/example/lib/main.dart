@@ -7,6 +7,7 @@ import 'examples/naked_accordion_example.dart';
 import 'examples/naked_avatar_example.dart';
 import 'examples/naked_button_example.dart';
 import 'examples/naked_checkbox_example.dart';
+import 'examples/naked_menu_example.dart';
 import 'examples/naked_radio_example.dart';
 import 'examples/naked_slider_example.dart';
 import 'examples/naked_tabs_example.dart';
@@ -121,13 +122,13 @@ class MyApp extends StatelessWidget {
 // Define destinations at the app level for route generation
 List<NavDestination> destinations() => [
       NavDestination(
+        label: 'Menu',
+        widget: const NakedMenuExample(),
+      ),
+      NavDestination(
         label: 'Tooltips',
         widget: const NakedTooltipExample(),
       ),
-      // NavDestination(
-      //   label: 'Menu',
-      //   widget: const NakedMenuExample(),
-      // ),
       NavDestination(
         label: 'Accordion',
         widget: const NakedAccordionExample(),
