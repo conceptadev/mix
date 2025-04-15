@@ -42,7 +42,7 @@ void main() {
                       callbackCalled = true;
                     });
                   },
-                  isDisabled: true,
+                  enabled: true,
                   child: const Column(
                     children: [
                       NakedRadioButton<String>(
@@ -209,7 +209,7 @@ void main() {
                       ),
                       NakedRadioButton<String>(
                         value: 'option2',
-                        isDisabled: true,
+                        enabled: true,
                         child: SizedBox(width: 20, height: 20),
                       ),
                     ],

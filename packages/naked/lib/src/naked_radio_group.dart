@@ -21,7 +21,7 @@ class NakedRadioGroup<T> extends StatefulWidget {
   /// Whether the entire group is disabled.
   ///
   /// When true, all radio buttons in the group will not respond to user interaction.
-  final bool isDisabled;
+  final bool enabled;
 
   /// Whether focus should be trapped within this radio group.
   ///
@@ -47,7 +47,7 @@ class NakedRadioGroup<T> extends StatefulWidget {
     required this.value,
     required this.onChanged,
     required this.child,
-    this.isDisabled = false,
+    this.enabled = true,
     this.trapFocus = false,
     this.autofocus = false,
     this.onEscapePressed,
@@ -137,7 +137,7 @@ class _NakedRadioGroupState<T> extends State<NakedRadioGroup<T>> {
         child: NakedRadioGroupScope<T>(
           value: widget.value,
           onChanged: widget.onChanged,
-          isDisabled: widget.isDisabled,
+          enabled: widget.enabled,
           child: widget.child,
         ),
       ),
@@ -146,9 +146,7 @@ class _NakedRadioGroupState<T> extends State<NakedRadioGroup<T>> {
 
   void _handleKeyEvent(KeyEvent event) {
     // Handle arrow key navigation between radio buttons
-    if (event is KeyDownEvent &&
-        !widget.isDisabled &&
-        widget.onChanged != null) {
+    if (event is KeyDownEvent && widget.enabled && widget.onChanged != null) {
       if (event.logicalKey == LogicalKeyboardKey.arrowDown ||
           event.logicalKey == LogicalKeyboardKey.arrowRight) {
         _moveToNextRadioButton();
@@ -226,14 +224,14 @@ class NakedRadioGroupScope<T> extends InheritedWidget {
   final ValueChanged<T?>? onChanged;
 
   /// Whether the entire group is disabled.
-  final bool isDisabled;
+  final bool enabled;
 
   /// Creates a radio group scope.
   const NakedRadioGroupScope({
     super.key,
     required this.value,
     required this.onChanged,
-    required this.isDisabled,
+    required this.enabled,
     required super.child,
   });
 
@@ -246,7 +244,7 @@ class NakedRadioGroupScope<T> extends InheritedWidget {
   @override
   bool updateShouldNotify(NakedRadioGroupScope<T> oldWidget) {
     return value != oldWidget.value ||
-        isDisabled != oldWidget.isDisabled ||
+        enabled != oldWidget.enabled ||
         onChanged != oldWidget.onChanged;
   }
 }

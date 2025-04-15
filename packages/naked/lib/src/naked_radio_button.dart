@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'naked_radio_group.dart';
-import 'utilities/naked_focus_manager.dart';
 
 /// A fully customizable radio button with no default styling.
 ///
@@ -117,7 +116,7 @@ class NakedRadioButton<T> extends StatefulWidget {
   ///
   /// When true, the radio button will not respond to user interaction,
   /// regardless of the group's disabled state.
-  final bool isDisabled;
+  final bool enabled;
 
   /// Optional semantic label for accessibility.
   ///
@@ -144,7 +143,7 @@ class NakedRadioButton<T> extends StatefulWidget {
     this.onHoverState,
     this.onPressedState,
     this.onFocusState,
-    this.isDisabled = false,
+    this.enabled = true,
     this.semanticLabel,
     this.cursor = SystemMouseCursors.click,
     this.enableHapticFeedback = true,
@@ -226,7 +225,7 @@ class _NakedRadioButtonState<T> extends State<NakedRadioButton<T>> {
 
     // Check if interaction is allowed
     final isInteractive =
-        !widget.isDisabled && !group.isDisabled && group.onChanged != null;
+        widget.enabled && group.enabled && group.onChanged != null;
 
     return Semantics(
       checked: isSelected,
@@ -234,40 +233,30 @@ class _NakedRadioButtonState<T> extends State<NakedRadioButton<T>> {
       label: widget.semanticLabel,
       onTap: isInteractive ? _handleTap : null,
       excludeSemantics: true,
-      child: NakedFocusManager(
-        trapFocus: false, // Don't trap focus within individual radio buttons
-        restoreFocus: true, // Restore focus when the button is removed
-        autofocus:
-            false, // Don't automatically request focus unless set by group
-        child: MouseRegion(
-          cursor: isInteractive ? widget.cursor : SystemMouseCursors.forbidden,
-          onEnter:
-              isInteractive ? (_) => widget.onHoverState?.call(true) : null,
-          onExit:
-              isInteractive ? (_) => widget.onHoverState?.call(false) : null,
-          child: Focus(
-            focusNode: _focusNode,
-            onFocusChange: widget.onFocusState,
-            onKeyEvent: (node, event) {
-              if (isInteractive) {
-                _handleKeyEvent(event);
-              }
-              return KeyEventResult.handled;
-            },
-            child: GestureDetector(
-              behavior: HitTestBehavior.opaque,
-              onTapDown: isInteractive
-                  ? (_) => widget.onPressedState?.call(true)
-                  : null,
-              onTapUp: isInteractive
-                  ? (_) => widget.onPressedState?.call(false)
-                  : null,
-              onTapCancel: isInteractive
-                  ? () => widget.onPressedState?.call(false)
-                  : null,
-              onTap: isInteractive ? _handleTap : null,
-              child: widget.child,
-            ),
+      child: MouseRegion(
+        cursor: isInteractive ? widget.cursor : SystemMouseCursors.forbidden,
+        onEnter: isInteractive ? (_) => widget.onHoverState?.call(true) : null,
+        onExit: isInteractive ? (_) => widget.onHoverState?.call(false) : null,
+        child: Focus(
+          focusNode: _focusNode,
+          onFocusChange: widget.onFocusState,
+          onKeyEvent: (node, event) {
+            if (isInteractive) {
+              _handleKeyEvent(event);
+            }
+            return KeyEventResult.handled;
+          },
+          child: GestureDetector(
+            behavior: HitTestBehavior.opaque,
+            onTapDown:
+                isInteractive ? (_) => widget.onPressedState?.call(true) : null,
+            onTapUp: isInteractive
+                ? (_) => widget.onPressedState?.call(false)
+                : null,
+            onTapCancel:
+                isInteractive ? () => widget.onPressedState?.call(false) : null,
+            onTap: isInteractive ? _handleTap : null,
+            child: widget.child,
           ),
         ),
       ),

@@ -377,7 +377,7 @@ class _DisabledRadioExampleState extends State<DisabledRadioExample> {
               _selectedOption = value;
             });
           },
-          isDisabled: true,
+          enabled: true,
           child: Column(
             children: [
               _buildRadioOption('option1', 'Option 1', false),
@@ -416,7 +416,7 @@ class _DisabledRadioExampleState extends State<DisabledRadioExample> {
       children: [
         NakedRadioButton<String>(
           value: value,
-          isDisabled: isOptionDisabled,
+          enabled: isOptionDisabled,
           child: Container(
             width: 20,
             height: 20,
@@ -501,28 +501,10 @@ class _NakedRadioExampleState extends State<NakedRadioExample> {
               child: const RadioButtonVariants(),
             ),
 
-            // Icon Radio Buttons
-            _buildSection(
-              title: 'Icon Radio Buttons',
-              child: const IconRadioButtons(),
-            ),
-
-            // Button-Style Radio Group
-            _buildSection(
-              title: 'Button-Style Radio Group',
-              child: const ButtonStyleRadio(),
-            ),
-
             // Focus Management Example
             _buildSection(
               title: 'Focus and Keyboard Navigation',
               child: const FocusRadioExample(),
-            ),
-
-            // Responsive Radio Grid
-            _buildSection(
-              title: 'Responsive Radio Grid',
-              child: const ResponsiveRadioGrid(),
             ),
           ],
         ),
@@ -1040,53 +1022,54 @@ class _RadioButtonVariantsState extends State<RadioButtonVariants> {
                       {
                         'id': 'option1',
                         'label': 'Enabled Option',
-                        'disabled': false
+                        'enabled': true
                       },
                       {
                         'id': 'option2',
                         'label': 'Disabled Option',
-                        'disabled': true
+                        'enabled': false
                       },
                     ])
                       Padding(
                         padding: const EdgeInsets.only(bottom: 8.0),
                         child: NakedRadioButton<String>(
                           value: option['id'] as String,
-                          isDisabled: option['disabled'] as bool,
+                          enabled: option['enabled'] as bool,
                           child: Builder(
                             builder: (context) {
                               final isSelected =
                                   _variants['disabled'] == option['id'];
-                              final isDisabled = option['disabled'] as bool;
+                              final isEnabled = option['enabled'] as bool;
                               return Row(
                                 children: [
                                   Container(
                                     width: 16,
                                     height: 16,
                                     decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      border: Border.all(
-                                        color: isDisabled
-                                            ? const Color(
-                                                0xFFE5E7EB) // gray-200
-                                            : isSelected
-                                                ? const Color(
-                                                    0xFF3B82F6) // blue-500
-                                                : const Color(
-                                                    0xFFD1D5DB), // gray-300
-                                        width: 2,
-                                      ),
-                                      color: isDisabled
-                                          ? const Color(0xFFF3F4F6) // gray-100
-                                          : Colors.white,
-                                    ),
+                                        shape: BoxShape.circle,
+                                        border: Border.all(
+                                          color: isEnabled
+                                              ? const Color(
+                                                  0xFF3B82F6) // gray-200
+                                              : isSelected
+                                                  ? const Color(
+                                                      0xFFE5E7EB) // blue-500
+                                                  : const Color(
+                                                      0xFFD1D5DB), // gray-300
+                                          width: 2,
+                                        ),
+                                        color: isEnabled
+                                            ? Colors.white
+                                            : const Color(
+                                                0xFFF3F4F6) // gray-100,
+                                        ),
                                     child: Center(
                                       child: Container(
                                         width: 8,
                                         height: 8,
                                         decoration: BoxDecoration(
                                           shape: BoxShape.circle,
-                                          color: isDisabled
+                                          color: !isEnabled
                                               ? isSelected
                                                   ? const Color(
                                                       0xFFD1D5DB) // gray-300
@@ -1105,7 +1088,7 @@ class _RadioButtonVariantsState extends State<RadioButtonVariants> {
                                     style: TextStyle(
                                       fontSize: 14,
                                       fontWeight: FontWeight.w500,
-                                      color: isDisabled
+                                      color: !isEnabled
                                           ? const Color(0xFF9CA3AF) // gray-400
                                           : const Color(
                                               0xFF374151), // text-gray-700
@@ -1125,48 +1108,6 @@ class _RadioButtonVariantsState extends State<RadioButtonVariants> {
         ),
       ],
     );
-  }
-}
-
-class IconRadioButtons extends StatefulWidget {
-  const IconRadioButtons({super.key});
-
-  @override
-  State<IconRadioButtons> createState() => _IconRadioButtonsState();
-}
-
-class _IconRadioButtonsState extends State<IconRadioButtons> {
-  @override
-  Widget build(BuildContext context) {
-    return const Placeholder();
-  }
-}
-
-class ButtonStyleRadio extends StatefulWidget {
-  const ButtonStyleRadio({super.key});
-
-  @override
-  State<ButtonStyleRadio> createState() => _ButtonStyleRadioState();
-}
-
-class _ButtonStyleRadioState extends State<ButtonStyleRadio> {
-  @override
-  Widget build(BuildContext context) {
-    return const Placeholder();
-  }
-}
-
-class ResponsiveRadioGrid extends StatefulWidget {
-  const ResponsiveRadioGrid({super.key});
-
-  @override
-  State<ResponsiveRadioGrid> createState() => _ResponsiveRadioGridState();
-}
-
-class _ResponsiveRadioGridState extends State<ResponsiveRadioGrid> {
-  @override
-  Widget build(BuildContext context) {
-    return const Placeholder();
   }
 }
 
