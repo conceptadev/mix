@@ -148,7 +148,7 @@ class NakedSlider extends StatefulWidget {
   /// Whether the slider is disabled.
   ///
   /// When true, the slider will not respond to user interaction.
-  final bool isDisabled;
+  final bool enabled;
 
   /// Optional semantic label for accessibility.
   ///
@@ -201,7 +201,7 @@ class NakedSlider extends StatefulWidget {
     this.onHoverState,
     this.onDraggingState,
     this.onFocusState,
-    this.isDisabled = false,
+    this.enabled = true,
     this.semanticLabel,
     this.cursor = SystemMouseCursors.click,
     this.focusNode,
@@ -288,7 +288,7 @@ class _NakedSliderState extends State<NakedSlider> {
   }
 
   void _handleDragStart(DragStartDetails details) {
-    if (widget.isDisabled || widget.onChanged == null) return;
+    if (!widget.enabled || widget.onChanged == null) return;
 
     setState(() {
       _isDragging = true;
@@ -301,7 +301,7 @@ class _NakedSliderState extends State<NakedSlider> {
   }
 
   void _handleDragUpdate(DragUpdateDetails details) {
-    if (!_isDragging || widget.isDisabled || widget.onChanged == null) return;
+    if (!_isDragging || !widget.enabled || widget.onChanged == null) return;
 
     // Calculate the drag delta in the proper direction
     final Offset currentPosition = details.globalPosition;
@@ -342,11 +342,17 @@ class _NakedSliderState extends State<NakedSlider> {
   }
 
   void _handleKeyEvent(KeyEvent event) {
-    if (widget.isDisabled || widget.onChanged == null) return;
+    if (!widget.enabled || widget.onChanged == null) return;
 
     double step = HardwareKeyboard.instance.isShiftPressed
         ? widget.largeKeyboardStep
         : widget.keyboardStep;
+
+  if (widget.divisions != null) {
+      final divisionStep = (widget.max - widget.min) / widget.divisions!;
+      step = divisionStep;
+    }
+
     double newValue = widget.value;
 
     // Get text direction for horizontal sliders
@@ -369,10 +375,6 @@ class _NakedSliderState extends State<NakedSlider> {
           newValue = widget.min;
         } else if (event.logicalKey == LogicalKeyboardKey.end) {
           newValue = widget.max;
-        } else if (event.logicalKey == LogicalKeyboardKey.pageUp) {
-          newValue += widget.largeKeyboardStep;
-        } else if (event.logicalKey == LogicalKeyboardKey.pageDown) {
-          newValue -= widget.largeKeyboardStep;
         }
       } else {
         // Vertical slider has inverted up/down controls
@@ -388,10 +390,6 @@ class _NakedSliderState extends State<NakedSlider> {
           newValue = widget.min;
         } else if (event.logicalKey == LogicalKeyboardKey.end) {
           newValue = widget.max;
-        } else if (event.logicalKey == LogicalKeyboardKey.pageUp) {
-          newValue += widget.largeKeyboardStep;
-        } else if (event.logicalKey == LogicalKeyboardKey.pageDown) {
-          newValue -= widget.largeKeyboardStep;
         }
       }
 
@@ -405,7 +403,7 @@ class _NakedSliderState extends State<NakedSlider> {
 
   @override
   Widget build(BuildContext context) {
-    final isInteractive = !widget.isDisabled && widget.onChanged != null;
+    final isInteractive = widget.enabled && widget.onChanged != null;
 
     // Calculate percentage for accessibility
     final double percentage = widget.max > widget.min
@@ -419,81 +417,74 @@ class _NakedSliderState extends State<NakedSlider> {
 
     return Semantics(
       slider: true,
-      value: widget.semanticLabel ?? '${percentage.round()}%',
+      label: widget.semanticLabel,
+      value: '${percentage.round()}%',
       increasedValue:
           '${((increasedValue - widget.min) / (widget.max - widget.min) * 100).round()}%',
       decreasedValue:
           '${((decreasedValue - widget.min) / (widget.max - widget.min) * 100).round()}%',
       enabled: isInteractive,
       excludeSemantics: true,
-      child: NakedFocusManager(
-        trapFocus: false, // Not needed for a standalone slider
-        restoreFocus: true, // Restore focus when slider is removed
-        autofocus:
-            false, // User can control autofocus through their own FocusNode
-        child: Focus(
-          focusNode: _focusNode,
-          onFocusChange: (focused) {
-            setState(() => _isFocused = focused);
-            widget.onFocusState?.call(focused);
-          },
-          skipTraversal: false, // Allow normal tab traversal
-          onKeyEvent: (node, event) {
-            if (!isInteractive) return KeyEventResult.ignored;
-
-            _handleKeyEvent(event);
-            return KeyEventResult.handled;
-          },
-          child: MouseRegion(
-            cursor:
-                isInteractive ? widget.cursor : SystemMouseCursors.forbidden,
-            onEnter: isInteractive
-                ? (_) {
-                    setState(() => _isHovered = true);
-                    widget.onHoverState?.call(true);
-                  }
-                : null,
-            onExit: isInteractive
-                ? (_) {
-                    setState(() => _isHovered = false);
-                    widget.onHoverState?.call(false);
-                  }
-                : null,
-            child: GestureDetector(
-              behavior: HitTestBehavior.opaque,
-              onHorizontalDragStart:
-                  widget.direction == SliderDirection.horizontal &&
-                          isInteractive
-                      ? _handleDragStart
-                      : null,
-              onHorizontalDragUpdate:
-                  widget.direction == SliderDirection.horizontal &&
-                          isInteractive
-                      ? _handleDragUpdate
-                      : null,
-              onHorizontalDragEnd:
-                  widget.direction == SliderDirection.horizontal &&
-                          isInteractive
-                      ? _handleDragEnd
-                      : null,
-              onVerticalDragStart:
-                  widget.direction == SliderDirection.vertical && isInteractive
-                      ? _handleDragStart
-                      : null,
-              onVerticalDragUpdate:
-                  widget.direction == SliderDirection.vertical && isInteractive
-                      ? _handleDragUpdate
-                      : null,
-              onVerticalDragEnd:
-                  widget.direction == SliderDirection.vertical && isInteractive
-                      ? _handleDragEnd
-                      : null,
-              child: NakedSliderState(
-                isHovered: _isHovered,
-                isFocused: _isFocused,
-                isDragging: _isDragging,
-                child: widget.child,
-              ),
+      child: Focus(
+        focusNode: _focusNode,
+        skipTraversal: false,
+        onKeyEvent: (node, event) {
+          if (!isInteractive) return KeyEventResult.ignored;
+          if (event.logicalKey == LogicalKeyboardKey.tab) {
+            return KeyEventResult.ignored;
+          }
+          _handleKeyEvent(event);
+          return KeyEventResult.handled;
+        },
+        onFocusChange: (focused) {
+          setState(() => _isFocused = focused);
+          widget.onFocusState?.call(focused);
+        },
+        child: MouseRegion(
+          cursor: isInteractive ? widget.cursor : SystemMouseCursors.forbidden,
+          onEnter: isInteractive
+              ? (_) {
+                  setState(() => _isHovered = true);
+                  widget.onHoverState?.call(true);
+                }
+              : null,
+          onExit: isInteractive
+              ? (_) {
+                  setState(() => _isHovered = false);
+                  widget.onHoverState?.call(false);
+                }
+              : null,
+          child: GestureDetector(
+            behavior: HitTestBehavior.opaque,
+            onHorizontalDragStart:
+                widget.direction == SliderDirection.horizontal && isInteractive
+                    ? _handleDragStart
+                    : null,
+            onHorizontalDragUpdate:
+                widget.direction == SliderDirection.horizontal && isInteractive
+                    ? _handleDragUpdate
+                    : null,
+            onHorizontalDragEnd:
+                widget.direction == SliderDirection.horizontal && isInteractive
+                    ? _handleDragEnd
+                    : null,
+            onVerticalDragStart:
+                widget.direction == SliderDirection.vertical && isInteractive
+                    ? _handleDragStart
+                    : null,
+            onVerticalDragUpdate:
+                widget.direction == SliderDirection.vertical && isInteractive
+                    ? _handleDragUpdate
+                    : null,
+            onVerticalDragEnd:
+                widget.direction == SliderDirection.vertical && isInteractive
+                    ? _handleDragEnd
+                    : null,
+            child: NakedSliderState(
+              isHovered: _isHovered,
+              isFocused: _isFocused,
+              isDragging: _isDragging,
+              child: widget.child,
             ),
           ),
         ),

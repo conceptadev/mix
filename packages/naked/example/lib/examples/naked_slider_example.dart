@@ -9,6 +9,7 @@ class NakedSliderExample extends StatefulWidget {
 }
 
 class _NakedSliderExampleState extends State<NakedSliderExample> {
+  double _value = 0.7;
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -17,6 +18,14 @@ class _NakedSliderExampleState extends State<NakedSliderExample> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            Slider(
+                label: 'Lucas',
+                value: _value,
+                onChanged: (value) {
+                  setState(() {
+                    _value = value;
+                  });
+                }),
             const Text(
               'Slider Examples',
               style: TextStyle(
@@ -40,10 +49,10 @@ class _NakedSliderExampleState extends State<NakedSliderExample> {
             ),
 
             // Range Slider
-            _buildSection(
-              title: 'Range Slider',
-              child: const RangeSlider(),
-            ),
+            // _buildSection(
+            //   title: 'Range Slider',
+            //   child: const RangeSlider(),
+            // ),
 
             // Slider Variants
             _buildSection(
@@ -173,7 +182,9 @@ class _BasicSliderState extends State<BasicSlider> {
                         child: Container(
                           height: 8,
                           decoration: BoxDecoration(
-                            color: const Color(0xFF3B82F6), // bg-blue-500
+                            color: isFocused
+                                ? const Color.fromARGB(255, 40, 91, 174)
+                                : const Color(0xFF3B82F6),
                             borderRadius: BorderRadius.circular(4),
                           ),
                         ),
@@ -263,15 +274,14 @@ class _SliderWithValueState extends State<SliderWithValue> {
           onChanged: (value) => setState(() {
             _value = value * 100;
           }),
-          child: Builder(
-            builder: (context) {
+          child: LayoutBuilder(
+            builder: (context, constraints) {
               final sliderState = NakedSliderState.of(context);
               final isHovered = sliderState.isHovered;
               final isFocused = sliderState.isFocused;
               final isDragging = sliderState.isDragging;
 
               return SizedBox(
-                width: 300,
                 height: 20,
                 child: Stack(
                   alignment: Alignment.center,
@@ -294,7 +304,9 @@ class _SliderWithValueState extends State<SliderWithValue> {
                         child: Container(
                           height: 8,
                           decoration: BoxDecoration(
-                            color: const Color(0xFF3B82F6), // bg-blue-500
+                            color: isFocused
+                                ? const Color.fromARGB(255, 40, 91, 174)
+                                : const Color(0xFF3B82F6), // bg-blue-500
                             borderRadius: BorderRadius.circular(4),
                           ),
                         ),
@@ -303,7 +315,7 @@ class _SliderWithValueState extends State<SliderWithValue> {
 
                     // Thumb
                     Positioned(
-                      left: (_value / 100) * 300 - 10,
+                      left: (_value / 100) * constraints.maxWidth - 10,
                       child: Container(
                         width: isDragging ? 24 : 20,
                         height: isDragging ? 24 : 20,
@@ -350,203 +362,203 @@ class _SliderWithValueState extends State<SliderWithValue> {
   }
 }
 
-class RangeSlider extends StatefulWidget {
-  const RangeSlider({super.key});
+// class RangeSlider extends StatefulWidget {
+//   const RangeSlider({super.key});
 
-  @override
-  State<RangeSlider> createState() => _RangeSliderState();
-}
+//   @override
+//   State<RangeSlider> createState() => _RangeSliderState();
+// }
 
-class _RangeSliderState extends State<RangeSlider> {
-  double _minValue = 25;
-  double _maxValue = 75;
+// class _RangeSliderState extends State<RangeSlider> {
+//   double _minValue = 25;
+//   double _maxValue = 75;
 
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            const Text(
-              'Price Range',
-              style: TextStyle(
-                fontSize: 14,
-                color: Color(0xFF4B5563), // text-gray-600
-              ),
-            ),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-              decoration: BoxDecoration(
-                color: const Color(0xFFDBEAFE), // bg-blue-100
-                borderRadius: BorderRadius.circular(6),
-              ),
-              child: Text(
-                '\$${_minValue.round()} - \$${_maxValue.round()}',
-                style: const TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500,
-                  color: Color(0xFF1E40AF), // text-blue-800
-                ),
-              ),
-            ),
-          ],
-        ),
-        const SizedBox(height: 24),
-        Stack(
-          children: [
-            // Min value slider
-            NakedSlider(
-              value: _minValue / 100,
-              onChanged: (value) {
-                final newValue = value * 100;
-                if (newValue < _maxValue) {
-                  setState(() => _minValue = newValue);
-                }
-              },
-              child: Builder(
-                builder: (context) {
-                  final sliderState = NakedSliderState.of(context);
-                  final isHovered = sliderState.isHovered;
-                  final isFocused = sliderState.isFocused;
-                  final isDragging = sliderState.isDragging;
+//   @override
+//   Widget build(BuildContext context) {
+//     return Column(
+//       crossAxisAlignment: CrossAxisAlignment.start,
+//       children: [
+//         Row(
+//           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//           children: [
+//             const Text(
+//               'Price Range',
+//               style: TextStyle(
+//                 fontSize: 14,
+//                 color: Color(0xFF4B5563),
+//               ),
+//             ),
+//             Container(
+//               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+//               decoration: BoxDecoration(
+//                 color: const Color(0xFFDBEAFE),
+//                 borderRadius: BorderRadius.circular(6),
+//               ),
+//               child: Text(
+//                 '\$${_minValue.round()} - \$${_maxValue.round()}',
+//                 style: const TextStyle(
+//                   fontSize: 14,
+//                   fontWeight: FontWeight.w500,
+//                   color: Color(0xFF1E40AF),
+//                 ),
+//               ),
+//             ),
+//           ],
+//         ),
+//         const SizedBox(height: 24),
+//         Stack(
+//           children: [
+//             // Min value slider
+//             NakedSlider(
+//               value: _minValue / 100,
+//               onChanged: (value) {
+//                 final newValue = value * 100;
+//                 if (newValue < _maxValue) {
+//                   setState(() => _minValue = newValue);
+//                 }
+//               },
+//               child: Builder(
+//                 builder: (context) {
+//                   final sliderState = NakedSliderState.of(context);
+//                   final isHovered = sliderState.isHovered;
+//                   final isFocused = sliderState.isFocused;
+//                   final isDragging = sliderState.isDragging;
 
-                  return SizedBox(
-                    width: 300,
-                    height: 32,
-                    child: Stack(
-                      alignment: Alignment.center,
-                      clipBehavior: Clip.none,
-                      children: [
-                        // Track background
-                        Container(
-                          height: 8,
-                          decoration: BoxDecoration(
-                            color: const Color(0xFFE5E7EB), // bg-gray-200
-                            borderRadius: BorderRadius.circular(4),
-                          ),
-                        ),
+//                   return SizedBox(
+//                     width: 300,
+//                     height: 32,
+//                     child: Stack(
+//                       alignment: Alignment.center,
+//                       clipBehavior: Clip.none,
+//                       children: [
+//                         // Track background
+//                         Container(
+//                           height: 8,
+//                           decoration: BoxDecoration(
+//                             color: const Color(0xFFE5E7EB), // bg-gray-200
+//                             borderRadius: BorderRadius.circular(4),
+//                           ),
+//                         ),
 
-                        // Active track
-                        Positioned(
-                          left: (_minValue / 100) * 300,
-                          width: (_maxValue - _minValue) / 100 * 300,
-                          child: Container(
-                            height: 8,
-                            decoration: BoxDecoration(
-                              color: const Color(0xFF3B82F6), // bg-blue-500
-                              borderRadius: BorderRadius.circular(4),
-                            ),
-                          ),
-                        ),
+//                         // Active track
+//                         Positioned(
+//                           left: (_minValue / 100) * 300,
+//                           width: (_maxValue - _minValue) / 100 * 300,
+//                           child: Container(
+//                             height: 8,
+//                             decoration: BoxDecoration(
+//                               color: const Color(0xFF3B82F6), // bg-blue-500
+//                               borderRadius: BorderRadius.circular(4),
+//                             ),
+//                           ),
+//                         ),
 
-                        // Min thumb
-                        Positioned(
-                          left: (_minValue / 100) * 300 - 10,
-                          child: Container(
-                            width: isDragging ? 24 : 20,
-                            height: isDragging ? 24 : 20,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              shape: BoxShape.circle,
-                              border: Border.all(
-                                color:
-                                    const Color(0xFF3B82F6), // border-blue-500
-                                width: 2,
-                              ),
-                              boxShadow: [
-                                if (isHovered || isFocused || isDragging)
-                                  BoxShadow(
-                                    color: Colors.black.withOpacity(0.1),
-                                    blurRadius: 4,
-                                    offset: const Offset(0, 2),
-                                  ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  );
-                },
-              ),
-            ),
+//                         // Min thumb
+//                         Positioned(
+//                           left: (_minValue / 100) * 300 - 10,
+//                           child: Container(
+//                             width: isDragging ? 24 : 20,
+//                             height: isDragging ? 24 : 20,
+//                             decoration: BoxDecoration(
+//                               color: Colors.white,
+//                               shape: BoxShape.circle,
+//                               border: Border.all(
+//                                 color:
+//                                     const Color(0xFF3B82F6), // border-blue-500
+//                                 width: 2,
+//                               ),
+//                               boxShadow: [
+//                                 if (isHovered || isFocused || isDragging)
+//                                   BoxShadow(
+//                                     color: Colors.black.withValues(alpha: 0.1),
+//                                     blurRadius: 4,
+//                                     offset: const Offset(0, 2),
+//                                   ),
+//                               ],
+//                             ),
+//                           ),
+//                         ),
+//                       ],
+//                     ),
+//                   );
+//                 },
+//               ),
+//             ),
 
-            // Max value slider
-            NakedSlider(
-              value: _maxValue / 100,
-              onChanged: (value) {
-                final newValue = value * 100;
-                if (newValue > _minValue) {
-                  setState(() => _maxValue = newValue);
-                }
-              },
-              child: Builder(
-                builder: (context) {
-                  final sliderState = NakedSliderState.of(context);
-                  final isHovered = sliderState.isHovered;
-                  final isFocused = sliderState.isFocused;
-                  final isDragging = sliderState.isDragging;
+//             // Max value slider
+//             NakedSlider(
+//               value: _maxValue / 100,
+//               onChanged: (value) {
+//                 final newValue = value * 100;
+//                 if (newValue > _minValue) {
+//                   setState(() => _maxValue = newValue);
+//                 }
+//               },
+//               child: Builder(
+//                 builder: (context) {
+//                   final sliderState = NakedSliderState.of(context);
+//                   final isHovered = sliderState.isHovered;
+//                   final isFocused = sliderState.isFocused;
+//                   final isDragging = sliderState.isDragging;
 
-                  return SizedBox(
-                    width: 300,
-                    height: 32,
-                    child: Stack(
-                      alignment: Alignment.center,
-                      clipBehavior: Clip.none,
-                      children: [
-                        // Max thumb
-                        Positioned(
-                          left: (_maxValue / 100) * 300 - 10,
-                          child: Container(
-                            width: isDragging ? 24 : 20,
-                            height: isDragging ? 24 : 20,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              shape: BoxShape.circle,
-                              border: Border.all(
-                                color:
-                                    const Color(0xFF3B82F6), // border-blue-500
-                                width: 2,
-                              ),
-                              boxShadow: [
-                                if (isHovered || isFocused || isDragging)
-                                  BoxShadow(
-                                    color: Colors.black.withOpacity(0.1),
-                                    blurRadius: 4,
-                                    offset: const Offset(0, 2),
-                                  ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  );
-                },
-              ),
-            ),
-          ],
-        ),
-        const SizedBox(height: 24),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: List.generate(5, (index) {
-            final value = index * 25;
-            return Text(
-              '\$$value',
-              style: const TextStyle(
-                fontSize: 12,
-                color: Color(0xFF6B7280), // text-gray-500
-              ),
-            );
-          }),
-        ),
-      ],
-    );
-  }
-}
+//                   return SizedBox(
+//                     width: 300,
+//                     height: 32,
+//                     child: Stack(
+//                       alignment: Alignment.center,
+//                       clipBehavior: Clip.none,
+//                       children: [
+//                         // Max thumb
+//                         Positioned(
+//                           left: (_maxValue / 100) * 300 - 10,
+//                           child: Container(
+//                             width: isDragging ? 24 : 20,
+//                             height: isDragging ? 24 : 20,
+//                             decoration: BoxDecoration(
+//                               color: Colors.white,
+//                               shape: BoxShape.circle,
+//                               border: Border.all(
+//                                 color:
+//                                     const Color(0xFF3B82F6), // border-blue-500
+//                                 width: 2,
+//                               ),
+//                               boxShadow: [
+//                                 if (isHovered || isFocused || isDragging)
+//                                   BoxShadow(
+//                                     color: Colors.black.withOpacity(0.1),
+//                                     blurRadius: 4,
+//                                     offset: const Offset(0, 2),
+//                                   ),
+//                               ],
+//                             ),
+//                           ),
+//                         ),
+//                       ],
+//                     ),
+//                   );
+//                 },
+//               ),
+//             ),
+//           ],
+//         ),
+//         const SizedBox(height: 24),
+//         Row(
+//           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//           children: List.generate(5, (index) {
+//             final value = index * 25;
+//             return Text(
+//               '\$$value',
+//               style: const TextStyle(
+//                 fontSize: 12,
+//                 color: Color(0xFF6B7280), // text-gray-500
+//               ),
+//             );
+//           }),
+//         ),
+//       ],
+//     );
+//   }
+// }
 
 class SliderVariants extends StatefulWidget {
   const SliderVariants({super.key});
@@ -762,8 +774,8 @@ class _SliderWithIconsState extends State<SliderWithIcons> {
                     onChanged: (value) => setState(() {
                       _volume = value * 100;
                     }),
-                    child: Builder(
-                      builder: (context) {
+                    child: LayoutBuilder(
+                      builder: (context, constraints) {
                         final sliderState = NakedSliderState.of(context);
                         final isHovered = sliderState.isHovered;
                         final isFocused = sliderState.isFocused;
@@ -802,7 +814,8 @@ class _SliderWithIconsState extends State<SliderWithIcons> {
 
                               // Thumb
                               Positioned(
-                                left: (_volume / 100) * 300 - 8,
+                                left:
+                                    (_volume / 100) * constraints.maxWidth - 8,
                                 child: Container(
                                   width: isDragging ? 20 : 16,
                                   height: isDragging ? 20 : 16,
@@ -882,8 +895,8 @@ class _SliderWithIconsState extends State<SliderWithIcons> {
                     onChanged: (value) => setState(() {
                       _brightness = value * 100;
                     }),
-                    child: Builder(
-                      builder: (context) {
+                    child: LayoutBuilder(
+                      builder: (context, constraints) {
                         final sliderState = NakedSliderState.of(context);
                         final isHovered = sliderState.isHovered;
                         final isFocused = sliderState.isFocused;
@@ -922,7 +935,9 @@ class _SliderWithIconsState extends State<SliderWithIcons> {
 
                               // Thumb
                               Positioned(
-                                left: (_brightness / 100) * 300 - 8,
+                                left:
+                                    (_brightness / 100) * constraints.maxWidth -
+                                        8,
                                 child: Container(
                                   width: isDragging ? 20 : 16,
                                   height: isDragging ? 20 : 16,
@@ -980,8 +995,6 @@ class _SteppedSliderState extends State<SteppedSlider> {
     {'value': 0, 'label': 'Beginner'},
     {'value': 1, 'label': 'Intermediate'},
     {'value': 2, 'label': 'Advanced'},
-    {'value': 3, 'label': 'Expert'},
-    {'value': 4, 'label': 'Master'},
   ];
 
   @override
@@ -1019,6 +1032,7 @@ class _SteppedSliderState extends State<SteppedSlider> {
         const SizedBox(height: 32),
         NakedSlider(
           value: _value / (_steps.length - 1),
+          divisions: _steps.length - 1,
           onChanged: (value) {
             final stepValue = (value * (_steps.length - 1)).roundToDouble();
             setState(() {
@@ -1114,7 +1128,7 @@ class _SteppedSliderState extends State<SteppedSlider> {
 
                     // Step labels
                     Positioned(
-                      top: 24,
+                      top: 0,
                       left: 0,
                       right: 0,
                       child: Row(
@@ -1209,6 +1223,7 @@ class _VerticalSliderState extends State<VerticalSlider> {
           // Slider
           NakedSlider(
             value: _value / 100,
+            direction: SliderDirection.vertical,
             onChanged: (value) => setState(() {
               _value = value * 100;
             }),
@@ -1289,18 +1304,23 @@ class _VerticalSliderState extends State<VerticalSlider> {
           ),
           const SizedBox(width: 16),
           // Current value display
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-            decoration: BoxDecoration(
-              color: const Color(0xFFDBEAFE), // bg-blue-100
-              borderRadius: BorderRadius.circular(6),
-            ),
-            child: Text(
-              '${_value.round()}%',
-              style: const TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.w500,
-                color: Color(0xFF1D4ED8), // text-blue-800
+          IntrinsicHeight(
+            child: Container(
+              constraints: const BoxConstraints(minWidth: 4 * 14),
+              alignment: Alignment.center,
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+              decoration: BoxDecoration(
+                color: const Color(0xFFDBEAFE), // bg-blue-100
+                borderRadius: BorderRadius.circular(6),
+              ),
+              child: Text(
+                '${_value.round()}%',
+                style: const TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w500,
+                  fontFeatures: [FontFeature.tabularFigures()],
+                  color: Color(0xFF1D4ED8), // text-blue-800
+                ),
               ),
             ),
           ),
