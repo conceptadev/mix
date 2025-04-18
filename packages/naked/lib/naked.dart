@@ -18,6 +18,7 @@ export 'src/naked_accordion.dart';
 export 'src/naked_avatar.dart';
 export 'src/naked_button.dart';
 export 'src/naked_checkbox.dart';
+export 'src/naked_dialog.dart';
 export 'src/naked_menu.dart';
 export 'src/naked_radio_button.dart';
 export 'src/naked_radio_group.dart';
