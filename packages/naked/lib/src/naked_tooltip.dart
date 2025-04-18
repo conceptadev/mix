@@ -152,6 +152,12 @@ class _NakedTooltipState extends State<NakedTooltip> {
     return Semantics(
       container: true,
       child: NakedPortal(
+        alignment: AlignmentPair(
+          target: widget.targetAnchor,
+          follower: widget.followerAnchor,
+          offset: widget.offset,
+        ),
+        fallbackAlignments: widget.fallbackAlignments,
         overlayChildBuilder: widget.tooltipWidgetBuilder,
         controller: widget.controller,
         child: widget.child,

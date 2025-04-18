@@ -22,7 +22,7 @@ class NakedTabsExample extends StatelessWidget {
             ),
             const SizedBox(height: 40),
 
-            // Basic Tabs
+            // Tabs with Icons
             _buildSection(
               title: 'Basic Tabs',
               child: const _BasicTabs(),
@@ -43,7 +43,7 @@ class NakedTabsExample extends StatelessWidget {
             ),
             const SizedBox(height: 48),
 
-            // Vertical Tabs
+            // // Vertical Tabs
             _buildSection(
               title: 'Vertical Tabs',
               child: const _VerticalTabs(),
@@ -117,6 +117,7 @@ class _BasicTabs extends StatefulWidget {
 
 class _BasicTabsState extends State<_BasicTabs> {
   String _activeTab = 'account';
+  final FocusNode _focusNode = FocusNode();
   final Map<String, bool> _hoverStates = {};
   final Map<String, bool> _focusStates = {};
   final Map<String, bool> _pressStates = {};
@@ -133,7 +134,7 @@ class _BasicTabsState extends State<_BasicTabs> {
       width: double.infinity,
       child: ConstrainedBox(
         constraints: const BoxConstraints(maxWidth: 400),
-        child: NakedTabs(
+        child: NakedTabGroup(
           selectedTabId: _activeTab,
           onSelectedTabIdChanged: (id) => setState(() => _activeTab = id),
           child: Column(
@@ -158,10 +159,13 @@ class _BasicTabsState extends State<_BasicTabs> {
                           tabId: id,
                           onHoverState: (hover) =>
                               setState(() => _hoverStates[id] = hover),
-                          onFocusState: (focus) =>
-                              setState(() => _focusStates[id] = focus),
+                          onFocusState: (focus) => setState(() {
+                            _focusStates[id] = focus;
+                            print(' id: $id, focus: $focus');
+                          }),
                           onPressedState: (press) =>
                               setState(() => _pressStates[id] = press),
+                          focusNode: id == 'password' ? _focusNode : null,
                           child: Container(
                             padding: const EdgeInsets.symmetric(
                                 vertical: 8, horizontal: 12),
@@ -172,7 +176,7 @@ class _BasicTabsState extends State<_BasicTabs> {
                                       ? const Color(0xFFE5E7EB)
                                       : isHovered || isFocused
                                           ? const Color(0xFFE5E7EB)
-                                              .withOpacity(0.5)
+                                              .withValues(alpha: 0.5)
                                           : Colors.transparent,
                               borderRadius: BorderRadius.circular(6),
                               boxShadow: isActive
@@ -204,34 +208,43 @@ class _BasicTabsState extends State<_BasicTabs> {
                 ),
               ),
               const SizedBox(height: 16),
-              ..._tabs.map((tab) => NakedTabPanel(
-                    tabId: tab['id']!,
-                    child: Container(
-                      height: 150,
-                      alignment: Alignment.center,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            '${tab['label']} Content',
-                            style: const TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.w500,
-                              color: Color(0xFF2563EB), // text-blue-600
-                            ),
+              ..._tabs.map(
+                (tab) => NakedTabPanel(
+                  tabId: tab['id']!,
+                  child: Container(
+                    height: 150,
+                    alignment: Alignment.center,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        TextButton(
+                          onPressed: () {
+                            print('object');
+                            _focusNode.requestFocus();
+                          },
+                          child: const Text('object'),
+                        ),
+                        Text(
+                          '${tab['label']} Content',
+                          style: const TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w500,
+                            color: Color(0xFF2563EB), // text-blue-600
                           ),
-                          const SizedBox(height: 4),
-                          Text(
-                            'This tab shows the ${tab['id']} panel',
-                            style: const TextStyle(
-                              fontSize: 14,
-                              color: Color(0xFF4B5563), // text-gray-600
-                            ),
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          'This tab shows the ${tab['id']} panel',
+                          style: const TextStyle(
+                            fontSize: 14,
+                            color: Color(0xFF4B5563), // text-gray-600
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
-                  )),
+                  ),
+                ),
+              ),
             ],
           ),
         ),
@@ -284,7 +297,7 @@ class _TabsWithIconsState extends State<_TabsWithIcons> {
       width: double.infinity,
       child: ConstrainedBox(
         constraints: const BoxConstraints(maxWidth: 400),
-        child: NakedTabs(
+        child: NakedTabGroup(
           selectedTabId: _activeTab,
           onSelectedTabIdChanged: (id) => setState(() => _activeTab = id),
           child: Column(
@@ -426,7 +439,7 @@ class _UnderlinedTabsState extends State<_UnderlinedTabs> {
       width: double.infinity,
       child: ConstrainedBox(
         constraints: const BoxConstraints(maxWidth: 400),
-        child: NakedTabs(
+        child: NakedTabGroup(
           selectedTabId: _activeTab,
           onSelectedTabIdChanged: (id) => setState(() => _activeTab = id),
           child: Column(
@@ -555,7 +568,7 @@ class _VerticalTabsState extends State<_VerticalTabs> {
   Widget build(BuildContext context) {
     return SizedBox(
       width: double.infinity,
-      child: NakedTabs(
+      child: NakedTabGroup(
         selectedTabId: _activeTab,
         onSelectedTabIdChanged: (id) => setState(() => _activeTab = id),
         orientation: Axis.vertical,
@@ -707,7 +720,7 @@ class _CardTabsState extends State<_CardTabs> {
       width: double.infinity,
       child: ConstrainedBox(
         constraints: const BoxConstraints(maxWidth: 600),
-        child: NakedTabs(
+        child: NakedTabGroup(
           selectedTabId: _activeTab,
           onSelectedTabIdChanged: (id) => setState(() => _activeTab = id),
           child: Column(
@@ -874,7 +887,7 @@ class _ButtonStyleTabsState extends State<_ButtonStyleTabs> {
       child: Column(
         children: [
           // Tabs as regular items instead of buttons
-          NakedTabs(
+          NakedTabGroup(
             selectedTabId: _activeTab,
             onSelectedTabIdChanged: (id) => setState(() => _activeTab = id),
             child: Column(
@@ -1196,7 +1209,7 @@ class _ResponsiveTabsGridState extends State<_ResponsiveTabsGrid> {
   Widget build(BuildContext context) {
     return SizedBox(
       width: double.infinity,
-      child: NakedTabs(
+      child: NakedTabGroup(
         selectedTabId: _activeTab,
         onSelectedTabIdChanged: (id) => setState(() => _activeTab = id),
         child: Column(
@@ -1264,6 +1277,136 @@ class _ResponsiveTabsGridState extends State<_ResponsiveTabsGrid> {
                   child: _buildProductGrid(tab['id']!),
                 )),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class MyApp extends StatefulWidget {
+  const MyApp({super.key});
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  String selectedTabId = 'tab1';
+  String selectedTabId2 = 'tab2';
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: NakedTabGroup(
+        orientation: Axis.vertical,
+        selectedTabId: selectedTabId,
+        onSelectedTabIdChanged: (id) => setState(() => selectedTabId = id),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const NakedTabList(
+              child: Row(
+                children: [
+                  Tab(
+                    tabId: 'tab1',
+                    label: 'Tab 1',
+                  ),
+                  Tab(
+                    tabId: 'tab2',
+                    label: 'Tab 2',
+                  ),
+                  Tab(
+                    tabId: 'tab3',
+                    label: 'Tab 3',
+                  ),
+                ],
+              ),
+            ),
+            NakedTabPanel(
+              tabId: 'tab1',
+              child: TextButton(
+                onFocusChange: (isFocused) {
+                  print('Panel 1 isFocused: $isFocused');
+                },
+                child: const Text('Panel 1'),
+                onPressed: () {
+                  print('Color 1');
+                },
+              ),
+            ),
+            NakedTabPanel(
+              tabId: 'tab2',
+              child: TextButton(
+                child: const Text('Panel 2'),
+                onFocusChange: (isFocused) {
+                  print('Panel 2 isFocused: $isFocused');
+                },
+                onPressed: () {
+                  print('Color 2');
+                },
+              ),
+            ),
+            NakedTabPanel(
+              tabId: 'tab3',
+              child: TextButton(
+                child: const Text('Panel 3'),
+                onFocusChange: (isFocused) {
+                  print('Panel 3 isFocused: $isFocused');
+                },
+                onPressed: () {
+                  print('Color 3');
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class Tab extends StatefulWidget {
+  const Tab({
+    super.key,
+    required this.tabId,
+    required this.label,
+  });
+
+  final String tabId;
+  final String label;
+
+  @override
+  State<Tab> createState() => _TabState();
+}
+
+class _TabState extends State<Tab> {
+  bool isSelected = false;
+  bool isSemiSelected = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return NakedTab(
+      onFocusState: (isFocused) => setState(() {
+        isSemiSelected = isFocused;
+        print('${widget.tabId} isFocused: $isFocused');
+      }),
+      onHoverState: (isHovered) => setState(() {
+        isSemiSelected = isHovered;
+        print('${widget.tabId} isHovered: $isHovered');
+      }),
+      tabId: widget.tabId,
+      child: Container(
+        decoration: BoxDecoration(
+          color: isSemiSelected
+              ? Colors.red.withAlpha(100)
+              : isSelected
+                  ? Colors.blue.withAlpha(100)
+                  : Colors.transparent,
+          borderRadius: BorderRadius.circular(100),
+        ),
+        padding: const EdgeInsets.all(10),
+        child: Text(
+          widget.label,
         ),
       ),
     );

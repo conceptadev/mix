@@ -810,7 +810,7 @@ class _MultiSectionMenuExampleState extends State<MultiSectionMenuExample> {
     return NakedMenuItem(
       onPressed: onPressed,
       onHoverState: (hover) => setState(() => _hoverStates[label] = hover),
-      onFocusState: (focus) => setState(() => _hoverStates    [label] = focus),
+      onFocusState: (focus) => setState(() => _hoverStates[label] = focus),
       child: Container(
         width: double.infinity,
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),

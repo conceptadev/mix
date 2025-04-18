@@ -240,7 +240,6 @@ enum _GlobalRouteEvent {
 }
 
 class _NakedMenuContentState extends State<NakedMenuContent> {
-  final GlobalKey _menuKey = GlobalKey();
   late final _NakedMenuState? menuState =
       context.findAncestorStateOfType<_NakedMenuState>();
 
