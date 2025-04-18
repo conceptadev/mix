@@ -455,9 +455,9 @@ class ParentChildCheckboxes extends StatefulWidget {
 class _ItemState {
   final int id;
   final String name;
-  bool isChecked;
+  bool isChecked = false;
 
-  _ItemState({required this.id, required this.name, this.isChecked = false});
+  _ItemState({required this.id, required this.name});
 }
 
 class _ParentChildCheckboxesState extends State<ParentChildCheckboxes> {
@@ -953,19 +953,21 @@ class _StyledCheckboxVariantState extends State<StyledCheckboxVariant> {
       if (isHovered) {
         effectiveBorderColor =
             Color.alphaBlend(Colors.black.withOpacity(0.2), color);
-        if (!isChecked && !isIndeterminate)
+        if (!isChecked && !isIndeterminate) {
           effectiveBgColor =
               Color.alphaBlend(color.withOpacity(0.05), Colors.white);
+        }
       }
       if (isPressed) {
         effectiveBorderColor =
             Color.alphaBlend(Colors.black.withOpacity(0.4), color);
-        if (!isChecked && !isIndeterminate)
+        if (!isChecked && !isIndeterminate) {
           effectiveBgColor =
               Color.alphaBlend(color.withOpacity(0.1), Colors.white);
-        else
+        } else {
           effectiveBgColor =
               Color.alphaBlend(Colors.black.withOpacity(0.2), color);
+        }
       }
     }
 
@@ -980,8 +982,6 @@ class _StyledCheckboxVariantState extends State<StyledCheckboxVariant> {
         // Web Reference: rounded-none
         borderRadius = BorderRadius.zero;
         break;
-      case CheckboxStyle.primary:
-      case CheckboxStyle.customWithIcon:
       default:
         // Web Reference: rounded
         borderRadius = BorderRadius.circular(4);
@@ -1047,8 +1047,9 @@ class _StyledCheckboxVariantState extends State<StyledCheckboxVariant> {
 class _ShoppingItem {
   final String id;
   final String name;
-  bool isChecked;
-  _ShoppingItem({required this.id, required this.name, this.isChecked = false});
+  bool isChecked = false;
+
+  _ShoppingItem({required this.id, required this.name});
 }
 
 class _ShoppingCategory {

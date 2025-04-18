@@ -293,11 +293,11 @@ class ButtonStates extends StatefulWidget {
 class _ButtonStatesState extends State<ButtonStates> {
   // State for hover effects
   bool _isHoverSlideHovered = false;
-  bool _isHoverSlidePressed = false;
+
   bool _isHoverSlideFocused = false;
 
   bool _isColorChangeHovered = false;
-  bool _isColorChangePressed = false;
+
   bool _isColorChangeFocused = false;
 
   bool _isElevationHovered = false;
@@ -305,15 +305,13 @@ class _ButtonStatesState extends State<ButtonStates> {
   bool _isElevationFocused = false;
 
   // State for active effects
-  bool _isScaleHovered = false;
+
   bool _isScalePressed = false;
   bool _isScaleFocused = false;
 
-  bool _isShadowHovered = false;
   bool _isShadowPressed = false;
   bool _isShadowFocused = false;
 
-  bool _isPushDownHovered = false;
   bool _isPushDownPressed = false;
   bool _isPushDownFocused = false;
 
@@ -339,8 +337,6 @@ class _ButtonStatesState extends State<ButtonStates> {
                   widget.onButtonPressed('Hover Slide Effect Pressed'),
               onHoverState: (value) =>
                   setState(() => _isHoverSlideHovered = value),
-              onPressedState: (value) =>
-                  setState(() => _isHoverSlidePressed = value),
               onFocusState: (value) =>
                   setState(() => _isHoverSlideFocused = value),
               child: Stack(
@@ -412,8 +408,6 @@ class _ButtonStatesState extends State<ButtonStates> {
                   widget.onButtonPressed('Color Change Button Pressed'),
               onHoverState: (value) =>
                   setState(() => _isColorChangeHovered = value),
-              onPressedState: (value) =>
-                  setState(() => _isColorChangePressed = value),
               onFocusState: (value) =>
                   setState(() => _isColorChangeFocused = value),
               child: AnimatedContainer(
@@ -509,7 +503,6 @@ class _ButtonStatesState extends State<ButtonStates> {
             // </button>
             NakedButton(
               onPressed: () => widget.onButtonPressed('Scale Button Pressed'),
-              onHoverState: (value) => setState(() => _isScaleHovered = value),
               onPressedState: (value) =>
                   setState(() => _isScalePressed = value),
               onFocusState: (value) => setState(() => _isScaleFocused = value),
@@ -545,7 +538,6 @@ class _ButtonStatesState extends State<ButtonStates> {
             NakedButton(
               onPressed: () =>
                   widget.onButtonPressed('Inner Shadow Button Pressed'),
-              onHoverState: (value) => setState(() => _isShadowHovered = value),
               onPressedState: (value) =>
                   setState(() => _isShadowPressed = value),
               onFocusState: (value) => setState(() => _isShadowFocused = value),
@@ -588,8 +580,6 @@ class _ButtonStatesState extends State<ButtonStates> {
             NakedButton(
               onPressed: () =>
                   widget.onButtonPressed('Push Down Button Pressed'),
-              onHoverState: (value) =>
-                  setState(() => _isPushDownHovered = value),
               onPressedState: (value) =>
                   setState(() => _isPushDownPressed = value),
               onFocusState: (value) =>
@@ -739,18 +729,10 @@ class ToggleButtons extends StatefulWidget {
 class _ToggleButtonsState extends State<ToggleButtons> {
   // Toggle states
   bool _simpleToggleState = false;
-  bool _simpleToggleHovered = false;
-  bool _simpleTogglePressed = false;
   bool _simpleToggleFocused = false;
-
   bool _iconToggleState = false;
-  bool _iconToggleHovered = false;
-  bool _iconTogglePressed = false;
   bool _iconToggleFocused = false;
-
   bool _themeToggleState = false;
-  bool _themeToggleHovered = false;
-  bool _themeTogglePressed = false;
   bool _themeToggleFocused = false;
 
   @override
@@ -776,10 +758,6 @@ class _ToggleButtonsState extends State<ToggleButtons> {
               widget.onButtonPressed(
                   'Simple Toggle: ${_simpleToggleState ? "ON" : "OFF"}');
             },
-            onHoverState: (value) =>
-                setState(() => _simpleToggleHovered = value),
-            onPressedState: (value) =>
-                setState(() => _simpleTogglePressed = value),
             onFocusState: (value) =>
                 setState(() => _simpleToggleFocused = value),
             child: AnimatedContainer(
@@ -826,9 +804,6 @@ class _ToggleButtonsState extends State<ToggleButtons> {
               widget.onButtonPressed(
                   'Icon Toggle: ${_iconToggleState ? "Enabled" : "Disabled"}');
             },
-            onHoverState: (value) => setState(() => _iconToggleHovered = value),
-            onPressedState: (value) =>
-                setState(() => _iconTogglePressed = value),
             onFocusState: (value) => setState(() => _iconToggleFocused = value),
             child: AnimatedContainer(
               duration: const Duration(milliseconds: 200),
@@ -882,10 +857,6 @@ class _ToggleButtonsState extends State<ToggleButtons> {
               widget.onButtonPressed(
                   'Theme Toggle: ${_themeToggleState ? "Dark" : "Light"}');
             },
-            onHoverState: (value) =>
-                setState(() => _themeToggleHovered = value),
-            onPressedState: (value) =>
-                setState(() => _themeTogglePressed = value),
             onFocusState: (value) =>
                 setState(() => _themeToggleFocused = value),
             child: AnimatedContainer(
@@ -968,10 +939,6 @@ class _LoadingButtonsState extends State<LoadingButtons> {
   bool _isProgressPressed = false;
   bool _isProgressFocused = false;
   double _progressValue = 0.0;
-
-  // For animation
-  late AnimationController _progressController;
-  late Animation<double> _progressAnimation;
 
   @override
   void initState() {
@@ -1240,7 +1207,6 @@ class _StyledButtonsState extends State<StyledButtons> {
   bool _isGradientFocused = false;
 
   bool _isGlassHovered = false;
-  bool _isGlassPressed = false;
   bool _isGlassFocused = false;
 
   bool _isArrowHovered = false;
@@ -1348,8 +1314,6 @@ class _StyledButtonsState extends State<StyledButtons> {
                 onPressed: () => widget.onButtonPressed('Glass Button Pressed'),
                 onHoverState: (value) =>
                     setState(() => _isGlassHovered = value),
-                onPressedState: (value) =>
-                    setState(() => _isGlassPressed = value),
                 onFocusState: (value) =>
                     setState(() => _isGlassFocused = value),
                 child: ClipRRect(

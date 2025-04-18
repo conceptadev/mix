@@ -140,7 +140,6 @@ class _BasicAccordionState extends State<_BasicAccordion> {
           final String id = item['id'] as String;
           final bool isExpanded = _expandedStates[id] ?? false;
           final bool isHovered = _hoveredItems[id] ?? false;
-          final bool isFocused = _focusedItems[id] ?? false;
 
           return NakedAccordion(
             type: NakedAccordionType.single,

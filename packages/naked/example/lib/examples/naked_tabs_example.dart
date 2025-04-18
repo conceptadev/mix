@@ -459,7 +459,6 @@ class _UnderlinedTabsState extends State<_UnderlinedTabs> {
                       final bool isActive = _activeTab == id;
                       final bool isHovered = _hoverStates[id] ?? false;
                       final bool isFocused = _focusStates[id] ?? false;
-                      final bool isPressed = _pressStates[id] ?? false;
 
                       return NakedTab(
                         tabId: id,

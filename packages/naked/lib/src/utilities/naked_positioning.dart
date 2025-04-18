@@ -105,7 +105,7 @@ class NakedPositioning extends StatefulWidget {
   ///
   /// The [child] and [target] parameters are required.
   const NakedPositioning({
-    Key? key,
+    super.key,
     required this.child,
     required this.target,
     this.preferredPositions = const [
@@ -119,7 +119,7 @@ class NakedPositioning extends StatefulWidget {
     this.dynamicSizing = false,
     this.onPositionChanged,
     this.maintainTargetInSafeArea = true,
-  }) : super(key: key);
+  });
 
   /// The widget to position relative to the target.
   ///
@@ -368,11 +368,10 @@ class _AdaptiveSizeMeasure extends StatefulWidget {
   final bool dynamicSizing;
 
   const _AdaptiveSizeMeasure({
-    Key? key,
     required this.child,
     required this.onChange,
     this.dynamicSizing = false,
-  }) : super(key: key);
+  });
 
   @override
   _AdaptiveSizeMeasureState createState() => _AdaptiveSizeMeasureState();

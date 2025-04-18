@@ -596,9 +596,6 @@ class _BasicRadioButtonsState extends State<BasicRadioButtons> {
                     child: Builder(
                       builder: (context) {
                         final isSelected = _selected == option['id'];
-                        final radioGroup =
-                            NakedRadioGroupScope.of<String>(context);
-                        final isHovered = radioGroup?.value == option['id'];
 
                         return Row(
                           children: [
