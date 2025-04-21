@@ -72,6 +72,10 @@ PressableBox(
       $box.width(100),
       $box.color(Colors.red),
       $box.borderRadius(20),
+      $on.hover(
+        $box.color(Colors.blue),
+        $box.borderRadius(10),
+      ),
     ).animate(
       duration: Durations.long1,
       curve: Curves.linear,
