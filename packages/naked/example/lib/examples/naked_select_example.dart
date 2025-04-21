@@ -1,956 +1,840 @@
-// import 'package:flutter/material.dart';
-// import 'package:naked/naked.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:naked/naked.dart';
 
-// class NakedSelectExample extends StatefulWidget {
-//   const NakedSelectExample({super.key});
+class NakedSelectExample extends StatefulWidget {
+  const NakedSelectExample({super.key});
 
-//   @override
-//   State<NakedSelectExample> createState() => _NakedSelectExampleState();
-// }
+  @override
+  State<NakedSelectExample> createState() => _NakedSelectExampleState();
+}
 
-// class _NakedSelectExampleState extends State<NakedSelectExample> {
-//   bool _isOpen1 = false;
-//   String? _selectedValue1;
-//   final List<String> _options1 = [
-//     'Option 1',
-//     'Option 2',
-//     'Option 3',
-//     'Option 4',
-//   ];
+class _NakedSelectExampleState extends State<NakedSelectExample> {
+  // Basic select state
+  final bool _isBasicOpen = false;
+  String? _basicSelectedValue;
 
-//   bool _isOpen2 = false;
-//   Map<String, String>? _selectedValue2;
-//   final List<Map<String, String>> _options2 = [
-//     {'code': 'US', 'name': 'United States'},
-//     {'code': 'CA', 'name': 'Canada'},
-//     {'code': 'GB', 'name': 'United Kingdom'},
-//     {'code': 'DE', 'name': 'Germany'},
-//     {'code': 'JP', 'name': 'Japan'},
-//   ];
+  // Multiple select state
+  final bool _isMultipleOpen = false;
+  Set<String> _multipleSelectedValues = {};
 
-//   bool _isOpen3 = false;
-//   String? _selectedValue3;
-//   final List<String> _options3 = List.generate(20, (i) => 'Item ${i + 1}');
-//   String _filterText = '';
+  // Disabled select state
+  final bool _isDisabledOpen = false;
+  String? _disabledSelectedValue;
 
-//   // State for styling
-//   bool _isTrigger1Hovered = false;
-//   bool _isTrigger1Focused = false;
-//   bool _isTrigger1Pressed = false;
-//   final Map<String, bool> _item1HoverStates = {};
-//   final Map<String, bool> _item1FocusStates = {};
+  // Search select state
+  final bool _isSearchOpen = false;
+  String? _searchSelectedValue;
+  late final TextEditingController _searchController;
+  String _searchText = '';
+  final FocusNode _searchFocusNode = FocusNode();
+  int _keyboardSelectedIndex = -1;
 
-//   bool _isTrigger2Hovered = false;
-//   bool _isTrigger2Focused = false;
-//   bool _isTrigger2Pressed = false;
-//   final Map<String, bool> _item2HoverStates = {};
-//   final Map<String, bool> _item2FocusStates = {};
+  // State for visual feedback
+  bool _isBasicTriggerHovered = false;
+  bool _isBasicTriggerFocused = false;
+  bool _isBasicTriggerPressed = false;
 
-//   bool _isTrigger3Hovered = false;
-//   bool _isTrigger3Focused = false;
-//   bool _isTrigger3Pressed = false;
-//   final Map<String, bool> _item3HoverStates = {};
-//   final Map<String, bool> _item3FocusStates = {};
+  bool _isMultipleTriggerHovered = false;
+  bool _isMultipleTriggerFocused = false;
+  bool _isMultipleTriggerPressed = false;
 
-//   @override
-//   Widget build(BuildContext context) {
-//     // Filter options for search example
-//     final filteredOptions3 = _options3
-//         .where((option) =>
-//             option.toLowerCase().contains(_filterText.toLowerCase()))
-//         .toList();
+  bool _isDisabledTriggerHovered = false;
+  bool _isDisabledTriggerFocused = false;
+  bool _isDisabledTriggerPressed = false;
 
-//     return Column(
-//       crossAxisAlignment: CrossAxisAlignment.start,
-//       children: [
-//         _buildSectionTitle('Basic Select (String Options)'),
-//         NakedSelect<String>(
-//           isOpen: _isOpen1,
-//           onIsOpenChanged: (isOpen) => setState(() => _isOpen1 = isOpen),
-//           selectedValue: _selectedValue1,
-//           onSelectedValueChanged: (value) =>
-//               setState(() => _selectedValue1 = value),
-//           child: Column(
-//             crossAxisAlignment: CrossAxisAlignment.start,
-//             children: [
-//               NakedSelectTrigger(
-//                 onHoverState: (h) => setState(() => _isTrigger1Hovered = h),
-//                 onFocusState: (f) => setState(() => _isTrigger1Focused = f),
-//                 onPressedState: (p) => setState(() => _isTrigger1Pressed = p),
-//                 child: _buildTriggerVisual(
-//                   value: _selectedValue1 ?? 'Select an option',
-//                   isOpen: _isOpen1,
-//                   isHovered: _isTrigger1Hovered,
-//                   isFocused: _isTrigger1Focused,
-//                   isPressed: _isTrigger1Pressed,
-//                   color: Colors.teal,
-//                 ),
-//               ),
-//               NakedSelectMenu(
-//                 child: _buildMenuVisual<String>(
-//                   options: _options1,
-//                   selectedValue: _selectedValue1,
-//                   itemBuilder: (option) => Text(option),
-//                   valueGetter: (option) => option,
-//                   itemHoverStates: _item1HoverStates,
-//                   itemFocusStates: _item1FocusStates,
-//                   color: Colors.teal,
-//                 ),
-//               ),
-//             ],
-//           ),
-//         ),
-//         const SizedBox(height: 32),
-//         _buildSectionTitle('Select with Map Options (Countries)'),
-//         NakedSelect<Map<String, String>>(
-//           isOpen: _isOpen2,
-//           onIsOpenChanged: (isOpen) => setState(() => _isOpen2 = isOpen),
-//           selectedValue: _selectedValue2,
-//           onSelectedValueChanged: (value) =>
-//               setState(() => _selectedValue2 = value),
-//           child: Column(
-//             crossAxisAlignment: CrossAxisAlignment.start,
-//             children: [
-//               NakedSelectTrigger(
-//                 onHoverState: (h) => setState(() => _isTrigger2Hovered = h),
-//                 onFocusState: (f) => setState(() => _isTrigger2Focused = f),
-//                 onPressedState: (p) => setState(() => _isTrigger2Pressed = p),
-//                 child: _buildTriggerVisual(
-//                   value: _selectedValue2?['name'] ?? 'Select a country',
-//                   isOpen: _isOpen2,
-//                   isHovered: _isTrigger2Hovered,
-//                   isFocused: _isTrigger2Focused,
-//                   isPressed: _isTrigger2Pressed,
-//                   color: Colors.deepOrange,
-//                 ),
-//               ),
-//               NakedSelectMenu(
-//                 child: _buildMenuVisual<Map<String, String>>(
-//                   options: _options2,
-//                   selectedValue: _selectedValue2,
-//                   itemBuilder: (option) => Text(option['name']!),
-//                   valueGetter: (option) =>
-//                       option['code']!, // Use code for identity
-//                   itemHoverStates: _item2HoverStates,
-//                   itemFocusStates: _item2FocusStates,
-//                   color: Colors.deepOrange,
-//                 ),
-//               ),
-//             ],
-//           ),
-//         ),
-//         const SizedBox(height: 32),
-//         _buildSectionTitle('Select with Search/Filter (Long List)'),
-//         NakedSelect<String>(
-//           isOpen: _isOpen3,
-//           onIsOpenChanged: (isOpen) {
-//             setState(() => _isOpen3 = isOpen);
-//             if (!isOpen) {
-//               _filterText = ''; // Clear filter on close
-//             }
-//           },
-//           selectedValue: _selectedValue3,
-//           onSelectedValueChanged: (value) =>
-//               setState(() => _selectedValue3 = value),
-//           child: Column(
-//             crossAxisAlignment: CrossAxisAlignment.start,
-//             children: [
-//               NakedSelectTrigger(
-//                 onHoverState: (h) => setState(() => _isTrigger3Hovered = h),
-//                 onFocusState: (f) => setState(() => _isTrigger3Focused = f),
-//                 onPressedState: (p) => setState(() => _isTrigger3Pressed = p),
-//                 child: _buildTriggerVisual(
-//                   value: _selectedValue3 ?? 'Select an item',
-//                   isOpen: _isOpen3,
-//                   isHovered: _isTrigger3Hovered,
-//                   isFocused: _isTrigger3Focused,
-//                   isPressed: _isTrigger3Pressed,
-//                   color: Colors.indigo,
-//                 ),
-//               ),
-//               NakedSelectMenu(
-//                 // Add a TextField for filtering within the menu
-//                 child: Column(
-//                   mainAxisSize: MainAxisSize.min,
-//                   children: [
-//                     Padding(
-//                       padding: const EdgeInsets.all(8.0),
-//                       child: TextField(
-//                         decoration: const InputDecoration(
-//                           hintText: 'Search...',
-//                           isDense: true,
-//                           border: OutlineInputBorder(),
-//                         ),
-//                         onChanged: (text) => setState(() => _filterText = text),
-//                       ),
-//                     ),
-//                     _buildMenuVisual<String>(
-//                       options: filteredOptions3,
-//                       selectedValue: _selectedValue3,
-//                       itemBuilder: (option) => Text(option),
-//                       valueGetter: (option) => option,
-//                       itemHoverStates: _item3HoverStates,
-//                       itemFocusStates: _item3FocusStates,
-//                       color: Colors.indigo,
-//                       maxHeight: 200, // Limit height for scrolling
-//                     ),
-//                   ],
-//                 ),
-//               ),
-//             ],
-//           ),
-//         ),
-//         const SizedBox(height: 32),
+  bool _isSearchTriggerHovered = false;
+  bool _isSearchTriggerFocused = false;
+  bool _isSearchTriggerPressed = false;
 
-//         // Focus management example
-//         _buildSectionTitle('Focus and Keyboard Navigation'),
-//         const FocusSelectExample(),
+  // Item state maps
+  final Map<String, bool> _basicItemHoverStates = {};
+  final Map<String, bool> _basicItemFocusStates = {};
+  final Map<String, bool> _basicItemPressStates = {};
 
-//         const SizedBox(height: 200), // Add space at the bottom
+  final Map<String, bool> _multipleItemHoverStates = {};
+  final Map<String, bool> _multipleItemFocusStates = {};
+  final Map<String, bool> _multipleItemPressStates = {};
 
-//         // Form Integration Example
-//         _buildSectionTitle('Form Integration'),
-//         const FormSelectExample(),
-//       ],
-//     );
-//   }
+  final Map<String, bool> _searchItemHoverStates = {};
+  final Map<String, bool> _searchItemFocusStates = {};
+  final Map<String, bool> _searchItemPressStates = {};
 
-//   Widget _buildSectionTitle(String title) {
-//     return Padding(
-//       padding: const EdgeInsets.only(bottom: 12.0),
-//       child: Text(
-//         title,
-//         style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-//       ),
-//     );
-//   }
+  // Options
+  final List<String> _fruitOptions = [
+    'Apple',
+    'Banana',
+    'Cherry',
+    'Dragon Fruit',
+    'Elderberry',
+    'Fig',
+    'Grape',
+    'Honeydew',
+  ];
 
-//   Widget _buildTriggerVisual({
-//     required String value,
-//     required bool isOpen,
-//     required bool isHovered,
-//     required bool isFocused,
-//     required bool isPressed,
-//     required MaterialColor color,
-//     bool hasError = false,
-//   }) {
-//     Color borderColor =
-//         isFocused ? Colors.black.withOpacity(0.7) : Colors.transparent;
-//     if (hasError) {
-//       borderColor = Theme.of(context).colorScheme.error;
-//     } else if (isFocused) {
-//       borderColor = color.shade700; // Use accent color for focus border
-//     }
+  final List<String> _colorOptions = [
+    'Red',
+    'Orange',
+    'Yellow',
+    'Green',
+    'Blue',
+    'Indigo',
+    'Violet',
+    'Purple',
+    'Pink',
+    'Brown',
+    'Black',
+    'White',
+    'Gray',
+    'Teal',
+    'Cyan',
+    'Magenta',
+  ];
 
-//     Color bgColor = color.shade500;
-//     if (isPressed) {
-//       bgColor = color.shade700;
-//     } else if (isHovered || isFocused) {
-//       // Combine hover and focus for background highlight
-//       bgColor = color.shade600;
-//     }
+  @override
+  void initState() {
+    super.initState();
+    _searchController = TextEditingController();
+    _searchController.addListener(_onSearchChanged);
+    _searchFocusNode.addListener(_onSearchFocusChanged);
+  }
 
-//     return Container(
-//       width: 250,
-//       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-//       decoration: BoxDecoration(
-//         color: bgColor, // Use calculated background color
-//         borderRadius: BorderRadius.circular(6), // Slightly more rounded
-//         border: Border.all(
-//           color: borderColor,
-//           width:
-//               isFocused || hasError ? 2 : 1.5, // Thicker border on focus/error
-//         ),
-//         boxShadow: isHovered && !isPressed // Add subtle shadow on hover
-//             ? [
-//                 BoxShadow(
-//                   color: Colors.black.withOpacity(0.2),
-//                   blurRadius: 4,
-//                   offset: const Offset(0, 2),
-//                 ),
-//               ]
-//             : null,
-//       ),
-//       child: Row(
-//         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//         children: [
-//           Expanded(
-//             child: Text(
-//               value,
-//               style: const TextStyle(color: Colors.white),
-//               overflow: TextOverflow.ellipsis,
-//             ),
-//           ),
-//           Icon(
-//             isOpen ? Icons.arrow_drop_up : Icons.arrow_drop_down,
-//             color: Colors.white,
-//           ),
-//         ],
-//       ),
-//     );
-//   }
+  @override
+  void dispose() {
+    _searchController.removeListener(_onSearchChanged);
+    _searchController.dispose();
+    _searchFocusNode.removeListener(_onSearchFocusChanged);
+    _searchFocusNode.dispose();
+    super.dispose();
+  }
 
-//   Widget _buildMenuVisual<T>({
-//     required List<T> options,
-//     required T? selectedValue,
-//     required Widget Function(T option) itemBuilder,
-//     required String Function(T option) valueGetter, // Used for state map keys
-//     required Map<String, bool> itemHoverStates,
-//     required Map<String, bool> itemFocusStates,
-//     required MaterialColor color,
-//     double maxHeight = 300,
-//   }) {
-//     return Container(
-//       constraints: BoxConstraints(maxHeight: maxHeight, maxWidth: 250),
-//       margin: const EdgeInsets.only(top: 4),
-//       decoration: BoxDecoration(
-//         color: Colors.white,
-//         borderRadius: BorderRadius.circular(6), // Match trigger rounding
-//         boxShadow: [
-//           BoxShadow(
-//               color: Colors.black.withOpacity(0.1),
-//               blurRadius: 8,
-//               offset: const Offset(0, 3))
-//         ], // Slightly more prominent shadow
-//         border: Border.all(color: Colors.grey.shade300),
-//       ),
-//       child: SingleChildScrollView(
-//         child: Column(
-//           mainAxisSize: MainAxisSize.min,
-//           crossAxisAlignment: CrossAxisAlignment.start,
-//           children: options.isEmpty
-//               ? [
-//                   const Padding(
-//                       padding: EdgeInsets.all(16),
-//                       child: Text('No options found'))
-//                 ]
-//               : options.map((option) {
-//                   final itemValueKey = valueGetter(option);
-//                   final bool isSelected = selectedValue == option;
-//                   final bool isItemHovered =
-//                       itemHoverStates[itemValueKey] ?? false;
-//                   final bool isItemFocused =
-//                       itemFocusStates[itemValueKey] ?? false;
+  void _onSearchChanged() {
+    setState(() {
+      _searchText = _searchController.text;
+    });
+  }
 
-//                   return NakedSelectItem<T>(
-//                     value: option,
-//                     isSelected: isSelected,
-//                     onHoverState: (hovered) =>
-//                         setState(() => itemHoverStates[itemValueKey] = hovered),
-//                     onFocusState: (focused) =>
-//                         setState(() => itemFocusStates[itemValueKey] = focused),
-//                     child: Container(
-//                       width: double.infinity,
-//                       padding: const EdgeInsets.symmetric(
-//                           horizontal: 16,
-//                           vertical: 12), // Increase padding slightly
-//                       color: isItemFocused
-//                           ? color.shade100 // More prominent focus color
-//                           : isItemHovered
-//                               ? color.shade50 // Subtle hover color
-//                               : isSelected
-//                                   ? color.shade50.withOpacity(0.5)
-//                                   : Colors
-//                                       .transparent, // Slight background if selected but not hovered/focused
-//                       child: Row(
-//                         children: [
-//                           Expanded(child: itemBuilder(option)),
-//                           if (isSelected)
-//                             Icon(
-//                               Icons.check,
-//                               size: 18,
-//                               color: color.shade700,
-//                             ),
-//                         ],
-//                       ),
-//                     ),
-//                   );
-//                 }).toList(),
-//         ),
-//       ),
-//     );
-//   }
-// }
+  void _onSearchFocusChanged() {
+    if (_searchFocusNode.hasFocus) {
+      setState(() {
+        _keyboardSelectedIndex = -1;
+      });
+    }
+  }
 
-// // New StatefulWidget for the Form Integration Example
-// class FormSelectExample extends StatefulWidget {
-//   const FormSelectExample({super.key});
+  @override
+  Widget build(BuildContext context) {
+    final filteredColorOptions = _colorOptions
+        .where(
+            (color) => color.toLowerCase().contains(_searchText.toLowerCase()))
+        .toList();
 
-//   @override
-//   State<FormSelectExample> createState() => _FormSelectExampleState();
-// }
+    return SingleChildScrollView(
+      child: SizedBox(
+        width: double.infinity,
+        child: Column(
+          children: [
+            _buildHeader('NakedSelect Examples'),
+            const SizedBox(height: 24),
 
-// class _FormSelectExampleState extends State<FormSelectExample> {
-//   final _formKey = GlobalKey<FormState>();
-//   String? _selectedFruit;
-//   bool _isOpen = false;
+            // Basic single-select example
+            _buildSectionTitle('Basic Single Select'),
+            const SizedBox(height: 8),
+            _buildBasicSelect(),
+            if (_basicSelectedValue != null)
+              Padding(
+                padding: const EdgeInsets.only(top: 8),
+                child: Text('Selected fruit: $_basicSelectedValue'),
+              ),
+            const SizedBox(height: 32),
 
-//   // Styling states
-//   bool _isTriggerHovered = false;
-//   bool _isTriggerFocused = false;
-//   bool _isTriggerPressed = false;
-//   final Map<String, bool> _itemHoverStates = {};
-//   final Map<String, bool> _itemFocusStates = {};
+            // Multiple select example
+            _buildSectionTitle('Multiple Select'),
+            const SizedBox(height: 8),
+            _buildMultipleSelect(),
+            if (_multipleSelectedValues.isNotEmpty)
+              Padding(
+                padding: const EdgeInsets.only(top: 8),
+                child: Text(
+                    'Selected fruits: ${_multipleSelectedValues.join(", ")}'),
+              ),
+            const SizedBox(height: 32),
 
-//   final List<String> _fruitOptions = [
-//     'Apple',
-//     'Banana',
-//     'Cherry',
-//     'Date',
-//     'Elderberry'
-//   ];
+            // Disabled select example
+            _buildSectionTitle('Disabled Select'),
+            const SizedBox(height: 8),
+            _buildDisabledSelect(),
+            const SizedBox(height: 32),
 
-//   void _submitForm() {
-//     if (_formKey.currentState!.validate()) {
-//       _formKey.currentState!.save();
-//       ScaffoldMessenger.of(context).showSnackBar(
-//         SnackBar(content: Text('Form submitted with fruit: $_selectedFruit')),
-//       );
-//     } else {
-//       ScaffoldMessenger.of(context).showSnackBar(
-//         const SnackBar(content: Text('Please select a fruit')),
-//       );
-//     }
-//   }
+            // Search/filter select example
+            _buildSectionTitle('Search/Filter Select'),
+            const SizedBox(height: 8),
+            _buildSearchSelect(filteredColorOptions),
+            if (_searchSelectedValue != null)
+              Padding(
+                padding: const EdgeInsets.only(top: 8),
+                child: Text('Selected color: $_searchSelectedValue'),
+              ),
+            const SizedBox(height: 100),
+          ],
+        ),
+      ),
+    );
+  }
 
-//   @override
-//   Widget build(BuildContext context) {
-//     return Form(
-//       key: _formKey,
-//       child: Column(
-//         crossAxisAlignment: CrossAxisAlignment.start,
-//         children: [
-//           // Using FormField to wrap NakedSelect for validation
-//           FormField<String>(
-//             initialValue: _selectedFruit,
-//             validator: (value) {
-//               if (value == null) {
-//                 return 'Please select a fruit.';
-//               }
-//               return null;
-//             },
-//             onSaved: (value) {
-//               // This could be useful if the FormField manages the state
-//               // In this case, we manage _selectedFruit directly via NakedSelect's onChanged
-//             },
-//             builder: (FormFieldState<String> field) {
-//               return Column(
-//                 crossAxisAlignment: CrossAxisAlignment.start,
-//                 children: [
-//                   NakedSelect<String>(
-//                     isOpen: _isOpen,
-//                     onIsOpenChanged: (isOpen) =>
-//                         setState(() => _isOpen = isOpen),
-//                     selectedValue: field.value, // Use FormField value
-//                     onSelectedValueChanged: (value) {
-//                       setState(() {
-//                         _selectedFruit = value; // Update local state
-//                         field.didChange(value); // Update FormField state
-//                       });
-//                     },
-//                     child: Column(
-//                       crossAxisAlignment: CrossAxisAlignment.start,
-//                       children: [
-//                         NakedSelectTrigger(
-//                           onHoverState: (h) =>
-//                               setState(() => _isTriggerHovered = h),
-//                           onFocusState: (f) =>
-//                               setState(() => _isTriggerFocused = f),
-//                           onPressedState: (p) =>
-//                               setState(() => _isTriggerPressed = p),
-//                           child: _buildTriggerVisual(
-//                             value: field.value ?? 'Select a fruit',
-//                             isOpen: _isOpen,
-//                             isHovered: _isTriggerHovered,
-//                             isFocused: _isTriggerFocused,
-//                             isPressed: _isTriggerPressed,
-//                             color: Colors.blueGrey,
-//                             hasError: field.hasError, // Indicate error state
-//                           ),
-//                         ),
-//                         NakedSelectMenu(
-//                           child: _buildMenuVisual<String>(
-//                             options: _fruitOptions,
-//                             selectedValue: field.value,
-//                             itemBuilder: (option) => Text(option),
-//                             valueGetter: (option) => option,
-//                             itemHoverStates: _itemHoverStates,
-//                             itemFocusStates: _itemFocusStates,
-//                             color: Colors.blueGrey,
-//                           ),
-//                         ),
-//                       ],
-//                     ),
-//                   ),
-//                   if (field.hasError)
-//                     Padding(
-//                       padding: const EdgeInsets.only(top: 8.0, left: 12.0),
-//                       child: Text(
-//                         field.errorText!,
-//                         style: TextStyle(
-//                           color: Theme.of(context).colorScheme.error,
-//                           fontSize: 12,
-//                         ),
-//                       ),
-//                     ),
-//                 ],
-//               );
-//             },
-//           ),
-//           const SizedBox(height: 16),
-//           ElevatedButton(
-//             onPressed: _submitForm,
-//             child: const Text('Submit'),
-//           ),
-//         ],
-//       ),
-//     );
-//   }
+  Widget _buildHeader(String title) {
+    return Text(
+      title,
+      style: const TextStyle(
+        fontSize: 28,
+        fontWeight: FontWeight.bold,
+      ),
+    );
+  }
 
-//   // Re-using helper methods from _NakedSelectExampleState, adapt if needed
-//   // Assuming _buildTriggerVisual and _buildMenuVisual are accessible or copied here
-//   // Need to add hasError parameter to _buildTriggerVisual
+  Widget _buildSectionTitle(String title) {
+    return Text(
+      title,
+      style: const TextStyle(
+        fontSize: 20,
+        fontWeight: FontWeight.bold,
+      ),
+    );
+  }
 
-//   Widget _buildTriggerVisual({
-//     required String value,
-//     required bool isOpen,
-//     required bool isHovered,
-//     required bool isFocused,
-//     required bool isPressed,
-//     required MaterialColor color,
-//     bool hasError = false, // Added parameter
-//   }) {
-//     Color borderColor =
-//         isFocused ? Colors.black.withOpacity(0.7) : Colors.transparent;
-//     if (hasError) {
-//       borderColor = Theme.of(context).colorScheme.error;
-//     }
+  Widget _buildBasicSelect() {
+    return NakedSelect<String>(
+      selectedValue: _basicSelectedValue,
+      onSelectedValueChanged: (value) =>
+          setState(() => _basicSelectedValue = value),
+      menu: NakedSelectMenu(
+        child: _buildMenuContainer(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: _fruitOptions
+                .map((fruit) => _buildBasicSelectItem(fruit))
+                .toList(),
+          ),
+          color: Colors.blue,
+        ),
+      ),
+      child: NakedSelectTrigger(
+        onHoverState: (value) => setState(() => _isBasicTriggerHovered = value),
+        onFocusState: (value) => setState(() => _isBasicTriggerFocused = value),
+        onPressedState: (value) =>
+            setState(() => _isBasicTriggerPressed = value),
+        child: _buildTrigger(
+          _basicSelectedValue ?? 'Select a fruit',
+          _isBasicOpen,
+          _isBasicTriggerHovered,
+          _isBasicTriggerFocused,
+          _isBasicTriggerPressed,
+          Colors.blue,
+        ),
+      ),
+    );
+  }
 
-//     return Container(
-//       width: 250,
-//       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-//       decoration: BoxDecoration(
-//         color: isPressed
-//             ? color.shade700
-//             : isHovered
-//                 ? color.shade600
-//                 : color.shade500,
-//         borderRadius: BorderRadius.circular(4),
-//         border: Border.all(
-//           color: borderColor,
-//           width: 2,
-//         ),
-//         boxShadow: isHovered || isFocused
-//             ? [
-//                 BoxShadow(
-//                   color: Colors.black.withOpacity(0.1),
-//                   blurRadius: 3,
-//                   offset: const Offset(0, 1),
-//                 ),
-//               ]
-//             : null,
-//       ),
-//       child: Row(
-//         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//         children: [
-//           Text(
-//             value,
-//             style: TextStyle(
-//               color:
-//                   hasError ? Theme.of(context).colorScheme.error : Colors.white,
-//             ),
-//           ),
-//           Icon(
-//             isOpen ? Icons.arrow_drop_up : Icons.arrow_drop_down,
-//             color: Colors.white,
-//           ),
-//         ],
-//       ),
-//     );
-//   }
+  Widget _buildBasicSelectItem(String fruit) {
+    return NakedSelectItem<String>(
+      value: fruit,
+      onHoverState: (value) =>
+          setState(() => _basicItemHoverStates[fruit] = value),
+      onFocusState: (value) =>
+          setState(() => _basicItemFocusStates[fruit] = value),
+      onPressedState: (value) =>
+          setState(() => _basicItemPressStates[fruit] = value),
+      child: _buildMenuItem(
+        fruit,
+        _basicSelectedValue == fruit,
+        _basicItemHoverStates[fruit] ?? false,
+        _basicItemFocusStates[fruit] ?? false,
+        _basicItemPressStates[fruit] ?? false,
+        Colors.blue,
+      ),
+    );
+  }
 
-//   // Assuming _buildMenuVisual is defined similarly to the main example state
-//   // This is a simplified placeholder - copy/adapt the full method
-//   Widget _buildMenuVisual<T>({
-//     required List<T> options,
-//     required T? selectedValue,
-//     required Widget Function(T) itemBuilder,
-//     required String Function(T) valueGetter,
-//     required Map<String, bool> itemHoverStates,
-//     required Map<String, bool> itemFocusStates,
-//     required MaterialColor color,
-//     double maxHeight = 300,
-//   }) {
-//     return Container(
-//       constraints: BoxConstraints(maxHeight: maxHeight, maxWidth: 250),
-//       margin: const EdgeInsets.only(top: 4),
-//       decoration: BoxDecoration(
-//         color: Colors.white,
-//         borderRadius: BorderRadius.circular(4),
-//         boxShadow: [
-//           BoxShadow(color: Colors.black.withOpacity(0.1), blurRadius: 6)
-//         ],
-//         border: Border.all(color: Colors.grey.shade300),
-//       ),
-//       child: SingleChildScrollView(
-//         child: Column(
-//           mainAxisSize: MainAxisSize.min,
-//           children: options.map((option) {
-//             final String itemValue = valueGetter(option);
-//             final bool isSelected = selectedValue == option;
-//             final bool isHovered = itemHoverStates[itemValue] ?? false;
-//             final bool isFocused = itemFocusStates[itemValue] ?? false;
+  Widget _buildMultipleSelect() {
+    return NakedSelect<String>(
+      allowMultiple: true,
+      selectedValues: _multipleSelectedValues,
+      onSelectedValuesChanged: (values) =>
+          setState(() => _multipleSelectedValues = values),
+      closeOnSelect: false,
+      menu: NakedSelectMenu(
+        child: _buildMenuContainer(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: _fruitOptions
+                .map((fruit) => _buildMultipleSelectItem(fruit))
+                .toList(),
+          ),
+          color: Colors.teal,
+        ),
+      ),
+      child: NakedSelectTrigger(
+        onHoverState: (value) =>
+            setState(() => _isMultipleTriggerHovered = value),
+        onFocusState: (value) =>
+            setState(() => _isMultipleTriggerFocused = value),
+        onPressedState: (value) =>
+            setState(() => _isMultipleTriggerPressed = value),
+        child: _buildTrigger(
+          _multipleSelectedValues.isEmpty
+              ? 'Select fruits'
+              : '${_multipleSelectedValues.length} fruit(s) selected',
+          _isMultipleOpen,
+          _isMultipleTriggerHovered,
+          _isMultipleTriggerFocused,
+          _isMultipleTriggerPressed,
+          Colors.teal,
+        ),
+      ),
+    );
+  }
 
-//             return NakedSelectItem<T>(
-//               value: option,
-//               isSelected: isSelected,
-//               onHoverState: (hovered) =>
-//                   setState(() => itemHoverStates[itemValue] = hovered),
-//               onFocusState: (focused) =>
-//                   setState(() => itemFocusStates[itemValue] = focused),
-//               child: Container(
-//                 width: double.infinity,
-//                 padding:
-//                     const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-//                 color: isFocused
-//                     ? color.shade100.withOpacity(0.5)
-//                     : isHovered
-//                         ? color.shade50.withOpacity(0.5)
-//                         : Colors.transparent,
-//                 child: DefaultTextStyle(
-//                   style: TextStyle(
-//                     color: Colors.black87,
-//                     fontWeight: isSelected || isFocused
-//                         ? FontWeight.bold
-//                         : FontWeight.normal,
-//                   ),
-//                   child: itemBuilder(option),
-//                 ),
-//               ),
-//             );
-//           }).toList(),
-//         ),
-//       ),
-//     );
-//   }
-// }
+  Widget _buildMultipleSelectItem(String fruit) {
+    final isSelected = _multipleSelectedValues.contains(fruit);
 
-// class FocusSelectExample extends StatefulWidget {
-//   const FocusSelectExample({super.key});
+    return NakedSelectItem<String>(
+      value: fruit,
+      isSelected: isSelected,
+      onHoverState: (value) =>
+          setState(() => _multipleItemHoverStates[fruit] = value),
+      onFocusState: (value) =>
+          setState(() => _multipleItemFocusStates[fruit] = value),
+      onPressedState: (value) =>
+          setState(() => _multipleItemPressStates[fruit] = value),
+      child: _buildMenuItem(
+        fruit,
+        isSelected,
+        _multipleItemHoverStates[fruit] ?? false,
+        _multipleItemFocusStates[fruit] ?? false,
+        _multipleItemPressStates[fruit] ?? false,
+        Colors.teal,
+        showCheckbox: true,
+      ),
+    );
+  }
 
-//   @override
-//   State<FocusSelectExample> createState() => _FocusSelectExampleState();
-// }
+  Widget _buildDisabledSelect() {
+    return NakedSelect<String>(
+      selectedValue: _disabledSelectedValue,
+      onSelectedValueChanged: (value) =>
+          setState(() => _disabledSelectedValue = value),
+      enabled: false,
+      menu: NakedSelectMenu(
+        child: _buildMenuContainer(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: _fruitOptions
+                .map((fruit) => _buildBasicSelectItem(fruit))
+                .toList(),
+          ),
+          color: Colors.grey,
+        ),
+      ),
+      child: NakedSelectTrigger(
+        onHoverState: (value) =>
+            setState(() => _isDisabledTriggerHovered = value),
+        onFocusState: (value) =>
+            setState(() => _isDisabledTriggerFocused = value),
+        onPressedState: (value) =>
+            setState(() => _isDisabledTriggerPressed = value),
+        child: _buildTrigger(
+          'Disabled Select',
+          _isDisabledOpen,
+          _isDisabledTriggerHovered,
+          _isDisabledTriggerFocused,
+          _isDisabledTriggerPressed,
+          Colors.grey,
+          isDisabled: true,
+        ),
+      ),
+    );
+  }
 
-// class _FocusSelectExampleState extends State<FocusSelectExample> {
-//   bool _isOpen = false;
-//   String? _selectedValue;
-//   String _lastAction = 'No action yet';
+  Widget _buildSearchSelect(List<String> filteredOptions) {
+    return KeyboardListener(
+      focusNode: FocusNode(),
+      onKeyEvent: (event) {
+        if (event is KeyDownEvent) {
+          if (event.logicalKey == LogicalKeyboardKey.arrowDown) {
+            setState(() {
+              if (_keyboardSelectedIndex < filteredOptions.length - 1) {
+                _keyboardSelectedIndex++;
+              }
+            });
+          } else if (event.logicalKey == LogicalKeyboardKey.arrowUp) {
+            setState(() {
+              if (_keyboardSelectedIndex > 0) {
+                _keyboardSelectedIndex--;
+              }
+            });
+          } else if (event.logicalKey == LogicalKeyboardKey.enter &&
+              _keyboardSelectedIndex >= 0 &&
+              _keyboardSelectedIndex < filteredOptions.length) {
+            setState(() {
+              _searchSelectedValue = filteredOptions[_keyboardSelectedIndex];
+            });
+          }
+        }
+      },
+      child: NakedSelect<String>(
+        enableTypeAhead: false,
+        onMenuClose: () {
+          setState(() {
+            _searchController.clear();
+            _keyboardSelectedIndex = -1;
+          });
+        },
+        selectedValue: _searchSelectedValue,
+        onSelectedValueChanged: (value) =>
+            setState(() => _searchSelectedValue = value),
+        menu: NakedSelectMenu(
+          child: _buildMenuContainer(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                _buildSearchField(),
+                const Divider(height: 1),
+                ConstrainedBox(
+                  constraints: const BoxConstraints(maxHeight: 200),
+                  child: filteredOptions.isEmpty
+                      ? const Padding(
+                          padding: EdgeInsets.all(16.0),
+                          child: Text('No colors found'),
+                        )
+                      : SingleChildScrollView(
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: List.generate(
+                              filteredOptions.length,
+                              (index) => _buildSearchSelectItem(
+                                  filteredOptions[index],
+                                  isKeyboardSelected:
+                                      index == _keyboardSelectedIndex),
+                            ),
+                          ),
+                        ),
+                ),
+              ],
+            ),
+            color: Colors.purple,
+          ),
+        ),
+        child: NakedSelectTrigger(
+          onHoverState: (value) =>
+              setState(() => _isSearchTriggerHovered = value),
+          onFocusState: (value) =>
+              setState(() => _isSearchTriggerFocused = value),
+          onPressedState: (value) =>
+              setState(() => _isSearchTriggerPressed = value),
+          child: _buildTrigger(
+            _searchSelectedValue ?? 'Select a color',
+            _isSearchOpen,
+            _isSearchTriggerHovered,
+            _isSearchTriggerFocused,
+            _isSearchTriggerPressed,
+            Colors.purple,
+          ),
+        ),
+      ),
+    );
+  }
 
-//   final List<Map<String, dynamic>> _options = [
-//     {'id': 'small', 'label': 'Small', 'icon': Icons.crop_7_5},
-//     {'id': 'medium', 'label': 'Medium', 'icon': Icons.crop_16_9},
-//     {'id': 'large', 'label': 'Large', 'icon': Icons.crop_din},
-//     {'id': 'xlarge', 'label': 'Extra Large', 'icon': Icons.aspect_ratio},
-//   ];
+  Widget _buildSearchField() {
+    return SelectSearchField(
+      controller: _searchController,
+      hintText: 'Search colors...',
+      autofocus: true,
+      focusNode: _searchFocusNode,
+      onClear: () {
+        setState(() {
+          _searchText = '';
+          _keyboardSelectedIndex = -1;
+        });
+      },
+    );
+  }
 
-//   // State for styling
-//   bool _isTriggerHovered = false;
-//   bool _isTriggerFocused = false;
-//   bool _isTriggerPressed = false;
-//   final Map<String, bool> _itemHoverStates = {};
-//   final Map<String, bool> _itemFocusStates = {};
+  Widget _buildSearchSelectItem(
+    String color, {
+    bool isKeyboardSelected = false,
+  }) {
+    return NakedSelectItem<String>(
+      value: color,
+      onHoverState: (value) =>
+          setState(() => _searchItemHoverStates[color] = value),
+      onFocusState: (value) =>
+          setState(() => _searchItemFocusStates[color] = value),
+      onPressedState: (value) =>
+          setState(() => _searchItemPressStates[color] = value),
+      child: _buildSearchMenuItem(
+        color,
+        _searchSelectedValue == color,
+        _searchItemHoverStates[color] ?? false,
+        _searchItemFocusStates[color] ?? false,
+        _searchItemPressStates[color] ?? false,
+        Colors.purple,
+        isKeyboardSelected: isKeyboardSelected,
+      ),
+    );
+  }
 
-//   @override
-//   Widget build(BuildContext context) {
-//     return Column(
-//       crossAxisAlignment: CrossAxisAlignment.start,
-//       children: [
-//         // Keyboard navigation instructions
-//         Container(
-//           padding: const EdgeInsets.all(16),
-//           margin: const EdgeInsets.only(bottom: 20),
-//           decoration: BoxDecoration(
-//             color: Colors.blue.shade50,
-//             borderRadius: BorderRadius.circular(8),
-//             border: Border.all(color: Colors.blue.shade200),
-//           ),
-//           child: Column(
-//             crossAxisAlignment: CrossAxisAlignment.start,
-//             children: [
-//               Row(
-//                 children: [
-//                   Icon(Icons.keyboard, color: Colors.blue.shade700),
-//                   const SizedBox(width: 8),
-//                   Text(
-//                     'Keyboard Navigation',
-//                     style: TextStyle(
-//                       fontWeight: FontWeight.bold,
-//                       color: Colors.blue.shade800,
-//                     ),
-//                   ),
-//                 ],
-//               ),
-//               const SizedBox(height: 8),
-//               const Wrap(
-//                 spacing: 16,
-//                 runSpacing: 8,
-//                 children: [
-//                   Text('• Tab: Focus trigger'),
-//                   Text('• Enter/Space: Open menu'),
-//                   Text('• ↑/↓: Navigate items'),
-//                   Text('• Enter: Select item'),
-//                   Text('• Esc: Close menu'),
-//                 ],
-//               ),
-//             ],
-//           ),
-//         ),
+  Widget _buildSearchMenuItem(
+    String text,
+    bool isSelected,
+    bool isHovered,
+    bool isFocused,
+    bool isPressed,
+    MaterialColor color, {
+    bool isKeyboardSelected = false,
+  }) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      decoration: BoxDecoration(
+        color: isKeyboardSelected
+            ? color.shade200
+            : isSelected
+                ? color.shade100
+                : isPressed
+                    ? color.shade50
+                    : isHovered || isFocused
+                        ? Colors.grey.shade100
+                        : Colors.transparent,
+        border: Border(
+          left: BorderSide(
+            color: isKeyboardSelected || isSelected
+                ? color.shade500
+                : Colors.transparent,
+            width: 4,
+          ),
+        ),
+      ),
+      child: Row(
+        children: [
+          Expanded(
+            child: HighlightText(
+              text: text,
+              searchQuery: _searchText,
+              style: TextStyle(
+                fontWeight: isSelected || isKeyboardSelected
+                    ? FontWeight.w600
+                    : FontWeight.normal,
+                color: isSelected || isKeyboardSelected
+                    ? color.shade800
+                    : Colors.black87,
+              ),
+              highlightStyle: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: color.shade900,
+                backgroundColor: color.shade50,
+              ),
+            ),
+          ),
+          if (isSelected)
+            Icon(
+              Icons.check,
+              color: color.shade500,
+              size: 20,
+            ),
+        ],
+      ),
+    );
+  }
 
-//         // Status display
-//         Container(
-//           padding: const EdgeInsets.all(12),
-//           margin: const EdgeInsets.only(bottom: 24),
-//           decoration: BoxDecoration(
-//             color: const Color(0xFFF3F4F6),
-//             borderRadius: BorderRadius.circular(6),
-//           ),
-//           child: Row(
-//             children: [
-//               const Text(
-//                 'Last Action:',
-//                 style: TextStyle(fontWeight: FontWeight.bold),
-//               ),
-//               const SizedBox(width: 8),
-//               Expanded(child: Text(_lastAction)),
-//             ],
-//           ),
-//         ),
+  Widget _buildTrigger(
+    String text,
+    bool isOpen,
+    bool isHovered,
+    bool isFocused,
+    bool isPressed,
+    MaterialColor color, {
+    bool isDisabled = false,
+  }) {
+    return Container(
+      width: 300,
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      decoration: BoxDecoration(
+        color: isDisabled
+            ? Colors.grey.shade300
+            : isPressed
+                ? color.shade700
+                : isHovered
+                    ? color.shade600
+                    : color.shade500,
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(
+          color: isFocused && !isDisabled ? Colors.white : Colors.transparent,
+          width: 2,
+        ),
+        boxShadow: isDisabled
+            ? null
+            : [
+                (isHovered || isFocused)
+                    ? BoxShadow(
+                        color: Colors.black.withOpacity(0.1),
+                        blurRadius: 4,
+                        offset: const Offset(0, 2),
+                      )
+                    : const BoxShadow(
+                        color: Colors.transparent,
+                      )
+              ],
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Expanded(
+            child: Text(
+              text,
+              style: TextStyle(
+                color: isDisabled ? Colors.grey.shade700 : Colors.white,
+                fontWeight: FontWeight.w500,
+              ),
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
+          const SizedBox(width: 8),
+          Icon(
+            isOpen ? Icons.arrow_drop_up : Icons.arrow_drop_down,
+            color: isDisabled ? Colors.grey.shade700 : Colors.white,
+          ),
+        ],
+      ),
+    );
+  }
 
-//         // Select with focus management
-//         NakedSelect<String>(
-//           isOpen: _isOpen,
-//           onIsOpenChanged: (isOpen) {
-//             setState(() {
-//               _isOpen = isOpen;
-//               if (isOpen) {
-//                 _lastAction = 'Menu opened';
-//               } else {
-//                 _lastAction = 'Menu closed';
-//               }
-//             });
-//           },
-//           selectedValue: _selectedValue,
-//           onSelectedValueChanged: (value) {
-//             setState(() {
-//               _selectedValue = value;
-//               _lastAction = 'Selected: ${_getLabelById(value)}';
-//             });
-//           },
-//           child: Column(
-//             crossAxisAlignment: CrossAxisAlignment.start,
-//             children: [
-//               NakedSelectTrigger(
-//                 onHoverState: (h) {
-//                   setState(() {
-//                     _isTriggerHovered = h;
-//                     if (h) _lastAction = 'Trigger hovered';
-//                   });
-//                 },
-//                 onFocusState: (f) {
-//                   setState(() {
-//                     _isTriggerFocused = f;
-//                     if (f) _lastAction = 'Trigger focused';
-//                   });
-//                 },
-//                 onPressedState: (p) {
-//                   setState(() {
-//                     _isTriggerPressed = p;
-//                     if (p) _lastAction = 'Trigger pressed';
-//                   });
-//                 },
-//                 child: _buildAccessibleTrigger(),
-//               ),
-//               NakedSelectMenu(
-//                 child: _buildAccessibleMenu(),
-//               ),
-//             ],
-//           ),
-//         ),
-//       ],
-//     );
-//   }
+  Widget _buildMenuContainer(
+      {required Widget child, required MaterialColor color}) {
+    return Container(
+      constraints: const BoxConstraints(
+        minWidth: 300,
+        maxWidth: 300,
+      ),
+      margin: const EdgeInsets.only(top: 4),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(color: color.shade200),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.1),
+            blurRadius: 6,
+            offset: const Offset(0, 3),
+          ),
+        ],
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(8),
+        child: child,
+      ),
+    );
+  }
 
-//   Widget _buildAccessibleTrigger() {
-//     final String displayValue = _selectedValue != null
-//         ? 'Size: ${_getLabelById(_selectedValue)}'
-//         : 'Select a size';
+  Widget _buildMenuItem(
+    String text,
+    bool isSelected,
+    bool isHovered,
+    bool isFocused,
+    bool isPressed,
+    MaterialColor color, {
+    bool showCheckbox = false,
+  }) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      decoration: BoxDecoration(
+        color: isSelected
+            ? color.shade100
+            : isPressed
+                ? color.shade50
+                : isHovered || isFocused
+                    ? Colors.grey.shade100
+                    : Colors.transparent,
+        border: Border(
+          left: BorderSide(
+            color: isSelected ? color.shade500 : Colors.transparent,
+            width: 4,
+          ),
+        ),
+      ),
+      child: Row(
+        children: [
+          if (showCheckbox) ...[
+            Icon(
+              isSelected ? Icons.check_box : Icons.check_box_outline_blank,
+              color: color.shade500,
+              size: 20,
+            ),
+            const SizedBox(width: 8),
+          ],
+          Expanded(
+            child: Text(
+              text,
+              style: TextStyle(
+                fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
+                color: isSelected ? color.shade800 : Colors.black87,
+              ),
+            ),
+          ),
+          if (isSelected && !showCheckbox)
+            Icon(
+              Icons.check,
+              color: color.shade500,
+              size: 20,
+            ),
+        ],
+      ),
+    );
+  }
+}
 
-//     return Container(
-//       width: 300,
-//       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-//       decoration: BoxDecoration(
-//         color: _isTriggerPressed
-//             ? Colors.grey.shade200
-//             : _isTriggerHovered
-//                 ? Colors.grey.shade50
-//                 : Colors.white,
-//         borderRadius: BorderRadius.circular(8),
-//         border: Border.all(
-//           color: _isTriggerFocused
-//               ? Colors.blue
-//               : _isOpen
-//                   ? Colors.blue.shade300
-//                   : Colors.grey.shade300,
-//           width: _isTriggerFocused ? 2 : 1,
-//         ),
-//         boxShadow: _isTriggerFocused || _isOpen
-//             ? [
-//                 BoxShadow(
-//                   color: Colors.blue.withOpacity(0.2),
-//                   blurRadius: 4,
-//                   offset: const Offset(0, 1),
-//                 )
-//               ]
-//             : null,
-//       ),
-//       child: Row(
-//         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//         children: [
-//           Row(
-//             children: [
-//               if (_selectedValue != null) ...[
-//                 Icon(
-//                   _getIconById(_selectedValue),
-//                   color: Colors.blue,
-//                   size: 20,
-//                 ),
-//                 const SizedBox(width: 8),
-//               ],
-//               Text(
-//                 displayValue,
-//                 style: TextStyle(
-//                   fontSize: 16,
-//                   color: _selectedValue != null
-//                       ? Colors.black
-//                       : Colors.grey.shade600,
-//                 ),
-//               ),
-//             ],
-//           ),
-//           Icon(
-//             _isOpen ? Icons.keyboard_arrow_up : Icons.keyboard_arrow_down,
-//             color: _isTriggerFocused ? Colors.blue : Colors.grey.shade600,
-//           ),
-//         ],
-//       ),
-//     );
-//   }
+// Custom search field widget
+class SelectSearchField extends StatefulWidget {
+  final TextEditingController controller;
+  final String hintText;
+  final VoidCallback? onClear;
+  final bool autofocus;
+  final FocusNode? focusNode;
 
-//   Widget _buildAccessibleMenu() {
-//     return Container(
-//       width: 300,
-//       constraints: const BoxConstraints(maxHeight: 250),
-//       decoration: BoxDecoration(
-//         color: Colors.white,
-//         borderRadius: BorderRadius.circular(8),
-//         border: Border.all(color: Colors.grey.shade300),
-//         boxShadow: [
-//           BoxShadow(
-//             color: Colors.black.withOpacity(0.1),
-//             blurRadius: 8,
-//             offset: const Offset(0, 4),
-//           ),
-//         ],
-//       ),
-//       child: ListView.builder(
-//         shrinkWrap: true,
-//         itemCount: _options.length,
-//         itemBuilder: (context, index) {
-//           final option = _options[index];
-//           final String id = option['id'];
-//           final String label = option['label'];
-//           final IconData icon = option['icon'];
+  const SelectSearchField({
+    super.key,
+    required this.controller,
+    this.hintText = 'Search...',
+    this.onClear,
+    this.autofocus = false,
+    this.focusNode,
+  });
 
-//           final bool isSelected = _selectedValue == id;
-//           final bool isHovered = _itemHoverStates[id] ?? false;
-//           final bool isFocused = _itemFocusStates[id] ?? false;
+  @override
+  State<SelectSearchField> createState() => _SelectSearchFieldState();
+}
 
-//           return NakedSelectItem(
-//             value: id,
-//             onHoverState: (hover) {
-//               setState(() {
-//                 _itemHoverStates[id] = hover;
-//                 if (hover) _lastAction = 'Hovering: $label';
-//               });
-//             },
-//             onFocusState: (focus) {
-//               setState(() {
-//                 _itemFocusStates[id] = focus;
-//                 if (focus) _lastAction = 'Focus on: $label';
-//               });
-//             },
-//             child: Container(
-//               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-//               color: isSelected
-//                   ? Colors.blue.withOpacity(0.1)
-//                   : isHovered
-//                       ? Colors.grey.shade100
-//                       : Colors.white,
-//               child: Row(
-//                 children: [
-//                   Icon(
-//                     icon,
-//                     color: isSelected ? Colors.blue : Colors.grey.shade600,
-//                     size: 20,
-//                   ),
-//                   const SizedBox(width: 12),
-//                   Text(
-//                     label,
-//                     style: TextStyle(
-//                       fontSize: 16,
-//                       fontWeight:
-//                           isSelected ? FontWeight.bold : FontWeight.normal,
-//                       color: isSelected ? Colors.blue : Colors.black,
-//                     ),
-//                   ),
-//                   const Spacer(),
-//                   if (isSelected)
-//                     const Icon(
-//                       Icons.check,
-//                       color: Colors.blue,
-//                       size: 18,
-//                     ),
-//                   if (isFocused && !isSelected)
-//                     Icon(
-//                       Icons.keyboard_tab,
-//                       color: Colors.blue.withOpacity(0.3),
-//                       size: 16,
-//                     ),
-//                 ],
-//               ),
-//             ),
-//           );
-//         },
-//       ),
-//     );
-//   }
+class _SelectSearchFieldState extends State<SelectSearchField> {
+  bool _hasFocus = false;
 
-//   String _getLabelById(String? id) {
-//     if (id == null) return 'None';
-//     final option = _options.firstWhere(
-//       (opt) => opt['id'] == id,
-//       orElse: () => {'label': 'Unknown'},
-//     );
-//     return option['label'] as String;
-//   }
+  @override
+  Widget build(BuildContext context) {
+    final hasText = widget.controller.text.isNotEmpty;
 
-//   IconData _getIconById(String? id) {
-//     if (id == null) return Icons.crop_7_5;
-//     final option = _options.firstWhere(
-//       (opt) => opt['id'] == id,
-//       orElse: () => {'icon': Icons.crop_7_5},
-//     );
-//     return option['icon'] as IconData;
-//   }
-// }
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Focus(
+        onFocusChange: (hasFocus) {
+          setState(() {
+            _hasFocus = hasFocus;
+          });
+        },
+        child: TextField(
+          controller: widget.controller,
+          decoration: InputDecoration(
+            hintText: widget.hintText,
+            prefixIcon: const Icon(Icons.search),
+            suffixIcon: hasText
+                ? IconButton(
+                    icon: const Icon(Icons.clear, size: 18),
+                    onPressed: () {
+                      widget.controller.clear();
+                      if (widget.onClear != null) {
+                        widget.onClear!();
+                      }
+                    },
+                  )
+                : null,
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8),
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8),
+              borderSide: BorderSide(color: Colors.grey.shade300),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8),
+              borderSide: BorderSide(color: Colors.purple.shade300, width: 2),
+            ),
+            contentPadding:
+                const EdgeInsets.symmetric(vertical: 10, horizontal: 12),
+            fillColor: _hasFocus ? Colors.purple.shade50 : Colors.grey.shade50,
+            filled: true,
+          ),
+          autofocus: widget.autofocus,
+          textInputAction: TextInputAction.done,
+          focusNode: widget.focusNode,
+        ),
+      ),
+    );
+  }
+}
+
+// Highlight text widget to show matching search text
+class HighlightText extends StatelessWidget {
+  final String text;
+  final String searchQuery;
+  final TextStyle style;
+  final TextStyle highlightStyle;
+
+  const HighlightText({
+    super.key,
+    required this.text,
+    required this.searchQuery,
+    this.style = const TextStyle(color: Colors.black87),
+    this.highlightStyle = const TextStyle(
+      color: Colors.black,
+      fontWeight: FontWeight.bold,
+      backgroundColor: Colors.yellow,
+    ),
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    if (searchQuery.isEmpty) {
+      return Text(text, style: style);
+    }
+
+    final matches = <int>[];
+    final lowerCaseText = text.toLowerCase();
+    final lowerCaseQuery = searchQuery.toLowerCase();
+
+    int startIndex = 0;
+    while (true) {
+      final index = lowerCaseText.indexOf(lowerCaseQuery, startIndex);
+      if (index == -1) break;
+      matches.add(index);
+      startIndex = index + lowerCaseQuery.length;
+    }
+
+    if (matches.isEmpty) {
+      return Text(text, style: style);
+    }
+
+    final spans = <TextSpan>[];
+    int lastMatchEnd = 0;
+
+    for (final index in matches) {
+      if (index > lastMatchEnd) {
+        spans.add(TextSpan(
+          text: text.substring(lastMatchEnd, index),
+          style: style,
+        ));
+      }
+
+      spans.add(TextSpan(
+        text: text.substring(index, index + lowerCaseQuery.length),
+        style: highlightStyle,
+      ));
+
+      lastMatchEnd = index + lowerCaseQuery.length;
+    }
+
+    if (lastMatchEnd < text.length) {
+      spans.add(TextSpan(
+        text: text.substring(lastMatchEnd),
+        style: style,
+      ));
+    }
+
+    return RichText(text: TextSpan(children: spans));
+  }
+}

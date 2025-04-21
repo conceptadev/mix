@@ -9,7 +9,6 @@ class NakedSliderExample extends StatefulWidget {
 }
 
 class _NakedSliderExampleState extends State<NakedSliderExample> {
-  double _value = 0.7;
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -18,14 +17,6 @@ class _NakedSliderExampleState extends State<NakedSliderExample> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Slider(
-                label: 'Lucas',
-                value: _value,
-                onChanged: (value) {
-                  setState(() {
-                    _value = value;
-                  });
-                }),
             const Text(
               'Slider Examples',
               style: TextStyle(
