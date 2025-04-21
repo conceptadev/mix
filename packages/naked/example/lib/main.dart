@@ -13,6 +13,7 @@ import 'examples/naked_menu_example.dart';
 import 'examples/naked_radio_example.dart';
 import 'examples/naked_slider_example.dart';
 import 'examples/naked_tabs_example.dart';
+import 'examples/textfield_example_page.dart';
 import 'url_strategy.dart';
 
 void main() {
@@ -123,6 +124,10 @@ class MyApp extends StatelessWidget {
 
 // Define destinations at the app level for route generation
 List<NavDestination> destinations() => [
+      NavDestination(
+        label: 'TextField',
+        widget: const TextFieldExamplePage(),
+      ),
       NavDestination(
         label: 'Menu',
         widget: const NakedMenuExample(),
