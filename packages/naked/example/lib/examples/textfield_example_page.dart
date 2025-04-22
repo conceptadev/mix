@@ -99,9 +99,9 @@ class _TextFieldExamplePageState extends State<TextFieldExamplePage> {
             onChanged: (value) => setState(() {}),
             onFocusState: (value) => setState(() => _searchFocused = value),
             onHoverState: (value) => setState(() => _searchHovered = value),
-            onPressed: () => print('onTap'),
-            onPressOutside: (_) => print('onTapOutside'),
-            onPressUpOutside: (_) => print('onTapUpOutside'),
+            // onPressed: () => print('onTap'),
+            // onPressOutside: (_) => print('onTapOutside'),
+            // onPressUpOutside: (_) => print('onTapUpOutside'),
             builder: (context, child) {
               return Container(
                 padding:

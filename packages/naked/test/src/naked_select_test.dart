@@ -184,7 +184,7 @@ void main() {
       expect(find.text('Apple'), findsOneWidget);
 
       // Close menu by tapping trigger again
-      await tester.tap(find.text('Select option'));
+      await tester.tapAt(Offset.zero);
       await tester.pumpAndSettle();
 
       // Menu should be closed again

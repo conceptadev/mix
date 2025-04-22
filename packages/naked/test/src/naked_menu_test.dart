@@ -252,11 +252,8 @@ void main() {
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      NakedMenuItem(
-                        onPressed: () {
-                          print('Item 1 pressed');
-                        },
-                        child: const Text('Item 1'),
+                      const NakedMenuItem(
+                        child: Text('Item 1'),
                       ),
                       NakedMenuItem(
                         onPressed: () {},

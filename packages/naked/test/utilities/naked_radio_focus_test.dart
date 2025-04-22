@@ -146,7 +146,7 @@ void main() {
                     selectedValue = value;
                     valueChanged = true;
                   },
-                  enabled: true, // Entire group is disabled
+                  enabled: false, // Entire group is disabled
                   child: const Column(
                     children: [
                       NakedRadioButton<String>(

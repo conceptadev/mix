@@ -138,15 +138,14 @@ class NakedTextField extends StatefulWidget {
     this.onPressedAlwaysCalled = false,
     this.onPressedState,
     this.onPressOutside,
-    this.onPressUpOutside,
+    // this.onPressUpOutside,
     this.scrollController,
     this.scrollPhysics,
     this.autofillHints = const <String>[],
     this.contentInsertionConfiguration,
     this.clipBehavior = Clip.hardEdge,
     this.restorationId,
-    this.stylusHandwritingEnabled =
-        EditableText.defaultStylusHandwritingEnabled,
+    this.scribbleEnabled = true,
     this.enableIMEPersonalizedLearning = true,
     this.contextMenuBuilder,
     this.canRequestFocus = true,
@@ -312,8 +311,9 @@ class NakedTextField extends StatefulWidget {
   /// Called when a tap is detected outside of the field.
   final TapRegionCallback? onPressOutside;
 
+  // TODO: Implement this on the Next version of Flutter
   /// Called when a tap up is detected outside of the field.
-  final TapRegionUpCallback? onPressUpOutside;
+  // final TapRegionUpCallback? onPressUpOutside;
 
   /// Drag start behavior.
   final DragStartBehavior dragStartBehavior;
@@ -336,8 +336,8 @@ class NakedTextField extends StatefulWidget {
   /// Restoration ID for this widget.
   final String? restorationId;
 
-  /// Whether stylus handwriting is enabled.
-  final bool stylusHandwritingEnabled;
+  /// Whether scribble is enabled.
+  final bool scribbleEnabled;
 
   /// Whether to enable IME personalized learning.
   final bool enableIMEPersonalizedLearning;
@@ -737,7 +737,7 @@ class _NakedTextFieldState extends State<NakedTextField>
             onAppPrivateCommand: widget.onAppPrivateCommand,
             onSelectionHandleTapped: _handleSelectionHandleTapped,
             onTapOutside: widget.onPressOutside,
-            onTapUpOutside: widget.onPressUpOutside,
+            // onTapUpOutside: widget.onPressUpOutside,
             inputFormatters: formatters,
             rendererIgnoresPointer: true,
             cursorWidth: widget.cursorWidth,
@@ -759,7 +759,7 @@ class _NakedTextFieldState extends State<NakedTextField>
             autofillClient: this,
             clipBehavior: widget.clipBehavior,
             restorationId: 'editable',
-            stylusHandwritingEnabled: widget.stylusHandwritingEnabled,
+            scribbleEnabled: widget.scribbleEnabled,
             enableIMEPersonalizedLearning: widget.enableIMEPersonalizedLearning,
             contentInsertionConfiguration: widget.contentInsertionConfiguration,
             contextMenuBuilder: widget.contextMenuBuilder,
