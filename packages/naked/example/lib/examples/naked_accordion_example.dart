@@ -102,7 +102,7 @@ class _BasicAccordion extends StatefulWidget {
 }
 
 class _BasicAccordionState extends State<_BasicAccordion> {
-  final Map<String, bool> _expandedStates = {};
+  final AccordionController<String> _controller = AccordionController<String>();
   final Map<String, bool> _hoveredItems = {};
   final Map<String, bool> _focusedItems = {};
 
@@ -135,86 +135,75 @@ class _BasicAccordionState extends State<_BasicAccordion> {
         borderRadius: BorderRadius.circular(8),
       ),
       clipBehavior: Clip.antiAlias,
-      child: Column(
+      child: NakedAccordion<String>(
+        controller: _controller,
+        onTriggerPressed: (value) {
+          setState(() {
+            if (_controller.values.contains(value)) {
+              _controller.close(value);
+            } else {
+              // Close all other items when opening a new one (single mode)
+              _controller.clear();
+              _controller.open(value);
+            }
+          });
+        },
         children: items.map((item) {
           final String id = item['id'] as String;
-          final bool isExpanded = _expandedStates[id] ?? false;
+          final bool isExpanded = _controller.values.contains(id);
           final bool isHovered = _hoveredItems[id] ?? false;
 
-          return NakedAccordion(
-            type: NakedAccordionType.single,
-            initialExpandedValues: isExpanded ? [id] : [],
-            onExpandedChange: (value, expanded) {
-              setState(() {
-                _expandedStates[id] = expanded;
-
-                // If we're in single mode, close others when expanding this one
-                if (expanded) {
-                  for (final itemId in items.map((i) => i['id'] as String)) {
-                    if (itemId != id) {
-                      _expandedStates[itemId] = false;
-                    }
-                  }
-                }
-              });
-            },
-            children: [
-              NakedAccordionItem(
-                value: id,
-                trigger: NakedAccordionTrigger(
-                  onHoverState: (hovered) =>
-                      setState(() => _hoveredItems[id] = hovered),
-                  onFocusState: (focused) =>
-                      setState(() => _focusedItems[id] = focused),
-                  child: Container(
-                    padding: const EdgeInsets.all(16),
-                    decoration: BoxDecoration(
-                      color: isExpanded
-                          ? Colors.blue.shade100
-                          : isHovered
-                              ? Colors.grey.shade300
-                              : Colors.grey.shade200,
-                      border: Border(
-                        bottom: BorderSide(color: Colors.grey.shade300),
-                      ),
-                    ),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: Text(
-                            item['title'] as String,
-                            style: TextStyle(
-                              fontWeight: FontWeight.w500,
-                              color: isExpanded
-                                  ? Colors.blue.shade800
-                                  : Colors.grey.shade800,
-                            ),
-                          ),
-                        ),
-                        Icon(
-                          isExpanded ? Icons.expand_less : Icons.expand_more,
-                          color:
-                              isExpanded ? Colors.blue : Colors.grey.shade600,
-                        ),
-                      ],
-                    ),
+          return NakedAccordionItem<String>(
+            value: id,
+            trigger: NakedAccordionTrigger<String>(
+              onHoverState: (hovered) =>
+                  setState(() => _hoveredItems[id] = hovered),
+              onFocusState: (focused) =>
+                  setState(() => _focusedItems[id] = focused),
+              child: Container(
+                padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  color: isExpanded
+                      ? Colors.blue.shade100
+                      : isHovered
+                          ? Colors.grey.shade300
+                          : Colors.grey.shade200,
+                  border: Border(
+                    bottom: BorderSide(color: Colors.grey.shade300),
                   ),
                 ),
-                content: NakedAccordionContent(
-                  child: Container(
-                    padding: const EdgeInsets.all(16),
-                    color: Colors.blue.shade50,
-                    child: Text(
-                      item['content'] as String,
-                      style: TextStyle(
-                        color: Colors.grey.shade700,
-                        height: 1.5,
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        item['title'] as String,
+                        style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          color: isExpanded
+                              ? Colors.blue.shade800
+                              : Colors.grey.shade800,
+                        ),
                       ),
                     ),
-                  ),
+                    Icon(
+                      isExpanded ? Icons.expand_less : Icons.expand_more,
+                      color: isExpanded ? Colors.blue : Colors.grey.shade600,
+                    ),
+                  ],
                 ),
               ),
-            ],
+            ),
+            content: Container(
+              padding: const EdgeInsets.all(16),
+              color: Colors.blue.shade50,
+              child: Text(
+                item['content'] as String,
+                style: TextStyle(
+                  color: Colors.grey.shade700,
+                  height: 1.5,
+                ),
+              ),
+            ),
           );
         }).toList(),
       ),
@@ -230,6 +219,7 @@ class _ColoredAccordion extends StatefulWidget {
 }
 
 class _ColoredAccordionState extends State<_ColoredAccordion> {
+  final AccordionController<String> _controller = AccordionController<String>();
   final Map<String, bool> _hoverStates = {};
   final Map<String, bool> _focusStates = {};
   final List<Map<String, dynamic>> items = [
@@ -258,75 +248,73 @@ class _ColoredAccordionState extends State<_ColoredAccordion> {
 
   @override
   Widget build(BuildContext context) {
-    return NakedAccordion(
-      type: NakedAccordionType.multiple,
+    return NakedAccordion<String>(
+      controller: _controller,
+      onTriggerPressed: (value) {
+        setState(() {
+          // Allow multiple items to be expanded
+          _controller.toggle(value);
+        });
+      },
       children: items.map((item) {
         final String id = item['id'] as String;
         final Color color = item['color'] as Color;
+        final bool isExpanded = _controller.values.contains(id);
+        final bool isHovered = _hoverStates[id] ?? false;
+        final bool isFocused = _focusStates[id] ?? false;
 
-        return NakedAccordionItem(
+        return NakedAccordionItem<String>(
           value: id,
-          trigger: NakedAccordionTrigger(
+          trigger: NakedAccordionTrigger<String>(
             onHoverState: (isHovered) =>
                 setState(() => _hoverStates[id] = isHovered),
             onFocusState: (isFocused) =>
                 setState(() => _focusStates[id] = isFocused),
-            child: Builder(builder: (context) {
-              final isExpanded = context
-                      .findAncestorWidgetOfExactType<NakedAccordionItem>()
-                      ?.isExpanded ??
-                  false;
-              final isHovered = _hoverStates[id] ?? false;
-              final isFocused = _focusStates[id] ?? false;
-
-              return Container(
-                padding: const EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  color: color.withOpacity(0.1),
-                  border: Border.all(
-                    color: color.withOpacity(
-                      isHovered
-                          ? 0.8
-                          : isFocused
-                              ? 0.6
-                              : 0.3,
-                    ),
-                  ),
-                  borderRadius: const BorderRadius.all(Radius.circular(8)),
-                ),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Text(
-                        item['title'] as String,
-                        style: TextStyle(
-                          color: color.withOpacity(0.8),
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ),
-                    Icon(
-                      isExpanded ? Icons.expand_less : Icons.expand_more,
-                      color: color.withOpacity(0.6),
-                    ),
-                  ],
-                ),
-              );
-            }),
-          ),
-          content: NakedAccordionContent(
             child: Container(
               padding: const EdgeInsets.all(16),
-              margin: const EdgeInsets.only(top: 8),
               decoration: BoxDecoration(
-                color: color.withOpacity(0.05),
+                color: color.withOpacity(0.1),
+                border: Border.all(
+                  color: color.withOpacity(
+                    isHovered
+                        ? 0.8
+                        : isFocused
+                            ? 0.6
+                            : 0.3,
+                  ),
+                ),
                 borderRadius: const BorderRadius.all(Radius.circular(8)),
               ),
-              child: Text(
-                item['content'] as String,
-                style: TextStyle(
-                  color: color.withOpacity(0.7),
-                ),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      item['title'] as String,
+                      style: TextStyle(
+                        color: color.withOpacity(0.8),
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ),
+                  Icon(
+                    isExpanded ? Icons.expand_less : Icons.expand_more,
+                    color: color.withOpacity(0.6),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          content: Container(
+            padding: const EdgeInsets.all(16),
+            margin: const EdgeInsets.only(top: 8),
+            decoration: BoxDecoration(
+              color: color.withOpacity(0.05),
+              borderRadius: const BorderRadius.all(Radius.circular(8)),
+            ),
+            child: Text(
+              item['content'] as String,
+              style: TextStyle(
+                color: color.withOpacity(0.7),
               ),
             ),
           ),
@@ -344,7 +332,7 @@ class _BorderedAccordion extends StatefulWidget {
 }
 
 class _BorderedAccordionState extends State<_BorderedAccordion> {
-  String? _expandedItem;
+  final AccordionController<String> _controller = AccordionController<String>();
   final Map<String, bool> _hoverStates = {};
   final Map<String, bool> _focusStates = {};
 
@@ -371,21 +359,26 @@ class _BorderedAccordionState extends State<_BorderedAccordion> {
 
   @override
   Widget build(BuildContext context) {
-    return NakedAccordion(
-      type: NakedAccordionType.single,
-      initialExpandedValues: _expandedItem != null ? [_expandedItem!] : [],
-      onExpandedChange: (value, isExpanded) {
+    return NakedAccordion<String>(
+      controller: _controller,
+      onTriggerPressed: (value) {
         setState(() {
-          _expandedItem = isExpanded ? value : null;
+          if (_controller.values.contains(value)) {
+            _controller.close(value);
+          } else {
+            // Single mode - close other items
+            _controller.clear();
+            _controller.open(value);
+          }
         });
       },
       children: items.map((item) {
         final String id = item['id'] as String;
-        final bool isExpanded = id == _expandedItem;
+        final bool isExpanded = _controller.values.contains(id);
 
-        return NakedAccordionItem(
+        return NakedAccordionItem<String>(
           value: id,
-          trigger: NakedAccordionTrigger(
+          trigger: NakedAccordionTrigger<String>(
             onHoverState: (isHovered) =>
                 setState(() => _hoverStates[id] = isHovered),
             onFocusState: (isFocused) =>
@@ -429,23 +422,21 @@ class _BorderedAccordionState extends State<_BorderedAccordion> {
               ),
             ),
           ),
-          content: NakedAccordionContent(
-            child: Container(
-              padding: const EdgeInsets.all(16),
-              margin: const EdgeInsets.only(bottom: 8),
-              decoration: BoxDecoration(
-                color: Colors.grey.shade50,
-                borderRadius: BorderRadius.circular(8),
-                border: Border.all(
-                  color: const Color(0xFFE9D5FF), // purple-200
-                  width: 1,
-                ),
+          content: Container(
+            padding: const EdgeInsets.all(16),
+            margin: const EdgeInsets.only(bottom: 8),
+            decoration: BoxDecoration(
+              color: Colors.grey.shade50,
+              borderRadius: BorderRadius.circular(8),
+              border: Border.all(
+                color: const Color(0xFFE9D5FF), // purple-200
+                width: 1,
               ),
-              child: Text(
-                item['content'] as String,
-                style: TextStyle(
-                  color: Colors.grey.shade700,
-                ),
+            ),
+            child: Text(
+              item['content'] as String,
+              style: TextStyle(
+                color: Colors.grey.shade700,
               ),
             ),
           ),
@@ -463,8 +454,7 @@ class _AccordionGroup extends StatefulWidget {
 }
 
 class _AccordionGroupState extends State<_AccordionGroup> {
-  // First one open by default
-  String _activeItem = 'ui';
+  final AccordionController<String> _controller = AccordionController<String>();
 
   final List<Map<String, dynamic>> items = [
     {
@@ -494,6 +484,13 @@ class _AccordionGroupState extends State<_AccordionGroup> {
   ];
 
   @override
+  void initState() {
+    super.initState();
+    // First one open by default
+    _controller.open('ui');
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
@@ -502,21 +499,27 @@ class _AccordionGroupState extends State<_AccordionGroup> {
         color: Colors.white,
       ),
       clipBehavior: Clip.antiAlias,
-      child: NakedAccordion(
-        type: NakedAccordionType.single,
-        initialExpandedValues: [_activeItem],
-        onExpandedChange: (value, isExpanded) {
-          if (isExpanded) {
-            setState(() => _activeItem = value);
-          }
+      child: NakedAccordion<String>(
+        controller: _controller,
+        onTriggerPressed: (value) {
+          setState(() {
+            if (_controller.values.contains(value)) {
+              // Don't allow closing the active item
+              return;
+            } else {
+              // Single mode - close other items
+              _controller.clear();
+              _controller.open(value);
+            }
+          });
         },
         children: items.map((item) {
           final String id = item['id'] as String;
-          final bool isActive = id == _activeItem;
+          final bool isActive = _controller.values.contains(id);
 
-          return NakedAccordionItem(
+          return NakedAccordionItem<String>(
             value: id,
-            trigger: NakedAccordionTrigger(
+            trigger: NakedAccordionTrigger<String>(
               child: Container(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
@@ -554,16 +557,14 @@ class _AccordionGroupState extends State<_AccordionGroup> {
                 ),
               ),
             ),
-            content: NakedAccordionContent(
-              child: Container(
-                padding: const EdgeInsets.all(16),
-                color: const Color(0xFFF9FAFB),
-                child: Text(
-                  item['content'] as String,
-                  style: TextStyle(
-                    color: Colors.grey.shade600,
-                    height: 1.5,
-                  ),
+            content: Container(
+              padding: const EdgeInsets.all(16),
+              color: const Color(0xFFF9FAFB),
+              child: Text(
+                item['content'] as String,
+                style: TextStyle(
+                  color: Colors.grey.shade600,
+                  height: 1.5,
                 ),
               ),
             ),
@@ -582,8 +583,9 @@ class _NestedAccordion extends StatefulWidget {
 }
 
 class _NestedAccordionState extends State<_NestedAccordion> {
-  final Set<String> _expandedParentItems = {};
-  final Map<String, Set<String>> _expandedChildItems = {};
+  final AccordionController<String> _parentController =
+      AccordionController<String>();
+  final Map<String, AccordionController<String>> _childControllers = {};
 
   final List<Map<String, dynamic>> items = [
     {
@@ -635,6 +637,16 @@ class _NestedAccordionState extends State<_NestedAccordion> {
   ];
 
   @override
+  void initState() {
+    super.initState();
+    // Initialize controllers for each parent item
+    for (final item in items) {
+      final String id = item['id'] as String;
+      _childControllers[id] = AccordionController<String>();
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
@@ -642,30 +654,23 @@ class _NestedAccordionState extends State<_NestedAccordion> {
         border: Border.all(color: Colors.grey.shade300),
         color: Colors.white,
       ),
-      child: NakedAccordion(
-        type: NakedAccordionType.multiple,
-        initialExpandedValues: _expandedParentItems.toList(),
-        onExpandedChange: (value, isExpanded) {
+      child: NakedAccordion<String>(
+        controller: _parentController,
+        onTriggerPressed: (value) {
           setState(() {
-            if (isExpanded) {
-              _expandedParentItems.add(value);
-            } else {
-              _expandedParentItems.remove(value);
-            }
+            _parentController.toggle(value);
           });
         },
         children: items.map((item) {
           final String id = item['id'] as String;
           final List<Map<String, dynamic>> children =
               (item['children'] as List<dynamic>).cast<Map<String, dynamic>>();
-          final bool isExpanded = _expandedParentItems.contains(id);
+          final bool isExpanded = _parentController.values.contains(id);
+          final childController = _childControllers[id]!;
 
-          // Initialize child expanded items set if not already created
-          _expandedChildItems.putIfAbsent(id, () => <String>{});
-
-          return NakedAccordionItem(
+          return NakedAccordionItem<String>(
             value: id,
-            trigger: NakedAccordionTrigger(
+            trigger: NakedAccordionTrigger<String>(
               child: Container(
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
@@ -700,123 +705,110 @@ class _NestedAccordionState extends State<_NestedAccordion> {
                 ),
               ),
             ),
-            content: NakedAccordionContent(
-              child: Container(
-                padding: const EdgeInsets.all(16),
-                color: const Color(0xFFEEF2FF), // indigo-50
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 16),
-                      child: Text(
-                        item['content'] as String,
-                        style: TextStyle(
-                          color: Colors.grey.shade700,
-                          height: 1.5,
+            content: Container(
+              padding: const EdgeInsets.all(16),
+              color: const Color(0xFFEEF2FF), // indigo-50
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 16),
+                    child: Text(
+                      item['content'] as String,
+                      style: TextStyle(
+                        color: Colors.grey.shade700,
+                        height: 1.5,
+                      ),
+                    ),
+                  ),
+                  // Child accordions
+                  Container(
+                    padding: const EdgeInsets.only(left: 16),
+                    decoration: const BoxDecoration(
+                      border: Border(
+                        left: BorderSide(
+                          color: Color(0xFFC7D2FE), // indigo-200
+                          width: 2,
                         ),
                       ),
                     ),
-                    // Child accordions
-                    Container(
-                      padding: const EdgeInsets.only(left: 16),
-                      decoration: const BoxDecoration(
-                        border: Border(
-                          left: BorderSide(
-                            color: Color(0xFFC7D2FE), // indigo-200
-                            width: 2,
-                          ),
-                        ),
-                      ),
-                      child: NakedAccordion(
-                        type: NakedAccordionType.multiple,
-                        initialExpandedValues:
-                            _expandedChildItems[id]!.toList(),
-                        onExpandedChange: (childId, isChildExpanded) {
-                          setState(() {
-                            if (isChildExpanded) {
-                              _expandedChildItems[id]!.add(childId);
-                            } else {
-                              _expandedChildItems[id]!.remove(childId);
-                            }
-                          });
-                        },
-                        children: children.map((child) {
-                          final String childId = child['id'] as String;
-                          final bool isChildExpanded =
-                              _expandedChildItems[id]!.contains(childId);
+                    child: NakedAccordion<String>(
+                      controller: childController,
+                      onTriggerPressed: (childId) {
+                        setState(() {
+                          childController.toggle(childId);
+                        });
+                      },
+                      children: children.map((child) {
+                        final String childId = child['id'] as String;
+                        final bool isChildExpanded =
+                            childController.values.contains(childId);
 
-                          return NakedAccordionItem(
-                            value: childId,
-                            trigger: NakedAccordionTrigger(
-                              child: Container(
-                                margin: const EdgeInsets.only(top: 8),
-                                padding: const EdgeInsets.all(12),
-                                decoration: BoxDecoration(
-                                  color: isChildExpanded
-                                      ? const Color(0xFFE0E7FF) // indigo-100
-                                      : Colors.white,
-                                  borderRadius: BorderRadius.circular(8),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.black.withOpacity(0.05),
-                                      blurRadius: 2,
-                                      offset: const Offset(0, 1),
-                                    ),
-                                  ],
-                                ),
-                                child: Row(
-                                  children: [
-                                    Expanded(
-                                      child: Text(
-                                        child['title'] as String,
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.w500,
-                                          color: isChildExpanded
-                                              ? const Color(
-                                                  0xFF4338CA) // indigo-700
-                                              : Colors.grey.shade700,
-                                        ),
+                        return NakedAccordionItem<String>(
+                          value: childId,
+                          trigger: NakedAccordionTrigger<String>(
+                            child: Container(
+                              margin: const EdgeInsets.only(top: 8),
+                              padding: const EdgeInsets.all(12),
+                              decoration: BoxDecoration(
+                                color: isChildExpanded
+                                    ? const Color(0xFFE0E7FF) // indigo-100
+                                    : Colors.white,
+                                borderRadius: BorderRadius.circular(8),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black.withOpacity(0.05),
+                                    blurRadius: 2,
+                                    offset: const Offset(0, 1),
+                                  ),
+                                ],
+                              ),
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    child: Text(
+                                      child['title'] as String,
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w500,
+                                        color: isChildExpanded
+                                            ? const Color(
+                                                0xFF4338CA) // indigo-700
+                                            : Colors.grey.shade700,
                                       ),
                                     ),
-                                    Icon(
-                                      isChildExpanded
-                                          ? Icons.remove
-                                          : Icons.add,
-                                      size: 18,
-                                      color: isChildExpanded
-                                          ? const Color(
-                                              0xFF4338CA) // indigo-700
-                                          : Colors.grey.shade500,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                            content: NakedAccordionContent(
-                              child: Container(
-                                padding: const EdgeInsets.all(12),
-                                margin: const EdgeInsets.only(top: 4),
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                                child: Text(
-                                  child['content'] as String,
-                                  style: TextStyle(
-                                    fontSize: 13,
-                                    color: Colors.grey.shade600,
-                                    height: 1.4,
                                   ),
-                                ),
+                                  Icon(
+                                    isChildExpanded ? Icons.remove : Icons.add,
+                                    size: 18,
+                                    color: isChildExpanded
+                                        ? const Color(0xFF4338CA) // indigo-700
+                                        : Colors.grey.shade500,
+                                  ),
+                                ],
                               ),
                             ),
-                          );
-                        }).toList(),
-                      ),
+                          ),
+                          content: Container(
+                            padding: const EdgeInsets.all(12),
+                            margin: const EdgeInsets.only(top: 4),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            child: Text(
+                              child['content'] as String,
+                              style: TextStyle(
+                                fontSize: 13,
+                                color: Colors.grey.shade600,
+                                height: 1.4,
+                              ),
+                            ),
+                          ),
+                        );
+                      }).toList(),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
           );
@@ -834,7 +826,7 @@ class _IconAccordion extends StatefulWidget {
 }
 
 class _IconAccordionState extends State<_IconAccordion> {
-  final Set<String> _expandedItems = {};
+  final Map<String, AccordionController<String>> _controllers = {};
 
   final List<Map<String, dynamic>> items = [
     {
@@ -872,13 +864,24 @@ class _IconAccordionState extends State<_IconAccordion> {
   ];
 
   @override
+  void initState() {
+    super.initState();
+    // Initialize a controller for each accordion item
+    for (final item in items) {
+      final String id = item['id'] as String;
+      _controllers[id] = AccordionController<String>();
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Column(
       children: items.map((item) {
         final String id = item['id'] as String;
         final IconData icon = item['icon'] as IconData;
         final Color iconColor = item['iconColor'] as Color;
-        final bool isExpanded = _expandedItems.contains(id);
+        final controller = _controllers[id]!;
+        final bool isExpanded = controller.values.contains(id);
 
         return Container(
           margin: const EdgeInsets.only(bottom: 8),
@@ -887,28 +890,17 @@ class _IconAccordionState extends State<_IconAccordion> {
             borderRadius: BorderRadius.circular(8),
             color: Colors.white,
           ),
-          child: NakedAccordion(
-            type: NakedAccordionType.single,
-            initialExpandedValues: isExpanded ? [id] : [],
-            onExpandedChange: (value, expanded) {
+          child: NakedAccordion<String>(
+            controller: controller,
+            onTriggerPressed: (value) {
               setState(() {
-                if (expanded) {
-                  _expandedItems.add(value);
-                } else {
-                  _expandedItems.remove(value);
-                }
+                controller.toggle(value);
               });
             },
             children: [
-              NakedAccordionItem(
+              NakedAccordionItem<String>(
                 value: id,
-                trigger: NakedAccordionTrigger(
-                  icon: Icon(
-                    isExpanded
-                        ? Icons.keyboard_arrow_up
-                        : Icons.keyboard_arrow_down,
-                    color: Colors.grey.shade500,
-                  ),
+                trigger: NakedAccordionTrigger<String>(
                   child: Padding(
                     padding: const EdgeInsets.all(16),
                     child: Row(
@@ -938,26 +930,30 @@ class _IconAccordionState extends State<_IconAccordion> {
                             ),
                           ),
                         ),
+                        Icon(
+                          isExpanded
+                              ? Icons.keyboard_arrow_up
+                              : Icons.keyboard_arrow_down,
+                          color: Colors.grey.shade500,
+                        ),
                       ],
                     ),
                   ),
                 ),
-                content: NakedAccordionContent(
-                  child: Container(
-                    padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
-                    decoration: BoxDecoration(
-                      border: Border(
-                        top: BorderSide(color: Colors.grey.shade200),
-                      ),
+                content: Container(
+                  padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+                  decoration: BoxDecoration(
+                    border: Border(
+                      top: BorderSide(color: Colors.grey.shade200),
                     ),
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 56),
-                      child: Text(
-                        item['content'] as String,
-                        style: TextStyle(
-                          color: Colors.grey.shade600,
-                          height: 1.5,
-                        ),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 56),
+                    child: Text(
+                      item['content'] as String,
+                      style: TextStyle(
+                        color: Colors.grey.shade600,
+                        height: 1.5,
                       ),
                     ),
                   ),
@@ -979,7 +975,7 @@ class _CardAccordion extends StatefulWidget {
 }
 
 class _CardAccordionState extends State<_CardAccordion> {
-  String? _expandedItem;
+  final AccordionController<String> _controller = AccordionController<String>();
 
   final List<Map<String, dynamic>> items = [
     {
@@ -1030,7 +1026,7 @@ class _CardAccordionState extends State<_CardAccordion> {
         final cardWidgets = items.map((item) {
           final String id = item['id'] as String;
           final List<Color> gradient = item['gradient'] as List<Color>;
-          final bool isExpanded = id == _expandedItem;
+          final bool isExpanded = _controller.values.contains(id);
 
           Widget cardContent = AnimatedContainer(
             duration: const Duration(milliseconds: 300),
@@ -1047,22 +1043,23 @@ class _CardAccordionState extends State<_CardAccordion> {
                 ),
               ],
             ),
-            child: NakedAccordion(
-              type: NakedAccordionType.single,
-              initialExpandedValues: isExpanded ? [id] : [],
-              onExpandedChange: (value, expanded) {
+            child: NakedAccordion<String>(
+              controller: _controller,
+              onTriggerPressed: (value) {
                 setState(() {
-                  _expandedItem = expanded ? id : null;
+                  if (_controller.values.contains(value)) {
+                    _controller.close(value);
+                  } else {
+                    // Single mode - close others when opening this one
+                    _controller.clear();
+                    _controller.open(value);
+                  }
                 });
               },
               children: [
-                NakedAccordionItem(
+                NakedAccordionItem<String>(
                   value: id,
-                  trigger: NakedAccordionTrigger(
-                    icon: Icon(
-                      isExpanded ? Icons.expand_less : Icons.expand_more,
-                      color: Colors.white.withOpacity(0.8),
-                    ),
+                  trigger: NakedAccordionTrigger<String>(
                     child: Container(
                       padding: const EdgeInsets.all(20),
                       decoration: BoxDecoration(
@@ -1112,61 +1109,71 @@ class _CardAccordionState extends State<_CardAccordion> {
                               ),
                             ],
                           ),
+                          const SizedBox(height: 8),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              Icon(
+                                isExpanded
+                                    ? Icons.expand_less
+                                    : Icons.expand_more,
+                                color: Colors.white.withOpacity(0.8),
+                              ),
+                            ],
+                          ),
                         ],
                       ),
                     ),
                   ),
-                  content: NakedAccordionContent(
-                    child: AnimatedContainer(
-                      duration: const Duration(milliseconds: 300),
-                      padding: const EdgeInsets.all(20),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: const BorderRadius.vertical(
-                          bottom: Radius.circular(16),
-                        ),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.05),
-                            blurRadius: 5,
-                            offset: const Offset(0, 3),
-                          ),
-                        ],
-                        border: Border.all(
-                          color: Colors.grey.shade100,
-                        ),
+                  content: AnimatedContainer(
+                    duration: const Duration(milliseconds: 300),
+                    padding: const EdgeInsets.all(20),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: const BorderRadius.vertical(
+                        bottom: Radius.circular(16),
                       ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            item['content'] as String,
-                            style: TextStyle(
-                              color: Colors.grey.shade700,
-                              height: 1.5,
-                            ),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.05),
+                          blurRadius: 5,
+                          offset: const Offset(0, 3),
+                        ),
+                      ],
+                      border: Border.all(
+                        color: Colors.grey.shade100,
+                      ),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          item['content'] as String,
+                          style: TextStyle(
+                            color: Colors.grey.shade700,
+                            height: 1.5,
                           ),
-                          const SizedBox(height: 16),
-                          SizedBox(
-                            width: double.infinity,
-                            child: ElevatedButton(
-                              onPressed: () {},
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: gradient[0],
-                                foregroundColor: Colors.white,
-                                padding: const EdgeInsets.symmetric(
-                                  vertical: 12,
-                                  horizontal: 24,
-                                ),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
+                        ),
+                        const SizedBox(height: 16),
+                        SizedBox(
+                          width: double.infinity,
+                          child: ElevatedButton(
+                            onPressed: () {},
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: gradient[0],
+                              foregroundColor: Colors.white,
+                              padding: const EdgeInsets.symmetric(
+                                vertical: 12,
+                                horizontal: 24,
                               ),
-                              child: const Text('Choose Plan'),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8),
+                              ),
                             ),
+                            child: const Text('Choose Plan'),
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ),
                 ),
