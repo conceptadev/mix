@@ -85,5 +85,5 @@ final class BoolUtility<T extends Attribute> extends ScalarUtility<T, bool> {
 /// This class extends [DoubleUtility] and serves as a base for more specific sizing utilities.
 abstract base class SizingUtility<T extends Attribute>
     extends ScalarUtility<T, double> {
-  SizingUtility(super.builder);
+  const SizingUtility(super.builder);
 }
