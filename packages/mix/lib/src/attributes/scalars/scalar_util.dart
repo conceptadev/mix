@@ -67,7 +67,7 @@ final class DurationUtility<T extends Attribute> extends MixUtility<T, Duration>
 }
 
 final class FontSizeUtility<T extends Attribute> extends SizingUtility<T> {
-  FontSizeUtility(super.builder);
+  const FontSizeUtility(super.builder);
 }
 
 @MixableUtility()
