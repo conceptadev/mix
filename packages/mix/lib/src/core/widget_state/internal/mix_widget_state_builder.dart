@@ -48,6 +48,19 @@ class MixWidgetStateModel extends InheritedModel<MixWidgetState> {
     required super.child,
   });
 
+  MixWidgetStateModel.controller({
+    super.key,
+    required super.child,
+    required MixWidgetStateController controller,
+  })  : disabled = controller.disabled,
+        hovered = controller.hovered,
+        focused = controller.focused,
+        pressed = controller.pressed,
+        dragged = controller.dragged,
+        selected = controller.selected,
+        error = controller.error,
+        longPressed = controller.longPressed;
+
   static MixWidgetStateModel? of(
     BuildContext context, [
     MixWidgetState? state,
