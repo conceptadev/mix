@@ -163,65 +163,56 @@ class _TextFieldExamplePageState extends State<TextFieldExamplePage> {
           const SizedBox(height: 16),
 
           // Gradient field using builder
-          Theme(
-            data: Theme.of(context).copyWith(
-              textSelectionTheme: const TextSelectionThemeData(
-                cursorColor: Colors.white,
-                selectionColor: Colors.white30,
-                selectionHandleColor: Colors.white70,
-              ),
-            ),
-            child: NakedTextField(
-              controller: _gradientController,
-              focusNode: _gradientFocus,
-              cursorColor: Colors.white,
-              onHoverState: (value) => setState(() => _gradientHovered = value),
-              builder: (context, child) {
-                return Container(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: _gradientFocused || _gradientHovered
-                          ? [Colors.purple, Colors.blue]
-                          : [Colors.blue, Colors.purple],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
+          NakedTextField(
+            controller: _gradientController,
+            focusNode: _gradientFocus,
+            cursorColor: Colors.white,
+            onHoverState: (value) => setState(() => _gradientHovered = value),
+            builder: (context, child) {
+              return Container(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: _gradientFocused || _gradientHovered
+                        ? [Colors.purple, Colors.blue]
+                        : [Colors.blue, Colors.purple],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                  borderRadius: BorderRadius.circular(12),
+                  boxShadow: _gradientFocused
+                      ? [
+                          BoxShadow(
+                            color: Colors.purple.withOpacity(0.5),
+                            blurRadius: 10,
+                            offset: const Offset(0, 4),
+                          )
+                        ]
+                      : null,
+                ),
+                child: Row(
+                  children: [
+                    // Star icon
+                    const Icon(
+                      Icons.star,
+                      color: Colors.white,
                     ),
-                    borderRadius: BorderRadius.circular(12),
-                    boxShadow: _gradientFocused
-                        ? [
-                            BoxShadow(
-                              color: Colors.purple.withOpacity(0.5),
-                              blurRadius: 10,
-                              offset: const Offset(0, 4),
-                            )
-                          ]
-                        : null,
-                  ),
-                  child: Row(
-                    children: [
-                      // Star icon
-                      const Icon(
-                        Icons.star,
-                        color: Colors.white,
-                      ),
-                      const SizedBox(width: 8),
+                    const SizedBox(width: 8),
 
-                      // TextField
-                      Expanded(child: child),
+                    // TextField
+                    Expanded(child: child),
 
-                      // Arrow icon
-                      const Icon(
-                        Icons.arrow_forward_ios,
-                        color: Colors.white,
-                        size: 16,
-                      ),
-                    ],
-                  ),
-                );
-              },
-            ),
+                    // Arrow icon
+                    const Icon(
+                      Icons.arrow_forward_ios,
+                      color: Colors.white,
+                      size: 16,
+                    ),
+                  ],
+                ),
+              );
+            },
           ),
           const SizedBox(height: 40),
 

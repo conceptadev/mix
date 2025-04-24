@@ -56,7 +56,7 @@ import 'package:naked/src/utilities/naked_focus_manager.dart';
 ///   }
 /// }
 /// ```
-class NakedButton extends StatelessWidget {
+class NakedButton extends StatefulWidget {
   /// The child widget to display.
   ///
   /// This widget should represent the visual appearance of the button.
@@ -149,66 +149,79 @@ class NakedButton extends StatelessWidget {
   });
 
   @override
+  State<NakedButton> createState() => _NakedButtonState();
+}
+
+class _NakedButtonState extends State<NakedButton> {
+  late final FocusNode effectiveFocusNode = widget.focusNode ?? FocusNode();
+
+  @override
+  void dispose() {
+    if (widget.focusNode == null) {
+      effectiveFocusNode.dispose();
+    }
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final isInteractive = enabled && !loading && onPressed != null;
-    final effectiveFocusNode = focusNode ?? FocusNode();
+    final isInteractive =
+        widget.enabled && !widget.loading && widget.onPressed != null;
 
     void handleTap() {
       if (isInteractive) {
-        if (enableHapticFeedback) {
+        if (widget.enableHapticFeedback) {
           HapticFeedback.lightImpact();
         }
-        onPressed?.call();
+        widget.onPressed?.call();
       }
     }
 
     return Semantics(
       button: true,
       enabled: isInteractive,
-      label: semanticLabel,
-      hint: loading ? 'Loading' : null,
+      label: widget.semanticLabel,
+      hint: widget.loading ? 'Loading' : null,
       onTap: isInteractive ? handleTap : null,
       excludeSemantics: true,
-      child: NakedFocusManager(
-        trapFocus: false, // Button is a standalone component
-        restoreFocus: true, // Good UX to restore focus when removed
-        autofocus: false, // Let the consumer control autofocus
-        onEscapePressed: onEscapePressed,
-        child: Focus(
-          focusNode: effectiveFocusNode,
-          onFocusChange: onFocusState,
-          onKeyEvent: (node, event) {
-            if (!isInteractive) return KeyEventResult.ignored;
+      child: Focus(
+        focusNode: effectiveFocusNode,
+        onFocusChange: widget.onFocusState,
+        onKeyEvent: (node, event) {
+          print('onKeyEvent: $event');
+          if (!isInteractive) return KeyEventResult.ignored;
 
-            if (event is KeyDownEvent &&
-                (event.logicalKey == LogicalKeyboardKey.space ||
-                    event.logicalKey == LogicalKeyboardKey.enter)) {
-              onPressedState?.call(true);
-              return KeyEventResult.handled;
-            } else if (event is KeyUpEvent &&
-                (event.logicalKey == LogicalKeyboardKey.space ||
-                    event.logicalKey == LogicalKeyboardKey.enter)) {
-              onPressedState?.call(false);
-              handleTap();
-              return KeyEventResult.handled;
-            }
-            return KeyEventResult.ignored;
-          },
-          child: MouseRegion(
-            cursor: isInteractive ? cursor : SystemMouseCursors.forbidden,
-            onEnter: isInteractive ? (_) => onHoverState?.call(true) : null,
-            onExit: isInteractive ? (_) => onHoverState?.call(false) : null,
-            child: GestureDetector(
-              behavior: HitTestBehavior.opaque,
-              onTapDown:
-                  isInteractive ? (_) => onPressedState?.call(true) : null,
-              onTapUp:
-                  isInteractive ? (_) => onPressedState?.call(false) : null,
-              onTapCancel:
-                  isInteractive ? () => onPressedState?.call(false) : null,
-              onTap: isInteractive ? handleTap : null,
-              child: child,
-            ),
+          if (event is KeyDownEvent &&
+              (event.logicalKey == LogicalKeyboardKey.space ||
+                  event.logicalKey == LogicalKeyboardKey.enter)) {
+            widget.onPressedState?.call(true);
+            return KeyEventResult.handled;
+          } else if (event is KeyUpEvent &&
+              (event.logicalKey == LogicalKeyboardKey.space ||
+                  event.logicalKey == LogicalKeyboardKey.enter)) {
+            widget.onPressedState?.call(false);
+            handleTap();
+            return KeyEventResult.handled;
+          }
+          return KeyEventResult.ignored;
+        },
+        child: MouseRegion(
+          cursor: isInteractive ? widget.cursor : SystemMouseCursors.forbidden,
+          onEnter:
+              isInteractive ? (_) => widget.onHoverState?.call(true) : null,
+          onExit:
+              isInteractive ? (_) => widget.onHoverState?.call(false) : null,
+          child: GestureDetector(
+            behavior: HitTestBehavior.opaque,
+            onTapDown:
+                isInteractive ? (_) => widget.onPressedState?.call(true) : null,
+            onTapUp: isInteractive
+                ? (_) => widget.onPressedState?.call(false)
+                : null,
+            onTapCancel:
+                isInteractive ? () => widget.onPressedState?.call(false) : null,
+            onTap: isInteractive ? handleTap : null,
+            child: widget.child,
           ),
         ),
       ),
