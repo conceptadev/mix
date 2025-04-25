@@ -91,98 +91,6 @@ class SpecBuilder extends StatelessWidget {
   final List<Type> orderOfModifiers;
 
   // Method to apply modifiers to the child widget
-  // Widget _applyModifiers(MixData mix, Widget child) {
-  //   // Get the list of WidgetModifierAttribute from the mix
-  //   final modifiers = mix
-  //       .whereType<WidgetModifierSpecAttribute>()
-  //       .map((e) => e.resolve(mix))
-  //       .toList();
-
-  //   // If the mix is animated, use RenderAnimatedModifiers, otherwise use RenderModifiers
-  //   return mix.isAnimated
-  //       ? RenderAnimatedModifiers(
-  //           modifiers: modifiers,
-  //           duration: mix.animation!.duration,
-  //           mix: mix,
-  //           orderOfModifiers: orderOfModifiers,
-  //           curve: mix.animation!.curve,
-  //           child: child,
-  //         )
-  //       : RenderModifiers(
-  //           modifiers: modifiers,
-  //           mix: mix,
-  //           orderOfModifiers: orderOfModifiers,
-  //           child: child,
-  //         );
-  // }
-
-  // Method to build the mixed child widget
-  // Widget _buildMixedChild(BuildContext context) {
-  //   // Get the inherited mix if inherit flag is true, otherwise null
-  //   final inheritedMix = inherit ? Mix.maybeOfInherited(context) : null;
-  //   // Get the mix from the style
-  //   final mix = style.of(context);
-  //   // Merge the inherited mix with the current mix, or use the current mix if no inherited mix
-  //   final mergedMix = inheritedMix?.merge(mix) ?? mix;
-
-  //   // Return a Mix widget with the merged mix and the child widget with modifiers applied
-  //   return Mix(
-  //     data: mergedMix,
-  //     child: _applyModifiers(mergedMix, Builder(builder: builder)),
-  //   );
-  // }
-
-  @override
-  Widget build(BuildContext context) {
-    Widget current = Builder(
-      builder: (context) => MixComposer(
-        inherit: inherit,
-        style: style,
-        orderOfModifiers: orderOfModifiers,
-        builder: builder,
-      ),
-    );
-    // Check if the widget needs widget state and if it's not available in the context
-    final needsWidgetState =
-        _hasWidgetStateVariant && MixWidgetState.of(context) == null;
-
-    if (needsWidgetState || controller != null) {
-      current = Interactable(controller: controller, child: current);
-    }
-
-    // Otherwise, directly build the mixed child widget
-    return current;
-  }
-}
-// Widget _buildMixedChild(BuildContext context) {
-//   // Get the inherited mix if inherit flag is true, otherwise null
-//   final inheritedMix = inherit ? Mix.maybeOfInherited(context) : null;
-//   // Get the mix from the style
-//   final mix = style.of(context);
-//   // Merge the inherited mix with the current mix, or use the current mix if no inherited mix
-//   final mergedMix = inheritedMix?.merge(mix) ?? mix;
-
-//   // Return a Mix widget with the merged mix and the child widget with modifiers applied
-//   return Mix(
-//     data: mergedMix,
-//     child: _applyModifiers(mergedMix, Builder(builder: builder)),
-//   );
-// }
-
-class MixComposer extends StatelessWidget {
-  const MixComposer({
-    super.key,
-    this.inherit = false,
-    required this.style,
-    this.orderOfModifiers = const [],
-    required this.builder,
-  });
-
-  final bool inherit;
-  final Style style;
-  final List<Type> orderOfModifiers;
-  final Widget Function(BuildContext) builder;
-
   Widget _applyModifiers(MixData mix, Widget child) {
     // Get the list of WidgetModifierAttribute from the mix
     final modifiers = mix
@@ -208,15 +116,34 @@ class MixComposer extends StatelessWidget {
           );
   }
 
-  @override
-  Widget build(BuildContext context) {
+  // Method to build the mixed child widget
+  Widget _buildMixedChild(BuildContext context) {
+    // Get the inherited mix if inherit flag is true, otherwise null
     final inheritedMix = inherit ? Mix.maybeOfInherited(context) : null;
+    // Get the mix from the style
     final mix = style.of(context);
+    // Merge the inherited mix with the current mix, or use the current mix if no inherited mix
     final mergedMix = inheritedMix?.merge(mix) ?? mix;
 
+    // Return a Mix widget with the merged mix and the child widget with modifiers applied
     return Mix(
       data: mergedMix,
       child: _applyModifiers(mergedMix, Builder(builder: builder)),
     );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    Widget current = Builder(builder: _buildMixedChild);
+    // Check if the widget needs widget state and if it's not available in the context
+    final needsWidgetState =
+        _hasWidgetStateVariant && MixWidgetState.of(context) == null;
+
+    if (needsWidgetState || controller != null) {
+      current = Interactable(controller: controller, child: current);
+    }
+
+    // Otherwise, directly build the mixed child widget
+    return current;
   }
 }
