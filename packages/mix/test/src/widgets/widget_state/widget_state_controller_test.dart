@@ -49,7 +49,6 @@ void main() {
       expect(controller.pressed, isFalse);
       expect(controller.dragged, isFalse);
       expect(controller.selected, isFalse);
-      expect(controller.longPressed, isFalse);
     });
 
     test('update individual state', () {
@@ -72,9 +71,6 @@ void main() {
 
       controller.selected = true;
       expect(controller.selected, isTrue);
-
-      controller.longPressed = true;
-      expect(controller.longPressed, isTrue);
     });
 
     test('batch update states', () {
@@ -92,7 +88,6 @@ void main() {
       expect(controller.pressed, isFalse);
       expect(controller.dragged, isFalse);
       expect(controller.selected, isFalse);
-      expect(controller.longPressed, isFalse);
     });
 
     test('notifyListeners called on state change', () {
@@ -125,7 +120,6 @@ void main() {
       controller.pressed = true;
       controller.dragged = true;
       controller.selected = true;
-      controller.longPressed = true;
       controller.error = true;
 
       await tester.pumpWidget(
@@ -137,7 +131,6 @@ void main() {
             pressed: controller.pressed,
             dragged: controller.dragged,
             selected: controller.selected,
-            longPressed: controller.longPressed,
             error: controller.error,
             child: Container(),
           ),
@@ -152,7 +145,6 @@ void main() {
       expect(foundModel.pressed, isTrue);
       expect(foundModel.dragged, isTrue);
       expect(foundModel.selected, isTrue);
-      expect(foundModel.longPressed, isTrue);
       expect(foundModel.error, isTrue);
     });
 
@@ -166,7 +158,6 @@ void main() {
             pressed: false,
             dragged: false,
             selected: false,
-            longPressed: false,
             error: false,
             child: Builder(
               builder: (context) {
@@ -200,7 +191,6 @@ void main() {
         pressed: false,
         dragged: false,
         selected: false,
-        longPressed: false,
         error: false,
         child: Container(),
       );
@@ -211,7 +201,6 @@ void main() {
         pressed: false,
         dragged: false,
         selected: false,
-        longPressed: false,
         error: false,
         child: Container(),
       );
@@ -227,7 +216,6 @@ void main() {
         pressed: false,
         dragged: false,
         selected: false,
-        longPressed: false,
         error: false,
         child: Container(),
       );
@@ -238,7 +226,6 @@ void main() {
         pressed: false,
         dragged: false,
         selected: false,
-        longPressed: false,
         error: false,
         child: Container(),
       );
@@ -259,7 +246,7 @@ void main() {
   ) async {
     bool hovered = false;
     bool pressed = false;
-    bool longPressed = false;
+
     bool focused = false;
 
     await tester.pumpWidget(
@@ -271,7 +258,6 @@ void main() {
             controller.disabled = false;
             controller.hovered = hovered;
             controller.pressed = pressed;
-            controller.longPressed = longPressed;
             controller.focused = focused;
 
             return Column(
@@ -283,7 +269,6 @@ void main() {
                       children: [
                         Text('Disabled: ${controller.disabled}'),
                         Text('Hovered: ${controller.hovered}'),
-                        Text('LongPressed: ${controller.longPressed}'),
                         Text('Pressed: ${controller.pressed}'),
                       ],
                     );
@@ -294,7 +279,6 @@ void main() {
                     setState(() {
                       hovered = !hovered;
                       pressed = !pressed;
-                      longPressed = !longPressed;
                       focused = !focused;
                     });
                   },
@@ -310,7 +294,6 @@ void main() {
     expect(find.text('Disabled: false'), findsOneWidget);
     expect(find.text('Hovered: false'), findsOneWidget);
     expect(find.text('Pressed: false'), findsOneWidget);
-    expect(find.text('LongPressed: false'), findsOneWidget);
     expect(find.text('Focused: false'), findsNothing);
 
     await tester.tap(find.text('Update State'));
@@ -319,7 +302,6 @@ void main() {
     expect(find.text('Disabled: false'), findsOneWidget);
     expect(find.text('Hovered: true'), findsOneWidget);
     expect(find.text('Pressed: true'), findsOneWidget);
-    expect(find.text('LongPressed: true'), findsOneWidget);
     expect(find.text('Focused: true'), findsNothing);
   });
 
@@ -351,14 +333,9 @@ void main() {
       return TrackRebuildWidget.findState(tester, 'pressed');
     }
 
-    TrackRebuildWidgetState getLongPressed() {
-      return TrackRebuildWidget.findState(tester, 'longPressed');
-    }
-
     var disabled = getDisabled();
     var hovered = getHovered();
     var pressed = getPressed();
-    var longPressed = getLongPressed();
 
     expect(disabled.buildCount, 1,
         reason: 'Disabled state should not have rebuilt');
@@ -372,10 +349,6 @@ void main() {
         reason: 'Pressed state should not have rebuilt');
     expect(pressed.state, false,
         reason: 'Pressed state should initially be false');
-    expect(longPressed.buildCount, 1,
-        reason: 'Long pressed state should not have rebuilt');
-    expect(longPressed.state, false,
-        reason: 'Long pressed state should initially be false');
 
     controller.hovered = true;
     await tester.pump();
@@ -383,7 +356,6 @@ void main() {
     disabled = getDisabled();
     hovered = getHovered();
     pressed = getPressed();
-    longPressed = getLongPressed();
 
     expect(disabled.buildCount, 1,
         reason: 'Disabled state should not rebuild when hovered changes');
@@ -397,10 +369,6 @@ void main() {
         reason: 'Pressed state should not rebuild when hovered changes');
     expect(pressed.state, false,
         reason: 'Pressed state should remain false when hovered changes');
-    expect(longPressed.buildCount, 1,
-        reason: 'Long pressed state should not rebuild when hovered changes');
-    expect(longPressed.state, false,
-        reason: 'Long pressed state should remain false when hovered changes');
 
     controller.pressed = true;
     await tester.pump();
@@ -408,7 +376,6 @@ void main() {
     disabled = getDisabled();
     hovered = getHovered();
     pressed = getPressed();
-    longPressed = getLongPressed();
 
     expect(disabled.buildCount, 1,
         reason: 'Disabled state should not rebuild when pressed changes');
@@ -422,18 +389,12 @@ void main() {
         reason: 'Pressed state should rebuild when set to true');
     expect(pressed.state, true,
         reason: 'Pressed state should be true after being set');
-    expect(longPressed.buildCount, 1,
-        reason: 'Long pressed state should not rebuild when pressed changes');
-    expect(longPressed.state, false,
-        reason: 'Long pressed state should remain false when pressed changes');
 
-    controller.longPressed = true;
     await tester.pump();
 
     disabled = getDisabled();
     hovered = getHovered();
     pressed = getPressed();
-    longPressed = getLongPressed();
 
     expect(disabled.buildCount, 1,
         reason: 'Disabled state should not rebuild when long pressed changes');
@@ -447,10 +408,6 @@ void main() {
         reason: 'Pressed state should not rebuild when long pressed changes');
     expect(pressed.state, true,
         reason: 'Pressed state should remain true when long pressed changes');
-    expect(longPressed.buildCount, 2,
-        reason: 'Long pressed state should rebuild when set to true');
-    expect(longPressed.state, true,
-        reason: 'Long pressed state should be true after being set');
 
     controller.disabled = true;
 
@@ -459,7 +416,6 @@ void main() {
     disabled = getDisabled();
     hovered = getHovered();
     pressed = getPressed();
-    longPressed = getLongPressed();
 
     expect(disabled.buildCount, 2,
         reason: 'Disabled state should rebuild when set to true');
@@ -473,10 +429,6 @@ void main() {
         reason: 'Pressed state should not rebuild when disabled changes');
     expect(pressed.state, true,
         reason: 'Pressed state should remain true when disabled changes');
-    expect(longPressed.buildCount, 2,
-        reason: 'Long pressed state should not rebuild when disabled changes');
-    expect(longPressed.state, true,
-        reason: 'Long pressed state should remain true when disabled changes');
   });
 }
 
@@ -514,10 +466,6 @@ class _PressableStateTestWidgetState extends State<PressableStateTestWidget> {
           TrackRebuildWidget(
             text: 'pressed',
             stateBuilder: _widgetStateOf(MixWidgetState.pressed),
-          ),
-          TrackRebuildWidget(
-            text: 'longPressed',
-            stateBuilder: _widgetStateOf(MixWidgetState.longPressed),
           ),
         ],
       ),

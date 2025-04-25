@@ -2,6 +2,7 @@ import 'package:flutter/widgets.dart';
 
 import '../core/factory/style_mix.dart';
 import '../core/variant.dart';
+import '../core/widget_state/internal/gesture_mix_state.dart';
 import '../core/widget_state/internal/mouse_region_mix_state.dart';
 import '../core/widget_state/widget_state_controller.dart';
 import 'context_variant.dart';
@@ -65,8 +66,16 @@ class OnPressVariant extends _ToggleMixStateVariant {
 }
 
 /// Applies styles when the widget is long pressed.
-class OnLongPressVariant extends _ToggleMixStateVariant {
-  const OnLongPressVariant() : super(MixWidgetState.longPressed);
+class OnLongPressVariant extends ContextVariant {
+  @override
+  final priority = VariantPriority.highest;
+
+  const OnLongPressVariant();
+
+  @override
+  bool when(BuildContext context) {
+    return LongPressInheritedState.of(context).longPressed;
+  }
 }
 
 /// Applies styles when the widget is disabled.

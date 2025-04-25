@@ -78,8 +78,10 @@ void main() {
       final context = tester.element(find.byKey(key));
 
       expect(onLongPressCalled, isTrue);
-      expect(MixWidgetState.hasStateOf(context, MixWidgetState.longPressed),
-          isTrue);
+      expect(
+        LongPressInheritedState.of(context).longPressed,
+        isTrue,
+      );
     });
 
     testWidgets('should update press state after delay when tapped',

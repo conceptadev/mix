@@ -26,7 +26,6 @@ class MixWidgetStateBuilder extends StatelessWidget {
           dragged: controller.dragged,
           selected: controller.selected,
           error: controller.error,
-          longPressed: controller.longPressed,
           child: Builder(builder: builder),
         );
       },
@@ -44,7 +43,6 @@ class MixWidgetStateModel extends InheritedModel<MixWidgetState> {
     required this.dragged,
     required this.selected,
     required this.error,
-    required this.longPressed,
     required super.child,
   });
 
@@ -71,7 +69,6 @@ class MixWidgetStateModel extends InheritedModel<MixWidgetState> {
       MixWidgetState.pressed => model.pressed,
       MixWidgetState.dragged => model.dragged,
       MixWidgetState.selected => model.selected,
-      MixWidgetState.longPressed => model.longPressed,
       MixWidgetState.error => model.error,
     };
   }
@@ -80,7 +77,6 @@ class MixWidgetStateModel extends InheritedModel<MixWidgetState> {
   final bool hovered;
   final bool focused;
   final bool pressed;
-  final bool longPressed;
   final bool dragged;
   final bool selected;
   final bool error;
@@ -93,7 +89,6 @@ class MixWidgetStateModel extends InheritedModel<MixWidgetState> {
         oldWidget.pressed != pressed ||
         oldWidget.dragged != dragged ||
         oldWidget.selected != selected ||
-        oldWidget.longPressed != longPressed ||
         oldWidget.error != error;
   }
 
@@ -114,8 +109,6 @@ class MixWidgetStateModel extends InheritedModel<MixWidgetState> {
             dependencies.contains(MixWidgetState.dragged) ||
         oldWidget.selected != selected &&
             dependencies.contains(MixWidgetState.selected) ||
-        oldWidget.longPressed != longPressed &&
-            dependencies.contains(MixWidgetState.longPressed) ||
         oldWidget.error != error && dependencies.contains(MixWidgetState.error);
   }
 }
