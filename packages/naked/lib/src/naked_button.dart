@@ -188,19 +188,18 @@ class _NakedButtonState extends State<NakedButton> {
         focusNode: effectiveFocusNode,
         onFocusChange: widget.onFocusState,
         onKeyEvent: (node, event) {
-          print('onKeyEvent: $event');
           if (!isInteractive) return KeyEventResult.ignored;
 
-          if (event is KeyDownEvent &&
-              (event.logicalKey == LogicalKeyboardKey.space ||
-                  event.logicalKey == LogicalKeyboardKey.enter)) {
+          if (event is KeyDownEvent && event.logicalKey.isSpaceOrEnter) {
             widget.onPressedState?.call(true);
             return KeyEventResult.handled;
-          } else if (event is KeyUpEvent &&
-              (event.logicalKey == LogicalKeyboardKey.space ||
-                  event.logicalKey == LogicalKeyboardKey.enter)) {
+          } else if (event is KeyUpEvent && event.logicalKey.isSpaceOrEnter) {
             widget.onPressedState?.call(false);
             handleTap();
+            return KeyEventResult.handled;
+          } else if (event is KeyUpEvent &&
+              event.logicalKey == LogicalKeyboardKey.escape) {
+            widget.onEscapePressed?.call();
             return KeyEventResult.handled;
           }
           return KeyEventResult.ignored;
@@ -227,4 +226,9 @@ class _NakedButtonState extends State<NakedButton> {
       ),
     );
   }
+}
+
+extension LogicalKeyboardKeyExtension on LogicalKeyboardKey {
+  bool get isSpaceOrEnter =>
+      this == LogicalKeyboardKey.space || this == LogicalKeyboardKey.enter;
 }
