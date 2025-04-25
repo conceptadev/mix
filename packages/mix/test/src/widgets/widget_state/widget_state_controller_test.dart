@@ -77,9 +77,9 @@ void main() {
       final controller = MixWidgetStateController();
 
       controller.batch([
-        (MixWidgetState.disabled, true),
-        (MixWidgetState.hovered, true),
-        (MixWidgetState.focused, true),
+        (WidgetState.disabled, true),
+        (WidgetState.hovered, true),
+        (WidgetState.focused, true),
       ]);
 
       expect(controller.disabled, isTrue);
@@ -100,8 +100,8 @@ void main() {
       expect(notifyListenersCallCount, 1);
 
       controller.batch([
-        (MixWidgetState.hovered, true),
-        (MixWidgetState.focused, true),
+        (WidgetState.hovered, true),
+        (WidgetState.focused, true),
       ]);
       expect(notifyListenersCallCount, 2);
 
@@ -164,14 +164,14 @@ void main() {
                 expect(
                   MixWidgetStateModel.hasStateOf(
                     context,
-                    MixWidgetState.disabled,
+                    WidgetState.disabled,
                   ),
                   isTrue,
                 );
                 expect(
                   MixWidgetStateModel.hasStateOf(
                     context,
-                    MixWidgetState.hovered,
+                    WidgetState.hovered,
                   ),
                   isFalse,
                 );
@@ -232,11 +232,10 @@ void main() {
 
       expect(
           newModel
-              .updateShouldNotifyDependent(oldModel, {MixWidgetState.disabled}),
+              .updateShouldNotifyDependent(oldModel, {WidgetState.disabled}),
           isTrue);
       expect(
-          newModel
-              .updateShouldNotifyDependent(oldModel, {MixWidgetState.hovered}),
+          newModel.updateShouldNotifyDependent(oldModel, {WidgetState.hovered}),
           isFalse);
     });
   });
@@ -442,7 +441,7 @@ class PressableStateTestWidget extends StatefulWidget {
 }
 
 class _PressableStateTestWidgetState extends State<PressableStateTestWidget> {
-  bool Function(BuildContext) _widgetStateOf(MixWidgetState state) {
+  bool Function(BuildContext) _widgetStateOf(WidgetState state) {
     return (BuildContext context) {
       return MixWidgetState.hasStateOf(context, state);
     };
@@ -457,15 +456,15 @@ class _PressableStateTestWidgetState extends State<PressableStateTestWidget> {
         children: [
           TrackRebuildWidget(
             text: 'disabled',
-            stateBuilder: _widgetStateOf(MixWidgetState.disabled),
+            stateBuilder: _widgetStateOf(WidgetState.disabled),
           ),
           TrackRebuildWidget(
             text: 'hovered',
-            stateBuilder: _widgetStateOf(MixWidgetState.hovered),
+            stateBuilder: _widgetStateOf(WidgetState.hovered),
           ),
           TrackRebuildWidget(
             text: 'pressed',
-            stateBuilder: _widgetStateOf(MixWidgetState.pressed),
+            stateBuilder: _widgetStateOf(WidgetState.pressed),
           ),
         ],
       ),

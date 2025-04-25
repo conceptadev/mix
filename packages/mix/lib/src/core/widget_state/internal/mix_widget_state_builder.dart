@@ -33,7 +33,7 @@ class MixWidgetStateBuilder extends StatelessWidget {
   }
 }
 
-class MixWidgetStateModel extends InheritedModel<MixWidgetState> {
+class MixWidgetStateModel extends InheritedModel<WidgetState> {
   const MixWidgetStateModel({
     super.key,
     required this.disabled,
@@ -46,30 +46,28 @@ class MixWidgetStateModel extends InheritedModel<MixWidgetState> {
     required super.child,
   });
 
-  static MixWidgetStateModel? of(
-    BuildContext context, [
-    MixWidgetState? state,
-  ]) {
+  static MixWidgetStateModel? of(BuildContext context, [WidgetState? state]) {
     return InheritedModel.inheritFrom<MixWidgetStateModel>(
       context,
       aspect: state,
     );
   }
 
-  static bool hasStateOf(BuildContext context, MixWidgetState state) {
+  static bool hasStateOf(BuildContext context, WidgetState state) {
     final model = of(context, state);
     if (model == null) {
       return false;
     }
 
     return switch (state) {
-      MixWidgetState.disabled => model.disabled,
-      MixWidgetState.hovered => model.hovered,
-      MixWidgetState.focused => model.focused,
-      MixWidgetState.pressed => model.pressed,
-      MixWidgetState.dragged => model.dragged,
-      MixWidgetState.selected => model.selected,
-      MixWidgetState.error => model.error,
+      WidgetState.disabled => model.disabled,
+      WidgetState.hovered => model.hovered,
+      WidgetState.focused => model.focused,
+      WidgetState.pressed => model.pressed,
+      WidgetState.dragged => model.dragged,
+      WidgetState.selected => model.selected,
+      WidgetState.error => model.error,
+      _ => false,
     };
   }
 
@@ -95,20 +93,20 @@ class MixWidgetStateModel extends InheritedModel<MixWidgetState> {
   @override
   bool updateShouldNotifyDependent(
     MixWidgetStateModel oldWidget,
-    Set<MixWidgetState> dependencies,
+    Set<WidgetState> dependencies,
   ) {
     return oldWidget.disabled != disabled &&
-            dependencies.contains(MixWidgetState.disabled) ||
+            dependencies.contains(WidgetState.disabled) ||
         oldWidget.hovered != hovered &&
-            dependencies.contains(MixWidgetState.hovered) ||
+            dependencies.contains(WidgetState.hovered) ||
         oldWidget.focused != focused &&
-            dependencies.contains(MixWidgetState.focused) ||
+            dependencies.contains(WidgetState.focused) ||
         oldWidget.pressed != pressed &&
-            dependencies.contains(MixWidgetState.pressed) ||
+            dependencies.contains(WidgetState.pressed) ||
         oldWidget.dragged != dragged &&
-            dependencies.contains(MixWidgetState.dragged) ||
+            dependencies.contains(WidgetState.dragged) ||
         oldWidget.selected != selected &&
-            dependencies.contains(MixWidgetState.selected) ||
-        oldWidget.error != error && dependencies.contains(MixWidgetState.error);
+            dependencies.contains(WidgetState.selected) ||
+        oldWidget.error != error && dependencies.contains(WidgetState.error);
   }
 }
