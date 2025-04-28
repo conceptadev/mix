@@ -45,7 +45,7 @@ mixin HasDefaultValue<Value> {
 abstract class DtoUtility<A extends Attribute, D extends Mixable<Value>, Value>
     extends MixUtility<A, D> {
   final D Function(Value) _fromValue;
-  DtoUtility(super.builder, {required D Function(Value) valueToDto})
+  const DtoUtility(super.builder, {required D Function(Value) valueToDto})
       : _fromValue = valueToDto;
 
   A only();

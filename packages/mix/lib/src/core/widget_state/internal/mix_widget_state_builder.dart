@@ -67,7 +67,7 @@ class MixWidgetStateModel extends InheritedModel<WidgetState> {
       WidgetState.dragged => model.dragged,
       WidgetState.selected => model.selected,
       WidgetState.error => model.error,
-      _ => false,
+      WidgetState.scrolledUnder => false,
     };
   }
 
