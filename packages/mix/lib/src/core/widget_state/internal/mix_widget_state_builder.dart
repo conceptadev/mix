@@ -50,13 +50,8 @@ class MixWidgetStateModel extends InheritedModel<WidgetState> {
         pressed = controller.pressed,
         dragged = controller.dragged,
         selected = controller.selected,
-        error = controller.error,
-        longPressed = controller.longPressed;
+        error = controller.error;
 
-  static MixWidgetStateModel? of(
-    BuildContext context, [
-    MixWidgetState? state,
-  ]) {
   static MixWidgetStateModel? of(BuildContext context, [WidgetState? state]) {
     return InheritedModel.inheritFrom<MixWidgetStateModel>(
       context,
