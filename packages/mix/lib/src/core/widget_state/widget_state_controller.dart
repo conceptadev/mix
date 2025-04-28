@@ -2,16 +2,7 @@ import "package:flutter/material.dart";
 
 import "internal/mix_widget_state_builder.dart";
 
-enum MixWidgetState {
-  hovered,
-  focused,
-  pressed,
-  dragged,
-  selected,
-  disabled,
-  error,
-  longPressed;
-
+extension MixWidgetState on WidgetState {
   static const of = MixWidgetStateModel.of;
   static const hasStateOf = MixWidgetStateModel.hasStateOf;
 }
@@ -19,8 +10,8 @@ enum MixWidgetState {
 /// A controller that manages the state of a widget.
 ///
 /// [MixWidgetStateController] tracks various states of a widget, such as
-/// [disabled], [hovered], [focused], [pressed], [dragged], [selected], and
-/// [longPressed]. These states are stored in a [Set] called [value].
+/// [disabled], [hovered], [focused], [pressed], [dragged], [selected].
+/// These states are stored in a [Set] called [value].
 ///
 /// The controller extends [ChangeNotifier], allowing listeners to be notified
 /// when the state of the widget changes.
@@ -30,62 +21,56 @@ class MixWidgetStateController extends ChangeNotifier {
   /// This is annotated with `@visibleForTesting` to indicate that it is
   /// accessible for testing purposes.
   @visibleForTesting
-  Set<MixWidgetState> value = {};
+  Set<WidgetState> value = {};
 
   /// Whether the widget is currently in the disabled state.
-  bool get disabled => value.contains(MixWidgetState.disabled);
+  bool get disabled => value.contains(WidgetState.disabled);
 
   /// Whether the widget is currently being hovered over.
-  bool get hovered => value.contains(MixWidgetState.hovered);
+  bool get hovered => value.contains(WidgetState.hovered);
 
   /// Whether the widget currently has focus.
-  bool get focused => value.contains(MixWidgetState.focused);
+  bool get focused => value.contains(WidgetState.focused);
 
   /// Whether the widget is currently being pressed.
-  bool get pressed => value.contains(MixWidgetState.pressed);
+  bool get pressed => value.contains(WidgetState.pressed);
 
   /// Whether the widget is currently being dragged.
-  bool get dragged => value.contains(MixWidgetState.dragged);
+  bool get dragged => value.contains(WidgetState.dragged);
 
   /// Whether the widget is currently in the selected state.
-  bool get selected => value.contains(MixWidgetState.selected);
+  bool get selected => value.contains(WidgetState.selected);
 
   /// Whether the widget is currently in the error state.
-  bool get error => value.contains(MixWidgetState.error);
-
-  /// Whether the widget is currently being long-pressed.
-  bool get longPressed => value.contains(MixWidgetState.longPressed);
+  bool get error => value.contains(WidgetState.error);
 
   /// Sets whether the widget is in the disabled state.
-  set disabled(bool value) => update(MixWidgetState.disabled, value);
+  set disabled(bool value) => update(WidgetState.disabled, value);
 
   /// Sets whether the widget is being hovered over.
-  set hovered(bool value) => update(MixWidgetState.hovered, value);
+  set hovered(bool value) => update(WidgetState.hovered, value);
 
   /// Sets whether the widget has focus.
-  set focused(bool value) => update(MixWidgetState.focused, value);
+  set focused(bool value) => update(WidgetState.focused, value);
 
   /// Sets whether the widget is being pressed.
-  set pressed(bool value) => update(MixWidgetState.pressed, value);
+  set pressed(bool value) => update(WidgetState.pressed, value);
 
   /// Sets whether the widget is being dragged.
-  set dragged(bool value) => update(MixWidgetState.dragged, value);
+  set dragged(bool value) => update(WidgetState.dragged, value);
 
   /// Sets whether the widget is in the selected state.
-  set selected(bool value) => update(MixWidgetState.selected, value);
+  set selected(bool value) => update(WidgetState.selected, value);
 
   /// Sets whether the widget is in the selected state.
-  set error(bool value) => update(MixWidgetState.error, value);
-
-  /// Sets whether the widget is being long-pressed.
-  set longPressed(bool value) => update(MixWidgetState.longPressed, value);
+  set error(bool value) => update(WidgetState.error, value);
 
   /// Updates the state of the widget for a given [key].
   ///
   /// If [add] is true, the [key] state is added to [value]. If false, it is
   /// removed. Listeners are notified if the state has changed.
   // ignore: prefer-named-boolean-parameters
-  void update(MixWidgetState key, bool add) {
+  void update(WidgetState key, bool add) {
     final valueHasChanged = add ? value.add(key) : value.remove(key);
 
     if (valueHasChanged) {
@@ -98,7 +83,7 @@ class MixWidgetStateController extends ChangeNotifier {
   /// [updates] is a list of tuples, where each tuple contains a state [key]
   /// and a boolean [add] indicating whether to add or remove the state.
   /// Listeners are notified if any state has changed.
-  void batch(List<(MixWidgetState, bool)> updates) {
+  void batch(List<(WidgetState, bool)> updates) {
     var valueHasChanged = false;
     for (final update in updates) {
       final key = update.$1;
@@ -116,5 +101,5 @@ class MixWidgetStateController extends ChangeNotifier {
   }
 
   /// Checks if the widget is currently in the given state [key].
-  bool has(MixWidgetState key) => value.contains(key);
+  bool has(WidgetState key) => value.contains(key);
 }

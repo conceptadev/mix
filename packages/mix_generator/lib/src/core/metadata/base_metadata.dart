@@ -28,7 +28,7 @@ abstract class BaseMetadata {
   /// Whether the class is abstract
   final bool isAbstract;
 
-  BaseMetadata({
+  const BaseMetadata({
     required this.element,
     required this.name,
     required this.parameters,

@@ -17,7 +17,7 @@ void main() {
       var context = tester.element(find.byType(Container));
 
       expect(
-        MixWidgetState.hasStateOf(context, MixWidgetState.disabled),
+        MixWidgetState.hasStateOf(context, WidgetState.disabled),
         isTrue,
       );
 
@@ -27,8 +27,7 @@ void main() {
 
       context = tester.element(find.byType(Container));
 
-      expect(
-          MixWidgetState.hasStateOf(context, MixWidgetState.disabled), isFalse);
+      expect(MixWidgetState.hasStateOf(context, WidgetState.disabled), isFalse);
     });
 
     testWidgets('should update focused state', (WidgetTester tester) async {
@@ -41,7 +40,7 @@ void main() {
 
       var context = tester.element(find.byType(Container));
       expect(
-        MixWidgetState.hasStateOf(context, MixWidgetState.focused),
+        MixWidgetState.hasStateOf(context, WidgetState.focused),
         isTrue,
       );
 
@@ -51,8 +50,7 @@ void main() {
 
       context = tester.element(find.byType(Container));
 
-      expect(
-          MixWidgetState.hasStateOf(context, MixWidgetState.focused), isFalse);
+      expect(MixWidgetState.hasStateOf(context, WidgetState.focused), isFalse);
     });
 
     testWidgets('should update hovered state', (WidgetTester tester) async {
@@ -66,8 +64,7 @@ void main() {
       );
 
       var context = tester.element(find.byType(Container));
-      expect(
-          MixWidgetState.hasStateOf(context, MixWidgetState.hovered), isTrue);
+      expect(MixWidgetState.hasStateOf(context, WidgetState.hovered), isTrue);
 
       controller.hovered = false;
 
@@ -75,8 +72,7 @@ void main() {
 
       context = tester.element(find.byType(Container));
 
-      expect(
-          MixWidgetState.hasStateOf(context, MixWidgetState.hovered), isFalse);
+      expect(MixWidgetState.hasStateOf(context, WidgetState.hovered), isFalse);
     });
   });
 }
