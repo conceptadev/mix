@@ -26,7 +26,7 @@ class MixableTypeMetadata extends BaseMetadata {
   /// Whether this type implements HasDefaultValue mixin
   final bool hasDefaultValue;
 
-  MixableTypeMetadata({
+  const MixableTypeMetadata({
     required super.element,
     required super.name,
     required super.parameters,

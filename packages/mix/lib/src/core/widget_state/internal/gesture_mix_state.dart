@@ -87,11 +87,18 @@ class _GestureMixStateWidgetState extends State<GestureMixStateWidget> {
   int _pressCount = 0;
   Timer? _timer;
   late final MixWidgetStateController _controller;
+  bool _longPressed = false;
 
   @override
   void initState() {
     super.initState();
     _controller = widget.controller ?? MixWidgetStateController();
+  }
+
+  void _setLongPressed(bool value) {
+    setState(() {
+      _longPressed = value;
+    });
   }
 
   void _onPanUpdate(DragUpdateDetails event) {
@@ -117,27 +124,27 @@ class _GestureMixStateWidgetState extends State<GestureMixStateWidget> {
   }
 
   void _onTapUp(TapUpDetails details) {
-    _controller.longPressed = false;
+    _setLongPressed(false);
     widget.onTapUp?.call(details);
   }
 
   void _onTapCancel() {
-    _controller.longPressed = false;
+    _setLongPressed(false);
     widget.onTapCancel?.call();
   }
 
   void _onLongPressStart(LongPressStartDetails details) {
-    _controller.longPressed = true;
+    _setLongPressed(true);
     widget.onLongPressStart?.call(details);
   }
 
   void _onLongPressEnd(LongPressEndDetails details) {
-    _controller.longPressed = false;
+    _setLongPressed(false);
     widget.onLongPressEnd?.call(details);
   }
 
   void _onLongPressCancel() {
-    _controller.longPressed = false;
+    _setLongPressed(false);
     widget.onLongPressCancel?.call();
   }
 
@@ -188,22 +195,52 @@ class _GestureMixStateWidgetState extends State<GestureMixStateWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTapUp: widget.onTap != null ? _onTapUp : null,
-      onTap: widget.onTap != null ? _onTap : null,
-      onTapCancel: widget.onTap != null ? _onTapCancel : null,
-      onLongPressCancel: widget.onLongPress != null ? _onLongPressCancel : null,
-      onLongPress: widget.onLongPress != null ? _onLongPress : null,
-      onLongPressStart: widget.onLongPress != null ? _onLongPressStart : null,
-      onLongPressEnd: widget.onLongPress != null ? _onLongPressEnd : null,
-      onPanDown: widget.onPanDown != null ? _onPanDown : null,
-      onPanStart: widget.onPanStart != null ? _onPanStart : null,
-      onPanUpdate: widget.onPanUpdate != null ? _onPanUpdate : null,
-      onPanEnd: widget.onPanEnd != null ? _onPanEnd : null,
-      onPanCancel: widget.onPanCancel != null ? _onPanCancel : null,
-      behavior: widget.hitTestBehavior,
-      excludeFromSemantics: widget.excludeFromSemantics,
-      child: widget.child,
+    return LongPressInheritedState(
+      longPressed: _longPressed,
+      child: GestureDetector(
+        onTapUp: widget.onTap != null ? _onTapUp : null,
+        onTap: widget.onTap != null ? _onTap : null,
+        onTapCancel: widget.onTap != null ? _onTapCancel : null,
+        onLongPressCancel:
+            widget.onLongPress != null ? _onLongPressCancel : null,
+        onLongPress: widget.onLongPress != null ? _onLongPress : null,
+        onLongPressStart: widget.onLongPress != null ? _onLongPressStart : null,
+        onLongPressEnd: widget.onLongPress != null ? _onLongPressEnd : null,
+        onPanDown: widget.onPanDown != null ? _onPanDown : null,
+        onPanStart: widget.onPanStart != null ? _onPanStart : null,
+        onPanUpdate: widget.onPanUpdate != null ? _onPanUpdate : null,
+        onPanEnd: widget.onPanEnd != null ? _onPanEnd : null,
+        onPanCancel: widget.onPanCancel != null ? _onPanCancel : null,
+        behavior: widget.hitTestBehavior,
+        excludeFromSemantics: widget.excludeFromSemantics,
+        child: widget.child,
+      ),
     );
+  }
+}
+
+class LongPressInheritedState extends InheritedWidget {
+  const LongPressInheritedState({
+    super.key,
+    required super.child,
+    required this.longPressed,
+  });
+
+  static LongPressInheritedState? maybeOf(BuildContext context) {
+    return context.dependOnInheritedWidgetOfExactType();
+  }
+
+  static LongPressInheritedState of(BuildContext context) {
+    final LongPressInheritedState? result = maybeOf(context);
+    assert(result != null, 'No LongPressVariantController found in context');
+
+    return result!;
+  }
+
+  final bool longPressed;
+
+  @override
+  bool updateShouldNotify(LongPressInheritedState oldWidget) {
+    return oldWidget.longPressed != longPressed;
   }
 }
