@@ -25,4 +25,10 @@ class ButtonSpec extends Spec<ButtonSpec> with _$ButtonSpec, Diagnosticable {
   })  : container = container ?? const FlexBoxSpec(),
         icon = icon ?? const IconSpec(),
         label = label ?? const TextSpec();
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    _debugFillProperties(properties);
+  }
 }

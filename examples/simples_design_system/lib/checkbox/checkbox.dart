@@ -134,15 +134,21 @@ class SimpleCheckbox extends _BaseCheckbox {
   });
 
   factory SimpleCheckbox({
+    Key? key,
     bool disabled = false,
     bool value = false,
+    IconData iconChecked = Icons.check_rounded,
+    IconData? iconUnchecked,
     ValueChanged<bool>? onChanged,
     List<Variant> variants = const [],
     String? label,
   }) {
     return SimpleCheckbox._(
+      key: key,
       disabled: disabled,
       value: value,
+      iconChecked: iconChecked,
+      iconUnchecked: iconUnchecked,
       onChanged: onChanged,
       style: SimpleCheckboxStyle(),
       variants: variants,

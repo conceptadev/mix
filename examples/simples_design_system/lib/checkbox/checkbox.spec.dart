@@ -29,4 +29,10 @@ base class CheckboxSpec extends Spec<CheckboxSpec>
         indicator = indicator ?? const IconSpec(),
         container = container ?? const FlexBoxSpec(),
         label = label ?? const TextSpec();
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    _debugFillProperties(properties);
+  }
 }

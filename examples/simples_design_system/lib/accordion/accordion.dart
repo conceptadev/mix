@@ -14,6 +14,7 @@ class _BaseAccordion extends StatefulWidget {
     required this.content,
     this.onChanged,
     this.expanded = true,
+    // ignore: unused_element
     this.variants = const [],
     this.duration = const Duration(milliseconds: 200),
     this.curve = Curves.easeInOut,
@@ -122,6 +123,7 @@ class SimpleAccordion extends _BaseAccordion {
   });
 
   factory SimpleAccordion({
+    Key? key,
     required Widget header,
     required Widget content,
     bool expanded = true,
@@ -130,6 +132,7 @@ class SimpleAccordion extends _BaseAccordion {
     Curve curve = Curves.easeInOut,
   }) {
     return SimpleAccordion._(
+      key: key,
       header: header,
       content: content,
       style: SimpleAccordionStyle(),
