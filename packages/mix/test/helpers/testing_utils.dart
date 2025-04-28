@@ -121,7 +121,6 @@ extension WidgetTesterExt on WidgetTester {
     bool focused = false,
     bool pressed = false,
     bool hovered = false,
-    bool longPressed = false,
   }) async {
     final controller = MixWidgetStateController();
 
@@ -129,7 +128,6 @@ extension WidgetTesterExt on WidgetTester {
     controller.focused = focused;
     controller.hovered = hovered;
     controller.pressed = pressed;
-    controller.longPressed = longPressed;
 
     await pumpWidget(
       MaterialApp(

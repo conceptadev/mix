@@ -25,7 +25,7 @@ class UtilityMetadata extends BaseMetadata {
 
   static final _logger = Logger('UtilityMetadata');
 
-  UtilityMetadata({
+  const UtilityMetadata({
     required super.element,
     required super.name,
     required super.parameters,

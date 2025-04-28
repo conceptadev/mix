@@ -56,7 +56,7 @@ void main() {
       final context = tester.element(find.byKey(key));
 
       expect(
-        MixWidgetState.hasStateOf(context, MixWidgetState.pressed),
+        MixWidgetState.hasStateOf(context, WidgetState.pressed),
         isTrue,
         reason: 'GesturableState should be pressed immediately after tap',
       );
@@ -78,8 +78,10 @@ void main() {
       final context = tester.element(find.byKey(key));
 
       expect(onLongPressCalled, isTrue);
-      expect(MixWidgetState.hasStateOf(context, MixWidgetState.longPressed),
-          isTrue);
+      expect(
+        LongPressInheritedState.of(context).longPressed,
+        isTrue,
+      );
     });
 
     testWidgets('should update press state after delay when tapped',
@@ -95,7 +97,7 @@ void main() {
       await tester.pump();
       final context = tester.element(find.byKey(key));
       expect(
-        MixWidgetState.hasStateOf(context, MixWidgetState.pressed),
+        MixWidgetState.hasStateOf(context, WidgetState.pressed),
         isTrue,
         reason: 'GesturableState should be pressed immediately after tap',
       );
@@ -104,7 +106,7 @@ void main() {
         const Duration(milliseconds: 50),
       );
       expect(
-        MixWidgetState.hasStateOf(context, MixWidgetState.pressed),
+        MixWidgetState.hasStateOf(context, WidgetState.pressed),
         isTrue,
         reason: 'GesturableState should still be pressed 50ms after tap',
       );
@@ -113,7 +115,7 @@ void main() {
         const Duration(milliseconds: 100),
       );
       expect(
-        MixWidgetState.hasStateOf(context, MixWidgetState.pressed),
+        MixWidgetState.hasStateOf(context, WidgetState.pressed),
         isFalse,
         reason:
             'GesturableState should be unpressed after unpressDelay has passed',
@@ -131,7 +133,7 @@ void main() {
       await tester.tap(find.byType(GestureMixStateWidget));
       final context = tester.element(find.byKey(key));
       expect(
-          MixWidgetState.hasStateOf(context, MixWidgetState.pressed), isFalse);
+          MixWidgetState.hasStateOf(context, WidgetState.pressed), isFalse);
     });
 
     testWidgets('GesturableWidget pan functions test', (

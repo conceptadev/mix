@@ -14,7 +14,7 @@ class SpecMetadata extends BaseMetadata {
   /// Whether this is a widget modifier spec
   final bool isWidgetModifier;
 
-  SpecMetadata({
+  const SpecMetadata({
     required super.element,
     required super.name,
     required super.parameters,
