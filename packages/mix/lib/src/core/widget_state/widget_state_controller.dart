@@ -10,8 +10,8 @@ extension MixWidgetState on WidgetState {
 /// A controller that manages the state of a widget.
 ///
 /// [MixWidgetStateController] tracks various states of a widget, such as
-/// [disabled], [hovered], [focused], [pressed], [dragged], [selected], and
-/// [longPressed]. These states are stored in a [Set] called [value].
+/// [disabled], [hovered], [focused], [pressed], [dragged], [selected].
+/// These states are stored in a [Set] called [value].
 ///
 /// The controller extends [ChangeNotifier], allowing listeners to be notified
 /// when the state of the widget changes.

@@ -70,6 +70,9 @@ class OnLongPressVariant extends ContextVariant {
   @override
   final priority = VariantPriority.highest;
 
+  @Deprecated(
+    'The longPress variant has been removed. Please implement your own context variant for it',
+  )
   const OnLongPressVariant();
 
   @override
