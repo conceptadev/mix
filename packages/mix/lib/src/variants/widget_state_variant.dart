@@ -2,6 +2,7 @@ import 'package:flutter/widgets.dart';
 
 import '../core/factory/style_mix.dart';
 import '../core/variant.dart';
+import '../core/widget_state/internal/gesture_mix_state.dart';
 import '../core/widget_state/internal/mouse_region_mix_state.dart';
 import '../core/widget_state/widget_state_controller.dart';
 import 'context_variant.dart';
@@ -25,7 +26,7 @@ abstract class MixWidgetStateVariant<Value> extends ContextVariant {
 }
 
 abstract class _ToggleMixStateVariant extends MixWidgetStateVariant<bool> {
-  final MixWidgetState _state;
+  final WidgetState _state;
   const _ToggleMixStateVariant(this._state);
 
   @override
@@ -55,41 +56,52 @@ class OnHoverVariant extends MixWidgetStateVariant<PointerPosition?> {
   @override
   bool when(BuildContext context) => MixWidgetState.hasStateOf(
         context,
-        MixWidgetState.hovered,
+        WidgetState.hovered,
       );
 }
 
 /// Applies styles when the widget is pressed.
 class OnPressVariant extends _ToggleMixStateVariant {
-  const OnPressVariant() : super(MixWidgetState.pressed);
+  const OnPressVariant() : super(WidgetState.pressed);
 }
 
 /// Applies styles when the widget is long pressed.
-class OnLongPressVariant extends _ToggleMixStateVariant {
-  const OnLongPressVariant() : super(MixWidgetState.longPressed);
+class OnLongPressVariant extends ContextVariant {
+  @override
+  final priority = VariantPriority.highest;
+
+  @Deprecated(
+    'The longPress variant has been removed. Please implement your own context variant for it',
+  )
+  const OnLongPressVariant();
+
+  @override
+  bool when(BuildContext context) {
+    return LongPressInheritedState.of(context).longPressed;
+  }
 }
 
 /// Applies styles when the widget is disabled.
 class OnDisabledVariant extends _ToggleMixStateVariant {
-  const OnDisabledVariant() : super(MixWidgetState.disabled);
+  const OnDisabledVariant() : super(WidgetState.disabled);
 }
 
 /// Applies styles when the widget has focus.
 class OnFocusedVariant extends _ToggleMixStateVariant {
-  const OnFocusedVariant() : super(MixWidgetState.focused);
+  const OnFocusedVariant() : super(WidgetState.focused);
 }
 
 /// Applies styles when the widget is selected
 class OnSelectedVariant extends _ToggleMixStateVariant {
-  const OnSelectedVariant() : super(MixWidgetState.selected);
+  const OnSelectedVariant() : super(WidgetState.selected);
 }
 
 /// Applies styles when the widget is dragged.
 class OnDraggedVariant extends _ToggleMixStateVariant {
-  const OnDraggedVariant() : super(MixWidgetState.dragged);
+  const OnDraggedVariant() : super(WidgetState.dragged);
 }
 
 /// Applies styles when the widget is error.
 class OnErrorVariant extends _ToggleMixStateVariant {
-  const OnErrorVariant() : super(MixWidgetState.error);
+  const OnErrorVariant() : super(WidgetState.error);
 }

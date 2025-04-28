@@ -45,7 +45,7 @@ class TokensMetadata extends BaseMetadata {
     ),
   };
 
-  TokensMetadata({
+  const TokensMetadata({
     required super.element,
     required super.name,
     required super.parameters,

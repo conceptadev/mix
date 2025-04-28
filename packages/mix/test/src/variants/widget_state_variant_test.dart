@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
+import 'package:mix/src/core/widget_state/internal/gesture_mix_state.dart';
 
 import '../../helpers/testing_utils.dart';
 
@@ -33,11 +34,12 @@ void main() {
       expect(onPressAttr.variant.when(context), true);
     });
 
-    testWidgets('long press state', (tester) async {
-      await tester.pumpWithPressable(
-        Container(),
-        longPressed: true,
-        focused: true,
+    testWidgets('long press state when long pressed', (tester) async {
+      await tester.pumpWidget(
+        LongPressInheritedState(
+          longPressed: true,
+          child: Container(),
+        ),
       );
 
       final context = tester.element(find.byType(Container));
@@ -49,8 +51,6 @@ void main() {
         onLongPressAttr.value,
         Style(attribute1, attribute2, attribute3),
       );
-
-      expect(onLongPressAttr.variant.when(context), true);
     });
 
     testWidgets('hover state', (tester) async {

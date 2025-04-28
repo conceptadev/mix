@@ -1,33 +1,51 @@
 import 'package:flutter/material.dart';
 import 'package:mix/mix.dart';
 
-void main() {
-  runApp(const MaterialApp(home: MyApp()));
-}
+const primary = ColorToken('primary');
 
-final style = Style(
-  $box.height(100),
-  $box.width(100),
-  $box.margin(10, 20),
-  $box.color.blue(),
-  $box.borderRadius(10),
-  $box.padding(20, 10),
-  $box.margin(10),
-  $box.border(color: Colors.black, style: BorderStyle.solid, width: 1),
-);
+void main() {
+  runApp(
+    MixTheme(
+      data: MixThemeData(
+        colors: {
+          primary: Colors.blue,
+        },
+      ),
+      child: const MyApp(),
+    ),
+  );
+}
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Box(
-          style: style,
-          child: const Center(child: Text('Hello Mix')),
+    return Directionality(
+      textDirection: TextDirection.ltr,
+      child: Center(
+        child: FlexBox(
+          style: style(),
+          direction: Axis.horizontal,
+          children: const [
+            StyledIcon(Icons.image),
+            StyledText('Hello World'),
+          ],
         ),
       ),
     );
   }
 }
+
+Style style() => Style(
+      $icon.color.red(),
+      $flexbox.chain
+        ..flex.direction(Axis.horizontal)
+        ..flex.mainAxisSize.min(),
+      $on.breakpoint(const Breakpoint(minWidth: 0, maxWidth: 365))(
+        $flexbox.chain.flex.direction(Axis.vertical),
+      ),
+    ).animate(
+      duration: const Duration(milliseconds: 200),
+      curve: Curves.easeInOut,
+    );
