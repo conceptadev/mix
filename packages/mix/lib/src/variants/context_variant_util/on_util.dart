@@ -1,6 +1,5 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
-import 'on_platform_util.dart';
 
 import '../../theme/tokens/breakpoints_token.dart';
 import '../widget_state_variant.dart';
@@ -9,6 +8,7 @@ import 'on_brightness_util.dart';
 import 'on_directionality_util.dart';
 import 'on_not_util.dart';
 import 'on_orientation_util.dart';
+import 'on_platform_util.dart';
 
 class OnContextVariantUtility {
   // Platform variants
@@ -46,6 +46,9 @@ class OnContextVariantUtility {
   final focus = const OnFocusedVariant();
   final enabled = const OnNotVariant(OnDisabledVariant());
   final disabled = const OnDisabledVariant();
+  @Deprecated(
+    'The longPress variant has been removed. Please implement your own context variant for it',
+  )
   final longPress = const OnLongPressVariant();
   final selected = const OnSelectedVariant();
   final unselected = const OnNotVariant(OnSelectedVariant());
