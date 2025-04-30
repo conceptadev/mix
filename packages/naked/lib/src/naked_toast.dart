@@ -37,6 +37,10 @@ class NakedToastEntry {
   int get hashCode => startTime.hashCode;
 }
 
+extension on List<_TimerToastEntry> {
+  List<NakedToastEntry> get toEntry => map((e) => e.entry).toList();
+}
+
 class _TimerToastEntry {
   final Timer timer;
   final NakedToastEntry entry;
@@ -49,56 +53,75 @@ class _TimerToastEntry {
 
 class NakedToastLayer extends StatefulWidget {
   final Widget child;
-  final Alignment alignment;
-  final NakedToastLayerBuilder builder;
+  final Widget toastWidget;
   final void Function(NakedToastEntry) onRemove;
 
   const NakedToastLayer({
     super.key,
     required this.child,
-    required this.builder,
-    this.alignment = Alignment.center,
+    required this.toastWidget,
     required this.onRemove,
   });
 
+  static NakedToastLayerState of(BuildContext context) {
+    final state = context.findAncestorStateOfType<NakedToastLayerState>();
+
+    if (state == null) {
+      throw Exception('NakedToastLayer not found in context');
+    }
+
+    return state;
+  }
+
   @override
-  State<NakedToastLayer> createState() => _NakedToastLayerState();
+  State<NakedToastLayer> createState() => NakedToastLayerState();
 }
 
-class _NakedToastLayerState extends State<NakedToastLayer> {
-  final List<_TimerToastEntry> _toasts = [];
+class NakedToastLayerState extends State<NakedToastLayer> {
+  final _toastController = StreamController<List<NakedToastEntry>>();
+  Stream<List<NakedToastEntry>> get toastStream => _toastController.stream;
+
+  List<_TimerToastEntry> _toasts = [];
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    for (final toast in _toasts) {
+      toast.timer.cancel();
+    }
+    _toastController.close();
+    super.dispose();
+  }
 
   void addToast(NakedToastEntry toast) {
     final timer = Timer(toast.duration, () {
       widget.onRemove(toast);
     });
 
-    setState(() {
-      _toasts.add(
-        _TimerToastEntry(
-          timer: timer,
-          entry: toast,
-        ),
-      );
-    });
+    _toasts = [
+      ..._toasts,
+      _TimerToastEntry(
+        timer: timer,
+        entry: toast,
+      ),
+    ];
+
+    _toastController.add(_toasts.toEntry);
   }
 
   int? removeToast(NakedToastEntry toast) {
-    final index = _toasts.indexWhere(
-      (e) => e.entry.startTime == toast.startTime,
-    );
+    final index = indexOf(toast);
 
-    final toastExists = index != -1;
+    if (index == null) return null;
 
-    if (toastExists) {
-      _toasts[index].timer.cancel();
-      setState(() {
-        _toasts.removeAt(index);
-      });
-      return index;
-    }
-
-    return null;
+    _toasts[index].timer.cancel();
+    _toasts.removeAt(index);
+    _toastController.add(_toasts.toEntry);
+    return index;
   }
 
   int? indexOf(NakedToastEntry toast) {
@@ -109,39 +132,13 @@ class _NakedToastLayerState extends State<NakedToastLayer> {
     return index == -1 ? null : index;
   }
 
-  static _NakedToastLayerState of(BuildContext context) {
-    final state = context.findAncestorStateOfType<_NakedToastLayerState>();
-
-    if (state == null) {
-      throw Exception('NakedToastLayer not found in context');
-    }
-
-    return state;
-  }
-
   @override
   Widget build(BuildContext context) {
     return Stack(
-      alignment: widget.alignment,
       children: [
         widget.child,
-        widget.builder(
-          context,
-          _toasts.map((e) => e.entry).toList(),
-        ),
+        widget.toastWidget,
       ],
     );
   }
-}
-
-void addToast(NakedToastEntry toast) {
-  _NakedToastLayerState.of(toast.context).addToast(toast);
-}
-
-int? removeToast(NakedToastEntry toast) {
-  return _NakedToastLayerState.of(toast.context).removeToast(toast);
-}
-
-int? indexOf(NakedToastEntry toast) {
-  return _NakedToastLayerState.of(toast.context).indexOf(toast);
 }

@@ -1,7 +1,7 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 import 'package:naked/naked.dart';
-
-import 'toast.dart';
 
 class NakedToastExample extends StatefulWidget {
   const NakedToastExample({super.key});
@@ -11,100 +11,146 @@ class NakedToastExample extends StatefulWidget {
 }
 
 class _NakedToastExampleState extends State<NakedToastExample> {
+  Alignment? alignment = Alignment.topRight;
+
   @override
   Widget build(BuildContext context) {
     return Center(
       child: Padding(
         padding: const EdgeInsets.all(24.0),
-        child: ToastLayer(
-          child: AspectRatio(
-            aspectRatio: 16 / 9,
-            child: Container(
-              color: Colors.blueGrey.shade50,
-              child: Center(
-                child: Builder(builder: (context) {
-                  // return const AnimatedColumnInsertTop();
-                  return Row(
-                    mainAxisSize: MainAxisSize.min,
-                    spacing: 24,
-                    children: [
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.redAccent.shade400,
-                        ),
-                        onPressed: () {
-                          // _insertItem();
-                          addAnimatedToast(
-                            NakedToastEntry(
-                              context: context,
-                              duration: const Duration(seconds: 3),
-                              toast: (context, remove) {
-                                return ToastContainer(
-                                  label: 'Alert',
-                                  icon: Icons.error,
-                                  onClose: remove,
-                                  backgroundColor: Colors.redAccent.shade700,
+        child: Column(
+          spacing: 8,
+          children: [
+            AspectRatio(
+              aspectRatio: 16 / 9,
+              child: ClipRRect(
+                // borderRadius: BorderRadius.circular(16),
+                child: ToastLayer(
+                  alignment: alignment!,
+                  child: Container(
+                    color: Colors.blueGrey.shade50,
+                    child: Center(
+                      child: Builder(builder: (context) {
+                        void addToast(NakedToastEntry toast) {
+                          NakedToastLayer.of(context).addToast(toast);
+                        }
+
+                        return Row(
+                          mainAxisSize: MainAxisSize.min,
+                          spacing: 24,
+                          children: [
+                            ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.redAccent.shade400,
+                              ),
+                              onPressed: () {
+                                addToast(
+                                  NakedToastEntry(
+                                    context: context,
+                                    toast: (context, remove) =>
+                                        buildToastContainer(
+                                      remove,
+                                      'Alert',
+                                      Icons.error,
+                                      Colors.redAccent.shade700,
+                                    ),
+                                  ),
                                 );
                               },
+                              child: const Text('Alert'),
                             ),
-                          );
-                        },
-                        child: const Text('Alert'),
-                      ),
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.blueAccent.shade400,
-                        ),
-                        onPressed: () {
-                          // _insertItem();
-                          addAnimatedToast(
-                            NakedToastEntry(
-                              context: context,
-                              duration: const Duration(seconds: 3),
-                              toast: (context, remove) {
-                                return ToastContainer(
-                                  label: 'Info',
-                                  icon: Icons.info,
-                                  onClose: remove,
-                                  backgroundColor: Colors.blueAccent.shade700,
+                            ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.blueAccent.shade400,
+                              ),
+                              onPressed: () {
+                                // _insertItem();
+                                addToast(
+                                  NakedToastEntry(
+                                    context: context,
+                                    toast: (context, remove) =>
+                                        buildToastContainer(
+                                      remove,
+                                      'Info',
+                                      Icons.info,
+                                      Colors.blueAccent.shade700,
+                                    ),
+                                  ),
                                 );
                               },
+                              child: const Text('Info'),
                             ),
-                          );
-                        },
-                        child: const Text('Info'),
-                      ),
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.greenAccent.shade700,
-                        ),
-                        onPressed: () {
-                          // _insertItem();
-                          addAnimatedToast(
-                            NakedToastEntry(
-                              context: context,
-                              duration: const Duration(seconds: 3),
-                              toast: (context, remove) {
-                                return ToastContainer(
-                                  label: 'Success',
-                                  icon: Icons.check_circle,
-                                  onClose: remove,
-                                  backgroundColor: Colors.greenAccent.shade700,
+                            ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.greenAccent.shade700,
+                              ),
+                              onPressed: () {
+                                addToast(
+                                  NakedToastEntry(
+                                    context: context,
+                                    toast: (context, remove) =>
+                                        buildToastContainer(
+                                      remove,
+                                      'Success',
+                                      Icons.check_circle,
+                                      Colors.greenAccent.shade700,
+                                    ),
+                                  ),
                                 );
                               },
+                              child: const Text('Success'),
                             ),
-                          );
-                        },
-                        child: const Text('Success'),
-                      ),
-                    ],
-                  );
-                }),
+                          ],
+                        );
+                      }),
+                    ),
+                  ),
+                ),
               ),
             ),
-          ),
+            Row(
+              children: [
+                DropdownButton(
+                  value: alignment,
+                  items: const [
+                    DropdownMenuItem(
+                      value: Alignment.topLeft,
+                      child: Text('Top Left'),
+                    ),
+                    DropdownMenuItem(
+                      value: Alignment.topRight,
+                      child: Text('Top Right'),
+                    ),
+                    DropdownMenuItem(
+                      value: Alignment.bottomLeft,
+                      child: Text('Bottom Left'),
+                    ),
+                    DropdownMenuItem(
+                      value: Alignment.bottomRight,
+                      child: Text('Bottom Right'),
+                    ),
+                  ],
+                  onChanged: (a) {
+                    setState(() {
+                      alignment = a;
+                    });
+                  },
+                ),
+              ],
+            )
+          ],
         ),
       ),
+    );
+  }
+
+  Widget buildToastContainer(void Function() remove, String label,
+      IconData icon, Color backgroundColor) {
+    return ToastContainer(
+      label: label,
+      icon: icon,
+      onClose: remove,
+      backgroundColor: backgroundColor,
     );
   }
 }
@@ -124,94 +170,76 @@ class ToastContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Transform.scale(
-      scale: .8,
-      child: Container(
-        width: 200,
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-        decoration: BoxDecoration(
-          color: backgroundColor,
-          borderRadius: BorderRadius.circular(8),
-        ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(
-              icon,
+    return Container(
+      width: 200,
+      margin: const EdgeInsets.only(bottom: 4),
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+      decoration: BoxDecoration(
+        color: backgroundColor,
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(
+            icon,
+            color: Colors.white,
+            size: 20,
+          ),
+          const SizedBox(width: 12),
+          Text(
+            label,
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 12,
+            ),
+          ),
+          const Spacer(),
+          IconButton(
+            padding: EdgeInsets.zero,
+            constraints: const BoxConstraints(),
+            icon: const Icon(
+              Icons.close,
               color: Colors.white,
               size: 20,
             ),
-            const SizedBox(width: 12),
-            Text(
-              label,
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 14,
-              ),
-            ),
-            const Spacer(),
-            IconButton(
-              padding: EdgeInsets.zero,
-              constraints: const BoxConstraints(),
-              icon: const Icon(
-                Icons.close,
-                color: Colors.white,
-                size: 20,
-              ),
-              onPressed: onClose,
-            ),
-          ],
-        ),
+            onPressed: onClose,
+          ),
+        ],
       ),
     );
   }
 }
 
-class AnimatedColumnInsertTop extends StatefulWidget {
-  const AnimatedColumnInsertTop({super.key});
+class ToastLayer extends StatefulWidget {
+  final Widget child;
+  final Alignment alignment;
+
+  const ToastLayer({
+    super.key,
+    required this.child,
+    required this.alignment,
+  });
 
   @override
-  _AnimatedColumnInsertTopState createState() =>
-      _AnimatedColumnInsertTopState();
+  State<ToastLayer> createState() => _ToastLayerState();
 }
 
-class _AnimatedColumnInsertTopState extends State<AnimatedColumnInsertTop> {
-  final GlobalKey<AnimatedListState> _listKey = GlobalKey<AnimatedListState>();
-  final List<int> _items = [];
+class _ToastLayerState extends State<ToastLayer> {
+  static final listKey = GlobalKey<AnimatedListState>();
 
-  int _counter = 1;
+  void removeAnimatedToast(NakedToastEntry entry) {
+    final index = NakedToastLayer.of(entry.context).removeToast(entry);
 
-  void _addNewItem() {
-    _items.insert(0, _counter++);
-    _listKey.currentState!
-        .insertItem(0, duration: const Duration(milliseconds: 300));
-  }
+    if (index == null) return;
 
-  void _removeItem(int index) {
-    final removedItem = _items.removeAt(index);
-    _listKey.currentState!.removeItem(
+    _ToastLayerState.listKey.currentState?.removeItem(
       index,
-      (context, animation) => _buildItem(removedItem, animation),
-      duration: const Duration(milliseconds: 300),
-    );
-  }
-
-  Widget _buildItem(int item, Animation<double> animation) {
-    return SizeTransition(
-      sizeFactor: animation,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 6),
-        child: GestureDetector(
-          onLongPress: () => _removeItem(_items.indexOf(item)),
-          child: Container(
-            decoration: BoxDecoration(
-              color: Colors.blueAccent,
-              borderRadius: BorderRadius.circular(12),
-            ),
-            padding: const EdgeInsets.all(24),
-            child:
-                Text('Item $item', style: const TextStyle(color: Colors.white)),
-          ),
+      (context, animation) => _AnimationTransformer(
+        animation: animation,
+        alignment: Alignment.topLeft,
+        child: entry.build(
+          () => (),
         ),
       ),
     );
@@ -219,20 +247,168 @@ class _AnimatedColumnInsertTopState extends State<AnimatedColumnInsertTop> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Animated Insert at Top')),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _addNewItem,
-        child: const Icon(Icons.add),
+    return NakedToastLayer(
+      onRemove: (entry) => removeAnimatedToast(entry),
+      toastWidget: Align(
+        alignment: widget.alignment,
+        child: SizedBox(
+          width: 200,
+          child: ToastEntries(
+            listKey: listKey,
+            onRemove: removeAnimatedToast,
+          ),
+        ),
       ),
-      body: AnimatedList(
-        key: _listKey,
-        reverse: false,
-        padding: const EdgeInsets.all(16),
-        initialItemCount: _items.length,
-        itemBuilder: (context, index, animation) {
-          return _buildItem(_items[index], animation);
-        },
+      child: widget.child,
+    );
+  }
+}
+
+class ToastEntries extends StatefulWidget {
+  const ToastEntries({
+    super.key,
+    required this.listKey,
+    required this.onRemove,
+  });
+
+  final GlobalKey<AnimatedListState> listKey;
+  final void Function(NakedToastEntry) onRemove;
+
+  @override
+  State<ToastEntries> createState() => _ToastEntriesState();
+}
+
+class _ToastEntriesState extends State<ToastEntries> {
+  List<NakedToastEntry> entries = [];
+  List<NakedToastEntry> oldEntries = [];
+
+  @override
+  void initState() {
+    super.initState();
+    final toastStream = NakedToastLayer.of(context).toastStream;
+    toastStream.listen(_listenEntries);
+  }
+
+  void _listenEntries(newEntries) {
+    oldEntries = entries;
+    entries = newEntries;
+
+    if (oldEntries.length > entries.length) return;
+
+    widget.listKey.currentState?.insertItem(entries.length - 1);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedList(
+      shrinkWrap: true,
+      key: widget.listKey,
+      initialItemCount: entries.length,
+      itemBuilder: (context, index, animation) {
+        return _AnimationTransformer(
+          animation: animation,
+          alignment: Alignment.topLeft,
+          child: entries[index].build(
+            () => widget.onRemove(entries[index]),
+          ),
+        );
+      },
+    );
+  }
+}
+
+class _AnimationTransformer extends AnimatedWidget {
+  const _AnimationTransformer({
+    required Animation<double> animation,
+    required this.alignment,
+    required this.child,
+  }) : super(listenable: animation);
+
+  Animation<double> get animation => listenable as Animation<double>;
+
+  final AlignmentGeometry alignment;
+
+  final Widget child;
+  @override
+  Widget build(BuildContext context) {
+    final alignment = this.alignment.resolve(Directionality.of(context));
+
+    final slideInAnimation = Tween<double>(
+      begin: 0,
+      end: 1,
+    ).animate(
+      CurvedAnimation(
+        parent: animation,
+        curve: const Interval(
+          0,
+          0.6,
+          curve: Curves.easeInOut,
+        ),
+      ),
+    );
+
+    final targetAnimation = Tween<double>(
+      begin: 0,
+      end: 1,
+    ).animate(
+      CurvedAnimation(
+        parent: animation,
+        curve: const Interval(
+          0.3,
+          1,
+          curve: Curves.easeInOut,
+        ),
+      ),
+    );
+
+    return Align(
+      heightFactor: math.max(slideInAnimation.value, 0.0),
+      alignment: alignment,
+      child: DefaultToastificationTransition(
+        animation: targetAnimation,
+        alignment: Alignment.topLeft,
+        child: child,
+      ),
+    );
+  }
+}
+
+class DefaultToastificationTransition extends AnimatedWidget {
+  const DefaultToastificationTransition({
+    super.key,
+    required Animation<double> animation,
+    required this.alignment,
+    this.child,
+  }) : super(listenable: animation);
+
+  Animation<double> get animation => listenable as Animation<double>;
+
+  final AlignmentGeometry alignment;
+
+  final Widget? child;
+
+  @override
+  Widget build(BuildContext context) {
+    final alignment = this.alignment.resolve(Directionality.of(context));
+
+    final isCenter = alignment.x == 0;
+
+    final slideOffset = isCenter
+        ? alignment.y >= 0
+            ? const Offset(0, 1)
+            : const Offset(0, -1)
+        : alignment.x >= 0
+            ? const Offset(1, 0)
+            : const Offset(-1, 0);
+
+    return FadeTransition(
+      opacity: animation,
+      child: SlideTransition(
+        position: Tween<Offset>(
+          begin: slideOffset,
+          end: const Offset(0, 0),
+        ).animate(animation),
+        child: child,
       ),
     );
   }
