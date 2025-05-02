@@ -18,14 +18,8 @@ class MixWidgetStateBuilder extends StatelessWidget {
     return ListenableBuilder(
       listenable: controller,
       builder: (context, _) {
-        return MixWidgetStateModel(
-          disabled: controller.disabled,
-          hovered: controller.hovered,
-          focused: controller.focused,
-          pressed: controller.pressed,
-          dragged: controller.dragged,
-          selected: controller.selected,
-          error: controller.error,
+        return MixWidgetStateModel.controller(
+          controller: controller,
           child: Builder(builder: builder),
         );
       },
@@ -45,6 +39,18 @@ class MixWidgetStateModel extends InheritedModel<WidgetState> {
     required this.error,
     required super.child,
   });
+
+  MixWidgetStateModel.controller({
+    super.key,
+    required super.child,
+    required MixWidgetStateController controller,
+  })  : disabled = controller.disabled,
+        hovered = controller.hovered,
+        focused = controller.focused,
+        pressed = controller.pressed,
+        dragged = controller.dragged,
+        selected = controller.selected,
+        error = controller.error;
 
   static MixWidgetStateModel? of(BuildContext context, [WidgetState? state]) {
     return InheritedModel.inheritFrom<MixWidgetStateModel>(
