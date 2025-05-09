@@ -9,7 +9,7 @@ class MixWidgetStateBuilder extends StatelessWidget {
     required this.builder,
   });
 
-  final MixWidgetStateController controller;
+  final WidgetStatesController controller;
 
   final Widget Function(BuildContext context) builder;
 

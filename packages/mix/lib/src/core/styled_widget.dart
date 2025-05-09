@@ -82,7 +82,7 @@ class SpecBuilder extends StatelessWidget {
   // Required builder function
   final Widget Function(BuildContext) builder;
   // Optional controller for managing widget state
-  final MixWidgetStateController? controller;
+  final WidgetStatesController? controller;
   // Style to be applied to the widget
   final Style style;
   // Flag to determine if the style should be inherited

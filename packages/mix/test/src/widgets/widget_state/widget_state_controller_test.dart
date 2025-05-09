@@ -64,9 +64,9 @@ extension on WidgetStatesController {
 }
 
 void main() {
-  group('MixWidgetStateController', () {
+  group('WidgetStatesController', () {
     test('initial state values', () {
-      final controller = MixWidgetStateController();
+      final controller = WidgetStatesController();
       expect(controller.disabled, isFalse);
       expect(controller.hovered, isFalse);
       expect(controller.focused, isFalse);
@@ -76,7 +76,7 @@ void main() {
     });
 
     test('update individual state', () {
-      final controller = MixWidgetStateController();
+      final controller = WidgetStatesController();
 
       controller.disabled = true;
       expect(controller.disabled, isTrue);
@@ -98,7 +98,7 @@ void main() {
     });
 
     test('batch update states', () {
-      final controller = MixWidgetStateController();
+      final controller = WidgetStatesController();
 
       controller.batch([
         (WidgetState.disabled, true),
@@ -115,7 +115,7 @@ void main() {
     });
 
     test('notifyListeners called on state change', () {
-      final controller = MixWidgetStateController();
+      final controller = WidgetStatesController();
 
       var notifyListenersCallCount = 0;
       controller.addListener(() => notifyListenersCallCount++);
@@ -136,7 +136,7 @@ void main() {
   });
   group('MixWidgetStateModel', () {
     testWidgets('of finds model', (tester) async {
-      final controller = MixWidgetStateController();
+      final controller = WidgetStatesController();
 
       controller.disabled = true;
       controller.hovered = true;
@@ -276,7 +276,7 @@ void main() {
       MaterialApp(
         home: StatefulBuilder(
           builder: (BuildContext context, StateSetter setState) {
-            final controller = MixWidgetStateController();
+            final controller = WidgetStatesController();
 
             controller.disabled = false;
             controller.hovered = hovered;
@@ -330,7 +330,7 @@ void main() {
 
   testWidgets('PressableState updates inherit model',
       (WidgetTester tester) async {
-    final controller = MixWidgetStateController();
+    final controller = WidgetStatesController();
 
     await tester.pumpWidget(
       MaterialApp(

@@ -15,7 +15,10 @@ extension MixWidgetState on WidgetState {
 ///
 /// The controller extends [ChangeNotifier], allowing listeners to be notified
 /// when the state of the widget changes.
-class MixWidgetStateController extends WidgetStatesController {
+@Deprecated('Use WidgetStatesController instead')
+typedef MixWidgetStateController = WidgetStatesController;
+
+extension WidgetStatesExt on WidgetStatesController {
   /// The current set of states for the widget.
   ///
   /// This is annotated with `@visibleForTesting` to indicate that it is

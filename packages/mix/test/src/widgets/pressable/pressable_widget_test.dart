@@ -710,12 +710,12 @@ class _DisposalPressable extends StatefulWidget {
 }
 
 class _DisposalPressableState extends State<_DisposalPressable> {
-  late final MixWidgetStateController _controller;
+  late final WidgetStatesController _controller;
 
   @override
   void initState() {
     super.initState();
-    _controller = MixWidgetStateController();
+    _controller = WidgetStatesController();
   }
 
   @override
