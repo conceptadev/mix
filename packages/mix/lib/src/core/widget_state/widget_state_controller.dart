@@ -15,13 +15,11 @@ extension MixWidgetState on WidgetState {
 ///
 /// The controller extends [ChangeNotifier], allowing listeners to be notified
 /// when the state of the widget changes.
-class MixWidgetStateController extends ChangeNotifier {
+class MixWidgetStateController extends WidgetStatesController {
   /// The current set of states for the widget.
   ///
   /// This is annotated with `@visibleForTesting` to indicate that it is
   /// accessible for testing purposes.
-  @visibleForTesting
-  Set<WidgetState> value = {};
 
   /// Whether the widget is currently in the disabled state.
   bool get disabled => value.contains(WidgetState.disabled);
@@ -64,41 +62,6 @@ class MixWidgetStateController extends ChangeNotifier {
 
   /// Sets whether the widget is in the selected state.
   set error(bool value) => update(WidgetState.error, value);
-
-  /// Updates the state of the widget for a given [key].
-  ///
-  /// If [add] is true, the [key] state is added to [value]. If false, it is
-  /// removed. Listeners are notified if the state has changed.
-  // ignore: prefer-named-boolean-parameters
-  void update(WidgetState key, bool add) {
-    final valueHasChanged = add ? value.add(key) : value.remove(key);
-
-    if (valueHasChanged) {
-      notifyListeners();
-    }
-  }
-
-  /// Batch updates the state of the widget with multiple state changes.
-  ///
-  /// [updates] is a list of tuples, where each tuple contains a state [key]
-  /// and a boolean [add] indicating whether to add or remove the state.
-  /// Listeners are notified if any state has changed.
-  void batch(List<(WidgetState, bool)> updates) {
-    var valueHasChanged = false;
-    for (final update in updates) {
-      final key = update.$1;
-      final add = update.$2;
-      if (add) {
-        valueHasChanged |= value.add(key);
-      } else {
-        valueHasChanged |= value.remove(key);
-      }
-    }
-
-    if (valueHasChanged) {
-      notifyListeners();
-    }
-  }
 
   /// Checks if the widget is currently in the given state [key].
   bool has(WidgetState key) => value.contains(key);

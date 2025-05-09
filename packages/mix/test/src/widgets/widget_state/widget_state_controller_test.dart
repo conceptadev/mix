@@ -39,6 +39,30 @@ class TrackRebuildWidgetState extends State<TrackRebuildWidget> {
   }
 }
 
+extension on WidgetStatesController {
+  /// Batch updates the state of the widget with multiple state changes.
+  ///
+  /// [updates] is a list of tuples, where each tuple contains a state [key]
+  /// and a boolean [add] indicating whether to add or remove the state.
+  /// Listeners are notified if any state has changed.
+  void batch(List<(WidgetState, bool)> updates) {
+    var valueHasChanged = false;
+    for (final update in updates) {
+      final key = update.$1;
+      final add = update.$2;
+      if (add) {
+        valueHasChanged |= value.add(key);
+      } else {
+        valueHasChanged |= value.remove(key);
+      }
+    }
+
+    if (valueHasChanged) {
+      notifyListeners();
+    }
+  }
+}
+
 void main() {
   group('MixWidgetStateController', () {
     test('initial state values', () {
