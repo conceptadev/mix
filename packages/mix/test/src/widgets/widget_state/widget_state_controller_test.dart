@@ -39,10 +39,34 @@ class TrackRebuildWidgetState extends State<TrackRebuildWidget> {
   }
 }
 
+extension on WidgetStatesController {
+  /// Batch updates the state of the widget with multiple state changes.
+  ///
+  /// [updates] is a list of tuples, where each tuple contains a state [key]
+  /// and a boolean [add] indicating whether to add or remove the state.
+  /// Listeners are notified if any state has changed.
+  void batch(List<(WidgetState, bool)> updates) {
+    var valueHasChanged = false;
+    for (final update in updates) {
+      final key = update.$1;
+      final add = update.$2;
+      if (add) {
+        valueHasChanged |= value.add(key);
+      } else {
+        valueHasChanged |= value.remove(key);
+      }
+    }
+
+    if (valueHasChanged) {
+      notifyListeners();
+    }
+  }
+}
+
 void main() {
-  group('MixWidgetStateController', () {
+  group('WidgetStatesController', () {
     test('initial state values', () {
-      final controller = MixWidgetStateController();
+      final controller = WidgetStatesController();
       expect(controller.disabled, isFalse);
       expect(controller.hovered, isFalse);
       expect(controller.focused, isFalse);
@@ -52,7 +76,7 @@ void main() {
     });
 
     test('update individual state', () {
-      final controller = MixWidgetStateController();
+      final controller = WidgetStatesController();
 
       controller.disabled = true;
       expect(controller.disabled, isTrue);
@@ -74,7 +98,7 @@ void main() {
     });
 
     test('batch update states', () {
-      final controller = MixWidgetStateController();
+      final controller = WidgetStatesController();
 
       controller.batch([
         (WidgetState.disabled, true),
@@ -91,7 +115,7 @@ void main() {
     });
 
     test('notifyListeners called on state change', () {
-      final controller = MixWidgetStateController();
+      final controller = WidgetStatesController();
 
       var notifyListenersCallCount = 0;
       controller.addListener(() => notifyListenersCallCount++);
@@ -112,7 +136,7 @@ void main() {
   });
   group('MixWidgetStateModel', () {
     testWidgets('of finds model', (tester) async {
-      final controller = MixWidgetStateController();
+      final controller = WidgetStatesController();
 
       controller.disabled = true;
       controller.hovered = true;
@@ -252,7 +276,7 @@ void main() {
       MaterialApp(
         home: StatefulBuilder(
           builder: (BuildContext context, StateSetter setState) {
-            final controller = MixWidgetStateController();
+            final controller = WidgetStatesController();
 
             controller.disabled = false;
             controller.hovered = hovered;
@@ -306,7 +330,7 @@ void main() {
 
   testWidgets('PressableState updates inherit model',
       (WidgetTester tester) async {
-    final controller = MixWidgetStateController();
+    final controller = WidgetStatesController();
 
     await tester.pumpWidget(
       MaterialApp(
