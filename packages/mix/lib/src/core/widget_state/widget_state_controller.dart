@@ -16,32 +16,32 @@ extension MixWidgetState on WidgetState {
 @Deprecated('Use WidgetStatesController instead')
 typedef MixWidgetStateController = WidgetStatesController;
 
-extension WidgetStatesExt on WidgetStatesController {
+extension MixWidgetStatesExt on WidgetStatesController {
   /// The current set of states for the widget.
   ///
   /// This is annotated with `@visibleForTesting` to indicate that it is
   /// accessible for testing purposes.
 
   /// Whether the widget is currently in the disabled state.
-  bool get disabled => value.contains(WidgetState.disabled);
+  bool get disabled => value.hasDisabled;
 
   /// Whether the widget is currently being hovered over.
-  bool get hovered => value.contains(WidgetState.hovered);
+  bool get hovered => value.hasHovered;
 
   /// Whether the widget currently has focus.
-  bool get focused => value.contains(WidgetState.focused);
+  bool get focused => value.hasFocused;
 
   /// Whether the widget is currently being pressed.
-  bool get pressed => value.contains(WidgetState.pressed);
+  bool get pressed => value.hasPressed;
 
   /// Whether the widget is currently being dragged.
-  bool get dragged => value.contains(WidgetState.dragged);
+  bool get dragged => value.hasDragged;
 
   /// Whether the widget is currently in the selected state.
-  bool get selected => value.contains(WidgetState.selected);
+  bool get selected => value.hasSelected;
 
   /// Whether the widget is currently in the error state.
-  bool get error => value.contains(WidgetState.error);
+  bool get error => value.hasError;
 
   /// Sets whether the widget is in the disabled state.
   set disabled(bool value) => update(WidgetState.disabled, value);
@@ -68,7 +68,37 @@ extension WidgetStatesExt on WidgetStatesController {
   bool has(WidgetState key) => value.contains(key);
 }
 
+extension MixSetWidgetStatesExt on Set<WidgetState> {
+  bool get hasDisabled => contains(WidgetState.disabled);
+  bool get hasHovered => contains(WidgetState.hovered);
+  bool get hasFocused => contains(WidgetState.focused);
+  bool get hasPressed => contains(WidgetState.pressed);
+  bool get hasDragged => contains(WidgetState.dragged);
+  bool get hasSelected => contains(WidgetState.selected);
+  bool get hasError => contains(WidgetState.error);
+}
+
 class MixWidgetStateModel extends InheritedModel<WidgetState> {
+  final bool disabled;
+  final bool hovered;
+  final bool focused;
+  final bool pressed;
+  final bool dragged;
+  final bool selected;
+  final bool error;
+
+  MixWidgetStateModel.fromSet({
+    super.key,
+    required Set<WidgetState> states,
+    required super.child,
+  })  : disabled = states.hasDisabled,
+        hovered = states.hasHovered,
+        focused = states.hasFocused,
+        pressed = states.hasPressed,
+        dragged = states.hasDragged,
+        selected = states.hasSelected,
+        error = states.hasError;
+
   const MixWidgetStateModel({
     super.key,
     required this.disabled,
@@ -106,14 +136,6 @@ class MixWidgetStateModel extends InheritedModel<WidgetState> {
     };
   }
 
-  final bool disabled;
-  final bool hovered;
-  final bool focused;
-  final bool pressed;
-  final bool dragged;
-  final bool selected;
-  final bool error;
-
   @override
   bool updateShouldNotify(MixWidgetStateModel oldWidget) {
     return oldWidget.disabled != disabled ||
@@ -130,18 +152,12 @@ class MixWidgetStateModel extends InheritedModel<WidgetState> {
     MixWidgetStateModel oldWidget,
     Set<WidgetState> dependencies,
   ) {
-    return oldWidget.disabled != disabled &&
-            dependencies.contains(WidgetState.disabled) ||
-        oldWidget.hovered != hovered &&
-            dependencies.contains(WidgetState.hovered) ||
-        oldWidget.focused != focused &&
-            dependencies.contains(WidgetState.focused) ||
-        oldWidget.pressed != pressed &&
-            dependencies.contains(WidgetState.pressed) ||
-        oldWidget.dragged != dragged &&
-            dependencies.contains(WidgetState.dragged) ||
-        oldWidget.selected != selected &&
-            dependencies.contains(WidgetState.selected) ||
-        oldWidget.error != error && dependencies.contains(WidgetState.error);
+    return oldWidget.disabled != disabled && dependencies.hasDisabled ||
+        oldWidget.hovered != hovered && dependencies.hasHovered ||
+        oldWidget.focused != focused && dependencies.hasFocused ||
+        oldWidget.pressed != pressed && dependencies.hasPressed ||
+        oldWidget.dragged != dragged && dependencies.hasDragged ||
+        oldWidget.selected != selected && dependencies.hasSelected ||
+        oldWidget.error != error && dependencies.hasError;
   }
 }
