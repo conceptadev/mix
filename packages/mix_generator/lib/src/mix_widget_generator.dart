@@ -248,16 +248,29 @@ class MixWidgetGenerator extends GeneratorForAnnotation<MixWidget> {
               ? const <WidgetCallTypeParam>[]
               : _extractCallTypeParams(callSource.call, library: library))
         : _extractTargetTypeParams(targetConstructor, library: library);
-    final variantConstructors =
-        factoryParams.any((parameter) => parameter.name == _variantParamName)
-        ? _extractVariantConstructors(
+    final variantParam = factoryParams
+        .where((parameter) => parameter.name == _variantParamName)
+        .firstOrNull;
+    final variantConstructors = variantParam == null
+        ? null
+        : _extractVariantConstructors(
             function,
             library: library,
             widgetTypeParameterNames: {
               for (final typeParameter in callTypeParams) typeParameter.name,
             },
-          )
-        : null;
+          );
+    // The named constructors are the only way to select a variant, so the
+    // parameter itself is curated off the widget: it declares no public field
+    // and no constructor parameter, and `build()` forwards the private field
+    // back into the recipe. Curated here rather than in `_extractFactoryParams`
+    // so `factoryParameters: .only(...)` keeps meaning exactly what it says for
+    // every other parameter.
+    final publicFactoryParams = variantConstructors == null
+        ? factoryParams
+        : factoryParams
+              .where((parameter) => parameter.name != _variantParamName)
+              .toList();
 
     return MixWidgetModel(
       widgetName: _resolveWidgetName(
@@ -268,7 +281,7 @@ class MixWidgetGenerator extends GeneratorForAnnotation<MixWidget> {
       ),
       factoryReference: functionName,
       isFunctionFactory: true,
-      factoryParams: factoryParams,
+      factoryParams: publicFactoryParams,
       callParams: callParams,
       callTypeParams: callTypeParams,
       stylerCallForwardsKey: call.forwardsKey,
@@ -276,6 +289,9 @@ class MixWidgetGenerator extends GeneratorForAnnotation<MixWidget> {
       targetConstructorName: callSource.targetConstructorName,
       doc: function.documentationComment,
       variantParamName: variantConstructors == null ? null : _variantParamName,
+      variantFieldTypeCode: variantConstructors == null
+          ? null
+          : variantParam?.typeCode,
       variantConstructors: variantConstructors ?? const [],
     );
   }

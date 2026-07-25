@@ -228,24 +228,43 @@ final cardStyle = BoxStyler()
 The widget name is derived from a lower-camel-case `*Style` identifier (`cardStyle` → `Card`); pass `@MixWidget(name: 'X')` to override. Function-backed factories thread their args before the styler `call()`: `@MixWidget Style<S> badge({Color? color}) => ...` generates a `Badge({this.color, this.child})` constructor.
 
 When a function-backed factory declares a named, non-nullable enum parameter
-named `variant`, the generator also emits one named constructor per accessible
-enum value:
+named `variant`, the generated widget is **named-constructors-only**: one
+constructor per accessible enum value, and no unnamed constructor.
 
 ```dart
 @MixWidget()
-ButtonStyler buttonStyle({ButtonVariant variant = .solid}) => ...;
+ButtonStyler buttonStyle({ButtonVariant variant = .solid, int size = 2}) => ...;
 
-// Generates both the backwards-compatible `Button(variant: ...)` and:
-//   const Button.solid({super.key, ...}) : variant = ButtonVariant.solid;
-//   const Button.ghost({super.key, ...}) : variant = ButtonVariant.ghost;
+// Generates:
+//   const Button.solid({super.key, this.size = 2, ...}) : _variant = ButtonVariant.solid;
+//   const Button.ghost({super.key, this.size = 2, ...}) : _variant = ButtonVariant.ghost;
+//   final ButtonVariant _variant;
+//   @override Widget build(BuildContext context) =>
+//       buttonStyle(variant: this._variant, size: this.size).call(...);
 ```
 
-Each named constructor omits the `variant` argument and preserves every other
-factory and styler `call()` parameter. Enum-value documentation and deprecation
-metadata are carried onto the matching constructor. Nullable, positional, and
-non-enum `variant` parameters retain the single-constructor behavior. Variant
-constructors are also skipped when an enum value conflicts with a generated
-widget type parameter.
+A variant is a recipe discriminator, not widget state, so it is curated off the
+widget's public surface: there is no public `variant` parameter and no public
+`variant` field. The selected value lives in a private `_variant` field that each
+named constructor pins, and `build()` forwards it back into the recipe's own
+`variant` parameter — so the recipe keeps whatever `switch (variant)` body it
+already had.
+
+Every other factory and styler `call()` parameter is preserved on each named
+constructor, and enum-value documentation and deprecation metadata are carried
+onto the matching constructor. Nullable, positional, and non-enum `variant`
+parameters are ordinary parameters and retain the single-unnamed-constructor
+behavior; the same applies when an enum value collides with a generated widget
+type parameter, since named constructors and type parameters share a namespace.
+
+`variant` must still be *selected* by `factoryParameters` for the constructors to
+be generated — selection is what opts the parameter into the widget at all. It is
+then curated back off the public surface. Excluding it from `.only(...)` keeps the
+pre-existing behavior of a single unnamed constructor that uses the recipe's own
+default variant.
+
+To select a variant dynamically, call the recipe directly and pass the resulting
+style to the target widget: `RemixButton(style: buttonStyle(variant: selected))`.
 
 See [`mix_annotations`](https://pub.dev/packages/mix_annotations) for the full annotation contract (parameter rules, `Key? key` forwarding, naming/visibility constraints).
 

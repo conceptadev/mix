@@ -87,7 +87,7 @@ ButtonStyler buttonStyle({
 
         final namedConstructorWithoutVariant = predicate<String>((source) {
           final match = RegExp(
-            r'const Button\.solid\(([\s\S]*?)\)\s*:\s*variant\s*=\s*'
+            r'const Button\.solid\(([\s\S]*?)\)\s*:\s*_variant\s*=\s*'
             r'variants\.ButtonVariant\.solid;',
           ).firstMatch(source);
 
@@ -123,9 +123,9 @@ ButtonStyler buttonStyle({
           inputAsset: 'mix_generator|lib/widget_case.dart',
           outputAsset: 'mix_generator|lib/widget_case.g.dart',
           outputMatcher: allOf([
-            // The existing unnamed constructor remains available.
-            contains('const Button({'),
-            contains('this.variant = variants.ButtonVariant.solid'),
+            // Variant constructors exist, so no unnamed constructor is emitted.
+            isNot(contains('const Button({')),
+            contains('final variants.ButtonVariant _variant;'),
             contains('this.size = 2'),
             contains('/// High-emphasis filled button.'),
             namedConstructorWithoutVariant,
@@ -136,7 +136,7 @@ ButtonStyler buttonStyle({
             constructorsFollowEnumOrder,
             contains(r'@Deprecated("Use \$solid instead.")'),
             contains('const Button.legacy('),
-            contains(': variant = variants.ButtonVariant.legacy;'),
+            contains(': _variant = variants.ButtonVariant.legacy;'),
           ]),
         );
       },
@@ -161,7 +161,10 @@ ButtonStyler buttonStyle({
           inputAsset: 'mix_generator|lib/widget_case.dart',
           outputAsset: 'mix_generator|lib/widget_case.g.dart',
           outputMatcher: allOf([
-            contains('this.variant = ButtonVariant.solid'),
+            isNot(contains('const Button({')),
+            contains('final ButtonVariant _variant;'),
+            contains(': _variant = ButtonVariant.solid;'),
+            contains(': _variant = ButtonVariant.ghost;'),
             contains('this.size = 2'),
             contains('required this.label'),
             contains('const Button.solid('),
@@ -189,9 +192,10 @@ ButtonStyler buttonStyle({required ButtonVariant variant}) =>
         inputAsset: 'mix_generator|lib/widget_case.dart',
         outputAsset: 'mix_generator|lib/widget_case.g.dart',
         outputMatcher: allOf([
-          contains('required this.variant'),
+          isNot(contains('this.variant')),
+          contains('final ButtonVariant _variant;'),
           contains('const Button.solid('),
-          contains(': variant = ButtonVariant.solid;'),
+          contains(': _variant = ButtonVariant.solid;'),
         ]),
       );
     });
@@ -277,7 +281,7 @@ ButtonStyler buttonStyle({
         outputMatcher: allOf([
           contains('const Button.solid('),
           contains('const Button._internal('),
-          contains(': variant = ButtonVariant._internal;'),
+          contains(': _variant = ButtonVariant._internal;'),
         ]),
       );
     });

@@ -1,3 +1,14 @@
+## 2.2.0-beta.3
+
+ - **BREAKING** **FEAT**: Generate named-constructors-only `@MixWidget` widgets
+   from an enum `variant` factory parameter. The widget no longer emits an
+   unnamed constructor, a public `variant` parameter, or a public `variant`
+   field: each named constructor pins its enum value into a private `_variant`
+   field, and `build()` forwards that field back into the recipe's own `variant`
+   parameter. Recipes are unchanged — they keep selecting the style themselves.
+   Select a variant dynamically by calling the recipe directly and passing the
+   result through the target's `style` parameter.
+
 ## 2.2.0-beta.2
 
  - **FEAT**: Generate `@MixWidget(target:)` wrappers for plain Widget

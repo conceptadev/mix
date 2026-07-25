@@ -15,18 +15,25 @@ class MixWidgetBuilder {
 
   /// Emits the constructor: positional factory params first, then named
   /// (`{super.key, ...named factory, ...named call}`).
+  ///
+  /// A widget with variant constructors is named-constructors-only: the variant
+  /// has no public parameter to select it, so an unnamed constructor could only
+  /// fall back to the recipe's default and would duplicate `.solid()` and
+  /// friends. This emits nothing for that case.
   void _writeConstructor(StringBuffer buffer) {
+    if (model.hasVariantConstructors) return;
+
     _writeConstructorDeclaration(buffer, model.widgetName, model.allParams);
+    buffer.writeln();
   }
 
   /// Emits the constructors derived from the convention-matched enum values.
   void _writeVariantConstructors(StringBuffer buffer) {
-    final variantParamName = model.variantParamName;
-    if (variantParamName == null || model.variantConstructors.isEmpty) return;
+    if (!model.hasVariantConstructors) return;
 
-    final constructorParams = model.allParams
-        .where((param) => param.name != variantParamName)
-        .toList();
+    // The variant is already absent from `allParams` — the generator curates it
+    // out — so every remaining parameter belongs on each named constructor.
+    final constructorParams = model.allParams;
 
     for (final variant in model.variantConstructors) {
       if (variant.doc != null) {
@@ -40,7 +47,8 @@ class MixWidgetBuilder {
         buffer,
         '${model.widgetName}.${variant.name}',
         constructorParams,
-        initializer: '$variantParamName = ${variant.valueCode}',
+        initializer:
+            '${MixWidgetModel.variantFieldName} = ${variant.valueCode}',
       );
       buffer.writeln();
     }
@@ -101,8 +109,14 @@ class MixWidgetBuilder {
     return '${required}this.${param.name}$defaultClause';
   }
 
-  /// Emits `final <type> <name>;` for each parameter.
+  /// Emits `final <type> <name>;` for each parameter, preceded by the private
+  /// variant field when the widget has variant constructors.
   void _writeFields(StringBuffer buffer) {
+    if (model.variantFieldTypeCode case final typeCode?) {
+      buffer.writeln('  final $typeCode ${MixWidgetModel.variantFieldName};');
+      buffer.writeln();
+    }
+
     for (final param in model.allParams) {
       buffer.writeln('  final ${param.typeCode} ${param.name};');
       buffer.writeln();
@@ -173,8 +187,13 @@ class MixWidgetBuilder {
     final named = model.factoryParams
         .where((p) => !p.isPositional)
         .map((p) => '${p.name}: this.${p.name}');
+    // The variant is curated off the widget but still selects the recipe's
+    // style, so it is re-added here from the field the constructor pinned.
+    final variant = model.variantParamName == null
+        ? const <String>[]
+        : ['${model.variantParamName}: this.${MixWidgetModel.variantFieldName}'];
 
-    return [...positional, ...named].join(', ');
+    return [...positional, ...variant, ...named].join(', ');
   }
 
   /// Renders the lines passed to `.call(...)`.
@@ -201,7 +220,6 @@ class MixWidgetBuilder {
     );
 
     _writeConstructor(buffer);
-    buffer.writeln();
 
     _writeVariantConstructors(buffer);
 

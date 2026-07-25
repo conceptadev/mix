@@ -121,12 +121,26 @@ class MixWidgetModel {
   /// `///` markers intact), or `null` when the element has no doc.
   final String? doc;
 
-  /// Factory parameter initialized by [variantConstructors], or `null` when
-  /// this widget has no convention-derived variant constructors.
+  /// Recipe parameter the named constructors select, or `null` when this
+  /// widget has no convention-derived variant constructors.
+  ///
+  /// The parameter is curated off the widget's public surface: the value lives
+  /// in the private [variantFieldName] field and is forwarded back into this
+  /// recipe parameter by `build()`.
   final String? variantParamName;
+
+  /// Dart source code for [variantFieldName]'s type, or `null` when this widget
+  /// has no variant constructors.
+  ///
+  /// Carried separately because the variant is absent from [factoryParams],
+  /// which is where every other field's type comes from.
+  final String? variantFieldTypeCode;
 
   /// Named constructors derived from the enum values of [variantParamName].
   final List<WidgetVariantConstructor> variantConstructors;
+
+  /// Private field the named constructors pin the selected enum value into.
+  static const variantFieldName = '_variant';
 
   const MixWidgetModel({
     required this.widgetName,
@@ -140,8 +154,12 @@ class MixWidgetModel {
     this.targetConstructorName,
     this.doc,
     this.variantParamName,
+    this.variantFieldTypeCode,
     this.variantConstructors = const [],
   });
+
+  /// Whether the widget is named-constructors-only.
+  bool get hasVariantConstructors => variantConstructors.isNotEmpty;
 
   String _typeParameterSuffix(String Function(WidgetCallTypeParam) render) {
     if (callTypeParams.isEmpty) return '';

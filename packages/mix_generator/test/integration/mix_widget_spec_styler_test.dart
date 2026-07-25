@@ -286,9 +286,11 @@ ButtonStyler buttonStyle({
           outputAsset: 'mix|lib/button.g.dart',
           outputMatcher: allOf([
             contains('class Button extends StatelessWidget {'),
+            isNot(contains('const Button({')),
             contains('const Button.solid('),
             contains('const Button.ghost('),
-            contains(': variant = ButtonVariant.solid;'),
+            contains(': _variant = ButtonVariant.solid;'),
+            contains('final ButtonVariant _variant;'),
             contains('required this.label'),
           ]),
         );
@@ -460,13 +462,14 @@ ButtonStyler fortalButtonStyler({
         outputAsset: 'mix|lib/button.g.dart',
         outputMatcher: allOf([
           contains('class FortalButton extends StatelessWidget {'),
-          contains('const FortalButton({'),
-          contains('this.variant = ButtonVariant.solid,'),
+          isNot(contains('const FortalButton({')),
           contains('this.size = ButtonSize.small,'),
           contains('required this.label,'),
           contains('const FortalButton.solid('),
           contains('const FortalButton.ghost('),
-          contains('final ButtonVariant variant;'),
+          contains(': _variant = ButtonVariant.solid;'),
+          contains(': _variant = ButtonVariant.ghost;'),
+          contains('final ButtonVariant _variant;'),
           contains('final ButtonSize size;'),
           contains('final String label;'),
           contains('final Widget? child;'),
@@ -479,7 +482,7 @@ ButtonStyler fortalButtonStyler({
           contains('return PlainButton('),
           contains('key: this.key,'),
           contains(
-            'style: fortalButtonStyler(variant: this.variant, '
+            'style: fortalButtonStyler(variant: this._variant, '
             'size: this.size),',
           ),
           contains('label: this.label,'),

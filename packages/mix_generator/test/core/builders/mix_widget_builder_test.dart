@@ -258,13 +258,6 @@ void main() {
           isFunctionFactory: true,
           factoryParams: [
             WidgetCallParam(
-              name: 'variant',
-              typeCode: 'ButtonVariant',
-              isPositional: false,
-              isRequired: false,
-              defaultValueCode: 'ButtonVariant.solid',
-            ),
-            WidgetCallParam(
               name: 'size',
               typeCode: 'int',
               isPositional: false,
@@ -288,6 +281,7 @@ void main() {
           ],
           stylerCallForwardsKey: true,
           variantParamName: 'variant',
+          variantFieldTypeCode: 'ButtonVariant',
           variantConstructors: [
             WidgetVariantConstructor(
               name: 'solid',
@@ -301,7 +295,7 @@ void main() {
       final code = builder.build();
       final constructor = RegExp(
         r'const Button\.solid\(([\s\S]*?)\)\s*:\s*'
-        r'variant\s*=\s*ButtonVariant\.solid;',
+        r'_variant\s*=\s*ButtonVariant\.solid;',
       ).firstMatch(code);
 
       expect(constructor, isNotNull);
@@ -317,7 +311,11 @@ void main() {
           '  const Button.solid(',
         ),
       );
-      expect(code, contains('final ButtonVariant variant;'));
+      // No unnamed constructor is emitted for a variant-backed widget.
+      expect(code, isNot(contains('const Button({')));
+      // The variant field is private and has no public counterpart.
+      expect(code, contains('final ButtonVariant _variant;'));
+      expect(code, isNot(contains('final ButtonVariant variant;')));
     });
 
     test('deprecated variant annotates its generated constructor', () {
@@ -326,17 +324,11 @@ void main() {
           widgetName: 'Button',
           factoryReference: 'buttonStyle',
           isFunctionFactory: true,
-          factoryParams: [
-            WidgetCallParam(
-              name: 'variant',
-              typeCode: 'ButtonVariant',
-              isPositional: false,
-              isRequired: true,
-            ),
-          ],
+          factoryParams: [],
           callParams: [],
           stylerCallForwardsKey: false,
           variantParamName: 'variant',
+          variantFieldTypeCode: 'ButtonVariant',
           variantConstructors: [
             WidgetVariantConstructor(
               name: 'legacy',
@@ -352,7 +344,7 @@ void main() {
         contains(
           "  @Deprecated('Use solid instead.')\n"
           '  const Button.legacy({super.key}) '
-          ': variant = ButtonVariant.legacy;',
+          ': _variant = ButtonVariant.legacy;',
         ),
       );
     });
