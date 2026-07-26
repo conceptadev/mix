@@ -4,16 +4,13 @@
 /// Spike 4 — Tailwind → unbundled Mix layout mapping (not productized).
 ///
 /// Maps the advanced-layout utilities identified in the exploration doc onto
-/// the Spike 1–3 primitives. Nothing here is exported from
+/// the Spike 2–3 primitives (Wrap + Grid). Nothing here is exported from
 /// [mix_tailwinds.dart].
 ///
 /// ## Mapping table
 ///
 /// | Tailwind | Mix spike target | Notes |
 /// |---|---|---|
-/// | `@container` | marks a constraint-query scope | StyleBuilder inserts ConstraintScope when any descendant style uses `onConstraints` |
-/// | `@max-md:flex-col` | `onConstraints(Breakpoint(maxWidth: md), FlexBoxStyler().direction(vertical))` | container query, not viewport `md:` |
-/// | `md:flex-col` | `onBreakpoint(Breakpoint(minWidth: md), …)` | existing viewport path (unchanged) |
 /// | `grid-cols-3` | `GridBoxStyler(columns: [fr(1), fr(1), fr(1)])` | equal fr tracks |
 /// | `grid-cols-[80px_2fr_1fr]` | `GridBoxStyler(columns: [fixed(80), fr(2), fr(1)])` | arbitrary tracks |
 /// | `gap-4` (on grid) | `GridBoxStyler(...).gap(16)` | theme spacing scale; 4 → 16px in default TW |
@@ -21,6 +18,13 @@
 /// | `flex-wrap` | `WrapBox` host (not FlexBox) | FlexBox cannot express wrap; flow family required |
 /// | `gap-2` (on wrap) | `WrapBoxStyler(flow: WrapStyler(spacing: 8, runSpacing: 8))` | TW gap applies both axes |
 /// | `content-*` / `items-*` on wrap | `WrapStyler(alignment/runAlignment/crossAxisAlignment)` | via nested flow |
+///
+/// ## Not mapped (failed / deferred experiments)
+///
+/// | Tailwind | Why omitted |
+/// |---|---|
+/// | `@container` / `@max-md:flex-col` | Universal `onConstraints` via LayoutBuilder failed dry/intrinsic layout. Grid-only render-time branches remain an internal validation direction — not a Tailwind container-query product claim. |
+/// | `md:flex-col` (viewport) | Already covered by public `onBreakpoint` / `onMobile`; not part of this layout spike. |
 ///
 /// ## Completeness findings
 ///
@@ -33,39 +37,16 @@
 /// 3. Grid is hand-written (no codegen) in the spike; productization should
 ///    either codegen GridBoxSpec or keep a thin hand API. Spans, named areas,
 ///    and content-sized tracks are intentionally out of scope.
-/// 4. `@container` name is not a style property — it is a scope marker. Mix
-///    does not need a user-facing `@container` widget if StyleBuilder always
-///    scopes when constraint variants are present (current spike behavior).
-/// 5. Tailwind `max-md:` on viewport vs `@max-md:` on container must stay
-///    distinct: map the former to `onBreakpoint`/`onMobile`, the latter to
-///    `onConstraints`.
+/// 4. WrapBox has no constraint-responsive styling in the spike. Grid-only
+///    render-time `onConstraints` is internal validation, not public API and
+///    not a descendant-scope / `@container` equivalent.
 library;
 
-import 'package:flutter/widgets.dart';
-import 'package:mix/mix.dart';
+import 'package:flutter/foundation.dart';
 import 'package:mix/src/layout/grid_box.dart';
 import 'package:mix/src/layout/grid_track.dart';
 import 'package:mix/src/specs/wrap/wrap_spec.dart';
 import 'package:mix/src/specs/wrapbox/wrapbox_spec.dart';
-
-/// Default Tailwind `md` breakpoint in px (min-width media, max for @max-md).
-const double twMdBreakpointPx = 768;
-
-/// Translates `@max-md:flex-col` into a FlexBox style branch.
-///
-/// [mdMaxWidth] defaults to Tailwind's md boundary (768): styles apply when
-/// offered max width is ≤ md − epsilon... Tailwind `@max-md` is
-/// `(max-width: 767px)` in v3 default — we use inclusive `maxWidth: 767` to
-/// match Mix [Breakpoint] inclusive bounds with the mobile token.
-FlexBoxStyler translateContainerMaxMdFlexCol({
-  FlexBoxStyler? base,
-  double maxWidth = 767,
-}) {
-  return (base ?? FlexBoxStyler().direction(Axis.horizontal)).onConstraints(
-    Breakpoint(maxWidth: maxWidth),
-    FlexBoxStyler().direction(Axis.vertical),
-  );
-}
 
 /// Translates `grid-cols-N gap-G` where G is a Tailwind spacing step (×4 px).
 GridBoxStyler translateGridColsGap({
@@ -101,13 +82,8 @@ class TailwindLayoutMapping {
   final String mixDescription;
 }
 
-/// The three acceptance mappings from the spike plan.
+/// Honest acceptance mappings retained after the container-query claim was dropped.
 const spike4AcceptanceMappings = <TailwindLayoutMapping>[
-  TailwindLayoutMapping(
-    tailwind: '@container + @max-md:flex-col',
-    mixDescription:
-        'onConstraints(Breakpoint(maxWidth: md), FlexBoxStyler().direction(vertical))',
-  ),
   TailwindLayoutMapping(
     tailwind: 'grid-cols-3 gap-4',
     mixDescription:

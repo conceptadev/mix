@@ -277,8 +277,6 @@ const _packageExportConfigs = <String, _PackageExportConfig>{
         'clearTokenRegistry',
         'getTokenFromValue',
       ],
-      // Layout spike: ConstraintVariant is @internal — do not export publicly.
-      'src/variants/variant.dart': ['ConstraintVariant'],
     },
     excludedPaths: [
       'src/core/decoration_merge.dart',
@@ -291,8 +289,10 @@ const _packageExportConfigs = <String, _PackageExportConfig>{
       // individual public symbols are already exported by mix.dart.
       'src/generated_styler_support.dart',
       // Layout spike prototypes — unexported until productization.
-      'src/core/providers/constraint_scope.dart',
+      // Universal onConstraints / ConstraintScope were removed as a failed
+      // experiment; Grid render-time branches and Wrap remain internal.
       'src/layout/grid_box.dart',
+      'src/layout/grid_layout_config.dart',
       'src/layout/grid_track.dart',
       'src/layout/render_grid.dart',
       'src/specs/wrap/wrap_spec.dart',

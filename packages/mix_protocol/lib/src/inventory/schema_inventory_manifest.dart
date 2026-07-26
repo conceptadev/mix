@@ -698,12 +698,4 @@ const _neverUnsupportedInventory = <SchemaInventoryEntry>[
     r'WrapStyler.$verticalDirection',
     _spikeUnexported,
   ),
-  SchemaInventoryEntry.knownUnsupported(
-    'variant:ConstraintVariant',
-    _spikeUnexported,
-  ),
-  SchemaInventoryEntry.knownUnsupported(
-    'variant_factory:ContextVariant.constraints',
-    _spikeUnexported,
-  ),
 ];

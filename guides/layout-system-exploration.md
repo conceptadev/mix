@@ -1,11 +1,12 @@
 # Mix Layout System: Clean-Sheet Exploration
 
-> **Status: spike-validated unbundled direction.** Advanced layout need is
-> delivered as independent primitives (`onConstraints`, `WrapBox`, `GridBox`)
-> following existing Mix conventions — not as a bundled `MixLayout<Slot>`
-> framework. Spike prototypes live under `packages/mix/lib/src/` (Wrap/Grid
-> unexported; constraint APIs marked `@internal`) and tests — **not productized**
-> (no barrel export of new families, no changelog, no public stabilization).
+> **Status: internal research hardening.** Universal `onConstraints` (LayoutBuilder
+> + `ConstraintScope` on every Styler) is a **failed experiment** — it cannot
+> satisfy Flutter dry/intrinsic layout. Continuing internal validation direction
+> is **Grid-host render-time constraint branches** only (not selected public API).
+> `WrapBox` remains a native-Wrap feasibility spike **without** constraint-responsive
+> styling. Both Wrap and Grid stay **unexported**. No public API, changelog,
+> Flex/Stack participation, or `MixLayout` ships from this work.
 > `MixLayout<Slot>` remains a considered-and-deferred alternative (see
 > [Spike results](#spike-results) and [Decision record](#decision-record)).
 
@@ -13,21 +14,20 @@
 `ColumnBox`, and `StackBox` APIs; continue to use Flutter's `Expanded`,
 `Flexible`, `Positioned`, and `PositionedDirectional` where needed; leave
 `WidgetModifierConfig.flexible` unchanged; and remove the discarded
-`FlexItem`/`StackItem` prototype. Productize advanced layout as three
-increments — `onConstraints` → `WrapBox` → `GridBox` — not as a single
-`MixLayout` host.
+`FlexItem`/`StackItem` prototype. Do **not** productize universal constraint
+variants. Keep Wrap/Grid as unexported experiments while Grid render-time
+branches are hardened.
 
 ## Executive summary
 
 Mix needs better local responsiveness (container queries) and two layout
 families that Flex/Stack do not cover: **flow** (Flutter `Wrap`) and **grid**
-(tracks + gaps). Spikes showed these can ship as independent, Mix-native
-pieces:
+(tracks + gaps). Spikes clarified what can and cannot ship as Mix-native pieces:
 
 ```text
-onConstraints(Breakpoint, style)   // universal variant — all Stylers
-WrapBox + WrapBoxStyler            // Box-family partner over Flutter Wrap
-GridBox + GridBoxStyler            // fixed/fr tracks, gaps, auto-place
+onConstraints (universal)          // FAILED — LayoutBuilder dry/intrinsic gap
+WrapBox + WrapBoxStyler            // native Wrap feasibility; no constraint branches
+GridBox + GridBoxStyler            // fixed/fr + gaps; Grid-only render-time branches (internal)
 ```
 
 A single `MixLayout<Slot>` host with plan switching remains **deferred**. It
@@ -37,9 +37,9 @@ between linear/flow/grid/overlay/masonry) becomes a product requirement that
 the unbundled pieces cannot express.
 
 Visual styling remains on existing Stylers. Parent-data wrappers stay at the
-host-child boundary. Tailwind (`mix_tailwinds`) is the completeness harness:
-`@container` / `@max-md:*` → `onConstraints`, `grid-cols-*` / `gap-*` → grid,
-`flex-wrap` / `gap-*` → wrap.
+host-child boundary. Tailwind (`mix_tailwinds`) is a completeness harness with
+**honest** mappings only: `grid-cols-*` / `gap-*` → grid, `flex-wrap` / `gap-*`
+→ wrap. `@container` / `@max-md:*` are **not** claimed as Mix product surfaces.
 
 ## Problem statement
 
@@ -488,15 +488,23 @@ as a deferred alternative.
 
 ## Recommended future model (validated)
 
-### Unbundled primitives are the product path
+### Unbundled family hosts — not universal constraint variants
 
-Ship advanced layout as three independent Mix-native pieces (export order):
+Spike evidence closed the **universal** `onConstraints` / LayoutBuilder path
+(see [Spike results](#spike-results)). Continuing internal validation and any
+later product path must not reintroduce LayoutBuilder-based constraint variants
+on every Styler.
 
-1. **`onConstraints`** — universal constraint variant on every Styler
-   (container queries; offered `BoxConstraints`, not MediaQuery).
-2. **`WrapBox`** — Box-family partner over Flutter `Wrap` (flow).
-3. **`GridBox`** — fixed/fr tracks, gaps, row-major auto-place first;
-   spans/areas later.
+What remains under consideration (all **unexported** until productization):
+
+1. **`WrapBox`** — Box-family partner over Flutter `Wrap` (flow). Feasibility
+   proven; no constraint-responsive styling required for Wrap.
+2. **`GridBox`** — fixed/fr tracks, gaps, row-major auto-place first;
+   spans/areas later. **Grid-only render-time constraint branches** are the
+   internal validation direction for local responsiveness — not selected public
+   API and not a universal Styler feature.
+3. **Viewport breakpoints** (`onBreakpoint` / `onMobile`) remain the public
+   responsive path for offered MediaQuery size; they are unrelated to this spike.
 
 Simple rows and stacks continue to use `RowBox`, `ColumnBox`, `FlexBox`, and
 `StackBox`. Parent-data wrappers (`Expanded`, `Positioned`, …) stay at the
@@ -593,7 +601,8 @@ algorithm never creates or removes widgets.
 - custom algorithm parameters;
 - Mix tokens and merge/reset behavior for those values;
 - context variants that can be resolved before layout; and
-- `onConstraints` branches selected from incoming box constraints.
+- host-owned render-time constraint branches (Grid-local validation direction;
+  universal LayoutBuilder `onConstraints` was tried and rejected).
 
 It does not own:
 
@@ -744,12 +753,14 @@ entirely in typed parameters.
 This API remains experimental until a corpus of real layouts demonstrates dry
 layout parity, good diagnostics, and acceptable performance.
 
-### `onConstraints` replaces the working name `onContainer`
+### Naming note: `onConstraints` vs `onContainer` (universal path failed)
 
-The proposed name is:
+The working name was `onContainer`. Spikes renamed the idea to `onConstraints`
+to state what the rule observes (offered `BoxConstraints`), not a CSS container:
 
 ```dart
-// Proposed API — not implemented.
+// Historical proposal — universal form failed dry/intrinsic layout and was removed.
+// Grid-only render-time branches remain internal validation only.
 style.onConstraints(
   const Breakpoint.maxWidth(560),
   compactStyle,
@@ -757,8 +768,8 @@ style.onConstraints(
 ```
 
 “Container” is ambiguous: it might refer to Flutter's `Container`, a styled
-box, or a CSS container query. `onConstraints` states what the rule actually
-observes.
+box, or a CSS container query. The name clarification stands; the **universal
+Styler product path does not**.
 
 The distinction from existing viewport variants is important:
 
@@ -1385,7 +1396,7 @@ Use fake typed child handles with recorded constraints and deterministic sizes:
 | A child cannot answer dry layout | Some Flutter render boxes intentionally reject it | Preserve Flutter failure, add slot context, document unsupported combinations |
 | Grid scope expands toward CSS | Track sizing becomes a long standards project | Publish a finite documented subset |
 | Masonry is mistaken for a lazy feed | Eager measurement can be expensive | Name and document it as finite box masonry; benchmark caps |
-| Constraint variants behave like screen variants | Responsive components choose surprising plans | Separate `onConstraints` docs/tests from `onMobile` and `onBreakpoint` |
+| Constraint variants behave like screen variants | Responsive components choose surprising plans | Do not ship universal constraint variants; keep viewport APIs (`onMobile`/`onBreakpoint`) separate from any host-local render-time branches |
 | Map order becomes accidental z-order | Overlays paint or hit test unexpectedly | Specify, snapshot, test, and diagnose source order |
 | Custom algorithms become mutable delegates | Reuse and relayout become nondeterministic | Stateless interface, typed params, equality checks, debug assertions |
 | Visual and layout styling blur together | Parent geometry leaks into child components | Keep `LayoutStyler` geometry-only |
@@ -1400,21 +1411,25 @@ Use fake typed child handles with recorded constraints and deterministic sizes:
 
 A public advanced layout API is ready for stabilization only when:
 
-1. `onConstraints` is exported (remove `@internal`), documented as offered
-   `BoxConstraints` (not MediaQuery), and tested for inclusive bounds, merge
-   order, nested detection, `styleSpec` bypass, and dry-layout blast radius.
-2. Styles without constraint variants pay zero `LayoutBuilder` cost.
-3. `WrapBox` / `WrapBoxStyler` are exported; fluent spacing API parity with
+1. **Universal LayoutBuilder `onConstraints` is not revived.** Dry/intrinsic
+   failure remains a hard stop for any universal Styler constraint variant.
+2. `WrapBox` / `WrapBoxStyler` are exported; fluent spacing API parity with
    FlexBox is acceptable (e.g. `WrapStyleMixin`); generator field naming
-   (`flow` vs reserved `wrap`) is documented.
-4. `GridBox` fixed/fr + gaps + auto-place passes live==dry parity; child layout
+   (`flow` vs reserved `wrap`) is documented. Constraint-responsive styling on
+   Wrap is not a v1 requirement.
+3. `GridBox` fixed/fr + gaps + auto-place passes live==dry parity; child layout
    pass counts and gap math are tested; slice remains maintainable.
-5. `onConstraints` composes on Flex, Text, Wrap, and Grid hosts.
-6. Tailwind mappings (`@container` / `@max-md:*`, `grid-cols-*` / `gap-*`,
-   `flex-wrap` / `gap-*`) compile cleanly in `mix_tailwinds`.
-7. Changelog, public docs, and export order follow
-   `onConstraints` → `WrapBox` → `GridBox`.
-8. Full repository generation, test, analysis, and export checks pass.
+4. If Grid-local responsiveness ships publicly, it uses **render-time branches**
+   on the Grid host only (immutable config, shared live/dry selection, no widget
+   rebuild for branch choice) — not universal variants and not Tailwind
+   `@container` product claims until dry-safe.
+5. Honest Tailwind mappings (`grid-cols-*` / `gap-*`, `flex-wrap` / `gap-*`)
+   compile cleanly in `mix_tailwinds`. No `@container` / `@max-md:*` translator
+   claim without a dry-safe host model.
+6. Changelog, public docs, and export order follow family readiness
+   (`WrapBox` and/or `GridBox` independently) — not a universal-constraint-first
+   sequence.
+7. Full repository generation, test, analysis, and export checks pass.
 
 ### Deferred `MixLayout` revival gates (only if product needs plan switching)
 
@@ -1452,102 +1467,93 @@ and animation expectations.
 
 ## Spike results
 
-Evidence from internal spikes on branch work (see tests under
-`packages/mix/test/src/variants/constraint_variant_test.dart`,
+Evidence from internal spikes (see tests under
 `packages/mix/test/src/specs/wrapbox/`, `packages/mix/test/src/layout/`,
 and `packages/mix_tailwinds/test/spike/`). Symbols for Wrap/Grid remain
-unexported from `mix.dart`.
+unexported from `mix.dart`. Universal constraint machinery has been **removed**.
 
-### Spike 1 — `onConstraints` — **Go**
+### Spike 1 — universal `onConstraints` — **Failed experiment**
 
-| Gate criterion | Evidence |
+| Gate criterion | Outcome |
 |---|---|
-| Zero cost for styles without constraint variants | No `LayoutBuilder` / `ConstraintScope` when `hasConstraintVariants` is false |
-| Matching on offered `BoxConstraints.biggest` | Inclusive bounds; unbounded axis = infinity so finite `maxWidth` does not match; `minWidth` can match unbounded; `BreakpointRef` resolves like `BreakpointVariant` |
-| Universal (not layout-only) | `TextStyler().fontSize(20).onConstraints(...)` changes font size |
-| Independent of viewport variants | Narrow panel on wide desktop: `onConstraints` matches, `onMobile` / `onBreakpoint` do not |
-| Merge / precedence | Base first; matching branches in declaration order; coexists with `onBreakpoint` |
-| Nested detection | Recursive scan into nested variant styles; depth-20 × 1000 calls &lt; 100 ms — no cache required yet |
-| `styleSpec` bypass | Debug assert when `style` has constraint variants and `styleSpec` is also passed; `styleSpec` path never installs `ConstraintScope` |
-| Rebuild dedupe | Identical constraints do not re-run the style builder |
-| Intrinsics / dry blast radius | Limited to opted-in subtrees. Exact dry-layout error: `_RenderLayoutBuilder class does not support dry layout. Calculating the dry layout would require running the layout callback speculatively…` Styles without constraint variants work under `IntrinsicHeight`. |
-| Variant machinery | No structural change — `ConstraintVariant` extends `ContextVariant`; `StyleBuilder` conditionally wraps |
+| Dry / intrinsic layout | **Failed.** `LayoutBuilder` / `_RenderLayoutBuilder` cannot compute dry layout or participate cleanly under `IntrinsicHeight` / intrinsic parents. Exact class of error: speculative layout callback would mutate the live tree. |
+| Universal Styler API | Achievable only by inserting `LayoutBuilder` + `ConstraintScope` into `StyleBuilder` when constraint variants are present — which reintroduces the dry-layout gap on every opted-in subtree. |
+| Zero cost for non-users | Achievable with static detection, but nested `onBuilder` closures cannot be detected without over-scoping every builder user. |
+| Product conclusion | **Hard-cut removal.** No deprecation shim (API was unpublished / `@internal`). Do not export universal `onConstraints`. |
 
-**Mechanism:** `ConstraintVariant` + `ConstraintScope` InheritedWidget; `StyleBuilder` inserts `LayoutBuilder` → `ConstraintScope` only when the style tree contains a constraint variant; `onConstraints` on `VariantStyleMixin`.
+**Removed:** `ConstraintScope`, `ConstraintVariant`, `ContextVariant.constraints`,
+`VariantStyleMixin.onConstraints`, and conditional `LayoutBuilder` insertion in
+`StyleBuilder` / `StyleWidget`.
 
-**Fallback (not taken):** host-side render-time branch selection without `LayoutBuilder` remains available if a product surface later cannot accept the dry-layout limitation. For v1, the LayoutBuilder cost is accepted and documented for opted-in subtrees only.
+**Continuing direction (internal only):** host-side render-time branch selection
+on layout hosts that own a render contract (Grid). Branch selection must stay
+immutable, shared between live and dry layout, and must not rebuild widgets or
+alter children when constraints change.
 
-**Known limitation — `onBuilder` nesting:** constraint detection
-(`hasConstraintVariants`) is static and cannot see inside a
-`ContextVariantBuilder` closure, which produces its style at build time. A
-`.onConstraints(...)` returned from inside `onBuilder` therefore gets no
-`ConstraintScope` and throws at resolution. Detecting it conservatively (treating
-every builder variant as constraint-bearing) is rejected: it would impose the
-`LayoutBuilder`/dry-layout cost on all existing `onBuilder` users. Resolution is
-to attach `onConstraints` directly to the style; the `ConstraintScope` error text
-names this cause. Productization should document it alongside the dry-layout note.
-
-### Spike 2 — `WrapBox` — **Go**
+### Spike 2 — `WrapBox` — **Go (feasibility only; no constraint styling)**
 
 | Gate criterion | Evidence |
 |---|---|
 | Codegen extends to a new family member | `melos`/`build_runner` produces `wrap_spec.g.dart` and `wrapbox_spec.g.dart` without generator code changes |
-| Widget behavior | spacing / runSpacing / alignment applied on Flutter `Wrap`; optional `Box` chrome |
-| `onConstraints` composition | `WrapBoxStyler(...).onConstraints(...)` flips spacing under narrow offered width |
+| Widget behavior | spacing / runSpacing / alignment / RTL / verticalDirection applied on Flutter `Wrap`; optional `Box` chrome |
+| Constraint-responsive styling | **Out of scope** for Wrap in this spike — no render-time branches, no universal variants |
 
 **Finding:** nested field cannot be named `wrap` — generator reserves `wrap` for modifier chaining. Field is named `flow`. Productization should add a `WrapStyleMixin` for flattened fluent methods (current composite only exposes `box` / `flow` setters, unlike `FlexBoxStyler`).
 
-### Spike 3 — `GridBox` render slice — **Go (build slice; adapt optional later)**
+### Spike 3 — `GridBox` render slice — **Internal validation (render-time branches)**
 
 | Gate criterion | Evidence |
 |---|---|
 | fixed + fr tracks, gaps, row-major auto-place | Unit tests on `computeTrackSizes` / `computeGridLayout`; widget tests on positions |
-| Live size == dry size | Shared `computeGridLayout` used by `performLayout` and `computeDryLayout` |
+| Live size == dry size | Shared `computeGridLayout` used by `performLayout` and `computeDryLayout` after the same branch resolution |
 | Single layout pass per child | `childLayoutCount == childCount` per performLayout |
-| Modest size | ~565 LOC under `packages/mix/lib/src/layout/` (hand-written Spec/Styler; no codegen) |
-| `onConstraints` composition | Dashboard (fixed+2fr+1fr → 1 col) and gallery (3×N → 1 col) demos |
+| Render-time `onConstraints` | Grid-only; patches are columns/rows/gaps only; breakpoint tokens resolve at styler resolve; frozen `GridLayoutConfig` on the render object; inclusive bounds; declaration-order partial patches |
+| Validation | ≥1 column; finite non-negative fixed tracks/gaps; finite >0 fr tracks; actionable `FlutterError` for fr on unbounded axis; no auto rows when empty children |
+| Immutability | Defensive unmodifiable copies of tracks/patches/branches; equality-checked config setter |
+| Not public API | Unexported; not a stability promise |
 
 **`flutter_layout_grid` evaluation (v2.0.8, MIT):**
 
 - Full CSS-inspired track sizing including intrinsic tracks; implements `computeDryLayout`.
 - Substantial surface area and dependency vs Mix-owned ~0.5k LOC slice.
-- **Recommendation:** **build** the Mix-owned fixed/fr + gap + auto-place core for product v1 (proven, small, Mix-native Styler). **Revisit adapt** when product needs content-sized tracks, spans, or named areas where reimplementing CSS grid would dominate — license fits (MIT); dry-layout support is real.
+- **Recommendation:** keep Mix-owned fixed/fr + gap + auto-place core for the spike. **Revisit adapt** when product needs content-sized tracks, spans, or named areas where reimplementing CSS grid would dominate — license fits (MIT); dry-layout support is real.
 
-### Spike 4 — Tailwind parity probe — **Pass (with completeness notes)**
+### Spike 4 — Tailwind parity probe — **Honest Grid/Wrap only**
 
 Prototype translators in `packages/mix_tailwinds/lib/src/spike/layout_parity_map.dart` (unexported):
 
 | Tailwind | Mix spike |
 |---|---|
-| `@container` + `@max-md:flex-col` | `onConstraints(Breakpoint(maxWidth: md), FlexBoxStyler().direction(vertical))` |
 | `grid-cols-3 gap-4` | `GridBoxStyler(columns: [fr×3], gap 16)` |
 | `flex-wrap gap-2` | `WrapBoxStyler(flow: WrapStyler(spacing: 8, runSpacing: 8))` |
 
-**Completeness findings before productization:**
+**Removed claims:** `@container` / `@max-md:flex-col` translator and any
+descendant-scope / StyleBuilder auto-scope story tied to universal
+`onConstraints`. Viewport `md:` remains public `onBreakpoint` (unchanged;
+outside this spike).
 
-1. Distinguish viewport `md:` (`onBreakpoint`) from container `@max-md:` (`onConstraints`).
-2. `@container` need not be a user widget if StyleBuilder auto-scopes on constraint variants.
-3. Flatten Wrap fluent API (`WrapStyleMixin`) before public export.
-4. Grid spans / areas / content tracks stay post-v1.
+**Completeness findings:**
 
-### Productization plan (export order)
+1. Flatten Wrap fluent API (`WrapStyleMixin`) before any public export.
+2. Grid spans / areas / content tracks stay deferred.
+3. Do not reintroduce Tailwind container-query product claims until a dry-safe
+   host-owned model is productized.
 
-Spike entry points are currently **`@internal`** (constraint APIs) or
-**unexported** (Wrap/Grid). Productization removes those gates in order:
+### Productization plan (export order) — revised
 
-1. **`onConstraints`** — remove `@internal` from `onConstraints`,
-   `ConstraintVariant`, `ContextVariant.constraints`, and `ConstraintScope` (or
-   keep scope package-private if StyleBuilder is the only publisher); document
-   dry-layout limitation and viewport-vs-offered distinction; ship tests
-   already written.
-2. **`WrapBox`** — export Wrap family from `mix.dart`; add `WrapStyleMixin` for
-   FlexBox-parity fluency; document `flow` field naming vs modifier `wrap`.
-3. **`GridBox`** — export after render contract solidifies; decide codegen vs
-   hand Spec; grow tracks (min/max content, spans) behind feature flags;
-   optional later adapt of `flutter_layout_grid` for advanced CSS parity.
+1. **Do not export universal `onConstraints`.** Treat LayoutBuilder-based
+   universal variants as a closed failed experiment.
+2. **`WrapBox`** — export only after feasibility + fluent API polish; still no
+   requirement for constraint-responsive styling on Wrap.
+3. **`GridBox`** — export only after render-time branch contract is proven
+   (immutability, live/dry parity, diagnostics) and product needs fixed/fr grid;
+   grow tracks (min/max content, spans) behind feature flags; optional later
+   adapt of `flutter_layout_grid` for advanced CSS parity.
+4. **Grid render-time branches** remain an **internal validation direction**,
+   not selected public API, until stop conditions in this doc are cleared.
 
 Do **not** export `MixLayout<Slot>` unless a product need for cross-family plan
-switching appears that these three increments cannot cover.
+switching appears that independent family hosts cannot cover.
 
 ## Decision record
 
@@ -1557,22 +1563,22 @@ switching appears that these three increments cannot cover.
 - Do not ship the prototype wrappers or aliases.
 - Do not put parent participation in visual Stylers.
 - Do not depend on or clone Boxy initially.
-- **Ship advanced layout unbundled:** `onConstraints` + `WrapBox` + `GridBox`,
-  not a mandatory `MixLayout<Slot>` host for v1.
 - **`MixLayout<Slot>` is considered and deferred** — revisit only for
   cross-family plan switching with typed child identity.
 - Keep layout and visual styling separate.
 - Prefer built-in family widgets plus optional experimental algorithms over a
   recursive blueprint or solver.
 - Use typed parameters and extensions before adding generator complexity.
-- Rename the working `onContainer` concept to `onConstraints` (done in spike).
-- **`onConstraints` may use conditional `LayoutBuilder`/`ConstraintScope`** for
-  universal Styler support; cost is opt-in and dry-layout failure is
-  diagnosable. Host-side render selection remains a fallback for hosts that
-  must support dry layout on every path.
+- **Universal `onConstraints` via LayoutBuilder/ConstraintScope is a failed
+  experiment** — removed hard-cut; cannot satisfy dry/intrinsic layout.
+- **Grid-host render-time constraint branches** are the continuing internal
+  validation direction (immutable config, shared live/dry selection, no widget
+  rebuild for branch choice). Not public API.
+- **WrapBox** is a native-Wrap feasibility spike without constraint-responsive
+  styling.
 - Keep normal Flutter paint, hit-test, semantics, and widget lifecycles.
-- Productize only after export-order steps above; spike code stays internal
-  until then.
+- Spike code stays internal until explicit productization; no changelog or
+  stability promise from hardening work.
 
 ## Primary references
 

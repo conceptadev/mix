@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mix/src/core/providers/constraint_scope.dart';
 import 'package:mix/src/specs/wrap/wrap_spec.dart';
 import 'package:mix/src/specs/wrapbox/wrapbox_spec.dart';
 import 'package:mix/src/specs/wrapbox/wrapbox_widget.dart';
@@ -62,75 +61,43 @@ void main() {
       expect(find.byType(Container), findsWidgets);
     });
 
-    testWidgets('onConstraints composes with WrapBoxStyler', (tester) async {
-      double? spacing;
-
+    testWidgets('RTL and verticalDirection match Flutter Wrap', (tester) async {
       await tester.pumpWidget(
         MaterialApp(
-          home: Center(
-            child: SizedBox(
-              width: 300,
-              height: 200,
-              child: StyleBuilder<WrapBoxSpec>(
-                style: WrapBoxStyler(flow: WrapStyler(spacing: 16))
-                    .onConstraints(
-                      const Breakpoint(maxWidth: 560),
-                      WrapBoxStyler(flow: WrapStyler(spacing: 4)),
+          home: Directionality(
+            textDirection: TextDirection.rtl,
+            child: Center(
+              child: SizedBox(
+                width: 200,
+                height: 200,
+                child: WrapBox(
+                  style: WrapBoxStyler(
+                    flow: WrapStyler(
+                      spacing: 8,
+                      textDirection: TextDirection.rtl,
+                      verticalDirection: VerticalDirection.up,
                     ),
-                builder: (context, spec) {
-                  spacing = spec.flow?.spec.spacing;
-                  return WrapBox(
-                    styleSpec: StyleSpec(spec: spec),
-                    children: const [SizedBox(width: 20, height: 20)],
-                  );
-                },
+                  ),
+                  children: const [
+                    SizedBox(key: Key('c1'), width: 40, height: 20),
+                    SizedBox(key: Key('c2'), width: 40, height: 20),
+                  ],
+                ),
               ),
             ),
           ),
         ),
       );
 
-      expect(spacing, 4);
-      expect(find.byType(ConstraintScope), findsOneWidget);
-
-      await tester.pumpWidget(
-        MaterialApp(
-          home: Center(
-            child: SizedBox(
-              width: 800,
-              height: 200,
-              child: StyleBuilder<WrapBoxSpec>(
-                style: WrapBoxStyler(flow: WrapStyler(spacing: 16))
-                    .onConstraints(
-                      const Breakpoint(maxWidth: 560),
-                      WrapBoxStyler(flow: WrapStyler(spacing: 4)),
-                    ),
-                builder: (context, spec) {
-                  spacing = spec.flow?.spec.spacing;
-                  return const SizedBox();
-                },
-              ),
-            ),
-          ),
-        ),
-      );
-
-      expect(spacing, 16);
+      final wrap = tester.widget<Wrap>(find.byType(Wrap));
+      expect(wrap.textDirection, TextDirection.rtl);
+      expect(wrap.verticalDirection, VerticalDirection.up);
+      expect(wrap.spacing, 8);
     });
 
     test('codegen produced WrapBoxStyler without generator changes', () {
-      // Structural evidence: generated class exists and is usable.
-      final style = WrapBoxStyler(
-        flow: WrapStyler(spacing: 8, runSpacing: 8),
-      );
+      final style = WrapBoxStyler(flow: WrapStyler(spacing: 8, runSpacing: 8));
       expect(style.$flow, isNotNull);
-      expect(style.hasConstraintVariants, isFalse);
-
-      final withConstraint = style.onConstraints(
-        const Breakpoint(maxWidth: 400),
-        WrapBoxStyler(flow: WrapStyler(spacing: 2)),
-      );
-      expect(withConstraint.hasConstraintVariants, isTrue);
     });
   });
 }
