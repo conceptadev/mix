@@ -10,4 +10,8 @@ If you want these guides mirrored privately, keep the source of truth in Notion 
 
 ## Guide Index
 
-- `api-composition-guidelines.md` - Fluent composition patterns and sizing decisions.
+- [API composition guidelines](api-composition-guidelines.md) - Fluent
+  composition patterns and sizing decisions.
+- [Internal Grid layout validation](grid-layout-validation.md) - The validated
+  fixed/fr render slice, overflow contract, dependency evaluation, and public
+  API blockers.

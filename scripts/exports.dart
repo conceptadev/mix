@@ -288,6 +288,12 @@ const _packageExportConfigs = <String, _PackageExportConfig>{
       // Generated stylers import this internal support barrel directly. Its
       // individual public symbols are already exported by mix.dart.
       'src/generated_styler_support.dart',
+      // Internal Grid validation slice. Keep these files out of the public
+      // barrel until the remaining productization blockers are resolved.
+      'src/layout/grid_box.dart',
+      'src/layout/grid_box_spec.dart',
+      'src/layout/grid_track.dart',
+      'src/layout/render_grid.dart',
     ],
     forcedPaths: ['src/modifiers/internal/reset_modifier.dart'],
   ),

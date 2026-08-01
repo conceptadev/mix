@@ -49,6 +49,8 @@ const _neverClosureBacked = 'never: closure-backed runtime behavior.';
 const _neverRuntimeOnly = 'never: runtime-only value with no stable data wire.';
 const _neverInternal =
     'never: internal or merge-control implementation detail.';
+const _internalGridUnexported =
+    'internal: Grid validation slice; not exported from mix.dart.';
 
 /// Coverage decisions for the current checked-in `packages/mix` inventory.
 const schemaInventoryManifest = <SchemaInventoryEntry>[
@@ -614,5 +616,18 @@ const _neverUnsupportedInventory = <SchemaInventoryEntry>[
   SchemaInventoryEntry.knownUnsupported(
     'variant_factory:ContextVariant.size',
     _neverClosureBacked,
+  ),
+  // Internal Grid validation (see guides/grid-layout-validation.md).
+  SchemaInventoryEntry.knownUnsupported(
+    r'GridBoxStyler.$animation',
+    _internalGridUnexported,
+  ),
+  SchemaInventoryEntry.knownUnsupported(
+    r'GridBoxStyler.$modifier',
+    _internalGridUnexported,
+  ),
+  SchemaInventoryEntry.knownUnsupported(
+    r'GridBoxStyler.$variants',
+    _internalGridUnexported,
   ),
 ];
