@@ -1328,7 +1328,9 @@ Object? _withNestedBranchLiteralSchemas(Object? branchValue) {
     (branchValue['properties'] as Map?) ?? const {},
   );
   switch (_branchSchemaType(branchValue)) {
-    case schemaTypeBox:
+    // wrap_box joins box here (not flex_box/stack_box) because it is the only
+    // composite that also flattens foregroundDecoration onto the wire.
+    case schemaTypeBox || schemaTypeWrapBox:
       _setPropertyLiteralSchemaRef(
         properties,
         'decoration',

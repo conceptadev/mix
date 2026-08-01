@@ -90,6 +90,24 @@ void main() {
       ),
       isTrue,
     );
+    expect(
+      _hasPropertyControlTerm(
+        _propertySchemaAt(branchesByType['wrap_box']!, [
+          'decoration',
+          'boxShadow',
+        ], definitions),
+      ),
+      isTrue,
+    );
+    expect(
+      _hasPropertyControlTerm(
+        _propertySchemaAt(branchesByType['wrap_box']!, [
+          'foregroundDecoration',
+          'boxShadow',
+        ], definitions),
+      ),
+      isTrue,
+    );
     expect(encoded, contains(r'"fractionally_sized_box"'));
     expect(encoded, contains(r'"default_text_styler"'));
     expect(encoded, contains(r'"spring"'));
