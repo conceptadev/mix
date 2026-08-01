@@ -1,5 +1,12 @@
 ## 2.2.0-beta.1
 
+### New features
+
+- **WrapBox:** Added the public `WrapSpec`, `WrapStyler`, `WrapBoxSpec`,
+  `WrapBoxStyler`, and `WrapBox` family with flattened fluent Wrap styling,
+  collision-safe Box/Wrap names, generated constructors and factories, and a
+  runnable gallery example.
+
 ### Fixes
 
 - **Box shadow blur styles:** `BoxShadowMix` now preserves non-default

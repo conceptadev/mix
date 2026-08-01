@@ -21,10 +21,12 @@ Styler discriminator values are:
 - `box`
 - `text`
 - `flex`
+- `wrap`
 - `stack`
 - `icon`
 - `image`
 - `flex_box`
+- `wrap_box`
 - `stack_box`
 
 An unknown root `type` fails with `unknown_type`.
@@ -164,6 +166,21 @@ are style metadata fields, not spec fields.
 - `modifiers`: modifier payload list or ordered modifier object
 - `animation`: animation payload
 
+### wrap
+
+- `direction`: enum name from `Axis`
+- `alignment`: enum name from `WrapAlignment`
+- `spacing`: number or double-valued token reference
+- `runAlignment`: enum name from `WrapAlignment`
+- `runSpacing`: number or double-valued token reference
+- `crossAxisAlignment`: enum name from `WrapCrossAlignment`
+- `textDirection`: `ltr`, `rtl`
+- `verticalDirection`: enum name from `VerticalDirection`
+- `clipBehavior`: enum name from `Clip`
+- `variants`: list of variant payloads
+- `modifiers`: modifier payload list or ordered modifier object
+- `animation`: animation payload
+
 ### stack
 
 - `alignment`: alignment
@@ -230,6 +247,17 @@ resolver names are safer for app icons when Flutter icon tree-shaking matters.
 `flex_box` flattens the representable `box` and `flex` fields into one payload.
 When a field name would conflict, `clipBehavior` belongs to the box part and
 `flexClipBehavior` belongs to the flex part.
+
+### wrap_box
+
+`wrap_box` flattens every representable `box` and `wrap` field into one
+payload. `alignment` and `clipBehavior` belong to the box part;
+`wrapAlignment` and `wrapClipBehavior` belong to the wrap part. `spacing` and
+`runSpacing` accept double-valued token references, while `padding` and
+`margin` accept whole-value and per-edge space-token references.
+
+The runtime composite inventory names remain `$box` and `$flow`; those names
+are implementation structure and do not appear as nested wire keys.
 
 ### stack_box
 

@@ -3,6 +3,9 @@
 ### New features
 
 - Added style and theme document inspection APIs for schema tooling.
+- Added canonical v1 `wrap` and `wrap_box` style branches, including complete
+  Box/Wrap field fidelity, collision-safe composite names, spacing tokens,
+  metadata, schema export, and token-reference walking.
 
 ### Fixes
 

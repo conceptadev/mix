@@ -15,6 +15,8 @@ void main() {
       'image',
       'flex_box',
       'stack_box',
+      'wrap',
+      'wrap_box',
     ]);
   });
 
@@ -43,6 +45,14 @@ void main() {
     );
     expect(
       contract.decodeStyle<StackBoxStyler>({'v': 1, 'type': 'stack_box'}),
+      isA<MixProtocolSuccess>(),
+    );
+    expect(
+      contract.decodeStyle<WrapStyler>({'v': 1, 'type': 'wrap'}),
+      isA<MixProtocolSuccess>(),
+    );
+    expect(
+      contract.decodeStyle<WrapBoxStyler>({'v': 1, 'type': 'wrap_box'}),
       isA<MixProtocolSuccess>(),
     );
   });

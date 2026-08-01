@@ -30,6 +30,8 @@ import '../schema/stack_box_styler_codec.dart';
 import '../schema/stack_styler_codec.dart';
 import '../schema/styler_branch.dart';
 import '../schema/text_styler_codec.dart';
+import '../schema/wrap_box_styler_codec.dart';
+import '../schema/wrap_styler_codec.dart';
 import '../schema/wire_discriminators.dart';
 import '../tokens/token_reference_walker.dart';
 
@@ -156,6 +158,20 @@ final class MixProtocol {
           identityContext: () => identityContext.current,
         ),
         debugName: schemaTypeStackBox,
+      ),
+      schemaTypeWrap: widenStylerBranch(
+        wrapStylerCodec(
+          rootStyleSchema: rootSchemaRef,
+          identityContext: () => identityContext.current,
+        ),
+        debugName: schemaTypeWrap,
+      ),
+      schemaTypeWrapBox: widenStylerBranch(
+        wrapBoxStylerCodec(
+          rootStyleSchema: rootSchemaRef,
+          identityContext: () => identityContext.current,
+        ),
+        debugName: schemaTypeWrapBox,
       ),
     };
     rootSchema = Ack.discriminated<Object>(
@@ -1267,6 +1283,8 @@ const _doubleTokenRootPropertiesByType = {
   schemaTypeImage: {'width', 'height'},
   schemaTypeFlexBox: {'padding', 'margin', 'spacing'},
   schemaTypeStackBox: {'padding', 'margin'},
+  schemaTypeWrap: {'spacing', 'runSpacing'},
+  schemaTypeWrapBox: {'padding', 'margin', 'spacing', 'runSpacing'},
 };
 
 const _doubleTokenNestedPropertyPathsByDefinition = {

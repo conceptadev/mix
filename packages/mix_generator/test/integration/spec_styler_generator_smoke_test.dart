@@ -375,6 +375,57 @@ const _mixStub = '''
 
   enum Axis { horizontal, vertical }
 
+  class WrapAlignment {}
+  class WrapCrossAlignment {}
+  class VerticalDirection {}
+  class TextDirection {}
+  class Clip {}
+
+  mixin WrapStyleMixin<T> {
+    T flow(WrapStyler value);
+    T direction(Axis value) => flow(WrapStyler(direction: value));
+    T wrapAlignment(WrapAlignment value) =>
+        flow(WrapStyler(alignment: value));
+    T spacing(double value) => flow(WrapStyler(spacing: value));
+    T runAlignment(WrapAlignment value) =>
+        flow(WrapStyler(runAlignment: value));
+    T runSpacing(double value) => flow(WrapStyler(runSpacing: value));
+    T crossAxisAlignment(WrapCrossAlignment value) =>
+        flow(WrapStyler(crossAxisAlignment: value));
+    T textDirection(TextDirection value) =>
+        flow(WrapStyler(textDirection: value));
+    T verticalDirection(VerticalDirection value) =>
+        flow(WrapStyler(verticalDirection: value));
+    T wrapClipBehavior(Clip value) =>
+        flow(WrapStyler(clipBehavior: value));
+  }
+
+  class WrapStyler {
+    WrapStyler({
+      Axis? direction,
+      WrapAlignment? alignment,
+      double? spacing,
+      WrapAlignment? runAlignment,
+      double? runSpacing,
+      WrapCrossAlignment? crossAxisAlignment,
+      TextDirection? textDirection,
+      VerticalDirection? verticalDirection,
+      Clip? clipBehavior,
+    });
+
+    WrapStyler direction(Axis value) => this;
+    WrapStyler alignment(WrapAlignment value) => this;
+    WrapStyler spacing(double value) => this;
+    WrapStyler runAlignment(WrapAlignment value) => this;
+    WrapStyler runSpacing(double value) => this;
+    WrapStyler crossAxisAlignment(WrapCrossAlignment value) => this;
+    WrapStyler textDirection(TextDirection value) => this;
+    WrapStyler verticalDirection(VerticalDirection value) => this;
+    WrapStyler clipBehavior(Clip value) => this;
+    WrapStyler wrapAlignment(WrapAlignment value) => this;
+    WrapStyler wrapClipBehavior(Clip value) => this;
+  }
+
   class StackStyler {
     StackStyler({
       AlignmentGeometry? alignment,
@@ -2970,6 +3021,93 @@ void main() {
               ),
               contains('StackBoxStyler stack(StackStyler value)'),
               isNot(contains('StackBoxStyler box(BoxStyler value)')),
+            ]),
+          ),
+        },
+      );
+    });
+
+    test('emits WrapBox compound nested styler parity', () async {
+      const boxSpec = '''
+          import 'package:mix/mix.dart';
+
+          final class BoxSpec extends Spec<BoxSpec> {
+            const BoxSpec();
+          }
+        ''';
+      const wrapSpec = '''
+          import 'package:mix/mix.dart';
+
+          final class WrapSpec extends Spec<WrapSpec> {
+            const WrapSpec();
+          }
+        ''';
+      const input = '''
+          library combo;
+          import 'package:flutter/widgets.dart';
+          import 'package:mix/mix.dart';
+          import 'package:mix_annotations/mix_annotations.dart';
+
+          import '../box/box_spec.dart';
+          import '../wrap/wrap_spec.dart';
+          part 'wrapbox_spec.g.dart';
+
+          @MixableSpec()
+          final class WrapBoxSpec extends Spec<WrapBoxSpec> {
+            final StyleSpec<BoxSpec>? box;
+            final StyleSpec<WrapSpec>? flow;
+            const WrapBoxSpec({this.box, this.flow});
+          }
+        ''';
+
+      await testBuilder(
+        _specStylerPartBuilder(),
+        {
+          ...mixAnnotationsSources,
+          ..._mixSources,
+          'mix|lib/src/box/box_spec.dart': boxSpec,
+          'mix|lib/src/wrap/wrap_spec.dart': wrapSpec,
+          'mix|lib/src/combo/wrapbox_spec.dart': input,
+        },
+        outputs: {
+          'mix|lib/src/combo/wrapbox_spec.g.dart': decodedMatches(
+            allOf([
+              contains(
+                'Axis? direction,\n'
+                '    WrapAlignment? wrapAlignment,\n'
+                '    double? spacing,\n'
+                '    WrapAlignment? runAlignment,\n'
+                '    double? runSpacing,\n'
+                '    WrapCrossAlignment? crossAxisAlignment,\n'
+                '    TextDirection? textDirection,\n'
+                '    VerticalDirection? verticalDirection,\n'
+                '    Clip? wrapClipBehavior,',
+              ),
+              contains('WrapStyleMixin<WrapBoxStyler>'),
+              contains('flow: Prop.maybeMix('),
+              contains('WrapStyler('),
+              contains(
+                'factory WrapBoxStyler.alignment(AlignmentGeometry value)',
+              ),
+              contains('factory WrapBoxStyler.clipBehavior(Clip value)'),
+              contains(
+                'factory WrapBoxStyler.wrapAlignment(WrapAlignment value)',
+              ),
+              contains('factory WrapBoxStyler.wrapClipBehavior(Clip value)'),
+              contains('factory WrapBoxStyler.spacing(double value)'),
+              contains('WrapBoxStyler flow(WrapStyler value)'),
+              contains('WrapBoxStyler merge(WrapBoxStyler? other)'),
+              contains(r'flow: MixOps.merge($flow, other?.$flow)'),
+              contains(
+                r'variants: MixOps.mergeVariants($variants, other?.$variants)',
+              ),
+              contains(
+                r'modifier: MixOps.mergeModifier($modifier, other?.$modifier)',
+              ),
+              contains(
+                r'animation: MixOps.mergeAnimation($animation, other?.$animation)',
+              ),
+              isNot(contains('WrapBoxStyler box(BoxStyler value)')),
             ]),
           ),
         },

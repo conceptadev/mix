@@ -105,6 +105,24 @@ final solid = base.color(Colors.blue);
 
 [Styling guide →](https://fluttermix.com/docs/guides/styling)
 
+### Wrapping Layouts
+
+`WrapBox` combines Box styling with Flutter's run-based `Wrap` layout:
+
+```dart
+final tagCloud = WrapBoxStyler()
+    .paddingAll(16)
+    .spacing(8)
+    .runSpacing(10)
+    .wrapAlignment(WrapAlignment.center);
+
+WrapBox(style: tagCloud, children: tags);
+```
+
+`alignment` and `clipBehavior` configure the outer Box;
+`wrapAlignment` and `wrapClipBehavior` configure the inner Wrap. The advanced
+nested-style escape hatch is `.flow(WrapStyler(...))`.
+
 ### Dynamic Styling (Variants)
 
 Styles adapt to interactions and context in one place:
@@ -181,7 +199,7 @@ Directives transform values (text casing, number scaling, color adjustments) at 
 - [Dynamic styling](https://fluttermix.com/docs/guides/dynamic-styling)
 - [Design tokens](https://fluttermix.com/docs/guides/design-token)
 - [Animations](https://fluttermix.com/docs/guides/animations)
-- [Widgets](https://fluttermix.com/docs/widgets/box) (Box, Text, Icon, FlexBox, Stack, etc.)
+- [Widgets](https://fluttermix.com/docs/widgets/box) (Box, Text, Icon, FlexBox, WrapBox, Stack, etc.)
 - [Ecosystem](https://fluttermix.com/docs/ecosystem/mix-tailwinds)
 
 ## Contributors

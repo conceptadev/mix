@@ -143,6 +143,26 @@ final solid = base.color(Colors.blue);
 
 [Styling guide →](https://fluttermix.com/docs/guides/styling)
 
+### Wrapping Layouts
+
+`WrapBox` combines Box chrome with Flutter's run-based `Wrap` layout. Its Wrap
+fields are available directly on `WrapBoxStyler`:
+
+```dart
+final tagCloud = WrapBoxStyler()
+    .paddingAll(16)
+    .spacing(8)
+    .runSpacing(10)
+    .wrapAlignment(WrapAlignment.center);
+
+WrapBox(style: tagCloud, children: tags);
+```
+
+On the composite styler, `alignment` and `clipBehavior` configure the outer
+Box; `wrapAlignment` and `wrapClipBehavior` configure the inner Wrap. Use
+`.flow(WrapStyler(...))` when direct nested-style composition is needed. See
+the runnable [WrapBox example](example/README.md).
+
 ### Dynamic Styling (Variants)
 
 Styles adapt to interactions and context (hover, press, dark mode, breakpoints) in one place:
@@ -234,7 +254,7 @@ BoxStyler()
 - [Animations](https://fluttermix.com/docs/guides/animations)
 - [Widget modifiers](https://fluttermix.com/docs/guides/widget-modifiers)
 - [Directives](https://fluttermix.com/docs/guides/directives)
-- [Widgets](https://fluttermix.com/docs/widgets/box) (Box, Text, Icon, FlexBox, Stack, etc.)
+- [Widgets](https://fluttermix.com/docs/widgets/box) (Box, Text, Icon, FlexBox, WrapBox, Stack, etc.)
 
 ## Contributors
 

@@ -94,6 +94,22 @@ void main() {
     );
   });
 
+  test('WrapStyler round-trips through canonical wire with field fidelity', () {
+    expectRoundTrips<WrapStyler>(
+      WrapStyler(
+        direction: Axis.vertical,
+        alignment: WrapAlignment.spaceBetween,
+        spacing: 8,
+        runAlignment: WrapAlignment.center,
+        runSpacing: 12,
+        crossAxisAlignment: WrapCrossAlignment.end,
+        textDirection: TextDirection.rtl,
+        verticalDirection: VerticalDirection.up,
+        clipBehavior: Clip.hardEdge,
+      ),
+    );
+  });
+
   test(
     'StackStyler round-trips through canonical wire with field fidelity',
     () {
@@ -143,6 +159,23 @@ void main() {
           direction: Axis.vertical,
           spacing: 4,
           flexClipBehavior: Clip.hardEdge,
+        ),
+      );
+    },
+  );
+
+  test(
+    'WrapBoxStyler round-trips through canonical wire with field fidelity',
+    () {
+      expectRoundTrips<WrapBoxStyler>(
+        WrapBoxStyler(
+          decoration: BoxDecorationMix(color: const Color(0xFF112233)),
+          padding: EdgeInsetsMix.all(8),
+          direction: Axis.vertical,
+          wrapAlignment: WrapAlignment.spaceAround,
+          spacing: 4,
+          runSpacing: 6,
+          wrapClipBehavior: Clip.hardEdge,
         ),
       );
     },
@@ -205,6 +238,21 @@ void main() {
           ],
           modifier: testModifier(),
           animation: testAnimation(),
+        ),
+      );
+    },
+  );
+
+  test(
+    'WrapStyler preserves variants, modifiers, and animation across wire',
+    () {
+      expectRoundTrips<WrapStyler>(
+        WrapStyler(
+          animation: testAnimation(),
+          modifier: testModifier(),
+          variants: [
+            VariantStyle(const NamedVariant('dense'), WrapStyler(spacing: 2)),
+          ],
         ),
       );
     },
@@ -277,6 +325,24 @@ void main() {
   );
 
   test(
+    'WrapBoxStyler preserves variants, modifiers, and animation across wire',
+    () {
+      expectRoundTrips<WrapBoxStyler>(
+        WrapBoxStyler(
+          animation: testAnimation(),
+          modifier: testModifier(),
+          variants: [
+            VariantStyle(
+              const NamedVariant('cloud'),
+              WrapBoxStyler(runSpacing: 2),
+            ),
+          ],
+        ),
+      );
+    },
+  );
+
+  test(
     'StackBoxStyler preserves variants, modifiers, and animation across wire',
     () {
       expectRoundTrips<StackBoxStyler>(
@@ -313,6 +379,33 @@ void main() {
         ],
         modifier: testModifier(),
         animation: testAnimation(),
+      ),
+    );
+  });
+
+  test('WrapBoxStyler round-trips combined box, wrap, and metadata fields', () {
+    expectRoundTrips<WrapBoxStyler>(
+      WrapBoxStyler(
+        margin: EdgeInsetsMix(bottom: 10),
+        alignment: Alignment.topLeft,
+        clipBehavior: Clip.antiAlias,
+        direction: Axis.horizontal,
+        wrapAlignment: WrapAlignment.center,
+        spacing: 6,
+        runAlignment: WrapAlignment.end,
+        runSpacing: 10,
+        crossAxisAlignment: WrapCrossAlignment.center,
+        textDirection: TextDirection.ltr,
+        verticalDirection: VerticalDirection.down,
+        wrapClipBehavior: Clip.hardEdge,
+        animation: testAnimation(),
+        modifier: testModifier(),
+        variants: [
+          VariantStyle(
+            const NamedVariant('combined'),
+            WrapBoxStyler(spacing: 2),
+          ),
+        ],
       ),
     );
   });
