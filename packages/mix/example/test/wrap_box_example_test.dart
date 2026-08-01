@@ -46,8 +46,11 @@ void main() {
       tester,
     ) async {
       final previousComparator = goldenFileComparator;
+      // Derive the base from the ambient comparator's absolute basedir so
+      // golden lookup and --update-goldens work regardless of process CWD.
+      final basedir = (previousComparator as LocalFileComparator).basedir;
       goldenFileComparator = _TolerantGoldenFileComparator(
-        Uri.parse('test/wrap_box_example_test.dart'),
+        Uri.parse('${basedir}wrap_box_example_test.dart'),
         precisionTolerance: _goldenDiffTolerance,
       );
       addTearDown(() => goldenFileComparator = previousComparator);
