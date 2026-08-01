@@ -90,6 +90,24 @@ void main() {
       ),
       isTrue,
     );
+    expect(
+      _hasPropertyControlTerm(
+        _propertySchemaAt(branchesByType['wrap_box']!, [
+          'decoration',
+          'boxShadow',
+        ], definitions),
+      ),
+      isTrue,
+    );
+    expect(
+      _hasPropertyControlTerm(
+        _propertySchemaAt(branchesByType['wrap_box']!, [
+          'foregroundDecoration',
+          'boxShadow',
+        ], definitions),
+      ),
+      isTrue,
+    );
     expect(encoded, contains(r'"fractionally_sized_box"'));
     expect(encoded, contains(r'"default_text_styler"'));
     expect(encoded, contains(r'"spring"'));
@@ -192,6 +210,39 @@ void main() {
       ),
       isTrue,
     );
+    for (final field in ['spacing', 'runSpacing']) {
+      expect(
+        _matchesJsonSchema(
+          _object(_properties(branchesByType['wrap']!)[field]),
+          {r'$token': 'space.wrap.gap', 'kind': 'space'},
+          definitions,
+        ),
+        isTrue,
+        reason:
+            'wrap.$field accepts space tokens: '
+            '${jsonEncode(_object(_properties(branchesByType['wrap']!)[field]))}',
+      );
+      expect(
+        _matchesJsonSchema(
+          _object(_properties(branchesByType['wrap_box']!)[field]),
+          {r'$token': 'double.wrap.gap', 'kind': 'double'},
+          definitions,
+        ),
+        isTrue,
+        reason: 'wrap_box.$field accepts double tokens',
+      );
+    }
+    for (final field in ['padding', 'margin']) {
+      expect(
+        _matchesJsonSchema(
+          _object(_properties(branchesByType['wrap_box']!)[field]),
+          {r'$token': 'space.wrap.$field', 'kind': 'space'},
+          definitions,
+        ),
+        isTrue,
+        reason: 'wrap_box.$field accepts space tokens',
+      );
+    }
     expect(
       _matchesJsonSchema(
         _object(_properties(branchesByType['flex']!)['spacing']),
@@ -400,6 +451,43 @@ const _expectedBranchProperties = {
     'fit',
     'textDirection',
     'stackClipBehavior',
+    'variants',
+    'modifiers',
+    'animation',
+  },
+  'wrap': {
+    'direction',
+    'alignment',
+    'spacing',
+    'runAlignment',
+    'runSpacing',
+    'crossAxisAlignment',
+    'textDirection',
+    'verticalDirection',
+    'clipBehavior',
+    'variants',
+    'modifiers',
+    'animation',
+  },
+  'wrap_box': {
+    'alignment',
+    'padding',
+    'margin',
+    'constraints',
+    'clipBehavior',
+    'transform',
+    'transformAlignment',
+    'decoration',
+    'foregroundDecoration',
+    'direction',
+    'wrapAlignment',
+    'spacing',
+    'runAlignment',
+    'runSpacing',
+    'crossAxisAlignment',
+    'textDirection',
+    'verticalDirection',
+    'wrapClipBehavior',
     'variants',
     'modifiers',
     'animation',
