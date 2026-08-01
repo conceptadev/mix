@@ -254,7 +254,7 @@ BoxStyler()
 - [Animations](https://fluttermix.com/docs/guides/animations)
 - [Widget modifiers](https://fluttermix.com/docs/guides/widget-modifiers)
 - [Directives](https://fluttermix.com/docs/guides/directives)
-- [Widgets](https://fluttermix.com/docs/widgets/box) (Box, Text, Icon, FlexBox, WrapBox, Stack, etc.)
+- [Widgets](https://fluttermix.com/docs/widgets/box) (Box, Text, Icon, FlexBox, WrapBox, StackBox, etc.)
 
 ## Contributors
 

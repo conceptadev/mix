@@ -199,7 +199,7 @@ Directives transform values (text casing, number scaling, color adjustments) at 
 - [Dynamic styling](https://fluttermix.com/docs/guides/dynamic-styling)
 - [Design tokens](https://fluttermix.com/docs/guides/design-token)
 - [Animations](https://fluttermix.com/docs/guides/animations)
-- [Widgets](https://fluttermix.com/docs/widgets/box) (Box, Text, Icon, FlexBox, WrapBox, Stack, etc.)
+- [Widgets](https://fluttermix.com/docs/widgets/box) (Box, Text, Icon, FlexBox, WrapBox, StackBox, etc.)
 - [Ecosystem](https://fluttermix.com/docs/ecosystem/mix-tailwinds)
 
 ## Contributors
