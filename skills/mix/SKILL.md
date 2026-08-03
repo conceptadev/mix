@@ -4,7 +4,9 @@ description: >
   This skill should be used when working on the Mix Flutter styling
   framework or any project using the mix package. Applies when the user
   mentions Mix specs, Mix styles, BoxStyler, TextStyler, Pressable,
-  PressableBox, StyleWidget, MixStyler, fluent chaining, Prop values, Mix types,
+  PressableBox, FlexBox, RowBox, ColumnBox, WrapBox, GridBox, GridTrack,
+  StackBox, responsive layouts, onConstraints, StyleWidget, MixStyler,
+  fluent chaining, Prop values, Mix types,
   Mix annotations (@MixableSpec, @MixWidget, @MixableModifier, legacy
   @MixableStyler, @Mixable), code generation with mix_generator,
   dot-shorthand policy, style variants (NamedVariant,
@@ -13,15 +15,15 @@ description: >
   tokens (MixScope, tokens), widget modifiers (.wrap()), directives, style
   mixins, melos commands for Mix (gen:build, ci, analyze, exports), or the
   Mix monorepo packages (mix, mix_annotations, mix_generator, mix_lint,
-  mix_tailwinds).
+  mix_protocol, mix_tailwinds, mix_chart).
 ---
 
 # Mix Framework
 
 Type-safe styling system for Flutter that separates style semantics from widgets.
 
-**Target version:** `mix: 2.0.3` (Dart >=3.11.0, Flutter >=3.41.0)
-Confirm the project's actual version before applying patterns — check `pubspec.yaml`.
+**Repository target:** current `main` (`mix` pubspec: `2.2.0-beta.1`, Dart >=3.11.0, Flutter >=3.41.0).
+Confirm the consuming project's actual version before applying patterns. `WrapBox` and `GridBox` landed on `main` after `2.2.0-beta.1`, so a released dependency may not expose them yet.
 
 ## Source of Truth
 
@@ -49,12 +51,17 @@ Resolution pipeline: `StyleWidget` → `StyleBuilder` → merge active variants 
 | `TextStyler` | `TextSpec` | `StyledText` | `Text` |
 | `FlexStyler` | `FlexSpec` | — (layout) | `Flex`/`Row`/`Column` |
 | `FlexBoxStyler` | `FlexBoxSpec` | `FlexBox`/`RowBox`/`ColumnBox` | `Column`/`Row` + `Container` |
+| `WrapStyler` | `WrapSpec` | — (layout) | `Wrap` |
+| `WrapBoxStyler` | `WrapBoxSpec` | `WrapBox` | `Wrap` + `Container` |
+| `GridBoxStyler` | `GridBoxSpec` | `GridBox` | Fixed/`fr` track grid |
 | `StackStyler` | `StackSpec` | — (layout) | `Stack` |
 | `StackBoxStyler` | `StackBoxSpec` | `StackBox` | `Stack` + `Container` |
 | `IconStyler` | `IconSpec` | `StyledIcon` | `Icon` |
 | `ImageStyler` | `ImageSpec` | `StyledImage` | `Image` |
 
 Interactive: `Pressable` (gesture + focus + mouse), `PressableBox` (Pressable + Box).
+
+`GridBox` is a Mix-owned layout primitive, but unlike `FlexBox`, `WrapBox`, and `StackBox`, it does not include outer `Box` decoration or padding. Compose it inside `Box` when the grid itself needs chrome.
 
 ## Key Patterns
 
@@ -71,9 +78,21 @@ When styling a Mix surface, keep visual semantics in Stylers instead of nesting 
 | `Theme.of(context).textTheme.bodyMedium` in styles | `TextStyleToken` values from `MixScope`, then `TextStyler().style($body.mix())` |
 | Nested `Padding` / `Align` for a styled widget | Styler methods such as `.paddingAll(16)` and `.alignment(Alignment.center)` |
 
+### Choose the Layout Primitive
+
+| Need | Use |
+|------|-----|
+| One child with size, padding, or decoration | `Box` |
+| One non-wrapping row or column | `RowBox`, `ColumnBox`, or `FlexBox` |
+| Chips, tags, or intrinsic items that flow onto new runs | `WrapBox` |
+| Dashboards, card catalogs, and galleries with explicit two-dimensional tracks | `GridBox` |
+| Overlays or positioned layers | `StackBox` |
+
+Use `GridBoxStyler.onConstraints` when grid geometry should react to the space offered by its parent. Use `onBreakpoint` when a style should react to viewport size through `MediaQuery`. See `references/layout.md` for the complete layout decision guide, responsive Grid patterns, constraints, animation rules, and current limitations.
+
 ### Top-Level Rule
 
-Start top-level declarations with the relevant concrete Styler constructor (`BoxStyler()`, `TextStyler()`, `IconStyler()`, etc.), then chain. Static factories are valid API but discouraged for top-level declarations; bare dot-shorthand is only for typed nested contexts. In nested typed contexts (variants, state callbacks), use bare shorthand `.method()` instead. See `references/styler-api-policy.md` for the complete policy.
+Start ordinary top-level declarations with the relevant concrete Styler constructor (`BoxStyler()`, `TextStyler()`, `IconStyler()`, etc.), then chain. Static factories are valid API but usually discouraged as top-level entry points. Grid declarations are the deliberate exception: use an explicit `GridBoxStyler` type with `.equalColumns(...)` or `.columns(...)` so the required track topology is visible. In typed nested contexts (variants, state callbacks, constraint patches), use bare shorthand `.method()`. See `references/styler-api-policy.md` for the complete policy.
 
 ### Fluent Chaining (recommended)
 
@@ -121,9 +140,11 @@ final combined = base.merge(elevated);
 - **Generated Stylers have `.create()` and default constructors** — many also expose generated factory constructors
 - **Prefer `@MixableSpec(target: Widget.new)`** — `@MixableStyler` is legacy/deprecated
 - **Use `@MixWidget` for generated widgets from style factories** — it wraps top-level `Style<S>` variables or functions
+- **`@MixWidget(target:)` supports plain Widgets** — the target needs a compatible named `style` parameter; it does not need to extend `StyleWidget`
 - **Use `@MixableModifier` for generated modifiers** — it emits the modifier contract mixin and `ModifierMix` class
 - **`mix.dart` is generated** — never edit directly; run `melos run exports`
 - **Run codegen after spec changes** — `melos run gen:build`
+- **Grid constraint branches are geometry-only** — columns, rows, `autoRows`, and gaps; keep clipping, modifiers, animations, and ordinary variants on the base styler
 - **Prop merge semantics** — regular values: last wins (replacement); Mix values: accumulated merge
 - **Variant priority** — ContextVariant/NamedVariant first → StyleVariation second → WidgetStateVariant last (highest)
 
@@ -151,7 +172,9 @@ melos run gen:build && melos run ci && melos run analyze
 | `mix_annotations` | `@MixableSpec`, `@MixWidget`, `@MixableModifier`, `@MixableStyler`, `@Mixable`, `@MixableField` |
 | `mix_generator` | `build_runner` generator producing `*.g.dart` mixins |
 | `mix_lint` | Analysis server plugin with Mix-specific lint rules |
+| `mix_protocol` | Versioned JSON wire contract, codecs, schemas, inspection, and token walking for Mix styles |
 | `mix_tailwinds` | Tailwind-style utility layer (experimental) |
+| `mix_chart` | Mix-owned line, bar, and pie chart APIs |
 
 ## References
 
@@ -159,6 +182,7 @@ Consult these for detailed guidance:
 
 - **[`references/architecture.md`](references/architecture.md)** — Spec, Styler, Prop<V>, resolution pipeline, StyleWidget
 - **[`references/styler-api-policy.md`](references/styler-api-policy.md)** — Top-level rule, dot-shorthand policy, factory constructor table, chain-only methods
+- **[`references/layout.md`](references/layout.md)** — Box/Flex/Wrap/Grid/Stack selection, responsive Grid use cases, constraints, and layout composition
 - **[`references/fluent-api.md`](references/fluent-api.md)** — Chaining, style mixins, sizing decision tree, composition
 - **[`references/code-generation.md`](references/code-generation.md)** — Annotations, generated output, BoxSpec reference impl
 - **[`references/examples.md`](references/examples.md)** — Worked end-to-end examples

@@ -10,9 +10,11 @@ packages/
   mix_annotations/        # Annotations for codegen
   mix_generator/          # build_runner generator
   mix_lint/               # Analysis server plugin
-  mix_lint_test/          # Lint rule tests
+  mix_protocol/           # Versioned JSON wire contract and codecs
   mix_tailwinds/          # Tailwind utility layer
   mix_tailwinds/example/  # Tailwind example app
+  mix_chart/              # Mix-owned chart API
+  mix_chart/example/      # Chart example app
 ```
 
 **SDK constraints:** Dart >=3.11.0, Flutter >=3.41.0
@@ -122,11 +124,14 @@ Generated Stylers are not edited directly. Edit the spec annotation, fields, wid
 | `melos run gen:build` | Clean + regenerate all `*.g.dart` files |
 | `melos run gen:watch` | Watch mode for codegen |
 | `melos run gen:clean` | Clean generated outputs |
+| `melos run gen:tailwinds-registry` | Regenerate the deterministic Tailwinds parser registry |
 | `melos run ci` | Run all tests (flutter + dart) |
 | `melos run test:flutter` | Flutter tests only |
 | `melos run test:dart` | Dart tests only |
 | `melos run test:coverage` | Tests with coverage report |
 | `melos run analyze` | Dart + DCM analysis |
+| `melos run schema:inventory` | Verify `mix_protocol` schema inventory coverage |
+| `melos run format:check` | Verify Dart formatting without changing files |
 | `melos run fix` | Auto-fix lint issues |
 | `melos run exports` | Regenerate `mix.dart` barrel file |
 | `melos run api-check` | API compatibility checking |

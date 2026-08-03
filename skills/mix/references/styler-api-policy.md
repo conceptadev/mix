@@ -6,7 +6,7 @@ Requires Dart SDK >=3.11.0 and Flutter >=3.41.0.
 
 ## The Top-Level Rule
 
-Start every top-level style declaration with an instance constructor, then chain:
+Start ordinary top-level style declarations with an instance constructor, then chain:
 
 ```dart
 // CORRECT — instance constructor at top-level
@@ -22,6 +22,20 @@ BoxStyler.color(Colors.blue)
 
 // WRONG — bare dot-shorthand at top-level
 .color(Colors.blue)
+```
+
+Use an explicitly typed factory initializer when the factory communicates
+required topology better than an empty constructor. Grid is the deliberate
+case in the current API:
+
+```dart
+// CORRECT — the declared type supplies shorthand context
+final GridBoxStyler cards = .equalColumns(3)
+    .gap(16)
+    .autoRows(.fixed(220));
+
+// WRONG — no contextual type for the leading shorthand
+final cards = .equalColumns(3);
 ```
 
 ## Nested Shorthand Rule
@@ -43,9 +57,11 @@ style.onHovered(BoxStyler().color(Colors.blue))
 ```
 
 Common typed contexts:
+- explicitly typed initializers such as `final GridBoxStyler grid = .columns(...)`
 - `.container(.shadow(...))`
 - `.onHovered(.color(...))`
 - `.onDisabled(.color(...))`
+- `.onConstraints(.maxWidth(600), .equalColumns(1))`
 
 ## Dot-Shorthand for Enum/Constant Arguments
 
@@ -68,8 +84,11 @@ Common generated factories include:
 | `BoxStyler` | layout (`alignment`, `padding`, `margin`, constraints), decoration (`color`, `gradient`, `border`, `borderRadius`, `shadow`, `image`, `shape`), transforms (`transform`, `scale`, `rotate`, `translate`, `skew`), gradients/background images, `textStyle`, `animate` |
 | `FlexStyler` | `direction`, `mainAxisAlignment`, `crossAxisAlignment`, `mainAxisSize`, `spacing`, row/column presets |
 | `FlexBoxStyler` | generated flexbox spec fields plus many box-style factories; verify clip/flex naming in `flexbox_spec.g.dart` |
+| `WrapStyler` | `direction`, `alignment`, `spacing`, `runAlignment`, `runSpacing`, `crossAxisAlignment`, `clipBehavior` |
+| `WrapBoxStyler` | generated wrapbox fields plus Box factories; use collision-safe `wrapAlignment` and `wrapClipBehavior` for the inner Wrap |
+| `GridBoxStyler` | handwritten `columns`, `equalColumns`, `rows`, `autoRows`, gaps, `clipBehavior`, `onConstraints`, `animate` |
 | `StackStyler` | `alignment`, `fit`, `clipBehavior` |
-| `StackBoxStyler` | generated stackbox spec fields plus box-style factories; verify stack-specific names in `stackbox_spec.g.dart` |
+| `StackBoxStyler` | generated stackbox fields plus Box factories; use `stackAlignment` and `stackClipBehavior` for the inner Stack |
 | `TextStyler` | layout (`overflow`, `textAlign`, `maxLines`, `softWrap`, direction), typography (`style`, color/font/decoration/spacing), paint/shadow/font-feature fields, text directives (`uppercase`, `lowercase`, `capitalize`, `titlecase`, `sentencecase`) |
 | `IconStyler` | `icon`, `color`, `size`, `weight`, `grade`, `opticalSize`, `fill`, `opacity`, `shadows`, `shadow`, `textDirection`, `applyTextScaling`, `blendMode` |
 | `ImageStyler` | `image`, dimensions, `color`, `repeat`, `fit`, `alignment`, `centerSlice`, `filterQuality`, `colorBlendMode`, `gaplessPlayback`, `isAntiAlias`, `matchTextDirection` |
@@ -84,7 +103,7 @@ These are mid-chain or end-of-chain policy choices. Some may also have generated
 | Compound border | `border(.all())`, `border(.top())`, `borderRadius(.circular())` |
 | Compound box | `shadow(.color(...).blurRadius(...))`, `backgroundImageUrl` |
 | Text directives | `uppercase`, `lowercase`, `capitalize`, `titlecase`, `sentencecase` |
-| Variants | `onHovered`, `onPressed`, `onDark`, `onLight`, `onDisabled`, `onFocused`, `variant`, `onBreakpoint` |
+| Variants and local constraints | `onHovered`, `onPressed`, `onDark`, `onLight`, `onDisabled`, `onFocused`, `variant`, `onBreakpoint`, Grid `onConstraints` |
 | Advanced modifiers | `wrap`, `phaseAnimation`, `keyframeAnimation` |
 
 **Rationale:** Factory constructors are reserved for primitives that map to stable style concepts. Compound convenience methods remain as instance methods to keep the static API focused.
@@ -96,6 +115,7 @@ These are mid-chain or end-of-chain policy choices. Some may also have generated
 - Min/max bounds? → `BoxStyler().minWidth(100).maxWidth(300)`
 - Pre-built Size/constraints? → Pass via constructor
 - Combining fragments? → `merge()`
+- Choosing a multi-child layout? → Use the decision guide in [`layout.md`](layout.md)
 - Otherwise → Chain on the Styler instance
 
 ## Composition Examples
