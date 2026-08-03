@@ -8,8 +8,8 @@ Run the WrapBox gallery from this directory:
 flutter run
 ```
 
-Run the GridBox gallery with dashboard, card-catalog, and media-gallery use
-cases:
+Run the GridBox gallery with dashboard, card-catalog, media-gallery, and
+implicit-animation use cases:
 
 ```sh
 flutter run -t lib/grid_main.dart
@@ -50,6 +50,32 @@ The same track model handles repeated product cards and a denser media gallery:
 <p>
   <img src="test/goldens/grid_catalog_wide.png" alt="Wide GridBox card catalog" width="66%">
   <img src="test/goldens/grid_gallery_compact.png" alt="Compact GridBox media gallery" width="24%">
+</p>
+
+### Grid animation
+
+The Animation example toggles a two-column planning Grid between balanced and
+focused geometry. Rebuilding the same two fractional tracks lets Mix
+interpolate their weights from 1:1 to 2:1 while also animating the repeated row
+height and gaps:
+
+```dart
+final GridBoxStyler animatedGrid = .columns([
+  .fr(focused ? 2 : 1),
+  .fr(1),
+])
+    .autoRows(.fixed(focused ? 148 : 112))
+    .gap(focused ? 20 : 12)
+    .animate(.easeInOut(const Duration(milliseconds: 600)));
+```
+
+No `AnimationController` is needed. Track lists with different lengths or
+kinds switch at the midpoint instead, and `onConstraints` branch selection
+remains immediate because it happens during layout.
+
+<p>
+  <img src="test/goldens/grid_animation_balanced.png" alt="Balanced animated GridBox state" width="46%">
+  <img src="test/goldens/grid_animation_focused.png" alt="Focused animated GridBox state" width="46%">
 </p>
 
 ## WrapBox

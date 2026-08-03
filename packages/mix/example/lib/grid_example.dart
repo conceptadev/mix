@@ -23,7 +23,8 @@ class GridBoxExampleApp extends StatelessWidget {
 enum GridExampleKind {
   dashboard('Dashboard', 'Metrics and asymmetric reporting panels'),
   catalog('Card catalog', 'A responsive product-card collection'),
-  gallery('Media gallery', 'Dense visual tiles with repeated rows');
+  gallery('Media gallery', 'Dense visual tiles with repeated rows'),
+  animation('Animation', 'State-driven track, row, and gap interpolation');
 
   const GridExampleKind(this.label, this.description);
 
@@ -42,7 +43,7 @@ enum GridExampleWidth {
   final String label;
 }
 
-/// Interactive selector for the three real-world Grid examples.
+/// Interactive selector for the real-world Grid examples.
 class GridBoxExampleScreen extends StatefulWidget {
   const GridBoxExampleScreen({super.key});
 
@@ -67,8 +68,8 @@ class _GridBoxExampleScreenState extends State<GridBoxExampleScreen> {
           ),
           const SizedBox(height: 8),
           const Text(
-            'Change the offered width to see onConstraints select a layout '
-            'without relying on the viewport size.',
+            'Change the offered width to exercise local constraints, or open '
+            'Animation and toggle focus to interpolate compatible tracks.',
           ),
           const SizedBox(height: 18),
           Wrap(
@@ -147,6 +148,7 @@ class GridShowcase extends StatelessWidget {
                   GridExampleKind.dashboard => const DashboardGridPreview(),
                   GridExampleKind.catalog => const CatalogGridPreview(),
                   GridExampleKind.gallery => const GalleryGridPreview(),
+                  GridExampleKind.animation => const AnimatedGridPreview(),
                 },
               ],
             ),
@@ -205,6 +207,7 @@ class _ShowcaseHeading extends StatelessWidget {
     GridExampleKind.dashboard => Icons.dashboard_rounded,
     GridExampleKind.catalog => Icons.shopping_bag_rounded,
     GridExampleKind.gallery => Icons.photo_library_rounded,
+    GridExampleKind.animation => Icons.animation_rounded,
   };
 }
 
@@ -628,6 +631,188 @@ class GalleryGridPreview extends StatelessWidget {
           Color(0xFFA9C979),
         ),
       ],
+    );
+  }
+}
+
+/// Interactive implicit animation with stable two-column track topology.
+class AnimatedGridPreview extends StatefulWidget {
+  const AnimatedGridPreview({super.key});
+
+  @override
+  State<AnimatedGridPreview> createState() => _AnimatedGridPreviewState();
+}
+
+class _AnimatedGridPreviewState extends State<AnimatedGridPreview> {
+  static const _duration = Duration(milliseconds: 600);
+
+  bool _focused = false;
+
+  @override
+  Widget build(BuildContext context) {
+    final GridBoxStyler style = .columns([.fr(_focused ? 2 : 1), .fr(1)])
+        .autoRows(.fixed(_focused ? 148 : 112))
+        .columnGap(_focused ? 20 : 12)
+        .rowGap(_focused ? 20 : 12)
+        .animate(.easeInOut(_duration));
+
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Row(
+          children: [
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    _focused ? 'Focused allocation' : 'Balanced allocation',
+                    key: const Key('animation-state-label'),
+                    style: const TextStyle(
+                      color: Color(0xFF20212D),
+                      fontSize: 16,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                  const SizedBox(height: 2),
+                  Text(
+                    _focused
+                        ? 'The leading track receives two shares.'
+                        : 'Both tracks receive one share.',
+                    style: const TextStyle(
+                      color: Color(0xFF707284),
+                      fontSize: 12,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(width: 12),
+            FilledButton.tonalIcon(
+              key: const Key('animation-toggle'),
+              onPressed: () => setState(() => _focused = !_focused),
+              icon: Icon(
+                _focused
+                    ? Icons.balance_rounded
+                    : Icons.center_focus_strong_rounded,
+              ),
+              label: Text(_focused ? 'Balance 1:1' : 'Focus 2:1'),
+            ),
+          ],
+        ),
+        const SizedBox(height: 16),
+        GridBox(
+          key: const Key('animated-grid'),
+          style: style,
+          children: const [
+            _AnimatedMetricCard(
+              key: Key('animation-card-reach'),
+              label: 'Reach',
+              value: '42k',
+              icon: Icons.campaign_rounded,
+              tint: Color(0xFFE9E6FF),
+              color: Color(0xFF6558D3),
+            ),
+            _AnimatedMetricCard(
+              key: Key('animation-card-spend'),
+              label: 'Spend',
+              value: r'$18k',
+              icon: Icons.payments_rounded,
+              tint: Color(0xFFFFE9D8),
+              color: Color(0xFFE07835),
+            ),
+            _AnimatedMetricCard(
+              key: Key('animation-card-leads'),
+              label: 'Leads',
+              value: '1.2k',
+              icon: Icons.group_add_rounded,
+              tint: Color(0xFFDDF4EE),
+              color: Color(0xFF198A72),
+            ),
+            _AnimatedMetricCard(
+              key: Key('animation-card-roi'),
+              label: 'ROI',
+              value: '3.8x',
+              icon: Icons.trending_up_rounded,
+              tint: Color(0xFFDDEBFA),
+              color: Color(0xFF3E79C5),
+            ),
+          ],
+        ),
+        const SizedBox(height: 12),
+        const Text(
+          'The track count and kinds stay unchanged, so Mix interpolates the '
+          'fraction weights, repeated row height, and gaps without an '
+          'AnimationController.',
+          style: TextStyle(color: Color(0xFF707284), fontSize: 12),
+        ),
+      ],
+    );
+  }
+}
+
+class _AnimatedMetricCard extends StatelessWidget {
+  const _AnimatedMetricCard({
+    required this.label,
+    required this.value,
+    required this.icon,
+    required this.tint,
+    required this.color,
+    super.key,
+  });
+
+  final String label;
+  final String value;
+  final IconData icon;
+  final Color tint;
+  final Color color;
+
+  @override
+  Widget build(BuildContext context) {
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        border: Border.all(color: const Color(0xFFE5E6EE)),
+        borderRadius: BorderRadius.circular(18),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(14),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            DecoratedBox(
+              decoration: BoxDecoration(
+                color: tint,
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(6),
+                child: Icon(icon, color: color, size: 18),
+              ),
+            ),
+            const Spacer(),
+            FittedBox(
+              fit: BoxFit.scaleDown,
+              alignment: Alignment.centerLeft,
+              child: Text(
+                value,
+                style: const TextStyle(
+                  color: Color(0xFF20212D),
+                  fontSize: 22,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+            ),
+            Text(
+              label,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: const TextStyle(color: Color(0xFF77798A), fontSize: 11),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

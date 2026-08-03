@@ -111,23 +111,56 @@ MixScope(
 
 ## Animation
 
-`animate` interpolates Grid geometry when the old and new styles have the same
-track topology:
+`animate` provides implicit Grid animation: rebuild with different geometry and
+Mix interpolates the resolved `GridBoxSpec` without an `AnimationController`.
+For example, this state-driven Grid moves from equal columns to a 2:1 focus
+layout while also increasing its row height and gaps:
 
 ```dart
-final GridBoxStyler animatedGrid = .equalColumns(2)
-    .autoRows(.fixed(expanded ? 180 : 120))
-    .gap(expanded ? 20 : 12)
-    .animate(.easeInOut(const Duration(milliseconds: 250)));
+final GridBoxStyler animatedGrid = .columns([
+  .fr(focused ? 2 : 1),
+  .fr(1),
+])
+    .autoRows(.fixed(focused ? 148 : 112))
+    .gap(focused ? 20 : 12)
+    .animate(.easeInOut(const Duration(milliseconds: 600)));
+
+return Column(
+  children: [
+    FilledButton(
+      onPressed: () => setState(() => focused = !focused),
+      child: Text(focused ? 'Balance 1:1' : 'Focus 2:1'),
+    ),
+    GridBox(style: animatedGrid, children: cards),
+  ],
+);
 ```
 
-Corresponding fixed tracks interpolate with fixed tracks, fractional tracks
-with fractional tracks, and gaps interpolate numerically. A track-count or
-track-kind change has no continuous geometric equivalent, so it switches at
-the animation midpoint. `clipBehavior` and constraint patches also switch at
-the midpoint. Resizing across an `onConstraints` breakpoint stays immediate:
-branch selection happens during layout and does not rebuild a new animation
-target.
+When `setState` rebuilds the styler, Mix creates a tween between the old and new
+resolved geometry. The render object lays out the Grid at each animation value.
+In the example, the first track's weight moves from `1` to `2`, the second stays
+at `1`, and the resulting pixel widths continuously move from 1:1 toward 2:1.
+
+Animation compatibility is positional:
+
+- fixed tracks interpolate with fixed tracks;
+- fractional tracks interpolate with fractional tracks;
+- the two track lists must keep the same length and track kinds;
+- compatible `autoRows`, `columnGap`, and `rowGap` values interpolate too.
+
+A track-count or track-kind change has no continuous geometric equivalent, so
+it switches at the animation midpoint. `clipBehavior` and constraint patches
+also switch at the midpoint. Resizing across an `onConstraints` breakpoint
+stays immediate: branch selection happens during layout and does not rebuild a
+new animation target. Use state or an ordinary Mix variant when the geometry
+change itself should animate.
+
+The runnable gallery includes balanced and focused states of this example:
+
+<p>
+  <img src="../example/test/goldens/grid_animation_balanced.png" alt="Balanced animated GridBox state" width="46%">
+  <img src="../example/test/goldens/grid_animation_focused.png" alt="Focused animated GridBox state" width="46%">
+</p>
 
 ## Overflow and clipping
 
@@ -146,7 +179,8 @@ GridBox intentionally supports fixed and fractional tracks with row-major
 auto-placement. Content-sized tracks, spans, named areas, direction-aware
 placement, and baseline alignment are not part of the current API.
 
-Run the card, dashboard, and gallery examples from `packages/mix/example`:
+Run the card, dashboard, gallery, and animation examples from
+`packages/mix/example`:
 
 ```sh
 flutter run -t lib/grid_main.dart

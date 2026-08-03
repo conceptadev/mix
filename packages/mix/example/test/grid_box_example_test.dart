@@ -32,6 +32,55 @@ void main() {
     await tester.tap(find.text('Media gallery'));
     await tester.pumpAndSettle();
     expect(find.byKey(const Key('gallery-grid')), findsOneWidget);
+
+    await tester.tap(find.text('Animation'));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const Key('animated-grid')), findsOneWidget);
+  });
+
+  testWidgets('animation example interpolates tracks, rows, and gaps', (
+    tester,
+  ) async {
+    await tester.binding.setSurfaceSize(const Size(840, 620));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+
+    await tester.pumpWidget(
+      const MaterialApp(
+        home: Material(
+          child: Center(
+            child: SizedBox(width: 704, child: AnimatedGridPreview()),
+          ),
+        ),
+      ),
+    );
+
+    final leading = find.byKey(const Key('animation-card-reach'));
+    final trailing = find.byKey(const Key('animation-card-spend'));
+
+    double trackRatio() =>
+        tester.getSize(leading).width / tester.getSize(trailing).width;
+    double columnGap() =>
+        tester.getTopLeft(trailing).dx - tester.getTopRight(leading).dx;
+
+    expect(trackRatio(), moreOrLessEquals(1));
+    expect(tester.getSize(leading).height, 112);
+    expect(columnGap(), 12);
+
+    await tester.tap(find.byKey(const Key('animation-toggle')));
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 300));
+
+    expect(trackRatio(), inExclusiveRange(1, 2));
+    expect(tester.getSize(leading).height, inExclusiveRange(112, 148));
+    expect(columnGap(), inExclusiveRange(12, 20));
+
+    await tester.pumpAndSettle();
+
+    expect(trackRatio(), moreOrLessEquals(2));
+    expect(tester.getSize(leading).height, 148);
+    expect(columnGap(), 20);
+    expect(find.text('Focused allocation'), findsOneWidget);
+    expect(tester.takeException(), isNull);
   });
 
   for (final golden in _goldens) {
@@ -62,6 +111,11 @@ void main() {
         ),
       );
 
+      if (golden.focusAnimation) {
+        await tester.tap(find.byKey(const Key('animation-toggle')));
+        await tester.pumpAndSettle();
+      }
+
       await expectLater(
         find.byKey(_boundaryKey),
         matchesGoldenFile('goldens/grid_${golden.name}.png'),
@@ -77,6 +131,7 @@ class _GridGolden {
     this.width,
     this.surfaceSize, {
     this.precisionTolerance = defaultGoldenDiffTolerance,
+    this.focusAnimation = false,
   });
 
   final String name;
@@ -84,6 +139,7 @@ class _GridGolden {
   final double width;
   final Size surfaceSize;
   final double precisionTolerance;
+  final bool focusAnimation;
 }
 
 const _goldens = [
@@ -115,5 +171,18 @@ const _goldens = [
     390,
     Size(450, 820),
     precisionTolerance: 0.04,
+  ),
+  _GridGolden(
+    'animation_balanced',
+    GridExampleKind.animation,
+    760,
+    Size(840, 540),
+  ),
+  _GridGolden(
+    'animation_focused',
+    GridExampleKind.animation,
+    760,
+    Size(840, 620),
+    focusAnimation: true,
   ),
 ];

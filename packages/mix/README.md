@@ -182,7 +182,8 @@ GridBox(style: dashboardGrid, children: panels);
 ```
 
 `onConstraints` observes local Grid constraints; `onBreakpoint` continues to
-observe the viewport. See the [Grid layout guide](doc/grid-layout.md) and the
+observe the viewport. Compatible track, row, and gap changes can use Mix's
+implicit `animate` API. See the [Grid layout guide](doc/grid-layout.md) and the
 runnable [Grid examples](example/README.md).
 
 ### Dynamic Styling (Variants)
