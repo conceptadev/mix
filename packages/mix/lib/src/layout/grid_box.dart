@@ -22,8 +22,8 @@ export 'grid_box_spec.dart';
 ///
 /// Constraint-responsive geometry uses Grid-only [onConstraints] — patches
 /// may contain columns, rows, autoRows, and gaps only. Paint configuration such
-/// as [clipBehavior] remains on the base style. Branches are snapshotted into
-/// [GridBoxSpec] at [resolve] and applied at render time.
+/// as [clipBehavior] remains on the base style. Constraint branches are
+/// snapshotted into [GridBoxSpec] at [resolve] and applied at render time.
 ///
 /// [clipBehavior] defaults to [Clip.none]. Fixed tracks keep their declared
 /// size when they overflow; clipping changes paint containment, not geometry.
@@ -123,7 +123,7 @@ class GridBoxStyler extends MixStyler<GridBoxStyler, GridBoxSpec> {
       columnGap: columnGap,
       rowGap: rowGap,
       clipBehavior: clipBehavior,
-      branches: [
+      constraintBranches: [
         for (final branch in constraintBranches)
           GridConstraintBranch(
             breakpoint: _resolveConstraintBreakpoint(
@@ -146,7 +146,7 @@ class GridBoxStyler extends MixStyler<GridBoxStyler, GridBoxSpec> {
   GridBoxStyler merge(covariant GridBoxStyler? other) {
     if (other == null) return this;
 
-    final mergedBranches =
+    final mergedConstraintBranches =
         _constraintBranches == null && other._constraintBranches == null
         ? null
         : <GridConstraintBranch>[
@@ -161,7 +161,7 @@ class GridBoxStyler extends MixStyler<GridBoxStyler, GridBoxSpec> {
       columnGap: other._columnGap ?? _columnGap,
       rowGap: other._rowGap ?? _rowGap,
       clipBehavior: other._clipBehavior ?? _clipBehavior,
-      constraintBranches: mergedBranches,
+      constraintBranches: mergedConstraintBranches,
       variants: MixOps.mergeVariants($variants, other.$variants),
       modifier: MixOps.mergeModifier($modifier, other.$modifier),
       animation: MixOps.mergeAnimation($animation, other.$animation),
@@ -228,8 +228,8 @@ GridLayoutPatch _createValidatedConstraintPatch(GridBoxStyler patch) {
       ErrorHint('Attach variants on the base GridBoxStyler instead.'),
     ]);
   }
-  final nestedBranches = patch._constraintBranches;
-  if (nestedBranches != null && nestedBranches.isNotEmpty) {
+  final nestedConstraintBranches = patch._constraintBranches;
+  if (nestedConstraintBranches != null && nestedConstraintBranches.isNotEmpty) {
     throw FlutterError.fromParts([
       ErrorSummary(
         'GridBoxStyler.onConstraints patch cannot nest constraint branches.',

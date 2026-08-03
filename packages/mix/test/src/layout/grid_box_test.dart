@@ -179,7 +179,7 @@ void main() {
     GridBoxSpec specFor(Breakpoint breakpoint) {
       return GridBoxSpec(
         columns: const [GridTrack.fixed(100)],
-        branches: [
+        constraintBranches: [
           GridConstraintBranch(
             breakpoint: breakpoint,
             patch: const GridLayoutPatch(columnGap: 1),
@@ -267,7 +267,7 @@ void main() {
 
       final spec = GridBoxSpec(
         columns: columns,
-        branches: [
+        constraintBranches: [
           GridConstraintBranch(
             breakpoint: Breakpoint.maxWidth(400),
             patch: GridLayoutPatch(columns: branchColumns),
@@ -279,13 +279,13 @@ void main() {
       branchColumns.add(const GridTrack.fixed(10));
 
       expect(spec.columns, hasLength(2));
-      expect(spec.branches.single.patch.columns, hasLength(1));
+      expect(spec.constraintBranches.single.patch.columns, hasLength(1));
       expect(
         () => spec.columns.add(const GridTrack.fr(1)),
         throwsUnsupportedError,
       );
       expect(
-        () => spec.branches.add(
+        () => spec.constraintBranches.add(
           GridConstraintBranch(
             breakpoint: Breakpoint.maxWidth(300),
             patch: const GridLayoutPatch(columnGap: 4),
@@ -298,7 +298,7 @@ void main() {
     test('branch matching is inclusive and declaration ordered', () {
       final spec = GridBoxSpec(
         columns: const [GridTrack.fr(1), GridTrack.fr(1), GridTrack.fr(1)],
-        branches: [
+        constraintBranches: [
           GridConstraintBranch(
             breakpoint: Breakpoint.maxWidth(560),
             patch: const GridLayoutPatch(columns: [GridTrack.fr(1)]),
@@ -344,7 +344,7 @@ void main() {
         rows: const [GridTrack.fixed(40)],
         columnGap: 8,
         rowGap: 4,
-        branches: [
+        constraintBranches: [
           GridConstraintBranch(
             breakpoint: Breakpoint.maxWidth(500),
             patch: const GridLayoutPatch(columnGap: 16),
@@ -361,11 +361,11 @@ void main() {
       expect(g.rowGap, 4);
     });
 
-    test('width query selects a branch when height is unbounded', () {
+    test('width breakpoint selects a branch when height is unbounded', () {
       final spec = GridBoxSpec(
         columns: const [GridTrack.fixed(50), GridTrack.fixed(50)],
         rows: const [GridTrack.fixed(40)],
-        branches: [
+        constraintBranches: [
           GridConstraintBranch(
             breakpoint: Breakpoint.maxWidth(500),
             patch: const GridLayoutPatch(columns: [GridTrack.fixed(100)]),
@@ -425,7 +425,7 @@ void main() {
     test('constructor rejects invalid branch geometry', () {
       expect(
         () => GridBoxSpec(
-          branches: [
+          constraintBranches: [
             GridConstraintBranch(
               breakpoint: Breakpoint.maxWidth(100),
               patch: const GridLayoutPatch(),
@@ -443,7 +443,7 @@ void main() {
       expect(
         () => GridBoxSpec(
           columns: const [GridTrack.fr(1)],
-          branches: [
+          constraintBranches: [
             GridConstraintBranch(
               breakpoint: Breakpoint.maxWidth(100),
               patch: GridLayoutPatch(columns: [FixedGridTrack(.infinity)]),
@@ -538,7 +538,7 @@ void main() {
       );
     });
 
-    test('merge appends branches and merges modifiers/animation', () {
+    test('merge appends constraint branches and merges geometry', () {
       final a = GridBoxStyler(columns: const [GridTrack.fr(1), GridTrack.fr(1)])
           .onConstraints(
             Breakpoint.maxWidth(560),
@@ -850,7 +850,7 @@ void main() {
 
       final render = tester.renderObject<RenderMixGrid>(find.byType(MixGrid));
       expect(
-        render.spec.branches.single.breakpoint,
+        render.spec.constraintBranches.single.breakpoint,
         const Breakpoint.maxWidth(560),
       );
       expect(
@@ -872,7 +872,7 @@ void main() {
         autoRows: const GridTrack.fr(1),
         columnGap: 8,
         rowGap: 8,
-        branches: [
+        constraintBranches: [
           GridConstraintBranch(
             breakpoint: Breakpoint.maxWidth(560),
             patch: const GridLayoutPatch(

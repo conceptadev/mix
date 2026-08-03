@@ -106,7 +106,7 @@ final class GridBoxSpec extends Spec<GridBoxSpec> with Diagnosticable {
   final double columnGap;
   final double rowGap;
   final Clip clipBehavior;
-  final List<GridConstraintBranch> branches;
+  final List<GridConstraintBranch> constraintBranches;
 
   const GridBoxSpec._({
     required this.columns,
@@ -115,7 +115,7 @@ final class GridBoxSpec extends Spec<GridBoxSpec> with Diagnosticable {
     required this.columnGap,
     required this.rowGap,
     required this.clipBehavior,
-    required this.branches,
+    required this.constraintBranches,
   });
 
   /// Creates a validated spec and snapshots every caller-owned collection.
@@ -126,7 +126,7 @@ final class GridBoxSpec extends Spec<GridBoxSpec> with Diagnosticable {
     double columnGap = 0,
     double rowGap = 0,
     Clip clipBehavior = .none,
-    List<GridConstraintBranch> branches = const [],
+    List<GridConstraintBranch> constraintBranches = const [],
   }) {
     final spec = GridBoxSpec._(
       columns: List<GridTrack>.unmodifiable(columns),
@@ -135,8 +135,8 @@ final class GridBoxSpec extends Spec<GridBoxSpec> with Diagnosticable {
       columnGap: columnGap,
       rowGap: rowGap,
       clipBehavior: clipBehavior,
-      branches: List<GridConstraintBranch>.unmodifiable([
-        for (final branch in branches)
+      constraintBranches: List<GridConstraintBranch>.unmodifiable([
+        for (final branch in constraintBranches)
           GridConstraintBranch(
             breakpoint: branch.breakpoint,
             patch: _snapshotPatch(branch.patch),
@@ -148,7 +148,7 @@ final class GridBoxSpec extends Spec<GridBoxSpec> with Diagnosticable {
     return spec;
   }
 
-  /// Applies matching branches in declaration order for [constraints].
+  /// Applies matching constraint branches in declaration order.
   GridResolvedGeometry resolveGeometryForConstraints(
     BoxConstraints constraints,
   ) {
@@ -158,7 +158,7 @@ final class GridBoxSpec extends Spec<GridBoxSpec> with Diagnosticable {
     var resolvedColumnGap = columnGap;
     var resolvedRowGap = rowGap;
 
-    for (final branch in branches) {
+    for (final branch in constraintBranches) {
       if (!_matchesBreakpointConstraints(branch.breakpoint, constraints)) {
         continue;
       }
@@ -203,7 +203,7 @@ final class GridBoxSpec extends Spec<GridBoxSpec> with Diagnosticable {
     double? columnGap,
     double? rowGap,
     Clip? clipBehavior,
-    List<GridConstraintBranch>? branches,
+    List<GridConstraintBranch>? constraintBranches,
   }) {
     return GridBoxSpec(
       columns: columns ?? this.columns,
@@ -212,7 +212,7 @@ final class GridBoxSpec extends Spec<GridBoxSpec> with Diagnosticable {
       columnGap: columnGap ?? this.columnGap,
       rowGap: rowGap ?? this.rowGap,
       clipBehavior: clipBehavior ?? this.clipBehavior,
-      branches: branches ?? this.branches,
+      constraintBranches: constraintBranches ?? this.constraintBranches,
     );
   }
 
@@ -239,7 +239,7 @@ final class GridBoxSpec extends Spec<GridBoxSpec> with Diagnosticable {
           defaultValue: Clip.none,
         ),
       )
-      ..add(IterableProperty('branches', branches));
+      ..add(IterableProperty('constraintBranches', constraintBranches));
   }
 
   @override
@@ -250,7 +250,7 @@ final class GridBoxSpec extends Spec<GridBoxSpec> with Diagnosticable {
     columnGap,
     rowGap,
     clipBehavior,
-    branches,
+    constraintBranches,
   ];
 }
 
@@ -290,7 +290,7 @@ void _validateGridSpecGeometry(GridBoxSpec spec) {
   _validateGap(spec.columnGap, label: 'columnGap');
   _validateGap(spec.rowGap, label: 'rowGap');
 
-  for (final branch in spec.branches) {
+  for (final branch in spec.constraintBranches) {
     _validateConstraintBreakpoint(branch.breakpoint);
     final patch = branch.patch;
     if (patch.isEmpty) {
