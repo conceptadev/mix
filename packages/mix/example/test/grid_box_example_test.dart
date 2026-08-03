@@ -36,7 +36,10 @@ void main() {
 
   for (final golden in _goldens) {
     testWidgets('${golden.name} matches its golden', (tester) async {
-      useTolerantGoldenFileComparator('grid_box_example_test.dart');
+      useTolerantGoldenFileComparator(
+        'grid_box_example_test.dart',
+        precisionTolerance: golden.precisionTolerance,
+      );
       await tester.binding.setSurfaceSize(golden.surfaceSize);
       addTearDown(() => tester.binding.setSurfaceSize(null));
 
@@ -68,12 +71,19 @@ void main() {
 }
 
 class _GridGolden {
-  const _GridGolden(this.name, this.kind, this.width, this.surfaceSize);
+  const _GridGolden(
+    this.name,
+    this.kind,
+    this.width,
+    this.surfaceSize, {
+    this.precisionTolerance = defaultGoldenDiffTolerance,
+  });
 
   final String name;
   final GridExampleKind kind;
   final double width;
   final Size surfaceSize;
+  final double precisionTolerance;
 }
 
 const _goldens = [
@@ -98,5 +108,12 @@ const _goldens = [
   _GridGolden('catalog_wide', GridExampleKind.catalog, 1120, Size(1200, 660)),
   _GridGolden('catalog_compact', GridExampleKind.catalog, 390, Size(450, 1400)),
   _GridGolden('gallery_wide', GridExampleKind.gallery, 1120, Size(1200, 520)),
-  _GridGolden('gallery_compact', GridExampleKind.gallery, 390, Size(450, 820)),
+  // Dense gradients and rounded edges differ slightly between Skia platforms.
+  _GridGolden(
+    'gallery_compact',
+    GridExampleKind.gallery,
+    390,
+    Size(450, 820),
+    precisionTolerance: 0.04,
+  ),
 ];
