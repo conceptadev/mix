@@ -69,7 +69,8 @@ class _GridBoxExampleScreenState extends State<GridBoxExampleScreen> {
           const SizedBox(height: 8),
           const Text(
             'Change the offered width to exercise local constraints, or open '
-            'Animation and toggle focus to interpolate compatible tracks.',
+            'Animation and press Animate to 2:1 to inspect compatible track '
+            'interpolation.',
           ),
           const SizedBox(height: 18),
           Wrap(
@@ -644,7 +645,9 @@ class AnimatedGridPreview extends StatefulWidget {
 }
 
 class _AnimatedGridPreviewState extends State<AnimatedGridPreview> {
-  static const _duration = Duration(milliseconds: 600);
+  // Deliberately slower than a typical product transition so each changing
+  // Grid dimension is easy to inspect in this runnable API example.
+  static const _duration = Duration(milliseconds: 1200);
 
   bool _focused = false;
 
@@ -697,7 +700,7 @@ class _AnimatedGridPreviewState extends State<AnimatedGridPreview> {
                     ? Icons.balance_rounded
                     : Icons.center_focus_strong_rounded,
               ),
-              label: Text(_focused ? 'Balance 1:1' : 'Focus 2:1'),
+              label: Text(_focused ? 'Animate to 1:1' : 'Animate to 2:1'),
             ),
           ],
         ),
@@ -742,9 +745,9 @@ class _AnimatedGridPreviewState extends State<AnimatedGridPreview> {
         ),
         const SizedBox(height: 12),
         const Text(
-          'The track count and kinds stay unchanged, so Mix interpolates the '
-          'fraction weights, repeated row height, and gaps without an '
-          'AnimationController.',
+          'This deliberately visible 1.2-second demo keeps the track count '
+          'and kinds unchanged, so Mix interpolates the fraction weights, '
+          'repeated row height, and gaps without an AnimationController.',
           style: TextStyle(color: Color(0xFF707284), fontSize: 12),
         ),
       ],

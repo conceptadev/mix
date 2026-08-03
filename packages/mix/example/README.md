@@ -57,7 +57,10 @@ The same track model handles repeated product cards and a denser media gallery:
 The Animation example toggles a two-column planning Grid between balanced and
 focused geometry. Rebuilding the same two fractional tracks lets Mix
 interpolate their weights from 1:1 to 2:1 while also animating the repeated row
-height and gaps:
+height and gaps. The gallery deliberately uses 1.2 seconds so the interpolation
+is easy to inspect; product transitions can be shorter:
+
+![GridBox interpolating between balanced and focused tracks](../screenshots/grid_animation_demo.gif)
 
 ```dart
 final GridBoxStyler animatedGrid = .columns([
@@ -66,7 +69,7 @@ final GridBoxStyler animatedGrid = .columns([
 ])
     .autoRows(.fixed(focused ? 148 : 112))
     .gap(focused ? 20 : 12)
-    .animate(.easeInOut(const Duration(milliseconds: 600)));
+    .animate(.easeInOut(const Duration(milliseconds: 1200)));
 ```
 
 No `AnimationController` is needed. Track lists with different lengths or

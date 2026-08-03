@@ -68,7 +68,7 @@ void main() {
 
     await tester.tap(find.byKey(const Key('animation-toggle')));
     await tester.pump();
-    await tester.pump(const Duration(milliseconds: 300));
+    await tester.pump(const Duration(milliseconds: 600));
 
     expect(trackRatio(), inExclusiveRange(1, 2));
     expect(tester.getSize(leading).height, inExclusiveRange(112, 148));
@@ -172,11 +172,14 @@ const _goldens = [
     Size(450, 820),
     precisionTolerance: 0.04,
   ),
+  // Text, icons, and rounded card edges rasterize just beyond the shared
+  // macOS/Linux tolerance; geometry is asserted by the widget test above.
   _GridGolden(
     'animation_balanced',
     GridExampleKind.animation,
     760,
     Size(840, 540),
+    precisionTolerance: 0.04,
   ),
   _GridGolden(
     'animation_focused',
