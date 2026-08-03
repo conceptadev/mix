@@ -1,12 +1,10 @@
-// Grid spike surfaces are intentionally unexported.
 // ignore_for_file: implementation_imports
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
-import 'package:mix/src/layout/grid_box.dart';
-import 'package:mix/src/layout/grid_track.dart';
+import 'package:mix/src/layout/internal/grid_geometry.dart';
 import 'package:mix/src/layout/render_grid.dart';
 
 void main() {
@@ -550,9 +548,9 @@ void main() {
       );
 
       final merged = a.merge(b);
-      expect(merged.constraintBranches, hasLength(2));
-      expect(merged.columnGap, 8);
-      expect(merged.columns, hasLength(2));
+      expect(merged.$constraintBranches, hasLength(2));
+      expect(merged.$columnGap, 8);
+      expect(merged.$columns, hasLength(2));
     });
 
     test('base modifiers merge via MixOps.mergeModifier', () {

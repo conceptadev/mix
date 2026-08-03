@@ -49,8 +49,6 @@ const _neverClosureBacked = 'never: closure-backed runtime behavior.';
 const _neverRuntimeOnly = 'never: runtime-only value with no stable data wire.';
 const _neverInternal =
     'never: internal or merge-control implementation detail.';
-const _internalGridUnexported =
-    'internal: Grid validation slice; not exported from mix.dart.';
 
 /// Coverage decisions for the current checked-in `packages/mix` inventory.
 const schemaInventoryManifest = <SchemaInventoryEntry>[
@@ -89,6 +87,16 @@ const _supportedInventory = <SchemaInventoryEntry>[
   SchemaInventoryEntry.supported(r'FlexStyler.$textDirection'),
   SchemaInventoryEntry.supported(r'FlexStyler.$variants'),
   SchemaInventoryEntry.supported(r'FlexStyler.$verticalDirection'),
+  SchemaInventoryEntry.supported(r'GridBoxStyler.$animation'),
+  SchemaInventoryEntry.supported(r'GridBoxStyler.$autoRows'),
+  SchemaInventoryEntry.supported(r'GridBoxStyler.$clipBehavior'),
+  SchemaInventoryEntry.supported(r'GridBoxStyler.$columnGap'),
+  SchemaInventoryEntry.supported(r'GridBoxStyler.$columns'),
+  SchemaInventoryEntry.supported(r'GridBoxStyler.$constraintBranches'),
+  SchemaInventoryEntry.supported(r'GridBoxStyler.$modifier'),
+  SchemaInventoryEntry.supported(r'GridBoxStyler.$rowGap'),
+  SchemaInventoryEntry.supported(r'GridBoxStyler.$rows'),
+  SchemaInventoryEntry.supported(r'GridBoxStyler.$variants'),
   SchemaInventoryEntry.supported(r'IconStyler.$animation'),
   SchemaInventoryEntry.supported(r'IconStyler.$applyTextScaling'),
   SchemaInventoryEntry.supported(r'IconStyler.$blendMode'),
@@ -633,18 +641,5 @@ const _neverUnsupportedInventory = <SchemaInventoryEntry>[
   SchemaInventoryEntry.knownUnsupported(
     'variant_factory:ContextVariant.size',
     _neverClosureBacked,
-  ),
-  // Internal Grid validation (see guides/grid-layout-validation.md).
-  SchemaInventoryEntry.knownUnsupported(
-    r'GridBoxStyler.$animation',
-    _internalGridUnexported,
-  ),
-  SchemaInventoryEntry.knownUnsupported(
-    r'GridBoxStyler.$modifier',
-    _internalGridUnexported,
-  ),
-  SchemaInventoryEntry.knownUnsupported(
-    r'GridBoxStyler.$variants',
-    _internalGridUnexported,
   ),
 ];

@@ -28,13 +28,13 @@ export 'grid_box_spec.dart';
 /// [clipBehavior] defaults to [Clip.none]. Fixed tracks keep their declared
 /// size when they overflow; clipping changes paint containment, not geometry.
 class GridBoxStyler extends MixStyler<GridBoxStyler, GridBoxSpec> {
-  final List<GridTrack>? _columns;
-  final List<GridTrack>? _rows;
-  final GridTrack? _autoRows;
-  final double? _columnGap;
-  final double? _rowGap;
-  final Clip? _clipBehavior;
-  final List<GridConstraintBranch>? _constraintBranches;
+  final List<GridTrack>? $columns;
+  final List<GridTrack>? $rows;
+  final GridTrack? $autoRows;
+  final double? $columnGap;
+  final double? $rowGap;
+  final Clip? $clipBehavior;
+  final List<GridConstraintBranch>? $constraintBranches;
 
   const GridBoxStyler({
     List<GridTrack>? columns,
@@ -47,41 +47,69 @@ class GridBoxStyler extends MixStyler<GridBoxStyler, GridBoxSpec> {
     super.variants,
     super.modifier,
     super.animation,
-  }) : _columns = columns,
-       _rows = rows,
-       _autoRows = autoRows,
-       _columnGap = columnGap,
-       _rowGap = rowGap,
-       _clipBehavior = clipBehavior,
-       _constraintBranches = constraintBranches;
+  }) : $columns = columns,
+       $rows = rows,
+       $autoRows = autoRows,
+       $columnGap = columnGap,
+       $rowGap = rowGap,
+       $clipBehavior = clipBehavior,
+       $constraintBranches = constraintBranches;
 
-  List<GridTrack> get columns => _columns ?? const [GridTrack.fr(1)];
-  List<GridTrack> get rows => _rows ?? const [];
-  GridTrack? get autoRows => _autoRows;
-  double get columnGap => _columnGap ?? 0;
-  double get rowGap => _rowGap ?? 0;
-  Clip get clipBehavior => _clipBehavior ?? .none;
+  /// Creates a style that sets [columns].
+  factory GridBoxStyler.columns(List<GridTrack> columns) =>
+      GridBoxStyler(columns: columns);
 
-  List<GridConstraintBranch> get constraintBranches =>
-      _constraintBranches ?? const [];
+  /// Creates a style that sets [rows].
+  factory GridBoxStyler.rows(List<GridTrack> rows) => GridBoxStyler(rows: rows);
 
-  GridBoxStyler columnsTracks(List<GridTrack> value) =>
+  /// Creates a style that sets [autoRows].
+  factory GridBoxStyler.autoRows(GridTrack autoRows) =>
+      GridBoxStyler(autoRows: autoRows);
+
+  /// Creates a style that sets both Grid gaps to [gap].
+  factory GridBoxStyler.gap(double gap) =>
+      GridBoxStyler(columnGap: gap, rowGap: gap);
+
+  /// Creates a style that sets [columnGap].
+  factory GridBoxStyler.columnGap(double columnGap) =>
+      GridBoxStyler(columnGap: columnGap);
+
+  /// Creates a style that sets [rowGap].
+  factory GridBoxStyler.rowGap(double rowGap) => GridBoxStyler(rowGap: rowGap);
+
+  /// Creates a style that sets [clipBehavior].
+  factory GridBoxStyler.clipBehavior(Clip clipBehavior) =>
+      GridBoxStyler(clipBehavior: clipBehavior);
+
+  /// Creates a style with one local constraint branch.
+  factory GridBoxStyler.onConstraints(
+    Breakpoint breakpoint,
+    GridBoxStyler patch,
+  ) => GridBoxStyler().onConstraints(breakpoint, patch);
+
+  /// Creates an animated Grid style.
+  factory GridBoxStyler.animate(AnimationConfig animation) =>
+      GridBoxStyler().animate(animation);
+
+  GridBoxStyler columns(List<GridTrack> value) =>
       merge(GridBoxStyler(columns: value));
 
-  GridBoxStyler rowsTracks(List<GridTrack> value) =>
+  GridBoxStyler rows(List<GridTrack> value) =>
       merge(GridBoxStyler(rows: value));
 
-  GridBoxStyler autoRowsTrack(GridTrack value) =>
+  GridBoxStyler autoRows(GridTrack value) =>
       merge(GridBoxStyler(autoRows: value));
 
   GridBoxStyler gap(double value) =>
       merge(GridBoxStyler(columnGap: value, rowGap: value));
 
-  GridBoxStyler columnGapValue(double value) =>
+  GridBoxStyler columnGap(double value) =>
       merge(GridBoxStyler(columnGap: value));
 
-  GridBoxStyler rowGapValue(double value) =>
-      merge(GridBoxStyler(rowGap: value));
+  GridBoxStyler rowGap(double value) => merge(GridBoxStyler(rowGap: value));
+
+  GridBoxStyler clipBehavior(Clip value) =>
+      merge(GridBoxStyler(clipBehavior: value));
 
   /// Attaches a Grid-only constraint branch applied at render time.
   ///
@@ -89,7 +117,7 @@ class GridBoxStyler extends MixStyler<GridBoxStyler, GridBoxSpec> {
   /// Unlike [onBreakpoint], it does not observe the viewport. [patch] may set
   /// columns, rows, autoRows, and gaps only. Modifiers, animations, ordinary
   /// variants, nested constraint branches, and empty patches are rejected.
-  /// Selection runs in [RenderMixGrid] without rebuilding the widget tree.
+  /// Selection runs during layout without rebuilding the widget tree.
   GridBoxStyler onConstraints(Breakpoint breakpoint, GridBoxStyler patch) {
     final layoutPatch = _createValidatedConstraintPatch(patch);
 
@@ -117,14 +145,14 @@ class GridBoxStyler extends MixStyler<GridBoxStyler, GridBoxSpec> {
   @override
   StyleSpec<GridBoxSpec> resolve(BuildContext context) {
     final spec = GridBoxSpec(
-      columns: columns,
-      rows: rows,
-      autoRows: autoRows,
-      columnGap: columnGap,
-      rowGap: rowGap,
-      clipBehavior: clipBehavior,
+      columns: $columns ?? const [GridTrack.fr(1)],
+      rows: $rows ?? const [],
+      autoRows: $autoRows,
+      columnGap: $columnGap ?? 0,
+      rowGap: $rowGap ?? 0,
+      clipBehavior: $clipBehavior ?? .none,
       constraintBranches: [
-        for (final branch in constraintBranches)
+        for (final branch in $constraintBranches ?? const [])
           GridConstraintBranch(
             breakpoint: _resolveConstraintBreakpoint(
               context,
@@ -147,20 +175,20 @@ class GridBoxStyler extends MixStyler<GridBoxStyler, GridBoxSpec> {
     if (other == null) return this;
 
     final mergedConstraintBranches =
-        _constraintBranches == null && other._constraintBranches == null
+        $constraintBranches == null && other.$constraintBranches == null
         ? null
         : <GridConstraintBranch>[
-            ...?_constraintBranches,
-            ...?other._constraintBranches,
+            ...?$constraintBranches,
+            ...?other.$constraintBranches,
           ];
 
     return GridBoxStyler(
-      columns: other._columns ?? _columns,
-      rows: other._rows ?? _rows,
-      autoRows: other._autoRows ?? _autoRows,
-      columnGap: other._columnGap ?? _columnGap,
-      rowGap: other._rowGap ?? _rowGap,
-      clipBehavior: other._clipBehavior ?? _clipBehavior,
+      columns: other.$columns ?? $columns,
+      rows: other.$rows ?? $rows,
+      autoRows: other.$autoRows ?? $autoRows,
+      columnGap: other.$columnGap ?? $columnGap,
+      rowGap: other.$rowGap ?? $rowGap,
+      clipBehavior: other.$clipBehavior ?? $clipBehavior,
       constraintBranches: mergedConstraintBranches,
       variants: MixOps.mergeVariants($variants, other.$variants),
       modifier: MixOps.mergeModifier($modifier, other.$modifier),
@@ -170,13 +198,13 @@ class GridBoxStyler extends MixStyler<GridBoxStyler, GridBoxSpec> {
 
   @override
   List<Object?> get props => [
-    _columns,
-    _rows,
-    _autoRows,
-    _columnGap,
-    _rowGap,
-    _clipBehavior,
-    _constraintBranches,
+    $columns,
+    $rows,
+    $autoRows,
+    $columnGap,
+    $rowGap,
+    $clipBehavior,
+    $constraintBranches,
     $variants,
     $modifier,
     $animation,
@@ -228,7 +256,7 @@ GridLayoutPatch _createValidatedConstraintPatch(GridBoxStyler patch) {
       ErrorHint('Attach variants on the base GridBoxStyler instead.'),
     ]);
   }
-  final nestedConstraintBranches = patch._constraintBranches;
+  final nestedConstraintBranches = patch.$constraintBranches;
   if (nestedConstraintBranches != null && nestedConstraintBranches.isNotEmpty) {
     throw FlutterError.fromParts([
       ErrorSummary(
@@ -239,7 +267,7 @@ GridLayoutPatch _createValidatedConstraintPatch(GridBoxStyler patch) {
       ),
     ]);
   }
-  if (patch._clipBehavior != null) {
+  if (patch.$clipBehavior != null) {
     throw FlutterError.fromParts([
       ErrorSummary(
         'GridBoxStyler.onConstraints patch cannot include clipBehavior.',
@@ -250,18 +278,14 @@ GridLayoutPatch _createValidatedConstraintPatch(GridBoxStyler patch) {
       ErrorHint('Move clipBehavior to the base GridBoxStyler.'),
     ]);
   }
-  final columns = patch._columns;
-  final rows = patch._rows;
+  final columns = patch.$columns;
+  final rows = patch.$rows;
   final layoutPatch = GridLayoutPatch(
-    columns: columns == null
-        ? null
-        : List<GridTrack>.unmodifiable(List<GridTrack>.of(columns)),
-    rows: rows == null
-        ? null
-        : List<GridTrack>.unmodifiable(List<GridTrack>.of(rows)),
-    autoRows: patch._autoRows,
-    columnGap: patch._columnGap,
-    rowGap: patch._rowGap,
+    columns: columns == null ? null : List<GridTrack>.unmodifiable(columns),
+    rows: rows == null ? null : List<GridTrack>.unmodifiable(rows),
+    autoRows: patch.$autoRows,
+    columnGap: patch.$columnGap,
+    rowGap: patch.$rowGap,
   );
   if (layoutPatch.isEmpty) {
     throw FlutterError.fromParts([
@@ -278,9 +302,7 @@ GridLayoutPatch _createValidatedConstraintPatch(GridBoxStyler patch) {
   return layoutPatch;
 }
 
-/// Grid host: [MixGrid] driven by [GridBoxStyler] / [GridBoxSpec].
-///
-/// Spike prototype — not exported from `mix.dart`.
+/// Multi-child Grid widget driven by [GridBoxStyler] and [GridBoxSpec].
 class GridBox extends StyleWidget<GridBoxSpec> {
   const GridBox({
     super.style = const GridBoxStyler(),
@@ -289,6 +311,7 @@ class GridBox extends StyleWidget<GridBoxSpec> {
     this.children = const <Widget>[],
   });
 
+  /// Children placed into cells in row-major order.
   final List<Widget> children;
 
   @override

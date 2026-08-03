@@ -1,11 +1,9 @@
-import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
 import 'package:mix_example/main.dart';
 
-const _goldenDiffTolerance = 0.03;
+import 'helpers/tolerant_golden_file_comparator.dart';
 
 void main() {
   testWidgets('gallery smoke test exposes controls and all direction samples', (
@@ -45,15 +43,7 @@ void main() {
     testWidgets('${width.label.toLowerCase()} cloud matches its golden', (
       tester,
     ) async {
-      final previousComparator = goldenFileComparator;
-      // Derive the base from the ambient comparator's absolute basedir so
-      // golden lookup and --update-goldens work regardless of process CWD.
-      final basedir = (previousComparator as LocalFileComparator).basedir;
-      goldenFileComparator = _TolerantGoldenFileComparator(
-        Uri.parse('${basedir}wrap_box_example_test.dart'),
-        precisionTolerance: _goldenDiffTolerance,
-      );
-      addTearDown(() => goldenFileComparator = previousComparator);
+      useTolerantGoldenFileComparator('wrap_box_example_test.dart');
 
       await tester.binding.setSurfaceSize(const Size(520, 280));
       addTearDown(() => tester.binding.setSurfaceSize(null));
@@ -78,35 +68,5 @@ void main() {
         matchesGoldenFile('goldens/wrap_cloud_${width.name}.png'),
       );
     });
-  }
-}
-
-/// Allows small rasterization differences between macOS and Linux renderers.
-class _TolerantGoldenFileComparator extends LocalFileComparator {
-  _TolerantGoldenFileComparator(
-    super.testFile, {
-    required this.precisionTolerance,
-  }) : assert(
-         precisionTolerance >= 0 && precisionTolerance <= 1,
-         'precisionTolerance must be between 0 and 1',
-       );
-
-  final double precisionTolerance;
-
-  @override
-  Future<bool> compare(Uint8List imageBytes, Uri golden) async {
-    final result = await GoldenFileComparator.compareLists(
-      imageBytes,
-      await getGoldenBytes(golden),
-    );
-
-    if (result.passed || result.diffPercent <= precisionTolerance) {
-      result.dispose();
-      return true;
-    }
-
-    final error = await generateFailureOutput(result, golden, basedir);
-    result.dispose();
-    throw FlutterError(error);
   }
 }

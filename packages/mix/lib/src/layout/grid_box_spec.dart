@@ -4,6 +4,7 @@ import 'package:flutter/widgets.dart';
 import '../core/breakpoint.dart';
 import '../core/spec.dart';
 import 'grid_track.dart';
+import 'internal/grid_validation.dart';
 
 /// Partial geometry override for a constraint-matched branch.
 ///
@@ -49,8 +50,8 @@ final class GridLayoutPatch {
     final rws = rows;
 
     return 'GridLayoutPatch('
-        'columns: ${cols == null ? 'null' : _tracksToString(cols)}, '
-        'rows: ${rws == null ? 'null' : _tracksToString(rws)}, '
+        'columns: ${cols == null ? 'null' : gridTracksToString(cols)}, '
+        'rows: ${rws == null ? 'null' : gridTracksToString(rws)}, '
         'autoRows: ${autoRows ?? 'null'}, '
         'columnGap: ${columnGap ?? 'null'}, '
         'rowGap: ${rowGap ?? 'null'})';
@@ -148,53 +149,6 @@ final class GridBoxSpec extends Spec<GridBoxSpec> with Diagnosticable {
     return spec;
   }
 
-  /// Applies matching constraint branches in declaration order.
-  GridResolvedGeometry resolveGeometryForConstraints(
-    BoxConstraints constraints,
-  ) {
-    var resolvedColumns = columns;
-    var resolvedRows = rows;
-    var resolvedAutoRows = autoRows;
-    var resolvedColumnGap = columnGap;
-    var resolvedRowGap = rowGap;
-
-    for (final branch in constraintBranches) {
-      if (!_matchesBreakpointConstraints(branch.breakpoint, constraints)) {
-        continue;
-      }
-      final patch = branch.patch;
-      final patchColumns = patch.columns;
-      final patchRows = patch.rows;
-      final patchAutoRows = patch.autoRows;
-      final patchColumnGap = patch.columnGap;
-      final patchRowGap = patch.rowGap;
-      if (patchColumns != null) resolvedColumns = patchColumns;
-      if (patchRows != null) resolvedRows = patchRows;
-      if (patchAutoRows != null) resolvedAutoRows = patchAutoRows;
-      if (patchColumnGap != null) resolvedColumnGap = patchColumnGap;
-      if (patchRowGap != null) resolvedRowGap = patchRowGap;
-    }
-
-    rejectFractionalGridTracksOnUnboundedAxis(
-      tracks: resolvedColumns,
-      axis: .horizontal,
-      constraints: constraints,
-    );
-    rejectFractionalGridTracksOnUnboundedAxis(
-      tracks: resolvedRows,
-      axis: .vertical,
-      constraints: constraints,
-    );
-
-    return GridResolvedGeometry(
-      columns: resolvedColumns,
-      rows: resolvedRows,
-      autoRows: resolvedAutoRows,
-      columnGap: resolvedColumnGap,
-      rowGap: resolvedRowGap,
-    );
-  }
-
   @override
   GridBoxSpec copyWith({
     List<GridTrack>? columns,
@@ -252,24 +206,6 @@ final class GridBoxSpec extends Spec<GridBoxSpec> with Diagnosticable {
     clipBehavior,
     constraintBranches,
   ];
-}
-
-/// Geometry after branch selection and before track sizing / placement.
-@immutable
-final class GridResolvedGeometry {
-  final List<GridTrack> columns;
-  final List<GridTrack> rows;
-  final GridTrack? autoRows;
-  final double columnGap;
-  final double rowGap;
-
-  const GridResolvedGeometry({
-    required this.columns,
-    required this.rows,
-    required this.autoRows,
-    required this.columnGap,
-    required this.rowGap,
-  });
 }
 
 void _validateGridSpecGeometry(GridBoxSpec spec) {
@@ -338,26 +274,6 @@ void _validateGridSpecGeometry(GridBoxSpec spec) {
       _validateGap(patchRowGap, label: 'patch.rowGap');
     }
   }
-}
-
-bool _matchesBreakpointConstraints(
-  Breakpoint breakpoint,
-  BoxConstraints constraints,
-) {
-  final (:minWidth, :maxWidth, :minHeight, :maxHeight) =
-      _readConstraintBreakpoint(breakpoint);
-  final constrainsWidth = minWidth != null || maxWidth != null;
-  final constrainsHeight = minHeight != null || maxHeight != null;
-
-  if (constrainsWidth && !constraints.hasBoundedWidth) return false;
-  if (constrainsHeight && !constraints.hasBoundedHeight) return false;
-
-  return breakpoint.matches(
-    Size(
-      constraints.hasBoundedWidth ? constraints.maxWidth : 0,
-      constraints.hasBoundedHeight ? constraints.maxHeight : 0,
-    ),
-  );
 }
 
 void _validateConstraintBreakpoint(Breakpoint breakpoint) {
@@ -439,16 +355,6 @@ GridLayoutPatch _snapshotPatch(GridLayoutPatch patch) {
   );
 }
 
-String _tracksToString(List<GridTrack> tracks) {
-  return [
-    for (final track in tracks)
-      switch (track) {
-        FixedGridTrack(:final size) => 'GridTrack.fixed($size)',
-        FrGridTrack(:final fraction) => 'GridTrack.fr($fraction)',
-      },
-  ].join(', ');
-}
-
 void _validateTracks(List<GridTrack> tracks, {required String axisLabel}) {
   for (var i = 0; i < tracks.length; i++) {
     final track = tracks[i];
@@ -486,35 +392,4 @@ void _validateGap(double gap, {required String label}) {
       ErrorHint('Use a finite gap ≥ 0.'),
     ]);
   }
-}
-
-/// Rejects fractional tracks when their axis has no finite available extent.
-void rejectFractionalGridTracksOnUnboundedAxis({
-  required List<GridTrack> tracks,
-  required Axis axis,
-  required BoxConstraints constraints,
-}) {
-  if (!tracks.any((track) => track is FrGridTrack)) return;
-
-  final bounded = axis == .horizontal
-      ? constraints.hasBoundedWidth
-      : constraints.hasBoundedHeight;
-  if (bounded) return;
-
-  final axisName = axis == .horizontal ? 'width' : 'height';
-  throw FlutterError.fromParts([
-    ErrorSummary('Grid fractional tracks require a bounded $axisName axis.'),
-    ErrorDescription(
-      'Axis: $axisName\n'
-      'Constraints: $constraints\n'
-      'Tracks: [${_tracksToString(tracks)}]',
-    ),
-    ErrorHint(
-      'Valid fixes:\n'
-      '• Replace fractional tracks with GridTrack.fixed on this axis.\n'
-      '• Place the grid under a bounded constraint '
-      '(SizedBox, Expanded in a bounded Flex, etc.).\n'
-      '• Content-sized tracks are not yet supported in this spike.',
-    ),
-  ]);
 }

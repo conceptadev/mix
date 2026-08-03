@@ -108,6 +108,21 @@ void main() {
       }),
     );
   });
+
+  test('finds breakpoint tokens in Grid constraint branches', () {
+    final style = GridBoxStyler(
+      constraintBranches: [
+        GridConstraintBranch(
+          breakpoint: const BreakpointToken('breakpoint.grid.compact')(),
+          patch: const GridLayoutPatch(columnGap: 8),
+        ),
+      ],
+    );
+
+    expect(tokenReferencesOf(style), {
+      const MixProtocolTokenReference('breakpoints', 'breakpoint.grid.compact'),
+    });
+  });
 }
 
 JsonMap _stylePayload() {

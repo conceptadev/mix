@@ -359,9 +359,45 @@ void _walkStyle(
         );
       }
     }
+    final constraintBranches = value['constraintBranches'];
+    if (constraintBranches is List<Object?>) {
+      for (var index = 0; index < constraintBranches.length; index += 1) {
+        final branch = constraintBranches[index]! as JsonMap;
+        final breakpoint = branch['breakpoint']! as JsonMap;
+        final selectorPointer = '$pointer/constraintBranches/$index/breakpoint';
+        final selectorInspection = _inspectSelector({
+          'kind': _constraintBreakpointSelectorKind,
+          ...breakpoint,
+        }, selectorPointer);
+        final selector = selectorInspection.selector;
+        state.evidence.add(
+          MixProtocolSelectorEvidence(
+            jsonPointer: selectorPointer,
+            selectors: selectors,
+            mergePath: mergePath,
+            selector: selector,
+            tokenOccurrences: selectorInspection.tokenOccurrences,
+          ),
+        );
+        _walkStyle(
+          branch['patch'],
+          pointer: '$pointer/constraintBranches/$index/patch',
+          propertyPath: propertyPath,
+          selectors: [...selectors, selector],
+          mergePath: mergePath,
+          state: state,
+        );
+      }
+    }
     final keys =
         value.keys
-            .where((key) => key != 'v' && key != 'type' && key != 'variants')
+            .where(
+              (key) =>
+                  key != 'v' &&
+                  key != 'type' &&
+                  key != 'variants' &&
+                  key != 'constraintBranches',
+            )
             .toList()
           ..sort();
     for (final key in keys) {
@@ -477,7 +513,9 @@ void _collectSelectorTokenOccurrences(
   List<MixProtocolTokenOccurrence> tokenOccurrences,
 ) {
   final tokenName = selector['token'];
-  if (selector['kind'] == 'context_breakpoint' && tokenName is String) {
+  if (tokenName is String &&
+      (selector['kind'] == 'context_breakpoint' ||
+          selector['kind'] == _constraintBreakpointSelectorKind)) {
     tokenOccurrences.add(
       MixProtocolTokenOccurrence(
         kind: 'breakpoints',
@@ -496,6 +534,8 @@ void _collectSelectorTokenOccurrences(
     );
   }
 }
+
+const _constraintBreakpointSelectorKind = 'constraint_breakpoint';
 
 String _tokenKind(
   JsonMap token,

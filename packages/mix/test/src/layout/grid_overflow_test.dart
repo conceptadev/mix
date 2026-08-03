@@ -1,4 +1,3 @@
-// Grid spike surfaces are intentionally unexported.
 // ignore_for_file: implementation_imports
 
 import 'dart:ui' as ui;
@@ -6,9 +5,7 @@ import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mix/mix.dart' show Breakpoint;
-import 'package:mix/src/layout/grid_box.dart';
-import 'package:mix/src/layout/grid_track.dart';
+import 'package:mix/mix.dart';
 import 'package:mix/src/layout/render_grid.dart';
 
 void main() {
@@ -33,8 +30,8 @@ void main() {
     const defaultStyle = GridBoxStyler();
     const clippedStyle = GridBoxStyler(clipBehavior: .hardEdge);
 
-    expect(defaultStyle.clipBehavior, Clip.none);
-    expect(clippedStyle.clipBehavior, Clip.hardEdge);
+    expect(defaultStyle.$clipBehavior, isNull);
+    expect(clippedStyle.$clipBehavior, Clip.hardEdge);
     expect(
       GridBoxSpec(
         columns: const [GridTrack.fixed(10)],

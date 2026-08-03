@@ -28,6 +28,7 @@ Styler discriminator values are:
 - `flex_box`
 - `wrap_box`
 - `stack_box`
+- `grid_box`
 
 An unknown root `type` fails with `unknown_type`.
 
@@ -266,6 +267,53 @@ payload. When a field name would conflict, `alignment` and `clipBehavior` belong
 to the box part; `stackAlignment` and `stackClipBehavior` belong to the stack
 part.
 
+### grid_box
+
+`grid_box` represents `GridBoxStyler` geometry and ordinary Mix style metadata:
+
+- `columns`: non-empty list of Grid tracks
+- `rows`: list of explicit Grid tracks; an empty list is allowed
+- `autoRows`: repeated track used for rows required beyond `rows`
+- `columnGap`: non-negative number
+- `rowGap`: non-negative number
+- `clipBehavior`: enum name from `Clip`
+- `constraintBranches`: ordered list of local constraint branches
+- `variants`: list of variant payloads
+- `modifiers`: modifier payload list or ordered modifier object
+- `animation`: animation payload
+
+A Grid track is one of:
+
+```json
+{ "type": "fixed", "size": 220 }
+{ "type": "fr", "fraction": 2 }
+```
+
+Fixed `size` is non-negative. Fractional `fraction` is greater than zero.
+
+Each local branch contains a `breakpoint` and a geometry-only `patch`:
+
+```json
+{
+  "breakpoint": { "maxWidth": 720 },
+  "patch": {
+    "columns": [{ "type": "fr", "fraction": 1 }],
+    "columnGap": 8,
+    "rowGap": 8
+  }
+}
+```
+
+A concrete Grid breakpoint accepts any non-negative `minWidth`, `maxWidth`,
+`minHeight`, and `maxHeight` combination with valid ranges. It must contain at
+least one bound. A token breakpoint uses `{ "token": "name" }`; token and
+concrete bounds cannot be mixed.
+
+The patch must set at least one of `columns`, `rows`, `autoRows`, `columnGap`,
+or `rowGap`. `columns`, when present, must remain non-empty. Branches apply in
+wire order against the bounded maximum size offered by the Grid's parent. They
+are distinct from `context_breakpoint` variants, which observe the viewport.
+
 ## Common Values
 
 Scalar and structural constraint failures, including positive-size rules,
@@ -399,7 +447,7 @@ The field position selects the canonical Mix token class:
 - shadow-list fields: `ShadowToken`
 - box-shadow-list fields: `BoxShadowToken`
 - duration fields: `DurationToken`
-- breakpoint variants: `BreakpointToken`
+- breakpoint variants and Grid constraint branches: `BreakpointToken`
 
 Only double-valued token references may include `"kind": "space"` or
 `"kind": "double"`. Decode defaults missing `kind` to `"space"`; canonical

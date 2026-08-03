@@ -17,6 +17,7 @@ void main() {
       'stack_box',
       'wrap',
       'wrap_box',
+      'grid_box',
     ]);
   });
 
@@ -53,6 +54,10 @@ void main() {
     );
     expect(
       contract.decodeStyle<WrapBoxStyler>({'v': 1, 'type': 'wrap_box'}),
+      isA<MixProtocolSuccess>(),
+    );
+    expect(
+      contract.decodeStyle<GridBoxStyler>({'v': 1, 'type': 'grid_box'}),
       isA<MixProtocolSuccess>(),
     );
   });

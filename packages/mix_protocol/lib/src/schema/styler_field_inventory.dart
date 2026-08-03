@@ -141,6 +141,19 @@ const wrapBoxStylerInventory = {
   'variants',
 };
 
+const gridBoxStylerInventory = {
+  'animation',
+  'autoRows',
+  'clipBehavior',
+  'columnGap',
+  'columns',
+  'constraintBranches',
+  'modifier',
+  'rowGap',
+  'rows',
+  'variants',
+};
+
 int stylerFieldCount(Equatable value) => value.props.length;
 
 void checkKnownFieldInventory(

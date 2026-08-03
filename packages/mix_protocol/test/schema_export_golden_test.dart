@@ -492,6 +492,18 @@ const _expectedBranchProperties = {
     'modifiers',
     'animation',
   },
+  'grid_box': {
+    'columns',
+    'rows',
+    'autoRows',
+    'columnGap',
+    'rowGap',
+    'clipBehavior',
+    'constraintBranches',
+    'variants',
+    'modifiers',
+    'animation',
+  },
 };
 
 List<JsonMap> _branches(JsonMap schema) {

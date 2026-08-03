@@ -2,7 +2,8 @@ import 'package:flutter/foundation.dart';
 
 /// How a grid track is sized.
 ///
-/// Spike scope: only [fixed] and [fr]. Content-sized tracks are excluded.
+/// Grid currently supports fixed and fractional tracks. Content-sized tracks
+/// are intentionally outside this API.
 @immutable
 sealed class GridTrack {
   const GridTrack();
@@ -49,61 +50,4 @@ final class FrGridTrack extends GridTrack {
 
   @override
   int get hashCode => fraction.hashCode;
-}
-
-/// Computes concrete track sizes for fixed + fr tracks under a free-space axis.
-///
-/// Shared by live layout and dry layout so both paths return the same sizes.
-List<double> computeTrackSizes({
-  required List<GridTrack> tracks,
-  required double freeSpace,
-  required double gap,
-}) {
-  if (tracks.isEmpty) return const [];
-
-  var fixedSum = 0.0;
-  var frSum = 0.0;
-  for (final track in tracks) {
-    switch (track) {
-      case FixedGridTrack(:final size):
-        fixedSum += size;
-      case FrGridTrack(:final fraction):
-        frSum += fraction;
-    }
-  }
-
-  final gapTotal = tracks.length > 1 ? gap * (tracks.length - 1) : 0.0;
-  final remaining = (freeSpace - fixedSum - gapTotal).clamp(
-    0.0,
-    double.infinity,
-  );
-  final frUnit = frSum > 0 ? remaining / frSum : 0.0;
-
-  return [
-    for (final track in tracks)
-      switch (track) {
-        FixedGridTrack(:final size) => size,
-        FrGridTrack(:final fraction) => frUnit * fraction,
-      },
-  ];
-}
-
-/// Total size along an axis for the given track sizes and gap.
-double axisExtent(List<double> sizes, double gap) {
-  if (sizes.isEmpty) return 0;
-  final sum = sizes.fold<double>(0, (a, b) => a + b);
-
-  return sum + (sizes.length > 1 ? gap * (sizes.length - 1) : 0);
-}
-
-/// Origin offsets for tracks with the given sizes and gap.
-List<double> computeTrackOrigins(List<double> sizes, double gap) {
-  final origins = <double>[];
-  var origin = 0.0;
-  for (final size in sizes) {
-    origins.add(origin);
-    origin += size + gap;
-  }
-
-  return origins;
 }

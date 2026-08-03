@@ -4,6 +4,65 @@ import 'package:flutter/widgets.dart';
 
 import 'grid_box_spec.dart';
 import 'grid_track.dart';
+import 'internal/grid_geometry.dart';
+import 'internal/grid_validation.dart';
+
+/// Computes concrete track sizes for fixed + fr tracks under a free-space axis.
+///
+/// Shared by live layout and dry layout so both paths return the same sizes.
+List<double> computeTrackSizes({
+  required List<GridTrack> tracks,
+  required double freeSpace,
+  required double gap,
+}) {
+  if (tracks.isEmpty) return const [];
+
+  var fixedSum = 0.0;
+  var frSum = 0.0;
+  for (final track in tracks) {
+    switch (track) {
+      case FixedGridTrack(:final size):
+        fixedSum += size;
+      case FrGridTrack(:final fraction):
+        frSum += fraction;
+    }
+  }
+
+  final gapTotal = tracks.length > 1 ? gap * (tracks.length - 1) : 0.0;
+  final remaining = (freeSpace - fixedSum - gapTotal).clamp(
+    0.0,
+    double.infinity,
+  );
+  final frUnit = frSum > 0 ? remaining / frSum : 0.0;
+
+  return [
+    for (final track in tracks)
+      switch (track) {
+        FixedGridTrack(:final size) => size,
+        FrGridTrack(:final fraction) => frUnit * fraction,
+      },
+  ];
+}
+
+/// Total size along an axis for the given track sizes and gap.
+double axisExtent(List<double> sizes, double gap) {
+  if (sizes.isEmpty) return 0;
+  final sum = sizes.fold<double>(0, (a, b) => a + b);
+
+  return sum + (sizes.length > 1 ? gap * (sizes.length - 1) : 0);
+}
+
+/// Origin offsets for tracks with the given sizes and gap.
+List<double> computeTrackOrigins(List<double> sizes, double gap) {
+  final origins = <double>[];
+  var origin = 0.0;
+  for (final size in sizes) {
+    origins.add(origin);
+    origin += size + gap;
+  }
+
+  return origins;
+}
 
 /// Geometry for a laid-out grid cell (row-major auto-placement, no spans).
 @immutable
@@ -47,7 +106,7 @@ class GridLayoutResult {
 ///
 /// Children are placed row-major into a matrix of [columns] × enough rows.
 /// Track sizes use only fixed/fr rules and parent constraints — no content
-/// measurement in this spike slice.
+/// measurement in the currently supported track model.
 ///
 /// When [childCount] is 0 and [rows] is empty, no auto rows are produced.
 /// When children exceed the explicit row capacity, [autoRows] provides the
@@ -172,7 +231,7 @@ List<GridTrack> _resolveEffectiveRows({
   return effectiveRows;
 }
 
-/// Multi-child render object for the GridBox spike.
+/// Multi-child render object for [GridBoxSpec].
 ///
 /// Supports fixed + fr tracks, row/column gaps, row-major auto-placement, and
 /// render-time constraint branch selection via [GridBoxSpec]. Fixed-track
@@ -194,7 +253,7 @@ class RenderMixGrid extends RenderBox
   }
 
   GridLayoutResult _compute(BoxConstraints constraints) {
-    final geometry = _resolveGeometry(constraints);
+    final geometry = _spec.resolveGeometryForConstraints(constraints);
 
     return computeGridLayout(
       constraints: constraints,
@@ -205,11 +264,6 @@ class RenderMixGrid extends RenderBox
       rowGap: geometry.rowGap,
       childCount: childCount,
     );
-  }
-
-  /// Shared branch selection for live, dry, and intrinsic layout.
-  GridResolvedGeometry _resolveGeometry(BoxConstraints constraints) {
-    return _spec.resolveGeometryForConstraints(constraints);
   }
 
   /// Intrinsic extent for fixed-only tracks after branch selection.
@@ -228,7 +282,7 @@ class RenderMixGrid extends RenderBox
           ? crossExtent
           : .infinity,
     );
-    final geometry = _resolveGeometry(constraints);
+    final geometry = _spec.resolveGeometryForConstraints(constraints);
     final effectiveTracks = axis == .horizontal
         ? geometry.columns
         : _resolveEffectiveRows(
@@ -239,13 +293,11 @@ class RenderMixGrid extends RenderBox
             childCount: childCount,
           );
 
-    if (effectiveTracks.any((t) => t is FrGridTrack)) {
-      rejectFractionalGridTracksOnUnboundedAxis(
-        tracks: effectiveTracks,
-        axis: axis,
-        constraints: constraints,
-      );
-    }
+    rejectFractionalGridTracksOnUnboundedAxis(
+      tracks: effectiveTracks,
+      axis: axis,
+      constraints: constraints,
+    );
 
     var sum = 0.0;
     for (final track in effectiveTracks) {
@@ -376,7 +428,7 @@ class RenderMixGrid extends RenderBox
           ),
           ErrorHint(
             'Content-sized tracks and implicit content-sized rows are not '
-            'supported by this internal Grid slice.',
+            'supported by GridBox.',
           ),
         ],
       );
@@ -404,9 +456,7 @@ class RenderMixGrid extends RenderBox
   }
 }
 
-/// Widget host for [RenderMixGrid].
-///
-/// Spike prototype — not exported from `mix.dart`.
+/// Internal widget host for [RenderMixGrid].
 class MixGrid extends MultiChildRenderObjectWidget {
   const MixGrid({super.key, required this.spec, super.children});
 

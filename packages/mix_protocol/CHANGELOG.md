@@ -6,6 +6,9 @@
 - Added canonical v1 `wrap` and `wrap_box` style branches, including complete
   Box/Wrap field fidelity, collision-safe composite names, spacing tokens,
   metadata, schema export, and token-reference walking.
+- Added canonical v1 `grid_box` support for fixed/fractional tracks, gaps,
+  clipping, ordered local-constraint branches, full style metadata, JSON Schema
+  export, document inspection, and breakpoint-token walking.
 
 ### Fixes
 

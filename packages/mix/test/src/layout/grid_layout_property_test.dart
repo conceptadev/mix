@@ -1,12 +1,10 @@
-// Grid spike surfaces are intentionally unexported.
 // ignore_for_file: implementation_imports
 
 import 'dart:math';
 
 import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mix/src/layout/grid_box_spec.dart';
-import 'package:mix/src/layout/grid_track.dart';
+import 'package:mix/mix.dart';
 import 'package:mix/src/layout/render_grid.dart';
 
 void main() {

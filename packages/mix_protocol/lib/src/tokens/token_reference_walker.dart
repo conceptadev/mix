@@ -281,6 +281,8 @@ final class _TokenReferenceWalker {
       case WrapBoxStyler():
         visit(style.$box);
         visit(style.$flow);
+      case GridBoxStyler():
+        visit(style.$constraintBranches?.map((branch) => branch.breakpoint));
       default:
         break;
     }

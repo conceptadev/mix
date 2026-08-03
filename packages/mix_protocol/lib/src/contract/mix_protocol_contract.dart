@@ -21,11 +21,12 @@ import 'json_map.dart';
 import '../errors/mix_protocol_error.dart';
 import '../errors/schema_error_mapper.dart';
 import '../schema/box_styler_codec.dart';
+import '../schema/common_codecs.dart';
 import '../schema/flex_box_styler_codec.dart';
 import '../schema/flex_styler_codec.dart';
+import '../schema/grid_box_styler_codec.dart';
 import '../schema/icon_styler_codec.dart';
 import '../schema/image_styler_codec.dart';
-import '../schema/common_codecs.dart';
 import '../schema/stack_box_styler_codec.dart';
 import '../schema/stack_styler_codec.dart';
 import '../schema/styler_branch.dart';
@@ -172,6 +173,10 @@ final class MixProtocol {
           identityContext: () => identityContext.current,
         ),
         debugName: schemaTypeWrapBox,
+      ),
+      schemaTypeGridBox: widenStylerBranch(
+        gridBoxStylerCodec(rootStyleSchema: rootSchemaRef),
+        debugName: schemaTypeGridBox,
       ),
     };
     rootSchema = Ack.discriminated<Object>(

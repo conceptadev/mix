@@ -2,6 +2,10 @@
 
 ### New features
 
+- **GridBox:** Added the public `GridTrack`, `GridBoxSpec`, `GridBoxStyler`, and
+  `GridBox` API with fixed/fractional tracks, explicit and repeated rows, gaps,
+  row-major placement, clipping, and local `Breakpoint`-based constraint
+  branches.
 - **WrapBox:** Added the public `WrapSpec`, `WrapStyler`, `WrapBoxSpec`,
   `WrapBoxStyler`, and `WrapBox` family with flattened fluent Wrap styling,
   collision-safe Box/Wrap names, generated constructors and factories, and a
