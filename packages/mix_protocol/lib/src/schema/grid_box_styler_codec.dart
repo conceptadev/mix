@@ -29,12 +29,12 @@ AckSchema<JsonMap, GridBoxStyler> gridBoxStylerCodec({
   );
   final columnGap = directField<GridBoxStyler, double>(
     'columnGap',
-    nonNegativeDoubleCodec(),
+    nonNegativeDoubleTokenCodec(),
     (value) => value.$columnGap,
   );
   final rowGap = directField<GridBoxStyler, double>(
     'rowGap',
-    nonNegativeDoubleCodec(),
+    nonNegativeDoubleTokenCodec(),
     (value) => value.$rowGap,
   );
   final clipBehavior = directField<GridBoxStyler, Clip>(
@@ -89,7 +89,7 @@ AckSchema<JsonMap, GridTrack> _gridTrackCodec() {
   return Ack.discriminated<GridTrack>(
     discriminatorKey: 'type',
     schemas: {
-      gridTrackTypeFixed: Ack.object({'size': nonNegativeDoubleCodec()})
+      gridTrackTypeFixed: Ack.object({'size': nonNegativeDoubleTokenCodec()})
           .codec<GridTrack>(
             decode: (data) => GridTrack.fixed(data['size']! as double),
             encode: (track) {
@@ -103,8 +103,8 @@ AckSchema<JsonMap, GridTrack> _gridTrackCodec() {
               return {'size': track.size};
             },
           ),
-      gridTrackTypeFraction: Ack.object({'fraction': positiveDoubleCodec()})
-          .codec<GridTrack>(
+      gridTrackTypeFraction:
+          Ack.object({'fraction': positiveDoubleTokenCodec()}).codec<GridTrack>(
             decode: (data) => GridTrack.fr(data['fraction']! as double),
             encode: (track) {
               if (track is! FrGridTrack) {
@@ -167,8 +167,8 @@ AckSchema<JsonMap, GridLayoutPatch> _gridLayoutPatchCodec() {
         'columns': Ack.list(_gridTrackCodec()).nonEmpty().optional(),
         'rows': Ack.list(_gridTrackCodec()).optional(),
         'autoRows': _gridTrackCodec().optional(),
-        'columnGap': nonNegativeDoubleCodec().optional(),
-        'rowGap': nonNegativeDoubleCodec().optional(),
+        'columnGap': nonNegativeDoubleTokenCodec().optional(),
+        'rowGap': nonNegativeDoubleTokenCodec().optional(),
       })
       .constrain(const _GridLayoutPatchConstraint())
       .codec<GridLayoutPatch>(

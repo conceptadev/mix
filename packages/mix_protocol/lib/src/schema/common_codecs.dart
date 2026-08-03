@@ -42,6 +42,27 @@ CodecSchema<num, double> positiveDoubleCodec() {
       );
 }
 
+CodecSchema<Object, double> positiveDoubleTokenCodec() {
+  return tokenizedCodec<double, double>(
+    literal: positiveDoubleCodec(),
+    decodeToken: (data) {
+      final name = data[tokenReferenceKey]! as String;
+      final kind = data[tokenKindKey] as String? ?? tokenKindSpace;
+
+      return switch (kind) {
+        tokenKindDouble => DoubleToken(name),
+        tokenKindSpace => SpaceToken(name),
+        _ => throw UnsupportedEncodeValueError(
+          kind,
+          'Unknown double token kind "$kind".',
+        ),
+      };
+    },
+    reference: (token) => token(),
+    allowDoubleKind: true,
+  );
+}
+
 CodecSchema<num, double> nonNegativeDoubleCodec() {
   return Ack.number()
       .min(0)

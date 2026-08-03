@@ -170,12 +170,12 @@ its own parent. Dot shorthand keeps nested track and breakpoint declarations
 compact:
 
 ```dart
-final GridBoxStyler dashboardGrid = .columns([
-  .fr(2),
-  .fr(1),
-]).gap(16).autoRows(.fixed(220)).onConstraints(
+final GridBoxStyler dashboardGrid = .equalColumns(3)
+    .gap(16)
+    .autoRows(.fixed(220))
+    .onConstraints(
   .maxWidth(720),
-  .columns([.fr(1)]).gap(12),
+  .equalColumns(1).gap(12),
 );
 
 GridBox(style: dashboardGrid, children: panels);

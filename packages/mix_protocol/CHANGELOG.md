@@ -8,7 +8,8 @@
   metadata, schema export, and token-reference walking.
 - Added canonical v1 `grid_box` support for fixed/fractional tracks, gaps,
   clipping, ordered local-constraint branches, full style metadata, JSON Schema
-  export, document inspection, and breakpoint-token walking.
+  export, document inspection, and complete token-reference walking. Grid
+  tracks and gaps accept canonical numeric token references.
 
 ### Fixes
 

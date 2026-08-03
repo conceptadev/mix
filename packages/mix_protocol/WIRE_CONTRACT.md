@@ -274,8 +274,8 @@ part.
 - `columns`: non-empty list of Grid tracks
 - `rows`: list of explicit Grid tracks; an empty list is allowed
 - `autoRows`: repeated track used for rows required beyond `rows`
-- `columnGap`: non-negative number
-- `rowGap`: non-negative number
+- `columnGap`: non-negative number or numeric token reference
+- `rowGap`: non-negative number or numeric token reference
 - `clipBehavior`: enum name from `Clip`
 - `constraintBranches`: ordered list of local constraint branches
 - `variants`: list of variant payloads
@@ -289,7 +289,15 @@ A Grid track is one of:
 { "type": "fr", "fraction": 2 }
 ```
 
-Fixed `size` is non-negative. Fractional `fraction` is greater than zero.
+Fixed `size` is non-negative. Fractional `fraction` is greater than zero. Each
+numeric value also accepts the standard numeric token form. Space tokens are
+recommended for fixed sizes and gaps; double tokens are recommended for
+fractional weights:
+
+```json
+{ "type": "fixed", "size": { "$token": "space.grid.track", "kind": "space" } }
+{ "type": "fr", "fraction": { "$token": "double.grid.weight", "kind": "double" } }
+```
 
 Each local branch contains a `breakpoint` and a geometry-only `patch`:
 
@@ -313,6 +321,8 @@ The patch must set at least one of `columns`, `rows`, `autoRows`, `columnGap`,
 or `rowGap`. `columns`, when present, must remain non-empty. Branches apply in
 wire order against the bounded maximum size offered by the Grid's parent. They
 are distinct from `context_breakpoint` variants, which observe the viewport.
+Track values and gaps inside a patch accept the same numeric token forms as
+base Grid geometry.
 
 ## Common Values
 

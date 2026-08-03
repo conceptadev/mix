@@ -42,4 +42,22 @@ void main() {
       const Breakpoint.maxHeight(480),
     );
   });
+
+  test('equalColumns creates repeated one-fraction tracks', () {
+    final GridBoxStyler factory = .equalColumns(3);
+    final chained = GridBoxStyler().equalColumns(2);
+
+    expect(factory.$columns, const [
+      GridTrack.fr(1),
+      GridTrack.fr(1),
+      GridTrack.fr(1),
+    ]);
+    expect(chained.$columns, const [GridTrack.fr(1), GridTrack.fr(1)]);
+    expect(
+      () => factory.$columns!.add(const GridTrack.fr(1)),
+      throwsUnsupportedError,
+    );
+    expect(() => GridBoxStyler.equalColumns(0), throwsArgumentError);
+    expect(() => GridBoxStyler().equalColumns(-1), throwsArgumentError);
+  });
 }

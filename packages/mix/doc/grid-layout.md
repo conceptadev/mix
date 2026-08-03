@@ -6,21 +6,29 @@ tracks. Its style supports ordinary Mix variants and modifiers, plus
 
 ## Basic usage
 
-Use `GridBoxStyler.columns` as a dot-shorthand entry point, then chain the
-remaining geometry:
+For equal-width columns, use `GridBoxStyler.equalColumns` as a dot-shorthand
+entry point, then chain the remaining geometry:
 
 ```dart
-final GridBoxStyler style = .columns([
-  .fixed(220),
-  .fr(2),
-]).gap(16).autoRows(.fixed(160));
+final GridBoxStyler style = .equalColumns(3)
+    .gap(16)
+    .autoRows(.fixed(160));
 
 GridBox(style: style, children: cards);
 ```
 
 `GridTrack.fixed(size)` keeps its logical-pixel size. `GridTrack.fr(fraction)`
 receives that fraction of the free space left after fixed tracks and gaps.
-Fractional tracks require a bounded parent extent on their axis.
+For example, with 300 pixels of remaining space, `[.fr(2), .fr(1)]` produces
+tracks of 200 and 100 pixels. Fractional tracks require a bounded parent extent
+on their axis. Use `columns` directly when tracks are intentionally mixed:
+
+```dart
+final GridBoxStyler sidebarAndContent = .columns([
+  .fixed(240),
+  .fr(1),
+]);
+```
 
 ## Responsive containers
 
@@ -28,16 +36,15 @@ Fractional tracks require a bounded parent extent on their axis.
 the bounded maximum size offered to this Grid:
 
 ```dart
-final GridBoxStyler cardGrid = .columns([
-  .fr(1),
-  .fr(1),
-  .fr(1),
-]).gap(16).autoRows(.fixed(220)).onConstraints(
+final GridBoxStyler cardGrid = .equalColumns(3)
+    .gap(16)
+    .autoRows(.fixed(220))
+    .onConstraints(
   .maxWidth(760),
-  .columns([.fr(1), .fr(1)]).gap(12),
+  .equalColumns(2).gap(12),
 ).onConstraints(
   .maxWidth(520),
-  .columns([.fr(1)]).gap(10),
+  .equalColumns(1).gap(10),
 );
 ```
 
@@ -65,17 +72,62 @@ Provide explicit `rows` for known row geometry, or `autoRows` for each repeated
 row needed beyond the explicit list:
 
 ```dart
-final GridBoxStyler gallery = .columns([
-  .fr(1),
-  .fr(1),
-  .fr(1),
-]).rows([
+final GridBoxStyler gallery = .equalColumns(2).rows([
   .fixed(180),
 ]).autoRows(.fixed(180)).columnGap(12).rowGap(12);
 ```
 
+With five children and two columns, the example needs three rows: the first
+uses the explicit 180-pixel row and the next two repeat `autoRows`. When
+`rows` is empty, every required row uses `autoRows`.
+
 If children require more rows than declared and `autoRows` is absent, GridBox
 reports an actionable layout error rather than guessing a content-sizing rule.
+Use fixed rows on an unbounded vertical axis such as `SingleChildScrollView`.
+Fractional rows and fractional `autoRows` require bounded height.
+
+## Design tokens
+
+Fixed sizes and gaps can use `SpaceToken`; fractional weights can use
+`DoubleToken`. Tokens resolve through the surrounding `MixScope` before Grid
+geometry is validated, including geometry inside `onConstraints` patches:
+
+```dart
+const cardWidth = SpaceToken('grid.card.width');
+const gridGap = SpaceToken('grid.gap');
+const contentWeight = DoubleToken('grid.content.weight');
+
+final GridBoxStyler tokenGrid = .columns([
+  .fixed(cardWidth()),
+  .fr(contentWeight()),
+]).gap(gridGap()).autoRows(.fixed(cardWidth()));
+
+MixScope(
+  spaces: {cardWidth: 160, gridGap: 12},
+  doubles: {contentWeight: 2},
+  child: GridBox(style: tokenGrid, children: cards),
+);
+```
+
+## Animation
+
+`animate` interpolates Grid geometry when the old and new styles have the same
+track topology:
+
+```dart
+final GridBoxStyler animatedGrid = .equalColumns(2)
+    .autoRows(.fixed(expanded ? 180 : 120))
+    .gap(expanded ? 20 : 12)
+    .animate(.easeInOut(const Duration(milliseconds: 250)));
+```
+
+Corresponding fixed tracks interpolate with fixed tracks, fractional tracks
+with fractional tracks, and gaps interpolate numerically. A track-count or
+track-kind change has no continuous geometric equivalent, so it switches at
+the animation midpoint. `clipBehavior` and constraint patches also switch at
+the midpoint. Resizing across an `onConstraints` breakpoint stays immediate:
+branch selection happens during layout and does not rebuild a new animation
+target.
 
 ## Overflow and clipping
 

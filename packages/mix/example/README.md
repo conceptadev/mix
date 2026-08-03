@@ -22,16 +22,15 @@ styles use `onConstraints`, so each Grid responds to its own offered space
 rather than the viewport:
 
 ```dart
-final GridBoxStyler cardGrid = .columns([
-  .fr(1),
-  .fr(1),
-  .fr(1),
-]).gap(16).autoRows(.fixed(220)).onConstraints(
+final GridBoxStyler cardGrid = .equalColumns(3)
+    .gap(16)
+    .autoRows(.fixed(220))
+    .onConstraints(
   .maxWidth(760),
-  .columns([.fr(1), .fr(1)]).gap(12),
+  .equalColumns(2).gap(12),
 ).onConstraints(
   .maxWidth(520),
-  .columns([.fr(1)]).gap(10),
+  .equalColumns(1).gap(10),
 );
 
 GridBox(style: cardGrid, children: cards);

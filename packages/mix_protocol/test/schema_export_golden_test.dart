@@ -243,6 +243,47 @@ void main() {
         reason: 'wrap_box.$field accepts space tokens',
       );
     }
+    final gridProperties = _properties(branchesByType['grid_box']!);
+    expect(
+      _matchesJsonSchema(_object(gridProperties['columns']), [
+        {
+          'type': 'fixed',
+          'size': {r'$token': 'space.grid.track', 'kind': 'space'},
+        },
+        {
+          'type': 'fr',
+          'fraction': {r'$token': 'double.grid.weight', 'kind': 'double'},
+        },
+      ], definitions),
+      isTrue,
+      reason: 'grid_box tracks accept numeric tokens',
+    );
+    for (final field in ['columnGap', 'rowGap']) {
+      expect(
+        _matchesJsonSchema(_object(gridProperties[field]), {
+          r'$token': 'space.grid.gap',
+          'kind': 'space',
+        }, definitions),
+        isTrue,
+        reason: 'grid_box.$field accepts numeric tokens',
+      );
+    }
+    expect(
+      _matchesJsonSchema(_object(gridProperties['constraintBranches']), [
+        {
+          'breakpoint': {'maxWidth': 600},
+          'patch': {
+            'autoRows': {
+              'type': 'fixed',
+              'size': {r'$token': 'space.grid.row', 'kind': 'space'},
+            },
+            'rowGap': {r'$token': 'space.grid.gap', 'kind': 'space'},
+          },
+        },
+      ], definitions),
+      isTrue,
+      reason: 'grid_box constraint patches accept numeric tokens',
+    );
     expect(
       _matchesJsonSchema(
         _object(_properties(branchesByType['flex']!)['spacing']),

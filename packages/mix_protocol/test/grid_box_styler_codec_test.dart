@@ -118,6 +118,59 @@ void main() {
     );
   });
 
+  test('grid_box round-trips tokenized tracks and gaps', () {
+    final payload = <String, Object>{
+      'v': 1,
+      'type': 'grid_box',
+      'columns': [
+        {
+          'type': 'fixed',
+          'size': {r'$token': 'space.grid.track', 'kind': 'space'},
+        },
+        {
+          'type': 'fr',
+          'fraction': {r'$token': 'double.grid.fraction', 'kind': 'double'},
+        },
+      ],
+      'autoRows': {
+        'type': 'fixed',
+        'size': {r'$token': 'space.grid.auto-row', 'kind': 'space'},
+      },
+      'columnGap': {r'$token': 'space.grid.column-gap', 'kind': 'space'},
+      'rowGap': {r'$token': 'space.grid.row-gap', 'kind': 'space'},
+      'constraintBranches': [
+        {
+          'breakpoint': {'maxWidth': 600.0},
+          'patch': {
+            'columns': [
+              {
+                'type': 'fixed',
+                'size': {
+                  r'$token': 'space.grid.compact-track',
+                  'kind': 'space',
+                },
+              },
+            ],
+            'rowGap': {r'$token': 'space.grid.compact-gap', 'kind': 'space'},
+          },
+        },
+      ],
+    };
+
+    final decoded = decode<GridBoxStyler>(payload);
+
+    expect(encode(decoded), payload);
+    expect(tokenReferencesOf(decoded), {
+      const MixProtocolTokenReference('spaces', 'space.grid.track'),
+      const MixProtocolTokenReference('doubles', 'double.grid.fraction'),
+      const MixProtocolTokenReference('spaces', 'space.grid.auto-row'),
+      const MixProtocolTokenReference('spaces', 'space.grid.column-gap'),
+      const MixProtocolTokenReference('spaces', 'space.grid.row-gap'),
+      const MixProtocolTokenReference('spaces', 'space.grid.compact-track'),
+      const MixProtocolTokenReference('spaces', 'space.grid.compact-gap'),
+    });
+  });
+
   test('grid_box rejects invalid geometry and constraint branches', () {
     final invalidFields = <String, Object>{
       'empty columns': <Object>[],

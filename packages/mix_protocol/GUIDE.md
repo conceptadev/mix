@@ -96,6 +96,27 @@ local constraint branches carry a `Breakpoint` plus a geometry-only patch:
 They are not viewport `context_breakpoint` variants. Breakpoint token names can
 be supplied as `{ "token": "breakpoint.card.compact" }`.
 
+Track values and gaps also accept numeric token references. Use space tokens
+for logical-pixel sizes and gaps, and double tokens for fractional weights:
+
+```json
+{
+  "v": 1,
+  "type": "grid_box",
+  "columns": [
+    {
+      "type": "fixed",
+      "size": { "$token": "space.grid.sidebar", "kind": "space" }
+    },
+    {
+      "type": "fr",
+      "fraction": { "$token": "double.grid.content", "kind": "double" }
+    }
+  ],
+  "columnGap": { "$token": "space.grid.gap", "kind": "space" }
+}
+```
+
 ## Decode a token theme
 
 Theme documents group concrete token values by Mix token kind:

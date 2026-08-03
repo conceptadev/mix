@@ -1,3 +1,5 @@
+import 'dart:ui' as ui;
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 
@@ -11,12 +13,25 @@ import 'internal/grid_validation.dart';
 /// Null fields preserve the prior value when the branch is applied.
 @immutable
 final class GridLayoutPatch {
+  /// Replacement column tracks, or `null` to preserve prior columns.
   final List<GridTrack>? columns;
+
+  /// Replacement explicit row tracks, or `null` to preserve prior rows.
   final List<GridTrack>? rows;
+
+  /// Replacement repeated row track, or `null` to preserve the prior track.
   final GridTrack? autoRows;
+
+  /// Replacement gap between columns, or `null` to preserve the prior gap.
   final double? columnGap;
+
+  /// Replacement gap between rows, or `null` to preserve the prior gap.
   final double? rowGap;
 
+  /// Creates a partial geometry override.
+  ///
+  /// At least one field must be non-null when the patch is attached to a
+  /// [GridConstraintBranch].
   const GridLayoutPatch({
     this.columns,
     this.rows,
@@ -74,9 +89,13 @@ final class GridLayoutPatch {
 /// Grid's parent. Branches are applied in declaration order at layout time.
 @immutable
 final class GridConstraintBranch {
+  /// The local size range that activates [patch].
   final Breakpoint breakpoint;
+
+  /// Geometry applied when [breakpoint] matches.
   final GridLayoutPatch patch;
 
+  /// Creates a local constraint branch from [breakpoint] and [patch].
   const GridConstraintBranch({required this.breakpoint, required this.patch});
 
   @override
@@ -101,12 +120,25 @@ final class GridConstraintBranch {
 /// during live and dry layout, not while building the widget tree.
 @immutable
 final class GridBoxSpec extends Spec<GridBoxSpec> with Diagnosticable {
+  /// Column tracks used for row-major placement.
   final List<GridTrack> columns;
+
+  /// Explicit row tracks reserved by the Grid.
   final List<GridTrack> rows;
+
+  /// Track repeated for each row required beyond [rows].
   final GridTrack? autoRows;
+
+  /// Logical-pixel gap between adjacent columns.
   final double columnGap;
+
+  /// Logical-pixel gap between adjacent rows.
   final double rowGap;
+
+  /// How overflowing Grid content is clipped while painting.
   final Clip clipBehavior;
+
+  /// Ordered local-constraint branches evaluated during layout.
   final List<GridConstraintBranch> constraintBranches;
 
   const GridBoxSpec._({
@@ -149,6 +181,7 @@ final class GridBoxSpec extends Spec<GridBoxSpec> with Diagnosticable {
     return spec;
   }
 
+  /// Returns a validated copy with each non-null argument replaced.
   @override
   GridBoxSpec copyWith({
     List<GridTrack>? columns,
@@ -170,11 +203,30 @@ final class GridBoxSpec extends Spec<GridBoxSpec> with Diagnosticable {
     );
   }
 
+  /// Interpolates compatible Grid geometry toward [other].
+  ///
+  /// Fixed tracks interpolate with fixed tracks and fractional tracks with
+  /// fractional tracks when their lists have the same length and kinds.
+  /// Gaps also interpolate. Incompatible track lists, nullable or mismatched
+  /// [autoRows], [clipBehavior], and [constraintBranches] switch at `t = 0.5`.
+  /// Progress outside the `0...1` interval is clamped so geometry stays valid.
   @override
   GridBoxSpec lerp(GridBoxSpec? other, double t) {
     if (other == null) return this;
 
-    return t < 0.5 ? this : other;
+    final progress = t.clamp(0.0, 1.0);
+
+    return GridBoxSpec(
+      columns: _lerpGridTracks(columns, other.columns, progress),
+      rows: _lerpGridTracks(rows, other.rows, progress),
+      autoRows: _lerpOptionalGridTrack(autoRows, other.autoRows, progress),
+      columnGap: ui.lerpDouble(columnGap, other.columnGap, progress)!,
+      rowGap: ui.lerpDouble(rowGap, other.rowGap, progress)!,
+      clipBehavior: progress < 0.5 ? clipBehavior : other.clipBehavior,
+      constraintBranches: progress < 0.5
+          ? constraintBranches
+          : other.constraintBranches,
+    );
   }
 
   @override
@@ -206,6 +258,63 @@ final class GridBoxSpec extends Spec<GridBoxSpec> with Diagnosticable {
     clipBehavior,
     constraintBranches,
   ];
+}
+
+List<GridTrack> _lerpGridTracks(
+  List<GridTrack> start,
+  List<GridTrack> end,
+  double t,
+) {
+  if (!_gridTrackListsAreCompatible(start, end)) {
+    return t < 0.5 ? start : end;
+  }
+
+  return [
+    for (var index = 0; index < start.length; index++)
+      _lerpCompatibleGridTrack(start[index], end[index], t),
+  ];
+}
+
+bool _gridTrackListsAreCompatible(List<GridTrack> start, List<GridTrack> end) {
+  if (start.length != end.length) return false;
+
+  for (var index = 0; index < start.length; index++) {
+    if (!_gridTracksAreCompatible(start[index], end[index])) return false;
+  }
+
+  return true;
+}
+
+GridTrack? _lerpOptionalGridTrack(GridTrack? start, GridTrack? end, double t) {
+  if (start == null || end == null || !_gridTracksAreCompatible(start, end)) {
+    return t < 0.5 ? start : end;
+  }
+
+  return _lerpCompatibleGridTrack(start, end, t);
+}
+
+bool _gridTracksAreCompatible(GridTrack start, GridTrack end) {
+  return switch ((start, end)) {
+    (FixedGridTrack(), FixedGridTrack()) => true,
+    (FrGridTrack(), FrGridTrack()) => true,
+    _ => false,
+  };
+}
+
+GridTrack _lerpCompatibleGridTrack(GridTrack start, GridTrack end, double t) {
+  return switch ((start, end)) {
+    (
+      FixedGridTrack(size: final startSize),
+      FixedGridTrack(size: final endSize),
+    ) =>
+      GridTrack.fixed(ui.lerpDouble(startSize, endSize, t)!),
+    (
+      FrGridTrack(fraction: final startFraction),
+      FrGridTrack(fraction: final endFraction),
+    ) =>
+      GridTrack.fr(ui.lerpDouble(startFraction, endFraction, t)!),
+    _ => throw StateError('Grid track interpolation requires matching types.'),
+  };
 }
 
 void _validateGridSpecGeometry(GridBoxSpec spec) {

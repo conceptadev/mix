@@ -390,6 +390,64 @@ void main() {
       expect(a, b);
       expect(a.hashCode, b.hashCode);
     });
+
+    test('lerp interpolates compatible tracks, rows, auto rows, and gaps', () {
+      final start = GridBoxSpec(
+        columns: const [GridTrack.fixed(100), GridTrack.fr(1)],
+        rows: const [GridTrack.fixed(40)],
+        autoRows: const GridTrack.fixed(20),
+        columnGap: 4,
+        rowGap: 6,
+        clipBehavior: Clip.none,
+        constraintBranches: const [
+          GridConstraintBranch(
+            breakpoint: Breakpoint.maxWidth(400),
+            patch: GridLayoutPatch(columnGap: 2),
+          ),
+        ],
+      );
+      final end = GridBoxSpec(
+        columns: const [GridTrack.fixed(200), GridTrack.fr(3)],
+        rows: const [GridTrack.fixed(80)],
+        autoRows: const GridTrack.fixed(60),
+        columnGap: 20,
+        rowGap: 10,
+        clipBehavior: Clip.hardEdge,
+        constraintBranches: const [
+          GridConstraintBranch(
+            breakpoint: Breakpoint.maxWidth(500),
+            patch: GridLayoutPatch(columnGap: 8),
+          ),
+        ],
+      );
+
+      final midpoint = start.lerp(end, 0.5);
+
+      expect(midpoint.columns, const [GridTrack.fixed(150), GridTrack.fr(2)]);
+      expect(midpoint.rows, const [GridTrack.fixed(60)]);
+      expect(midpoint.autoRows, const GridTrack.fixed(40));
+      expect(midpoint.columnGap, 12);
+      expect(midpoint.rowGap, 8);
+      expect(midpoint.clipBehavior, Clip.hardEdge);
+      expect(midpoint.constraintBranches, end.constraintBranches);
+      expect(start.lerp(end, -0.5), start);
+      expect(start.lerp(end, 1.5), end);
+    });
+
+    test('lerp snaps incompatible track topology at the midpoint', () {
+      final start = GridBoxSpec(
+        columns: const [GridTrack.fixed(100), GridTrack.fr(1)],
+      );
+      final differentType = GridBoxSpec(
+        columns: const [GridTrack.fr(1), GridTrack.fr(1)],
+      );
+      final differentCount = GridBoxSpec(columns: const [GridTrack.fr(1)]);
+
+      expect(start.lerp(differentType, 0.49).columns, start.columns);
+      expect(start.lerp(differentType, 0.5).columns, differentType.columns);
+      expect(start.lerp(differentCount, 0.49).columns, start.columns);
+      expect(start.lerp(differentCount, 0.5).columns, differentCount.columns);
+    });
   });
 
   group('GridBoxSpec validation', () {
@@ -401,6 +459,14 @@ void main() {
     });
 
     test('infinite fixed track and non-finite gaps throw FlutterError', () {
+      expect(
+        () => GridBoxSpec(columns: const [GridTrack.fixed(-1)]),
+        throwsA(isA<FlutterError>()),
+      );
+      expect(
+        () => GridBoxSpec(columns: const [GridTrack.fr(0)]),
+        throwsA(isA<FlutterError>()),
+      );
       expect(
         () => GridBoxSpec(columns: [FixedGridTrack(.infinity)]),
         throwsA(isA<FlutterError>()),
@@ -560,6 +626,179 @@ void main() {
       expect(merged.$modifier, isNotNull);
       // Merged config is a new object combining both.
       expect(merged.$modifier, isNot(same(base.$modifier)));
+    });
+  });
+
+  group('GridBoxStyler resolution and animation', () {
+    testWidgets('resolves tokens in base and constraint Grid geometry', (
+      tester,
+    ) async {
+      const fixedTrack = SpaceToken('grid.track.fixed');
+      const fractionalTrack = DoubleToken('grid.track.fraction');
+      const automaticRow = SpaceToken('grid.row.auto');
+      const gap = SpaceToken('grid.gap');
+      const compactTrack = SpaceToken('grid.track.compact');
+
+      final style =
+          GridBoxStyler(
+            columns: [
+              GridTrack.fixed(fixedTrack()),
+              GridTrack.fr(fractionalTrack()),
+            ],
+            rows: [GridTrack.fixed(fixedTrack())],
+            autoRows: GridTrack.fixed(automaticRow()),
+            columnGap: gap(),
+            rowGap: gap(),
+          ).onConstraints(
+            const Breakpoint.maxWidth(400),
+            GridBoxStyler(
+              columns: [GridTrack.fixed(compactTrack())],
+              autoRows: GridTrack.fixed(automaticRow()),
+              columnGap: gap(),
+              rowGap: gap(),
+            ),
+          );
+
+      await tester.pumpWidget(
+        MaterialApp(
+          home: MixScope(
+            spaces: {
+              fixedTrack: 80,
+              automaticRow: 32,
+              gap: 12,
+              compactTrack: 240,
+            },
+            doubles: {fractionalTrack: 2},
+            child: Center(
+              child: SizedBox(
+                width: 300,
+                height: 200,
+                child: GridBox(style: style),
+              ),
+            ),
+          ),
+        ),
+      );
+
+      final spec = tester
+          .renderObject<RenderMixGrid>(find.byType(MixGrid))
+          .spec;
+      expect(spec.columns, const [GridTrack.fixed(80), GridTrack.fr(2)]);
+      expect(spec.rows, const [GridTrack.fixed(80)]);
+      expect(spec.autoRows, const GridTrack.fixed(32));
+      expect(spec.columnGap, 12);
+      expect(spec.rowGap, 12);
+      expect(spec.constraintBranches.single.patch.columns, const [
+        GridTrack.fixed(240),
+      ]);
+      expect(
+        spec.constraintBranches.single.patch.autoRows,
+        const GridTrack.fixed(32),
+      );
+      expect(spec.constraintBranches.single.patch.columnGap, 12);
+      expect(spec.constraintBranches.single.patch.rowGap, 12);
+    });
+
+    testWidgets('validates token values after Grid geometry resolves', (
+      tester,
+    ) async {
+      const invalidTrack = SpaceToken('grid.track.invalid');
+
+      await tester.pumpWidget(
+        MaterialApp(
+          home: MixScope(
+            spaces: {invalidTrack: -1},
+            child: GridBox(
+              style: GridBoxStyler(columns: [GridTrack.fixed(invalidTrack())]),
+            ),
+          ),
+        ),
+      );
+
+      expect(
+        tester.takeException(),
+        isA<FlutterError>().having(
+          (error) => error.toString(),
+          'message',
+          contains('finite and non-negative'),
+        ),
+      );
+    });
+
+    testWidgets('animate interpolates compatible Grid geometry on screen', (
+      tester,
+    ) async {
+      var expanded = false;
+      late StateSetter updateGrid;
+
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Align(
+            alignment: Alignment.topLeft,
+            child: StatefulBuilder(
+              builder: (context, setState) {
+                updateGrid = setState;
+
+                return SizedBox(
+                  width: 400,
+                  height: 200,
+                  child: GridBox(
+                    style:
+                        GridBoxStyler(
+                          columns: [
+                            GridTrack.fixed(expanded ? 200 : 100),
+                            GridTrack.fr(expanded ? 3 : 1),
+                          ],
+                          rows: [GridTrack.fixed(expanded ? 100 : 40)],
+                          autoRows: GridTrack.fixed(expanded ? 80 : 20),
+                          columnGap: expanded ? 40 : 0,
+                          rowGap: expanded ? 20 : 0,
+                        ).animate(
+                          AnimationConfig.linear(const Duration(seconds: 1)),
+                        ),
+                    children: const [
+                      SizedBox(key: Key('animated-left')),
+                      SizedBox(key: Key('animated-right')),
+                    ],
+                  ),
+                );
+              },
+            ),
+          ),
+        ),
+      );
+
+      expect(
+        tester.getSize(find.byKey(const Key('animated-left'))),
+        const Size(100, 40),
+      );
+
+      updateGrid(() => expanded = true);
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 500));
+
+      final midpoint = tester
+          .renderObject<RenderMixGrid>(find.byType(MixGrid))
+          .spec;
+      expect(midpoint.columns, const [GridTrack.fixed(150), GridTrack.fr(2)]);
+      expect(midpoint.rows, const [GridTrack.fixed(70)]);
+      expect(midpoint.autoRows, const GridTrack.fixed(50));
+      expect(midpoint.columnGap, 20);
+      expect(midpoint.rowGap, 10);
+      expect(
+        tester.getSize(find.byKey(const Key('animated-left'))),
+        const Size(150, 70),
+      );
+      final left = tester.getTopLeft(find.byKey(const Key('animated-left')));
+      final right = tester.getTopLeft(find.byKey(const Key('animated-right')));
+      expect(right.dx - left.dx, 170);
+
+      await tester.pump(const Duration(milliseconds: 500));
+      expect(
+        tester.getSize(find.byKey(const Key('animated-left'))),
+        const Size(200, 100),
+      );
+      expect(tester.takeException(), isNull);
     });
   });
 

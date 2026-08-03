@@ -214,13 +214,13 @@ class DashboardGridPreview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final GridBoxStyler metrics = .columns([.fr(1), .fr(1), .fr(1), .fr(1)])
+    final GridBoxStyler metrics = .equalColumns(4)
         .gap(14)
         .autoRows(.fixed(116))
-        .onConstraints(.maxWidth(900), .columns([.fr(1), .fr(1)]).gap(12))
+        .onConstraints(.maxWidth(900), .equalColumns(2).gap(12))
         .onConstraints(
           .maxWidth(520),
-          .columns([.fr(1)]).gap(10).autoRows(.fixed(104)),
+          .equalColumns(1).gap(10).autoRows(.fixed(104)),
         );
     final GridBoxStyler panels = .columns([.fr(2), .fr(1)])
         .gap(14)
@@ -438,13 +438,13 @@ class CatalogGridPreview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final GridBoxStyler style = .columns([.fr(1), .fr(1), .fr(1)])
+    final GridBoxStyler style = .equalColumns(3)
         .gap(16)
         .autoRows(.fixed(220))
-        .onConstraints(.maxWidth(760), .columns([.fr(1), .fr(1)]).gap(12))
+        .onConstraints(.maxWidth(760), .equalColumns(2).gap(12))
         .onConstraints(
           .maxWidth(520),
-          .columns([.fr(1)]).gap(10).autoRows(.fixed(190)),
+          .equalColumns(1).gap(10).autoRows(.fixed(190)),
         );
 
     return GridBox(
@@ -568,15 +568,12 @@ class GalleryGridPreview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final GridBoxStyler style = .columns([.fr(1), .fr(1), .fr(1), .fr(1)])
+    final GridBoxStyler style = .equalColumns(4)
         .gap(12)
         .autoRows(.fixed(160))
         .clipBehavior(.hardEdge)
-        .onConstraints(.maxWidth(920), .columns([.fr(1), .fr(1), .fr(1)]))
-        .onConstraints(
-          .maxWidth(620),
-          .columns([.fr(1), .fr(1)]).autoRows(.fixed(142)),
-        );
+        .onConstraints(.maxWidth(920), .equalColumns(3))
+        .onConstraints(.maxWidth(620), .equalColumns(2).autoRows(.fixed(142)));
 
     return GridBox(
       key: const Key('gallery-grid'),
