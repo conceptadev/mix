@@ -116,6 +116,10 @@ Mix interpolates the resolved `GridBoxSpec` without an `AnimationController`.
 For example, this state-driven Grid moves from equal columns to a 2:1 focus
 layout while also increasing its row height and gaps:
 
+The runnable gallery uses an intentionally slow 1.2-second duration so every
+changing Grid dimension is easy to inspect. Product interfaces can choose a
+shorter duration without changing the API.
+
 ```dart
 final GridBoxStyler animatedGrid = .columns([
   .fr(focused ? 2 : 1),
@@ -123,18 +127,20 @@ final GridBoxStyler animatedGrid = .columns([
 ])
     .autoRows(.fixed(focused ? 148 : 112))
     .gap(focused ? 20 : 12)
-    .animate(.easeInOut(const Duration(milliseconds: 600)));
+    .animate(.easeInOut(const Duration(milliseconds: 1200)));
 
 return Column(
   children: [
     FilledButton(
       onPressed: () => setState(() => focused = !focused),
-      child: Text(focused ? 'Balance 1:1' : 'Focus 2:1'),
+      child: Text(focused ? 'Animate to 1:1' : 'Animate to 2:1'),
     ),
     GridBox(style: animatedGrid, children: cards),
   ],
 );
 ```
+
+![GridBox interpolating between balanced and focused tracks](../screenshots/grid_animation_demo.gif)
 
 When `setState` rebuilds the styler, Mix creates a tween between the old and new
 resolved geometry. The render object lays out the Grid at each animation value.

@@ -68,7 +68,7 @@ void main() {
 
     await tester.tap(find.byKey(const Key('animation-toggle')));
     await tester.pump();
-    await tester.pump(const Duration(milliseconds: 300));
+    await tester.pump(const Duration(milliseconds: 600));
 
     expect(trackRatio(), inExclusiveRange(1, 2));
     expect(tester.getSize(leading).height, inExclusiveRange(112, 148));
