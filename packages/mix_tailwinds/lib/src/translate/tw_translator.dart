@@ -18,6 +18,8 @@ import 'tw_presets.dart';
 import 'tw_routing.dart';
 import 'tw_target.dart';
 
+typedef _ParsedToken = ({String token, TailwindCandidate candidate});
+
 final class TwTranslator {
   TwTranslator({
     required this.config,
@@ -31,6 +33,13 @@ final class TwTranslator {
   static const _parser = TailwindCandidateParser(
     registry: defaultTailwindParserRegistry,
   );
+  static final _staticUtilityOrder = <String, int>{
+    for (final entry in generatedStaticUtilityRoots.indexed) entry.$2: entry.$1,
+  };
+  static final _functionalUtilityOrder = <String, int>{
+    for (final entry in generatedFunctionalUtilityRoots.indexed)
+      entry.$2: entry.$1,
+  };
 
   void _emitDiagnostic(TwDiagnostic diagnostic) {
     onDiagnostic?.call(diagnostic);
@@ -75,6 +84,98 @@ final class TwTranslator {
     );
   }
 
+  List<_ParsedToken> _parseAndSort(Iterable<String> tokens) {
+    final parsedTokens = <_ParsedToken>[];
+    for (final token in tokens) {
+      final parsed = _parser.parseCandidate(token);
+      switch (parsed) {
+        case TailwindParseSuccess(:final candidate):
+          parsedTokens.add((token: token, candidate: candidate));
+        case TailwindParseFailure():
+          _reportParseFailure(token, parsed);
+      }
+    }
+
+    // The generated registry preserves the pinned snapshot's root order. A
+    // natural raw-candidate tie-breaker makes values within one root stable too.
+    return parsedTokens..sort(_compareParsedTokens);
+  }
+
+  int _compareParsedTokens(_ParsedToken left, _ParsedToken right) {
+    final leftOrder = _utilityOrder(left.candidate.utility);
+    final rightOrder = _utilityOrder(right.candidate.utility);
+    final kind = leftOrder.$1.compareTo(rightOrder.$1);
+    if (kind != 0) return kind;
+
+    final root = leftOrder.$2.compareTo(rightOrder.$2);
+    if (root != 0) return root;
+
+    final utility = _compareNatural(
+      left.candidate.utility.raw,
+      right.candidate.utility.raw,
+    );
+    if (utility != 0) return utility;
+
+    final candidate = _compareNatural(left.candidate.raw, right.candidate.raw);
+    return candidate != 0
+        ? candidate
+        : left.candidate.raw.compareTo(right.candidate.raw);
+  }
+
+  (int, int) _utilityOrder(TailwindUtility utility) {
+    return switch (utility) {
+      TailwindStaticUtility(:final root) => (
+        0,
+        _staticUtilityOrder[root] ?? generatedStaticUtilityRoots.length,
+      ),
+      TailwindFunctionalUtility(:final root) => (
+        1,
+        _functionalUtilityOrder[root] ?? generatedFunctionalUtilityRoots.length,
+      ),
+      TailwindArbitraryProperty() => (2, 0),
+      TailwindUnresolvedUtility() => (3, 0),
+    };
+  }
+
+  int _compareNatural(String left, String right) {
+    var leftIndex = 0;
+    var rightIndex = 0;
+    while (leftIndex < left.length && rightIndex < right.length) {
+      final leftDigit = _isDigit(left.codeUnitAt(leftIndex));
+      final rightDigit = _isDigit(right.codeUnitAt(rightIndex));
+      if (leftDigit && rightDigit) {
+        final leftEnd = _digitRunEnd(left, leftIndex);
+        final rightEnd = _digitRunEnd(right, rightIndex);
+        final leftNumber = BigInt.parse(left.substring(leftIndex, leftEnd));
+        final rightNumber = BigInt.parse(right.substring(rightIndex, rightEnd));
+        final number = leftNumber.compareTo(rightNumber);
+        if (number != 0) return number;
+        leftIndex = leftEnd;
+        rightIndex = rightEnd;
+        continue;
+      }
+
+      final character = left
+          .codeUnitAt(leftIndex)
+          .compareTo(right.codeUnitAt(rightIndex));
+      if (character != 0) return character;
+      leftIndex++;
+      rightIndex++;
+    }
+
+    return (left.length - leftIndex).compareTo(right.length - rightIndex);
+  }
+
+  bool _isDigit(int codeUnit) => codeUnit >= 0x30 && codeUnit <= 0x39;
+
+  int _digitRunEnd(String value, int start) {
+    var end = start;
+    while (end < value.length && _isDigit(value.codeUnitAt(end))) {
+      end++;
+    }
+    return end;
+  }
+
   BoxStyler translateBox(String classNames) {
     return _translate<BoxStyler>(
       classNames,
@@ -116,13 +217,8 @@ final class TwTranslator {
     Color? color;
     double? opacity;
 
-    for (final token in splitTailwindTokens(classNames)) {
-      final parsed = _parser.parseCandidate(token);
-      if (parsed is TailwindParseFailure) {
-        _reportParseFailure(token, parsed);
-        continue;
-      }
-      final candidate = (parsed as TailwindParseSuccess).candidate;
+    for (final parsed in _parseAndSort(splitTailwindTokens(classNames))) {
+      final (:token, :candidate) = parsed;
 
       final route = routeCandidate(candidate, breakpoints: config.breakpoints);
       if (_reportBlockingRoute(token, route)) continue;
@@ -199,14 +295,8 @@ final class TwTranslator {
     Curve curve = Curves.easeOut;
     var delay = Duration.zero;
 
-    for (final token in tokens) {
-      final parsed = _parser.parseCandidate(token);
-      if (parsed is TailwindParseFailure) {
-        _reportParseFailure(token, parsed);
-        continue;
-      }
-
-      final candidate = (parsed as TailwindParseSuccess).candidate;
+    for (final parsed in _parseAndSort(tokens)) {
+      final (:token, :candidate) = parsed;
       final route = routeCandidate(candidate, breakpoints: config.breakpoints);
       if (_reportBlockingRoute(token, route)) continue;
 
@@ -298,14 +388,8 @@ final class TwTranslator {
       return groups.putIfAbsent(path, () => _GroupContext(target));
     }
 
-    for (final token in splitTailwindTokens(classNames)) {
-      final parsed = _parser.parseCandidate(token);
-      if (parsed is TailwindParseFailure) {
-        _reportParseFailure(token, parsed);
-        continue;
-      }
-
-      final candidate = (parsed as TailwindParseSuccess).candidate;
+    for (final parsed in _parseAndSort(splitTailwindTokens(classNames))) {
+      final (:token, :candidate) = parsed;
       final route = routeCandidate(candidate, breakpoints: config.breakpoints);
       if (_reportBlockingRoute(token, route)) continue;
       if (route.kind == TwRouteKind.widgetLayer) {

@@ -11,6 +11,8 @@
 - Added structured `TwDiagnostic` reporting through `onDiagnostic`; ignored
   adaptations and unsupported candidates no longer disappear silently. The
   token-only `onUnsupported` callback remains as a deprecated shim.
+- Resolve conflicting utilities in canonical registry order so class-string
+  order no longer changes base or variant output.
 - Report unsupported `basis-*` flex item utilities through `onDiagnostic`
   instead of silently ignoring fraction, full, arbitrary, or unknown values.
 - Keep supported `basis-auto` and spacing-scale basis utilities quiet while

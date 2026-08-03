@@ -150,33 +150,31 @@ void _brokenTestWidgets(
 }
 
 void main() {
-  _brokenTestWidgets(
-    'E1 conflicting utilities resolve independently of token order',
-    (tester) async {
-      final forwardBase = await _baseSnapshot(
-        tester,
-        'w-20 h-20 bg-red-500 bg-blue-500 p-2 p-4',
-      );
-      final reverseBase = await _baseSnapshot(
-        tester,
-        'w-20 h-20 bg-blue-500 bg-red-500 p-4 p-2',
-      );
-      final forwardHover = await _hoveredColor(
-        tester,
-        'w-20 h-20 hover:bg-red-500 hover:bg-blue-500',
-      );
-      final reverseHover = await _hoveredColor(
-        tester,
-        'w-20 h-20 hover:bg-blue-500 hover:bg-red-500',
-      );
+  testWidgets('E1 conflicting utilities resolve independently of token order', (
+    tester,
+  ) async {
+    final forwardBase = await _baseSnapshot(
+      tester,
+      'w-20 h-20 bg-red-500 bg-blue-500 p-2 p-4',
+    );
+    final reverseBase = await _baseSnapshot(
+      tester,
+      'w-20 h-20 bg-blue-500 bg-red-500 p-4 p-2',
+    );
+    final forwardHover = await _hoveredColor(
+      tester,
+      'w-20 h-20 hover:bg-red-500 hover:bg-blue-500',
+    );
+    final reverseHover = await _hoveredColor(
+      tester,
+      'w-20 h-20 hover:bg-blue-500 hover:bg-red-500',
+    );
 
-      expect(
-        [reverseBase.$1, reverseBase.$2, reverseHover],
-        [forwardBase.$1, forwardBase.$2, forwardHover],
-      );
-    },
-    skip: 'BROKEN: base, padding, and hover conflicts are last-token-wins',
-  );
+    expect(
+      [reverseBase.$1, reverseBase.$2, reverseHover],
+      [forwardBase.$1, forwardBase.$2, forwardHover],
+    );
+  });
 
   _brokenTestWidgets(
     'E2 md:hover and hover:md require both stacked conditions',

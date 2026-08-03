@@ -1047,12 +1047,14 @@ void main() {
     expect(radius.topLeft.x, 0);
   });
 
-  testWidgets('px-4 overridden by p-2', (tester) async {
+  testWidgets('px-4 outranks p-2 independent of token position', (
+    tester,
+  ) async {
     final container = await boxContainerFor(tester, 'px-4 p-2');
     final padding = container.padding as EdgeInsets?;
     expect(padding, isNotNull);
-    expect(padding!.left, 8);
-    expect(padding.right, 8);
+    expect(padding!.left, 16);
+    expect(padding.right, 16);
     expect(padding.top, 8);
   });
 
@@ -1790,31 +1792,51 @@ void main() {
   });
 
   // ==========================================================================
-  // Last-Wins Precedence Tests
+  // Canonical Utility-Order Precedence Tests
   // ==========================================================================
 
-  test('later duration overrides earlier', () {
-    final config = parseAnimation('transition duration-100 duration-300');
-    expect(config, isNotNull);
-    expect(config!.duration, const Duration(milliseconds: 300));
+  test('duration conflicts resolve independently of token order', () {
+    for (final classes in [
+      'transition duration-100 duration-300',
+      'transition duration-300 duration-100',
+    ]) {
+      final config = parseAnimation(classes);
+      expect(config, isNotNull);
+      expect(config!.duration, const Duration(milliseconds: 300));
+    }
   });
 
-  test('later ease overrides earlier', () {
-    final config = parseAnimation('transition ease-in ease-out');
-    expect(config, isNotNull);
-    expect(config!.curve, Curves.easeOut);
+  test('ease conflicts resolve independently of token order', () {
+    for (final classes in [
+      'transition ease-in ease-out',
+      'transition ease-out ease-in',
+    ]) {
+      final config = parseAnimation(classes);
+      expect(config, isNotNull);
+      expect(config!.curve, Curves.easeOut);
+    }
   });
 
-  test('later delay overrides earlier', () {
-    final config = parseAnimation('transition delay-100 delay-500');
-    expect(config, isNotNull);
-    expect(config!.delay, const Duration(milliseconds: 500));
+  test('delay conflicts resolve independently of token order', () {
+    for (final classes in [
+      'transition delay-100 delay-500',
+      'transition delay-500 delay-100',
+    ]) {
+      final config = parseAnimation(classes);
+      expect(config, isNotNull);
+      expect(config!.delay, const Duration(milliseconds: 500));
+    }
   });
 
-  test('later delay-0 overrides earlier delay-500', () {
-    final config = parseAnimation('transition delay-500 delay-0');
-    expect(config, isNotNull);
-    expect(config!.delay, Duration.zero);
+  test('delay-500 outranks delay-0 independent of token order', () {
+    for (final classes in [
+      'transition delay-0 delay-500',
+      'transition delay-500 delay-0',
+    ]) {
+      final config = parseAnimation(classes);
+      expect(config, isNotNull);
+      expect(config!.delay, const Duration(milliseconds: 500));
+    }
   });
 
   // ==========================================================================
