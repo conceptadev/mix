@@ -56,7 +56,9 @@ Use legacy `@MixableStyler()` only when maintaining an existing handwritten Styl
 
 ### `@MixWidget()`
 
-Applied to a top-level variable or function returning a `Style<S>`. It generates a `StatelessWidget` wrapper whose `build()` delegates to the styler's `call()`.
+Apply to a top-level variable or function returning a `Style<S>`. It generates a
+`StatelessWidget` wrapper whose `build()` delegates to the styler's `call()` or
+to an explicitly configured plain Widget target.
 
 ```dart
 @MixWidget()
@@ -66,7 +68,58 @@ final cardStyle = BoxStyler().paddingAll(16).borderRounded(12);
 
 By default, the widget name is derived from a lowerCamelCase element name ending in `Style`: `cardStyle` becomes `Card`, and leading underscores are preserved. Override the name with `@MixWidget(name: 'X')`.
 
-`@MixWidget` complements `@MixableSpec(target:)`; it wraps a style factory after a Styler exists, while `@MixableSpec(target:)` generates the Styler and its `call()` support. Mix's own specs use `@MixableSpec(target:)`; `@MixWidget` is mainly a downstream-author convenience.
+For a plain Widget with a compatible named `style` parameter, pass its
+constructor tear-off through `target`. The Widget does not need to extend
+`StyleWidget` or expose a Styler extension `call()` method. This direct-target
+path ships in `mix_generator 2.2.0-beta.2` with
+`mix_annotations 2.2.0-beta.1`:
+
+```dart
+@MixWidget(
+  name: 'AppButton',
+  target: PlainButton.new,
+  widgetParameters: .only({'label', 'onPressed'}),
+  factoryParameters: .only({'variant', 'size'}),
+)
+ButtonStyler appButtonStyle({
+  ButtonVariant variant = .solid,
+  ButtonSize size = .medium,
+  bool highContrast = false,
+}) => switch (variant) {
+  .solid => solidButtonStyle(size, highContrast: highContrast),
+  .soft => softButtonStyle(size, highContrast: highContrast),
+};
+```
+
+Use `widgetParameters` to curate parameters read from the Styler `call()` or
+plain target constructor. Use `factoryParameters` to curate the recipe
+function's own parameters. Required parameters must remain selected; omitted
+optional parameters use their original defaults. The target's `style` and
+`styleSpec` parameters never become generated wrapper fields.
+
+When a recipe function has a named, non-nullable enum parameter named exactly
+`variant` and that parameter remains selected by `factoryParameters`, generate
+one named constructor per accessible enum value while retaining the unnamed
+constructor:
+
+```dart
+AppButton.solid(label: 'Save')
+AppButton.soft(label: 'Save')
+AppButton(variant: selectedVariant, label: 'Save')
+```
+
+Do not add an `EnumVariant` mixin solely for this feature. The enum is a recipe
+switch key and does not enter Mix's runtime variant system. Nullable,
+positional, non-enum, or differently named parameters retain the unnamed-only
+constructor shape. Preserve the unnamed constructor because runtime-selected
+variants cannot choose a named constructor at compile time.
+
+`@MixWidget` complements `@MixableSpec(target:)`; it wraps a style recipe after
+a Styler exists, while `@MixableSpec(target:)` generates the Styler and its
+`call()` support. Mix's own specs use `@MixableSpec(target:)`; `@MixWidget` is
+mainly a downstream-author convenience. Consult
+`guides/mix-widget-variant-constructors.md` before changing this contract; its
+future curation rename is a decision record, not shipped API on current `main`.
 
 ### `@MixableModifier()`
 
@@ -125,7 +178,16 @@ final EdgeInsetsGeometry? padding;
 
 @MixableField(skipMixin: true)
 final Matrix4? transform;
+
+@MixableField(forwardStyler: true)
+final StyleSpec<LabelSpec>? label;
 ```
+
+Nested `StyleSpec<XSpec>` fields derive `XStyler` by convention for generated
+constructors and setters. Use `setterType` only to override that convention.
+Use `forwardStyler: true` to project a nested Styler's canonical factories and
+fluent anchors onto the parent Styler; add `stylerSurface` only when generation
+needs an explicit compatible surface during a same-package clean build.
 
 For legacy handwritten stylers:
 
