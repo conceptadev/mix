@@ -4,6 +4,8 @@
   `wrapDefaultTextStyle` styler extensions, and unused `TwConfig` lookup
   helpers. Use `TwParser`, standard Mix composition, and the public config
   maps instead.
+- **Breaking (experimental alpha):** Removed the unused semantic AST and plugin
+  registry that were previously exported from `tw_semantic.dart`.
 - Restored the hosted `mix: ^2.1.0` dependency so the package remains
   publishable by the repository release workflow.
 - Added structured `TwDiagnostic` reporting through `onDiagnostic`; ignored
