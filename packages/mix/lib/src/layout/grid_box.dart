@@ -89,20 +89,7 @@ class GridBoxStyler extends MixStyler<GridBoxStyler, GridBoxSpec> {
   /// rejected. Selection runs in [RenderMixGrid] without rebuilding the widget
   /// tree.
   GridBoxStyler onConstraints(GridConstraintQuery query, GridBoxStyler patch) {
-    _validateConstraintPatch(patch);
-    final patchColumns = patch._columns;
-    final patchRows = patch._rows;
-    final layoutPatch = GridLayoutPatch(
-      columns: patchColumns == null
-          ? null
-          : List<GridTrack>.unmodifiable(List<GridTrack>.of(patchColumns)),
-      rows: patchRows == null
-          ? null
-          : List<GridTrack>.unmodifiable(List<GridTrack>.of(patchRows)),
-      autoRows: patch._autoRows,
-      columnGap: patch._columnGap,
-      rowGap: patch._rowGap,
-    );
+    final layoutPatch = _createValidatedConstraintPatch(patch);
 
     return merge(
       GridBoxStyler(
@@ -185,7 +172,7 @@ class GridBoxStyler extends MixStyler<GridBoxStyler, GridBoxSpec> {
   ];
 }
 
-void _validateConstraintPatch(GridBoxStyler patch) {
+GridLayoutPatch _createValidatedConstraintPatch(GridBoxStyler patch) {
   if (patch.$modifier != null) {
     throw FlutterError.fromParts([
       ErrorSummary(
@@ -241,13 +228,20 @@ void _validateConstraintPatch(GridBoxStyler patch) {
       ErrorHint('Move clipBehavior to the base GridBoxStyler.'),
     ]);
   }
-  final hasGeometry =
-      patch._columns != null ||
-      patch._rows != null ||
-      patch._autoRows != null ||
-      patch._columnGap != null ||
-      patch._rowGap != null;
-  if (!hasGeometry) {
+  final columns = patch._columns;
+  final rows = patch._rows;
+  final layoutPatch = GridLayoutPatch(
+    columns: columns == null
+        ? null
+        : List<GridTrack>.unmodifiable(List<GridTrack>.of(columns)),
+    rows: rows == null
+        ? null
+        : List<GridTrack>.unmodifiable(List<GridTrack>.of(rows)),
+    autoRows: patch._autoRows,
+    columnGap: patch._columnGap,
+    rowGap: patch._rowGap,
+  );
+  if (layoutPatch.isEmpty) {
     throw FlutterError.fromParts([
       ErrorSummary('GridBoxStyler.onConstraints patch must set geometry.'),
       ErrorDescription(
@@ -258,6 +252,8 @@ void _validateConstraintPatch(GridBoxStyler patch) {
       ),
     ]);
   }
+
+  return layoutPatch;
 }
 
 /// Grid host: [MixGrid] driven by [GridBoxStyler] / [GridBoxSpec].

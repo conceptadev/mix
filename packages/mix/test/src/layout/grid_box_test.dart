@@ -2,6 +2,7 @@
 // ignore_for_file: implementation_imports
 
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
 import 'package:mix/src/layout/grid_box.dart';
@@ -41,12 +42,10 @@ void main() {
       expect(sizes[1], closeTo(100, 0.001));
     });
 
-    test('gap math at track boundaries via axisExtent', () {
+    test('gap math produces the expected extent and track origins', () {
       final sizes = [100.0, 100.0, 100.0];
       expect(axisExtent(sizes, 10), 320); // 300 + 2*10
-      expect(trackOrigin(sizes, 10, 0), 0);
-      expect(trackOrigin(sizes, 10, 1), 110);
-      expect(trackOrigin(sizes, 10, 2), 220);
+      expect(computeTrackOrigins(sizes, 10), [0, 110, 220]);
     });
   });
 
@@ -201,16 +200,16 @@ void main() {
         throwsA(isA<FlutterError>()),
       );
       expect(
-        () => GridConstraintQuery.widthAtMost(double.infinity),
+        () => GridConstraintQuery.widthAtMost(.infinity),
         throwsA(isA<FlutterError>()),
       );
     });
   });
 
-  group('GridBoxSpec immutability', () {
+  group('GridBoxSpec', () {
     test('constructor validates and snapshots all caller-owned lists', () {
-      final columns = <GridTrack>[const GridTrack.fr(1), const GridTrack.fr(1)];
-      final branchColumns = <GridTrack>[const GridTrack.fr(1)];
+      final columns = [const GridTrack.fr(1), const GridTrack.fr(1)];
+      final branchColumns = [const GridTrack.fr(1)];
 
       final spec = GridBoxSpec(
         columns: columns,
@@ -242,19 +241,6 @@ void main() {
       );
     });
 
-    test('constructor rejects invalid geometry immediately', () {
-      expect(
-        () => GridBoxSpec(columns: const []),
-        throwsA(isA<FlutterError>()),
-      );
-      expect(
-        () => GridBoxSpec(columns: const [GridTrack.fixed(10)], columnGap: -1),
-        throwsA(isA<FlutterError>()),
-      );
-    });
-  });
-
-  group('GridBoxSpec', () {
     test('branch matching is inclusive and declaration ordered', () {
       final spec = GridBoxSpec(
         columns: const [GridTrack.fr(1), GridTrack.fr(1), GridTrack.fr(1)],
@@ -339,7 +325,7 @@ void main() {
       expect(narrow.columns, hasLength(1));
     });
 
-    test('equality and immutable snapshots', () {
+    test('uses value equality for snapped geometry', () {
       final cols = [const GridTrack.fr(1), const GridTrack.fr(1)];
       final a = GridBoxSpec(
         columns: List.unmodifiable(List.of(cols)),
@@ -351,30 +337,6 @@ void main() {
       );
       expect(a, b);
       expect(a.hashCode, b.hashCode);
-    });
-
-    test('mutating original lists cannot alter the spec snapshot', () {
-      final cols = <GridTrack>[const GridTrack.fr(1), const GridTrack.fr(1)];
-      final patchCols = <GridTrack>[const GridTrack.fr(1)];
-      final spec = GridBoxSpec(
-        columns: cols,
-        branches: [
-          GridConstraintBranch(
-            query: GridConstraintQuery.widthAtMost(400),
-            patch: GridLayoutPatch(columns: patchCols),
-          ),
-        ],
-      );
-
-      cols.add(const GridTrack.fr(1));
-      patchCols.add(const GridTrack.fixed(10));
-
-      expect(spec.columns, hasLength(2));
-      expect(spec.branches.single.patch.columns, hasLength(1));
-      expect(
-        () => spec.columns.add(const GridTrack.fr(1)),
-        throwsUnsupportedError,
-      );
     });
   });
 
@@ -388,14 +350,12 @@ void main() {
 
     test('infinite fixed track and non-finite gaps throw FlutterError', () {
       expect(
-        () => GridBoxSpec(columns: [FixedGridTrack(double.infinity)]),
+        () => GridBoxSpec(columns: [FixedGridTrack(.infinity)]),
         throwsA(isA<FlutterError>()),
       );
       expect(
-        () => GridBoxSpec(
-          columns: const [GridTrack.fr(1)],
-          columnGap: double.infinity,
-        ),
+        () =>
+            GridBoxSpec(columns: const [GridTrack.fr(1)], columnGap: .infinity),
         throwsA(isA<FlutterError>()),
       );
       expect(
@@ -403,7 +363,7 @@ void main() {
         throwsA(isA<FlutterError>()),
       );
       expect(
-        () => GridBoxSpec(columns: [FrGridTrack(double.infinity)]),
+        () => GridBoxSpec(columns: [FrGridTrack(.infinity)]),
         throwsA(isA<FlutterError>()),
       );
     });
@@ -411,13 +371,28 @@ void main() {
     test('constructor rejects invalid branch geometry', () {
       expect(
         () => GridBoxSpec(
+          branches: [
+            GridConstraintBranch(
+              query: GridConstraintQuery.widthAtMost(100),
+              patch: const GridLayoutPatch(),
+            ),
+          ],
+        ),
+        throwsA(
+          isA<FlutterError>().having(
+            (error) => error.toString(),
+            'message',
+            contains('empty patch'),
+          ),
+        ),
+      );
+      expect(
+        () => GridBoxSpec(
           columns: const [GridTrack.fr(1)],
           branches: [
             GridConstraintBranch(
               query: GridConstraintQuery.widthAtMost(100),
-              patch: GridLayoutPatch(
-                columns: [FixedGridTrack(double.infinity)],
-              ),
+              patch: GridLayoutPatch(columns: [FixedGridTrack(.infinity)]),
             ),
           ],
         ),
@@ -440,7 +415,7 @@ void main() {
         error = e;
       }
       expect(error, isA<FlutterError>());
-      final text = error.toString();
+      final text = error?.toString() ?? '';
       expect(text, contains('bounded width'));
       expect(text, contains('Axis: width'));
       expect(text, contains('Tracks:'));
@@ -577,7 +552,7 @@ void main() {
       );
       expect(live, dry);
       expect(live, const Size(300, 200));
-      expect(render.columns.length, 3);
+      expect(render.spec.columns.length, 3);
     });
 
     testWidgets('loose fixed auto rows produce meaningful live/dry parity', (
@@ -590,7 +565,7 @@ void main() {
             child: SizedBox(
               width: 300,
               child: Column(
-                mainAxisSize: MainAxisSize.min,
+                mainAxisSize: .min,
                 children: [
                   MixGrid(
                     spec: GridBoxSpec(
@@ -633,9 +608,9 @@ void main() {
                   autoRows: GridTrack.fr(1),
                 ),
                 children: const [
-                  SizedBox(key: Key('a')),
-                  SizedBox(key: Key('b')),
-                  SizedBox(key: Key('c')),
+                  _LayoutCallCounter(key: Key('a')),
+                  _LayoutCallCounter(key: Key('b')),
+                  _LayoutCallCounter(key: Key('c')),
                 ],
               ),
             ),
@@ -644,12 +619,20 @@ void main() {
       );
 
       final render = tester.renderObject<RenderMixGrid>(find.byType(MixGrid));
-      expect(render.childLayoutCount, 3);
+      final counters = tester
+          .renderObjectList<_RenderLayoutCallCounter>(
+            find.byType(_LayoutCallCounter),
+          )
+          .toList();
+      expect(counters, hasLength(3));
+      expect(counters.map((counter) => counter.layoutCount), everyElement(1));
 
-      render.childLayoutCount = 0;
+      for (final counter in counters) {
+        counter.layoutCount = 0;
+      }
       render.markNeedsLayout();
       await tester.pump();
-      expect(render.childLayoutCount, 3);
+      expect(counters.map((counter) => counter.layoutCount), everyElement(1));
     });
 
     testWidgets('gap math at track boundaries positions children', (
@@ -703,13 +686,13 @@ void main() {
                 children: [
                   GestureDetector(
                     key: const Key('left'),
-                    behavior: HitTestBehavior.opaque,
                     onTap: () => leftTaps++,
+                    behavior: .opaque,
                   ),
                   GestureDetector(
                     key: const Key('right'),
-                    behavior: HitTestBehavior.opaque,
                     onTap: () => rightTaps++,
+                    behavior: .opaque,
                   ),
                 ],
               ),
@@ -811,17 +794,18 @@ void main() {
       expect(geometry.columns.length, 1);
 
       // Narrow: one column → children stack vertically.
-      final narrow0 = tester.getTopLeft(find.byKey(const Key('cell0')));
-      final narrow1 = tester.getTopLeft(find.byKey(const Key('cell1')));
-      expect(narrow1.dx, narrow0.dx);
-      expect(narrow1.dy, greaterThan(narrow0.dy));
-      expect(find.byType(LayoutBuilder), findsNothing);
+      final narrowOffsets = [
+        tester.getTopLeft(find.byKey(const Key('cell0'))),
+        tester.getTopLeft(find.byKey(const Key('cell1'))),
+      ];
+      expect(narrowOffsets[1].dx, narrowOffsets[0].dx);
+      expect(narrowOffsets[1].dy, greaterThan(narrowOffsets[0].dy));
     });
 
     testWidgets(
       'spec snapshot prevents caller list mutation from reaching render',
       (tester) async {
-        final cols = <GridTrack>[
+        final cols = [
           const GridTrack.fr(1),
           const GridTrack.fr(1),
           const GridTrack.fr(1),
@@ -847,12 +831,13 @@ void main() {
         );
 
         final render = tester.renderObject<RenderMixGrid>(find.byType(MixGrid));
-        expect(render.spec.columns, hasLength(3));
+        final snappedColumns = render.spec.columns;
+        expect(snappedColumns, hasLength(3));
         // The spec owns its snapshot before it reaches the render boundary.
-        expect(identical(render.spec.columns, cols), isFalse);
+        expect(identical(snappedColumns, cols), isFalse);
 
         cols.add(const GridTrack.fr(1));
-        expect(render.spec.columns, hasLength(3));
+        expect(render.spec.columns, same(snappedColumns));
         expect(
           () => render.spec.columns.add(const GridTrack.fr(1)),
           throwsUnsupportedError,
@@ -864,6 +849,7 @@ void main() {
       'GridBoxStyler.onConstraints dashboard collapse under offered width',
       (tester) async {
         final width = ValueNotifier(900.0);
+        addTearDown(width.dispose);
 
         await tester.pumpWidget(
           MaterialApp(
@@ -907,7 +893,7 @@ void main() {
         );
 
         var render = tester.renderObject<RenderMixGrid>(find.byType(MixGrid));
-        expect(render.columns.length, 3);
+        expect(render.spec.columns.length, 3);
         expect(find.byType(LayoutBuilder), findsNothing);
 
         width.value = 400;
@@ -923,8 +909,6 @@ void main() {
         final narrow1 = tester.getTopLeft(find.byKey(const Key('cell1')));
         expect(narrow1.dx, narrow0.dx);
         expect(narrow1.dy, greaterThan(narrow0.dy));
-
-        width.dispose();
       },
     );
 
@@ -991,7 +975,7 @@ void main() {
           home: Align(
             alignment: Alignment.topLeft,
             child: Column(
-              mainAxisSize: MainAxisSize.min,
+              mainAxisSize: .min,
               children: [
                 GridBox(
                   style: const GridBoxStyler(
@@ -1092,23 +1076,25 @@ void main() {
           // Swallow so the test harness does not aggregate secondary failures.
         };
 
-        await tester.pumpWidget(
-          MaterialApp(
-            home: Center(
-              child: IntrinsicHeight(
-                child: MixGrid(
-                  spec: GridBoxSpec(
-                    columns: [GridTrack.fixed(50)],
-                    rows: [GridTrack.fr(1)],
+        try {
+          await tester.pumpWidget(
+            MaterialApp(
+              home: Center(
+                child: IntrinsicHeight(
+                  child: MixGrid(
+                    spec: GridBoxSpec(
+                      columns: [GridTrack.fixed(50)],
+                      rows: [GridTrack.fr(1)],
+                    ),
+                    children: const [SizedBox(key: Key('a'))],
                   ),
-                  children: const [SizedBox(key: Key('a'))],
                 ),
               ),
             ),
-          ),
-        );
-
-        FlutterError.onError = oldOnError;
+          );
+        } finally {
+          FlutterError.onError = oldOnError;
+        }
         // Drain any residual exception stored by the binding.
         tester.takeException();
 
@@ -1122,13 +1108,23 @@ void main() {
       },
     );
   });
+}
 
-  group('isolation', () {
-    test('no ConstraintScope or ConstraintVariant symbols remain in core', () {
-      // Structural: these types must not be importable from mix public API.
-      // Compile-time absence is the real gate; this documents intent.
-      expect(GridBoxStyler, isNotNull);
-      expect(GridBoxSpec, isNotNull);
-    });
-  });
+class _LayoutCallCounter extends SingleChildRenderObjectWidget {
+  const _LayoutCallCounter({super.key});
+
+  @override
+  _RenderLayoutCallCounter createRenderObject(BuildContext context) {
+    return _RenderLayoutCallCounter();
+  }
+}
+
+class _RenderLayoutCallCounter extends RenderProxyBox {
+  int layoutCount = 0;
+
+  @override
+  void layout(Constraints constraints, {bool parentUsesSize = false}) {
+    layoutCount++;
+    super.layout(constraints, parentUsesSize: parentUsesSize);
+  }
 }

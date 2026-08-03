@@ -328,6 +328,18 @@ void _validateGridSpecGeometry(GridBoxSpec spec) {
 
   for (final branch in spec.branches) {
     final patch = branch.patch;
+    if (patch.isEmpty) {
+      throw FlutterError.fromParts([
+        ErrorSummary('GridLayoutPatch must set geometry.'),
+        ErrorDescription(
+          'A constraint branch supplied an empty patch with no columns, rows, '
+          'autoRows, or gaps.',
+        ),
+        ErrorHint(
+          'Set at least one geometry field or remove the constraint branch.',
+        ),
+      ]);
+    }
     final patchColumns = patch.columns;
     final patchRows = patch.rows;
     final patchAutoRows = patch.autoRows;

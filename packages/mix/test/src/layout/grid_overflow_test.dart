@@ -30,14 +30,14 @@ void main() {
 
   test('Grid clip behavior defaults to none and resolves through the spec', () {
     const defaultStyle = GridBoxStyler();
-    const clippedStyle = GridBoxStyler(clipBehavior: Clip.hardEdge);
+    const clippedStyle = GridBoxStyler(clipBehavior: .hardEdge);
 
     expect(defaultStyle.clipBehavior, Clip.none);
     expect(clippedStyle.clipBehavior, Clip.hardEdge);
     expect(
       GridBoxSpec(
         columns: const [GridTrack.fixed(10)],
-        clipBehavior: Clip.antiAlias,
+        clipBehavior: .antiAlias,
       ).clipBehavior,
       Clip.antiAlias,
     );
@@ -47,7 +47,7 @@ void main() {
     expect(
       () => const GridBoxStyler().onConstraints(
         GridConstraintQuery.widthAtMost(400),
-        const GridBoxStyler(clipBehavior: Clip.hardEdge),
+        const GridBoxStyler(clipBehavior: .hardEdge),
       ),
       throwsA(
         isA<FlutterError>()
@@ -68,8 +68,9 @@ void main() {
   testWidgets('overflow with clipping exposes the Grid paint clip', (
     tester,
   ) async {
+    final overflowErrors = <FlutterErrorDetails>[];
     final previousOnError = FlutterError.onError;
-    FlutterError.onError = (_) {};
+    FlutterError.onError = overflowErrors.add;
     try {
       await tester.pumpWidget(
         MaterialApp(
@@ -82,7 +83,7 @@ void main() {
                 spec: GridBoxSpec(
                   columns: const [GridTrack.fixed(160)],
                   rows: const [GridTrack.fixed(75)],
-                  clipBehavior: Clip.hardEdge,
+                  clipBehavior: .hardEdge,
                 ),
                 children: const [ColoredBox(color: Colors.blue)],
               ),
@@ -95,6 +96,7 @@ void main() {
     }
 
     final render = tester.renderObject<RenderMixGrid>(find.byType(MixGrid));
+    expect(overflowErrors, isNotEmpty);
     expect(render.size, const Size(100, 60));
     expect(
       render.describeApproximatePaintClip(render.firstChild!),
@@ -105,8 +107,9 @@ void main() {
   testWidgets('Clip.none paints overflow while Clip.hardEdge hides it', (
     tester,
   ) async {
+    final overflowErrors = <FlutterErrorDetails>[];
     final previousOnError = FlutterError.onError;
-    FlutterError.onError = (_) {};
+    FlutterError.onError = overflowErrors.add;
     try {
       await tester.pumpWidget(
         MaterialApp(
@@ -120,7 +123,7 @@ void main() {
                   width: 340,
                   height: 120,
                   child: Stack(
-                    clipBehavior: Clip.none,
+                    clipBehavior: .none,
                     children: const [
                       Positioned(
                         left: 20,
@@ -130,7 +133,7 @@ void main() {
                           height: 60,
                           child: _OverflowingGrid(
                             color: Colors.red,
-                            clipBehavior: Clip.none,
+                            clipBehavior: .none,
                           ),
                         ),
                       ),
@@ -142,7 +145,7 @@ void main() {
                           height: 60,
                           child: _OverflowingGrid(
                             color: Colors.blue,
-                            clipBehavior: Clip.hardEdge,
+                            clipBehavior: .hardEdge,
                           ),
                         ),
                       ),
@@ -162,6 +165,7 @@ void main() {
       Offset(120, 40),
       Offset(280, 40),
     ]);
+    expect(overflowErrors, isNotEmpty);
     expect(pixels[0], const Color(0xFFF44336));
     expect(pixels[1], const Color(0xFFFFFFFF));
   });
@@ -214,8 +218,9 @@ void main() {
   testWidgets('overflow outside Grid bounds is never hit-testable', (
     tester,
   ) async {
+    final overflowErrors = <FlutterErrorDetails>[];
     final previousOnError = FlutterError.onError;
-    FlutterError.onError = (_) {};
+    FlutterError.onError = overflowErrors.add;
     try {
       await tester.pumpWidget(
         MaterialApp(
@@ -225,7 +230,7 @@ void main() {
               width: 240,
               height: 100,
               child: Stack(
-                clipBehavior: Clip.none,
+                clipBehavior: .none,
                 children: [
                   Positioned(
                     left: 20,
@@ -251,6 +256,7 @@ void main() {
     }
 
     final render = tester.renderObject<RenderMixGrid>(find.byType(MixGrid));
+    expect(overflowErrors, isNotEmpty);
     final inside = BoxHitTestResult();
     final outside = BoxHitTestResult();
 
@@ -274,7 +280,7 @@ void main() {
               style: GridBoxStyler(
                 columns: [GridTrack.fixed(trackWidth)],
                 rows: const [GridTrack.fixed(60)],
-                clipBehavior: Clip.hardEdge,
+                clipBehavior: .hardEdge,
               ),
               children: const [ColoredBox(color: Colors.blue)],
             ),
@@ -283,19 +289,23 @@ void main() {
       );
     }
 
+    final overflowErrors = <FlutterErrorDetails>[];
     final previousOnError = FlutterError.onError;
-    FlutterError.onError = (_) {};
+    FlutterError.onError = overflowErrors.add;
     try {
       await tester.pumpWidget(build(140));
     } finally {
       FlutterError.onError = previousOnError;
     }
     final render = tester.renderObject<RenderMixGrid>(find.byType(MixGrid));
+    expect(overflowErrors, isNotEmpty);
     expect(render.clipBehavior, Clip.hardEdge);
     expect(render, paints..clipRect());
 
     await tester.pumpWidget(build(80));
 
+    // Re-querying the same finder verifies that the keyed render object was reused.
+    // ignore: avoid-duplicate-initializers
     final updated = tester.renderObject<RenderMixGrid>(find.byType(MixGrid));
     expect(updated, same(render));
     expect(updated.describeApproximatePaintClip(updated.firstChild!), isNull);

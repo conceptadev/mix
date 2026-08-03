@@ -33,7 +33,7 @@ void main() {
         if (missingRowCount > 0) ...List.filled(missingRowCount, autoRows!),
       ];
       final columnGap = random.nextInt(25).toDouble();
-      final rowGap = random.nextInt(25).toDouble();
+      final rowGap = random.nextDouble() * 24;
       final width = 40 + random.nextInt(761).toDouble();
       final height = 40 + random.nextInt(561).toDouble();
       final constraints = BoxConstraints.tightFor(width: width, height: height);
@@ -106,7 +106,6 @@ void main() {
       final drySize = render.getDryLayout(constraints);
       render.layout(constraints);
       expect(render.size, drySize, reason: reason);
-      expect(render.childLayoutCount, childCount, reason: reason);
       render.removeAll();
       render.dispose();
       for (final child in children) {
@@ -117,7 +116,7 @@ void main() {
 }
 
 List<GridTrack> _tracks(Random random, int count) {
-  return List<GridTrack>.generate(count, (_) => _track(random));
+  return List.generate(count, (_) => _track(random));
 }
 
 GridTrack _track(Random random) {

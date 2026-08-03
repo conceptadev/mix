@@ -96,12 +96,14 @@ double axisExtent(List<double> sizes, double gap) {
   return sum + (sizes.length > 1 ? gap * (sizes.length - 1) : 0);
 }
 
-/// Origin offset of track [index] given sizes and gap.
-double trackOrigin(List<double> sizes, double gap, int index) {
+/// Origin offsets for tracks with the given sizes and gap.
+List<double> computeTrackOrigins(List<double> sizes, double gap) {
+  final origins = <double>[];
   var origin = 0.0;
-  for (var i = 0; i < index; i++) {
-    origin += sizes[i] + gap;
+  for (final size in sizes) {
+    origins.add(origin);
+    origin += size + gap;
   }
 
-  return origin;
+  return origins;
 }

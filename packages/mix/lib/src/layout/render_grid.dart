@@ -94,6 +94,8 @@ GridLayoutResult computeGridLayout({
   final intrinsicWidth = axisExtent(columnSizes, columnGap);
   final intrinsicHeight = axisExtent(rowSizes, rowGap);
   final size = constraints.constrain(Size(intrinsicWidth, intrinsicHeight));
+  final columnOrigins = computeTrackOrigins(columnSizes, columnGap);
+  final rowOrigins = computeTrackOrigins(rowSizes, rowGap);
 
   final cells = <GridCellGeometry>[];
   for (var i = 0; i < childCount; i++) {
@@ -104,10 +106,7 @@ GridLayoutResult computeGridLayout({
       GridCellGeometry(
         column: column,
         row: row,
-        offset: Offset(
-          trackOrigin(columnSizes, columnGap, column),
-          trackOrigin(rowSizes, rowGap, row),
-        ),
+        offset: Offset(columnOrigins[column], rowOrigins[row]),
         size: Size(columnSizes[column], rowSizes[row]),
       ),
     );
@@ -184,9 +183,6 @@ class RenderMixGrid extends RenderBox
         ContainerRenderObjectMixin<RenderBox, MultiChildLayoutParentData>,
         RenderBoxContainerDefaultsMixin<RenderBox, MultiChildLayoutParentData>,
         DebugOverflowIndicatorMixin {
-  /// Layout pass counter for tests (reset externally).
-  int childLayoutCount = 0;
-
   GridBoxSpec _spec;
   Size _contentSize = .zero;
   final LayerHandle<ClipRectLayer> _clipRectLayer =
@@ -274,12 +270,6 @@ class RenderMixGrid extends RenderBox
 
   GridBoxSpec get spec => _spec;
 
-  /// Convenience accessors for tests (resolved base, not branch-selected).
-  List<GridTrack> get columns => _spec.columns;
-  List<GridTrack> get rows => _spec.rows;
-  GridTrack? get autoRows => _spec.autoRows;
-  double get columnGap => _spec.columnGap;
-  double get rowGap => _spec.rowGap;
   Clip get clipBehavior => _spec.clipBehavior;
 
   /// Single equality-checked immutable spec setter.
@@ -328,21 +318,15 @@ class RenderMixGrid extends RenderBox
     final result = _compute(constraints);
     size = result.size;
     _contentSize = result.contentSize;
+    assert(result.cells.length == childCount);
 
     var index = 0;
     var child = firstChild;
     while (child != null) {
       final parentData = child.parentData! as MultiChildLayoutParentData;
-      if (index < result.cells.length) {
-        final cell = result.cells[index];
-        child.layout(BoxConstraints.tight(cell.size), parentUsesSize: false);
-        childLayoutCount++;
-        parentData.offset = cell.offset;
-      } else {
-        child.layout(BoxConstraints.tight(.zero), parentUsesSize: false);
-        childLayoutCount++;
-        parentData.offset = .zero;
-      }
+      final cell = result.cells[index];
+      child.layout(BoxConstraints.tight(cell.size), parentUsesSize: false);
+      parentData.offset = cell.offset;
       child = parentData.nextSibling;
       index++;
     }
