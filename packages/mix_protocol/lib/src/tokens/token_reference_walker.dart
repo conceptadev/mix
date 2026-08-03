@@ -281,8 +281,43 @@ final class _TokenReferenceWalker {
       case WrapBoxStyler():
         visit(style.$box);
         visit(style.$flow);
+      case GridBoxStyler():
+        _visitGridTracks(style.$columns);
+        _visitGridTracks(style.$rows);
+        _visitGridTrack(style.$autoRows);
+        visit(style.$columnGap);
+        visit(style.$rowGap);
+        for (final branch in style.$constraintBranches ?? const []) {
+          visit(branch.breakpoint);
+          _visitGridLayoutPatch(branch.patch);
+        }
       default:
         break;
+    }
+  }
+
+  void _visitGridLayoutPatch(GridLayoutPatch patch) {
+    _visitGridTracks(patch.columns);
+    _visitGridTracks(patch.rows);
+    _visitGridTrack(patch.autoRows);
+    visit(patch.columnGap);
+    visit(patch.rowGap);
+  }
+
+  void _visitGridTracks(Iterable<GridTrack>? tracks) {
+    for (final track in tracks ?? const <GridTrack>[]) {
+      _visitGridTrack(track);
+    }
+  }
+
+  void _visitGridTrack(GridTrack? track) {
+    switch (track) {
+      case FixedGridTrack(:final size):
+        visit(size);
+      case FrGridTrack(:final fraction):
+        visit(fraction);
+      case null:
+        return;
     }
   }
 

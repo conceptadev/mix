@@ -196,6 +196,31 @@ void main() {
   );
 
   test(
+    'GridBoxStyler round-trips through canonical wire with field fidelity',
+    () {
+      expectRoundTrips<GridBoxStyler>(
+        GridBoxStyler(
+          columns: const [GridTrack.fixed(220), GridTrack.fr(2)],
+          autoRows: const GridTrack.fixed(96),
+          columnGap: 16,
+          rowGap: 12,
+          clipBehavior: Clip.hardEdge,
+          constraintBranches: const [
+            GridConstraintBranch(
+              breakpoint: Breakpoint(maxWidth: 720),
+              patch: GridLayoutPatch(
+                columns: [GridTrack.fr(1)],
+                columnGap: 8,
+                rowGap: 8,
+              ),
+            ),
+          ],
+        ),
+      );
+    },
+  );
+
+  test(
     'BoxStyler preserves variants, modifiers, and animation across wire',
     () {
       expectRoundTrips<BoxStyler>(

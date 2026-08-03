@@ -158,6 +158,45 @@ void main() {
       );
     });
 
+    test('treats Grid constraint branches as local selectors', () {
+      final inspection = _inspectStyle({
+        'v': 1,
+        'type': 'grid_box',
+        'constraintBranches': [
+          {
+            'breakpoint': {'token': 'breakpoint.card.compact'},
+            'patch': {
+              'columns': [
+                {'type': 'fr', 'fraction': 1.0},
+              ],
+            },
+          },
+        ],
+      });
+
+      expect(inspection.selectors, hasLength(1));
+      final selector = inspection.selectors.single;
+      expect(selector.selector.kind, 'constraint_breakpoint');
+      expect(selector.selector.jsonPointer, '/constraintBranches/0/breakpoint');
+      expect(selector.tokenOccurrences.single.name, 'breakpoint.card.compact');
+      expect(
+        selector.tokenOccurrences.single.jsonPointer,
+        '/constraintBranches/0/breakpoint/token',
+      );
+      expect(
+        inspection.values,
+        contains(
+          isA<MixProtocolValueEvidence>()
+              .having((value) => value.property, 'property', 'columns.fraction')
+              .having(
+                (value) => value.selectors.single.kind,
+                'selector kind',
+                'constraint_breakpoint',
+              ),
+        ),
+      );
+    });
+
     test('emits empty selector evidence with complete selector context', () {
       final inspection = _inspectStyle({
         'v': 1,

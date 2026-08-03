@@ -8,7 +8,7 @@ for authoring tools.
 The package is intentionally narrow:
 
 - one fixed v1 vocabulary for `box`, `text`, `flex`, `wrap`, `stack`, `icon`,
-  `image`, `flex_box`, `wrap_box`, and `stack_box` styles;
+  `image`, `flex_box`, `wrap_box`, `stack_box`, and `grid_box` styles;
 - one shared `mixProtocol` façade for styles, themes, and schema export;
 - strict decode by default, with bounded lenient recovery for additive data;
 - stable path-qualified diagnostics and fail-loud encoding;

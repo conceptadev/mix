@@ -65,6 +65,58 @@ final style = switch (mixProtocol.decodeStyle<BoxStyler>(payload)) {
 The success value is a real `BoxStyler`, not a protocol DTO. A requested Dart
 type that does not match the payload's `type` fails with `type_mismatch`.
 
+Grid layout styles use the same boundary. Tracks are discriminated values, and
+local constraint branches carry a `Breakpoint` plus a geometry-only patch:
+
+```json
+{
+  "v": 1,
+  "type": "grid_box",
+  "columns": [
+    { "type": "fixed", "size": 220 },
+    { "type": "fr", "fraction": 2 }
+  ],
+  "autoRows": { "type": "fixed", "size": 96 },
+  "columnGap": 16,
+  "rowGap": 12,
+  "constraintBranches": [
+    {
+      "breakpoint": { "maxWidth": 720 },
+      "patch": {
+        "columns": [{ "type": "fr", "fraction": 1 }],
+        "columnGap": 8,
+        "rowGap": 8
+      }
+    }
+  ]
+}
+```
+
+`constraintBranches` evaluate the Grid's bounded local layout constraints.
+They are not viewport `context_breakpoint` variants. Breakpoint token names can
+be supplied as `{ "token": "breakpoint.card.compact" }`.
+
+Track values and gaps also accept numeric token references. Use space tokens
+for logical-pixel sizes and gaps, and double tokens for fractional weights:
+
+```json
+{
+  "v": 1,
+  "type": "grid_box",
+  "columns": [
+    {
+      "type": "fixed",
+      "size": { "$token": "space.grid.sidebar", "kind": "space" }
+    },
+    {
+      "type": "fr",
+      "fraction": { "$token": "double.grid.content", "kind": "double" }
+    }
+  ],
+  "columnGap": { "$token": "space.grid.gap", "kind": "space" }
+}
+```
+
 ## Decode a token theme
 
 Theme documents group concrete token values by Mix token kind:

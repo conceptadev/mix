@@ -8,6 +8,10 @@ const schemaTypeFlexBox = 'flex_box';
 const schemaTypeStackBox = 'stack_box';
 const schemaTypeWrap = 'wrap';
 const schemaTypeWrapBox = 'wrap_box';
+const schemaTypeGridBox = 'grid_box';
+
+const gridTrackTypeFixed = 'fixed';
+const gridTrackTypeFraction = 'fr';
 
 const modifierTypeAlign = 'align';
 const modifierTypeAspectRatio = 'aspect_ratio';

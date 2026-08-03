@@ -14,7 +14,8 @@ enum SchemaStyler {
   flexBox(schemaTypeFlexBox),
   stackBox(schemaTypeStackBox),
   wrap(schemaTypeWrap),
-  wrapBox(schemaTypeWrapBox);
+  wrapBox(schemaTypeWrapBox),
+  gridBox(schemaTypeGridBox);
 
   const SchemaStyler(this.wireValue);
 

@@ -288,6 +288,9 @@ const _packageExportConfigs = <String, _PackageExportConfig>{
       // Generated stylers import this internal support barrel directly. Its
       // individual public symbols are already exported by mix.dart.
       'src/generated_styler_support.dart',
+      // Render-object plumbing stays internal; GridBox, GridBoxSpec, and
+      // GridTrack are exported from their public layout libraries.
+      'src/layout/render_grid.dart',
     ],
     forcedPaths: ['src/modifiers/internal/reset_modifier.dart'],
   ),

@@ -48,6 +48,11 @@ export 'src/core/style_spec.dart';
 export 'src/core/style_widget.dart';
 export 'src/core/widget_modifier.dart';
 
+/// LAYOUT
+export 'src/layout/grid_box.dart';
+export 'src/layout/grid_box_spec.dart';
+export 'src/layout/grid_track.dart';
+
 /// MODIFIERS
 export 'src/modifiers/align_modifier.dart';
 export 'src/modifiers/aspect_ratio_modifier.dart';

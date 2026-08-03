@@ -52,6 +52,7 @@ void main() {
         expect(StackBoxStyler(), isA<WidgetModifierStyleMixin>());
         expect(WrapStyler(), isA<WidgetModifierStyleMixin>());
         expect(WrapBoxStyler(), isA<WidgetModifierStyleMixin>());
+        expect(GridBoxStyler(), isA<WidgetModifierStyleMixin>());
         expect(TextStyler(), isA<WidgetModifierStyleMixin>());
         expect(IconStyler(), isA<WidgetModifierStyleMixin>());
         expect(ImageStyler(), isA<WidgetModifierStyleMixin>());
@@ -65,6 +66,7 @@ void main() {
         expect(StackBoxStyler(), isA<VariantStyleMixin>());
         expect(WrapStyler(), isA<VariantStyleMixin>());
         expect(WrapBoxStyler(), isA<VariantStyleMixin>());
+        expect(GridBoxStyler(), isA<VariantStyleMixin>());
         expect(TextStyler(), isA<VariantStyleMixin>());
         expect(IconStyler(), isA<VariantStyleMixin>());
         expect(ImageStyler(), isA<VariantStyleMixin>());
@@ -78,6 +80,7 @@ void main() {
         expect(StackBoxStyler(), isA<WidgetStateVariantMixin>());
         expect(WrapStyler(), isA<WidgetStateVariantMixin>());
         expect(WrapBoxStyler(), isA<WidgetStateVariantMixin>());
+        expect(GridBoxStyler(), isA<WidgetStateVariantMixin>());
         expect(TextStyler(), isA<WidgetStateVariantMixin>());
         expect(IconStyler(), isA<WidgetStateVariantMixin>());
         expect(ImageStyler(), isA<WidgetStateVariantMixin>());
@@ -118,6 +121,10 @@ void main() {
 
       test('WrapBoxStyler has AnimationStyleMixin', () {
         _verifyAnimationStyleMixin<WrapBoxStyler, WrapBoxSpec>(WrapBoxStyler());
+      });
+
+      test('GridBoxStyler has AnimationStyleMixin', () {
+        _verifyAnimationStyleMixin<GridBoxStyler, GridBoxSpec>(GridBoxStyler());
       });
 
       test('TextStyler has AnimationStyleMixin', () {

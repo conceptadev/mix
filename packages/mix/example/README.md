@@ -1,14 +1,84 @@
 # Mix examples
 
-This app consumes only Mix's public `package:mix/mix.dart` library. Its
-WrapBox gallery demonstrates a constrained tag cloud, narrow and wide widths,
-horizontal and vertical flow, and LTR and RTL directionality.
+These apps consume only Mix's public `package:mix/mix.dart` library.
 
-Run it from this directory:
+Run the WrapBox gallery from this directory:
 
 ```sh
 flutter run
 ```
+
+Run the GridBox gallery with dashboard, card-catalog, media-gallery, and
+implicit-animation use cases:
+
+```sh
+flutter run -t lib/grid_main.dart
+```
+
+## GridBox
+
+The Grid gallery switches between compact, medium, and wide parent widths. Its
+styles use `onConstraints`, so each Grid responds to its own offered space
+rather than the viewport:
+
+```dart
+final GridBoxStyler cardGrid = .equalColumns(3)
+    .gap(16)
+    .autoRows(.fixed(220))
+    .onConstraints(
+  .maxWidth(760),
+  .equalColumns(2).gap(12),
+).onConstraints(
+  .maxWidth(520),
+  .equalColumns(1).gap(10),
+);
+
+GridBox(style: cardGrid, children: cards);
+```
+
+The dashboard composes two independent GridBoxes: metrics transition from four
+to two to one column, while the asymmetric report panels transition from two
+columns to one.
+
+<p>
+  <img src="test/goldens/grid_dashboard_wide.png" alt="Wide GridBox dashboard" width="66%">
+  <img src="test/goldens/grid_dashboard_compact.png" alt="Compact GridBox dashboard" width="24%">
+</p>
+
+The same track model handles repeated product cards and a denser media gallery:
+
+<p>
+  <img src="test/goldens/grid_catalog_wide.png" alt="Wide GridBox card catalog" width="66%">
+  <img src="test/goldens/grid_gallery_compact.png" alt="Compact GridBox media gallery" width="24%">
+</p>
+
+### Grid animation
+
+The Animation example toggles a two-column planning Grid between balanced and
+focused geometry. Rebuilding the same two fractional tracks lets Mix
+interpolate their weights from 1:1 to 2:1 while also animating the repeated row
+height and gaps:
+
+```dart
+final GridBoxStyler animatedGrid = .columns([
+  .fr(focused ? 2 : 1),
+  .fr(1),
+])
+    .autoRows(.fixed(focused ? 148 : 112))
+    .gap(focused ? 20 : 12)
+    .animate(.easeInOut(const Duration(milliseconds: 600)));
+```
+
+No `AnimationController` is needed. Track lists with different lengths or
+kinds switch at the midpoint instead, and `onConstraints` branch selection
+remains immediate because it happens during layout.
+
+<p>
+  <img src="test/goldens/grid_animation_balanced.png" alt="Balanced animated GridBox state" width="46%">
+  <img src="test/goldens/grid_animation_focused.png" alt="Focused animated GridBox state" width="46%">
+</p>
+
+## WrapBox
 
 The primary example uses WrapBoxStyler's flattened fluent methods:
 
@@ -26,8 +96,8 @@ widget-modifier API. On WrapBoxStyler, `.alignment()` and `.clipBehavior()`
 belong to the outer Box; `.wrapAlignment()` and `.wrapClipBehavior()` belong
 to Flutter's inner Wrap.
 
-The widget tests include smoke coverage and deterministic narrow/wide golden
-images:
+The widget tests include smoke coverage and deterministic responsive golden
+images for both galleries:
 
 ```sh
 flutter test

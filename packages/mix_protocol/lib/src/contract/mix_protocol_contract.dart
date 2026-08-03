@@ -21,11 +21,12 @@ import 'json_map.dart';
 import '../errors/mix_protocol_error.dart';
 import '../errors/schema_error_mapper.dart';
 import '../schema/box_styler_codec.dart';
+import '../schema/common_codecs.dart';
 import '../schema/flex_box_styler_codec.dart';
 import '../schema/flex_styler_codec.dart';
+import '../schema/grid_box_styler_codec.dart';
 import '../schema/icon_styler_codec.dart';
 import '../schema/image_styler_codec.dart';
-import '../schema/common_codecs.dart';
 import '../schema/stack_box_styler_codec.dart';
 import '../schema/stack_styler_codec.dart';
 import '../schema/styler_branch.dart';
@@ -172,6 +173,10 @@ final class MixProtocol {
           identityContext: () => identityContext.current,
         ),
         debugName: schemaTypeWrapBox,
+      ),
+      schemaTypeGridBox: widenStylerBranch(
+        gridBoxStylerCodec(rootStyleSchema: rootSchemaRef),
+        debugName: schemaTypeGridBox,
       ),
     };
     rootSchema = Ack.discriminated<Object>(
@@ -1245,9 +1250,12 @@ JsonMap _withDoubleTokenPropertyTermSchemas(JsonMap schema) {
 
 Object? _withDoubleTokenBranchProperties(Object? branchValue) {
   if (branchValue is! JsonMap) return branchValue;
+  final branchType = _branchSchemaType(branchValue);
   final doubleTokenProperties =
-      _doubleTokenRootPropertiesByType[_branchSchemaType(branchValue)];
-  if (doubleTokenProperties == null || doubleTokenProperties.isEmpty) {
+      _doubleTokenRootPropertiesByType[branchType] ?? const {};
+  final nestedPaths =
+      _doubleTokenNestedPropertyPathsByType[branchType] ?? const [];
+  if (doubleTokenProperties.isEmpty && nestedPaths.isEmpty) {
     return branchValue;
   }
 
@@ -1261,7 +1269,10 @@ Object? _withDoubleTokenBranchProperties(Object? branchValue) {
     }
   }
 
-  return {...branchValue, 'properties': properties};
+  return _withDoubleTokenNestedPropertySchemas({
+    ...branchValue,
+    'properties': properties,
+  }, nestedPaths);
 }
 
 bool _isGenericPropertyTermRef(Object? value) {
@@ -1285,6 +1296,26 @@ const _doubleTokenRootPropertiesByType = {
   schemaTypeStackBox: {'padding', 'margin'},
   schemaTypeWrap: {'spacing', 'runSpacing'},
   schemaTypeWrapBox: {'padding', 'margin', 'spacing', 'runSpacing'},
+  schemaTypeGridBox: {'columnGap', 'rowGap'},
+};
+
+const _doubleTokenNestedPropertyPathsByType = {
+  schemaTypeGridBox: [
+    ['columns', '*', 'size'],
+    ['columns', '*', 'fraction'],
+    ['rows', '*', 'size'],
+    ['rows', '*', 'fraction'],
+    ['autoRows', 'size'],
+    ['autoRows', 'fraction'],
+    ['constraintBranches', '*', 'patch', 'columns', '*', 'size'],
+    ['constraintBranches', '*', 'patch', 'columns', '*', 'fraction'],
+    ['constraintBranches', '*', 'patch', 'rows', '*', 'size'],
+    ['constraintBranches', '*', 'patch', 'rows', '*', 'fraction'],
+    ['constraintBranches', '*', 'patch', 'autoRows', 'size'],
+    ['constraintBranches', '*', 'patch', 'autoRows', 'fraction'],
+    ['constraintBranches', '*', 'patch', 'columnGap'],
+    ['constraintBranches', '*', 'patch', 'rowGap'],
+  ],
 };
 
 const _doubleTokenNestedPropertyPathsByDefinition = {
@@ -1472,12 +1503,16 @@ Object? _withDoubleTokenPropertyTermAtPath(Object? value, List<String> path) {
 
   final properties = map['properties'];
   if (properties is! Map || !properties.containsKey(segment)) return value;
+  final typedProperties = JsonMap.from(properties);
 
   return {
     ...map,
     'properties': {
-      ...properties,
-      segment: _withDoubleTokenPropertyTermAtPath(properties[segment], rest),
+      ...typedProperties,
+      segment: _withDoubleTokenPropertyTermAtPath(
+        typedProperties[segment],
+        rest,
+      ),
     },
   };
 }

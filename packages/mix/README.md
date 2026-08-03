@@ -163,6 +163,29 @@ Box; `wrapAlignment` and `wrapClipBehavior` configure the inner Wrap. Use
 `.flow(WrapStyler(...))` when direct nested-style composition is needed. See
 the runnable [WrapBox example](example/README.md).
 
+### Grid Layouts
+
+`GridBox` uses fixed and fractional tracks and can adapt to the width offered by
+its own parent. Dot shorthand keeps nested track and breakpoint declarations
+compact:
+
+```dart
+final GridBoxStyler dashboardGrid = .equalColumns(3)
+    .gap(16)
+    .autoRows(.fixed(220))
+    .onConstraints(
+  .maxWidth(720),
+  .equalColumns(1).gap(12),
+);
+
+GridBox(style: dashboardGrid, children: panels);
+```
+
+`onConstraints` observes local Grid constraints; `onBreakpoint` continues to
+observe the viewport. Compatible track, row, and gap changes can use Mix's
+implicit `animate` API. See the [Grid layout guide](doc/grid-layout.md) and the
+runnable [Grid examples](example/README.md).
+
 ### Dynamic Styling (Variants)
 
 Styles adapt to interactions and context (hover, press, dark mode, breakpoints) in one place:
@@ -254,7 +277,7 @@ BoxStyler()
 - [Animations](https://fluttermix.com/docs/guides/animations)
 - [Widget modifiers](https://fluttermix.com/docs/guides/widget-modifiers)
 - [Directives](https://fluttermix.com/docs/guides/directives)
-- [Widgets](https://fluttermix.com/docs/widgets/box) (Box, Text, Icon, FlexBox, WrapBox, StackBox, etc.)
+- [Widgets](https://fluttermix.com/docs/widgets/box) (Box, Text, Icon, FlexBox, WrapBox, GridBox, StackBox, etc.)
 
 ## Contributors
 
