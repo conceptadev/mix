@@ -12,10 +12,18 @@ void main() {
       value: length,
       variants: [TwInteractionVariant('hover')],
     );
+    const diagnostic = TwDiagnostic(
+      token: 'group-hover:bg-red-500',
+      code: TwDiagnosticCode.contextVariantIgnored,
+      reason: 'Selector-relative state is unavailable.',
+      workaround: 'Share state explicitly.',
+    );
 
     expect(length.unit, TwUnit.px);
     expect(color.color, const Color(0xFF112233));
     expect(parsed.variantKey, 'hover');
+    expect(diagnostic.token, 'group-hover:bg-red-500');
+    expect(diagnostic.code, TwDiagnosticCode.contextVariantIgnored);
     expect(functionalPlugins, contains('p'));
     expect(namedPlugins, contains('flex'));
     expect(gradientDirections, contains('to-r'));

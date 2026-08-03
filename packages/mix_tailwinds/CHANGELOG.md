@@ -6,7 +6,10 @@
   maps instead.
 - Restored the hosted `mix: ^2.1.0` dependency so the package remains
   publishable by the repository release workflow.
-- Report unsupported `basis-*` flex item utilities through `onUnsupported`
+- Added structured `TwDiagnostic` reporting through `onDiagnostic`; ignored
+  adaptations and unsupported candidates no longer disappear silently. The
+  token-only `onUnsupported` callback remains as a deprecated shim.
+- Report unsupported `basis-*` flex item utilities through `onDiagnostic`
   instead of silently ignoring fraction, full, arbitrary, or unknown values.
 - Keep supported `basis-auto` and spacing-scale basis utilities quiet while
   preserving the existing pixel-basis runtime behavior.

@@ -80,13 +80,13 @@ Flex item tokens (`flex-1`, `flex-auto`, `flex-none`, `basis-*`, `self-*`, `shri
 | Token | Supported Values | Notes |
 |-------|------------------|-------|
 | `flex-1`, `flex-auto`, `flex-initial`, `flex-none` | ✅ Supported | Maps to Flutter's flex factor and fit |
-| `basis-*` | Spacing scale only (e.g., `basis-32`) | Unsupported fractional, full, arbitrary, and unknown values are no-ops reported through `onUnsupported` |
+| `basis-*` | Spacing scale only (e.g., `basis-32`) | Unsupported fractional, full, arbitrary, and unknown values are no-ops reported through `onDiagnostic` |
 | `self-start`, `self-center`, `self-end` | ✅ Supported | Cross-axis alignment |
 | `shrink`, `shrink-0` | ✅ Supported | Controls shrink behavior |
 
 **Important**: Flex item tokens are handled at the widget layer rather than as
 Mix styler properties. Supported values stay quiet; unsupported `basis-*`
-values such as `basis-1/2` are reported through `onUnsupported`.
+values such as `basis-1/2` are reported through `onDiagnostic`.
 
 ## Custom Configuration
 
@@ -124,13 +124,16 @@ TwScope(
 
 ## Handling Unsupported Tokens
 
-The `Div` widget accepts an `onUnsupported` callback to help identify unrecognized Tailwind classes:
+The `Div` widget accepts an `onDiagnostic` callback to explain unrecognized,
+unsupported, and intentionally ignored Tailwind classes:
 
 ```dart
 Div(
   classNames: 'flex gap-4 unknown-class',
-  onUnsupported: (token) {
-    debugPrint('Unsupported Tailwind token: $token');
+  onDiagnostic: (diagnostic) {
+    debugPrint(
+      '${diagnostic.code}: ${diagnostic.token} — ${diagnostic.reason}',
+    );
   },
   children: [...],
 )
@@ -138,12 +141,17 @@ Div(
 
 This callback receives:
 - The original class token, including variant prefixes when present
-- Tokens that cannot be mapped to Mix stylers, plus unsupported `basis-*`
-  values validated for the widget layer
+- A stable `TwDiagnosticCode` plus a human-readable reason
+- An optional supported workaround
+- Tokens that cannot be mapped to Mix stylers, unsupported widget-layer values,
+  and adaptations intentionally ignored by Flutter
 - It's safe to throw from this callback (will surface during development)
 
 Supported flex item tokens (`flex-*`, `basis-*`, `self-*`, `shrink-*`, and
-`grow-*`) do not trigger `onUnsupported`.
+`grow-*`) do not trigger `onDiagnostic`.
+
+The token-only `onUnsupported` callback and `TokenWarningCallback` typedef remain
+as deprecated compatibility shims. New code should use `onDiagnostic`.
 
 ## License
 

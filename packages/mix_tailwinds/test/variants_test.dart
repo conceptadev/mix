@@ -81,12 +81,14 @@ void main() {
     expect((spec.decoration as BoxDecoration?)?.color, const Color(0xFFDC2626));
   });
 
-  test('group-hover is ignored without crashing', () {
-    final seen = <String>[];
+  test('group-hover is ignored with a structured diagnostic', () {
+    final seen = <TwDiagnostic>[];
     final style = TwParser(
-      onUnsupported: seen.add,
+      onDiagnostic: seen.add,
     ).parseBox('group-hover:bg-red-600');
     expect(style, isA<BoxStyler>());
-    expect(seen, isEmpty);
+    expect(seen, hasLength(1));
+    expect(seen.single.token, 'group-hover:bg-red-600');
+    expect(seen.single.code, TwDiagnosticCode.contextVariantIgnored);
   });
 }

@@ -298,7 +298,8 @@ class Div extends StatelessWidget {
     this.child,
     this.children = const [],
     this.isFlex,
-    this.onUnsupported,
+    this.onDiagnostic,
+    @Deprecated('Use onDiagnostic instead.') this.onUnsupported,
     this.config,
   });
 
@@ -307,7 +308,10 @@ class Div extends StatelessWidget {
   final List<Widget> children;
   final bool? isFlex;
   final TwConfig? config;
-  final TokenWarningCallback? onUnsupported;
+  final TwDiagnosticCallback? onDiagnostic;
+
+  @Deprecated('Use onDiagnostic instead.')
+  final void Function(String token)? onUnsupported;
 
   @override
   Widget build(BuildContext context) {
@@ -316,16 +320,17 @@ class Div extends StatelessWidget {
       'Provide either child or children, not both.',
     );
     final cfg = config ?? TwConfigProvider.of(context);
-    final reportedUnsupported = <String>{};
-    void reportUnsupported(String token) {
-      if (reportedUnsupported.add(token)) {
-        onUnsupported?.call(token);
+    final reportedTokens = <String>{};
+    void reportDiagnostic(TwDiagnostic diagnostic) {
+      if (reportedTokens.add(diagnostic.token)) {
+        onDiagnostic?.call(diagnostic);
+        onUnsupported?.call(diagnostic.token);
       }
     }
 
-    final parser = TwParser(config: cfg, onUnsupported: reportUnsupported);
+    final parser = TwParser(config: cfg, onDiagnostic: reportDiagnostic);
     final tokens = parser.setTokens(classNames);
-    _reportUnsupportedWidgetLayerVariants(tokens, cfg, reportUnsupported);
+    _reportUnsupportedWidgetLayerVariants(tokens, cfg, reportDiagnostic);
     final shouldUseFlex = isFlex ?? parser.wantsFlex(tokens);
     final animationConfig = parser.parseAnimationFromTokens(tokens.toList());
 
@@ -913,7 +918,7 @@ bool _needsFlexItemDecorators(Set<String> tokens, TwConfig cfg) {
 void _reportUnsupportedWidgetLayerVariants(
   Set<String> tokens,
   TwConfig cfg,
-  TokenWarningCallback onUnsupported,
+  TwDiagnosticCallback onDiagnostic,
 ) {
   for (final token in tokens) {
     final candidate = _parseCandidate(token);
@@ -927,7 +932,15 @@ void _reportUnsupportedWidgetLayerVariants(
       continue;
     }
 
-    onUnsupported(token);
+    onDiagnostic(
+      TwDiagnostic(
+        token: token,
+        code: TwDiagnosticCode.widgetLayerVariantUnsupported,
+        reason:
+            'Widget-layer layout utilities only support breakpoint variants.',
+        workaround: 'Move interactive state to a supported styler utility.',
+      ),
+    );
   }
 }
 

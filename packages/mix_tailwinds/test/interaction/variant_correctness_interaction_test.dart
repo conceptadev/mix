@@ -114,29 +114,30 @@ Future<(Color?, List<String>)> _variantSnapshot(
   final warnings = <String>[];
   await _pumpAtTopLeft(
     tester,
-    Div(key: subject, classNames: classNames, onUnsupported: warnings.add),
+    Div(
+      key: subject,
+      classNames: classNames,
+      onDiagnostic: (diagnostic) => warnings.add(diagnostic.token),
+    ),
     brightness: brightness,
   );
   return (_decorationColor(tester, subject), warnings);
 }
 
-Future<void> _expectUnsupportedCallback(
-  WidgetTester tester,
-  String token,
-) async {
+Future<void> _expectDiagnostic(WidgetTester tester, String token) async {
   const subject = Key('silent-drop-subject');
-  final warnings = <String>[];
+  final diagnostics = <TwDiagnostic>[];
   await _pumpAtTopLeft(
     tester,
     Div(
       key: subject,
       classNames: 'w-20 h-20 bg-red-500 $token',
-      onUnsupported: warnings.add,
+      onDiagnostic: diagnostics.add,
     ),
   );
 
   expect(_decorationColor(tester, subject), _red500);
-  expect(warnings, contains(token));
+  expect(diagnostics.map((diagnostic) => diagnostic.token), contains(token));
 }
 
 void _brokenTestWidgets(
@@ -274,10 +275,8 @@ void main() {
     skip: 'BROKEN: theme-midnight is silently aliased to platform dark',
   );
 
-  testWidgets('E4 important modifier emits an unsupported callback', (
-    tester,
-  ) async {
-    await _expectUnsupportedCallback(tester, '!bg-blue-500');
+  testWidgets('E4 important modifier emits a diagnostic', (tester) async {
+    await _expectDiagnostic(tester, '!bg-blue-500');
   });
 
   for (final testCase in <(String, String)>[
@@ -286,12 +285,8 @@ void main() {
     ('group variant', 'group-hover:bg-blue-500'),
     ('peer variant', 'peer-hover:bg-blue-500'),
   ]) {
-    _brokenTestWidgets(
-      'E4 ${testCase.$1} emits an unsupported callback',
-      (tester) async {
-        await _expectUnsupportedCallback(tester, testCase.$2);
-      },
-      skip: 'BROKEN: ${testCase.$1} is silently dropped',
-    );
+    testWidgets('E4 ${testCase.$1} emits a diagnostic', (tester) async {
+      await _expectDiagnostic(tester, testCase.$2);
+    });
   }
 }

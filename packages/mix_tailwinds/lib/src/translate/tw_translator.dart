@@ -19,13 +19,61 @@ import 'tw_routing.dart';
 import 'tw_target.dart';
 
 final class TwTranslator {
-  TwTranslator({required this.config, this.onUnsupported});
+  TwTranslator({
+    required this.config,
+    this.onDiagnostic,
+    this.legacyOnUnsupported,
+  });
 
   final TwConfig config;
-  final TokenWarningCallback? onUnsupported;
+  final TwDiagnosticCallback? onDiagnostic;
+  final void Function(String token)? legacyOnUnsupported;
   static const _parser = TailwindCandidateParser(
     registry: defaultTailwindParserRegistry,
   );
+
+  void _emitDiagnostic(TwDiagnostic diagnostic) {
+    onDiagnostic?.call(diagnostic);
+    legacyOnUnsupported?.call(diagnostic.token);
+  }
+
+  void _reportParseFailure(String token, TailwindParseFailure failure) {
+    final reason = failure.errors.map((error) => error.message).join('; ');
+    _emitDiagnostic(
+      TwDiagnostic(
+        token: token,
+        code: TwDiagnosticCode.invalidCandidate,
+        reason: reason,
+        workaround: 'Correct the Tailwind candidate syntax.',
+      ),
+    );
+  }
+
+  bool _reportBlockingRoute(String token, TwRoute route) {
+    if (route.kind != TwRouteKind.ignored &&
+        route.kind != TwRouteKind.unsupported) {
+      return false;
+    }
+
+    _emitDiagnostic(route.toDiagnostic(token));
+    return true;
+  }
+
+  void _reportUnsupported(
+    String token, {
+    TwDiagnosticCode code = TwDiagnosticCode.unsupportedValue,
+    required String reason,
+    String? workaround,
+  }) {
+    _emitDiagnostic(
+      TwDiagnostic(
+        token: token,
+        code: code,
+        reason: reason,
+        workaround: workaround,
+      ),
+    );
+  }
 
   BoxStyler translateBox(String classNames) {
     return _translate<BoxStyler>(
@@ -70,27 +118,70 @@ final class TwTranslator {
 
     for (final token in splitTailwindTokens(classNames)) {
       final parsed = _parser.parseCandidate(token);
-      if (parsed is! TailwindParseSuccess) continue;
-      final candidate = parsed.candidate;
-      if (candidate.variants.isNotEmpty) continue;
+      if (parsed is TailwindParseFailure) {
+        _reportParseFailure(token, parsed);
+        continue;
+      }
+      final candidate = (parsed as TailwindParseSuccess).candidate;
 
       final route = routeCandidate(candidate, breakpoints: config.breakpoints);
-      if (route.kind != TwRouteKind.schemaValue) continue;
+      if (_reportBlockingRoute(token, route)) continue;
+      if (candidate.variants.isNotEmpty ||
+          route.kind != TwRouteKind.schemaValue) {
+        _reportUnsupported(
+          token,
+          code: TwDiagnosticCode.unsupportedForTarget,
+          reason: 'This candidate cannot be applied to an icon target.',
+          workaround: 'Apply the variant or box utility to a wrapping Div.',
+        );
+        continue;
+      }
 
       final utility = candidate.utility;
-      if (tailwindUtilityNegative(utility)) continue;
+      if (tailwindUtilityNegative(utility)) {
+        _reportUnsupported(
+          token,
+          reason: 'Negative icon sizing and opacity values are unsupported.',
+        );
+        continue;
+      }
       final root = tailwindUtilityRoot(utility);
       final value = tailwindUtilityValue(utility);
+      var handled = false;
 
       switch (root) {
         case 'w':
-          width = _sizingLength('w', value) ?? width;
+          final resolved = _sizingLength('w', value);
+          if (resolved != null) {
+            width = resolved;
+            handled = true;
+          }
         case 'h':
-          height = _sizingLength('h', value) ?? height;
+          final resolved = _sizingLength('h', value);
+          if (resolved != null) {
+            height = resolved;
+            handled = true;
+          }
         case 'text':
-          color = _color(value, tailwindUtilityModifier(utility)) ?? color;
+          final resolved = _color(value, tailwindUtilityModifier(utility));
+          if (resolved != null) {
+            color = resolved;
+            handled = true;
+          }
         case 'opacity':
-          opacity = _opacity(value) ?? opacity;
+          final resolved = _opacity(value);
+          if (resolved != null) {
+            opacity = resolved;
+            handled = true;
+          }
+      }
+
+      if (!handled) {
+        _reportUnsupported(
+          token,
+          code: TwDiagnosticCode.unsupportedForTarget,
+          reason: 'This utility has no supported icon translation.',
+        );
       }
     }
 
@@ -111,20 +202,13 @@ final class TwTranslator {
     for (final token in tokens) {
       final parsed = _parser.parseCandidate(token);
       if (parsed is TailwindParseFailure) {
-        onUnsupported?.call(token);
+        _reportParseFailure(token, parsed);
         continue;
       }
 
       final candidate = (parsed as TailwindParseSuccess).candidate;
       final route = routeCandidate(candidate, breakpoints: config.breakpoints);
-      if (route.kind == TwRouteKind.ignored) {
-        if (route.reason == 'important modifier') onUnsupported?.call(token);
-        continue;
-      }
-      if (route.kind == TwRouteKind.unsupported) {
-        onUnsupported?.call(token);
-        continue;
-      }
+      if (_reportBlockingRoute(token, route)) continue;
 
       final base = candidate.utility.raw;
       if (transitionTriggerTokens.contains(base)) {
@@ -136,7 +220,11 @@ final class TwTranslator {
         if (ms != null) {
           duration = Duration(milliseconds: ms);
         } else {
-          onUnsupported?.call(token);
+          _reportUnsupported(
+            token,
+            reason: 'The transition duration is not in the configured scale.',
+            workaround: 'Use a duration key from TwConfig.durations.',
+          );
         }
       } else if (_easeTokens.containsKey(base)) {
         curve = _easeTokens[base]!;
@@ -145,7 +233,11 @@ final class TwTranslator {
         if (ms != null) {
           delay = Duration(milliseconds: ms);
         } else {
-          onUnsupported?.call(token);
+          _reportUnsupported(
+            token,
+            reason: 'The transition delay is not in the configured scale.',
+            workaround: 'Use a delay key from TwConfig.delays.',
+          );
         }
       }
     }
@@ -209,40 +301,54 @@ final class TwTranslator {
     for (final token in splitTailwindTokens(classNames)) {
       final parsed = _parser.parseCandidate(token);
       if (parsed is TailwindParseFailure) {
-        onUnsupported?.call(token);
+        _reportParseFailure(token, parsed);
         continue;
       }
 
       final candidate = (parsed as TailwindParseSuccess).candidate;
       final route = routeCandidate(candidate, breakpoints: config.breakpoints);
-      if (route.kind == TwRouteKind.ignored) {
-        if (route.reason == 'important modifier') onUnsupported?.call(token);
-        continue;
-      }
-      if (route.kind == TwRouteKind.unsupported) {
-        onUnsupported?.call(token);
-        continue;
-      }
+      if (_reportBlockingRoute(token, route)) continue;
       if (route.kind == TwRouteKind.widgetLayer) {
         if (!_isSupportedWidgetLayerUtility(candidate.utility)) {
-          onUnsupported?.call(token);
+          _reportUnsupported(
+            token,
+            reason: 'This value is unsupported by the Flutter widget layer.',
+          );
         }
         continue;
       }
 
       final path = _variantPath(candidate.variants);
-      if (path == null) continue;
+      if (path == null) {
+        _reportUnsupported(
+          token,
+          code: TwDiagnosticCode.unsupportedVariant,
+          reason: 'The variant chain cannot be represented at runtime.',
+        );
+        continue;
+      }
       final group = groupFor(path);
 
       if (route.kind == TwRouteKind.gradient) {
         if (!_applyGradient(group.gradient, candidate)) {
-          onUnsupported?.call(token);
+          _reportUnsupported(
+            token,
+            reason: 'The gradient value cannot be represented in Flutter.',
+          );
         }
         continue;
       }
 
       final handled = _applySchemaCandidate(group, candidate, target);
-      if (!handled) onUnsupported?.call(token);
+      if (!handled) {
+        _reportUnsupported(
+          token,
+          code: TwDiagnosticCode.unsupportedUtility,
+          reason: 'This utility has no translation for the selected target.',
+          workaround:
+              'Use a utility marked implemented or adapted in the ledger.',
+        );
+      }
     }
 
     return groups;
