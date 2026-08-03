@@ -399,6 +399,19 @@ const _flexFactories = [
   ),
 ];
 
+const _wrapFactories = [
+  StylerFactoryDescriptor(
+    name: 'wrapAlignment',
+    signature: 'wrapAlignment(WrapAlignment value)',
+    invocation: 'wrapAlignment(value)',
+  ),
+  StylerFactoryDescriptor(
+    name: 'wrapClipBehavior',
+    signature: 'wrapClipBehavior(Clip value)',
+    invocation: 'wrapClipBehavior(value)',
+  ),
+];
+
 const _textStyleMethod = StylerMethodDescriptor(
   name: 'textStyle',
   signature: 'textStyle(TextStyler value)',
@@ -408,6 +421,13 @@ const _textStyleMethod = StylerMethodDescriptor(
 const _flexAnchorMethod = StylerMethodDescriptor(
   name: 'flex',
   signature: 'flex(FlexStyler value)',
+  bodyLines: ['return merge(value);'],
+  isOverride: true,
+);
+
+const _wrapAnchorMethod = StylerMethodDescriptor(
+  name: 'flow',
+  signature: 'flow(WrapStyler value)',
   bodyLines: ['return merge(value);'],
   isOverride: true,
 );
@@ -443,6 +463,13 @@ const _surfaces = {
     suppressedFieldFactoryNames: {'semanticsLabel'},
     requiredFieldNames: {'style'},
   ),
+  'WrapStyler': StylerSurface(
+    stylerName: 'WrapStyler',
+    ownerMixinNames: ['WrapStyleMixin'],
+    factoryEntries: _wrapFactories,
+    methodDescriptors: [_wrapAnchorMethod],
+    requiredFieldNames: {'direction'},
+  ),
   'FlexBoxStyler': StylerSurface(
     stylerName: 'FlexBoxStyler',
     factoryEntries: [..._boxConvenienceFactories, ..._flexFactories],
@@ -451,6 +478,12 @@ const _surfaces = {
   ),
   'StackBoxStyler': StylerSurface(
     stylerName: 'StackBoxStyler',
+    factoryEntries: _boxConvenienceFactories,
+    methodDescriptors: [_textStyleMethod],
+    generatesAnimateFactory: true,
+  ),
+  'WrapBoxStyler': StylerSurface(
+    stylerName: 'WrapBoxStyler',
     factoryEntries: _boxConvenienceFactories,
     methodDescriptors: [_textStyleMethod],
     generatesAnimateFactory: true,
@@ -558,6 +591,42 @@ const _stackConstructorArguments = [
   'clipBehavior: stackClipBehavior,',
 ];
 
+const _wrapConstructorParams = [
+  StylerConstructorParamDescriptor(type: 'Axis', name: 'direction'),
+  StylerConstructorParamDescriptor(
+    type: 'WrapAlignment',
+    name: 'wrapAlignment',
+  ),
+  StylerConstructorParamDescriptor(type: 'double', name: 'spacing'),
+  StylerConstructorParamDescriptor(type: 'WrapAlignment', name: 'runAlignment'),
+  StylerConstructorParamDescriptor(type: 'double', name: 'runSpacing'),
+  StylerConstructorParamDescriptor(
+    type: 'WrapCrossAlignment',
+    name: 'crossAxisAlignment',
+  ),
+  StylerConstructorParamDescriptor(
+    type: 'TextDirection',
+    name: 'textDirection',
+  ),
+  StylerConstructorParamDescriptor(
+    type: 'VerticalDirection',
+    name: 'verticalDirection',
+  ),
+  StylerConstructorParamDescriptor(type: 'Clip', name: 'wrapClipBehavior'),
+];
+
+const _wrapConstructorArguments = [
+  'direction: direction,',
+  'alignment: wrapAlignment,',
+  'spacing: spacing,',
+  'runAlignment: runAlignment,',
+  'runSpacing: runSpacing,',
+  'crossAxisAlignment: crossAxisAlignment,',
+  'textDirection: textDirection,',
+  'verticalDirection: verticalDirection,',
+  'clipBehavior: wrapClipBehavior,',
+];
+
 List<StylerFactoryDescriptor> _directFactories(Map<String, String> signatures) {
   return [
     for (final entry in signatures.entries)
@@ -609,6 +678,18 @@ const _stackDirectFactorySignatures = {
   'fit': 'StackFit',
   'textDirection': 'TextDirection',
   'stackClipBehavior': 'Clip',
+};
+
+const _wrapDirectFactorySignatures = {
+  'direction': 'Axis',
+  'wrapAlignment': 'WrapAlignment',
+  'spacing': 'double',
+  'runAlignment': 'WrapAlignment',
+  'runSpacing': 'double',
+  'crossAxisAlignment': 'WrapCrossAlignment',
+  'textDirection': 'TextDirection',
+  'verticalDirection': 'VerticalDirection',
+  'wrapClipBehavior': 'Clip',
 };
 
 final _boxDirectMethods = [
@@ -701,6 +782,17 @@ final _stackDirectMethods = [
   ),
 ];
 
+final _wrapDirectMethods = [
+  const StylerMethodDescriptor(
+    name: 'flow',
+    signature: 'flow(WrapStyler value)',
+    bodyLines: [
+      'return merge($_stylerToken.create(flow: Prop.maybeMix(value)));',
+    ],
+    isOverride: true,
+  ),
+];
+
 final _compoundSurfaces = {
   'FlexBoxStyler': CompoundStylerSurface(
     stylerName: 'FlexBoxStyler',
@@ -755,6 +847,33 @@ final _compoundSurfaces = {
       transformAnchorFactoryDescriptor(),
     ],
     methodDescriptors: [..._boxDirectMethods, ..._stackDirectMethods],
+  ),
+  'WrapBoxStyler': CompoundStylerSurface(
+    stylerName: 'WrapBoxStyler',
+    parts: const [
+      CompoundStylerPartDescriptor(
+        fieldName: 'box',
+        specName: 'BoxSpec',
+        stylerName: 'BoxStyler',
+        ownerMixinNames: _boxOwnerMixinNames,
+        constructorParams: _boxConstructorParams,
+        constructorArguments: _boxConstructorArguments,
+      ),
+      CompoundStylerPartDescriptor(
+        fieldName: 'flow',
+        specName: 'WrapSpec',
+        stylerName: 'WrapStyler',
+        ownerMixinNames: ['WrapStyleMixin'],
+        constructorParams: _wrapConstructorParams,
+        constructorArguments: _wrapConstructorArguments,
+      ),
+    ],
+    factoryDescriptors: [
+      ..._directFactories(_boxDirectFactorySignatures),
+      ..._directFactories(_wrapDirectFactorySignatures),
+      transformAnchorFactoryDescriptor(),
+    ],
+    methodDescriptors: [..._boxDirectMethods, ..._wrapDirectMethods],
   ),
 };
 

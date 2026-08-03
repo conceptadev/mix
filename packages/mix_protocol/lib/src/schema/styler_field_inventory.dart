@@ -118,6 +118,29 @@ const stackBoxStylerInventory = {
   'variants',
 };
 
+const wrapStylerInventory = {
+  'alignment',
+  'animation',
+  'clipBehavior',
+  'crossAxisAlignment',
+  'direction',
+  'modifier',
+  'runAlignment',
+  'runSpacing',
+  'spacing',
+  'textDirection',
+  'variants',
+  'verticalDirection',
+};
+
+const wrapBoxStylerInventory = {
+  'animation',
+  'box',
+  'flow',
+  'modifier',
+  'variants',
+};
+
 int stylerFieldCount(Equatable value) => value.props.length;
 
 void checkKnownFieldInventory(

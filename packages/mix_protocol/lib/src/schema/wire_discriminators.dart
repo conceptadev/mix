@@ -6,6 +6,8 @@ const schemaTypeIcon = 'icon';
 const schemaTypeImage = 'image';
 const schemaTypeFlexBox = 'flex_box';
 const schemaTypeStackBox = 'stack_box';
+const schemaTypeWrap = 'wrap';
+const schemaTypeWrapBox = 'wrap_box';
 
 const modifierTypeAlign = 'align';
 const modifierTypeAspectRatio = 'aspect_ratio';

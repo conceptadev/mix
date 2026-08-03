@@ -12,7 +12,9 @@ enum SchemaStyler {
   icon(schemaTypeIcon),
   image(schemaTypeImage),
   flexBox(schemaTypeFlexBox),
-  stackBox(schemaTypeStackBox);
+  stackBox(schemaTypeStackBox),
+  wrap(schemaTypeWrap),
+  wrapBox(schemaTypeWrapBox);
 
   const SchemaStyler(this.wireValue);
 

@@ -268,6 +268,19 @@ final class _TokenReferenceWalker {
       case StackBoxStyler():
         visit(style.$box);
         visit(style.$stack);
+      case WrapStyler():
+        visit(style.$direction);
+        visit(style.$alignment);
+        visit(style.$spacing);
+        visit(style.$runAlignment);
+        visit(style.$runSpacing);
+        visit(style.$crossAxisAlignment);
+        visit(style.$textDirection);
+        visit(style.$verticalDirection);
+        visit(style.$clipBehavior);
+      case WrapBoxStyler():
+        visit(style.$box);
+        visit(style.$flow);
       default:
         break;
     }

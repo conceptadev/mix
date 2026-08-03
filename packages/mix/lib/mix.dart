@@ -107,6 +107,9 @@ export 'src/specs/stackbox/stackbox_spec.dart';
 export 'src/specs/stackbox/stackbox_widget.dart';
 export 'src/specs/text/text_spec.dart';
 export 'src/specs/text/text_widget.dart';
+export 'src/specs/wrap/wrap_spec.dart';
+export 'src/specs/wrapbox/wrapbox_spec.dart';
+export 'src/specs/wrapbox/wrapbox_widget.dart';
 
 /// STYLE
 export 'src/style/abstracts/styler.dart';
@@ -123,6 +126,7 @@ export 'src/style/mixins/transform_style_mixin.dart';
 export 'src/style/mixins/variant_style_mixin.dart';
 export 'src/style/mixins/widget_modifier_style_mixin.dart';
 export 'src/style/mixins/widget_state_variant_mixin.dart';
+export 'src/style/mixins/wrap_style_mixin.dart';
 
 /// THEME
 export 'src/theme/material/material_theme.dart';
