@@ -6,6 +6,7 @@ import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mix/mix.dart' show Breakpoint;
 import 'package:mix/src/layout/grid_box.dart';
 import 'package:mix/src/layout/grid_track.dart';
 import 'package:mix/src/layout/render_grid.dart';
@@ -46,7 +47,7 @@ void main() {
   test('onConstraints rejects clipBehavior with an actionable message', () {
     expect(
       () => const GridBoxStyler().onConstraints(
-        GridConstraintQuery.widthAtMost(400),
+        Breakpoint.maxWidth(400),
         const GridBoxStyler(clipBehavior: .hardEdge),
       ),
       throwsA(

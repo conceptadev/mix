@@ -23,11 +23,18 @@ The current slice supports:
 - overflow diagnostics and configurable clipping; and
 - ordinary Flutter hit testing and child lifecycle behavior.
 
-`GridConstraintQuery.widthAtMost` observes the finite maximum width offered to
-the Grid render object. Matching branches apply partial geometry patches in
-declaration order. Patches may change columns, rows, `autoRows`, and gaps only.
-Modifiers, animation, ordinary variants, nested branches, clipping, and empty
-patches are rejected with actionable errors.
+`GridBoxStyler.onConstraints` reuses Mix's `Breakpoint` value, but evaluates it
+against the bounded maximum size offered to the Grid render object. This is
+different from `onBreakpoint`, which evaluates the same value against the
+viewport through `MediaQuery`. A breakpoint that constrains an unbounded axis
+does not match. Matching branches apply partial geometry patches in declaration
+order. Patches may change columns, rows, `autoRows`, and gaps only. Modifiers,
+animation, ordinary variants, nested branches, clipping, and empty patches are
+rejected with actionable errors.
+
+For example, `onConstraints(.maxWidth(560), patch)` responds to the Grid's local
+container width, while `onBreakpoint(.maxWidth(560), style)` responds to the
+viewport width.
 
 This host-owned branch selection is deliberately narrower than a universal
 Styler constraint API. It runs in live, dry, and intrinsic Grid layout without

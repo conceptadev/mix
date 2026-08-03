@@ -1,12 +1,14 @@
 import 'package:flutter/widgets.dart';
 
 import '../animation/animation_config.dart';
+import '../core/breakpoint.dart';
 import '../core/helpers.dart';
 import '../core/style.dart';
 import '../core/style_spec.dart';
 import '../core/style_widget.dart';
 import '../modifiers/widget_modifier_config.dart';
 import '../style/abstracts/styler.dart';
+import '../theme/tokens/token_refs.dart';
 import 'grid_box_spec.dart';
 import 'grid_track.dart';
 import 'render_grid.dart';
@@ -83,18 +85,18 @@ class GridBoxStyler extends MixStyler<GridBoxStyler, GridBoxSpec> {
 
   /// Attaches a Grid-only constraint branch applied at render time.
   ///
-  /// [query] observes the finite maximum width offered to this Grid. [patch]
-  /// may set columns, rows, autoRows, and gaps only. Modifiers, animations,
-  /// ordinary variants, nested constraint branches, and empty patches are
-  /// rejected. Selection runs in [RenderMixGrid] without rebuilding the widget
-  /// tree.
-  GridBoxStyler onConstraints(GridConstraintQuery query, GridBoxStyler patch) {
+  /// [breakpoint] observes the bounded maximum size offered to this Grid.
+  /// Unlike [onBreakpoint], it does not observe the viewport. [patch] may set
+  /// columns, rows, autoRows, and gaps only. Modifiers, animations, ordinary
+  /// variants, nested constraint branches, and empty patches are rejected.
+  /// Selection runs in [RenderMixGrid] without rebuilding the widget tree.
+  GridBoxStyler onConstraints(Breakpoint breakpoint, GridBoxStyler patch) {
     final layoutPatch = _createValidatedConstraintPatch(patch);
 
     return merge(
       GridBoxStyler(
         constraintBranches: [
-          GridConstraintBranch(query: query, patch: layoutPatch),
+          GridConstraintBranch(breakpoint: breakpoint, patch: layoutPatch),
         ],
       ),
     );
@@ -121,7 +123,16 @@ class GridBoxStyler extends MixStyler<GridBoxStyler, GridBoxSpec> {
       columnGap: columnGap,
       rowGap: rowGap,
       clipBehavior: clipBehavior,
-      branches: constraintBranches,
+      branches: [
+        for (final branch in constraintBranches)
+          GridConstraintBranch(
+            breakpoint: _resolveConstraintBreakpoint(
+              context,
+              branch.breakpoint,
+            ),
+            patch: branch.patch,
+          ),
+      ],
     );
 
     return StyleSpec(
@@ -170,6 +181,17 @@ class GridBoxStyler extends MixStyler<GridBoxStyler, GridBoxSpec> {
     $modifier,
     $animation,
   ];
+}
+
+Breakpoint _resolveConstraintBreakpoint(
+  BuildContext context,
+  Breakpoint breakpoint,
+) {
+  if (breakpoint case BreakpointRef(:final token)) {
+    return token.resolve(context);
+  }
+
+  return breakpoint;
 }
 
 GridLayoutPatch _createValidatedConstraintPatch(GridBoxStyler patch) {

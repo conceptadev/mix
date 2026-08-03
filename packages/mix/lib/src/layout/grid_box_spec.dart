@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 
+import '../core/breakpoint.dart';
 import '../core/spec.dart';
 import 'grid_track.dart';
 
@@ -65,71 +66,32 @@ final class GridLayoutPatch {
   );
 }
 
-/// A Grid-local query over the constraints offered by the parent layout.
+/// One local-constraint branch: [breakpoint] to [patch].
 ///
-/// This deliberately supports only a bounded maximum width. It is distinct
-/// from viewport `Breakpoint` semantics and cannot accidentally interpret an
-/// unbounded axis as an infinite concrete size.
-@immutable
-final class GridConstraintQuery {
-  final double maxWidth;
-
-  const GridConstraintQuery._(this.maxWidth);
-
-  /// Matches when the offered maximum width is finite and at most [maxWidth].
-  factory GridConstraintQuery.widthAtMost(double maxWidth) {
-    if (!maxWidth.isFinite || maxWidth < 0) {
-      throw FlutterError.fromParts([
-        ErrorSummary('Invalid GridConstraintQuery width threshold.'),
-        ErrorDescription(
-          'widthAtMost requires a finite, non-negative width; got $maxWidth.',
-        ),
-      ]);
-    }
-
-    return GridConstraintQuery._(maxWidth);
-  }
-
-  bool matches(BoxConstraints constraints) {
-    return constraints.hasBoundedWidth && constraints.maxWidth <= maxWidth;
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        other is GridConstraintQuery && maxWidth == other.maxWidth;
-  }
-
-  @override
-  String toString() => 'GridConstraintQuery.widthAtMost($maxWidth)';
-
-  @override
-  int get hashCode => maxWidth.hashCode;
-}
-
-/// One constraint branch: [query] to [patch].
-///
-/// Branches are applied in declaration order at layout time.
+/// Unlike `onBreakpoint`, which observes the viewport through `MediaQuery`,
+/// this breakpoint is matched against the bounded maximum size offered by the
+/// Grid's parent. Branches are applied in declaration order at layout time.
 @immutable
 final class GridConstraintBranch {
-  final GridConstraintQuery query;
+  final Breakpoint breakpoint;
   final GridLayoutPatch patch;
 
-  const GridConstraintBranch({required this.query, required this.patch});
+  const GridConstraintBranch({required this.breakpoint, required this.patch});
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         other is GridConstraintBranch &&
-            query == other.query &&
+            breakpoint == other.breakpoint &&
             patch == other.patch;
   }
 
   @override
-  String toString() => 'GridConstraintBranch(query: $query, patch: $patch)';
+  String toString() =>
+      'GridConstraintBranch(breakpoint: $breakpoint, patch: $patch)';
 
   @override
-  int get hashCode => Object.hash(query, patch);
+  int get hashCode => Object.hash(breakpoint, patch);
 }
 
 /// Immutable, validated geometry resolved from [GridBoxStyler].
@@ -176,7 +138,7 @@ final class GridBoxSpec extends Spec<GridBoxSpec> with Diagnosticable {
       branches: List<GridConstraintBranch>.unmodifiable([
         for (final branch in branches)
           GridConstraintBranch(
-            query: branch.query,
+            breakpoint: branch.breakpoint,
             patch: _snapshotPatch(branch.patch),
           ),
       ]),
@@ -197,7 +159,9 @@ final class GridBoxSpec extends Spec<GridBoxSpec> with Diagnosticable {
     var resolvedRowGap = rowGap;
 
     for (final branch in branches) {
-      if (!branch.query.matches(constraints)) continue;
+      if (!_matchesBreakpointConstraints(branch.breakpoint, constraints)) {
+        continue;
+      }
       final patch = branch.patch;
       final patchColumns = patch.columns;
       final patchRows = patch.rows;
@@ -327,6 +291,7 @@ void _validateGridSpecGeometry(GridBoxSpec spec) {
   _validateGap(spec.rowGap, label: 'rowGap');
 
   for (final branch in spec.branches) {
+    _validateConstraintBreakpoint(branch.breakpoint);
     final patch = branch.patch;
     if (patch.isEmpty) {
       throw FlutterError.fromParts([
@@ -372,6 +337,92 @@ void _validateGridSpecGeometry(GridBoxSpec spec) {
     if (patchRowGap != null) {
       _validateGap(patchRowGap, label: 'patch.rowGap');
     }
+  }
+}
+
+bool _matchesBreakpointConstraints(
+  Breakpoint breakpoint,
+  BoxConstraints constraints,
+) {
+  final (:minWidth, :maxWidth, :minHeight, :maxHeight) =
+      _readConstraintBreakpoint(breakpoint);
+  final constrainsWidth = minWidth != null || maxWidth != null;
+  final constrainsHeight = minHeight != null || maxHeight != null;
+
+  if (constrainsWidth && !constraints.hasBoundedWidth) return false;
+  if (constrainsHeight && !constraints.hasBoundedHeight) return false;
+
+  return breakpoint.matches(
+    Size(
+      constraints.hasBoundedWidth ? constraints.maxWidth : 0,
+      constraints.hasBoundedHeight ? constraints.maxHeight : 0,
+    ),
+  );
+}
+
+void _validateConstraintBreakpoint(Breakpoint breakpoint) {
+  final (:minWidth, :maxWidth, :minHeight, :maxHeight) =
+      _readConstraintBreakpoint(breakpoint);
+
+  final values = {
+    'minWidth': minWidth,
+    'maxWidth': maxWidth,
+    'minHeight': minHeight,
+    'maxHeight': maxHeight,
+  };
+  if (values.values.every((value) => value == null)) {
+    throw FlutterError.fromParts([
+      ErrorSummary('Grid constraint breakpoint must contain a size bound.'),
+      ErrorHint('Set at least one minimum or maximum width or height.'),
+    ]);
+  }
+
+  for (final MapEntry(:key, :value) in values.entries) {
+    if (value != null && (!value.isFinite || value < 0)) {
+      throw FlutterError.fromParts([
+        ErrorSummary('Invalid Grid constraint breakpoint $key.'),
+        ErrorDescription('$key must be finite and non-negative; got $value.'),
+      ]);
+    }
+  }
+
+  if (minWidth != null && maxWidth != null && minWidth > maxWidth) {
+    throw FlutterError.fromParts([
+      ErrorSummary('Invalid Grid constraint breakpoint width range.'),
+      ErrorDescription('minWidth ($minWidth) exceeds maxWidth ($maxWidth).'),
+    ]);
+  }
+  if (minHeight != null && maxHeight != null && minHeight > maxHeight) {
+    throw FlutterError.fromParts([
+      ErrorSummary('Invalid Grid constraint breakpoint height range.'),
+      ErrorDescription(
+        'minHeight ($minHeight) exceeds maxHeight ($maxHeight).',
+      ),
+    ]);
+  }
+}
+
+({double? minWidth, double? maxWidth, double? minHeight, double? maxHeight})
+_readConstraintBreakpoint(Breakpoint breakpoint) {
+  try {
+    return (
+      minWidth: breakpoint.minWidth,
+      maxWidth: breakpoint.maxWidth,
+      minHeight: breakpoint.minHeight,
+      maxHeight: breakpoint.maxHeight,
+    );
+  } on UnsupportedError catch (error, stackTrace) {
+    Error.throwWithStackTrace(
+      FlutterError.fromParts([
+        ErrorSummary('Grid constraint breakpoint must be resolved.'),
+        ErrorDescription('$error'),
+        ErrorHint(
+          'Resolve breakpoint tokens through GridBoxStyler.onConstraints rather '
+          'than constructing GridBoxSpec with an unresolved token reference.',
+        ),
+      ]),
+      stackTrace,
+    );
   }
 }
 

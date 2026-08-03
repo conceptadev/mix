@@ -175,32 +175,86 @@ void main() {
     });
   });
 
-  group('GridConstraintQuery', () {
-    test('widthAtMost is inclusive and evaluates the offered max width', () {
-      final query = GridConstraintQuery.widthAtMost(560);
+  group('Breakpoint constraint matching', () {
+    GridBoxSpec specFor(Breakpoint breakpoint) {
+      return GridBoxSpec(
+        columns: const [GridTrack.fixed(100)],
+        branches: [
+          GridConstraintBranch(
+            breakpoint: breakpoint,
+            patch: const GridLayoutPatch(columnGap: 1),
+          ),
+        ],
+      );
+    }
 
-      expect(query.matches(const BoxConstraints(maxWidth: 560)), isTrue);
-      expect(query.matches(const BoxConstraints(maxWidth: 561)), isFalse);
+    bool matches(Breakpoint breakpoint, BoxConstraints constraints) {
+      final geometry = specFor(
+        breakpoint,
+      ).resolveGeometryForConstraints(constraints);
+
+      return geometry.columnGap == 1;
+    }
+
+    test('maxWidth is inclusive and evaluates the offered maximum width', () {
+      const breakpoint = Breakpoint.maxWidth(560);
+
+      expect(matches(breakpoint, const BoxConstraints(maxWidth: 560)), isTrue);
+      expect(matches(breakpoint, const BoxConstraints(maxWidth: 561)), isFalse);
       expect(
-        query.matches(const BoxConstraints(minWidth: 400)),
+        matches(breakpoint, const BoxConstraints(minWidth: 400)),
         isFalse,
         reason: 'an unbounded width is not a concrete offered width',
       );
     });
 
-    test('unbounded height does not affect a width query', () {
-      final query = GridConstraintQuery.widthAtMost(560);
+    test('supports width and height ranges over bounded offered maxima', () {
+      const breakpoint = Breakpoint(
+        minWidth: 400,
+        maxWidth: 560,
+        minHeight: 200,
+        maxHeight: 400,
+      );
 
-      expect(query.matches(const BoxConstraints(maxWidth: 400)), isTrue);
+      expect(
+        matches(
+          breakpoint,
+          const BoxConstraints.tightFor(width: 400, height: 200),
+        ),
+        isTrue,
+      );
+      expect(
+        matches(
+          breakpoint,
+          const BoxConstraints.tightFor(width: 560, height: 400),
+        ),
+        isTrue,
+      );
+      expect(
+        matches(
+          breakpoint,
+          const BoxConstraints.tightFor(width: 399, height: 300),
+        ),
+        isFalse,
+      );
+      expect(
+        matches(breakpoint, const BoxConstraints(maxWidth: 500)),
+        isFalse,
+        reason: 'a constrained height breakpoint needs bounded height',
+      );
     });
 
-    test('invalid width thresholds throw in the public factory', () {
+    test('validates breakpoints before they cross the render boundary', () {
       expect(
-        () => GridConstraintQuery.widthAtMost(-1),
+        () => specFor(const Breakpoint.maxWidth(-1)),
         throwsA(isA<FlutterError>()),
       );
       expect(
-        () => GridConstraintQuery.widthAtMost(.infinity),
+        () => specFor(const Breakpoint.maxWidth(.infinity)),
+        throwsA(isA<FlutterError>()),
+      );
+      expect(
+        () => specFor(const Breakpoint.widthRange(600, 500)),
         throwsA(isA<FlutterError>()),
       );
     });
@@ -215,7 +269,7 @@ void main() {
         columns: columns,
         branches: [
           GridConstraintBranch(
-            query: GridConstraintQuery.widthAtMost(400),
+            breakpoint: Breakpoint.maxWidth(400),
             patch: GridLayoutPatch(columns: branchColumns),
           ),
         ],
@@ -233,7 +287,7 @@ void main() {
       expect(
         () => spec.branches.add(
           GridConstraintBranch(
-            query: GridConstraintQuery.widthAtMost(300),
+            breakpoint: Breakpoint.maxWidth(300),
             patch: const GridLayoutPatch(columnGap: 4),
           ),
         ),
@@ -246,11 +300,11 @@ void main() {
         columns: const [GridTrack.fr(1), GridTrack.fr(1), GridTrack.fr(1)],
         branches: [
           GridConstraintBranch(
-            query: GridConstraintQuery.widthAtMost(560),
+            breakpoint: Breakpoint.maxWidth(560),
             patch: const GridLayoutPatch(columns: [GridTrack.fr(1)]),
           ),
           GridConstraintBranch(
-            query: GridConstraintQuery.widthAtMost(400),
+            breakpoint: Breakpoint.maxWidth(400),
             patch: const GridLayoutPatch(
               columns: [GridTrack.fixed(50), GridTrack.fixed(50)],
             ),
@@ -292,7 +346,7 @@ void main() {
         rowGap: 4,
         branches: [
           GridConstraintBranch(
-            query: GridConstraintQuery.widthAtMost(500),
+            breakpoint: Breakpoint.maxWidth(500),
             patch: const GridLayoutPatch(columnGap: 16),
           ),
         ],
@@ -313,7 +367,7 @@ void main() {
         rows: const [GridTrack.fixed(40)],
         branches: [
           GridConstraintBranch(
-            query: GridConstraintQuery.widthAtMost(500),
+            breakpoint: Breakpoint.maxWidth(500),
             patch: const GridLayoutPatch(columns: [GridTrack.fixed(100)]),
           ),
         ],
@@ -373,7 +427,7 @@ void main() {
         () => GridBoxSpec(
           branches: [
             GridConstraintBranch(
-              query: GridConstraintQuery.widthAtMost(100),
+              breakpoint: Breakpoint.maxWidth(100),
               patch: const GridLayoutPatch(),
             ),
           ],
@@ -391,7 +445,7 @@ void main() {
           columns: const [GridTrack.fr(1)],
           branches: [
             GridConstraintBranch(
-              query: GridConstraintQuery.widthAtMost(100),
+              breakpoint: Breakpoint.maxWidth(100),
               patch: GridLayoutPatch(columns: [FixedGridTrack(.infinity)]),
             ),
           ],
@@ -436,14 +490,14 @@ void main() {
     test('rejects modifiers, animations, variants, nested branches, empty', () {
       expect(
         () => GridBoxStyler().onConstraints(
-          GridConstraintQuery.widthAtMost(400),
+          Breakpoint.maxWidth(400),
           GridBoxStyler().wrap(const WidgetModifierConfig()),
         ),
         throwsA(isA<FlutterError>()),
       );
       expect(
         () => GridBoxStyler().onConstraints(
-          GridConstraintQuery.widthAtMost(400),
+          Breakpoint.maxWidth(400),
           GridBoxStyler().animate(
             const CurveAnimationConfig(
               duration: Duration(milliseconds: 100),
@@ -455,7 +509,7 @@ void main() {
       );
       expect(
         () => GridBoxStyler().onConstraints(
-          GridConstraintQuery.widthAtMost(400),
+          Breakpoint.maxWidth(400),
           GridBoxStyler().onDark(const GridBoxStyler()),
         ),
         throwsA(isA<FlutterError>()),
@@ -463,13 +517,13 @@ void main() {
       expect(
         () => GridBoxStyler()
             .onConstraints(
-              GridConstraintQuery.widthAtMost(400),
+              Breakpoint.maxWidth(400),
               const GridBoxStyler(columns: [GridTrack.fr(1)]),
             )
             .onConstraints(
-              GridConstraintQuery.widthAtMost(300),
+              Breakpoint.maxWidth(300),
               GridBoxStyler().onConstraints(
-                GridConstraintQuery.widthAtMost(200),
+                Breakpoint.maxWidth(200),
                 const GridBoxStyler(columns: [GridTrack.fr(1)]),
               ),
             ),
@@ -477,7 +531,7 @@ void main() {
       );
       expect(
         () => GridBoxStyler().onConstraints(
-          GridConstraintQuery.widthAtMost(400),
+          Breakpoint.maxWidth(400),
           const GridBoxStyler(),
         ),
         throwsA(isA<FlutterError>()),
@@ -487,11 +541,11 @@ void main() {
     test('merge appends branches and merges modifiers/animation', () {
       final a = GridBoxStyler(columns: const [GridTrack.fr(1), GridTrack.fr(1)])
           .onConstraints(
-            GridConstraintQuery.widthAtMost(560),
+            Breakpoint.maxWidth(560),
             const GridBoxStyler(columns: [GridTrack.fr(1)]),
           );
       final b = const GridBoxStyler(columnGap: 8).onConstraints(
-        GridConstraintQuery.widthAtMost(400),
+        Breakpoint.maxWidth(400),
         const GridBoxStyler(columnGap: 4),
       );
 
@@ -710,6 +764,101 @@ void main() {
   });
 
   group('GridBox render-time onConstraints', () {
+    testWidgets(
+      'onBreakpoint observes the viewport while onConstraints observes the container',
+      (tester) async {
+        const baseColumns = [GridTrack.fr(1), GridTrack.fr(1), GridTrack.fr(1)];
+        const narrowColumns = [GridTrack.fr(1)];
+
+        await tester.pumpWidget(
+          MaterialApp(
+            home: MediaQuery(
+              data: const MediaQueryData(size: Size(1000, 800)),
+              child: Column(
+                children: [
+                  SizedBox(
+                    width: 400,
+                    height: 100,
+                    child: GridBox(
+                      style: GridBoxStyler(columns: baseColumns).onBreakpoint(
+                        const Breakpoint.maxWidth(560),
+                        const GridBoxStyler(columns: narrowColumns),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 400,
+                    height: 100,
+                    child: GridBox(
+                      style: GridBoxStyler(columns: baseColumns).onConstraints(
+                        const Breakpoint.maxWidth(560),
+                        const GridBoxStyler(columns: narrowColumns),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+
+        final renders = tester
+            .renderObjectList<RenderMixGrid>(find.byType(MixGrid))
+            .toList();
+        expect(renders, hasLength(2));
+        expect(renders.first.spec.columns, hasLength(3));
+        expect(
+          renders.last.spec
+              .resolveGeometryForConstraints(renders.last.constraints)
+              .columns,
+          hasLength(1),
+        );
+      },
+    );
+
+    testWidgets('onConstraints resolves breakpoint tokens before layout', (
+      tester,
+    ) async {
+      const compact = BreakpointToken('grid.breakpoint.compact');
+
+      await tester.pumpWidget(
+        MaterialApp(
+          home: MixScope(
+            breakpoints: {compact: const Breakpoint.maxWidth(560)},
+            child: Center(
+              child: SizedBox(
+                width: 400,
+                height: 100,
+                child: GridBox(
+                  style:
+                      GridBoxStyler(
+                        columns: const [
+                          GridTrack.fr(1),
+                          GridTrack.fr(1),
+                          GridTrack.fr(1),
+                        ],
+                      ).onConstraints(
+                        compact(),
+                        const GridBoxStyler(columns: [GridTrack.fr(1)]),
+                      ),
+                ),
+              ),
+            ),
+          ),
+        ),
+      );
+
+      final render = tester.renderObject<RenderMixGrid>(find.byType(MixGrid));
+      expect(
+        render.spec.branches.single.breakpoint,
+        const Breakpoint.maxWidth(560),
+      );
+      expect(
+        render.spec.resolveGeometryForConstraints(render.constraints).columns,
+        hasLength(1),
+      );
+    });
+
     testWidgets('three-to-one column switch via layout without child rebuild', (
       tester,
     ) async {
@@ -725,7 +874,7 @@ void main() {
         rowGap: 8,
         branches: [
           GridConstraintBranch(
-            query: GridConstraintQuery.widthAtMost(560),
+            breakpoint: Breakpoint.maxWidth(560),
             patch: const GridLayoutPatch(
               columns: [GridTrack.fr(1)],
               columnGap: 8,
@@ -872,7 +1021,7 @@ void main() {
                             columnGap: 8,
                             rowGap: 8,
                           ).onConstraints(
-                            GridConstraintQuery.widthAtMost(560),
+                            Breakpoint.maxWidth(560),
                             const GridBoxStyler(
                               columns: [GridTrack.fr(1)],
                               columnGap: 8,
@@ -933,7 +1082,7 @@ void main() {
                       columnGap: 8,
                       rowGap: 8,
                     ).onConstraints(
-                      GridConstraintQuery.widthAtMost(560),
+                      Breakpoint.maxWidth(560),
                       const GridBoxStyler(
                         columns: [GridTrack.fr(1)],
                         columnGap: 8,
