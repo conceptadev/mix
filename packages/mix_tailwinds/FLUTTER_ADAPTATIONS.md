@@ -233,6 +233,19 @@ Current adaptation policy:
 | `from`/`via`/`to` gradients | Accumulated into `LinearGradientMix` | Gradient outputs encode through `mix_protocol`, including CSS keyword directions. |
 | `bg-*/50` alpha modifiers | Approximated with Flutter alpha | Flutter has no `color-mix()`/OKLAB equivalent for Tailwind's CSS output. |
 
+### Compatibility Ledger Status Notes
+
+The generated compatibility ledger records current behavior, including differences
+that still require a 1.0 decision. A ledger entry is an accounting statement, not a
+promise that the adaptation is final.
+
+| Tailwind variant | Current mix_tailwinds behavior |
+|---|---|
+| `active:` | Uses Mix's pressed widget state. |
+| `focus-visible:` | Uses Mix's broader focused widget state; keyboard modality is not distinguished. |
+| `dark:` | Uses Flutter platform brightness rather than a CSS selector strategy. |
+| `theme-midnight:` | Currently aliases Flutter dark mode. Interaction finding E3 requires this hardcoded alias to be removed or replaced by an explicit custom-variant design before 1.0. |
+
 Responsive layout utilities such as `w-full`, `w-screen`, fractions, external margin, negative margin handling, flex item parent data, axis, and gap remain in `tw_widget.dart` because they depend on live Flutter constraints.
 
 ### Percent-Based Sizing
