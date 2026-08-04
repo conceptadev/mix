@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 
@@ -66,10 +68,26 @@ abstract class Style<S extends Spec<S>> extends Mix<StyleSpec<S>>
 
   @internal
   Set<WidgetState> get widgetStates {
-    return ($variants ?? [])
-        .where((v) => v.variant is WidgetStateVariant)
-        .map((v) => (v.variant as WidgetStateVariant).state)
-        .toSet();
+    final states = <WidgetState>{};
+    final visited = HashSet<Style<S>>.identity();
+
+    void collectDependencies(Style<S> style) {
+      if (!visited.add(style)) return;
+
+      final variants = style.$variants;
+      if (variants == null) return;
+
+      for (final variantStyle in variants) {
+        if (variantStyle.variant case final ContextVariant variant) {
+          states.addAll(variant.widgetStateDependencies);
+        }
+        collectDependencies(variantStyle.value);
+      }
+    }
+
+    collectDependencies(this);
+
+    return states;
   }
 
   /// Merges all active variants with their nested variants recursively.

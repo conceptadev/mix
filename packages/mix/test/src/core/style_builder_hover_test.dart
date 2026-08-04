@@ -5,6 +5,54 @@ import 'package:mix/mix.dart';
 
 void main() {
   group('StyleBuilder hover functionality', () {
+    Future<void> expectHoverColors(
+      WidgetTester tester, {
+      required BoxStyler style,
+      required Color initial,
+      required Color hovered,
+      Brightness platformBrightness = Brightness.light,
+    }) async {
+      Color? currentColor;
+
+      await tester.pumpWidget(
+        MaterialApp(
+          home: MediaQuery(
+            data: MediaQueryData(
+              size: const Size(800, 600),
+              platformBrightness: platformBrightness,
+            ),
+            child: Center(
+              child: StyleBuilder<BoxSpec>(
+                style: style,
+                builder: (context, spec) {
+                  currentColor = (spec.decoration as BoxDecoration?)?.color;
+
+                  return Container(
+                    key: const Key('nested-hover-target'),
+                    constraints: spec.constraints,
+                    decoration: spec.decoration,
+                  );
+                },
+              ),
+            ),
+          ),
+        ),
+      );
+
+      expect(currentColor, initial);
+
+      final gesture = await tester.createGesture(kind: PointerDeviceKind.mouse);
+      await gesture.addPointer(location: Offset.zero);
+      await gesture.moveTo(
+        tester.getCenter(find.byKey(const Key('nested-hover-target'))),
+      );
+      await tester.pump();
+
+      expect(currentColor, hovered);
+
+      await gesture.removePointer();
+    }
+
     testWidgets('hover variant changes style when mouse enters and exits', (
       tester,
     ) async {
@@ -178,5 +226,95 @@ void main() {
         await gesture.removePointer();
       },
     );
+
+    group('nested widget-state dependency discovery', () {
+      testWidgets('tracks a negated hover variant', (tester) async {
+        final style = BoxStyler()
+            .size(100, 100)
+            .color(Colors.blue)
+            .onNot(
+              ContextVariant.widgetState(WidgetState.hovered),
+              BoxStyler().color(Colors.red),
+            );
+
+        await expectHoverColors(
+          tester,
+          style: style,
+          initial: Colors.red,
+          hovered: Colors.blue,
+        );
+      });
+
+      testWidgets('tracks hover nested under a breakpoint', (tester) async {
+        final style = BoxStyler()
+            .size(100, 100)
+            .color(Colors.blue)
+            .onBreakpoint(
+              const Breakpoint.minWidth(0),
+              BoxStyler().onHovered(BoxStyler().color(Colors.red)),
+            );
+
+        await expectHoverColors(
+          tester,
+          style: style,
+          initial: Colors.blue,
+          hovered: Colors.red,
+        );
+      });
+
+      testWidgets('tracks hover nested under dark mode', (tester) async {
+        final style = BoxStyler()
+            .size(100, 100)
+            .color(Colors.blue)
+            .onDark(BoxStyler().onHovered(BoxStyler().color(Colors.red)));
+
+        await expectHoverColors(
+          tester,
+          style: style,
+          initial: Colors.blue,
+          hovered: Colors.red,
+          platformBrightness: Brightness.dark,
+        );
+      });
+
+      testWidgets('tracks hover when breakpoint nesting is reversed', (
+        tester,
+      ) async {
+        final style = BoxStyler()
+            .size(100, 100)
+            .color(Colors.blue)
+            .onHovered(
+              BoxStyler().onBreakpoint(
+                const Breakpoint.minWidth(0),
+                BoxStyler().color(Colors.red),
+              ),
+            );
+
+        await expectHoverColors(
+          tester,
+          style: style,
+          initial: Colors.blue,
+          hovered: Colors.red,
+        );
+      });
+
+      test('handles cyclic nested variant styles by identity', () {
+        final variants = <VariantStyle<BoxSpec>>[];
+        final cyclicStyle = BoxStyler(variants: variants);
+        variants.add(VariantStyle(const NamedVariant('cycle'), cyclicStyle));
+        variants.add(
+          VariantStyle(
+            ContextVariant.widgetState(WidgetState.hovered),
+            BoxStyler(),
+          ),
+        );
+        final rootStyle = BoxStyler().variant(
+          const NamedVariant('root'),
+          cyclicStyle,
+        );
+
+        expect(rootStyle.widgetStates, {WidgetState.hovered});
+      });
+    });
   });
 }

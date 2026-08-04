@@ -1,3 +1,11 @@
+## Unreleased
+
+### Fixes
+
+- **Nested widget-state discovery:** `StyleBuilder` now discovers state
+  requirements recursively through nested and negated variants with
+  identity-based cycle protection.
+
 ## 2.2.0-beta.1
 
 ### New features

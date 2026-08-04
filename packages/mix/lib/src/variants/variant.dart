@@ -108,6 +108,9 @@ class ContextVariant extends Variant {
     return ContextVariant.breakpoint(BreakpointToken.desktop());
   }
 
+  /// Widget states that must be tracked for this variant to be evaluated.
+  Set<WidgetState> get widgetStateDependencies => const {};
+
   /// Check if this variant should be active for the given context
   bool when(BuildContext context) {
     return shouldApply(context);
@@ -186,6 +189,9 @@ final class NotVariant extends ContextVariant {
       identical(this, other) || other is NotVariant && other.inner == inner;
 
   @override
+  Set<WidgetState> get widgetStateDependencies => inner.widgetStateDependencies;
+
+  @override
   int get hashCode => inner.hashCode;
 }
 
@@ -253,6 +259,9 @@ final class WidgetStateVariant extends ContextVariant {
   bool operator ==(Object other) =>
       identical(this, other) ||
       other is WidgetStateVariant && other.state == state;
+
+  @override
+  Set<WidgetState> get widgetStateDependencies => {state};
 
   @override
   int get hashCode => state.hashCode;
