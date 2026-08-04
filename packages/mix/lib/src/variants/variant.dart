@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../core/breakpoint.dart';
+import '../core/providers/focus_highlight_mode_provider.dart';
 import '../core/providers/widget_state_provider.dart';
 import '../core/providers/widget_state_style_override.dart';
 import '../core/spec.dart';
@@ -55,6 +56,10 @@ class ContextVariant extends Variant {
 
   static WidgetStateVariant widgetState(WidgetState state) {
     return WidgetStateVariant(state);
+  }
+
+  static FocusVisibleVariant focusVisible() {
+    return FocusVisibleVariant();
   }
 
   static OrientationVariant orientation(Orientation orientation) {
@@ -265,6 +270,24 @@ final class WidgetStateVariant extends ContextVariant {
 
   @override
   int get hashCode => state.hashCode;
+}
+
+/// Context variant that applies to traditionally highlighted keyboard focus.
+final class FocusVisibleVariant extends ContextVariant {
+  FocusVisibleVariant()
+    : super('focus_visible', (context) {
+        return WidgetStateProvider.hasStateOf(context, .focused) &&
+            FocusHighlightModeProvider.of(context) == .traditional;
+      });
+
+  @override
+  bool operator ==(Object other) => other is FocusVisibleVariant;
+
+  @override
+  Set<WidgetState> get widgetStateDependencies => const {.focused};
+
+  @override
+  int get hashCode => key.hashCode;
 }
 
 String _breakpointKey(Breakpoint breakpoint) {

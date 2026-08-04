@@ -6,19 +6,21 @@ import 'package:mix/mix.dart';
 void main() {
   group('Pressable hover and press interaction', () {
     testWidgets(
-      'press state should remain true until tapUp even when hover ends',
+      'press state clears when the pointer leaves the detector bounds',
       (tester) async {
         final controller = WidgetStatesController();
 
         await tester.pumpWidget(
           MaterialApp(
-            home: Pressable(
-              controller: controller,
-              onPress: () {},
-              child: const SizedBox(
-                width: 100,
-                height: 100,
-                child: Text('Pressable'),
+            home: Center(
+              child: Pressable(
+                controller: controller,
+                onPress: () {},
+                child: const SizedBox(
+                  width: 100,
+                  height: 100,
+                  child: Text('Pressable'),
+                ),
               ),
             ),
           ),
@@ -48,7 +50,7 @@ void main() {
         expect(controller.has(WidgetState.hovered), isTrue);
 
         // Move mouse away while still pressed
-        await gesture.moveTo(const Offset(200, 200)); // Move outside widget
+        await gesture.moveTo(Offset.zero);
         await tester.pumpAndSettle();
 
         // When moving out while pressed, the gesture is cancelled
@@ -77,13 +79,15 @@ void main() {
 
       await tester.pumpWidget(
         MaterialApp(
-          home: Pressable(
-            controller: controller,
-            onPress: () => onPressCalled = true,
-            child: const SizedBox(
-              width: 100,
-              height: 100,
-              child: Text('Pressable'),
+          home: Center(
+            child: Pressable(
+              controller: controller,
+              onPress: () => onPressCalled = true,
+              child: const SizedBox(
+                width: 100,
+                height: 100,
+                child: Text('Pressable'),
+              ),
             ),
           ),
         ),
@@ -104,7 +108,7 @@ void main() {
       expect(controller.has(WidgetState.pressed), isTrue);
 
       // Move out - this triggers tap cancel
-      await gesture.moveTo(const Offset(200, 200)); // Move out
+      await gesture.moveTo(Offset.zero);
       await tester.pumpAndSettle();
 
       // Press state should be cleared on cancel
@@ -116,6 +120,46 @@ void main() {
 
       // onPress should not have been called since gesture was cancelled
       expect(onPressCalled, isFalse);
+    });
+
+    testWidgets('focus loss does not clear a pointer-owned press', (
+      tester,
+    ) async {
+      final focusNode = FocusNode();
+      final controller = WidgetStatesController();
+      addTearDown(focusNode.dispose);
+      addTearDown(controller.dispose);
+
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Center(
+            child: Pressable(
+              focusNode: focusNode,
+              controller: controller,
+              onPress: () {},
+              child: const SizedBox(width: 100, height: 100),
+            ),
+          ),
+        ),
+      );
+      focusNode.requestFocus();
+      await tester.pump();
+
+      final gesture = await tester.createGesture(kind: PointerDeviceKind.mouse);
+      await gesture.addPointer(
+        location: tester.getCenter(find.byType(Pressable)),
+      );
+      await gesture.down(tester.getCenter(find.byType(Pressable)));
+      await tester.pump();
+      expect(controller.pressed, isTrue);
+
+      focusNode.unfocus();
+      await tester.pump();
+      expect(controller.pressed, isTrue);
+
+      await gesture.up();
+      await tester.pump();
+      expect(controller.pressed, isFalse);
     });
   });
 }

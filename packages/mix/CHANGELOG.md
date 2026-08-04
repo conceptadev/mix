@@ -1,10 +1,32 @@
 ## Unreleased
 
+### New features
+
+- **Typed focus-visible variants:** Added `FocusVisibleVariant`,
+  `ContextVariant.focusVisible()`, and `onFocusVisible(...)`. Context variants
+  can now declare their required states through
+  `ContextVariant.widgetStateDependencies`.
+- **Pressable semantics roles:** Added `PressableSemanticsRole` with button,
+  link, and neutral roles. `PressableBox` now forwards the full Pressable
+  focus, keyboard, controller, feedback, cursor, action, and semantics surface.
+
+### Breaking changes
+
+- **Pressable input and semantics:** Replaced `semanticButtonLabel` with
+  `semanticsLabel`, added `semanticsRole`, and removed the deprecated `onKey`
+  callback. Use `onKeyEvent` for custom keyboard handling.
+- **Reserved activation keys:** Pressable owns Space, Enter, and numpad Enter
+  so it can model held-key state consistently. Custom activation behavior must
+  use `onKeyEvent`; custom `actions` remain supported for other intents.
+
 ### Fixes
 
 - **Nested widget-state discovery:** `StyleBuilder` now discovers state
   requirements recursively through nested and negated variants with
   identity-based cycle protection.
+- **Pressable lifecycle:** Pointer state has one owner, keyboard activation
+  fires once on key-up, cancellation clears held state, focus-visible follows
+  Flutter input modality, and disabled semantics expose no actions.
 
 ## 2.2.0-beta.1
 
