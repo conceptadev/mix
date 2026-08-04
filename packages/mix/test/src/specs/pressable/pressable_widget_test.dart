@@ -287,7 +287,7 @@ void main() {
         MaterialApp(
           home: Pressable(
             onPress: () {},
-            semanticButtonLabel: 'Test Button',
+            semanticsLabel: 'Test Button',
             child: const SizedBox(width: 100, height: 100),
           ),
         ),
@@ -304,7 +304,7 @@ void main() {
           home: Pressable(
             onPress: () {},
             excludeFromSemantics: true,
-            semanticButtonLabel: 'Test Button',
+            semanticsLabel: 'Test Button',
             child: const SizedBox(width: 100, height: 100),
           ),
         ),
@@ -385,6 +385,10 @@ void main() {
       // ignore: unused_local_variable
       bool? focusChanged;
       final focusNode = FocusNode();
+      final controller = WidgetStatesController();
+      final actions = <Type, Action<Intent>>{};
+      KeyEventResult onKeyEvent(FocusNode _, KeyEvent _) =>
+          KeyEventResult.ignored;
 
       await tester.pumpWidget(
         MaterialApp(
@@ -396,7 +400,14 @@ void main() {
             autofocus: true,
             enabled: true,
             enableFeedback: true,
-
+            mouseCursor: SystemMouseCursors.help,
+            canRequestFocus: false,
+            excludeFromSemantics: true,
+            semanticsLabel: 'Forwarded label',
+            semanticsRole: PressableSemanticsRole.link,
+            onKeyEvent: onKeyEvent,
+            controller: controller,
+            actions: actions,
             hitTestBehavior: HitTestBehavior.deferToChild,
             child: const SizedBox(width: 100, height: 100),
           ),
@@ -408,7 +419,15 @@ void main() {
       expect(pressable.enabled, isTrue);
       expect(pressable.autofocus, isTrue);
       expect(pressable.focusNode, same(focusNode));
-
+      expect(pressable.enableFeedback, isTrue);
+      expect(pressable.mouseCursor, SystemMouseCursors.help);
+      expect(pressable.canRequestFocus, isFalse);
+      expect(pressable.excludeFromSemantics, isTrue);
+      expect(pressable.semanticsLabel, 'Forwarded label');
+      expect(pressable.semanticsRole, PressableSemanticsRole.link);
+      expect(pressable.onKeyEvent, same(onKeyEvent));
+      expect(pressable.controller, same(controller));
+      expect(pressable.actions, same(actions));
       expect(pressable.hitTestBehavior, HitTestBehavior.deferToChild);
 
       // Test callbacks work
@@ -421,6 +440,7 @@ void main() {
       expect(wasLongPressed, isTrue);
 
       focusNode.dispose();
+      controller.dispose();
     });
   });
 }

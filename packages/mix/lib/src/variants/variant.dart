@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../core/breakpoint.dart';
+import '../core/providers/focus_highlight_mode_provider.dart';
 import '../core/providers/widget_state_provider.dart';
 import '../core/providers/widget_state_style_override.dart';
 import '../core/spec.dart';
@@ -57,6 +58,10 @@ class ContextVariant extends Variant {
     return WidgetStateVariant(state);
   }
 
+  static FocusVisibleVariant focusVisible() {
+    return FocusVisibleVariant();
+  }
+
   static OrientationVariant orientation(Orientation orientation) {
     return OrientationVariant(orientation);
   }
@@ -107,6 +112,9 @@ class ContextVariant extends Variant {
   static ContextVariant desktop() {
     return ContextVariant.breakpoint(BreakpointToken.desktop());
   }
+
+  /// Widget states that must be tracked for this variant to be evaluated.
+  Set<WidgetState> get widgetStateDependencies => const {};
 
   /// Check if this variant should be active for the given context
   bool when(BuildContext context) {
@@ -186,6 +194,9 @@ final class NotVariant extends ContextVariant {
       identical(this, other) || other is NotVariant && other.inner == inner;
 
   @override
+  Set<WidgetState> get widgetStateDependencies => inner.widgetStateDependencies;
+
+  @override
   int get hashCode => inner.hashCode;
 }
 
@@ -255,7 +266,28 @@ final class WidgetStateVariant extends ContextVariant {
       other is WidgetStateVariant && other.state == state;
 
   @override
+  Set<WidgetState> get widgetStateDependencies => {state};
+
+  @override
   int get hashCode => state.hashCode;
+}
+
+/// Context variant that applies to traditionally highlighted keyboard focus.
+final class FocusVisibleVariant extends ContextVariant {
+  FocusVisibleVariant()
+    : super('focus_visible', (context) {
+        return WidgetStateProvider.hasStateOf(context, .focused) &&
+            FocusHighlightModeProvider.of(context) == .traditional;
+      });
+
+  @override
+  bool operator ==(Object other) => other is FocusVisibleVariant;
+
+  @override
+  Set<WidgetState> get widgetStateDependencies => const {.focused};
+
+  @override
+  int get hashCode => key.hashCode;
 }
 
 String _breakpointKey(Breakpoint breakpoint) {

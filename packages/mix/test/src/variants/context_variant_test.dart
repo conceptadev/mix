@@ -55,6 +55,17 @@ void main() {
       expect(enabled, anotherEnabled);
       expect(enabled.hashCode, anotherEnabled.hashCode);
     });
+
+    test('focusVisible factory returns a typed focused-state variant', () {
+      final focusVisible = ContextVariant.focusVisible();
+      final anotherFocusVisible = ContextVariant.focusVisible();
+
+      expect(focusVisible, isA<FocusVisibleVariant>());
+      expect(focusVisible.key, 'focus_visible');
+      expect(focusVisible.widgetStateDependencies, {WidgetState.focused});
+      expect(focusVisible, anotherFocusVisible);
+      expect(focusVisible.hashCode, anotherFocusVisible.hashCode);
+    });
   });
 
   group('responsive breakpoint shorthand factories', () {
