@@ -12,6 +12,7 @@ This example renders the same UI twice: once with `mix_tailwinds` (Flutter) and 
 - `lib/main.dart` – Flutter app that drives the Mix `Div`/`Span` widgets. A width slider lets you exercise the responsive tokens (e.g., `md:flex-row`).
 - `real_tailwind/index.html` – Standalone CDN-powered Tailwind page that reuses the exact same class strings.
 - `real_tailwind/flowbite-card.html` – Flowbite-style card fixture using semantic Tailwind aliases plus a matching `FlowbiteCardPreview` Flutter implementation.
+- `real_tailwind/complex-parity.html` – Pinned Tailwind 4.3.1 reference for ten isolated complex utility, responsive, and interaction cases; paired with `ComplexParityPreview`.
 
 ## Run the Flutter preview
 
@@ -56,6 +57,7 @@ A Playwright-based tool captures screenshots of both the Flutter and Tailwind ve
    npm install   # first time only
    npm run compare
    npm run compare -- --example=flowbite-card
+   npm run compare:complex # all ten cases at 480/768/1024
    ```
 
 Screenshots and diff images are saved to `packages/mix_tailwinds/visual-comparison/`.

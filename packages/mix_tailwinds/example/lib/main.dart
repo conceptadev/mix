@@ -4,6 +4,7 @@ import 'package:flutter/rendering.dart';
 import 'package:mix_tailwinds/mix_tailwinds.dart';
 
 import 'card_alert_preview.dart';
+import 'complex_parity_preview.dart';
 import 'flowbite_card_preview.dart';
 import 'gradient_debug_preview.dart';
 
@@ -38,12 +39,19 @@ class ScreenshotConfig {
   /// Supported values:
   /// - `dashboard` (default)
   /// - `card-alert`
+  /// - `complex-parity`
   /// - `flowbite-card`
   /// - `gradient-debug`
   static String get example {
     if (!kIsWeb) return 'dashboard';
     final params = Uri.base.queryParameters;
     return params['example'] ?? 'dashboard';
+  }
+
+  /// Returns the isolated complex visual-parity case (`01` through `10`).
+  static String get complexCase {
+    if (!kIsWeb) return '01';
+    return Uri.base.queryParameters['case'] ?? '01';
   }
 
   /// Returns gradient strategy for screenshot experiments.
@@ -76,6 +84,19 @@ class TailwindParityApp extends StatelessWidget {
     if (ScreenshotConfig.isScreenshotMode) {
       final width = ScreenshotConfig.width;
       final example = ScreenshotConfig.example;
+
+      if (example == 'complex-parity') {
+        return _ScreenshotWidgetsApp(
+          backgroundColor: const Color(0xFFF3F4F6),
+          child: TwScope(
+            config: twConfig,
+            child: ComplexParityPreview(
+              caseId: ScreenshotConfig.complexCase,
+              width: width,
+            ),
+          ),
+        );
+      }
 
       if (example == 'gradient-debug') {
         return _ScreenshotWidgetsApp(

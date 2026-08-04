@@ -30,6 +30,44 @@ const WIDTHS = [480, 768, 1024];
 const FLUTTER_PORT = 8089;
 const DEFAULT_GRADIENT_STRATEGY = 'css-angle-rect';
 
+const COMPLEX_CASE_IDS = Array.from({ length: 10 }, (_, index) =>
+  String(index + 1).padStart(2, '0'),
+);
+const COMPLEX_CASES = Object.fromEntries(
+  COMPLEX_CASE_IDS.map((caseId) => {
+    const fullCanvasCases = new Set(['02', '07', '08']);
+    const hoverCases = new Set(['09', '10']);
+    return [
+      `complex-${caseId}`,
+      {
+        htmlFile: 'example/real_tailwind/complex-parity.html',
+        selector: fullCanvasCases.has(caseId)
+          ? '#capture'
+          : `[data-case="${caseId}"]`,
+        margin: fullCanvasCases.has(caseId) ? 0 : 16,
+        outputSubdir: `complex-parity/case-${caseId}`,
+        tailwindQuery: `case=${caseId}`,
+        flutterExample: 'complex-parity',
+        flutterQuery: `case=${caseId}`,
+        colorScheme: caseId === '09' ? 'dark' : 'light',
+        hoverSelector: hoverCases.has(caseId)
+          ? '[data-case]:not([hidden]) [data-subject]'
+          : null,
+        hoverWaitMs: caseId === '10' ? 500 : 100,
+        tailwindWaitMs: 500,
+        caseId,
+        captureState: caseId === '09'
+          ? 'dark-hovered'
+          : caseId === '10'
+            ? 'hovered-after-transition'
+            : 'static',
+        moderateDiffThreshold: 8,
+        highDiffThreshold: 100,
+      },
+    ];
+  }),
+);
+
 // Example configurations
 const EXAMPLES = {
   dashboard: {
@@ -60,6 +98,7 @@ const EXAMPLES = {
     moderateDiffThreshold: 5,
     highDiffThreshold: 12,
   },
+  ...COMPLEX_CASES,
 };
 
 async function main() {
@@ -88,13 +127,15 @@ async function main() {
   const elementSelector = exampleConfig.selector;
   const captureMargin = exampleConfig.margin ?? 0;
   const clipByWidth = new Map();
+  const hoverPointByWidth = new Map();
 
   // Create example-specific directories.
   // Keep non-default gradient strategy outputs separate for A/B comparisons.
+  const configuredSubdir = exampleConfig.outputSubdir ?? exampleArg;
   const screenshotSubdir =
     gradientStrategy === DEFAULT_GRADIENT_STRATEGY
-      ? exampleArg
-      : `${exampleArg}-${gradientStrategy}`;
+      ? configuredSubdir
+      : `${configuredSubdir}-${gradientStrategy}`;
   const screenshotDir = path.join(baseScreenshotDir, screenshotSubdir);
   const diffDir = path.join(screenshotDir, 'diff');
   await fs.promises.mkdir(diffDir, { recursive: true });
@@ -109,7 +150,9 @@ async function main() {
 
   // Launch browser
   const browser = await chromium.launch();
-  const context = await browser.newContext();
+  const context = await browser.newContext({
+    colorScheme: exampleConfig.colorScheme ?? 'light',
+  });
   const page = await context.newPage();
 
   console.log('Capturing screenshots...\n');
@@ -118,9 +161,33 @@ async function main() {
   for (const width of WIDTHS) {
     const viewport = { width, height: 1200 };
     await page.setViewportSize(viewport);
-    await page.goto(`file://${tailwindPath}`);
+    await page.mouse.move(viewport.width - 1, viewport.height - 1);
+    const tailwindQuery = exampleConfig.tailwindQuery
+      ? `?${exampleConfig.tailwindQuery}`
+      : '';
+    await page.goto(`file://${tailwindPath}${tailwindQuery}`);
     await page.waitForLoadState('networkidle');
     await waitForFonts(page);
+    if (exampleConfig.tailwindWaitMs) {
+      await page.waitForTimeout(exampleConfig.tailwindWaitMs);
+    }
+    if (exampleConfig.hoverSelector) {
+      const hoverTarget = await page.$(exampleConfig.hoverSelector);
+      const hoverBox = await hoverTarget?.boundingBox();
+      if (!hoverBox) {
+        console.error(
+          `  ERROR: Could not read hover target ${exampleConfig.hoverSelector} for ${width}px`,
+        );
+        continue;
+      }
+      const hoverPoint = {
+        x: hoverBox.x + hoverBox.width / 2,
+        y: hoverBox.y + hoverBox.height / 2,
+      };
+      hoverPointByWidth.set(width, hoverPoint);
+      await page.mouse.move(hoverPoint.x, hoverPoint.y);
+      await page.waitForTimeout(exampleConfig.hoverWaitMs ?? 100);
+    }
     const element = await page.$(elementSelector);
     if (!element) {
       console.error(`  ERROR: Could not find <${elementSelector}> element for ${width}px`);
@@ -145,11 +212,24 @@ async function main() {
     const viewport = { width, height: 1200 };
     await page.setViewportSize(viewport);
     try {
-      await page.goto(
-        `${flutterUrl}/?screenshot=true&width=${width}&example=${exampleArg}&gradient=${gradientStrategy}`,
-        {
-        timeout: 30000,
+      await page.mouse.move(viewport.width - 1, viewport.height - 1);
+      const flutterParams = new URLSearchParams({
+        screenshot: 'true',
+        width: String(width),
+        example: exampleConfig.flutterExample ?? exampleArg,
+        gradient: gradientStrategy,
       });
+      if (exampleConfig.flutterQuery) {
+        for (const [key, value] of new URLSearchParams(
+          exampleConfig.flutterQuery,
+        )) {
+          flutterParams.set(key, value);
+        }
+      }
+      await page.goto(
+        `${flutterUrl}/?${flutterParams}`,
+        { timeout: 30000 },
+      );
       // Wait for Flutter to fully render (flt-glass-pane indicates Flutter is ready)
       // Use state: 'attached' since the element may be transparent/hidden
       await page.waitForSelector('flt-glass-pane', { timeout: 10000, state: 'attached' });
@@ -157,6 +237,11 @@ async function main() {
       await waitForFonts(page);
       // Additional delay for Flutter to finish painting
       await page.waitForTimeout(1000);
+      const hoverPoint = hoverPointByWidth.get(width);
+      if (hoverPoint) {
+        await page.mouse.move(hoverPoint.x, hoverPoint.y);
+        await page.waitForTimeout(exampleConfig.hoverWaitMs ?? 100);
+      }
       const clip = clipByWidth.get(width) ?? fullViewportClip(viewport);
       await page.screenshot({
         path: path.join(screenshotDir, `flutter-${width}.png`),
@@ -215,8 +300,25 @@ async function main() {
       { threshold: 0.1 },
     );
 
+    const strictDiff = new PNG({ width: targetWidth, height: targetHeight });
+    const strictMismatched = pixelmatch(
+      tailwindCropped.data,
+      flutterCropped.data,
+      strictDiff.data,
+      targetWidth,
+      targetHeight,
+      { threshold: 0.01 },
+    );
+    const exactDifference = measureExactRgbaDifference(
+      tailwindCropped,
+      flutterCropped,
+    );
+
     const diffPath = path.join(diffDir, `diff-${width}.png`);
     fs.writeFileSync(diffPath, PNG.sync.write(diff));
+
+    const strictDiffPath = path.join(diffDir, `strictdiff-${width}.png`);
+    fs.writeFileSync(strictDiffPath, PNG.sync.write(strictDiff));
 
     const absoluteDiff = createAmplifiedAbsoluteDiff(
       tailwindCropped,
@@ -237,6 +339,8 @@ async function main() {
 
     const totalPixels = targetWidth * targetHeight;
     const delta = (mismatched / totalPixels) * 100;
+    const strictDelta = (strictMismatched / totalPixels) * 100;
+    const exactDelta = (exactDifference.mismatchedPixels / totalPixels) * 100;
     results.push({
       width,
       dimensions: {
@@ -245,18 +349,26 @@ async function main() {
         compared: { width: targetWidth, height: targetHeight },
       },
       mismatched,
+      strictMismatched,
+      exactMismatched: exactDifference.mismatchedPixels,
+      meanAbsoluteRgbaDelta: exactDifference.meanAbsoluteChannelDelta,
+      maximumRgbaChannelDelta: exactDifference.maximumChannelDelta,
       totalPixels,
       delta,
+      strictDelta,
+      exactDelta,
       files: {
         tailwind: path.relative(screenshotDir, tailwindFile),
         flutter: path.relative(screenshotDir, flutterFile),
         pixelmatchDiff: path.relative(screenshotDir, diffPath),
+        strictPixelmatchDiff: path.relative(screenshotDir, strictDiffPath),
         absoluteDiff: path.relative(screenshotDir, absoluteDiffPath),
         blink: path.relative(screenshotDir, blinkPath),
       },
     });
     console.log(
-      `  diff-${width}.png (${delta.toFixed(2)}% diff, plus absdiff/blink)`,
+      `  diff-${width}.png (${delta.toFixed(2)}% tolerant, ` +
+        `${strictDelta.toFixed(2)}% strict, ${exactDelta.toFixed(2)}% exact)`,
     );
   }
 
@@ -264,10 +376,14 @@ async function main() {
   const summary = {
     generatedAt: new Date().toISOString(),
     example: exampleArg,
+    caseId: exampleConfig.caseId ?? null,
+    captureState: exampleConfig.captureState ?? 'static',
+    tailwindVersion: exampleConfig.caseId ? '4.3.1' : null,
     gradientStrategy,
     flutterUrl,
     tailwindHtml: tailwindPath,
     selector: elementSelector,
+    captureComplete: results.length === WIDTHS.length,
     thresholds: {
       moderateDiffPercent: exampleConfig.moderateDiffThreshold ?? 5,
       highDiffPercent: exampleConfig.highDiffThreshold ?? 15,
@@ -276,20 +392,35 @@ async function main() {
       width: r.width,
       dimensions: r.dimensions,
       mismatchedPixels: r.mismatched,
+      strictMismatchedPixels: r.strictMismatched,
+      exactMismatchedPixels: r.exactMismatched,
       totalPixels: r.totalPixels,
       diffPercent: Number(r.delta.toFixed(4)),
+      strictDiffPercent: Number(r.strictDelta.toFixed(4)),
+      exactDiffPercent: Number(r.exactDelta.toFixed(4)),
+      meanAbsoluteRgbaDelta: Number(r.meanAbsoluteRgbaDelta.toFixed(6)),
+      maximumRgbaChannelDelta: r.maximumRgbaChannelDelta,
       files: r.files,
     })),
   };
   fs.writeFileSync(summaryPath, `${JSON.stringify(summary, null, 2)}\n`);
+
+  if (results.length !== WIDTHS.length) {
+    console.error(
+      `\nIncomplete capture: expected ${WIDTHS.length} widths, produced ${results.length}.`,
+    );
+    process.exitCode = 1;
+  }
 
   // Output report
   console.log('\n=== Visual Comparison Results ===\n');
   console.table(
     results.map((r) => ({
       width: `${r.width}px`,
-      'diff pixels': r.mismatched.toLocaleString(),
-      'diff %': `${r.delta.toFixed(2)}%`,
+      'tolerant %': `${r.delta.toFixed(2)}%`,
+      'strict %': `${r.strictDelta.toFixed(2)}%`,
+      'exact %': `${r.exactDelta.toFixed(2)}%`,
+      'mean RGBA Δ': r.meanAbsoluteRgbaDelta.toFixed(3),
     })),
   );
 
@@ -307,12 +438,25 @@ async function main() {
     process.exitCode = 1;
   } else if (results.some((r) => r.delta > moderateDiffThreshold)) {
     console.log(
-      `\nModerate diff detected (>${moderateDiffThreshold}%, likely font/background rendering differences).`,
+      `\nModerate tolerant diff detected (>${moderateDiffThreshold}%). Inspect geometry, state, and palette.`,
     );
+  } else if (
+    results.some((result) => result.strictDelta > moderateDiffThreshold)
+  ) {
+    console.log(
+      `\nStrict rendering diff detected (>${moderateDiffThreshold}%). Geometry may match while colors or typography differ.`,
+    );
+  } else if (
+    avgDiff < 3 &&
+    results.every((result) => result.exactMismatched === 0)
+  ) {
+    console.log('\nExact pixel parity.');
   } else if (avgDiff < 3) {
-    console.log('\nExcellent parity! Remaining diff is likely platform-specific font rendering.');
+    console.log(
+      '\nTolerant geometry is close; inspect strict/exact metrics for palette or raster differences.',
+    );
   } else {
-    console.log('\nGood parity.');
+    console.log('\nClose rendering parity; inspect exact metrics for small raster differences.');
   }
 
   console.log(`\nScreenshots saved to: ${screenshotDir}`);
@@ -333,6 +477,32 @@ function cropToSize(png, targetWidth, targetHeight) {
     }
   }
   return cropped;
+}
+
+function measureExactRgbaDifference(tailwindPng, flutterPng) {
+  let mismatchedPixels = 0;
+  let absoluteChannelDelta = 0;
+  let maximumChannelDelta = 0;
+
+  for (let index = 0; index < tailwindPng.data.length; index += 4) {
+    let pixelDiffers = false;
+    for (let channel = 0; channel < 4; channel++) {
+      const delta = Math.abs(
+        tailwindPng.data[index + channel] - flutterPng.data[index + channel],
+      );
+      absoluteChannelDelta += delta;
+      maximumChannelDelta = Math.max(maximumChannelDelta, delta);
+      pixelDiffers ||= delta !== 0;
+    }
+    if (pixelDiffers) mismatchedPixels++;
+  }
+
+  return {
+    mismatchedPixels,
+    meanAbsoluteChannelDelta:
+      absoluteChannelDelta / tailwindPng.data.length,
+    maximumChannelDelta,
+  };
 }
 
 async function waitForFonts(page) {

@@ -44,6 +44,8 @@ cd packages/mix_tailwinds/tool/visual-comparison
 npm install  # first time only
 npx playwright install chromium  # first time only, if Chromium is missing
 npm run compare
+# Run all ten isolated complex parity fixtures (30 screenshot pairs).
+npm run compare:complex
 ```
 
 This script automatically:
@@ -52,6 +54,10 @@ This script automatically:
 3. Generates pixel-diff, amplified absolute-diff, and blink-GIF images
 4. Writes `summary.json` with image dimensions and diff percentages
 5. Reports diff percentages
+
+The complex batch pins the browser reference to Tailwind CSS `4.3.1`, captures
+480/768/1024px, replays dark-hover and delayed-hover states, and writes an
+aggregate `complex-parity/summary.json`.
 
 ### Output
 
@@ -77,10 +83,23 @@ visual-comparison/
 │   ├── ... (same structure)
 │   └── diff/
 │       └── ...
-└── flowbite-card/
+├── flowbite-card/
     ├── flutter-480.png
     ├── ... (same structure)
     └── diff/
+        └── ...
+└── complex-parity/
+    ├── summary.json
+    ├── case-01/
+    │   ├── tailwind-480.png
+    │   ├── flutter-480.png
+    │   ├── summary.json
+    │   └── diff/
+    │       ├── diff-480.png
+    │       ├── strictdiff-480.png
+    │       ├── absdiff-480.png
+    │       └── blink-480.gif
+    └── case-10/
         └── ...
 ```
 
@@ -89,7 +108,19 @@ To run a specific example:
 npm run compare -- --example=dashboard
 npm run compare -- --example=card-alert
 npm run compare -- --example=flowbite-card
+npm run compare -- --example=complex-04
+npm run compare:complex
 ```
+
+Complex-case summaries expose three complementary metrics:
+
+- `diffPercent`: anti-alias-tolerant `pixelmatch` at threshold `0.1`, useful for
+  large structural shifts but intentionally insensitive to nearby colors.
+- `strictDiffPercent`: `pixelmatch` at threshold `0.01`, which catches named
+  palette drift while retaining anti-alias classification.
+- `exactDiffPercent` and `meanAbsoluteRgbaDelta`: byte-level evidence. Use these
+  to confirm exact output, but do not treat tiny raster/shadow deltas as layout
+  failures without inspecting the strict diff and source values.
 
 ### Interpreting Results
 
