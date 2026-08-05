@@ -223,8 +223,17 @@ Use `Pressable` for interaction state around any child, and `PressableBox` when 
 | `canRequestFocus` | Whether focus can be requested; defaults to `true` |
 | `controller` | Optional `WidgetStatesController` |
 | `actions` | Additional focus actions |
+| `onKeyEvent` | Custom key handling; runs before built-in activation |
+| `semanticsLabel` | Accessibility label |
+| `semanticsRole` | `PressableSemanticsRole.button` (default), `link`, or `none` |
+| `excludeFromSemantics` | Emits no semantics node; defaults to `false` |
 
-`Pressable` also exposes keyboard and semantics parameters such as `onKey`, `onKeyEvent`, `excludeFromSemantics`, and `semanticButtonLabel`; check `pressable_widget.dart` for the full constructor.
+While focused, `Pressable` handles the activation keys itself (Space, Enter,
+numpad Enter, select, game button A): pressed on key down, activated once on key
+up. It leaves those keys alone when a descendant holds focus, so a nested
+`TextField` still receives them. Custom `actions` therefore never see
+`ActivateIntent` for a focused Pressable; use `onKeyEvent` to override
+activation.
 
 ### PressableBox
 
@@ -240,7 +249,7 @@ Use `Pressable` for interaction state around any child, and `PressableBox` when 
 | `enableFeedback` | Enables haptic/audio feedback; defaults to `false` |
 | `hitTestBehavior` | Gesture hit-test behavior; defaults to `HitTestBehavior.opaque` |
 
-`PressableBox` forwards interaction handling to `Pressable` and renders the child through `Box(style: style, child: child)`.
+`PressableBox` forwards the full `Pressable` surface — including `mouseCursor`, `canRequestFocus`, `onKeyEvent`, `controller`, `actions`, `semanticsLabel`, `semanticsRole`, and `excludeFromSemantics` — and renders the child through `Box(style: style, child: child)`.
 
 ## Sizing Decision Tree
 

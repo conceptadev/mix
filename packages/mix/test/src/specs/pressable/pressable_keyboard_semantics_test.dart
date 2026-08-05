@@ -53,6 +53,114 @@ void main() {
       }
     });
 
+    testWidgets('activates on every key Flutter maps to ActivateIntent', (
+      tester,
+    ) async {
+      final focusNode = FocusNode();
+      final controller = WidgetStatesController();
+      addTearDown(focusNode.dispose);
+      addTearDown(controller.dispose);
+      var presses = 0;
+
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Pressable(
+            focusNode: focusNode,
+            controller: controller,
+            onPress: () => presses++,
+            child: const SizedBox(width: 100, height: 100),
+          ),
+        ),
+      );
+      focusNode.requestFocus();
+      await tester.pump();
+
+      for (final key in [
+        LogicalKeyboardKey.numpadEnter,
+        LogicalKeyboardKey.select,
+        LogicalKeyboardKey.gameButtonA,
+      ]) {
+        await tester.sendKeyDownEvent(key);
+        await tester.pump();
+        expect(controller.pressed, isTrue, reason: '${key.debugName} down');
+
+        await tester.sendKeyUpEvent(key);
+        await tester.pump();
+        expect(controller.pressed, isFalse, reason: '${key.debugName} up');
+        expect(presses, 1, reason: '${key.debugName} activation');
+
+        presses = 0;
+      }
+    });
+
+    testWidgets('leaves activation keys to a focused descendant', (
+      tester,
+    ) async {
+      final fieldFocus = FocusNode();
+      addTearDown(fieldFocus.dispose);
+      var presses = 0;
+
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Scaffold(
+            body: Pressable(
+              onPress: () => presses++,
+              child: TextField(focusNode: fieldFocus),
+            ),
+          ),
+        ),
+      );
+      fieldFocus.requestFocus();
+      await tester.pump();
+      expect(fieldFocus.hasPrimaryFocus, isTrue);
+
+      for (final key in [LogicalKeyboardKey.space, LogicalKeyboardKey.enter]) {
+        final handled = await tester.sendKeyDownEvent(key);
+        await tester.pump();
+        await tester.sendKeyUpEvent(key);
+        await tester.pump();
+
+        expect(
+          handled,
+          isFalse,
+          reason: '${key.debugName} must reach the field',
+        );
+        expect(
+          presses,
+          0,
+          reason: '${key.debugName} must not press the parent',
+        );
+      }
+    });
+
+    testWidgets('a disabled pressable does not swallow activation keys', (
+      tester,
+    ) async {
+      final fieldFocus = FocusNode();
+      addTearDown(fieldFocus.dispose);
+
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Scaffold(
+            body: Pressable(
+              enabled: false,
+              onPress: () {},
+              child: TextField(focusNode: fieldFocus),
+            ),
+          ),
+        ),
+      );
+      fieldFocus.requestFocus();
+      await tester.pump();
+
+      final handled = await tester.sendKeyDownEvent(LogicalKeyboardKey.space);
+      await tester.pump();
+      await tester.sendKeyUpEvent(LogicalKeyboardKey.space);
+      await tester.pump();
+
+      expect(handled, isFalse);
+    });
+
     testWidgets('focus loss cancels held keyboard activation', (tester) async {
       final focusNode = FocusNode();
       final controller = WidgetStatesController();
@@ -379,6 +487,54 @@ void main() {
         expect(flags.isButton, role == PressableSemanticsRole.button);
         expect(flags.isLink, role == PressableSemanticsRole.link);
       }
+
+      handle.dispose();
+    });
+
+    testWidgets('a roleless wrapper without callbacks has no enabled state', (
+      tester,
+    ) async {
+      final handle = tester.ensureSemantics();
+
+      await tester.pumpWidget(
+        const MaterialApp(
+          home: Pressable(
+            key: Key('wrapper'),
+            semanticsRole: PressableSemanticsRole.none,
+            child: SizedBox(width: 100, height: 100),
+          ),
+        ),
+      );
+
+      expect(
+        tester.getSemantics(find.byKey(const Key('wrapper'))),
+        isSemantics(hasEnabledState: false, isButton: false, isLink: false),
+      );
+
+      handle.dispose();
+    });
+
+    testWidgets('a roleless control still reports its enabled state', (
+      tester,
+    ) async {
+      final handle = tester.ensureSemantics();
+
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Pressable(
+            key: const Key('control'),
+            enabled: false,
+            semanticsRole: PressableSemanticsRole.none,
+            onPress: () {},
+            child: const SizedBox(width: 100, height: 100),
+          ),
+        ),
+      );
+
+      expect(
+        tester.getSemantics(find.byKey(const Key('control'))),
+        isSemantics(hasEnabledState: true, isEnabled: false, isButton: false),
+      );
 
       handle.dispose();
     });

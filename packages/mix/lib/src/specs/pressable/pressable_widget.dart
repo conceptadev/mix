@@ -1,8 +1,7 @@
-import 'package:flutter/widgets.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
 
 import '../../core/internal/mix_interaction_detector.dart';
-import '../../core/providers/focus_highlight_mode_provider.dart';
 import '../../core/providers/widget_state_provider.dart';
 import '../box/box_spec.dart';
 import '../box/box_widget.dart';
@@ -177,37 +176,50 @@ class PressableWidgetState extends State<Pressable> {
 
   void _initController([Set<WidgetState>? initialStates]) {
     _ownsController = widget.controller == null;
-    _controller =
-        widget.controller ?? WidgetStatesController(initialStates ?? {});
+    _controller = widget.controller ?? WidgetStatesController(initialStates);
   }
 
   void _onTap() {
     if (!widget.enabled || widget.onPress == null) return;
 
-    widget.onPress?.call();
+    widget.onPress!();
     if (widget.enableFeedback) Feedback.forTap(context);
   }
 
   void _onLongPress() {
     if (!widget.enabled || widget.onLongPress == null) return;
 
-    widget.onLongPress?.call();
+    widget.onLongPress!();
     if (widget.enableFeedback) Feedback.forLongPress(context);
   }
 
   void _onFocusChange(bool hasFocus) {
-    if (!hasFocus && _heldActivationKey != null) _cancelHeldActivation();
+    if (!hasFocus) _cancelHeldActivation();
     _controller.focused = hasFocus;
     widget.onFocusChange?.call(hasFocus);
   }
 
+  /// Keys Flutter maps to [ActivateIntent] in `WidgetsApp.defaultShortcuts`.
+  ///
+  /// Pressable models activation itself instead of binding [ActivateIntent],
+  /// so it has to cover the same key set or those keys would activate nothing.
   bool _isActivationKey(LogicalKeyboardKey key) {
-    return key == .space || key == .enter || key == .numpadEnter;
+    return key == .space ||
+        key == .enter ||
+        key == .numpadEnter ||
+        key == .select ||
+        key == .gameButtonA;
   }
 
-  void _cancelHeldActivation([WidgetStatesController? controller]) {
+  /// Releases a held keyboard activation.
+  ///
+  /// Guarded so keyboard bookkeeping never clears a pointer-owned press, which
+  /// [MixInteractionDetector] owns.
+  void _cancelHeldActivation() {
+    if (_heldActivationKey == null) return;
+
     _heldActivationKey = null;
-    (controller ?? _controller).pressed = false;
+    _controller.pressed = false;
   }
 
   KeyEventResult _onKeyEvent(FocusNode node, KeyEvent event) {
@@ -225,14 +237,19 @@ class PressableWidgetState extends State<Pressable> {
       return .ignored;
     }
 
-    if (!widget.enabled || widget.onPress == null || !node.hasFocus) {
-      if (event.logicalKey == _heldActivationKey) {
-        _cancelHeldActivation();
-      }
+    // [FocusNode.hasFocus] is also true while a descendant holds primary focus,
+    // so only the focused Pressable itself may claim activation keys. Claiming
+    // them any wider would swallow Space and Enter before a nested text field
+    // (or app shortcuts) ever sees them.
+    if (!node.hasPrimaryFocus || !widget.enabled || widget.onPress == null) {
+      _cancelHeldActivation();
 
-      return .handled;
+      return .ignored;
     }
 
+    // A focused Pressable owns activation keys while it can activate, so a
+    // second activation key pressed during a hold is absorbed rather than
+    // starting a competing activation.
     if (event is KeyDownEvent) {
       if (_heldActivationKey == null) {
         _heldActivationKey = event.logicalKey;
@@ -242,21 +259,17 @@ class PressableWidgetState extends State<Pressable> {
       return .handled;
     }
 
-    if (event is KeyRepeatEvent) {
-      return .handled;
+    // Repeats and key ups only concern the key currently being held.
+    if (event.logicalKey != _heldActivationKey) {
+      return .ignored;
     }
 
     if (event is KeyUpEvent) {
-      final shouldActivate = event.logicalKey == _heldActivationKey;
-      if (shouldActivate) {
-        _cancelHeldActivation();
-        _onTap();
-      }
-
-      return .handled;
+      _cancelHeldActivation();
+      _onTap();
     }
 
-    return .ignored;
+    return .handled;
   }
 
   bool get hasOnPress => widget.onPress != null;
@@ -279,15 +292,17 @@ class PressableWidgetState extends State<Pressable> {
 
     if (oldWidget.controller != widget.controller) {
       final oldController = _controller;
-      final oldStates = oldController.value;
       final ownedOldController = _ownsController;
-      _cancelHeldActivation(oldController);
-      _initController(widget.controller == null ? oldStates : null);
+      // Release the held key on the outgoing controller before its states are
+      // copied, so a keyboard press never survives the swap.
+      _cancelHeldActivation();
+      _initController(
+        widget.controller == null ? {...oldController.value} : null,
+      );
       if (ownedOldController) oldController.dispose();
     }
 
-    if ((oldWidget.enabled && !widget.enabled) ||
-        (oldWidget.onPress != null && widget.onPress == null)) {
+    if (!widget.enabled || widget.onPress == null) {
       _cancelHeldActivation();
     }
   }
@@ -301,6 +316,24 @@ class PressableWidgetState extends State<Pressable> {
 
   @override
   Widget build(BuildContext context) {
+    Widget focusable = Focus(
+      focusNode: widget.focusNode,
+      autofocus: widget.autofocus,
+      onFocusChange: _onFocusChange,
+      onKeyEvent: _onKeyEvent,
+      canRequestFocus: widget.canRequestFocus && widget.enabled,
+      child: MixInteractionDetector(
+        controller: _controller,
+        enabled: widget.enabled,
+        child: widget.child,
+      ),
+    );
+
+    final actions = widget.actions;
+    if (actions != null) {
+      focusable = Actions(actions: actions, child: focusable);
+    }
+
     Widget current = GestureDetector(
       onTap: widget.enabled && widget.onPress != null ? _onTap : null,
       onLongPress: widget.enabled && widget.onLongPress != null
@@ -308,29 +341,20 @@ class PressableWidgetState extends State<Pressable> {
           : null,
       behavior: widget.hitTestBehavior,
       excludeFromSemantics: true,
-      child: MouseRegion(
-        cursor: mouseCursor,
-        child: Actions(
-          actions: widget.actions ?? const {},
-          child: Focus(
-            focusNode: widget.focusNode,
-            autofocus: widget.autofocus,
-            onFocusChange: _onFocusChange,
-            onKeyEvent: _onKeyEvent,
-            canRequestFocus: widget.canRequestFocus && widget.enabled,
-            child: MixInteractionDetector(
-              controller: _controller,
-              enabled: widget.enabled,
-              child: FocusHighlightModeProvider(child: widget.child),
-            ),
-          ),
-        ),
-      ),
+      child: MouseRegion(cursor: mouseCursor, child: focusable),
     );
 
     if (!widget.excludeFromSemantics) {
+      // Only claim an enabled/disabled state for something that can be
+      // disabled: a role, or an activation callback. A bare `none` wrapper is
+      // not a control, so it should not be announced as one.
+      final hasEnabledState =
+          widget.semanticsRole != .none ||
+          widget.onPress != null ||
+          widget.onLongPress != null;
+
       current = Semantics(
-        enabled: widget.enabled,
+        enabled: hasEnabledState ? widget.enabled : null,
         button: widget.semanticsRole == .button ? true : null,
         link: widget.semanticsRole == .link ? true : null,
         label: widget.semanticsLabel,

@@ -276,6 +276,14 @@ final class WidgetStateVariant extends ContextVariant {
 final class FocusVisibleVariant extends ContextVariant {
   FocusVisibleVariant()
     : super('focus_visible', (context) {
+        // A forced state override is authoritative and skips the modality
+        // check: preview tooling asks for the focus-visible look directly and
+        // has no real input modality to read.
+        final override = WidgetStateStyleOverride.maybeOf(context);
+        if (override != null) {
+          return override.states.contains(WidgetState.focused);
+        }
+
         return WidgetStateProvider.hasStateOf(context, .focused) &&
             FocusHighlightModeProvider.of(context) == .traditional;
       });

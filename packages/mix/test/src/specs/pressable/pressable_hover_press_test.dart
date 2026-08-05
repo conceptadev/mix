@@ -161,5 +161,81 @@ void main() {
       await tester.pump();
       expect(controller.pressed, isFalse);
     });
+
+    testWidgets(
+      'press state clears when the pointer drifts past the tap slop',
+      (tester) async {
+        final controller = WidgetStatesController();
+        addTearDown(controller.dispose);
+
+        await tester.pumpWidget(
+          MaterialApp(
+            home: Pressable(
+              controller: controller,
+              onPress: () {},
+              // Large enough that the pointer never leaves the bounds.
+              child: const SizedBox.expand(),
+            ),
+          ),
+        );
+
+        final gesture = await tester.startGesture(const Offset(200, 200));
+        await tester.pump(const Duration(milliseconds: 120));
+        expect(controller.pressed, isTrue);
+
+        await gesture.moveBy(const Offset(0, kTouchSlop / 2));
+        await tester.pump();
+        expect(
+          controller.pressed,
+          isTrue,
+          reason: 'movement within the slop is still a press',
+        );
+
+        await gesture.moveBy(const Offset(0, kTouchSlop));
+        await tester.pump();
+        expect(controller.pressed, isFalse);
+
+        await gesture.up();
+        await tester.pumpAndSettle();
+      },
+    );
+
+    testWidgets('press state clears while scrolling a list of pressables', (
+      tester,
+    ) async {
+      final controller = WidgetStatesController();
+      addTearDown(controller.dispose);
+
+      await tester.pumpWidget(
+        MaterialApp(
+          home: ListView.builder(
+            itemCount: 30,
+            itemExtent: 200,
+            itemBuilder: (context, index) => Pressable(
+              controller: index == 0 ? controller : null,
+              onPress: () {},
+              child: SizedBox(height: 200, child: Text('item $index')),
+            ),
+          ),
+        ),
+      );
+
+      final gesture = await tester.startGesture(const Offset(200, 100));
+      await tester.pump(const Duration(milliseconds: 120));
+      expect(controller.pressed, isTrue);
+
+      // A scrolled item travels with the pointer, so it never leaves the item
+      // bounds: only the slop rule can end the press here.
+      for (var i = 0; i < 5; i++) {
+        await gesture.moveBy(const Offset(0, -8));
+        await tester.pump(const Duration(milliseconds: 16));
+      }
+
+      expect(controller.pressed, isFalse);
+      expect(tester.getTopLeft(find.text('item 0')).dy, lessThan(0));
+
+      await gesture.up();
+      await tester.pumpAndSettle();
+    });
   });
 }

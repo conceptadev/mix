@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 import '../animation/style_animation_builder.dart';
 import '../modifiers/internal/render_modifier.dart';
 import 'internal/mix_interaction_detector.dart';
+import 'providers/focus_highlight_mode_provider.dart';
 import 'providers/style_provider.dart';
 import 'providers/style_spec_provider.dart';
 import 'providers/widget_state_provider.dart';
@@ -220,11 +221,15 @@ class _ExternalControllerProvider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListenableBuilder(
-      listenable: controller,
-      builder: (_, _) {
-        return WidgetStateProvider(states: controller.value, child: child);
-      },
+    // Paired with the widget-state scope so the focus-visible variant can read
+    // the input modality wherever focused state is published.
+    return FocusHighlightModeProvider(
+      child: ListenableBuilder(
+        listenable: controller,
+        builder: (_, _) {
+          return WidgetStateProvider(states: controller.value, child: child);
+        },
+      ),
     );
   }
 }

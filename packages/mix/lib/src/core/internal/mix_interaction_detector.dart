@@ -3,6 +3,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 import '../pointer_position.dart';
+import '../providers/focus_highlight_mode_provider.dart';
 import '../providers/widget_state_provider.dart';
 
 /// A widget that detects user interactions and provides state tracking with automatic mouse position tracking.
@@ -37,6 +38,15 @@ class _MixInteractionDetectorState extends State<MixInteractionDetector> {
   WidgetStatesController? _internalController;
   late final PointerPositionNotifier _cursorPositionNotifier;
 
+  /// Global position of the pointer that owns the current pressed state.
+  Offset? _pressOrigin;
+
+  /// Distance a pointer may drift before it stops counting as a press.
+  ///
+  /// Mirrors what [TapGestureRecognizer] uses, so the pressed state and the tap
+  /// gesture give up on the same movement.
+  double _touchSlop = kTouchSlop;
+
   @override
   void initState() {
     super.initState();
@@ -54,7 +64,7 @@ class _MixInteractionDetectorState extends State<MixInteractionDetector> {
     _effectiveController.update(.disabled, !widget.enabled);
     if (!widget.enabled) {
       _effectiveController.update(.hovered, false);
-      _effectiveController.update(.pressed, false);
+      _clearPressedState();
       _cursorPositionNotifier.clearPosition();
       widget.onHoverChange?.call(false);
     }
@@ -72,8 +82,9 @@ class _MixInteractionDetectorState extends State<MixInteractionDetector> {
     }
   }
 
-  /// Clears the pressed state and notifies listeners.
+  /// Clears the pressed state and the pointer that owned it.
   void _clearPressedState() {
+    _pressOrigin = null;
     if (!_effectiveController.value.contains(WidgetState.pressed)) return;
     _effectiveController.update(.pressed, false);
   }
@@ -105,32 +116,43 @@ class _MixInteractionDetectorState extends State<MixInteractionDetector> {
     if (event.kind == .mouse && (event.buttons & kPrimaryMouseButton) == 0) {
       return;
     }
+    _pressOrigin = event.position;
     _effectiveController.update(.pressed, true);
   }
 
   /// Handles pointer up events.
   void _handlePointerUp(PointerUpEvent event) {
     if (!mounted) return;
-    _effectiveController.update(.pressed, false);
+    _clearPressedState();
   }
 
   /// Handles pointer cancel events.
   void _handlePointerCancel(PointerCancelEvent event) {
     if (!mounted) return;
-    _effectiveController.update(.pressed, false);
+    _clearPressedState();
   }
 
   /// Handles pointer move events to track boundary crossings.
   void _handlePointerMove(PointerMoveEvent event) {
     if (!mounted) return;
 
+    // A pointer that drifts past the tap slop has become a drag or a scroll,
+    // so it no longer owns a press. This [Listener] sees raw pointer events
+    // rather than arena outcomes, and a scrolled widget travels with the
+    // pointer, so bounds alone never notice.
+    final pressOrigin = _pressOrigin;
+    if (pressOrigin != null &&
+        (event.position - pressOrigin).distance > _touchSlop) {
+      _clearPressedState();
+
+      return;
+    }
+
     final size = context.size;
     if (size == null) return;
 
-    final isInside = size.contains(event.localPosition);
-
     // Clear pressed state when moving outside
-    if (!isInside) {
+    if (!size.contains(event.localPosition)) {
       _clearPressedState();
     }
   }
@@ -169,6 +191,13 @@ class _MixInteractionDetectorState extends State<MixInteractionDetector> {
       (_internalController ??= _createInternalController());
 
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _touchSlop =
+        MediaQuery.maybeGestureSettingsOf(context)?.touchSlop ?? kTouchSlop;
+  }
+
+  @override
   void didUpdateWidget(MixInteractionDetector oldWidget) {
     super.didUpdateWidget(oldWidget);
 
@@ -193,29 +222,35 @@ class _MixInteractionDetectorState extends State<MixInteractionDetector> {
 
   @override
   Widget build(BuildContext context) {
-    // Build order: IgnorePointer -> MouseRegion -> Listener -> PointerPositionProvider -> ListenableBuilder -> WidgetStateProvider
-    return IgnorePointer(
-      ignoring: !widget.enabled,
-      child: MouseRegion(
-        onEnter: _handlePointerEnter,
-        onExit: _handlePointerExit,
-        onHover: _handleOnPointerHover,
-        child: Listener(
-          onPointerDown: _handlePointerDown,
-          onPointerMove: _handlePointerMove,
-          onPointerUp: _handlePointerUp,
-          onPointerCancel: _handlePointerCancel,
-          behavior: .opaque,
-          child: PointerPositionProvider(
-            notifier: _cursorPositionNotifier,
-            child: ListenableBuilder(
-              listenable: _effectiveController,
-              builder: (context, _) {
-                return WidgetStateProvider(
-                  states: _effectiveController.value,
-                  child: widget.child,
-                );
-              },
+    // Build order: FocusHighlightModeProvider -> IgnorePointer -> MouseRegion -> Listener -> PointerPositionProvider -> ListenableBuilder -> WidgetStateProvider
+    //
+    // The focus-highlight scope is paired with the widget-state scope: any
+    // subtree that can resolve widget-state variants can also resolve the
+    // focus-visible variant, which needs both signals.
+    return FocusHighlightModeProvider(
+      child: IgnorePointer(
+        ignoring: !widget.enabled,
+        child: MouseRegion(
+          onEnter: _handlePointerEnter,
+          onExit: _handlePointerExit,
+          onHover: _handleOnPointerHover,
+          child: Listener(
+            onPointerDown: _handlePointerDown,
+            onPointerMove: _handlePointerMove,
+            onPointerUp: _handlePointerUp,
+            onPointerCancel: _handlePointerCancel,
+            behavior: .opaque,
+            child: PointerPositionProvider(
+              notifier: _cursorPositionNotifier,
+              child: ListenableBuilder(
+                listenable: _effectiveController,
+                builder: (context, _) {
+                  return WidgetStateProvider(
+                    states: _effectiveController.value,
+                    child: widget.child,
+                  );
+                },
+              ),
             ),
           ),
         ),
