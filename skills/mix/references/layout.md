@@ -7,7 +7,7 @@ Flutter layout widgets for styling concerns.
 
 Check the consuming package's `pubspec.yaml` and resolved dependency before
 using a layout API. This repository's `main` branch includes `WrapBox` and
-`GridBox`, but both landed after the `mix 2.2.0-beta.1` release. When working in
+`GridBox`, both first shipped in the `mix 2.2.0-beta.2` release. When working in
 the Mix repository, prefer local source. When working downstream, confirm the
 installed version exposes the referenced classes.
 

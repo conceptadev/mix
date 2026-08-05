@@ -1,4 +1,4 @@
-## 2.2.0-beta.1
+## 2.2.0-beta.2
 
 ### New features
 
@@ -12,6 +12,8 @@
   `WrapBoxStyler`, and `WrapBox` family with flattened fluent Wrap styling,
   collision-safe Box/Wrap names, generated constructors and factories, and a
   runnable gallery example.
+
+## 2.2.0-beta.1
 
 ### Fixes
 
