@@ -22,10 +22,12 @@
 - **Reserved activation keys:** While it holds primary focus and can activate,
   Pressable owns unmodified Space, Enter, numpad Enter, select, and game button
   A so it can model held-key state consistently. Override those direct key
-  bindings with `onKeyEvent`; custom `actions` remain available to other
-  shortcuts and programmatic intents. Those keys are left untouched when a
-  descendant holds focus, and modified chords are left to application
-  shortcuts.
+  bindings with `onKeyEvent`. `onPress` still honors `ActivateIntent` dispatched
+  by remapped shortcuts or programmatic invocation, and custom `actions` can
+  override that binding or handle other intents. Only those five reserved keys
+  are claimed raw; they are left untouched when a descendant holds focus, and
+  modified chords are left to application shortcuts. A link-role Pressable
+  activates with Enter but leaves Space available for scrolling.
 
 ### Fixes
 

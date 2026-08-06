@@ -417,6 +417,102 @@ void main() {
       expect(customActivations, 0);
     });
 
+    testWidgets('a remapped ActivateIntent invokes onPress', (tester) async {
+      final focusNode = FocusNode();
+      addTearDown(focusNode.dispose);
+      var presses = 0;
+
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Shortcuts(
+            shortcuts: const {
+              SingleActivator(LogicalKeyboardKey.keyY): ActivateIntent(),
+            },
+            child: Pressable(
+              focusNode: focusNode,
+              onPress: () => presses++,
+              child: const SizedBox(width: 100, height: 100),
+            ),
+          ),
+        ),
+      );
+      focusNode.requestFocus();
+      await tester.pump();
+
+      await tester.sendKeyEvent(LogicalKeyboardKey.keyY);
+      await tester.pump();
+
+      expect(presses, 1);
+    });
+
+    testWidgets('a custom ActivateIntent overrides the built-in action', (
+      tester,
+    ) async {
+      final focusNode = FocusNode();
+      addTearDown(focusNode.dispose);
+      var presses = 0;
+      var customActivations = 0;
+
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Shortcuts(
+            shortcuts: const {
+              SingleActivator(LogicalKeyboardKey.keyY): ActivateIntent(),
+            },
+            child: Pressable(
+              focusNode: focusNode,
+              onPress: () => presses++,
+              actions: {
+                ActivateIntent: CallbackAction<ActivateIntent>(
+                  onInvoke: (_) => customActivations++,
+                ),
+              },
+              child: const SizedBox(width: 100, height: 100),
+            ),
+          ),
+        ),
+      );
+      focusNode.requestFocus();
+      await tester.pump();
+
+      await tester.sendKeyEvent(LogicalKeyboardKey.keyY);
+      await tester.pump();
+
+      expect(customActivations, 1);
+      expect(presses, 0);
+    });
+
+    testWidgets('a disabled Pressable ignores a remapped ActivateIntent', (
+      tester,
+    ) async {
+      final focusNode = FocusNode();
+      addTearDown(focusNode.dispose);
+      var presses = 0;
+
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Shortcuts(
+            shortcuts: const {
+              SingleActivator(LogicalKeyboardKey.keyY): ActivateIntent(),
+            },
+            child: Pressable(
+              enabled: false,
+              focusNode: focusNode,
+              onPress: () => presses++,
+              child: const SizedBox(width: 100, height: 100),
+            ),
+          ),
+        ),
+      );
+      focusNode.requestFocus();
+      await tester.pump();
+
+      await tester.sendKeyEvent(LogicalKeyboardKey.keyY);
+      await tester.pump();
+
+      expect(presses, 0);
+    });
+
     testWidgets('leaves modified activation keys to application shortcuts', (
       tester,
     ) async {
@@ -660,6 +756,88 @@ void main() {
   });
 
   group('Pressable semantics contract', () {
+    testWidgets('a link activates with Enter but not Space', (tester) async {
+      final focusNode = FocusNode();
+      final controller = WidgetStatesController();
+      addTearDown(focusNode.dispose);
+      addTearDown(controller.dispose);
+      var presses = 0;
+
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Pressable(
+            focusNode: focusNode,
+            controller: controller,
+            semanticsRole: PressableSemanticsRole.link,
+            onPress: () => presses++,
+            child: const SizedBox(width: 100, height: 100),
+          ),
+        ),
+      );
+      focusNode.requestFocus();
+      await tester.pump();
+
+      expect(await tester.sendKeyDownEvent(LogicalKeyboardKey.space), isFalse);
+      await tester.pump();
+      expect(controller.pressed, isFalse);
+      expect(presses, 0);
+
+      expect(await tester.sendKeyUpEvent(LogicalKeyboardKey.space), isFalse);
+      expect(await tester.sendKeyDownEvent(LogicalKeyboardKey.enter), isTrue);
+      await tester.pump();
+      expect(controller.pressed, isTrue);
+      expect(presses, 0);
+
+      expect(await tester.sendKeyUpEvent(LogicalKeyboardKey.enter), isTrue);
+      await tester.pump();
+      expect(controller.pressed, isFalse);
+      expect(presses, 1);
+    });
+
+    testWidgets('changing from button to link cancels a held Space', (
+      tester,
+    ) async {
+      final focusNode = FocusNode();
+      final controller = WidgetStatesController();
+      addTearDown(focusNode.dispose);
+      addTearDown(controller.dispose);
+      var role = PressableSemanticsRole.button;
+      var presses = 0;
+      late StateSetter setState;
+
+      await tester.pumpWidget(
+        MaterialApp(
+          home: StatefulBuilder(
+            builder: (context, stateSetter) {
+              setState = stateSetter;
+
+              return Pressable(
+                focusNode: focusNode,
+                controller: controller,
+                semanticsRole: role,
+                onPress: () => presses++,
+                child: const SizedBox(width: 100, height: 100),
+              );
+            },
+          ),
+        ),
+      );
+      focusNode.requestFocus();
+      await tester.pump();
+
+      expect(await tester.sendKeyDownEvent(LogicalKeyboardKey.space), isTrue);
+      await tester.pump();
+      expect(controller.pressed, isTrue);
+
+      setState(() => role = PressableSemanticsRole.link);
+      await tester.pump();
+      expect(controller.pressed, isFalse);
+
+      expect(await tester.sendKeyUpEvent(LogicalKeyboardKey.space), isFalse);
+      await tester.pump();
+      expect(presses, 0);
+    });
+
     testWidgets('maps button, link, and none roles exactly', (tester) async {
       final handle = tester.ensureSemantics();
 

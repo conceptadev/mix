@@ -12,6 +12,8 @@ enum PressableSemanticsRole {
   button,
 
   /// Exposes the control as a link.
+  ///
+  /// Activates with Enter but not Space, matching platform link convention.
   link,
 
   /// Adds no button or link role while preserving other semantics.
@@ -173,6 +175,18 @@ class Pressable extends StatefulWidget {
   State<Pressable> createState() => PressableWidgetState();
 }
 
+final class _PressableActivateAction extends CallbackAction<Intent> {
+  final bool Function() _isEnabled;
+
+  _PressableActivateAction({
+    required bool Function() isEnabled,
+    required super.onInvoke,
+  }) : _isEnabled = isEnabled;
+
+  @override
+  bool isEnabled(Intent intent) => _isEnabled();
+}
+
 @visibleForTesting
 class PressableWidgetState extends State<Pressable> {
   late WidgetStatesController _controller;
@@ -220,6 +234,9 @@ class PressableWidgetState extends State<Pressable> {
 
   /// Keys Pressable supports for direct keyboard/game-controller activation.
   bool _isActivationKey(LogicalKeyboardKey key) {
+    // Links follow platform convention: Enter activates, Space scrolls.
+    if (widget.semanticsRole == .link && key == .space) return false;
+
     return key == .space ||
         key == .enter ||
         key == .numpadEnter ||
@@ -360,19 +377,26 @@ class PressableWidgetState extends State<Pressable> {
       if (ownedOldController) oldController.dispose();
     }
 
-    if (!widget.enabled || widget.onPress == null) {
+    final heldKey = _heldActivationKey;
+    if (!widget.enabled ||
+        widget.onPress == null ||
+        (heldKey != null && !_isActivationKey(heldKey))) {
       _cancelHeldActivation();
     }
   }
 
   @override
   void dispose() {
-    _heldActivationKey = null;
-    _hovered = false;
-    _focused = false;
-    _pointerPressed = false;
-    _syncInteractionStates();
-    if (_ownsController) _controller.dispose();
+    if (_ownsController) {
+      _controller.dispose();
+    } else {
+      // Detaching must not leave phantom interaction states on a controller
+      // the caller keeps using.
+      _controller
+        ..hovered = false
+        ..focused = false
+        ..pressed = false;
+    }
     super.dispose();
   }
 
@@ -398,7 +422,23 @@ class PressableWidgetState extends State<Pressable> {
     // Keep the subtree shape stable when enabled changes while withholding
     // custom actions from disabled controls.
     focusable = Actions(
-      actions: widget.enabled ? (widget.actions ?? const {}) : const {},
+      actions: widget.enabled
+          ? {
+              // Reserved keys are claimed raw before Shortcuts, so this binding
+              // only fires for remapped shortcuts and programmatic intents.
+              ActivateIntent: _PressableActivateAction(
+                // Flutter maps Space to ActivateIntent by default. Keep that
+                // intent disabled for link Space so the key remains unhandled.
+                isEnabled: () =>
+                    widget.semanticsRole != .link ||
+                    !HardwareKeyboard.instance.logicalKeysPressed.contains(
+                      LogicalKeyboardKey.space,
+                    ),
+                onInvoke: (_) => _onTap(),
+              ),
+              ...?widget.actions,
+            }
+          : const {},
       child: focusable,
     );
 

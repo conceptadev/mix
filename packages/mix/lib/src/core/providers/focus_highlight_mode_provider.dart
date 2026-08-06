@@ -6,6 +6,11 @@ import 'package:flutter/widgets.dart';
 class FocusHighlightModeProvider extends StatefulWidget {
   const FocusHighlightModeProvider({super.key, required this.child});
 
+  /// Reads the current focus-highlight mode.
+  ///
+  /// Without a provider scope, this falls back to
+  /// [FocusManager.highlightMode] without subscribing to changes. Callers only
+  /// receive reactive modality updates inside a [FocusHighlightModeProvider].
   static FocusHighlightMode of(BuildContext context) {
     return context
             .dependOnInheritedWidgetOfExactType<_FocusHighlightModeScope>()

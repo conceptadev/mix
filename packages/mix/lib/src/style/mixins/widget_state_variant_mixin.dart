@@ -48,6 +48,10 @@ mixin WidgetStateVariantMixin<T extends Style<S>, S extends Spec<S>>
   }
 
   /// Creates a variant for focus shown in Flutter's traditional highlight mode.
+  ///
+  /// Modality changes rebuild reactively under Mix-managed state scopes such as
+  /// [Pressable] or a [StyleBuilder] with a controller. Under a manually mounted
+  /// [WidgetStateProvider], they apply on the next rebuild.
   T onFocusVisible(T style) {
     return variant(ContextVariant.focusVisible(), style);
   }

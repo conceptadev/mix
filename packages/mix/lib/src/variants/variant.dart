@@ -285,6 +285,9 @@ final class WidgetStateVariant extends ContextVariant {
 }
 
 /// Context variant that applies to traditionally highlighted keyboard focus.
+///
+/// Modality changes are reactive inside Mix-managed widget-state scopes and
+/// apply on the next rebuild under a manually mounted [WidgetStateProvider].
 final class FocusVisibleVariant extends ContextVariant {
   FocusVisibleVariant()
     : super('focus_visible', (context) {

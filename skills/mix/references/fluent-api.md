@@ -233,9 +233,11 @@ select, and game button A itself: pressed on key down, activated once on key up.
 It leaves those keys alone when a descendant holds focus, so a nested
 `TextField` still receives them, and leaves modified chords to application
 shortcuts. Those direct key bindings are handled before Flutter can dispatch an
-`ActivateIntent`; use `onKeyEvent` to override them. Custom actions remain
-available to other shortcuts and programmatic intents, but are not installed
-while the Pressable is disabled.
+`ActivateIntent`; use `onKeyEvent` to override them. `ActivateIntent` remains
+bound so remapped shortcuts and programmatic invocation activate `onPress`, and
+a custom action can override that binding. With `semanticsRole: .link`, Enter
+activates but Space does not. Custom actions are not installed while the
+Pressable is disabled.
 
 ### PressableBox
 
