@@ -1,5 +1,3 @@
-import 'dart:collection';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 
@@ -69,7 +67,15 @@ abstract class Style<S extends Spec<S>> extends Mix<StyleSpec<S>>
   @internal
   Set<WidgetState> get widgetStates {
     final states = <WidgetState>{};
-    final visited = HashSet<Style<S>>.identity();
+    // Identity, not equality, and it earns its keep twice over:
+    //  1. Cycles. `$variants` is stored by reference, so a caller can pass a
+    //     list to a styler constructor and then append the styler to that same
+    //     list. Value equality would also recurse forever comparing the cycle.
+    //  2. Sharing. `VariantStyleMixin.onBuilder` stores the receiver itself as
+    //     the builder's placeholder value, so each chained `onBuilder` nests a
+    //     snapshot of the style before it. Without dedup that is O(2^n) in the
+    //     number of chained builders.
+    final visited = Set<Style<S>>.identity();
 
     void collectDependencies(Style<S> style) {
       if (!visited.add(style)) return;

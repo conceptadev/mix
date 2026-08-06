@@ -26,6 +26,19 @@ class MixInteractionDetector extends StatefulWidget {
     this.onPointerPositionChange,
   });
 
+  /// The widget states this detector derives from pointer input.
+  ///
+  /// Deliberately excludes [WidgetState.disabled]: that one is driven by
+  /// [enabled], which the caller sets, not by interaction. Every other
+  /// [WidgetState] must come from an external controller or an ancestor
+  /// [WidgetStateProvider], so installing this detector to satisfy them adds an
+  /// opaque hit-test target for no behavioural gain. Callers deciding whether
+  /// this detector is worth mounting should check against this set.
+  static const Set<WidgetState> pointerDrivenStates = {
+    WidgetState.hovered,
+    WidgetState.pressed,
+  };
+
   final Widget child;
   final WidgetStatesController? controller;
   final bool enabled;
