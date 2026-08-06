@@ -169,6 +169,34 @@ void main() {
       expect(keyEvents, 0);
     });
 
+    testWidgets('without onPress, activation keys stay unhandled', (
+      tester,
+    ) async {
+      final focusNode = FocusNode();
+      addTearDown(focusNode.dispose);
+
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Pressable(
+            focusNode: focusNode,
+            onLongPress: () {},
+            child: const SizedBox(width: 100, height: 100),
+          ),
+        ),
+      );
+      focusNode.requestFocus();
+      await tester.pump();
+
+      // Neither the raw key claim nor the ActivateIntent binding may report
+      // these keys handled when there is nothing to activate.
+      expect(await tester.sendKeyDownEvent(LogicalKeyboardKey.enter), isFalse);
+      await tester.pump();
+      expect(await tester.sendKeyUpEvent(LogicalKeyboardKey.enter), isFalse);
+      expect(await tester.sendKeyDownEvent(LogicalKeyboardKey.space), isFalse);
+      await tester.pump();
+      expect(await tester.sendKeyUpEvent(LogicalKeyboardKey.space), isFalse);
+    });
+
     testWidgets('focus loss cancels held keyboard activation', (tester) async {
       final focusNode = FocusNode();
       final controller = WidgetStatesController();

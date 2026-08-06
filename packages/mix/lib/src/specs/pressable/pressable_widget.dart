@@ -427,13 +427,16 @@ class PressableWidgetState extends State<Pressable> {
               // Reserved keys are claimed raw before Shortcuts, so this binding
               // only fires for remapped shortcuts and programmatic intents.
               ActivateIntent: _PressableActivateAction(
-                // Flutter maps Space to ActivateIntent by default. Keep that
-                // intent disabled for link Space so the key remains unhandled.
+                // Flutter maps Space to ActivateIntent by default, so this
+                // binding reports disabled whenever activation cannot happen —
+                // no onPress, or link-role Space — and the key stays unhandled
+                // for scrolling and other fallback handlers.
                 isEnabled: () =>
-                    widget.semanticsRole != .link ||
-                    !HardwareKeyboard.instance.logicalKeysPressed.contains(
-                      LogicalKeyboardKey.space,
-                    ),
+                    widget.onPress != null &&
+                    (widget.semanticsRole != .link ||
+                        !HardwareKeyboard.instance.logicalKeysPressed.contains(
+                          LogicalKeyboardKey.space,
+                        )),
                 onInvoke: (_) => _onTap(),
               ),
               ...?widget.actions,
