@@ -1,10 +1,27 @@
 ## Unreleased
 
+### New features
+
+- **`ContextVariant.widgetStateDependencies`:** Context variants now declare the
+  widget states they read, so custom variants participate in nested dependency
+  discovery instead of relying on the framework recognizing a specific variant
+  type. Automatic self-tracking is limited to pointer-driven hover and press;
+  other states still require an ancestor scope or external controller.
+
 ### Fixes
 
-- **Nested widget-state discovery:** `StyleBuilder` now discovers state
+- **Nested widget-state discovery:** `Style.widgetStates` now discovers state
   requirements recursively through nested and negated variants with
-  identity-based cycle protection.
+  identity-based cycle protection, so variants like
+  `onDark(BoxStyler().onHovered(...))` and `onEnabled(...)` are tracked instead
+  of silently never activating.
+- **Interaction detector is mounted only when it can help:** `StyleBuilder` now
+  installs its pointer-interaction detector only for the states that detector
+  actually drives (`hovered`/`pressed`). States such as `disabled` and `focused`
+  can only come from an external `WidgetStatesController` or an ancestor scope,
+  so styles depending solely on those no longer gain an opaque hit-test target
+  that swallowed pointer events aimed at widgets beneath them, and no longer
+  hijack the state scope of descendants that do track hover.
 
 ## 2.2.0-beta.1
 

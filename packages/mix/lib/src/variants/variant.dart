@@ -109,6 +109,18 @@ class ContextVariant extends Variant {
   }
 
   /// Widget states that must be tracked for this variant to be evaluated.
+  ///
+  /// [Style.widgetStates] uses this declaration to discover dependencies in a
+  /// complete nested style. [StyleBuilder] can then install automatic tracking
+  /// for pointer-driven states such as hovered and pressed. Other states, such
+  /// as focused and disabled, still require an ancestor state scope or an
+  /// external [WidgetStatesController]. Subclasses that read widget state —
+  /// directly, or by delegating to another variant the way [NotVariant] does —
+  /// must override this getter.
+  ///
+  /// Discovery does not execute context closures, so states introduced by a
+  /// [ContextVariantBuilder], or read by a plain [ContextVariant] closure,
+  /// cannot contribute automatic dependencies.
   Set<WidgetState> get widgetStateDependencies => const {};
 
   /// Check if this variant should be active for the given context

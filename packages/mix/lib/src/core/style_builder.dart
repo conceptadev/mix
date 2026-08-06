@@ -125,11 +125,18 @@ class _StyleBuilderState<S extends Spec<S>> extends State<StyleBuilder<S>>
   Widget build(BuildContext context) {
     final style = _buildStyle(context);
 
-    // Calculate interactivity need early
-    final needsToTrackWidgetState =
-        widget.controller == null && style.widgetStates.isNotEmpty;
+    // Calculate interactivity need early. Only states the detector can actually
+    // drive justify mounting it; see [MixInteractionDetector.pointerDrivenStates].
+    final needsPointerStateTracking =
+        widget.controller == null &&
+        style.widgetStates.any(
+          MixInteractionDetector.pointerDrivenStates.contains,
+        );
 
-    final alreadyHasWidgetStateScope = WidgetStateProvider.of(context) != null;
+    // Variant resolution registers its own granular state dependencies; this
+    // existence check must not subscribe to every change in the model.
+    final alreadyHasWidgetStateScope =
+        context.getInheritedWidgetOfExactType<WidgetStateProvider>() != null;
 
     Widget current = Builder(
       builder: (context) {
@@ -142,7 +149,7 @@ class _StyleBuilderState<S extends Spec<S>> extends State<StyleBuilder<S>>
       },
     );
 
-    if (needsToTrackWidgetState && !alreadyHasWidgetStateScope) {
+    if (needsPointerStateTracking && !alreadyHasWidgetStateScope) {
       // If we need interactivity and no MixWidgetStateModel is present,
       // wrap in MixInteractionDetector
       current = MixInteractionDetector(controller: _controller, child: current);
