@@ -71,10 +71,8 @@ abstract class Style<S extends Spec<S>> extends Mix<StyleSpec<S>>
     //  1. Cycles. `$variants` is stored by reference, so a caller can pass a
     //     list to a styler constructor and then append the styler to that same
     //     list. Value equality would also recurse forever comparing the cycle.
-    //  2. Sharing. `VariantStyleMixin.onBuilder` stores the receiver itself as
-    //     the builder's placeholder value, so each chained `onBuilder` nests a
-    //     snapshot of the style before it. Without dedup that is O(2^n) in the
-    //     number of chained builders.
+    //  2. Sharing. A style instance can be shared between multiple context-
+    //     variant branches, so identity avoids visiting it more than once.
     final visited = Set<Style<S>>.identity();
 
     void collectDependencies(Style<S> style) {
@@ -84,10 +82,16 @@ abstract class Style<S extends Spec<S>> extends Mix<StyleSpec<S>>
       if (variants == null) return;
 
       for (final variantStyle in variants) {
+        // Only ContextVariant-headed entries can activate through StyleBuilder,
+        // which always resolves with empty namedVariants: NamedVariant branches
+        // are inert until applyVariants hoists their value to the top level, and
+        // ContextVariantBuilder ignores its stored placeholder value at
+        // resolution. Walking them would mount the interaction detector for
+        // states that can never fire.
         if (variantStyle.variant case final ContextVariant variant) {
           states.addAll(variant.widgetStateDependencies);
+          collectDependencies(variantStyle.value);
         }
-        collectDependencies(variantStyle.value);
       }
     }
 

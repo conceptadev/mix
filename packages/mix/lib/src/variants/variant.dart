@@ -121,6 +121,11 @@ class ContextVariant extends Variant {
   /// Discovery does not execute context closures, so states introduced by a
   /// [ContextVariantBuilder], or read by a plain [ContextVariant] closure,
   /// cannot contribute automatic dependencies.
+  ///
+  /// Discovery is static: dependencies nested under variants that are inactive
+  /// in the current context (for example hover declared inside a dark-mode
+  /// branch while in light mode) still count, so state tracking may be installed
+  /// before the enclosing variant activates.
   Set<WidgetState> get widgetStateDependencies => const {};
 
   /// Check if this variant should be active for the given context

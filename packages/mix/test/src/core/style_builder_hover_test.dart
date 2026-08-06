@@ -358,20 +358,32 @@ void main() {
         expect(style.widgetStates, {WidgetState.disabled});
       });
 
+      test('ignores hover under an un-applied named variant', () {
+        const primary = NamedVariant('primary');
+        final style = BoxStyler().variant(
+          primary,
+          BoxStyler().onHovered(BoxStyler()),
+        );
+
+        expect(style.widgetStates, isEmpty);
+        expect(style.applyVariants([primary]).widgetStates, {
+          WidgetState.hovered,
+        });
+      });
+
       test('handles cyclic nested variant styles by identity', () {
         final variants = <VariantStyle<BoxSpec>>[];
         final cyclicStyle = BoxStyler(variants: variants);
-        variants.add(VariantStyle(const NamedVariant('cycle'), cyclicStyle));
+        variants.add(
+          VariantStyle(ContextVariant.brightness(Brightness.dark), cyclicStyle),
+        );
         variants.add(
           VariantStyle(
             ContextVariant.widgetState(WidgetState.hovered),
             BoxStyler(),
           ),
         );
-        final rootStyle = BoxStyler().variant(
-          const NamedVariant('root'),
-          cyclicStyle,
-        );
+        final rootStyle = BoxStyler().onDark(cyclicStyle);
 
         expect(rootStyle.widgetStates, {WidgetState.hovered});
       });
@@ -436,6 +448,25 @@ void main() {
           await reachesWidgetBeneath(
             tester,
             BoxStyler().size(100, 100).onEnabled(BoxStyler().size(100, 100)),
+          ),
+          isTrue,
+        );
+      });
+
+      testWidgets('un-applied named-variant hover stays transparent to taps', (
+        tester,
+      ) async {
+        const primary = NamedVariant('primary');
+
+        expect(
+          await reachesWidgetBeneath(
+            tester,
+            BoxStyler()
+                .size(100, 100)
+                .variant(
+                  primary,
+                  BoxStyler().onHovered(BoxStyler().size(100, 100)),
+                ),
           ),
           isTrue,
         );

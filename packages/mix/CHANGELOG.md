@@ -11,10 +11,12 @@
 ### Fixes
 
 - **Nested widget-state discovery:** `Style.widgetStates` now discovers state
-  requirements recursively through nested and negated variants with
-  identity-based cycle protection, so variants like
+  requirements recursively through nested and negated context-variant branches
+  with identity-based cycle protection, so variants like
   `onDark(BoxStyler().onHovered(...))` and `onEnabled(...)` are tracked instead
-  of silently never activating.
+  of silently never activating. Branches under un-applied named variants are
+  deliberately not tracked because they cannot activate until `applyVariants`
+  hoists them to the top level.
 - **Interaction detector is mounted only when it can help:** `StyleBuilder` now
   installs its pointer-interaction detector only for the states that detector
   actually drives (`hovered`/`pressed`). States such as `disabled` and `focused`
