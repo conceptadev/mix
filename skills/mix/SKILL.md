@@ -22,8 +22,8 @@ description: >
 
 Type-safe styling system for Flutter that separates style semantics from widgets.
 
-**Repository target:** current `main` (`mix` pubspec: `2.2.0-beta.1`, Dart >=3.11.0, Flutter >=3.41.0).
-Confirm the consuming project's actual version before applying patterns. `WrapBox` and `GridBox` landed on `main` after `2.2.0-beta.1`, so a released dependency may not expose them yet.
+**Repository target:** current `main` (`mix` pubspec: `2.2.0-beta.2`, Dart >=3.11.0, Flutter >=3.41.0).
+Confirm the consuming project's actual version before applying patterns. `WrapBox` and `GridBox` ship in `2.2.0-beta.2`, so an older resolved dependency may not expose them yet.
 
 ## Source of Truth
 
