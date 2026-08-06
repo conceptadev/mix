@@ -172,9 +172,7 @@ void main() {
       focusNode.dispose();
     });
 
-    testWidgets('handles keyboard activation with ActivateIntent', (
-      tester,
-    ) async {
+    testWidgets('handles Enter and Space keyboard activation', (tester) async {
       bool wasPressed = false;
       final focusNode = FocusNode();
 
@@ -299,18 +297,58 @@ void main() {
     });
 
     testWidgets('excludes semantics when requested', (tester) async {
+      final handle = tester.ensureSemantics();
+
       await tester.pumpWidget(
         MaterialApp(
           home: Pressable(
             onPress: () {},
             excludeFromSemantics: true,
             semanticsLabel: 'Test Button',
-            child: const SizedBox(width: 100, height: 100),
+            child: const SizedBox(
+              width: 100,
+              height: 100,
+              child: Text('Visible child'),
+            ),
           ),
         ),
       );
 
       expect(find.bySemanticsLabel('Test Button'), findsNothing);
+      expect(
+        tester.getSemantics(find.text('Visible child')),
+        isSemantics(
+          label: 'Visible child',
+          isFocusable: false,
+          hasFocusAction: false,
+          hasTapAction: false,
+        ),
+      );
+
+      handle.dispose();
+    });
+
+    testWidgets('keeps nested control semantics separate', (tester) async {
+      final handle = tester.ensureSemantics();
+
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Scaffold(
+            body: Pressable(
+              onPress: () {},
+              child: const TextField(key: Key('field')),
+            ),
+          ),
+        ),
+      );
+
+      final field = tester
+          .getSemantics(find.byType(EditableText))
+          .flagsCollection;
+      expect(field.isTextField, isTrue);
+      expect(field.isButton, isFalse);
+
+      handle.dispose();
     });
 
     testWidgets('properly disposes controller when not provided', (

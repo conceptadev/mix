@@ -16,20 +16,23 @@
   `semanticsLabel`, added `semanticsRole`, and removed the deprecated `onKey`
   callback. Use `onKeyEvent` for custom keyboard handling.
 - **Reserved activation keys:** While it holds primary focus and can activate,
-  Pressable owns the keys Flutter maps to `ActivateIntent` — Space, Enter,
-  numpad Enter, select, and game button A — so it can model held-key state
-  consistently. Custom activation behavior must use `onKeyEvent`; custom
-  `actions` remain supported for other intents. Those keys are left untouched
-  when a descendant holds focus, so nested text fields keep working.
+  Pressable owns unmodified Space, Enter, numpad Enter, select, and game button
+  A so it can model held-key state consistently. Override those direct key
+  bindings with `onKeyEvent`; custom `actions` remain available to other
+  shortcuts and programmatic intents. Those keys are left untouched when a
+  descendant holds focus, and modified chords are left to application
+  shortcuts.
 
 ### Fixes
 
 - **Nested widget-state discovery:** `StyleBuilder` now discovers state
   requirements recursively through nested and negated variants with
   identity-based cycle protection.
-- **Pressable lifecycle:** Pointer state has one owner, keyboard activation
-  fires once on key-up, cancellation clears held state, focus-visible follows
-  Flutter input modality, and disabled semantics expose no actions.
+- **Pressable lifecycle:** Pointer and keyboard press sources are combined
+  without clearing each other, keyboard activation fires once on key-up,
+  cancellation clears held state, focus-visible follows Flutter input modality,
+  and disabled controls ignore custom key handling and expose neither semantic
+  nor custom actions.
 - **Press state ends with the gesture:** A pointer that drifts past the tap slop
   stops counting as a press, so items no longer stay visually pressed while a
   list scrolls under the finger.

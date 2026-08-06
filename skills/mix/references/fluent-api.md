@@ -223,17 +223,19 @@ Use `Pressable` for interaction state around any child, and `PressableBox` when 
 | `canRequestFocus` | Whether focus can be requested; defaults to `true` |
 | `controller` | Optional `WidgetStatesController` |
 | `actions` | Additional focus actions |
-| `onKeyEvent` | Custom key handling; runs before built-in activation |
+| `onKeyEvent` | Custom key handling while enabled; runs before built-in activation |
 | `semanticsLabel` | Accessibility label |
 | `semanticsRole` | `PressableSemanticsRole.button` (default), `link`, or `none` |
-| `excludeFromSemantics` | Emits no semantics node; defaults to `false` |
+| `excludeFromSemantics` | Suppresses Pressable's semantic annotations while preserving descendant semantics; defaults to `false` |
 
-While focused, `Pressable` handles the activation keys itself (Space, Enter,
-numpad Enter, select, game button A): pressed on key down, activated once on key
-up. It leaves those keys alone when a descendant holds focus, so a nested
-`TextField` still receives them. Custom `actions` therefore never see
-`ActivateIntent` for a focused Pressable; use `onKeyEvent` to override
-activation.
+While focused, `Pressable` handles unmodified Space, Enter, numpad Enter,
+select, and game button A itself: pressed on key down, activated once on key up.
+It leaves those keys alone when a descendant holds focus, so a nested
+`TextField` still receives them, and leaves modified chords to application
+shortcuts. Those direct key bindings are handled before Flutter can dispatch an
+`ActivateIntent`; use `onKeyEvent` to override them. Custom actions remain
+available to other shortcuts and programmatic intents, but are not installed
+while the Pressable is disabled.
 
 ### PressableBox
 

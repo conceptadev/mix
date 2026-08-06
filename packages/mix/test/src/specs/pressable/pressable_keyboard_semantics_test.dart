@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/semantics.dart';
 import 'package:flutter/services.dart';
@@ -53,7 +54,7 @@ void main() {
       }
     });
 
-    testWidgets('activates on every key Flutter maps to ActivateIntent', (
+    testWidgets('activates on each supported auxiliary activation key', (
       tester,
     ) async {
       final focusNode = FocusNode();
@@ -138,6 +139,7 @@ void main() {
     ) async {
       final fieldFocus = FocusNode();
       addTearDown(fieldFocus.dispose);
+      var keyEvents = 0;
 
       await tester.pumpWidget(
         MaterialApp(
@@ -145,6 +147,11 @@ void main() {
             body: Pressable(
               enabled: false,
               onPress: () {},
+              onKeyEvent: (_, _) {
+                keyEvents++;
+
+                return KeyEventResult.handled;
+              },
               child: TextField(focusNode: fieldFocus),
             ),
           ),
@@ -159,6 +166,7 @@ void main() {
       await tester.pump();
 
       expect(handled, isFalse);
+      expect(keyEvents, 0);
     });
 
     testWidgets('focus loss cancels held keyboard activation', (tester) async {
@@ -407,6 +415,193 @@ void main() {
 
       expect(presses, 1);
       expect(customActivations, 0);
+    });
+
+    testWidgets('leaves modified activation keys to application shortcuts', (
+      tester,
+    ) async {
+      final focusNode = FocusNode();
+      final controller = WidgetStatesController();
+      addTearDown(focusNode.dispose);
+      addTearDown(controller.dispose);
+      var presses = 0;
+      var shortcuts = 0;
+
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Shortcuts(
+            shortcuts: const {
+              SingleActivator(LogicalKeyboardKey.enter, control: true):
+                  _ProbeIntent(),
+            },
+            child: Actions(
+              actions: {
+                _ProbeIntent: CallbackAction<_ProbeIntent>(
+                  onInvoke: (_) => shortcuts++,
+                ),
+              },
+              child: Pressable(
+                focusNode: focusNode,
+                controller: controller,
+                onPress: () => presses++,
+                child: const SizedBox(width: 100, height: 100),
+              ),
+            ),
+          ),
+        ),
+      );
+      focusNode.requestFocus();
+      await tester.pump();
+
+      await tester.sendKeyDownEvent(LogicalKeyboardKey.controlLeft);
+      await tester.sendKeyDownEvent(LogicalKeyboardKey.enter);
+      await tester.pump();
+
+      expect(shortcuts, 1);
+      expect(presses, 0);
+      expect(controller.pressed, isFalse);
+
+      await tester.sendKeyUpEvent(LogicalKeyboardKey.enter);
+      await tester.sendKeyUpEvent(LogicalKeyboardKey.controlLeft);
+    });
+
+    testWidgets('absorbs competing activation-key repeats during a hold', (
+      tester,
+    ) async {
+      final focusNode = FocusNode();
+      final controller = WidgetStatesController();
+      addTearDown(focusNode.dispose);
+      addTearDown(controller.dispose);
+      var presses = 0;
+
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Pressable(
+            focusNode: focusNode,
+            controller: controller,
+            onPress: () => presses++,
+            child: const SizedBox(width: 100, height: 100),
+          ),
+        ),
+      );
+      focusNode.requestFocus();
+      await tester.pump();
+
+      expect(await tester.sendKeyDownEvent(LogicalKeyboardKey.space), isTrue);
+      expect(await tester.sendKeyDownEvent(LogicalKeyboardKey.enter), isTrue);
+      expect(await tester.sendKeyRepeatEvent(LogicalKeyboardKey.enter), isTrue);
+      expect(await tester.sendKeyUpEvent(LogicalKeyboardKey.enter), isTrue);
+      expect(controller.pressed, isTrue);
+      expect(presses, 0);
+
+      await tester.sendKeyUpEvent(LogicalKeyboardKey.space);
+      await tester.pump();
+      expect(controller.pressed, isFalse);
+      expect(presses, 1);
+    });
+
+    testWidgets('a disabled Pressable does not install custom actions', (
+      tester,
+    ) async {
+      BuildContext? childContext;
+
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Pressable(
+            enabled: false,
+            actions: {
+              _ProbeIntent: CallbackAction<_ProbeIntent>(onInvoke: (_) => null),
+            },
+            child: Builder(
+              builder: (context) {
+                childContext = context;
+
+                return const SizedBox(width: 100, height: 100);
+              },
+            ),
+          ),
+        ),
+      );
+
+      expect(Actions.maybeFind<_ProbeIntent>(childContext!), isNull);
+    });
+
+    testWidgets('pointer press survives keyboard activation release', (
+      tester,
+    ) async {
+      final focusNode = FocusNode();
+      final controller = WidgetStatesController();
+      addTearDown(focusNode.dispose);
+      addTearDown(controller.dispose);
+
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Center(
+            child: Pressable(
+              focusNode: focusNode,
+              controller: controller,
+              onPress: () {},
+              child: const SizedBox(width: 100, height: 100),
+            ),
+          ),
+        ),
+      );
+      focusNode.requestFocus();
+      await tester.pump();
+
+      final pointer = await tester.createGesture(kind: PointerDeviceKind.mouse);
+      final center = tester.getCenter(find.byType(Pressable));
+      await pointer.addPointer(location: center);
+      await pointer.down(center);
+      await tester.sendKeyDownEvent(LogicalKeyboardKey.space);
+      await tester.pump();
+      expect(controller.pressed, isTrue);
+
+      await tester.sendKeyUpEvent(LogicalKeyboardKey.space);
+      await tester.pump();
+      expect(controller.pressed, isTrue, reason: 'pointer is still down');
+
+      await pointer.up();
+      await tester.pump();
+      expect(controller.pressed, isFalse);
+    });
+
+    testWidgets('keyboard press survives pointer release', (tester) async {
+      final focusNode = FocusNode();
+      final controller = WidgetStatesController();
+      addTearDown(focusNode.dispose);
+      addTearDown(controller.dispose);
+
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Center(
+            child: Pressable(
+              focusNode: focusNode,
+              controller: controller,
+              onPress: () {},
+              child: const SizedBox(width: 100, height: 100),
+            ),
+          ),
+        ),
+      );
+      focusNode.requestFocus();
+      await tester.pump();
+
+      await tester.sendKeyDownEvent(LogicalKeyboardKey.space);
+      final pointer = await tester.createGesture(kind: PointerDeviceKind.mouse);
+      final center = tester.getCenter(find.byType(Pressable));
+      await pointer.addPointer(location: center);
+      await pointer.down(center);
+      await tester.pump();
+      expect(controller.pressed, isTrue);
+
+      await pointer.up();
+      await tester.pump();
+      expect(controller.pressed, isTrue, reason: 'keyboard key is still down');
+
+      await tester.sendKeyUpEvent(LogicalKeyboardKey.space);
+      await tester.pump();
+      expect(controller.pressed, isFalse);
     });
   });
 

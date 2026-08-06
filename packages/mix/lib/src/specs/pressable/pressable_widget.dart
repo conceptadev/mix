@@ -7,7 +7,16 @@ import '../box/box_spec.dart';
 import '../box/box_widget.dart';
 
 /// The accessibility role exposed by a [Pressable].
-enum PressableSemanticsRole { button, link, none }
+enum PressableSemanticsRole {
+  /// Exposes the control as a button.
+  button,
+
+  /// Exposes the control as a link.
+  link,
+
+  /// Adds no button or link role while preserving other semantics.
+  none,
+}
 
 /// Combines [Box] styling with gesture handling.
 ///
@@ -56,6 +65,8 @@ class PressableBox extends StatelessWidget {
   final bool excludeFromSemantics;
   final String? semanticsLabel;
   final PressableSemanticsRole semanticsRole;
+
+  /// Handles key events before built-in activation while enabled.
   final FocusOnKeyEventCallback? onKeyEvent;
   final WidgetStatesController? controller;
   final Map<Type, Action<Intent>>? actions;
@@ -147,7 +158,7 @@ class Pressable extends StatefulWidget {
   /// {@macro flutter.widgets.Focus.focusNode}
   final FocusNode? focusNode;
 
-  /// {@macro flutter.widgets.Focus.onKeyEvent}
+  /// Handles key events before built-in activation while [enabled].
   final FocusOnKeyEventCallback? onKeyEvent;
 
   /// {@macro flutter.widgets.GestureDetector.hitTestBehavior}
@@ -159,7 +170,7 @@ class Pressable extends StatefulWidget {
   final WidgetStatesController? controller;
 
   @override
-  State createState() => PressableWidgetState();
+  State<Pressable> createState() => PressableWidgetState();
 }
 
 @visibleForTesting
@@ -167,6 +178,9 @@ class PressableWidgetState extends State<Pressable> {
   late WidgetStatesController _controller;
   late bool _ownsController;
   LogicalKeyboardKey? _heldActivationKey;
+  bool _hovered = false;
+  bool _focused = false;
+  bool _pointerPressed = false;
 
   @override
   void initState() {
@@ -195,20 +209,46 @@ class PressableWidgetState extends State<Pressable> {
 
   void _onFocusChange(bool hasFocus) {
     if (!hasFocus) _cancelHeldActivation();
+    _focused = hasFocus;
     _controller.focused = hasFocus;
     widget.onFocusChange?.call(hasFocus);
   }
 
-  /// Keys Flutter maps to [ActivateIntent] in `WidgetsApp.defaultShortcuts`.
-  ///
-  /// Pressable models activation itself instead of binding [ActivateIntent],
-  /// so it has to cover the same key set or those keys would activate nothing.
+  void _onHoverChange(bool isHovered) {
+    _hovered = isHovered;
+  }
+
+  /// Keys Pressable supports for direct keyboard/game-controller activation.
   bool _isActivationKey(LogicalKeyboardKey key) {
     return key == .space ||
         key == .enter ||
         key == .numpadEnter ||
         key == .select ||
         key == .gameButtonA;
+  }
+
+  bool get _hasActivationModifier {
+    final keyboard = HardwareKeyboard.instance;
+
+    return keyboard.isAltPressed ||
+        keyboard.isControlPressed ||
+        keyboard.isMetaPressed ||
+        keyboard.isShiftPressed;
+  }
+
+  void _syncPressedState() {
+    _controller.pressed = _pointerPressed || _heldActivationKey != null;
+  }
+
+  void _syncInteractionStates() {
+    _controller.hovered = _hovered;
+    _controller.focused = _focused;
+    _syncPressedState();
+  }
+
+  void _onPointerPressChange(bool isPressed) {
+    _pointerPressed = isPressed;
+    _syncPressedState();
   }
 
   /// Releases a held keyboard activation.
@@ -219,10 +259,16 @@ class PressableWidgetState extends State<Pressable> {
     if (_heldActivationKey == null) return;
 
     _heldActivationKey = null;
-    _controller.pressed = false;
+    _syncPressedState();
   }
 
   KeyEventResult _onKeyEvent(FocusNode node, KeyEvent event) {
+    if (!widget.enabled) {
+      _cancelHeldActivation();
+
+      return .ignored;
+    }
+
     final customResult = widget.onKeyEvent?.call(node, event) ?? .ignored;
 
     if (customResult != .ignored) {
@@ -241,7 +287,7 @@ class PressableWidgetState extends State<Pressable> {
     // so only the focused Pressable itself may claim activation keys. Claiming
     // them any wider would swallow Space and Enter before a nested text field
     // (or app shortcuts) ever sees them.
-    if (!node.hasPrimaryFocus || !widget.enabled || widget.onPress == null) {
+    if (!node.hasPrimaryFocus || widget.onPress == null) {
       _cancelHeldActivation();
 
       return .ignored;
@@ -252,16 +298,21 @@ class PressableWidgetState extends State<Pressable> {
     // starting a competing activation.
     if (event is KeyDownEvent) {
       if (_heldActivationKey == null) {
+        // Leave modified key chords to application shortcuts.
+        if (_hasActivationModifier) return .ignored;
+
         _heldActivationKey = event.logicalKey;
-        _controller.pressed = true;
+        _syncPressedState();
       }
 
       return .handled;
     }
 
-    // Repeats and key ups only concern the key currently being held.
+    // Keep all events from a competing activation key contained while the
+    // original key is held. Otherwise its repeat can escape to an ancestor
+    // shortcut even though its key-down was handled here.
     if (event.logicalKey != _heldActivationKey) {
-      return .ignored;
+      return _heldActivationKey == null ? .ignored : .handled;
     }
 
     if (event is KeyUpEvent) {
@@ -293,12 +344,19 @@ class PressableWidgetState extends State<Pressable> {
     if (oldWidget.controller != widget.controller) {
       final oldController = _controller;
       final ownedOldController = _ownsController;
-      // Release the held key on the outgoing controller before its states are
-      // copied, so a keyboard press never survives the swap.
-      _cancelHeldActivation();
+      // A held key belongs to the outgoing controller and never survives a
+      // controller swap.
+      _heldActivationKey = null;
+      // Live pointer, hover, and focus sources do survive. Remove their values
+      // from the outgoing controller before publishing them to the new one.
+      oldController
+        ..hovered = false
+        ..focused = false
+        ..pressed = false;
       _initController(
         widget.controller == null ? {...oldController.value} : null,
       );
+      _syncInteractionStates();
       if (ownedOldController) oldController.dispose();
     }
 
@@ -309,7 +367,11 @@ class PressableWidgetState extends State<Pressable> {
 
   @override
   void dispose() {
-    _cancelHeldActivation();
+    _heldActivationKey = null;
+    _hovered = false;
+    _focused = false;
+    _pointerPressed = false;
+    _syncInteractionStates();
     if (_ownsController) _controller.dispose();
     super.dispose();
   }
@@ -322,17 +384,23 @@ class PressableWidgetState extends State<Pressable> {
       onFocusChange: _onFocusChange,
       onKeyEvent: _onKeyEvent,
       canRequestFocus: widget.canRequestFocus && widget.enabled,
+      includeSemantics: !widget.excludeFromSemantics,
       child: MixInteractionDetector(
         controller: _controller,
         enabled: widget.enabled,
+        onHoverChange: _onHoverChange,
+        onPressChange: _onPointerPressChange,
+        managesPressedState: false,
         child: widget.child,
       ),
     );
 
-    final actions = widget.actions;
-    if (actions != null) {
-      focusable = Actions(actions: actions, child: focusable);
-    }
+    // Keep the subtree shape stable when enabled changes while withholding
+    // custom actions from disabled controls.
+    focusable = Actions(
+      actions: widget.enabled ? (widget.actions ?? const {}) : const {},
+      child: focusable,
+    );
 
     Widget current = GestureDetector(
       onTap: widget.enabled && widget.onPress != null ? _onTap : null,
@@ -354,6 +422,7 @@ class PressableWidgetState extends State<Pressable> {
           widget.onLongPress != null;
 
       current = Semantics(
+        container: hasEnabledState || widget.semanticsLabel != null,
         enabled: hasEnabledState ? widget.enabled : null,
         button: widget.semanticsRole == .button ? true : null,
         link: widget.semanticsRole == .link ? true : null,

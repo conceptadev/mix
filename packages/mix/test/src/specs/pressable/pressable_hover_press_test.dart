@@ -237,5 +237,153 @@ void main() {
       await gesture.up();
       await tester.pumpAndSettle();
     });
+
+    testWidgets('only the pointer that started a press can end it', (
+      tester,
+    ) async {
+      final controller = WidgetStatesController();
+      addTearDown(controller.dispose);
+
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Center(
+            child: Pressable(
+              controller: controller,
+              onPress: () {},
+              child: const SizedBox(width: 100, height: 100),
+            ),
+          ),
+        ),
+      );
+
+      final center = tester.getCenter(find.byType(Pressable));
+      final owner = await tester.startGesture(center, pointer: 1);
+      final other = await tester.startGesture(
+        center + const Offset(1, 1),
+        pointer: 2,
+      );
+      await tester.pump();
+      expect(controller.pressed, isTrue);
+
+      await other.up();
+      await tester.pump();
+      expect(controller.pressed, isTrue, reason: 'the owner is still down');
+
+      await owner.up();
+      await tester.pump();
+      expect(controller.pressed, isFalse);
+    });
+
+    testWidgets('controller swap moves active interaction states', (
+      tester,
+    ) async {
+      final firstController = WidgetStatesController();
+      final secondController = WidgetStatesController();
+      final focusNode = FocusNode();
+      addTearDown(firstController.dispose);
+      addTearDown(secondController.dispose);
+      addTearDown(focusNode.dispose);
+      var useFirstController = true;
+      late StateSetter setState;
+
+      await tester.pumpWidget(
+        MaterialApp(
+          home: StatefulBuilder(
+            builder: (context, stateSetter) {
+              setState = stateSetter;
+
+              return Center(
+                child: Pressable(
+                  focusNode: focusNode,
+                  controller: useFirstController
+                      ? firstController
+                      : secondController,
+                  onPress: () {},
+                  child: const SizedBox(width: 100, height: 100),
+                ),
+              );
+            },
+          ),
+        ),
+      );
+
+      focusNode.requestFocus();
+      final gesture = await tester.createGesture(kind: PointerDeviceKind.mouse);
+      final center = tester.getCenter(find.byType(Pressable));
+      await gesture.addPointer(location: center);
+      await gesture.down(center);
+      await tester.pump();
+      expect(firstController.pressed, isTrue);
+      expect(firstController.hovered, isTrue);
+      expect(firstController.focused, isTrue);
+
+      setState(() => useFirstController = false);
+      await tester.pump();
+      expect(firstController.pressed, isFalse);
+      expect(firstController.hovered, isFalse);
+      expect(firstController.focused, isFalse);
+      expect(secondController.pressed, isTrue);
+      expect(secondController.hovered, isTrue);
+      expect(secondController.focused, isTrue);
+
+      await gesture.up();
+      await tester.pump();
+      expect(secondController.pressed, isFalse);
+      expect(secondController.hovered, isTrue);
+      expect(secondController.focused, isTrue);
+
+      await gesture.removePointer();
+    });
+
+    testWidgets('disposal clears transient states on an external controller', (
+      tester,
+    ) async {
+      final controller = WidgetStatesController();
+      final focusNode = FocusNode();
+      addTearDown(controller.dispose);
+      addTearDown(focusNode.dispose);
+      var showPressable = true;
+      late StateSetter setState;
+
+      await tester.pumpWidget(
+        MaterialApp(
+          home: StatefulBuilder(
+            builder: (context, stateSetter) {
+              setState = stateSetter;
+
+              return Center(
+                child: showPressable
+                    ? Pressable(
+                        focusNode: focusNode,
+                        controller: controller,
+                        onPress: () {},
+                        child: const SizedBox(width: 100, height: 100),
+                      )
+                    : const SizedBox(width: 100, height: 100),
+              );
+            },
+          ),
+        ),
+      );
+
+      focusNode.requestFocus();
+      final gesture = await tester.createGesture(kind: PointerDeviceKind.mouse);
+      final center = tester.getCenter(find.byType(Pressable));
+      await gesture.addPointer(location: center);
+      await gesture.down(center);
+      await tester.pump();
+      expect(controller.pressed, isTrue);
+      expect(controller.hovered, isTrue);
+      expect(controller.focused, isTrue);
+
+      setState(() => showPressable = false);
+      await tester.pump();
+      expect(controller.pressed, isFalse);
+      expect(controller.hovered, isFalse);
+      expect(controller.focused, isFalse);
+
+      await gesture.up();
+      await gesture.removePointer();
+    });
   });
 }

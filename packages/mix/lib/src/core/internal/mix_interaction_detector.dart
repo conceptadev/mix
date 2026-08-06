@@ -21,6 +21,8 @@ class MixInteractionDetector extends StatefulWidget {
     this.controller,
     this.enabled = true,
     this.onHoverChange,
+    this.onPressChange,
+    this.managesPressedState = true,
     this.onPointerPositionChange,
   });
 
@@ -28,6 +30,14 @@ class MixInteractionDetector extends StatefulWidget {
   final WidgetStatesController? controller;
   final bool enabled;
   final ValueChanged<bool>? onHoverChange;
+  final ValueChanged<bool>? onPressChange;
+
+  /// Whether pointer input is written directly to [controller].
+  ///
+  /// Set this to false when the owner combines pointer presses with another
+  /// input source before publishing [WidgetState.pressed].
+  final bool managesPressedState;
+
   final ValueChanged<PointerPosition>? onPointerPositionChange;
 
   @override
@@ -40,6 +50,9 @@ class _MixInteractionDetectorState extends State<MixInteractionDetector> {
 
   /// Global position of the pointer that owns the current pressed state.
   Offset? _pressOrigin;
+
+  /// Pointer that owns the current pressed state.
+  int? _pressPointer;
 
   /// Distance a pointer may drift before it stops counting as a press.
   ///
@@ -64,7 +77,7 @@ class _MixInteractionDetectorState extends State<MixInteractionDetector> {
     _effectiveController.update(.disabled, !widget.enabled);
     if (!widget.enabled) {
       _effectiveController.update(.hovered, false);
-      _clearPressedState();
+      _clearPressedState(force: true);
       _cursorPositionNotifier.clearPosition();
       widget.onHoverChange?.call(false);
     }
@@ -82,11 +95,22 @@ class _MixInteractionDetectorState extends State<MixInteractionDetector> {
     }
   }
 
-  /// Clears the pressed state and the pointer that owned it.
-  void _clearPressedState() {
+  /// Clears the pressed state if [pointer] owns it.
+  void _clearPressedState({int? pointer, bool force = false}) {
+    final pressPointer = _pressPointer;
+    if (!force &&
+        (pressPointer == null ||
+            (pointer != null && pointer != pressPointer))) {
+      return;
+    }
+
+    final hadPointerPress = pressPointer != null;
+    _pressPointer = null;
     _pressOrigin = null;
-    if (!_effectiveController.value.contains(WidgetState.pressed)) return;
-    _effectiveController.update(.pressed, false);
+    if (widget.managesPressedState) {
+      _effectiveController.update(.pressed, false);
+    }
+    if (hadPointerPress) widget.onPressChange?.call(false);
   }
 
   /// Handles pointer entering the widget bounds.
@@ -106,35 +130,41 @@ class _MixInteractionDetectorState extends State<MixInteractionDetector> {
     widget.onHoverChange?.call(false);
 
     // Clear pressed state if active (edge case handling)
-    _clearPressedState();
+    _clearPressedState(pointer: event.pointer);
   }
 
   /// Handles pointer down events for all pointer types.
   void _handlePointerDown(PointerDownEvent event) {
     if (!mounted) return;
-    // Only treat primary mouse button as "pressed" for mouse; all other kinds count.
-    if (event.kind == .mouse && (event.buttons & kPrimaryMouseButton) == 0) {
-      return;
-    }
+
+    // Match GestureDetector's primary tap recognizer across device kinds.
+    if (_pressPointer != null || event.buttons != kPrimaryButton) return;
+
+    _pressPointer = event.pointer;
     _pressOrigin = event.position;
-    _effectiveController.update(.pressed, true);
+    if (widget.managesPressedState) {
+      _effectiveController.update(.pressed, true);
+    }
+    widget.onPressChange?.call(true);
   }
 
   /// Handles pointer up events.
   void _handlePointerUp(PointerUpEvent event) {
     if (!mounted) return;
-    _clearPressedState();
+    _clearPressedState(pointer: event.pointer);
   }
 
   /// Handles pointer cancel events.
   void _handlePointerCancel(PointerCancelEvent event) {
     if (!mounted) return;
-    _clearPressedState();
+    _clearPressedState(pointer: event.pointer);
   }
 
   /// Handles pointer move events to track boundary crossings.
   void _handlePointerMove(PointerMoveEvent event) {
     if (!mounted) return;
+
+    if (event.pointer != _pressPointer) return;
 
     // A pointer that drifts past the tap slop has become a drag or a scroll,
     // so it no longer owns a press. This [Listener] sees raw pointer events
@@ -143,7 +173,7 @@ class _MixInteractionDetectorState extends State<MixInteractionDetector> {
     final pressOrigin = _pressOrigin;
     if (pressOrigin != null &&
         (event.position - pressOrigin).distance > _touchSlop) {
-      _clearPressedState();
+      _clearPressedState(pointer: event.pointer);
 
       return;
     }
@@ -153,7 +183,7 @@ class _MixInteractionDetectorState extends State<MixInteractionDetector> {
 
     // Clear pressed state when moving outside
     if (!size.contains(event.localPosition)) {
-      _clearPressedState();
+      _clearPressedState(pointer: event.pointer);
     }
   }
 
@@ -205,6 +235,9 @@ class _MixInteractionDetectorState extends State<MixInteractionDetector> {
     if (oldWidget.controller != widget.controller) {
       _handleControllerChange(oldWidget);
       _syncDisabledState();
+      if (widget.managesPressedState && _pressPointer != null) {
+        _effectiveController.update(.pressed, true);
+      }
     }
 
     // Handle enabled state changes
