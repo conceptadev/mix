@@ -432,6 +432,10 @@ const _supportedInventory = <SchemaInventoryEntry>[
 const _v1UnsupportedInventory = <SchemaInventoryEntry>[
   SchemaInventoryEntry.knownUnsupported('enum:ElevationShadow', _v1OutOfScope),
   SchemaInventoryEntry.knownUnsupported(
+    'enum:PressableSemanticsRole',
+    _v1OutOfScope,
+  ),
+  SchemaInventoryEntry.knownUnsupported(
     r'mix:BeveledRectangleBorderMix.$borderRadius',
     _v1OutOfScope,
   ),
@@ -577,6 +581,14 @@ const _v1UnsupportedInventory = <SchemaInventoryEntry>[
   ),
   SchemaInventoryEntry.knownUnsupported(
     r'mix:StarBorderMix.$valleyRounding',
+    _v1OutOfScope,
+  ),
+  SchemaInventoryEntry.knownUnsupported(
+    'variant:FocusVisibleVariant',
+    _v1OutOfScope,
+  ),
+  SchemaInventoryEntry.knownUnsupported(
+    'variant_factory:ContextVariant.focusVisible',
     _v1OutOfScope,
   ),
 ];
