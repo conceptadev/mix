@@ -4,9 +4,15 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "test": "node --test test/*.test.mjs",
     "compare": "node run-visual-comparison.mjs",
+    "compare:advanced": "node run-advanced-comparison.mjs",
     "compare:complex": "node run-complex-comparison.mjs",
-    "analyze-gradient": "node analyze-gradient-samples.mjs"
+    "showcase:prepare": "node prepare-showcase.mjs",
+    "showcase:build": "node build-showcase.mjs",
+    "showcase:verify": "node verify-showcase.mjs",
+    "analyze-gradient": "node analyze-gradient-samples.mjs",
+    "update:theme-snapshot": "node update-theme-snapshot.mjs"
   },
   "dependencies": {
     "gif-encoder-2": "^1.0.5",

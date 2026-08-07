@@ -73,19 +73,16 @@ class _Case02 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Div(
-      classNames: 'flex w-full flex-col',
-      children: [
-        Div(
-          classNames: 'p-2 px-6 pt-4 m-2 mx-4 mt-8 bg-red-500',
-          child: Div(classNames: 'w-16 h-12 bg-white'),
-        ),
-        Div(
-          classNames: 'bg-red-500 mt-8 mx-4 m-2 pt-4 px-6 p-2',
-          child: Div(classNames: 'w-16 h-12 bg-white'),
-        ),
-      ],
-    );
+    return div('flex w-full flex-col', [
+      Div(
+        classNames: 'p-2 px-6 pt-4 m-2 mx-4 mt-8 bg-red-500',
+        child: div('w-16 h-12 bg-white'),
+      ),
+      Div(
+        classNames: 'bg-red-500 mt-8 mx-4 m-2 pt-4 px-6 p-2',
+        child: div('w-16 h-12 bg-white'),
+      ),
+    ]);
   }
 }
 
@@ -94,10 +91,9 @@ class _Case03 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Div(
-      classNames:
-          'w-[37px] h-[29px] bg-[#123456]/[50%] '
-          'translate-x-[11px] -translate-y-[7px]',
+    return div(
+      'w-[37px] h-[29px] bg-[#123456]/[50%] '
+      'translate-x-[11px] -translate-y-[7px]',
     );
   }
 }
@@ -107,13 +103,12 @@ class _Case04 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const SizedBox(
+    return SizedBox(
       width: 176,
-      child: P(
-        text: 'complex tailwind overflow sample',
-        classNames:
-            'text-2xl font-bold leading-tight tracking-tight '
+      child: p(
+        'text-2xl font-bold leading-tight tracking-tight '
             'text-slate-700 uppercase text-center truncate',
+        'complex tailwind overflow sample',
       ),
     );
   }
@@ -124,10 +119,9 @@ class _Case05 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Div(
-      classNames:
-          'w-[300px] h-[120px] bg-linear-to-br '
-          'from-blue-500 via-purple-500 to-pink-500',
+    return div(
+      'w-[300px] h-[120px] bg-linear-to-br '
+      'from-blue-500 via-purple-500 to-pink-500',
     );
   }
 }
@@ -137,12 +131,11 @@ class _Case06 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Padding(
-      padding: EdgeInsets.all(32),
-      child: Div(
-        classNames:
-            'w-24 h-24 bg-emerald-500 translate-x-4 '
-            '-translate-y-2 rotate-45 scale-105',
+    return Padding(
+      padding: const EdgeInsets.all(32),
+      child: div(
+        'w-24 h-24 bg-emerald-500 translate-x-4 '
+        '-translate-y-2 rotate-45 scale-105',
       ),
     );
   }
@@ -153,7 +146,7 @@ class _Case07 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Div(classNames: 'w-full md:w-1/2 lg:w-1/3 h-12 bg-blue-500');
+    return div('w-full md:w-1/2 lg:w-1/3 h-12 bg-blue-500');
   }
 }
 
@@ -162,14 +155,13 @@ class _Case08 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Div(
-      classNames:
-          'w-full h-40 flex flex-col gap-2 md:flex-row md:gap-6 '
-          'items-center justify-between',
-      children: [
-        Div(classNames: 'w-10 h-10 rounded-lg bg-blue-500'),
-        Div(classNames: 'w-10 h-10 rounded-lg bg-purple-500'),
-        Div(classNames: 'w-10 h-10 rounded-lg bg-pink-500'),
+    return div(
+      'w-full h-40 flex flex-col gap-2 md:flex-row md:gap-6 '
+      'items-center justify-between',
+      [
+        div('w-10 h-10 rounded-lg bg-blue-500'),
+        div('w-10 h-10 rounded-lg bg-purple-500'),
+        div('w-10 h-10 rounded-lg bg-pink-500'),
       ],
     );
   }
@@ -180,10 +172,9 @@ class _Case09 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Div(
-      classNames:
-          'w-24 h-24 bg-white dark:bg-slate-900 '
-          'dark:hover:bg-blue-900',
+    return div(
+      'w-24 h-24 bg-white dark:bg-slate-900 '
+      'dark:hover:bg-blue-900',
     );
   }
 }
@@ -193,10 +184,9 @@ class _Case10 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Div(
-      classNames:
-          'w-24 h-24 bg-red-500 hover:bg-blue-500 transition-colors '
-          'duration-300 ease-in-out delay-100',
+    return div(
+      'w-24 h-24 bg-red-500 hover:bg-blue-500 transition-colors '
+      'duration-300 ease-in-out delay-100',
     );
   }
 }

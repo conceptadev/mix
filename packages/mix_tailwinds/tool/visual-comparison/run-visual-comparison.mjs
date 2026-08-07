@@ -4,7 +4,7 @@
  *
  * Usage:
  *   cd packages/mix_tailwinds/tool/visual-comparison
- *   npm install  # first time only
+ *   npm ci       # first time, or whenever package-lock.json changes
  *   npm run compare
  *   npm run compare -- --example=card-alert
  *   npm run compare -- --example=flowbite-card
@@ -21,6 +21,7 @@ import { fileURLToPath } from 'node:url';
 import GIFEncoder from 'gif-encoder-2';
 import pixelmatch from 'pixelmatch';
 import { PNG } from 'pngjs';
+import { evaluateAcceptance, writeVisualReport } from './visual-report.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const packageRoot = path.resolve(__dirname, '../..'); // packages/mix_tailwinds
@@ -29,6 +30,22 @@ const baseScreenshotDir = path.join(packageRoot, 'visual-comparison');
 const WIDTHS = [480, 768, 1024];
 const FLUTTER_PORT = 8089;
 const DEFAULT_GRADIENT_STRATEGY = 'css-angle-rect';
+
+const maximumAtEveryWidth = (maximum) =>
+  Object.fromEntries(WIDTHS.map((width) => [width, maximum]));
+
+const COMPLEX_ACCEPTANCE = {
+  '01': { metric: 'strictDiffPercent', maximum: 1 },
+  '02': { metric: 'strictDiffPercent', maximum: 1 },
+  '03': { metric: 'exactDiffPercent', maximum: 0 },
+  '04': { metric: 'diffPercent', maximum: 5 },
+  '05': { metric: 'diffPercent', maximum: 1 },
+  '06': { metric: 'strictDiffPercent', maximum: 3 },
+  '07': { metric: 'strictDiffPercent', maximum: 1 },
+  '08': { metric: 'strictDiffPercent', maximum: 1 },
+  '09': { metric: 'strictDiffPercent', maximum: 1 },
+  '10': { metric: 'strictDiffPercent', maximum: 1 },
+};
 
 const COMPLEX_CASE_IDS = Array.from({ length: 10 }, (_, index) =>
   String(index + 1).padStart(2, '0'),
@@ -61,11 +78,43 @@ const COMPLEX_CASES = Object.fromEntries(
           : caseId === '10'
             ? 'hovered-after-transition'
             : 'static',
-        moderateDiffThreshold: 8,
-        highDiffThreshold: 100,
+        acceptance: {
+          metric: COMPLEX_ACCEPTANCE[caseId].metric,
+          maximumByWidth: maximumAtEveryWidth(
+            COMPLEX_ACCEPTANCE[caseId].maximum,
+          ),
+        },
       },
     ];
   }),
+);
+
+const ADVANCED_EXAMPLES = Object.fromEntries(
+  [
+    ['01', 'launch-command', 'Launch command'],
+    ['02', 'signal-analytics', 'Signal analytics'],
+    ['03', 'incident-room', 'Incident room'],
+    ['04', 'release-timeline', 'Release timeline'],
+    ['05', 'capacity-map', 'Capacity map'],
+  ].map(([exampleId, slug, title]) => [
+    `advanced-${slug}`,
+    {
+      htmlFile: 'example/real_tailwind/advanced-examples.html',
+      selector: `[data-example="${exampleId}"]`,
+      margin: 16,
+      outputSubdir: `advanced-parity/${slug}`,
+      tailwindQuery: `example=${exampleId}`,
+      tailwindWaitMs: 500,
+      flutterExample: 'advanced-parity',
+      flutterQuery: `sample=${exampleId}`,
+      suite: 'advanced',
+      title,
+      acceptance: {
+        metric: 'diffPercent',
+        maximumByWidth: maximumAtEveryWidth(5),
+      },
+    },
+  ]),
 );
 
 // Example configurations
@@ -74,30 +123,39 @@ const EXAMPLES = {
     htmlFile: 'example/real_tailwind/index.html',
     selector: 'main',
     margin: 16,
-    moderateDiffThreshold: 6,
-    highDiffThreshold: 12,
+    acceptance: {
+      metric: 'diffPercent',
+      maximumByWidth: { 480: 1.45, 768: 1.4, 1024: 1.15 },
+    },
   },
   'card-alert': {
     htmlFile: 'example/real_tailwind/card-alert.html',
     selector: 'body > div > div',
     margin: 16,
-    moderateDiffThreshold: 7,
-    highDiffThreshold: 16,
+    acceptance: {
+      metric: 'diffPercent',
+      maximumByWidth: { 480: 5.11, 768: 4.19, 1024: 3.62 },
+    },
   },
   'flowbite-card': {
     htmlFile: 'example/real_tailwind/flowbite-card.html',
     selector: 'body > div',
     margin: 16,
-    moderateDiffThreshold: 8,
-    highDiffThreshold: 18,
+    acceptance: {
+      metric: 'diffPercent',
+      maximumByWidth: { 480: 1.68, 768: 1.68, 1024: 1.68 },
+    },
   },
   'gradient-debug': {
     htmlFile: 'example/real_tailwind/gradient-debug.html',
     selector: 'main',
     margin: 16,
-    moderateDiffThreshold: 5,
-    highDiffThreshold: 12,
+    acceptance: {
+      metric: 'diffPercent',
+      maximumByWidth: maximumAtEveryWidth(5),
+    },
   },
+  ...ADVANCED_EXAMPLES,
   ...COMPLEX_CASES,
 };
 
@@ -139,6 +197,7 @@ async function main() {
   const screenshotDir = path.join(baseScreenshotDir, screenshotSubdir);
   const diffDir = path.join(screenshotDir, 'diff');
   await fs.promises.mkdir(diffDir, { recursive: true });
+  await clearPreviousCaptureArtifacts(screenshotDir, diffDir);
 
   console.log('Automated Visual Comparison: Flutter vs Tailwind CSS\n');
   console.log(`Example: ${exampleArg}`);
@@ -377,6 +436,8 @@ async function main() {
     generatedAt: new Date().toISOString(),
     example: exampleArg,
     caseId: exampleConfig.caseId ?? null,
+    suite: exampleConfig.suite ?? null,
+    title: exampleConfig.title ?? null,
     captureState: exampleConfig.captureState ?? 'static',
     tailwindVersion: exampleConfig.caseId ? '4.3.1' : null,
     gradientStrategy,
@@ -384,10 +445,6 @@ async function main() {
     tailwindHtml: tailwindPath,
     selector: elementSelector,
     captureComplete: results.length === WIDTHS.length,
-    thresholds: {
-      moderateDiffPercent: exampleConfig.moderateDiffThreshold ?? 5,
-      highDiffPercent: exampleConfig.highDiffThreshold ?? 15,
-    },
     results: results.map((r) => ({
       width: r.width,
       dimensions: r.dimensions,
@@ -403,6 +460,7 @@ async function main() {
       files: r.files,
     })),
   };
+  summary.acceptance = evaluateAcceptance(summary, exampleConfig.acceptance);
   fs.writeFileSync(summaryPath, `${JSON.stringify(summary, null, 2)}\n`);
 
   if (results.length !== WIDTHS.length) {
@@ -424,44 +482,39 @@ async function main() {
     })),
   );
 
-  // Summary
-  const avgDiff =
-    results.reduce((sum, r) => sum + r.delta, 0) / results.length || 0;
-
-  const moderateDiffThreshold = exampleConfig.moderateDiffThreshold ?? 5;
-  const highDiffThreshold = exampleConfig.highDiffThreshold ?? 15;
-
-  if (results.some((r) => r.delta > highDiffThreshold)) {
-    console.log(
-      `\nHigh diff detected (>${highDiffThreshold}%). Check for structural issues in the diff images.`,
-    );
-    process.exitCode = 1;
-  } else if (results.some((r) => r.delta > moderateDiffThreshold)) {
-    console.log(
-      `\nModerate tolerant diff detected (>${moderateDiffThreshold}%). Inspect geometry, state, and palette.`,
-    );
-  } else if (
-    results.some((result) => result.strictDelta > moderateDiffThreshold)
-  ) {
-    console.log(
-      `\nStrict rendering diff detected (>${moderateDiffThreshold}%). Geometry may match while colors or typography differ.`,
-    );
-  } else if (
-    avgDiff < 3 &&
-    results.every((result) => result.exactMismatched === 0)
-  ) {
-    console.log('\nExact pixel parity.');
-  } else if (avgDiff < 3) {
-    console.log(
-      '\nTolerant geometry is close; inspect strict/exact metrics for palette or raster differences.',
-    );
-  } else {
-    console.log('\nClose rendering parity; inspect exact metrics for small raster differences.');
-  }
+  console.log(
+    `\nAcceptance: ${summary.acceptance.metricLabel} at configured per-width maxima — ` +
+      `${summary.acceptance.passed ? 'PASS' : 'FAIL'}`,
+  );
+  console.table(
+    summary.acceptance.checks.map((check) => ({
+      width: `${check.width}px`,
+      metric: summary.acceptance.metricLabel,
+      actual: check.value == null ? 'missing' : `${check.value.toFixed(4)}%`,
+      maximum: `${check.maximum.toFixed(4)}%`,
+      result: check.passed ? 'pass' : 'FAIL',
+    })),
+  );
+  if (!summary.acceptance.passed) process.exitCode = 1;
 
   console.log(`\nScreenshots saved to: ${screenshotDir}`);
   console.log(`Diff images saved to: ${diffDir}\n`);
   console.log(`JSON summary saved to: ${summaryPath}\n`);
+}
+
+async function clearPreviousCaptureArtifacts(screenshotDir, diffDir) {
+  const files = [path.join(screenshotDir, 'summary.json')];
+  for (const width of WIDTHS) {
+    files.push(
+      path.join(screenshotDir, `tailwind-${width}.png`),
+      path.join(screenshotDir, `flutter-${width}.png`),
+      path.join(diffDir, `diff-${width}.png`),
+      path.join(diffDir, `strictdiff-${width}.png`),
+      path.join(diffDir, `absdiff-${width}.png`),
+      path.join(diffDir, `blink-${width}.gif`),
+    );
+  }
+  await Promise.all(files.map((file) => fs.promises.rm(file, { force: true })));
 }
 
 function cropToSize(png, targetWidth, targetHeight) {
@@ -570,7 +623,17 @@ function expandClipBox(box, viewport, margin) {
   };
 }
 
-main().catch((error) => {
+try {
+  await main();
+} catch (error) {
   console.error('Error:', error.message);
   process.exitCode = 1;
-});
+} finally {
+  try {
+    const report = writeVisualReport(baseScreenshotDir);
+    console.log(`Visual report: ${report.outputPath}`);
+  } catch (error) {
+    console.error('Could not generate visual report:', error.message);
+    process.exitCode = 1;
+  }
+}

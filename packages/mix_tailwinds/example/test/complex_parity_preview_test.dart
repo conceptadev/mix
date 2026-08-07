@@ -19,18 +19,22 @@ void main() {
       '${exampleRoot.path}/real_tailwind/complex-parity.html',
     ).readAsStringSync();
 
-    final dartClasses =
-        RegExp(
-            r"classNames:\s*((?:'[^']*'\s*)+)",
-            multiLine: true,
-          ).allMatches(dartSource).map((match) {
-            final literals = RegExp(r"'([^']*)'")
-                .allMatches(match.group(1)!)
-                .map((literal) => literal.group(1)!)
-                .join();
-            return _normalizeClasses(literals);
-          }).toList()
-          ..sort();
+    final dartClassMatches = [
+      ...RegExp(
+        r"\b(?:div|p)\(\s*((?:'[^']*'\s*)+)",
+        multiLine: true,
+      ).allMatches(dartSource),
+      ...RegExp(
+        r"classNames:\s*((?:'[^']*'\s*)+)",
+        multiLine: true,
+      ).allMatches(dartSource),
+    ];
+    final dartClasses = dartClassMatches.map((match) {
+      final literals = RegExp(
+        r"'([^']*)'",
+      ).allMatches(match.group(1)!).map((literal) => literal.group(1)!).join();
+      return _normalizeClasses(literals);
+    }).toList()..sort();
 
     final htmlClasses =
         RegExp(

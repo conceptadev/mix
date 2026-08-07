@@ -92,6 +92,14 @@ void main() {
       tester.element(find.text('Save Changes')),
     ).style;
 
+    expect(
+      tester.widget(find.byKey(const ValueKey('card-alert-cancel-button'))),
+      isA<Button>(),
+    );
+    expect(
+      tester.widget(find.byKey(const ValueKey('card-alert-save-button'))),
+      isA<Button>(),
+    );
     expect(content.width, closeTo(614, 0.1));
     expect(message.left, closeTo(content.left, 0.1));
     expect(message.width, closeTo(content.width, 0.1));
@@ -124,6 +132,14 @@ void main() {
     final viewButton = rectForKey(tester, 'dashboard-view-button');
     final downloadButton = rectForKey(tester, 'dashboard-download-button');
 
+    expect(
+      tester.widget(find.byKey(const ValueKey('dashboard-view-button'))),
+      isA<Button>(),
+    );
+    expect(
+      tester.widget(find.byKey(const ValueKey('dashboard-download-button'))),
+      isA<Button>(),
+    );
     expect(spend.width, closeTo(returnMetric.width, 1));
     expect(returnMetric.width, closeTo(cpa.width, 1));
     expect(viewButton.width, closeTo(downloadButton.width, 1));
@@ -154,6 +170,10 @@ void main() {
     ).style;
     final innerWidth = root.width - 2;
 
+    expect(
+      tester.widget(find.byKey(const ValueKey('flowbite-card-read-more'))),
+      isA<Div>(),
+    );
     expect(root.width, closeTo(384, 0.1));
     expect(hero.width, closeTo(innerWidth, 0.1));
     expect(hero.height, closeTo(256, 0.1));
