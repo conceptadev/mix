@@ -4,8 +4,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
 import 'package:mix_tailwinds/mix_tailwinds.dart';
 
-const _red500 = Color(0xFFEF4444);
-const _blue500 = Color(0xFF3B82F6);
+const _red500 = Color(0xFFFB2C36);
+const _blue500 = Color(0xFF2B7FFF);
 
 Future<void> _pumpAtTopLeft(WidgetTester tester, Widget child) async {
   await tester.binding.setSurfaceSize(const Size(500, 400));
@@ -31,15 +31,6 @@ Color? _decorationColor(WidgetTester tester, Key key) {
   expect(finder, findsOneWidget);
   final container = tester.widget<Container>(finder);
   return (container.decoration as BoxDecoration?)?.color;
-}
-
-void _brokenTestWidgets(
-  String description,
-  WidgetTesterCallback callback, {
-  required String skip,
-}) {
-  assert(skip.startsWith('BROKEN: '));
-  testWidgets('$description [$skip]', callback, skip: true);
 }
 
 void main() {
@@ -176,41 +167,37 @@ void main() {
     },
   );
 
-  _brokenTestWidgets(
-    'B4 Pressable excludes Div margin from press styling and onPress',
-    (tester) async {
-      const subject = Key('b4-div');
-      var presses = 0;
-      await _pumpAtTopLeft(
-        tester,
-        Pressable(
-          onPress: () => presses++,
-          child: const Div(
-            key: subject,
-            classNames: 'm-8 w-20 h-20 bg-red-500 active:bg-blue-500',
-          ),
-        ),
-      );
+  testWidgets('B4 Button excludes margin from press styling and onPressed', (
+    tester,
+  ) async {
+    const subject = Key('b4-div');
+    var presses = 0;
+    await _pumpAtTopLeft(
+      tester,
+      Button(
+        key: subject,
+        classNames: 'm-8 w-20 h-20 bg-red-500 active:bg-blue-500',
+        onPressed: () => presses++,
+      ),
+    );
 
-      final innerRect = tester.getRect(_containerInside(subject));
-      final padding = find.descendant(
-        of: find.byKey(subject),
-        matching: find.byType(Padding),
-      );
-      final outerRect = tester.getRect(padding.first);
-      final marginPoint = Offset(
-        (outerRect.left + innerRect.left) / 2,
-        innerRect.center.dy,
-      );
+    final innerRect = tester.getRect(_containerInside(subject));
+    final padding = find.descendant(
+      of: find.byKey(subject),
+      matching: find.byType(Padding),
+    );
+    final outerRect = tester.getRect(padding.first);
+    final marginPoint = Offset(
+      (outerRect.left + innerRect.left) / 2,
+      innerRect.center.dy,
+    );
 
-      final gesture = await tester.startGesture(marginPoint);
-      await tester.pump();
-      final colorWhileHeld = _decorationColor(tester, subject);
-      await gesture.up();
-      await tester.pump();
+    final gesture = await tester.startGesture(marginPoint);
+    await tester.pump();
+    final colorWhileHeld = _decorationColor(tester, subject);
+    await gesture.up();
+    await tester.pump();
 
-      expect([colorWhileHeld, presses], [_red500, 0]);
-    },
-    skip: 'BROKEN: Pressable treats the outer margin as pressed and tappable',
-  );
+    expect([colorWhileHeld, presses], [_red500, 0]);
+  });
 }

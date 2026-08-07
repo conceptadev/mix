@@ -6,13 +6,13 @@ import 'package:mix_tailwinds/mix_tailwinds.dart';
 
 import 'tailwinds_test_helpers.dart';
 
-const _blue500 = Color(0xFF3B82F6);
-const _blue900 = Color(0xFF1E3A8A);
-const _pink500 = Color(0xFFEC4899);
-const _purple500 = Color(0xFFA855F7);
-const _red500 = Color(0xFFEF4444);
-const _slate700 = Color(0xFF334155);
-const _slate900 = Color(0xFF0F172A);
+const _blue500 = Color(0xFF2B7FFF);
+const _blue900 = Color(0xFF1C398E);
+const _pink500 = Color(0xFFF6339A);
+const _purple500 = Color(0xFFAD46FF);
+const _red500 = Color(0xFFFB2C36);
+const _slate700 = Color(0xFF314158);
+const _slate900 = Color(0xFF0F172B);
 
 void main() {
   group('Tailwind CSS v4.3.1 complex runtime parity', () {
@@ -112,7 +112,7 @@ void main() {
       },
     );
 
-    brokenTestWidgets(
+    testWidgets(
       '04 rich typography preserves Tailwind line-height and em tracking',
       (tester) async {
         await pumpLtr(
@@ -145,9 +145,6 @@ void main() {
         expect(text.maxLines, 1);
         expect(text.softWrap, isFalse);
       },
-      reason:
-          'text-2xl overwrites leading-tight and tracking-tight is fixed at '
-          '-0.4px instead of scaling -0.025em with font size',
     );
 
     testWidgets('05 v4 diagonal three-stop gradient matches CSS geometry', (
@@ -189,6 +186,7 @@ void main() {
         'translate-x-4 -translate-y-2 rotate-45 scale-105',
       );
       final actual = container.transform!;
+      expect(container.transformAlignment, Alignment.center);
       final expected =
           (Matrix4.identity()
                 ..multiply(Matrix4.translationValues(16, -8, 0))
@@ -257,48 +255,45 @@ void main() {
       expect(desktop.mainAxisAlignment, MainAxisAlignment.spaceBetween);
     });
 
-    brokenTestWidgets(
-      '09 dark hover compound variant responds to pointer hover',
-      (tester) async {
-        await tester.pumpWidget(
-          const MediaQuery(
-            data: MediaQueryData(
-              size: Size(400, 300),
-              platformBrightness: Brightness.dark,
-            ),
-            child: Directionality(
-              textDirection: TextDirection.ltr,
-              child: Align(
-                alignment: Alignment.topLeft,
-                child: Div(
-                  classNames:
-                      'w-24 h-24 bg-white dark:bg-slate-900 '
-                      'dark:hover:bg-blue-900',
-                  child: SizedBox(),
-                ),
+    testWidgets('09 dark hover compound variant responds to pointer hover', (
+      tester,
+    ) async {
+      await tester.pumpWidget(
+        const MediaQuery(
+          data: MediaQueryData(
+            size: Size(400, 300),
+            platformBrightness: Brightness.dark,
+          ),
+          child: Directionality(
+            textDirection: TextDirection.ltr,
+            child: Align(
+              alignment: Alignment.topLeft,
+              child: Div(
+                classNames:
+                    'w-24 h-24 bg-white dark:bg-slate-900 '
+                    'dark:hover:bg-blue-900',
+                child: SizedBox(),
               ),
             ),
           ),
-        );
-        await tester.pump();
+        ),
+      );
+      await tester.pump();
 
-        final finder = find.byType(Container);
-        Color? color() =>
-            (tester.widget<Container>(finder).decoration! as BoxDecoration)
-                .color;
+      final finder = find.byType(Container);
+      Color? color() =>
+          (tester.widget<Container>(finder).decoration! as BoxDecoration).color;
 
-        expect(color(), _slate900);
+      expect(color(), _slate900);
 
-        final gesture = await createOffscreenMouseGesture(tester);
-        await gesture.moveTo(tester.getCenter(finder));
-        await tester.pump();
+      final gesture = await createOffscreenMouseGesture(tester);
+      await gesture.moveTo(tester.getCenter(finder));
+      await tester.pump();
 
-        expect(color(), _blue900);
+      expect(color(), _blue900);
 
-        await gesture.removePointer();
-      },
-      reason: 'nested hover state under dark is not discovered by StyleBuilder',
-    );
+      await gesture.removePointer();
+    });
 
     testWidgets('10 delayed color transition follows Tailwind timing', (
       tester,
@@ -332,14 +327,6 @@ void main() {
       await gesture.removePointer();
     });
   });
-}
-
-void brokenTestWidgets(
-  String description,
-  WidgetTesterCallback callback, {
-  required String reason,
-}) {
-  testWidgets('$description [BROKEN: $reason]', callback, skip: true);
 }
 
 Future<void> _pumpLooseCanvas(

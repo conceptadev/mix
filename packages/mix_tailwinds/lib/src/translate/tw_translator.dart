@@ -680,7 +680,7 @@ final class TwTranslator {
       final lineHeight = twDefaultLineHeights[key];
       style()
         ..fontSize = size
-        ..height = lineHeight;
+        ..fontSizeHeight = lineHeight;
       return true;
     }
 
@@ -702,6 +702,8 @@ final class TwTranslator {
   bool _applyDefaultTextStatic(_GroupContext group, String raw) {
     final style = group.ensureDefaultTextStyle();
     if (_applyFontWeight(style, raw)) return true;
+    if (_applyLineHeight(style, raw)) return true;
+    if (_applyTracking(style, raw)) return true;
     if (_applyTextShadow(style, raw)) return true;
     return false;
   }
@@ -731,8 +733,35 @@ final class TwTranslator {
     TailwindValue? value, {
     required bool negative,
   }) {
+    if (root == 'w-auto') {
+      group.constraints
+        ..minWidth = 0
+        ..maxWidth = double.infinity;
+      return true;
+    }
+    if (root == 'h-auto') {
+      group.constraints
+        ..minHeight = 0
+        ..maxHeight = double.infinity;
+      return true;
+    }
     if (!sizingRoots.contains(root)) return false;
     if (negative) return false;
+    final key = tailwindValueKey(value);
+    if (key == 'auto') {
+      switch (root) {
+        case 'w':
+          group.constraints
+            ..minWidth = 0
+            ..maxWidth = double.infinity;
+          return true;
+        case 'h':
+          group.constraints
+            ..minHeight = 0
+            ..maxHeight = double.infinity;
+          return true;
+      }
+    }
     final length = _sizingLength(root, value);
     if (length == null) return _isWidgetLayerSize(value);
 
@@ -943,6 +972,7 @@ final class TwTranslator {
     return switch (part.kind) {
       TwRuntimeVariantKind.hover => BoxStyler().onHovered(style),
       TwRuntimeVariantKind.focus => BoxStyler().onFocused(style),
+      TwRuntimeVariantKind.focusVisible => BoxStyler().onFocusVisible(style),
       TwRuntimeVariantKind.pressed => BoxStyler().onPressed(style),
       TwRuntimeVariantKind.disabled => BoxStyler().onDisabled(style),
       TwRuntimeVariantKind.enabled => BoxStyler().onEnabled(style),
@@ -963,6 +993,9 @@ final class TwTranslator {
     return switch (part.kind) {
       TwRuntimeVariantKind.hover => FlexBoxStyler().onHovered(style),
       TwRuntimeVariantKind.focus => FlexBoxStyler().onFocused(style),
+      TwRuntimeVariantKind.focusVisible => FlexBoxStyler().onFocusVisible(
+        style,
+      ),
       TwRuntimeVariantKind.pressed => FlexBoxStyler().onPressed(style),
       TwRuntimeVariantKind.disabled => FlexBoxStyler().onDisabled(style),
       TwRuntimeVariantKind.enabled => FlexBoxStyler().onEnabled(style),
@@ -983,6 +1016,7 @@ final class TwTranslator {
     return switch (part.kind) {
       TwRuntimeVariantKind.hover => TextStyler().onHovered(style),
       TwRuntimeVariantKind.focus => TextStyler().onFocused(style),
+      TwRuntimeVariantKind.focusVisible => TextStyler().onFocusVisible(style),
       TwRuntimeVariantKind.pressed => TextStyler().onPressed(style),
       TwRuntimeVariantKind.disabled => TextStyler().onDisabled(style),
       TwRuntimeVariantKind.enabled => TextStyler().onEnabled(style),
@@ -1166,32 +1200,18 @@ final class TwTranslator {
   }
 
   bool _applyLineHeight(_TextStyleAccum style, String raw) {
-    final height = switch (raw) {
-      'leading-none' => 1.0,
-      'leading-tight' => 1.25,
-      'leading-snug' => 1.375,
-      'leading-normal' => 1.5,
-      'leading-relaxed' => 1.625,
-      'leading-loose' => 2.0,
-      _ => null,
-    };
+    final key = raw.startsWith('leading-') ? raw.substring(8) : null;
+    final height = key == null ? null : twDefaultLeading[key];
     if (height == null) return false;
-    style.height = height;
+    style.explicitHeight = height;
     return true;
   }
 
   bool _applyTracking(_TextStyleAccum style, String raw) {
-    final tracking = switch (raw) {
-      'tracking-tighter' => -0.8,
-      'tracking-tight' => -0.4,
-      'tracking-normal' => 0.0,
-      'tracking-wide' => 0.4,
-      'tracking-wider' => 0.8,
-      'tracking-widest' => 1.6,
-      _ => null,
-    };
+    final key = raw.startsWith('tracking-') ? raw.substring(9) : null;
+    final tracking = key == null ? null : twDefaultTracking[key];
     if (tracking == null) return false;
-    style.letterSpacing = tracking;
+    style.trackingEm = tracking;
     return true;
   }
 
@@ -1276,24 +1296,30 @@ final class _GroupContext {
   }
 
   BoxStyler toBoxStyler(TwConfig config) {
+    final hasTransform = transform.hasAnyTransform;
+
     return BoxStyler(
       padding: padding.toMix(),
       margin: margin.toMix(),
       constraints: constraints.toMix(),
       decoration: _decorationMix(config),
-      transform: transform.hasAnyTransform ? transform.toMatrix4() : null,
+      transform: hasTransform ? transform.toMatrix4() : null,
+      transformAlignment: hasTransform ? Alignment.center : null,
       clipBehavior: clipBehavior,
-      modifier: _modifierConfig(),
+      modifier: _modifierConfig(config),
     );
   }
 
   FlexBoxStyler toFlexBoxStyler(TwConfig config) {
+    final hasTransform = transform.hasAnyTransform;
+
     return FlexBoxStyler(
       padding: padding.toMix(),
       margin: margin.toMix(),
       constraints: constraints.toMix(),
       decoration: _decorationMix(config),
-      transform: transform.hasAnyTransform ? transform.toMatrix4() : null,
+      transform: hasTransform ? transform.toMatrix4() : null,
+      transformAlignment: hasTransform ? Alignment.center : null,
       clipBehavior: clipBehavior,
       direction: direction,
       mainAxisAlignment: mainAxisAlignment,
@@ -1301,13 +1327,16 @@ final class _GroupContext {
       mainAxisSize: mainAxisSize,
       textBaseline: textBaseline,
       spacing: spacing,
-      modifier: _modifierConfig(),
+      modifier: _modifierConfig(config),
     );
   }
 
   TextStyler toTextStyler(TwConfig config) {
     return TextStyler(
-      style: textStyle.toMix(defaultHeight: config.textDefaults.lineHeight),
+      style: textStyle.toMix(
+        defaultHeight: config.textDefaults.lineHeight,
+        defaultFontSize: config.textDefaults.fontSize,
+      ),
       textAlign: textAlign,
       overflow: overflow,
       maxLines: maxLines,
@@ -1316,7 +1345,7 @@ final class _GroupContext {
       textDirectives: textDirectives.isEmpty
           ? null
           : List.unmodifiable(textDirectives),
-      modifier: _modifierConfig(),
+      modifier: _modifierConfig(config),
     );
   }
 
@@ -1331,14 +1360,18 @@ final class _GroupContext {
     return decoration.toMix(border: borderMix, gradient: gradientMix);
   }
 
-  WidgetModifierConfig? _modifierConfig() {
+  WidgetModifierConfig? _modifierConfig(TwConfig config) {
     if (modifiers.isEmpty && _defaultTextStyleInsertIndex == null) return null;
 
     final output = List<ModifierMix>.of(modifiers);
     if (_defaultTextStyleInsertIndex case final index?) {
       output.insert(
         index,
-        DefaultTextStyleModifierMix(style: defaultTextStyle.toMix()),
+        DefaultTextStyleModifierMix(
+          style: defaultTextStyle.toMix(
+            defaultFontSize: config.textDefaults.fontSize,
+          ),
+        ),
       );
     }
 
@@ -1453,23 +1486,30 @@ final class _BorderRadiusAccum {
 final class _TextStyleAccum {
   Color? color;
   double? fontSize;
+  double? fontSizeHeight;
   FontWeight? fontWeight;
   TextDecoration? decoration;
-  double? height;
+  double? explicitHeight;
   double? letterSpacing;
+  double? trackingEm;
   List<ShadowMix>? shadows;
 
   bool get hasAny =>
       color != null ||
       fontSize != null ||
+      fontSizeHeight != null ||
       fontWeight != null ||
       decoration != null ||
-      height != null ||
+      explicitHeight != null ||
       letterSpacing != null ||
+      trackingEm != null ||
       shadows != null;
 
-  TextStyleMix? toMix({double? defaultHeight}) {
-    final resolvedHeight = height ?? defaultHeight;
+  TextStyleMix? toMix({double? defaultHeight, double? defaultFontSize}) {
+    final resolvedHeight = explicitHeight ?? fontSizeHeight ?? defaultHeight;
+    final resolvedLetterSpacing = trackingEm == null
+        ? letterSpacing
+        : trackingEm! * (fontSize ?? defaultFontSize!);
     if (!hasAny && resolvedHeight == null) return null;
     return TextStyleMix(
       color: color,
@@ -1477,7 +1517,7 @@ final class _TextStyleAccum {
       fontWeight: fontWeight,
       decoration: decoration,
       height: resolvedHeight,
-      letterSpacing: letterSpacing,
+      letterSpacing: resolvedLetterSpacing,
       shadows: shadows,
     );
   }

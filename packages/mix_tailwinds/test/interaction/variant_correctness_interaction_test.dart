@@ -3,8 +3,8 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix_tailwinds/mix_tailwinds.dart';
 
-const _red500 = Color(0xFFEF4444);
-const _blue500 = Color(0xFF3B82F6);
+const _red500 = Color(0xFFFB2C36);
+const _blue500 = Color(0xFF2B7FFF);
 
 Future<void> _pumpAtTopLeft(
   WidgetTester tester,
@@ -140,15 +140,6 @@ Future<void> _expectDiagnostic(WidgetTester tester, String token) async {
   expect(diagnostics.map((diagnostic) => diagnostic.token), contains(token));
 }
 
-void _brokenTestWidgets(
-  String description,
-  WidgetTesterCallback callback, {
-  required String skip,
-}) {
-  assert(skip.startsWith('BROKEN: '));
-  testWidgets('$description [$skip]', callback, skip: true);
-}
-
 void main() {
   testWidgets('E1 conflicting utilities resolve independently of token order', (
     tester,
@@ -176,102 +167,83 @@ void main() {
     );
   });
 
-  _brokenTestWidgets(
-    'E2 md:hover and hover:md require both stacked conditions',
-    (tester) async {
-      tester.view.devicePixelRatio = 1;
-      addTearDown(tester.view.resetDevicePixelRatio);
-      addTearDown(tester.view.resetPhysicalSize);
+  testWidgets('E2 md:hover and hover:md require both stacked conditions', (
+    tester,
+  ) async {
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.resetDevicePixelRatio);
+    addTearDown(tester.view.resetPhysicalSize);
 
-      Future<List<Color?>> observationsFor(String variant) async {
-        return <Color?>[
-          await _stackedVariantColor(
-            tester,
-            variant,
-            width: 600,
-            hovered: false,
-          ),
-          await _stackedVariantColor(
-            tester,
-            variant,
-            width: 600,
-            hovered: true,
-          ),
-          await _stackedVariantColor(
-            tester,
-            variant,
-            width: 1000,
-            hovered: false,
-          ),
-          await _stackedVariantColor(
-            tester,
-            variant,
-            width: 1000,
-            hovered: true,
-          ),
-        ];
-      }
+    Future<List<Color?>> observationsFor(String variant) async {
+      return <Color?>[
+        await _stackedVariantColor(tester, variant, width: 600, hovered: false),
+        await _stackedVariantColor(tester, variant, width: 600, hovered: true),
+        await _stackedVariantColor(
+          tester,
+          variant,
+          width: 1000,
+          hovered: false,
+        ),
+        await _stackedVariantColor(tester, variant, width: 1000, hovered: true),
+      ];
+    }
 
-      final observations = <String, List<Color?>>{
-        'hover control': await observationsFor('hover'),
-        'breakpoint control': await observationsFor('md'),
-        'md:hover': await observationsFor('md:hover'),
-        'hover:md': await observationsFor('hover:md'),
-      };
-      expect(observations, {
-        'hover control': [_red500, _blue500, _red500, _blue500],
-        'breakpoint control': [_red500, _red500, _blue500, _blue500],
-        'md:hover': [_red500, _red500, _red500, _blue500],
-        'hover:md': [_red500, _red500, _red500, _blue500],
-      });
-    },
-    skip: 'BROKEN: md:hover never applies at runtime while hover:md does',
-  );
+    final observations = <String, List<Color?>>{
+      'hover control': await observationsFor('hover'),
+      'breakpoint control': await observationsFor('md'),
+      'md:hover': await observationsFor('md:hover'),
+      'hover:md': await observationsFor('hover:md'),
+    };
+    expect(observations, {
+      'hover control': [_red500, _blue500, _red500, _blue500],
+      'breakpoint control': [_red500, _red500, _blue500, _blue500],
+      'md:hover': [_red500, _red500, _red500, _blue500],
+      'hover:md': [_red500, _red500, _red500, _blue500],
+    });
+  });
 
-  _brokenTestWidgets(
-    'E3 dark follows brightness without aliasing theme-midnight',
-    (tester) async {
-      final darkInLight = await _variantSnapshot(
-        tester,
-        'w-20 h-20 bg-red-500 dark:bg-blue-500',
-        brightness: Brightness.light,
-      );
-      final darkInDark = await _variantSnapshot(
-        tester,
-        'w-20 h-20 bg-red-500 dark:bg-blue-500',
-        brightness: Brightness.dark,
-      );
-      const midnightToken = 'theme-midnight:bg-blue-500';
-      final midnightInLight = await _variantSnapshot(
-        tester,
-        'w-20 h-20 bg-red-500 $midnightToken',
-        brightness: Brightness.light,
-      );
-      final midnightInDark = await _variantSnapshot(
-        tester,
-        'w-20 h-20 bg-red-500 $midnightToken',
-        brightness: Brightness.dark,
-      );
+  testWidgets('E3 dark follows brightness without aliasing theme-midnight', (
+    tester,
+  ) async {
+    final darkInLight = await _variantSnapshot(
+      tester,
+      'w-20 h-20 bg-red-500 dark:bg-blue-500',
+      brightness: Brightness.light,
+    );
+    final darkInDark = await _variantSnapshot(
+      tester,
+      'w-20 h-20 bg-red-500 dark:bg-blue-500',
+      brightness: Brightness.dark,
+    );
+    const midnightToken = 'theme-midnight:bg-blue-500';
+    final midnightInLight = await _variantSnapshot(
+      tester,
+      'w-20 h-20 bg-red-500 $midnightToken',
+      brightness: Brightness.light,
+    );
+    final midnightInDark = await _variantSnapshot(
+      tester,
+      'w-20 h-20 bg-red-500 $midnightToken',
+      brightness: Brightness.dark,
+    );
 
-      expect(
-        [
-          darkInLight.$1,
-          darkInDark.$1,
-          midnightInLight.$1,
-          midnightInDark.$1,
-          midnightInDark.$2,
-        ],
-        [
-          _red500,
-          _blue500,
-          _red500,
-          _red500,
-          [midnightToken],
-        ],
-      );
-    },
-    skip: 'BROKEN: theme-midnight is silently aliased to platform dark',
-  );
+    expect(
+      [
+        darkInLight.$1,
+        darkInDark.$1,
+        midnightInLight.$1,
+        midnightInDark.$1,
+        midnightInDark.$2,
+      ],
+      [
+        _red500,
+        _blue500,
+        _red500,
+        _red500,
+        [midnightToken],
+      ],
+    );
+  });
 
   testWidgets('E4 important modifier emits a diagnostic', (tester) async {
     await _expectDiagnostic(tester, '!bg-blue-500');

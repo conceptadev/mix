@@ -5,8 +5,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
 import 'package:mix_tailwinds/mix_tailwinds.dart';
 
-const _red500 = Color(0xFFEF4444);
-const _blue500 = Color(0xFF3B82F6);
+const _red500 = Color(0xFFFB2C36);
+const _blue500 = Color(0xFF2B7FFF);
 
 Future<void> _pumpApp(WidgetTester tester, Widget child) async {
   await tester.binding.setSurfaceSize(const Size(500, 400));
@@ -38,15 +38,6 @@ double _effectiveOpacity(WidgetTester tester, Key key) {
   if (finder.evaluate().isEmpty) return 1;
   expect(finder, findsOneWidget);
   return tester.widget<Opacity>(finder).opacity;
-}
-
-void _brokenTestWidgets(
-  String description,
-  WidgetTesterCallback callback, {
-  required String skip,
-}) {
-  assert(skip.startsWith('BROKEN: '));
-  testWidgets('$description [$skip]', callback, skip: true);
 }
 
 void main() {
@@ -121,34 +112,36 @@ void main() {
     expect([presses, focusNode.hasFocus, hoverColor], [0, false, _red500]);
   });
 
-  _brokenTestWidgets(
-    'D3 disabled Pressable exposes disabled non-actionable semantics',
-    (tester) async {
-      const subject = Key('d3-pressable');
-      await _pumpApp(
-        tester,
-        Pressable(
-          key: subject,
-          enabled: false,
-          semanticButtonLabel: 'Disabled action',
-          onPress: () {},
-          child: const SizedBox(width: 80, height: 80),
-        ),
-      );
+  testWidgets('D3 disabled Button exposes disabled non-actionable semantics', (
+    tester,
+  ) async {
+    const subject = Key('d3-button');
+    await _pumpApp(
+      tester,
+      const Button(
+        key: subject,
+        classNames: 'w-20 h-20',
+        semanticsLabel: 'Disabled action',
+        onPressed: null,
+      ),
+    );
 
-      expect(
-        tester.getSemantics(find.byKey(subject)),
-        isSemantics(
-          label: 'Disabled action',
-          isButton: true,
-          hasEnabledState: true,
-          isEnabled: false,
-          hasTapAction: false,
+    expect(
+      tester.getSemantics(
+        find.descendant(
+          of: find.byKey(subject),
+          matching: find.byType(Pressable),
         ),
-      );
-    },
-    skip: 'BROKEN: disabled semantics retain tap and omit enabled state',
-  );
+      ),
+      isSemantics(
+        label: 'Disabled action',
+        isButton: true,
+        hasEnabledState: true,
+        isEnabled: false,
+        hasTapAction: false,
+      ),
+    );
+  });
 
   testWidgets('D4 tab traversal skips a disabled Pressable', (tester) async {
     final before = FocusNode(debugLabel: 'before');

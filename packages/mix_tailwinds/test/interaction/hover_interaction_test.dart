@@ -3,8 +3,8 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix_tailwinds/mix_tailwinds.dart';
 
-const _red500 = Color(0xFFEF4444);
-const _blue500 = Color(0xFF3B82F6);
+const _red500 = Color(0xFFFB2C36);
+const _blue500 = Color(0xFF2B7FFF);
 
 Future<void> _pumpAtTopLeft(WidgetTester tester, Widget child) async {
   await tester.binding.setSurfaceSize(const Size(400, 400));
@@ -56,15 +56,6 @@ Future<TestGesture> _mouse(WidgetTester tester) async {
   await gesture.addPointer(location: const Offset(-100, -100));
   await tester.pump();
   return gesture;
-}
-
-void _brokenTestWidgets(
-  String description,
-  WidgetTesterCallback callback, {
-  required String skip,
-}) {
-  assert(skip.startsWith('BROKEN: '));
-  testWidgets('$description [$skip]', callback, skip: true);
 }
 
 void main() {
@@ -130,28 +121,24 @@ void main() {
     await gesture.removePointer();
   });
 
-  _brokenTestWidgets(
-    'A3 not-hover opacity is removed while hovered',
-    (tester) async {
-      const subject = Key('a3-div');
-      await _pumpAtTopLeft(
-        tester,
-        const Div(
-          key: subject,
-          classNames: 'not-hover:opacity-50 w-20 h-20 bg-red-500',
-        ),
-      );
+  testWidgets('A3 not-hover opacity is removed while hovered', (tester) async {
+    const subject = Key('a3-div');
+    await _pumpAtTopLeft(
+      tester,
+      const Div(
+        key: subject,
+        classNames: 'not-hover:opacity-50 w-20 h-20 bg-red-500',
+      ),
+    );
 
-      expect(_effectiveOpacity(tester, subject), 0.5);
+    expect(_effectiveOpacity(tester, subject), 0.5);
 
-      final gesture = await _mouse(tester);
-      await gesture.moveTo(tester.getCenter(_containerInside(subject)));
-      await tester.pump();
-      expect(_effectiveOpacity(tester, subject), 1);
-      await gesture.removePointer();
-    },
-    skip: 'BROKEN: not-hover opacity remains 0.5 after mouse enter',
-  );
+    final gesture = await _mouse(tester);
+    await gesture.moveTo(tester.getCenter(_containerInside(subject)));
+    await tester.pump();
+    expect(_effectiveOpacity(tester, subject), 1);
+    await gesture.removePointer();
+  });
 
   testWidgets('A4 hover changes decoration on the flex rendering path', (
     tester,

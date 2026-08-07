@@ -284,6 +284,24 @@ void main() {
     expect(boxSize.width, closeTo(100, 0.0001));
   });
 
+  testWidgets('fractional width aligns its border box to inline start', (
+    tester,
+  ) async {
+    await pumpSized(
+      tester,
+      Div(
+        key: const ValueKey('fractional-box'),
+        classNames: 'w-1/2 bg-blue-500',
+        child: const SizedBox(height: 40),
+      ),
+      width: 200,
+    );
+
+    final boxRect = tester.getRect(find.byType(Container));
+    expect(boxRect.left, closeTo(0, 0.0001));
+    expect(boxRect.width, closeTo(100, 0.0001));
+  });
+
   testWidgets('w-2/3 applies two-thirds width', (tester) async {
     await pumpSized(
       tester,
@@ -341,6 +359,270 @@ void main() {
     final boxSize = tester.getSize(find.byType(Container));
     expect(boxSize.width, closeTo(60, 0.0001));
     expect(boxSize.height, closeTo(120, 0.0001));
+  });
+
+  testWidgets('fixed width self-loosens inside a stretched block column', (
+    tester,
+  ) async {
+    const fixed = ValueKey('nested-fixed-width');
+    await pumpSized(
+      tester,
+      const Div(
+        classNames: '',
+        children: [
+          Div(
+            key: fixed,
+            classNames: 'w-16 h-8 bg-blue-500',
+            child: SizedBox(),
+          ),
+        ],
+      ),
+      width: 320,
+      height: 120,
+    );
+
+    final container = find.descendant(
+      of: find.byKey(fixed),
+      matching: find.byType(Container),
+    );
+    expect(tester.getSize(container).width, 64);
+    expect(tester.getTopLeft(container).dx, 0);
+  });
+
+  testWidgets('active width kind controls stretch in a flex column', (
+    tester,
+  ) async {
+    const fixed = ValueKey('flex-fixed-width');
+    const fraction = ValueKey('flex-fraction-width');
+    const full = ValueKey('flex-full-width');
+    await pumpSized(
+      tester,
+      const Div(
+        classNames: 'flex flex-col',
+        children: [
+          Div(key: fixed, classNames: 'w-16 h-8 bg-blue-500'),
+          Div(key: fraction, classNames: 'w-1/2 h-8 bg-blue-500'),
+          Div(key: full, classNames: 'w-full h-8 bg-blue-500'),
+        ],
+      ),
+      width: 320,
+      height: 120,
+    );
+
+    double widthOf(Key key) => tester
+        .getSize(
+          find.descendant(
+            of: find.byKey(key),
+            matching: find.byType(Container),
+          ),
+        )
+        .width;
+
+    expect(widthOf(fixed), 64);
+    expect(widthOf(fraction), 160);
+    expect(widthOf(full), 320);
+  });
+
+  testWidgets('responsive fixed width can clear to auto stretch', (
+    tester,
+  ) async {
+    const subject = ValueKey('responsive-auto-width');
+
+    Future<double> widthAt(double viewportWidth) async {
+      await pumpSized(
+        tester,
+        const Div(
+          classNames: 'flex flex-col',
+          children: [
+            Div(key: subject, classNames: 'w-16 md:w-auto h-8 bg-blue-500'),
+          ],
+        ),
+        width: viewportWidth,
+        height: 100,
+      );
+      return tester
+          .getSize(
+            find.descendant(
+              of: find.byKey(subject),
+              matching: find.byType(Container),
+            ),
+          )
+          .width;
+    }
+
+    expect(await widthAt(600), 64);
+    expect(await widthAt(900), 900);
+  });
+
+  testWidgets('responsive fixed height can clear to intrinsic auto height', (
+    tester,
+  ) async {
+    const subject = ValueKey('responsive-auto-height');
+
+    Future<double> heightAt(double viewportWidth) async {
+      await pumpSized(
+        tester,
+        const Div(
+          classNames: 'flex flex-col',
+          children: [
+            Div(
+              key: subject,
+              classNames: 'w-16 h-16 md:h-auto bg-blue-500',
+              child: SizedBox(height: 24),
+            ),
+          ],
+        ),
+        width: viewportWidth,
+        height: 120,
+      );
+      return tester
+          .getSize(
+            find.descendant(
+              of: find.byKey(subject),
+              matching: find.byType(Container),
+            ),
+          )
+          .height;
+    }
+
+    expect(await heightAt(600), 64);
+    expect(await heightAt(900), 24);
+  });
+
+  testWidgets('nested vertical flex stretches cards across bounded width', (
+    tester,
+  ) async {
+    const frame = ValueKey('centered-frame');
+    const cardRoot = ValueKey('full-width-card-root');
+    const contentColumn = ValueKey('padded-content-column');
+    const responsiveColumn = ValueKey('responsive-column');
+    const card = ValueKey('stretched-card');
+
+    await pumpSized(
+      tester,
+      const Div(
+        key: frame,
+        classNames: 'flex w-full flex-col items-center gap-8 p-6',
+        children: [
+          Div(
+            key: cardRoot,
+            classNames:
+                'flex w-full max-w-5xl flex-col overflow-hidden rounded-3xl '
+                'border border-slate-200 bg-white',
+            children: [
+              Div(
+                key: contentColumn,
+                classNames: 'flex flex-col p-6 md:p-8',
+                children: [
+                  Div(
+                    key: responsiveColumn,
+                    classNames:
+                        'mt-8 flex flex-col gap-6 md:flex-row md:items-start',
+                    children: [
+                      Div(
+                        key: card,
+                        classNames: 'flex flex-col rounded-2xl bg-blue-600 p-6',
+                        child: P(text: 'Qualified sessions'),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ],
+      ),
+      width: 480,
+      height: 320,
+    );
+
+    final responsiveFlexFinder = find
+        .descendant(
+          of: find.byKey(responsiveColumn),
+          matching: find.byType(Flex),
+        )
+        .first;
+    final responsiveFlex = tester.widget<Flex>(responsiveFlexFinder);
+    final responsiveRenderFlex = tester.renderObject<RenderFlex>(
+      responsiveFlexFinder,
+    );
+    final cardContainer = find.descendant(
+      of: find.byKey(card),
+      matching: find.byType(Container),
+    );
+
+    RenderFlex renderFlexUnder(Key key) => tester.renderObject<RenderFlex>(
+      find.descendant(of: find.byKey(key), matching: find.byType(Flex)).first,
+    );
+
+    expect(
+      renderFlexUnder(frame).crossAxisAlignment,
+      CrossAxisAlignment.center,
+    );
+    expect(renderFlexUnder(cardRoot).size.width, 430);
+    expect(renderFlexUnder(contentColumn).size.width, 382);
+    expect(responsiveRenderFlex.constraints.minWidth, 382);
+    expect(responsiveRenderFlex.constraints.maxWidth, 382);
+    expect(responsiveFlex.direction, Axis.vertical);
+    expect(responsiveFlex.crossAxisAlignment, CrossAxisAlignment.stretch);
+    expect(tester.getSize(cardContainer).width, 382);
+  });
+
+  testWidgets('md:items-start only disables column stretch at md', (
+    tester,
+  ) async {
+    const parent = ValueKey('responsive-items-parent');
+    const child = ValueKey('responsive-items-child');
+
+    Future<(CrossAxisAlignment, BoxConstraints, double)> metricsAt(
+      double width,
+    ) async {
+      await pumpSized(
+        tester,
+        const Div(
+          key: parent,
+          classNames: 'flex flex-col md:items-start',
+          children: [
+            Div(
+              key: child,
+              classNames: 'h-8 bg-blue-500',
+              child: SizedBox(width: 80),
+            ),
+          ],
+        ),
+        width: width,
+        height: 120,
+      );
+
+      final flexFinder = find
+          .descendant(of: find.byKey(parent), matching: find.byType(Flex))
+          .first;
+      final flex = tester.widget<Flex>(flexFinder);
+      final constraints = tester
+          .renderObject<RenderFlex>(flexFinder)
+          .constraints;
+      final childContainer = find.descendant(
+        of: find.byKey(child),
+        matching: find.byType(Container),
+      );
+      return (
+        flex.crossAxisAlignment,
+        constraints,
+        tester.getSize(childContainer).width,
+      );
+    }
+
+    final mobile = await metricsAt(600);
+    expect(mobile.$1, CrossAxisAlignment.stretch);
+    expect(mobile.$2.minWidth, 600);
+    expect(mobile.$2.maxWidth, 600);
+    expect(mobile.$3, 600);
+
+    final desktop = await metricsAt(900);
+    expect(desktop.$1, CrossAxisAlignment.start);
+    expect(desktop.$2.minWidth, 900);
+    expect(desktop.$2.maxWidth, 900);
+    expect(desktop.$3, 80);
   });
 
   testWidgets('max-w-sm uses Tailwind named max-width scale', (tester) async {
@@ -415,6 +697,65 @@ void main() {
     );
 
     expect(tester.takeException(), isNull);
+  });
+
+  testWidgets('vertical flex uses CSS-safe defaults across width constraints', (
+    tester,
+  ) async {
+    const subject = ValueKey('alignment-subject');
+
+    Future<(CrossAxisAlignment, bool)> metrics({
+      required String classNames,
+      required bool boundedWidth,
+    }) async {
+      final div = Div(
+        key: subject,
+        classNames: classNames,
+        children: const [
+          SizedBox(width: 40, height: 20),
+          SizedBox(width: 80, height: 20),
+        ],
+      );
+
+      await pumpSized(
+        tester,
+        boundedWidth
+            ? div
+            : Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [div],
+              ),
+        width: 320,
+        height: 120,
+      );
+
+      final flexFinder = find
+          .descendant(of: find.byKey(subject), matching: find.byType(Flex))
+          .first;
+      final flex = tester.widget<Flex>(flexFinder);
+      final renderFlex = tester.renderObject<RenderFlex>(flexFinder);
+      return (flex.crossAxisAlignment, renderFlex.constraints.hasBoundedWidth);
+    }
+
+    final unboundedDefault = await metrics(
+      classNames: 'flex flex-col',
+      boundedWidth: false,
+    );
+    final boundedDefault = await metrics(
+      classNames: 'flex flex-col',
+      boundedWidth: true,
+    );
+    final unboundedCenter = await metrics(
+      classNames: 'flex flex-col items-center',
+      boundedWidth: false,
+    );
+
+    expect(unboundedDefault.$2, isFalse);
+    expect(unboundedDefault.$1, CrossAxisAlignment.start);
+    expect(boundedDefault.$2, isTrue);
+    expect(boundedDefault.$1, CrossAxisAlignment.stretch);
+    expect(unboundedCenter.$2, isFalse);
+    expect(unboundedCenter.$1, CrossAxisAlignment.center);
   });
 
   testWidgets('flex-1 applies flex parent data when used inside Row', (
@@ -945,8 +1286,8 @@ void main() {
     final decoration = await boxDecorationFor(tester, 'border-x-red-500');
     final border = decoration?.border as Border?;
     expect(border, isNotNull);
-    expect(border!.left.color, const Color(0xFFEF4444));
-    expect(border.right.color, const Color(0xFFEF4444));
+    expect(border!.left.color, const Color(0xFFFB2C36));
+    expect(border.right.color, const Color(0xFFFB2C36));
   });
 
   testWidgets('border-gray-200 alone produces no visible border', (
@@ -992,10 +1333,10 @@ void main() {
     final border = decoration?.border as Border?;
     expect(border, isNotNull);
     expect(border!.top.width, 1);
-    expect(border.top.color, const Color(0xFFEF4444)); // red-500
-    expect(border.bottom.color, const Color(0xFFEF4444));
-    expect(border.left.color, const Color(0xFFEF4444));
-    expect(border.right.color, const Color(0xFFEF4444));
+    expect(border.top.color, const Color(0xFFFB2C36)); // red-500
+    expect(border.bottom.color, const Color(0xFFFB2C36));
+    expect(border.left.color, const Color(0xFFFB2C36));
+    expect(border.right.color, const Color(0xFFFB2C36));
   });
 
   testWidgets('border-x-2 border-blue-500 applies width and color', (
@@ -1009,8 +1350,8 @@ void main() {
     expect(border, isNotNull);
     expect(border!.left.width, 2);
     expect(border.right.width, 2);
-    expect(border.left.color, const Color(0xFF3B82F6)); // blue-500
-    expect(border.right.color, const Color(0xFF3B82F6));
+    expect(border.left.color, const Color(0xFF2B7FFF)); // blue-500
+    expect(border.right.color, const Color(0xFF2B7FFF));
     expect(border.top.width, 0);
     expect(border.bottom.width, 0);
   });
@@ -1073,7 +1414,7 @@ void main() {
     await pumpLtr(tester, p);
 
     final text = tester.widget<Text>(find.text('Hello'));
-    expect(text.style?.color, const Color(0xFF3B82F6));
+    expect(text.style?.color, const Color(0xFF2B7FFF));
     expect(text.style?.fontWeight, FontWeight.w700);
   });
 
@@ -1172,7 +1513,7 @@ void main() {
 
     final icon = tester.widget<Icon>(find.byIcon(Icons.add));
     expect(icon.size, 12);
-    expect(icon.color, const Color(0xFF1D4ED8));
+    expect(icon.color, const Color(0xFF1447E6));
 
     final padding = tester.widget<Padding>(find.byType(Padding));
     expect(padding.padding.resolve(TextDirection.ltr).right, 4);
@@ -1356,6 +1697,19 @@ void main() {
     expect(text.style?.height, 2.0);
   });
 
+  testWidgets('explicit leading wins over font-size defaults in either order', (
+    tester,
+  ) async {
+    for (final classNames in [
+      'leading-tight text-2xl',
+      'text-2xl leading-tight',
+    ]) {
+      final text = await renderedTextFor(tester, classNames);
+      expect(text.style?.fontSize, 24);
+      expect(text.style?.height, 1.25);
+    }
+  });
+
   testWidgets('leading-even applies even leading distribution', (tester) async {
     const value = 'leading-even sample';
     final seen = <String>[];
@@ -1427,6 +1781,84 @@ void main() {
   testWidgets('tracking-widest applies 1.6 letter spacing', (tester) async {
     final text = await renderedTextFor(tester, 'tracking-widest');
     expect(text.style?.letterSpacing, 1.6);
+  });
+
+  testWidgets('tracking resolves em units against the selected font size', (
+    tester,
+  ) async {
+    for (final classNames in [
+      'tracking-tight text-2xl',
+      'text-2xl tracking-tight',
+    ]) {
+      final text = await renderedTextFor(tester, classNames);
+      expect(text.style?.letterSpacing, closeTo(-0.6, 0.000001));
+    }
+  });
+
+  testWidgets('box default text uses the same leading and tracking rules', (
+    tester,
+  ) async {
+    for (final classNames in [
+      'leading-tight text-2xl tracking-tight',
+      'tracking-tight text-2xl leading-tight',
+    ]) {
+      late TextStyle inherited;
+      await pumpLtr(
+        tester,
+        Div(
+          classNames: classNames,
+          child: Builder(
+            builder: (context) {
+              inherited = DefaultTextStyle.of(context).style;
+              return const SizedBox();
+            },
+          ),
+        ),
+      );
+      await tester.pump();
+
+      expect(inherited.fontSize, 24);
+      expect(inherited.height, 1.25);
+      expect(inherited.letterSpacing, closeTo(-0.6, 0.000001));
+    }
+  });
+
+  testWidgets('tracking uses configured base font size for text and boxes', (
+    tester,
+  ) async {
+    final config = TwConfig.standard().copyWith(
+      textDefaults: TwConfig.standard().textDefaults.copyWith(fontSize: 15),
+    );
+    late TextStyle inherited;
+
+    await pumpLtr(
+      tester,
+      TwScope(
+        config: config,
+        child: Column(
+          children: [
+            StyledText(
+              'direct tracking',
+              style: TwParser(config: config).parseText('tracking-wide'),
+            ),
+            Div(
+              classNames: 'tracking-wide',
+              child: Builder(
+                builder: (context) {
+                  inherited = DefaultTextStyle.of(context).style;
+                  return const SizedBox();
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+    await tester.pump();
+
+    final direct = tester.widget<Text>(find.text('direct tracking'));
+    expect(direct.style?.letterSpacing, closeTo(0.375, 0.000001));
+    expect(inherited.letterSpacing, closeTo(0.375, 0.000001));
   });
 
   // ==========================================================================
@@ -2343,7 +2775,9 @@ void main() {
     final containerFinder = find.byType(Container);
 
     expect(containerFinder, findsOneWidget);
-    expect(tester.widget<Container>(containerFinder).transform, isNotNull);
+    final container = tester.widget<Container>(containerFinder);
+    expect(container.transform, isNotNull);
+    expect(container.transformAlignment, Alignment.center);
     expect(
       find.descendant(
         of: find.byType(Container),

@@ -37,7 +37,7 @@ void main() {
     expect((base.decoration as BoxDecoration?)?.color, isNull);
     expect(
       (hovered.decoration as BoxDecoration?)?.color,
-      const Color(0xFFDC2626),
+      const Color(0xFFE7000B),
     );
   });
 
@@ -78,7 +78,7 @@ void main() {
       ),
     );
 
-    expect((spec.decoration as BoxDecoration?)?.color, const Color(0xFFDC2626));
+    expect((spec.decoration as BoxDecoration?)?.color, const Color(0xFFE7000B));
   });
 
   test('group-hover is ignored with a structured diagnostic', () {

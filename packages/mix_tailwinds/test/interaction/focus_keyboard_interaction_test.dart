@@ -4,8 +4,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
 import 'package:mix_tailwinds/mix_tailwinds.dart';
 
-const _red500 = Color(0xFFEF4444);
-const _blue500 = Color(0xFF3B82F6);
+const _red500 = Color(0xFFFB2C36);
+const _blue500 = Color(0xFF2B7FFF);
 
 Future<void> _pumpApp(WidgetTester tester, Widget child) async {
   await tester.binding.setSurfaceSize(const Size(500, 400));
@@ -27,15 +27,6 @@ Color? _decorationColor(WidgetTester tester, Key key) {
   expect(finder, findsOneWidget);
   final container = tester.widget<Container>(finder);
   return (container.decoration as BoxDecoration?)?.color;
-}
-
-void _brokenTestWidgets(
-  String description,
-  WidgetTesterCallback callback, {
-  required String skip,
-}) {
-  assert(skip.startsWith('BROKEN: '));
-  testWidgets('$description [$skip]', callback, skip: true);
 }
 
 void main() {
@@ -93,66 +84,58 @@ void main() {
     expect(presses, 2);
   });
 
-  _brokenTestWidgets(
-    'C3 Space hold drives active styling until key release',
-    (tester) async {
-      const subject = Key('c3-div');
-      final focusNode = FocusNode();
-      addTearDown(focusNode.dispose);
-      await _pumpApp(
-        tester,
-        Pressable(
-          focusNode: focusNode,
-          onPress: () {},
-          child: const Div(
-            key: subject,
-            classNames: 'w-20 h-20 bg-red-500 active:bg-blue-500',
-          ),
-        ),
-      );
+  testWidgets('C3 Space hold drives active styling until key release', (
+    tester,
+  ) async {
+    const subject = Key('c3-div');
+    final focusNode = FocusNode();
+    addTearDown(focusNode.dispose);
+    await _pumpApp(
+      tester,
+      Button(
+        key: subject,
+        classNames: 'w-20 h-20 bg-red-500 active:bg-blue-500',
+        focusNode: focusNode,
+        onPressed: () {},
+      ),
+    );
 
-      focusNode.requestFocus();
-      await tester.pump();
-      await tester.sendKeyDownEvent(LogicalKeyboardKey.space);
-      await tester.pump();
-      final colorWhileHeld = _decorationColor(tester, subject);
+    focusNode.requestFocus();
+    await tester.pump();
+    await tester.sendKeyDownEvent(LogicalKeyboardKey.space);
+    await tester.pump();
+    final colorWhileHeld = _decorationColor(tester, subject);
 
-      await tester.sendKeyUpEvent(LogicalKeyboardKey.space);
-      await tester.pump();
-      final colorAfterRelease = _decorationColor(tester, subject);
+    await tester.sendKeyUpEvent(LogicalKeyboardKey.space);
+    await tester.pump();
+    final colorAfterRelease = _decorationColor(tester, subject);
 
-      expect([colorWhileHeld, colorAfterRelease], [_blue500, _red500]);
-    },
-    skip: 'BROKEN: Space activates onPress without setting pressed state',
-  );
+    expect([colorWhileHeld, colorAfterRelease], [_blue500, _red500]);
+  });
 
-  _brokenTestWidgets(
-    'C4 focus-visible stays off when a pointer tap requests focus',
-    (tester) async {
-      const subject = Key('c4-div');
-      final focusNode = FocusNode();
-      addTearDown(focusNode.dispose);
-      await _pumpApp(
-        tester,
-        Pressable(
-          focusNode: focusNode,
-          onPress: focusNode.requestFocus,
-          child: const Div(
-            key: subject,
-            classNames: 'w-20 h-20 bg-red-500 focus-visible:bg-blue-500',
-          ),
-        ),
-      );
+  testWidgets('C4 focus-visible stays off when a pointer tap requests focus', (
+    tester,
+  ) async {
+    const subject = Key('c4-div');
+    final focusNode = FocusNode();
+    addTearDown(focusNode.dispose);
+    await _pumpApp(
+      tester,
+      Button(
+        key: subject,
+        classNames: 'w-20 h-20 bg-red-500 focus-visible:bg-blue-500',
+        focusNode: focusNode,
+        onPressed: focusNode.requestFocus,
+      ),
+    );
 
-      await tester.tap(_containerInside(subject));
-      await tester.pump();
-      final focused = focusNode.hasFocus;
-      final colorAfterPointerFocus = _decorationColor(tester, subject);
-      focusNode.unfocus();
-      await tester.pump();
+    await tester.tap(_containerInside(subject));
+    await tester.pump();
+    final focused = focusNode.hasFocus;
+    final colorAfterPointerFocus = _decorationColor(tester, subject);
+    focusNode.unfocus();
+    await tester.pump();
 
-      expect([focused, colorAfterPointerFocus], [true, _red500]);
-    },
-    skip: 'BROKEN: focus-visible is aliased to pointer-induced focus',
-  );
+    expect([focused, colorAfterPointerFocus], [true, _red500]);
+  });
 }

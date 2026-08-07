@@ -23,6 +23,7 @@ void main() {
       contains(TwGradientStrategy.cssAngleRect),
     );
     expect(const Div(classNames: 'p-4'), isNotNull);
+    expect(const Button(classNames: 'p-4', onPressed: null), isNotNull);
   });
 
   test('public barrel does not export the removed semantic registry', () {

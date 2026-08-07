@@ -168,6 +168,7 @@ TwRoute? _routeVariant(
 enum TwRuntimeVariantKind {
   hover,
   focus,
+  focusVisible,
   pressed,
   disabled,
   enabled,
@@ -211,9 +212,10 @@ TwRuntimeVariant? runtimeVariantFor(
 
     return switch (variant.root) {
       'hover' => const TwRuntimeVariant(TwRuntimeVariantKind.hover, 'hover'),
-      'focus' || 'focus-visible' => const TwRuntimeVariant(
-        TwRuntimeVariantKind.focus,
-        'focus',
+      'focus' => const TwRuntimeVariant(TwRuntimeVariantKind.focus, 'focus'),
+      'focus-visible' => const TwRuntimeVariant(
+        TwRuntimeVariantKind.focusVisible,
+        'focus-visible',
       ),
       'active' || 'pressed' => const TwRuntimeVariant(
         TwRuntimeVariantKind.pressed,
@@ -227,10 +229,7 @@ TwRuntimeVariant? runtimeVariantFor(
         TwRuntimeVariantKind.enabled,
         'enabled',
       ),
-      'dark' || 'theme-midnight' => const TwRuntimeVariant(
-        TwRuntimeVariantKind.dark,
-        'dark',
-      ),
+      'dark' => const TwRuntimeVariant(TwRuntimeVariantKind.dark, 'dark'),
       'light' => const TwRuntimeVariant(TwRuntimeVariantKind.light, 'light'),
       _ => null,
     };
@@ -284,9 +283,11 @@ bool isWidgetLayerUtility(TailwindUtility utility) {
   if (root == 'gap-x' || root == 'gap-y') return true;
 
   if (sizingRoots.contains(root)) {
+    if (valueKey == 'auto') {
+      return root != 'w' && root != 'h';
+    }
     return valueKey == 'full' ||
         valueKey == 'screen' ||
-        valueKey == 'auto' ||
         valueKey?.contains('/') == true;
   }
 
