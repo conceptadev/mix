@@ -5,7 +5,6 @@
   self-aligned child now renders through a `RenderFlex` that offsets those
   children after it has measured its cross axis, so the override also works in
   the common case of a row nested inside a column.
-
 - **Breaking:** `TwConfig.standard()` now contains only Tailwind CSS 4.3.1
   defaults. The fixture-only `brand-500`, `card` spacing/radius, `3xl`
   breakpoint, and `shadow-card` values were removed; add project values with
@@ -48,8 +47,9 @@
 - Added structured `TwDiagnostic` reporting through `onDiagnostic`; ignored
   adaptations and unsupported candidates no longer disappear silently. The
   token-only `onUnsupported` callback remains as a deprecated shim.
-- Resolve conflicting utilities in canonical registry order so class-string
-  order no longer changes base or variant output.
+- Resolve conflicting utilities in canonical registry order across translated
+  styles and constraint-aware widget behavior, so class-string order no longer
+  changes base, variant, flex-axis, gap, or self-alignment output.
 - Report unsupported `basis-*` flex item utilities through `onDiagnostic`
   instead of silently ignoring fraction, full, arbitrary, or unknown values.
 - Keep supported `basis-auto` and spacing-scale basis utilities quiet while

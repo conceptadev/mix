@@ -236,7 +236,7 @@ Red pixels in diff images indicate differences between Flutter and Tailwind:
 
 - **Font anti-aliasing** - Web and Flutter render fonts differently
 - **Sub-pixel rendering** - Minor 1px differences in positioning
-- **Shadow rendering** - Flutter uses Material elevation, CSS uses box-shadow
+- **Shadow rasterization** - Flutter and the browser rasterize matching box-shadow values differently
 - **Line height** - Minor differences in text vertical positioning
 
 ### Unacceptable Differences (Parser Bugs)
@@ -272,13 +272,15 @@ open ../../visual-comparison/card-alert/diff/absdiff-768.png
 
 ### Step 1: Identify the Problem Class
 
-Look at the diff image and identify which element has the red pixels. Find the corresponding class string in both:
-- `real_tailwind/index.html` - The HTML element
-- `example/lib/main.dart` - The Flutter `Div` widget
+Look at the diff image and identify which element has the red pixels. Find the
+corresponding class string in both `example/real_tailwind/*.html` and its
+matching preview under `example/lib/`.
 
 ### Step 2: Check the Parser
 
-Look in `lib/src/tw_parser.dart` for how the class is handled.
+Look in `lib/src/translate/tw_translator.dart` for utility translation,
+`lib/src/translate/tw_routing.dart` for support/target routing, and
+`lib/src/parser/` for candidate parsing.
 
 ### Step 3: Check the Config
 
@@ -299,82 +301,6 @@ When a visual diff looks structural, add focused widget tests before changing pa
 - Dashboard: equal metric tile widths, equal action button widths, row separator/top-border behavior.
 
 This keeps fixes tied to utility semantics instead of chasing screenshot noise.
-
----
-
-## Deep Analysis with Codex Agent
-
-After running the visual comparison, use the Codex MCP agent for automated deep analysis of parity issues.
-
-### Running Codex Visual Parity Analysis
-
-Invoke the Codex agent with this configuration:
-
-```
-Tool: mcp__plugin_codex_codex__codex
-Model: gpt-5.2-codex
-Config: { "reasoning_effort": "xhigh" }
-Sandbox: read-only
-CWD: packages/mix_tailwinds
-```
-
-### Image Paths for Analysis
-
-Reference these paths when prompting Codex:
-
-**Dashboard Example:**
-- `visual-comparison/dashboard/tailwind-480.png` - Tailwind CSS reference
-- `visual-comparison/dashboard/flutter-480.png` - Flutter mix_tailwinds output
-- `visual-comparison/dashboard/diff/diff-480.png` - Pixel diff highlighting
-
-**Card-Alert Example:**
-- `visual-comparison/card-alert/tailwind-480.png` - Tailwind CSS reference
-- `visual-comparison/card-alert/flutter-480.png` - Flutter mix_tailwinds output
-- `visual-comparison/card-alert/diff/diff-480.png` - Pixel diff highlighting
-
-Also available at 768px and 1024px widths.
-
-### Example Codex Prompt
-
-```
-Perform a DEEP visual parity analysis between Tailwind CSS examples and Flutter mix_tailwinds.
-
-Image paths:
-- visual-comparison/dashboard/tailwind-480.png
-- visual-comparison/dashboard/flutter-480.png
-- visual-comparison/dashboard/diff/diff-480.png
-- visual-comparison/card-alert/tailwind-480.png
-- visual-comparison/card-alert/flutter-480.png
-- visual-comparison/card-alert/diff/diff-480.png
-
-Tasks:
-1. Read Flutter examples in example/lib/
-2. Read Tailwind HTML in example/real_tailwind/
-3. Analyze parser in lib/src/tw_parser.dart
-4. Analyze widget in lib/src/tw_widget.dart
-5. Cross-reference each Tailwind class with its Flutter implementation
-6. Identify ALL potential sources of visual differences
-
-Focus on: gradients, spacing, sizing, typography, colors, borders, shadows, flexbox behavior.
-```
-
-### Expected Output
-
-Codex returns YAML with:
-- `parity_analysis` - Per-example breakdown with issue severity
-- `parser_findings` - Issues in tw_parser.dart
-- `widget_findings` - Issues in tw_widget.dart
-- `priority_fixes` - Ranked list of recommended fixes
-- `summary` - Overall assessment and issue counts
-
-### Interpreting Codex Results
-
-| Severity | Meaning |
-|----------|---------|
-| CRITICAL | Will cause runtime failures |
-| MAJOR | Significant visual difference (missing badge, collapsed spacing) |
-| MINOR | Noticeable but not breaking (line-height, hover states) |
-| COSMETIC | Platform-specific (shadow blur, font anti-aliasing) |
 
 ---
 
@@ -424,7 +350,9 @@ Codex returns YAML with:
 
 | File | Purpose |
 |------|---------|
-| `lib/src/tw_parser.dart` | Token parsing logic |
+| `lib/src/parser/` | Candidate parsing, registry data, diagnostics, and routing inputs |
+| `lib/src/translate/tw_translator.dart` | Utility-to-Mix translation logic |
+| `lib/src/translate/tw_routing.dart` | Candidate support and target routing policy |
 | `lib/src/tw_config.dart` | Value mappings (spacing, colors, etc.) |
 | `lib/src/tw_widget.dart` | Div/Span widget implementation |
 | `lib/src/tw_utils.dart` | Utility functions (fraction parsing) |
@@ -439,7 +367,7 @@ Codex returns YAML with:
 These differences are expected and not bugs:
 
 1. **Font rendering** - Web uses system fonts with different hinting than Flutter
-2. **Shadow spread** - Material elevation != CSS box-shadow
+2. **Shadow rasterization** - Flutter and browsers rasterize box shadows differently
 3. **Sub-pixel anti-aliasing** - Different rendering engines
 4. **Line height** - Minor line height differences between platforms
 

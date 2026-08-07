@@ -991,10 +991,8 @@ const _adaptedStaticVariantReasons = <String, String>{
       'Mapped to Flutter platform brightness; see FLUTTER_ADAPTATIONS.md '
       '(Compatibility Ledger Status Notes).',
   'focus-visible':
-      'Currently mapped to the broader Mix focus state; see '
-      'FLUTTER_ADAPTATIONS.md (Compatibility Ledger Status Notes).',
-  'theme-midnight':
-      'Currently aliases Flutter dark mode pending the documented 1.0 decision; '
+      "Mapped to Mix's focus-visible state using Flutter's app-wide input "
+      'modality; '
       'see FLUTTER_ADAPTATIONS.md (Compatibility Ledger Status Notes).',
 };
 

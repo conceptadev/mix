@@ -1333,7 +1333,7 @@ const generatedTailwindVariantCompatibilityLedger = <TailwindCompatibilityEntry>
     .staticVariant,
     .adapted,
     reason:
-        'Currently mapped to the broader Mix focus state; see FLUTTER_ADAPTATIONS.md (Compatibility Ledger Status Notes).',
+        'Mapped to Mix\'s focus-visible state using Flutter\'s app-wide input modality; see FLUTTER_ADAPTATIONS.md (Compatibility Ledger Status Notes).',
   ),
   TailwindCompatibilityEntry('focus-within', .staticVariant, .unsupported),
   TailwindCompatibilityEntry('forced-colors', .staticVariant, .unsupported),
@@ -1373,13 +1373,7 @@ const generatedTailwindVariantCompatibilityLedger = <TailwindCompatibilityEntry>
   TailwindCompatibilityEntry('sm', .staticVariant, .implemented),
   TailwindCompatibilityEntry('starting', .staticVariant, .unsupported),
   TailwindCompatibilityEntry('target', .staticVariant, .unsupported),
-  TailwindCompatibilityEntry(
-    'theme-midnight',
-    .staticVariant,
-    .adapted,
-    reason:
-        'Currently aliases Flutter dark mode pending the documented 1.0 decision; see FLUTTER_ADAPTATIONS.md (Compatibility Ledger Status Notes).',
-  ),
+  TailwindCompatibilityEntry('theme-midnight', .staticVariant, .unsupported),
   TailwindCompatibilityEntry('user-invalid', .staticVariant, .unsupported),
   TailwindCompatibilityEntry('user-valid', .staticVariant, .unsupported),
   TailwindCompatibilityEntry('valid', .staticVariant, .unsupported),

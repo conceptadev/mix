@@ -101,6 +101,30 @@ final class TwTranslator {
     return parsedTokens..sort(_compareParsedTokens);
   }
 
+  /// Returns raw candidates in the same deterministic order as translation.
+  List<String> sortTokens(Iterable<String> tokens) {
+    return List<String>.of(tokens)..sort(_compareTokenStrings);
+  }
+
+  int _compareTokenStrings(String left, String right) {
+    final leftParsed = _parser.parseCandidate(left);
+    final rightParsed = _parser.parseCandidate(right);
+
+    if (leftParsed case TailwindParseSuccess(:final candidate)) {
+      if (rightParsed case TailwindParseSuccess(candidate: final other)) {
+        return _compareParsedTokens(
+          (token: left, candidate: candidate),
+          (token: right, candidate: other),
+        );
+      }
+      return -1;
+    }
+    if (rightParsed is TailwindParseSuccess) return 1;
+
+    final natural = _compareNatural(left, right);
+    return natural != 0 ? natural : left.compareTo(right);
+  }
+
   int _compareParsedTokens(_ParsedToken left, _ParsedToken right) {
     final leftOrder = _utilityOrder(left.candidate.utility);
     final rightOrder = _utilityOrder(right.candidate.utility);

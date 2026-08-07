@@ -343,8 +343,8 @@ class _CssSemanticFlexBox extends StatelessWidget {
 /// Flutter's [RenderFlex] has no per-child cross-axis alignment, so `self-*`
 /// cannot be honored by the child alone: a child wrapping itself in an [Align]
 /// only shrink-wraps and the flex still positions it by the container's
-/// `align-items`. The container therefore has to read its children's classes
-/// and switch to a stretched cross axis. This interface is that read.
+/// `align-items`. The container reads this interface to pass each direct
+/// child's requested alignment to its flex render object.
 abstract interface class TwClassed {
   String get classNames;
 }
@@ -959,7 +959,7 @@ _SelfAlignment? _selfAlignmentOfChild(
 ) {
   if (child case final TwClassed classed) {
     return _resolveSelfAlignment(
-      splitTailwindTokens(classed.classNames).toSet(),
+      TwParser(config: cfg).setTokens(classed.classNames),
       cfg,
       width,
     );
@@ -1891,10 +1891,9 @@ _SelfAlignment? _resolveSelfAlignment(
 
 /// Places [child] at [position] within the cross extent the flex handed it.
 ///
-/// Shared by a child's own `self-*` and by the container rebuilding `items-*`
-/// for its remaining children, so the two cannot drift apart. Only meaningful
-/// when that extent is tight; against a loose one the [Align] shrink-wraps and
-/// the flex positions the child as usual.
+/// With a tight cross extent, [Align] positions the styled box inside that
+/// extent. With a loose extent it shrink-wraps, and [_RenderSelfAlignFlex]
+/// positions the wrapper after the flex has determined its own size.
 Widget _positionInCrossAxis(Widget child, _SelfAlignment position, Axis axis) {
   final resolved = switch (position) {
     _SelfAlignment.start =>

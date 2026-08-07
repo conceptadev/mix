@@ -72,7 +72,7 @@ settings:
 Button(
   key: const ValueKey('save-button'),
   classNames: 'px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 '
-      'focus-visible:ring-2 active:bg-blue-800',
+      'focus-visible:bg-blue-700 active:bg-blue-800',
   onPressed: () {},
   child: const Span(text: 'Save', classNames: 'text-white font-medium'),
 )

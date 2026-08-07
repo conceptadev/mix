@@ -42,7 +42,8 @@ class TwParser {
 
   List<String> listTokens(String classNames) => splitTailwindTokens(classNames);
 
-  Set<String> setTokens(String classNames) => listTokens(classNames).toSet();
+  Set<String> setTokens(String classNames) =>
+      _translator.sortTokens(listTokens(classNames)).toSet();
 
   bool wantsFlex(Set<String> tokens) =>
       target.wantsFlex(tokens, breakpoints: config.breakpoints);

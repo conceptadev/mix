@@ -1215,6 +1215,37 @@ void main() {
     expect(flex.spacing, 24); // gap-x-6 wins over gap-2 (8)
   });
 
+  testWidgets(
+    'flex axis and gap conflicts resolve independently of token order',
+    (tester) async {
+      Future<(Axis, double)> snapshotFor(String classNames) async {
+        await pumpLtr(
+          tester,
+          Div(
+            classNames: classNames,
+            children: const [
+              SizedBox(width: 20, height: 20),
+              SizedBox(width: 20, height: 20),
+            ],
+          ),
+        );
+
+        final flex = tester.widget<Flex>(find.byType(Flex));
+        return (flex.direction, flex.spacing);
+      }
+
+      final forward = await snapshotFor(
+        'flex flex-col flex-row gap-x-2 gap-x-10 gap-y-8',
+      );
+      final reverse = await snapshotFor(
+        'gap-y-8 gap-x-10 gap-x-2 flex-row flex-col flex',
+      );
+
+      expect(forward, (Axis.horizontal, 40));
+      expect(reverse, forward);
+    },
+  );
+
   testWidgets('gap-x responds to breakpoints', (tester) async {
     Future<double> spacingFor(double width) async {
       await pumpSized(

@@ -79,6 +79,19 @@ void main() {
     }
   });
 
+  test('adapted variant policy matches the implemented runtime behavior', () {
+    final focusVisible = generatedTailwindVariantCompatibilityLedger
+        .singleWhere((entry) => entry.root == 'focus-visible');
+    final themeMidnight = generatedTailwindVariantCompatibilityLedger
+        .singleWhere((entry) => entry.root == 'theme-midnight');
+
+    expect(focusVisible.status, TailwindCompatibilityStatus.adapted);
+    expect(focusVisible.reason, contains('focus-visible state'));
+    expect(focusVisible.reason, isNot(contains('broader Mix focus state')));
+    expect(themeMidnight.status, TailwindCompatibilityStatus.unsupported);
+    expect(themeMidnight.reason, isNull);
+  });
+
   test('checked-in registries match generator output', () {
     final result = Process.runSync(_dartExecutable(), [
       'tool/gen_registry.dart',

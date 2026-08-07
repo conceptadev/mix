@@ -43,9 +43,9 @@ Future<void> _pumpRow(
 
 /// The painted box inside a Tailwind element.
 ///
-/// A self-aligned child is wrapped in an [Align] that fills the flex cross
-/// extent, so the element's outermost box is the wrapper. Assertions target the
-/// decorated box so they describe what is actually on screen.
+/// A self-aligned child contains an [Align], and the custom flex can reposition
+/// that wrapper. Assertions target the decorated box so they describe what is
+/// actually on screen.
 Finder _painted(String key) =>
     find.descendant(of: find.byKey(Key(key)), matching: find.byType(Container));
 
@@ -83,6 +83,53 @@ void main() {
 
       final rowTop = _top(tester, 'tall');
       expect(_top(tester, 'badge'), closeTo(rowTop + (96 - 24) / 2, 0.5));
+    });
+
+    testWidgets('self conflicts resolve independently of token order', (
+      tester,
+    ) async {
+      Future<double> topFor(String classes) async {
+        await _pumpRow(tester, '$classes h-6 w-20 bg-emerald-400');
+        return _top(tester, 'badge');
+      }
+
+      final forward = await topFor('self-end self-start');
+      final reverse = await topFor('self-start self-end');
+
+      expect(forward, 0);
+      expect(reverse, forward);
+    });
+
+    testWidgets('self-start opts out of explicit items-stretch', (
+      tester,
+    ) async {
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Scaffold(
+            body: Align(
+              alignment: Alignment.topLeft,
+              child: SizedBox(
+                width: 600,
+                height: 96,
+                child: Div(
+                  classNames: 'flex flex-row items-stretch',
+                  children: const [
+                    Div(
+                      key: Key('badge'),
+                      classNames: 'self-start h-6 w-20 bg-emerald-400',
+                    ),
+                    Div(key: Key('sibling'), classNames: 'w-20 bg-cyan-400'),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+      );
+
+      expect(_top(tester, 'badge'), 0);
+      expect(_height(tester, 'badge'), 24);
+      expect(_height(tester, 'sibling'), 96);
     });
 
     testWidgets('siblings keep the container alignment and natural size', (

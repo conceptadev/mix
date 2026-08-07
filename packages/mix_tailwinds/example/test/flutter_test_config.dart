@@ -11,9 +11,9 @@ import 'package:flutter_test/flutter_test.dart';
 /// (2026-08, macOS-generated goldens compared on Linux CI):
 ///   - cross-platform noise: 0.75%–1.80%
 ///   - smallest genuine regression observed in this suite: 6.97%
-/// 3% sits above the noise ceiling and well below the signal floor. Real
-/// styling regressions are also guarded by the parity metric tests, which
-/// compare against real Tailwind renders rather than prior Flutter output.
+/// 3% sits above the noise ceiling and well below the signal floor. Focused
+/// metric tests guard structural layout, while the browser comparison tool
+/// separately compares Flutter captures with real Tailwind renders.
 const double _kGoldenDiffTolerance = 0.03;
 
 Future<void> testExecutable(FutureOr<void> Function() testMain) async {
