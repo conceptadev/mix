@@ -152,13 +152,14 @@ void main() {
       expect(tester.getTopLeft(_painted('tall')).dx, 260);
     });
 
-    testWidgets('reports self-* it cannot honor on an unbounded cross axis', (
+    testWidgets('honors self-start when the cross axis is unbounded', (
       tester,
     ) async {
       final diagnostics = <TwDiagnostic>[];
 
-      // A row nested in a column receives an unbounded height, which is the
-      // case RenderFlex cannot express per-child cross alignment for.
+      // A row nested in a column receives an unbounded height, so the flex sizes
+      // its own cross axis from its children. This is the shape the parity
+      // examples use, and the one a container-level stretch cannot serve.
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
@@ -173,8 +174,14 @@ void main() {
                       classNames: 'flex flex-row items-center',
                       onDiagnostic: diagnostics.add,
                       children: [
-                        Div(classNames: 'h-24 w-20 bg-slate-800'),
-                        Div(classNames: 'self-start h-6 w-20 bg-emerald-400'),
+                        Div(
+                          key: const Key('tall'),
+                          classNames: 'h-24 w-20 bg-slate-800',
+                        ),
+                        Div(
+                          key: const Key('badge'),
+                          classNames: 'self-start h-6 w-20 bg-emerald-400',
+                        ),
                       ],
                     ),
                   ],
@@ -185,14 +192,12 @@ void main() {
         ),
       );
 
+      expect(_top(tester, 'badge'), _top(tester, 'tall'));
+      expect(_height(tester, 'badge'), 24);
       expect(
-        diagnostics.map((d) => d.token),
-        contains('self-start'),
-        reason: 'an unhonored utility must be reported, never dropped',
-      );
-      expect(
-        diagnostics.firstWhere((d) => d.token == 'self-start').workaround,
-        isNotNull,
+        diagnostics,
+        isEmpty,
+        reason: 'the utility is honored, so nothing should be reported',
       );
     });
   });

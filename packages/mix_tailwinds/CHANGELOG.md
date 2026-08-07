@@ -1,11 +1,10 @@
 ## Unreleased
 
-- Fixed `self-start`, `self-end`, `self-center`, and `self-stretch`, which
-  silently did nothing whenever the container carried an `items-*` utility. The
-  container now stretches its cross axis so the child can place itself, and
-  every sibling keeps the container's alignment and its natural size. Where the
-  cross axis is unbounded and the override is impossible, the utility is
-  reported through `onDiagnostic` instead of being dropped in silence.
+- Fixed `self-start`, `self-end`, and `self-center`, which silently did nothing
+  whenever the container carried an `items-*` utility. A flex holding a
+  self-aligned child now renders through a `RenderFlex` that offsets those
+  children after it has measured its cross axis, so the override also works in
+  the common case of a row nested inside a column.
 
 - **Breaking:** `TwConfig.standard()` now contains only Tailwind CSS 4.3.1
   defaults. The fixture-only `brand-500`, `card` spacing/radius, `3xl`

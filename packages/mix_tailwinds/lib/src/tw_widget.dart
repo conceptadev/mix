@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:mix/mix.dart';
@@ -264,11 +265,16 @@ class _CssSemanticFlexBox extends StatelessWidget {
     required this.style,
     required this.children,
     this.wrapBorderBox,
+    this.selfAlignments,
   });
 
   final FlexBoxStyler style;
   final List<Widget> children;
   final _BorderBoxWrapper? wrapBorderBox;
+
+  /// Per-child `self-*` alignment, positional and null where a child keeps the
+  /// container's alignment. Null when no child opts out at all.
+  final List<_SelfAlignment?>? selfAlignments;
 
   @override
   Widget build(BuildContext context) {
@@ -281,10 +287,37 @@ class _CssSemanticFlexBox extends StatelessWidget {
       style: style,
       builder: (context, spec) {
         // Use FlexBox widget with margin stripped - margin is applied externally
-        return FlexBox(
-          styleSpec: StyleSpec(spec: _flexBoxSpecWithoutMargin(spec)),
+        final stripped = _flexBoxSpecWithoutMargin(spec);
+        final alignments = selfAlignments;
+        if (alignments == null) {
+          return FlexBox(
+            styleSpec: StyleSpec(spec: stripped),
+            children: children,
+          );
+        }
+
+        // FlexBox is a Box wrapping a Flex, so the same composition is rebuilt
+        // here with a Flex that can honor per-child cross alignment.
+        final flexSpec = stripped.flex?.spec;
+        final Widget flex = _SelfAlignFlex(
+          direction: flexSpec?.direction ?? Axis.horizontal,
+          mainAxisAlignment:
+              flexSpec?.mainAxisAlignment ?? MainAxisAlignment.start,
+          mainAxisSize: flexSpec?.mainAxisSize ?? MainAxisSize.max,
+          crossAxisAlignment:
+              flexSpec?.crossAxisAlignment ?? CrossAxisAlignment.center,
+          textDirection: flexSpec?.textDirection,
+          verticalDirection:
+              flexSpec?.verticalDirection ?? VerticalDirection.down,
+          textBaseline: flexSpec?.textBaseline,
+          clipBehavior: flexSpec?.clipBehavior ?? Clip.none,
+          spacing: flexSpec?.spacing ?? 0.0,
+          selfAlignments: alignments,
           children: children,
         );
+
+        final box = stripped.box;
+        return box == null ? flex : Box(styleSpec: box, child: flex);
       },
     );
 
@@ -511,7 +544,6 @@ class _TwElement extends StatelessWidget {
         baseStyle: flexStyle,
         rawChildren: rawChildren,
         wrapBorderBox: wrapBorderBox,
-        onDiagnostic: reportDiagnostic,
       );
     } else {
       var boxStyle = parser.parseBox(classNames);
@@ -916,39 +948,6 @@ bool _hasResponsiveAlignItems(Set<String> tokens, TwConfig cfg, double width) {
   return false;
 }
 
-/// Resolves the container's active `items-*` utility, highest breakpoint wins.
-CrossAxisAlignment? _resolveAlignItems(
-  Set<String> tokens,
-  TwConfig cfg,
-  double width,
-) {
-  CrossAxisAlignment? alignment;
-  double chosenMin = -1;
-
-  for (final token in tokens) {
-    final info = _parseResponsiveToken(token, cfg);
-    if (info == null || info.minWidth > width) {
-      continue;
-    }
-
-    final candidate = switch (info.base) {
-      'items-start' => CrossAxisAlignment.start,
-      'items-center' => CrossAxisAlignment.center,
-      'items-end' => CrossAxisAlignment.end,
-      'items-stretch' => CrossAxisAlignment.stretch,
-      'items-baseline' => CrossAxisAlignment.baseline,
-      _ => null,
-    };
-
-    if (candidate != null && info.minWidth >= chosenMin) {
-      alignment = candidate;
-      chosenMin = info.minWidth;
-    }
-  }
-
-  return alignment;
-}
-
 /// The `self-*` alignment a direct child asks for at [width], if any.
 ///
 /// Only Tailwind elements can be read; an arbitrary widget child has no class
@@ -969,56 +968,12 @@ _SelfAlignment? _selfAlignmentOfChild(
   return null;
 }
 
-/// The container's `align-items` as a child position, or null when the flex
-/// already positions children itself.
-///
-/// Stretch hands children a tight cross extent and baseline is applied by the
-/// flex directly, so neither needs rebuilding. A null container alignment means
-/// no `items-*` was written, which behaves the same way.
-_SelfAlignment? _crossAxisPositionOf(CrossAxisAlignment? alignment) {
-  return switch (alignment) {
-    CrossAxisAlignment.start => _SelfAlignment.start,
-    CrossAxisAlignment.center => _SelfAlignment.center,
-    CrossAxisAlignment.end => _SelfAlignment.end,
-    _ => null,
-  };
-}
-
-/// Reports every `self-*` token on [child] that the container cannot honor.
-void _reportUnhonoredSelfAlignment(
-  Widget child,
-  TwConfig cfg,
-  TwDiagnosticCallback? onDiagnostic,
-) {
-  if (onDiagnostic == null) return;
-  if (child case final TwClassed classed) {
-    for (final token in splitTailwindTokens(classed.classNames)) {
-      final info = _parseResponsiveToken(token, cfg);
-      if (info == null || !info.base.startsWith('self-')) continue;
-
-      onDiagnostic(
-        TwDiagnostic(
-          token: token,
-          code: TwDiagnosticCode.unsupportedForTarget,
-          reason:
-              'align-self needs a bounded cross axis, and this flex container '
-              'received an unbounded one.',
-          workaround:
-              'Give the container a cross-axis size, or set the alignment on '
-              'the container with items-*.',
-        ),
-      );
-    }
-  }
-}
-
 Widget _buildResponsiveFlex({
   required Set<String> tokens,
   required TwConfig cfg,
   required FlexBoxStyler baseStyle,
   required List<Widget> rawChildren,
   _BorderBoxWrapper? wrapBorderBox,
-  TwDiagnosticCallback? onDiagnostic,
 }) {
   return LayoutBuilder(
     builder: (context, constraints) {
@@ -1040,54 +995,16 @@ Widget _buildResponsiveFlex({
       }
 
       final crossGap = axis == Axis.horizontal ? gapY : gapX;
-      var alignedChildren = rawChildren;
+      final flexChildren = _applyCrossAxisGap(rawChildren, axis, crossGap);
 
-      // CSS `align-self` overrides the container's `align-items` per child, but
-      // RenderFlex has one cross alignment for every child. A child can only
-      // place itself when the flex hands it a tight cross extent, which is what
-      // stretch does, so the container stretches and hands each remaining child
-      // the container's alignment back.
-      //
-      // A container that is already stretching needs no help: its children
-      // receive that tight extent and align themselves. Only an `items-*` that
-      // positions children — start, center, end — has to be rebuilt this way.
-      final containerPosition = _crossAxisPositionOf(
-        _resolveAlignItems(tokens, cfg, width),
-      );
-      final selfAlignedChildren = rawChildren
-          .where((child) => _selfAlignmentOfChild(child, cfg, width) != null)
+      // CSS `align-self` lets a child opt out of the container's `align-items`.
+      // RenderFlex has one cross alignment for every child, so the opt-out is
+      // carried to the flex itself and applied after it has sized its cross
+      // axis. Collected positionally: the gap wrapper preserves child order.
+      final selfAlignments = rawChildren
+          .map((child) => _selfAlignmentOfChild(child, cfg, width))
           .toList(growable: false);
-
-      if (containerPosition != null && selfAlignedChildren.isNotEmpty) {
-        final isCrossAxisBounded = axis == Axis.horizontal
-            ? constraints.hasBoundedHeight
-            : constraints.hasBoundedWidth;
-
-        if (isCrossAxisBounded) {
-          style = style.crossAxisAlignment(CrossAxisAlignment.stretch);
-          alignedChildren = [
-            for (final child in rawChildren)
-              if (_selfAlignmentOfChild(child, cfg, width) != null)
-                child
-              else
-                _positionInCrossAxis(child, containerPosition, axis),
-          ];
-        } else {
-          // Stretch needs a finite cross extent, and a row nested in a column
-          // does not have one: RenderFlex sizes its cross axis from its
-          // children, so neither side learns that size in time to align against
-          // it. IntrinsicHeight cannot bridge the gap either, because every
-          // Tailwind element is a LayoutBuilder and those cannot report
-          // intrinsics. Closing this needs per-child cross alignment inside the
-          // render object, so until then the utility is reported rather than
-          // dropped.
-          for (final child in selfAlignedChildren) {
-            _reportUnhonoredSelfAlignment(child, cfg, onDiagnostic);
-          }
-        }
-      }
-
-      final flexChildren = _applyCrossAxisGap(alignedChildren, axis, crossGap);
+      final hasSelfAlignedChild = selfAlignments.any((a) => a != null);
 
       // CSS parity: Tailwind's default `align-items` is `stretch` (unless an
       // explicit `items-*` utility is present). Stretch is invalid on an
@@ -1112,6 +1029,7 @@ Widget _buildResponsiveFlex({
         child: _CssSemanticFlexBox(
           style: style,
           wrapBorderBox: wrapBorderBox,
+          selfAlignments: hasSelfAlignedChild ? selfAlignments : null,
           children: flexChildren,
         ),
       );
@@ -1990,6 +1908,113 @@ Widget _positionInCrossAxis(Widget child, _SelfAlignment position, Axis axis) {
           : AlignmentDirectional.centerEnd,
   };
   return Align(alignment: resolved, child: child);
+}
+
+/// A [Flex] that lets individual children opt out of the container's cross
+/// alignment, which is what CSS `align-self` does and what [RenderFlex] has no
+/// way to express.
+///
+/// [selfAlignments] is positional: entry _i_ belongs to child _i_, and null
+/// means the child keeps the container's alignment.
+class _SelfAlignFlex extends Flex {
+  const _SelfAlignFlex({
+    required super.direction,
+    required super.mainAxisAlignment,
+    required super.mainAxisSize,
+    required super.crossAxisAlignment,
+    required super.verticalDirection,
+    required super.clipBehavior,
+    required super.spacing,
+    required this.selfAlignments,
+    super.textDirection,
+    super.textBaseline,
+    super.children,
+  });
+
+  final List<_SelfAlignment?> selfAlignments;
+
+  @override
+  RenderFlex createRenderObject(BuildContext context) {
+    return _RenderSelfAlignFlex(
+      direction: direction,
+      mainAxisAlignment: mainAxisAlignment,
+      mainAxisSize: mainAxisSize,
+      crossAxisAlignment: crossAxisAlignment,
+      textDirection: getEffectiveTextDirection(context),
+      verticalDirection: verticalDirection,
+      textBaseline: textBaseline,
+      clipBehavior: clipBehavior,
+      spacing: spacing,
+    )..selfAlignments = selfAlignments;
+  }
+
+  @override
+  void updateRenderObject(BuildContext context, RenderFlex renderObject) {
+    super.updateRenderObject(context, renderObject);
+    (renderObject as _RenderSelfAlignFlex).selfAlignments = selfAlignments;
+  }
+}
+
+class _RenderSelfAlignFlex extends RenderFlex {
+  _RenderSelfAlignFlex({
+    required super.direction,
+    required super.mainAxisAlignment,
+    required super.mainAxisSize,
+    required super.crossAxisAlignment,
+    required super.verticalDirection,
+    required super.clipBehavior,
+    required super.spacing,
+    super.textDirection,
+    super.textBaseline,
+  });
+
+  List<_SelfAlignment?> _selfAlignments = const [];
+
+  set selfAlignments(List<_SelfAlignment?> value) {
+    if (listEquals(_selfAlignments, value)) return;
+    _selfAlignments = value;
+    markNeedsLayout();
+  }
+
+  /// Whether cross-axis start sits at the far edge rather than at zero.
+  bool get _crossAxisIsReversed => direction == Axis.horizontal
+      ? verticalDirection == VerticalDirection.up
+      : textDirection == TextDirection.rtl;
+
+  @override
+  void performLayout() {
+    super.performLayout();
+
+    // RenderFlex has sized itself from its children by now, so the cross extent
+    // is known even when the incoming constraints were unbounded. Only the
+    // offsets of the opted-out children change; nothing is laid out again.
+    var child = firstChild;
+    var index = 0;
+    while (child != null) {
+      final parentData = child.parentData! as FlexParentData;
+      final alignment = index < _selfAlignments.length
+          ? _selfAlignments[index]
+          : null;
+
+      if (alignment != null) {
+        final free = direction == Axis.horizontal
+            ? size.height - child.size.height
+            : size.width - child.size.width;
+        final reversed = _crossAxisIsReversed;
+        final crossOffset = switch (alignment) {
+          _SelfAlignment.start => reversed ? free : 0.0,
+          _SelfAlignment.center => free / 2,
+          _SelfAlignment.end => reversed ? 0.0 : free,
+        };
+        parentData.offset = direction == Axis.horizontal
+            ? Offset(parentData.offset.dx, crossOffset)
+            : Offset(crossOffset, parentData.offset.dy);
+      }
+
+      child = parentData.nextSibling;
+      index++;
+    }
+  }
 }
 
 class _FlexParentDataWrapper extends ParentDataWidget<FlexParentData> {
