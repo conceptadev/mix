@@ -223,8 +223,21 @@ Use `Pressable` for interaction state around any child, and `PressableBox` when 
 | `canRequestFocus` | Whether focus can be requested; defaults to `true` |
 | `controller` | Optional `WidgetStatesController` |
 | `actions` | Additional focus actions |
+| `onKeyEvent` | Custom key handling while enabled; runs before built-in activation |
+| `semanticsLabel` | Accessibility label |
+| `semanticsRole` | `PressableSemanticsRole.button` (default), `link`, or `none` |
+| `excludeFromSemantics` | Suppresses Pressable's semantic annotations while preserving descendant semantics; defaults to `false` |
 
-`Pressable` also exposes keyboard and semantics parameters such as `onKey`, `onKeyEvent`, `excludeFromSemantics`, and `semanticButtonLabel`; check `pressable_widget.dart` for the full constructor.
+While focused, `Pressable` handles unmodified Space, Enter, numpad Enter,
+select, and game button A itself: pressed on key down, activated once on key up.
+It leaves those keys alone when a descendant holds focus, so a nested
+`TextField` still receives them, and leaves modified chords to application
+shortcuts. Those direct key bindings are handled before Flutter can dispatch an
+`ActivateIntent`; use `onKeyEvent` to override them. `ActivateIntent` remains
+bound so remapped shortcuts and programmatic invocation activate `onPress`, and
+a custom action can override that binding. With `semanticsRole: .link`, Enter
+activates but Space does not. Custom actions are not installed while the
+Pressable is disabled.
 
 ### PressableBox
 
@@ -240,7 +253,7 @@ Use `Pressable` for interaction state around any child, and `PressableBox` when 
 | `enableFeedback` | Enables haptic/audio feedback; defaults to `false` |
 | `hitTestBehavior` | Gesture hit-test behavior; defaults to `HitTestBehavior.opaque` |
 
-`PressableBox` forwards interaction handling to `Pressable` and renders the child through `Box(style: style, child: child)`.
+`PressableBox` forwards the full `Pressable` surface — including `mouseCursor`, `canRequestFocus`, `onKeyEvent`, `controller`, `actions`, `semanticsLabel`, `semanticsRole`, and `excludeFromSemantics` — and renders the child through `Box(style: style, child: child)`.
 
 ## Sizing Decision Tree
 

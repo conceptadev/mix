@@ -1,3 +1,63 @@
+## Unreleased
+
+### New features
+
+- **`ContextVariant.widgetStateDependencies`:** Context variants now declare the
+  widget states they read, so custom variants participate in nested dependency
+  discovery instead of relying on the framework recognizing a specific variant
+  type. Automatic self-tracking is limited to pointer-driven hover and press;
+  other states still require an ancestor scope or external controller.
+- **Typed focus-visible variants:** Added `FocusVisibleVariant`,
+  `ContextVariant.focusVisible()`, and `onFocusVisible(...)`, which apply while
+  focus is highlighted in Flutter's traditional (keyboard/directional) mode.
+- **Pressable semantics roles:** Added `PressableSemanticsRole` with button,
+  link, and neutral roles. `PressableBox` now forwards the full Pressable
+  focus, keyboard, controller, feedback, cursor, action, and semantics surface.
+
+### Breaking changes
+
+- **Pressable input and semantics:** Replaced `semanticButtonLabel` with
+  `semanticsLabel`, added `semanticsRole`, and removed the deprecated `onKey`
+  callback. Use `onKeyEvent` for custom keyboard handling.
+- **Reserved activation keys:** While it holds primary focus and can activate,
+  Pressable owns unmodified Space, Enter, numpad Enter, select, and game button
+  A so it can model held-key state consistently. Override those direct key
+  bindings with `onKeyEvent`. `onPress` still honors `ActivateIntent` dispatched
+  by remapped shortcuts or programmatic invocation, and custom `actions` can
+  override that binding or handle other intents. Only those five reserved keys
+  are claimed raw; they are left untouched when a descendant holds focus, and
+  modified chords are left to application shortcuts. A link-role Pressable
+  activates with Enter but leaves Space available for scrolling.
+
+### Fixes
+
+- **Nested widget-state discovery:** `Style.widgetStates` now discovers state
+  requirements recursively through nested and negated context-variant branches
+  with identity-based cycle protection, so variants like
+  `onDark(BoxStyler().onHovered(...))` and `onEnabled(...)` are tracked instead
+  of silently never activating. Branches under un-applied named variants are
+  deliberately not tracked because they cannot activate until `applyVariants`
+  hoists them to the top level.
+- **Interaction detector is mounted only when it can help:** `StyleBuilder` now
+  installs its pointer-interaction detector only for the states that detector
+  actually drives (`hovered`/`pressed`). States such as `disabled` and `focused`
+  can only come from an external `WidgetStatesController` or an ancestor scope,
+  so styles depending solely on those no longer gain an opaque hit-test target
+  that swallowed pointer events aimed at widgets beneath them, and no longer
+  hijack the state scope of descendants that do track hover.
+- **Pressable lifecycle:** Pointer and keyboard press sources are combined
+  without clearing each other, keyboard activation fires once on key-up,
+  cancellation clears held state, focus-visible follows Flutter input modality,
+  and disabled controls ignore custom key handling and expose neither semantic
+  nor custom actions.
+- **Press state ends with the gesture:** A pointer that drifts past the tap slop
+  stops counting as a press, so items no longer stay visually pressed while a
+  list scrolls under the finger.
+- **Focus-visible scope:** The focus-highlight scope is now provided wherever
+  widget states are, so `onFocusVisible` also resolves — and repaints on input
+  modality changes — outside a `Pressable`. A `WidgetStateStyleOverride` forcing
+  `focused` now applies it too, matching `onFocused`.
+
 ## 2.2.0-beta.2
 
 ### New features
