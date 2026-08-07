@@ -305,7 +305,18 @@ class _CssSemanticFlexBox extends StatelessWidget {
 // Public Widgets
 // =============================================================================
 
-class Div extends StatelessWidget {
+/// A Tailwind element that exposes the class string it was built from.
+///
+/// Flutter's [RenderFlex] has no per-child cross-axis alignment, so `self-*`
+/// cannot be honored by the child alone: a child wrapping itself in an [Align]
+/// only shrink-wraps and the flex still positions it by the container's
+/// `align-items`. The container therefore has to read its children's classes
+/// and switch to a stretched cross axis. This interface is that read.
+abstract interface class TwClassed {
+  String get classNames;
+}
+
+class Div extends StatelessWidget implements TwClassed {
   const Div({
     super.key,
     required this.classNames,
@@ -317,6 +328,7 @@ class Div extends StatelessWidget {
     this.config,
   });
 
+  @override
   final String classNames;
   final Widget? child;
   final List<Widget> children;
@@ -346,7 +358,7 @@ class Div extends StatelessWidget {
 /// Its margin remains outside the interactive and semantic hit-test area,
 /// matching the CSS box model. A null [onPressed] disables the button unless
 /// [onLongPress] provides an action.
-class Button extends StatelessWidget {
+class Button extends StatelessWidget implements TwClassed {
   const Button({
     super.key,
     required this.classNames,
@@ -372,6 +384,7 @@ class Button extends StatelessWidget {
     this.actions,
   });
 
+  @override
   final String classNames;
   final VoidCallback? onPressed;
   final Widget? child;
@@ -498,6 +511,7 @@ class _TwElement extends StatelessWidget {
         baseStyle: flexStyle,
         rawChildren: rawChildren,
         wrapBorderBox: wrapBorderBox,
+        onDiagnostic: reportDiagnostic,
       );
     } else {
       var boxStyle = parser.parseBox(classNames);
@@ -547,10 +561,11 @@ class _TwElement extends StatelessWidget {
 ///   classNames: 'text-lg font-bold text-gray-700 mb-4',
 /// )
 /// ```
-class P extends StatelessWidget {
+class P extends StatelessWidget implements TwClassed {
   const P({super.key, required this.text, this.classNames = '', this.config});
 
   final String text;
+  @override
   final String classNames;
   final TwConfig? config;
 
@@ -577,7 +592,7 @@ class P extends StatelessWidget {
 /// When box utilities (padding, background, border, rounded, etc.) are present,
 /// the text is wrapped in a Box container to apply those styles, matching
 /// CSS behavior where `<span>` can have padding, background, etc.
-class Span extends StatelessWidget {
+class Span extends StatelessWidget implements TwClassed {
   const Span({
     super.key,
     required this.text,
@@ -586,6 +601,7 @@ class Span extends StatelessWidget {
   });
 
   final String text;
+  @override
   final String classNames;
   final TwConfig? config;
 
@@ -619,7 +635,7 @@ class Span extends StatelessWidget {
 /// This is a small bridge between Tailwind SVG icon classes and Mix's
 /// [StyledIcon]. It supports the icon classes used by common inline SVGs:
 /// `w-*`, `h-*`, `text-*`, and positive logical/physical margin tokens.
-class TwIcon extends StatelessWidget {
+class TwIcon extends StatelessWidget implements TwClassed {
   const TwIcon(
     this.icon, {
     super.key,
@@ -629,6 +645,7 @@ class TwIcon extends StatelessWidget {
   });
 
   final IconData icon;
+  @override
   final String classNames;
   final TwConfig? config;
   final String? semanticLabel;
@@ -713,7 +730,7 @@ double? _spacingTokenLength(String key, TwConfig cfg) {
   return cfg.hasSpace(key) ? cfg.spaceOf(key) : null;
 }
 
-abstract class _Heading extends StatelessWidget {
+abstract class _Heading extends StatelessWidget implements TwClassed {
   const _Heading({
     super.key,
     required int headingLevel,
@@ -724,6 +741,7 @@ abstract class _Heading extends StatelessWidget {
 
   final int _headingLevel;
   final String text;
+  @override
   final String classNames;
   final TwConfig? config;
 
@@ -838,7 +856,7 @@ class H6 extends _Heading {
 ///   child: P(text: text, classNames: 'truncate $classNames'),
 /// )
 /// ```
-class TruncatedP extends StatelessWidget {
+class TruncatedP extends StatelessWidget implements TwClassed {
   const TruncatedP({
     super.key,
     required this.text,
@@ -847,6 +865,7 @@ class TruncatedP extends StatelessWidget {
   });
 
   final String text;
+  @override
   final String classNames;
   final TwConfig? config;
 
@@ -885,16 +904,88 @@ List<Widget> _applyCrossAxisGap(List<Widget> input, Axis axis, double? gap) {
 }
 
 bool _hasResponsiveAlignItems(Set<String> tokens, TwConfig cfg, double width) {
+  return _resolveAlignItems(tokens, cfg, width) != null;
+}
+
+/// Resolves the container's active `items-*` utility, highest breakpoint wins.
+CrossAxisAlignment? _resolveAlignItems(
+  Set<String> tokens,
+  TwConfig cfg,
+  double width,
+) {
+  CrossAxisAlignment? alignment;
+  double chosenMin = -1;
+
   for (final token in tokens) {
     final info = _parseResponsiveToken(token, cfg);
     if (info == null || info.minWidth > width) {
       continue;
     }
-    if (info.base.startsWith('items-')) {
-      return true;
+
+    final candidate = switch (info.base) {
+      'items-start' => CrossAxisAlignment.start,
+      'items-center' => CrossAxisAlignment.center,
+      'items-end' => CrossAxisAlignment.end,
+      'items-stretch' => CrossAxisAlignment.stretch,
+      'items-baseline' => CrossAxisAlignment.baseline,
+      _ => null,
+    };
+
+    if (candidate != null && info.minWidth >= chosenMin) {
+      alignment = candidate;
+      chosenMin = info.minWidth;
     }
   }
-  return false;
+
+  return alignment;
+}
+
+/// The `self-*` alignment a direct child asks for at [width], if any.
+///
+/// Only Tailwind elements can be read; an arbitrary widget child has no class
+/// string and therefore never overrides the container.
+_SelfAlignment? _selfAlignmentOfChild(
+  Widget child,
+  TwConfig cfg,
+  double width,
+) {
+  if (child case final TwClassed classed) {
+    return _resolveSelfAlignment(
+      splitTailwindTokens(classed.classNames).toSet(),
+      cfg,
+      width,
+    );
+  }
+
+  return null;
+}
+
+/// Reproduces a container's `align-items` on a single child.
+///
+/// Paired with [_stretchForSelfAlignment]: once the container stretches so that
+/// `self-*` children can position themselves, every other child would be
+/// force-sized to the full cross extent, so each one gets its natural size back
+/// through an [Align] carrying the container's original alignment.
+Widget _alignChildForCrossAxis(
+  Widget child,
+  CrossAxisAlignment alignment,
+  Axis axis,
+) {
+  final resolved = switch (alignment) {
+    CrossAxisAlignment.start =>
+      axis == Axis.horizontal
+          ? AlignmentDirectional.topCenter
+          : AlignmentDirectional.centerStart,
+    CrossAxisAlignment.end =>
+      axis == Axis.horizontal
+          ? AlignmentDirectional.bottomCenter
+          : AlignmentDirectional.centerEnd,
+    CrossAxisAlignment.center => AlignmentDirectional.center,
+    // Stretch and baseline are left to the flex itself.
+    _ => null,
+  };
+
+  return resolved == null ? child : Align(alignment: resolved, child: child);
 }
 
 Widget _buildResponsiveFlex({
@@ -903,6 +994,7 @@ Widget _buildResponsiveFlex({
   required FlexBoxStyler baseStyle,
   required List<Widget> rawChildren,
   _BorderBoxWrapper? wrapBorderBox,
+  TwDiagnosticCallback? onDiagnostic,
 }) {
   return LayoutBuilder(
     builder: (context, constraints) {
@@ -924,7 +1016,76 @@ Widget _buildResponsiveFlex({
       }
 
       final crossGap = axis == Axis.horizontal ? gapY : gapX;
-      final flexChildren = _applyCrossAxisGap(rawChildren, axis, crossGap);
+      var alignedChildren = rawChildren;
+
+      // CSS `align-self` overrides the container's `align-items` per child, but
+      // RenderFlex has a single cross alignment for all children. A child that
+      // aligns itself only works when the flex hands it a tight cross extent,
+      // which is what stretch does — so the container stretches and every child
+      // that is not aligning itself is given the container's alignment back.
+      final isCrossAxisBoundedForSelf = axis == Axis.horizontal
+          ? constraints.hasBoundedHeight
+          : constraints.hasBoundedWidth;
+      final containerAlignment =
+          _resolveAlignItems(tokens, cfg, width) ?? CrossAxisAlignment.stretch;
+      //
+      // The stretch needs a finite cross extent. When the flex receives an
+      // unbounded one — a row inside a column, most commonly — RenderFlex sizes
+      // its cross axis from its children, and neither the container nor the
+      // child can learn that size in time to align against it. IntrinsicHeight
+      // cannot bridge the gap either, because every Tailwind element is a
+      // LayoutBuilder and those cannot report intrinsics. Honoring `self-*`
+      // there needs per-child cross alignment inside RenderFlex itself, so the
+      // utility is reported as unsupported instead of silently ignored.
+      final hasSelfAlignedChild = rawChildren.any(
+        (child) => _selfAlignmentOfChild(child, cfg, width) != null,
+      );
+      final canOverrideAlignment =
+          containerAlignment != CrossAxisAlignment.stretch &&
+          containerAlignment != CrossAxisAlignment.baseline;
+      final stretchForSelfAlignment =
+          hasSelfAlignedChild &&
+          canOverrideAlignment &&
+          isCrossAxisBoundedForSelf;
+
+      if (hasSelfAlignedChild &&
+          canOverrideAlignment &&
+          !isCrossAxisBoundedForSelf) {
+        for (final child in rawChildren) {
+          if (child case final TwClassed classed) {
+            if (_selfAlignmentOfChild(child, cfg, width) == null) continue;
+            for (final token in splitTailwindTokens(classed.classNames)) {
+              final info = _parseResponsiveToken(token, cfg);
+              if (info == null || !info.base.startsWith('self-')) continue;
+              onDiagnostic?.call(
+                TwDiagnostic(
+                  token: token,
+                  code: TwDiagnosticCode.unsupportedForTarget,
+                  reason:
+                      'align-self needs a bounded cross axis, and this flex '
+                      'container received an unbounded one.',
+                  workaround:
+                      'Give the container a cross-axis size, or set the '
+                      'alignment on the container with items-*.',
+                ),
+              );
+            }
+          }
+        }
+      }
+
+      if (stretchForSelfAlignment) {
+        style = style.crossAxisAlignment(CrossAxisAlignment.stretch);
+        alignedChildren = [
+          for (final child in rawChildren)
+            if (_selfAlignmentOfChild(child, cfg, width) != null)
+              child
+            else
+              _alignChildForCrossAxis(child, containerAlignment, axis),
+        ];
+      }
+
+      final flexChildren = _applyCrossAxisGap(alignedChildren, axis, crossGap);
 
       // CSS parity: Tailwind's default `align-items` is `stretch` (unless an
       // explicit `items-*` utility is present). Stretch is invalid on an

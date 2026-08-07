@@ -87,6 +87,56 @@ Div(
 
 ---
 
+### 5. `self-*` Needs a Bounded Cross Axis
+
+**Tailwind CSS:**
+```html
+<div class="flex flex-row items-center">
+  <div class="self-start">Badge</div>
+</div>
+```
+- `align-self` overrides the container's `align-items` for that one child.
+
+**Flutter Adaptation:**
+
+`self-start`, `self-end`, `self-center`, and `self-stretch` are honored when the
+flex container has a bounded cross axis — a row with a known height, or a column
+with a known width, which covers most layouts.
+
+When the cross axis is unbounded, most often a row nested directly inside a
+column, the utility is reported through `onDiagnostic` and the child keeps the
+container's alignment. Give the container a cross-axis size, or move the
+alignment onto the container with `items-*`:
+
+```dart
+// Reported, falls back to items-center
+Div(classNames: 'flex flex-col', children: [
+  Div(classNames: 'flex flex-row items-center', children: [
+    Div(classNames: 'self-start ...'),
+  ]),
+])
+
+// Honored
+Div(classNames: 'flex flex-col', children: [
+  Div(classNames: 'flex flex-row items-center h-24', children: [
+    Div(classNames: 'self-start ...'),
+  ]),
+])
+```
+
+**Root Cause:** Flutter's `RenderFlex` has one `crossAxisAlignment` for all
+children, so a child can only place itself when the flex hands it a tight cross
+extent — which is what `CrossAxisAlignment.stretch` does, and stretch requires a
+finite cross size. Measuring that size with `IntrinsicHeight` is not available
+here because every Tailwind element is a `LayoutBuilder`, and those cannot report
+intrinsic dimensions. Full parity needs per-child cross alignment inside the
+render object itself.
+
+**Note:** `self-auto` is a no-op by definition — it means "use the container's
+`align-items`" — so it is correct that it changes nothing.
+
+---
+
 ## Summary Table
 
 | CSS Behavior | Flutter Adaptation | Notes |
