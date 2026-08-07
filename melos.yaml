@@ -29,6 +29,7 @@ categories:
     - packages/mix
     - packages/mix_protocol
     - packages/mix_tailwinds
+    - packages/mix_tailwinds/example
     - packages/mix_chart
     - packages/mix_chart/example
     - packages/mix/example
