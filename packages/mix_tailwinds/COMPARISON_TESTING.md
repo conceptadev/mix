@@ -41,9 +41,11 @@ Wait for: `lib/main.dart is being served at http://localhost:8089`
 
 ```bash
 cd packages/mix_tailwinds/tool/visual-comparison
-npm install  # first time only
+npm ci  # first time, or whenever package-lock.json changes
 npx playwright install chromium  # first time only, if Chromium is missing
 npm run compare
+# Run all five product-scale advanced fixtures (15 screenshot pairs).
+npm run compare:advanced
 # Run all ten isolated complex parity fixtures (30 screenshot pairs).
 npm run compare:complex
 ```
@@ -53,17 +55,23 @@ This script automatically:
 2. Captures Flutter screenshots from `localhost:8089`
 3. Generates pixel-diff, amplified absolute-diff, and blink-GIF images
 4. Writes `summary.json` with image dimensions and diff percentages
-5. Reports diff percentages
+5. Enforces the example's selected metric at every viewport
+6. Regenerates `visual-comparison/index.html`, even when the comparison fails
 
 The complex batch pins the browser reference to Tailwind CSS `4.3.1`, captures
 480/768/1024px, replays dark-hover and delayed-hover states, and writes an
 aggregate `complex-parity/summary.json`.
+
+The advanced batch captures five responsive Northstar operations surfaces and
+writes an aggregate `advanced-parity/summary.json`. Each individual summary is
+tagged as the `advanced` suite in the HTML report.
 
 ### Output
 
 Screenshots and diffs are saved to `visual-comparison/<example>/` (gitignored):
 ```
 visual-comparison/
+├── index.html                 # generated live report (gitignored)
 ├── dashboard/
 │   ├── flutter-480.png
 │   ├── flutter-768.png
@@ -84,23 +92,30 @@ visual-comparison/
 │   └── diff/
 │       └── ...
 ├── flowbite-card/
-    ├── flutter-480.png
-    ├── ... (same structure)
-    └── diff/
-        └── ...
-└── complex-parity/
+│   ├── flutter-480.png
+│   ├── ... (same structure)
+│   └── diff/
+│       └── ...
+├── complex-parity/
+│   ├── summary.json
+│   ├── case-01/
+│   │   ├── tailwind-480.png
+│   │   ├── flutter-480.png
+│   │   ├── summary.json
+│   │   └── diff/
+│   │       ├── diff-480.png
+│   │       ├── strictdiff-480.png
+│   │       ├── absdiff-480.png
+│   │       └── blink-480.gif
+│   └── case-10/
+│       └── ...
+└── advanced-parity/
     ├── summary.json
-    ├── case-01/
-    │   ├── tailwind-480.png
-    │   ├── flutter-480.png
-    │   ├── summary.json
-    │   └── diff/
-    │       ├── diff-480.png
-    │       ├── strictdiff-480.png
-    │       ├── absdiff-480.png
-    │       └── blink-480.gif
-    └── case-10/
-        └── ...
+    ├── launch-command/
+    ├── signal-analytics/
+    ├── incident-room/
+    ├── release-timeline/
+    └── capacity-map/
 ```
 
 To run a specific example:
@@ -108,6 +123,12 @@ To run a specific example:
 npm run compare -- --example=dashboard
 npm run compare -- --example=card-alert
 npm run compare -- --example=flowbite-card
+npm run compare -- --example=advanced-launch-command
+npm run compare -- --example=advanced-signal-analytics
+npm run compare -- --example=advanced-incident-room
+npm run compare -- --example=advanced-release-timeline
+npm run compare -- --example=advanced-capacity-map
+npm run compare:advanced
 npm run compare -- --example=complex-04
 npm run compare:complex
 ```
@@ -122,28 +143,33 @@ Complex-case summaries expose three complementary metrics:
   to confirm exact output, but do not treat tiny raster/shadow deltas as layout
   failures without inspecting the strict diff and source values.
 
-### Interpreting Results
+### Acceptance contracts
 
-| Diff % | Interpretation |
-|--------|----------------|
-| < 3% | Excellent parity (font rendering differences only) |
-| 3-5% | Good parity (minor differences) |
-| 5-15% | Moderate diff (likely structural issues) |
-| > 15% | High diff (parser bugs likely) |
+Each example selects one metric and a maximum for each width. A missing width,
+missing capture, or value above the maximum fails the command. Do not raise a
+maximum to make a regression pass.
 
-Use percentages as a trend signal, not as the only pass/fail rule. A large region can be caused by one structural shift, such as a text line wrapping differently and moving every row below it.
+| Cases | Enforced metric | 480 / 768 / 1024 maximum |
+|---|---:|---:|
+| Complex 03 | Exact | `0 / 0 / 0%` |
+| Complex 01, 02, 07, 08, 09, 10 | Strict | `1 / 1 / 1%` |
+| Complex 06 | Strict | `3 / 3 / 3%` |
+| Complex 04 | Tolerant | `5 / 5 / 5%` |
+| Complex 05 | Tolerant | `1 / 1 / 1%` |
+| Dashboard | Tolerant | `1.45 / 1.40 / 1.15%` |
+| Card alert | Tolerant | `5.11 / 4.19 / 3.62%` |
+| Flowbite card | Tolerant | `1.68 / 1.68 / 1.68%` |
+| Advanced 01–05 | Tolerant | `5 / 5 / 5%` |
 
-### Current Visual Baseline
+Open `visual-comparison/index.html` after a run. It discovers all available
+summaries and provides viewport, suite, and pass/fail filters; paired Tailwind
+and Flutter captures; all three scores; and direct links to strict, absolute,
+pixelmatch, and blink diffs. Missing artifacts are shown as failures rather
+than broken, silent image slots.
 
-These values are useful when checking whether a new change regresses the existing examples:
-
-| Example | 480px | 768px | 1024px | Main known issue |
-|---------|-------|-------|--------|------------------|
-| `dashboard` | 1.20% | 1.14% | 0.89% | Remaining text anti-aliasing and minor shadow/background rendering noise |
-| `card-alert` | 4.86% | 3.94% | 3.36% | Remaining text baseline/anti-aliasing and minor background rendering noise |
-| `flowbite-card` | 1.43% | 1.43% | 1.43% | Remaining text rendering noise and Material icon equivalents differing from Flowbite SVG paths |
-
-Before treating a diff as a regression, compare against the previous commit or saved baseline artifacts. If current and baseline Flutter screenshots are byte-identical, the issue is existing parity drift, not a regression from the latest patch.
+Use the non-enforced metrics as diagnostic evidence. A large region can still
+come from one structural shift, such as a wrapped line moving every row below
+it, while a small strict-only region often indicates palette or raster drift.
 
 `card-alert` 768px note: the comparison harness pins both the Tailwind HTML pages and Flutter screenshot mode to the bundled `TwParityRoboto` font. This keeps glyph metrics deterministic without changing canonical Tailwind sizes; `TwConfig.standard()` still uses the standard Tailwind font scale and system sans stack.
 
@@ -227,7 +253,8 @@ The comparison tool writes extra artifacts next to each `diff-*.png`:
 
 - `diff/absdiff-<width>.png` amplifies raw channel differences so subtle text, color, and border drift is easier to see.
 - `diff/blink-<width>.gif` alternates Tailwind and Flutter frames so layout shifts are obvious.
-- `summary.json` records dimensions, diff percentages, thresholds, and generated artifact paths.
+- `summary.json` records dimensions, all diff metrics, the enforced acceptance
+  checks, and generated artifact paths.
 
 Do not commit generated screenshots, GIFs, summaries, or diff images. If you need additional review composites such as triptychs, keep them under `.context/visual-review/`.
 

@@ -242,11 +242,26 @@ promise that the adaptation is final.
 | Tailwind variant | Current mix_tailwinds behavior |
 |---|---|
 | `active:` | Uses Mix's pressed widget state. |
-| `focus-visible:` | Uses Mix's broader focused widget state; keyboard modality is not distinguished. |
+| `focus-visible:` | Uses Mix's focus-visible state, driven by Flutter's app-wide focus-highlight modality rather than CSS's per-element focus heuristics. Any focus matches while highlight mode is traditional (keyboard and desktop-pointer input); nothing matches in touch modality. Desktop mouse-click focus can therefore match where CSS would not. |
 | `dark:` | Uses Flutter platform brightness rather than a CSS selector strategy. |
-| `theme-midnight:` | Currently aliases Flutter dark mode. Interaction finding E3 requires this hardcoded alias to be removed or replaced by an explicit custom-variant design before 1.0. |
+| `theme-midnight:` | Unsupported and reported through `onDiagnostic`; custom named theme variants require an explicit application-level design. |
 
-Responsive layout utilities such as `w-full`, `w-screen`, fractions, external margin, negative margin handling, flex item parent data, axis, and gap remain in `tw_widget.dart` because they depend on live Flutter constraints.
+Responsive layout utilities such as `w-full`, `w-screen`, fractions, external
+margin, negative margin handling, flex item parent data, axis, and gap remain
+in `tw_widget.dart` because they depend on live Flutter constraints. Fixed,
+fractional, full, and automatic widths are resolved from the element's active
+responsive classes; `w-auto` and `h-auto` explicitly clear earlier fixed
+constraints.
+
+### Actionable Elements
+
+Use `Button` for HTML button counterparts instead of wrapping `Div` in another
+gesture or interaction widget. It keeps hover, pressed, focus, focus-visible,
+keyboard activation, disabled state, and fixed button semantics under one Mix
+`Pressable`. A null `onPressed` disables it unless `onLongPress` supplies an
+action. Its Tailwind margin is applied outside the border box, so margin is not
+tappable and does not become part of the accessibility bounds. Keep structural
+elements and non-button tags, including links, as `Div`.
 
 ### Percent-Based Sizing
 
