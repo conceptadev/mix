@@ -35,7 +35,9 @@
   successful and failed runs.
 - Added a source-backed web showcase for five product-scale examples with
   Tailwind/Flutter code comparison, published parity evidence, linkable
-  viewports, and one-engine single/multi-view Flutter embedding modes.
+  viewports, and one-engine single/multi-view Flutter embedding modes. Showcase
+  builds reject incomplete, malformed, or stale parity evidence by validating
+  the canonical viewport set and a content fingerprint of their source inputs.
 - **Breaking (experimental alpha):** Removed the legacy `TwResolver`, the
   `wrapDefaultTextStyle` styler extensions, and unused `TwConfig` lookup
   helpers. Use `TwParser`, standard Mix composition, and the public config

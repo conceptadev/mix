@@ -64,7 +64,10 @@ aggregate `complex-parity/summary.json`.
 
 The advanced batch captures five responsive Northstar operations surfaces and
 writes an aggregate `advanced-parity/summary.json`. Each individual summary is
-tagged as the `advanced` suite in the HTML report.
+tagged as the `advanced` suite in the HTML report. The aggregate records a
+content fingerprint for every source that can affect the showcase or its
+evidence; `showcase:build` rejects the aggregate after any of those inputs
+change.
 
 ### Output
 

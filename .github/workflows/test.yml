@@ -49,3 +49,23 @@ jobs:
       melos-commands: |
         melos run schema:inventory
         melos run analyze:dart
+
+  showcase-tool:
+    name: Showcase Tool Tests
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: packages/mix_tailwinds/tool/visual-comparison
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: packages/mix_tailwinds/tool/visual-comparison/package-lock.json
+      - name: Install Node dependencies
+        run: npm ci
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+      - name: Run showcase tool tests
+        run: npm test

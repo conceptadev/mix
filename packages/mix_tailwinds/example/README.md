@@ -33,17 +33,30 @@ places their exact HTML and Dart source directly below, and exposes captured
 parity evidence in a secondary disclosure. A single engine mounts the selected
 Flutter example.
 
+First start the screenshot renderer in one terminal:
+
+```bash
+cd packages/mix_tailwinds/example
+fvm flutter run -d web-server --web-port=8089 --profile
+```
+
+Then generate current parity evidence and build the release in another:
+
 ```bash
 cd packages/mix_tailwinds/tool/visual-comparison
 npm ci
+npx playwright install chromium # first time only
+npm run compare:advanced
 npm run showcase:build
 npm run showcase:verify
 ```
 
 The release output is `packages/mix_tailwinds/example/build/web`. The build
 fails before publishing if any required 480/768/1024 capture is missing or its
-visual acceptance contract did not pass. Showcase selections are linkable with
-the `example` and `width` URL parameters.
+visual acceptance contract did not pass. It also fingerprints the renderer,
+fixtures, web sources, dependency locks, and comparison tooling, so changing
+any of them requires a fresh `compare:advanced` run. Showcase selections are
+linkable with the `example` and `width` URL parameters.
 
 ## Run the real Tailwind sample
 

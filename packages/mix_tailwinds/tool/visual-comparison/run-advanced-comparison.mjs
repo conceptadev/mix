@@ -4,6 +4,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import process from 'node:process';
 import { fileURLToPath } from 'node:url';
+import { computeShowcaseSourceFingerprint } from './showcase-provenance.mjs';
 import { writeVisualReport } from './visual-report.mjs';
 
 const scriptDir = path.dirname(fileURLToPath(import.meta.url));
@@ -21,6 +22,7 @@ const forwardedArgs = process.argv
   .filter((argument) => !argument.startsWith('--example='));
 const summaries = [];
 const failures = [];
+const sourceFingerprint = computeShowcaseSourceFingerprint();
 
 for (const [slug, title] of examples) {
   console.log(`\n${'='.repeat(72)}`);
@@ -70,8 +72,17 @@ for (const [slug, title] of examples) {
 
 await fs.promises.mkdir(outputRoot, { recursive: true });
 const aggregatePath = path.join(outputRoot, 'summary.json');
+const finalSourceFingerprint = computeShowcaseSourceFingerprint();
+if (finalSourceFingerprint !== sourceFingerprint) {
+  failures.push({
+    slug: null,
+    exitCode: null,
+    error: 'Showcase sources changed while advanced parity was running.',
+  });
+}
 const aggregate = {
   generatedAt: new Date().toISOString(),
+  sourceFingerprint,
   tailwindVersion: '4.3.1',
   widths: [480, 768, 1024],
   expectedExampleCount: examples.length,

@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import { execFileSync } from 'node:child_process';
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
@@ -11,6 +12,7 @@ import {
   presentationTailwindSource,
 } from '../../../example/web/showcase-source.js';
 import { prepareShowcase } from '../prepare-showcase.mjs';
+import { computeShowcaseSourceFingerprint } from '../showcase-provenance.mjs';
 
 const testDir = path.dirname(fileURLToPath(import.meta.url));
 const mixTailwindsRoot = path.resolve(testDir, '../../..');
@@ -119,49 +121,23 @@ test('Dart highlighting classifies syntax without changing source text', () => {
 });
 
 test('showcase preparation publishes only complete passing evidence', (t) => {
-  const root = temporaryDirectory(t);
-  const visualRoot = path.join(root, 'visual');
-  const outputRoot = path.join(root, 'generated');
-  const manifestFile = path.join(root, 'manifest.json');
-  const aggregateFile = path.join(root, 'aggregate.json');
-  const compilerFile = path.join(root, 'tailwind.js');
-  const manifest = readJson(path.join(exampleWebRoot, 'showcase-manifest.json'));
-  const summaries = manifest.examples.map((example) =>
-    createEvidence(visualRoot, example.slug, example.title),
-  );
-
-  fs.writeFileSync(manifestFile, JSON.stringify(manifest));
-  fs.writeFileSync(compilerFile, '/* compiler */');
-  fs.writeFileSync(
-    aggregateFile,
-    JSON.stringify({
-      generatedAt: '2026-08-04T00:00:00.000Z',
-      tailwindVersion: '4.3.1',
-      widths,
-      completedExampleCount: 5,
-      failures: [],
-      passed: true,
-      examples: summaries,
-    }),
-  );
-
-  const result = prepareShowcase({
-    aggregateFile,
-    manifestFile,
-    outputRoot,
-    tailwindCompiler: compilerFile,
-    visualRoot,
-  });
+  const fixture = createPreparationFixture(t);
+  const result = prepareShowcase(fixture.options);
   const published = readJson(result.parityDataPath);
 
   assert.equal(result.artifactCount, 90);
+  assert.equal(published.sourceFingerprint, fixture.options.sourceFingerprint);
   assert.equal(published.examples.length, 5);
   assert.equal(published.examples[0].results.length, 3);
   assert.equal(
     published.examples[0].results[0].files.tailwind,
     'generated/parity/launch-command/tailwind-480.png',
   );
-  assert.ok(fs.existsSync(path.join(outputRoot, 'tailwindcss-browser.js')));
+  assert.ok(
+    fs.existsSync(
+      path.join(fixture.options.outputRoot, 'tailwindcss-browser.js'),
+    ),
+  );
 });
 
 test('showcase preparation refuses failed parity evidence before replacing output', (t) => {
@@ -188,6 +164,103 @@ test('showcase preparation refuses failed parity evidence before replacing outpu
   );
   assert.equal(fs.readFileSync(path.join(outputRoot, 'sentinel'), 'utf8'), 'preserve me');
 });
+
+test(
+  'showcase preparation refuses evidence from a different source fingerprint',
+  (t) => {
+    const fixture = createPreparationFixture(t, {
+      sourceFingerprint: 'captured-source',
+    });
+
+    assert.throws(
+      () =>
+        prepareShowcase({
+          ...fixture.options,
+          sourceFingerprint: 'current-source',
+        }),
+      /source fingerprint/i,
+    );
+  },
+);
+
+test(
+  'showcase preparation requires each canonical capture width exactly once',
+  (t) => {
+    const fixture = createPreparationFixture(t);
+    fixture.aggregate.examples[0].results[2].width = 768;
+    fs.writeFileSync(
+      fixture.options.aggregateFile,
+      JSON.stringify(fixture.aggregate),
+    );
+
+    assert.throws(
+      () => prepareShowcase(fixture.options),
+      /480, 768, and 1024/i,
+    );
+  },
+);
+
+test('source fingerprint includes ignored dependency overrides', (t) => {
+  const root = temporaryDirectory(t);
+  execFileSync('git', ['init', '--quiet'], { cwd: root });
+  fs.writeFileSync(path.join(root, '.gitignore'), 'pubspec_overrides.yaml\n');
+  fs.writeFileSync(path.join(root, 'tracked.txt'), 'tracked source');
+  fs.writeFileSync(path.join(root, 'pubspec_overrides.yaml'), 'mix: local-a\n');
+  execFileSync('git', ['add', '.gitignore', 'tracked.txt'], { cwd: root });
+
+  const options = {
+    additionalFiles: ['pubspec_overrides.yaml'],
+    sourcePaths: ['tracked.txt'],
+    workspaceRoot: root,
+  };
+  const before = computeShowcaseSourceFingerprint(options);
+  fs.writeFileSync(path.join(root, 'pubspec_overrides.yaml'), 'mix: local-b\n');
+  const after = computeShowcaseSourceFingerprint(options);
+
+  assert.notEqual(after, before);
+});
+
+function createPreparationFixture(
+  t,
+  { sourceFingerprint = 'current-source' } = {},
+) {
+  const root = temporaryDirectory(t);
+  const visualRoot = path.join(root, 'visual');
+  const outputRoot = path.join(root, 'generated');
+  const manifestFile = path.join(root, 'manifest.json');
+  const aggregateFile = path.join(root, 'aggregate.json');
+  const tailwindCompiler = path.join(root, 'tailwind.js');
+  const manifest = readJson(path.join(exampleWebRoot, 'showcase-manifest.json'));
+  const examples = manifest.examples.map((example) =>
+    createEvidence(visualRoot, example.slug, example.title),
+  );
+  const aggregate = {
+    generatedAt: '2026-08-04T00:00:00.000Z',
+    tailwindVersion: '4.3.1',
+    sourceFingerprint,
+    widths,
+    completedExampleCount: 5,
+    failures: [],
+    passed: true,
+    examples,
+  };
+
+  fs.writeFileSync(manifestFile, JSON.stringify(manifest));
+  fs.writeFileSync(aggregateFile, JSON.stringify(aggregate));
+  fs.writeFileSync(tailwindCompiler, '/* compiler */');
+
+  return {
+    aggregate,
+    options: {
+      aggregateFile,
+      manifestFile,
+      outputRoot,
+      sourceFingerprint,
+      tailwindCompiler,
+      visualRoot,
+    },
+  };
+}
 
 function createEvidence(visualRoot, slug, title) {
   const directory = path.join(visualRoot, slug);

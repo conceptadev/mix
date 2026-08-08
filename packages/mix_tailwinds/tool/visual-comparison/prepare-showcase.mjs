@@ -4,6 +4,8 @@ import path from 'node:path';
 import process from 'node:process';
 import { fileURLToPath } from 'node:url';
 
+import { computeShowcaseSourceFingerprint } from './showcase-provenance.mjs';
+
 const scriptPath = fileURLToPath(import.meta.url);
 const scriptDir = path.dirname(scriptPath);
 const packageRoot = path.resolve(scriptDir, '../..');
@@ -34,6 +36,7 @@ const REQUIRED_ARTIFACTS = [
   'absoluteDiff',
   'blink',
 ];
+const REQUIRED_WIDTHS = [480, 768, 1024];
 
 export function prepareShowcase({
   outputRoot = generatedRoot,
@@ -41,10 +44,16 @@ export function prepareShowcase({
   manifestFile = manifestPath,
   aggregateFile = aggregatePath,
   tailwindCompiler = compilerPath,
+  sourceFingerprint = computeShowcaseSourceFingerprint(),
 } = {}) {
   const manifest = readJson(manifestFile, 'showcase manifest');
   const aggregate = readJson(aggregateFile, 'advanced parity summary');
-  const examples = validateEvidence({ aggregate, manifest, visualRoot });
+  const examples = validateEvidence({
+    aggregate,
+    manifest,
+    sourceFingerprint,
+    visualRoot,
+  });
 
   if (!fs.existsSync(tailwindCompiler)) {
     throw new Error(
@@ -67,6 +76,7 @@ export function prepareShowcase({
   const parityData = {
     schemaVersion: 1,
     generatedAt: aggregate.generatedAt,
+    sourceFingerprint: aggregate.sourceFingerprint,
     tailwindVersion: aggregate.tailwindVersion,
     widths: aggregate.widths,
     passed: aggregate.passed,
@@ -103,7 +113,12 @@ export function prepareShowcase({
   };
 }
 
-function validateEvidence({ aggregate, manifest, visualRoot }) {
+function validateEvidence({
+  aggregate,
+  manifest,
+  sourceFingerprint,
+  visualRoot,
+}) {
   if (!Array.isArray(manifest.examples) || manifest.examples.length !== 5) {
     throw new Error('The public showcase must declare exactly five examples.');
   }
@@ -112,6 +127,16 @@ function validateEvidence({ aggregate, manifest, visualRoot }) {
   }
   if (aggregate.completedExampleCount !== manifest.examples.length) {
     throw new Error('Advanced parity evidence is incomplete for the showcase manifest.');
+  }
+  if (aggregate.sourceFingerprint !== sourceFingerprint) {
+    throw new Error(
+      'Advanced parity evidence has a different source fingerprint. Run npm run compare:advanced again.',
+    );
+  }
+  if (!hasCanonicalWidths(aggregate.widths)) {
+    throw new Error(
+      'Advanced parity evidence must contain 480, 768, and 1024 exactly once.',
+    );
   }
 
   const summaryBySlug = new Map(
@@ -125,8 +150,13 @@ function validateEvidence({ aggregate, manifest, visualRoot }) {
     if (summary.captureComplete !== true || summary.acceptance?.passed !== true) {
       throw new Error(`Parity evidence did not pass for ${manifestExample.slug}.`);
     }
-    if (!Array.isArray(summary.results) || summary.results.length !== 3) {
-      throw new Error(`Expected three canonical captures for ${manifestExample.slug}.`);
+    if (
+      !Array.isArray(summary.results) ||
+      !hasCanonicalWidths(summary.results.map((result) => result.width))
+    ) {
+      throw new Error(
+        `${manifestExample.slug} must contain 480, 768, and 1024 exactly once.`,
+      );
     }
 
     const individualSummary = path.join(
@@ -139,6 +169,18 @@ function validateEvidence({ aggregate, manifest, visualRoot }) {
     }
     return { manifestExample, summary };
   });
+}
+
+function hasCanonicalWidths(values) {
+  if (!Array.isArray(values) || values.length !== REQUIRED_WIDTHS.length) {
+    return false;
+  }
+
+  const uniqueWidths = new Set(values);
+  return (
+    uniqueWidths.size === REQUIRED_WIDTHS.length &&
+    REQUIRED_WIDTHS.every((width) => uniqueWidths.has(width))
+  );
 }
 
 function buildCopyPlan(examples, visualRoot, outputRoot) {
