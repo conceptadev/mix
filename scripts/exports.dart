@@ -247,7 +247,7 @@ const _libAsci = r'''
 ///         \/\\\             \/\\\  /\\\\\\\\\\\  /\\\/   \///\\\
 ///          \///              \///  \///////////  \///       \///
 ///
-///                        https://fluttermix.com
+///                        https://www.fluttermix.com
 ///
 ///             /\///////////////////////////////////////////////////\
 ///             \/\           ***** GENERATED CODE *****            \ \
@@ -291,6 +291,10 @@ const _packageExportConfigs = <String, _PackageExportConfig>{
       // Render-object plumbing stays internal; GridBox, GridBoxSpec, and
       // GridTrack are exported from their public layout libraries.
       'src/layout/render_grid.dart',
+      // FocusHighlightModeProvider is @internal and lives outside src/internal/,
+      // so the path heuristic does not catch it. Exporting it fails analysis
+      // with invalid_export_of_internal_element.
+      'src/core/providers/focus_highlight_mode_provider.dart',
     ],
     forcedPaths: ['src/modifiers/internal/reset_modifier.dart'],
   ),

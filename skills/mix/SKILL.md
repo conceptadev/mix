@@ -31,7 +31,7 @@ When working on Mix code, resolve ambiguity in this order:
 
 1. **Local source code** — always highest priority when the repo is present
 2. **Dart MCP tools** (`hover`, `signature_help`, `resolve_workspace_symbol`) — if connected and dependencies resolved
-3. **Version-pinned docs** — [Mix website](https://fluttermix.com), [pub.dev/packages/mix](https://pub.dev/packages/mix)
+3. **Version-pinned docs** — [Mix website](https://www.fluttermix.com), [pub.dev/packages/mix](https://pub.dev/packages/mix)
 4. **This skill** — patterns, invariants, and workflows documented here
 5. **If still unclear** — state uncertainty and ask the user to confirm
 

@@ -1,13 +1,13 @@
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/leoafarias/mix/main/assets/dark.svg">
-  <img alt="Mix logo" src="https://raw.githubusercontent.com/leoafarias/mix/main/assets/light.svg">
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/btwld/mix/main/assets/dark.svg">
+  <img alt="Mix logo" src="https://raw.githubusercontent.com/btwld/mix/main/assets/light.svg">
 </picture>
 
 ![GitHub stars](https://img.shields.io/github/stars/btwld/mix?style=for-the-badge&logo=GitHub&logoColor=black&labelColor=white&color=dddddd)
 [![Pub Version](https://img.shields.io/pub/v/mix?label=version&style=for-the-badge)](https://pub.dev/packages/mix/changelog)
 ![Pub Likes](https://img.shields.io/pub/likes/mix?label=Pub%20Likes&style=for-the-badge)
 ![Pub Points](https://img.shields.io/pub/points/mix?label=Pub%20Points&style=for-the-badge)
-[![MIT Licence](https://img.shields.io/github/license/leoafarias/mix?style=for-the-badge&longCache=true)](https://opensource.org/licenses/mit-license.php)
+[![MIT Licence](https://img.shields.io/github/license/btwld/mix?style=for-the-badge&longCache=true)](https://opensource.org/license/mit)
 [![Awesome Flutter](https://img.shields.io/badge/awesome-flutter-purple?longCache=true&style=for-the-badge)](https://github.com/Solido/awesome-flutter)
 
 **Mix** is a styling system for Flutter that separates style definitions from widget structure. It provides a composable, type-safe way to define and apply styles using a fluent API, design tokens, and context-aware variants.
@@ -141,7 +141,7 @@ final base = BoxStyler()
 final solid = base.color(Colors.blue);
 ```
 
-[Styling guide →](https://fluttermix.com/docs/guides/styling)
+[Styling guide →](https://www.fluttermix.com/documentation/mix/guides/styling)
 
 ### Wrapping Layouts
 
@@ -201,7 +201,7 @@ final buttonStyle = BoxStyler()
 
 Built-in variants include `onHovered`, `onPressed`, `onFocused`, `onDisabled`, `onDark`, `onLight`, `onBreakpoint`, `onMobile`, `onTablet`, `onDesktop`, and platform/context variants.
 
-[Dynamic styling guide →](https://fluttermix.com/docs/guides/dynamic-styling)
+[Dynamic styling guide →](https://www.fluttermix.com/documentation/mix/guides/dynamic-styling)
 
 ### Design Tokens and Theming
 
@@ -222,7 +222,7 @@ final style = BoxStyler()
     .paddingAll($spacingMd());
 ```
 
-[Design tokens guide →](https://fluttermix.com/docs/guides/design-token)
+[Design tokens guide →](https://www.fluttermix.com/documentation/mix/guides/design-token)
 
 ### Animations
 
@@ -230,19 +230,19 @@ final style = BoxStyler()
 - **Phase** — Multi-step flows (e.g. tap → compress → expand) with `.phaseAnimation(...)`
 - **Keyframe** — Full control with tracks and keyframes
 
-[Animations guide →](https://fluttermix.com/docs/guides/animations)
+[Animations guide →](https://www.fluttermix.com/documentation/mix/guides/animations)
 
 ### Widget Modifiers
 
 Some visual effects — opacity, clipping, visibility — aren't style properties. Modifiers let you declare widget wrappers inside your style so they stay composable and animatable.
 
-[Widget modifiers guide →](https://fluttermix.com/docs/guides/widget-modifiers)
+[Widget modifiers guide →](https://www.fluttermix.com/documentation/mix/guides/widget-modifiers)
 
 ### Directives
 
 Directives transform values (text casing, number scaling, color adjustments) at resolve time, keeping transformations inside the style so they survive merging.
 
-[Directives guide →](https://fluttermix.com/docs/guides/directives)
+[Directives guide →](https://www.fluttermix.com/documentation/mix/guides/directives)
 
 ### Utility-First Approach
 
@@ -256,7 +256,7 @@ BoxStyler()
     .border(.color(Colors.red));
 ```
 
-[Utility-first overview →](https://fluttermix.com/docs/overview/utility-first)
+[Utility-first overview →](https://www.fluttermix.com/documentation/mix/overview/utility-first)
 
 ## Ecosystem
 
@@ -269,15 +269,15 @@ BoxStyler()
 
 ## Documentation
 
-- [Introduction](https://fluttermix.com/docs/overview/introduction)
-- [Getting started](https://fluttermix.com/docs/overview/getting-started)
-- [Styling](https://fluttermix.com/docs/guides/styling)
-- [Dynamic styling](https://fluttermix.com/docs/guides/dynamic-styling)
-- [Design tokens](https://fluttermix.com/docs/guides/design-token)
-- [Animations](https://fluttermix.com/docs/guides/animations)
-- [Widget modifiers](https://fluttermix.com/docs/guides/widget-modifiers)
-- [Directives](https://fluttermix.com/docs/guides/directives)
-- [Widgets](https://fluttermix.com/docs/widgets/box) (Box, Text, Icon, FlexBox, WrapBox, GridBox, StackBox, etc.)
+- [Introduction](https://www.fluttermix.com/documentation/mix/overview/introduction)
+- [Getting started](https://www.fluttermix.com/documentation/mix/overview/getting-started)
+- [Styling](https://www.fluttermix.com/documentation/mix/guides/styling)
+- [Dynamic styling](https://www.fluttermix.com/documentation/mix/guides/dynamic-styling)
+- [Design tokens](https://www.fluttermix.com/documentation/mix/guides/design-token)
+- [Animations](https://www.fluttermix.com/documentation/mix/guides/animations)
+- [Widget modifiers](https://www.fluttermix.com/documentation/mix/guides/widget-modifiers)
+- [Directives](https://www.fluttermix.com/documentation/mix/guides/directives)
+- [Widgets](https://www.fluttermix.com/documentation/mix/widgets/box) (Box, Text, Icon, FlexBox, WrapBox, GridBox, StackBox, etc.)
 
 ## Contributors
 
