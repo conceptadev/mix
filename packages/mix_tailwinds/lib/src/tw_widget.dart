@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:mix/mix.dart';
@@ -218,10 +219,11 @@ bool _resolveIsMainAxisBounded(
 ///               └── Box(no margin)
 /// ```
 class _CssSemanticBox extends StatelessWidget {
-  const _CssSemanticBox({required this.style, this.child});
+  const _CssSemanticBox({required this.style, this.child, this.wrapBorderBox});
 
   final BoxStyler style;
   final Widget? child;
+  final _BorderBoxWrapper? wrapBorderBox;
 
   @override
   Widget build(BuildContext context) {
@@ -242,6 +244,10 @@ class _CssSemanticBox extends StatelessWidget {
       },
     );
 
+    if (wrapBorderBox case final wrap?) {
+      inner = wrap(inner);
+    }
+
     // Step 3: Apply margin OUTSIDE MixInteractionDetector
     if (margin != null) {
       inner = Padding(padding: margin, child: inner);
@@ -255,10 +261,20 @@ class _CssSemanticBox extends StatelessWidget {
 ///
 /// See [_CssSemanticBox] for details on CSS margin semantics.
 class _CssSemanticFlexBox extends StatelessWidget {
-  const _CssSemanticFlexBox({required this.style, required this.children});
+  const _CssSemanticFlexBox({
+    required this.style,
+    required this.children,
+    this.wrapBorderBox,
+    this.selfAlignments,
+  });
 
   final FlexBoxStyler style;
   final List<Widget> children;
+  final _BorderBoxWrapper? wrapBorderBox;
+
+  /// Per-child `self-*` alignment, positional and null where a child keeps the
+  /// container's alignment. Null when no child opts out at all.
+  final List<_SelfAlignment?>? selfAlignments;
 
   @override
   Widget build(BuildContext context) {
@@ -271,12 +287,43 @@ class _CssSemanticFlexBox extends StatelessWidget {
       style: style,
       builder: (context, spec) {
         // Use FlexBox widget with margin stripped - margin is applied externally
-        return FlexBox(
-          styleSpec: StyleSpec(spec: _flexBoxSpecWithoutMargin(spec)),
+        final stripped = _flexBoxSpecWithoutMargin(spec);
+        final alignments = selfAlignments;
+        if (alignments == null) {
+          return FlexBox(
+            styleSpec: StyleSpec(spec: stripped),
+            children: children,
+          );
+        }
+
+        // FlexBox is a Box wrapping a Flex, so the same composition is rebuilt
+        // here with a Flex that can honor per-child cross alignment.
+        final flexSpec = stripped.flex?.spec;
+        final Widget flex = _SelfAlignFlex(
+          direction: flexSpec?.direction ?? Axis.horizontal,
+          mainAxisAlignment:
+              flexSpec?.mainAxisAlignment ?? MainAxisAlignment.start,
+          mainAxisSize: flexSpec?.mainAxisSize ?? MainAxisSize.max,
+          crossAxisAlignment:
+              flexSpec?.crossAxisAlignment ?? CrossAxisAlignment.center,
+          textDirection: flexSpec?.textDirection,
+          verticalDirection:
+              flexSpec?.verticalDirection ?? VerticalDirection.down,
+          textBaseline: flexSpec?.textBaseline,
+          clipBehavior: flexSpec?.clipBehavior ?? Clip.none,
+          spacing: flexSpec?.spacing ?? 0.0,
+          selfAlignments: alignments,
           children: children,
         );
+
+        final box = stripped.box;
+        return box == null ? flex : Box(styleSpec: box, child: flex);
       },
     );
+
+    if (wrapBorderBox case final wrap?) {
+      inner = wrap(inner);
+    }
 
     // Step 3: Apply margin OUTSIDE MixInteractionDetector
     if (margin != null) {
@@ -291,15 +338,163 @@ class _CssSemanticFlexBox extends StatelessWidget {
 // Public Widgets
 // =============================================================================
 
-class Div extends StatelessWidget {
+/// A Tailwind element that exposes the class string it was built from.
+///
+/// Flutter's [RenderFlex] has no per-child cross-axis alignment, so `self-*`
+/// cannot be honored by the child alone: a child wrapping itself in an [Align]
+/// only shrink-wraps and the flex still positions it by the container's
+/// `align-items`. The container reads this interface to pass each direct
+/// child's requested alignment to its flex render object.
+abstract interface class TwClassed {
+  String get classNames;
+}
+
+class Div extends StatelessWidget implements TwClassed {
   const Div({
     super.key,
     required this.classNames,
     this.child,
     this.children = const [],
     this.isFlex,
-    this.onUnsupported,
+    this.onDiagnostic,
+    @Deprecated('Use onDiagnostic instead.') this.onUnsupported,
     this.config,
+  });
+
+  @override
+  final String classNames;
+  final Widget? child;
+  final List<Widget> children;
+  final bool? isFlex;
+  final TwConfig? config;
+  final TwDiagnosticCallback? onDiagnostic;
+
+  @Deprecated('Use onDiagnostic instead.')
+  final void Function(String token)? onUnsupported;
+
+  @override
+  Widget build(BuildContext context) {
+    return _TwElement(
+      classNames: classNames,
+      child: child,
+      children: children,
+      isFlex: isFlex,
+      onDiagnostic: onDiagnostic,
+      onUnsupported: onUnsupported,
+      config: config,
+    );
+  }
+}
+
+/// A Tailwind-styled button backed by Mix [Pressable].
+///
+/// Its margin remains outside the interactive and semantic hit-test area,
+/// matching the CSS box model. A null [onPressed] disables the button unless
+/// [onLongPress] provides an action.
+class Button extends StatelessWidget implements TwClassed {
+  const Button({
+    super.key,
+    required this.classNames,
+    required this.onPressed,
+    this.child,
+    this.children = const [],
+    this.isFlex,
+    this.onDiagnostic,
+    @Deprecated('Use onDiagnostic instead.') this.onUnsupported,
+    this.config,
+    this.enableFeedback = false,
+    this.hitTestBehavior = HitTestBehavior.opaque,
+    this.onLongPress,
+    this.onFocusChange,
+    this.autofocus = false,
+    this.focusNode,
+    this.mouseCursor,
+    this.canRequestFocus = true,
+    this.excludeFromSemantics = false,
+    this.semanticsLabel,
+    this.onKeyEvent,
+    this.controller,
+    this.actions,
+  });
+
+  @override
+  final String classNames;
+  final VoidCallback? onPressed;
+  final Widget? child;
+  final List<Widget> children;
+  final bool? isFlex;
+  final TwConfig? config;
+  final TwDiagnosticCallback? onDiagnostic;
+
+  @Deprecated('Use onDiagnostic instead.')
+  final void Function(String token)? onUnsupported;
+
+  final bool enableFeedback;
+  final HitTestBehavior hitTestBehavior;
+  final VoidCallback? onLongPress;
+  final ValueChanged<bool>? onFocusChange;
+  final bool autofocus;
+  final FocusNode? focusNode;
+  final MouseCursor? mouseCursor;
+  final bool canRequestFocus;
+  final bool excludeFromSemantics;
+
+  /// An accessible label for a child that does not provide one itself.
+  ///
+  /// Omit this when visible child text already names the button because Mix
+  /// combines an explicit label with descendant semantics.
+  final String? semanticsLabel;
+  final FocusOnKeyEventCallback? onKeyEvent;
+  final WidgetStatesController? controller;
+  final Map<Type, Action<Intent>>? actions;
+
+  @override
+  Widget build(BuildContext context) {
+    final enabled = onPressed != null || onLongPress != null;
+
+    return _TwElement(
+      classNames: classNames,
+      child: child,
+      children: children,
+      isFlex: isFlex,
+      onDiagnostic: onDiagnostic,
+      onUnsupported: onUnsupported,
+      config: config,
+      wrapBorderBox: (child) => Pressable(
+        enabled: enabled,
+        enableFeedback: enableFeedback,
+        onPress: onPressed,
+        hitTestBehavior: hitTestBehavior,
+        onLongPress: onLongPress,
+        onFocusChange: onFocusChange,
+        autofocus: autofocus,
+        focusNode: focusNode,
+        mouseCursor: mouseCursor,
+        canRequestFocus: canRequestFocus,
+        excludeFromSemantics: excludeFromSemantics,
+        semanticsLabel: semanticsLabel,
+        semanticsRole: PressableSemanticsRole.button,
+        onKeyEvent: onKeyEvent,
+        controller: controller,
+        actions: actions,
+        child: child,
+      ),
+    );
+  }
+}
+
+typedef _BorderBoxWrapper = Widget Function(Widget child);
+
+class _TwElement extends StatelessWidget {
+  const _TwElement({
+    required this.classNames,
+    required this.child,
+    required this.children,
+    required this.isFlex,
+    required this.onDiagnostic,
+    required this.onUnsupported,
+    required this.config,
+    this.wrapBorderBox,
   });
 
   final String classNames;
@@ -307,7 +502,9 @@ class Div extends StatelessWidget {
   final List<Widget> children;
   final bool? isFlex;
   final TwConfig? config;
-  final TokenWarningCallback? onUnsupported;
+  final TwDiagnosticCallback? onDiagnostic;
+  final void Function(String token)? onUnsupported;
+  final _BorderBoxWrapper? wrapBorderBox;
 
   @override
   Widget build(BuildContext context) {
@@ -316,16 +513,17 @@ class Div extends StatelessWidget {
       'Provide either child or children, not both.',
     );
     final cfg = config ?? TwConfigProvider.of(context);
-    final reportedUnsupported = <String>{};
-    void reportUnsupported(String token) {
-      if (reportedUnsupported.add(token)) {
-        onUnsupported?.call(token);
+    final reportedTokens = <String>{};
+    void reportDiagnostic(TwDiagnostic diagnostic) {
+      if (reportedTokens.add(diagnostic.token)) {
+        onDiagnostic?.call(diagnostic);
+        onUnsupported?.call(diagnostic.token);
       }
     }
 
-    final parser = TwParser(config: cfg, onUnsupported: reportUnsupported);
+    final parser = TwParser(config: cfg, onDiagnostic: reportDiagnostic);
     final tokens = parser.setTokens(classNames);
-    _reportUnsupportedWidgetLayerVariants(tokens, cfg, reportUnsupported);
+    _reportUnsupportedWidgetLayerVariants(tokens, cfg, reportDiagnostic);
     final shouldUseFlex = isFlex ?? parser.wantsFlex(tokens);
     final animationConfig = parser.parseAnimationFromTokens(tokens.toList());
 
@@ -345,6 +543,7 @@ class Div extends StatelessWidget {
         cfg: cfg,
         baseStyle: flexStyle,
         rawChildren: rawChildren,
+        wrapBorderBox: wrapBorderBox,
       );
     } else {
       var boxStyle = parser.parseBox(classNames);
@@ -367,6 +566,7 @@ class Div extends StatelessWidget {
         cfg: cfg,
         style: boxStyle,
         child: resolvedChild,
+        wrapBorderBox: wrapBorderBox,
       );
     }
 
@@ -393,10 +593,11 @@ class Div extends StatelessWidget {
 ///   classNames: 'text-lg font-bold text-gray-700 mb-4',
 /// )
 /// ```
-class P extends StatelessWidget {
+class P extends StatelessWidget implements TwClassed {
   const P({super.key, required this.text, this.classNames = '', this.config});
 
   final String text;
+  @override
   final String classNames;
   final TwConfig? config;
 
@@ -423,7 +624,7 @@ class P extends StatelessWidget {
 /// When box utilities (padding, background, border, rounded, etc.) are present,
 /// the text is wrapped in a Box container to apply those styles, matching
 /// CSS behavior where `<span>` can have padding, background, etc.
-class Span extends StatelessWidget {
+class Span extends StatelessWidget implements TwClassed {
   const Span({
     super.key,
     required this.text,
@@ -432,6 +633,7 @@ class Span extends StatelessWidget {
   });
 
   final String text;
+  @override
   final String classNames;
   final TwConfig? config;
 
@@ -465,7 +667,7 @@ class Span extends StatelessWidget {
 /// This is a small bridge between Tailwind SVG icon classes and Mix's
 /// [StyledIcon]. It supports the icon classes used by common inline SVGs:
 /// `w-*`, `h-*`, `text-*`, and positive logical/physical margin tokens.
-class TwIcon extends StatelessWidget {
+class TwIcon extends StatelessWidget implements TwClassed {
   const TwIcon(
     this.icon, {
     super.key,
@@ -475,6 +677,7 @@ class TwIcon extends StatelessWidget {
   });
 
   final IconData icon;
+  @override
   final String classNames;
   final TwConfig? config;
   final String? semanticLabel;
@@ -559,20 +762,18 @@ double? _spacingTokenLength(String key, TwConfig cfg) {
   return cfg.hasSpace(key) ? cfg.spaceOf(key) : null;
 }
 
-/// Heading level 1 element with Tailwind styling.
-///
-/// Equivalent to HTML `<h1>`. Note: Like Tailwind's Preflight, headings have
-/// no default styles - use utility classes like `text-4xl font-bold`.
-/// Supports margin utilities (m-*, mx-*, my-*, mt-*, mr-*, mb-*, ml-*).
-abstract class _Heading extends StatelessWidget {
+abstract class _Heading extends StatelessWidget implements TwClassed {
   const _Heading({
     super.key,
+    required int headingLevel,
     required this.text,
     this.classNames = '',
     this.config,
-  });
+  }) : _headingLevel = headingLevel;
 
+  final int _headingLevel;
   final String text;
+  @override
   final String classNames;
   final TwConfig? config;
 
@@ -587,17 +788,22 @@ abstract class _Heading extends StatelessWidget {
       result = Padding(padding: margin, child: result);
     }
 
-    return result;
+    return Semantics(headingLevel: _headingLevel, child: result);
   }
 }
 
+/// Heading level 1 element with Tailwind styling.
+///
+/// Equivalent to HTML `<h1>`. Like Tailwind's Preflight, headings have no
+/// default styles; use utility classes such as `text-4xl font-bold`.
+/// Exposes Flutter semantics heading level 1 and supports margin utilities.
 class H1 extends _Heading {
   const H1({
     super.key,
     required super.text,
     super.classNames = '',
     super.config,
-  });
+  }) : super(headingLevel: 1);
 }
 
 /// Heading level 2 element with Tailwind styling.
@@ -611,7 +817,7 @@ class H2 extends _Heading {
     required super.text,
     super.classNames = '',
     super.config,
-  });
+  }) : super(headingLevel: 2);
 }
 
 /// Heading level 3 element with Tailwind styling.
@@ -625,7 +831,7 @@ class H3 extends _Heading {
     required super.text,
     super.classNames = '',
     super.config,
-  });
+  }) : super(headingLevel: 3);
 }
 
 /// Heading level 4 element with Tailwind styling.
@@ -639,7 +845,7 @@ class H4 extends _Heading {
     required super.text,
     super.classNames = '',
     super.config,
-  });
+  }) : super(headingLevel: 4);
 }
 
 /// Heading level 5 element with Tailwind styling.
@@ -653,7 +859,7 @@ class H5 extends _Heading {
     required super.text,
     super.classNames = '',
     super.config,
-  });
+  }) : super(headingLevel: 5);
 }
 
 /// Heading level 6 element with Tailwind styling.
@@ -667,7 +873,7 @@ class H6 extends _Heading {
     required super.text,
     super.classNames = '',
     super.config,
-  });
+  }) : super(headingLevel: 6);
 }
 
 /// Convenience wrapper for truncated text in flex containers.
@@ -682,7 +888,7 @@ class H6 extends _Heading {
 ///   child: P(text: text, classNames: 'truncate $classNames'),
 /// )
 /// ```
-class TruncatedP extends StatelessWidget {
+class TruncatedP extends StatelessWidget implements TwClassed {
   const TruncatedP({
     super.key,
     required this.text,
@@ -691,6 +897,7 @@ class TruncatedP extends StatelessWidget {
   });
 
   final String text;
+  @override
   final String classNames;
   final TwConfig? config;
 
@@ -741,41 +948,24 @@ bool _hasResponsiveAlignItems(Set<String> tokens, TwConfig cfg, double width) {
   return false;
 }
 
-bool _hasResponsiveWidthToken(String classNames, TwConfig cfg, double width) {
-  for (final token in splitTailwindTokens(classNames)) {
-    final info = _parseResponsiveToken(token, cfg);
-    if (info == null || info.minWidth > width) {
-      continue;
-    }
-    if (info.base.startsWith('w-')) {
-      return true;
-    }
-  }
-  return false;
-}
-
-Widget _wrapIfExplicitWidthInStretchColumn(
+/// The `self-*` alignment a direct child asks for at [width], if any.
+///
+/// Only Tailwind elements can be read; an arbitrary widget child has no class
+/// string and therefore never overrides the container.
+_SelfAlignment? _selfAlignmentOfChild(
   Widget child,
   TwConfig cfg,
   double width,
 ) {
-  final classNames = switch (child) {
-    Div() => child.classNames,
-    P() => child.classNames,
-    _Heading() => child.classNames,
-    _ => null,
-  };
-
-  if (classNames == null || classNames.trim().isEmpty) {
-    return child;
+  if (child case final TwClassed classed) {
+    return _resolveSelfAlignment(
+      TwParser(config: cfg).setTokens(classed.classNames),
+      cfg,
+      width,
+    );
   }
 
-  if (_hasResponsiveWidthToken(classNames, cfg, width)) {
-    // Allow the child to keep its own explicit width under a stretched Column.
-    return Align(alignment: AlignmentDirectional.centerStart, child: child);
-  }
-
-  return child;
+  return null;
 }
 
 Widget _buildResponsiveFlex({
@@ -783,6 +973,7 @@ Widget _buildResponsiveFlex({
   required TwConfig cfg,
   required FlexBoxStyler baseStyle,
   required List<Widget> rawChildren,
+  _BorderBoxWrapper? wrapBorderBox,
 }) {
   return LayoutBuilder(
     builder: (context, constraints) {
@@ -806,33 +997,41 @@ Widget _buildResponsiveFlex({
       final crossGap = axis == Axis.horizontal ? gapY : gapX;
       final flexChildren = _applyCrossAxisGap(rawChildren, axis, crossGap);
 
-      var resolvedChildren = flexChildren;
+      // CSS `align-self` lets a child opt out of the container's `align-items`.
+      // RenderFlex has one cross alignment for every child, so the opt-out is
+      // carried to the flex itself and applied after it has sized its cross
+      // axis. Collected positionally: the gap wrapper preserves child order.
+      final selfAlignments = rawChildren
+          .map((child) => _selfAlignmentOfChild(child, cfg, width))
+          .toList(growable: false);
+      final hasSelfAlignedChild = selfAlignments.any((a) => a != null);
 
       // CSS parity: Tailwind's default `align-items` is `stretch` (unless an
-      // explicit `items-*` utility is present). In Flutter, a Column/Row with
-      // `crossAxisAlignment == center` shrink-wraps on the cross-axis, causing
-      // flex containers to render centered/narrower than their available width.
-      //
-      // Only apply `stretch` when the cross-axis is bounded to avoid Flutter
-      // layout assertions in unbounded contexts (e.g. Row inside Column).
+      // explicit `items-*` utility is present). Stretch is invalid on an
+      // unbounded Flutter cross axis, so use `start` there to preserve CSS
+      // block-child alignment instead of FlexBox's centered fallback.
       final hasExplicitItems = _hasResponsiveAlignItems(tokens, cfg, width);
       final isCrossAxisBounded = axis == Axis.horizontal
           ? constraints.hasBoundedHeight
           : constraints.hasBoundedWidth;
-      if (!hasExplicitItems && axis == Axis.vertical && isCrossAxisBounded) {
-        style = style.crossAxisAlignment(CrossAxisAlignment.stretch);
-        // Preserve explicit widths (e.g. `w-44`) which should not be stretched.
-        resolvedChildren = [
-          for (final child in resolvedChildren)
-            _wrapIfExplicitWidthInStretchColumn(child, cfg, width),
-        ];
+      if (!hasExplicitItems && axis == Axis.vertical) {
+        style = style.crossAxisAlignment(
+          isCrossAxisBounded
+              ? CrossAxisAlignment.stretch
+              : CrossAxisAlignment.start,
+        );
       }
 
       // Use CSS semantic flex box - margin is outside hover/press detection area
       Widget current = _TwFlexScope(
         axis: axis,
         isMainAxisBounded: isMainAxisBounded,
-        child: _CssSemanticFlexBox(style: style, children: resolvedChildren),
+        child: _CssSemanticFlexBox(
+          style: style,
+          wrapBorderBox: wrapBorderBox,
+          selfAlignments: hasSelfAlignedChild ? selfAlignments : null,
+          children: flexChildren,
+        ),
       );
       current = _applyContainerSizingResponsive(
         current,
@@ -844,6 +1043,13 @@ Widget _buildResponsiveFlex({
       );
       current = _applyMinSizingResponsive(current, tokens, cfg, context, width);
       current = _applyFractionalSizingResponsive(current, tokens, cfg, width);
+      current = _loosenFixedWidthUnderTightStretch(
+        current,
+        tokens,
+        cfg,
+        width,
+        constraints,
+      );
       return current;
     },
   );
@@ -854,12 +1060,17 @@ Widget _buildResponsiveBox({
   required TwConfig cfg,
   required BoxStyler style,
   Widget? child,
+  _BorderBoxWrapper? wrapBorderBox,
 }) {
   return LayoutBuilder(
     builder: (context, constraints) {
       final width = _responsiveWidth(constraints, context);
       // Use CSS semantic box - margin is outside hover/press detection area
-      Widget current = _CssSemanticBox(style: style, child: child);
+      Widget current = _CssSemanticBox(
+        style: style,
+        wrapBorderBox: wrapBorderBox,
+        child: child,
+      );
       current = _applyContainerSizingResponsive(
         current,
         tokens,
@@ -870,6 +1081,13 @@ Widget _buildResponsiveBox({
       );
       current = _applyMinSizingResponsive(current, tokens, cfg, context, width);
       current = _applyFractionalSizingResponsive(current, tokens, cfg, width);
+      current = _loosenFixedWidthUnderTightStretch(
+        current,
+        tokens,
+        cfg,
+        width,
+        constraints,
+      );
       return current;
     },
   );
@@ -913,7 +1131,7 @@ bool _needsFlexItemDecorators(Set<String> tokens, TwConfig cfg) {
 void _reportUnsupportedWidgetLayerVariants(
   Set<String> tokens,
   TwConfig cfg,
-  TokenWarningCallback onUnsupported,
+  TwDiagnosticCallback onDiagnostic,
 ) {
   for (final token in tokens) {
     final candidate = _parseCandidate(token);
@@ -927,7 +1145,15 @@ void _reportUnsupportedWidgetLayerVariants(
       continue;
     }
 
-    onUnsupported(token);
+    onDiagnostic(
+      TwDiagnostic(
+        token: token,
+        code: TwDiagnosticCode.widgetLayerVariantUnsupported,
+        reason:
+            'Widget-layer layout utilities only support breakpoint variants.',
+        workaround: 'Move interactive state to a supported styler utility.',
+      ),
+    );
   }
 }
 
@@ -988,12 +1214,11 @@ Widget _applyContainerSizingResponsive(
   BuildContext context,
   double width,
 ) {
-  final widthIntent = _resolveDimensionIntent(
+  final widthIntent = _resolveResponsiveWidth(
     tokens,
     cfg,
     width,
-    isWidth: true,
-  );
+  ).dimensionIntent;
   final heightIntent = _resolveDimensionIntent(
     tokens,
     cfg,
@@ -1109,7 +1334,7 @@ Widget _applyFractionalSizingResponsive(
   TwConfig cfg,
   double width,
 ) {
-  final widthFactor = _resolveResponsiveFraction(tokens, cfg, width, 'w-');
+  final widthFactor = _resolveResponsiveWidth(tokens, cfg, width).fraction;
   final heightFactor = _resolveResponsiveFraction(tokens, cfg, width, 'h-');
 
   if (widthFactor == null && heightFactor == null) {
@@ -1119,8 +1344,25 @@ Widget _applyFractionalSizingResponsive(
   return FractionallySizedBox(
     widthFactor: widthFactor,
     heightFactor: heightFactor,
+    alignment: AlignmentDirectional.topStart,
     child: child,
   );
+}
+
+Widget _loosenFixedWidthUnderTightStretch(
+  Widget child,
+  Set<String> tokens,
+  TwConfig cfg,
+  double width,
+  BoxConstraints constraints,
+) {
+  final activeWidth = _resolveResponsiveWidth(tokens, cfg, width);
+  if (!constraints.hasTightWidth ||
+      activeWidth.kind != _ResponsiveWidthKind.fixed) {
+    return child;
+  }
+
+  return Align(alignment: AlignmentDirectional.centerStart, child: child);
 }
 
 Widget _applyFlexItemDecorators(
@@ -1143,12 +1385,11 @@ Widget _applyFlexItemDecorators(
   );
   var current = child;
 
-  final widthIntent = _resolveDimensionIntent(
+  final widthIntent = _resolveResponsiveWidth(
     tokens,
     cfg,
     viewportWidth,
-    isWidth: true,
-  );
+  ).dimensionIntent;
   final heightIntent = _resolveDimensionIntent(
     tokens,
     cfg,
@@ -1163,7 +1404,7 @@ Widget _applyFlexItemDecorators(
 
   final selfAlignment = _resolveSelfAlignment(tokens, cfg, viewportWidth);
   if (selfAlignment != null) {
-    current = _applySelfAlignment(current, selfAlignment, axis);
+    current = _positionInCrossAxis(current, selfAlignment, axis);
   }
 
   final behavior = _resolveFlexItemBehavior(
@@ -1321,6 +1562,51 @@ double? _resolveResponsiveFraction(
   return fraction;
 }
 
+_ResponsiveWidth _resolveResponsiveWidth(
+  Set<String> tokens,
+  TwConfig cfg,
+  double width,
+) {
+  var resolved = const _ResponsiveWidth(_ResponsiveWidthKind.none);
+  double chosenMin = -1;
+
+  for (final token in tokens) {
+    final info = _parseResponsiveToken(token, cfg);
+    if (info == null || info.minWidth > width || !info.base.startsWith('w-')) {
+      continue;
+    }
+
+    final key = info.base.substring(2);
+    final fraction = parseFractionToken(key);
+    final candidate = switch (key) {
+      'auto' => const _ResponsiveWidth(_ResponsiveWidthKind.auto),
+      'full' => const _ResponsiveWidth(_ResponsiveWidthKind.full),
+      'screen' => const _ResponsiveWidth(_ResponsiveWidthKind.screen),
+      _ when fraction != null => _ResponsiveWidth(
+        _ResponsiveWidthKind.fraction,
+        fraction: fraction,
+      ),
+      _ when _isFixedWidthKey(key, cfg) => const _ResponsiveWidth(
+        _ResponsiveWidthKind.fixed,
+      ),
+      _ => null,
+    };
+
+    if (candidate != null && info.minWidth >= chosenMin) {
+      resolved = candidate;
+      chosenMin = info.minWidth;
+    }
+  }
+
+  return resolved;
+}
+
+bool _isFixedWidthKey(String key, TwConfig cfg) {
+  if (cfg.hasSpace(key)) return true;
+  if (!key.startsWith('[') || !key.endsWith(']')) return false;
+  return parseCssLength(key.substring(1, key.length - 1)) != null;
+}
+
 _DimensionIntent _resolveDimensionIntent(
   Set<String> tokens,
   TwConfig cfg,
@@ -1410,6 +1696,21 @@ _ResponsiveToken? _parseResponsiveToken(String token, TwConfig cfg) {
 }
 
 enum _DimensionIntent { none, full, screen }
+
+enum _ResponsiveWidthKind { none, fixed, fraction, auto, full, screen }
+
+class _ResponsiveWidth {
+  const _ResponsiveWidth(this.kind, {this.fraction});
+
+  final _ResponsiveWidthKind kind;
+  final double? fraction;
+
+  _DimensionIntent get dimensionIntent => switch (kind) {
+    _ResponsiveWidthKind.full => _DimensionIntent.full,
+    _ResponsiveWidthKind.screen => _DimensionIntent.screen,
+    _ => _DimensionIntent.none,
+  };
+}
 
 class _FlexItemBehavior {
   const _FlexItemBehavior({
@@ -1588,8 +1889,13 @@ _SelfAlignment? _resolveSelfAlignment(
   return alignment;
 }
 
-Widget _applySelfAlignment(Widget child, _SelfAlignment alignment, Axis axis) {
-  final resolved = switch (alignment) {
+/// Places [child] at [position] within the cross extent the flex handed it.
+///
+/// With a tight cross extent, [Align] positions the styled box inside that
+/// extent. With a loose extent it shrink-wraps, and [_RenderSelfAlignFlex]
+/// positions the wrapper after the flex has determined its own size.
+Widget _positionInCrossAxis(Widget child, _SelfAlignment position, Axis axis) {
+  final resolved = switch (position) {
     _SelfAlignment.start =>
       axis == Axis.horizontal
           ? AlignmentDirectional.topCenter
@@ -1601,6 +1907,113 @@ Widget _applySelfAlignment(Widget child, _SelfAlignment alignment, Axis axis) {
           : AlignmentDirectional.centerEnd,
   };
   return Align(alignment: resolved, child: child);
+}
+
+/// A [Flex] that lets individual children opt out of the container's cross
+/// alignment, which is what CSS `align-self` does and what [RenderFlex] has no
+/// way to express.
+///
+/// [selfAlignments] is positional: entry _i_ belongs to child _i_, and null
+/// means the child keeps the container's alignment.
+class _SelfAlignFlex extends Flex {
+  const _SelfAlignFlex({
+    required super.direction,
+    required super.mainAxisAlignment,
+    required super.mainAxisSize,
+    required super.crossAxisAlignment,
+    required super.verticalDirection,
+    required super.clipBehavior,
+    required super.spacing,
+    required this.selfAlignments,
+    super.textDirection,
+    super.textBaseline,
+    super.children,
+  });
+
+  final List<_SelfAlignment?> selfAlignments;
+
+  @override
+  RenderFlex createRenderObject(BuildContext context) {
+    return _RenderSelfAlignFlex(
+      direction: direction,
+      mainAxisAlignment: mainAxisAlignment,
+      mainAxisSize: mainAxisSize,
+      crossAxisAlignment: crossAxisAlignment,
+      textDirection: getEffectiveTextDirection(context),
+      verticalDirection: verticalDirection,
+      textBaseline: textBaseline,
+      clipBehavior: clipBehavior,
+      spacing: spacing,
+    )..selfAlignments = selfAlignments;
+  }
+
+  @override
+  void updateRenderObject(BuildContext context, RenderFlex renderObject) {
+    super.updateRenderObject(context, renderObject);
+    (renderObject as _RenderSelfAlignFlex).selfAlignments = selfAlignments;
+  }
+}
+
+class _RenderSelfAlignFlex extends RenderFlex {
+  _RenderSelfAlignFlex({
+    required super.direction,
+    required super.mainAxisAlignment,
+    required super.mainAxisSize,
+    required super.crossAxisAlignment,
+    required super.verticalDirection,
+    required super.clipBehavior,
+    required super.spacing,
+    super.textDirection,
+    super.textBaseline,
+  });
+
+  List<_SelfAlignment?> _selfAlignments = const [];
+
+  set selfAlignments(List<_SelfAlignment?> value) {
+    if (listEquals(_selfAlignments, value)) return;
+    _selfAlignments = value;
+    markNeedsLayout();
+  }
+
+  /// Whether cross-axis start sits at the far edge rather than at zero.
+  bool get _crossAxisIsReversed => direction == Axis.horizontal
+      ? verticalDirection == VerticalDirection.up
+      : textDirection == TextDirection.rtl;
+
+  @override
+  void performLayout() {
+    super.performLayout();
+
+    // RenderFlex has sized itself from its children by now, so the cross extent
+    // is known even when the incoming constraints were unbounded. Only the
+    // offsets of the opted-out children change; nothing is laid out again.
+    var child = firstChild;
+    var index = 0;
+    while (child != null) {
+      final parentData = child.parentData! as FlexParentData;
+      final alignment = index < _selfAlignments.length
+          ? _selfAlignments[index]
+          : null;
+
+      if (alignment != null) {
+        final free = direction == Axis.horizontal
+            ? size.height - child.size.height
+            : size.width - child.size.width;
+        final reversed = _crossAxisIsReversed;
+        final crossOffset = switch (alignment) {
+          _SelfAlignment.start => reversed ? free : 0.0,
+          _SelfAlignment.center => free / 2,
+          _SelfAlignment.end => reversed ? 0.0 : free,
+        };
+        parentData.offset = direction == Axis.horizontal
+            ? Offset(parentData.offset.dx, crossOffset)
+            : Offset(crossOffset, parentData.offset.dy);
+      }
+
+      child = parentData.nextSibling;
+      index++;
+    }
+  }
 }
 
 class _FlexParentDataWrapper extends ParentDataWidget<FlexParentData> {

@@ -57,7 +57,7 @@ void main() {
     expect(titleText.style?.color, const Color(0xFFFFFFFF));
 
     final primaryText = textByLabel('Primary');
-    expect(primaryText.style?.color, const Color(0xFF1D4ED8));
+    expect(primaryText.style?.color, const Color(0xFF1447E6));
 
     final secondaryText = textByLabel('Secondary');
     expect(secondaryText.style?.color, const Color(0xFFFFFFFF));

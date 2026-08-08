@@ -111,14 +111,6 @@ final kTailwindBoxShadowPresets = <String, List<BoxShadowMix>>{
       color: const Color(0x40000000),
     ),
   ],
-  'shadow-card': [
-    BoxShadowMix(
-      offset: const Offset(0, 8),
-      blurRadius: 24,
-      spreadRadius: 0,
-      color: const Color(0x1F000000),
-    ),
-  ],
 };
 
 const kTailwindMaxWidthPresets = <String, double>{

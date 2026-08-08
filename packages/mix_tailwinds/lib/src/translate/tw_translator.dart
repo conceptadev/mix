@@ -18,14 +18,187 @@ import 'tw_presets.dart';
 import 'tw_routing.dart';
 import 'tw_target.dart';
 
+typedef _ParsedToken = ({String token, TailwindCandidate candidate});
+
 final class TwTranslator {
-  TwTranslator({required this.config, this.onUnsupported});
+  TwTranslator({
+    required this.config,
+    this.onDiagnostic,
+    this.legacyOnUnsupported,
+  });
 
   final TwConfig config;
-  final TokenWarningCallback? onUnsupported;
+  final TwDiagnosticCallback? onDiagnostic;
+  final void Function(String token)? legacyOnUnsupported;
   static const _parser = TailwindCandidateParser(
     registry: defaultTailwindParserRegistry,
   );
+  static final _staticUtilityOrder = <String, int>{
+    for (final entry in generatedStaticUtilityRoots.indexed) entry.$2: entry.$1,
+  };
+  static final _functionalUtilityOrder = <String, int>{
+    for (final entry in generatedFunctionalUtilityRoots.indexed)
+      entry.$2: entry.$1,
+  };
+
+  void _emitDiagnostic(TwDiagnostic diagnostic) {
+    onDiagnostic?.call(diagnostic);
+    legacyOnUnsupported?.call(diagnostic.token);
+  }
+
+  void _reportParseFailure(String token, TailwindParseFailure failure) {
+    final reason = failure.errors.map((error) => error.message).join('; ');
+    _emitDiagnostic(
+      TwDiagnostic(
+        token: token,
+        code: TwDiagnosticCode.invalidCandidate,
+        reason: reason,
+        workaround: 'Correct the Tailwind candidate syntax.',
+      ),
+    );
+  }
+
+  bool _reportBlockingRoute(String token, TwRoute route) {
+    if (route.kind != TwRouteKind.ignored &&
+        route.kind != TwRouteKind.unsupported) {
+      return false;
+    }
+
+    _emitDiagnostic(route.toDiagnostic(token));
+    return true;
+  }
+
+  void _reportUnsupported(
+    String token, {
+    TwDiagnosticCode code = TwDiagnosticCode.unsupportedValue,
+    required String reason,
+    String? workaround,
+  }) {
+    _emitDiagnostic(
+      TwDiagnostic(
+        token: token,
+        code: code,
+        reason: reason,
+        workaround: workaround,
+      ),
+    );
+  }
+
+  List<_ParsedToken> _parseAndSort(Iterable<String> tokens) {
+    final parsedTokens = <_ParsedToken>[];
+    for (final token in tokens) {
+      final parsed = _parser.parseCandidate(token);
+      switch (parsed) {
+        case TailwindParseSuccess(:final candidate):
+          parsedTokens.add((token: token, candidate: candidate));
+        case TailwindParseFailure():
+          _reportParseFailure(token, parsed);
+      }
+    }
+
+    // The generated registry preserves the pinned snapshot's root order. A
+    // natural raw-candidate tie-breaker makes values within one root stable too.
+    return parsedTokens..sort(_compareParsedTokens);
+  }
+
+  /// Returns raw candidates in the same deterministic order as translation.
+  List<String> sortTokens(Iterable<String> tokens) {
+    return List<String>.of(tokens)..sort(_compareTokenStrings);
+  }
+
+  int _compareTokenStrings(String left, String right) {
+    final leftParsed = _parser.parseCandidate(left);
+    final rightParsed = _parser.parseCandidate(right);
+
+    if (leftParsed case TailwindParseSuccess(:final candidate)) {
+      if (rightParsed case TailwindParseSuccess(candidate: final other)) {
+        return _compareParsedTokens(
+          (token: left, candidate: candidate),
+          (token: right, candidate: other),
+        );
+      }
+      return -1;
+    }
+    if (rightParsed is TailwindParseSuccess) return 1;
+
+    final natural = _compareNatural(left, right);
+    return natural != 0 ? natural : left.compareTo(right);
+  }
+
+  int _compareParsedTokens(_ParsedToken left, _ParsedToken right) {
+    final leftOrder = _utilityOrder(left.candidate.utility);
+    final rightOrder = _utilityOrder(right.candidate.utility);
+    final kind = leftOrder.$1.compareTo(rightOrder.$1);
+    if (kind != 0) return kind;
+
+    final root = leftOrder.$2.compareTo(rightOrder.$2);
+    if (root != 0) return root;
+
+    final utility = _compareNatural(
+      left.candidate.utility.raw,
+      right.candidate.utility.raw,
+    );
+    if (utility != 0) return utility;
+
+    final candidate = _compareNatural(left.candidate.raw, right.candidate.raw);
+    return candidate != 0
+        ? candidate
+        : left.candidate.raw.compareTo(right.candidate.raw);
+  }
+
+  (int, int) _utilityOrder(TailwindUtility utility) {
+    return switch (utility) {
+      TailwindStaticUtility(:final root) => (
+        0,
+        _staticUtilityOrder[root] ?? generatedStaticUtilityRoots.length,
+      ),
+      TailwindFunctionalUtility(:final root) => (
+        1,
+        _functionalUtilityOrder[root] ?? generatedFunctionalUtilityRoots.length,
+      ),
+      TailwindArbitraryProperty() => (2, 0),
+      TailwindUnresolvedUtility() => (3, 0),
+    };
+  }
+
+  int _compareNatural(String left, String right) {
+    var leftIndex = 0;
+    var rightIndex = 0;
+    while (leftIndex < left.length && rightIndex < right.length) {
+      final leftDigit = _isDigit(left.codeUnitAt(leftIndex));
+      final rightDigit = _isDigit(right.codeUnitAt(rightIndex));
+      if (leftDigit && rightDigit) {
+        final leftEnd = _digitRunEnd(left, leftIndex);
+        final rightEnd = _digitRunEnd(right, rightIndex);
+        final leftNumber = BigInt.parse(left.substring(leftIndex, leftEnd));
+        final rightNumber = BigInt.parse(right.substring(rightIndex, rightEnd));
+        final number = leftNumber.compareTo(rightNumber);
+        if (number != 0) return number;
+        leftIndex = leftEnd;
+        rightIndex = rightEnd;
+        continue;
+      }
+
+      final character = left
+          .codeUnitAt(leftIndex)
+          .compareTo(right.codeUnitAt(rightIndex));
+      if (character != 0) return character;
+      leftIndex++;
+      rightIndex++;
+    }
+
+    return (left.length - leftIndex).compareTo(right.length - rightIndex);
+  }
+
+  bool _isDigit(int codeUnit) => codeUnit >= 0x30 && codeUnit <= 0x39;
+
+  int _digitRunEnd(String value, int start) {
+    var end = start;
+    while (end < value.length && _isDigit(value.codeUnitAt(end))) {
+      end++;
+    }
+    return end;
+  }
 
   BoxStyler translateBox(String classNames) {
     return _translate<BoxStyler>(
@@ -68,29 +241,67 @@ final class TwTranslator {
     Color? color;
     double? opacity;
 
-    for (final token in splitTailwindTokens(classNames)) {
-      final parsed = _parser.parseCandidate(token);
-      if (parsed is! TailwindParseSuccess) continue;
-      final candidate = parsed.candidate;
-      if (candidate.variants.isNotEmpty) continue;
+    for (final parsed in _parseAndSort(splitTailwindTokens(classNames))) {
+      final (:token, :candidate) = parsed;
 
       final route = routeCandidate(candidate, breakpoints: config.breakpoints);
-      if (route.kind != TwRouteKind.schemaValue) continue;
+      if (_reportBlockingRoute(token, route)) continue;
+      if (candidate.variants.isNotEmpty ||
+          route.kind != TwRouteKind.schemaValue) {
+        _reportUnsupported(
+          token,
+          code: TwDiagnosticCode.unsupportedForTarget,
+          reason: 'This candidate cannot be applied to an icon target.',
+          workaround: 'Apply the variant or box utility to a wrapping Div.',
+        );
+        continue;
+      }
 
       final utility = candidate.utility;
-      if (tailwindUtilityNegative(utility)) continue;
+      if (tailwindUtilityNegative(utility)) {
+        _reportUnsupported(
+          token,
+          reason: 'Negative icon sizing and opacity values are unsupported.',
+        );
+        continue;
+      }
       final root = tailwindUtilityRoot(utility);
       final value = tailwindUtilityValue(utility);
+      var handled = false;
 
       switch (root) {
         case 'w':
-          width = _sizingLength('w', value) ?? width;
+          final resolved = _sizingLength('w', value);
+          if (resolved != null) {
+            width = resolved;
+            handled = true;
+          }
         case 'h':
-          height = _sizingLength('h', value) ?? height;
+          final resolved = _sizingLength('h', value);
+          if (resolved != null) {
+            height = resolved;
+            handled = true;
+          }
         case 'text':
-          color = _color(value, tailwindUtilityModifier(utility)) ?? color;
+          final resolved = _color(value, tailwindUtilityModifier(utility));
+          if (resolved != null) {
+            color = resolved;
+            handled = true;
+          }
         case 'opacity':
-          opacity = _opacity(value) ?? opacity;
+          final resolved = _opacity(value);
+          if (resolved != null) {
+            opacity = resolved;
+            handled = true;
+          }
+      }
+
+      if (!handled) {
+        _reportUnsupported(
+          token,
+          code: TwDiagnosticCode.unsupportedForTarget,
+          reason: 'This utility has no supported icon translation.',
+        );
       }
     }
 
@@ -108,23 +319,10 @@ final class TwTranslator {
     Curve curve = Curves.easeOut;
     var delay = Duration.zero;
 
-    for (final token in tokens) {
-      final parsed = _parser.parseCandidate(token);
-      if (parsed is TailwindParseFailure) {
-        onUnsupported?.call(token);
-        continue;
-      }
-
-      final candidate = (parsed as TailwindParseSuccess).candidate;
+    for (final parsed in _parseAndSort(tokens)) {
+      final (:token, :candidate) = parsed;
       final route = routeCandidate(candidate, breakpoints: config.breakpoints);
-      if (route.kind == TwRouteKind.ignored) {
-        if (route.reason == 'important modifier') onUnsupported?.call(token);
-        continue;
-      }
-      if (route.kind == TwRouteKind.unsupported) {
-        onUnsupported?.call(token);
-        continue;
-      }
+      if (_reportBlockingRoute(token, route)) continue;
 
       final base = candidate.utility.raw;
       if (transitionTriggerTokens.contains(base)) {
@@ -136,7 +334,11 @@ final class TwTranslator {
         if (ms != null) {
           duration = Duration(milliseconds: ms);
         } else {
-          onUnsupported?.call(token);
+          _reportUnsupported(
+            token,
+            reason: 'The transition duration is not in the configured scale.',
+            workaround: 'Use a duration key from TwConfig.durations.',
+          );
         }
       } else if (_easeTokens.containsKey(base)) {
         curve = _easeTokens[base]!;
@@ -145,7 +347,11 @@ final class TwTranslator {
         if (ms != null) {
           delay = Duration(milliseconds: ms);
         } else {
-          onUnsupported?.call(token);
+          _reportUnsupported(
+            token,
+            reason: 'The transition delay is not in the configured scale.',
+            workaround: 'Use a delay key from TwConfig.delays.',
+          );
         }
       }
     }
@@ -206,43 +412,51 @@ final class TwTranslator {
       return groups.putIfAbsent(path, () => _GroupContext(target));
     }
 
-    for (final token in splitTailwindTokens(classNames)) {
-      final parsed = _parser.parseCandidate(token);
-      if (parsed is TailwindParseFailure) {
-        onUnsupported?.call(token);
-        continue;
-      }
-
-      final candidate = (parsed as TailwindParseSuccess).candidate;
+    for (final parsed in _parseAndSort(splitTailwindTokens(classNames))) {
+      final (:token, :candidate) = parsed;
       final route = routeCandidate(candidate, breakpoints: config.breakpoints);
-      if (route.kind == TwRouteKind.ignored) {
-        if (route.reason == 'important modifier') onUnsupported?.call(token);
-        continue;
-      }
-      if (route.kind == TwRouteKind.unsupported) {
-        onUnsupported?.call(token);
-        continue;
-      }
+      if (_reportBlockingRoute(token, route)) continue;
       if (route.kind == TwRouteKind.widgetLayer) {
         if (!_isSupportedWidgetLayerUtility(candidate.utility)) {
-          onUnsupported?.call(token);
+          _reportUnsupported(
+            token,
+            reason: 'This value is unsupported by the Flutter widget layer.',
+          );
         }
         continue;
       }
 
       final path = _variantPath(candidate.variants);
-      if (path == null) continue;
+      if (path == null) {
+        _reportUnsupported(
+          token,
+          code: TwDiagnosticCode.unsupportedVariant,
+          reason: 'The variant chain cannot be represented at runtime.',
+        );
+        continue;
+      }
       final group = groupFor(path);
 
       if (route.kind == TwRouteKind.gradient) {
         if (!_applyGradient(group.gradient, candidate)) {
-          onUnsupported?.call(token);
+          _reportUnsupported(
+            token,
+            reason: 'The gradient value cannot be represented in Flutter.',
+          );
         }
         continue;
       }
 
       final handled = _applySchemaCandidate(group, candidate, target);
-      if (!handled) onUnsupported?.call(token);
+      if (!handled) {
+        _reportUnsupported(
+          token,
+          code: TwDiagnosticCode.unsupportedUtility,
+          reason: 'This utility has no translation for the selected target.',
+          workaround:
+              'Use a utility marked implemented or adapted in the ledger.',
+        );
+      }
     }
 
     return groups;
@@ -490,7 +704,7 @@ final class TwTranslator {
       final lineHeight = twDefaultLineHeights[key];
       style()
         ..fontSize = size
-        ..height = lineHeight;
+        ..fontSizeHeight = lineHeight;
       return true;
     }
 
@@ -512,6 +726,8 @@ final class TwTranslator {
   bool _applyDefaultTextStatic(_GroupContext group, String raw) {
     final style = group.ensureDefaultTextStyle();
     if (_applyFontWeight(style, raw)) return true;
+    if (_applyLineHeight(style, raw)) return true;
+    if (_applyTracking(style, raw)) return true;
     if (_applyTextShadow(style, raw)) return true;
     return false;
   }
@@ -541,8 +757,35 @@ final class TwTranslator {
     TailwindValue? value, {
     required bool negative,
   }) {
+    if (root == 'w-auto') {
+      group.constraints
+        ..minWidth = 0
+        ..maxWidth = double.infinity;
+      return true;
+    }
+    if (root == 'h-auto') {
+      group.constraints
+        ..minHeight = 0
+        ..maxHeight = double.infinity;
+      return true;
+    }
     if (!sizingRoots.contains(root)) return false;
     if (negative) return false;
+    final key = tailwindValueKey(value);
+    if (key == 'auto') {
+      switch (root) {
+        case 'w':
+          group.constraints
+            ..minWidth = 0
+            ..maxWidth = double.infinity;
+          return true;
+        case 'h':
+          group.constraints
+            ..minHeight = 0
+            ..maxHeight = double.infinity;
+          return true;
+      }
+    }
     final length = _sizingLength(root, value);
     if (length == null) return _isWidgetLayerSize(value);
 
@@ -753,6 +996,7 @@ final class TwTranslator {
     return switch (part.kind) {
       TwRuntimeVariantKind.hover => BoxStyler().onHovered(style),
       TwRuntimeVariantKind.focus => BoxStyler().onFocused(style),
+      TwRuntimeVariantKind.focusVisible => BoxStyler().onFocusVisible(style),
       TwRuntimeVariantKind.pressed => BoxStyler().onPressed(style),
       TwRuntimeVariantKind.disabled => BoxStyler().onDisabled(style),
       TwRuntimeVariantKind.enabled => BoxStyler().onEnabled(style),
@@ -773,6 +1017,9 @@ final class TwTranslator {
     return switch (part.kind) {
       TwRuntimeVariantKind.hover => FlexBoxStyler().onHovered(style),
       TwRuntimeVariantKind.focus => FlexBoxStyler().onFocused(style),
+      TwRuntimeVariantKind.focusVisible => FlexBoxStyler().onFocusVisible(
+        style,
+      ),
       TwRuntimeVariantKind.pressed => FlexBoxStyler().onPressed(style),
       TwRuntimeVariantKind.disabled => FlexBoxStyler().onDisabled(style),
       TwRuntimeVariantKind.enabled => FlexBoxStyler().onEnabled(style),
@@ -793,6 +1040,7 @@ final class TwTranslator {
     return switch (part.kind) {
       TwRuntimeVariantKind.hover => TextStyler().onHovered(style),
       TwRuntimeVariantKind.focus => TextStyler().onFocused(style),
+      TwRuntimeVariantKind.focusVisible => TextStyler().onFocusVisible(style),
       TwRuntimeVariantKind.pressed => TextStyler().onPressed(style),
       TwRuntimeVariantKind.disabled => TextStyler().onDisabled(style),
       TwRuntimeVariantKind.enabled => TextStyler().onEnabled(style),
@@ -976,32 +1224,18 @@ final class TwTranslator {
   }
 
   bool _applyLineHeight(_TextStyleAccum style, String raw) {
-    final height = switch (raw) {
-      'leading-none' => 1.0,
-      'leading-tight' => 1.25,
-      'leading-snug' => 1.375,
-      'leading-normal' => 1.5,
-      'leading-relaxed' => 1.625,
-      'leading-loose' => 2.0,
-      _ => null,
-    };
+    final key = raw.startsWith('leading-') ? raw.substring(8) : null;
+    final height = key == null ? null : twDefaultLeading[key];
     if (height == null) return false;
-    style.height = height;
+    style.explicitHeight = height;
     return true;
   }
 
   bool _applyTracking(_TextStyleAccum style, String raw) {
-    final tracking = switch (raw) {
-      'tracking-tighter' => -0.8,
-      'tracking-tight' => -0.4,
-      'tracking-normal' => 0.0,
-      'tracking-wide' => 0.4,
-      'tracking-wider' => 0.8,
-      'tracking-widest' => 1.6,
-      _ => null,
-    };
+    final key = raw.startsWith('tracking-') ? raw.substring(9) : null;
+    final tracking = key == null ? null : twDefaultTracking[key];
     if (tracking == null) return false;
-    style.letterSpacing = tracking;
+    style.trackingEm = tracking;
     return true;
   }
 
@@ -1086,24 +1320,30 @@ final class _GroupContext {
   }
 
   BoxStyler toBoxStyler(TwConfig config) {
+    final hasTransform = transform.hasAnyTransform;
+
     return BoxStyler(
       padding: padding.toMix(),
       margin: margin.toMix(),
       constraints: constraints.toMix(),
       decoration: _decorationMix(config),
-      transform: transform.hasAnyTransform ? transform.toMatrix4() : null,
+      transform: hasTransform ? transform.toMatrix4() : null,
+      transformAlignment: hasTransform ? Alignment.center : null,
       clipBehavior: clipBehavior,
-      modifier: _modifierConfig(),
+      modifier: _modifierConfig(config),
     );
   }
 
   FlexBoxStyler toFlexBoxStyler(TwConfig config) {
+    final hasTransform = transform.hasAnyTransform;
+
     return FlexBoxStyler(
       padding: padding.toMix(),
       margin: margin.toMix(),
       constraints: constraints.toMix(),
       decoration: _decorationMix(config),
-      transform: transform.hasAnyTransform ? transform.toMatrix4() : null,
+      transform: hasTransform ? transform.toMatrix4() : null,
+      transformAlignment: hasTransform ? Alignment.center : null,
       clipBehavior: clipBehavior,
       direction: direction,
       mainAxisAlignment: mainAxisAlignment,
@@ -1111,13 +1351,16 @@ final class _GroupContext {
       mainAxisSize: mainAxisSize,
       textBaseline: textBaseline,
       spacing: spacing,
-      modifier: _modifierConfig(),
+      modifier: _modifierConfig(config),
     );
   }
 
   TextStyler toTextStyler(TwConfig config) {
     return TextStyler(
-      style: textStyle.toMix(defaultHeight: config.textDefaults.lineHeight),
+      style: textStyle.toMix(
+        defaultHeight: config.textDefaults.lineHeight,
+        defaultFontSize: config.textDefaults.fontSize,
+      ),
       textAlign: textAlign,
       overflow: overflow,
       maxLines: maxLines,
@@ -1126,7 +1369,7 @@ final class _GroupContext {
       textDirectives: textDirectives.isEmpty
           ? null
           : List.unmodifiable(textDirectives),
-      modifier: _modifierConfig(),
+      modifier: _modifierConfig(config),
     );
   }
 
@@ -1141,14 +1384,18 @@ final class _GroupContext {
     return decoration.toMix(border: borderMix, gradient: gradientMix);
   }
 
-  WidgetModifierConfig? _modifierConfig() {
+  WidgetModifierConfig? _modifierConfig(TwConfig config) {
     if (modifiers.isEmpty && _defaultTextStyleInsertIndex == null) return null;
 
     final output = List<ModifierMix>.of(modifiers);
     if (_defaultTextStyleInsertIndex case final index?) {
       output.insert(
         index,
-        DefaultTextStyleModifierMix(style: defaultTextStyle.toMix()),
+        DefaultTextStyleModifierMix(
+          style: defaultTextStyle.toMix(
+            defaultFontSize: config.textDefaults.fontSize,
+          ),
+        ),
       );
     }
 
@@ -1263,23 +1510,30 @@ final class _BorderRadiusAccum {
 final class _TextStyleAccum {
   Color? color;
   double? fontSize;
+  double? fontSizeHeight;
   FontWeight? fontWeight;
   TextDecoration? decoration;
-  double? height;
+  double? explicitHeight;
   double? letterSpacing;
+  double? trackingEm;
   List<ShadowMix>? shadows;
 
   bool get hasAny =>
       color != null ||
       fontSize != null ||
+      fontSizeHeight != null ||
       fontWeight != null ||
       decoration != null ||
-      height != null ||
+      explicitHeight != null ||
       letterSpacing != null ||
+      trackingEm != null ||
       shadows != null;
 
-  TextStyleMix? toMix({double? defaultHeight}) {
-    final resolvedHeight = height ?? defaultHeight;
+  TextStyleMix? toMix({double? defaultHeight, double? defaultFontSize}) {
+    final resolvedHeight = explicitHeight ?? fontSizeHeight ?? defaultHeight;
+    final resolvedLetterSpacing = trackingEm == null
+        ? letterSpacing
+        : trackingEm! * (fontSize ?? defaultFontSize!);
     if (!hasAny && resolvedHeight == null) return null;
     return TextStyleMix(
       color: color,
@@ -1287,7 +1541,7 @@ final class _TextStyleAccum {
       fontWeight: fontWeight,
       decoration: decoration,
       height: resolvedHeight,
-      letterSpacing: letterSpacing,
+      letterSpacing: resolvedLetterSpacing,
       shadows: shadows,
     );
   }

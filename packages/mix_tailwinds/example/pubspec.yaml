@@ -22,6 +22,10 @@ flutter:
   uses-material-design: true
   assets:
     - "assets/images/flowbite-card-hero.png"
+    # Source-backed showcase snippets. The browser reads the same fixtures that
+    # are compiled and parity-tested instead of maintaining copied examples.
+    - "lib/advanced_parity_preview.dart"
+    - "real_tailwind/advanced-examples.html"
   fonts:
     - family: TwParityRoboto
       fonts:

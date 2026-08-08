@@ -5,6 +5,7 @@
 *.pyc
 *.swp
 .DS_Store
+.context/
 .atom/
 .buildlog/
 .history
@@ -131,3 +132,9 @@ website/public/previews/
 # Playwright
 website/playwright-report/
 website/test-results/
+
+# The mix_tailwinds example has a hand-authored web showcase. Keep its source
+# in version control while excluding parity evidence generated during builds.
+!packages/mix_tailwinds/example/web/
+!packages/mix_tailwinds/example/web/**
+packages/mix_tailwinds/example/web/generated/

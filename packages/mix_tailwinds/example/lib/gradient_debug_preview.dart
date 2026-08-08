@@ -27,29 +27,25 @@ class _GradientDebugCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Div(
-      classNames:
-          'w-full rounded-2xl border border-slate-400 bg-white p-4 shadow-md',
-      children: const [
-        Div(
-          classNames: 'flex flex-col gap-3',
-          children: [
-            _GradientTile(
-              gradientClassNames:
-                  'bg-gradient-to-r from-black via-white to-black',
-            ),
-            _GradientTile(
-              gradientClassNames:
-                  'bg-gradient-to-br from-black via-white to-black',
-            ),
-            _GradientTile(
-              gradientClassNames: 'bg-gradient-to-r from-white to-black',
-            ),
-            _GradientTile(
-              gradientClassNames: 'bg-gradient-to-br from-white to-black',
-            ),
-          ],
-        ),
+    return div(
+      'w-full rounded-2xl border border-slate-400 bg-white p-4 shadow-md',
+      [
+        div('flex flex-col gap-3', const [
+          _GradientTile(
+            gradientClassNames:
+                'bg-gradient-to-r from-black via-white to-black',
+          ),
+          _GradientTile(
+            gradientClassNames:
+                'bg-gradient-to-br from-black via-white to-black',
+          ),
+          _GradientTile(
+            gradientClassNames: 'bg-gradient-to-r from-white to-black',
+          ),
+          _GradientTile(
+            gradientClassNames: 'bg-gradient-to-br from-white to-black',
+          ),
+        ]),
       ],
     );
   }
@@ -66,9 +62,8 @@ class _GradientTile extends StatelessWidget {
       height: 120,
       child: Div(
         classNames: 'h-full rounded-xl border border-slate-500',
-        child: Div(
-          classNames:
-              'h-full w-full rounded-lg border border-black/50 $gradientClassNames',
+        child: div(
+          'h-full w-full rounded-lg border border-black/50 $gradientClassNames',
         ),
       ),
     );

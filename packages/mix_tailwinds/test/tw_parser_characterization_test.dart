@@ -143,9 +143,9 @@ Future<Container> _divContainer(
 }
 
 // Tailwind reference colors used throughout (sRGB hex).
-const _blue500 = Color(0xFF3B82F6);
-const _red500 = Color(0xFFEF4444);
-const _emerald400 = Color(0xFF34D399);
+const _blue500 = Color(0xFF2B7FFF);
+const _red500 = Color(0xFFFB2C36);
+const _emerald400 = Color(0xFF00D492);
 const _gray200 = Color(0xFFE5E7EB);
 const _white = Color(0xFFFFFFFF);
 
@@ -254,14 +254,14 @@ void main() {
       tester,
     ) async {
       final spec = await _resolveBox(tester, 'bg-red-500/[50%]');
-      expect(_decoOf(spec)?.color, const Color(0x80EF4444));
+      expect(_decoOf(spec)?.color, const Color(0x80FB2C36));
     });
 
     testWidgets('arbitrary bare-fraction opacity modifier applies alpha', (
       tester,
     ) async {
       final spec = await _resolveBox(tester, 'bg-red-500/[0.5]');
-      expect(_decoOf(spec)?.color, const Color(0x80EF4444));
+      expect(_decoOf(spec)?.color, const Color(0x80FB2C36));
     });
 
     testWidgets('invalid color opacity modifiers warn and skip token', (

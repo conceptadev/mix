@@ -87,6 +87,33 @@ Div(
 
 ---
 
+### 5. `self-*` Is Applied by the Flex, Not the Child
+
+**Tailwind CSS:**
+```html
+<div class="flex flex-row items-center">
+  <div class="self-start">Badge</div>
+</div>
+```
+- `align-self` overrides the container's `align-items` for that one child.
+
+**Flutter Adaptation:**
+
+`self-start`, `self-end`, and `self-center` are honored, including inside a row
+nested in a column where the flex sizes its own cross axis.
+
+**Root Cause:** Flutter's `RenderFlex` exposes a single `crossAxisAlignment` for
+every child, and a child cannot place itself: wrapping in an `Align` only
+shrink-wraps, so the flex goes on positioning it by the container's rule. A flex
+container holding a self-aligned child therefore renders through a `RenderFlex`
+subclass that offsets those children along the cross axis after layout, once the
+flex has measured its own cross extent. Nothing is laid out twice.
+
+**Note:** `self-auto` is a no-op by definition — it means "use the container's
+`align-items`" — so it is correct that it changes nothing.
+
+---
+
 ## Summary Table
 
 | CSS Behavior | Flutter Adaptation | Notes |
@@ -225,15 +252,43 @@ Current adaptation policy:
 
 | Tailwind feature | mix_tailwinds behavior | Reason |
 |---|---|---|
-| `group-*`, `peer-*` variants | Parsed, ignored | Flutter has no selector-relative group/peer state equivalent in this widget API. |
-| Arbitrary selector variants like `[&_p]:mt-4` | Parsed, ignored | Flutter widgets cannot target descendants by CSS selector. |
-| Container query variants like `@...` | Parsed, ignored | Container-query semantics remain in the widget/layout layer, not styler payloads. |
-| `!important` prefix/suffix | Parsed, ignored and reported through `onUnsupported` | Flutter/Mix has no CSS cascade priority model. |
-| Arbitrary properties like `[color:red]` | Parsed, ignored | They do not map safely to typed Mix styler fields. |
+| `group-*`, `peer-*` variants | Parsed, ignored, reported through `onDiagnostic` | Flutter has no selector-relative group/peer state equivalent in this widget API. |
+| Arbitrary selector variants like `[&_p]:mt-4` | Parsed, ignored, reported through `onDiagnostic` | Flutter widgets cannot target descendants by CSS selector. |
+| Container query variants like `@...` | Parsed, ignored, reported through `onDiagnostic` | Container-query semantics remain in the widget/layout layer, not styler payloads. |
+| `!important` prefix/suffix | Parsed, ignored, reported through `onDiagnostic` | Flutter/Mix has no CSS cascade priority model. |
+| Arbitrary properties like `[color:red]` | Parsed, ignored, reported through `onDiagnostic` | They do not map safely to typed Mix styler fields. |
 | `from`/`via`/`to` gradients | Accumulated into `LinearGradientMix` | Gradient outputs encode through `mix_protocol`, including CSS keyword directions. |
 | `bg-*/50` alpha modifiers | Approximated with Flutter alpha | Flutter has no `color-mix()`/OKLAB equivalent for Tailwind's CSS output. |
 
-Responsive layout utilities such as `w-full`, `w-screen`, fractions, external margin, negative margin handling, flex item parent data, axis, and gap remain in `tw_widget.dart` because they depend on live Flutter constraints.
+### Compatibility Ledger Status Notes
+
+The generated compatibility ledger records current behavior, including differences
+that still require a 1.0 decision. A ledger entry is an accounting statement, not a
+promise that the adaptation is final.
+
+| Tailwind variant | Current mix_tailwinds behavior |
+|---|---|
+| `active:` | Uses Mix's pressed widget state. |
+| `focus-visible:` | Uses Mix's focus-visible state, driven by Flutter's app-wide focus-highlight modality rather than CSS's per-element focus heuristics. Any focus matches while highlight mode is traditional (keyboard and desktop-pointer input); nothing matches in touch modality. Desktop mouse-click focus can therefore match where CSS would not. |
+| `dark:` | Uses Flutter platform brightness rather than a CSS selector strategy. |
+| `theme-midnight:` | Unsupported and reported through `onDiagnostic`; custom named theme variants require an explicit application-level design. |
+
+Responsive layout utilities such as `w-full`, `w-screen`, fractions, external
+margin, negative margin handling, flex item parent data, axis, and gap remain
+in `tw_widget.dart` because they depend on live Flutter constraints. Fixed,
+fractional, full, and automatic widths are resolved from the element's active
+responsive classes; `w-auto` and `h-auto` explicitly clear earlier fixed
+constraints.
+
+### Actionable Elements
+
+Use `Button` for HTML button counterparts instead of wrapping `Div` in another
+gesture or interaction widget. It keeps hover, pressed, focus, focus-visible,
+keyboard activation, disabled state, and fixed button semantics under one Mix
+`Pressable`. A null `onPressed` disables it unless `onLongPress` supplies an
+action. Its Tailwind margin is applied outside the border box, so margin is not
+tappable and does not become part of the accessibility bounds. Keep structural
+elements and non-button tags, including links, as `Div`.
 
 ### Percent-Based Sizing
 
@@ -271,7 +326,7 @@ FractionallySizedBox(
 
 **Current Limitation:**
 - `translate-x-1/2` and similar fractions are **not supported**
-- `translate-x-[50%]` is **unsupported** and reported through `onUnsupported`
+- `translate-x-[50%]` is **unsupported** and reported through `onDiagnostic`
 
 **Workaround:**
 ```dart
@@ -299,7 +354,7 @@ Transform.translate(
 
 **Current Limitation:**
 - `basis-1/2`, `basis-1/3`, `basis-full` are **not supported** and are
-  reported through `onUnsupported`
+  reported through `onDiagnostic`
 - Only space scale values (`basis-4`, `basis-8`) and `basis-auto` work
 
 **Workaround:**
@@ -379,6 +434,6 @@ P(text: '...', classNames: 'p-2 hover:p-4')  // ✓ Works
 | `w-[50%]`, `h-[25%]` | ✗ Parsed but not applied | Use `w-1/2`, `h-1/4` fractions |
 | `translate-x-1/2` | ✗ Not supported | Use pixel values |
 | `translate-x-[50%]` | ✗ Unsupported | Use Flutter Transform |
-| `basis-1/2`, `basis-full` | ✗ Unsupported; reported through `onUnsupported` | Use `w-1/2 flex-none` |
+| `basis-1/2`, `basis-full` | ✗ Unsupported; reported through `onDiagnostic` | Use `w-1/2 flex-none` |
 | `bg-[rgb(...)]`, `bg-[hsl(...)]` | ✗ Not supported | Use CSS hex: `bg-[#rgb]`, `bg-[#rrggbb]`, or `bg-[#rrggbbaa]` |
 | `hover:m-4` on `P`/headings | ✗ Ignored | Use padding instead |

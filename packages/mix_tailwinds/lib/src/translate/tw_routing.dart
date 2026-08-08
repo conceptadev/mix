@@ -2,14 +2,37 @@
 library;
 
 import '../parser/model.dart';
+import '../tw_types.dart';
 
 enum TwRouteKind { schemaValue, gradient, widgetLayer, ignored, unsupported }
 
 final class TwRoute {
-  const TwRoute(this.kind, {this.reason});
+  const TwRoute(this.kind, {this.diagnosticCode, this.reason, this.workaround})
+    : assert(
+        kind == TwRouteKind.ignored || kind == TwRouteKind.unsupported
+            ? diagnosticCode != null && reason != null
+            : diagnosticCode == null && reason == null && workaround == null,
+      );
 
   final TwRouteKind kind;
+  final TwDiagnosticCode? diagnosticCode;
   final String? reason;
+  final String? workaround;
+
+  TwDiagnostic toDiagnostic(String token) {
+    final code = diagnosticCode;
+    final explanation = reason;
+    if (code == null || explanation == null) {
+      throw StateError('Route $kind does not carry a diagnostic.');
+    }
+
+    return TwDiagnostic(
+      token: token,
+      code: code,
+      reason: explanation,
+      workaround: workaround,
+    );
+  }
 }
 
 TwRoute routeCandidate(
@@ -17,7 +40,12 @@ TwRoute routeCandidate(
   required Map<String, double> breakpoints,
 }) {
   if (candidate.important) {
-    return const TwRoute(TwRouteKind.ignored, reason: 'important modifier');
+    return const TwRoute(
+      TwRouteKind.ignored,
+      diagnosticCode: TwDiagnosticCode.importantModifierIgnored,
+      reason: 'Tailwind !important has no Mix cascade-priority equivalent.',
+      workaround: 'Order utilities explicitly or compose a Mix styler.',
+    );
   }
 
   final variantRoute = _routeVariants(
@@ -30,14 +58,24 @@ TwRoute routeCandidate(
 
   final utility = candidate.utility;
   if (utility is TailwindArbitraryProperty) {
-    return const TwRoute(TwRouteKind.ignored, reason: 'arbitrary property');
+    return const TwRoute(
+      TwRouteKind.ignored,
+      diagnosticCode: TwDiagnosticCode.arbitraryPropertyIgnored,
+      reason: 'Arbitrary CSS properties do not map safely to typed Mix fields.',
+      workaround: 'Use a supported utility or compose a typed Mix styler.',
+    );
   }
   if (isGradientUtility(utility)) return const TwRoute(TwRouteKind.gradient);
   if (isWidgetLayerUtility(utility)) {
     return const TwRoute(TwRouteKind.widgetLayer);
   }
   if (utility is TailwindUnresolvedUtility) {
-    return const TwRoute(TwRouteKind.unsupported);
+    return const TwRoute(
+      TwRouteKind.unsupported,
+      diagnosticCode: TwDiagnosticCode.unsupportedUtility,
+      reason: 'The utility root is not present in the Tailwind registry.',
+      workaround: 'Use a utility listed in the compatibility ledger.',
+    );
   }
 
   return const TwRoute(TwRouteKind.schemaValue);
@@ -60,29 +98,48 @@ TwRoute? _routeVariant(
   required Map<String, double> breakpoints,
 }) {
   if (variant is TailwindArbitraryVariant) {
-    return const TwRoute(TwRouteKind.ignored, reason: 'arbitrary variant');
+    return const TwRoute(
+      TwRouteKind.ignored,
+      diagnosticCode: TwDiagnosticCode.arbitraryVariantIgnored,
+      reason:
+          'Arbitrary CSS selectors cannot target Flutter widget descendants.',
+      workaround: 'Express the relationship through widget composition.',
+    );
   }
 
   if (variant is TailwindFunctionalVariant) {
     if (variant.root.startsWith('@')) {
-      return const TwRoute(TwRouteKind.ignored, reason: 'container variant');
+      return const TwRoute(
+        TwRouteKind.ignored,
+        diagnosticCode: TwDiagnosticCode.containerVariantIgnored,
+        reason:
+            'Container-query variants are not available in styler payloads.',
+        workaround: 'Use LayoutBuilder or a configured viewport breakpoint.',
+      );
     }
     return TwRoute(
       TwRouteKind.unsupported,
-      reason: 'unsupported variant ${variant.raw}',
+      diagnosticCode: TwDiagnosticCode.unsupportedVariant,
+      reason: 'Variant ${variant.raw} is not implemented.',
     );
   }
 
   if (variant is TailwindCompoundVariant) {
     if (variant.root == 'group' || variant.root == 'peer') {
-      return const TwRoute(TwRouteKind.ignored, reason: 'context variant');
+      return TwRoute(
+        TwRouteKind.ignored,
+        diagnosticCode: TwDiagnosticCode.contextVariantIgnored,
+        reason: '${variant.root}-relative state has no widget-API equivalent.',
+        workaround: 'Share state explicitly through widget composition.',
+      );
     }
     if (runtimeVariantFor(variant, breakpoints: breakpoints) != null) {
       return null;
     }
     return TwRoute(
       TwRouteKind.unsupported,
-      reason: 'unsupported variant ${variant.raw}',
+      diagnosticCode: TwDiagnosticCode.unsupportedVariant,
+      reason: 'Variant ${variant.raw} is not implemented.',
     );
   }
 
@@ -92,14 +149,16 @@ TwRoute? _routeVariant(
     }
     return TwRoute(
       TwRouteKind.unsupported,
-      reason: 'unsupported variant ${variant.raw}',
+      diagnosticCode: TwDiagnosticCode.unsupportedVariant,
+      reason: 'Variant ${variant.raw} is not implemented.',
     );
   }
 
   if (variant is TailwindUnresolvedVariant) {
     return TwRoute(
       TwRouteKind.unsupported,
-      reason: 'unknown variant ${variant.raw}',
+      diagnosticCode: TwDiagnosticCode.unsupportedVariant,
+      reason: 'Variant ${variant.raw} is not present in the Tailwind registry.',
     );
   }
 
@@ -109,6 +168,7 @@ TwRoute? _routeVariant(
 enum TwRuntimeVariantKind {
   hover,
   focus,
+  focusVisible,
   pressed,
   disabled,
   enabled,
@@ -152,9 +212,10 @@ TwRuntimeVariant? runtimeVariantFor(
 
     return switch (variant.root) {
       'hover' => const TwRuntimeVariant(TwRuntimeVariantKind.hover, 'hover'),
-      'focus' || 'focus-visible' => const TwRuntimeVariant(
-        TwRuntimeVariantKind.focus,
-        'focus',
+      'focus' => const TwRuntimeVariant(TwRuntimeVariantKind.focus, 'focus'),
+      'focus-visible' => const TwRuntimeVariant(
+        TwRuntimeVariantKind.focusVisible,
+        'focus-visible',
       ),
       'active' || 'pressed' => const TwRuntimeVariant(
         TwRuntimeVariantKind.pressed,
@@ -168,10 +229,7 @@ TwRuntimeVariant? runtimeVariantFor(
         TwRuntimeVariantKind.enabled,
         'enabled',
       ),
-      'dark' || 'theme-midnight' => const TwRuntimeVariant(
-        TwRuntimeVariantKind.dark,
-        'dark',
-      ),
+      'dark' => const TwRuntimeVariant(TwRuntimeVariantKind.dark, 'dark'),
       'light' => const TwRuntimeVariant(TwRuntimeVariantKind.light, 'light'),
       _ => null,
     };
@@ -225,9 +283,11 @@ bool isWidgetLayerUtility(TailwindUtility utility) {
   if (root == 'gap-x' || root == 'gap-y') return true;
 
   if (sizingRoots.contains(root)) {
+    if (valueKey == 'auto') {
+      return root != 'w' && root != 'h';
+    }
     return valueKey == 'full' ||
         valueKey == 'screen' ||
-        valueKey == 'auto' ||
         valueKey?.contains('/') == true;
   }
 

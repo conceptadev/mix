@@ -296,7 +296,7 @@ void main() {
       expect(config.colorOf('white/0'), equals(const Color(0x00FFFFFF)));
       expect(config.colorOf('white/50'), equals(const Color(0x80FFFFFF)));
       expect(config.colorOf('white/100'), equals(const Color(0xFFFFFFFF)));
-      expect(config.colorOf('blue-500/30'), equals(const Color(0x4D3B82F6)));
+      expect(config.colorOf('blue-500/30'), equals(const Color(0x4D2B7FFF)));
     });
 
     test('returns null for unknown base color with opacity modifier', () {

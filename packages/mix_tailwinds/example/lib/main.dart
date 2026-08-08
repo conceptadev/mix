@@ -3,19 +3,42 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:mix_tailwinds/mix_tailwinds.dart';
 
+import 'advanced_parity_preview.dart';
 import 'card_alert_preview.dart';
+import 'complex_parity_preview.dart';
 import 'flowbite_card_preview.dart';
 import 'gradient_debug_preview.dart';
+import 'showcase/showcase_embedded_example.dart';
+import 'showcase/showcase_multi_view_app.dart';
 
 const _screenshotParityFontFamily = 'TwParityRoboto';
 
+void _noop() {}
+
 void main() {
+  final binding = WidgetsFlutterBinding.ensureInitialized();
+
   // Ensure debug paint overlays are disabled for parity screenshots.
   debugPaintBaselinesEnabled = false;
   debugPaintSizeEnabled = false;
   debugPaintPointersEnabled = false;
   debugRepaintRainbowEnabled = false;
+
+  // Embedded Flutter web runs without an implicit view. The JavaScript host
+  // attaches one or more views after the engine starts and selects the example
+  // for each view through initialData.
+  if (kIsWeb && binding.platformDispatcher.implicitView == null) {
+    runWidget(
+      const ShowcaseMultiViewApp(viewBuilder: _buildShowcaseEmbeddedExample),
+    );
+    return;
+  }
+
   runApp(const TailwindParityApp());
+}
+
+Widget _buildShowcaseEmbeddedExample(BuildContext context) {
+  return const ShowcaseEmbeddedExample();
 }
 
 /// Parses URL query parameters for screenshot mode (web only).
@@ -38,12 +61,26 @@ class ScreenshotConfig {
   /// Supported values:
   /// - `dashboard` (default)
   /// - `card-alert`
+  /// - `complex-parity`
   /// - `flowbite-card`
   /// - `gradient-debug`
+  /// - `advanced-parity`
   static String get example {
     if (!kIsWeb) return 'dashboard';
     final params = Uri.base.queryParameters;
     return params['example'] ?? 'dashboard';
+  }
+
+  /// Returns the isolated complex visual-parity case (`01` through `10`).
+  static String get complexCase {
+    if (!kIsWeb) return '01';
+    return Uri.base.queryParameters['case'] ?? '01';
+  }
+
+  /// Returns the isolated advanced visual-parity example (`01` through `05`).
+  static String get advancedExample {
+    if (!kIsWeb) return '01';
+    return Uri.base.queryParameters['sample'] ?? '01';
   }
 
   /// Returns gradient strategy for screenshot experiments.
@@ -77,6 +114,19 @@ class TailwindParityApp extends StatelessWidget {
       final width = ScreenshotConfig.width;
       final example = ScreenshotConfig.example;
 
+      if (example == 'complex-parity') {
+        return _ScreenshotWidgetsApp(
+          backgroundColor: const Color(0xFFF3F4F6),
+          child: TwScope(
+            config: twConfig,
+            child: ComplexParityPreview(
+              caseId: ScreenshotConfig.complexCase,
+              width: width,
+            ),
+          ),
+        );
+      }
+
       if (example == 'gradient-debug') {
         return _ScreenshotWidgetsApp(
           backgroundColor: const Color(0xFFE2E8F0),
@@ -84,6 +134,21 @@ class TailwindParityApp extends StatelessWidget {
             config: twConfig,
             child: SingleChildScrollView(
               child: GradientDebugPreview(width: width),
+            ),
+          ),
+        );
+      }
+
+      if (example == 'advanced-parity') {
+        const slate100 = Color(0xFFF1F5F9);
+        return _ScreenshotWidgetsApp(
+          backgroundColor: slate100,
+          child: TwScope(
+            config: twConfig,
+            child: SingleChildScrollView(
+              child: AdvancedParityPreview(
+                exampleId: ScreenshotConfig.advancedExample,
+              ),
             ),
           ),
         );
@@ -230,10 +295,9 @@ class _TailwindParityScreenState extends State<TailwindParityScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    P(
-                      text:
-                          'Preview width: ${_previewWidth.toStringAsFixed(0)} px',
-                      classNames: 'text-base font-semibold text-gray-700',
+                    p(
+                      'text-base font-semibold text-gray-700',
+                      'Preview width: ${_previewWidth.toStringAsFixed(0)} px',
                     ),
                     Slider(
                       min: 320,
@@ -289,10 +353,10 @@ class _ComparisonStack extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Div(
-      classNames: 'flex w-full flex-col gap-6',
-      children: const [_CampaignOverviewCard(), _TeamActivityCard()],
-    );
+    return div('flex w-full flex-col gap-6', const [
+      _CampaignOverviewCard(),
+      _TeamActivityCard(),
+    ]);
   }
 }
 
@@ -301,22 +365,14 @@ class _CampaignOverviewCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Div(
-      classNames:
-          'flex flex-col gap-5 rounded-2xl border border-gray-200 bg-white p-6 shadow-lg',
-      children: [
-        const P(
-          text: 'Campaign Health',
-          classNames: 'text-sm font-semibold uppercase text-blue-700',
-        ),
-        const H1(
-          text: 'November brand push',
-          classNames: 'text-3xl font-semibold text-gray-700',
-        ),
-        const P(
-          text:
-              'Live performance snapshot for paid, lifecycle, and organic channels.',
-          classNames: 'text-base text-gray-500',
+    return div(
+      'flex flex-col gap-5 rounded-2xl border border-gray-200 bg-white p-6 shadow-lg',
+      [
+        p('text-sm font-semibold uppercase text-blue-700', 'Campaign Health'),
+        h1('text-3xl font-semibold text-gray-700', 'November brand push'),
+        p(
+          'text-base text-gray-500',
+          'Live performance snapshot for paid, lifecycle, and organic channels.',
         ),
         Div(
           key: const ValueKey('dashboard-metric-row'),
@@ -340,17 +396,19 @@ class _CampaignOverviewCard extends StatelessWidget {
           key: const ValueKey('dashboard-button-row'),
           classNames: 'flex flex-col gap-3 md:flex-row',
           children: [
-            Div(
+            Button(
               key: const ValueKey('dashboard-view-button'),
               classNames:
                   'flex flex-1 items-center justify-center rounded-full bg-blue-600 px-4 py-3 text-base font-semibold text-white hover:bg-blue-700',
-              child: const Span(text: 'View live dashboard'),
+              onPressed: _noop,
+              child: span('', 'View live dashboard'),
             ),
-            Div(
+            Button(
               key: const ValueKey('dashboard-download-button'),
               classNames:
                   'flex flex-1 items-center justify-center rounded-full border border-blue-600 px-4 py-3 text-base font-semibold text-blue-600 hover:bg-blue-50',
-              child: const Span(text: 'Download CSV'),
+              onPressed: _noop,
+              child: span('', 'Download CSV'),
             ),
           ],
         ),
@@ -376,12 +434,9 @@ class _MetricTile extends StatelessWidget {
       key: ValueKey('dashboard-metric-$label'),
       classNames: 'flex flex-1 flex-col gap-2 rounded-xl bg-blue-50 p-4',
       children: [
-        P(
-          text: label,
-          classNames: 'text-sm font-semibold uppercase text-blue-700',
-        ),
-        P(text: value, classNames: 'text-2xl font-semibold text-gray-700'),
-        P(text: change, classNames: 'text-sm text-blue-700'),
+        p('text-sm font-semibold uppercase text-blue-700', label),
+        p('text-2xl font-semibold text-gray-700', value),
+        p('text-sm text-blue-700', change),
       ],
     );
   }
@@ -392,49 +447,39 @@ class _TeamActivityCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Div(
-      classNames:
-          'flex flex-col gap-5 rounded-2xl border border-gray-200 bg-white p-6 shadow-lg',
-      children: [
-        const P(
-          text: 'Team activity',
-          classNames: 'text-sm font-semibold uppercase text-blue-700',
+    return div(
+      'flex flex-col gap-5 rounded-2xl border border-gray-200 bg-white p-6 shadow-lg',
+      [
+        p('text-sm font-semibold uppercase text-blue-700', 'Team activity'),
+        h2('text-2xl font-semibold text-gray-700', 'Channel owners'),
+        p(
+          'text-base text-gray-500',
+          'Latest updates from lifecycle, paid, and organic squads.',
         ),
-        const H2(
-          text: 'Channel owners',
-          classNames: 'text-2xl font-semibold text-gray-700',
-        ),
-        const P(
-          text: 'Latest updates from lifecycle, paid, and organic squads.',
-          classNames: 'text-base text-gray-500',
-        ),
-        Div(
-          classNames: 'flex flex-col',
-          children: const [
-            _ActivityRow(
-              name: 'Rita Carr',
-              role: 'Lifecycle · Email',
-              update: 'Shipped reactivation flow revamp',
-              timeago: '12m ago',
-              accentIndex: 0,
-              showBorder: false,
-            ),
-            _ActivityRow(
-              name: 'Jalen Ruiz',
-              role: 'Paid · Social',
-              update: 'Cut CPA by 14% on TikTok lookalikes',
-              timeago: '1h ago',
-              accentIndex: 1,
-            ),
-            _ActivityRow(
-              name: 'Mara Singh',
-              role: 'Organic · Web',
-              update: 'Published performance teardown for Q4',
-              timeago: '3h ago',
-              accentIndex: 2,
-            ),
-          ],
-        ),
+        div('flex flex-col', const [
+          _ActivityRow(
+            name: 'Rita Carr',
+            role: 'Lifecycle · Email',
+            update: 'Shipped reactivation flow revamp',
+            timeago: '12m ago',
+            accentIndex: 0,
+            showBorder: false,
+          ),
+          _ActivityRow(
+            name: 'Jalen Ruiz',
+            role: 'Paid · Social',
+            update: 'Cut CPA by 14% on TikTok lookalikes',
+            timeago: '1h ago',
+            accentIndex: 1,
+          ),
+          _ActivityRow(
+            name: 'Mara Singh',
+            role: 'Organic · Web',
+            update: 'Published performance teardown for Q4',
+            timeago: '3h ago',
+            accentIndex: 2,
+          ),
+        ]),
       ],
     );
   }
@@ -504,37 +549,22 @@ class _ActivityRow extends StatelessWidget {
       key: ValueKey('dashboard-activity-$name'),
       classNames: 'flex items-center justify-between gap-4 $borderClass py-4',
       children: [
-        Div(
-          classNames: 'flex flex-1 items-center gap-4',
-          children: [
-            Div(
-              classNames:
-                  'flex h-12 w-12 items-center justify-center rounded-full bg-gray-100',
-              child: Span(
-                text: avatarLetter,
-                classNames: 'text-lg font-semibold text-gray-700',
-              ),
-            ),
-            Div(
-              classNames: 'flex flex-1 flex-col gap-1',
-              children: [
-                P(
-                  text: name,
-                  classNames: 'text-base font-semibold text-gray-700',
-                ),
-                P(text: role, classNames: 'text-sm text-gray-500'),
-                Div(
-                  classNames: 'flex items-center gap-2',
-                  children: [
-                    Div(classNames: 'h-1 w-1 rounded-full $badgeColor'),
-                    P(text: update, classNames: 'text-sm text-gray-500'),
-                  ],
-                ),
-              ],
-            ),
-          ],
-        ),
-        P(text: timeago, classNames: 'text-sm text-gray-500'),
+        div('flex flex-1 items-center gap-4', [
+          Div(
+            classNames:
+                'flex h-12 w-12 items-center justify-center rounded-full bg-gray-100',
+            child: span('text-lg font-semibold text-gray-700', avatarLetter),
+          ),
+          div('flex flex-1 flex-col gap-1', [
+            p('text-base font-semibold text-gray-700', name),
+            p('text-sm text-gray-500', role),
+            div('flex items-center gap-2', [
+              div('h-1 w-1 rounded-full $badgeColor'),
+              p('text-sm text-gray-500', update),
+            ]),
+          ]),
+        ]),
+        p('text-sm text-gray-500', timeago),
       ],
     );
   }

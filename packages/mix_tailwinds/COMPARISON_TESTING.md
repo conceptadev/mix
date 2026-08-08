@@ -41,9 +41,13 @@ Wait for: `lib/main.dart is being served at http://localhost:8089`
 
 ```bash
 cd packages/mix_tailwinds/tool/visual-comparison
-npm install  # first time only
+npm ci  # first time, or whenever package-lock.json changes
 npx playwright install chromium  # first time only, if Chromium is missing
 npm run compare
+# Run all five product-scale advanced fixtures (15 screenshot pairs).
+npm run compare:advanced
+# Run all ten isolated complex parity fixtures (30 screenshot pairs).
+npm run compare:complex
 ```
 
 This script automatically:
@@ -51,13 +55,26 @@ This script automatically:
 2. Captures Flutter screenshots from `localhost:8089`
 3. Generates pixel-diff, amplified absolute-diff, and blink-GIF images
 4. Writes `summary.json` with image dimensions and diff percentages
-5. Reports diff percentages
+5. Enforces the example's selected metric at every viewport
+6. Regenerates `visual-comparison/index.html`, even when the comparison fails
+
+The complex batch pins the browser reference to Tailwind CSS `4.3.1`, captures
+480/768/1024px, replays dark-hover and delayed-hover states, and writes an
+aggregate `complex-parity/summary.json`.
+
+The advanced batch captures five responsive Northstar operations surfaces and
+writes an aggregate `advanced-parity/summary.json`. Each individual summary is
+tagged as the `advanced` suite in the HTML report. The aggregate records a
+content fingerprint for every source that can affect the showcase or its
+evidence; `showcase:build` rejects the aggregate after any of those inputs
+change.
 
 ### Output
 
 Screenshots and diffs are saved to `visual-comparison/<example>/` (gitignored):
 ```
 visual-comparison/
+├── index.html                 # generated live report (gitignored)
 ├── dashboard/
 │   ├── flutter-480.png
 │   ├── flutter-768.png
@@ -77,11 +94,31 @@ visual-comparison/
 │   ├── ... (same structure)
 │   └── diff/
 │       └── ...
-└── flowbite-card/
-    ├── flutter-480.png
-    ├── ... (same structure)
-    └── diff/
-        └── ...
+├── flowbite-card/
+│   ├── flutter-480.png
+│   ├── ... (same structure)
+│   └── diff/
+│       └── ...
+├── complex-parity/
+│   ├── summary.json
+│   ├── case-01/
+│   │   ├── tailwind-480.png
+│   │   ├── flutter-480.png
+│   │   ├── summary.json
+│   │   └── diff/
+│   │       ├── diff-480.png
+│   │       ├── strictdiff-480.png
+│   │       ├── absdiff-480.png
+│   │       └── blink-480.gif
+│   └── case-10/
+│       └── ...
+└── advanced-parity/
+    ├── summary.json
+    ├── launch-command/
+    ├── signal-analytics/
+    ├── incident-room/
+    ├── release-timeline/
+    └── capacity-map/
 ```
 
 To run a specific example:
@@ -89,30 +126,53 @@ To run a specific example:
 npm run compare -- --example=dashboard
 npm run compare -- --example=card-alert
 npm run compare -- --example=flowbite-card
+npm run compare -- --example=advanced-launch-command
+npm run compare -- --example=advanced-signal-analytics
+npm run compare -- --example=advanced-incident-room
+npm run compare -- --example=advanced-release-timeline
+npm run compare -- --example=advanced-capacity-map
+npm run compare:advanced
+npm run compare -- --example=complex-04
+npm run compare:complex
 ```
 
-### Interpreting Results
+Complex-case summaries expose three complementary metrics:
 
-| Diff % | Interpretation |
-|--------|----------------|
-| < 3% | Excellent parity (font rendering differences only) |
-| 3-5% | Good parity (minor differences) |
-| 5-15% | Moderate diff (likely structural issues) |
-| > 15% | High diff (parser bugs likely) |
+- `diffPercent`: anti-alias-tolerant `pixelmatch` at threshold `0.1`, useful for
+  large structural shifts but intentionally insensitive to nearby colors.
+- `strictDiffPercent`: `pixelmatch` at threshold `0.01`, which catches named
+  palette drift while retaining anti-alias classification.
+- `exactDiffPercent` and `meanAbsoluteRgbaDelta`: byte-level evidence. Use these
+  to confirm exact output, but do not treat tiny raster/shadow deltas as layout
+  failures without inspecting the strict diff and source values.
 
-Use percentages as a trend signal, not as the only pass/fail rule. A large region can be caused by one structural shift, such as a text line wrapping differently and moving every row below it.
+### Acceptance contracts
 
-### Current Visual Baseline
+Each example selects one metric and a maximum for each width. A missing width,
+missing capture, or value above the maximum fails the command. Do not raise a
+maximum to make a regression pass.
 
-These values are useful when checking whether a new change regresses the existing examples:
+| Cases | Enforced metric | 480 / 768 / 1024 maximum |
+|---|---:|---:|
+| Complex 03 | Exact | `0 / 0 / 0%` |
+| Complex 01, 02, 07, 08, 09, 10 | Strict | `1 / 1 / 1%` |
+| Complex 06 | Strict | `3 / 3 / 3%` |
+| Complex 04 | Tolerant | `5 / 5 / 5%` |
+| Complex 05 | Tolerant | `1 / 1 / 1%` |
+| Dashboard | Tolerant | `1.45 / 1.40 / 1.15%` |
+| Card alert | Tolerant | `5.11 / 4.19 / 3.62%` |
+| Flowbite card | Tolerant | `1.68 / 1.68 / 1.68%` |
+| Advanced 01–05 | Tolerant | `5 / 5 / 5%` |
 
-| Example | 480px | 768px | 1024px | Main known issue |
-|---------|-------|-------|--------|------------------|
-| `dashboard` | 1.20% | 1.14% | 0.89% | Remaining text anti-aliasing and minor shadow/background rendering noise |
-| `card-alert` | 4.86% | 3.94% | 3.36% | Remaining text baseline/anti-aliasing and minor background rendering noise |
-| `flowbite-card` | 1.43% | 1.43% | 1.43% | Remaining text rendering noise and Material icon equivalents differing from Flowbite SVG paths |
+Open `visual-comparison/index.html` after a run. It discovers all available
+summaries and provides viewport, suite, and pass/fail filters; paired Tailwind
+and Flutter captures; all three scores; and direct links to strict, absolute,
+pixelmatch, and blink diffs. Missing artifacts are shown as failures rather
+than broken, silent image slots.
 
-Before treating a diff as a regression, compare against the previous commit or saved baseline artifacts. If current and baseline Flutter screenshots are byte-identical, the issue is existing parity drift, not a regression from the latest patch.
+Use the non-enforced metrics as diagnostic evidence. A large region can still
+come from one structural shift, such as a wrapped line moving every row below
+it, while a small strict-only region often indicates palette or raster drift.
 
 `card-alert` 768px note: the comparison harness pins both the Tailwind HTML pages and Flutter screenshot mode to the bundled `TwParityRoboto` font. This keeps glyph metrics deterministic without changing canonical Tailwind sizes; `TwConfig.standard()` still uses the standard Tailwind font scale and system sans stack.
 
@@ -179,7 +239,7 @@ Red pixels in diff images indicate differences between Flutter and Tailwind:
 
 - **Font anti-aliasing** - Web and Flutter render fonts differently
 - **Sub-pixel rendering** - Minor 1px differences in positioning
-- **Shadow rendering** - Flutter uses Material elevation, CSS uses box-shadow
+- **Shadow rasterization** - Flutter and the browser rasterize matching box-shadow values differently
 - **Line height** - Minor differences in text vertical positioning
 
 ### Unacceptable Differences (Parser Bugs)
@@ -196,7 +256,8 @@ The comparison tool writes extra artifacts next to each `diff-*.png`:
 
 - `diff/absdiff-<width>.png` amplifies raw channel differences so subtle text, color, and border drift is easier to see.
 - `diff/blink-<width>.gif` alternates Tailwind and Flutter frames so layout shifts are obvious.
-- `summary.json` records dimensions, diff percentages, thresholds, and generated artifact paths.
+- `summary.json` records dimensions, all diff metrics, the enforced acceptance
+  checks, and generated artifact paths.
 
 Do not commit generated screenshots, GIFs, summaries, or diff images. If you need additional review composites such as triptychs, keep them under `.context/visual-review/`.
 
@@ -214,13 +275,15 @@ open ../../visual-comparison/card-alert/diff/absdiff-768.png
 
 ### Step 1: Identify the Problem Class
 
-Look at the diff image and identify which element has the red pixels. Find the corresponding class string in both:
-- `real_tailwind/index.html` - The HTML element
-- `example/lib/main.dart` - The Flutter `Div` widget
+Look at the diff image and identify which element has the red pixels. Find the
+corresponding class string in both `example/real_tailwind/*.html` and its
+matching preview under `example/lib/`.
 
 ### Step 2: Check the Parser
 
-Look in `lib/src/tw_parser.dart` for how the class is handled.
+Look in `lib/src/translate/tw_translator.dart` for utility translation,
+`lib/src/translate/tw_routing.dart` for support/target routing, and
+`lib/src/parser/` for candidate parsing.
 
 ### Step 3: Check the Config
 
@@ -241,82 +304,6 @@ When a visual diff looks structural, add focused widget tests before changing pa
 - Dashboard: equal metric tile widths, equal action button widths, row separator/top-border behavior.
 
 This keeps fixes tied to utility semantics instead of chasing screenshot noise.
-
----
-
-## Deep Analysis with Codex Agent
-
-After running the visual comparison, use the Codex MCP agent for automated deep analysis of parity issues.
-
-### Running Codex Visual Parity Analysis
-
-Invoke the Codex agent with this configuration:
-
-```
-Tool: mcp__plugin_codex_codex__codex
-Model: gpt-5.2-codex
-Config: { "reasoning_effort": "xhigh" }
-Sandbox: read-only
-CWD: packages/mix_tailwinds
-```
-
-### Image Paths for Analysis
-
-Reference these paths when prompting Codex:
-
-**Dashboard Example:**
-- `visual-comparison/dashboard/tailwind-480.png` - Tailwind CSS reference
-- `visual-comparison/dashboard/flutter-480.png` - Flutter mix_tailwinds output
-- `visual-comparison/dashboard/diff/diff-480.png` - Pixel diff highlighting
-
-**Card-Alert Example:**
-- `visual-comparison/card-alert/tailwind-480.png` - Tailwind CSS reference
-- `visual-comparison/card-alert/flutter-480.png` - Flutter mix_tailwinds output
-- `visual-comparison/card-alert/diff/diff-480.png` - Pixel diff highlighting
-
-Also available at 768px and 1024px widths.
-
-### Example Codex Prompt
-
-```
-Perform a DEEP visual parity analysis between Tailwind CSS examples and Flutter mix_tailwinds.
-
-Image paths:
-- visual-comparison/dashboard/tailwind-480.png
-- visual-comparison/dashboard/flutter-480.png
-- visual-comparison/dashboard/diff/diff-480.png
-- visual-comparison/card-alert/tailwind-480.png
-- visual-comparison/card-alert/flutter-480.png
-- visual-comparison/card-alert/diff/diff-480.png
-
-Tasks:
-1. Read Flutter examples in example/lib/
-2. Read Tailwind HTML in example/real_tailwind/
-3. Analyze parser in lib/src/tw_parser.dart
-4. Analyze widget in lib/src/tw_widget.dart
-5. Cross-reference each Tailwind class with its Flutter implementation
-6. Identify ALL potential sources of visual differences
-
-Focus on: gradients, spacing, sizing, typography, colors, borders, shadows, flexbox behavior.
-```
-
-### Expected Output
-
-Codex returns YAML with:
-- `parity_analysis` - Per-example breakdown with issue severity
-- `parser_findings` - Issues in tw_parser.dart
-- `widget_findings` - Issues in tw_widget.dart
-- `priority_fixes` - Ranked list of recommended fixes
-- `summary` - Overall assessment and issue counts
-
-### Interpreting Codex Results
-
-| Severity | Meaning |
-|----------|---------|
-| CRITICAL | Will cause runtime failures |
-| MAJOR | Significant visual difference (missing badge, collapsed spacing) |
-| MINOR | Noticeable but not breaking (line-height, hover states) |
-| COSMETIC | Platform-specific (shadow blur, font anti-aliasing) |
 
 ---
 
@@ -366,7 +353,9 @@ Codex returns YAML with:
 
 | File | Purpose |
 |------|---------|
-| `lib/src/tw_parser.dart` | Token parsing logic |
+| `lib/src/parser/` | Candidate parsing, registry data, diagnostics, and routing inputs |
+| `lib/src/translate/tw_translator.dart` | Utility-to-Mix translation logic |
+| `lib/src/translate/tw_routing.dart` | Candidate support and target routing policy |
 | `lib/src/tw_config.dart` | Value mappings (spacing, colors, etc.) |
 | `lib/src/tw_widget.dart` | Div/Span widget implementation |
 | `lib/src/tw_utils.dart` | Utility functions (fraction parsing) |
@@ -381,7 +370,7 @@ Codex returns YAML with:
 These differences are expected and not bugs:
 
 1. **Font rendering** - Web uses system fonts with different hinting than Flutter
-2. **Shadow spread** - Material elevation != CSS box-shadow
+2. **Shadow rasterization** - Flutter and browsers rasterize box shadows differently
 3. **Sub-pixel anti-aliasing** - Different rendering engines
 4. **Line height** - Minor line height differences between platforms
 

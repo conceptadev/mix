@@ -31,7 +31,7 @@ void main() {
     final icon = await _iconFor(tester, 'w-6 text-blue-700');
 
     expect(icon.size, 24);
-    expect(icon.color, const Color(0xFF1D4ED8));
+    expect(icon.color, const Color(0xFF1447E6));
   });
 
   testWidgets('TwIcon takes the min of w-* and h-* for size', (tester) async {
@@ -51,7 +51,7 @@ void main() {
   ) async {
     final icon = await _iconFor(tester, 'text-blue-700');
 
-    expect(icon.color, const Color(0xFF1D4ED8));
+    expect(icon.color, const Color(0xFF1447E6));
   });
 
   testWidgets('TwIcon ignores hover:/dark: color variants as base', (

@@ -30,20 +30,66 @@ dependencies:
 
 ## Usage
 
+The class-first functional API keeps each Tailwind utility string beside its
+content and returns the corresponding concrete widget:
+
 ```dart
 import 'package:mix_tailwinds/mix_tailwinds.dart';
 
-// Use Div for container/box elements
-Div(
-  classNames: 'flex flex-col gap-4 p-6 bg-white rounded-lg shadow-lg',
-  children: [
-    Span(
-      text: 'Hello World',
-      classNames: 'text-2xl font-bold text-gray-900',
+final card = div(
+  'flex flex-col gap-4 rounded-lg bg-white p-6 shadow-lg',
+  [
+    h2('text-2xl font-bold text-gray-900', 'Hello World'),
+    button(
+      'rounded-lg bg-blue-600 px-4 py-2 hover:bg-blue-700',
+      [span('font-medium text-white', 'Save')],
+      onPressed: () {},
     ),
   ],
+);
+```
+
+All functions require a non-null class string; pass `''` when an element has no
+utilities. Their signatures and concrete return types are:
+
+| Element | Functional API | Returns |
+|---|---|---|
+| Container/structural element | `div(String classNames, [List<Widget> children = const []])` | `Div` |
+| Paragraph | `p(String classNames, String text)` | `P` |
+| Inline text | `span(String classNames, String text)` | `Span` |
+| Headings | `h1` through `h6` with `(String classNames, String text)` | `H1` through `H6` |
+| Button | `button(String classNames, List<Widget> children, {required VoidCallback? onPressed, String? semanticsLabel})` | `Button` |
+| Icon | `twIcon(String classNames, IconData icon, {String? semanticLabel})` | `TwIcon` |
+| Truncated paragraph | `truncatedP(String classNames, String text)` | `TruncatedP` |
+
+These convenience functions are intentionally non-const and forward only the
+arguments shown above. Use the uppercase constructors as the advanced and
+const-capable escape hatch for keys, configuration, diagnostics, single-child
+composition, focus/controller options, long press, and other widget-specific
+settings:
+
+```dart
+Button(
+  key: const ValueKey('save-button'),
+  classNames: 'px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 '
+      'focus-visible:bg-blue-700 active:bg-blue-800',
+  onPressed: () {},
+  child: const Span(text: 'Save', classNames: 'text-white font-medium'),
 )
 ```
+
+Use `button` or `Button` for HTML button counterparts so hover, press, keyboard,
+focus, semantics, and disabled state share one interaction owner. `Button`
+accepts the same child/flex/config/diagnostic options as `Div` and forwards Mix
+`Pressable` interaction options. It always exposes button semantics;
+`onPressed: null` disables it unless `onLongPress` supplies an action. CSS
+margin remains outside its visual, semantic, and tappable border box. Use
+`div` or `Div` for structural elements and non-button tags such as links.
+
+Visible `span`/`Span` text automatically becomes the accessible button name.
+Omit `semanticsLabel` when child text already names the control because Mix
+combines explicit and descendant labels; reserve it for icon-only or otherwise
+nonverbal children.
 
 ## Supported Tokens
 
@@ -80,15 +126,19 @@ Flex item tokens (`flex-1`, `flex-auto`, `flex-none`, `basis-*`, `self-*`, `shri
 | Token | Supported Values | Notes |
 |-------|------------------|-------|
 | `flex-1`, `flex-auto`, `flex-initial`, `flex-none` | ✅ Supported | Maps to Flutter's flex factor and fit |
-| `basis-*` | Spacing scale only (e.g., `basis-32`) | Unsupported fractional, full, arbitrary, and unknown values are no-ops reported through `onUnsupported` |
+| `basis-*` | Spacing scale only (e.g., `basis-32`) | Unsupported fractional, full, arbitrary, and unknown values are no-ops reported through `onDiagnostic` |
 | `self-start`, `self-center`, `self-end` | ✅ Supported | Cross-axis alignment |
 | `shrink`, `shrink-0` | ✅ Supported | Controls shrink behavior |
 
 **Important**: Flex item tokens are handled at the widget layer rather than as
 Mix styler properties. Supported values stay quiet; unsupported `basis-*`
-values such as `basis-1/2` are reported through `onUnsupported`.
+values such as `basis-1/2` are reported through `onDiagnostic`.
 
 ## Custom Configuration
+
+`TwConfig.standard()` is generated from the checked-in Tailwind CSS 4.3.1
+theme snapshot and contains stock Tailwind defaults only. Add product aliases
+explicitly rather than relying on fixture-specific values:
 
 You can customize defaults and provide config with `TwScope`:
 
@@ -111,6 +161,15 @@ TwScope(
 
 Descendant `Div` and `Span` widgets automatically use this config, and typography defaults are applied via Mix `TextScope` (without `ThemeData.textTheme` overrides).
 
+When intentionally updating the pinned upstream theme, regenerate and verify
+the snapshot from the visual-comparison tool directory:
+
+```bash
+npm run update:theme-snapshot
+cd ../..
+dart run tool/gen_registry.dart --check
+```
+
 To use native platform defaults (no explicit `sans-serif` override):
 
 ```dart
@@ -124,13 +183,16 @@ TwScope(
 
 ## Handling Unsupported Tokens
 
-The `Div` widget accepts an `onUnsupported` callback to help identify unrecognized Tailwind classes:
+The `Div` widget accepts an `onDiagnostic` callback to explain unrecognized,
+unsupported, and intentionally ignored Tailwind classes:
 
 ```dart
 Div(
   classNames: 'flex gap-4 unknown-class',
-  onUnsupported: (token) {
-    debugPrint('Unsupported Tailwind token: $token');
+  onDiagnostic: (diagnostic) {
+    debugPrint(
+      '${diagnostic.code}: ${diagnostic.token} — ${diagnostic.reason}',
+    );
   },
   children: [...],
 )
@@ -138,12 +200,17 @@ Div(
 
 This callback receives:
 - The original class token, including variant prefixes when present
-- Tokens that cannot be mapped to Mix stylers, plus unsupported `basis-*`
-  values validated for the widget layer
+- A stable `TwDiagnosticCode` plus a human-readable reason
+- An optional supported workaround
+- Tokens that cannot be mapped to Mix stylers, unsupported widget-layer values,
+  and adaptations intentionally ignored by Flutter
 - It's safe to throw from this callback (will surface during development)
 
 Supported flex item tokens (`flex-*`, `basis-*`, `self-*`, `shrink-*`, and
-`grow-*`) do not trigger `onUnsupported`.
+`grow-*`) do not trigger `onDiagnostic`.
+
+The token-only `onUnsupported` callback and `TokenWarningCallback` typedef remain
+as deprecated compatibility shims. New code should use `onDiagnostic`.
 
 ## License
 

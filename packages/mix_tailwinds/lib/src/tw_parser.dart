@@ -7,14 +7,21 @@ import 'tw_types.dart';
 import 'tw_utils.dart';
 
 class TwParser {
-  factory TwParser({TwConfig? config, TokenWarningCallback? onUnsupported}) {
+  factory TwParser({
+    TwConfig? config,
+    TwDiagnosticCallback? onDiagnostic,
+    @Deprecated('Use onDiagnostic instead.')
+    void Function(String token)? onUnsupported,
+  }) {
     final resolvedConfig = config ?? TwConfig.standard();
     return TwParser._(
       config: resolvedConfig,
       translator: TwTranslator(
         config: resolvedConfig,
-        onUnsupported: onUnsupported,
+        onDiagnostic: onDiagnostic,
+        legacyOnUnsupported: onUnsupported,
       ),
+      onDiagnostic: onDiagnostic,
       onUnsupported: onUnsupported,
     );
   }
@@ -22,16 +29,21 @@ class TwParser {
   TwParser._({
     required this.config,
     required TwTranslator translator,
+    this.onDiagnostic,
     this.onUnsupported,
   }) : _translator = translator;
 
   final TwConfig config;
-  final TokenWarningCallback? onUnsupported;
+  final TwDiagnosticCallback? onDiagnostic;
+
+  @Deprecated('Use onDiagnostic instead.')
+  final void Function(String token)? onUnsupported;
   final TwTranslator _translator;
 
   List<String> listTokens(String classNames) => splitTailwindTokens(classNames);
 
-  Set<String> setTokens(String classNames) => listTokens(classNames).toSet();
+  Set<String> setTokens(String classNames) =>
+      _translator.sortTokens(listTokens(classNames)).toSet();
 
   bool wantsFlex(Set<String> tokens) =>
       target.wantsFlex(tokens, breakpoints: config.breakpoints);
