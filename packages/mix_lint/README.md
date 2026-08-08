@@ -1,6 +1,6 @@
 # mix_lint
 
-Mix Lint helps you enforce coding standards and best practices in Flutter apps using [Mix](https://github.com/virtuallyio/mix).
+Mix Lint helps you enforce coding standards and best practices in Flutter apps using [Mix](https://github.com/btwld/mix).
 
 ## Getting Started
 

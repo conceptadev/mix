@@ -1,7 +1,7 @@
 # mix_generator
 
 [![Pub Version](https://img.shields.io/pub/v/mix_generator?label=version&style=for-the-badge)](https://pub.dev/packages/mix_generator/changelog)
-[![MIT Licence](https://img.shields.io/github/license/leoafarias/mix?style=for-the-badge&longCache=true)](https://opensource.org/licenses/mit-license.php)
+[![MIT Licence](https://img.shields.io/github/license/btwld/mix?style=for-the-badge&longCache=true)](https://opensource.org/license/mit)
 
 Code generator for the [Mix](https://pub.dev/packages/mix) styling framework. Processes [mix_annotations](https://pub.dev/packages/mix_annotations) to generate boilerplate code for Spec, Styler, Mix, and widget-wrapper classes.
 

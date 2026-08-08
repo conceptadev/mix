@@ -446,13 +446,13 @@ Mix 2.0 is a ground-up rethink of how styling works in Flutter. This release int
 - Extensive bug fixes for increased stability.
 - Too many things to list; view our docs for more info.
 
-Visit our documentation site for more information [https://fluttermix.com](https://fluttermix.com)
+Visit our documentation site for more information [https://www.fluttermix.com](https://www.fluttermix.com)
 
 ## 0.0.7
 
 - Performance improvements.
-- Bug fixes [#59](https://github.com/leoafarias/mix/issues/59) by @bdlukaa.
-- InheritedAttribute - Custom Mix attributes [#94](https://github.com/leoafarias/mix/pull/94) by @pbissonho.
+- Bug fixes [#59](https://github.com/conceptadev/mix/issues/59) by @bdlukaa.
+- InheritedAttribute - Custom Mix attributes [#94](https://github.com/conceptadev/mix/pull/94) by @pbissonho.
 
 ## 0.0.6
 
