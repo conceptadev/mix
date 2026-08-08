@@ -265,7 +265,7 @@ BoxStyler()
 | [mix_annotations](https://pub.dev/packages/mix_annotations) | Annotations for code generation |
 | [mix_generator](https://pub.dev/packages/mix_generator) | build_runner generator for specs |
 | [mix_lint](https://pub.dev/packages/mix_lint) | Custom linter rules |
-| [mix_tailwinds](https://pub.dev/packages/mix_tailwinds) | Utility-first styling inspired by Tailwind CSS |
+| [mix_winds](https://pub.dev/packages/mix_winds) | Utility-first styling inspired by Tailwind CSS |
 
 ## Documentation
 

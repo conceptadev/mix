@@ -13,7 +13,7 @@ Future<void> loadGridExampleTestFonts() {
 Future<void> _loadGridExampleTestFonts() async {
   final repositoryRoot = _findAncestorContaining(
     Directory.current,
-    'packages/mix_tailwinds/example/assets/fonts/roboto/Roboto[wdth,wght].ttf',
+    'packages/mix_winds/example/assets/fonts/roboto/Roboto[wdth,wght].ttf',
   );
   final flutterRoot = _findAncestorContaining(
     File(Platform.resolvedExecutable).parent,
@@ -23,7 +23,7 @@ Future<void> _loadGridExampleTestFonts() async {
   await _loadFont(
     gridExampleTestFontFamily,
     File(
-      '${repositoryRoot.path}/packages/mix_tailwinds/example/assets/fonts/'
+      '${repositoryRoot.path}/packages/mix_winds/example/assets/fonts/'
       'roboto/Roboto[wdth,wght].ttf',
     ),
   );

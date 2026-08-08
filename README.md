@@ -189,7 +189,7 @@ Directives transform values (text casing, number scaling, color adjustments) at 
 | [mix_annotations](packages/mix_annotations) | Annotations for code generation |
 | [mix_generator](packages/mix_generator) | build_runner generator for specs |
 | [mix_lint](packages/mix_lint) | Custom linter rules |
-| [mix_tailwinds](packages/mix_tailwinds) | Utility-first styling inspired by Tailwind CSS |
+| [mix_winds](packages/mix_winds) | Utility-first styling inspired by Tailwind CSS |
 
 ## Documentation
 
@@ -200,7 +200,7 @@ Directives transform values (text casing, number scaling, color adjustments) at 
 - [Design tokens](https://fluttermix.com/docs/guides/design-token)
 - [Animations](https://fluttermix.com/docs/guides/animations)
 - [Widgets](https://fluttermix.com/docs/widgets/box) (Box, Text, Icon, FlexBox, WrapBox, StackBox, etc.)
-- [Ecosystem](https://fluttermix.com/docs/ecosystem/mix-tailwinds)
+- [Ecosystem](https://fluttermix.com/docs/ecosystem/mix-winds)
 
 ## Contributors
 

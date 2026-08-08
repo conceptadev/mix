@@ -303,11 +303,11 @@ JSON Schema describes the accepted structural shape. The Dart protocol remains
 the semantic authority for canonical encoding, resolution, resource limits,
 lenient repair, and diagnostic mapping. Ack is not exposed by the public API.
 
-## Tailwinds and future document layers
+## mix_winds and future document layers
 
-`mix_tailwinds` should continue to construct Mix stylers directly at runtime.
+`mix_winds` should continue to construct Mix stylers directly at runtime.
 It uses `mix_protocol` only in tests to encode, strictly decode, and canonically
-re-encode representative Tailwinds output. Runtime JSON conversion would add
+re-encode representative mix_winds output. Runtime JSON conversion would add
 cost and failure modes without changing the resulting style.
 
 A future server-driven widget-tree package can embed these style and theme

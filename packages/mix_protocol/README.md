@@ -73,9 +73,9 @@ These are distinct layers:
   these per-node style payloads. Widget trees, events, and component identity
   are not part of `mix_protocol` v1.
 
-`mix_tailwinds` remains a direct Mix styler producer at runtime. Its test suite
+`mix_winds` remains a direct Mix styler producer at runtime. Its test suite
 uses `mix_protocol` as a development-only reference consumer to prove that a
-broad Tailwinds utility corpus is representable and canonical.
+broad `mix_winds` utility corpus is representable and canonical.
 
 See [GUIDE.md](GUIDE.md) for integration patterns and
 [WIRE_CONTRACT.md](WIRE_CONTRACT.md) for the complete v1 grammar.
