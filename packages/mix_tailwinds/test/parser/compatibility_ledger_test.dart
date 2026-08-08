@@ -92,6 +92,14 @@ void main() {
     expect(themeMidnight.reason, isNull);
   });
 
+  test('min-w-auto is not advertised as a Flutter automatic minimum', () {
+    final minWidthAuto = generatedTailwindUtilityCompatibilityLedger
+        .singleWhere((entry) => entry.root == 'min-w-auto');
+
+    expect(minWidthAuto.status, TailwindCompatibilityStatus.unsupported);
+    expect(minWidthAuto.reason, isNull);
+  });
+
   test('checked-in registries match generator output', () {
     final result = Process.runSync(_dartExecutable(), [
       'tool/gen_registry.dart',

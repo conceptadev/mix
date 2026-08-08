@@ -833,9 +833,6 @@ const _adaptedStaticUtilityReasons = <String, String>{
   'min-h-screen':
       'Resolved from live Flutter constraints; see FLUTTER_ADAPTATIONS.md '
       '(Parser and Variant Adaptations).',
-  'min-w-auto':
-      'Flutter flex intrinsic-size escape hatch; see FLUTTER_ADAPTATIONS.md '
-      '(min-w-0 for Flex Shrinking).',
   'min-w-screen':
       'Resolved from live Flutter constraints; see FLUTTER_ADAPTATIONS.md '
       '(Parser and Variant Adaptations).',

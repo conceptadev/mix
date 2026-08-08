@@ -1,5 +1,13 @@
 ## Unreleased
 
+- Fixed zero-basis flex growth with unequal child margin, padding, or border.
+  When positive content space remains, Tailwind-owned flex containers now
+  reserve those non-content extents before distributing it, while delegating
+  both layout passes to Flutter's `RenderFlex` and retaining native
+  `Row`/`Column` compatibility.
+- Corrected `min-w-auto` compatibility reporting. Flutter has no equivalent
+  flex-item automatic-minimum phase, so the utility is now reported as
+  unsupported instead of invoking a no-op escape hatch.
 - Fixed `self-start`, `self-end`, and `self-center`, which silently did nothing
   whenever the container carried an `items-*` utility. A flex holding a
   self-aligned child now renders through a `RenderFlex` that offsets those

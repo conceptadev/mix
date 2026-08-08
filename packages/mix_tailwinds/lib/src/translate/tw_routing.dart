@@ -65,6 +65,16 @@ TwRoute routeCandidate(
       workaround: 'Use a supported utility or compose a typed Mix styler.',
     );
   }
+  if (utility.raw == 'min-w-auto') {
+    return const TwRoute(
+      TwRouteKind.unsupported,
+      diagnosticCode: TwDiagnosticCode.unsupportedUtility,
+      reason:
+          'Flutter flex items have no CSS automatic minimum-size phase to restore.',
+      workaround:
+          'Keep min-w-0 in shared markup when browser content must shrink.',
+    );
+  }
   if (isGradientUtility(utility)) return const TwRoute(TwRouteKind.gradient);
   if (isWidgetLayerUtility(utility)) {
     return const TwRoute(TwRouteKind.widgetLayer);

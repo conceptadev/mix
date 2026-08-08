@@ -111,7 +111,10 @@ void main() {
     expect(buttonRow.left, closeTo(content.left, 0.1));
     expect(buttonRow.width, closeTo(content.width, 0.1));
     expect(buttonRow.top, closeTo(warning.bottom, 0.1));
-    expect(cancel.width, closeTo(save.width, 1));
+    // Tailwind flexes the content boxes equally, then adds the Cancel button's
+    // one-pixel border on both sides to its outer width.
+    expect(cancel.width, closeTo(302, 0.1));
+    expect(save.width, closeTo(300, 0.1));
     expect(cancelTextStyle.fontSize, 16);
     expect(cancelTextStyle.fontWeight, FontWeight.w500);
     expect(saveTextStyle.fontSize, 16);
@@ -142,7 +145,10 @@ void main() {
     );
     expect(spend.width, closeTo(returnMetric.width, 1));
     expect(returnMetric.width, closeTo(cpa.width, 1));
-    expect(viewButton.width, closeTo(downloadButton.width, 1));
+    // The outlined button adds a one-pixel border on each side after the two
+    // zero-basis content boxes receive equal flex shares.
+    expect(viewButton.width, closeTo(352, 0.1));
+    expect(downloadButton.width, closeTo(354, 0.1));
 
     expectTopOnlyBorder(borderForKey(tester, 'dashboard-metric-row'));
     expectTopOnlyBorder(borderForKey(tester, 'dashboard-activity-Jalen Ruiz'));
