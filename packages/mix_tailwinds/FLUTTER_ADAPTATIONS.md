@@ -10,11 +10,24 @@ This document explains the differences between Tailwind CSS behavior and Flutter
 ```html
 <div className="flex-1">...</div>
 ```
-- `flex-1` applies `flex: 1 1 0%` - items expand and can shrink below content size
+- `flex-1` applies `flex: 1 1 0%`.
+- The default automatic minimum size can still protect content; add `min-w-0`
+  when the item must shrink below its content-based minimum.
+- Padding, border, and margin remain outside a zero flex basis. They are
+  reserved before the remaining content space is distributed.
 
 **mix_tailwinds:**
-- `flex-1` automatically applies min-width/height constraints for CSS parity
-- Use `min-w-auto` escape hatch if you need intrinsic minimum sizing
+- When positive content space remains, a Tailwind `Div(classNames: 'flex')`
+  reserves each zero-basis grower's main-axis margin, padding, and border
+  before distributing that space. For example, two `flex-1` items in 900px,
+  where only the first has `border px-5` (42px total), size to 471px and 429px
+  like the browser.
+- The adapter delegates both layout passes to Flutter's `RenderFlex`, so gap,
+  direction, alignment, baseline, overflow, and clipping stay on Flutter's
+  maintained implementation.
+- A Tailwind child placed directly in a native `Row` or `Column` keeps the
+  compatibility mapping to Flutter `Flexible`; native parents therefore use
+  Flutter's outer-box distribution.
 
 ---
 
@@ -24,16 +37,21 @@ This document explains the differences between Tailwind CSS behavior and Flutter
 ```html
 <div className="flex flex-1 flex-col gap-1">...</div>
 ```
-- Flex items can shrink below content size by default
+- Flex items default to `min-width: auto`, which can preserve a content-based
+  minimum. `min-w-0` explicitly opts out.
 
 **Flutter Adaptation:**
 ```dart
 Div(classNames: 'flex flex-1 flex-col gap-1 min-w-0', ...)
 ```
-- For `flex-auto` or other flex utilities, explicitly add `min-w-0` to allow shrinking
-- `flex-1` handles this automatically
+- Keep `min-w-0` in shared Tailwind markup when browser content must shrink.
+- Flutter's tight flex allocation can already assign less than the child's
+  intrinsic width. It does not reproduce CSS's automatic minimum-size rule,
+  and `min-w-auto` cannot restore that rule in a Flutter flex parent.
 
-**Root Cause:** Flutter widgets have intrinsic minimum sizes based on content.
+**Root Cause:** CSS flex layout has a content-aware automatic minimum. Flutter
+passes explicit constraints to a child and has no equivalent flex-item
+minimum-size phase.
 
 ---
 
@@ -107,7 +125,8 @@ every child, and a child cannot place itself: wrapping in an `Align` only
 shrink-wraps, so the flex goes on positioning it by the container's rule. A flex
 container holding a self-aligned child therefore renders through a `RenderFlex`
 subclass that offsets those children along the cross axis after layout, once the
-flex has measured its own cross extent. Nothing is laid out twice.
+flex has measured its own cross extent. Self alignment changes offsets only;
+it does not add another layout pass by itself.
 
 **Note:** `self-auto` is a no-op by definition — it means "use the container's
 `align-items`" — so it is correct that it changes nothing.
@@ -118,8 +137,8 @@ flex has measured its own cross extent. Nothing is laid out twice.
 
 | CSS Behavior | Flutter Adaptation | Notes |
 |--------------|-------------------|-------|
-| `flex-1` shrinks | Automatic | mix_tailwinds handles this |
-| `flex-auto` shrinks | Add `min-w-0` | Explicit for non-flex-1 |
+| Zero-basis grow with unequal margin/padding/border | Automatic in Tailwind `Div` flex containers | Native `Row`/`Column` keeps Flutter distribution |
+| CSS automatic flex-item minimum | Not modeled | Keep `min-w-0` in shared browser markup; `min-w-auto` cannot restore it in Flutter |
 | Text truncates in flex | Use `TruncatedP` | Or manual wrapper pattern |
 | Content clips to bounds | Add `overflow-hidden` | Explicit clipping required |
 
@@ -214,15 +233,19 @@ runApp(
 | Aspect | CSS | Flutter |
 |--------|-----|---------|
 | Constraints | Implicit (viewport, document flow) | Explicit (parent passes down) |
-| Minimum size | `min-width: auto` protects content | Intrinsic size always enforced |
+| Minimum size | `min-width: auto` can protect content | No flex-item automatic-minimum phase |
 | Text sizing | Block elements fill container width | Text calculates intrinsic width |
 | Overflow | `overflow: hidden` enables shrinking | Must explicitly clip |
 
-### The `min-width: auto` Problem
+### The `min-width: auto` Difference
 
-CSS flexbox uses `min-width: auto` as the default for flex items. When `overflow: hidden` is set, this computes to 0, allowing shrinking.
+CSS flexbox uses `min-width: auto` as the default for flex items. For a
+non-scrollable item this can resolve to a content-based minimum; for a scroll
+container the automatic minimum is zero.
 
-Flutter has no such exception - widgets always have intrinsic minimum sizes unless explicitly overridden.
+Flutter has no matching flex-item phase. A tight `Flexible` allocation controls
+the outer size directly, while overflowing descendants still need explicit
+clipping or truncation.
 
 ### Why `flex-1` Needed Special Handling
 
@@ -232,17 +255,38 @@ Flutter has no such exception - widgets always have intrinsic minimum sizes unle
 - `flex-basis: 0%` - start from zero
 
 **Flutter `flex: 1` + `FlexFit.tight`**:
-- Allocates space proportionally
-- Forces child to use allocated space
-- Child's minimum size was still enforced (before fix)
+- Allocates each child's complete outer extent proportionally
+- Includes that child's padding and border inside its share
 
-mix_tailwinds now automatically applies `min-w-0` semantics for `flex-1` to match CSS behavior.
+For an owned Tailwind flex container, mix_tailwinds first lets `RenderFlex`
+measure the line, then adjusts only the affected flex-factor ratios so the
+second `RenderFlex` pass reserves each zero-basis item's non-content extent.
+The stock path remains in use when the adjustment would not change the result.
 
 ---
 
 ## Known Limitations
 
 The following Tailwind utilities have limited or no support in mix_tailwinds due to fundamental differences between CSS and Flutter's layout system.
+
+### Zero-basis Flex Overflow Boundary
+
+The content-box adjustment delegates final sizing to `RenderFlex`, so it only
+engages when the growing children's combined margin, padding, and border leave
+positive content space. If those extents alone consume the line, mix_tailwinds
+falls back to Flutter's outer-box allocation instead of reproducing CSS's
+overflowing minimum. Move padding and border to an inner `Div` when that narrow
+boundary must match the browser exactly.
+
+Interaction variants that change a flex item's margin, padding, or border width
+after the container builds are not fed back into the container's distribution.
+Keep those extents stable across hover/press/focus states, or put the changing
+decoration on an inner `Div`.
+
+This adapter corrects positive-space distribution for zero-basis growers; it
+does not replace Flutter's flex algorithm wholesale. CSS min/max freezing and
+scaled shrink-factor resolution remain subject to the existing Flutter
+adaptations.
 
 ### Parser and Variant Adaptations
 

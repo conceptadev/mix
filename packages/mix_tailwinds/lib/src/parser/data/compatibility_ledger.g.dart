@@ -570,13 +570,7 @@ const generatedTailwindUtilityCompatibilityLedger = <TailwindCompatibilityEntry>
   ),
   TailwindCompatibilityEntry('min-inline-auto', .staticUtility, .unsupported),
   TailwindCompatibilityEntry('min-inline-screen', .staticUtility, .unsupported),
-  TailwindCompatibilityEntry(
-    'min-w-auto',
-    .staticUtility,
-    .adapted,
-    reason:
-        'Flutter flex intrinsic-size escape hatch; see FLUTTER_ADAPTATIONS.md (min-w-0 for Flex Shrinking).',
-  ),
+  TailwindCompatibilityEntry('min-w-auto', .staticUtility, .unsupported),
   TailwindCompatibilityEntry(
     'min-w-screen',
     .staticUtility,

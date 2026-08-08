@@ -266,6 +266,7 @@ class _CssSemanticFlexBox extends StatelessWidget {
     required this.children,
     this.wrapBorderBox,
     this.selfAlignments,
+    this.zeroBasisItems,
   });
 
   final FlexBoxStyler style;
@@ -275,6 +276,10 @@ class _CssSemanticFlexBox extends StatelessWidget {
   /// Per-child `self-*` alignment, positional and null where a child keeps the
   /// container's alignment. Null when no child opts out at all.
   final List<_SelfAlignment?>? selfAlignments;
+
+  /// CSS sizing inputs for direct `flex-basis: 0` children. Null keeps the
+  /// stock Flutter flex path.
+  final List<_ZeroBasisFlexItem?>? zeroBasisItems;
 
   @override
   Widget build(BuildContext context) {
@@ -289,17 +294,18 @@ class _CssSemanticFlexBox extends StatelessWidget {
         // Use FlexBox widget with margin stripped - margin is applied externally
         final stripped = _flexBoxSpecWithoutMargin(spec);
         final alignments = selfAlignments;
-        if (alignments == null) {
+        final items = zeroBasisItems;
+        if (alignments == null && items == null) {
           return FlexBox(
             styleSpec: StyleSpec(spec: stripped),
             children: children,
           );
         }
 
-        // FlexBox is a Box wrapping a Flex, so the same composition is rebuilt
-        // here with a Flex that can honor per-child cross alignment.
+        // FlexBox is a Box wrapping a Flex, so rebuild that composition when
+        // Tailwind needs per-child alignment or content-box flex sizing.
         final flexSpec = stripped.flex?.spec;
-        final Widget flex = _SelfAlignFlex(
+        final Widget flex = _TailwindFlex(
           direction: flexSpec?.direction ?? Axis.horizontal,
           mainAxisAlignment:
               flexSpec?.mainAxisAlignment ?? MainAxisAlignment.start,
@@ -312,7 +318,8 @@ class _CssSemanticFlexBox extends StatelessWidget {
           textBaseline: flexSpec?.textBaseline,
           clipBehavior: flexSpec?.clipBehavior ?? Clip.none,
           spacing: flexSpec?.spacing ?? 0.0,
-          selfAlignments: alignments,
+          selfAlignments: alignments ?? const [],
+          zeroBasisItems: items ?? const [],
           children: children,
         );
 
@@ -340,16 +347,18 @@ class _CssSemanticFlexBox extends StatelessWidget {
 
 /// A Tailwind element that exposes the class string it was built from.
 ///
-/// Flutter's [RenderFlex] has no per-child cross-axis alignment, so `self-*`
-/// cannot be honored by the child alone: a child wrapping itself in an [Align]
-/// only shrink-wraps and the flex still positions it by the container's
-/// `align-items`. The container reads this interface to pass each direct
-/// child's requested alignment to its flex render object.
+/// A Tailwind flex container reads this interface on direct children for
+/// semantics that Flutter's [RenderFlex] cannot infer from their render boxes,
+/// including `self-*` alignment and zero-basis content-box sizing.
 abstract interface class TwClassed {
   String get classNames;
 }
 
-class Div extends StatelessWidget implements TwClassed {
+abstract interface class _TwConfigured {
+  TwConfig? get config;
+}
+
+class Div extends StatelessWidget implements TwClassed, _TwConfigured {
   const Div({
     super.key,
     required this.classNames,
@@ -366,6 +375,7 @@ class Div extends StatelessWidget implements TwClassed {
   final Widget? child;
   final List<Widget> children;
   final bool? isFlex;
+  @override
   final TwConfig? config;
   final TwDiagnosticCallback? onDiagnostic;
 
@@ -391,7 +401,7 @@ class Div extends StatelessWidget implements TwClassed {
 /// Its margin remains outside the interactive and semantic hit-test area,
 /// matching the CSS box model. A null [onPressed] disables the button unless
 /// [onLongPress] provides an action.
-class Button extends StatelessWidget implements TwClassed {
+class Button extends StatelessWidget implements TwClassed, _TwConfigured {
   const Button({
     super.key,
     required this.classNames,
@@ -423,6 +433,7 @@ class Button extends StatelessWidget implements TwClassed {
   final Widget? child;
   final List<Widget> children;
   final bool? isFlex;
+  @override
   final TwConfig? config;
   final TwDiagnosticCallback? onDiagnostic;
 
@@ -593,12 +604,13 @@ class _TwElement extends StatelessWidget {
 ///   classNames: 'text-lg font-bold text-gray-700 mb-4',
 /// )
 /// ```
-class P extends StatelessWidget implements TwClassed {
+class P extends StatelessWidget implements TwClassed, _TwConfigured {
   const P({super.key, required this.text, this.classNames = '', this.config});
 
   final String text;
   @override
   final String classNames;
+  @override
   final TwConfig? config;
 
   @override
@@ -624,7 +636,7 @@ class P extends StatelessWidget implements TwClassed {
 /// When box utilities (padding, background, border, rounded, etc.) are present,
 /// the text is wrapped in a Box container to apply those styles, matching
 /// CSS behavior where `<span>` can have padding, background, etc.
-class Span extends StatelessWidget implements TwClassed {
+class Span extends StatelessWidget implements TwClassed, _TwConfigured {
   const Span({
     super.key,
     required this.text,
@@ -635,6 +647,7 @@ class Span extends StatelessWidget implements TwClassed {
   final String text;
   @override
   final String classNames;
+  @override
   final TwConfig? config;
 
   @override
@@ -667,7 +680,7 @@ class Span extends StatelessWidget implements TwClassed {
 /// This is a small bridge between Tailwind SVG icon classes and Mix's
 /// [StyledIcon]. It supports the icon classes used by common inline SVGs:
 /// `w-*`, `h-*`, `text-*`, and positive logical/physical margin tokens.
-class TwIcon extends StatelessWidget implements TwClassed {
+class TwIcon extends StatelessWidget implements TwClassed, _TwConfigured {
   const TwIcon(
     this.icon, {
     super.key,
@@ -679,6 +692,7 @@ class TwIcon extends StatelessWidget implements TwClassed {
   final IconData icon;
   @override
   final String classNames;
+  @override
   final TwConfig? config;
   final String? semanticLabel;
 
@@ -762,7 +776,8 @@ double? _spacingTokenLength(String key, TwConfig cfg) {
   return cfg.hasSpace(key) ? cfg.spaceOf(key) : null;
 }
 
-abstract class _Heading extends StatelessWidget implements TwClassed {
+abstract class _Heading extends StatelessWidget
+    implements TwClassed, _TwConfigured {
   const _Heading({
     super.key,
     required int headingLevel,
@@ -775,6 +790,7 @@ abstract class _Heading extends StatelessWidget implements TwClassed {
   final String text;
   @override
   final String classNames;
+  @override
   final TwConfig? config;
 
   @override
@@ -888,7 +904,7 @@ class H6 extends _Heading {
 ///   child: P(text: text, classNames: 'truncate $classNames'),
 /// )
 /// ```
-class TruncatedP extends StatelessWidget implements TwClassed {
+class TruncatedP extends StatelessWidget implements TwClassed, _TwConfigured {
   const TruncatedP({
     super.key,
     required this.text,
@@ -899,6 +915,7 @@ class TruncatedP extends StatelessWidget implements TwClassed {
   final String text;
   @override
   final String classNames;
+  @override
   final TwConfig? config;
 
   @override
@@ -968,6 +985,111 @@ _SelfAlignment? _selfAlignmentOfChild(
   return null;
 }
 
+@immutable
+class _ZeroBasisFlexItem {
+  const _ZeroBasisFlexItem({required this.grow, required this.outerExtra});
+
+  final double grow;
+
+  /// Margin, padding, and border along the container's main axis.
+  final double outerExtra;
+
+  @override
+  bool operator ==(Object other) =>
+      other is _ZeroBasisFlexItem &&
+      grow == other.grow &&
+      outerExtra == other.outerExtra;
+
+  @override
+  int get hashCode => Object.hash(grow, outerExtra);
+}
+
+_ZeroBasisFlexItem? _zeroBasisFlexItemOfChild(
+  Widget child,
+  TwConfig cfg,
+  double width,
+  Axis axis,
+  BuildContext context,
+) {
+  if (child is! TwClassed) return null;
+  final classNames = (child as TwClassed).classNames;
+  final childConfig = child is _TwConfigured
+      ? (child as _TwConfigured).config ?? cfg
+      : cfg;
+
+  final parser = TwParser(config: childConfig);
+  final tokens = parser.setTokens(classNames);
+  final grow = _resolveZeroBasisGrow(tokens, childConfig, width);
+  if (grow == null || grow <= 0) return null;
+
+  final spec = parser.parseBox(classNames).resolve(context).spec;
+  final textDirection = Directionality.maybeOf(context) ?? TextDirection.ltr;
+  final padding = spec.padding?.resolve(textDirection) ?? EdgeInsets.zero;
+  final margin = spec.margin?.resolve(textDirection) ?? EdgeInsets.zero;
+  final decoration = spec.decoration;
+  final border = decoration is BoxDecoration ? decoration.border : null;
+  final borderInsets =
+      border?.dimensions.resolve(textDirection) ?? EdgeInsets.zero;
+
+  double mainExtent(EdgeInsets insets) =>
+      axis == Axis.horizontal ? insets.horizontal : insets.vertical;
+
+  return _ZeroBasisFlexItem(
+    grow: grow,
+    outerExtra:
+        mainExtent(margin) + mainExtent(padding) + mainExtent(borderInsets),
+  );
+}
+
+double? _resolveZeroBasisGrow(Set<String> tokens, TwConfig cfg, double width) {
+  String? shorthand;
+  var shorthandMinWidth = -1.0;
+  String? basis;
+  var basisMinWidth = -1.0;
+  String? grow;
+  var growMinWidth = -1.0;
+
+  for (final token in tokens) {
+    final info = _parseResponsiveToken(token, cfg);
+    if (info == null || info.minWidth > width) continue;
+
+    final utility = info.base;
+    if ((utility == 'flex-1' ||
+            utility == 'flex-auto' ||
+            utility == 'flex-initial' ||
+            utility == 'flex-none') &&
+        info.minWidth >= shorthandMinWidth) {
+      shorthand = utility;
+      shorthandMinWidth = info.minWidth;
+    }
+    if (utility.startsWith('basis-') && info.minWidth >= basisMinWidth) {
+      basis = utility;
+      basisMinWidth = info.minWidth;
+    }
+    if ((utility == 'grow' || utility == 'grow-0') &&
+        info.minWidth >= growMinWidth) {
+      grow = utility;
+      growMinWidth = info.minWidth;
+    }
+  }
+
+  var hasZeroBasis = shorthand == 'flex-1';
+  var resolvedGrow = shorthand == 'flex-1' || shorthand == 'flex-auto'
+      ? 1.0
+      : 0.0;
+
+  // A responsive declaration outranks a lower-breakpoint declaration. At the
+  // same breakpoint, Tailwind emits the longhands after the flex shorthand.
+  if (basis != null && basisMinWidth >= shorthandMinWidth) {
+    hasZeroBasis = basis == 'basis-0';
+  }
+  if (grow != null && growMinWidth >= shorthandMinWidth) {
+    resolvedGrow = grow == 'grow' ? 1 : 0;
+  }
+
+  return hasZeroBasis ? resolvedGrow : null;
+}
+
 Widget _buildResponsiveFlex({
   required Set<String> tokens,
   required TwConfig cfg,
@@ -1005,6 +1127,33 @@ Widget _buildResponsiveFlex({
           .map((child) => _selfAlignmentOfChild(child, cfg, width))
           .toList(growable: false);
       final hasSelfAlignedChild = selfAlignments.any((a) => a != null);
+      final zeroBasisItems = rawChildren
+          .map(
+            (child) =>
+                _zeroBasisFlexItemOfChild(child, cfg, width, axis, context),
+          )
+          .toList(growable: false);
+      final zeroBasisChildren = zeroBasisItems
+          .whereType<_ZeroBasisFlexItem>()
+          .toList(growable: false);
+      final totalGrow = zeroBasisChildren.fold<double>(
+        0,
+        (sum, item) => sum + item.grow,
+      );
+      final totalOuterExtra = zeroBasisChildren.fold<double>(
+        0,
+        (sum, item) => sum + item.outerExtra,
+      );
+      // Stock RenderFlex is already correct when each item's non-content
+      // extent is proportional to its grow factor.
+      final needsContentBoxSizing =
+          zeroBasisChildren.length > 1 &&
+          zeroBasisChildren.any(
+            (item) =>
+                (item.outerExtra * totalGrow - totalOuterExtra * item.grow)
+                    .abs() >
+                0.001,
+          );
 
       // CSS parity: Tailwind's default `align-items` is `stretch` (unless an
       // explicit `items-*` utility is present). Stretch is invalid on an
@@ -1030,6 +1179,7 @@ Widget _buildResponsiveFlex({
           style: style,
           wrapBorderBox: wrapBorderBox,
           selfAlignments: hasSelfAlignedChild ? selfAlignments : null,
+          zeroBasisItems: needsContentBoxSizing ? zeroBasisItems : null,
           children: flexChildren,
         ),
       );
@@ -1446,12 +1596,6 @@ Widget _applyFlexItemDecorators(
     if (!isMainAxisBounded && behavior.flex > 0) {
       // CSS parity: flex-grow has no effect in unbounded context. Skip.
     } else {
-      if (behavior.applyMinConstraint) {
-        current = ConstrainedBox(
-          constraints: const BoxConstraints(minWidth: 0, minHeight: 0),
-          child: current,
-        );
-      }
       current = _FlexParentDataWrapper(
         flex: behavior.flex,
         fit: behavior.fit,
@@ -1713,15 +1857,10 @@ class _ResponsiveWidth {
 }
 
 class _FlexItemBehavior {
-  const _FlexItemBehavior({
-    required this.flex,
-    required this.fit,
-    this.applyMinConstraint = false,
-  });
+  const _FlexItemBehavior({required this.flex, required this.fit});
 
   final int flex;
   final FlexFit fit;
-  final bool applyMinConstraint;
 }
 
 class _BasisValue {
@@ -1738,16 +1877,6 @@ _FlexItemBehavior? _resolveFlexItemBehavior(
   double width,
   BuildContext context,
 ) {
-  // Check for min-w-auto escape hatch (respects breakpoint prefixes)
-  var hasMinWidthAuto = false;
-  for (final token in tokens) {
-    final info = _parseResponsiveToken(token, cfg);
-    if (info != null && info.minWidth <= width && info.base == 'min-w-auto') {
-      hasMinWidthAuto = true;
-      break;
-    }
-  }
-
   _FlexItemBehavior? behavior;
   double chosenMin = -1;
 
@@ -1760,12 +1889,7 @@ _FlexItemBehavior? _resolveFlexItemBehavior(
     final modifier = twFlexibleModifierForFlexItem(info.base);
     final candidate = modifier == null
         ? null
-        : _flexItemBehaviorFromModifier(
-            modifier,
-            context,
-            utility: info.base,
-            hasMinWidthAuto: hasMinWidthAuto,
-          );
+        : _flexItemBehaviorFromModifier(modifier, context);
 
     if (candidate != null && info.minWidth >= chosenMin) {
       behavior = candidate;
@@ -1778,23 +1902,14 @@ _FlexItemBehavior? _resolveFlexItemBehavior(
 
 _FlexItemBehavior _flexItemBehaviorFromModifier(
   FlexibleModifierMix modifier,
-  BuildContext context, {
-  required String utility,
-  required bool hasMinWidthAuto,
-}) {
+  BuildContext context,
+) {
   final resolved = modifier.resolve(context);
 
   return _FlexItemBehavior(
     flex: resolved.flex ?? 1,
     fit: resolved.fit ?? FlexFit.loose,
-    applyMinConstraint: _appliesAutoMinConstraint(utility, hasMinWidthAuto),
   );
-}
-
-bool _appliesAutoMinConstraint(String utility, bool hasMinWidthAuto) {
-  if (hasMinWidthAuto) return false;
-
-  return utility == 'flex-1' || utility == 'flex-shrink' || utility == 'shrink';
 }
 
 _BasisValue? _resolveBasisValue(
@@ -1892,7 +2007,7 @@ _SelfAlignment? _resolveSelfAlignment(
 /// Places [child] at [position] within the cross extent the flex handed it.
 ///
 /// With a tight cross extent, [Align] positions the styled box inside that
-/// extent. With a loose extent it shrink-wraps, and [_RenderSelfAlignFlex]
+/// extent. With a loose extent it shrink-wraps, and [_RenderTailwindFlex]
 /// positions the wrapper after the flex has determined its own size.
 Widget _positionInCrossAxis(Widget child, _SelfAlignment position, Axis axis) {
   final resolved = switch (position) {
@@ -1909,14 +2024,13 @@ Widget _positionInCrossAxis(Widget child, _SelfAlignment position, Axis axis) {
   return Align(alignment: resolved, child: child);
 }
 
-/// A [Flex] that lets individual children opt out of the container's cross
-/// alignment, which is what CSS `align-self` does and what [RenderFlex] has no
-/// way to express.
+/// A [Flex] that fills the two CSS gaps Flutter's [RenderFlex] cannot express:
+/// per-child cross alignment and zero-basis content-box distribution.
 ///
 /// [selfAlignments] is positional: entry _i_ belongs to child _i_, and null
 /// means the child keeps the container's alignment.
-class _SelfAlignFlex extends Flex {
-  const _SelfAlignFlex({
+class _TailwindFlex extends Flex {
+  const _TailwindFlex({
     required super.direction,
     required super.mainAxisAlignment,
     required super.mainAxisSize,
@@ -1925,37 +2039,44 @@ class _SelfAlignFlex extends Flex {
     required super.clipBehavior,
     required super.spacing,
     required this.selfAlignments,
+    required this.zeroBasisItems,
     super.textDirection,
     super.textBaseline,
     super.children,
   });
 
   final List<_SelfAlignment?> selfAlignments;
+  final List<_ZeroBasisFlexItem?> zeroBasisItems;
 
   @override
   RenderFlex createRenderObject(BuildContext context) {
-    return _RenderSelfAlignFlex(
-      direction: direction,
-      mainAxisAlignment: mainAxisAlignment,
-      mainAxisSize: mainAxisSize,
-      crossAxisAlignment: crossAxisAlignment,
-      textDirection: getEffectiveTextDirection(context),
-      verticalDirection: verticalDirection,
-      textBaseline: textBaseline,
-      clipBehavior: clipBehavior,
-      spacing: spacing,
-    )..selfAlignments = selfAlignments;
+    return _RenderTailwindFlex(
+        direction: direction,
+        mainAxisAlignment: mainAxisAlignment,
+        mainAxisSize: mainAxisSize,
+        crossAxisAlignment: crossAxisAlignment,
+        textDirection: getEffectiveTextDirection(context),
+        verticalDirection: verticalDirection,
+        textBaseline: textBaseline,
+        clipBehavior: clipBehavior,
+        spacing: spacing,
+      )
+      ..selfAlignments = selfAlignments
+      ..zeroBasisItems = zeroBasisItems;
   }
 
   @override
   void updateRenderObject(BuildContext context, RenderFlex renderObject) {
     super.updateRenderObject(context, renderObject);
-    (renderObject as _RenderSelfAlignFlex).selfAlignments = selfAlignments;
+    final tailwindFlex = renderObject as _RenderTailwindFlex;
+    tailwindFlex
+      ..selfAlignments = selfAlignments
+      ..zeroBasisItems = zeroBasisItems;
   }
 }
 
-class _RenderSelfAlignFlex extends RenderFlex {
-  _RenderSelfAlignFlex({
+class _RenderTailwindFlex extends RenderFlex {
+  _RenderTailwindFlex({
     required super.direction,
     required super.mainAxisAlignment,
     required super.mainAxisSize,
@@ -1968,10 +2089,17 @@ class _RenderSelfAlignFlex extends RenderFlex {
   });
 
   List<_SelfAlignment?> _selfAlignments = const [];
+  List<_ZeroBasisFlexItem?> _zeroBasisItems = const [];
 
   set selfAlignments(List<_SelfAlignment?> value) {
     if (listEquals(_selfAlignments, value)) return;
     _selfAlignments = value;
+    markNeedsLayout();
+  }
+
+  set zeroBasisItems(List<_ZeroBasisFlexItem?> value) {
+    if (listEquals(_zeroBasisItems, value)) return;
+    _zeroBasisItems = value;
     markNeedsLayout();
   }
 
@@ -1983,6 +2111,8 @@ class _RenderSelfAlignFlex extends RenderFlex {
   @override
   void performLayout() {
     super.performLayout();
+
+    _redistributeZeroBasisItems();
 
     // RenderFlex has sized itself from its children by now, so the cross extent
     // is known even when the incoming constraints were unbounded. Only the
@@ -2012,6 +2142,82 @@ class _RenderSelfAlignFlex extends RenderFlex {
 
       child = parentData.nextSibling;
       index++;
+    }
+  }
+
+  double _mainExtent(RenderBox child) =>
+      direction == Axis.horizontal ? child.size.width : child.size.height;
+
+  void _redistributeZeroBasisItems() {
+    if (_zeroBasisItems.isEmpty) return;
+
+    final flexChildren =
+        <({RenderBox child, FlexParentData data, _ZeroBasisFlexItem item})>[];
+    var child = firstChild;
+    var index = 0;
+    while (child != null) {
+      final parentData = child.parentData! as FlexParentData;
+      if ((parentData.flex ?? 0) > 0) {
+        final item = index < _zeroBasisItems.length
+            ? _zeroBasisItems[index]
+            : null;
+        if (item == null || parentData.fit != FlexFit.tight) return;
+        flexChildren.add((child: child, data: parentData, item: item));
+      }
+      child = parentData.nextSibling;
+      index++;
+    }
+    if (flexChildren.length < 2) return;
+
+    final outerSpace = flexChildren.fold<double>(
+      0,
+      (sum, entry) => sum + _mainExtent(entry.child),
+    );
+    final outerExtra = flexChildren.fold<double>(
+      0,
+      (sum, entry) => sum + entry.item.outerExtra,
+    );
+    final totalGrow = flexChildren.fold<double>(
+      0,
+      (sum, entry) => sum + entry.item.grow,
+    );
+    final contentSpace = outerSpace - outerExtra;
+    if (contentSpace <= 0 || totalGrow <= 0) return;
+
+    final targets = flexChildren
+        .map(
+          (entry) =>
+              entry.item.outerExtra +
+              contentSpace * entry.item.grow / totalGrow,
+        )
+        .toList(growable: false);
+    final changed = Iterable<int>.generate(flexChildren.length).any(
+      (index) =>
+          (targets[index] - _mainExtent(flexChildren[index].child)).abs() >
+          0.001,
+    );
+    if (!changed) return;
+
+    // RenderFlex accepts integer factors, so encode the target outer-size
+    // ratios with enough precision to keep sub-pixel layout differences.
+    const factorBudget = 1000000;
+    final originalFactors = flexChildren
+        .map((entry) => entry.data.flex!)
+        .toList(growable: false);
+    for (var index = 0; index < flexChildren.length; index++) {
+      flexChildren[index].data.flex =
+          (targets[index] / outerSpace * factorBudget).round().clamp(
+            1,
+            factorBudget,
+          );
+    }
+
+    try {
+      super.performLayout();
+    } finally {
+      for (var index = 0; index < flexChildren.length; index++) {
+        flexChildren[index].data.flex = originalFactors[index];
+      }
     }
   }
 }

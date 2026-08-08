@@ -68,6 +68,11 @@ void main() {
         kind: TwRouteKind.unsupported,
         code: TwDiagnosticCode.unsupportedUtility,
       ),
+      (
+        token: 'min-w-auto',
+        kind: TwRouteKind.unsupported,
+        code: TwDiagnosticCode.unsupportedUtility,
+      ),
     ];
 
     for (final testCase in cases) {

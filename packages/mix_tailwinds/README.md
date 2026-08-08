@@ -125,7 +125,7 @@ Flex item tokens (`flex-1`, `flex-auto`, `flex-none`, `basis-*`, `self-*`, `shri
 
 | Token | Supported Values | Notes |
 |-------|------------------|-------|
-| `flex-1`, `flex-auto`, `flex-initial`, `flex-none` | ✅ Supported | Maps to Flutter's flex factor and fit |
+| `flex-1`, `flex-auto`, `flex-initial`, `flex-none` | ✅ Supported | Maps to Flutter flex behavior; owned Tailwind flex containers reserve unequal non-content size for zero-basis growers when positive content space remains |
 | `basis-*` | Spacing scale only (e.g., `basis-32`) | Unsupported fractional, full, arbitrary, and unknown values are no-ops reported through `onDiagnostic` |
 | `self-start`, `self-center`, `self-end` | ✅ Supported | Cross-axis alignment |
 | `shrink`, `shrink-0` | ✅ Supported | Controls shrink behavior |
