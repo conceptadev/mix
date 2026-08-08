@@ -26,7 +26,7 @@ packages/
 
 The repo uses [Dart pub workspaces](https://dart.dev/tools/pub/workspaces): a single `pubspec.lock` and shared resolution at the root. Run `dart pub get` at the repo root to resolve all workspace packages.
 
-- **In the workspace:** mix, mix_annotations, mix_generator, mix_tailwinds, mix_tailwinds/example.
+- **In the workspace:** mix, mix_annotations, mix_generator, mix_winds, mix_winds/example.
 - **Excluded:** `mix_lint` (uses analyzer ^7.x for custom_lint_builder; other packages use analyzer >=9). Run `dart pub get` inside `packages/mix_lint` when working on the linter.
 
 ## Commands

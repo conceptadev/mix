@@ -7,7 +7,7 @@ on:
       - 'mix_annotations-v[0-9]+.[0-9]+.[0-9]+*'
       - 'mix_generator-v[0-9]+.[0-9]+.[0-9]+*'
       - 'mix_lint-v[0-9]+.[0-9]+.[0-9]+*'
-      - 'mix_tailwinds-v[0-9]+.[0-9]+.[0-9]+*'
+      - 'mix_winds-v[0-9]+.[0-9]+.[0-9]+*'
       - 'mix_chart-v[0-9]+.[0-9]+.[0-9]+*'
 
 jobs:
@@ -55,13 +55,13 @@ jobs:
       id-token: write
       contents: read
 
-  publish_mix_tailwinds:
-    if: startsWith(github.ref_name, 'mix_tailwinds-v')
+  publish_mix_winds:
+    if: startsWith(github.ref_name, 'mix_winds-v')
     uses: btwld/dart-actions/.github/workflows/publish.yml@main
     with:
       packages_folder_path: "packages"
       packages: |
-        mix_tailwinds
+        mix_winds
     permissions:
       id-token: write
       contents: read

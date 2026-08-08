@@ -5,7 +5,7 @@ packages:
   - packages/*
   - packages/mix/example
   - packages/mix_generator/example
-  - packages/mix_tailwinds/example
+  - packages/mix_winds/example
   - packages/mix_chart/example
   - packages/*/demo
 
@@ -28,8 +28,8 @@ categories:
   flutter_projects:
     - packages/mix
     - packages/mix_protocol
-    - packages/mix_tailwinds
-    - packages/mix_tailwinds/example
+    - packages/mix_winds
+    - packages/mix_winds/example
     - packages/mix_chart
     - packages/mix_chart/example
     - packages/mix/example
@@ -84,12 +84,12 @@ scripts:
       dependsOn: "build_runner"
 
   gen:build:
-    run: melos run gen:clean && melos run gen:build:flutter && melos run gen:build:dart && melos run gen:tailwinds-registry
+    run: melos run gen:clean && melos run gen:build:flutter && melos run gen:build:dart && melos run gen:winds-registry
     description: Generate code for all packages
 
-  gen:tailwinds-registry:
-    run: melos exec --scope="mix_tailwinds" -- dart run tool/gen_registry.dart
-    description: Generate the deterministic mix_tailwinds parser registry
+  gen:winds-registry:
+    run: melos exec --scope="mix_winds" -- dart run tool/gen_registry.dart
+    description: Generate the deterministic mix_winds parser registry
 
   gen:build:flutter:
     run: melos exec --category=flutter_projects --order-dependents -- flutter pub run build_runner build --delete-conflicting-outputs

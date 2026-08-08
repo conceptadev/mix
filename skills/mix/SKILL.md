@@ -15,7 +15,7 @@ description: >
   tokens (MixScope, tokens), widget modifiers (.wrap()), directives, style
   mixins, melos commands for Mix (gen:build, ci, analyze, exports), or the
   Mix monorepo packages (mix, mix_annotations, mix_generator, mix_lint,
-  mix_protocol, mix_tailwinds, mix_chart).
+  mix_protocol, mix_winds, mix_chart).
 ---
 
 # Mix Framework
@@ -173,7 +173,7 @@ melos run gen:build && melos run ci && melos run analyze
 | `mix_generator` | `build_runner` generator producing `*.g.dart` mixins |
 | `mix_lint` | Analysis server plugin with Mix-specific lint rules |
 | `mix_protocol` | Versioned JSON wire contract, codecs, schemas, inspection, and token walking for Mix styles |
-| `mix_tailwinds` | Tailwind-style utility layer (experimental) |
+| `mix_winds` | Tailwind-style utility layer (experimental) |
 | `mix_chart` | Mix-owned line, bar, and pie chart APIs |
 
 ## References

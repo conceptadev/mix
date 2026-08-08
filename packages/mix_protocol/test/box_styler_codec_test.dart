@@ -283,7 +283,7 @@ void main() {
     });
   });
 
-  test('linear gradient encode matches Tailwinds angle-strategy fixture', () {
+  test('linear gradient encode matches mix_winds angle-strategy fixture', () {
     final style = BoxStyler(
       decoration: BoxDecorationMix(
         gradient: LinearGradientMix(
@@ -315,7 +315,7 @@ void main() {
     expect(_encode(contract(), _decodeBox(contract(), payload)), payload);
   });
 
-  test('linear gradient encode matches Tailwinds css-angle fixture', () {
+  test('linear gradient encode matches mix_winds css-angle fixture', () {
     final style = BoxStyler(
       decoration: BoxDecorationMix(
         gradient: LinearGradientMix(

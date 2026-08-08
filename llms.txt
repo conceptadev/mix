@@ -45,7 +45,7 @@ Important notes:
 
 - [mix_protocol guide](https://raw.githubusercontent.com/conceptadev/mix/main/packages/mix_protocol/GUIDE.md): Versioned Mix JSON documents, codecs, schema validation, inspection, and resolver behavior.
 - [mix_protocol wire contract](https://raw.githubusercontent.com/conceptadev/mix/main/packages/mix_protocol/WIRE_CONTRACT.md): Canonical wire vocabulary and compatibility rules.
-- [mix_tailwinds README](https://raw.githubusercontent.com/conceptadev/mix/main/packages/mix_tailwinds/README.md): Tailwind-style parsing and translation into Mix styles.
+- [mix_winds README](https://raw.githubusercontent.com/conceptadev/mix/main/packages/mix_winds/README.md): Tailwind-style parsing and translation into Mix styles.
 - [mix_chart README](https://raw.githubusercontent.com/conceptadev/mix/main/packages/mix_chart/README.md): Mix-owned line, bar, and pie chart APIs.
 - [mix_lint README](https://raw.githubusercontent.com/conceptadev/mix/main/packages/mix_lint/README.md): Mix-specific analyzer and custom lint rules.
 

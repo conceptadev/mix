@@ -109,7 +109,7 @@ packages/mix/.cody/ignore
 .cursor
 .orbit
 CLAUDE.md
-!packages/mix_tailwinds/CLAUDE.md
+!packages/mix_winds/CLAUDE.md
 .augment/env/setup.sh
 
 # API compatibility reports
@@ -122,7 +122,7 @@ website/public/_pagefind/
 
 # Claude Code
 CLAUDE.md
-!packages/mix_tailwinds/CLAUDE.md
+!packages/mix_winds/CLAUDE.md
 .claude/settings.local.json
 
 # Flutter web previews (generated via: packages/mix_docs_preview/scripts/build_web_previews.sh)
@@ -133,8 +133,8 @@ website/public/previews/
 website/playwright-report/
 website/test-results/
 
-# The mix_tailwinds example has a hand-authored web showcase. Keep its source
+# The mix_winds example has a hand-authored web showcase. Keep its source
 # in version control while excluding parity evidence generated during builds.
-!packages/mix_tailwinds/example/web/
-!packages/mix_tailwinds/example/web/**
-packages/mix_tailwinds/example/web/generated/
+!packages/mix_winds/example/web/
+!packages/mix_winds/example/web/**
+packages/mix_winds/example/web/generated/
