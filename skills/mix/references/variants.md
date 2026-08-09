@@ -2,6 +2,16 @@
 
 Context-aware and state-driven styling in Mix.
 
+## Table of Contents
+
+- [Variant hierarchy](#variant-hierarchy)
+- [Priority order](#priority-order)
+- [Built-in variants](#built-in-variant-methods)
+- [Usage patterns](#usage-patterns)
+- [Named variants](#pre-defined-named-variants)
+- [ContextVariant factories](#contextvariant-factory-methods)
+- [StyleVariation](#stylevariation)
+
 ## Variant Hierarchy
 
 **File:** `packages/mix/lib/src/variants/variant.dart`

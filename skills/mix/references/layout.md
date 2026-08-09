@@ -3,6 +3,17 @@
 Choose and compose Mix-owned layout primitives without falling back to raw
 Flutter layout widgets for styling concerns.
 
+## Table of Contents
+
+- [Verify API availability](#verify-api-availability)
+- [Select a primitive](#select-the-primitive)
+- [Understand composites](#understand-composite-layouts)
+- [One-dimensional layouts](#build-one-dimensional-layouts)
+- [Wrapping layouts](#build-wrapping-layouts)
+- [Grid layouts](#build-two-dimensional-grid-layouts)
+- [Overlays](#build-overlays)
+- [Verification](#verify-layout-work)
+
 ## Verify API Availability
 
 Check the consuming package's `pubspec.yaml` and resolved dependency before

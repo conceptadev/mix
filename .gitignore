@@ -11,6 +11,10 @@
 .history
 .svn/
 
+# Public skills live in /skills; keep CLI-installed local copies untracked.
+/.agents/
+/.claude/skills
+
 # IntelliJ related
 *.iml
 *.ipr

@@ -2,6 +2,17 @@
 
 Centralized visual properties via `MixToken` and `MixScope`.
 
+## Table of Contents
+
+- [Overview](#overview)
+- [Token workflow](#token-workflow)
+- [Built-in token types](#built-in-token-types)
+- [MixScope](#mixscope)
+- [Theme switching](#theme-switching)
+- [Custom token types](#custom-token-types)
+- [Programmatic resolution](#programmatic-resolution)
+- [Material integration](#mixscopewithmaterial)
+
 ## Overview
 
 Design tokens define visual properties (colors, typography, spacing) in a centralized, swappable way. Mix provides token types and `MixScope` (an `InheritedModel`) to provide values to the widget tree.

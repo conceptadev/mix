@@ -2,6 +2,16 @@
 
 Annotations, generators, and the codegen workflow in Mix.
 
+## Table of Contents
+
+- [Spec-driven generation](#current-default-spec-driven-styler-generation)
+- [Annotations](#annotations)
+- [File structure](#file-structure-per-widget-spec)
+- [Type metadata](#type-metadata-registry)
+- [Run code generation](#running-code-generation)
+- [Box reference implementation](#reference-implementation-box)
+- [Generator flags](#generator-flags)
+
 ## Current Default: Spec-Driven Styler Generation
 
 For widget-backed specs, prefer `@MixableSpec(target: Widget.new)`. The generator emits both:
@@ -117,9 +127,10 @@ variants cannot choose a named constructor at compile time.
 `@MixWidget` complements `@MixableSpec(target:)`; it wraps a style recipe after
 a Styler exists, while `@MixableSpec(target:)` generates the Styler and its
 `call()` support. Mix's own specs use `@MixableSpec(target:)`; `@MixWidget` is
-mainly a downstream-author convenience. Consult
-`guides/mix-widget-variant-constructors.md` before changing this contract; its
-future curation rename is a decision record, not shipped API on current `main`.
+mainly a downstream-author convenience. When changing this contract inside the
+Mix repository, also consult its `guides/mix-widget-variant-constructors.md`
+decision record if present; do not treat a proposed curation rename as shipped
+API unless the current source exposes it.
 
 ### `@MixableModifier()`
 
