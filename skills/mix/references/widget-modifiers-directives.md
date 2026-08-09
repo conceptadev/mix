@@ -1,5 +1,15 @@
 # Widget Modifiers & Directives
 
+## Table of Contents
+
+- [Widget modifiers](#widget-modifiers)
+- [Modifier usage](#usage)
+- [Built-in modifiers](#built-in-modifiers)
+- [Authoring modifiers](#authoring-modifiers)
+- [Modifier ordering](#modifier-ordering)
+- [Fluent chaining](#fluent-chaining)
+- [Directives](#directives)
+
 ## Widget Modifiers
 
 Modifiers wrap a widget with another widget (`Transform`, `Padding`, `Opacity`, etc.) without changing the styled widget API. Apply them with `.wrap()` on a Styler, or use convenience methods such as `BoxStyler().rotate(...)` when the Styler exposes them.

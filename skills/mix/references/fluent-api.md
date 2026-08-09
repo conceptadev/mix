@@ -2,6 +2,15 @@
 
 Chaining patterns, style mixins, and composition in Mix.
 
+## Table of Contents
+
+- [Core principle](#core-principle)
+- [Style mixins](#style-mixins)
+- [Interaction widgets](#interaction-widgets)
+- [Sizing](#sizing-decision-tree)
+- [Composition](#composition-via-merge)
+- [Callable stylers](#callable-stylers)
+
 ## Core Principle
 
 Prefer fluent chaining on Styler types. Each setter returns a new merged instance:

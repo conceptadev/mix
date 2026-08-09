@@ -6,13 +6,48 @@
 ![GitHub stars](https://img.shields.io/github/stars/btwld/mix?style=for-the-badge&logo=GitHub&logoColor=black&labelColor=white&color=dddddd)
 [![Pub Version](https://img.shields.io/pub/v/mix?label=version&style=for-the-badge)](https://pub.dev/packages/mix/changelog)
 ![Pub Likes](https://img.shields.io/pub/likes/mix?label=Pub%20Likes&style=for-the-badge)
-![Pub Points](https://img.shields.io/pub/points/mix?label=Pub%20Points&style=for-the-badge) [![MIT Licence](https://img.shields.io/github/license/btwld/mix?style=for-the-badge&longCache=true)](https://opensource.org/license/mit) [![Awesome Flutter](https://img.shields.io/badge/awesome-flutter-purple?longCache=true&style=for-the-badge)](https://github.com/Solido/awesome-flutter)
+![Pub Points](https://img.shields.io/pub/points/mix?label=Pub%20Points&style=for-the-badge) [![MIT Licence](https://img.shields.io/github/license/btwld/mix?style=for-the-badge&longCache=true)](https://opensource.org/license/mit) [![Awesome Flutter](https://img.shields.io/badge/awesome-flutter-purple?longCache=true&style=for-the-badge)](https://github.com/Solido/awesome-flutter) [![skills.sh](https://skills.sh/b/btwld/mix)](https://skills.sh/btwld/mix)
 
 **Mix** is a styling system for Flutter that separates style definitions from widget structure. It provides a composable, type-safe way to define and apply styles using a fluent API, design tokens, and context-aware variants.
 
 - Compose, merge, and apply styles across widgets
 - Write maintainable styling definitions separate from widget code
 - Adapt styles conditionally based on interactions and context
+
+## Agent skill
+
+The [`mix`](https://skills.sh/btwld/mix/mix) skill helps coding agents build
+Flutter UI with Mix and maintain this monorepo's specs, generators, variants,
+animations, tokens, modifiers, and packages.
+
+List the repository's available skills without installing them:
+
+```bash
+npx skills add btwld/mix --list
+```
+
+Install the skill in the current project:
+
+```bash
+npx skills add btwld/mix --skill mix -y
+```
+
+Project installation creates a local agent-skills directory such as
+`.agents/`. It is ignored because [`skills/`](skills) is the committed source
+catalog. Install globally or invoke the skill ephemerally when you do not want
+a project-local copy:
+
+```bash
+npx skills add btwld/mix --skill mix -g -y
+npx skills use btwld/mix@mix
+```
+
+List installed skills and update them later:
+
+```bash
+npx skills ls
+npx skills update
+```
 
 ## Why Mix?
 

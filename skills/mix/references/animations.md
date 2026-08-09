@@ -2,6 +2,13 @@
 
 Three animation systems in Mix, from simple to full control.
 
+## Table of Contents
+
+- [Implicit animations](#implicit-animations)
+- [Phase animations](#phase-animations)
+- [Keyframe animations](#keyframe-animations)
+- [Comparison](#comparison)
+
 ## Implicit Animations
 
 Simplest approach. Call `.animate()` on any Styler — Mix interpolates between old and new values automatically when state or variants change.

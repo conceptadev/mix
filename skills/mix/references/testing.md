@@ -2,6 +2,16 @@
 
 Testing patterns for Mix, adapted from `packages/mix/test/helpers/testing_utils.dart`.
 
+## Table of Contents
+
+- [Philosophy](#core-philosophy)
+- [Utilities](#utilities)
+- [Testing patterns](#testing-patterns)
+- [MockBuildContext](#mockbuildcontext)
+- [Widget testing](#widget-testing)
+- [Common mistakes](#common-mistakes)
+- [Best practices](#best-practices)
+
 ## Core Philosophy
 
 Testing in Mix focuses on **resolution testing**: verify what `Resolvable` types, `Prop` values, Mix value objects, Stylers, and modifier Mix classes resolve to in a `BuildContext`.

@@ -2,6 +2,15 @@
 
 Rules for static factory constructors on Styler classes and Dart 3.11+ dot-shorthand usage.
 
+## Table of Contents
+
+- [Top-level rule](#the-top-level-rule)
+- [Nested shorthand](#nested-shorthand-rule)
+- [Enum shorthand](#dot-shorthand-for-enumconstant-arguments)
+- [Factory constructors](#factory-constructors-by-styler)
+- [Chain-only methods](#methods-without-factories-chain-only)
+- [Composition](#composition-decision-tree)
+
 Requires Dart SDK >=3.11.0 and Flutter >=3.41.0.
 
 ## The Top-Level Rule

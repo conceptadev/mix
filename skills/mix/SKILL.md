@@ -1,29 +1,38 @@
 ---
 name: mix
-description: >
-  This skill should be used when working on the Mix Flutter styling
-  framework or any project using the mix package. Applies when the user
-  mentions Mix specs, Mix styles, BoxStyler, TextStyler, Pressable,
-  PressableBox, FlexBox, RowBox, ColumnBox, WrapBox, GridBox, GridTrack,
-  StackBox, responsive layouts, onConstraints, StyleWidget, MixStyler,
-  fluent chaining, Prop values, Mix types,
-  Mix annotations (@MixableSpec, @MixWidget, @MixableModifier, legacy
-  @MixableStyler, @Mixable), code generation with mix_generator,
-  dot-shorthand policy, style variants (NamedVariant,
-  ContextVariant, WidgetStateVariant, onHovered, onPressed, onDark), implicit
-  animations with .animate(), Phase animations, Keyframe animations, design
-  tokens (MixScope, tokens), widget modifiers (.wrap()), directives, style
-  mixins, melos commands for Mix (gen:build, ci, analyze, exports), or the
-  Mix monorepo packages (mix, mix_annotations, mix_generator, mix_lint,
-  mix_protocol, mix_winds, mix_chart).
+description: >-
+  Use when building or maintaining Flutter UI with the Mix styling framework:
+  Mix specs and stylers, BoxStyler, TextStyler, Pressable, FlexBox, WrapBox,
+  GridBox, StackBox, responsive layouts, fluent chaining, Prop values, Mix
+  annotations and mix_generator code generation, dot shorthand, variants,
+  animations, design tokens and MixScope, widget modifiers, directives, style
+  mixins, or the Mix monorepo packages (mix, mix_annotations, mix_generator,
+  mix_lint, mix_protocol, mix_winds, and mix_chart). Also trigger for UI work in
+  a project that already depends on `mix`. Do not trigger for generic Flutter
+  work when Mix is neither present nor requested.
 ---
 
 # Mix Framework
 
 Type-safe styling system for Flutter that separates style semantics from widgets.
 
-**Repository target:** current `main` (`mix` pubspec: `2.2.0-beta.2`, Dart >=3.11.0, Flutter >=3.41.0).
-Confirm the consuming project's actual version before applying patterns. `WrapBox` and `GridBox` ship in `2.2.0-beta.2`, so an older resolved dependency may not expose them yet.
+## Set Up Mix
+
+Inspect the consuming project's `pubspec.yaml` or lockfile before assuming Mix
+is available or applying version-specific APIs.
+
+```bash
+flutter pub add mix
+```
+
+```dart
+import 'package:mix/mix.dart';
+```
+
+In the Mix repository, read `packages/mix/pubspec.yaml` for the current SDK,
+Flutter, and package versions. In a consumer repository, follow its resolved
+version; older releases may not expose newer primitives such as `WrapBox` and
+`GridBox`.
 
 ## Source of Truth
 

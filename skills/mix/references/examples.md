@@ -2,6 +2,12 @@
 
 Worked examples that show current Mix APIs in complete Flutter snippets.
 
+## Table of Contents
+
+- [Themed profile page](#themed-profile-page)
+- [Dark and light toggle](#darklight-toggle)
+- [Pressable button](#pressable-button)
+
 ## Themed Profile Page
 
 Tokens define the visual vocabulary, `MixScope` provides concrete values, and Stylers consume token refs with `$token()` or `$token.mix()`.

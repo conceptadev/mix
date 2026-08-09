@@ -2,6 +2,15 @@
 
 Creating, modifying, and maintaining specs in the Mix monorepo.
 
+## Table of Contents
+
+- [Monorepo structure](#monorepo-structure)
+- [Create a widget-backed spec](#creating-a-new-widget-backed-spec)
+- [Modify a spec](#modifying-an-existing-spec)
+- [Commands](#commands-reference)
+- [Pre-commit verification](#pre-commit-verification)
+- [Type metadata](#adding-type-metadata)
+
 ## Monorepo Structure
 
 ```text
