@@ -148,6 +148,37 @@ void main() {
       );
     });
 
+    testWidgets('onEnabled outranks an ambient variant declared after it', (
+      tester,
+    ) async {
+      // onEnabled is not(disabled), so it forwards a widget-state dependency
+      // and merges in the high-priority group. Pinned deliberately: it reads
+      // like base styling but does not behave like it.
+      await tester.pumpWidget(
+        MaterialApp(
+          home: MediaQuery(
+            data: const MediaQueryData(platformBrightness: Brightness.dark),
+            child: Box(
+              key: const Key('target'),
+              style: BoxStyler()
+                  .size(50, 50)
+                  .onEnabled(BoxStyler().color(Colors.blue))
+                  .onDark(BoxStyler().color(Colors.black)),
+            ),
+          ),
+        ),
+      );
+
+      final container = tester.widget<Container>(
+        find.descendant(
+          of: find.byKey(const Key('target')),
+          matching: find.byType(Container),
+        ),
+      );
+
+      expect((container.decoration as BoxDecoration?)?.color, Colors.blue);
+    });
+
     testWidgets('not variant inverts inner shouldApply result', (tester) async {
       final disabled = ContextVariant.widgetState(WidgetState.disabled);
       final enabled = ContextVariant.not(disabled);

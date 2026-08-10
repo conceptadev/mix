@@ -1,3 +1,20 @@
+## Unreleased
+
+### Fixes
+
+- **Variant merge priority follows declared state dependencies:** Priority now
+  groups active variants by whether they declare
+  `ContextVariant.widgetStateDependencies` rather than by whether they are a
+  `WidgetStateVariant`, so `onFocusVisible(...)` competes by declaration order
+  instead of always losing to any widget-state variant sharing a property, which
+  had been silently replacing focus rings. Variants built on
+  `ContextVariant.not(...)` move with their inner variant, so `onEnabled(...)`
+  now outranks an ambient variant such as `onDark(...)` declared after it.
+- **Declaration order within a priority group is reliable:** Grouping is a
+  stable partition rather than a `List.sort`, which fell back to an unstable
+  quicksort at 32 elements and could reorder equal-priority variants in styles
+  that large.
+
 ## 2.2.0-beta.3
 
 ### New features
