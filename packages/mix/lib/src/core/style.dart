@@ -102,43 +102,57 @@ abstract class Style<S extends Spec<S>> extends Mix<StyleSpec<S>>
 
   /// Merges all active variants with their nested variants recursively.
   ///
-  /// This method evaluates which variants should be active based on the current
-  /// context and named variants, then recursively processes nested variants
-  /// within each active variant's style. The result is a fully merged style
-  /// with all applicable variants applied.
+  /// Evaluates which variants are active in [context] and against
+  /// [namedVariants], then recursively resolves the nested variants inside each
+  /// active variant's style.
   ///
-  /// Variant priority order (lowest to highest):
-  /// 1. ContextVariant and NamedVariant (applied first)
-  /// 2. StyleVariation (applied second)
-  /// 3. WidgetStateVariant (applied last, highest priority)
+  /// Active variants apply in two priority groups, lowest first: those that
+  /// declare no [ContextVariant.widgetStateDependencies], then those that do.
+  /// Within a group, the variant declared last merges last and so wins on the
+  /// properties they share.
   @visibleForTesting
   Style<S> mergeActiveVariants(
     BuildContext context, {
     required Set<NamedVariant> namedVariants,
   }) {
-    // Filter variants that should be active in this context
-    final activeVariants = ($variants ?? [])
-        .where(
-          (variantAttr) => switch (variantAttr.variant) {
-            (ContextVariant variant) => variant.when(context),
-            (NamedVariant variant) => namedVariants.contains(variant),
-            (ContextVariantBuilder _) => true,
-          },
-        )
-        .toList();
+    final variants = $variants;
+    if (variants == null) return this;
 
-    // Sort by priority: WidgetStateVariant gets applied last (highest priority)
-    activeVariants.sort(
-      (a, b) => Comparable.compare(
-        a.variant is WidgetStateVariant ? 1 : 0,
-        b.variant is WidgetStateVariant ? 1 : 0,
-      ),
-    );
+    // Partition, don't sort: declaration order inside a group is load-bearing,
+    // and List.sort is only stable by accident of the insertion sort it falls
+    // back to below 32 elements.
+    final lowPriority = <VariantStyle<S>>[];
+    final highPriority = <VariantStyle<S>>[];
+
+    for (final variantAttr in variants) {
+      final variant = variantAttr.variant;
+
+      final isActive = switch (variant) {
+        ContextVariant() => variant.when(context),
+        NamedVariant() => namedVariants.contains(variant),
+        ContextVariantBuilder() => true,
+      };
+      if (!isActive) continue;
+
+      // Keyed off the declaration, not the class: FocusVisibleVariant is not a
+      // WidgetStateVariant yet reads WidgetState.focused just the same, and
+      // NotVariant forwards whatever its inner variant reads.
+      //
+      // The getter stays on ContextVariant rather than moving up to Variant
+      // because ContextVariant is also the only kind widgetStates walks, so a
+      // dependency declared on any other kind would never get tracking
+      // installed.
+      final readsWidgetState =
+          variant is ContextVariant &&
+          variant.widgetStateDependencies.isNotEmpty;
+
+      (readsWidgetState ? highPriority : lowPriority).add(variantAttr);
+    }
 
     // Extract the style from each active variant
     final stylesToMerge = <(Style<S>, bool)>[]; // (style, isFromStyleVariation)
 
-    for (final variantAttr in activeVariants) {
+    for (final variantAttr in lowPriority.followedBy(highPriority)) {
       final result = switch (variantAttr.variant) {
         ContextVariantBuilder variant => (
           variant.build(context) as Style<S>,

@@ -22,17 +22,24 @@ void main() {
       return (container.decoration as BoxDecoration?)?.color;
     }
 
-    Widget buildWithController(WidgetStatesController controller) {
+    Widget buildStyle(BoxStyler style, WidgetStatesController controller) {
       return MaterialApp(
         home: StyleBuilder<BoxSpec>(
           controller: controller,
-          style: BoxStyler()
-              .size(50, 50)
-              .color(Colors.blue)
-              .onFocusVisible(BoxStyler().color(Colors.red)),
+          style: style,
           builder: (context, spec) =>
               Container(key: const Key('target'), decoration: spec.decoration),
         ),
+      );
+    }
+
+    Widget buildWithController(WidgetStatesController controller) {
+      return buildStyle(
+        BoxStyler()
+            .size(50, 50)
+            .color(Colors.blue)
+            .onFocusVisible(BoxStyler().color(Colors.red)),
+        controller,
       );
     }
 
@@ -109,6 +116,53 @@ void main() {
             ?.color,
         Colors.red,
       );
+    });
+
+    group('merge priority', () {
+      final selected = ContextVariant.widgetState(WidgetState.selected);
+
+      WidgetStatesController selectedAndFocusVisible() {
+        FocusManager.instance.highlightStrategy =
+            FocusHighlightStrategy.alwaysTraditional;
+        final controller = WidgetStatesController();
+        addTearDown(controller.dispose);
+        controller.selected = true;
+        controller.focused = true;
+
+        return controller;
+      }
+
+      testWidgets('beats a widget-state variant declared before it', (
+        tester,
+      ) async {
+        await tester.pumpWidget(
+          buildStyle(
+            BoxStyler()
+                .size(50, 50)
+                .variant(selected, BoxStyler().color(Colors.red))
+                .onFocusVisible(BoxStyler().color(Colors.blue)),
+            selectedAndFocusVisible(),
+          ),
+        );
+
+        expect(colorOf(tester), Colors.blue);
+      });
+
+      testWidgets('loses to a widget-state variant declared after it', (
+        tester,
+      ) async {
+        await tester.pumpWidget(
+          buildStyle(
+            BoxStyler()
+                .size(50, 50)
+                .onFocusVisible(BoxStyler().color(Colors.blue))
+                .variant(selected, BoxStyler().color(Colors.red)),
+            selectedAndFocusVisible(),
+          ),
+        );
+
+        expect(colorOf(tester), Colors.red);
+      });
     });
   });
 }
