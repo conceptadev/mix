@@ -25,6 +25,12 @@ final class PieChartSpec with _$PieChartSpec {
   @override
   final StyleSpec<PieSliceSpec>? slice;
 
+  /// Extra radius applied to selected slices after chart and slice styling.
+  ///
+  /// When unset, the renderer preserves the compatibility default of 8.
+  @override
+  final double? selectedSliceRadiusOffset;
+
   /// Colors cycled across slices without an explicit fill.
   @override
   final List<Color>? palette;
@@ -56,6 +62,7 @@ final class PieChartSpec with _$PieChartSpec {
   const PieChartSpec({
     this.frame,
     this.slice,
+    this.selectedSliceRadiusOffset,
     this.palette,
     this.centerRadius,
     this.centerColor,

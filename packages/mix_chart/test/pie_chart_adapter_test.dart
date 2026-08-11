@@ -4,47 +4,98 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mix_chart/mix_chart.dart';
 
 void main() {
-  testWidgets('maps pie slices and donut presentation', (tester) async {
-    final chart = PieChart(
-      slices: [
-        PieSlice(id: 'mobile', label: 'Mobile', value: 64),
-        PieSlice(
-          id: 'desktop',
-          label: 'Desktop',
-          value: 36,
-          style: .color(const Color(0xFF06B6D4)).radius(72),
-        ),
-      ],
-      selectedSliceIds: const {'desktop'},
-      valueFormatter: (value) => '${value.toInt()}%',
-      style: .centerRadius(42)
-          .centerColor(const Color(0xFFF8FAFC))
-          .sliceSpacing(4)
-          .startAngle(-120)
-          .sunbeamLabels(true)
-          .slice(.radius(64).label(.fontSize(11)).cornerRadius(5)),
-    );
+  testWidgets(
+    'selected slices use the compatibility offset after per-slice radius',
+    (tester) async {
+      final chart = PieChart(
+        slices: [
+          PieSlice(id: 'mobile', label: 'Mobile', value: 64),
+          PieSlice(
+            id: 'desktop',
+            label: 'Desktop',
+            value: 36,
+            style: .color(const Color(0xFF06B6D4)).radius(72),
+          ),
+        ],
+        selectedSliceIds: const {'desktop'},
+        valueFormatter: (value) => '${value.toInt()}%',
+        style: .centerRadius(42)
+            .centerColor(const Color(0xFFF8FAFC))
+            .sliceSpacing(4)
+            .startAngle(-120)
+            .sunbeamLabels(true)
+            .slice(.radius(64).label(.fontSize(11)).cornerRadius(5)),
+      );
 
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Scaffold(body: SizedBox(width: 320, height: 280, child: chart)),
+        ),
+      );
+
+      final backend = tester.widget<fl.PieChart>(find.byType(fl.PieChart));
+      final data = backend.data;
+
+      expect(data.centerSpaceRadius, 42);
+      expect(data.centerSpaceColor, const Color(0xFFF8FAFC));
+      expect(data.sectionsSpace, 4);
+      expect(data.startDegreeOffset, -120);
+      expect(data.titleSunbeamLayout, isTrue);
+      expect(data.sections, hasLength(2));
+      expect(data.sections.first.radius, 64);
+      expect(data.sections.first.title, 'Mobile\n64%');
+      expect(data.sections.last.color, const Color(0xFF06B6D4));
+      expect(data.sections.last.radius, 80);
+      expect(data.sections.last.cornerRadius, 5);
+    },
+  );
+
+  testWidgets('selected slice radius offset is configurable', (tester) async {
     await tester.pumpWidget(
       MaterialApp(
-        home: Scaffold(body: SizedBox(width: 320, height: 280, child: chart)),
+        home: SizedBox(
+          width: 240,
+          height: 240,
+          child: PieChart(
+            slices: [PieSlice(id: 'slice', label: 'Slice', value: 1)],
+            selectedSliceIds: const {'slice'},
+            style: .slice(.radius(60)).selectedSliceRadiusOffset(12),
+          ),
+        ),
       ),
     );
 
-    final backend = tester.widget<fl.PieChart>(find.byType(fl.PieChart));
-    final data = backend.data;
+    final section = tester
+        .widget<fl.PieChart>(find.byType(fl.PieChart))
+        .data
+        .sections
+        .single;
+    expect(section.radius, 72);
+  });
 
-    expect(data.centerSpaceRadius, 42);
-    expect(data.centerSpaceColor, const Color(0xFFF8FAFC));
-    expect(data.sectionsSpace, 4);
-    expect(data.startDegreeOffset, -120);
-    expect(data.titleSunbeamLayout, isTrue);
-    expect(data.sections, hasLength(2));
-    expect(data.sections.first.radius, 64);
-    expect(data.sections.first.title, 'Mobile\n64%');
-    expect(data.sections.last.color, const Color(0xFF06B6D4));
-    expect(data.sections.last.radius, 80);
-    expect(data.sections.last.cornerRadius, 5);
+  testWidgets('zero selected slice radius offset disables expansion', (
+    tester,
+  ) async {
+    await tester.pumpWidget(
+      MaterialApp(
+        home: SizedBox(
+          width: 240,
+          height: 240,
+          child: PieChart(
+            slices: [PieSlice(id: 'slice', label: 'Slice', value: 1)],
+            selectedSliceIds: const {'slice'},
+            style: .slice(.radius(60)).selectedSliceRadiusOffset(0),
+          ),
+        ),
+      ),
+    );
+
+    final section = tester
+        .widget<fl.PieChart>(find.byType(fl.PieChart))
+        .data
+        .sections
+        .single;
+    expect(section.radius, 60);
   });
 
   testWidgets('renders empty and zero-sum pies without a renderer crash', (

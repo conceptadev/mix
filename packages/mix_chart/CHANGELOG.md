@@ -1,3 +1,8 @@
+## Unreleased
+
+- Adds `PieChartStyler.selectedSliceRadiusOffset` to customize or disable the
+  selected-slice expansion while preserving the existing 8-pixel default.
+
 ## 0.0.1-beta.0
 
 - Introduces Mix-owned `LineChart`, `BarChart`, and `PieChart` widgets.

@@ -155,7 +155,7 @@ PieChart(
   valueFormatter: (value) => '${value.toInt()}%',
   style: .palette(
     const [Color(0xFF6366F1), Color(0xFF06B6D4)],
-  ).centerRadius(48).sliceSpacing(3).slice(
+  ).centerRadius(48).sliceSpacing(3).selectedSliceRadiusOffset(12).slice(
     .radius(72).showLabel(false).cornerRadius(6),
   ),
 );
@@ -178,6 +178,12 @@ deterministic package defaults
   < interaction-derived selection presentation
 ```
 
+For pie charts, `selectedSliceRadiusOffset` controls the expansion applied to
+selected slices. It is added after the chart-level and per-slice radius resolve,
+so a per-slice radius remains the selected slice's base geometry. Leaving the
+property unset preserves the 8 logical-pixel compatibility default; set it to
+zero to disable expansion.
+
 Specs cover:
 
 | Surface | Controls |
@@ -187,7 +193,7 @@ Specs cover:
 | Grid | horizontal/vertical lines, intervals, color/gradient, width, dashes |
 | Lines | solid/gradient strokes, curves, steps, gaps, dashes, shadows, markers, area fills |
 | Bars | grouped/stacked/floating values, fills, radii, borders, tracks, labels, spacing |
-| Pie | fills, radius, donut center, gaps, angle, labels, badges, borders, corners |
+| Pie | fills, radius, selected-slice offset, donut center, gaps, angle, labels, badges, borders, corners |
 | Interaction | hover, tap, long press, hit tolerance, cursors, scoped selection keys, widget tooltips |
 
 Use per-item Stylers for exceptions without rebuilding a renderer data object:
