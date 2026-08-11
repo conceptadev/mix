@@ -59,7 +59,7 @@ final class _FlPieChartAdapterState extends State<FlPieChartAdapter> {
       gradient: presentation.gradient,
       radius:
           (presentation.radius ?? 80) +
-          (selected ? widget.spec.selectedSliceRadiusOffset ?? 8.0 : 0),
+          (selected ? (widget.spec.selectedSliceRadiusOffset ?? 8.0) : 0),
       showTitle: presentation.showLabel ?? true,
       titleStyle: const TextStyle(
         color: Colors.white,
