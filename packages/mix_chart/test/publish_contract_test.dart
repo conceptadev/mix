@@ -10,9 +10,9 @@ void main() {
     expect(pubspec, contains(RegExp(r'^name: mix_chart$', multiLine: true)));
     expect(
       pubspec,
-      contains(RegExp(r'^version: 0\.0\.1-beta\.0$', multiLine: true)),
+      contains(RegExp(r'^version: 0\.0\.1-beta\.1$', multiLine: true)),
     );
-    expect(changelog, contains('## 0.0.1-beta.0\n'));
+    expect(changelog, startsWith('## 0.0.1-beta.1\n'));
     expect(
       pubspec,
       isNot(contains('publish_to: none')),

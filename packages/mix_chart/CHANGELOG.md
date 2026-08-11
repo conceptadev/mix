@@ -1,4 +1,4 @@
-## Unreleased
+## 0.0.1-beta.1
 
 - Adds `PieChartStyler.selectedSliceRadiusOffset` to customize or disable the
   selected-slice expansion while preserving the existing 8-pixel default.
