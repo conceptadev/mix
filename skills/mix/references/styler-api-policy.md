@@ -109,13 +109,49 @@ These are mid-chain or end-of-chain policy choices. Some may also have generated
 | Category | Methods |
 |---|---|
 | Compound spacing | `padding(.all(8))`, `padding(.horizontal(8))`, `padding(.vertical(8))`, `margin(.all(8))`, `margin(.horizontal(8))`, `margin(.vertical(8))`, `padding(.only(left: 8, right: 8))` |
-| Compound border | `border(.all())`, `border(.top())`, `borderRadius(.circular())` |
+| Compound border | `border(.color(...).width(...))`, `border(.all())`, `border(.top())`, `borderRadius(.circular())` |
 | Compound box | `shadow(.color(...).blurRadius(...))`, `backgroundImageUrl` |
 | Text directives | `uppercase`, `lowercase`, `capitalize`, `titlecase`, `sentencecase` |
 | Variants and local constraints | `onHovered`, `onPressed`, `onDark`, `onLight`, `onDisabled`, `onFocused`, `variant`, `onBreakpoint`, Grid `onConstraints` |
 | Advanced modifiers | `wrap`, `phaseAnimation`, `keyframeAnimation` |
 
 **Rationale:** Factory constructors are reserved for primitives that map to stable style concepts. Compound convenience methods remain as instance methods to keep the static API focused.
+
+### Uniform borders skip the side wrapper
+
+`BoxBorderMix` exposes `color`, `width`, `style`, and `strokeAlign` statics that each build an all-sides border — `BoxBorderMix.color(v)` is defined as `BorderMix.all(BorderSideMix.color(v))`. So a border that is the same on every side needs no side wrapper:
+
+```dart
+// CORRECT — uniform border, side properties straight off border()
+BoxStyler().border(.color(Colors.grey).width(1))
+
+// Redundant — .all() wrapping a side that is then built anyway
+BoxStyler().border(.all(.color(Colors.grey).width(1)))
+```
+
+Reach for `.all(...)`, `.top(...)`, and friends when the side wrapper earns its place:
+
+```dart
+// A specific side
+BoxStyler().border(.top(.color(Colors.grey).width(1)))
+
+// Forwarding optional values — the chained setters take non-nullable arguments,
+// so a wrapper that passes nullables through needs the constructor
+BoxStyler().border(.all(BorderSideMix(color: color, width: width)))
+
+// A prebuilt side reused across several borders
+BoxStyler().border(.all(sharedSide))
+```
+
+Constants that live on a Flutter class stay qualified, because dot shorthand resolves against the *parameter's* type. `strokeAlign` takes a `double`, so `.strokeAlignOutside` does not resolve:
+
+```dart
+// CORRECT
+border(.color(c).strokeAlign(BorderSide.strokeAlignOutside))
+
+// WRONG — the context type is double, not BorderSide
+border(.color(c).strokeAlign(.strokeAlignOutside))
+```
 
 ## Composition Decision Tree
 
