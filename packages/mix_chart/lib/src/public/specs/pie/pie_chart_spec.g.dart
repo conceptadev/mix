@@ -9,6 +9,7 @@ part of 'pie_chart_spec.dart';
 mixin _$PieChartSpec implements Spec<PieChartSpec>, Diagnosticable {
   StyleSpec<ChartFrameSpec>? get frame;
   StyleSpec<PieSliceSpec>? get slice;
+  double? get selectedSliceRadiusOffset;
   List<Color>? get palette;
   double? get centerRadius;
   Color? get centerColor;
@@ -24,6 +25,7 @@ mixin _$PieChartSpec implements Spec<PieChartSpec>, Diagnosticable {
   PieChartSpec copyWith({
     StyleSpec<ChartFrameSpec>? frame,
     StyleSpec<PieSliceSpec>? slice,
+    double? selectedSliceRadiusOffset,
     List<Color>? palette,
     double? centerRadius,
     Color? centerColor,
@@ -35,6 +37,8 @@ mixin _$PieChartSpec implements Spec<PieChartSpec>, Diagnosticable {
     return PieChartSpec(
       frame: frame ?? this.frame,
       slice: slice ?? this.slice,
+      selectedSliceRadiusOffset:
+          selectedSliceRadiusOffset ?? this.selectedSliceRadiusOffset,
       palette: palette ?? this.palette,
       centerRadius: centerRadius ?? this.centerRadius,
       centerColor: centerColor ?? this.centerColor,
@@ -50,6 +54,11 @@ mixin _$PieChartSpec implements Spec<PieChartSpec>, Diagnosticable {
     return PieChartSpec(
       frame: frame?.lerp(other?.frame, t),
       slice: slice?.lerp(other?.slice, t),
+      selectedSliceRadiusOffset: MixOps.lerp(
+        selectedSliceRadiusOffset,
+        other?.selectedSliceRadiusOffset,
+        t,
+      ),
       palette: MixOps.lerpSnap(palette, other?.palette, t),
       centerRadius: MixOps.lerp(centerRadius, other?.centerRadius, t),
       centerColor: MixOps.lerp(centerColor, other?.centerColor, t),
@@ -64,6 +73,7 @@ mixin _$PieChartSpec implements Spec<PieChartSpec>, Diagnosticable {
   List<Object?> get props => [
     frame,
     slice,
+    selectedSliceRadiusOffset,
     palette,
     centerRadius,
     centerColor,
@@ -115,6 +125,9 @@ mixin _$PieChartSpec implements Spec<PieChartSpec>, Diagnosticable {
     properties
       ..add(DiagnosticsProperty('frame', frame))
       ..add(DiagnosticsProperty('slice', slice))
+      ..add(
+        DoubleProperty('selectedSliceRadiusOffset', selectedSliceRadiusOffset),
+      )
       ..add(IterableProperty<Color>('palette', palette))
       ..add(DoubleProperty('centerRadius', centerRadius))
       ..add(ColorProperty('centerColor', centerColor))
@@ -137,6 +150,7 @@ typedef _$PieChartSpecMethods = _$PieChartSpec; // ignore: unused_element
 class PieChartStyler extends MixStyler<PieChartStyler, PieChartSpec> {
   final Prop<StyleSpec<ChartFrameSpec>>? $frame;
   final Prop<StyleSpec<PieSliceSpec>>? $slice;
+  final Prop<double>? $selectedSliceRadiusOffset;
   final Prop<List<Color>>? $palette;
   final Prop<double>? $centerRadius;
   final Prop<Color>? $centerColor;
@@ -148,6 +162,7 @@ class PieChartStyler extends MixStyler<PieChartStyler, PieChartSpec> {
   const PieChartStyler.create({
     Prop<StyleSpec<ChartFrameSpec>>? frame,
     Prop<StyleSpec<PieSliceSpec>>? slice,
+    Prop<double>? selectedSliceRadiusOffset,
     Prop<List<Color>>? palette,
     Prop<double>? centerRadius,
     Prop<Color>? centerColor,
@@ -160,6 +175,7 @@ class PieChartStyler extends MixStyler<PieChartStyler, PieChartSpec> {
     super.animation,
   }) : $frame = frame,
        $slice = slice,
+       $selectedSliceRadiusOffset = selectedSliceRadiusOffset,
        $palette = palette,
        $centerRadius = centerRadius,
        $centerColor = centerColor,
@@ -171,6 +187,7 @@ class PieChartStyler extends MixStyler<PieChartStyler, PieChartSpec> {
   PieChartStyler({
     ChartFrameStyler? frame,
     PieSliceStyler? slice,
+    double? selectedSliceRadiusOffset,
     List<Color>? palette,
     double? centerRadius,
     Color? centerColor,
@@ -184,6 +201,7 @@ class PieChartStyler extends MixStyler<PieChartStyler, PieChartSpec> {
   }) : this.create(
          frame: Prop.maybeMix(frame),
          slice: Prop.maybeMix(slice),
+         selectedSliceRadiusOffset: Prop.maybe(selectedSliceRadiusOffset),
          palette: Prop.maybe(palette),
          centerRadius: Prop.maybe(centerRadius),
          centerColor: Prop.maybe(centerColor),
@@ -200,6 +218,8 @@ class PieChartStyler extends MixStyler<PieChartStyler, PieChartSpec> {
       PieChartStyler().frame(value);
   factory PieChartStyler.slice(PieSliceStyler value) =>
       PieChartStyler().slice(value);
+  factory PieChartStyler.selectedSliceRadiusOffset(double value) =>
+      PieChartStyler().selectedSliceRadiusOffset(value);
   factory PieChartStyler.palette(List<Color> value) =>
       PieChartStyler().palette(value);
   factory PieChartStyler.centerRadius(double value) =>
@@ -223,6 +243,11 @@ class PieChartStyler extends MixStyler<PieChartStyler, PieChartSpec> {
   /// Sets the slice.
   PieChartStyler slice(PieSliceStyler value) {
     return merge(PieChartStyler(slice: value));
+  }
+
+  /// Sets the selectedSliceRadiusOffset.
+  PieChartStyler selectedSliceRadiusOffset(double value) {
+    return merge(PieChartStyler(selectedSliceRadiusOffset: value));
   }
 
   /// Sets the palette.
@@ -322,6 +347,10 @@ class PieChartStyler extends MixStyler<PieChartStyler, PieChartSpec> {
     return PieChartStyler.create(
       frame: MixOps.merge($frame, other?.$frame),
       slice: MixOps.merge($slice, other?.$slice),
+      selectedSliceRadiusOffset: MixOps.merge(
+        $selectedSliceRadiusOffset,
+        other?.$selectedSliceRadiusOffset,
+      ),
       palette: MixOps.merge($palette, other?.$palette),
       centerRadius: MixOps.merge($centerRadius, other?.$centerRadius),
       centerColor: MixOps.merge($centerColor, other?.$centerColor),
@@ -341,6 +370,10 @@ class PieChartStyler extends MixStyler<PieChartStyler, PieChartSpec> {
     final spec = PieChartSpec(
       frame: MixOps.resolve(context, $frame),
       slice: MixOps.resolve(context, $slice),
+      selectedSliceRadiusOffset: MixOps.resolve(
+        context,
+        $selectedSliceRadiusOffset,
+      ),
       palette: MixOps.resolve(context, $palette),
       centerRadius: MixOps.resolve(context, $centerRadius),
       centerColor: MixOps.resolve(context, $centerColor),
@@ -363,6 +396,12 @@ class PieChartStyler extends MixStyler<PieChartStyler, PieChartSpec> {
     properties
       ..add(DiagnosticsProperty('frame', $frame))
       ..add(DiagnosticsProperty('slice', $slice))
+      ..add(
+        DiagnosticsProperty(
+          'selectedSliceRadiusOffset',
+          $selectedSliceRadiusOffset,
+        ),
+      )
       ..add(DiagnosticsProperty('palette', $palette))
       ..add(DiagnosticsProperty('centerRadius', $centerRadius))
       ..add(DiagnosticsProperty('centerColor', $centerColor))
@@ -376,6 +415,7 @@ class PieChartStyler extends MixStyler<PieChartStyler, PieChartSpec> {
   List<Object?> get props => [
     $frame,
     $slice,
+    $selectedSliceRadiusOffset,
     $palette,
     $centerRadius,
     $centerColor,
