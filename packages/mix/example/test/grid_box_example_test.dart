@@ -172,8 +172,8 @@ const _goldens = [
     Size(450, 820),
     precisionTolerance: 0.04,
   ),
-  // Text, icons, and rounded card edges rasterize just beyond the shared
-  // macOS/Linux tolerance; geometry is asserted by the widget test above.
+  // Animation text, icons, and rounded card edges rasterize just beyond the
+  // shared macOS/Linux tolerance; geometry is asserted by the test above.
   _GridGolden(
     'animation_balanced',
     GridExampleKind.animation,
@@ -186,6 +186,7 @@ const _goldens = [
     GridExampleKind.animation,
     760,
     Size(840, 620),
+    precisionTolerance: 0.04,
     focusAnimation: true,
   ),
 ];
