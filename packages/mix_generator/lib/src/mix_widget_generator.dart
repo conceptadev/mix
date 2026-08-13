@@ -597,7 +597,6 @@ class MixWidgetGenerator extends GeneratorForAnnotation<MixWidget> {
     final specElement = _findGeneratedStylerSpec(library, writtenStylerName);
     if (specElement == null) return null;
 
-    final specName = specElement.name!;
     final annotationObject = mixableSpecAnnotationChecker.firstAnnotationOf(
       specElement,
     );
@@ -605,6 +604,8 @@ class MixWidgetGenerator extends GeneratorForAnnotation<MixWidget> {
 
     final target = ConstantReader(annotationObject).peek('target');
     if (target == null || target.isNull) {
+      final specName = specElement.name!;
+
       fail(
         anchor,
         '$_annotationLabel factory returns the same-build generated styler '
@@ -623,7 +624,7 @@ class MixWidgetGenerator extends GeneratorForAnnotation<MixWidget> {
       constructor: constructor,
       widgetName: mixableSpecTargetWidgetName(constructor),
       specElement: specElement,
-      specName: specName,
+      stylerName: writtenStylerName,
       anchor: anchor,
     );
 

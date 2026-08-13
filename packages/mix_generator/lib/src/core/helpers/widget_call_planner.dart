@@ -35,7 +35,6 @@ const stylerBackedTargetParams = {'style', 'styleSpec'};
 String? buildMixableSpecTargetCall({
   required ConstantReader annotation,
   required InterfaceElement specElement,
-  required String specName,
   required String stylerName,
   required Element hostElement,
   required LibraryElement hostLibrary,
@@ -74,7 +73,7 @@ String? buildMixableSpecTargetCall({
     constructor: constructor,
     widgetName: widgetName,
     specElement: specElement,
-    specName: specName,
+    stylerName: stylerName,
     anchor: specElement,
   );
 
@@ -192,33 +191,20 @@ void validateMixableSpecTargetConstructor({
   required ConstructorElement constructor,
   required String widgetName,
   required InterfaceElement specElement,
-  required String specName,
+  required String stylerName,
   required Element anchor,
 }) {
-  final styleWidgetSupertype = findSupertypeMatching(
-    constructor.enclosingElement.thisType,
-    styleWidgetChecker,
-  );
-  if (styleWidgetSupertype == null) {
+  final targetType = constructor.enclosingElement.thisType;
+  if (!widgetChecker.isAssignableFromType(targetType)) {
     fail(
       anchor,
-      'Widget $widgetName must extend StyleWidget<$specName> '
-      'to be used as @MixableSpec(target:).',
+      '@MixableSpec(target:) must reference a Widget constructor, but '
+      '`$widgetName` is not a Widget subtype.',
     );
   }
 
-  final widgetSpecArg = styleWidgetSupertype.typeArguments.first;
-  if (widgetSpecArg is! InterfaceType || widgetSpecArg.element != specElement) {
-    fail(
-      anchor,
-      'Spec generic mismatch: $specName annotated, but '
-      '$widgetName extends StyleWidget<${widgetSpecArg.getDisplayString()}>.',
-    );
-  }
-
-  final optionalPositional = optionalPositionalNames(
-    constructor.formalParameters,
-  );
+  final parameters = constructor.formalParameters;
+  final optionalPositional = optionalPositionalNames(parameters);
   if (optionalPositional.isNotEmpty) {
     fail(
       anchor,
@@ -229,15 +215,82 @@ void validateMixableSpecTargetConstructor({
     );
   }
 
-  for (final parameter in constructor.formalParameters) {
-    if (parameter.name == 'style' && parameter.isNamed) return;
+  final styleParameter = parameters
+      .where((parameter) => parameter.name == 'style' && parameter.isNamed)
+      .firstOrNull;
+  if (styleParameter == null) {
+    fail(
+      anchor,
+      '@MixableSpec(target:) requires $widgetName to expose a named '
+      '`style` constructor parameter so the generated call() can pass '
+      '`style: this`.',
+    );
   }
 
-  fail(
-    anchor,
-    '@MixableSpec(target:) requires $widgetName to expose a named '
-    '`style` constructor parameter so the generated call() can pass '
-    '`style: this`.',
+  final styleSpecParameter = parameters
+      .where((parameter) => parameter.name == 'styleSpec')
+      .firstOrNull;
+  if (styleSpecParameter != null && styleSpecParameter.isRequired) {
+    fail(
+      anchor,
+      '@MixableSpec(target:) cannot omit required `styleSpec` on $widgetName.',
+    );
+  }
+
+  if (!_targetStyleAcceptsGeneratedStyler(
+    styleParameter.type,
+    specElement: specElement,
+  )) {
+    fail(
+      anchor,
+      '@MixableSpec(target:) $widgetName `style` parameter cannot accept '
+      'the generated `$stylerName`.',
+    );
+  }
+}
+
+/// Whether [targetStyleType] can receive the Styler generated for
+/// [specElement] in the same build.
+///
+/// The generated class is not available to analyzer until the shared part is
+/// written, so compatibility is established through its known `Style<S>`
+/// supertype. An unresolved target type is left to the analyzer pass over the
+/// completed part; this also supports a parameter typed as the generated
+/// Styler itself.
+bool _targetStyleAcceptsGeneratedStyler(
+  DartType targetStyleType, {
+  required InterfaceElement specElement,
+}) {
+  final specName = specElement.name;
+  if (specName == null) return false;
+
+  if (targetStyleType is DynamicType ||
+      targetStyleType is InvalidType ||
+      targetStyleType.isDartCoreObject) {
+    return true;
+  }
+  if (targetStyleType is! InterfaceType) return false;
+
+  final acceptedStyle = findSupertypeMatching(targetStyleType, styleChecker);
+  if (acceptedStyle == null) {
+    // Some build-test consumers re-export a lightweight Style stub from a
+    // barrel rather than its canonical library. Preserve semantic matching
+    // for that test shape without weakening non-Style targets.
+    return targetStyleType.getDisplayString() == 'Style<$specName>';
+  }
+  if (acceptedStyle.typeArguments.isEmpty) return false;
+
+  final acceptedSpec = acceptedStyle.typeArguments.first;
+  final acceptsSpec =
+      acceptedSpec is InterfaceType &&
+      acceptedSpec.element.name == specName &&
+      acceptedSpec.element.library.uri == specElement.library.uri;
+  if (!acceptsSpec) return false;
+
+  return specElement.library.typeSystem.isAssignableTo(
+    acceptedStyle,
+    targetStyleType,
+    strictCasts: false,
   );
 }
 

@@ -149,7 +149,7 @@ final combined = base.merge(elevated);
 - **Generated Stylers have `.create()` and default constructors** — many also expose generated factory constructors
 - **Prefer `@MixableSpec(target: Widget.new)`** — `@MixableStyler` is legacy/deprecated
 - **Use `@MixWidget` for generated widgets from style factories** — it wraps top-level `Style<S>` variables or functions
-- **`@MixWidget(target:)` supports plain Widgets** — the target needs a compatible named `style` parameter; it does not need to extend `StyleWidget`
+- **Widget targets can be plain Widgets** — `@MixableSpec(target:)` and `@MixWidget(target:)` need a compatible named `style` parameter; neither requires `StyleWidget`
 - **Use `@MixableModifier` for generated modifiers** — it emits the modifier contract mixin and `ModifierMix` class
 - **`mix.dart` is generated** — never edit directly; run `melos run exports`
 - **Run codegen after spec changes** — `melos run gen:build`
