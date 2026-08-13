@@ -47,6 +47,12 @@ String? buildMixableSpecTargetCall({
 
   final constructor = mixableSpecTargetTearOff(target, specElement);
   final widgetName = mixableSpecTargetWidgetName(constructor);
+  validateGenericTargetTearOff(
+    target: target,
+    constructor: constructor,
+    anchor: specElement,
+    annotationLabel: '@MixableSpec(target:)',
+  );
   if (validateTargetVisibility) {
     final widgetElement = constructor.enclosingElement;
     final hiddenWidgetType = firstInvisibleTypeName(
@@ -81,11 +87,31 @@ String? buildMixableSpecTargetCall({
     annotationLabel: '@MixableSpec(target:)',
     keyOwner: 'the target constructor',
   );
+  if (call.forwardsKey) {
+    for (final typeParameter in constructor.enclosingElement.typeParameters) {
+      if (typeParameter.name != 'Key') continue;
+      fail(
+        typeParameter,
+        'Target widget type parameter `Key` conflicts with the generated '
+        'Flutter `Key? key` parameter in @MixableSpec(target:) call().',
+        todo: 'Rename the target widget type parameter.',
+      );
+    }
+  }
+  // Generated stylers and legacy styler mixins are never generic today, so
+  // target type parameters cannot shadow host type parameters. Revisit this
+  // if generic specs or stylers become supported.
+  final typeParams = extractTypeParams(
+    constructor.enclosingElement.typeParameters,
+    library: hostLibrary,
+    context: .mixableSpecTarget,
+  );
 
   return renderWidgetCall(
     widgetName: widgetName,
     params: call.params,
     forwardsKey: call.forwardsKey,
+    typeParams: typeParams,
     indent: indent,
   );
 }
@@ -117,6 +143,42 @@ ConstructorElement mixableSpecTargetTearOff(
   }
 
   return constructor;
+}
+
+/// Ensures a generic target is the class constructor's direct, uninstantiated
+/// tear-off. The raw [ConstructorElement] does not retain type arguments or
+/// typedef substitutions, so accepting either would silently change the API.
+void validateGenericTargetTearOff({
+  required ConstantReader target,
+  required ConstructorElement constructor,
+  required Element anchor,
+  required String annotationLabel,
+}) {
+  final classTypeParams = constructor.enclosingElement.typeParameters;
+  final tearOffType = target.objectValue.type;
+  if (classTypeParams.isEmpty) return;
+
+  final preservesClassTypeParams =
+      tearOffType is FunctionType &&
+      tearOffType.typeParameters.length == classTypeParams.length &&
+      tearOffType.typeParameters.indexed.every(
+        (entry) =>
+            entry.$2.baseElement == classTypeParams[entry.$1].baseElement,
+      );
+  if (preservesClassTypeParams) return;
+
+  final widgetName = requireName(
+    constructor.enclosingElement,
+    orFailWith: '$annotationLabel target widget class must have a name.',
+  );
+  fail(
+    anchor,
+    '$annotationLabel only supports direct, uninstantiated constructor '
+    'tear-offs for generic target `$widgetName`.',
+    todo:
+        'Use the class constructor tear-off directly, without type arguments '
+        'or a typedef, so the generated API can preserve its generics.',
+  );
 }
 
 String mixableSpecTargetWidgetName(ConstructorElement constructor) {
@@ -219,12 +281,83 @@ void validateMixableSpecTargetConstructor({
   return (params: params, forwardsKey: forwardsKey);
 }
 
+enum WidgetCallTypeParamContext {
+  mixWidgetCall,
+  mixableSpecTarget;
+
+  String get missingNameMessage => switch (this) {
+    mixWidgetCall => '@MixWidget call type parameter must have a name.',
+    mixableSpecTarget =>
+      '@MixableSpec(target:) target widget type parameter must have a name.',
+  };
+
+  String invisibleBoundMessage(
+    String name,
+    String hiddenType,
+  ) => switch (this) {
+    mixWidgetCall =>
+      'Call type parameter `$name` has bound `$hiddenType`, but that type '
+          'is not visible from the annotated library.',
+    mixableSpecTarget =>
+      'Target widget type parameter `$name` has bound `$hiddenType`, but that '
+          'type is not visible from the annotated library.',
+  };
+}
+
+List<WidgetCallTypeParam> extractTypeParams(
+  Iterable<TypeParameterElement> typeParameters, {
+  required LibraryElement library,
+  WidgetCallTypeParamContext context = .mixWidgetCall,
+}) {
+  return [
+    for (final typeParameter in typeParameters)
+      _typeParam(typeParameter, library: library, context: context),
+  ];
+}
+
+WidgetCallTypeParam _typeParam(
+  TypeParameterElement typeParameter, {
+  required LibraryElement library,
+  required WidgetCallTypeParamContext context,
+}) {
+  final name = requireName(
+    typeParameter,
+    orFailWith: context.missingNameMessage,
+  );
+  final bound = typeParameter.bound;
+
+  if (bound == null) {
+    return WidgetCallTypeParam(name: name);
+  }
+
+  final hiddenType = firstInvisibleTypeName(bound, library);
+  if (hiddenType != null) {
+    fail(
+      typeParameter,
+      context.invisibleBoundMessage(name, hiddenType),
+      todo: 'Import or re-export `$hiddenType` where the annotation lives.',
+    );
+  }
+
+  return WidgetCallTypeParam(
+    name: name,
+    boundCode: typeCode(bound, visibleFrom: library),
+  );
+}
+
 String renderWidgetCall({
   required String widgetName,
   required List<WidgetCallParam> params,
   required bool forwardsKey,
+  List<WidgetCallTypeParam> typeParams = const [],
   String indent = '',
 }) {
+  final declarationSuffix = typeParams.isEmpty
+      ? ''
+      : '<${typeParams.map((p) => p.declarationCode).join(', ')}>';
+  final invocationSuffix = typeParams.isEmpty
+      ? ''
+      : '<${typeParams.map((p) => p.name).join(', ')}>';
   final positional = params.where((p) => p.isPositional).toList();
   final named = params.where((p) => !p.isPositional).toList();
   final signatureParams = [
@@ -240,8 +373,8 @@ String renderWidgetCall({
   ];
 
   return '''
-$indent$widgetName call(${signatureParams.join(', ')}) {
-$indent  return $widgetName(${invocationArgs.join(', ')});
+$indent$widgetName$invocationSuffix call$declarationSuffix(${signatureParams.join(', ')}) {
+$indent  return $widgetName$invocationSuffix(${invocationArgs.join(', ')});
 $indent}
 ''';
 }

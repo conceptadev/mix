@@ -167,8 +167,14 @@ class MixWidgetGenerator extends GeneratorForAnnotation<MixWidget> {
       callTypeParams: targetConstructor == null
           ? (callSource.isGenerated
                 ? const []
-                : _extractCallTypeParams(callSource.call, library: library))
-          : _extractTargetTypeParams(targetConstructor, library: library),
+                : extractTypeParams(
+                    callSource.call.typeParameters,
+                    library: library,
+                  ))
+          : extractTypeParams(
+              targetConstructor.enclosingElement.typeParameters,
+              library: library,
+            ),
       stylerCallForwardsKey: call.forwardsKey,
       targetTypeReference: callSource.targetTypeReference,
       targetConstructorName: callSource.targetConstructorName,
@@ -246,8 +252,14 @@ class MixWidgetGenerator extends GeneratorForAnnotation<MixWidget> {
     final callTypeParams = targetConstructor == null
         ? (callSource.isGenerated
               ? const <WidgetCallTypeParam>[]
-              : _extractCallTypeParams(callSource.call, library: library))
-        : _extractTargetTypeParams(targetConstructor, library: library);
+              : extractTypeParams(
+                  callSource.call.typeParameters,
+                  library: library,
+                ))
+        : extractTypeParams(
+            targetConstructor.enclosingElement.typeParameters,
+            library: library,
+          );
     final variantConstructors =
         factoryParams.any((parameter) => parameter.name == _variantParamName)
         ? _extractVariantConstructors(
@@ -447,16 +459,6 @@ class MixWidgetGenerator extends GeneratorForAnnotation<MixWidget> {
     return acceptedSpec is InterfaceType &&
         acceptedSpec.element.name == spec.name &&
         acceptedSpec.element.library.uri == spec.library.uri;
-  }
-
-  List<WidgetCallTypeParam> _extractTargetTypeParams(
-    ConstructorElement constructor, {
-    required LibraryElement library,
-  }) {
-    return [
-      for (final typeParameter in constructor.enclosingElement.typeParameters)
-        _callTypeParam(typeParameter, library: library),
-    ];
   }
 
   List<WidgetVariantConstructor>? _extractVariantConstructors(
@@ -847,46 +849,6 @@ class MixWidgetGenerator extends GeneratorForAnnotation<MixWidget> {
     return null;
   }
 
-  List<WidgetCallTypeParam> _extractCallTypeParams(
-    ExecutableElement callMethod, {
-    required LibraryElement library,
-  }) {
-    return [
-      for (final typeParameter in callMethod.typeParameters)
-        _callTypeParam(typeParameter, library: library),
-    ];
-  }
-
-  WidgetCallTypeParam _callTypeParam(
-    TypeParameterElement typeParameter, {
-    required LibraryElement library,
-  }) {
-    final name = requireName(
-      typeParameter,
-      orFailWith: '$_annotationLabel call type parameter must have a name.',
-    );
-    final bound = typeParameter.bound;
-
-    if (bound == null) {
-      return WidgetCallTypeParam(name: name);
-    }
-
-    final hiddenType = firstInvisibleTypeName(bound, library);
-    if (hiddenType != null) {
-      fail(
-        typeParameter,
-        'Call type parameter `$name` has bound `$hiddenType`, but that type '
-        'is not visible from the annotated library.',
-        todo: 'Import or re-export `$hiddenType` where the annotation lives.',
-      );
-    }
-
-    return WidgetCallTypeParam(
-      name: name,
-      boundCode: typeCode(bound, visibleFrom: library),
-    );
-  }
-
   List<WidgetCallParam> _extractFactoryParams(
     TopLevelFunctionElement function, {
     required LibraryElement library,
@@ -1252,6 +1214,13 @@ class MixWidgetGenerator extends GeneratorForAnnotation<MixWidget> {
         '(e.g., RemixButton.new).',
       );
     }
+    validateGenericTargetTearOff(
+      target: target,
+      constructor: constructor,
+      anchor: anchor,
+      annotationLabel: '@MixWidget(target:)',
+    );
+
     return constructor;
   }
 }

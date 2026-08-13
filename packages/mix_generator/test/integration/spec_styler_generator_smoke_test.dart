@@ -777,6 +777,346 @@ void main() {
     });
 
     test(
+      'preserves generic target widget type parameters, including bounds',
+      () async {
+        const input = '''
+          library generic_target;
+          import 'package:flutter/widgets.dart';
+          import 'package:mix/mix.dart';
+          import 'package:mix/src/core/style_widget.dart';
+          import 'package:mix_annotations/mix_annotations.dart';
+          part 'generic_target.g.dart';
+
+          @MixableSpec(target: GenericWidget.new)
+          final class GenericSpec extends Spec<GenericSpec> {
+            const GenericSpec();
+          }
+
+          class GenericWidget<T, U extends Object>
+              extends StyleWidget<GenericSpec> {
+            const GenericWidget({
+              super.key,
+              required super.style,
+              required this.value,
+              required this.other,
+            });
+
+            final T value;
+            final U other;
+          }
+        ''';
+
+        await expectGeneratorOutputResolves(
+          builder: _specStylerPartBuilder(),
+          sources: {
+            ...mixAnnotationsSources,
+            ..._flutterResolveStubs,
+            ..._mixSourcesWithStyleWidget,
+            'mix|lib/generic_target.dart': input,
+          },
+          inputAsset: 'mix|lib/generic_target.dart',
+          outputAsset: 'mix|lib/generic_target.g.dart',
+          outputMatcher: allOf(
+            contains(
+              'GenericWidget<T, U> call<T, U extends Object>({\n'
+              '    Key? key,\n'
+              '    required T value,\n'
+              '    required U other,\n'
+              '  })',
+            ),
+            contains(
+              'return GenericWidget<T, U>(\n'
+              '      key: key,\n'
+              '      style: this,\n'
+              '      value: value,\n'
+              '      other: other,\n'
+              '    );',
+            ),
+          ),
+        );
+      },
+    );
+
+    test('forwards F-bounded target widget type parameters', () async {
+      const input = '''
+        library f_bounded_target;
+        import 'package:flutter/widgets.dart';
+        import 'package:mix/mix.dart';
+        import 'package:mix/src/core/style_widget.dart';
+        import 'package:mix_annotations/mix_annotations.dart';
+        part 'f_bounded_target.g.dart';
+
+        @MixableSpec(target: ComparableWidget.new)
+        final class ComparableSpec extends Spec<ComparableSpec> {
+          const ComparableSpec();
+        }
+
+        class ComparableWidget<T extends Comparable<T>>
+            extends StyleWidget<ComparableSpec> {
+          const ComparableWidget({
+            super.key,
+            required super.style,
+            required this.value,
+          });
+
+          final T value;
+        }
+      ''';
+
+      await expectGeneratorOutputResolves(
+        builder: _specStylerPartBuilder(),
+        sources: {
+          ...mixAnnotationsSources,
+          ..._flutterResolveStubs,
+          ..._mixSourcesWithStyleWidget,
+          'mix|lib/f_bounded_target.dart': input,
+        },
+        inputAsset: 'mix|lib/f_bounded_target.dart',
+        outputAsset: 'mix|lib/f_bounded_target.g.dart',
+        outputMatcher: allOf(
+          contains(
+            'ComparableWidget<T> call<T extends Comparable<T>>({\n'
+            '    Key? key,\n'
+            '    required T value,\n'
+            '  })',
+          ),
+          contains(
+            'return ComparableWidget<T>(key: key, style: this, value: value);',
+          ),
+        ),
+      );
+    });
+
+    test('preserves generic function type bounds', () async {
+      const input = '''
+        library generic_function_bound_target;
+        import 'package:flutter/widgets.dart';
+        import 'package:mix/mix.dart';
+        import 'package:mix/src/core/style_widget.dart';
+        import 'package:mix_annotations/mix_annotations.dart';
+        part 'generic_function_bound_target.g.dart';
+
+        @MixableSpec(target: GenericFunctionWidget.new)
+        final class GenericFunctionSpec extends Spec<GenericFunctionSpec> {
+          const GenericFunctionSpec();
+        }
+
+        class GenericFunctionWidget<T extends S Function<S>(S)>
+            extends StyleWidget<GenericFunctionSpec> {
+          const GenericFunctionWidget({super.key, required super.style});
+        }
+      ''';
+
+      await expectGeneratorOutputResolves(
+        builder: _specStylerPartBuilder(),
+        sources: {
+          ...mixAnnotationsSources,
+          ..._flutterResolveStubs,
+          ..._mixSourcesWithStyleWidget,
+          'mix|lib/generic_function_bound_target.dart': input,
+        },
+        inputAsset: 'mix|lib/generic_function_bound_target.dart',
+        outputAsset: 'mix|lib/generic_function_bound_target.g.dart',
+        outputMatcher: allOf(
+          contains(
+            'GenericFunctionWidget<T> '
+            'call<T extends S Function<S>(S)>({Key? key})',
+          ),
+          contains('return GenericFunctionWidget<T>(key: key, style: this);'),
+        ),
+      );
+    });
+
+    test('preserves visible prefixes inside record bounds', () async {
+      const input = '''
+        library record_bound_target;
+        import 'package:flutter/widgets.dart';
+        import 'package:mix/mix.dart';
+        import 'package:mix/src/core/style_widget.dart';
+        import 'package:mix_annotations/mix_annotations.dart';
+        import 'bound.dart' as b;
+        part 'record_bound_target.g.dart';
+
+        @MixableSpec(target: RecordWidget.new)
+        final class RecordSpec extends Spec<RecordSpec> {
+          const RecordSpec();
+        }
+
+        class RecordWidget<T extends (b.Visible,)>
+            extends StyleWidget<RecordSpec> {
+          const RecordWidget({super.key, required super.style});
+        }
+      ''';
+
+      await expectGeneratorOutputResolves(
+        builder: _specStylerPartBuilder(),
+        sources: {
+          ...mixAnnotationsSources,
+          ..._flutterResolveStubs,
+          ..._mixSourcesWithStyleWidget,
+          'mix|lib/bound.dart': 'class Visible {}',
+          'mix|lib/record_bound_target.dart': input,
+        },
+        inputAsset: 'mix|lib/record_bound_target.dart',
+        outputAsset: 'mix|lib/record_bound_target.g.dart',
+        outputMatcher: allOf(
+          contains('RecordWidget<T> call<T extends (b.Visible,)>({Key? key})'),
+          contains('return RecordWidget<T>(key: key, style: this);'),
+        ),
+      );
+    });
+
+    test(
+      'preserves target widget type parameters unused by constructor params',
+      () async {
+        const input = '''
+          library unused_generic_target;
+          import 'package:flutter/widgets.dart';
+          import 'package:mix/mix.dart';
+          import 'package:mix/src/core/style_widget.dart';
+          import 'package:mix_annotations/mix_annotations.dart';
+          part 'unused_generic_target.g.dart';
+
+          @MixableSpec(target: WrapperWidget.new)
+          final class WrapperSpec extends Spec<WrapperSpec> {
+            const WrapperSpec();
+          }
+
+          class WrapperWidget<T> extends StyleWidget<WrapperSpec> {
+            const WrapperWidget({super.key, required super.style});
+          }
+        ''';
+
+        await expectGeneratorOutputResolves(
+          builder: _specStylerPartBuilder(),
+          sources: {
+            ...mixAnnotationsSources,
+            ..._flutterResolveStubs,
+            ..._mixSourcesWithStyleWidget,
+            'mix|lib/unused_generic_target.dart': input,
+          },
+          inputAsset: 'mix|lib/unused_generic_target.dart',
+          outputAsset: 'mix|lib/unused_generic_target.g.dart',
+          outputMatcher: allOf(
+            contains('WrapperWidget<T> call<T>({Key? key})'),
+            contains('return WrapperWidget<T>(key: key, style: this);'),
+          ),
+        );
+      },
+    );
+
+    test('rejects target type parameters that shadow Flutter Key', () async {
+      const input = '''
+        library key_shadow_target;
+        import 'package:mix/mix.dart';
+        import 'package:mix/src/core/style_widget.dart';
+        import 'package:mix_annotations/mix_annotations.dart';
+        part 'key_shadow_target.g.dart';
+
+        @MixableSpec(target: GenericWidget.new)
+        final class GenericSpec extends Spec<GenericSpec> {
+          const GenericSpec();
+        }
+
+        class GenericWidget<Key> extends StyleWidget<GenericSpec> {
+          const GenericWidget({super.key, required super.style});
+        }
+      ''';
+
+      final errors = await _expectSpecStylerValidationError({
+        ...mixAnnotationsSources,
+        ..._flutterResolveStubs,
+        ..._mixSourcesWithStyleWidget,
+        'mix|lib/key_shadow_target.dart': input,
+      }, inputAsset: 'mix|lib/key_shadow_target.dart');
+
+      expect(
+        errors,
+        contains(
+          'Target widget type parameter `Key` conflicts with the generated '
+          'Flutter `Key? key` parameter',
+        ),
+      );
+    });
+
+    test('rejects instantiated generic target constructor tear-offs', () async {
+      const input = '''
+        library spike;
+        import 'package:mix/mix.dart';
+        import 'package:mix/src/core/style_widget.dart';
+        import 'package:mix_annotations/mix_annotations.dart';
+        part 'spike.g.dart';
+
+        @MixableSpec(target: GenericWidget<int>.new)
+        final class GenericSpec extends Spec<GenericSpec> {
+          const GenericSpec();
+        }
+
+        class GenericWidget<T> extends StyleWidget<GenericSpec> {
+          const GenericWidget({required super.style, required this.value});
+
+          final T value;
+        }
+      ''';
+
+      final errors = await _expectSpecStylerValidationError({
+        ...mixAnnotationsSources,
+        ..._flutterResolveStubs,
+        ..._mixSourcesWithStyleWidget,
+        'mix|lib/spike.dart': input,
+      });
+
+      expect(
+        errors,
+        contains(
+          '@MixableSpec(target:) only supports direct, uninstantiated '
+          'constructor tear-offs for generic target `GenericWidget`',
+        ),
+      );
+    });
+
+    test(
+      'rejects generic target constructor tear-offs through typedefs',
+      () async {
+        const input = '''
+        library spike;
+        import 'package:mix/mix.dart';
+        import 'package:mix/src/core/style_widget.dart';
+        import 'package:mix_annotations/mix_annotations.dart';
+        part 'spike.g.dart';
+
+        typedef GenericAlias<T> = GenericWidget<T>;
+
+        @MixableSpec(target: GenericAlias.new)
+        final class GenericSpec extends Spec<GenericSpec> {
+          const GenericSpec();
+        }
+
+        class GenericWidget<T> extends StyleWidget<GenericSpec> {
+          const GenericWidget({required super.style, required this.value});
+
+          final T value;
+        }
+      ''';
+
+        final errors = await _expectSpecStylerValidationError({
+          ...mixAnnotationsSources,
+          ..._flutterResolveStubs,
+          ..._mixSourcesWithStyleWidget,
+          'mix|lib/spike.dart': input,
+        });
+
+        expect(
+          errors,
+          contains(
+            '@MixableSpec(target:) only supports direct, uninstantiated '
+            'constructor tear-offs for generic target `GenericWidget`',
+          ),
+        );
+      },
+    );
+
+    test(
       'uses source imports needed by target widgets from the host part',
       () async {
         const specInput = '''

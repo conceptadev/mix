@@ -541,6 +541,45 @@ RadioStyler fortalRadioStyler() => RadioStyler();
       );
     });
 
+    test('rejects instantiated generic target constructor tear-offs', () async {
+      const body = r'''
+final class ButtonSpec extends Spec<ButtonSpec> {
+  const ButtonSpec();
+}
+
+class ButtonStyler extends Style<ButtonSpec> {
+  const ButtonStyler();
+}
+
+class GenericWidget<T> extends StatelessWidget {
+  const GenericWidget({required this.style, required this.value});
+
+  final Style<ButtonSpec> style;
+  final T value;
+
+  @override
+  Widget build(BuildContext context) => const _Leaf();
+}
+
+class _Leaf extends Widget {
+  const _Leaf();
+}
+
+@MixWidget(target: GenericWidget<int>.new)
+final genericStyle = const ButtonStyler();
+''';
+
+      final errors = await _expectMixWidgetError(body);
+
+      expect(
+        errors,
+        contains(
+          '@MixWidget(target:) only supports direct, uninstantiated '
+          'constructor tear-offs for generic target `GenericWidget`',
+        ),
+      );
+    });
+
     test('rejects a target without a named style parameter', () async {
       const body = r'''
 @MixableSpec()
