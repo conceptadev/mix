@@ -32,6 +32,7 @@ The generator emits several surfaces with deliberately different shapes, chosen 
 
 - **`@MixableSpec`** emits a *rich* mixin (`mixin _$<Name> implements Spec<T>, Diagnosticable`) that fully completes the Spec contract on its own. Specs are immutable value types with no shared concrete behavior to inherit, so the generated mixin can be self-contained — user code only writes `with _$<Name>`.
 - **`@MixableSpec(target: Widget.new)`** also emits a full generated Styler class into the same `.g.dart` part file as the spec mixin. The generated class owns fields, constructors, factories, fluent methods, `call()`, merge, resolve, diagnostics, and props.
+  Direct, uninstantiated generic targets are supported; generated `call()` methods preserve and forward their type parameters and bounds. Instantiated targets such as `Widget<int>.new` and generic constructor tear-offs through typedefs are rejected because their substitutions are not yet supported. A target type parameter named `Key` is also rejected when the constructor forwards Flutter's `key`, because it would shadow the generated `Key? key` parameter.
 - **`@MixableStyler`** emits a legacy *slim* mixin (`mixin _$<Name>Mixin on Style<S>, Diagnosticable`) that fills in per-field plumbing for handwritten styler classes.
 - **`@Mixable`** emits a *slim* mixin (`mixin _$<Name>Mixin on Mix<T>[, DefaultValue<T>][, Diagnosticable]`) for the same reason — Mix subclasses commonly compose intermediate base classes (e.g., `class BoxConstraintsMix extends ConstraintsMix<BoxConstraints>`) and the user keeps that inheritance chain.
 - **`@MixableModifier`** emits a self-contained modifier mixin (`mixin _$<Name> implements WidgetModifier<T>, Diagnosticable`) plus its corresponding `<Name>Mix` class.
@@ -200,7 +201,9 @@ This path reads widget parameters and generic type parameters from the target
 constructor, omits `style` and `styleSpec`, and instantiates the target
 directly with the recipe result passed through `style`. It does not require
 the target to extend `StyleWidget` and does not inspect extension `call()`
-methods.
+methods. Generic targets must be passed uninstantiated (for example,
+`RemixButton.new`); constructor tear-offs with fixed type arguments or through
+typedefs are rejected.
 
 For compatibility, an annotation from an older `mix_annotations` release that
 does not define `widgetParameters` is interpreted as `.all()`. Using

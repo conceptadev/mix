@@ -1,3 +1,12 @@
+## 2.2.0-beta.3
+
+ - **FIX**: Preserve type parameters and bounds from uninstantiated generic
+   targets in generated `@MixableSpec(target:)` `call()` methods, and reject
+   instantiated or aliased generic targets instead of silently widening them in
+   `@MixableSpec(target:)` or `@MixWidget(target:)`. Reject a target type
+   parameter named `Key` when it would shadow the generated Flutter key
+   parameter (#1023).
+
 ## 2.2.0-beta.2
 
  - **FEAT**: Generate `@MixWidget(target:)` wrappers for plain Widget

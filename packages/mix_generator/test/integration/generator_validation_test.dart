@@ -614,6 +614,72 @@ class _Stub extends StatelessWidget {
       expect(errors, contains('not visible from the annotated library'));
     });
 
+    /// This visibility split is only reachable through the legacy
+    /// `@MixableStyler` path because generated specs and their stylers share a
+    /// library.
+    test('StylerGenerator rejects a target widget type parameter bound that '
+        'is not visible from the annotated library', () async {
+      const stylerSource = r'''
+library styler_validation;
+
+import 'package:mix_annotations/mix_annotations.dart';
+import 'package:mix/src/core/style.dart';
+import 'target.dart';
+
+@MixableStyler()
+class GenericStyler extends Style<GenericSpec> {
+  const GenericStyler();
+}
+''';
+
+      final result = await testBuilder(
+        partBuilder(const StylerGenerator()),
+        {
+          ...mixAnnotationsSources,
+          ...widgetStub,
+          'mix|lib/src/core/style.dart': styleStub,
+          'mix|lib/src/core/style_widget.dart': r'''
+import 'package:flutter/widgets.dart';
+import 'style.dart';
+
+abstract class StyleWidget<S> extends Widget {
+  final Style<S> style;
+
+  const StyleWidget({required this.style});
+}
+''',
+          'mix_generator|lib/hidden_bound.dart': r'''
+class HiddenBound {}
+''',
+          'mix_generator|lib/target.dart': r'''
+import 'package:flutter/widgets.dart';
+import 'package:mix_annotations/mix_annotations.dart';
+import 'package:mix/src/core/style_widget.dart';
+import 'hidden_bound.dart';
+
+@MixableSpec(target: GenericWidget.new)
+class GenericSpec {
+  const GenericSpec();
+}
+
+class GenericWidget<T extends HiddenBound> extends StyleWidget<GenericSpec> {
+  const GenericWidget({required super.style});
+}
+''',
+          'mix_generator|lib/styler_validation.dart': stylerSource,
+        },
+        generateFor: {'mix_generator|lib/styler_validation.dart'},
+      );
+
+      expect(result.succeeded, isFalse);
+      final errors = result.errors.join('\n');
+      expect(
+        errors,
+        contains('Target widget type parameter `T` has bound `HiddenBound`'),
+      );
+      expect(errors, contains('not visible from the annotated library'));
+    });
+
     test(
       'MixWidgetGenerator rejects optional positional factory params',
       () async {

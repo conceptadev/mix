@@ -111,6 +111,18 @@ void main() {
         'HiddenAlias',
       );
     });
+
+    test('checks generic function type parameter bounds', () async {
+      final libraries = await _resolveHiddenLibraryScope();
+      final hiddenValue = libraries.hidden.getTopLevelFunction(
+        'hiddenGenericBound',
+      )!;
+
+      expect(
+        firstInvisibleTypeName(hiddenValue.returnType, libraries.input),
+        'HiddenType',
+      );
+    });
   });
 
   group('typeCode', () {
@@ -192,6 +204,8 @@ _resolveHiddenLibraryScope() {
 
         HiddenType hiddenValue() => throw UnimplementedError();
         HiddenAlias<int> hiddenAlias() => throw UnimplementedError();
+        S Function<S extends HiddenType>(S) hiddenGenericBound() =>
+            throw UnimplementedError();
       ''',
       'test_pkg|lib/input.dart': '''
         library input;

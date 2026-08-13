@@ -57,6 +57,7 @@ Optional method flags:
 - `GeneratedSpecMethods.skipLerp`
 
 With `target: Widget.new`, it also drives generated Styler and `call()` support from the target widget constructor.
+Direct, uninstantiated generic targets are supported; generated `call()` methods preserve and forward their type parameters and bounds. Instantiated targets such as `Widget<int>.new` and generic constructor tear-offs through typedefs are rejected because their substitutions are not yet supported. A target type parameter named `Key` is also rejected when the constructor forwards Flutter's `key`, because it would shadow the generated `Key? key` parameter.
 
 ### `@MixableStyler()` Legacy
 

@@ -175,16 +175,16 @@ void _writeGeneratedDart(String path, String output) {
 }
 
 void _checkGeneratedDart(String path, String output) {
-  final tempDir = Directory.systemTemp.createTempSync(
-    'mix_winds_registry_check_',
-  );
+  final target = File(path);
+  // Keep the temporary source in the package so `dart format` resolves the
+  // same package language version for both files.
+  final tempDir = target.parent.createTempSync('.mix_winds_registry_check_');
   try {
     final temporary = File(
       '${tempDir.path}/${File(path).uri.pathSegments.last}',
     )..writeAsStringSync(output);
     if (!_formatGeneratedDart(temporary)) return;
 
-    final target = File(path);
     if (!target.existsSync() ||
         target.readAsStringSync() != temporary.readAsStringSync()) {
       stderr.writeln(
