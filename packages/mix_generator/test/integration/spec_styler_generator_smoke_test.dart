@@ -32,6 +32,14 @@ const _styleSpecStub = '''
   }
 ''';
 
+const _canonicalStyleStub = '''
+  import 'package:mix/mix.dart' show Spec;
+
+  abstract class Style<S extends Spec<S>> {
+    const Style();
+  }
+''';
+
 const _setterTypeMixSources = {
   'mix|lib/src/core/mix_element.dart': '''
     abstract class Mix<T> {
@@ -1355,13 +1363,7 @@ void main() {
             ...mixAnnotationsSources,
             ..._flutterResolveStubs,
             ..._mixSourcesWithStyleWidget,
-            'mix|lib/src/core/style.dart': '''
-            import 'package:mix/mix.dart' show Spec;
-
-            abstract class Style<S extends Spec<S>> {
-              const Style();
-            }
-          ''',
+            'mix|lib/src/core/style.dart': _canonicalStyleStub,
             'mix|lib/spike.dart': input,
             'mix|lib/prior.g.dart': priorOutput,
           },
@@ -1524,6 +1526,48 @@ void main() {
       );
     });
 
+    test('rejects unrelated Style types with matching display names', () async {
+      const input = '''
+        library spike;
+        import 'package:flutter/widgets.dart';
+        import 'package:mix/mix.dart' hide Style;
+        import 'package:mix/unrelated_style.dart';
+        import 'package:mix_annotations/mix_annotations.dart';
+        part 'spike.g.dart';
+
+        @MixableSpec(target: PlainWidget.new)
+        final class BoxSpec extends Spec<BoxSpec> {
+          const BoxSpec();
+        }
+
+        class PlainWidget extends Widget {
+          const PlainWidget({required this.style});
+
+          final Style<BoxSpec> style;
+        }
+      ''';
+
+      final errors = await _expectSpecStylerValidationError({
+        ...mixAnnotationsSources,
+        ..._flutterResolveStubs,
+        ..._mixSourcesWithStyleWidget,
+        'mix|lib/unrelated_style.dart': '''
+          final class Style<T> {
+            const Style();
+          }
+        ''',
+        'mix|lib/spike.dart': input,
+      });
+
+      expect(
+        errors,
+        contains(
+          '@MixableSpec(target:) PlainWidget `style` parameter cannot accept '
+          'the generated `BoxStyler`',
+        ),
+      );
+    });
+
     test('rejects style subtypes not implemented by the Styler', () async {
       const input = '''
         library spike;
@@ -1553,13 +1597,7 @@ void main() {
         ...mixAnnotationsSources,
         ..._flutterResolveStubs,
         ..._mixSourcesWithStyleWidget,
-        'mix|lib/src/core/style.dart': '''
-          import 'package:mix/mix.dart' show Spec;
-
-          abstract class Style<S extends Spec<S>> {
-            const Style();
-          }
-        ''',
+        'mix|lib/src/core/style.dart': _canonicalStyleStub,
         'mix|lib/spike.dart': input,
       });
 

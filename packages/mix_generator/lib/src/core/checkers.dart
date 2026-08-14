@@ -15,11 +15,6 @@ const styleChecker = TypeChecker.fromUrl(
   'package:mix/src/core/style.dart#Style',
 );
 
-/// `StyleWidget<S>` abstract class from `package:mix`.
-const styleWidgetChecker = TypeChecker.fromUrl(
-  'package:mix/src/core/style_widget.dart#StyleWidget',
-);
-
 /// `StyleSpec<S>` from `package:mix`.
 const styleSpecChecker = TypeChecker.fromUrl(
   'package:mix/src/core/style_spec.dart#StyleSpec',

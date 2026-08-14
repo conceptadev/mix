@@ -36,7 +36,7 @@ String? buildMixableSpecTargetCall({
   required ConstantReader annotation,
   required InterfaceElement specElement,
   required String stylerName,
-  required bool allowExactStylerType,
+  required bool allowExactGeneratedStyler,
   required Element hostElement,
   required LibraryElement hostLibrary,
   bool validateTargetVisibility = false,
@@ -75,7 +75,7 @@ String? buildMixableSpecTargetCall({
     widgetName: widgetName,
     specElement: specElement,
     stylerName: stylerName,
-    allowExactStylerType: allowExactStylerType,
+    allowExactGeneratedStyler: allowExactGeneratedStyler,
     anchor: specElement,
   );
 
@@ -194,7 +194,7 @@ void validateMixableSpecTargetConstructor({
   required String widgetName,
   required InterfaceElement specElement,
   required String stylerName,
-  required bool allowExactStylerType,
+  required bool allowExactGeneratedStyler,
   required Element anchor,
 }) {
   final targetType = constructor.enclosingElement.thisType;
@@ -244,7 +244,7 @@ void validateMixableSpecTargetConstructor({
     styleParameter.type,
     specElement: specElement,
     stylerName: stylerName,
-    allowExactStylerType: allowExactStylerType,
+    allowExactGeneratedStyler: allowExactGeneratedStyler,
   )) {
     fail(
       anchor,
@@ -262,13 +262,13 @@ void validateMixableSpecTargetConstructor({
 /// interface. Both states are accepted for the exact generated Styler; other
 /// resolved types must accept its known `Style<S>` supertype.
 ///
-/// [allowExactStylerType] is false for legacy mixins, where `this` is only
-/// statically known to satisfy the mixin's `Style<S>` constraint.
+/// [allowExactGeneratedStyler] is false for legacy mixins, where `this` is
+/// only statically known to satisfy the mixin's `Style<S>` constraint.
 bool _targetStyleAcceptsGeneratedStyler(
   DartType targetStyleType, {
   required InterfaceElement specElement,
   required String stylerName,
-  required bool allowExactStylerType,
+  required bool allowExactGeneratedStyler,
 }) {
   final specName = specElement.name;
   if (specName == null) return false;
@@ -281,19 +281,21 @@ bool _targetStyleAcceptsGeneratedStyler(
   if (targetStyleType is! InterfaceType) return false;
 
   final targetElement = targetStyleType.element;
-  final isGeneratedStyler =
-      allowExactStylerType &&
+  final isExactGeneratedStyler =
+      allowExactGeneratedStyler &&
       targetElement.name == stylerName &&
       targetElement.library.uri == specElement.library.uri;
-  if (isGeneratedStyler) return true;
+  if (isExactGeneratedStyler) return true;
 
-  final acceptedStyle = findSupertypeMatching(targetStyleType, styleChecker);
-  if (acceptedStyle == null) {
-    // Some build-test consumers re-export a lightweight Style stub from a
-    // barrel rather than its canonical library. Preserve semantic matching
-    // for that test shape without weakening non-Style targets.
-    return targetStyleType.getDisplayString() == 'Style<$specName>';
+  var acceptedStyle = findSupertypeMatching(targetStyleType, styleChecker);
+  if (acceptedStyle == null &&
+      targetElement.name == 'Style' &&
+      targetElement.library.uri.toString() == 'package:mix/mix.dart') {
+    // Lightweight build-test fixtures declare Style directly at the public
+    // barrel URI. Match that exact identity rather than rendered type text.
+    acceptedStyle = targetStyleType;
   }
+  if (acceptedStyle == null) return false;
   if (acceptedStyle.typeArguments.isEmpty) return false;
 
   final acceptedSpec = acceptedStyle.typeArguments.first;

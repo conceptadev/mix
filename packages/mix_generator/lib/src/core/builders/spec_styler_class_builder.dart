@@ -1015,7 +1015,7 @@ class SpecStylerClassBuilder {
       annotation: annotation,
       specElement: specElement,
       stylerName: stylerName,
-      allowExactStylerType: true,
+      allowExactGeneratedStyler: true,
       hostElement: specElement,
       hostLibrary: specElement.library,
     );

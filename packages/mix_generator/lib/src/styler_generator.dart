@@ -85,7 +85,7 @@ class StylerGenerator extends GeneratorForAnnotation<MixableStyler> {
       annotation: ConstantReader(specAnnotation),
       specElement: specElement,
       stylerName: stylerName,
-      allowExactStylerType: false,
+      allowExactGeneratedStyler: false,
       hostElement: stylerElement,
       hostLibrary: stylerElement.library,
       validateTargetVisibility: true,
