@@ -10,11 +10,11 @@ import 'schema_field.dart';
 import 'styler_field_inventory.dart';
 import 'styler_codec_helpers.dart';
 
-AckSchema<JsonMap, TextStyler> textStylerCodec({
+SchemaObject<TextStyler> textStylerSchema({
   AckSchema<JsonMap, Object>? rootStyleSchema,
   MixProtocolIdentityContext Function()? identityContext,
 }) {
-  return _textStylerSchemaType(rootStyleSchema).codec();
+  return _textStylerSchemaType(rootStyleSchema);
 }
 
 SchemaObject<TextStyler> _textStylerSchemaType(
@@ -29,6 +29,7 @@ SchemaObject<TextStyler> _textStylerSchemaType(
     'strutStyle',
     strutStyleMixCodec(),
     (value) => value.$strutStyle,
+    schemaSemantics: strutStyleFieldSemantics,
   );
   final textAlign = propValueField<TextStyler, TextAlign>(
     'textAlign',
@@ -49,6 +50,7 @@ SchemaObject<TextStyler> _textStylerSchemaType(
     'style',
     textStyleMixCodec(),
     (value) => value.$style,
+    schemaSemantics: textStyleFieldSemantics,
   );
   final textWidthBasis = propValueField<TextStyler, TextWidthBasis>(
     'textWidthBasis',

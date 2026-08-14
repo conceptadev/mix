@@ -37,7 +37,7 @@ enum MixProtocolErrorCode {
   /// The runtime Mix surface and schema inventory disagree during encode.
   inventorySkew('inventory_skew'),
 
-  /// The root discriminator did not match any built-in styler branch.
+  /// The root discriminator did not match any composed styler branch.
   unknownType('unknown_type'),
 
   /// An identity name was well formed but not resolved by decode options.

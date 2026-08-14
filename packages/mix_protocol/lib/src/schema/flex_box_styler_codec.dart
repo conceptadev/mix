@@ -10,11 +10,11 @@ import 'schema_field.dart';
 import 'styler_field_inventory.dart';
 import 'styler_codec_helpers.dart';
 
-AckSchema<JsonMap, FlexBoxStyler> flexBoxStylerCodec({
+SchemaObject<FlexBoxStyler> flexBoxStylerSchema({
   AckSchema<JsonMap, Object>? rootStyleSchema,
   MixProtocolIdentityContext Function()? identityContext,
 }) {
-  return _flexBoxStylerSchemaType(rootStyleSchema).codec();
+  return _flexBoxStylerSchemaType(rootStyleSchema);
 }
 
 SchemaObject<FlexBoxStyler> _flexBoxStylerSchemaType(
@@ -37,6 +37,7 @@ SchemaObject<FlexBoxStyler> _flexBoxStylerSchemaType(
     ),
     _boxField,
     inventoryName: 'box',
+    schemaSemantics: doubleTokenFieldSemantics,
   );
   final margin = derivedField<FlexBoxStyler, Prop<EdgeInsetsGeometry>>(
     'margin',
@@ -46,6 +47,7 @@ SchemaObject<FlexBoxStyler> _flexBoxStylerSchemaType(
     ),
     _boxField,
     inventoryName: 'box',
+    schemaSemantics: doubleTokenFieldSemantics,
   );
   final constraints = derivedField<FlexBoxStyler, Prop<BoxConstraints>>(
     'constraints',
@@ -86,6 +88,7 @@ SchemaObject<FlexBoxStyler> _flexBoxStylerSchemaType(
     ),
     _boxField,
     inventoryName: 'box',
+    schemaSemantics: boxDecorationFieldSemantics,
   );
   final direction = derivedField<FlexBoxStyler, Prop<Axis>>(
     'direction',
@@ -165,6 +168,7 @@ SchemaObject<FlexBoxStyler> _flexBoxStylerSchemaType(
     valuePropCodec<double>(doubleTokenCodec(), fieldName: 'spacing'),
     _flexField,
     inventoryName: 'flex',
+    schemaSemantics: doubleTokenFieldSemantics,
   );
   final metadata = StylerMetadataFields<FlexBoxStyler, FlexBoxSpec>(
     rootStyleSchema: rootStyleSchema,

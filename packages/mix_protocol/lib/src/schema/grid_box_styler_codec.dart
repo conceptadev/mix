@@ -9,33 +9,53 @@ import 'styler_codec_helpers.dart';
 import 'styler_field_inventory.dart';
 import 'wire_discriminators.dart';
 
-AckSchema<JsonMap, GridBoxStyler> gridBoxStylerCodec({
+SchemaObject<GridBoxStyler> gridBoxStylerSchema({
   AckSchema<JsonMap, Object>? rootStyleSchema,
 }) {
   final columns = directField<GridBoxStyler, List<GridTrack>>(
     'columns',
     Ack.list(_gridTrackCodec()).nonEmpty(),
     (value) => value.$columns,
+    schemaSemantics: const SchemaFieldSemantics(
+      doubleTokenPaths: [
+        ['*', 'size'],
+        ['*', 'fraction'],
+      ],
+    ),
   );
   final rows = directField<GridBoxStyler, List<GridTrack>>(
     'rows',
     Ack.list(_gridTrackCodec()),
     (value) => value.$rows,
+    schemaSemantics: const SchemaFieldSemantics(
+      doubleTokenPaths: [
+        ['*', 'size'],
+        ['*', 'fraction'],
+      ],
+    ),
   );
   final autoRows = directField<GridBoxStyler, GridTrack>(
     'autoRows',
     _gridTrackCodec(),
     (value) => value.$autoRows,
+    schemaSemantics: const SchemaFieldSemantics(
+      doubleTokenPaths: [
+        ['size'],
+        ['fraction'],
+      ],
+    ),
   );
   final columnGap = directField<GridBoxStyler, double>(
     'columnGap',
     nonNegativeDoubleTokenCodec(),
     (value) => value.$columnGap,
+    schemaSemantics: doubleTokenFieldSemantics,
   );
   final rowGap = directField<GridBoxStyler, double>(
     'rowGap',
     nonNegativeDoubleTokenCodec(),
     (value) => value.$rowGap,
+    schemaSemantics: doubleTokenFieldSemantics,
   );
   final clipBehavior = directField<GridBoxStyler, Clip>(
     'clipBehavior',
@@ -47,6 +67,18 @@ AckSchema<JsonMap, GridBoxStyler> gridBoxStylerCodec({
         'constraintBranches',
         Ack.list(_gridConstraintBranchCodec()),
         (value) => value.$constraintBranches,
+        schemaSemantics: const SchemaFieldSemantics(
+          doubleTokenPaths: [
+            ['*', 'patch', 'columns', '*', 'size'],
+            ['*', 'patch', 'columns', '*', 'fraction'],
+            ['*', 'patch', 'rows', '*', 'size'],
+            ['*', 'patch', 'rows', '*', 'fraction'],
+            ['*', 'patch', 'autoRows', 'size'],
+            ['*', 'patch', 'autoRows', 'fraction'],
+            ['*', 'patch', 'columnGap'],
+            ['*', 'patch', 'rowGap'],
+          ],
+        ),
       );
   final metadata = StylerMetadataFields<GridBoxStyler, GridBoxSpec>(
     rootStyleSchema: rootStyleSchema,
@@ -82,7 +114,7 @@ AckSchema<JsonMap, GridBoxStyler> gridBoxStylerCodec({
     inventoryOwner: 'GridBoxStyler',
     ownerFieldInventory: gridBoxStylerInventory,
     actualFieldCount: stylerFieldCount,
-  ).codec();
+  );
 }
 
 AckSchema<JsonMap, GridTrack> _gridTrackCodec() {

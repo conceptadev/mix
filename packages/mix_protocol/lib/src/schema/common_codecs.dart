@@ -506,14 +506,17 @@ CodecSchema<Object, Prop<PropValue>> valueAsPropCodec<
   );
 }
 
-CodecSchema<Object, Prop<PropValue>> mixPropCodec<
-  Value extends Object,
-  PropValue extends Object
->(AckSchema<Object, Value> valueCodec, {required String fieldName}) {
+CodecSchema<Object, Prop<PropValue>>
+mixPropCodec<Value extends Object, PropValue extends Object>(
+  AckSchema<Object, Value> valueCodec, {
+  required String fieldName,
+  Value? Function(PropValue value)? convertValue,
+}) {
   return _propTermCodec<Value, PropValue>(
     valueCodec,
     fieldName: fieldName,
     source: _PropSourceKind.mix,
+    convertValue: convertValue,
   );
 }
 
@@ -635,6 +638,7 @@ Object? encodePropTerm<T extends Object, V extends Object>(
   required String fieldName,
   AckSchema<Object, T>? valueCodec,
   bool tokenAware = false,
+  T? Function(V value)? convertValue,
 }) {
   if (prop == null) return null;
   if (prop.sources.isEmpty) {
@@ -651,6 +655,7 @@ Object? encodePropTerm<T extends Object, V extends Object>(
       fieldName: fieldName,
       valueCodec: valueCodec,
       tokenAware: tokenAware,
+      convertValue: convertValue,
     );
   }
 
@@ -661,6 +666,7 @@ Object? encodePropTerm<T extends Object, V extends Object>(
         fieldName: fieldName,
         valueCodec: valueCodec,
         tokenAware: tokenAware,
+        convertValue: convertValue,
       ),
   ];
 
@@ -687,6 +693,7 @@ Object _encodePropSource<T extends Object, V extends Object>(
   required String fieldName,
   AckSchema<Object, T>? valueCodec,
   required bool tokenAware,
+  T? Function(V value)? convertValue,
 }) {
   Object value;
   if (source is TokenSource<V>) {
@@ -701,6 +708,15 @@ Object _encodePropSource<T extends Object, V extends Object>(
     value = source.mix as T;
   } else if (source is ValueSource<V> && source.value is T) {
     value = source.value as T;
+  } else if (source is ValueSource<V> && convertValue != null) {
+    final converted = convertValue(source.value);
+    if (converted == null) {
+      throw UnsupportedEncodeValueError(
+        source,
+        'Field "$fieldName" is ${source.runtimeType}; expected $T.',
+      );
+    }
+    value = converted;
   } else {
     throw UnsupportedEncodeValueError(
       source,
@@ -780,6 +796,7 @@ _propTermCodec<Value extends Object, PropValue extends Object>(
   AckSchema<Object, Value> valueCodec, {
   required String fieldName,
   required _PropSourceKind source,
+  Value? Function(PropValue value)? convertValue,
 }) {
   return Ack.codec<Object, Object, Prop<PropValue>>(
     input: Ack.any(),
@@ -794,6 +811,7 @@ _propTermCodec<Value extends Object, PropValue extends Object>(
       fieldName: fieldName,
       valueCodec: valueCodec,
       tokenAware: true,
+      convertValue: convertValue,
     )!,
   );
 }

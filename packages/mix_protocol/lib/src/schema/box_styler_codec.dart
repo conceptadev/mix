@@ -9,11 +9,11 @@ import 'schema_field.dart';
 import 'styler_field_inventory.dart';
 import 'styler_codec_helpers.dart';
 
-AckSchema<JsonMap, BoxStyler> boxStylerCodec({
+SchemaObject<BoxStyler> boxStylerSchema({
   AckSchema<JsonMap, Object>? rootStyleSchema,
   MixProtocolIdentityContext Function()? identityContext,
 }) {
-  return _boxStylerSchemaType(rootStyleSchema).codec();
+  return _boxStylerSchemaType(rootStyleSchema);
 }
 
 JsonMap encodeBoxStylerFields(
@@ -39,12 +39,14 @@ SchemaObject<BoxStyler> _boxStylerSchemaType(
         'padding',
         edgeInsetsCodec(),
         (value) => value.$padding,
+        schemaSemantics: doubleTokenFieldSemantics,
       );
   final margin =
       propTokenMixField<BoxStyler, EdgeInsetsMix, EdgeInsetsGeometry>(
         'margin',
         edgeInsetsCodec(),
         (value) => value.$margin,
+        schemaSemantics: doubleTokenFieldSemantics,
       );
   final constraints =
       propMixField<BoxStyler, BoxConstraintsMix, BoxConstraints>(
@@ -72,12 +74,14 @@ SchemaObject<BoxStyler> _boxStylerSchemaType(
     'decoration',
     boxDecorationCodec(),
     (value) => value.$decoration,
+    schemaSemantics: boxDecorationFieldSemantics,
   );
   final foregroundDecoration =
       propMixField<BoxStyler, BoxDecorationMix, Decoration>(
         'foregroundDecoration',
         boxDecorationCodec(),
         (value) => value.$foregroundDecoration,
+        schemaSemantics: boxDecorationFieldSemantics,
       );
   final metadata = StylerMetadataFields<BoxStyler, BoxSpec>(
     rootStyleSchema: rootStyleSchema,
@@ -143,7 +147,7 @@ CodecSchema<JsonMap, BoxDecorationMix> boxDecorationCodec() {
       fieldName: 'decoration.backgroundBlendMode',
     ).optional(),
     'gradient': mixPropCodec<GradientMix, Gradient>(
-      _gradientCodec(),
+      gradientCodec(),
       fieldName: 'decoration.gradient',
     ).optional(),
     'boxShadow': mixPropCodec<BoxShadowListMix, List<BoxShadow>>(
@@ -181,7 +185,7 @@ CodecSchema<JsonMap, BoxDecorationMix> boxDecorationCodec() {
   );
 }
 
-CodecSchema<JsonMap, GradientMix> _gradientCodec() {
+CodecSchema<JsonMap, GradientMix> gradientCodec() {
   final colors = valuePropCodec<List<Color>>(
     Ack.list(colorLiteralCodec()),
     fieldName: 'decoration.gradient.colors',

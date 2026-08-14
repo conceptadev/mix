@@ -28,6 +28,7 @@ categories:
   flutter_projects:
     - packages/mix
     - packages/mix_protocol
+    - packages/mix_chart_protocol
     - packages/mix_winds
     - packages/mix_winds/example
     - packages/mix_chart
@@ -46,8 +47,8 @@ scripts:
     description: Run all static analysis checks.
 
   schema:inventory:
-    run: melos exec --scope="mix_protocol" -- dart run tool/inventory_check.dart --check
-    description: Verify mix_protocol inventory coverage decisions.
+    run: melos exec --scope="mix_protocol" -- dart run tool/inventory_check.dart --check && melos exec --scope="mix_chart_protocol" -- dart run tool/inventory_check.dart
+    description: Verify protocol vocabulary inventory coverage decisions.
 
   analyze:dart:
     run: melos exec -c 4 -- dart analyze .

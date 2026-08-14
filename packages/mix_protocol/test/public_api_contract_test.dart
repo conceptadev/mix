@@ -4,7 +4,7 @@ import 'package:mix_protocol/mix_protocol.dart';
 import 'package:mix_protocol/testing.dart' as protocol_testing;
 
 void main() {
-  test('public API exposes one fixed protocol facade and generic results', () {
+  test('public API keeps a fixed core facade and generic results', () {
     final MixProtocol protocol = mixProtocol;
     final MixProtocolResult<BoxStyler> decoded = protocol
         .decodeStyle<BoxStyler>({'v': 1, 'type': 'box'});

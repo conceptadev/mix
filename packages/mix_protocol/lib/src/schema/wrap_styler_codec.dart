@@ -8,11 +8,11 @@ import 'schema_field.dart';
 import 'styler_codec_helpers.dart';
 import 'styler_field_inventory.dart';
 
-AckSchema<JsonMap, WrapStyler> wrapStylerCodec({
+SchemaObject<WrapStyler> wrapStylerSchema({
   AckSchema<JsonMap, Object>? rootStyleSchema,
   MixProtocolIdentityContext Function()? identityContext,
 }) {
-  return _wrapStylerSchemaType(rootStyleSchema).codec();
+  return _wrapStylerSchemaType(rootStyleSchema);
 }
 
 JsonMap encodeWrapStylerFields(
@@ -42,6 +42,7 @@ SchemaObject<WrapStyler> _wrapStylerSchemaType(
     'spacing',
     doubleTokenCodec(),
     (value) => value.$spacing,
+    schemaSemantics: doubleTokenFieldSemantics,
   );
   final runAlignment = propValueField<WrapStyler, WrapAlignment>(
     'runAlignment',
@@ -52,6 +53,7 @@ SchemaObject<WrapStyler> _wrapStylerSchemaType(
     'runSpacing',
     doubleTokenCodec(),
     (value) => value.$runSpacing,
+    schemaSemantics: doubleTokenFieldSemantics,
   );
   final crossAxisAlignment = propValueField<WrapStyler, WrapCrossAlignment>(
     'crossAxisAlignment',

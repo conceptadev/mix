@@ -8,11 +8,11 @@ import 'schema_field.dart';
 import 'styler_field_inventory.dart';
 import 'styler_codec_helpers.dart';
 
-AckSchema<JsonMap, StackStyler> stackStylerCodec({
+SchemaObject<StackStyler> stackStylerSchema({
   AckSchema<JsonMap, Object>? rootStyleSchema,
   MixProtocolIdentityContext Function()? identityContext,
 }) {
-  return _stackStylerSchemaType(rootStyleSchema).codec();
+  return _stackStylerSchemaType(rootStyleSchema);
 }
 
 JsonMap encodeStackStylerFields(

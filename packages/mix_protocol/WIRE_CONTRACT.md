@@ -30,11 +30,28 @@ Styler discriminator values are:
 - `stack_box`
 - `grid_box`
 
+These bare names are reserved for the fixed core vocabulary. Explicitly
+composed package vocabularies add discriminators in this form:
+
+```text
+<vocabulary-id>.v<wire-major>.<branch-name>
+```
+
+For example, `mix_chart.v1.line_chart` and
+`mix_chart.v1.chart_axis`. Vocabulary ids and branch names use lowercase
+snake-case identifiers. A vocabulary wire major is independent from its Dart
+package version.
+
 An unknown root `type` fails with `unknown_type`.
 
-The fixed `mixProtocol` façade accepts all branches above. String identity
-names are resolved per call with `MixProtocolDecodeOptions`; common icon/image
-value forms require no app state.
+The fixed `mixProtocol` façade accepts only the core branches above. A consumer
+opts into package branches with `MixProtocol.compose`, always including
+`mixProtocolCoreVocabulary`. Composition is immutable, validates collisions,
+and is sorted deterministically; there is no runtime registry or import-time
+registration. Contributed branch runtime types must be concrete and mutually
+disjoint so encoding selects one unambiguous discriminator. String identity
+names are resolved per call with
+`MixProtocolDecodeOptions`; common icon/image value forms require no app state.
 
 A missing top-level `v` fails with `required_field`. Unsupported or malformed
 `v` fails with `unsupported_version`. Encoded output and exported JSON Schema
@@ -114,8 +131,9 @@ objects are available on the in-process error but omitted by `toJson()`.
 
 ## Styler Fields
 
-All field names use lower camel case. `modifiers`, `variants`, and `animation`
-are style metadata fields, not spec fields.
+All field names use lower camel case. `v`, `type`, and `$`-prefixed control
+names are protocol-owned, and duplicate field names are invalid. `modifiers`,
+`variants`, and `animation` are style metadata fields, not spec fields.
 
 ### box
 
@@ -439,6 +457,10 @@ control-marker objects (`$token`, `$merge`, and `apply`) and exclude malformed
 marker combinations. Field-specific literal details still come from the runtime
 codecs; runtime decode remains authoritative for exact Flutter/Mix value
 semantics.
+
+A composed style schema includes `x-mix-protocol-vocabularies`, ordered by
+vocabulary id. Each entry declares `id` and `wireVersion`. The core-only schema
+omits this extension key and remains byte-for-byte stable.
 
 ## Token References
 

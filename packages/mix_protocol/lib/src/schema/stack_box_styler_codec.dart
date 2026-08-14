@@ -10,11 +10,11 @@ import 'stack_styler_codec.dart';
 import 'styler_field_inventory.dart';
 import 'styler_codec_helpers.dart';
 
-AckSchema<JsonMap, StackBoxStyler> stackBoxStylerCodec({
+SchemaObject<StackBoxStyler> stackBoxStylerSchema({
   AckSchema<JsonMap, Object>? rootStyleSchema,
   MixProtocolIdentityContext Function()? identityContext,
 }) {
-  return _stackBoxStylerSchemaType(rootStyleSchema).codec();
+  return _stackBoxStylerSchemaType(rootStyleSchema);
 }
 
 SchemaObject<StackBoxStyler> _stackBoxStylerSchemaType(
@@ -37,6 +37,7 @@ SchemaObject<StackBoxStyler> _stackBoxStylerSchemaType(
     ),
     _boxField,
     inventoryName: 'box',
+    schemaSemantics: doubleTokenFieldSemantics,
   );
   final margin = derivedField<StackBoxStyler, Prop<EdgeInsetsGeometry>>(
     'margin',
@@ -46,6 +47,7 @@ SchemaObject<StackBoxStyler> _stackBoxStylerSchemaType(
     ),
     _boxField,
     inventoryName: 'box',
+    schemaSemantics: doubleTokenFieldSemantics,
   );
   final constraints = derivedField<StackBoxStyler, Prop<BoxConstraints>>(
     'constraints',
@@ -86,6 +88,7 @@ SchemaObject<StackBoxStyler> _stackBoxStylerSchemaType(
     ),
     _boxField,
     inventoryName: 'box',
+    schemaSemantics: boxDecorationFieldSemantics,
   );
   final stackAlignment = derivedField<StackBoxStyler, Prop<AlignmentGeometry>>(
     'stackAlignment',

@@ -10,11 +10,11 @@ import 'styler_codec_helpers.dart';
 import 'styler_field_inventory.dart';
 import 'wrap_styler_codec.dart';
 
-AckSchema<JsonMap, WrapBoxStyler> wrapBoxStylerCodec({
+SchemaObject<WrapBoxStyler> wrapBoxStylerSchema({
   AckSchema<JsonMap, Object>? rootStyleSchema,
   MixProtocolIdentityContext Function()? identityContext,
 }) {
-  return _wrapBoxStylerSchemaType(rootStyleSchema).codec();
+  return _wrapBoxStylerSchemaType(rootStyleSchema);
 }
 
 SchemaObject<WrapBoxStyler> _wrapBoxStylerSchemaType(
@@ -37,6 +37,7 @@ SchemaObject<WrapBoxStyler> _wrapBoxStylerSchemaType(
     ),
     _boxField,
     inventoryName: 'box',
+    schemaSemantics: doubleTokenFieldSemantics,
   );
   final margin = derivedField<WrapBoxStyler, Prop<EdgeInsetsGeometry>>(
     'margin',
@@ -46,6 +47,7 @@ SchemaObject<WrapBoxStyler> _wrapBoxStylerSchemaType(
     ),
     _boxField,
     inventoryName: 'box',
+    schemaSemantics: doubleTokenFieldSemantics,
   );
   final constraints = derivedField<WrapBoxStyler, Prop<BoxConstraints>>(
     'constraints',
@@ -86,6 +88,7 @@ SchemaObject<WrapBoxStyler> _wrapBoxStylerSchemaType(
     ),
     _boxField,
     inventoryName: 'box',
+    schemaSemantics: boxDecorationFieldSemantics,
   );
   final foregroundDecoration = derivedField<WrapBoxStyler, Prop<Decoration>>(
     'foregroundDecoration',
@@ -95,6 +98,7 @@ SchemaObject<WrapBoxStyler> _wrapBoxStylerSchemaType(
     ),
     _boxField,
     inventoryName: 'box',
+    schemaSemantics: boxDecorationFieldSemantics,
   );
   final direction = derivedField<WrapBoxStyler, Prop<Axis>>(
     'direction',
@@ -117,6 +121,7 @@ SchemaObject<WrapBoxStyler> _wrapBoxStylerSchemaType(
     valuePropCodec<double>(doubleTokenCodec(), fieldName: 'spacing'),
     _flowField,
     inventoryName: 'flow',
+    schemaSemantics: doubleTokenFieldSemantics,
   );
   final runAlignment = derivedField<WrapBoxStyler, Prop<WrapAlignment>>(
     'runAlignment',
@@ -132,6 +137,7 @@ SchemaObject<WrapBoxStyler> _wrapBoxStylerSchemaType(
     valuePropCodec<double>(doubleTokenCodec(), fieldName: 'runSpacing'),
     _flowField,
     inventoryName: 'flow',
+    schemaSemantics: doubleTokenFieldSemantics,
   );
   final crossAxisAlignment =
       derivedField<WrapBoxStyler, Prop<WrapCrossAlignment>>(

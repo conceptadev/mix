@@ -14,3 +14,5 @@ export 'src/errors/mix_protocol_error.dart'
         MixProtocolSuccess;
 export 'src/inspection/document_inspection.dart';
 export 'src/tokens/token_reference_walker.dart';
+export 'src/schema/vocabulary.dart'
+    show MixProtocolVocabulary, mixProtocolCoreVocabulary;

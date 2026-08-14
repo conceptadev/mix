@@ -2,6 +2,11 @@
 
 ### New features
 
+- Added immutable, deterministic package-contributed styler vocabularies,
+  namespaced versioned discriminators, explicit `MixProtocol.compose`, and an
+  Ack-free codec-authoring façade.
+- Made schema field declarations own token, literal, and lenient list-repair
+  semantics, and added reusable package styler inventory discovery.
 - Added style and theme document inspection APIs for schema tooling.
 - Added canonical v1 `wrap` and `wrap_box` style branches, including complete
   Box/Wrap field fidelity, collision-safe composite names, spacing tokens,

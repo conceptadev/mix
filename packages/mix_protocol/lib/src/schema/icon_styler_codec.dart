@@ -9,11 +9,11 @@ import 'schema_field.dart';
 import 'styler_field_inventory.dart';
 import 'styler_codec_helpers.dart';
 
-AckSchema<JsonMap, IconStyler> iconStylerCodec({
+SchemaObject<IconStyler> iconStylerSchema({
   AckSchema<JsonMap, Object>? rootStyleSchema,
   required MixProtocolIdentityContext Function() identityContext,
 }) {
-  return _iconStylerSchemaType(rootStyleSchema, identityContext).codec();
+  return _iconStylerSchemaType(rootStyleSchema, identityContext);
 }
 
 SchemaObject<IconStyler> _iconStylerSchemaType(
@@ -34,26 +34,31 @@ SchemaObject<IconStyler> _iconStylerSchemaType(
     'size',
     nonNegativeDoubleTokenCodec(),
     (value) => value.$size,
+    schemaSemantics: doubleTokenFieldSemantics,
   );
   final weight = propTokenValueField<IconStyler, double>(
     'weight',
     doubleTokenCodec(),
     (value) => value.$weight,
+    schemaSemantics: doubleTokenFieldSemantics,
   );
   final grade = propTokenValueField<IconStyler, double>(
     'grade',
     doubleTokenCodec(),
     (value) => value.$grade,
+    schemaSemantics: doubleTokenFieldSemantics,
   );
   final opticalSize = propTokenValueField<IconStyler, double>(
     'opticalSize',
     nonNegativeDoubleTokenCodec(),
     (value) => value.$opticalSize,
+    schemaSemantics: doubleTokenFieldSemantics,
   );
   final shadows = propMixField<IconStyler, ShadowListMix, List<Shadow>>(
     'shadows',
     shadowListMixCodec(),
     (value) => value.$shadows,
+    schemaSemantics: listEntryFieldSemantics,
   );
   final textDirection = propValueField<IconStyler, TextDirection>(
     'textDirection',
@@ -69,6 +74,7 @@ SchemaObject<IconStyler> _iconStylerSchemaType(
     'fill',
     doubleTokenCodec(),
     (value) => value.$fill,
+    schemaSemantics: doubleTokenFieldSemantics,
   );
   final semanticsLabel = propValueField<IconStyler, String>(
     'semanticsLabel',
@@ -79,6 +85,7 @@ SchemaObject<IconStyler> _iconStylerSchemaType(
     'opacity',
     unitDoubleTokenCodec(),
     (value) => value.$opacity,
+    schemaSemantics: doubleTokenFieldSemantics,
   );
   final blendMode = propValueField<IconStyler, BlendMode>(
     'blendMode',

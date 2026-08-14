@@ -25,12 +25,20 @@ final class StylerMetadataFields<
                'variants',
                Ack.list(variantCodec<SpecType>(rootStyleSchema)),
                readVariants,
+               schemaSemantics: listEntryFieldSemantics,
              ),
        modifiers = directField<Owner, WidgetModifierConfig>(
          'modifiers',
          modifierConfigCodec(rootStyleSchema: rootStyleSchema),
          readModifier,
          inventoryName: 'modifier',
+         schemaSemantics: const SchemaFieldSemantics(
+           listEntryPaths: [
+             [],
+             ['order'],
+             ['items'],
+           ],
+         ),
        ),
        animation = directField<Owner, AnimationConfig>(
          'animation',

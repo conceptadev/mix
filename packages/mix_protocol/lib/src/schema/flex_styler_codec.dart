@@ -8,11 +8,11 @@ import 'schema_field.dart';
 import 'styler_field_inventory.dart';
 import 'styler_codec_helpers.dart';
 
-AckSchema<JsonMap, FlexStyler> flexStylerCodec({
+SchemaObject<FlexStyler> flexStylerSchema({
   AckSchema<JsonMap, Object>? rootStyleSchema,
   MixProtocolIdentityContext Function()? identityContext,
 }) {
-  return _flexStylerSchemaType(rootStyleSchema).codec();
+  return _flexStylerSchemaType(rootStyleSchema);
 }
 
 JsonMap encodeFlexStylerFields(
@@ -72,6 +72,7 @@ SchemaObject<FlexStyler> _flexStylerSchemaType(
     'spacing',
     doubleTokenCodec(),
     (value) => value.$spacing,
+    schemaSemantics: doubleTokenFieldSemantics,
   );
   final metadata = StylerMetadataFields<FlexStyler, FlexSpec>(
     rootStyleSchema: rootStyleSchema,

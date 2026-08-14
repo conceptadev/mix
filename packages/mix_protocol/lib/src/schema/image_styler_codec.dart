@@ -9,11 +9,11 @@ import 'schema_field.dart';
 import 'styler_field_inventory.dart';
 import 'styler_codec_helpers.dart';
 
-AckSchema<JsonMap, ImageStyler> imageStylerCodec({
+SchemaObject<ImageStyler> imageStylerSchema({
   AckSchema<JsonMap, Object>? rootStyleSchema,
   required MixProtocolIdentityContext Function() identityContext,
 }) {
-  return _imageStylerSchemaType(rootStyleSchema, identityContext).codec();
+  return _imageStylerSchemaType(rootStyleSchema, identityContext);
 }
 
 SchemaObject<ImageStyler> _imageStylerSchemaType(
@@ -29,11 +29,13 @@ SchemaObject<ImageStyler> _imageStylerSchemaType(
     'width',
     nonNegativeDoubleTokenCodec(),
     (value) => value.$width,
+    schemaSemantics: doubleTokenFieldSemantics,
   );
   final height = propTokenValueField<ImageStyler, double>(
     'height',
     nonNegativeDoubleTokenCodec(),
     (value) => value.$height,
+    schemaSemantics: doubleTokenFieldSemantics,
   );
   final color = propTokenValueField<ImageStyler, Color>(
     'color',
