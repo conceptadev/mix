@@ -460,6 +460,35 @@ final class MixProtocolStylerCodec<Owner extends Object> {
            : Set.unmodifiable({...ownerFieldInventory}),
        _actualFieldCount = actualFieldCount;
 
+  /// Creates a codec for a Mix [Style], wiring its standard metadata and
+  /// generated equality-field count automatically.
+  static MixProtocolStylerCodec<Styler>
+  forStyler<Styler extends Style<S>, S extends Spec<S>>({
+    required MixProtocolBranchContext context,
+    required List<MixProtocolFieldCodec<Styler, Object>> fields,
+    required Set<String> ownerFieldInventory,
+    required Styler Function(
+      JsonMap data,
+      MixProtocolStylerMetadata<Styler, S> metadata,
+    )
+    build,
+  }) {
+    final metadata = MixProtocolStylerMetadata<Styler, S>(
+      context: context,
+      readVariants: (value) => value.$variants,
+      readModifier: (value) => value.$modifier,
+      readAnimation: (value) => value.$animation,
+    );
+
+    return MixProtocolStylerCodec<Styler>(
+      fields: fields,
+      metadata: metadata,
+      ownerFieldInventory: ownerFieldInventory,
+      actualFieldCount: (value) => value.props.length,
+      build: (data) => build(data, metadata),
+    );
+  }
+
   SchemaObject<Owner> _build() {
     return SchemaObject<Owner>(
       fields: [

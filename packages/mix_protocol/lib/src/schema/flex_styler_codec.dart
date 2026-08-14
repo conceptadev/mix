@@ -74,17 +74,10 @@ SchemaObject<FlexStyler> _flexStylerSchemaType(
     (value) => value.$spacing,
     schemaSemantics: doubleTokenFieldSemantics,
   );
-  final metadata = StylerMetadataFields<FlexStyler, FlexSpec>(
-    rootStyleSchema: rootStyleSchema,
-    readVariants: (value) => value.$variants,
-    readModifier: (value) => value.$modifier,
-    readAnimation: (value) => value.$animation,
-  );
 
-  return SchemaObject<FlexStyler>(
-    inventoryOwner: 'FlexStyler',
+  return stylerSchemaObject<FlexStyler, FlexSpec>(
+    rootStyleSchema: rootStyleSchema,
     ownerFieldInventory: flexStylerInventory,
-    actualFieldCount: stylerFieldCount,
     fields: [
       direction,
       mainAxisAlignment,
@@ -95,10 +88,8 @@ SchemaObject<FlexStyler> _flexStylerSchemaType(
       textBaseline,
       clipBehavior,
       spacing,
-      ...metadata.fields,
     ],
-    unsupportedFields: [...metadata.unsupportedFields()],
-    build: (data) => FlexStyler.create(
+    build: (data, metadata) => FlexStyler.create(
       direction: direction.value(data),
       mainAxisAlignment: mainAxisAlignment.value(data),
       crossAxisAlignment: crossAxisAlignment.value(data),

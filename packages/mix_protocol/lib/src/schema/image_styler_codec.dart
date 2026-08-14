@@ -97,17 +97,10 @@ SchemaObject<ImageStyler> _imageStylerSchemaType(
     Ack.boolean(),
     (value) => value.$matchTextDirection,
   );
-  final metadata = StylerMetadataFields<ImageStyler, ImageSpec>(
-    rootStyleSchema: rootStyleSchema,
-    readVariants: (value) => value.$variants,
-    readModifier: (value) => value.$modifier,
-    readAnimation: (value) => value.$animation,
-  );
 
-  return SchemaObject<ImageStyler>(
-    inventoryOwner: 'ImageStyler',
+  return stylerSchemaObject<ImageStyler, ImageSpec>(
+    rootStyleSchema: rootStyleSchema,
     ownerFieldInventory: imageStylerInventory,
-    actualFieldCount: stylerFieldCount,
     fields: [
       image,
       width,
@@ -124,10 +117,8 @@ SchemaObject<ImageStyler> _imageStylerSchemaType(
       gaplessPlayback,
       isAntiAlias,
       matchTextDirection,
-      ...metadata.fields,
     ],
-    unsupportedFields: [...metadata.unsupportedFields()],
-    build: (data) => ImageStyler.create(
+    build: (data, metadata) => ImageStyler.create(
       image: image.value(data),
       width: width.value(data),
       height: height.value(data),

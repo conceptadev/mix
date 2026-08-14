@@ -71,6 +71,10 @@ final chartProtocol = MixProtocol.compose([
 ]);
 ```
 
+Integration packages may also expose that deterministic composition as a
+ready-to-use value; `mix_chart_protocol` provides `mixChartProtocol` for the
+common core-plus-chart case.
+
 Contributed discriminators include their vocabulary wire major, such as
 `mix_chart.v1.line_chart`. See [GUIDE.md](GUIDE.md) for authoring and consuming
 vocabularies.

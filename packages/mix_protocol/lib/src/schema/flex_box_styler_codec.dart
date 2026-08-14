@@ -170,17 +170,10 @@ SchemaObject<FlexBoxStyler> _flexBoxStylerSchemaType(
     inventoryName: 'flex',
     schemaSemantics: doubleTokenFieldSemantics,
   );
-  final metadata = StylerMetadataFields<FlexBoxStyler, FlexBoxSpec>(
-    rootStyleSchema: rootStyleSchema,
-    readVariants: (value) => value.$variants,
-    readModifier: (value) => value.$modifier,
-    readAnimation: (value) => value.$animation,
-  );
 
-  return SchemaObject<FlexBoxStyler>(
-    inventoryOwner: 'FlexBoxStyler',
+  return stylerSchemaObject<FlexBoxStyler, FlexBoxSpec>(
+    rootStyleSchema: rootStyleSchema,
     ownerFieldInventory: flexBoxStylerInventory,
-    actualFieldCount: stylerFieldCount,
     fields: [
       alignment,
       padding,
@@ -199,10 +192,8 @@ SchemaObject<FlexBoxStyler> _flexBoxStylerSchemaType(
       textBaseline,
       flexClipBehavior,
       spacing,
-      ...metadata.fields,
     ],
-    unsupportedFields: [...metadata.unsupportedFields()],
-    build: (data) => FlexBoxStyler.create(
+    build: (data, metadata) => FlexBoxStyler.create(
       box: Prop.mix(
         BoxStyler.create(
           alignment: alignment.value(data),

@@ -92,17 +92,10 @@ SchemaObject<IconStyler> _iconStylerSchemaType(
     enumNameCodec(BlendMode.values),
     (value) => value.$blendMode,
   );
-  final metadata = StylerMetadataFields<IconStyler, IconSpec>(
-    rootStyleSchema: rootStyleSchema,
-    readVariants: (value) => value.$variants,
-    readModifier: (value) => value.$modifier,
-    readAnimation: (value) => value.$animation,
-  );
 
-  return SchemaObject<IconStyler>(
-    inventoryOwner: 'IconStyler',
+  return stylerSchemaObject<IconStyler, IconSpec>(
+    rootStyleSchema: rootStyleSchema,
     ownerFieldInventory: iconStylerInventory,
-    actualFieldCount: stylerFieldCount,
     fields: [
       icon,
       color,
@@ -117,10 +110,8 @@ SchemaObject<IconStyler> _iconStylerSchemaType(
       semanticsLabel,
       opacity,
       blendMode,
-      ...metadata.fields,
     ],
-    unsupportedFields: [...metadata.unsupportedFields()],
-    build: (data) => IconStyler.create(
+    build: (data, metadata) => IconStyler.create(
       icon: icon.value(data),
       color: color.value(data),
       size: size.value(data),

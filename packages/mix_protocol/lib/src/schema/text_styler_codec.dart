@@ -93,17 +93,10 @@ SchemaObject<TextStyler> _textStylerSchemaType(
     Ack.list(textDirectiveCodec()),
     (value) => value.$textDirectives,
   );
-  final metadata = StylerMetadataFields<TextStyler, TextSpec>(
-    rootStyleSchema: rootStyleSchema,
-    readVariants: (value) => value.$variants,
-    readModifier: (value) => value.$modifier,
-    readAnimation: (value) => value.$animation,
-  );
 
-  return SchemaObject<TextStyler>(
-    inventoryOwner: 'TextStyler',
+  return stylerSchemaObject<TextStyler, TextSpec>(
+    rootStyleSchema: rootStyleSchema,
     ownerFieldInventory: textStylerInventory,
-    actualFieldCount: stylerFieldCount,
     fields: [
       overflow,
       strutStyle,
@@ -119,10 +112,8 @@ SchemaObject<TextStyler> _textStylerSchemaType(
       locale,
       textHeightBehavior,
       textDirectives,
-      ...metadata.fields,
     ],
-    unsupportedFields: [...metadata.unsupportedFields()],
-    build: (data) => TextStyler.create(
+    build: (data, metadata) => TextStyler.create(
       overflow: overflow.value(data),
       strutStyle: strutStyle.value(data),
       textAlign: textAlign.value(data),

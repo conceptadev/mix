@@ -125,17 +125,10 @@ SchemaObject<StackBoxStyler> _stackBoxStylerSchemaType(
     readWire: 'clipBehavior',
     inventoryName: 'stack',
   );
-  final metadata = StylerMetadataFields<StackBoxStyler, StackBoxSpec>(
-    rootStyleSchema: rootStyleSchema,
-    readVariants: (value) => value.$variants,
-    readModifier: (value) => value.$modifier,
-    readAnimation: (value) => value.$animation,
-  );
 
-  return SchemaObject<StackBoxStyler>(
-    inventoryOwner: 'StackBoxStyler',
+  return stylerSchemaObject<StackBoxStyler, StackBoxSpec>(
+    rootStyleSchema: rootStyleSchema,
     ownerFieldInventory: stackBoxStylerInventory,
-    actualFieldCount: stylerFieldCount,
     fields: [
       alignment,
       padding,
@@ -149,10 +142,8 @@ SchemaObject<StackBoxStyler> _stackBoxStylerSchemaType(
       fit,
       textDirection,
       stackClipBehavior,
-      ...metadata.fields,
     ],
-    unsupportedFields: [...metadata.unsupportedFields()],
-    build: (data) => StackBoxStyler.create(
+    build: (data, metadata) => StackBoxStyler.create(
       box: Prop.mix(
         BoxStyler.create(
           alignment: alignment.value(data),

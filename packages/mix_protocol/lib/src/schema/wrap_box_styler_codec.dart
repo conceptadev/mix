@@ -178,14 +178,10 @@ SchemaObject<WrapBoxStyler> _wrapBoxStylerSchemaType(
     readWire: 'clipBehavior',
     inventoryName: 'flow',
   );
-  final metadata = StylerMetadataFields<WrapBoxStyler, WrapBoxSpec>(
-    rootStyleSchema: rootStyleSchema,
-    readVariants: (value) => value.$variants,
-    readModifier: (value) => value.$modifier,
-    readAnimation: (value) => value.$animation,
-  );
 
-  return SchemaObject<WrapBoxStyler>(
+  return stylerSchemaObject<WrapBoxStyler, WrapBoxSpec>(
+    rootStyleSchema: rootStyleSchema,
+    ownerFieldInventory: wrapBoxStylerInventory,
     fields: [
       alignment,
       padding,
@@ -205,9 +201,8 @@ SchemaObject<WrapBoxStyler> _wrapBoxStylerSchemaType(
       textDirection,
       verticalDirection,
       wrapClipBehavior,
-      ...metadata.fields,
     ],
-    build: (data) => WrapBoxStyler.create(
+    build: (data, metadata) => WrapBoxStyler.create(
       box: Prop.mix(
         BoxStyler.create(
           alignment: alignment.value(data),
@@ -238,10 +233,6 @@ SchemaObject<WrapBoxStyler> _wrapBoxStylerSchemaType(
       modifier: metadata.modifiers.value(data),
       animation: metadata.animation.value(data),
     ),
-    unsupportedFields: [...metadata.unsupportedFields()],
-    inventoryOwner: 'WrapBoxStyler',
-    ownerFieldInventory: wrapBoxStylerInventory,
-    actualFieldCount: stylerFieldCount,
   );
 }
 

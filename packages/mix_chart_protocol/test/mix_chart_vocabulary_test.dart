@@ -5,13 +5,16 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
 import 'package:mix_chart/mix_chart.dart';
 import 'package:mix_chart_protocol/mix_chart_protocol.dart';
-import 'package:mix_protocol/mix_protocol.dart';
 
 void main() {
-  final protocol = MixProtocol.compose([
-    mixProtocolCoreVocabulary,
-    mixChartVocabulary,
-  ]);
+  final protocol = mixChartProtocol;
+
+  test('ready-to-use chart protocol does not widen the core singleton', () {
+    final style = LineChartStyler();
+
+    expect(protocol.encodeStyle(style), isA<MixProtocolSuccess<JsonMap>>());
+    expect(mixProtocol.encodeStyle(style), isA<MixProtocolFailure<JsonMap>>());
+  });
 
   test('covers every public mix_chart styler', () {
     final expectedBranches = <String, Object>{

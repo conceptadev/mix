@@ -7,6 +7,8 @@
   Ack-free codec-authoring façade.
 - Made schema field declarations own token, literal, and lenient list-repair
   semantics, and added reusable package styler inventory discovery.
+- Added a typed styler-codec helper that owns standard metadata and field
+  count wiring for core and contributed vocabularies.
 - Added style and theme document inspection APIs for schema tooling.
 - Added canonical v1 `wrap` and `wrap_box` style branches, including complete
   Box/Wrap field fidelity, collision-safe composite names, spacing tokens,

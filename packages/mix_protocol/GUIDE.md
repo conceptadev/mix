@@ -41,11 +41,19 @@ import 'package:mix_protocol/mix_protocol.dart';
 
 ## Compose package vocabularies
 
-Import the package vocabulary and compose it with the exact core vocabulary:
+An integration package can expose a ready-to-use composition for its common
+case. For charts, use:
 
 ```dart
 import 'package:mix_chart_protocol/mix_chart_protocol.dart';
-import 'package:mix_protocol/mix_protocol.dart';
+
+final result = mixChartProtocol.encodeStyle(chartStyle);
+```
+
+Use the vocabulary values directly when constructing the composition manually:
+
+```dart
+import 'package:mix_chart_protocol/mix_chart_protocol.dart';
 
 final chartProtocol = MixProtocol.compose([
   mixProtocolCoreVocabulary,
@@ -116,6 +124,12 @@ by the core and chart vocabularies.
 Branch runtime types must be concrete and mutually disjoint. Field names use
 lower camel case; duplicate names and the protocol-owned `v`, `type`, and `$...`
 names are rejected when the composition is built.
+
+For ordinary Mix `Style` subclasses, prefer
+`MixProtocolStylerCodec.forStyler`. It wires variants, modifiers, animation,
+and the generated equality-field count once, and requires the owner field
+inventory needed to enforce that check. The base constructor remains available
+for nonstandard codec owners and targeted tests.
 
 ## Decode a style
 

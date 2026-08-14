@@ -83,17 +83,10 @@ SchemaObject<BoxStyler> _boxStylerSchemaType(
         (value) => value.$foregroundDecoration,
         schemaSemantics: boxDecorationFieldSemantics,
       );
-  final metadata = StylerMetadataFields<BoxStyler, BoxSpec>(
-    rootStyleSchema: rootStyleSchema,
-    readVariants: (value) => value.$variants,
-    readModifier: (value) => value.$modifier,
-    readAnimation: (value) => value.$animation,
-  );
 
-  return SchemaObject<BoxStyler>(
-    inventoryOwner: 'BoxStyler',
+  return stylerSchemaObject<BoxStyler, BoxSpec>(
+    rootStyleSchema: rootStyleSchema,
     ownerFieldInventory: boxStylerInventory,
-    actualFieldCount: stylerFieldCount,
     fields: [
       alignment,
       padding,
@@ -104,10 +97,8 @@ SchemaObject<BoxStyler> _boxStylerSchemaType(
       transformAlignment,
       decoration,
       foregroundDecoration,
-      ...metadata.fields,
     ],
-    unsupportedFields: [...metadata.unsupportedFields()],
-    build: (data) => BoxStyler.create(
+    build: (data, metadata) => BoxStyler.create(
       alignment: alignment.value(data),
       padding: padding.value(data),
       margin: margin.value(data),

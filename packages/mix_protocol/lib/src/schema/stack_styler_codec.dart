@@ -48,20 +48,12 @@ SchemaObject<StackStyler> _stackStylerSchemaType(
     enumNameCodec(Clip.values),
     (value) => value.$clipBehavior,
   );
-  final metadata = StylerMetadataFields<StackStyler, StackSpec>(
-    rootStyleSchema: rootStyleSchema,
-    readVariants: (value) => value.$variants,
-    readModifier: (value) => value.$modifier,
-    readAnimation: (value) => value.$animation,
-  );
 
-  return SchemaObject<StackStyler>(
-    inventoryOwner: 'StackStyler',
+  return stylerSchemaObject<StackStyler, StackSpec>(
+    rootStyleSchema: rootStyleSchema,
     ownerFieldInventory: stackStylerInventory,
-    actualFieldCount: stylerFieldCount,
-    fields: [alignment, fit, textDirection, clipBehavior, ...metadata.fields],
-    unsupportedFields: [...metadata.unsupportedFields()],
-    build: (data) => StackStyler.create(
+    fields: [alignment, fit, textDirection, clipBehavior],
+    build: (data, metadata) => StackStyler.create(
       alignment: alignment.value(data),
       fit: fit.value(data),
       textDirection: textDirection.value(data),

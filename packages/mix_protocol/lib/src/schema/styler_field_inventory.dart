@@ -154,8 +154,6 @@ const gridBoxStylerInventory = {
   'variants',
 };
 
-int stylerFieldCount(Equatable value) => value.props.length;
-
 void checkKnownFieldInventory(
   Equatable value, {
   required String owner,

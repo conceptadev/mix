@@ -63,6 +63,37 @@ final class StylerMetadataFields<
   }
 }
 
+/// Creates a schema object for a standard Mix styler, including its shared
+/// metadata fields and generated equality-field inventory check.
+SchemaObject<Styler> stylerSchemaObject<
+  Styler extends Style<SpecType>,
+  SpecType extends Spec<SpecType>
+>({
+  required AckSchema<JsonMap, Object>? rootStyleSchema,
+  required Set<String> ownerFieldInventory,
+  required List<SchemaFieldBase<Styler>> fields,
+  required Styler Function(
+    JsonMap data,
+    StylerMetadataFields<Styler, SpecType> metadata,
+  )
+  build,
+}) {
+  final metadata = StylerMetadataFields<Styler, SpecType>(
+    rootStyleSchema: rootStyleSchema,
+    readVariants: (value) => value.$variants,
+    readModifier: (value) => value.$modifier,
+    readAnimation: (value) => value.$animation,
+  );
+
+  return SchemaObject<Styler>(
+    fields: [...fields, ...metadata.fields],
+    build: (data) => build(data, metadata),
+    unsupportedFields: metadata.unsupportedFields(),
+    ownerFieldInventory: ownerFieldInventory,
+    actualFieldCount: (value) => value.props.length,
+  );
+}
+
 Object? encodedNestedStylerField<
   Owner extends Object,
   Styler extends Style<SpecType>,

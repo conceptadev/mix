@@ -75,14 +75,10 @@ SchemaObject<WrapStyler> _wrapStylerSchemaType(
     enumNameCodec(Clip.values),
     (value) => value.$clipBehavior,
   );
-  final metadata = StylerMetadataFields<WrapStyler, WrapSpec>(
-    rootStyleSchema: rootStyleSchema,
-    readVariants: (value) => value.$variants,
-    readModifier: (value) => value.$modifier,
-    readAnimation: (value) => value.$animation,
-  );
 
-  return SchemaObject<WrapStyler>(
+  return stylerSchemaObject<WrapStyler, WrapSpec>(
+    rootStyleSchema: rootStyleSchema,
+    ownerFieldInventory: wrapStylerInventory,
     fields: [
       direction,
       alignment,
@@ -93,9 +89,8 @@ SchemaObject<WrapStyler> _wrapStylerSchemaType(
       textDirection,
       verticalDirection,
       clipBehavior,
-      ...metadata.fields,
     ],
-    build: (data) => WrapStyler.create(
+    build: (data, metadata) => WrapStyler.create(
       direction: direction.value(data),
       alignment: alignment.value(data),
       spacing: spacing.value(data),
@@ -109,9 +104,5 @@ SchemaObject<WrapStyler> _wrapStylerSchemaType(
       modifier: metadata.modifiers.value(data),
       animation: metadata.animation.value(data),
     ),
-    unsupportedFields: [...metadata.unsupportedFields()],
-    inventoryOwner: 'WrapStyler',
-    ownerFieldInventory: wrapStylerInventory,
-    actualFieldCount: stylerFieldCount,
   );
 }

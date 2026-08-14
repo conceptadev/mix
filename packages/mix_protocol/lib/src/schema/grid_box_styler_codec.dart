@@ -80,14 +80,10 @@ SchemaObject<GridBoxStyler> gridBoxStylerSchema({
           ],
         ),
       );
-  final metadata = StylerMetadataFields<GridBoxStyler, GridBoxSpec>(
-    rootStyleSchema: rootStyleSchema,
-    readVariants: (value) => value.$variants,
-    readModifier: (value) => value.$modifier,
-    readAnimation: (value) => value.$animation,
-  );
 
-  return SchemaObject<GridBoxStyler>(
+  return stylerSchemaObject<GridBoxStyler, GridBoxSpec>(
+    rootStyleSchema: rootStyleSchema,
+    ownerFieldInventory: gridBoxStylerInventory,
     fields: [
       columns,
       rows,
@@ -96,9 +92,8 @@ SchemaObject<GridBoxStyler> gridBoxStylerSchema({
       rowGap,
       clipBehavior,
       constraintBranches,
-      ...metadata.fields,
     ],
-    build: (data) => GridBoxStyler(
+    build: (data, metadata) => GridBoxStyler(
       columns: columns.value(data),
       rows: rows.value(data),
       autoRows: autoRows.value(data),
@@ -110,10 +105,6 @@ SchemaObject<GridBoxStyler> gridBoxStylerSchema({
       modifier: metadata.modifiers.value(data),
       animation: metadata.animation.value(data),
     ),
-    unsupportedFields: [...metadata.unsupportedFields()],
-    inventoryOwner: 'GridBoxStyler',
-    ownerFieldInventory: gridBoxStylerInventory,
-    actualFieldCount: stylerFieldCount,
   );
 }
 

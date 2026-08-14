@@ -99,21 +99,15 @@ MixProtocolStylerCodec<BarBackgroundStyler> _barBackgroundCodec(
         codec: MixProtocolCodecs.gradient(),
         read: (value) => value.$gradient,
       );
-  final metadata =
-      MixProtocolStylerMetadata<BarBackgroundStyler, BarBackgroundSpec>(
-        context: context,
-        readVariants: (value) => value.$variants,
-        readModifier: (value) => value.$modifier,
-        readAnimation: (value) => value.$animation,
-      );
 
-  return MixProtocolStylerCodec(
+  return MixProtocolStylerCodec.forStyler<
+    BarBackgroundStyler,
+    BarBackgroundSpec
+  >(
+    context: context,
     fields: [show, fromY, toY, color, gradient],
-    metadata: metadata,
-    inventoryOwner: 'BarBackgroundStyler',
     ownerFieldInventory: mixChartStylerInventory['BarBackgroundStyler']!,
-    actualFieldCount: (value) => value.props.length,
-    build: (data) => BarBackgroundStyler.create(
+    build: (data, metadata) => BarBackgroundStyler.create(
       show: show.value(data),
       fromY: fromY.value(data),
       toY: toY.value(data),
@@ -199,14 +193,9 @@ MixProtocolStylerCodec<BarChartStyler> _barChartCodec(
     context: context,
     read: (value) => value.$tooltip,
   );
-  final metadata = MixProtocolStylerMetadata<BarChartStyler, BarChartSpec>(
-    context: context,
-    readVariants: (value) => value.$variants,
-    readModifier: (value) => value.$modifier,
-    readAnimation: (value) => value.$animation,
-  );
 
-  return MixProtocolStylerCodec(
+  return MixProtocolStylerCodec.forStyler<BarChartStyler, BarChartSpec>(
+    context: context,
     fields: [
       frame,
       axis,
@@ -223,11 +212,8 @@ MixProtocolStylerCodec<BarChartStyler> _barChartCodec(
       alignment,
       tooltip,
     ],
-    metadata: metadata,
-    inventoryOwner: 'BarChartStyler',
     ownerFieldInventory: mixChartStylerInventory['BarChartStyler']!,
-    actualFieldCount: (value) => value.props.length,
-    build: (data) => BarChartStyler.create(
+    build: (data, metadata) => BarChartStyler.create(
       frame: frame.value(data),
       axis: axis.value(data),
       xAxis: xAxis.value(data),
@@ -274,20 +260,12 @@ MixProtocolStylerCodec<BarSegmentStyler> _barSegmentCodec(
     context: context,
     read: (value) => value.$label,
   );
-  final metadata = MixProtocolStylerMetadata<BarSegmentStyler, BarSegmentSpec>(
-    context: context,
-    readVariants: (value) => value.$variants,
-    readModifier: (value) => value.$modifier,
-    readAnimation: (value) => value.$animation,
-  );
 
-  return MixProtocolStylerCodec(
+  return MixProtocolStylerCodec.forStyler<BarSegmentStyler, BarSegmentSpec>(
+    context: context,
     fields: [color, gradient, border, label],
-    metadata: metadata,
-    inventoryOwner: 'BarSegmentStyler',
     ownerFieldInventory: mixChartStylerInventory['BarSegmentStyler']!,
-    actualFieldCount: (value) => value.props.length,
-    build: (data) => BarSegmentStyler.create(
+    build: (data, metadata) => BarSegmentStyler.create(
       color: color.value(data),
       gradient: gradient.value(data),
       border: border.value(data),
@@ -351,14 +329,9 @@ MixProtocolStylerCodec<BarStyler> _barCodec(MixProtocolBranchContext context) {
     codec: MixProtocolCodecs.number(),
     read: (value) => value.$labelAngle,
   );
-  final metadata = MixProtocolStylerMetadata<BarStyler, BarSpec>(
-    context: context,
-    readVariants: (value) => value.$variants,
-    readModifier: (value) => value.$modifier,
-    readAnimation: (value) => value.$animation,
-  );
 
-  return MixProtocolStylerCodec(
+  return MixProtocolStylerCodec.forStyler<BarStyler, BarSpec>(
+    context: context,
     fields: [
       color,
       gradient,
@@ -371,11 +344,8 @@ MixProtocolStylerCodec<BarStyler> _barCodec(MixProtocolBranchContext context) {
       labelOffset,
       labelAngle,
     ],
-    metadata: metadata,
-    inventoryOwner: 'BarStyler',
     ownerFieldInventory: mixChartStylerInventory['BarStyler']!,
-    actualFieldCount: (value) => value.props.length,
-    build: (data) => BarStyler.create(
+    build: (data, metadata) => BarStyler.create(
       color: color.value(data),
       gradient: gradient.value(data),
       width: width.value(data),
@@ -421,20 +391,12 @@ MixProtocolStylerCodec<ChartAreaStyler> _chartAreaCodec(
     codec: MixProtocolCodecs.boolean(),
     read: (value) => value.$applyCutoff,
   );
-  final metadata = MixProtocolStylerMetadata<ChartAreaStyler, ChartAreaSpec>(
-    context: context,
-    readVariants: (value) => value.$variants,
-    readModifier: (value) => value.$modifier,
-    readAnimation: (value) => value.$animation,
-  );
 
-  return MixProtocolStylerCodec(
+  return MixProtocolStylerCodec.forStyler<ChartAreaStyler, ChartAreaSpec>(
+    context: context,
     fields: [show, color, gradient, cutoffY, applyCutoff],
-    metadata: metadata,
-    inventoryOwner: 'ChartAreaStyler',
     ownerFieldInventory: mixChartStylerInventory['ChartAreaStyler']!,
-    actualFieldCount: (value) => value.props.length,
-    build: (data) => ChartAreaStyler.create(
+    build: (data, metadata) => ChartAreaStyler.create(
       show: show.value(data),
       color: color.value(data),
       gradient: gradient.value(data),
@@ -475,20 +437,12 @@ MixProtocolStylerCodec<ChartFrameStyler> _chartFrameCodec(
     codec: MixProtocolCodecs.integer(),
     read: (value) => value.$rotationQuarterTurns,
   );
-  final metadata = MixProtocolStylerMetadata<ChartFrameStyler, ChartFrameSpec>(
-    context: context,
-    readVariants: (value) => value.$variants,
-    readModifier: (value) => value.$modifier,
-    readAnimation: (value) => value.$animation,
-  );
 
-  return MixProtocolStylerCodec(
+  return MixProtocolStylerCodec.forStyler<ChartFrameStyler, ChartFrameSpec>(
+    context: context,
     fields: [backgroundColor, border, showBorder, clip, rotationQuarterTurns],
-    metadata: metadata,
-    inventoryOwner: 'ChartFrameStyler',
     ownerFieldInventory: mixChartStylerInventory['ChartFrameStyler']!,
-    actualFieldCount: (value) => value.props.length,
-    build: (data) => ChartFrameStyler.create(
+    build: (data, metadata) => ChartFrameStyler.create(
       backgroundColor: backgroundColor.value(data),
       border: border.value(data),
       showBorder: showBorder.value(data),
@@ -539,21 +493,12 @@ MixProtocolStylerCodec<ChartMarkerStyler> _chartMarkerCodec(
     codec: MixProtocolCodecs.shadow(),
     read: (value) => value.$shadow,
   );
-  final metadata =
-      MixProtocolStylerMetadata<ChartMarkerStyler, ChartMarkerSpec>(
-        context: context,
-        readVariants: (value) => value.$variants,
-        readModifier: (value) => value.$modifier,
-        readAnimation: (value) => value.$animation,
-      );
 
-  return MixProtocolStylerCodec(
+  return MixProtocolStylerCodec.forStyler<ChartMarkerStyler, ChartMarkerSpec>(
+    context: context,
     fields: [show, shape, color, radius, borderColor, borderWidth, shadow],
-    metadata: metadata,
-    inventoryOwner: 'ChartMarkerStyler',
     ownerFieldInventory: mixChartStylerInventory['ChartMarkerStyler']!,
-    actualFieldCount: (value) => value.props.length,
-    build: (data) => ChartMarkerStyler.create(
+    build: (data, metadata) => ChartMarkerStyler.create(
       show: show.value(data),
       shape: shape.value(data),
       color: color.value(data),
@@ -619,15 +564,9 @@ MixProtocolStylerCodec<ChartTooltipStyler> _chartTooltipCodec(
     context: context,
     read: (value) => value.$text,
   );
-  final metadata =
-      MixProtocolStylerMetadata<ChartTooltipStyler, ChartTooltipSpec>(
-        context: context,
-        readVariants: (value) => value.$variants,
-        readModifier: (value) => value.$modifier,
-        readAnimation: (value) => value.$animation,
-      );
 
-  return MixProtocolStylerCodec(
+  return MixProtocolStylerCodec.forStyler<ChartTooltipStyler, ChartTooltipSpec>(
+    context: context,
     fields: [
       backgroundColor,
       border,
@@ -639,11 +578,8 @@ MixProtocolStylerCodec<ChartTooltipStyler> _chartTooltipCodec(
       fitVertically,
       text,
     ],
-    metadata: metadata,
-    inventoryOwner: 'ChartTooltipStyler',
     ownerFieldInventory: mixChartStylerInventory['ChartTooltipStyler']!,
-    actualFieldCount: (value) => value.props.length,
-    build: (data) => ChartTooltipStyler.create(
+    build: (data, metadata) => ChartTooltipStyler.create(
       backgroundColor: backgroundColor.value(data),
       border: border.value(data),
       borderRadius: borderRadius.value(data),
@@ -713,14 +649,9 @@ MixProtocolStylerCodec<LineChartStyler> _lineChartCodec(
     context: context,
     read: (value) => value.$tooltip,
   );
-  final metadata = MixProtocolStylerMetadata<LineChartStyler, LineChartSpec>(
-    context: context,
-    readVariants: (value) => value.$variants,
-    readModifier: (value) => value.$modifier,
-    readAnimation: (value) => value.$animation,
-  );
 
-  return MixProtocolStylerCodec(
+  return MixProtocolStylerCodec.forStyler<LineChartStyler, LineChartSpec>(
+    context: context,
     fields: [
       frame,
       axis,
@@ -733,11 +664,8 @@ MixProtocolStylerCodec<LineChartStyler> _lineChartCodec(
       palette,
       tooltip,
     ],
-    metadata: metadata,
-    inventoryOwner: 'LineChartStyler',
     ownerFieldInventory: mixChartStylerInventory['LineChartStyler']!,
-    actualFieldCount: (value) => value.props.length,
-    build: (data) => LineChartStyler.create(
+    build: (data, metadata) => LineChartStyler.create(
       frame: frame.value(data),
       axis: axis.value(data),
       xAxis: xAxis.value(data),
@@ -809,14 +737,9 @@ MixProtocolStylerCodec<ChartAxisStyler> _chartAxisCodec(
         codec: MixProtocolCodecs.enumName(ChartAxisLabelAlignment.values),
         read: (value) => value.$alignment,
       );
-  final metadata = MixProtocolStylerMetadata<ChartAxisStyler, ChartAxisSpec>(
-    context: context,
-    readVariants: (value) => value.$variants,
-    readModifier: (value) => value.$modifier,
-    readAnimation: (value) => value.$animation,
-  );
 
-  return MixProtocolStylerCodec(
+  return MixProtocolStylerCodec.forStyler<ChartAxisStyler, ChartAxisSpec>(
+    context: context,
     fields: [
       showLabels,
       label,
@@ -829,11 +752,8 @@ MixProtocolStylerCodec<ChartAxisStyler> _chartAxisCodec(
       drawBelowEverything,
       alignment,
     ],
-    metadata: metadata,
-    inventoryOwner: 'ChartAxisStyler',
     ownerFieldInventory: mixChartStylerInventory['ChartAxisStyler']!,
-    actualFieldCount: (value) => value.props.length,
-    build: (data) => ChartAxisStyler.create(
+    build: (data, metadata) => ChartAxisStyler.create(
       showLabels: showLabels.value(data),
       label: label.value(data),
       reservedSize: reservedSize.value(data),
@@ -884,14 +804,9 @@ MixProtocolStylerCodec<ChartGridStyler> _chartGridCodec(
     context: context,
     read: (value) => value.$stroke,
   );
-  final metadata = MixProtocolStylerMetadata<ChartGridStyler, ChartGridSpec>(
-    context: context,
-    readVariants: (value) => value.$variants,
-    readModifier: (value) => value.$modifier,
-    readAnimation: (value) => value.$animation,
-  );
 
-  return MixProtocolStylerCodec(
+  return MixProtocolStylerCodec.forStyler<ChartGridStyler, ChartGridSpec>(
+    context: context,
     fields: [
       show,
       showHorizontal,
@@ -900,11 +815,8 @@ MixProtocolStylerCodec<ChartGridStyler> _chartGridCodec(
       verticalInterval,
       stroke,
     ],
-    metadata: metadata,
-    inventoryOwner: 'ChartGridStyler',
     ownerFieldInventory: mixChartStylerInventory['ChartGridStyler']!,
-    actualFieldCount: (value) => value.props.length,
-    build: (data) => ChartGridStyler.create(
+    build: (data, metadata) => ChartGridStyler.create(
       show: show.value(data),
       showHorizontal: showHorizontal.value(data),
       showVertical: showVertical.value(data),
@@ -947,21 +859,12 @@ MixProtocolStylerCodec<ChartStrokeStyler> _chartStrokeCodec(
     codec: MixProtocolCodecs.unitNumber(),
     read: (value) => value.$opacity,
   );
-  final metadata =
-      MixProtocolStylerMetadata<ChartStrokeStyler, ChartStrokeSpec>(
-        context: context,
-        readVariants: (value) => value.$variants,
-        readModifier: (value) => value.$modifier,
-        readAnimation: (value) => value.$animation,
-      );
 
-  return MixProtocolStylerCodec(
+  return MixProtocolStylerCodec.forStyler<ChartStrokeStyler, ChartStrokeSpec>(
+    context: context,
     fields: [color, gradient, width, dashArray, opacity],
-    metadata: metadata,
-    inventoryOwner: 'ChartStrokeStyler',
     ownerFieldInventory: mixChartStylerInventory['ChartStrokeStyler']!,
-    actualFieldCount: (value) => value.props.length,
-    build: (data) => ChartStrokeStyler.create(
+    build: (data, metadata) => ChartStrokeStyler.create(
       color: color.value(data),
       gradient: gradient.value(data),
       width: width.value(data),
@@ -1039,14 +942,9 @@ MixProtocolStylerCodec<LineSeriesStyler> _lineSeriesCodec(
     codec: MixProtocolCodecs.shadow(),
     read: (value) => value.$shadow,
   );
-  final metadata = MixProtocolStylerMetadata<LineSeriesStyler, LineSeriesSpec>(
-    context: context,
-    readVariants: (value) => value.$variants,
-    readModifier: (value) => value.$modifier,
-    readAnimation: (value) => value.$animation,
-  );
 
-  return MixProtocolStylerCodec(
+  return MixProtocolStylerCodec.forStyler<LineSeriesStyler, LineSeriesSpec>(
+    context: context,
     fields: [
       show,
       stroke,
@@ -1061,11 +959,8 @@ MixProtocolStylerCodec<LineSeriesStyler> _lineSeriesCodec(
       aboveArea,
       shadow,
     ],
-    metadata: metadata,
-    inventoryOwner: 'LineSeriesStyler',
     ownerFieldInventory: mixChartStylerInventory['LineSeriesStyler']!,
-    actualFieldCount: (value) => value.props.length,
-    build: (data) => LineSeriesStyler.create(
+    build: (data, metadata) => LineSeriesStyler.create(
       show: show.value(data),
       stroke: stroke.value(data),
       curve: curve.value(data),
@@ -1139,14 +1034,9 @@ MixProtocolStylerCodec<PieChartStyler> _pieChartCodec(
     context: context,
     read: (value) => value.$tooltip,
   );
-  final metadata = MixProtocolStylerMetadata<PieChartStyler, PieChartSpec>(
-    context: context,
-    readVariants: (value) => value.$variants,
-    readModifier: (value) => value.$modifier,
-    readAnimation: (value) => value.$animation,
-  );
 
-  return MixProtocolStylerCodec(
+  return MixProtocolStylerCodec.forStyler<PieChartStyler, PieChartSpec>(
+    context: context,
     fields: [
       frame,
       slice,
@@ -1159,11 +1049,8 @@ MixProtocolStylerCodec<PieChartStyler> _pieChartCodec(
       sunbeamLabels,
       tooltip,
     ],
-    metadata: metadata,
-    inventoryOwner: 'PieChartStyler',
     ownerFieldInventory: mixChartStylerInventory['PieChartStyler']!,
-    actualFieldCount: (value) => value.props.length,
-    build: (data) => PieChartStyler.create(
+    build: (data, metadata) => PieChartStyler.create(
       frame: frame.value(data),
       slice: slice.value(data),
       selectedSliceRadiusOffset: selectedSliceRadiusOffset.value(data),
@@ -1230,14 +1117,9 @@ MixProtocolStylerCodec<PieSliceStyler> _pieSliceCodec(
     codec: MixProtocolCodecs.unitNumber(),
     read: (value) => value.$badgePosition,
   );
-  final metadata = MixProtocolStylerMetadata<PieSliceStyler, PieSliceSpec>(
-    context: context,
-    readVariants: (value) => value.$variants,
-    readModifier: (value) => value.$modifier,
-    readAnimation: (value) => value.$animation,
-  );
 
-  return MixProtocolStylerCodec(
+  return MixProtocolStylerCodec.forStyler<PieSliceStyler, PieSliceSpec>(
+    context: context,
     fields: [
       color,
       gradient,
@@ -1249,11 +1131,8 @@ MixProtocolStylerCodec<PieSliceStyler> _pieSliceCodec(
       cornerRadius,
       badgePosition,
     ],
-    metadata: metadata,
-    inventoryOwner: 'PieSliceStyler',
     ownerFieldInventory: mixChartStylerInventory['PieSliceStyler']!,
-    actualFieldCount: (value) => value.props.length,
-    build: (data) => PieSliceStyler.create(
+    build: (data, metadata) => PieSliceStyler.create(
       color: color.value(data),
       gradient: gradient.value(data),
       radius: radius.value(data),
