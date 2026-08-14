@@ -36,6 +36,7 @@ String? buildMixableSpecTargetCall({
   required ConstantReader annotation,
   required InterfaceElement specElement,
   required String stylerName,
+  required bool allowExactStylerType,
   required Element hostElement,
   required LibraryElement hostLibrary,
   bool validateTargetVisibility = false,
@@ -74,6 +75,7 @@ String? buildMixableSpecTargetCall({
     widgetName: widgetName,
     specElement: specElement,
     stylerName: stylerName,
+    allowExactStylerType: allowExactStylerType,
     anchor: specElement,
   );
 
@@ -192,6 +194,7 @@ void validateMixableSpecTargetConstructor({
   required String widgetName,
   required InterfaceElement specElement,
   required String stylerName,
+  required bool allowExactStylerType,
   required Element anchor,
 }) {
   final targetType = constructor.enclosingElement.thisType;
@@ -240,6 +243,8 @@ void validateMixableSpecTargetConstructor({
   if (!_targetStyleAcceptsGeneratedStyler(
     styleParameter.type,
     specElement: specElement,
+    stylerName: stylerName,
+    allowExactStylerType: allowExactStylerType,
   )) {
     fail(
       anchor,
@@ -252,14 +257,18 @@ void validateMixableSpecTargetConstructor({
 /// Whether [targetStyleType] can receive the Styler generated for
 /// [specElement] in the same build.
 ///
-/// The generated class is not available to analyzer until the shared part is
-/// written, so compatibility is established through its known `Style<S>`
-/// supertype. An unresolved target type is left to the analyzer pass over the
-/// completed part; this also supports a parameter typed as the generated
-/// Styler itself.
+/// On a clean build, the generated class is unresolved until the shared part
+/// is written. A prior generated part can instead expose it as a resolved
+/// interface. Both states are accepted for the exact generated Styler; other
+/// resolved types must accept its known `Style<S>` supertype.
+///
+/// [allowExactStylerType] is false for legacy mixins, where `this` is only
+/// statically known to satisfy the mixin's `Style<S>` constraint.
 bool _targetStyleAcceptsGeneratedStyler(
   DartType targetStyleType, {
   required InterfaceElement specElement,
+  required String stylerName,
+  required bool allowExactStylerType,
 }) {
   final specName = specElement.name;
   if (specName == null) return false;
@@ -270,6 +279,13 @@ bool _targetStyleAcceptsGeneratedStyler(
     return true;
   }
   if (targetStyleType is! InterfaceType) return false;
+
+  final targetElement = targetStyleType.element;
+  final isGeneratedStyler =
+      allowExactStylerType &&
+      targetElement.name == stylerName &&
+      targetElement.library.uri == specElement.library.uri;
+  if (isGeneratedStyler) return true;
 
   final acceptedStyle = findSupertypeMatching(targetStyleType, styleChecker);
   if (acceptedStyle == null) {

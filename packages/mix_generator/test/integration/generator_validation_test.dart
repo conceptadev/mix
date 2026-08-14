@@ -614,6 +614,57 @@ class _Stub extends StatelessWidget {
       expect(errors, contains('not visible from the annotated library'));
     });
 
+    test(
+      'StylerGenerator rejects targets requiring the concrete legacy Styler',
+      () async {
+        const source = r'''
+library styler_validation;
+
+import 'package:flutter/widgets.dart';
+import 'package:mix_annotations/mix_annotations.dart';
+import 'package:mix/src/core/style.dart';
+
+part 'styler_validation.g.dart';
+
+@MixableSpec(target: PlainWidget.new)
+class BoxSpec {
+  const BoxSpec();
+}
+
+class PlainWidget extends Widget {
+  const PlainWidget({required this.style});
+
+  final BoxStyler style;
+}
+
+@MixableStyler()
+class BoxStyler extends Style<BoxSpec> {
+  const BoxStyler();
+}
+''';
+
+        final result = await testBuilder(
+          partBuilder(const StylerGenerator()),
+          {
+            ...mixAnnotationsSources,
+            ...widgetStub,
+            'mix|lib/src/core/style.dart': styleStub,
+            'mix_generator|lib/styler_validation.dart': source,
+          },
+          generateFor: {'mix_generator|lib/styler_validation.dart'},
+        );
+
+        expect(result.succeeded, isFalse);
+        expect(
+          result.errors.join('\n'),
+          contains(
+            '@MixableSpec(target:) PlainWidget `style` parameter cannot '
+            'accept the generated `BoxStyler`',
+          ),
+        );
+      },
+    );
+
     /// This visibility split is only reachable through the legacy
     /// `@MixableStyler` path because generated specs and their stylers share a
     /// library.

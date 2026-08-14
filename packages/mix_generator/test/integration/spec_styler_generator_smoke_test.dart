@@ -1315,6 +1315,66 @@ void main() {
       );
     });
 
+    test(
+      'supports targets typed as a resolved prior generated Styler',
+      () async {
+        // Model a checked-in generated part during input resolution while the
+        // builder writes its replacement to the normal output asset.
+        const input = '''
+        library spike;
+        import 'package:flutter/widgets.dart';
+        import 'package:mix/mix.dart' hide Style;
+        import 'package:mix/src/core/style.dart';
+        import 'package:mix_annotations/mix_annotations.dart';
+        part 'prior.g.dart';
+        part 'spike.g.dart';
+
+        @MixableSpec(target: PlainWidget.new)
+        final class BoxSpec extends Spec<BoxSpec> {
+          const BoxSpec();
+        }
+
+        class PlainWidget extends Widget {
+          const PlainWidget({required this.style});
+
+          final BoxStyler style;
+        }
+      ''';
+
+        const priorOutput = '''
+        part of 'spike.dart';
+
+        final class BoxStyler extends Style<BoxSpec> {
+          const BoxStyler();
+        }
+      ''';
+
+        await testBuilder(
+          _specStylerPartBuilder(),
+          {
+            ...mixAnnotationsSources,
+            ..._flutterResolveStubs,
+            ..._mixSourcesWithStyleWidget,
+            'mix|lib/src/core/style.dart': '''
+            import 'package:mix/mix.dart' show Spec;
+
+            abstract class Style<S extends Spec<S>> {
+              const Style();
+            }
+          ''',
+            'mix|lib/spike.dart': input,
+            'mix|lib/prior.g.dart': priorOutput,
+          },
+          generateFor: {'mix|lib/spike.dart'},
+          outputs: {
+            'mix|lib/spike.g.dart': decodedMatches(
+              contains('return PlainWidget(style: this);'),
+            ),
+          },
+        );
+      },
+    );
+
     test('rejects plain Widget targets with required styleSpec', () async {
       const input = '''
         library spike;

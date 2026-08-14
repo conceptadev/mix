@@ -625,6 +625,7 @@ class MixWidgetGenerator extends GeneratorForAnnotation<MixWidget> {
       widgetName: mixableSpecTargetWidgetName(constructor),
       specElement: specElement,
       stylerName: writtenStylerName,
+      allowExactStylerType: true,
       anchor: anchor,
     );
 
