@@ -928,7 +928,7 @@ bool _isLenientSkippable(MixProtocolError error) {
 
 bool _isLenientListEntryPath(List<String> path, List<List<String>> suffixes) {
   for (final suffix in suffixes) {
-    if (_endsWithSegments(path, suffix)) return true;
+    if (_endsWithListPathSegments(path, suffix)) return true;
   }
 
   return false;
@@ -1092,11 +1092,17 @@ bool _startsWithSegments(List<String> value, List<String> prefix) {
   return true;
 }
 
-bool _endsWithSegments(List<String> value, List<String> suffix) {
+bool _endsWithListPathSegments(List<String> value, List<String> suffix) {
   if (value.length < suffix.length) return false;
   final offset = value.length - suffix.length;
   for (var i = 0; i < suffix.length; i += 1) {
-    if (value[offset + i] != suffix[i]) return false;
+    final expected = suffix[i];
+    final actual = value[offset + i];
+    if (expected == '*') {
+      if (int.tryParse(actual) == null) return false;
+    } else if (actual != expected) {
+      return false;
+    }
   }
 
   return true;

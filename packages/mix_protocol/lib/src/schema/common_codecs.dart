@@ -291,6 +291,14 @@ CodecSchema<JsonMap, BorderSideMix> borderSideCodec() {
   );
 }
 
+CodecSchema<Object, Prop<BorderSide>> borderSideMixPropCodec(String fieldName) {
+  return mixPropCodec<Object, BorderSide>(
+    _borderSideFieldCodec(),
+    fieldName: fieldName,
+    convertValue: BorderSideMix.value,
+  );
+}
+
 CodecSchema<JsonMap, BorderMix> borderCodec() {
   return Ack.object({
     'top': _borderSideFieldCodec().optional(),
@@ -706,17 +714,18 @@ Object _encodePropSource<T extends Object, V extends Object>(
     value = _referenceForToken<T, V>(source.token, fieldName);
   } else if (source is MixSource<V> && source.mix is T) {
     value = source.mix as T;
-  } else if (source is ValueSource<V> && source.value is T) {
-    value = source.value as T;
-  } else if (source is ValueSource<V> && convertValue != null) {
-    final converted = convertValue(source.value);
-    if (converted == null) {
+  } else if (source is ValueSource<V>) {
+    final converted = convertValue?.call(source.value);
+    if (converted != null) {
+      value = converted;
+    } else if (source.value is T) {
+      value = source.value as T;
+    } else {
       throw UnsupportedEncodeValueError(
         source,
         'Field "$fieldName" is ${source.runtimeType}; expected $T.',
       );
     }
-    value = converted;
   } else {
     throw UnsupportedEncodeValueError(
       source,

@@ -237,6 +237,177 @@ void main() {
     );
   });
 
+  test('list codecs preserve nested double-token schema semantics', () {
+    final values = MixProtocolField.direct<_NumberListStyler, List<double>>(
+      wire: 'values',
+      codec: MixProtocolCodecs.list(MixProtocolCodecs.number()),
+      read: (value) => value.values,
+    );
+    final protocol = MixProtocol.compose([
+      mixProtocolCoreVocabulary,
+      MixProtocolVocabulary(
+        id: 'number_lists',
+        wireVersion: 1,
+        branches: [
+          MixProtocolStylerBranch<_NumberListStyler>(
+            name: 'number_list',
+            codec: (_) => MixProtocolStylerCodec(
+              fields: [values],
+              build: (data) => _NumberListStyler(values.value(data)),
+            ),
+          ),
+        ],
+      ),
+    ]);
+    final schema = protocol.exportStyleJsonSchema();
+    final branch = (schema['anyOf']! as List<Object?>)
+        .cast<JsonMap>()
+        .singleWhere((branch) {
+          final properties = branch['properties']! as JsonMap;
+          final type = properties['type']! as JsonMap;
+
+          return type['const'] == 'number_lists.v1.number_list';
+        });
+    final properties = branch['properties']! as JsonMap;
+    final listSchema = properties['values']! as JsonMap;
+
+    expect(listSchema['items'], {
+      r'$ref': '#/definitions/mix_protocol_double_property_term',
+    });
+    expect(
+      protocol.encodeStyle(
+        _NumberListStyler([const DoubleToken('double.item')()]),
+      ),
+      isA<MixProtocolSuccess<JsonMap>>().having(
+        (result) => result.value,
+        'value',
+        {
+          'type': 'number_lists.v1.number_list',
+          'values': [
+            {r'$token': 'double.item', 'kind': 'double'},
+          ],
+          'v': 1,
+        },
+      ),
+    );
+  });
+
+  test('nested list codecs repair the smallest invalid entry', () {
+    final values =
+        MixProtocolField.direct<_NestedListStyler, List<List<_Cell>>>(
+          wire: 'values',
+          codec: MixProtocolCodecs.list(
+            MixProtocolCodecs.list(MixProtocolCodecs.enumName(_Cell.values)),
+          ),
+          read: (value) => value.values,
+        );
+    final protocol = MixProtocol.compose([
+      mixProtocolCoreVocabulary,
+      MixProtocolVocabulary(
+        id: 'nested_lists',
+        wireVersion: 1,
+        branches: [
+          MixProtocolStylerBranch<_NestedListStyler>(
+            name: 'nested_list',
+            codec: (_) => MixProtocolStylerCodec(
+              fields: [values],
+              build: (data) => _NestedListStyler(values.value(data)),
+            ),
+          ),
+        ],
+      ),
+    ]);
+
+    final result = protocol.decodeStyle<_NestedListStyler>({
+      'v': 1,
+      'type': 'nested_lists.v1.nested_list',
+      'values': [
+        ['alpha', 'future', 'beta'],
+        ['alpha'],
+      ],
+    }, options: const MixProtocolDecodeOptions(mode: .lenient));
+
+    expect(result, isA<MixProtocolSuccess<_NestedListStyler>>());
+    final success = result as MixProtocolSuccess<_NestedListStyler>;
+    expect(success.value.values, [
+      [_Cell.alpha, _Cell.beta],
+      [_Cell.alpha],
+    ]);
+    expect(success.warnings, hasLength(1));
+    expect(success.warnings.single.path, '/values/0/1');
+  });
+
+  test('composite codecs describe every nested double-token position', () {
+    final protocol = _compositeProtocol();
+    final branch = (protocol.exportStyleJsonSchema()['anyOf']! as List)
+        .cast<JsonMap>()
+        .singleWhere((branch) {
+          final properties = branch['properties']! as JsonMap;
+          final type = properties['type']! as JsonMap;
+
+          return type['const'] == 'composites.v1.composite';
+        });
+    final properties = branch['properties']! as JsonMap;
+    const doubleTerm = '#/definitions/mix_protocol_double_property_term';
+    const expectedPaths = <String, List<List<String>>>{
+      'gradient': [
+        ['radius'],
+        ['focalRadius'],
+        ['startAngle'],
+        ['endAngle'],
+      ],
+      'border': [
+        ['top', 'width'],
+        ['top', 'strokeAlign'],
+        ['right', 'width'],
+        ['right', 'strokeAlign'],
+        ['bottom', 'width'],
+        ['bottom', 'strokeAlign'],
+        ['left', 'width'],
+        ['left', 'strokeAlign'],
+      ],
+      'borderSide': [
+        ['width'],
+        ['strokeAlign'],
+      ],
+      'edgeInsets': [
+        [],
+        ['left'],
+        ['top'],
+        ['right'],
+        ['bottom'],
+      ],
+      'shadow': [
+        ['blurRadius'],
+      ],
+    };
+
+    for (final entry in expectedPaths.entries) {
+      for (final path in entry.value) {
+        expect(
+          _schemaPathHasDirectRef(properties[entry.key], path, doubleTerm),
+          isTrue,
+          reason: '${entry.key}.${path.join('.')}',
+        );
+      }
+    }
+
+    expect(
+      protocol.encodeStyle(
+        _CompositeStyler(
+          borderSide: BorderSideMix(width: const DoubleToken('side.width')()),
+        ),
+      ),
+      isA<MixProtocolSuccess<JsonMap>>().having(
+        (encoded) => encoded.value['borderSide'],
+        'borderSide',
+        {
+          'width': {r'$token': 'side.width', 'kind': 'double'},
+        },
+      ),
+    );
+  });
+
   group('composition validation', () {
     test('requires the exact core vocabulary', () {
       final extension = _emptyVocabulary<_AlphaStyler>(
@@ -472,6 +643,57 @@ MixProtocolStylerBranch<T> _emptyBranch<T extends Object>({
   );
 }
 
+MixProtocol _compositeProtocol() {
+  final gradient = MixProtocolField.direct<_CompositeStyler, GradientMix>(
+    wire: 'gradient',
+    codec: MixProtocolCodecs.gradient(),
+    read: (value) => value.gradient,
+  );
+  final border = MixProtocolField.direct<_CompositeStyler, BorderMix>(
+    wire: 'border',
+    codec: MixProtocolCodecs.border(),
+    read: (value) => value.border,
+  );
+  final borderSide = MixProtocolField.direct<_CompositeStyler, BorderSideMix>(
+    wire: 'borderSide',
+    codec: MixProtocolCodecs.borderSide(),
+    read: (value) => value.borderSide,
+  );
+  final edgeInsets = MixProtocolField.direct<_CompositeStyler, EdgeInsetsMix>(
+    wire: 'edgeInsets',
+    codec: MixProtocolCodecs.edgeInsets(),
+    read: (value) => value.edgeInsets,
+  );
+  final shadow = MixProtocolField.direct<_CompositeStyler, ShadowMix>(
+    wire: 'shadow',
+    codec: MixProtocolCodecs.shadow(),
+    read: (value) => value.shadow,
+  );
+
+  return MixProtocol.compose([
+    mixProtocolCoreVocabulary,
+    MixProtocolVocabulary(
+      id: 'composites',
+      wireVersion: 1,
+      branches: [
+        MixProtocolStylerBranch<_CompositeStyler>(
+          name: 'composite',
+          codec: (_) => MixProtocolStylerCodec(
+            fields: [gradient, border, borderSide, edgeInsets, shadow],
+            build: (data) => _CompositeStyler(
+              gradient: gradient.value(data),
+              border: border.value(data),
+              borderSide: borderSide.value(data),
+              edgeInsets: edgeInsets.value(data),
+              shadow: shadow.value(data),
+            ),
+          ),
+        ),
+      ],
+    ),
+  ]);
+}
+
 final class _CounterStyler {
   const _CounterStyler(this.count);
 
@@ -492,3 +714,57 @@ final class _AlphaStyler {
 final class _BetaStyler {
   const _BetaStyler();
 }
+
+final class _NumberListStyler {
+  const _NumberListStyler(this.values);
+
+  final List<double>? values;
+}
+
+final class _NestedListStyler {
+  const _NestedListStyler(this.values);
+
+  final List<List<_Cell>>? values;
+}
+
+final class _CompositeStyler {
+  const _CompositeStyler({
+    this.gradient,
+    this.border,
+    this.borderSide,
+    this.edgeInsets,
+    this.shadow,
+  });
+
+  final GradientMix? gradient;
+  final BorderMix? border;
+  final BorderSideMix? borderSide;
+  final EdgeInsetsMix? edgeInsets;
+  final ShadowMix? shadow;
+}
+
+bool _schemaPathHasDirectRef(
+  Object? schema,
+  List<String> path,
+  String reference,
+) {
+  if (schema is! Map) return false;
+  final map = JsonMap.from(schema);
+  final anyOf = map['anyOf'];
+  if (anyOf is List &&
+      anyOf.any((branch) => _schemaPathHasDirectRef(branch, path, reference))) {
+    return true;
+  }
+  if (path.isEmpty) return map[r'$ref'] == reference;
+
+  final properties = map['properties'];
+  if (properties is! Map) return false;
+
+  return _schemaPathHasDirectRef(
+    properties[path.first],
+    path.sublist(1),
+    reference,
+  );
+}
+
+enum _Cell { alpha, beta }

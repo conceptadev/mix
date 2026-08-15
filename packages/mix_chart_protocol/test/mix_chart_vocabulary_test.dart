@@ -154,6 +154,31 @@ void main() {
     }
   });
 
+  test('round-trips border-side token references', () {
+    const token = BorderSideToken('border.chart');
+    final style = BarStyler(border: token());
+
+    final encoded = protocol.encodeStyle(style);
+    expect(
+      encoded,
+      isA<MixProtocolSuccess<JsonMap>>().having(
+        (result) => result.value['border'],
+        'border',
+        {r'$token': token.name},
+      ),
+    );
+
+    final payload = (encoded as MixProtocolSuccess<JsonMap>).value;
+    expect(
+      protocol.decodeStyle<BarStyler>(payload),
+      isA<MixProtocolSuccess<BarStyler>>().having(
+        (result) => result.value,
+        'value',
+        style,
+      ),
+    );
+  });
+
   test('ordinary Flutter encoding ignores global converter mutations', () {
     const border = Border.fromBorderSide(
       BorderSide(color: Color(0xff112233), width: 2),
@@ -494,7 +519,7 @@ void main() {
 
     expect(
       _fnv1a64(utf8.encode(jsonEncode(schema))),
-      4689672354660132275,
+      3081541222728341371,
       reason: 'Changing this fingerprint changes the declared chart v1 schema.',
     );
 
@@ -513,6 +538,10 @@ void main() {
     expect(_properties(chartBranches['mix_chart.v1.chart_stroke']!)['width'], {
       r'$ref': '#/definitions/mix_protocol_double_property_term',
     });
+    expect(
+      _properties(chartBranches['mix_chart.v1.chart_tooltip']!)['padding'],
+      {r'$ref': '#/definitions/mix_protocol_double_property_term'},
+    );
   });
 }
 
