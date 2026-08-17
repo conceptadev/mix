@@ -85,7 +85,6 @@ class StylerGenerator extends GeneratorForAnnotation<MixableStyler> {
     required ClassElement stylerElement,
     required String stylerName,
     required InterfaceElement specElement,
-    required String specName,
   }) {
     final specAnnotation = mixableSpecAnnotationChecker.firstAnnotationOf(
       specElement,
@@ -95,8 +94,8 @@ class StylerGenerator extends GeneratorForAnnotation<MixableStyler> {
     return buildMixableSpecTargetCall(
       annotation: ConstantReader(specAnnotation),
       specElement: specElement,
-      specName: specName,
       stylerName: stylerName,
+      allowExactGeneratedStyler: false,
       hostElement: stylerElement,
       hostLibrary: stylerElement.library,
       validateTargetVisibility: true,
@@ -140,7 +139,6 @@ class StylerGenerator extends GeneratorForAnnotation<MixableStyler> {
       stylerElement: classElement,
       stylerName: stylerName,
       specElement: specType.element,
-      specName: specName,
     );
     final fields = _extractFields(classElement, stylerName);
     final config = _extractAnnotationConfig(annotation);

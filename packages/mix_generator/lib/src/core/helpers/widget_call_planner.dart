@@ -35,8 +35,8 @@ const stylerBackedTargetParams = {'style', 'styleSpec'};
 String? buildMixableSpecTargetCall({
   required ConstantReader annotation,
   required InterfaceElement specElement,
-  required String specName,
   required String stylerName,
+  required bool allowExactGeneratedStyler,
   required Element hostElement,
   required LibraryElement hostLibrary,
   bool validateTargetVisibility = false,
@@ -74,7 +74,8 @@ String? buildMixableSpecTargetCall({
     constructor: constructor,
     widgetName: widgetName,
     specElement: specElement,
-    specName: specName,
+    stylerName: stylerName,
+    allowExactGeneratedStyler: allowExactGeneratedStyler,
     anchor: specElement,
   );
 
@@ -86,6 +87,11 @@ String? buildMixableSpecTargetCall({
     excludeNames: stylerBackedTargetParams,
     annotationLabel: '@MixableSpec(target:)',
     keyOwner: 'the target constructor',
+  );
+  final callParams = qualifyTargetMemberDefaults(
+    call.params,
+    constructor: constructor,
+    targetTypeReference: widgetName,
   );
   if (call.forwardsKey) {
     for (final typeParameter in constructor.enclosingElement.typeParameters) {
@@ -109,11 +115,48 @@ String? buildMixableSpecTargetCall({
 
   return renderWidgetCall(
     widgetName: widgetName,
-    params: call.params,
+    params: callParams,
     forwardsKey: call.forwardsKey,
     typeParams: typeParams,
     indent: indent,
   );
+}
+
+/// Qualifies default-value identifiers that refer to static members of the
+/// target class so they remain in scope when copied into generated code.
+List<WidgetCallParam> qualifyTargetMemberDefaults(
+  List<WidgetCallParam> params, {
+  required ConstructorElement constructor,
+  required String targetTypeReference,
+}) {
+  final target = constructor.enclosingElement;
+
+  return [
+    for (final param in params)
+      if (param.defaultValueCode case final code?
+          when RegExp(r'^[_$A-Za-z][_$A-Za-z0-9]*$').hasMatch(code) &&
+              _isStaticTargetMember(target, code))
+        WidgetCallParam(
+          name: param.name,
+          typeCode: param.typeCode,
+          isPositional: param.isPositional,
+          isRequired: param.isRequired,
+          defaultValueCode: '$targetTypeReference.$code',
+        )
+      else
+        param,
+  ];
+}
+
+bool _isStaticTargetMember(InterfaceElement target, String name) {
+  for (final method in target.methods) {
+    if (method.name == name && method.isStatic) return true;
+  }
+  for (final field in target.fields) {
+    if (field.name == name && field.isStatic) return true;
+  }
+
+  return false;
 }
 
 /// Returns display names of optional positional parameters in declaration
@@ -192,33 +235,21 @@ void validateMixableSpecTargetConstructor({
   required ConstructorElement constructor,
   required String widgetName,
   required InterfaceElement specElement,
-  required String specName,
+  required String stylerName,
+  required bool allowExactGeneratedStyler,
   required Element anchor,
 }) {
-  final styleWidgetSupertype = findSupertypeMatching(
-    constructor.enclosingElement.thisType,
-    styleWidgetChecker,
-  );
-  if (styleWidgetSupertype == null) {
+  final targetType = constructor.enclosingElement.thisType;
+  if (!widgetChecker.isAssignableFromType(targetType)) {
     fail(
       anchor,
-      'Widget $widgetName must extend StyleWidget<$specName> '
-      'to be used as @MixableSpec(target:).',
+      '@MixableSpec(target:) must reference a Widget constructor, but '
+      '`$widgetName` is not a Widget subtype.',
     );
   }
 
-  final widgetSpecArg = styleWidgetSupertype.typeArguments.first;
-  if (widgetSpecArg is! InterfaceType || widgetSpecArg.element != specElement) {
-    fail(
-      anchor,
-      'Spec generic mismatch: $specName annotated, but '
-      '$widgetName extends StyleWidget<${widgetSpecArg.getDisplayString()}>.',
-    );
-  }
-
-  final optionalPositional = optionalPositionalNames(
-    constructor.formalParameters,
-  );
+  final parameters = constructor.formalParameters;
+  final optionalPositional = optionalPositionalNames(parameters);
   if (optionalPositional.isNotEmpty) {
     fail(
       anchor,
@@ -229,15 +260,97 @@ void validateMixableSpecTargetConstructor({
     );
   }
 
-  for (final parameter in constructor.formalParameters) {
-    if (parameter.name == 'style' && parameter.isNamed) return;
+  final styleParameter = parameters
+      .where((parameter) => parameter.name == 'style' && parameter.isNamed)
+      .firstOrNull;
+  if (styleParameter == null) {
+    fail(
+      anchor,
+      '@MixableSpec(target:) requires $widgetName to expose a named '
+      '`style` constructor parameter so the generated call() can pass '
+      '`style: this`.',
+    );
   }
 
-  fail(
-    anchor,
-    '@MixableSpec(target:) requires $widgetName to expose a named '
-    '`style` constructor parameter so the generated call() can pass '
-    '`style: this`.',
+  final styleSpecParameter = parameters
+      .where((parameter) => parameter.name == 'styleSpec')
+      .firstOrNull;
+  if (styleSpecParameter != null && styleSpecParameter.isRequired) {
+    fail(
+      anchor,
+      '@MixableSpec(target:) cannot omit required `styleSpec` on $widgetName.',
+    );
+  }
+
+  if (!_targetStyleAcceptsGeneratedStyler(
+    styleParameter.type,
+    specElement: specElement,
+    stylerName: stylerName,
+    allowExactGeneratedStyler: allowExactGeneratedStyler,
+  )) {
+    fail(
+      anchor,
+      '@MixableSpec(target:) $widgetName `style` parameter cannot accept '
+      'the generated `$stylerName`.',
+    );
+  }
+}
+
+/// Whether [targetStyleType] can receive the Styler generated for
+/// [specElement] in the same build.
+///
+/// On a clean build, the generated class is unresolved until the shared part
+/// is written. A prior generated part can instead expose it as a resolved
+/// interface. Both states are accepted for the exact generated Styler; other
+/// resolved types must accept its known `Style<S>` supertype.
+///
+/// [allowExactGeneratedStyler] is false for legacy mixins, where `this` is
+/// only statically known to satisfy the mixin's `Style<S>` constraint.
+bool _targetStyleAcceptsGeneratedStyler(
+  DartType targetStyleType, {
+  required InterfaceElement specElement,
+  required String stylerName,
+  required bool allowExactGeneratedStyler,
+}) {
+  final specName = specElement.name;
+  if (specName == null) return false;
+
+  if (targetStyleType is DynamicType ||
+      targetStyleType is InvalidType ||
+      targetStyleType.isDartCoreObject) {
+    return true;
+  }
+  if (targetStyleType is! InterfaceType) return false;
+
+  final targetElement = targetStyleType.element;
+  final isExactGeneratedStyler =
+      allowExactGeneratedStyler &&
+      targetElement.name == stylerName &&
+      targetElement.library.uri == specElement.library.uri;
+  if (isExactGeneratedStyler) return true;
+
+  var acceptedStyle = findSupertypeMatching(targetStyleType, styleChecker);
+  if (acceptedStyle == null &&
+      targetElement.name == 'Style' &&
+      targetElement.library.uri.toString() == 'package:mix/mix.dart') {
+    // Lightweight build-test fixtures declare Style directly at the public
+    // barrel URI. Match that exact identity rather than rendered type text.
+    acceptedStyle = targetStyleType;
+  }
+  if (acceptedStyle == null) return false;
+  if (acceptedStyle.typeArguments.isEmpty) return false;
+
+  final acceptedSpec = acceptedStyle.typeArguments.first;
+  final acceptsSpec =
+      acceptedSpec is InterfaceType &&
+      acceptedSpec.element.name == specName &&
+      acceptedSpec.element.library.uri == specElement.library.uri;
+  if (!acceptsSpec) return false;
+
+  return specElement.library.typeSystem.isAssignableTo(
+    acceptedStyle,
+    targetStyleType,
+    strictCasts: false,
   );
 }
 

@@ -1026,8 +1026,8 @@ class SpecStylerClassBuilder {
     return buildMixableSpecTargetCall(
       annotation: annotation,
       specElement: specElement,
-      specName: specName,
       stylerName: stylerName,
+      allowExactGeneratedStyler: true,
       hostElement: specElement,
       hostLibrary: specElement.library,
     );

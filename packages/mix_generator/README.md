@@ -32,6 +32,9 @@ The generator emits several surfaces with deliberately different shapes, chosen 
 
 - **`@MixableSpec`** emits a *rich* mixin (`mixin _$<Name> implements Spec<T>, Diagnosticable`) that fully completes the Spec contract on its own. Specs are immutable value types with no shared concrete behavior to inherit, so the generated mixin can be self-contained — user code only writes `with _$<Name>`.
 - **`@MixableSpec(target: Widget.new)`** also emits a full generated Styler class into the same `.g.dart` part file as the spec mixin. The generated class owns fields, constructors, factories, fluent methods, `call()`, merge, resolve, diagnostics, and props.
+  The target can be any `Widget` constructor with a named `style` parameter
+  that accepts the generated Styler; it does not need to extend `StyleWidget`.
+  A `styleSpec` parameter is supported when it is optional.
   Direct, uninstantiated generic targets are supported; generated `call()` methods preserve and forward their type parameters and bounds. Instantiated targets such as `Widget<int>.new` and generic constructor tear-offs through typedefs are rejected because their substitutions are not yet supported. A target type parameter named `Key` is also rejected when the constructor forwards Flutter's `key`, because it would shadow the generated `Key? key` parameter.
 - **`@MixableStyler`** emits a legacy *slim* mixin (`mixin _$<Name>Mixin on Style<S>, Diagnosticable`) that fills in per-field plumbing for handwritten styler classes.
 - **`@Mixable`** emits a *slim* mixin (`mixin _$<Name>Mixin on Mix<T>[, DefaultValue<T>][, Diagnosticable]`) for the same reason — Mix subclasses commonly compose intermediate base classes (e.g., `class BoxConstraintsMix extends ConstraintsMix<BoxConstraints>`) and the user keeps that inheritance chain.

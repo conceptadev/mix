@@ -11,6 +11,9 @@
    `@MixableSpec(target:)` or `@MixWidget(target:)`. Reject a target type
    parameter named `Key` when it would shadow the generated Flutter key
    parameter (#1023).
+ - **FIX**: Allow `@MixableSpec(target:)` to use plain Widget constructors whose
+   named `style` parameter accepts the generated Styler, without requiring the
+   target to extend `StyleWidget` (#1022).
 
 ## 2.2.0-beta.2
 
