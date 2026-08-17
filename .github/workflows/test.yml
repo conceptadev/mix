@@ -38,17 +38,28 @@ jobs:
         run: melos run format:check
 
   test:
-    name: Test
-    uses: btwld/dart-actions/.github/workflows/ci.yml@9075ce1232ec77b8747953f2ff4a349190e5a805
-    secrets:
-      token: ${{ secrets.GITHUB_TOKEN }}
-    with:
-      flutter-version: 'stable'
-      # DCM requires CI credentials; the reusable workflow still runs Dart analysis.
-      run-dcm: false
-      melos-commands: |
-        melos run schema:inventory
-        melos run analyze:dart
+    name: Test / Run tests for all packages
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: kuhnroyal/flutter-fvm-config-action@v2
+        id: fvm-config-action
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ steps.fvm-config-action.outputs.FLUTTER_VERSION }}
+          channel: ${{ steps.fvm-config-action.outputs.FLUTTER_CHANNEL }}
+      - name: Setup Melos
+        run: |
+          dart pub global activate melos 6.3.3
+          melos bootstrap
+      - name: Analyze
+        run: |
+          melos run schema:inventory
+          melos run analyze:dart
+      - name: Test
+        run: melos run ci
 
   showcase-tool:
     name: Showcase Tool Tests
