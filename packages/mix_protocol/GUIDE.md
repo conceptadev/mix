@@ -4,7 +4,7 @@
 boundary. It is a good fit for server-driven component styling, shared design
 tokens, preset validation, and authoring tools. It is not a widget-tree format.
 
-The public API is deliberately fixed:
+The shared API is deliberately core-only:
 
 ```dart
 final MixProtocol mixProtocol;
@@ -17,8 +17,9 @@ mixProtocol.exportStyleJsonSchema();
 mixProtocol.exportThemeJsonSchema();
 ```
 
-There is no contract builder or public codec registry in v1. This keeps every
-producer and consumer on the same auditable vocabulary.
+There is no runtime codec registry. A package-defined vocabulary is an immutable
+value, and applications opt into the same explicit composition at each protocol
+boundary.
 
 ## Setup
 
@@ -38,10 +39,105 @@ import 'package:mix/mix.dart';
 import 'package:mix_protocol/mix_protocol.dart';
 ```
 
+## Compose package vocabularies
+
+An integration package can expose a ready-to-use composition for its common
+case. For charts, use:
+
+```dart
+import 'package:mix_chart_protocol/mix_chart_protocol.dart';
+
+final result = mixChartProtocol.encodeStyle(chartStyle);
+```
+
+Use the vocabulary values directly when constructing the composition manually:
+
+```dart
+import 'package:mix_chart_protocol/mix_chart_protocol.dart';
+
+final chartProtocol = MixProtocol.compose([
+  mixProtocolCoreVocabulary,
+  mixChartVocabulary,
+]);
+```
+
+The ordinary `mixProtocol` singleton remains core-only. It rejects chart roots
+in both strict and lenient modes, so merely adding a package dependency cannot
+change the meaning of a core v1 document.
+
+Composition order does not affect the resulting schema or encoded documents.
+Non-core vocabulary ids and branch names are sorted after validation. A chart
+root uses a versioned namespace such as `mix_chart.v1.line_chart`; nested chart
+and core stylers recurse through the same union.
+
+Exported schema identifies required additions:
+
+```json
+{
+  "x-mix-protocol-vocabularies": [
+    { "id": "mix_chart", "wireVersion": 1 }
+  ]
+}
+```
+
+Vocabulary wire versions are protocol majors, independent from the package's
+release version.
+
+## Author a vocabulary
+
+Packages define codecs through the Ack-free authoring façade. Declare each
+field once and use the supplied reconstruction callback:
+
+```dart
+import 'package:mix_protocol/authoring.dart';
+
+final counterVocabulary = MixProtocolVocabulary(
+  id: 'counter_styles',
+  wireVersion: 1,
+  branches: [
+    MixProtocolStylerBranch<CounterStyler>(
+      name: 'counter',
+      codec: (_) {
+        final count = MixProtocolField.direct<CounterStyler, int>(
+          wire: 'count',
+          codec: MixProtocolCodecs.integer(min: 0),
+          read: (value) => value.count,
+        );
+
+        return MixProtocolStylerCodec(
+          fields: [count],
+          build: (data) => CounterStyler(count.value(data)),
+        );
+      },
+    ),
+  ],
+);
+```
+
+Use `MixProtocolField.value` for ordinary `Prop<T>` fields,
+`MixProtocolField.mix` for Mix-backed properties, and
+`MixProtocolField.style` for recursive nested stylers. Standard styler metadata
+is represented with `MixProtocolStylerMetadata`. Generated Stylers expose their
+source-field names through `StylerFieldMetadata.$stylerFieldNames`, enabling
+the core and extension-contributed vocabularies to detect inventory drift
+without handwritten field manifests.
+
+Branch runtime types must be concrete and mutually disjoint. Field names use
+lower camel case; duplicate names and the protocol-owned `v`, `type`, and `$...`
+names are rejected when the composition is built.
+
+For ordinary Mix `Style` subclasses, prefer
+`MixProtocolStylerCodec.forStyler`. It wires variants, modifiers, animation,
+and generated field inventory once. Handwritten Stylers and output from an
+older generator can temporarily supply `ownerFieldInventory`; when neither
+generated metadata nor that fallback is available, encoding fails with an
+`inventorySkew` diagnostic. The base constructor remains available for
+nonstandard codec owners and targeted tests.
+
 ## Decode a style
 
-Every top-level style document requires the supported version and a built-in
-styler discriminator:
+Every top-level style document requires the supported version and a styler
+discriminator known to the protocol composition:
 
 ```json
 {

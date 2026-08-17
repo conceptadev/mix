@@ -7,14 +7,13 @@ import 'box_styler_codec.dart';
 import 'common_codecs.dart';
 import 'schema_field.dart';
 import 'stack_styler_codec.dart';
-import 'styler_field_inventory.dart';
 import 'styler_codec_helpers.dart';
 
-AckSchema<JsonMap, StackBoxStyler> stackBoxStylerCodec({
+SchemaObject<StackBoxStyler> stackBoxStylerSchema({
   AckSchema<JsonMap, Object>? rootStyleSchema,
   MixProtocolIdentityContext Function()? identityContext,
 }) {
-  return _stackBoxStylerSchemaType(rootStyleSchema).codec();
+  return _stackBoxStylerSchemaType(rootStyleSchema);
 }
 
 SchemaObject<StackBoxStyler> _stackBoxStylerSchemaType(
@@ -37,6 +36,7 @@ SchemaObject<StackBoxStyler> _stackBoxStylerSchemaType(
     ),
     _boxField,
     inventoryName: 'box',
+    schemaSemantics: doubleTokenFieldSemantics,
   );
   final margin = derivedField<StackBoxStyler, Prop<EdgeInsetsGeometry>>(
     'margin',
@@ -46,6 +46,7 @@ SchemaObject<StackBoxStyler> _stackBoxStylerSchemaType(
     ),
     _boxField,
     inventoryName: 'box',
+    schemaSemantics: doubleTokenFieldSemantics,
   );
   final constraints = derivedField<StackBoxStyler, Prop<BoxConstraints>>(
     'constraints',
@@ -86,6 +87,7 @@ SchemaObject<StackBoxStyler> _stackBoxStylerSchemaType(
     ),
     _boxField,
     inventoryName: 'box',
+    schemaSemantics: boxDecorationFieldSemantics,
   );
   final stackAlignment = derivedField<StackBoxStyler, Prop<AlignmentGeometry>>(
     'stackAlignment',
@@ -122,17 +124,9 @@ SchemaObject<StackBoxStyler> _stackBoxStylerSchemaType(
     readWire: 'clipBehavior',
     inventoryName: 'stack',
   );
-  final metadata = StylerMetadataFields<StackBoxStyler, StackBoxSpec>(
-    rootStyleSchema: rootStyleSchema,
-    readVariants: (value) => value.$variants,
-    readModifier: (value) => value.$modifier,
-    readAnimation: (value) => value.$animation,
-  );
 
-  return SchemaObject<StackBoxStyler>(
-    inventoryOwner: 'StackBoxStyler',
-    ownerFieldInventory: stackBoxStylerInventory,
-    actualFieldCount: stylerFieldCount,
+  return stylerSchemaObject<StackBoxStyler, StackBoxSpec>(
+    rootStyleSchema: rootStyleSchema,
     fields: [
       alignment,
       padding,
@@ -146,10 +140,8 @@ SchemaObject<StackBoxStyler> _stackBoxStylerSchemaType(
       fit,
       textDirection,
       stackClipBehavior,
-      ...metadata.fields,
     ],
-    unsupportedFields: [...metadata.unsupportedFields()],
-    build: (data) => StackBoxStyler.create(
+    build: (data, metadata) => StackBoxStyler.create(
       box: Prop.mix(
         BoxStyler.create(
           alignment: alignment.value(data),

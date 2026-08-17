@@ -5,6 +5,12 @@ import 'package:mix_protocol/mix_protocol.dart';
 import 'package:mix_protocol/testing.dart' show SchemaStyler;
 
 void main() {
+  test('core schema export has a byte-for-byte v1 fingerprint', () {
+    final encoded = jsonEncode(mixProtocol.exportStyleJsonSchema());
+
+    expect(_fnv1a64(utf8.encode(encoded)), -531352329917363246);
+  });
+
   test('schema export structurally describes every built-in branch', () {
     final contract = mixProtocol;
     final schema = contract.exportStyleJsonSchema();
@@ -360,6 +366,16 @@ void main() {
       reason: 'Only top-level branches require the v envelope.',
     );
   });
+}
+
+int _fnv1a64(List<int> bytes) {
+  var hash = 0xcbf29ce484222325;
+  for (final byte in bytes) {
+    hash ^= byte;
+    hash = (hash * 0x100000001b3) & 0xffffffffffffffff;
+  }
+
+  return hash;
 }
 
 const _expectedBranchProperties = {

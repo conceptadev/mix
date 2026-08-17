@@ -7,14 +7,15 @@ for authoring tools.
 
 The package is intentionally narrow:
 
-- one fixed v1 vocabulary for `box`, `text`, `flex`, `wrap`, `stack`, `icon`,
-  `image`, `flex_box`, `wrap_box`, `stack_box`, and `grid_box` styles;
-- one shared `mixProtocol` façade for styles, themes, and schema export;
+- one fixed core v1 vocabulary for `box`, `text`, `flex`, `wrap`, `stack`,
+  `icon`, `image`, `flex_box`, `wrap_box`, `stack_box`, and `grid_box` styles;
+- one shared core-only `mixProtocol` façade, plus explicit immutable vocabulary
+  composition for packages that define their own stylers;
 - strict decode by default, with bounded lenient recovery for additive data;
 - stable path-qualified diagnostics and fail-loud encoding;
 - per-call icon and image identity resolution; and
-- no public codec registration, Ack types, widget-tree model, transport, or
-  persistence policy.
+- no runtime registry, import side effects, public Ack types, widget-tree
+  model, transport, or persistence policy.
 
 Ack powers the private bidirectional codecs and JSON Schema generation. The
 wire semantics and compatibility policy belong to `mix_protocol`; consumers do
@@ -59,6 +60,24 @@ final themeSchema = mixProtocol.exportThemeJsonSchema();
 Every top-level document must carry `v: 1`; nested variant styles inherit the
 root version. Explicit JSON `null` is forbidden. Unsupported runtime values
 fail encode instead of being silently omitted.
+
+Packages can contribute namespaced, independently versioned style words without
+changing the core singleton. Composition is explicit and deterministic:
+
+```dart
+final chartProtocol = MixProtocol.compose([
+  mixProtocolCoreVocabulary,
+  mixChartVocabulary,
+]);
+```
+
+Integration packages may also expose that deterministic composition as a
+ready-to-use value; `mix_chart_protocol` provides `mixChartProtocol` for the
+common core-plus-chart case.
+
+Contributed discriminators include their vocabulary wire major, such as
+`mix_chart.v1.line_chart`. See [GUIDE.md](GUIDE.md) for authoring and consuming
+vocabularies.
 
 ## Protocol, schema, and future documents
 

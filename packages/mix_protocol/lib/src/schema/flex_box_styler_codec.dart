@@ -7,14 +7,13 @@ import 'box_styler_codec.dart';
 import 'common_codecs.dart';
 import 'flex_styler_codec.dart';
 import 'schema_field.dart';
-import 'styler_field_inventory.dart';
 import 'styler_codec_helpers.dart';
 
-AckSchema<JsonMap, FlexBoxStyler> flexBoxStylerCodec({
+SchemaObject<FlexBoxStyler> flexBoxStylerSchema({
   AckSchema<JsonMap, Object>? rootStyleSchema,
   MixProtocolIdentityContext Function()? identityContext,
 }) {
-  return _flexBoxStylerSchemaType(rootStyleSchema).codec();
+  return _flexBoxStylerSchemaType(rootStyleSchema);
 }
 
 SchemaObject<FlexBoxStyler> _flexBoxStylerSchemaType(
@@ -37,6 +36,7 @@ SchemaObject<FlexBoxStyler> _flexBoxStylerSchemaType(
     ),
     _boxField,
     inventoryName: 'box',
+    schemaSemantics: doubleTokenFieldSemantics,
   );
   final margin = derivedField<FlexBoxStyler, Prop<EdgeInsetsGeometry>>(
     'margin',
@@ -46,6 +46,7 @@ SchemaObject<FlexBoxStyler> _flexBoxStylerSchemaType(
     ),
     _boxField,
     inventoryName: 'box',
+    schemaSemantics: doubleTokenFieldSemantics,
   );
   final constraints = derivedField<FlexBoxStyler, Prop<BoxConstraints>>(
     'constraints',
@@ -86,6 +87,7 @@ SchemaObject<FlexBoxStyler> _flexBoxStylerSchemaType(
     ),
     _boxField,
     inventoryName: 'box',
+    schemaSemantics: boxDecorationFieldSemantics,
   );
   final direction = derivedField<FlexBoxStyler, Prop<Axis>>(
     'direction',
@@ -165,18 +167,11 @@ SchemaObject<FlexBoxStyler> _flexBoxStylerSchemaType(
     valuePropCodec<double>(doubleTokenCodec(), fieldName: 'spacing'),
     _flexField,
     inventoryName: 'flex',
-  );
-  final metadata = StylerMetadataFields<FlexBoxStyler, FlexBoxSpec>(
-    rootStyleSchema: rootStyleSchema,
-    readVariants: (value) => value.$variants,
-    readModifier: (value) => value.$modifier,
-    readAnimation: (value) => value.$animation,
+    schemaSemantics: doubleTokenFieldSemantics,
   );
 
-  return SchemaObject<FlexBoxStyler>(
-    inventoryOwner: 'FlexBoxStyler',
-    ownerFieldInventory: flexBoxStylerInventory,
-    actualFieldCount: stylerFieldCount,
+  return stylerSchemaObject<FlexBoxStyler, FlexBoxSpec>(
+    rootStyleSchema: rootStyleSchema,
     fields: [
       alignment,
       padding,
@@ -195,10 +190,8 @@ SchemaObject<FlexBoxStyler> _flexBoxStylerSchemaType(
       textBaseline,
       flexClipBehavior,
       spacing,
-      ...metadata.fields,
     ],
-    unsupportedFields: [...metadata.unsupportedFields()],
-    build: (data) => FlexBoxStyler.create(
+    build: (data, metadata) => FlexBoxStyler.create(
       box: Prop.mix(
         BoxStyler.create(
           alignment: alignment.value(data),
