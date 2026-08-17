@@ -1,5 +1,10 @@
 ## 2.2.0-beta.3
 
+ - **FEAT**: Emit a complete `$stylerFieldNames` inventory for generated
+   Stylers so schema tooling can validate field coverage directly from runtime
+   classes. `stylerFieldNames` is now reserved, with a targeted diagnostic,
+   and generated field-name literals safely escape `$` identifiers. Generated
+   output requires Mix 2.2.0-beta.5 or newer.
  - **FIX**: Preserve type parameters and bounds from uninstantiated generic
    targets in generated `@MixableSpec(target:)` `call()` methods, and reject
    instantiated or aliased generic targets instead of silently widening them in

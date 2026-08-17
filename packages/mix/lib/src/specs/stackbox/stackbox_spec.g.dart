@@ -94,7 +94,8 @@ class StackBoxStyler extends MixStyler<StackBoxStyler, StackBoxSpec>
         BorderStyleMixin<StackBoxStyler>,
         BorderRadiusStyleMixin<StackBoxStyler>,
         ShadowStyleMixin<StackBoxStyler>,
-        TransformStyleMixin<StackBoxStyler> {
+        TransformStyleMixin<StackBoxStyler>
+    implements StylerFieldMetadata {
   final Prop<StyleSpec<BoxSpec>>? $box;
   final Prop<StyleSpec<StackSpec>>? $stack;
 
@@ -413,6 +414,15 @@ class StackBoxStyler extends MixStyler<StackBoxStyler, StackBoxSpec>
   StackBoxStyler stackClipBehavior(Clip value) {
     return merge(StackBoxStyler(stackClipBehavior: value));
   }
+
+  @override
+  Set<String> get $stylerFieldNames => const {
+    'box',
+    'stack',
+    'animation',
+    'modifier',
+    'variants',
+  };
 
   /// Sets the animation configuration.
   @override

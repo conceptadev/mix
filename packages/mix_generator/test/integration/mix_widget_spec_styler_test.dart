@@ -31,6 +31,10 @@ const _mixStub = r'''
     const Spec();
   }
 
+  abstract interface class StylerFieldMetadata {
+    Set<String> get $stylerFieldNames;
+  }
+
   abstract class Style<S extends Spec<S>> extends Mix<StyleSpec<S>> {
     final List<VariantStyle<S>>? $variants;
     final WidgetModifierConfig? $modifier;

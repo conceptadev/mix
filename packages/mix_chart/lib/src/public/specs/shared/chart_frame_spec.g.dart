@@ -114,7 +114,8 @@ typedef _$ChartFrameSpecMethods = _$ChartFrameSpec; // ignore: unused_element
 // SpecStylerGenerator
 // **************************************************************************
 
-class ChartFrameStyler extends MixStyler<ChartFrameStyler, ChartFrameSpec> {
+class ChartFrameStyler extends MixStyler<ChartFrameStyler, ChartFrameSpec>
+    implements StylerFieldMetadata {
   final Prop<Color>? $backgroundColor;
   final Prop<Border>? $border;
   final Prop<bool>? $showBorder;
@@ -165,6 +166,18 @@ class ChartFrameStyler extends MixStyler<ChartFrameStyler, ChartFrameSpec> {
   factory ChartFrameStyler.clip(bool value) => ChartFrameStyler().clip(value);
   factory ChartFrameStyler.rotationQuarterTurns(int value) =>
       ChartFrameStyler().rotationQuarterTurns(value);
+
+  @override
+  Set<String> get $stylerFieldNames => const {
+    'backgroundColor',
+    'border',
+    'showBorder',
+    'clip',
+    'rotationQuarterTurns',
+    'animation',
+    'modifier',
+    'variants',
+  };
 
   /// Sets the backgroundColor.
   ChartFrameStyler backgroundColor(Color value) {

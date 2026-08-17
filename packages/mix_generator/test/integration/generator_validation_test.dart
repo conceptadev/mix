@@ -1,4 +1,5 @@
 import 'package:build_test/build_test.dart';
+import 'package:logging/logging.dart';
 import 'package:mix_generator/mix_generator.dart';
 import 'package:source_gen_test/source_gen_test.dart';
 import 'package:test/test.dart';
@@ -24,6 +25,25 @@ Future<String> _expectMixWidgetValidationError(
   expect(result.succeeded, isFalse);
 
   return result.errors.join('\n');
+}
+
+Future<String> _expectStylerValidationError(String libSource) async {
+  final logs = <LogRecord>[];
+  await testBuilder(
+    partBuilder(const StylerGenerator()),
+    {
+      ...mixAnnotationsSources,
+      'mix|lib/src/core/style.dart': styleStub,
+      'mix_generator|lib/styler_validation.dart': libSource,
+    },
+    generateFor: {'mix_generator|lib/styler_validation.dart'},
+    onLog: logs.add,
+  );
+
+  return logs
+      .where((record) => record.level == Level.SEVERE)
+      .map((record) => record.message)
+      .join('\n');
 }
 
 void main() {
@@ -121,6 +141,68 @@ class NotAStyle {}
         );
       },
     );
+
+    test('StylerGenerator rejects a getter reserved for metadata', () async {
+      const libSource = r'''
+library styler_validation;
+
+import 'package:mix_annotations/mix_annotations.dart';
+import 'package:mix/src/core/style.dart';
+
+part 'styler_validation.g.dart';
+
+@MixableStyler()
+class ReservedStyler extends Style<Object> {
+  Object? get $stylerFieldNames => null;
+
+  const ReservedStyler()
+    : super(variants: null, modifier: null, animation: null);
+}
+''';
+
+      final errors = await _expectStylerValidationError(libSource);
+
+      expect(
+        errors,
+        allOf(
+          contains(
+            r'`$stylerFieldNames` is reserved for generated Styler metadata',
+          ),
+          contains('Rename the Styler member'),
+        ),
+      );
+    });
+
+    test('StylerGenerator rejects a method reserved for metadata', () async {
+      const libSource = r'''
+library styler_validation;
+
+import 'package:mix_annotations/mix_annotations.dart';
+import 'package:mix/src/core/style.dart';
+
+part 'styler_validation.g.dart';
+
+@MixableStyler()
+class ReservedStyler extends Style<Object> {
+  const ReservedStyler()
+    : super(variants: null, modifier: null, animation: null);
+
+  Object? $stylerFieldNames() => null;
+}
+''';
+
+      final errors = await _expectStylerValidationError(libSource);
+
+      expect(
+        errors,
+        allOf(
+          contains(
+            r'`$stylerFieldNames` is reserved for generated Styler metadata',
+          ),
+          contains('Rename the Styler member'),
+        ),
+      );
+    });
 
     test('MixWidgetGenerator rejects annotation on a class', () async {
       const libSource = r'''

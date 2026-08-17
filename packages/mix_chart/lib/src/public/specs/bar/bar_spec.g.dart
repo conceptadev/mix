@@ -233,7 +233,8 @@ typedef _$BarSegmentSpecMethods = _$BarSegmentSpec; // ignore: unused_element
 // SpecStylerGenerator
 // **************************************************************************
 
-class BarStyler extends MixStyler<BarStyler, BarSpec> {
+class BarStyler extends MixStyler<BarStyler, BarSpec>
+    implements StylerFieldMetadata {
   final Prop<Color>? $color;
   final Prop<Gradient>? $gradient;
   final Prop<double>? $width;
@@ -313,6 +314,23 @@ class BarStyler extends MixStyler<BarStyler, BarSpec> {
   factory BarStyler.label(TextStyler value) => BarStyler().label(value);
   factory BarStyler.labelOffset(Offset value) => BarStyler().labelOffset(value);
   factory BarStyler.labelAngle(double value) => BarStyler().labelAngle(value);
+
+  @override
+  Set<String> get $stylerFieldNames => const {
+    'color',
+    'gradient',
+    'width',
+    'borderRadius',
+    'border',
+    'borderDashArray',
+    'background',
+    'label',
+    'labelOffset',
+    'labelAngle',
+    'animation',
+    'modifier',
+    'variants',
+  };
 
   /// Sets the color.
   BarStyler color(Color value) {
@@ -464,7 +482,8 @@ class BarStyler extends MixStyler<BarStyler, BarSpec> {
   ];
 }
 
-class BarSegmentStyler extends MixStyler<BarSegmentStyler, BarSegmentSpec> {
+class BarSegmentStyler extends MixStyler<BarSegmentStyler, BarSegmentSpec>
+    implements StylerFieldMetadata {
   final Prop<Color>? $color;
   final Prop<Gradient>? $gradient;
   final Prop<BorderSide>? $border;
@@ -509,6 +528,17 @@ class BarSegmentStyler extends MixStyler<BarSegmentStyler, BarSegmentSpec> {
       BarSegmentStyler().border(value);
   factory BarSegmentStyler.label(TextStyler value) =>
       BarSegmentStyler().label(value);
+
+  @override
+  Set<String> get $stylerFieldNames => const {
+    'color',
+    'gradient',
+    'border',
+    'label',
+    'animation',
+    'modifier',
+    'variants',
+  };
 
   /// Sets the color.
   BarSegmentStyler color(Color value) {

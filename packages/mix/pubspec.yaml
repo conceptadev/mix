@@ -1,6 +1,6 @@
 name: mix
 description: An expressive way to effortlessly build design systems in Flutter.
-version: 2.2.0-beta.4
+version: 2.2.0-beta.5
 homepage: https://github.com/btwld/mix
 repository: https://github.com/btwld/mix/tree/main/packages/mix
 
@@ -18,7 +18,7 @@ dev_dependencies:
   dart_code_metrics_presets: ^2.24.0
   build_runner: ^2.11.0
   mix_generator:
-    version: ^2.2.0-beta.0
+    version: ^2.2.0-beta.3
     path: ../mix_generator
   flutter_test:
     sdk: flutter

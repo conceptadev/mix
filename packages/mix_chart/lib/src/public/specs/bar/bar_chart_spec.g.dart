@@ -164,7 +164,8 @@ typedef _$BarChartSpecMethods = _$BarChartSpec; // ignore: unused_element
 // SpecStylerGenerator
 // **************************************************************************
 
-class BarChartStyler extends MixStyler<BarChartStyler, BarChartSpec> {
+class BarChartStyler extends MixStyler<BarChartStyler, BarChartSpec>
+    implements StylerFieldMetadata {
   final Prop<StyleSpec<ChartFrameSpec>>? $frame;
   final Prop<StyleSpec<ChartAxisSpec>>? $axis;
   final Prop<StyleSpec<ChartAxisSpec>>? $xAxis;
@@ -278,6 +279,27 @@ class BarChartStyler extends MixStyler<BarChartStyler, BarChartSpec> {
       BarChartStyler().alignment(value);
   factory BarChartStyler.tooltip(ChartTooltipStyler value) =>
       BarChartStyler().tooltip(value);
+
+  @override
+  Set<String> get $stylerFieldNames => const {
+    'frame',
+    'axis',
+    'xAxis',
+    'yAxis',
+    'topAxis',
+    'rightAxis',
+    'grid',
+    'bar',
+    'segment',
+    'palette',
+    'groupSpacing',
+    'barSpacing',
+    'alignment',
+    'tooltip',
+    'animation',
+    'modifier',
+    'variants',
+  };
 
   /// Sets the frame.
   BarChartStyler frame(ChartFrameStyler value) {

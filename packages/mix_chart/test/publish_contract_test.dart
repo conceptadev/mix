@@ -10,16 +10,16 @@ void main() {
     expect(pubspec, contains(RegExp(r'^name: mix_chart$', multiLine: true)));
     expect(
       pubspec,
-      contains(RegExp(r'^version: 0\.0\.1-beta\.1$', multiLine: true)),
+      contains(RegExp(r'^version: 0\.0\.1-beta\.2$', multiLine: true)),
     );
-    expect(changelog, startsWith('## 0.0.1-beta.1\n'));
+    expect(changelog, startsWith('## 0.0.1-beta.2\n'));
     expect(
       pubspec,
       isNot(contains('publish_to: none')),
       reason: 'mix_chart is released by the repository publish workflow.',
     );
     expect(
-      RegExp(r'^  mix: \^2\.2\.0-beta\.0$', multiLine: true).hasMatch(pubspec),
+      RegExp(r'^  mix: \^2\.2\.0-beta\.5$', multiLine: true).hasMatch(pubspec),
       isTrue,
       reason: 'Published packages must use the hosted Mix dependency.',
     );

@@ -138,8 +138,8 @@ typedef _$ChartTooltipSpecMethods = _$ChartTooltipSpec; // ignore: unused_elemen
 // SpecStylerGenerator
 // **************************************************************************
 
-class ChartTooltipStyler
-    extends MixStyler<ChartTooltipStyler, ChartTooltipSpec> {
+class ChartTooltipStyler extends MixStyler<ChartTooltipStyler, ChartTooltipSpec>
+    implements StylerFieldMetadata {
   final Prop<Color>? $backgroundColor;
   final Prop<BorderSide>? $border;
   final Prop<BorderRadius>? $borderRadius;
@@ -219,6 +219,22 @@ class ChartTooltipStyler
       ChartTooltipStyler().fitVertically(value);
   factory ChartTooltipStyler.text(TextStyler value) =>
       ChartTooltipStyler().text(value);
+
+  @override
+  Set<String> get $stylerFieldNames => const {
+    'backgroundColor',
+    'border',
+    'borderRadius',
+    'padding',
+    'margin',
+    'maxWidth',
+    'fitHorizontally',
+    'fitVertically',
+    'text',
+    'animation',
+    'modifier',
+    'variants',
+  };
 
   /// Sets the backgroundColor.
   ChartTooltipStyler backgroundColor(Color value) {
