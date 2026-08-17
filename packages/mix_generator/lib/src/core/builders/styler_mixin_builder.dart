@@ -14,6 +14,12 @@ const stylerFieldMetadataName = 'stylerFieldNames';
 /// Getter reserved for generated Styler metadata.
 const stylerFieldMetadataGetter = r'$stylerFieldNames';
 
+/// Source names of the fields inherited from `Style<T>` by every Styler.
+///
+/// The order is shared by generated `props` and field metadata. Legacy field
+/// extraction also uses this list to exclude the inherited storage fields.
+const stylerBaseFieldNames = ['animation', 'modifier', 'variants'];
+
 String _dartStringLiteral(String value) {
   final escaped = value
       .replaceAll(r'\', r'\\')
@@ -197,7 +203,9 @@ class StylerMixinBuilder {
   String _buildProps() {
     return _fieldEmitter().multilineProps(
       propCode: (field) => field.declaredName,
-      trailingProps: const [r'$animation', r'$modifier', r'$variants'],
+      trailingProps: [
+        for (final fieldName in stylerBaseFieldNames) '\$$fieldName',
+      ],
     );
   }
 
@@ -210,11 +218,11 @@ class StylerMixinBuilder {
       buffer.writeln('    ${_dartStringLiteral(field.name)},');
     }
 
-    buffer
-      ..writeln("    'animation',")
-      ..writeln("    'modifier',")
-      ..writeln("    'variants',")
-      ..writeln('  };');
+    for (final fieldName in stylerBaseFieldNames) {
+      buffer.writeln('    ${_dartStringLiteral(fieldName)},');
+    }
+
+    buffer.writeln('  };');
 
     return buffer.toString();
   }

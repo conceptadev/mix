@@ -70,7 +70,7 @@ class StylerGenerator extends GeneratorForAnnotation<MixableStyler> {
 
   bool _isBaseField(String name) {
     // Base fields come from `Style<T>` and are handled separately.
-    return const {r'$variants', r'$modifier', r'$animation'}.contains(name);
+    return stylerBaseFieldNames.any((fieldName) => name == '\$$fieldName');
   }
 
   MixableStylerAnnotationConfig _extractAnnotationConfig(
