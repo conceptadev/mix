@@ -364,6 +364,12 @@ final class MixProtocolFieldCodec<Owner extends Object, Value extends Object> {
 }
 
 /// Builders for declarative contributed-styler fields.
+///
+/// A declaration keeps three names separate: `wire` is the stable serialized
+/// key, `inventoryName` is the Dart owner field consumed by the declaration,
+/// and `fieldName` is an optional diagnostic label. Keeping these namespaces
+/// explicit allows Dart fields to evolve without silently changing the wire
+/// contract.
 abstract final class MixProtocolField {
   /// Creates a field read directly from its owner.
   static MixProtocolFieldCodec<Owner, Value>
@@ -553,6 +559,7 @@ final class MixProtocolStylerCodec<Owner extends Object> {
   /// [ownerFieldInventory] is a compatibility fallback for handwritten
   /// Stylers and output produced before field metadata was generated. Encoding
   /// fails with an inventory-skew diagnostic when neither source is available.
+  /// Metadata exposed by the runtime Styler takes precedence over the fallback.
   static MixProtocolStylerCodec<Styler>
   forStyler<Styler extends Style<S>, S extends Spec<S>>({
     required MixProtocolBranchContext context,
@@ -575,10 +582,7 @@ final class MixProtocolStylerCodec<Owner extends Object> {
       fields: fields,
       metadata: metadata,
       ownerFieldInventory: ownerFieldInventory,
-      ownerFieldInventoryOf: (value) => switch (value) {
-        StylerFieldMetadata metadata => metadata.$stylerFieldNames,
-        _ => null,
-      },
+      ownerFieldInventoryOf: stylerFieldInventoryOf,
       actualFieldCount: (value) => value.props.length,
       build: (data) => build(data, metadata),
     );

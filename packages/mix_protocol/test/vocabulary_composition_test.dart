@@ -247,6 +247,15 @@ void main() {
     );
   });
 
+  test('forStyler prefers Styler metadata over its manual fallback', () {
+    final protocol = _metadataStylerProtocol();
+
+    expect(
+      protocol.encodeStyle(const _MetadataStyler()),
+      isA<MixProtocolSuccess<JsonMap>>(),
+    );
+  });
+
   test('forStyler reports unavailable handwritten style metadata', () {
     final protocol = _legacyStylerProtocol(useManualInventory: false);
     final result = protocol.encodeStyle(const _LegacyStyler());
@@ -776,6 +785,37 @@ MixProtocol _legacyStylerProtocol({required bool useManualInventory}) {
   return MixProtocol.compose([mixProtocolCoreVocabulary, vocabulary]);
 }
 
+MixProtocol _metadataStylerProtocol() {
+  final color = MixProtocolField.value<_MetadataStyler, Color>(
+    wire: 'color',
+    codec: MixProtocolCodecs.color(),
+    read: (value) => value.$color,
+  );
+  final vocabulary = MixProtocolVocabulary(
+    id: 'metadata_styles',
+    wireVersion: 1,
+    branches: [
+      MixProtocolStylerBranch<_MetadataStyler>(
+        name: 'metadata',
+        codec: (context) =>
+            MixProtocolStylerCodec.forStyler<_MetadataStyler, BoxSpec>(
+              context: context,
+              fields: [color],
+              ownerFieldInventory: const {'stale'},
+              build: (data, metadata) => _MetadataStyler(
+                color: color.value(data),
+                variants: metadata.variants(data),
+                modifier: metadata.modifier(data),
+                animation: metadata.animation(data),
+              ),
+            ),
+      ),
+    ],
+  );
+
+  return MixProtocol.compose([mixProtocolCoreVocabulary, vocabulary]);
+}
+
 final class _CounterStyler {
   const _CounterStyler(this.count);
 
@@ -837,6 +877,36 @@ final class _LegacyStyler extends Style<BoxSpec> {
 
   @override
   _LegacyStyler merge(covariant _LegacyStyler? other) => other ?? this;
+
+  @override
+  StyleSpec<BoxSpec> resolve(BuildContext context) =>
+      const StyleSpec(spec: BoxSpec());
+
+  @override
+  List<Object?> get props => [$color, $animation, $modifier, $variants];
+}
+
+final class _MetadataStyler extends Style<BoxSpec>
+    implements StylerFieldMetadata {
+  final Prop<Color>? $color;
+
+  const _MetadataStyler({
+    Prop<Color>? color,
+    super.variants,
+    super.modifier,
+    super.animation,
+  }) : $color = color;
+
+  @override
+  Set<String> get $stylerFieldNames => const {
+    'color',
+    'animation',
+    'modifier',
+    'variants',
+  };
+
+  @override
+  _MetadataStyler merge(covariant _MetadataStyler? other) => other ?? this;
 
   @override
   StyleSpec<BoxSpec> resolve(BuildContext context) =>

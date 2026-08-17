@@ -9,6 +9,12 @@ import 'variant_codec.dart';
 
 const stylerMetadataFields = {'variants', 'modifiers', 'animation'};
 
+/// Returns Styler source-field metadata when [value] exposes it.
+Set<String>? stylerFieldInventoryOf(Object value) => switch (value) {
+  StylerFieldMetadata metadata => metadata.$stylerFieldNames,
+  _ => null,
+};
+
 final class StylerMetadataFields<
   Owner extends Object,
   SpecType extends Spec<SpecType>
@@ -88,10 +94,7 @@ SchemaObject<Styler> stylerSchemaObject<
     fields: [...fields, ...metadata.fields],
     build: (data) => build(data, metadata),
     unsupportedFields: metadata.unsupportedFields(),
-    ownerFieldInventoryOf: (value) => switch (value) {
-      StylerFieldMetadata metadata => metadata.$stylerFieldNames,
-      _ => null,
-    },
+    ownerFieldInventoryOf: stylerFieldInventoryOf,
     actualFieldCount: (value) => value.props.length,
   );
 }

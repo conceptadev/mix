@@ -54,7 +54,13 @@ const strutStyleLiteralSchemaDefinition = 'mix_protocol_strut_style_literal';
 const textStyleLiteralSchemaDefinition = 'mix_protocol_text_style_literal';
 
 abstract interface class SchemaFieldBase<Owner extends Object> {
+  /// Stable key used by the serialized protocol document.
   String get wire;
+
+  /// Dart source field consumed from [Owner] for inventory validation.
+  ///
+  /// This defaults to [wire], but can differ when one source field contributes
+  /// multiple wire fields or when the stable wire spelling differs from Dart.
   String get inventoryName;
   AckSchema<Object, Object> get ackSchema;
   SchemaFieldSemantics get schemaSemantics;
