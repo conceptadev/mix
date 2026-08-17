@@ -1419,6 +1419,58 @@ void main() {
       },
     );
 
+    test(
+      'qualifies static target-member defaults in generated calls',
+      () async {
+        const input = '''
+        library spike;
+        import 'package:flutter/widgets.dart';
+        import 'package:mix/mix.dart';
+        import 'package:mix_annotations/mix_annotations.dart';
+        part 'spike.g.dart';
+
+        Widget topLevelTransitionBuilder(Widget child) => child;
+
+        @MixableSpec(target: PlainWidget.new)
+        final class BoxSpec extends Spec<BoxSpec> {
+          const BoxSpec();
+        }
+
+        class PlainWidget extends Widget {
+          const PlainWidget({
+            required this.style,
+            this.transitionBuilder = defaultTransitionBuilder,
+            this.fallbackBuilder = topLevelTransitionBuilder,
+          });
+
+          static Widget defaultTransitionBuilder(Widget child) => child;
+
+          final Style<BoxSpec> style;
+          final Widget Function(Widget) transitionBuilder;
+          final Widget Function(Widget) fallbackBuilder;
+        }
+      ''';
+
+        await expectGeneratorOutputResolves(
+          builder: _specStylerPartBuilder(),
+          sources: {
+            ...mixAnnotationsSources,
+            ..._flutterResolveStubs,
+            ..._mixSourcesWithStyleWidget,
+            'mix|lib/spike.dart': input,
+          },
+          inputAsset: 'mix|lib/spike.dart',
+          outputAsset: 'mix|lib/spike.g.dart',
+          outputMatcher: allOf([
+            contains('transitionBuilder ='),
+            contains('PlainWidget.defaultTransitionBuilder'),
+            contains('fallbackBuilder = topLevelTransitionBuilder'),
+            isNot(contains('PlainWidget.topLevelTransitionBuilder')),
+          ]),
+        );
+      },
+    );
+
     test('rejects plain Widget targets with required styleSpec', () async {
       const input = '''
         library spike;

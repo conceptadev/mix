@@ -88,6 +88,11 @@ String? buildMixableSpecTargetCall({
     annotationLabel: '@MixableSpec(target:)',
     keyOwner: 'the target constructor',
   );
+  final callParams = qualifyTargetMemberDefaults(
+    call.params,
+    constructor: constructor,
+    targetTypeReference: widgetName,
+  );
   if (call.forwardsKey) {
     for (final typeParameter in constructor.enclosingElement.typeParameters) {
       if (typeParameter.name != 'Key') continue;
@@ -110,11 +115,48 @@ String? buildMixableSpecTargetCall({
 
   return renderWidgetCall(
     widgetName: widgetName,
-    params: call.params,
+    params: callParams,
     forwardsKey: call.forwardsKey,
     typeParams: typeParams,
     indent: indent,
   );
+}
+
+/// Qualifies default-value identifiers that refer to static members of the
+/// target class so they remain in scope when copied into generated code.
+List<WidgetCallParam> qualifyTargetMemberDefaults(
+  List<WidgetCallParam> params, {
+  required ConstructorElement constructor,
+  required String targetTypeReference,
+}) {
+  final target = constructor.enclosingElement;
+
+  return [
+    for (final param in params)
+      if (param.defaultValueCode case final code?
+          when RegExp(r'^[_$A-Za-z][_$A-Za-z0-9]*$').hasMatch(code) &&
+              _isStaticTargetMember(target, code))
+        WidgetCallParam(
+          name: param.name,
+          typeCode: param.typeCode,
+          isPositional: param.isPositional,
+          isRequired: param.isRequired,
+          defaultValueCode: '$targetTypeReference.$code',
+        )
+      else
+        param,
+  ];
+}
+
+bool _isStaticTargetMember(InterfaceElement target, String name) {
+  for (final method in target.methods) {
+    if (method.name == name && method.isStatic) return true;
+  }
+  for (final field in target.fields) {
+    if (field.name == name && field.isStatic) return true;
+  }
+
+  return false;
 }
 
 /// Returns display names of optional positional parameters in declaration

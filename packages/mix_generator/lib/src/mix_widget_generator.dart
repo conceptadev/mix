@@ -147,7 +147,7 @@ class MixWidgetGenerator extends GeneratorForAnnotation<MixWidget> {
     );
     final callParams = targetConstructor == null
         ? call.params
-        : _qualifyDirectTargetDefaults(
+        : qualifyTargetMemberDefaults(
             call.params,
             constructor: targetConstructor,
             targetTypeReference: callSource.targetTypeReference!,
@@ -237,7 +237,7 @@ class MixWidgetGenerator extends GeneratorForAnnotation<MixWidget> {
     );
     final callParams = targetConstructor == null
         ? call.params
-        : _qualifyDirectTargetDefaults(
+        : qualifyTargetMemberDefaults(
             call.params,
             constructor: targetConstructor,
             targetTypeReference: callSource.targetTypeReference!,
@@ -290,39 +290,6 @@ class MixWidgetGenerator extends GeneratorForAnnotation<MixWidget> {
       variantParamName: variantConstructors == null ? null : _variantParamName,
       variantConstructors: variantConstructors ?? const [],
     );
-  }
-
-  List<WidgetCallParam> _qualifyDirectTargetDefaults(
-    List<WidgetCallParam> params, {
-    required ConstructorElement constructor,
-    required String targetTypeReference,
-  }) {
-    final target = constructor.enclosingElement;
-    return [
-      for (final param in params)
-        if (param.defaultValueCode case final code?
-            when RegExp(r'^[_$A-Za-z][_$A-Za-z0-9]*$').hasMatch(code) &&
-                _isStaticTargetMember(target, code))
-          WidgetCallParam(
-            name: param.name,
-            typeCode: param.typeCode,
-            isPositional: param.isPositional,
-            isRequired: param.isRequired,
-            defaultValueCode: '$targetTypeReference.$code',
-          )
-        else
-          param,
-    ];
-  }
-
-  bool _isStaticTargetMember(InterfaceElement target, String name) {
-    for (final method in target.methods) {
-      if (method.name == name && method.isStatic) return true;
-    }
-    for (final field in target.fields) {
-      if (field.name == name && field.isStatic) return true;
-    }
-    return false;
   }
 
   _CallSource _directTargetCallSource({
