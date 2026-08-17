@@ -5,7 +5,6 @@ import 'package:mix/mix.dart';
 import '../contract/identity_resolution.dart';
 import 'common_codecs.dart';
 import 'schema_field.dart';
-import 'styler_field_inventory.dart';
 import 'styler_codec_helpers.dart';
 
 SchemaObject<FlexStyler> flexStylerSchema({
@@ -77,7 +76,6 @@ SchemaObject<FlexStyler> _flexStylerSchemaType(
 
   return stylerSchemaObject<FlexStyler, FlexSpec>(
     rootStyleSchema: rootStyleSchema,
-    ownerFieldInventory: flexStylerInventory,
     fields: [
       direction,
       mainAxisAlignment,

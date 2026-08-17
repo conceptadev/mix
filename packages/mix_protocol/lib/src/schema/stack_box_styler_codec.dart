@@ -7,7 +7,6 @@ import 'box_styler_codec.dart';
 import 'common_codecs.dart';
 import 'schema_field.dart';
 import 'stack_styler_codec.dart';
-import 'styler_field_inventory.dart';
 import 'styler_codec_helpers.dart';
 
 SchemaObject<StackBoxStyler> stackBoxStylerSchema({
@@ -128,7 +127,6 @@ SchemaObject<StackBoxStyler> _stackBoxStylerSchemaType(
 
   return stylerSchemaObject<StackBoxStyler, StackBoxSpec>(
     rootStyleSchema: rootStyleSchema,
-    ownerFieldInventory: stackBoxStylerInventory,
     fields: [
       alignment,
       padding,

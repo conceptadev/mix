@@ -383,6 +383,7 @@ final class SchemaObject<Owner extends Object> {
   final List<UnsupportedSchemaField<Owner>> unsupportedFields;
   final String? inventoryOwner;
   final Set<String>? ownerFieldInventory;
+  final Set<String>? Function(Owner value)? ownerFieldInventoryOf;
   final int Function(Owner value)? actualFieldCount;
 
   const SchemaObject({
@@ -391,16 +392,24 @@ final class SchemaObject<Owner extends Object> {
     this.unsupportedFields = const [],
     this.inventoryOwner,
     this.ownerFieldInventory,
+    this.ownerFieldInventoryOf,
     this.actualFieldCount,
   });
 
   void _checkInventory(Owner value) {
-    final owner = ownerFieldInventory;
-    if (owner == null) return;
+    final inventoryOf = ownerFieldInventoryOf;
+    final inventory = inventoryOf?.call(value) ?? ownerFieldInventory;
+    if (inventory == null) {
+      if (inventoryOf == null) return;
+      throw SchemaInventorySkewError(
+        owner: inventoryOwner ?? Owner.toString(),
+        metadataUnavailable: true,
+      );
+    }
 
     checkSchemaFieldInventory(
       owner: inventoryOwner ?? Owner.toString(),
-      ownerFieldInventory: owner,
+      ownerFieldInventory: inventory,
       consumedFieldInventory: _inferredConsumedFields(),
       actualFieldCount: actualFieldCount?.call(value),
     );

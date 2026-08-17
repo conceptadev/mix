@@ -5,7 +5,6 @@ import 'package:mix/mix.dart';
 import '../contract/identity_resolution.dart';
 import 'common_codecs.dart';
 import 'schema_field.dart';
-import 'styler_field_inventory.dart';
 import 'styler_codec_helpers.dart';
 
 SchemaObject<StackStyler> stackStylerSchema({
@@ -51,7 +50,6 @@ SchemaObject<StackStyler> _stackStylerSchemaType(
 
   return stylerSchemaObject<StackStyler, StackSpec>(
     rootStyleSchema: rootStyleSchema,
-    ownerFieldInventory: stackStylerInventory,
     fields: [alignment, fit, textDirection, clipBehavior],
     build: (data, metadata) => StackStyler.create(
       alignment: alignment.value(data),

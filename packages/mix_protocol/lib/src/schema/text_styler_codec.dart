@@ -96,7 +96,6 @@ SchemaObject<TextStyler> _textStylerSchemaType(
 
   return stylerSchemaObject<TextStyler, TextSpec>(
     rootStyleSchema: rootStyleSchema,
-    ownerFieldInventory: textStylerInventory,
     fields: [
       overflow,
       strutStyle,

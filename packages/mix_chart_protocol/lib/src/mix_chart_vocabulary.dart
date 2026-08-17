@@ -3,8 +3,6 @@ import 'package:mix/mix.dart';
 import 'package:mix_chart/mix_chart.dart';
 import 'package:mix_protocol/authoring.dart';
 
-import 'mix_chart_inventory.dart';
-
 /// Version-one wire vocabulary for public `mix_chart` stylers.
 final MixProtocolVocabulary mixChartVocabulary = MixProtocolVocabulary(
   id: 'mix_chart',
@@ -106,7 +104,6 @@ MixProtocolStylerCodec<BarBackgroundStyler> _barBackgroundCodec(
   >(
     context: context,
     fields: [show, fromY, toY, color, gradient],
-    ownerFieldInventory: mixChartStylerInventory['BarBackgroundStyler']!,
     build: (data, metadata) => BarBackgroundStyler.create(
       show: show.value(data),
       fromY: fromY.value(data),
@@ -212,7 +209,6 @@ MixProtocolStylerCodec<BarChartStyler> _barChartCodec(
       alignment,
       tooltip,
     ],
-    ownerFieldInventory: mixChartStylerInventory['BarChartStyler']!,
     build: (data, metadata) => BarChartStyler.create(
       frame: frame.value(data),
       axis: axis.value(data),
@@ -264,7 +260,6 @@ MixProtocolStylerCodec<BarSegmentStyler> _barSegmentCodec(
   return MixProtocolStylerCodec.forStyler<BarSegmentStyler, BarSegmentSpec>(
     context: context,
     fields: [color, gradient, border, label],
-    ownerFieldInventory: mixChartStylerInventory['BarSegmentStyler']!,
     build: (data, metadata) => BarSegmentStyler.create(
       color: color.value(data),
       gradient: gradient.value(data),
@@ -344,7 +339,6 @@ MixProtocolStylerCodec<BarStyler> _barCodec(MixProtocolBranchContext context) {
       labelOffset,
       labelAngle,
     ],
-    ownerFieldInventory: mixChartStylerInventory['BarStyler']!,
     build: (data, metadata) => BarStyler.create(
       color: color.value(data),
       gradient: gradient.value(data),
@@ -395,7 +389,6 @@ MixProtocolStylerCodec<ChartAreaStyler> _chartAreaCodec(
   return MixProtocolStylerCodec.forStyler<ChartAreaStyler, ChartAreaSpec>(
     context: context,
     fields: [show, color, gradient, cutoffY, applyCutoff],
-    ownerFieldInventory: mixChartStylerInventory['ChartAreaStyler']!,
     build: (data, metadata) => ChartAreaStyler.create(
       show: show.value(data),
       color: color.value(data),
@@ -441,7 +434,6 @@ MixProtocolStylerCodec<ChartFrameStyler> _chartFrameCodec(
   return MixProtocolStylerCodec.forStyler<ChartFrameStyler, ChartFrameSpec>(
     context: context,
     fields: [backgroundColor, border, showBorder, clip, rotationQuarterTurns],
-    ownerFieldInventory: mixChartStylerInventory['ChartFrameStyler']!,
     build: (data, metadata) => ChartFrameStyler.create(
       backgroundColor: backgroundColor.value(data),
       border: border.value(data),
@@ -497,7 +489,6 @@ MixProtocolStylerCodec<ChartMarkerStyler> _chartMarkerCodec(
   return MixProtocolStylerCodec.forStyler<ChartMarkerStyler, ChartMarkerSpec>(
     context: context,
     fields: [show, shape, color, radius, borderColor, borderWidth, shadow],
-    ownerFieldInventory: mixChartStylerInventory['ChartMarkerStyler']!,
     build: (data, metadata) => ChartMarkerStyler.create(
       show: show.value(data),
       shape: shape.value(data),
@@ -578,7 +569,6 @@ MixProtocolStylerCodec<ChartTooltipStyler> _chartTooltipCodec(
       fitVertically,
       text,
     ],
-    ownerFieldInventory: mixChartStylerInventory['ChartTooltipStyler']!,
     build: (data, metadata) => ChartTooltipStyler.create(
       backgroundColor: backgroundColor.value(data),
       border: border.value(data),
@@ -664,7 +654,6 @@ MixProtocolStylerCodec<LineChartStyler> _lineChartCodec(
       palette,
       tooltip,
     ],
-    ownerFieldInventory: mixChartStylerInventory['LineChartStyler']!,
     build: (data, metadata) => LineChartStyler.create(
       frame: frame.value(data),
       axis: axis.value(data),
@@ -752,7 +741,6 @@ MixProtocolStylerCodec<ChartAxisStyler> _chartAxisCodec(
       drawBelowEverything,
       alignment,
     ],
-    ownerFieldInventory: mixChartStylerInventory['ChartAxisStyler']!,
     build: (data, metadata) => ChartAxisStyler.create(
       showLabels: showLabels.value(data),
       label: label.value(data),
@@ -815,7 +803,6 @@ MixProtocolStylerCodec<ChartGridStyler> _chartGridCodec(
       verticalInterval,
       stroke,
     ],
-    ownerFieldInventory: mixChartStylerInventory['ChartGridStyler']!,
     build: (data, metadata) => ChartGridStyler.create(
       show: show.value(data),
       showHorizontal: showHorizontal.value(data),
@@ -863,7 +850,6 @@ MixProtocolStylerCodec<ChartStrokeStyler> _chartStrokeCodec(
   return MixProtocolStylerCodec.forStyler<ChartStrokeStyler, ChartStrokeSpec>(
     context: context,
     fields: [color, gradient, width, dashArray, opacity],
-    ownerFieldInventory: mixChartStylerInventory['ChartStrokeStyler']!,
     build: (data, metadata) => ChartStrokeStyler.create(
       color: color.value(data),
       gradient: gradient.value(data),
@@ -959,7 +945,6 @@ MixProtocolStylerCodec<LineSeriesStyler> _lineSeriesCodec(
       aboveArea,
       shadow,
     ],
-    ownerFieldInventory: mixChartStylerInventory['LineSeriesStyler']!,
     build: (data, metadata) => LineSeriesStyler.create(
       show: show.value(data),
       stroke: stroke.value(data),
@@ -1049,7 +1034,6 @@ MixProtocolStylerCodec<PieChartStyler> _pieChartCodec(
       sunbeamLabels,
       tooltip,
     ],
-    ownerFieldInventory: mixChartStylerInventory['PieChartStyler']!,
     build: (data, metadata) => PieChartStyler.create(
       frame: frame.value(data),
       slice: slice.value(data),
@@ -1131,7 +1115,6 @@ MixProtocolStylerCodec<PieSliceStyler> _pieSliceCodec(
       cornerRadius,
       badgePosition,
     ],
-    ownerFieldInventory: mixChartStylerInventory['PieSliceStyler']!,
     build: (data, metadata) => PieSliceStyler.create(
       color: color.value(data),
       gradient: gradient.value(data),

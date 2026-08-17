@@ -7,7 +7,6 @@ import 'box_styler_codec.dart';
 import 'common_codecs.dart';
 import 'flex_styler_codec.dart';
 import 'schema_field.dart';
-import 'styler_field_inventory.dart';
 import 'styler_codec_helpers.dart';
 
 SchemaObject<FlexBoxStyler> flexBoxStylerSchema({
@@ -173,7 +172,6 @@ SchemaObject<FlexBoxStyler> _flexBoxStylerSchemaType(
 
   return stylerSchemaObject<FlexBoxStyler, FlexBoxSpec>(
     rootStyleSchema: rootStyleSchema,
-    ownerFieldInventory: flexBoxStylerInventory,
     fields: [
       alignment,
       padding,

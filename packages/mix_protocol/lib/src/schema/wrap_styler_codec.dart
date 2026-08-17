@@ -6,7 +6,6 @@ import '../contract/identity_resolution.dart';
 import 'common_codecs.dart';
 import 'schema_field.dart';
 import 'styler_codec_helpers.dart';
-import 'styler_field_inventory.dart';
 
 SchemaObject<WrapStyler> wrapStylerSchema({
   AckSchema<JsonMap, Object>? rootStyleSchema,
@@ -78,7 +77,6 @@ SchemaObject<WrapStyler> _wrapStylerSchemaType(
 
   return stylerSchemaObject<WrapStyler, WrapSpec>(
     rootStyleSchema: rootStyleSchema,
-    ownerFieldInventory: wrapStylerInventory,
     fields: [
       direction,
       alignment,

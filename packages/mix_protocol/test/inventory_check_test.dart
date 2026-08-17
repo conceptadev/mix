@@ -302,7 +302,6 @@ SchemaObject<ProbeStyler> probeStylerSchema() {
 
   return stylerSchemaObject<ProbeStyler, ProbeSpec>(
     rootStyleSchema: null,
-    ownerFieldInventory: probeStylerInventory,
     fields: [color],
     build: (data, metadata) => ProbeStyler.create(),
   );

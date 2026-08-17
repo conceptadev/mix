@@ -7,7 +7,6 @@ import 'box_styler_codec.dart';
 import 'common_codecs.dart';
 import 'schema_field.dart';
 import 'styler_codec_helpers.dart';
-import 'styler_field_inventory.dart';
 import 'wrap_styler_codec.dart';
 
 SchemaObject<WrapBoxStyler> wrapBoxStylerSchema({
@@ -181,7 +180,6 @@ SchemaObject<WrapBoxStyler> _wrapBoxStylerSchemaType(
 
   return stylerSchemaObject<WrapBoxStyler, WrapBoxSpec>(
     rootStyleSchema: rootStyleSchema,
-    ownerFieldInventory: wrapBoxStylerInventory,
     fields: [
       alignment,
       padding,

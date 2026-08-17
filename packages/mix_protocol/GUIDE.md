@@ -117,9 +117,10 @@ final counterVocabulary = MixProtocolVocabulary(
 Use `MixProtocolField.value` for ordinary `Prop<T>` fields,
 `MixProtocolField.mix` for Mix-backed properties, and
 `MixProtocolField.style` for recursive nested stylers. Standard styler metadata
-is represented with `MixProtocolStylerMetadata`. Supplying an owner field
-manifest and runtime field count enables the same inventory drift checks used
-by the core and chart vocabularies.
+is represented with `MixProtocolStylerMetadata`. Generated Stylers expose their
+source-field names through `StylerFieldMetadata.$stylerFieldNames`, enabling
+the core and extension-contributed vocabularies to detect inventory drift
+without handwritten field manifests.
 
 Branch runtime types must be concrete and mutually disjoint. Field names use
 lower camel case; duplicate names and the protocol-owned `v`, `type`, and `$...`
@@ -127,9 +128,11 @@ names are rejected when the composition is built.
 
 For ordinary Mix `Style` subclasses, prefer
 `MixProtocolStylerCodec.forStyler`. It wires variants, modifiers, animation,
-and the generated equality-field count once, and requires the owner field
-inventory needed to enforce that check. The base constructor remains available
-for nonstandard codec owners and targeted tests.
+and generated field inventory once. Handwritten Stylers and output from an
+older generator can temporarily supply `ownerFieldInventory`; when neither
+generated metadata nor that fallback is available, encoding fails with an
+`inventorySkew` diagnostic. The base constructor remains available for
+nonstandard codec owners and targeted tests.
 
 ## Decode a style
 

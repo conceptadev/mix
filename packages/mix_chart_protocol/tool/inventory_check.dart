@@ -1,13 +1,11 @@
+import 'dart:convert';
 import 'dart:io';
-
-import 'package:mix_chart_protocol/src/mix_chart_inventory.dart';
 
 import '../../mix_protocol/tool/styler_surface.dart' as inventory;
 
 void main() {
-  final surface = inventory.collectStylerSurface(
-    sourceRoot: Directory('../mix_chart/lib/src'),
-  );
+  final sourceRoot = _packageSourceRoot('mix_chart');
+  final surface = inventory.collectStylerSurface(sourceRoot: sourceRoot);
   final vocabularySource = File(
     'lib/src/mix_chart_vocabulary.dart',
   ).readAsStringSync();
@@ -16,22 +14,20 @@ void main() {
   ).allMatches(vocabularySource).map((match) => match.group(1)!).toSet();
   final missingBranches = surface.stylerNames.difference(vocabularyTypes);
   final staleBranches = vocabularyTypes.difference(surface.stylerNames);
+  final generatedFields = inventory
+      .collectGeneratedStylerSurface(sourceRoot: sourceRoot)
+      .fieldsByStyler;
   final fieldDrift = <String>{};
-  for (final styler in {
-    ...surface.stylerNames,
-    ...mixChartStylerInventory.keys,
-  }) {
-    if (!_sameSet(
-      surface.fieldsByStyler[styler],
-      mixChartStylerInventory[styler],
-    )) {
+  for (final styler in {...surface.stylerNames, ...generatedFields.keys}) {
+    if (!_sameSet(surface.fieldsByStyler[styler], generatedFields[styler])) {
       fieldDrift.add(styler);
     }
   }
 
   if (missingBranches.isEmpty && staleBranches.isEmpty && fieldDrift.isEmpty) {
     stdout.writeln(
-      'mix_chart vocabulary inventory ok: ${surface.stylerNames.length} stylers',
+      'mix_chart vocabulary and generated inventory ok: '
+      '${surface.stylerNames.length} stylers',
     );
 
     return;
@@ -48,6 +44,21 @@ void main() {
     stderr.writeln('Field drift: ${fieldDrift.toList()..sort()}');
   }
   exitCode = 1;
+}
+
+Directory _packageSourceRoot(String packageName) {
+  final configFile = File('.dart_tool/package_config.json');
+  final config =
+      jsonDecode(configFile.readAsStringSync()) as Map<String, Object?>;
+  final packages = config['packages']! as List<Object?>;
+  final package = packages.cast<Map<String, Object?>>().singleWhere(
+    (entry) => entry['name'] == packageName,
+  );
+  final root = Directory.fromUri(
+    configFile.parent.uri.resolve(package['rootUri']! as String),
+  );
+
+  return Directory.fromUri(root.uri.resolve('lib/src/'));
 }
 
 bool _sameSet(Set<String>? left, Set<String>? right) {

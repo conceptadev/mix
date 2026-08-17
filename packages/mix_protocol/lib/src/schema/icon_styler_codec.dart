@@ -6,7 +6,6 @@ import '../contract/identity_resolution.dart';
 import '../contract/identity_codec.dart';
 import 'common_codecs.dart';
 import 'schema_field.dart';
-import 'styler_field_inventory.dart';
 import 'styler_codec_helpers.dart';
 
 SchemaObject<IconStyler> iconStylerSchema({
@@ -95,7 +94,6 @@ SchemaObject<IconStyler> _iconStylerSchemaType(
 
   return stylerSchemaObject<IconStyler, IconSpec>(
     rootStyleSchema: rootStyleSchema,
-    ownerFieldInventory: iconStylerInventory,
     fields: [
       icon,
       color,

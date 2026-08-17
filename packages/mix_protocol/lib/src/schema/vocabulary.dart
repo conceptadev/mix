@@ -509,6 +509,7 @@ final class MixProtocolStylerCodec<Owner extends Object> {
   final MixProtocolStylerMetadataBase<Owner>? _metadata;
   final String? _inventoryOwner;
   final Set<String>? _ownerFieldInventory;
+  final Set<String>? Function(Owner value)? _ownerFieldInventoryOf;
   final int Function(Owner value)? _actualFieldCount;
 
   /// Creates a styler codec from its fields and reconstruction callback.
@@ -519,6 +520,23 @@ final class MixProtocolStylerCodec<Owner extends Object> {
     Set<String>? ownerFieldInventory,
     int Function(Owner value)? actualFieldCount,
     required Owner Function(JsonMap data) build,
+  }) : this._(
+         fields: fields,
+         metadata: metadata,
+         inventoryOwner: inventoryOwner,
+         ownerFieldInventory: ownerFieldInventory,
+         actualFieldCount: actualFieldCount,
+         build: build,
+       );
+
+  MixProtocolStylerCodec._({
+    required List<MixProtocolFieldCodec<Owner, Object>> fields,
+    MixProtocolStylerMetadataBase<Owner>? metadata,
+    String? inventoryOwner,
+    Set<String>? ownerFieldInventory,
+    Set<String>? Function(Owner value)? ownerFieldInventoryOf,
+    int Function(Owner value)? actualFieldCount,
+    required Owner Function(JsonMap data) build,
   }) : _fields = List.unmodifiable(fields),
        _buildOwner = build,
        _metadata = metadata,
@@ -526,15 +544,20 @@ final class MixProtocolStylerCodec<Owner extends Object> {
        _ownerFieldInventory = ownerFieldInventory == null
            ? null
            : Set.unmodifiable(ownerFieldInventory),
+       _ownerFieldInventoryOf = ownerFieldInventoryOf,
        _actualFieldCount = actualFieldCount;
 
   /// Creates a codec for a Mix [Style], wiring its standard metadata and
-  /// generated equality-field count automatically.
+  /// generated field inventory automatically.
+  ///
+  /// [ownerFieldInventory] is a compatibility fallback for handwritten
+  /// Stylers and output produced before field metadata was generated. Encoding
+  /// fails with an inventory-skew diagnostic when neither source is available.
   static MixProtocolStylerCodec<Styler>
   forStyler<Styler extends Style<S>, S extends Spec<S>>({
     required MixProtocolBranchContext context,
     required List<MixProtocolFieldCodec<Styler, Object>> fields,
-    required Set<String> ownerFieldInventory,
+    Set<String>? ownerFieldInventory,
     required Styler Function(
       JsonMap data,
       MixProtocolStylerMetadata<Styler, S> metadata,
@@ -548,10 +571,14 @@ final class MixProtocolStylerCodec<Owner extends Object> {
       readAnimation: (value) => value.$animation,
     );
 
-    return MixProtocolStylerCodec<Styler>(
+    return MixProtocolStylerCodec<Styler>._(
       fields: fields,
       metadata: metadata,
       ownerFieldInventory: ownerFieldInventory,
+      ownerFieldInventoryOf: (value) => switch (value) {
+        StylerFieldMetadata metadata => metadata.$stylerFieldNames,
+        _ => null,
+      },
       actualFieldCount: (value) => value.props.length,
       build: (data) => build(data, metadata),
     );
@@ -567,6 +594,7 @@ final class MixProtocolStylerCodec<Owner extends Object> {
       unsupportedFields: [...?_metadata?._unsupportedFields],
       inventoryOwner: _inventoryOwner,
       ownerFieldInventory: _ownerFieldInventory,
+      ownerFieldInventoryOf: _ownerFieldInventoryOf,
       actualFieldCount: _actualFieldCount,
     );
   }

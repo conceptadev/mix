@@ -6,7 +6,6 @@ import '../errors/mix_protocol_error.dart';
 import 'common_codecs.dart';
 import 'schema_field.dart';
 import 'styler_codec_helpers.dart';
-import 'styler_field_inventory.dart';
 import 'wire_discriminators.dart';
 
 SchemaObject<GridBoxStyler> gridBoxStylerSchema({
@@ -83,7 +82,6 @@ SchemaObject<GridBoxStyler> gridBoxStylerSchema({
 
   return stylerSchemaObject<GridBoxStyler, GridBoxSpec>(
     rootStyleSchema: rootStyleSchema,
-    ownerFieldInventory: gridBoxStylerInventory,
     fields: [
       columns,
       rows,

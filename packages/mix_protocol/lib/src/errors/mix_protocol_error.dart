@@ -257,6 +257,7 @@ final class SchemaInventorySkewError implements Exception {
     Iterable<String> staleFields = const [],
     this.expectedFieldCount,
     this.actualFieldCount,
+    this.metadataUnavailable = false,
   }) : missingFields = Set.unmodifiable(missingFields),
        staleFields = Set.unmodifiable(staleFields);
 
@@ -275,6 +276,9 @@ final class SchemaInventorySkewError implements Exception {
   /// Number of runtime owner fields observed, when known.
   final int? actualFieldCount;
 
+  /// Whether the owner exposed no field metadata and no fallback was supplied.
+  final bool metadataUnavailable;
+
   /// JSON-safe diagnostic value.
   JsonMap toJson() => {
     'owner': owner,
@@ -282,11 +286,15 @@ final class SchemaInventorySkewError implements Exception {
     if (staleFields.isNotEmpty) 'staleFields': staleFields.toList(),
     if (expectedFieldCount != null) 'expectedFieldCount': expectedFieldCount,
     if (actualFieldCount != null) 'actualFieldCount': actualFieldCount,
+    if (metadataUnavailable) 'metadataUnavailable': true,
   };
 
   @override
   String toString() {
     final parts = <String>[
+      if (metadataUnavailable)
+        'field metadata unavailable; regenerate the Styler or provide an '
+            'owner field inventory',
       if (missingFields.isNotEmpty)
         'missing fields: ${missingFields.join(', ')}',
       if (staleFields.isNotEmpty) 'stale fields: ${staleFields.join(', ')}',

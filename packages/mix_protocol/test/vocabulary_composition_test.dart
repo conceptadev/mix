@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
 import 'package:mix_protocol/authoring.dart';
@@ -234,6 +235,41 @@ void main() {
     expect(
       protocol.encodeStyle(const _CounterStyler(3)),
       isA<MixProtocolSuccess<JsonMap>>(),
+    );
+  });
+
+  test('forStyler preserves manual inventory for handwritten styles', () {
+    final protocol = _legacyStylerProtocol(useManualInventory: true);
+
+    expect(
+      protocol.encodeStyle(const _LegacyStyler()),
+      isA<MixProtocolSuccess<JsonMap>>(),
+    );
+  });
+
+  test('forStyler reports unavailable handwritten style metadata', () {
+    final protocol = _legacyStylerProtocol(useManualInventory: false);
+    final result = protocol.encodeStyle(const _LegacyStyler());
+
+    expect(
+      result,
+      isA<MixProtocolFailure<JsonMap>>().having(
+        (failure) => failure.errors,
+        'errors',
+        contains(
+          isA<MixProtocolError>()
+              .having(
+                (error) => error.code,
+                'code',
+                MixProtocolErrorCode.inventorySkew,
+              )
+              .having(
+                (error) => error.value,
+                'value',
+                containsPair('metadataUnavailable', true),
+              ),
+        ),
+      ),
     );
   });
 
@@ -694,6 +730,52 @@ MixProtocol _compositeProtocol() {
   ]);
 }
 
+MixProtocol _legacyStylerProtocol({required bool useManualInventory}) {
+  final color = MixProtocolField.value<_LegacyStyler, Color>(
+    wire: 'color',
+    codec: MixProtocolCodecs.color(),
+    read: (value) => value.$color,
+  );
+  final vocabulary = MixProtocolVocabulary(
+    id: 'legacy_styles',
+    wireVersion: 1,
+    branches: [
+      MixProtocolStylerBranch<_LegacyStyler>(
+        name: 'legacy',
+        codec: (context) => useManualInventory
+            ? MixProtocolStylerCodec.forStyler<_LegacyStyler, BoxSpec>(
+                context: context,
+                fields: [color],
+                ownerFieldInventory: const {
+                  'color',
+                  'animation',
+                  'modifier',
+                  'variants',
+                },
+                build: (data, metadata) => _LegacyStyler(
+                  color: color.value(data),
+                  variants: metadata.variants(data),
+                  modifier: metadata.modifier(data),
+                  animation: metadata.animation(data),
+                ),
+              )
+            : MixProtocolStylerCodec.forStyler<_LegacyStyler, BoxSpec>(
+                context: context,
+                fields: [color],
+                build: (data, metadata) => _LegacyStyler(
+                  color: color.value(data),
+                  variants: metadata.variants(data),
+                  modifier: metadata.modifier(data),
+                  animation: metadata.animation(data),
+                ),
+              ),
+      ),
+    ],
+  );
+
+  return MixProtocol.compose([mixProtocolCoreVocabulary, vocabulary]);
+}
+
 final class _CounterStyler {
   const _CounterStyler(this.count);
 
@@ -741,6 +823,27 @@ final class _CompositeStyler {
   final BorderSideMix? borderSide;
   final EdgeInsetsMix? edgeInsets;
   final ShadowMix? shadow;
+}
+
+final class _LegacyStyler extends Style<BoxSpec> {
+  final Prop<Color>? $color;
+
+  const _LegacyStyler({
+    Prop<Color>? color,
+    super.variants,
+    super.modifier,
+    super.animation,
+  }) : $color = color;
+
+  @override
+  _LegacyStyler merge(covariant _LegacyStyler? other) => other ?? this;
+
+  @override
+  StyleSpec<BoxSpec> resolve(BuildContext context) =>
+      const StyleSpec(spec: BoxSpec());
+
+  @override
+  List<Object?> get props => [$color, $animation, $modifier, $variants];
 }
 
 bool _schemaPathHasDirectRef(

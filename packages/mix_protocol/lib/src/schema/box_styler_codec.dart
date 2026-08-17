@@ -86,7 +86,6 @@ SchemaObject<BoxStyler> _boxStylerSchemaType(
 
   return stylerSchemaObject<BoxStyler, BoxSpec>(
     rootStyleSchema: rootStyleSchema,
-    ownerFieldInventory: boxStylerInventory,
     fields: [
       alignment,
       padding,

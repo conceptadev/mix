@@ -59,6 +59,60 @@ StylerSurfaceSnapshot collectStylerSurface({required Directory sourceRoot}) {
   return StylerSurfaceSnapshot(fieldsByStyler);
 }
 
+/// Collects field metadata emitted into generated Styler classes.
+StylerSurfaceSnapshot collectGeneratedStylerSurface({
+  required Directory sourceRoot,
+}) {
+  if (!sourceRoot.existsSync()) {
+    throw StateError(
+      'Missing generated Styler source root: ${sourceRoot.path}',
+    );
+  }
+
+  final fieldsByStyler = <String, Set<String>>{};
+  for (final file in _dartFiles(sourceRoot)) {
+    final unit = parseString(
+      content: file.readAsStringSync(),
+      path: file.path,
+      throwIfDiagnostics: false,
+    ).unit;
+    for (final declaration in unit.declarations.whereType<ClassDeclaration>()) {
+      final body = declaration.body;
+      if (body is! BlockClassBody) continue;
+
+      for (final member in body.members.whereType<MethodDeclaration>()) {
+        if (!member.isGetter || member.name.lexeme != r'$stylerFieldNames') {
+          continue;
+        }
+        final functionBody = member.body;
+        final expression = functionBody is ExpressionFunctionBody
+            ? functionBody.expression
+            : null;
+        if (expression is! SetOrMapLiteral) {
+          throw StateError(
+            '${declaration.namePart}.\$stylerFieldNames must use a set literal.',
+          );
+        }
+
+        final fields = <String>{};
+        for (final element in expression.elements) {
+          if (element is! StringLiteral || element.stringValue == null) {
+            throw StateError(
+              '${declaration.namePart}.\$stylerFieldNames contains a '
+              'non-string entry.',
+            );
+          }
+          fields.add(element.stringValue!);
+        }
+        fieldsByStyler[_declarationName(declaration.namePart.toSource())] =
+            fields;
+      }
+    }
+  }
+
+  return StylerSurfaceSnapshot(fieldsByStyler);
+}
+
 List<File> _dartFiles(Directory root) {
   return root
       .listSync(recursive: true)
