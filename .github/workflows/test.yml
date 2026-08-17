@@ -54,10 +54,11 @@ jobs:
         run: |
           dart pub global activate melos 6.3.3
           melos bootstrap
+      # DCM requires CI credentials; this job still runs all Dart analysis.
+      - name: Verify schema inventories
+        run: melos run schema:inventory
       - name: Analyze
-        run: |
-          melos run schema:inventory
-          melos run analyze:dart
+        run: melos run analyze:dart
       - name: Test
         run: melos run ci
 
