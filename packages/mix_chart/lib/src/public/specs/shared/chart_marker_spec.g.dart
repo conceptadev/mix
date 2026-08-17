@@ -122,7 +122,8 @@ typedef _$ChartMarkerSpecMethods = _$ChartMarkerSpec; // ignore: unused_element
 // SpecStylerGenerator
 // **************************************************************************
 
-class ChartMarkerStyler extends MixStyler<ChartMarkerStyler, ChartMarkerSpec> {
+class ChartMarkerStyler extends MixStyler<ChartMarkerStyler, ChartMarkerSpec>
+    implements StylerFieldMetadata {
   final Prop<bool>? $show;
   final Prop<ChartMarkerShape>? $shape;
   final Prop<Color>? $color;
@@ -187,6 +188,20 @@ class ChartMarkerStyler extends MixStyler<ChartMarkerStyler, ChartMarkerSpec> {
       ChartMarkerStyler().borderWidth(value);
   factory ChartMarkerStyler.shadow(ShadowMix value) =>
       ChartMarkerStyler().shadow(value);
+
+  @override
+  Set<String> get $stylerFieldNames => const {
+    'show',
+    'shape',
+    'color',
+    'radius',
+    'borderColor',
+    'borderWidth',
+    'shadow',
+    'animation',
+    'modifier',
+    'variants',
+  };
 
   /// Sets the show.
   ChartMarkerStyler show(bool value) {

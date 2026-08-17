@@ -134,7 +134,8 @@ typedef _$PieSliceSpecMethods = _$PieSliceSpec; // ignore: unused_element
 // SpecStylerGenerator
 // **************************************************************************
 
-class PieSliceStyler extends MixStyler<PieSliceStyler, PieSliceSpec> {
+class PieSliceStyler extends MixStyler<PieSliceStyler, PieSliceSpec>
+    implements StylerFieldMetadata {
   final Prop<Color>? $color;
   final Prop<Gradient>? $gradient;
   final Prop<double>? $radius;
@@ -212,6 +213,22 @@ class PieSliceStyler extends MixStyler<PieSliceStyler, PieSliceSpec> {
       PieSliceStyler().cornerRadius(value);
   factory PieSliceStyler.badgePosition(double value) =>
       PieSliceStyler().badgePosition(value);
+
+  @override
+  Set<String> get $stylerFieldNames => const {
+    'color',
+    'gradient',
+    'radius',
+    'showLabel',
+    'label',
+    'labelPosition',
+    'border',
+    'cornerRadius',
+    'badgePosition',
+    'animation',
+    'modifier',
+    'variants',
+  };
 
   /// Sets the color.
   PieSliceStyler color(Color value) {

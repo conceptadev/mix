@@ -104,7 +104,8 @@ typedef _$ChartStrokeSpecMethods = _$ChartStrokeSpec; // ignore: unused_element
 // SpecStylerGenerator
 // **************************************************************************
 
-class ChartStrokeStyler extends MixStyler<ChartStrokeStyler, ChartStrokeSpec> {
+class ChartStrokeStyler extends MixStyler<ChartStrokeStyler, ChartStrokeSpec>
+    implements StylerFieldMetadata {
   final Prop<Color>? $color;
   final Prop<Gradient>? $gradient;
   final Prop<double>? $width;
@@ -156,6 +157,18 @@ class ChartStrokeStyler extends MixStyler<ChartStrokeStyler, ChartStrokeSpec> {
       ChartStrokeStyler().dashArray(value);
   factory ChartStrokeStyler.opacity(double value) =>
       ChartStrokeStyler().opacity(value);
+
+  @override
+  Set<String> get $stylerFieldNames => const {
+    'color',
+    'gradient',
+    'width',
+    'dashArray',
+    'opacity',
+    'animation',
+    'modifier',
+    'variants',
+  };
 
   /// Sets the color.
   ChartStrokeStyler color(Color value) {

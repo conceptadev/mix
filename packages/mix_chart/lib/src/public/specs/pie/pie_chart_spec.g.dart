@@ -147,7 +147,8 @@ typedef _$PieChartSpecMethods = _$PieChartSpec; // ignore: unused_element
 // SpecStylerGenerator
 // **************************************************************************
 
-class PieChartStyler extends MixStyler<PieChartStyler, PieChartSpec> {
+class PieChartStyler extends MixStyler<PieChartStyler, PieChartSpec>
+    implements StylerFieldMetadata {
   final Prop<StyleSpec<ChartFrameSpec>>? $frame;
   final Prop<StyleSpec<PieSliceSpec>>? $slice;
   final Prop<double>? $selectedSliceRadiusOffset;
@@ -234,6 +235,23 @@ class PieChartStyler extends MixStyler<PieChartStyler, PieChartSpec> {
       PieChartStyler().sunbeamLabels(value);
   factory PieChartStyler.tooltip(ChartTooltipStyler value) =>
       PieChartStyler().tooltip(value);
+
+  @override
+  Set<String> get $stylerFieldNames => const {
+    'frame',
+    'slice',
+    'selectedSliceRadiusOffset',
+    'palette',
+    'centerRadius',
+    'centerColor',
+    'sliceSpacing',
+    'startAngle',
+    'sunbeamLabels',
+    'tooltip',
+    'animation',
+    'modifier',
+    'variants',
+  };
 
   /// Sets the frame.
   PieChartStyler frame(ChartFrameStyler value) {

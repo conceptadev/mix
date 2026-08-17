@@ -124,7 +124,8 @@ typedef _$ChartGridSpecMethods = _$ChartGridSpec; // ignore: unused_element
 // SpecStylerGenerator
 // **************************************************************************
 
-class ChartGridStyler extends MixStyler<ChartGridStyler, ChartGridSpec> {
+class ChartGridStyler extends MixStyler<ChartGridStyler, ChartGridSpec>
+    implements StylerFieldMetadata {
   final Prop<bool>? $show;
   final Prop<bool>? $showHorizontal;
   final Prop<bool>? $showVertical;
@@ -182,6 +183,19 @@ class ChartGridStyler extends MixStyler<ChartGridStyler, ChartGridSpec> {
       ChartGridStyler().verticalInterval(value);
   factory ChartGridStyler.stroke(ChartStrokeStyler value) =>
       ChartGridStyler().stroke(value);
+
+  @override
+  Set<String> get $stylerFieldNames => const {
+    'show',
+    'showHorizontal',
+    'showVertical',
+    'horizontalInterval',
+    'verticalInterval',
+    'stroke',
+    'animation',
+    'modifier',
+    'variants',
+  };
 
   /// Sets the show.
   ChartGridStyler show(bool value) {

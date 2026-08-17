@@ -140,7 +140,8 @@ typedef _$LineChartSpecMethods = _$LineChartSpec; // ignore: unused_element
 // SpecStylerGenerator
 // **************************************************************************
 
-class LineChartStyler extends MixStyler<LineChartStyler, LineChartSpec> {
+class LineChartStyler extends MixStyler<LineChartStyler, LineChartSpec>
+    implements StylerFieldMetadata {
   final Prop<StyleSpec<ChartFrameSpec>>? $frame;
   final Prop<StyleSpec<ChartAxisSpec>>? $axis;
   final Prop<StyleSpec<ChartAxisSpec>>? $xAxis;
@@ -227,6 +228,23 @@ class LineChartStyler extends MixStyler<LineChartStyler, LineChartSpec> {
       LineChartStyler().palette(value);
   factory LineChartStyler.tooltip(ChartTooltipStyler value) =>
       LineChartStyler().tooltip(value);
+
+  @override
+  Set<String> get $stylerFieldNames => const {
+    'frame',
+    'axis',
+    'xAxis',
+    'yAxis',
+    'topAxis',
+    'rightAxis',
+    'grid',
+    'series',
+    'palette',
+    'tooltip',
+    'animation',
+    'modifier',
+    'variants',
+  };
 
   /// Sets the frame.
   LineChartStyler frame(ChartFrameStyler value) {

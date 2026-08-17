@@ -49,13 +49,23 @@ class StylerGenerator extends GeneratorForAnnotation<MixableStyler> {
     ClassElement classElement,
     String stylerName,
   ) {
-    return classElement.fields
+    for (final member in [...classElement.fields, ...classElement.methods]) {
+      if (member.name != stylerFieldMetadataGetter) continue;
+      fail(
+        member,
+        '`$stylerFieldMetadataGetter` is reserved for generated Styler metadata. '
+        'Rename the Styler member.',
+        todo: 'Rename the Styler member.',
+      );
+    }
+
+    final fields = classElement.fields
         .where((f) => f.name?.startsWith(r'$') ?? false)
-        .where((f) => !_isBaseField(f.name!))
-        .map((field) {
-          return StylerFieldModel.fromElement(field, stylerName: stylerName);
-        })
-        .toList();
+        .where((f) => !_isBaseField(f.name!));
+
+    return fields.map((field) {
+      return StylerFieldModel.fromElement(field, stylerName: stylerName);
+    }).toList();
   }
 
   bool _isBaseField(String name) {

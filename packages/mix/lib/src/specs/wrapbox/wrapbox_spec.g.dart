@@ -92,7 +92,8 @@ class WrapBoxStyler extends MixStyler<WrapBoxStyler, WrapBoxSpec>
         BorderRadiusStyleMixin<WrapBoxStyler>,
         ShadowStyleMixin<WrapBoxStyler>,
         TransformStyleMixin<WrapBoxStyler>,
-        WrapStyleMixin<WrapBoxStyler> {
+        WrapStyleMixin<WrapBoxStyler>
+    implements StylerFieldMetadata {
   final Prop<StyleSpec<BoxSpec>>? $box;
   final Prop<StyleSpec<WrapSpec>>? $flow;
 
@@ -416,6 +417,15 @@ class WrapBoxStyler extends MixStyler<WrapBoxStyler, WrapBoxSpec>
   WrapBoxStyler flow(WrapStyler value) {
     return merge(WrapBoxStyler.create(flow: Prop.maybeMix(value)));
   }
+
+  @override
+  Set<String> get $stylerFieldNames => const {
+    'box',
+    'flow',
+    'animation',
+    'modifier',
+    'variants',
+  };
 
   /// Sets the animation configuration.
   @override

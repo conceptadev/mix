@@ -145,7 +145,8 @@ typedef _$WrapSpecMethods = _$WrapSpec; // ignore: unused_element
 // **************************************************************************
 
 class WrapStyler extends MixStyler<WrapStyler, WrapSpec>
-    with WrapStyleMixin<WrapStyler> {
+    with WrapStyleMixin<WrapStyler>
+    implements StylerFieldMetadata {
   final Prop<Axis>? $direction;
   final Prop<WrapAlignment>? $alignment;
   final Prop<double>? $spacing;
@@ -231,6 +232,22 @@ class WrapStyler extends MixStyler<WrapStyler, WrapSpec>
   WrapStyler flow(WrapStyler value) {
     return merge(value);
   }
+
+  @override
+  Set<String> get $stylerFieldNames => const {
+    'direction',
+    'alignment',
+    'spacing',
+    'runAlignment',
+    'runSpacing',
+    'crossAxisAlignment',
+    'textDirection',
+    'verticalDirection',
+    'clipBehavior',
+    'animation',
+    'modifier',
+    'variants',
+  };
 
   /// Sets the direction.
   @override
