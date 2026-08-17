@@ -5,14 +5,13 @@ import 'package:mix/mix.dart';
 import '../contract/identity_resolution.dart';
 import 'common_codecs.dart';
 import 'schema_field.dart';
-import 'styler_field_inventory.dart';
 import 'styler_codec_helpers.dart';
 
-AckSchema<JsonMap, StackStyler> stackStylerCodec({
+SchemaObject<StackStyler> stackStylerSchema({
   AckSchema<JsonMap, Object>? rootStyleSchema,
   MixProtocolIdentityContext Function()? identityContext,
 }) {
-  return _stackStylerSchemaType(rootStyleSchema).codec();
+  return _stackStylerSchemaType(rootStyleSchema);
 }
 
 JsonMap encodeStackStylerFields(
@@ -48,20 +47,11 @@ SchemaObject<StackStyler> _stackStylerSchemaType(
     enumNameCodec(Clip.values),
     (value) => value.$clipBehavior,
   );
-  final metadata = StylerMetadataFields<StackStyler, StackSpec>(
-    rootStyleSchema: rootStyleSchema,
-    readVariants: (value) => value.$variants,
-    readModifier: (value) => value.$modifier,
-    readAnimation: (value) => value.$animation,
-  );
 
-  return SchemaObject<StackStyler>(
-    inventoryOwner: 'StackStyler',
-    ownerFieldInventory: stackStylerInventory,
-    actualFieldCount: stylerFieldCount,
-    fields: [alignment, fit, textDirection, clipBehavior, ...metadata.fields],
-    unsupportedFields: [...metadata.unsupportedFields()],
-    build: (data) => StackStyler.create(
+  return stylerSchemaObject<StackStyler, StackSpec>(
+    rootStyleSchema: rootStyleSchema,
+    fields: [alignment, fit, textDirection, clipBehavior],
+    build: (data, metadata) => StackStyler.create(
       alignment: alignment.value(data),
       fit: fit.value(data),
       textDirection: textDirection.value(data),

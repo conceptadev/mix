@@ -30,7 +30,8 @@ export 'grid_box_spec.dart';
 /// size when they overflow; clipping changes paint containment, not geometry.
 /// Numeric geometry accepts `SpaceToken` and `DoubleToken` references and
 /// resolves them before [GridBoxSpec] validation.
-class GridBoxStyler extends MixStyler<GridBoxStyler, GridBoxSpec> {
+class GridBoxStyler extends MixStyler<GridBoxStyler, GridBoxSpec>
+    implements StylerFieldMetadata {
   /// Unresolved column tracks, or `null` to use one `fr(1)` column.
   final List<GridTrack>? $columns;
 
@@ -253,6 +254,20 @@ class GridBoxStyler extends MixStyler<GridBoxStyler, GridBoxSpec> {
       animation: MixOps.mergeAnimation($animation, other.$animation),
     );
   }
+
+  @override
+  Set<String> get $stylerFieldNames => const {
+    'columns',
+    'rows',
+    'autoRows',
+    'columnGap',
+    'rowGap',
+    'clipBehavior',
+    'constraintBranches',
+    'variants',
+    'modifier',
+    'animation',
+  };
 
   @override
   List<Object?> get props => [

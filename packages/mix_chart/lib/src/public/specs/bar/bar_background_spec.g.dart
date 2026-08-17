@@ -105,7 +105,8 @@ typedef _$BarBackgroundSpecMethods = _$BarBackgroundSpec; // ignore: unused_elem
 // **************************************************************************
 
 class BarBackgroundStyler
-    extends MixStyler<BarBackgroundStyler, BarBackgroundSpec> {
+    extends MixStyler<BarBackgroundStyler, BarBackgroundSpec>
+    implements StylerFieldMetadata {
   final Prop<bool>? $show;
   final Prop<double>? $fromY;
   final Prop<double>? $toY;
@@ -157,6 +158,18 @@ class BarBackgroundStyler
       BarBackgroundStyler().color(value);
   factory BarBackgroundStyler.gradient(Gradient value) =>
       BarBackgroundStyler().gradient(value);
+
+  @override
+  Set<String> get $stylerFieldNames => const {
+    'show',
+    'fromY',
+    'toY',
+    'color',
+    'gradient',
+    'animation',
+    'modifier',
+    'variants',
+  };
 
   /// Sets the show.
   BarBackgroundStyler show(bool value) {

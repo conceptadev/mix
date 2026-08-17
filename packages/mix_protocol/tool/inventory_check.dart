@@ -556,6 +556,43 @@ final class _StylerCodecFieldVisitor extends RecursiveAstVisitor<void> {
   final ids = SplayTreeSet<String>();
   final _fieldInventoryByVariable = <String, String>{};
 
+  void _recordSchemaObjectInvocation(String source, ArgumentList argumentList) {
+    final owner = _schemaObjectOwner(source);
+    if (owner == null) return;
+
+    _recordSchemaObjectFields(
+      owner,
+      argumentList,
+      includesStylerMetadata: source.startsWith('stylerSchemaObject<'),
+    );
+  }
+
+  void _recordSchemaObjectFields(
+    String owner,
+    ArgumentList argumentList, {
+    required bool includesStylerMetadata,
+  }) {
+    final fields = _namedArgument(argumentList, 'fields');
+    if (fields is! ListLiteral) return;
+
+    for (final element in fields.elements) {
+      if (element is SimpleIdentifier) {
+        final inventoryName = _fieldInventoryByVariable[element.name];
+        if (inventoryName != null) ids.add('$owner.\$$inventoryName');
+      } else if (element is SpreadElement &&
+          element.expression.toSource().endsWith('.fields')) {
+        includesStylerMetadata = true;
+      }
+    }
+
+    if (includesStylerMetadata) {
+      ids
+        ..add('$owner.\$animation')
+        ..add('$owner.\$modifier')
+        ..add('$owner.\$variants');
+    }
+  }
+
   @override
   void visitVariableDeclaration(VariableDeclaration node) {
     final inventoryName = _schemaFieldInventoryName(node.initializer);
@@ -568,44 +605,26 @@ final class _StylerCodecFieldVisitor extends RecursiveAstVisitor<void> {
 
   @override
   void visitInstanceCreationExpression(InstanceCreationExpression node) {
-    final owner = _schemaObjectOwner(node.constructorName.toSource());
-    if (owner != null) _recordSchemaObjectFields(owner, node.argumentList);
+    _recordSchemaObjectInvocation(
+      node.constructorName.toSource(),
+      node.argumentList,
+    );
 
     super.visitInstanceCreationExpression(node);
   }
 
   @override
   void visitFunctionExpressionInvocation(FunctionExpressionInvocation node) {
-    final owner = _schemaObjectOwner(node.toSource());
-    if (owner != null) _recordSchemaObjectFields(owner, node.argumentList);
+    _recordSchemaObjectInvocation(node.toSource(), node.argumentList);
 
     super.visitFunctionExpressionInvocation(node);
   }
 
   @override
   void visitMethodInvocation(MethodInvocation node) {
-    final owner = _schemaObjectOwner(node.toSource());
-    if (owner != null) _recordSchemaObjectFields(owner, node.argumentList);
+    _recordSchemaObjectInvocation(node.toSource(), node.argumentList);
 
     super.visitMethodInvocation(node);
-  }
-
-  void _recordSchemaObjectFields(String owner, ArgumentList argumentList) {
-    final fields = _namedArgument(argumentList, 'fields');
-    if (fields is ListLiteral) {
-      for (final element in fields.elements) {
-        if (element is SimpleIdentifier) {
-          final inventoryName = _fieldInventoryByVariable[element.name];
-          if (inventoryName != null) ids.add('$owner.\$$inventoryName');
-        } else if (element is SpreadElement &&
-            element.expression.toSource().endsWith('.fields')) {
-          ids
-            ..add('$owner.\$animation')
-            ..add('$owner.\$modifier')
-            ..add('$owner.\$variants');
-        }
-      }
-    }
   }
 }
 
@@ -659,9 +678,11 @@ String? _firstPositionalStringArgument(ArgumentList argumentList) {
 }
 
 String? _schemaObjectOwner(String constructorSource) {
-  final match = RegExp(r'^SchemaObject<([^>]+)>').firstMatch(constructorSource);
+  final match = RegExp(
+    r'^(?:SchemaObject<([^>]+)>|stylerSchemaObject<([^,>]+),)',
+  ).firstMatch(constructorSource);
 
-  return match?.group(1);
+  return match == null ? null : match.group(1) ?? match.group(2);
 }
 
 Set<String> _directSupertypeNames(ClassDeclaration node) {

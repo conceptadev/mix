@@ -150,7 +150,8 @@ class BoxStyler extends MixStyler<BoxStyler, BoxSpec>
         BorderStyleMixin<BoxStyler>,
         BorderRadiusStyleMixin<BoxStyler>,
         ShadowStyleMixin<BoxStyler>,
-        TransformStyleMixin<BoxStyler> {
+        TransformStyleMixin<BoxStyler>
+    implements StylerFieldMetadata {
   final Prop<AlignmentGeometry>? $alignment;
   final Prop<EdgeInsetsGeometry>? $padding;
   final Prop<EdgeInsetsGeometry>? $margin;
@@ -390,6 +391,22 @@ class BoxStyler extends MixStyler<BoxStyler, BoxSpec>
   BoxStyler transform(Matrix4 value, {Alignment alignment = .center}) {
     return merge(BoxStyler(transform: value, transformAlignment: alignment));
   }
+
+  @override
+  Set<String> get $stylerFieldNames => const {
+    'alignment',
+    'padding',
+    'margin',
+    'constraints',
+    'decoration',
+    'foregroundDecoration',
+    'transform',
+    'transformAlignment',
+    'clipBehavior',
+    'animation',
+    'modifier',
+    'variants',
+  };
 
   /// Sets the alignment.
   BoxStyler alignment(AlignmentGeometry value) {

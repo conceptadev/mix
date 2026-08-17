@@ -4,6 +4,8 @@ import 'generator_flags.dart';
 ///
 /// [methods] specifies generated methods within the annotated class.
 /// [components] specifies external generated code like utility classes or extensions.
+/// The source field name `stylerFieldNames` is reserved for generated Styler
+/// metadata.
 class MixableSpec {
   final int methods;
   final int components;
@@ -32,6 +34,11 @@ const mixableSpec = MixableSpec();
 /// - `resolve()` method for resolving to StyleSpec
 /// - `debugFillProperties()` for diagnostics
 /// - `props` getter for equality comparison
+///
+/// The generated mixin always includes `$stylerFieldNames` metadata, even when
+/// [methods] disables `props` or every optional method. A custom `props`
+/// implementation must preserve that complete field surface. The member name
+/// `$stylerFieldNames` is reserved for this metadata.
 ///
 /// Example usage:
 /// ```dart

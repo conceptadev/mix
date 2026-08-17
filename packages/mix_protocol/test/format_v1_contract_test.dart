@@ -182,6 +182,26 @@ void main() {
       expect(reencoded['padding'], 4.0);
     });
 
+    test('lenient mode preserves a grid track with an additive field', () {
+      final payload = {
+        'v': 1,
+        'type': 'grid_box',
+        'columns': [
+          {'type': 'fixed', 'size': 10, 'future': true},
+          {'type': 'fixed', 'size': 20},
+        ],
+      };
+
+      final success = decodeSuccess<GridBoxStyler>(payload, options: lenient);
+      final reencoded = encode(success.value);
+
+      expect(success.warnings.single.path, '/columns/0/future');
+      expect(reencoded['columns'], [
+        {'type': 'fixed', 'size': 10.0},
+        {'type': 'fixed', 'size': 20.0},
+      ]);
+    });
+
     test('lenient mode skips unknown variant entries', () {
       final payload = {
         'v': 1,

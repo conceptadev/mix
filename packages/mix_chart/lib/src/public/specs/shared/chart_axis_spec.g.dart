@@ -148,7 +148,8 @@ typedef _$ChartAxisSpecMethods = _$ChartAxisSpec; // ignore: unused_element
 // SpecStylerGenerator
 // **************************************************************************
 
-class ChartAxisStyler extends MixStyler<ChartAxisStyler, ChartAxisSpec> {
+class ChartAxisStyler extends MixStyler<ChartAxisStyler, ChartAxisSpec>
+    implements StylerFieldMetadata {
   final Prop<bool>? $showLabels;
   final Prop<StyleSpec<TextSpec>>? $label;
   final Prop<double>? $reservedSize;
@@ -235,6 +236,23 @@ class ChartAxisStyler extends MixStyler<ChartAxisStyler, ChartAxisSpec> {
       ChartAxisStyler().drawBelowEverything(value);
   factory ChartAxisStyler.alignment(ChartAxisLabelAlignment value) =>
       ChartAxisStyler().alignment(value);
+
+  @override
+  Set<String> get $stylerFieldNames => const {
+    'showLabels',
+    'label',
+    'reservedSize',
+    'labelSpace',
+    'labelAngle',
+    'fitInside',
+    'fitInsideDistance',
+    'nameSize',
+    'drawBelowEverything',
+    'alignment',
+    'animation',
+    'modifier',
+    'variants',
+  };
 
   /// Sets the showLabels.
   ChartAxisStyler showLabels(bool value) {

@@ -284,6 +284,61 @@ final class DynamicDirective extends Directive<String> {
     },
   );
 
+  test('declared styler fields recognize direct and standard helper forms', () {
+    final root = Directory.systemTemp.createTempSync(
+      'mix_protocol_styler_helper_',
+    );
+    addTearDown(() => root.deleteSync(recursive: true));
+    _writeFile(
+      root,
+      'packages/mix_protocol/lib/src/schema/probe_styler_codec.dart',
+      r'''
+SchemaObject<ProbeStyler> probeStylerSchema() {
+  final color = valueField<ProbeStyler, Color>(
+    'color',
+    colorCodec(),
+    (value) => value.$color,
+  );
+
+  return stylerSchemaObject<ProbeStyler, ProbeSpec>(
+    rootStyleSchema: null,
+    fields: [color],
+    build: (data, metadata) => ProbeStyler.create(),
+  );
+}
+
+SchemaObject<DirectStyler> directStylerSchema() {
+  final size = valueField<DirectStyler, double>(
+    'size',
+    numberCodec(),
+    (value) => value.$size,
+  );
+  final metadata = StylerMetadataFields<DirectStyler, DirectSpec>();
+
+  return SchemaObject<DirectStyler>(
+    fields: [size, ...metadata.fields],
+    build: (data) => DirectStyler.create(),
+  );
+}
+''',
+    );
+
+    final declared = inventory.collectDeclaredStylerCodecFieldIds(
+      repositoryRoot: root,
+    );
+
+    expect(declared, {
+      r'ProbeStyler.$color',
+      r'ProbeStyler.$animation',
+      r'ProbeStyler.$modifier',
+      r'ProbeStyler.$variants',
+      r'DirectStyler.$size',
+      r'DirectStyler.$animation',
+      r'DirectStyler.$modifier',
+      r'DirectStyler.$variants',
+    });
+  });
+
   test(
     'manifest truthfulness rejects supported styler fields without codecs',
     () {

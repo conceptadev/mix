@@ -85,6 +85,20 @@ void main() {
         expect(IconStyler(), isA<WidgetStateVariantMixin>());
         expect(ImageStyler(), isA<WidgetStateVariantMixin>());
       });
+
+      test('all Stylers name every equality field', () {
+        _verifyFieldInventory(BoxStyler());
+        _verifyFieldInventory(FlexStyler());
+        _verifyFieldInventory(FlexBoxStyler());
+        _verifyFieldInventory(StackStyler());
+        _verifyFieldInventory(StackBoxStyler());
+        _verifyFieldInventory(WrapStyler());
+        _verifyFieldInventory(WrapBoxStyler());
+        _verifyFieldInventory(GridBoxStyler());
+        _verifyFieldInventory(TextStyler());
+        _verifyFieldInventory(IconStyler());
+        _verifyFieldInventory(ImageStyler());
+      });
     });
 
     // =========================================================================
@@ -367,6 +381,12 @@ void main() {
       });
     });
   });
+}
+
+void _verifyFieldInventory<S extends Spec<S>>(Style<S> styler) {
+  expect(styler, isA<StylerFieldMetadata>());
+  final metadata = styler as StylerFieldMetadata;
+  expect(metadata.$stylerFieldNames, hasLength(styler.props.length));
 }
 
 /// Verifies that a Styler has AnimationStyleMixin by calling its methods.

@@ -1,3 +1,8 @@
+## 0.0.1-beta.2
+
+- Regenerates chart Stylers with source-field metadata and requires the Mix
+  release that defines the metadata contract.
+
 ## 0.0.1-beta.1
 
 - Adds `PieChartStyler.selectedSliceRadiusOffset` to customize or disable the

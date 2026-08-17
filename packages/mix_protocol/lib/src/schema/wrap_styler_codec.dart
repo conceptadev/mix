@@ -6,13 +6,12 @@ import '../contract/identity_resolution.dart';
 import 'common_codecs.dart';
 import 'schema_field.dart';
 import 'styler_codec_helpers.dart';
-import 'styler_field_inventory.dart';
 
-AckSchema<JsonMap, WrapStyler> wrapStylerCodec({
+SchemaObject<WrapStyler> wrapStylerSchema({
   AckSchema<JsonMap, Object>? rootStyleSchema,
   MixProtocolIdentityContext Function()? identityContext,
 }) {
-  return _wrapStylerSchemaType(rootStyleSchema).codec();
+  return _wrapStylerSchemaType(rootStyleSchema);
 }
 
 JsonMap encodeWrapStylerFields(
@@ -42,6 +41,7 @@ SchemaObject<WrapStyler> _wrapStylerSchemaType(
     'spacing',
     doubleTokenCodec(),
     (value) => value.$spacing,
+    schemaSemantics: doubleTokenFieldSemantics,
   );
   final runAlignment = propValueField<WrapStyler, WrapAlignment>(
     'runAlignment',
@@ -52,6 +52,7 @@ SchemaObject<WrapStyler> _wrapStylerSchemaType(
     'runSpacing',
     doubleTokenCodec(),
     (value) => value.$runSpacing,
+    schemaSemantics: doubleTokenFieldSemantics,
   );
   final crossAxisAlignment = propValueField<WrapStyler, WrapCrossAlignment>(
     'crossAxisAlignment',
@@ -73,14 +74,9 @@ SchemaObject<WrapStyler> _wrapStylerSchemaType(
     enumNameCodec(Clip.values),
     (value) => value.$clipBehavior,
   );
-  final metadata = StylerMetadataFields<WrapStyler, WrapSpec>(
-    rootStyleSchema: rootStyleSchema,
-    readVariants: (value) => value.$variants,
-    readModifier: (value) => value.$modifier,
-    readAnimation: (value) => value.$animation,
-  );
 
-  return SchemaObject<WrapStyler>(
+  return stylerSchemaObject<WrapStyler, WrapSpec>(
+    rootStyleSchema: rootStyleSchema,
     fields: [
       direction,
       alignment,
@@ -91,9 +87,8 @@ SchemaObject<WrapStyler> _wrapStylerSchemaType(
       textDirection,
       verticalDirection,
       clipBehavior,
-      ...metadata.fields,
     ],
-    build: (data) => WrapStyler.create(
+    build: (data, metadata) => WrapStyler.create(
       direction: direction.value(data),
       alignment: alignment.value(data),
       spacing: spacing.value(data),
@@ -107,9 +102,5 @@ SchemaObject<WrapStyler> _wrapStylerSchemaType(
       modifier: metadata.modifiers.value(data),
       animation: metadata.animation.value(data),
     ),
-    unsupportedFields: [...metadata.unsupportedFields()],
-    inventoryOwner: 'WrapStyler',
-    ownerFieldInventory: wrapStylerInventory,
-    actualFieldCount: stylerFieldCount,
   );
 }

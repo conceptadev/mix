@@ -22,18 +22,9 @@ import '../errors/mix_protocol_error.dart';
 import '../errors/schema_error_mapper.dart';
 import '../schema/box_styler_codec.dart';
 import '../schema/common_codecs.dart';
-import '../schema/flex_box_styler_codec.dart';
-import '../schema/flex_styler_codec.dart';
-import '../schema/grid_box_styler_codec.dart';
-import '../schema/icon_styler_codec.dart';
-import '../schema/image_styler_codec.dart';
-import '../schema/stack_box_styler_codec.dart';
-import '../schema/stack_styler_codec.dart';
-import '../schema/styler_branch.dart';
+import '../schema/schema_field.dart';
 import '../schema/text_styler_codec.dart';
-import '../schema/wrap_box_styler_codec.dart';
-import '../schema/wrap_styler_codec.dart';
-import '../schema/wire_discriminators.dart';
+import '../schema/vocabulary.dart';
 import '../tokens/token_reference_walker.dart';
 
 /// Package version stamped into exported JSON Schema metadata.
@@ -96,110 +87,46 @@ final MixProtocol mixProtocol = MixProtocol._builtIn();
 
 /// Versioned JSON protocol for representable Mix styles and token themes.
 final class MixProtocol {
-  factory MixProtocol._builtIn() {
+  final AckSchema<JsonMap, Object> _rootSchema;
+  final MixProtocolIdentityContextHolder _identityContext;
+  final List<({String id, int wireVersion})> _contributedVocabularies;
+  final Map<String, Map<String, SchemaFieldSemantics>> _branchFieldSemantics;
+  final List<List<String>> _lenientListEntryPathSuffixes;
+
+  factory MixProtocol._builtIn() =>
+      MixProtocol.compose([mixProtocolCoreVocabulary]);
+
+  /// Creates an immutable protocol from an explicit vocabulary composition.
+  factory MixProtocol.compose(List<MixProtocolVocabulary> vocabularies) {
     final identityContext = MixProtocolIdentityContextHolder();
-    late final AckSchema<JsonMap, Object> rootSchema;
-    final rootSchemaRef = Ack.lazy<JsonMap, Object>(
-      'mix_protocol_style',
-      () => rootSchema,
-    );
-    final branches = <String, AckSchema<JsonMap, Object>>{
-      schemaTypeBox: widenStylerBranch(
-        boxStylerCodec(
-          rootStyleSchema: rootSchemaRef,
-          identityContext: () => identityContext.current,
-        ),
-        debugName: schemaTypeBox,
-      ),
-      schemaTypeText: widenStylerBranch(
-        textStylerCodec(
-          rootStyleSchema: rootSchemaRef,
-          identityContext: () => identityContext.current,
-        ),
-        debugName: schemaTypeText,
-      ),
-      schemaTypeFlex: widenStylerBranch(
-        flexStylerCodec(
-          rootStyleSchema: rootSchemaRef,
-          identityContext: () => identityContext.current,
-        ),
-        debugName: schemaTypeFlex,
-      ),
-      schemaTypeStack: widenStylerBranch(
-        stackStylerCodec(
-          rootStyleSchema: rootSchemaRef,
-          identityContext: () => identityContext.current,
-        ),
-        debugName: schemaTypeStack,
-      ),
-      schemaTypeIcon: widenStylerBranch(
-        iconStylerCodec(
-          rootStyleSchema: rootSchemaRef,
-          identityContext: () => identityContext.current,
-        ),
-        debugName: schemaTypeIcon,
-      ),
-      schemaTypeImage: widenStylerBranch(
-        imageStylerCodec(
-          rootStyleSchema: rootSchemaRef,
-          identityContext: () => identityContext.current,
-        ),
-        debugName: schemaTypeImage,
-      ),
-      schemaTypeFlexBox: widenStylerBranch(
-        flexBoxStylerCodec(
-          rootStyleSchema: rootSchemaRef,
-          identityContext: () => identityContext.current,
-        ),
-        debugName: schemaTypeFlexBox,
-      ),
-      schemaTypeStackBox: widenStylerBranch(
-        stackBoxStylerCodec(
-          rootStyleSchema: rootSchemaRef,
-          identityContext: () => identityContext.current,
-        ),
-        debugName: schemaTypeStackBox,
-      ),
-      schemaTypeWrap: widenStylerBranch(
-        wrapStylerCodec(
-          rootStyleSchema: rootSchemaRef,
-          identityContext: () => identityContext.current,
-        ),
-        debugName: schemaTypeWrap,
-      ),
-      schemaTypeWrapBox: widenStylerBranch(
-        wrapBoxStylerCodec(
-          rootStyleSchema: rootSchemaRef,
-          identityContext: () => identityContext.current,
-        ),
-        debugName: schemaTypeWrapBox,
-      ),
-      schemaTypeGridBox: widenStylerBranch(
-        gridBoxStylerCodec(rootStyleSchema: rootSchemaRef),
-        debugName: schemaTypeGridBox,
-      ),
-    };
-    rootSchema = Ack.discriminated<Object>(
-      discriminatorKey: 'type',
-      schemas: branches,
+    final compilation = compileMixProtocolVocabularies(
+      vocabularies,
+      identityContext,
     );
 
     return MixProtocol._(
-      rootSchema: rootSchema,
+      rootSchema: compilation.rootSchema,
       identityContext: identityContext,
+      contributedVocabularies: compilation.contributedVocabularies,
+      branchFieldSemantics: compilation.branchFieldSemantics,
+      lenientListEntryPathSuffixes: compilation.lenientListEntryPathSuffixes,
     );
   }
 
   const MixProtocol._({
     required AckSchema<JsonMap, Object> rootSchema,
     required MixProtocolIdentityContextHolder identityContext,
+    required List<({String id, int wireVersion})> contributedVocabularies,
+    required Map<String, Map<String, SchemaFieldSemantics>>
+    branchFieldSemantics,
+    required List<List<String>> lenientListEntryPathSuffixes,
   }) : _rootSchema = rootSchema,
-       _identityContext = identityContext;
+       _identityContext = identityContext,
+       _contributedVocabularies = contributedVocabularies,
+       _branchFieldSemantics = branchFieldSemantics,
+       _lenientListEntryPathSuffixes = lenientListEntryPathSuffixes;
 
-  final AckSchema<JsonMap, Object> _rootSchema;
-  final MixProtocolIdentityContextHolder _identityContext;
-
-  /// Decodes [payload] as a built-in Mix styler of type [T].
+  /// Decodes [payload] as a styler known to this protocol composition.
   MixProtocolResult<T> decodeStyle<T extends Object>(
     Object? payload, {
     MixProtocolDecodeOptions options = const MixProtocolDecodeOptions(),
@@ -243,7 +170,7 @@ final class MixProtocol {
     ], warnings: ready.warnings);
   }
 
-  /// Encodes a representable built-in Mix styler.
+  /// Encodes a representable styler known to this protocol composition.
   MixProtocolResult<JsonMap> encodeStyle(
     Object value, {
     MixProtocolEncodeOptions options = const MixProtocolEncodeOptions(),
@@ -309,12 +236,13 @@ final class MixProtocol {
         .toList(growable: false);
   }
 
-  /// Exports the built-in style shape as draft-07 JSON Schema metadata.
+  /// Exports this composition's style shape as draft-07 JSON Schema metadata.
   JsonMap exportStyleJsonSchema() {
     final exported = _withPropertyTermDefinitions(
       _withVersionEnvelope(
         Map<String, Object?>.from(_rootSchema.toJsonSchema()),
       ),
+      _branchFieldSemantics,
     );
 
     return {
@@ -323,6 +251,11 @@ final class MixProtocol {
       'x-mix-protocol-contract': 'mix_protocol',
       'x-mix-protocol-version': mixProtocolVersion,
       'x-mix-protocol-format-version': mixProtocolFormatVersion,
+      if (_contributedVocabularies.isNotEmpty)
+        'x-mix-protocol-vocabularies': [
+          for (final vocabulary in _contributedVocabularies)
+            {'id': vocabulary.id, 'wireVersion': vocabulary.wireVersion},
+        ],
     };
   }
 
@@ -373,7 +306,10 @@ final class MixProtocol {
 
       final errors = mapSchemaError(result.getError());
       var changed = false;
-      final repair = _lenientRepairCandidate(errors);
+      final repair = _lenientRepairCandidate(
+        errors,
+        _lenientListEntryPathSuffixes,
+      );
       if (repair != null) {
         final (:error, :removalPath) = repair;
         if (removals >= _defaultMaxLenientRemovals) {
@@ -898,10 +834,11 @@ final class _LenientRemovalJournal {
 
 ({MixProtocolError error, List<String> removalPath})? _lenientRepairCandidate(
   List<MixProtocolError> errors,
+  List<List<String>> listEntryPathSuffixes,
 ) {
   ({MixProtocolError error, List<String> removalPath})? best;
   for (final error in errors) {
-    final removalPath = _lenientRemovalPath(error);
+    final removalPath = _lenientRemovalPath(error, listEntryPathSuffixes);
     if (removalPath == null) continue;
     if (best == null || removalPath.length > best.removalPath.length) {
       best = (error: error, removalPath: removalPath);
@@ -911,7 +848,10 @@ final class _LenientRemovalJournal {
   return best;
 }
 
-List<String>? _lenientRemovalPath(MixProtocolError error) {
+List<String>? _lenientRemovalPath(
+  MixProtocolError error,
+  List<List<String>> listEntryPathSuffixes,
+) {
   if (!_isLenientSkippable(error)) return null;
 
   final segments = _pathSegments(error.path);
@@ -921,7 +861,10 @@ List<String>? _lenientRemovalPath(MixProtocolError error) {
     return null;
   }
 
-  final indexedContainer = _deepestIndexedContainer(segments);
+  final indexedContainer = _deepestIndexedContainer(
+    segments,
+    listEntryPathSuffixes,
+  );
   if (indexedContainer != null) {
     final (:container, :index) = indexedContainer;
     final entryPath = segments.sublist(0, index + 2);
@@ -970,11 +913,12 @@ bool _isLenientSkippable(MixProtocolError error) {
 
 ({String container, int index})? _deepestIndexedContainer(
   List<String> segments,
+  List<List<String>> listEntryPathSuffixes,
 ) {
   for (var i = segments.length - 2; i >= 0; i -= 1) {
     if (int.tryParse(segments[i + 1]) == null) continue;
     final listPath = segments.sublist(0, i + 1);
-    if (!_isLenientListEntryPath(listPath)) continue;
+    if (!_isLenientListEntryPath(listPath, listEntryPathSuffixes)) continue;
 
     return (container: segments[i], index: i);
   }
@@ -982,9 +926,9 @@ bool _isLenientSkippable(MixProtocolError error) {
   return null;
 }
 
-bool _isLenientListEntryPath(List<String> path) {
-  for (final suffix in _lenientListEntryPathSuffixes) {
-    if (_endsWithSegments(path, suffix)) return true;
+bool _isLenientListEntryPath(List<String> path, List<List<String>> suffixes) {
+  for (final suffix in suffixes) {
+    if (_endsWithListPathSegments(path, suffix)) return true;
   }
 
   return false;
@@ -1011,27 +955,6 @@ bool _isNestedDiscriminatorPath(List<String> path) {
 
   return path.last == 'type' || path.last == 'kind';
 }
-
-const _lenientListEntryPathSuffixes = [
-  ['variants'],
-  ['modifiers'],
-  ['modifiers', 'order'],
-  ['modifiers', 'items'],
-  [applyDirectivesKey],
-  [mergeReferenceKey],
-  ['decoration', 'boxShadow'],
-  ['decoration', 'gradient', 'colors'],
-  ['decoration', 'gradient', 'stops'],
-  ['foregroundDecoration', 'boxShadow'],
-  ['foregroundDecoration', 'gradient', 'colors'],
-  ['foregroundDecoration', 'gradient', 'stops'],
-  ['style', 'fontFamilyFallback'],
-  ['style', 'fontFeatures'],
-  ['style', 'fontVariations'],
-  ['style', 'shadows'],
-  ['strutStyle', 'fontFamilyFallback'],
-  ['shadows'],
-];
 
 enum _RemovalKind { mapProperty, listEntry }
 
@@ -1169,11 +1092,17 @@ bool _startsWithSegments(List<String> value, List<String> prefix) {
   return true;
 }
 
-bool _endsWithSegments(List<String> value, List<String> suffix) {
+bool _endsWithListPathSegments(List<String> value, List<String> suffix) {
   if (value.length < suffix.length) return false;
   final offset = value.length - suffix.length;
   for (var i = 0; i < suffix.length; i += 1) {
-    if (value[offset + i] != suffix[i]) return false;
+    final expected = suffix[i];
+    final actual = value[offset + i];
+    if (expected == '*') {
+      if (int.tryParse(actual) == null) return false;
+    } else if (actual != expected) {
+      return false;
+    }
   }
 
   return true;
@@ -1197,10 +1126,16 @@ JsonMap _withVersionEnvelope(JsonMap schema) {
   return _branchWithVersion(schema);
 }
 
-JsonMap _withPropertyTermDefinitions(JsonMap schema) {
+JsonMap _withPropertyTermDefinitions(
+  JsonMap schema,
+  Map<String, Map<String, SchemaFieldSemantics>> branchFieldSemantics,
+) {
   final withPropertyTermRefs = _withDoubleTokenPropertyTermSchemas(
-    _replaceAckAnyJsonSchemas(_withNestedPropertyLiteralSchemas(schema))
+    _replaceAckAnyJsonSchemas(
+          _withNestedPropertyLiteralSchemas(schema, branchFieldSemantics),
+        )
         as JsonMap,
+    branchFieldSemantics,
   );
   final definitions = Map<String, Object?>.from(
     (withPropertyTermRefs['definitions'] as Map?) ?? const {},
@@ -1218,43 +1153,57 @@ JsonMap _withPropertyTermDefinitions(JsonMap schema) {
       'mix_protocol_double_property_control_term':
           _propertyControlTermJsonSchema(allowTokenKind: true),
       'mix_protocol_directive': _directiveJsonSchema(),
-      _boxDecorationLiteralSchemaDefinition: _nestedLiteralDefinitionSchema(
+      boxDecorationLiteralSchemaDefinition: _nestedLiteralDefinitionSchema(
         boxDecorationCodec().toJsonSchema(),
-        definitionName: _boxDecorationLiteralSchemaDefinition,
+        doubleTokenPaths: boxDecorationFieldSemantics.doubleTokenPaths,
       ),
-      _strutStyleLiteralSchemaDefinition: _nestedLiteralDefinitionSchema(
+      strutStyleLiteralSchemaDefinition: _nestedLiteralDefinitionSchema(
         strutStyleMixCodec().toJsonSchema(),
-        definitionName: _strutStyleLiteralSchemaDefinition,
+        doubleTokenPaths: strutStyleFieldSemantics.doubleTokenPaths,
       ),
-      _textStyleLiteralSchemaDefinition: _nestedLiteralDefinitionSchema(
+      textStyleLiteralSchemaDefinition: _nestedLiteralDefinitionSchema(
         textStyleMixLiteralJsonSchema(),
-        definitionName: _textStyleLiteralSchemaDefinition,
+        doubleTokenPaths: textStyleFieldSemantics.doubleTokenPaths,
       ),
     },
   };
 }
 
-JsonMap _withDoubleTokenPropertyTermSchemas(JsonMap schema) {
+JsonMap _withDoubleTokenPropertyTermSchemas(
+  JsonMap schema,
+  Map<String, Map<String, SchemaFieldSemantics>> branchFieldSemantics,
+) {
   final anyOf = schema['anyOf'];
   if (anyOf is List) {
     return {
       ...schema,
       'anyOf': [
-        for (final branch in anyOf) _withDoubleTokenBranchProperties(branch),
+        for (final branch in anyOf)
+          _withDoubleTokenBranchProperties(branch, branchFieldSemantics),
       ],
     };
   }
 
-  return _withDoubleTokenBranchProperties(schema) as JsonMap;
+  return _withDoubleTokenBranchProperties(schema, branchFieldSemantics)
+      as JsonMap;
 }
 
-Object? _withDoubleTokenBranchProperties(Object? branchValue) {
+Object? _withDoubleTokenBranchProperties(
+  Object? branchValue,
+  Map<String, Map<String, SchemaFieldSemantics>> branchFieldSemantics,
+) {
   if (branchValue is! JsonMap) return branchValue;
   final branchType = _branchSchemaType(branchValue);
-  final doubleTokenProperties =
-      _doubleTokenRootPropertiesByType[branchType] ?? const {};
-  final nestedPaths =
-      _doubleTokenNestedPropertyPathsByType[branchType] ?? const [];
+  final fieldSemantics = branchFieldSemantics[branchType] ?? const {};
+  final doubleTokenProperties = {
+    for (final entry in fieldSemantics.entries)
+      if (entry.value.allowDoubleTokenKind) entry.key,
+  };
+  final nestedPaths = [
+    for (final entry in fieldSemantics.entries)
+      if (entry.value.literalDefinition == null)
+        for (final path in entry.value.doubleTokenPaths) [entry.key, ...path],
+  ];
   if (doubleTokenProperties.isEmpty && nestedPaths.isEmpty) {
     return branchValue;
   }
@@ -1287,108 +1236,41 @@ bool _isGenericPropertyControlTermRef(Object? value) {
       value[r'$ref'] == '#/definitions/mix_protocol_property_control_term';
 }
 
-const _doubleTokenRootPropertiesByType = {
-  schemaTypeBox: {'padding', 'margin'},
-  schemaTypeFlex: {'spacing'},
-  schemaTypeIcon: {'size', 'weight', 'grade', 'opticalSize', 'fill', 'opacity'},
-  schemaTypeImage: {'width', 'height'},
-  schemaTypeFlexBox: {'padding', 'margin', 'spacing'},
-  schemaTypeStackBox: {'padding', 'margin'},
-  schemaTypeWrap: {'spacing', 'runSpacing'},
-  schemaTypeWrapBox: {'padding', 'margin', 'spacing', 'runSpacing'},
-  schemaTypeGridBox: {'columnGap', 'rowGap'},
-};
-
-const _doubleTokenNestedPropertyPathsByType = {
-  schemaTypeGridBox: [
-    ['columns', '*', 'size'],
-    ['columns', '*', 'fraction'],
-    ['rows', '*', 'size'],
-    ['rows', '*', 'fraction'],
-    ['autoRows', 'size'],
-    ['autoRows', 'fraction'],
-    ['constraintBranches', '*', 'patch', 'columns', '*', 'size'],
-    ['constraintBranches', '*', 'patch', 'columns', '*', 'fraction'],
-    ['constraintBranches', '*', 'patch', 'rows', '*', 'size'],
-    ['constraintBranches', '*', 'patch', 'rows', '*', 'fraction'],
-    ['constraintBranches', '*', 'patch', 'autoRows', 'size'],
-    ['constraintBranches', '*', 'patch', 'autoRows', 'fraction'],
-    ['constraintBranches', '*', 'patch', 'columnGap'],
-    ['constraintBranches', '*', 'patch', 'rowGap'],
-  ],
-};
-
-const _doubleTokenNestedPropertyPathsByDefinition = {
-  _strutStyleLiteralSchemaDefinition: [
-    ['fontSize'],
-    ['height'],
-    ['leading'],
-  ],
-  _textStyleLiteralSchemaDefinition: [
-    ['fontSize'],
-    ['letterSpacing'],
-    ['wordSpacing'],
-    ['height'],
-    ['decorationThickness'],
-  ],
-};
-
-const _boxDecorationLiteralSchemaDefinition =
-    'mix_protocol_box_decoration_literal';
-const _strutStyleLiteralSchemaDefinition = 'mix_protocol_strut_style_literal';
-const _textStyleLiteralSchemaDefinition = 'mix_protocol_text_style_literal';
-
-JsonMap _withNestedPropertyLiteralSchemas(JsonMap schema) {
+JsonMap _withNestedPropertyLiteralSchemas(
+  JsonMap schema,
+  Map<String, Map<String, SchemaFieldSemantics>> branchFieldSemantics,
+) {
   final anyOf = schema['anyOf'];
   if (anyOf is List) {
     return {
       ...schema,
       'anyOf': [
-        for (final branch in anyOf) _withNestedBranchLiteralSchemas(branch),
+        for (final branch in anyOf)
+          _withNestedBranchLiteralSchemas(branch, branchFieldSemantics),
       ],
     };
   }
 
-  return _withNestedBranchLiteralSchemas(schema) as JsonMap;
+  return _withNestedBranchLiteralSchemas(schema, branchFieldSemantics)
+      as JsonMap;
 }
 
-Object? _withNestedBranchLiteralSchemas(Object? branchValue) {
+Object? _withNestedBranchLiteralSchemas(
+  Object? branchValue,
+  Map<String, Map<String, SchemaFieldSemantics>> branchFieldSemantics,
+) {
   if (branchValue is! JsonMap) return branchValue;
 
   final properties = Map<String, Object?>.from(
     (branchValue['properties'] as Map?) ?? const {},
   );
-  switch (_branchSchemaType(branchValue)) {
-    // wrap_box joins box here (not flex_box/stack_box) because it is the only
-    // composite that also flattens foregroundDecoration onto the wire.
-    case schemaTypeBox || schemaTypeWrapBox:
-      _setPropertyLiteralSchemaRef(
-        properties,
-        'decoration',
-        _boxDecorationLiteralSchemaDefinition,
-      );
-      _setPropertyLiteralSchemaRef(
-        properties,
-        'foregroundDecoration',
-        _boxDecorationLiteralSchemaDefinition,
-      );
-    case schemaTypeText:
-      _setPropertyLiteralSchemaRef(
-        properties,
-        'style',
-        _textStyleLiteralSchemaDefinition,
-      );
-      _setPropertyLiteralSchemaRef(
-        properties,
-        'strutStyle',
-        _strutStyleLiteralSchemaDefinition,
-      );
-    case schemaTypeFlexBox || schemaTypeStackBox:
-      _setPropertyLiteralSchemaRef(
-        properties,
-        'decoration',
-        _boxDecorationLiteralSchemaDefinition,
-      );
+  final fieldSemantics =
+      branchFieldSemantics[_branchSchemaType(branchValue)] ?? const {};
+  for (final entry in fieldSemantics.entries) {
+    final definition = entry.value.literalDefinition;
+    if (definition != null) {
+      _setPropertyLiteralSchemaRef(properties, entry.key, definition);
+    }
   }
 
   return {...branchValue, 'properties': properties};
@@ -1454,14 +1336,14 @@ bool _isAckAnyJsonSchema(JsonMap value) {
 
 JsonMap _nestedLiteralDefinitionSchema(
   JsonMap schema, {
-  required String definitionName,
+  required List<List<String>> doubleTokenPaths,
 }) {
   final replaced = _replaceAckAnyJsonSchemas(schema);
   if (replaced is! JsonMap) return JsonMap.from(replaced as Map);
 
   return _withDoubleTokenNestedPropertySchemas(
     _wrapTopLevelPropertySchemas(replaced),
-    _doubleTokenNestedPropertyPathsByDefinition[definitionName] ?? const [],
+    doubleTokenPaths,
   );
 }
 

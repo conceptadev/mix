@@ -5,14 +5,13 @@ import 'package:mix/mix.dart';
 import '../contract/identity_resolution.dart';
 import 'common_codecs.dart';
 import 'schema_field.dart';
-import 'styler_field_inventory.dart';
 import 'styler_codec_helpers.dart';
 
-AckSchema<JsonMap, FlexStyler> flexStylerCodec({
+SchemaObject<FlexStyler> flexStylerSchema({
   AckSchema<JsonMap, Object>? rootStyleSchema,
   MixProtocolIdentityContext Function()? identityContext,
 }) {
-  return _flexStylerSchemaType(rootStyleSchema).codec();
+  return _flexStylerSchemaType(rootStyleSchema);
 }
 
 JsonMap encodeFlexStylerFields(
@@ -72,18 +71,11 @@ SchemaObject<FlexStyler> _flexStylerSchemaType(
     'spacing',
     doubleTokenCodec(),
     (value) => value.$spacing,
-  );
-  final metadata = StylerMetadataFields<FlexStyler, FlexSpec>(
-    rootStyleSchema: rootStyleSchema,
-    readVariants: (value) => value.$variants,
-    readModifier: (value) => value.$modifier,
-    readAnimation: (value) => value.$animation,
+    schemaSemantics: doubleTokenFieldSemantics,
   );
 
-  return SchemaObject<FlexStyler>(
-    inventoryOwner: 'FlexStyler',
-    ownerFieldInventory: flexStylerInventory,
-    actualFieldCount: stylerFieldCount,
+  return stylerSchemaObject<FlexStyler, FlexSpec>(
+    rootStyleSchema: rootStyleSchema,
     fields: [
       direction,
       mainAxisAlignment,
@@ -94,10 +86,8 @@ SchemaObject<FlexStyler> _flexStylerSchemaType(
       textBaseline,
       clipBehavior,
       spacing,
-      ...metadata.fields,
     ],
-    unsupportedFields: [...metadata.unsupportedFields()],
-    build: (data) => FlexStyler.create(
+    build: (data, metadata) => FlexStyler.create(
       direction: direction.value(data),
       mainAxisAlignment: mainAxisAlignment.value(data),
       crossAxisAlignment: crossAxisAlignment.value(data),

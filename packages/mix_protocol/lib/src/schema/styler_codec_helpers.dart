@@ -9,6 +9,12 @@ import 'variant_codec.dart';
 
 const stylerMetadataFields = {'variants', 'modifiers', 'animation'};
 
+/// Returns Styler source-field metadata when [value] exposes it.
+Set<String>? stylerFieldInventoryOf(Object value) => switch (value) {
+  StylerFieldMetadata metadata => metadata.$stylerFieldNames,
+  _ => null,
+};
+
 final class StylerMetadataFields<
   Owner extends Object,
   SpecType extends Spec<SpecType>
@@ -25,12 +31,20 @@ final class StylerMetadataFields<
                'variants',
                Ack.list(variantCodec<SpecType>(rootStyleSchema)),
                readVariants,
+               schemaSemantics: listEntryFieldSemantics,
              ),
        modifiers = directField<Owner, WidgetModifierConfig>(
          'modifiers',
          modifierConfigCodec(rootStyleSchema: rootStyleSchema),
          readModifier,
          inventoryName: 'modifier',
+         schemaSemantics: const SchemaFieldSemantics(
+           listEntryPaths: [
+             [],
+             ['order'],
+             ['items'],
+           ],
+         ),
        ),
        animation = directField<Owner, AnimationConfig>(
          'animation',
@@ -53,6 +67,36 @@ final class StylerMetadataFields<
         UnsupportedSchemaField<Owner>('variants', _readVariants),
     ];
   }
+}
+
+/// Creates a schema object for a standard Mix styler, including its shared
+/// metadata fields and generated field-inventory check.
+SchemaObject<Styler> stylerSchemaObject<
+  Styler extends Style<SpecType>,
+  SpecType extends Spec<SpecType>
+>({
+  required AckSchema<JsonMap, Object>? rootStyleSchema,
+  required List<SchemaFieldBase<Styler>> fields,
+  required Styler Function(
+    JsonMap data,
+    StylerMetadataFields<Styler, SpecType> metadata,
+  )
+  build,
+}) {
+  final metadata = StylerMetadataFields<Styler, SpecType>(
+    rootStyleSchema: rootStyleSchema,
+    readVariants: (value) => value.$variants,
+    readModifier: (value) => value.$modifier,
+    readAnimation: (value) => value.$animation,
+  );
+
+  return SchemaObject<Styler>(
+    fields: [...fields, ...metadata.fields],
+    build: (data) => build(data, metadata),
+    unsupportedFields: metadata.unsupportedFields(),
+    ownerFieldInventoryOf: stylerFieldInventoryOf,
+    actualFieldCount: (value) => value.props.length,
+  );
 }
 
 Object? encodedNestedStylerField<

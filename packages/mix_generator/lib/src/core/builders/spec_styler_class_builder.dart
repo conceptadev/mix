@@ -383,6 +383,18 @@ class SpecStylerClassBuilder {
     return fields.map((field) => field.name).toSet();
   }
 
+  void _validateStylerMetadataField(List<FieldModel> fields) {
+    for (final field in fields) {
+      if (field.name != stylerFieldMetadataName) continue;
+      fail(
+        specElement.getField(field.name) ?? specElement,
+        '`${field.name}` is reserved for generated Styler metadata. '
+        'Rename the Spec field.',
+        todo: 'Rename the Spec field.',
+      );
+    }
+  }
+
   bool _usesTransformOwnerMixin(List<_OwnerMixinReference> mixins) {
     return mixins.any((mixin) => mixin.name == 'TransformStyleMixin');
   }
@@ -1144,6 +1156,7 @@ class SpecStylerClassBuilder {
       specName,
       visibleFrom: _emissionLibrary,
     );
+    _validateStylerMetadataField(fields);
     final mixins = _collectOwnerMixins(fields);
     final mixinNames = mixins.map((m) => '${m.name}<$stylerName>').toList();
     final mixinClause = mixinNames.isEmpty
@@ -1151,7 +1164,8 @@ class SpecStylerClassBuilder {
         : ' with ${mixinNames.join(', ')}';
     final buffer = StringBuffer();
     buffer.writeln(
-      'class $stylerName extends MixStyler<$stylerName, $specName>$mixinClause {',
+      'class $stylerName extends MixStyler<$stylerName, $specName>$mixinClause '
+      'implements StylerFieldMetadata {',
     );
 
     for (final field in fields) {

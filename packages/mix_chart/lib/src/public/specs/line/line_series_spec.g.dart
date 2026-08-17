@@ -176,7 +176,8 @@ typedef _$LineSeriesSpecMethods = _$LineSeriesSpec; // ignore: unused_element
 // SpecStylerGenerator
 // **************************************************************************
 
-class LineSeriesStyler extends MixStyler<LineSeriesStyler, LineSeriesSpec> {
+class LineSeriesStyler extends MixStyler<LineSeriesStyler, LineSeriesSpec>
+    implements StylerFieldMetadata {
   final Prop<bool>? $show;
   final Prop<StyleSpec<ChartStrokeSpec>>? $stroke;
   final Prop<LineCurve>? $curve;
@@ -276,6 +277,25 @@ class LineSeriesStyler extends MixStyler<LineSeriesStyler, LineSeriesSpec> {
       LineSeriesStyler().aboveArea(value);
   factory LineSeriesStyler.shadow(ShadowMix value) =>
       LineSeriesStyler().shadow(value);
+
+  @override
+  Set<String> get $stylerFieldNames => const {
+    'show',
+    'stroke',
+    'curve',
+    'smoothness',
+    'preventCurveOvershooting',
+    'curveOvershootingThreshold',
+    'roundStrokeCap',
+    'roundStrokeJoin',
+    'marker',
+    'belowArea',
+    'aboveArea',
+    'shadow',
+    'animation',
+    'modifier',
+    'variants',
+  };
 
   /// Sets the show.
   LineSeriesStyler show(bool value) {

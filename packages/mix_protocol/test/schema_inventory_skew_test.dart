@@ -28,6 +28,25 @@ final class _FutureStrutStyleMix extends StrutStyleMix {
   List<Object?> get props => [...super.props, 'future'];
 }
 
+final class _FutureBoxStyler extends BoxStyler {
+  _FutureBoxStyler() : super();
+
+  @override
+  Set<String> get $stylerFieldNames => {...super.$stylerFieldNames, 'future'};
+
+  @override
+  List<Object?> get props => [...super.props, 'future'];
+}
+
+final class _SwappedBoxStyler extends BoxStyler {
+  _SwappedBoxStyler() : super();
+
+  @override
+  Set<String> get $stylerFieldNames => ({...super.$stylerFieldNames}
+    ..remove('alignment')
+    ..add('future'));
+}
+
 void main() {
   test('SchemaObject encode fails loudly when owner inventory drifts', () {
     final schema = SchemaObject<_InventoryOwner>(
@@ -135,6 +154,48 @@ void main() {
       );
     },
   );
+
+  test('styler schemas use generated runtime field names', () {
+    final result = mixProtocol.encodeStyle(_FutureBoxStyler());
+
+    expect(result, isA<MixProtocolFailure<JsonMap>>());
+    final errors = (result as MixProtocolFailure<JsonMap>).errors;
+    final inventoryError = errors.singleWhere(
+      (error) => error.code == MixProtocolErrorCode.inventorySkew,
+    );
+    expect(
+      inventoryError,
+      isA<MixProtocolError>()
+          .having(
+            (error) => error.code,
+            'code',
+            MixProtocolErrorCode.inventorySkew,
+          )
+          .having(
+            (error) => error.value,
+            'value',
+            containsPair('missingFields', ['future']),
+          ),
+    );
+  });
+
+  test('styler schemas detect same-cardinality field-name skew', () {
+    final result = mixProtocol.encodeStyle(_SwappedBoxStyler());
+
+    expect(result, isA<MixProtocolFailure<JsonMap>>());
+    final inventoryError = (result as MixProtocolFailure<JsonMap>).errors
+        .singleWhere(
+          (error) => error.code == MixProtocolErrorCode.inventorySkew,
+        );
+    expect(
+      inventoryError.value,
+      allOf(
+        containsPair('missingFields', ['future']),
+        containsPair('staleFields', ['alignment']),
+        isNot(contains('expectedFieldCount')),
+      ),
+    );
+  });
 
   test('nested Mix inventory guard reports count skew', () {
     expect(

@@ -92,7 +92,8 @@ class FlexBoxStyler extends MixStyler<FlexBoxStyler, FlexBoxSpec>
         BorderRadiusStyleMixin<FlexBoxStyler>,
         ShadowStyleMixin<FlexBoxStyler>,
         TransformStyleMixin<FlexBoxStyler>,
-        FlexStyleMixin<FlexBoxStyler> {
+        FlexStyleMixin<FlexBoxStyler>
+    implements StylerFieldMetadata {
   final Prop<StyleSpec<BoxSpec>>? $box;
   final Prop<StyleSpec<FlexSpec>>? $flex;
 
@@ -416,6 +417,15 @@ class FlexBoxStyler extends MixStyler<FlexBoxStyler, FlexBoxSpec>
   FlexBoxStyler flex(FlexStyler value) {
     return merge(FlexBoxStyler.create(flex: Prop.maybeMix(value)));
   }
+
+  @override
+  Set<String> get $stylerFieldNames => const {
+    'box',
+    'flex',
+    'animation',
+    'modifier',
+    'variants',
+  };
 
   /// Sets the animation configuration.
   @override

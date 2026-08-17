@@ -60,6 +60,10 @@ const _setterTypeMixSources = {
       const Spec();
     }
 
+    abstract interface class StylerFieldMetadata {
+      Set<String> get \$stylerFieldNames;
+    }
+
     abstract class Style<S extends Spec<S>> extends Mix<StyleSpec<S>> {
       final List<VariantStyle<S>>? \$variants;
       final WidgetModifierConfig? \$modifier;
@@ -146,6 +150,10 @@ const _mixStub = '''
 
   abstract class Spec<T extends Spec<T>> {
     const Spec();
+  }
+
+  abstract interface class StylerFieldMetadata {
+    Set<String> get \$stylerFieldNames;
   }
 
   abstract class Style<S extends Spec<S>> extends Mix<StyleSpec<S>> {
@@ -565,11 +573,45 @@ void main() {
         {...mixAnnotationsSources, ..._mixSources, 'mix|lib/spike.dart': input},
         outputs: {
           'mix|lib/spike.g.dart': decodedMatches(
-            contains(
-              'class TrivialStyler extends MixStyler<TrivialStyler, TrivialSpec>',
+            allOf(
+              contains(
+                'class TrivialStyler extends '
+                'MixStyler<TrivialStyler, TrivialSpec>',
+              ),
+              contains('implements StylerFieldMetadata'),
             ),
           ),
         },
+      );
+    });
+
+    test('rejects a spec field reserved for styler metadata', () async {
+      const input = '''
+        library reserved_styler_metadata;
+        import 'package:mix_annotations/mix_annotations.dart';
+        part 'reserved_styler_metadata.g.dart';
+
+        @MixableSpec()
+        final class ReservedSpec {
+          final int? stylerFieldNames;
+          const ReservedSpec({this.stylerFieldNames});
+        }
+      ''';
+
+      final errors = await _expectSpecStylerValidationError({
+        ...mixAnnotationsSources,
+        ..._mixSources,
+        'mix|lib/reserved_styler_metadata.dart': input,
+      }, inputAsset: 'mix|lib/reserved_styler_metadata.dart');
+
+      expect(
+        errors,
+        allOf(
+          contains(
+            '`stylerFieldNames` is reserved for generated Styler metadata',
+          ),
+          contains('Rename the Spec field'),
+        ),
       );
     });
 

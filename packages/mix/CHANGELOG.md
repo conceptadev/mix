@@ -1,3 +1,14 @@
+## 2.2.0-beta.5
+
+### New features
+
+- **Generated Styler field metadata:** Every generated Styler now exposes its
+  complete source-field inventory through
+  `StylerFieldMetadata.$stylerFieldNames`, allowing schema tooling to validate
+  coverage without maintaining duplicate string manifests. Handwritten and
+  previously generated Stylers do not implement this capability until they opt
+  in or are regenerated.
+
 ## 2.2.0-beta.4
 
 ### Fixes

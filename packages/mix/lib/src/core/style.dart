@@ -16,6 +16,16 @@ sealed class StyleElement {
   const StyleElement();
 }
 
+/// Field metadata exposed by Styler classes produced by Mix's generator.
+///
+/// Protocols and tooling can use this capability to inspect a Styler's complete
+/// field surface without duplicating generated field names. Handwritten Stylers
+/// can implement this interface when they want to expose the same metadata.
+abstract interface class StylerFieldMetadata {
+  /// Names of every field represented by the Styler's [Mix.props].
+  Set<String> get $stylerFieldNames;
+}
+
 /// Base class for style classes that can be resolved to specifications.
 ///
 /// Provides variant support, modifiers, and animation configuration for styled elements.

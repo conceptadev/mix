@@ -1,6 +1,6 @@
 name: mix_chart
 description: Type-safe Flutter chart widgets styled with Mix.
-version: 0.0.1-beta.1
+version: 0.0.1-beta.2
 homepage: https://github.com/btwld/mix
 repository: https://github.com/btwld/mix/tree/main/packages/mix_chart
 
@@ -12,7 +12,7 @@ dependencies:
   flutter:
     sdk: flutter
   fl_chart: ^1.2.0
-  mix: ^2.2.0-beta.0
+  mix: ^2.2.0-beta.5
   mix_annotations: ^2.2.0-beta.0
 
 dev_dependencies:
@@ -22,7 +22,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   mix_generator:
-    version: ^2.2.0-beta.0
+    version: ^2.2.0-beta.3
     path: ../mix_generator
 
 screenshots:

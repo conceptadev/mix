@@ -104,7 +104,8 @@ typedef _$ChartAreaSpecMethods = _$ChartAreaSpec; // ignore: unused_element
 // SpecStylerGenerator
 // **************************************************************************
 
-class ChartAreaStyler extends MixStyler<ChartAreaStyler, ChartAreaSpec> {
+class ChartAreaStyler extends MixStyler<ChartAreaStyler, ChartAreaSpec>
+    implements StylerFieldMetadata {
   final Prop<bool>? $show;
   final Prop<Color>? $color;
   final Prop<Gradient>? $gradient;
@@ -154,6 +155,18 @@ class ChartAreaStyler extends MixStyler<ChartAreaStyler, ChartAreaSpec> {
       ChartAreaStyler().cutoffY(value);
   factory ChartAreaStyler.applyCutoff(bool value) =>
       ChartAreaStyler().applyCutoff(value);
+
+  @override
+  Set<String> get $stylerFieldNames => const {
+    'show',
+    'color',
+    'gradient',
+    'cutoffY',
+    'applyCutoff',
+    'animation',
+    'modifier',
+    'variants',
+  };
 
   /// Sets the show.
   ChartAreaStyler show(bool value) {
