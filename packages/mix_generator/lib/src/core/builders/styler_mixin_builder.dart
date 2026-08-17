@@ -12,7 +12,7 @@ import '../models/styler_field_model.dart';
 const stylerFieldMetadataName = 'stylerFieldNames';
 
 /// Getter reserved for generated Styler metadata.
-const stylerFieldMetadataGetter = r'$stylerFieldNames';
+const stylerFieldMetadataGetter = '\$$stylerFieldMetadataName';
 
 /// Source names of the fields inherited from `Style<T>` by every Styler.
 ///

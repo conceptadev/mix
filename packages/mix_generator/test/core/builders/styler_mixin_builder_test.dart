@@ -175,17 +175,7 @@ void main() {
         final builder = StylerMixinBuilder(
           stylerName: 'BoxStyler',
           specName: 'BoxSpec',
-          fields: [
-            StylerFieldModel(
-              name: 'gap',
-              declaredName: r'$gap',
-              fieldTypeCode: 'Prop<double>?',
-              isRawList: false,
-              effectivePublicParamType: 'double',
-              generateSetter: true,
-              setterName: 'gap',
-            ),
-          ],
+          fields: const [metadataField],
           config: defaultConfig,
         );
         final code = builder.build();
