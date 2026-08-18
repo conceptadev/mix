@@ -2,12 +2,29 @@
 
 ### New features
 
+- **GridTrack.auto():** Vertical auto tracks for explicit `rows` and
+  `autoRows`. `auto` is vertical-only; columns still reject it. Existing
+  explicit fixed/`fr` layouts keep a single child layout per pass. Auto-row
+  children may be measured and then stretched.
 - **Generated Styler field metadata:** Every generated Styler now exposes its
   complete source-field inventory through
   `StylerFieldMetadata.$stylerFieldNames`, allowing schema tooling to validate
   coverage without maintaining duplicate string manifests. Handwritten and
   previously generated Stylers do not implement this capability until they opt
   in or are regenerated.
+
+### Breaking changes
+
+- **Omitted GridBox autoRows no longer throws:** Previously, children that
+  needed more rows than were declared required an explicit `autoRows` track
+  or the grid threw. Omitted `autoRows` now defaults to `GridTrack.auto()`,
+  so implicit rows size to their tallest child — both when no rows are
+  declared and when some explicit rows exist but are not enough. Fractional
+  rows still require a bounded height. Fixed tracks remain hard constraints.
+  Because the new default opts a Grid into the measure-then-stretch pass,
+  nesting compounds it: a leaf inside one auto Grid is laid out twice, and
+  inside three nested auto Grids eight times. Give inner levels fixed rows
+  once their heights are known.
 
 ## 2.2.0-beta.4
 

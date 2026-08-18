@@ -165,14 +165,14 @@ the runnable [WrapBox example](example/README.md).
 
 ### Grid Layouts
 
-`GridBox` uses fixed and fractional tracks and can adapt to the width offered by
-its own parent. Dot shorthand keeps nested track and breakpoint declarations
-compact:
+`GridBox` uses fixed and fractional columns plus vertical auto rows, and can
+adapt to the width offered by its own parent. Dot shorthand keeps nested track
+and breakpoint declarations compact. Omit `autoRows` (or set `.autoRows(.auto())`)
+when row height should follow the tallest child:
 
 ```dart
 final GridBoxStyler dashboardGrid = .equalColumns(3)
     .gap(16)
-    .autoRows(.fixed(220))
     .onConstraints(
   .maxWidth(720),
   .equalColumns(1).gap(12),

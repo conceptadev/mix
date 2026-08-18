@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:flutter/foundation.dart' show precisionErrorTolerance;
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
@@ -7,22 +9,27 @@ import 'grid_track.dart';
 import 'internal/grid_geometry.dart';
 import 'internal/grid_validation.dart';
 
-/// Computes concrete track sizes for fixed + fr tracks under a free-space axis.
+/// Computes concrete track sizes for fixed, auto, and fr tracks.
 ///
-/// Shared by live layout and dry layout so both paths return the same sizes.
+/// Auto tracks contribute [autoExtents] at the matching index, then remaining
+/// free space is shared by fractional tracks. Shared by live layout, dry
+/// layout, and the fixed/fr fast path.
 List<double> computeTrackSizes({
   required List<GridTrack> tracks,
   required double freeSpace,
   required double gap,
+  List<double>? autoExtents,
 }) {
   if (tracks.isEmpty) return const [];
 
   var fixedSum = 0.0;
   var frSum = 0.0;
-  for (final track in tracks) {
-    switch (track) {
+  for (var index = 0; index < tracks.length; index++) {
+    switch (tracks[index]) {
       case FixedGridTrack(:final size):
         fixedSum += size;
+      case AutoGridTrack():
+        fixedSum += _autoExtentAt(autoExtents, index);
       case FrGridTrack(:final fraction):
         frSum += fraction;
     }
@@ -36,12 +43,30 @@ List<double> computeTrackSizes({
   final frUnit = frSum > 0 ? remaining / frSum : 0.0;
 
   return [
-    for (final track in tracks)
-      switch (track) {
+    for (var index = 0; index < tracks.length; index++)
+      switch (tracks[index]) {
         FixedGridTrack(:final size) => size,
+        AutoGridTrack() => _autoExtentAt(autoExtents, index),
         FrGridTrack(:final fraction) => frUnit * fraction,
       },
   ];
+}
+
+double _autoExtentAt(List<double>? autoExtents, int index) {
+  if (autoExtents == null || index >= autoExtents.length) {
+    throw FlutterError.fromParts([
+      ErrorSummary('GridTrack.auto() requires a measured row extent.'),
+      ErrorDescription(
+        'Track $index is auto but no measured height was provided.',
+      ),
+      ErrorHint(
+        'Measure auto-row children at their column width before resolving '
+        'row sizes.',
+      ),
+    ]);
+  }
+
+  return autoExtents[index];
 }
 
 /// Total size along an axis for the given track sizes and gap.
@@ -102,34 +127,28 @@ class GridLayoutResult {
   });
 }
 
-/// Computes grid geometry without touching children.
+/// Computes grid geometry from tracks, gaps, and optional auto-row extents.
 ///
-/// Children are placed row-major into a matrix of [columns] × enough rows.
-/// Track sizes use only fixed/fr rules and parent constraints — no content
-/// measurement in the currently supported track model.
+/// Children are placed row-major into a matrix of [columns] × [rows].
+/// [rows] must already include implicit tracks. Callers that grow rows from
+/// [childCount] resolve that list first so live and shared layout cannot
+/// disagree. When no row is [GridTrack.auto], sizes use only fixed/fr rules
+/// and parent constraints. Auto rows consume [autoRowHeights] at the matching
+/// row index before remaining bounded height is given to fractional rows.
 ///
-/// When [childCount] is 0 and [rows] is empty, no auto rows are produced.
-/// When children exceed the explicit row capacity, [autoRows] provides the
-/// repeated track used for every additional row.
+/// When [childCount] is 0 and [rows] is empty, no automatic rows are produced.
 GridLayoutResult computeGridLayout({
   required BoxConstraints constraints,
   required List<GridTrack> columns,
   required List<GridTrack> rows,
-  GridTrack? autoRows,
   required double columnGap,
   required double rowGap,
   required int childCount,
+  List<double>? autoRowHeights,
 }) {
   assert(columns.isNotEmpty, 'Grid requires at least one column track.');
 
   final colCount = columns.length;
-  final effectiveRows = _resolveEffectiveRows(
-    constraints: constraints,
-    columnCount: colCount,
-    rows: rows,
-    autoRows: autoRows,
-    childCount: childCount,
-  );
 
   // Resolve free space: prefer max constraint when finite; else min.
   final freeWidth = constraints.hasBoundedWidth
@@ -145,9 +164,10 @@ GridLayoutResult computeGridLayout({
     gap: columnGap,
   );
   final rowSizes = computeTrackSizes(
-    tracks: effectiveRows,
+    tracks: rows,
     freeSpace: freeHeight,
     gap: rowGap,
+    autoExtents: autoRowHeights,
   );
 
   final intrinsicWidth = axisExtent(columnSizes, columnGap);
@@ -180,31 +200,18 @@ GridLayoutResult computeGridLayout({
   );
 }
 
-List<GridTrack> _resolveEffectiveRows({
+/// Expands explicit [rows] with [autoRows] until every child has a row.
+List<GridTrack> _resolveEffectiveGridRows({
   required BoxConstraints constraints,
   required int columnCount,
   required List<GridTrack> rows,
-  required GridTrack? autoRows,
+  required GridTrack autoRows,
   required int childCount,
 }) {
   final requiredRowCount = childCount == 0
       ? 0
       : ((childCount + columnCount - 1) ~/ columnCount);
   final missingRowCount = requiredRowCount - rows.length;
-  if (missingRowCount > 0 && autoRows == null) {
-    throw FlutterError.fromParts([
-      ErrorSummary('Grid auto-placement requires an autoRows track.'),
-      ErrorDescription(
-        '$childCount children across $columnCount columns require '
-        '$requiredRowCount rows, but only ${rows.length} explicit rows were '
-        'provided.',
-      ),
-      ErrorHint(
-        'Provide enough explicit rows or set autoRows to the GridTrack used '
-        'for each additional row.',
-      ),
-    ]);
-  }
   if (missingRowCount > 0 &&
       autoRows is FrGridTrack &&
       !constraints.hasBoundedHeight) {
@@ -217,26 +224,25 @@ List<GridTrack> _resolveEffectiveRows({
         'but autoRows is $autoRows.',
       ),
       ErrorHint(
-        'Use GridTrack.fixed for autoRows or place the grid under a bounded '
-        'height.',
+        'Use GridTrack.fixed or GridTrack.auto() for autoRows, or place the '
+        'grid under a bounded height.',
       ),
     ]);
   }
 
-  final effectiveRows = <GridTrack>[
+  return [
     ...rows,
-    if (missingRowCount > 0) ...List.filled(missingRowCount, autoRows!),
+    if (missingRowCount > 0) ...List.filled(missingRowCount, autoRows),
   ];
-
-  return effectiveRows;
 }
 
 /// Multi-child render object for [GridBoxSpec].
 ///
-/// Supports fixed + fr tracks, row/column gaps, row-major auto-placement, and
-/// render-time constraint branch selection via [GridBoxSpec]. Fixed-track
-/// overflow is diagnosed on both axes and optionally clipped by the spec.
-/// Excludes spans, named areas, content-sized tracks, RTL, and baseline.
+/// Supports fixed, fractional, and vertical auto tracks, row/column gaps,
+/// row-major auto-placement, and render-time constraint branch selection via
+/// [GridBoxSpec]. Fixed-track overflow is diagnosed on both axes and
+/// optionally clipped by the spec. Excludes spans, named areas, content-sized
+/// columns, RTL, and baseline.
 class RenderMixGrid extends RenderBox
     with
         ContainerRenderObjectMixin<RenderBox, MultiChildLayoutParentData>,
@@ -252,24 +258,96 @@ class RenderMixGrid extends RenderBox
     addAll(children);
   }
 
-  GridLayoutResult _compute(BoxConstraints constraints) {
+  GridLayoutResult _compute(
+    BoxConstraints constraints, {
+    required ChildLayouter measureChild,
+  }) {
     final geometry = _spec.resolveGeometryForConstraints(constraints);
+    final effectiveRows = _resolveEffectiveGridRows(
+      constraints: constraints,
+      columnCount: geometry.columns.length,
+      rows: geometry.rows,
+      autoRows: geometry.autoRows,
+      childCount: childCount,
+    );
+    final autoRowHeights = _hasAutoTrack(effectiveRows)
+        ? _measureAutoRowHeights(
+            constraints: constraints,
+            geometry: geometry,
+            effectiveRows: effectiveRows,
+            measureChild: measureChild,
+          )
+        : null;
 
     return computeGridLayout(
       constraints: constraints,
       columns: geometry.columns,
-      rows: geometry.rows,
-      autoRows: geometry.autoRows,
+      rows: effectiveRows,
       columnGap: geometry.columnGap,
       rowGap: geometry.rowGap,
       childCount: childCount,
+      autoRowHeights: autoRowHeights,
     );
   }
 
-  /// Intrinsic extent for fixed-only tracks after branch selection.
+  List<double> _measureAutoRowHeights({
+    required BoxConstraints constraints,
+    required GridResolvedGeometry geometry,
+    required List<GridTrack> effectiveRows,
+    required ChildLayouter measureChild,
+  }) {
+    final freeWidth = constraints.hasBoundedWidth
+        ? constraints.maxWidth
+        : constraints.minWidth;
+    final columnSizes = computeTrackSizes(
+      tracks: geometry.columns,
+      freeSpace: freeWidth,
+      gap: geometry.columnGap,
+    );
+    final heights = List<double>.filled(effectiveRows.length, 0);
+    final columnCount = geometry.columns.length;
+
+    var index = 0;
+    var child = firstChild;
+    while (child != null) {
+      final row = index ~/ columnCount;
+      if (row < effectiveRows.length && effectiveRows[row] is AutoGridTrack) {
+        final column = index % columnCount;
+        final measured = _measureAutoRowChild(
+          child: child,
+          row: row,
+          constraints: BoxConstraints.tightFor(width: columnSizes[column]),
+          measureChild: measureChild,
+        );
+        heights[row] = math.max(heights[row], measured.height);
+      }
+      child = (child.parentData! as MultiChildLayoutParentData).nextSibling;
+      index++;
+    }
+
+    return heights;
+  }
+
+  Size _measureAutoRowChild({
+    required RenderBox child,
+    required int row,
+    required BoxConstraints constraints,
+    required ChildLayouter measureChild,
+  }) {
+    final measured = measureChild(child, constraints);
+    if (!measured.height.isFinite) {
+      throw _autoRowNeedsFiniteHeight(row, 'height ${measured.height}');
+    }
+
+    return measured;
+  }
+
+  /// Intrinsic extent after branch selection.
   ///
   /// Fractional tracks on the queried axis throw the same actionable
-  /// [FlutterError] as unbounded layout (no LayoutBuilder cascade).
+  /// [FlutterError] as unbounded layout (no LayoutBuilder cascade). Vertical
+  /// auto rows use each child's max intrinsic height at the resolved column
+  /// width.
   double _computeIntrinsicExtent({
     required Axis axis,
     required double crossExtent,
@@ -285,7 +363,7 @@ class RenderMixGrid extends RenderBox
     final geometry = _spec.resolveGeometryForConstraints(constraints);
     final effectiveTracks = axis == .horizontal
         ? geometry.columns
-        : _resolveEffectiveRows(
+        : _resolveEffectiveGridRows(
             constraints: constraints,
             columnCount: geometry.columns.length,
             rows: geometry.rows,
@@ -299,11 +377,24 @@ class RenderMixGrid extends RenderBox
       constraints: constraints,
     );
 
+    if (axis == .vertical && _hasAutoTrack(effectiveTracks)) {
+      return _computeAutoRowIntrinsicHeight(
+        geometry: geometry,
+        effectiveRows: effectiveTracks,
+        width: crossExtent,
+      );
+    }
+
     var sum = 0.0;
     for (final track in effectiveTracks) {
       switch (track) {
         case FixedGridTrack(:final size):
           sum += size;
+        // An auto track never reaches here — the branch above returns first,
+        // and columns reject auto during validation. The case exists only to
+        // satisfy the sealed exhaustiveness check. A fractional track has no
+        // intrinsic contribution because its size comes from free space.
+        case AutoGridTrack():
         case FrGridTrack():
           break;
       }
@@ -314,6 +405,50 @@ class RenderMixGrid extends RenderBox
     }
 
     return sum;
+  }
+
+  double _computeAutoRowIntrinsicHeight({
+    required GridResolvedGeometry geometry,
+    required List<GridTrack> effectiveRows,
+    required double width,
+  }) {
+    final columnSizes = computeTrackSizes(
+      tracks: geometry.columns,
+      freeSpace: width.isFinite ? width : 0.0,
+      gap: geometry.columnGap,
+    );
+    final columnCount = geometry.columns.length;
+    final autoRowHeights = List<double>.filled(effectiveRows.length, 0);
+
+    // Mirrors _measureAutoRowHeights so the intrinsic answer and the laid-out
+    // size are derived the same way; only the per-child measurement differs.
+    var index = 0;
+    var child = firstChild;
+    while (child != null) {
+      final row = index ~/ columnCount;
+      if (row < effectiveRows.length && effectiveRows[row] is AutoGridTrack) {
+        final column = index % columnCount;
+        autoRowHeights[row] = math.max(
+          autoRowHeights[row],
+          child.getMaxIntrinsicHeight(columnSizes[column]),
+        );
+      }
+      child = (child.parentData! as MultiChildLayoutParentData).nextSibling;
+      index++;
+    }
+
+    final rowExtents = <double>[
+      for (var row = 0; row < effectiveRows.length; row++)
+        switch (effectiveRows[row]) {
+          FixedGridTrack(:final size) => size,
+          AutoGridTrack() => autoRowHeights[row],
+          // Fractional rows draw from free space, which an intrinsic query
+          // has none of.
+          FrGridTrack() => 0.0,
+        },
+    ];
+
+    return axisExtent(rowExtents, geometry.rowGap);
   }
 
   bool get _hasVisualOverflow =>
@@ -362,12 +497,18 @@ class RenderMixGrid extends RenderBox
 
   @override
   Size computeDryLayout(BoxConstraints constraints) {
-    return _compute(constraints).size;
+    return _compute(
+      constraints,
+      measureChild: ChildLayoutHelper.dryLayoutChild,
+    ).size;
   }
 
   @override
   void performLayout() {
-    final result = _compute(constraints);
+    final result = _compute(
+      constraints,
+      measureChild: ChildLayoutHelper.layoutChild,
+    );
     size = result.size;
     _contentSize = result.contentSize;
     assert(result.cells.length == childCount);
@@ -427,8 +568,8 @@ class RenderMixGrid extends RenderBox
             'Clip.none deliberately leaves overflow visible.',
           ),
           ErrorHint(
-            'Content-sized tracks and implicit content-sized rows are not '
-            'supported by GridBox.',
+            'Use GridTrack.auto() for unknown content height. Fixed tracks are '
+            'hard constraints and do not grow to fit overflowing children.',
           ),
         ],
       );
@@ -454,6 +595,26 @@ class RenderMixGrid extends RenderBox
     _clipRectLayer.layer = null;
     super.dispose();
   }
+}
+
+bool _hasAutoTrack(Iterable<GridTrack> tracks) =>
+    tracks.any((track) => track is AutoGridTrack);
+
+FlutterError _autoRowNeedsFiniteHeight(int row, Object cause) {
+  return FlutterError.fromParts([
+    ErrorSummary('Grid auto rows require children with a finite height.'),
+    ErrorDescription(
+      'A child in row $row could not determine a finite height under '
+      'unbounded vertical constraints.',
+    ),
+    ErrorDescription('$cause'),
+    ErrorHint(
+      'Auto rows measure children at their column width with a loose '
+      'height. Use finite-height content such as text or intrinsic boxes. '
+      'Do not place Expanded, Spacer, or fractional-height layout inside '
+      'an auto row in a vertical scroll view.',
+    ),
+  ]);
 }
 
 /// Internal widget host for [RenderMixGrid].

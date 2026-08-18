@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart' show FlutterError;
 import 'package:flutter/widgets.dart' show Clip;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
@@ -40,6 +41,35 @@ void main() {
     expect(
       constrained.$constraintBranches!.single.breakpoint,
       const Breakpoint.maxHeight(480),
+    );
+  });
+
+  test('GridTrack.auto is a fieldless row track', () {
+    expect(const GridTrack.auto(), const AutoGridTrack());
+    expect(const GridTrack.auto(), const GridTrack.auto());
+    expect(const GridTrack.auto().toString(), 'GridTrack.auto()');
+    expect(
+      const GridBoxStyler().autoRows(.auto()).$autoRows,
+      const GridTrack.auto(),
+    );
+    expect(const GridBoxStyler().rows([.auto()]).$rows, const [
+      GridTrack.auto(),
+    ]);
+    expect(
+      () => GridBoxSpec(columns: const [GridTrack.auto()]),
+      throwsA(
+        isA<FlutterError>()
+            .having(
+              (error) => error.toString(),
+              'message',
+              contains('vertical-only'),
+            )
+            .having(
+              (error) => error.toString(),
+              'message',
+              contains('rows or autoRows'),
+            ),
+      ),
     );
   });
 

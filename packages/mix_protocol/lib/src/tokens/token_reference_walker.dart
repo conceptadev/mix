@@ -316,6 +316,8 @@ final class _TokenReferenceWalker {
         visit(size);
       case FrGridTrack(:final fraction):
         visit(fraction);
+      case AutoGridTrack():
+        return;
       case null:
         return;
     }

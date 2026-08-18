@@ -172,7 +172,7 @@ local constraint branches carry a `Breakpoint` plus a geometry-only patch:
     { "type": "fixed", "size": 220 },
     { "type": "fr", "fraction": 2 }
   ],
-  "autoRows": { "type": "fixed", "size": 96 },
+  "autoRows": { "type": "auto" },
   "columnGap": 16,
   "rowGap": 12,
   "constraintBranches": [

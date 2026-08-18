@@ -28,6 +28,12 @@ void main() {
     await tester.tap(find.text('Compact'));
     await tester.pumpAndSettle();
     expect(tester.getSize(find.byKey(const Key('catalog-grid'))).width, 334);
+    expect(
+      tester.getSize(find.byKey(const Key('catalog-card-1'))).height,
+      greaterThan(
+        tester.getSize(find.byKey(const Key('catalog-card-0'))).height,
+      ),
+    );
 
     await tester.tap(find.text('Media gallery'));
     await tester.pumpAndSettle();
@@ -37,6 +43,40 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.byKey(const Key('animated-grid')), findsOneWidget);
   });
+
+  testWidgets(
+    'catalog rows follow unequal card content instead of one height',
+    (tester) async {
+      await tester.binding.setSurfaceSize(const Size(1200, 900));
+      addTearDown(() => tester.binding.setSurfaceSize(null));
+
+      await tester.pumpWidget(
+        const MaterialApp(
+          home: Material(
+            child: Center(
+              child: SizedBox(width: 1120, child: CatalogGridPreview()),
+            ),
+          ),
+        ),
+      );
+
+      final rowZero = tester
+          .getSize(find.byKey(const Key('catalog-card-0')))
+          .height;
+      final rowOne = tester
+          .getSize(find.byKey(const Key('catalog-card-3')))
+          .height;
+      expect(rowZero, isNot(rowOne));
+      expect(
+        tester.getSize(find.byKey(const Key('catalog-card-1'))).height,
+        rowZero,
+      );
+      expect(
+        tester.getSize(find.byKey(const Key('catalog-card-4'))).height,
+        rowOne,
+      );
+    },
+  );
 
   testWidgets('animation example interpolates tracks, rows, and gaps', (
     tester,

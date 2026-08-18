@@ -13,7 +13,7 @@ SchemaObject<GridBoxStyler> gridBoxStylerSchema({
 }) {
   final columns = directField<GridBoxStyler, List<GridTrack>>(
     'columns',
-    Ack.list(_gridTrackCodec()).nonEmpty(),
+    Ack.list(_gridTrackCodec(allowAuto: false)).nonEmpty(),
     (value) => value.$columns,
     schemaSemantics: const SchemaFieldSemantics(
       doubleTokenPaths: [
@@ -24,7 +24,7 @@ SchemaObject<GridBoxStyler> gridBoxStylerSchema({
   );
   final rows = directField<GridBoxStyler, List<GridTrack>>(
     'rows',
-    Ack.list(_gridTrackCodec()),
+    Ack.list(_gridTrackCodec(allowAuto: true)),
     (value) => value.$rows,
     schemaSemantics: const SchemaFieldSemantics(
       doubleTokenPaths: [
@@ -35,7 +35,7 @@ SchemaObject<GridBoxStyler> gridBoxStylerSchema({
   );
   final autoRows = directField<GridBoxStyler, GridTrack>(
     'autoRows',
-    _gridTrackCodec(),
+    _gridTrackCodec(allowAuto: true),
     (value) => value.$autoRows,
     schemaSemantics: const SchemaFieldSemantics(
       doubleTokenPaths: [
@@ -106,7 +106,7 @@ SchemaObject<GridBoxStyler> gridBoxStylerSchema({
   );
 }
 
-AckSchema<JsonMap, GridTrack> _gridTrackCodec() {
+AckSchema<JsonMap, GridTrack> _gridTrackCodec({required bool allowAuto}) {
   return Ack.discriminated<GridTrack>(
     discriminatorKey: 'type',
     schemas: {
@@ -138,6 +138,20 @@ AckSchema<JsonMap, GridTrack> _gridTrackCodec() {
               return {'fraction': track.fraction};
             },
           ),
+      if (allowAuto)
+        gridTrackTypeAuto: Ack.object({}).codec<GridTrack>(
+          decode: (_) => const GridTrack.auto(),
+          encode: (track) {
+            if (track is! AutoGridTrack) {
+              throw UnsupportedEncodeValueError(
+                track,
+                'Expected AutoGridTrack.',
+              );
+            }
+
+            return const <String, Object?>{};
+          },
+        ),
     },
   );
 }
@@ -185,9 +199,11 @@ AckSchema<JsonMap, Breakpoint> _gridBreakpointCodec() {
 
 AckSchema<JsonMap, GridLayoutPatch> _gridLayoutPatchCodec() {
   return Ack.object({
-        'columns': Ack.list(_gridTrackCodec()).nonEmpty().optional(),
-        'rows': Ack.list(_gridTrackCodec()).optional(),
-        'autoRows': _gridTrackCodec().optional(),
+        'columns': Ack.list(
+          _gridTrackCodec(allowAuto: false),
+        ).nonEmpty().optional(),
+        'rows': Ack.list(_gridTrackCodec(allowAuto: true)).optional(),
+        'autoRows': _gridTrackCodec(allowAuto: true).optional(),
         'columnGap': nonNegativeDoubleTokenCodec().optional(),
         'rowGap': nonNegativeDoubleTokenCodec().optional(),
       })

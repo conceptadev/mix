@@ -8,7 +8,7 @@ void main() {
   test('core schema export has a byte-for-byte v1 fingerprint', () {
     final encoded = jsonEncode(mixProtocol.exportStyleJsonSchema());
 
-    expect(_fnv1a64(utf8.encode(encoded)), -531352329917363246);
+    expect(_fnv1a64(utf8.encode(encoded)), -7566329063571446550);
   });
 
   test('schema export structurally describes every built-in branch', () {
@@ -264,6 +264,20 @@ void main() {
       isTrue,
       reason: 'grid_box tracks accept numeric tokens',
     );
+    expect(
+      _matchesJsonSchema(_object(gridProperties['rows']), [
+        {'type': 'auto'},
+      ], definitions),
+      isTrue,
+      reason: 'grid_box rows accept fieldless auto tracks',
+    );
+    expect(
+      _matchesJsonSchema(_object(gridProperties['autoRows']), {
+        'type': 'auto',
+      }, definitions),
+      isTrue,
+      reason: 'grid_box autoRows accepts fieldless auto tracks',
+    );
     for (final field in ['columnGap', 'rowGap']) {
       expect(
         _matchesJsonSchema(_object(gridProperties[field]), {
@@ -289,6 +303,21 @@ void main() {
       ], definitions),
       isTrue,
       reason: 'grid_box constraint patches accept numeric tokens',
+    );
+    expect(
+      _matchesJsonSchema(_object(gridProperties['constraintBranches']), [
+        {
+          'breakpoint': {'maxWidth': 600},
+          'patch': {
+            'autoRows': {'type': 'auto'},
+            'rows': [
+              {'type': 'auto'},
+            ],
+          },
+        },
+      ], definitions),
+      isTrue,
+      reason: 'grid_box constraint patches accept fieldless auto tracks',
     );
     expect(
       _matchesJsonSchema(

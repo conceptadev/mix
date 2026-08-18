@@ -40,8 +40,7 @@ void main() {
       final result = computeGridLayout(
         constraints: constraints,
         columns: columns,
-        rows: rows,
-        autoRows: autoRows,
+        rows: effectiveRows,
         columnGap: columnGap,
         rowGap: rowGap,
         childCount: childCount,
@@ -104,6 +103,82 @@ void main() {
       final drySize = render.getDryLayout(constraints);
       render.layout(constraints);
       expect(render.size, drySize, reason: reason);
+      render.removeAll();
+      render.dispose();
+      for (final child in children) {
+        child.dispose();
+      }
+    }
+  });
+
+  test('seeded auto rows size to the per-row child maximum', () {
+    const seed = 0x4155544F;
+    const iterations = 200;
+    final random = Random(seed);
+
+    for (var iteration = 0; iteration < iterations; iteration++) {
+      final columnCount = 1 + random.nextInt(4);
+      final childCount = 1 + random.nextInt(12);
+      final requiredRows = (childCount + columnCount - 1) ~/ columnCount;
+      final childHeights = List<double>.generate(
+        childCount,
+        (_) => 8 + random.nextInt(80).toDouble(),
+      );
+      final expectedRows = List<double>.filled(requiredRows, 0);
+      for (var index = 0; index < childCount; index++) {
+        final row = index ~/ columnCount;
+        expectedRows[row] = max(expectedRows[row], childHeights[index]);
+      }
+      final rowGap = random.nextInt(17).toDouble();
+      final width = 80.0 + random.nextInt(401);
+      final constraints = BoxConstraints(maxWidth: width);
+      final reason = 'seed=$seed iteration=$iteration';
+
+      final result = computeGridLayout(
+        constraints: constraints,
+        columns: List<GridTrack>.filled(columnCount, const GridTrack.fr(1)),
+        rows: List<GridTrack>.filled(requiredRows, const GridTrack.auto()),
+        columnGap: 0,
+        rowGap: rowGap,
+        childCount: childCount,
+        autoRowHeights: expectedRows,
+      );
+
+      expect(result.rowSizes, expectedRows, reason: reason);
+      expect(
+        result.contentSize.height,
+        closeTo(_extent(expectedRows, rowGap), 1e-8),
+        reason: reason,
+      );
+      expect(result.cells, hasLength(childCount), reason: reason);
+      for (var index = 0; index < result.cells.length; index++) {
+        final cell = result.cells[index];
+        expect(cell.row, index ~/ columnCount, reason: reason);
+        expect(
+          cell.offset.dy,
+          closeTo(_origin(result.rowSizes, rowGap, cell.row), 1e-8),
+          reason: reason,
+        );
+        expect(cell.size.height, expectedRows[cell.row], reason: reason);
+      }
+
+      final children = <RenderBox>[
+        for (final height in childHeights)
+          RenderConstrainedBox(
+            additionalConstraints: BoxConstraints.tightFor(height: height),
+          ),
+      ];
+      final render = RenderMixGrid(
+        spec: GridBoxSpec(
+          columns: List<GridTrack>.filled(columnCount, const GridTrack.fr(1)),
+          rowGap: rowGap,
+        ),
+        children: children,
+      );
+      final drySize = render.getDryLayout(constraints);
+      render.layout(constraints);
+      expect(render.size, drySize, reason: reason);
+      expect(render.size.height, result.contentSize.height, reason: reason);
       render.removeAll();
       render.dispose();
       for (final child in children) {

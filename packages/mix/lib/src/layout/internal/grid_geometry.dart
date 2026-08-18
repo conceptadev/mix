@@ -7,11 +7,14 @@ import '../grid_track.dart';
 import 'grid_validation.dart';
 
 /// Geometry after branch selection and before track sizing and placement.
+///
+/// Omitted [autoRows] becomes [GridTrack.auto] here. Styler and patch fields
+/// stay nullable so a missing value still means “no override.”
 @immutable
 final class GridResolvedGeometry {
   final List<GridTrack> columns;
   final List<GridTrack> rows;
-  final GridTrack? autoRows;
+  final GridTrack autoRows;
   final double columnGap;
   final double rowGap;
 
@@ -61,7 +64,7 @@ extension GridBoxSpecGeometry on GridBoxSpec {
     return GridResolvedGeometry(
       columns: resolvedColumns,
       rows: resolvedRows,
-      autoRows: resolvedAutoRows,
+      autoRows: resolvedAutoRows ?? const GridTrack.auto(),
       columnGap: resolvedColumnGap,
       rowGap: resolvedRowGap,
     );

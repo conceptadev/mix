@@ -444,50 +444,58 @@ class CatalogGridPreview extends StatelessWidget {
   Widget build(BuildContext context) {
     final GridBoxStyler style = .equalColumns(3)
         .gap(16)
-        .autoRows(.fixed(220))
         .onConstraints(.maxWidth(760), .equalColumns(2).gap(12))
-        .onConstraints(
-          .maxWidth(520),
-          .equalColumns(1).gap(10).autoRows(.fixed(190)),
-        );
+        .onConstraints(.maxWidth(520), .equalColumns(1).gap(10));
 
     return GridBox(
       key: const Key('catalog-grid'),
       style: style,
       children: const [
         _ProductCard(
+          key: Key('catalog-card-0'),
           'Canvas tote',
           r'$48',
+          'A roomy everyday bag.',
           Icons.shopping_bag_rounded,
           Color(0xFFE9E6FF),
         ),
         _ProductCard(
+          key: Key('catalog-card-1'),
           'Desk lamp',
           r'$72',
+          'Adjustable arm and a warm-dim LED. Built for late editing sessions when the rest of the room has gone dark.',
           Icons.light_rounded,
           Color(0xFFFFE9D8),
         ),
         _ProductCard(
+          key: Key('catalog-card-2'),
           'Travel mug',
           r'$32',
+          'Keeps coffee hot through a standup.',
           Icons.coffee_rounded,
           Color(0xFFDDF4EE),
         ),
         _ProductCard(
+          key: Key('catalog-card-3'),
           'Studio clock',
           r'$64',
+          'Quiet sweep, high-contrast face.',
           Icons.schedule_rounded,
           Color(0xFFDDEBFA),
         ),
         _ProductCard(
+          key: Key('catalog-card-4'),
           'Wool throw',
           r'$96',
+          'Heavyweight merino for the couch.',
           Icons.bed_rounded,
           Color(0xFFF6E2EB),
         ),
         _ProductCard(
+          key: Key('catalog-card-5'),
           'Plant stand',
           r'$58',
+          'Three-tier oak riser.',
           Icons.eco_rounded,
           Color(0xFFE4F2D8),
         ),
@@ -497,10 +505,18 @@ class CatalogGridPreview extends StatelessWidget {
 }
 
 class _ProductCard extends StatelessWidget {
-  const _ProductCard(this.name, this.price, this.icon, this.tint);
+  const _ProductCard(
+    this.name,
+    this.price,
+    this.blurb,
+    this.icon,
+    this.tint, {
+    super.key,
+  });
 
   final String name;
   final String price;
+  final String blurb;
   final IconData icon;
   final Color tint;
 
@@ -508,6 +524,7 @@ class _ProductCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return _CardSurface(
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
@@ -519,15 +536,15 @@ class _ProductCard extends StatelessWidget {
             ),
             child: Icon(icon, color: const Color(0xFF3C3D4A)),
           ),
-          const Spacer(),
+          const SizedBox(height: 16),
           Text(
             name,
             style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
           ),
           const SizedBox(height: 4),
-          const Text(
-            'Essential collection',
-            style: TextStyle(color: Color(0xFF77798A), fontSize: 12),
+          Text(
+            blurb,
+            style: const TextStyle(color: Color(0xFF77798A), fontSize: 12),
           ),
           const SizedBox(height: 12),
           Row(

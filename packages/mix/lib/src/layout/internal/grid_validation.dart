@@ -8,6 +8,7 @@ String gridTracksToString(List<GridTrack> tracks) {
       switch (track) {
         FixedGridTrack(:final size) => 'GridTrack.fixed($size)',
         FrGridTrack(:final fraction) => 'GridTrack.fr($fraction)',
+        AutoGridTrack() => 'GridTrack.auto()',
       },
   ].join(', ');
 }
@@ -38,7 +39,7 @@ void rejectFractionalGridTracksOnUnboundedAxis({
       '• Replace fractional tracks with GridTrack.fixed on this axis.\n'
       '• Place the grid under a bounded constraint '
       '(SizedBox, Expanded in a bounded Flex, etc.).\n'
-      '• Content-sized tracks are not supported by GridBox.',
+      '• Use GridTrack.auto() for content-sized rows (not columns).',
     ),
   ]);
 }

@@ -12,6 +12,7 @@ const schemaTypeGridBox = 'grid_box';
 
 const gridTrackTypeFixed = 'fixed';
 const gridTrackTypeFraction = 'fr';
+const gridTrackTypeAuto = 'auto';
 
 const modifierTypeAlign = 'align';
 const modifierTypeAspectRatio = 'aspect_ratio';

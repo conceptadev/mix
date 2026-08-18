@@ -2,8 +2,20 @@ import 'package:flutter/foundation.dart';
 
 /// How a grid track is sized.
 ///
-/// Grid currently supports fixed and fractional tracks. Content-sized tracks
+/// Rows accept fixed, fractional, and content-sized [GridTrack.auto] tracks.
+/// Columns accept only fixed and fractional tracks; content-sized columns
 /// are intentionally outside this API.
+///
+/// One type covers both axes, so "auto is rows-only" is a runtime rule
+/// (see `_validateTracks` in `grid_box_spec.dart`) rather than a compile-time
+/// one. Splitting this into row and column hierarchies was considered and
+/// rejected: it would not remove the equivalent check in the wire codec —
+/// JSON is untyped, so the schema must reject `auto` under `columns`
+/// regardless of the Dart type — and the factories below have static type
+/// `GridTrack`, so axis-specific lists would force duplicate factories or
+/// give up the dot-shorthand (`.columns([.fr(1)])`) this API is built around.
+/// The trade is one runtime throw against those two costs; do not "simplify"
+/// this into a split without re-checking both.
 @immutable
 sealed class GridTrack {
   /// Creates the base value for a concrete Grid track.
@@ -18,11 +30,16 @@ sealed class GridTrack {
 
   /// A track with [fraction] shares of the remaining free space.
   ///
-  /// Remaining space is calculated after fixed tracks and gaps. For example,
-  /// `fr(2)` receives twice as much remaining space as `fr(1)`. [fraction]
-  /// must resolve to a finite value greater than zero, and the track's axis
-  /// must be bounded.
+  /// Remaining space is calculated after fixed tracks, auto tracks, and gaps.
+  /// For example, `fr(2)` receives twice as much remaining space as `fr(1)`.
+  /// [fraction] must resolve to a finite value greater than zero, and the
+  /// track's axis must be bounded.
   const factory GridTrack.fr(double fraction) = FrGridTrack;
+
+  /// A vertical track sized to the tallest child assigned to that row.
+  ///
+  /// Valid only in `rows` and `autoRows`. Column tracks reject this kind.
+  const factory GridTrack.auto() = AutoGridTrack;
 }
 
 /// Track with a fixed size in logical pixels.
@@ -70,4 +87,21 @@ final class FrGridTrack extends GridTrack {
 
   @override
   int get hashCode => fraction.hashCode;
+}
+
+/// Vertical track sized to the tallest assigned child's natural height.
+@immutable
+final class AutoGridTrack extends GridTrack {
+  /// Creates a content-sized row track.
+  const AutoGridTrack();
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) || other is AutoGridTrack;
+
+  @override
+  String toString() => 'GridTrack.auto()';
+
+  @override
+  int get hashCode => runtimeType.hashCode;
 }

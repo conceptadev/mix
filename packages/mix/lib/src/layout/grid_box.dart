@@ -39,6 +39,9 @@ class GridBoxStyler extends MixStyler<GridBoxStyler, GridBoxSpec>
   final List<GridTrack>? $rows;
 
   /// Unresolved track repeated for rows required beyond [$rows].
+  ///
+  /// `null` means no override. Resolved geometry defaults omitted automatic
+  /// rows to [GridTrack.auto].
   final GridTrack? $autoRows;
 
   /// Unresolved logical-pixel gap between columns.
@@ -95,8 +98,10 @@ class GridBoxStyler extends MixStyler<GridBoxStyler, GridBoxSpec>
   /// Creates a style that repeats [autoRows] for undeclared rows.
   ///
   /// Children are placed row-major. Each row needed beyond [rows] uses this
-  /// track. A fixed track works on an unbounded vertical axis, such as a
-  /// vertical scroll view; a fractional track requires bounded height.
+  /// track. Omitted [autoRows] defaults to [GridTrack.auto] on the complete
+  /// resolved geometry, so implicit rows size to their tallest child. A
+  /// fixed track is a hard height; a fractional track requires bounded
+  /// height.
   factory GridBoxStyler.autoRows(GridTrack autoRows) =>
       GridBoxStyler(autoRows: autoRows);
 
@@ -143,6 +148,9 @@ class GridBoxStyler extends MixStyler<GridBoxStyler, GridBoxSpec>
       merge(GridBoxStyler(rows: value));
 
   /// Sets the track repeated for each row required beyond explicit [rows].
+  ///
+  /// Use [GridTrack.auto] for unknown content height. Omit this method to
+  /// get the same default on implicit rows.
   GridBoxStyler autoRows(GridTrack value) =>
       merge(GridBoxStyler(autoRows: value));
 
@@ -184,11 +192,12 @@ class GridBoxStyler extends MixStyler<GridBoxStyler, GridBoxSpec>
 
   /// Adds implicit animation to compatible Grid geometry changes.
   ///
-  /// Fixed sizes, fractional weights, row tracks, `autoRows`, and gaps
-  /// interpolate when their topology is compatible. Track-count or track-kind
-  /// changes, clipping, and constraint patches snap at the midpoint. A local
-  /// [onConstraints] branch switch remains immediate because it occurs during
-  /// layout without producing a new resolved style.
+  /// Fixed sizes, fractional weights, row tracks, compatible `autoRows`, and
+  /// gaps interpolate when their topology is compatible. Auto-to-auto stays
+  /// constant. Track-count or track-kind changes, clipping, and constraint
+  /// patches snap at the midpoint. A local [onConstraints] branch switch
+  /// remains immediate because it occurs during layout without producing a
+  /// new resolved style.
   @override
   GridBoxStyler animate(AnimationConfig value) =>
       merge(GridBoxStyler(animation: value));
@@ -310,6 +319,7 @@ GridTrack _resolveGridTrack(BuildContext context, GridTrack track) {
     FrGridTrack(:final fraction) => GridTrack.fr(
       _resolveGridDouble(context, fraction),
     ),
+    AutoGridTrack() => track,
   };
 }
 

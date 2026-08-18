@@ -41,7 +41,7 @@ case in the current API:
 // CORRECT — the declared type supplies shorthand context
 final GridBoxStyler cards = .equalColumns(3)
     .gap(16)
-    .autoRows(.fixed(220));
+    .autoRows(.auto());
 
 // WRONG — no contextual type for the leading shorthand
 final cards = .equalColumns(3);
