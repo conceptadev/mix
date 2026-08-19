@@ -84,11 +84,29 @@ jobs:
           cache-dependency-path: packages/mix_winds/tool/visual-comparison/package-lock.json
       - name: Install Node dependencies
         run: npm ci
+      # Skips the download entirely on a hit. The browser only changes when the
+      # pinned Playwright version does, so the lockfile is the right key.
+      - name: Cache Playwright browsers
+        id: playwright-cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: >-
+            playwright-${{ runner.os }}-${{
+              hashFiles('packages/mix_winds/tool/visual-comparison/package-lock.json')
+            }}
       - name: Install Chromium
-        # This download wedged for 20+ minutes on PR #1032 while every other
-        # step passed. A step bound fails on the actual culprit instead of
-        # letting the job time out with the cause buried.
+        # Deliberately no --with-deps. That flag shells out to apt-get, and the
+        # Azure Ubuntu mirror on GitHub's runners intermittently hangs there:
+        # it stalled this job for 21 minutes on PR #1032 and again to the
+        # 10-minute bound on PR #1031, while every other step passed. The
+        # ubuntu-24.04 image already ships Chromium's shared libraries, and
+        # Playwright is pinned well past 1.45, which is where 24.04 support
+        # landed. If a future image drops a library, this fails fast with a
+        # missing-library error naming it -- add just that package rather than
+        # putting all of apt back on the critical path.
+        if: steps.playwright-cache.outputs.cache-hit != 'true'
         timeout-minutes: 10
-        run: npx playwright install --with-deps chromium
+        run: npx playwright install chromium
       - name: Run showcase tool tests
         run: npm test
