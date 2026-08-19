@@ -116,6 +116,12 @@ class GridLayoutResult {
   final Size contentSize;
   final List<double> columnSizes;
   final List<double> rowSizes;
+
+  /// Row tracks after implicit rows were resolved, parallel to [rowSizes].
+  ///
+  /// [RenderMixGrid.performLayout] needs the track *kind*, not just the size,
+  /// to decide which children may keep a tight cell constraint.
+  final List<GridTrack> rowTracks;
   final List<GridCellGeometry> cells;
 
   const GridLayoutResult({
@@ -123,6 +129,7 @@ class GridLayoutResult {
     required this.contentSize,
     required this.columnSizes,
     required this.rowSizes,
+    required this.rowTracks,
     required this.cells,
   });
 }
@@ -196,6 +203,7 @@ GridLayoutResult computeGridLayout({
     contentSize: Size(intrinsicWidth, intrinsicHeight),
     columnSizes: columnSizes,
     rowSizes: rowSizes,
+    rowTracks: rows,
     cells: cells,
   );
 }
@@ -313,12 +321,13 @@ class RenderMixGrid extends RenderBox
       final row = index ~/ columnCount;
       if (row < effectiveRows.length && effectiveRows[row] is AutoGridTrack) {
         final column = index % columnCount;
-        final measured = _measureAutoRowChild(
-          row: row,
-          constraints: BoxConstraints.tightFor(width: columnSizes[column]),
-          measureChild: measureChild,
-          child: child,
+        final measured = measureChild(
+          child,
+          BoxConstraints.tightFor(width: columnSizes[column]),
         );
+        if (!measured.height.isFinite) {
+          throw _autoRowNeedsFiniteHeight(row, 'height ${measured.height}');
+        }
         heights[row] = math.max(heights[row], measured.height);
       }
       child = (child.parentData! as MultiChildLayoutParentData).nextSibling;
@@ -326,20 +335,6 @@ class RenderMixGrid extends RenderBox
     }
 
     return heights;
-  }
-
-  Size _measureAutoRowChild({
-    required int row,
-    required BoxConstraints constraints,
-    required ChildLayouter measureChild,
-    required RenderBox child,
-  }) {
-    final measured = measureChild(child, constraints);
-    if (!measured.height.isFinite) {
-      throw _autoRowNeedsFiniteHeight(row, 'height ${measured.height}');
-    }
-
-    return measured;
   }
 
   /// Intrinsic extent after branch selection.
@@ -518,7 +513,26 @@ class RenderMixGrid extends RenderBox
     while (child != null) {
       final parentData = child.parentData! as MultiChildLayoutParentData;
       final cell = result.cells[index];
-      child.layout(BoxConstraints.tight(cell.size), parentUsesSize: false);
+      final isAutoRow = result.rowTracks[cell.row] is AutoGridTrack;
+      // An auto row's height is derived from this child, so the child must
+      // stay inside the grid's relayout boundary. A fully tight constraint
+      // would make the child its own boundary (see RenderObject.layout), so a
+      // later child-only change would never reach the grid and the row would
+      // keep the height measured on the first pass. An unbounded max height
+      // keeps the constraint loose enough to propagate, while the min height
+      // still stretches shorter siblings to fill the row. Fixed and fr rows
+      // keep the tight cell: their height never depends on the child, and
+      // tightness is the documented hard-constraint contract.
+      child.layout(
+        isAutoRow
+            ? BoxConstraints(
+                minWidth: cell.size.width,
+                maxWidth: cell.size.width,
+                minHeight: cell.size.height,
+              )
+            : BoxConstraints.tight(cell.size),
+        parentUsesSize: isAutoRow,
+      );
       parentData.offset = cell.offset;
       child = parentData.nextSibling;
       index++;

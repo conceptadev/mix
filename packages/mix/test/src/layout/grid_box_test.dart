@@ -2218,6 +2218,110 @@ void main() {
         );
       },
     );
+
+    testWidgets('an auto row re-measures when only the child changes', (
+      tester,
+    ) async {
+      // A tight cell constraint would make the child its own relayout
+      // boundary, so a child-only change would never reach the grid and the
+      // row would keep its first measured height.
+      Widget build(double height) => MaterialApp(
+        home: Align(
+          alignment: Alignment.topLeft,
+          child: SizedBox(
+            width: 100,
+            child: GridBox(
+              style: const GridBoxStyler(columns: [GridTrack.fixed(100)]),
+              children: [SizedBox(key: const Key('a'), height: height)],
+            ),
+          ),
+        ),
+      );
+
+      await tester.pumpWidget(build(30));
+      expect(tester.getSize(find.byKey(const Key('a'))), const Size(100, 30));
+      expect(
+        tester.renderObject<RenderMixGrid>(find.byType(MixGrid)).size.height,
+        30,
+      );
+
+      await tester.pumpWidget(build(80));
+      expect(tester.getSize(find.byKey(const Key('a'))), const Size(100, 80));
+      expect(
+        tester.renderObject<RenderMixGrid>(find.byType(MixGrid)).size.height,
+        80,
+      );
+
+      await tester.pumpWidget(build(15));
+      expect(tester.getSize(find.byKey(const Key('a'))), const Size(100, 15));
+      expect(
+        tester.renderObject<RenderMixGrid>(find.byType(MixGrid)).size.height,
+        15,
+      );
+    });
+
+    testWidgets('an auto-row child still stretches to fill the taller row', (
+      tester,
+    ) async {
+      // The auto-row cell is loose on max height so the child stays inside the
+      // grid's relayout boundary. Min height must still stretch the child, and
+      // the child must distribute that stretched extent internally.
+      await tester.pumpWidget(
+        const MaterialApp(
+          home: Align(
+            alignment: Alignment.topLeft,
+            child: SizedBox(
+              width: 200,
+              child: GridBox(
+                style: GridBoxStyler(
+                  columns: [GridTrack.fixed(100), GridTrack.fixed(100)],
+                ),
+                children: [
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      SizedBox(key: Key('top'), height: 10, width: 10),
+                      SizedBox(key: Key('bottom'), height: 10, width: 10),
+                    ],
+                  ),
+                  SizedBox(key: Key('tall'), height: 90),
+                ],
+              ),
+            ),
+          ),
+        ),
+      );
+
+      expect(tester.getSize(find.byKey(const Key('tall'))).height, 90);
+      expect(tester.getTopLeft(find.byKey(const Key('top'))).dy, 0);
+      expect(tester.getTopLeft(find.byKey(const Key('bottom'))).dy, 80);
+    });
+
+    testWidgets('a fixed row still hard-constrains a changing child', (
+      tester,
+    ) async {
+      Widget build(double height) => MaterialApp(
+        home: Align(
+          alignment: Alignment.topLeft,
+          child: SizedBox(
+            width: 100,
+            child: GridBox(
+              style: const GridBoxStyler(
+                columns: [GridTrack.fixed(100)],
+                rows: [GridTrack.fixed(40)],
+              ),
+              children: [SizedBox(key: const Key('a'), height: height)],
+            ),
+          ),
+        ),
+      );
+
+      await tester.pumpWidget(build(10));
+      expect(tester.getSize(find.byKey(const Key('a'))), const Size(100, 40));
+
+      await tester.pumpWidget(build(90));
+      expect(tester.getSize(find.byKey(const Key('a'))), const Size(100, 40));
+    });
   });
 }
 
