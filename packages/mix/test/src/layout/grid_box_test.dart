@@ -2334,6 +2334,44 @@ void main() {
       );
     });
 
+    testWidgets('an auto row grows when a child resizes itself via setState', (
+      tester,
+    ) async {
+      // The test above drives the height from a parent rebuild, which reaches
+      // the grid through the widget tree regardless of the constraint. This
+      // one changes height entirely below the grid, with GridBoxSpec untouched
+      // so MixGrid.updateRenderObject no-ops. The only path back to the grid is
+      // markNeedsLayout propagating past the child, which a tight cell would
+      // have stopped by making the child its own relayout boundary. Models the
+      // real case: an async image or an expanding tile inside a scroll view.
+      final key = GlobalKey<_ResizableState>();
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Align(
+            alignment: Alignment.topLeft,
+            child: SizedBox(
+              width: 100,
+              child: GridBox(
+                style: const GridBoxStyler(columns: [GridTrack.fixed(100)]),
+                children: [_Resizable(key: key, initialHeight: 30)],
+              ),
+            ),
+          ),
+        ),
+      );
+
+      final grid = tester.renderObject<RenderMixGrid>(find.byType(MixGrid));
+      expect(grid.size.height, 30);
+
+      key.currentState!.setHeight(90);
+      await tester.pump();
+      expect(grid.size.height, 90, reason: 'row must follow the child upward');
+
+      key.currentState!.setHeight(20);
+      await tester.pump();
+      expect(grid.size.height, 20, reason: 'and back down');
+    });
+
     testWidgets('an auto-row child still stretches to fill the taller row', (
       tester,
     ) async {
@@ -2464,6 +2502,25 @@ class _RenderLayoutCallCounter extends RenderBox {
     performLayoutCount++;
     size = computeDryLayout(constraints);
   }
+}
+
+/// Changes its own height from below the grid, without any parent rebuild.
+class _Resizable extends StatefulWidget {
+  const _Resizable({super.key, required this.initialHeight});
+
+  final double initialHeight;
+
+  @override
+  State<_Resizable> createState() => _ResizableState();
+}
+
+class _ResizableState extends State<_Resizable> {
+  late double _height = widget.initialHeight;
+
+  void setHeight(double value) => setState(() => _height = value);
+
+  @override
+  Widget build(BuildContext context) => SizedBox(height: _height);
 }
 
 class _ThrowingLayoutBox extends LeafRenderObjectWidget {
