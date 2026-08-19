@@ -13,7 +13,7 @@ on:
 jobs:
   publish_mix:
     if: startsWith(github.ref_name, 'mix-v')
-    uses: btwld/dart-actions/.github/workflows/publish.yml@main
+    uses: conceptadev/dart-actions/.github/workflows/publish.yml@main
     with:
       packages_folder_path: "packages"
       packages: |
@@ -24,7 +24,7 @@ jobs:
 
   publish_mix_annotations:
     if: startsWith(github.ref_name, 'mix_annotations-v')
-    uses: btwld/dart-actions/.github/workflows/publish.yml@main
+    uses: conceptadev/dart-actions/.github/workflows/publish.yml@main
     with:
       packages_folder_path: "packages"
       packages: |
@@ -35,7 +35,7 @@ jobs:
 
   publish_mix_generator:
     if: startsWith(github.ref_name, 'mix_generator-v')
-    uses: btwld/dart-actions/.github/workflows/publish.yml@main
+    uses: conceptadev/dart-actions/.github/workflows/publish.yml@main
     with:
       packages_folder_path: "packages"
       packages: |
@@ -46,7 +46,7 @@ jobs:
 
   publish_mix_lint:
     if: startsWith(github.ref_name, 'mix_lint-v')
-    uses: btwld/dart-actions/.github/workflows/publish.yml@main
+    uses: conceptadev/dart-actions/.github/workflows/publish.yml@main
     with:
       packages_folder_path: "packages"
       packages: |
@@ -57,7 +57,7 @@ jobs:
 
   publish_mix_winds:
     if: startsWith(github.ref_name, 'mix_winds-v')
-    uses: btwld/dart-actions/.github/workflows/publish.yml@main
+    uses: conceptadev/dart-actions/.github/workflows/publish.yml@main
     with:
       packages_folder_path: "packages"
       packages: |
@@ -68,7 +68,7 @@ jobs:
 
   publish_mix_chart:
     if: startsWith(github.ref_name, 'mix_chart-v')
-    uses: btwld/dart-actions/.github/workflows/publish.yml@main
+    uses: conceptadev/dart-actions/.github/workflows/publish.yml@main
     with:
       packages_folder_path: "packages"
       packages: |
