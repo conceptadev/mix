@@ -90,6 +90,11 @@ Future<InventorySnapshot> collectMixInventory({
   final mixSourceRoot = Directory(
     '${repositoryRoot.path}/packages/mix/lib/src',
   );
+  // Engine bases (Variant, NamedVariant, ContextVariantBuilder, ...) are
+  // declared in mix_core and re-exported by mix, so the inventory scans both.
+  final mixCoreSourceRoot = Directory(
+    '${repositoryRoot.path}/packages/mix_core/lib/src',
+  );
   final schemaSourceRoot = Directory(
     '${repositoryRoot.path}/packages/mix_protocol/lib/src/schema',
   );
@@ -98,7 +103,10 @@ Future<InventorySnapshot> collectMixInventory({
     throw StateError('Missing mix source root: ${mixSourceRoot.path}');
   }
 
-  final mixFiles = _dartFiles(mixSourceRoot);
+  final mixFiles = [
+    ..._dartFiles(mixSourceRoot),
+    if (mixCoreSourceRoot.existsSync()) ..._dartFiles(mixCoreSourceRoot),
+  ];
   final enumDeclarations = _collectEnumDeclarations(mixFiles);
   final classInheritance = _collectClassInheritance(mixFiles);
   final trackedClasses = _TrackedClassSets.fromInheritance(classInheritance);
@@ -304,8 +312,14 @@ Map<String, Set<String>> _collectClassInheritance(List<File> files) {
     ).unit;
     for (final declaration in unit.declarations) {
       if (declaration is ClassDeclaration) {
-        inheritanceByClass[_declarationName(declaration.namePart.toSource())] =
-            _directSupertypeNames(declaration);
+        // Merge on collision: the platform binding and the mix_core base can
+        // share a name (mix's ContextVariant extends core.ContextVariant), and
+        // both edges are needed to reach the tracked root.
+        inheritanceByClass.update(
+          _declarationName(declaration.namePart.toSource()),
+          (existing) => existing..addAll(_directSupertypeNames(declaration)),
+          ifAbsent: () => _directSupertypeNames(declaration),
+        );
       }
     }
   }
@@ -698,7 +712,11 @@ Set<String> _directSupertypeNames(ClassDeclaration node) {
   };
 }
 
-String _declarationName(String source) => source.split('<').first.trim();
+// Strips type arguments and any import prefix (`core.ContextVariant<C>` →
+// `ContextVariant`): engine bases live in package:mix_core and are referenced
+// through a prefix from package:mix.
+String _declarationName(String source) =>
+    source.split('<').first.trim().split('.').last;
 
 Iterable<String> _typeNames(String source) {
   return RegExp(

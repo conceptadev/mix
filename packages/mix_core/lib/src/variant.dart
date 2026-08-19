@@ -57,6 +57,16 @@ class ContextVariant<C> extends Variant {
   final String key;
   const ContextVariant(this.key, this.shouldApply);
 
+  /// Interaction states that must be tracked for this variant to be
+  /// evaluated.
+  ///
+  /// The style fold applies variants that declare dependencies after those
+  /// that don't, and platforms use the declarations to install state
+  /// tracking (package:mix narrows the element type to `WidgetState`).
+  /// Subclasses that read interaction state — directly, or by delegating to
+  /// another variant the way [NotVariant] does — must override this getter.
+  Set<Object> get stateDependencies => const {};
+
   /// Check if this variant should be active for the given context
   bool when(C context) {
     return shouldApply(context);
@@ -75,7 +85,55 @@ final class NotVariant<C> extends ContextVariant<C> {
       identical(this, other) || other is NotVariant && other.inner == inner;
 
   @override
+  Set<Object> get stateDependencies => inner.stateDependencies;
+
+  @override
   int get hashCode => inner.hashCode;
+}
+
+/// Variant that dynamically builds a style based on the resolution context.
+@immutable
+class ContextVariantBuilder<C, St> extends Variant {
+  /// Function that builds a style from context
+  final St Function(C) fn;
+
+  const ContextVariantBuilder(this.fn);
+
+  /// The builder function viewed as an untyped [Function].
+  ///
+  /// Reading [fn] through a raw `ContextVariantBuilder` receiver implicitly
+  /// casts it to `dynamic Function(dynamic)`, which fails at runtime for any
+  /// concrete context type (parameter contravariance). Identity comparisons
+  /// (equality, merge keys) must use this getter instead.
+  Function get functionKey => fn;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is ContextVariantBuilder && other.functionKey == functionKey;
+
+  @override
+  int get hashCode => fn.hashCode;
+
+  @override
+  String get key => fn.hashCode.toString();
+
+  /// Build a style from context
+  St build(C context) => fn(context);
+}
+
+/// Interface for design system components that adapt their styling
+/// based on active variants and user modifications.
+abstract class StyleVariation<C, St> {
+  /// The named variant this StyleVariation handles
+  NamedVariant get variantType;
+
+  /// Combines user modifications with variant styling and contextual adaptations.
+  St styleBuilder(
+    covariant St style,
+    Set<NamedVariant> activeVariants,
+    C context,
+  );
 }
 
 // Helper functions for cleaner variant checking

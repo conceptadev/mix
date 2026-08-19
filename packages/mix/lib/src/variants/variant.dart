@@ -1,5 +1,11 @@
+// The variant base types (Variant, NamedVariant, EnumVariant, the helper
+// predicates) live in package:mix_core. This file binds ContextVariant to
+// Flutter's BuildContext and provides the concrete Flutter context variants
+// (media queries, widget states, platform checks).
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:mix_core/mix_core.dart' as core;
 
 import '../core/breakpoint.dart';
 import '../core/providers/focus_highlight_mode_provider.dart';
@@ -10,49 +16,19 @@ import '../core/style.dart';
 import '../theme/tokens/token_refs.dart';
 import '../theme/tokens/value_tokens.dart';
 
-/// Base class for all variant types.
-@immutable
-sealed class Variant {
-  const Variant();
-
-  /// Factory method to create a named variant
-  static NamedVariant named(String name) => .new(name);
-
-  /// Human-readable label used for diagnostics.
-  ///
-  /// This label is not guaranteed to be unique across variant kinds.
-  String get key;
-}
-
-/// Manual variants applied when explicitly requested.
-@immutable
-class NamedVariant extends Variant {
-  final String name;
-
-  const NamedVariant(this.name);
-
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) || other is NamedVariant && other.name == name;
-
-  @override
-  String toString() => 'NamedVariant($name)';
-
-  @override
-  String get key => name;
-
-  @override
-  int get hashCode => name.hashCode;
-}
+export 'package:mix_core/mix_core.dart'
+    show
+        EnumVariant,
+        NamedVariant,
+        Variant,
+        hasAllVariants,
+        hasAnyVariant,
+        hasVariant;
 
 /// Variants that automatically apply based on context conditions.
 @immutable
-class ContextVariant extends Variant {
-  final bool Function(BuildContext) shouldApply;
-
-  @override
-  final String key;
-  const ContextVariant(this.key, this.shouldApply);
+class ContextVariant extends core.ContextVariant<BuildContext> {
+  const ContextVariant(super.key, super.shouldApply);
 
   static WidgetStateVariant widgetState(WidgetState state) {
     return WidgetStateVariant(state);
@@ -133,10 +109,11 @@ class ContextVariant extends Variant {
   /// before the enclosing variant activates.
   Set<WidgetState> get widgetStateDependencies => const {};
 
-  /// Check if this variant should be active for the given context
-  bool when(BuildContext context) {
-    return shouldApply(context);
-  }
+  /// The engine reads state dependencies through this platform-neutral
+  /// getter; mix code uses the [WidgetState]-typed
+  /// [widgetStateDependencies] instead.
+  @override
+  Set<Object> get stateDependencies => widgetStateDependencies;
 }
 
 /// Context variant that applies for a media-query orientation.
@@ -327,81 +304,21 @@ String _breakpointKey(Breakpoint breakpoint) {
 }
 
 /// Variant that dynamically builds a Style based on build context.
-@immutable
-class ContextVariantBuilder<S extends Style<Object?>> extends Variant {
-  /// Function that builds a Style from context
-  final S Function(BuildContext) fn;
-
-  const ContextVariantBuilder(this.fn);
-
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is ContextVariantBuilder && other.fn == fn;
-
-  @override
-  int get hashCode => fn.hashCode;
-
-  @override
-  String get key => fn.hashCode.toString();
-
-  /// Build a Style from context
-  S build(BuildContext context) => fn(context);
-}
-
-// Helper functions for cleaner variant checking
-bool hasVariant(List<NamedVariant> activeVariants, NamedVariant variant) =>
-    activeVariants.contains(variant);
-
-bool hasAnyVariant(
-  List<NamedVariant> activeVariants,
-  List<NamedVariant> variants,
-) => variants.any((variant) => activeVariants.contains(variant));
-
-bool hasAllVariants(
-  List<NamedVariant> activeVariants,
-  List<NamedVariant> variants,
-) => variants.every((variant) => activeVariants.contains(variant));
+typedef ContextVariantBuilder<S extends Style<Object?>> =
+    core.ContextVariantBuilder<BuildContext, S>;
 
 /// Interface for design system components that adapt their styling
 /// based on active variants and user modifications.
-abstract class StyleVariation<S extends Spec<S>> {
-  /// The named variant this StyleVariation handles
-  NamedVariant get variantType;
-
-  /// Combines user modifications with variant styling and contextual adaptations.
-  Style<S> styleBuilder(
-    covariant Style<S> style,
-    Set<NamedVariant> activeVariants,
-    BuildContext context,
-  );
-}
-
-/// Mixin for enums that act as [NamedVariant]s.
-///
-/// Apply this mixin to an enum to use its values as named variants:
-/// ```dart
-/// enum ButtonVariant with EnumVariant { primary, secondary, outlined }
-/// ```
-mixin EnumVariant on Enum implements NamedVariant {
-  @override
-  String get key => _EnumName(this).name;
-
-  @override
-  String get name => _EnumName(this).name;
-}
-
-extension type const _EnumName(Enum _value) implements Enum {
-  String get name => _value.name;
-}
+typedef StyleVariation<S extends Spec<S>> =
+    core.StyleVariation<BuildContext, Style<S>>;
 
 // Common named variants
-const primary = NamedVariant('primary');
-const secondary = NamedVariant('secondary');
-const outlined = NamedVariant('outlined');
-const solid = NamedVariant('solid');
-const danger = NamedVariant('danger');
+const primary = core.NamedVariant('primary');
+const secondary = core.NamedVariant('secondary');
+const outlined = core.NamedVariant('outlined');
+const solid = core.NamedVariant('solid');
+const danger = core.NamedVariant('danger');
 
 // Size variants
-const small = NamedVariant('small');
-const large = NamedVariant('large');
+const small = core.NamedVariant('small');
+const large = core.NamedVariant('large');

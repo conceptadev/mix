@@ -15,5 +15,6 @@ export 'src/ops.dart';
 export 'src/prop.dart';
 export 'src/prop_source.dart';
 export 'src/spec.dart';
+export 'src/style.dart';
 export 'src/token.dart';
 export 'src/variant.dart';

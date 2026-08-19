@@ -4,6 +4,7 @@ import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart' as r;
 import 'package:flutter/widgets.dart' as w;
+import 'package:mix_core/mix_core.dart' as core;
 import 'package:mix_core/mix_core.dart' show DeepCollectionEquality, Mixable;
 
 import '../animation/animation_config.dart';
@@ -11,6 +12,7 @@ import '../modifiers/widget_modifier_config.dart';
 import 'prop.dart';
 import 'spec.dart';
 import 'style.dart';
+import 'style_spec.dart';
 import 'widget_modifier.dart';
 
 // Prop-level operations (directive merge/apply, context-aware Mix merging)
@@ -67,23 +69,10 @@ class MixOps {
     List<VariantStyle<S>>? current,
     List<VariantStyle<S>>? other,
   ) {
-    if (current == null && other == null) return null;
-    if (current == null) return List.of(other!);
-    if (other == null) return List.of(current);
-
-    final Map<Object, VariantStyle<S>> merged = {};
-
-    for (final variant in current) {
-      merged[variant.mergeKey] = variant;
-    }
-
-    for (final variant in other) {
-      final key = variant.mergeKey;
-      final existing = merged[key];
-      merged[key] = existing != null ? existing.merge(variant) : variant;
-    }
-
-    return merged.values.toList();
+    return core.mergeVariantLists<BuildContext, StyleSpec<S>, Style<S>>(
+      current,
+      other,
+    );
   }
 
   static List<T>? _mergeList<T>(
