@@ -128,8 +128,8 @@ final class GridBoxSpec extends Spec<GridBoxSpec> with Diagnosticable {
 
   /// Track repeated for each row required beyond [rows].
   ///
-  /// `null` means no override. Resolved geometry defaults omitted automatic
-  /// rows to [GridTrack.auto].
+  /// `null` means no override, in which case implicit rows use
+  /// [GridTrack.auto].
   final GridTrack? autoRows;
 
   /// Logical-pixel gap between adjacent columns.

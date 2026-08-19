@@ -4,18 +4,16 @@ import 'package:flutter/foundation.dart';
 ///
 /// Rows accept fixed, fractional, and content-sized [GridTrack.auto] tracks.
 /// Columns accept only fixed and fractional tracks; content-sized columns
-/// are intentionally outside this API.
-///
-/// One type covers both axes, so "auto is rows-only" is a runtime rule
-/// (see `_validateTracks` in `grid_box_spec.dart`) rather than a compile-time
-/// one. Splitting this into row and column hierarchies was considered and
-/// rejected: it would not remove the equivalent check in the wire codec —
-/// JSON is untyped, so the schema must reject `auto` under `columns`
-/// regardless of the Dart type — and the factories below have static type
-/// `GridTrack`, so axis-specific lists would force duplicate factories or
-/// give up the dot-shorthand (`.columns([.fr(1)])`) this API is built around.
-/// The trade is one runtime throw against those two costs; do not "simplify"
-/// this into a split without re-checking both.
+/// are intentionally outside this API. Because one type covers both axes,
+/// "auto is rows-only" is enforced at runtime rather than by the type system.
+// Design note, deliberately not part of the published API docs: splitting this
+// into row and column hierarchies was considered and rejected. It would not
+// remove the equivalent check in the wire codec — JSON is untyped, so the
+// schema must reject `auto` under `columns` regardless of the Dart type — and
+// the factories below have static type `GridTrack`, so axis-specific lists
+// would force duplicate factories or give up the dot-shorthand
+// (`.columns([.fr(1)])`) this API is built around. The trade is one runtime
+// throw against those two costs; do not split without re-checking both.
 @immutable
 sealed class GridTrack {
   /// Creates the base value for a concrete Grid track.

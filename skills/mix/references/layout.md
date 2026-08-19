@@ -239,8 +239,9 @@ final GridBoxStyler animatedGrid = .columns([
 
 Keep track lists the same length and keep each positional track kind compatible
 (`fixed` with `fixed`, `fr` with `fr`, `auto` with `auto`) for continuous
-interpolation. Compatible rows, `autoRows`, and gaps interpolate too. Track-count or track-kind changes,
-clipping, and constraint-patch lists switch at the midpoint. A live
+interpolation. Compatible rows, `autoRows`, and gaps interpolate too.
+Track-count or track-kind changes, clipping, and constraint-patch lists
+switch at the midpoint. A live
 `onConstraints` branch change remains immediate because selection happens
 during layout rather than creating a new animation target.
 

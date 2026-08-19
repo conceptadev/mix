@@ -19,9 +19,9 @@ GridBox(style: style, children: cards);
 ```
 
 `GridTrack.fixed(size)` keeps its logical-pixel size and is a hard constraint:
-children in a fixed row are stretched or clipped to that height. `GridTrack.fr(fraction)`
-receives that fraction of the free space left after fixed tracks, auto tracks,
-and gaps. For example, with 300 pixels of remaining space, `[.fr(2), .fr(1)]`
+children in a fixed row are stretched or clipped to that height.
+`GridTrack.fr(fraction)` receives that fraction of the free space left after
+fixed tracks, auto tracks, and gaps. For example, with 300 pixels of remaining space, `[.fr(2), .fr(1)]`
 produces tracks of 200 and 100 pixels. Fractional tracks require a bounded
 parent extent on their axis. `GridTrack.auto()` is vertical-only: the row
 sizes to its tallest child's natural height at the resolved column width.

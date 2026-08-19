@@ -9,7 +9,7 @@ import 'grid_validation.dart';
 /// Geometry after branch selection and before track sizing and placement.
 ///
 /// Omitted [autoRows] becomes [GridTrack.auto] here. Styler and patch fields
-/// stay nullable so a missing value still means “no override.”
+/// stay nullable so a missing value still means "no override".
 @immutable
 final class GridResolvedGeometry {
   final List<GridTrack> columns;

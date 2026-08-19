@@ -326,7 +326,7 @@ class RenderMixGrid extends RenderBox
           BoxConstraints.tightFor(width: columnSizes[column]),
         );
         if (!measured.height.isFinite) {
-          throw _autoRowNeedsFiniteHeight(row, 'height ${measured.height}');
+          throw _autoRowNeedsFiniteHeight(row, measured.height);
         }
         heights[row] = math.max(heights[row], measured.height);
       }
@@ -614,14 +614,14 @@ class RenderMixGrid extends RenderBox
 bool _hasAutoTrack(Iterable<GridTrack> tracks) =>
     tracks.any((track) => track is AutoGridTrack);
 
-FlutterError _autoRowNeedsFiniteHeight(int row, Object cause) {
+FlutterError _autoRowNeedsFiniteHeight(int row, double measuredHeight) {
   return FlutterError.fromParts([
     ErrorSummary('Grid auto rows require children with a finite height.'),
     ErrorDescription(
       'A child in row $row could not determine a finite height under '
       'unbounded vertical constraints.',
     ),
-    ErrorDescription('$cause'),
+    ErrorDescription('Measured height: $measuredHeight'),
     ErrorHint(
       'Auto rows measure children at their column width with a loose '
       'height. Use finite-height content such as text or intrinsic boxes. '

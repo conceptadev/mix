@@ -40,8 +40,8 @@ class GridBoxStyler extends MixStyler<GridBoxStyler, GridBoxSpec>
 
   /// Unresolved track repeated for rows required beyond [$rows].
   ///
-  /// `null` means no override. Resolved geometry defaults omitted automatic
-  /// rows to [GridTrack.auto].
+  /// `null` means no override, in which case implicit rows use
+  /// [GridTrack.auto].
   final GridTrack? $autoRows;
 
   /// Unresolved logical-pixel gap between columns.
@@ -98,10 +98,9 @@ class GridBoxStyler extends MixStyler<GridBoxStyler, GridBoxSpec>
   /// Creates a style that repeats [autoRows] for undeclared rows.
   ///
   /// Children are placed row-major. Each row needed beyond [rows] uses this
-  /// track. Omitted [autoRows] defaults to [GridTrack.auto] on the complete
-  /// resolved geometry, so implicit rows size to their tallest child. A
-  /// fixed track is a hard height; a fractional track requires bounded
-  /// height.
+  /// track. Omitting it leaves implicit rows on [GridTrack.auto], so they
+  /// size to their tallest child. A fixed track is a hard height; a
+  /// fractional track requires bounded height.
   factory GridBoxStyler.autoRows(GridTrack autoRows) =>
       GridBoxStyler(autoRows: autoRows);
 
