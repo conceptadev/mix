@@ -131,6 +131,56 @@ boundary.
 gives downstream platforms first-class typed contexts. Prototype it on
 `Prop` + `MixToken` first (Phase 3 spike) before committing everywhere.
 
+### Verdict from the BuildContext API inventory (spike, DONE)
+
+Do we need a `BuildContext` *abstraction* — an interface enumerating the APIs
+the engine needs? **No.** A full inventory of every context dereference in the
+engine files (`prop.dart`, `style.dart`, `mix_element.dart`, `mix_token.dart`,
+`helpers.dart`) shows the engine only ever does four things with the context:
+
+1. `token.resolve(context)` — delegated to `MixToken` (platform implements)
+2. `variant.when(context)` / `variant.build(context)` — delegated to
+   `ContextVariant` (platform implements)
+3. `mix.resolve(context)` / `style.build(context)` — recursion, pure
+   pass-through
+4. `context.getInheritedWidgetOfExactType<StyleProvider>()` — only in
+   `Style.of`/`Style.maybeOf`, a widget-tree feature that stays Flutter-side
+
+So the context is *opaque to the engine*: no interface is needed, just an
+uninterpreted type parameter `C` plus the two platform-implemented hooks
+(token resolve, variant predicate). The "which APIs do we need" question
+dissolves — the answer is "none; the platforms own all context APIs".
+
+This is validated in code: `packages/mix_core` exists as a working spike —
+the genericized engine (`Prop<C,V>`, `PropSource`, `MixToken<C,T>`,
+`Directive`, `ContextVariant<C>`, converter registry, `PropOps`, `Equatable`,
+`Spec`, `Breakpoint`) with a fake terminal platform bound in
+`test/terminal_poc_test.dart` (13 tests: merge order, token resolution, Mix
+accumulation, converters, directives, nested `Buildable`, variants) and a
+purity gate in `test/purity_test.dart`. `dart analyze` clean, all tests pass,
+zero Flutter in the dependency graph.
+
+Spike learnings to carry into Phase 3:
+
+- **Two new core interfaces replace hardcoded couplings**: `Buildable<C,V>`
+  (replaces the `mergedMix is Style` check in `Prop.resolveProp`; mix's
+  `Style` will implement it) and `ContextMergeable<C,T>` (replaces the
+  hardcoded `DecorationMix`/`ShapeBorderMix` cases in `PropOps.mergeMixes`;
+  those types opt in).
+- **Static-method inference through the alias**: `TermProp.value(x)` infers
+  `C` from downward inference (declared/expected type) but not from arguments
+  alone; bare call sites may need explicit type arguments. Mitigation for
+  mix: bind via a thin subclass (`class Prop<V> extends core.Prop<BuildContext, V>`)
+  or keep single-type-param static facades in mix — which mix needs anyway
+  for token-ref sentinel detection (next point).
+- **Token-ref sentinel detection moved out of core `Prop.value`**:
+  `getTokenFromValue` inspects sentinel types that implement Flutter value
+  interfaces, so detection belongs in mix's `Prop.value` facade before
+  delegating to core.
+- **Converter registry became per-context-type**
+  (`MixConverterRegistry.instanceOf<C>()`) with a settable lazy `initializer`
+  replacing the hardcoded `initializeMixConverters()` call.
+
 ## Target layout
 
 ```
