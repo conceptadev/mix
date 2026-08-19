@@ -1,3 +1,21 @@
+## Unreleased
+
+### Changes
+
+- **Engine extracted to `mix_core`:** The platform-neutral styling engine
+  (`Prop`, `Mix`, `MixToken`, `Directive`, variants, the `Style` variant
+  fold, converter registry, modifier ordering, token-table algebra) now
+  lives in the new pure-Dart `mix_core` package, which `mix` depends on and
+  binds to Flutter. The `mix` public API — imports, class names, fluent
+  stylers, generated code — is unchanged.
+- `Variant` is no longer `sealed` (it is the shared base in `mix_core`);
+  exhaustive switches over `Variant` need a default case.
+- Resolving a `Prop` with no sources now throws `StateError` instead of
+  `FlutterError`.
+- `MixConverterRegistry` is now a static accessor for the `mix_core`
+  registry instance bound to `BuildContext`; `MixConverterRegistry.instance`
+  keeps working. Its unused `clearCache()` was removed.
+
 ## 2.2.0-beta.5
 
 ### New features
