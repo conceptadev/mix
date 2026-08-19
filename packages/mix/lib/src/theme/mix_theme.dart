@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:mix_core/mix_core.dart' as core;
 
 import '../core/breakpoint.dart';
 import 'material/material_theme.dart';
@@ -253,22 +254,7 @@ class MixScope extends InheritedModel<String> {
   /// `$primary()`, still use Mix's existing token-reference support and are
   /// limited to the same supported value types.
   T getToken<T>(MixToken<T> token, BuildContext context) {
-    final value = _tokens?[token];
-    if (value == null) {
-      throw StateError('Token "${token.name}" not found in scope');
-    }
-
-    if (value is T Function(BuildContext)) {
-      return value(context);
-    }
-
-    if (value is T) {
-      return value as T;
-    }
-
-    throw StateError(
-      'Token "${token.name}" resolved to ${value.runtimeType}, expected $T',
-    );
+    return core.TokenStore<BuildContext>(_tokens).getToken(token, context);
   }
 
   /// Returns a new [MixScope] by merging this scope with [other].
@@ -276,9 +262,10 @@ class MixScope extends InheritedModel<String> {
   /// Token maps are combined with [other] taking precedence; [other]'s
   /// [orderOfModifiers], [key], and [child] win when provided.
   MixScope merge(MixScope other) {
-    final mergedTokens = _tokens != null || other._tokens != null
-        ? <MixToken, Object>{...?_tokens, ...?other._tokens}
-        : null;
+    final mergedTokens = core.TokenStore<BuildContext>(_tokens)
+        .merge(core.TokenStore(other._tokens))
+        .tokens
+        ?.cast<MixToken, Object>();
 
     return MixScope._(
       key: other.key,

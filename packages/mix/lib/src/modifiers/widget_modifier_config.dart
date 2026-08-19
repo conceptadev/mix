@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+import 'package:mix_core/mix_core.dart' as core;
 
 import '../core/style.dart';
 import '../core/widget_modifier.dart';
@@ -332,14 +333,11 @@ final class WidgetModifierConfig with Equatable {
     Map<Object, ModifierMix> acc,
     Iterable<ModifierMix> list,
   ) {
-    for (final m in list) {
-      final key = m.mergeKey;
-      if (key == ResetModifierMix().mergeKey) {
-        acc.clear();
-        continue;
-      }
-      acc[key] = acc[key]?.merge(m) ?? m;
-    }
+    core.mergeKeyedWithReset<ModifierMix>(
+      acc,
+      list,
+      resetKey: ResetModifierMix().mergeKey,
+    );
   }
 
   WidgetModifierConfig translate({required double x, required double y}) {
@@ -358,30 +356,11 @@ final class WidgetModifierConfig with Equatable {
   /// Orders modifiers according to the specified order or default order.
   @visibleForTesting
   List<WidgetModifier> reorderModifiers(List<WidgetModifier> modifiers) {
-    if (modifiers.isEmpty) return modifiers;
-
-    final orderOfModifiers = {
-      // Prioritize the order of modifiers provided by the user.
-      ...?$orderOfModifiers,
-      // Add the default order of modifiers.
-      ..._defaultOrder,
-      // Add any remaining modifiers that were not included in the order.
-      ...modifiers.map((e) => e.runtimeType),
-    }.toList();
-
-    final orderedSpecs = <WidgetModifier>[];
-
-    for (final modifierType in orderOfModifiers) {
-      // Find and add modifiers matching this type
-      final modifier = modifiers
-          .where((e) => e.runtimeType == modifierType)
-          .firstOrNull;
-      if (modifier != null) {
-        orderedSpecs.add(modifier);
-      }
-    }
-
-    return orderedSpecs;
+    return core.reorderByType<WidgetModifier>(
+      modifiers,
+      typeOrder: $orderOfModifiers,
+      defaultOrder: _defaultOrder,
+    );
   }
 
   WidgetModifierConfig shaderMask({
