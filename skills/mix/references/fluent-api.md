@@ -153,7 +153,7 @@ selection. Prefer an explicitly typed factory initializer:
 ```dart
 final GridBoxStyler grid = .equalColumns(3)
     .gap(16)
-    .autoRows(.fixed(220));
+    .autoRows(.auto());
 ```
 
 Use `columns`, `equalColumns`, `rows`, `autoRows`, `gap`, `columnGap`,

@@ -24,7 +24,6 @@ rather than the viewport:
 ```dart
 final GridBoxStyler cardGrid = .equalColumns(3)
     .gap(16)
-    .autoRows(.fixed(220))
     .onConstraints(
   .maxWidth(760),
   .equalColumns(2).gap(12),
@@ -45,7 +44,8 @@ columns to one.
   <img src="test/goldens/grid_dashboard_compact.png" alt="Compact GridBox dashboard" width="24%">
 </p>
 
-The same track model handles repeated product cards and a denser media gallery:
+The card catalog omits `autoRows` so implicit rows size to unequal copy. The
+media gallery keeps fixed automatic rows for a dense, even tile height:
 
 <p>
   <img src="test/goldens/grid_catalog_wide.png" alt="Wide GridBox card catalog" width="66%">

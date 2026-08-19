@@ -2,6 +2,8 @@
 
 ### New features
 
+- Added additive v1 `{"type":"auto"}` Grid tracks for `rows`, `autoRows`, and
+  constraint patches. Auto tracks have no token references.
 - Added immutable, deterministic package-contributed styler vocabularies,
   namespaced versioned discriminators, explicit `MixProtocol.compose`, and an
   Ack-free codec-authoring façade.

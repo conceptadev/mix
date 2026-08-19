@@ -1,5 +1,7 @@
 // ignore_for_file: implementation_imports
 
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -52,8 +54,11 @@ void main() {
       final result = computeGridLayout(
         constraints: const BoxConstraints(maxWidth: 100),
         columns: const [GridTrack.fixed(100)],
-        rows: const [],
-        autoRows: const GridTrack.fixed(40),
+        rows: const [
+          GridTrack.fixed(40),
+          GridTrack.fixed(40),
+          GridTrack.fixed(40),
+        ],
         columnGap: 0,
         rowGap: 8,
         childCount: 3,
@@ -63,70 +68,73 @@ void main() {
       expect(result.size, const Size(100, 136));
     });
 
-    test('missing auto rows reports the undeclared row strategy', () {
-      expect(
-        () => computeGridLayout(
-          constraints: const BoxConstraints(maxWidth: 100, maxHeight: 200),
-          columns: const [GridTrack.fixed(100)],
-          rows: const [],
+    test(
+      'auto rows use provided measured heights before fractional remainder',
+      () {
+        final result = computeGridLayout(
+          constraints: const BoxConstraints.tightFor(width: 200, height: 200),
+          columns: const [GridTrack.fr(1), GridTrack.fr(1)],
+          rows: const [GridTrack.auto(), GridTrack.auto()],
           columnGap: 0,
-          rowGap: 0,
-          childCount: 1,
-        ),
-        throwsA(
-          isA<FlutterError>()
-              .having(
-                (error) => error.toString(),
-                'message',
-                contains('autoRows'),
-              )
-              .having(
-                (error) => error.toString(),
-                'message',
-                isNot(contains('fractional')),
-              ),
-        ),
-      );
-    });
+          rowGap: 10,
+          childCount: 4,
+          autoRowHeights: const [40, 70],
+        );
+
+        expect(result.rowSizes, [40.0, 70.0]);
+        expect(result.cells[2].offset.dy, 50);
+        expect(result.contentSize.height, 120);
+      },
+    );
 
     test('fractional auto rows name the configured track when unbounded', () {
-      expect(
-        () => computeGridLayout(
-          constraints: const BoxConstraints(maxWidth: 100),
-          columns: const [GridTrack.fixed(100)],
-          rows: const [],
-          autoRows: const GridTrack.fr(1),
-          columnGap: 0,
-          rowGap: 0,
-          childCount: 1,
-        ),
-        throwsA(
-          isA<FlutterError>()
-              .having(
-                (error) => error.toString(),
-                'message',
-                contains('autoRows'),
-              )
-              .having(
-                (error) => error.toString(),
-                'message',
-                contains('bounded height'),
-              )
-              .having(
-                (error) => error.toString(),
-                'message',
-                contains('GridTrack.fr(1'),
-              ),
+      final child = RenderConstrainedBox(
+        additionalConstraints: const BoxConstraints.tightFor(
+          width: 10,
+          height: 10,
         ),
       );
+      final render = RenderMixGrid(
+        spec: GridBoxSpec(
+          columns: const [GridTrack.fixed(100)],
+          autoRows: const GridTrack.fr(1),
+        ),
+        children: [child],
+      );
+      try {
+        expect(
+          () => render.getDryLayout(const BoxConstraints(maxWidth: 100)),
+          throwsA(
+            isA<FlutterError>()
+                .having(
+                  (error) => error.toString(),
+                  'message',
+                  contains('autoRows'),
+                )
+                .having(
+                  (error) => error.toString(),
+                  'message',
+                  contains('bounded height'),
+                )
+                .having(
+                  (error) => error.toString(),
+                  'message',
+                  contains('GridTrack.fr(1'),
+                ),
+          ),
+        );
+      } finally {
+        render.removeAll();
+        render.dispose();
+        child.dispose();
+      }
     });
 
     test('row-major auto-placement', () {
       final result = computeGridLayout(
         constraints: const BoxConstraints.tightFor(width: 300, height: 200),
         columns: const [GridTrack.fr(1), GridTrack.fr(1), GridTrack.fr(1)],
-        rows: const [],
-        autoRows: const GridTrack.fr(1),
+        rows: const [GridTrack.fr(1), GridTrack.fr(1)],
         columnGap: 0,
         rowGap: 0,
         childCount: 5,
@@ -447,6 +455,31 @@ void main() {
       expect(start.lerp(differentType, 0.5).columns, differentType.columns);
       expect(start.lerp(differentCount, 0.49).columns, start.columns);
       expect(start.lerp(differentCount, 0.5).columns, differentCount.columns);
+    });
+
+    test('lerp keeps auto-to-auto stable and snaps auto-to-numeric', () {
+      final auto = GridBoxSpec(
+        columns: const [GridTrack.fixed(100)],
+        rows: const [GridTrack.auto()],
+        autoRows: const GridTrack.auto(),
+      );
+      final alsoAuto = GridBoxSpec(
+        columns: const [GridTrack.fixed(100)],
+        rows: const [GridTrack.auto()],
+        autoRows: const GridTrack.auto(),
+      );
+      final fixed = GridBoxSpec(
+        columns: const [GridTrack.fixed(100)],
+        rows: const [GridTrack.fixed(40)],
+        autoRows: const GridTrack.fixed(20),
+      );
+
+      expect(auto.lerp(alsoAuto, 0.5).rows, const [GridTrack.auto()]);
+      expect(auto.lerp(alsoAuto, 0.5).autoRows, const GridTrack.auto());
+      expect(auto.lerp(fixed, 0.49).rows, const [GridTrack.auto()]);
+      expect(auto.lerp(fixed, 0.49).autoRows, const GridTrack.auto());
+      expect(auto.lerp(fixed, 0.5).rows, const [GridTrack.fixed(40)]);
+      expect(auto.lerp(fixed, 0.5).autoRows, const GridTrack.fixed(20));
     });
   });
 
@@ -1494,23 +1527,1026 @@ void main() {
       },
     );
   });
+
+  group('content-sized auto rows', () {
+    test('resolved geometry defaults omitted autoRows to auto', () {
+      final spec = GridBoxSpec(
+        columns: const [GridTrack.fr(1), GridTrack.fr(1)],
+      );
+      final geometry = spec.resolveGeometryForConstraints(
+        const BoxConstraints.tightFor(width: 400, height: 200),
+      );
+
+      expect(geometry.autoRows, const GridTrack.auto());
+    });
+
+    testWidgets('omitted autoRows sizes implicit rows to content', (
+      tester,
+    ) async {
+      await tester.pumpWidget(
+        const MaterialApp(
+          home: Align(
+            alignment: Alignment.topLeft,
+            child: SizedBox(
+              width: 200,
+              child: GridBox(
+                style: GridBoxStyler(
+                  columns: [GridTrack.fr(1), GridTrack.fr(1)],
+                ),
+                children: [
+                  SizedBox(key: Key('a'), height: 30),
+                  SizedBox(key: Key('b'), height: 50),
+                  SizedBox(key: Key('c'), height: 20),
+                ],
+              ),
+            ),
+          ),
+        ),
+      );
+
+      expect(tester.takeException(), isNull);
+      final render = tester.renderObject<RenderMixGrid>(find.byType(MixGrid));
+      expect(render.size, const Size(200, 70));
+      expect(tester.getSize(find.byKey(const Key('a'))), const Size(100, 50));
+      expect(tester.getSize(find.byKey(const Key('b'))), const Size(100, 50));
+      expect(tester.getSize(find.byKey(const Key('c'))), const Size(100, 20));
+      expect(
+        tester.getTopLeft(find.byKey(const Key('c'))).dy,
+        tester.getTopLeft(find.byKey(const Key('a'))).dy + 50,
+      );
+    });
+
+    testWidgets('explicit autoRows and rows use the same content rule', (
+      tester,
+    ) async {
+      Future<Size> pump(GridBoxStyler style) async {
+        await tester.pumpWidget(
+          MaterialApp(
+            home: Align(
+              alignment: Alignment.topLeft,
+              child: SizedBox(
+                width: 120,
+                child: GridBox(
+                  style: style,
+                  children: const [
+                    SizedBox(key: Key('left'), height: 18),
+                    SizedBox(key: Key('right'), height: 42),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        );
+
+        return tester.renderObject<RenderMixGrid>(find.byType(MixGrid)).size;
+      }
+
+      final omitted = await pump(
+        const GridBoxStyler(columns: [GridTrack.fr(1), GridTrack.fr(1)]),
+      );
+      final automatic = await pump(
+        const GridBoxStyler(
+          columns: [GridTrack.fr(1), GridTrack.fr(1)],
+          autoRows: GridTrack.auto(),
+        ),
+      );
+      final explicit = await pump(
+        const GridBoxStyler(
+          columns: [GridTrack.fr(1), GridTrack.fr(1)],
+          rows: [GridTrack.auto()],
+        ),
+      );
+
+      expect(omitted, const Size(120, 42));
+      expect(automatic, omitted);
+      expect(explicit, omitted);
+    });
+
+    testWidgets(
+      'scroll-view two-column auto rows size to independently measured text',
+      (tester) async {
+        const texts = [
+          'Short',
+          'This catalog card wraps to several lines at a 194-pixel width so the first row is taller than a single line.',
+          'A medium-length product blurb that still wraps once.',
+          'Tiny',
+        ];
+        const gap = 12.0;
+        const width = 400.0;
+        const cellWidth = 194.0;
+
+        await tester.pumpWidget(
+          MaterialApp(
+            home: Align(
+              alignment: Alignment.topLeft,
+              child: SizedBox(
+                width: width,
+                height: 600,
+                child: SingleChildScrollView(
+                  child: GridBox(
+                    style: const GridBoxStyler(
+                      columns: [GridTrack.fr(1), GridTrack.fr(1)],
+                      columnGap: gap,
+                      rowGap: gap,
+                    ),
+                    children: [
+                      for (var index = 0; index < texts.length; index++)
+                        Text(texts[index], key: Key('copy-$index')),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+        );
+
+        expect(tester.takeException(), isNull);
+        final render = tester.renderObject<RenderMixGrid>(find.byType(MixGrid));
+        final naturalHeights = [
+          for (var index = 0; index < texts.length; index++)
+            tester
+                .renderObject<RenderBox>(find.byKey(Key('copy-$index')))
+                .getDryLayout(const BoxConstraints.tightFor(width: cellWidth))
+                .height,
+        ];
+        final firstRow = math.max(naturalHeights[0], naturalHeights[1]);
+        final secondRow = math.max(naturalHeights[2], naturalHeights[3]);
+        final firstOrigin = tester.getTopLeft(find.byKey(const Key('copy-0')));
+        final secondOrigin = tester.getTopLeft(find.byKey(const Key('copy-2')));
+
+        // Guards the fixture rather than the Grid: the assertions below are
+        // written against measured text, so if font metrics ever made every
+        // string fit one line they would all still pass while proving nothing
+        // about content sizing. Both rows must stay genuinely unequal, and
+        // each row must be taller than its shortest member.
+        expect(firstRow, greaterThan(secondRow));
+        expect(firstRow, greaterThan(naturalHeights[0]));
+        expect(secondRow, greaterThan(naturalHeights[3]));
+
+        expect(
+          tester.getSize(find.byKey(const Key('copy-0'))).width,
+          cellWidth,
+        );
+        expect(
+          tester.getSize(find.byKey(const Key('copy-0'))).height,
+          firstRow,
+        );
+        expect(
+          tester.getSize(find.byKey(const Key('copy-1'))).height,
+          firstRow,
+        );
+        expect(
+          tester.getSize(find.byKey(const Key('copy-2'))).height,
+          secondRow,
+        );
+        expect(secondOrigin.dy, firstOrigin.dy + firstRow + gap);
+        expect(render.size, Size(width, firstRow + gap + secondRow));
+      },
+    );
+
+    testWidgets('mixed auto and fixed rows keep both rules', (tester) async {
+      await tester.pumpWidget(
+        const MaterialApp(
+          home: Align(
+            alignment: Alignment.topLeft,
+            child: SizedBox(
+              width: 100,
+              child: GridBox(
+                style: GridBoxStyler(
+                  columns: [GridTrack.fixed(100)],
+                  rows: [GridTrack.auto(), GridTrack.fixed(50)],
+                ),
+                children: [
+                  SizedBox(key: Key('auto'), height: 24),
+                  SizedBox(key: Key('fixed'), height: 10),
+                ],
+              ),
+            ),
+          ),
+        ),
+      );
+
+      expect(
+        tester.getSize(find.byKey(const Key('auto'))),
+        const Size(100, 24),
+      );
+      expect(
+        tester.getSize(find.byKey(const Key('fixed'))),
+        const Size(100, 50),
+      );
+      expect(
+        tester.renderObject<RenderMixGrid>(find.byType(MixGrid)).size,
+        const Size(100, 74),
+      );
+    });
+
+    testWidgets('mixed auto and fr rows consume remaining bounded height', (
+      tester,
+    ) async {
+      Future<void> pump({required bool tight}) async {
+        final grid = GridBox(
+          style: const GridBoxStyler(
+            columns: [GridTrack.fixed(100)],
+            rows: [GridTrack.auto(), GridTrack.fr(1)],
+            rowGap: 10,
+          ),
+          children: const [
+            SizedBox(key: Key('auto'), height: 40),
+            SizedBox(key: Key('flex')),
+          ],
+        );
+
+        await tester.pumpWidget(
+          MaterialApp(
+            home: Align(
+              alignment: Alignment.topLeft,
+              child: tight
+                  ? SizedBox(width: 100, height: 200, child: grid)
+                  : SizedBox(
+                      width: 100,
+                      height: 200,
+                      child: OverflowBox(
+                        maxHeight: 200,
+                        minHeight: 0,
+                        alignment: Alignment.topLeft,
+                        child: grid,
+                      ),
+                    ),
+            ),
+          ),
+        );
+      }
+
+      await pump(tight: true);
+      expect(tester.getSize(find.byKey(const Key('auto'))).height, 40);
+      expect(tester.getSize(find.byKey(const Key('flex'))).height, 150);
+
+      await pump(tight: false);
+      expect(tester.getSize(find.byKey(const Key('auto'))).height, 40);
+      expect(tester.getSize(find.byKey(const Key('flex'))).height, 150);
+    });
+
+    testWidgets(
+      'auto-row content that exceeds a bounded parent still overflows',
+      (tester) async {
+        final overflowErrors = <FlutterErrorDetails>[];
+        final previousOnError = FlutterError.onError;
+        FlutterError.onError = overflowErrors.add;
+        try {
+          await tester.pumpWidget(
+            const MaterialApp(
+              home: Align(
+                alignment: Alignment.topLeft,
+                child: SizedBox(
+                  width: 100,
+                  height: 40,
+                  child: GridBox(
+                    style: GridBoxStyler(columns: [GridTrack.fixed(100)]),
+                    children: [SizedBox(height: 90)],
+                  ),
+                ),
+              ),
+            ),
+          );
+        } finally {
+          FlutterError.onError = previousOnError;
+        }
+
+        expect(overflowErrors, isNotEmpty);
+        expect(
+          overflowErrors.first.exception.toString(),
+          contains('RenderMixGrid overflowed'),
+        );
+        expect(
+          tester.renderObject<RenderMixGrid>(find.byType(MixGrid)).size,
+          const Size(100, 40),
+        );
+      },
+    );
+
+    testWidgets(
+      'onConstraints remeasures auto rows at the new cell width without rebuilds',
+      (tester) async {
+        await tester.binding.setSurfaceSize(const Size(800, 600));
+        addTearDown(() => tester.binding.setSurfaceSize(null));
+
+        var childBuilds = 0;
+        final children = <Widget>[
+          Builder(
+            builder: (context) {
+              childBuilds++;
+
+              return const _WidthDrivenHeight(
+                key: Key('wide-child'),
+                factor: 0.5,
+              );
+            },
+          ),
+        ];
+        final grid = MixGrid(
+          spec: GridBoxSpec(
+            columns: const [GridTrack.fr(1), GridTrack.fr(1)],
+            constraintBranches: [
+              GridConstraintBranch(
+                breakpoint: Breakpoint.maxWidth(500),
+                patch: const GridLayoutPatch(columns: [GridTrack.fr(1)]),
+              ),
+            ],
+          ),
+          children: children,
+        );
+
+        await tester.pumpWidget(
+          MaterialApp(
+            home: Align(
+              alignment: Alignment.topLeft,
+              child: SizedBox(width: 700, height: 400, child: grid),
+            ),
+          ),
+        );
+
+        expect(childBuilds, 1);
+        expect(tester.getSize(find.byKey(const Key('wide-child'))).height, 175);
+
+        await tester.pumpWidget(
+          MaterialApp(
+            home: Align(
+              alignment: Alignment.topLeft,
+              child: SizedBox(width: 400, height: 400, child: grid),
+            ),
+          ),
+        );
+
+        expect(childBuilds, 1);
+        expect(tester.getSize(find.byKey(const Key('wide-child'))).height, 200);
+      },
+    );
+
+    testWidgets('a child that already fills its auto row is not relaid out', (
+      tester,
+    ) async {
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Center(
+            child: SizedBox(
+              width: 100,
+              height: 200,
+              child: MixGrid(
+                spec: GridBoxSpec(
+                  columns: const [GridTrack.fixed(100)],
+                  rows: const [GridTrack.auto(), GridTrack.fixed(40)],
+                ),
+                children: const [
+                  _LayoutCallCounter(key: Key('auto'), height: 30),
+                  _LayoutCallCounter(key: Key('fixed'), height: 10),
+                ],
+              ),
+            ),
+          ),
+        ),
+      );
+
+      final counters = tester
+          .renderObjectList<_RenderLayoutCallCounter>(
+            find.byType(_LayoutCallCounter),
+          )
+          .toList();
+      // The auto-row child is measured, then handed the same constraint again
+      // so RenderObject.layout early-returns: two calls, one relayout.
+      expect(counters[0].layoutCount, 2);
+      expect(counters[0].performLayoutCount, 1);
+      expect(counters[1].layoutCount, 1);
+      expect(counters[1].performLayoutCount, 1);
+    });
+
+    testWidgets('a shorter auto-row sibling is relaid out to fill the row', (
+      tester,
+    ) async {
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Center(
+            child: SizedBox(
+              width: 200,
+              child: MixGrid(
+                spec: GridBoxSpec(
+                  columns: const [GridTrack.fixed(100), GridTrack.fixed(100)],
+                ),
+                children: const [
+                  _LayoutCallCounter(key: Key('short'), height: 20),
+                  _LayoutCallCounter(key: Key('tall'), height: 60),
+                ],
+              ),
+            ),
+          ),
+        ),
+      );
+
+      final counters = tester
+          .renderObjectList<_RenderLayoutCallCounter>(
+            find.byType(_LayoutCallCounter),
+          )
+          .toList();
+      expect(counters[0].performLayoutCount, 2, reason: 'stretched to 60');
+      expect(counters[1].performLayoutCount, 1, reason: 'already 60 tall');
+      expect(tester.getSize(find.byKey(const Key('short'))).height, 60);
+    });
+
+    testWidgets('nesting auto grids does not multiply leaf layout passes', (
+      tester,
+    ) async {
+      // The measure pass hands each level the same constraint its parent used,
+      // so a leaf that fills its row stays at one relayout no matter how deep
+      // the nesting goes. Without that, cost is 2^depth.
+      Widget nest(int depth) {
+        Widget current = const _LayoutCallCounter(key: Key('leaf'), height: 25);
+        for (var level = 0; level < depth; level++) {
+          current = GridBox(
+            style: const GridBoxStyler(columns: [GridTrack.fixed(100)]),
+            children: [current],
+          );
+        }
+
+        return current;
+      }
+
+      for (final depth in [1, 2, 3]) {
+        // Force a fresh render object so counts never carry across depths.
+        await tester.pumpWidget(const SizedBox());
+        await tester.pumpWidget(
+          MaterialApp(
+            home: Align(
+              alignment: Alignment.topLeft,
+              child: SizedBox(width: 100, child: nest(depth)),
+            ),
+          ),
+        );
+
+        final leaf = tester.renderObject<_RenderLayoutCallCounter>(
+          find.byKey(const Key('leaf')),
+        );
+        expect(leaf.performLayoutCount, 1, reason: 'depth=$depth');
+        expect(tester.getSize(find.byKey(const Key('leaf'))).height, 25);
+      }
+    });
+
+    testWidgets('live and dry sizes match for deterministic auto-row boxes', (
+      tester,
+    ) async {
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Align(
+            alignment: Alignment.topLeft,
+            child: SizedBox(
+              width: 200,
+              child: MixGrid(
+                spec: GridBoxSpec(
+                  columns: const [GridTrack.fixed(100), GridTrack.fixed(100)],
+                  autoRows: const GridTrack.auto(),
+                  rowGap: 8,
+                ),
+                children: const [
+                  SizedBox(height: 20),
+                  SizedBox(height: 36),
+                  SizedBox(height: 12),
+                ],
+              ),
+            ),
+          ),
+        ),
+      );
+
+      final render = tester.renderObject<RenderMixGrid>(find.byType(MixGrid));
+      final dry = render.getDryLayout(const BoxConstraints(maxWidth: 200));
+      expect(render.size, const Size(200, 56));
+      expect(dry, render.size);
+    });
+
+    testWidgets('vertical intrinsic height is the per-row max plus gaps', (
+      tester,
+    ) async {
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Align(
+            alignment: Alignment.topLeft,
+            child: SizedBox(
+              width: 200,
+              child: MixGrid(
+                spec: GridBoxSpec(
+                  columns: const [GridTrack.fr(1), GridTrack.fr(1)],
+                  rowGap: 8,
+                ),
+                children: const [
+                  SizedBox(height: 20),
+                  SizedBox(height: 36),
+                  SizedBox(height: 12),
+                ],
+              ),
+            ),
+          ),
+        ),
+      );
+
+      final render = tester.renderObject<RenderMixGrid>(find.byType(MixGrid));
+      expect(render.getMaxIntrinsicHeight(200), 56);
+      expect(render.getMinIntrinsicHeight(200), 56);
+    });
+
+    testWidgets('incomplete last auto row stays well-defined', (tester) async {
+      await tester.pumpWidget(
+        const MaterialApp(
+          home: Align(
+            alignment: Alignment.topLeft,
+            child: SizedBox(
+              width: 200,
+              child: GridBox(
+                style: GridBoxStyler(
+                  columns: [GridTrack.fr(1), GridTrack.fr(1)],
+                  rowGap: 6,
+                ),
+                children: [
+                  SizedBox(height: 10),
+                  SizedBox(height: 14),
+                  SizedBox(key: Key('last'), height: 22),
+                ],
+              ),
+            ),
+          ),
+        ),
+      );
+
+      final render = tester.renderObject<RenderMixGrid>(find.byType(MixGrid));
+      expect(render.size, const Size(200, 42));
+      expect(
+        tester.getSize(find.byKey(const Key('last'))),
+        const Size(100, 22),
+      );
+    });
+
+    testWidgets(
+      'a child that cannot dry-layout reports Flutter dry-layout failure',
+      (tester) async {
+        await tester.pumpWidget(
+          MaterialApp(
+            home: Align(
+              alignment: Alignment.topLeft,
+              child: SizedBox(
+                width: 200,
+                height: 200,
+                child: GridBox(
+                  style: const GridBoxStyler(columns: [GridTrack.fixed(200)]),
+                  children: [
+                    LayoutBuilder(
+                      builder: (context, constraints) {
+                        return const SizedBox(height: 40);
+                      },
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        );
+
+        final render = tester.renderObject<RenderMixGrid>(find.byType(MixGrid));
+        expect(
+          () => render.getDryLayout(
+            const BoxConstraints.tightFor(width: 200, height: 200),
+          ),
+          throwsA(
+            isA<FlutterError>()
+                .having(
+                  (error) => error.toString(),
+                  'message',
+                  contains('dry layout'),
+                )
+                .having(
+                  (error) => error.toString(),
+                  'message',
+                  isNot(contains('finite height')),
+                ),
+          ),
+        );
+      },
+    );
+
+    testWidgets(
+      'an expanding auto-row child reports Flutter unbounded-flex error',
+      (tester) async {
+        final captured = <String>[];
+        final previousOnError = FlutterError.onError;
+        FlutterError.onError = (details) {
+          captured.add(details.exceptionAsString());
+        };
+        try {
+          await tester.pumpWidget(
+            const MaterialApp(
+              home: Align(
+                alignment: Alignment.topLeft,
+                child: SizedBox(
+                  width: 200,
+                  child: SingleChildScrollView(
+                    child: GridBox(
+                      style: GridBoxStyler(columns: [GridTrack.fr(1)]),
+                      children: [
+                        Column(children: [Expanded(child: SizedBox())]),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          );
+        } finally {
+          FlutterError.onError = previousOnError;
+        }
+        final leftover = tester.takeException();
+        if (leftover != null) {
+          captured.add(leftover.toString());
+        }
+
+        final messages = captured.join('\n');
+        expect(messages, contains('non-zero flex'));
+        expect(messages, contains('incoming height constraints are unbounded'));
+        expect(
+          messages,
+          isNot(
+            contains('Grid auto rows require children with a finite height'),
+          ),
+        );
+      },
+    );
+
+    testWidgets(
+      'an auto-row child that throws StateError reports that StateError',
+      (tester) async {
+        final captured = <String>[];
+        final previousOnError = FlutterError.onError;
+        FlutterError.onError = (details) {
+          captured.add(details.exceptionAsString());
+        };
+        try {
+          await tester.pumpWidget(
+            const MaterialApp(
+              home: Align(
+                alignment: Alignment.topLeft,
+                child: SizedBox(
+                  width: 200,
+                  child: GridBox(
+                    style: GridBoxStyler(columns: [GridTrack.fixed(200)]),
+                    children: [_ThrowingLayoutBox()],
+                  ),
+                ),
+              ),
+            ),
+          );
+        } finally {
+          FlutterError.onError = previousOnError;
+        }
+        final leftover = tester.takeException();
+        if (leftover != null) {
+          captured.add(leftover.toString());
+        }
+
+        final messages = captured.join('\n');
+        expect(messages, contains('child-specific bug: index out of range'));
+        expect(
+          messages,
+          isNot(
+            contains('Grid auto rows require children with a finite height'),
+          ),
+        );
+      },
+    );
+
+    testWidgets(
+      'a child that does not implement computeDryLayout reports Flutter dry-layout failure',
+      (tester) async {
+        await tester.pumpWidget(
+          const MaterialApp(
+            home: Align(
+              alignment: Alignment.topLeft,
+              child: SizedBox(
+                width: 200,
+                height: 200,
+                child: GridBox(
+                  style: GridBoxStyler(columns: [GridTrack.fixed(200)]),
+                  children: [_NoDryLayoutBox()],
+                ),
+              ),
+            ),
+          ),
+        );
+
+        final render = tester.renderObject<RenderMixGrid>(find.byType(MixGrid));
+        expect(
+          () => render.getDryLayout(
+            const BoxConstraints.tightFor(width: 200, height: 200),
+          ),
+          throwsA(
+            isA<FlutterError>()
+                .having(
+                  (error) => error.toString(),
+                  'message',
+                  contains('does not implement "computeDryLayout"'),
+                )
+                .having(
+                  (error) => error.toString(),
+                  'message',
+                  isNot(contains('finite height')),
+                ),
+          ),
+        );
+      },
+    );
+
+    testWidgets(
+      'omitted autoRows grows a content-sized row beyond explicit rows',
+      (tester) async {
+        await tester.pumpWidget(
+          const MaterialApp(
+            home: Align(
+              alignment: Alignment.topLeft,
+              child: SizedBox(
+                width: 100,
+                child: GridBox(
+                  style: GridBoxStyler(
+                    columns: [GridTrack.fixed(100)],
+                    rows: [GridTrack.fixed(40)],
+                  ),
+                  children: [
+                    SizedBox(height: 10),
+                    SizedBox(key: Key('tall'), height: 72),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        );
+
+        final render = tester.renderObject<RenderMixGrid>(find.byType(MixGrid));
+        expect(render.size.height, isNot(40));
+        expect(render.size.height, 112);
+        expect(
+          tester.getSize(find.byKey(const Key('tall'))),
+          const Size(100, 72),
+        );
+      },
+    );
+
+    testWidgets('an auto row re-measures when only the child changes', (
+      tester,
+    ) async {
+      // A tight cell constraint would make the child its own relayout
+      // boundary, so a child-only change would never reach the grid and the
+      // row would keep its first measured height.
+      Widget build(double height) => MaterialApp(
+        home: Align(
+          alignment: Alignment.topLeft,
+          child: SizedBox(
+            width: 100,
+            child: GridBox(
+              style: const GridBoxStyler(columns: [GridTrack.fixed(100)]),
+              children: [SizedBox(key: const Key('a'), height: height)],
+            ),
+          ),
+        ),
+      );
+
+      await tester.pumpWidget(build(30));
+      expect(tester.getSize(find.byKey(const Key('a'))), const Size(100, 30));
+      expect(
+        tester.renderObject<RenderMixGrid>(find.byType(MixGrid)).size.height,
+        30,
+      );
+
+      await tester.pumpWidget(build(80));
+      expect(tester.getSize(find.byKey(const Key('a'))), const Size(100, 80));
+      expect(
+        tester.renderObject<RenderMixGrid>(find.byType(MixGrid)).size.height,
+        80,
+      );
+
+      await tester.pumpWidget(build(15));
+      expect(tester.getSize(find.byKey(const Key('a'))), const Size(100, 15));
+      expect(
+        tester.renderObject<RenderMixGrid>(find.byType(MixGrid)).size.height,
+        15,
+      );
+    });
+
+    testWidgets('an auto row grows when a child resizes itself via setState', (
+      tester,
+    ) async {
+      // The test above drives the height from a parent rebuild, which reaches
+      // the grid through the widget tree regardless of the constraint. This
+      // one changes height entirely below the grid, with GridBoxSpec untouched
+      // so MixGrid.updateRenderObject no-ops. The only path back to the grid is
+      // markNeedsLayout propagating past the child, which a tight cell would
+      // have stopped by making the child its own relayout boundary. Models the
+      // real case: an async image or an expanding tile inside a scroll view.
+      final key = GlobalKey<_ResizableState>();
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Align(
+            alignment: Alignment.topLeft,
+            child: SizedBox(
+              width: 100,
+              child: GridBox(
+                style: const GridBoxStyler(columns: [GridTrack.fixed(100)]),
+                children: [_Resizable(key: key, initialHeight: 30)],
+              ),
+            ),
+          ),
+        ),
+      );
+
+      final grid = tester.renderObject<RenderMixGrid>(find.byType(MixGrid));
+      expect(grid.size.height, 30);
+
+      key.currentState!.setHeight(90);
+      await tester.pump();
+      expect(grid.size.height, 90, reason: 'row must follow the child upward');
+
+      key.currentState!.setHeight(20);
+      await tester.pump();
+      expect(grid.size.height, 20, reason: 'and back down');
+    });
+
+    testWidgets('an auto-row child still stretches to fill the taller row', (
+      tester,
+    ) async {
+      // The auto-row cell is loose on max height so the child stays inside the
+      // grid's relayout boundary. Min height must still stretch the child, and
+      // the child must distribute that stretched extent internally.
+      await tester.pumpWidget(
+        const MaterialApp(
+          home: Align(
+            alignment: Alignment.topLeft,
+            child: SizedBox(
+              width: 200,
+              child: GridBox(
+                style: GridBoxStyler(
+                  columns: [GridTrack.fixed(100), GridTrack.fixed(100)],
+                ),
+                children: [
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      SizedBox(key: Key('top'), height: 10, width: 10),
+                      SizedBox(key: Key('bottom'), height: 10, width: 10),
+                    ],
+                  ),
+                  SizedBox(key: Key('tall'), height: 90),
+                ],
+              ),
+            ),
+          ),
+        ),
+      );
+
+      expect(tester.getSize(find.byKey(const Key('tall'))).height, 90);
+      expect(tester.getTopLeft(find.byKey(const Key('top'))).dy, 0);
+      expect(tester.getTopLeft(find.byKey(const Key('bottom'))).dy, 80);
+    });
+
+    testWidgets('a fixed row still hard-constrains a changing child', (
+      tester,
+    ) async {
+      Widget build(double height) => MaterialApp(
+        home: Align(
+          alignment: Alignment.topLeft,
+          child: SizedBox(
+            width: 100,
+            child: GridBox(
+              style: const GridBoxStyler(
+                columns: [GridTrack.fixed(100)],
+                rows: [GridTrack.fixed(40)],
+              ),
+              children: [SizedBox(key: const Key('a'), height: height)],
+            ),
+          ),
+        ),
+      );
+
+      await tester.pumpWidget(build(10));
+      expect(tester.getSize(find.byKey(const Key('a'))), const Size(100, 40));
+
+      await tester.pumpWidget(build(90));
+      expect(tester.getSize(find.byKey(const Key('a'))), const Size(100, 40));
+    });
+  });
 }
 
-class _LayoutCallCounter extends SingleChildRenderObjectWidget {
-  const _LayoutCallCounter({super.key});
+class _WidthDrivenHeight extends StatelessWidget {
+  const _WidthDrivenHeight({super.key, required this.factor});
+
+  final double factor;
 
   @override
-  _RenderLayoutCallCounter createRenderObject(BuildContext context) {
-    return _RenderLayoutCallCounter();
+  Widget build(BuildContext context) {
+    return AspectRatio(aspectRatio: 1 / factor);
   }
 }
 
-class _RenderLayoutCallCounter extends RenderProxyBox {
+class _LayoutCallCounter extends LeafRenderObjectWidget {
+  const _LayoutCallCounter({super.key, this.height = 0});
+
+  /// Natural height, so the counter can act as a tall or short auto-row child.
+  final double height;
+
+  @override
+  _RenderLayoutCallCounter createRenderObject(BuildContext context) {
+    return _RenderLayoutCallCounter(height);
+  }
+
+  @override
+  void updateRenderObject(
+    BuildContext context,
+    _RenderLayoutCallCounter renderObject,
+  ) {
+    renderObject.naturalHeight = height;
+  }
+}
+
+class _RenderLayoutCallCounter extends RenderBox {
+  _RenderLayoutCallCounter(this._naturalHeight);
+
+  double _naturalHeight;
+
   int layoutCount = 0;
+
+  /// Times the subtree actually relaid out.
+  ///
+  /// [layout] can be called without doing any work when the constraints are
+  /// unchanged, so this is the metric that tracks real cost.
+  int performLayoutCount = 0;
+
+  set naturalHeight(double value) {
+    if (_naturalHeight == value) return;
+    _naturalHeight = value;
+    markNeedsLayout();
+  }
 
   @override
   void layout(Constraints constraints, {bool parentUsesSize = false}) {
     layoutCount++;
     super.layout(constraints, parentUsesSize: parentUsesSize);
+  }
+
+  @override
+  Size computeDryLayout(BoxConstraints constraints) =>
+      constraints.constrain(Size(constraints.minWidth, _naturalHeight));
+
+  @override
+  void performLayout() {
+    performLayoutCount++;
+    size = computeDryLayout(constraints);
+  }
+}
+
+/// Changes its own height from below the grid, without any parent rebuild.
+class _Resizable extends StatefulWidget {
+  const _Resizable({super.key, required this.initialHeight});
+
+  final double initialHeight;
+
+  @override
+  State<_Resizable> createState() => _ResizableState();
+}
+
+class _ResizableState extends State<_Resizable> {
+  late double _height = widget.initialHeight;
+
+  void setHeight(double value) => setState(() => _height = value);
+
+  @override
+  Widget build(BuildContext context) => SizedBox(height: _height);
+}
+
+class _ThrowingLayoutBox extends LeafRenderObjectWidget {
+  const _ThrowingLayoutBox();
+
+  @override
+  RenderBox createRenderObject(BuildContext context) => _RenderThrowingLayout();
+}
+
+class _RenderThrowingLayout extends RenderBox {
+  @override
+  void performLayout() {
+    throw StateError('child-specific bug: index out of range');
+  }
+}
+
+class _NoDryLayoutBox extends LeafRenderObjectWidget {
+  const _NoDryLayoutBox();
+
+  @override
+  RenderBox createRenderObject(BuildContext context) => _RenderNoDryLayout();
+}
+
+class _RenderNoDryLayout extends RenderBox {
+  @override
+  void performLayout() {
+    size = constraints.constrain(const Size(10, 10));
   }
 }

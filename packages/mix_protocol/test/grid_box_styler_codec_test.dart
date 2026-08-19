@@ -74,6 +74,103 @@ void main() {
     });
   });
 
+  test('grid_box round-trips fieldless auto tracks without token refs', () {
+    final payload = <String, Object>{
+      'v': 1,
+      'type': 'grid_box',
+      'columns': [
+        {'type': 'fr', 'fraction': 1.0},
+        {'type': 'fr', 'fraction': 1.0},
+      ],
+      'rows': [
+        {'type': 'auto'},
+      ],
+      'autoRows': {'type': 'auto'},
+      'constraintBranches': [
+        {
+          'breakpoint': {'maxWidth': 520.0},
+          'patch': {
+            'autoRows': {'type': 'auto'},
+            'rows': [
+              {'type': 'auto'},
+            ],
+          },
+        },
+      ],
+    };
+
+    final decoded = decode<GridBoxStyler>(payload);
+
+    expect(encode(decoded), payload);
+    expect(decoded.$rows, const [GridTrack.auto()]);
+    expect(decoded.$autoRows, const GridTrack.auto());
+    expect(
+      decoded.$constraintBranches!.single.patch.autoRows,
+      const GridTrack.auto(),
+    );
+    expect(tokenReferencesOf(decoded), isEmpty);
+  });
+
+  test('lenient decode drops the smallest unrecognized grid track', () {
+    (GridBoxStyler, List<String>) lenient(JsonMap payload) {
+      final result = contract.decodeStyle<GridBoxStyler>(
+        payload,
+        options: const MixProtocolDecodeOptions(
+          mode: MixProtocolDecodeMode.lenient,
+        ),
+      );
+
+      return switch (result) {
+        MixProtocolSuccess<GridBoxStyler>(:final value, :final warnings) => (
+          value,
+          [for (final warning in warnings) warning.path],
+        ),
+        MixProtocolFailure<GridBoxStyler>(:final errors) => fail('$errors'),
+      };
+    }
+
+    // A list entry loses only that entry; sibling tracks survive.
+    final (rowStyle, rowWarnings) = lenient({
+      'v': 1,
+      'type': 'grid_box',
+      'columns': [
+        {'type': 'fr', 'fraction': 1.0},
+      ],
+      'rows': [
+        {'type': 'fixed', 'size': 40.0},
+        {'type': 'minmax', 'min': 1.0, 'max': 2.0},
+      ],
+    });
+    expect(rowWarnings, ['/rows/1/type']);
+    expect(rowStyle.$rows, const [GridTrack.fixed(40)]);
+
+    // A scalar field loses the whole field, which resolves back to the
+    // implicit GridTrack.auto() default rather than a decode failure.
+    final (autoStyle, autoWarnings) = lenient({
+      'v': 1,
+      'type': 'grid_box',
+      'columns': [
+        {'type': 'fr', 'fraction': 1.0},
+      ],
+      'autoRows': {'type': 'minmax', 'min': 1.0, 'max': 2.0},
+    });
+    expect(autoWarnings, ['/autoRows/type']);
+    expect(autoStyle.$autoRows, isNull);
+
+    // `auto` is unrecognized under columns, so lenient mode drops that column
+    // instead of failing the way strict mode does.
+    final (columnStyle, columnWarnings) = lenient({
+      'v': 1,
+      'type': 'grid_box',
+      'columns': [
+        {'type': 'fr', 'fraction': 1.0},
+        {'type': 'auto'},
+      ],
+    });
+    expect(columnWarnings, ['/columns/1/type']);
+    expect(columnStyle.$columns, const [GridTrack.fr(1)]);
+  });
+
   test('runtime grid style round-trips without losing branch order', () {
     final style = GridBoxStyler(
       columns: const [GridTrack.fixed(200), GridTrack.fr(2)],
@@ -185,6 +282,9 @@ void main() {
       ],
       'infinite fraction': [
         {'type': 'fr', 'fraction': double.infinity},
+      ],
+      'auto column': [
+        {'type': 'auto'},
       ],
     };
 

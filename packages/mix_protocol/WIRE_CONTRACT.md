@@ -305,10 +305,12 @@ A Grid track is one of:
 ```json
 { "type": "fixed", "size": 220 }
 { "type": "fr", "fraction": 2 }
+{ "type": "auto" }
 ```
 
-Fixed `size` is non-negative. Fractional `fraction` is greater than zero. Each
-numeric value also accepts the standard numeric token form. Space tokens are
+Fixed `size` is non-negative. Fractional `fraction` is greater than zero.
+`auto` is fieldless and valid on `rows` and `autoRows` only. Each numeric
+value also accepts the standard numeric token form. Space tokens are
 recommended for fixed sizes and gaps; double tokens are recommended for
 fractional weights:
 

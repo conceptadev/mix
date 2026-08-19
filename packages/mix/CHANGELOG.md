@@ -2,12 +2,29 @@
 
 ### New features
 
+- **`GridTrack.auto()`:** Content-sized row tracks for `rows` and `autoRows`.
+  An auto row sizes to its tallest child's natural height at the resolved
+  column width, then stretches shorter children to fill the row. Use it — or
+  omit `autoRows` — when child heights are unknown, such as a card grid in a
+  scroll view. `auto` is vertical-only; `columns` rejects it. Grids built only
+  from fixed and `fr` tracks are unaffected and still lay each child out once.
 - **Generated Styler field metadata:** Every generated Styler now exposes its
   complete source-field inventory through
   `StylerFieldMetadata.$stylerFieldNames`, allowing schema tooling to validate
   coverage without maintaining duplicate string manifests. Handwritten and
   previously generated Stylers do not implement this capability until they opt
   in or are regenerated.
+
+### Breaking changes
+
+- **Omitted GridBox `autoRows` no longer throws:** Children needing more rows
+  than were declared previously required an explicit `autoRows` track, or the
+  Grid threw. Omitted `autoRows` now defaults to `GridTrack.auto()`, so
+  implicit rows size to their tallest child — both when no rows are declared
+  and when explicit rows run out. Fractional rows still require a bounded
+  height, and fixed tracks remain hard constraints. If you relied on the throw
+  to catch an under-declared Grid, declare `rows` explicitly or set `autoRows`
+  to the track you want repeated.
 
 ## 2.2.0-beta.4
 

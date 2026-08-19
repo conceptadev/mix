@@ -519,7 +519,7 @@ void main() {
 
     expect(
       _fnv1a64(utf8.encode(jsonEncode(schema))),
-      3081541222728341371,
+      -1622746188329387277,
       reason: 'Changing this fingerprint changes the declared chart v1 schema.',
     );
 

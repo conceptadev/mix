@@ -127,6 +127,9 @@ final class GridBoxSpec extends Spec<GridBoxSpec> with Diagnosticable {
   final List<GridTrack> rows;
 
   /// Track repeated for each row required beyond [rows].
+  ///
+  /// `null` means no override, in which case implicit rows use
+  /// [GridTrack.auto].
   final GridTrack? autoRows;
 
   /// Logical-pixel gap between adjacent columns.
@@ -205,11 +208,12 @@ final class GridBoxSpec extends Spec<GridBoxSpec> with Diagnosticable {
 
   /// Interpolates compatible Grid geometry toward [other].
   ///
-  /// Fixed tracks interpolate with fixed tracks and fractional tracks with
-  /// fractional tracks when their lists have the same length and kinds.
-  /// Gaps also interpolate. Incompatible track lists, nullable or mismatched
-  /// [autoRows], [clipBehavior], and [constraintBranches] switch at `t = 0.5`.
-  /// Progress outside the `0...1` interval is clamped so geometry stays valid.
+  /// Fixed tracks interpolate with fixed tracks, fractional tracks with
+  /// fractional tracks, and auto tracks with auto tracks when their lists
+  /// have the same length and kinds. Gaps also interpolate. Incompatible
+  /// track lists, nullable or mismatched [autoRows], [clipBehavior], and
+  /// [constraintBranches] switch at `t = 0.5`. Progress outside the `0...1`
+  /// interval is clamped so geometry stays valid.
   @override
   GridBoxSpec lerp(GridBoxSpec? other, double t) {
     if (other == null) return this;
@@ -297,6 +301,7 @@ bool _gridTracksAreCompatible(GridTrack start, GridTrack end) {
   return switch ((start, end)) {
     (FixedGridTrack(), FixedGridTrack()) => true,
     (FrGridTrack(), FrGridTrack()) => true,
+    (AutoGridTrack(), AutoGridTrack()) => true,
     _ => false,
   };
 }
@@ -313,6 +318,7 @@ GridTrack _lerpCompatibleGridTrack(GridTrack start, GridTrack end, double t) {
       FrGridTrack(fraction: final endFraction),
     ) =>
       GridTrack.fr(ui.lerpDouble(startFraction, endFraction, t)!),
+    (AutoGridTrack(), AutoGridTrack()) => start,
     _ => throw StateError('Grid track interpolation requires matching types.'),
   };
 }
@@ -328,9 +334,9 @@ void _validateGridSpecGeometry(GridBoxSpec spec) {
   }
 
   _validateTracks(columns, axisLabel: 'columns');
-  _validateTracks(spec.rows, axisLabel: 'rows');
+  _validateTracks(spec.rows, axisLabel: 'rows', allowAuto: true);
   if (spec.autoRows case final track?) {
-    _validateTracks([track], axisLabel: 'autoRows');
+    _validateTracks([track], axisLabel: 'autoRows', allowAuto: true);
   }
   _validateGap(spec.columnGap, label: 'columnGap');
   _validateGap(spec.rowGap, label: 'rowGap');
@@ -371,10 +377,14 @@ void _validateGridSpecGeometry(GridBoxSpec spec) {
       _validateTracks(patchColumns, axisLabel: 'patch.columns');
     }
     if (patchRows != null) {
-      _validateTracks(patchRows, axisLabel: 'patch.rows');
+      _validateTracks(patchRows, axisLabel: 'patch.rows', allowAuto: true);
     }
     if (patchAutoRows != null) {
-      _validateTracks([patchAutoRows], axisLabel: 'patch.autoRows');
+      _validateTracks(
+        [patchAutoRows],
+        axisLabel: 'patch.autoRows',
+        allowAuto: true,
+      );
     }
     if (patchColumnGap != null) {
       _validateGap(patchColumnGap, label: 'patch.columnGap');
@@ -464,7 +474,11 @@ GridLayoutPatch _snapshotPatch(GridLayoutPatch patch) {
   );
 }
 
-void _validateTracks(List<GridTrack> tracks, {required String axisLabel}) {
+void _validateTracks(
+  List<GridTrack> tracks, {
+  required String axisLabel,
+  bool allowAuto = false,
+}) {
   for (var i = 0; i < tracks.length; i++) {
     final track = tracks[i];
     switch (track) {
@@ -487,6 +501,18 @@ void _validateTracks(List<GridTrack> tracks, {required String axisLabel}) {
               'got $fraction.',
             ),
             ErrorHint('Use GridTrack.fr with a finite fraction > 0.'),
+          ]);
+        }
+      case AutoGridTrack():
+        if (!allowAuto) {
+          throw FlutterError.fromParts([
+            ErrorSummary('GridTrack.auto() is only valid for rows.'),
+            ErrorDescription('$axisLabel[$i] used GridTrack.auto().'),
+            ErrorHint(
+              'GridTrack.auto() is vertical-only. Use it in rows or autoRows '
+              'after column widths are known. Content-sized columns are not '
+              'supported.',
+            ),
           ]);
         }
     }

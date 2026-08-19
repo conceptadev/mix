@@ -201,7 +201,7 @@ void main() {
       expectRoundTrips<GridBoxStyler>(
         GridBoxStyler(
           columns: const [GridTrack.fixed(220), GridTrack.fr(2)],
-          autoRows: const GridTrack.fixed(96),
+          autoRows: const GridTrack.auto(),
           columnGap: 16,
           rowGap: 12,
           clipBehavior: Clip.hardEdge,

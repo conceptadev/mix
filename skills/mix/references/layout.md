@@ -29,7 +29,7 @@ installed version exposes the referenced classes.
 | One child with size, padding, constraints, or decoration | `Box` + `BoxStyler` | Owns single-child box styling |
 | One non-wrapping horizontal or vertical sequence | `RowBox`, `ColumnBox`, or `FlexBox` + `FlexBoxStyler` | Combines Flex geometry with outer Box styling |
 | Intrinsic items that should flow onto additional runs | `WrapBox` + `WrapBoxStyler` | Models tags, chips, and button groups without fixed tracks |
-| Explicit two-dimensional rows and columns | `GridBox` + `GridBoxStyler` | Models dashboards, card catalogs, and galleries with fixed/`fr` tracks |
+| Explicit two-dimensional rows and columns | `GridBox` + `GridBoxStyler` | Models dashboards, card catalogs, and galleries with fixed/`fr` columns and fixed, `fr`, or auto rows |
 | Overlapping or positioned children | `StackBox` + `StackBoxStyler` | Combines Stack geometry with outer Box styling |
 
 Prefer the simplest primitive that represents the layout semantics. Do not use
@@ -123,7 +123,7 @@ shorthand to make its topology visible:
 ```dart
 final GridBoxStyler cardGridStyle = .equalColumns(3)
     .gap(16)
-    .autoRows(.fixed(220));
+    .autoRows(.auto());
 
 GridBox(style: cardGridStyle, children: cards);
 ```
@@ -141,9 +141,15 @@ final GridBoxStyler reportGridStyle = .columns([
 
 Interpret tracks as follows:
 
-- `.fixed(240)` consumes 240 logical pixels and does not shrink.
-- `.fr(2)` receives twice the remaining space of `.fr(1)` after fixed tracks
-  and gaps.
+- `.fixed(240)` consumes 240 logical pixels and does not shrink. On a row it
+  is a hard height: children stretch or clip to that cell.
+- `.fr(2)` receives twice the remaining space of `.fr(1)` after fixed tracks,
+  auto tracks, and gaps.
+- `.auto()` is vertical-only and sizes the row to its tallest child's natural
+  height at the resolved column width. Auto-row children are measured at that
+  width; only a child shorter than the resolved row is laid out again to
+  stretch it. That extra pass is only for children in auto rows, and nesting
+  auto Grids does not compound it.
 - Fractional columns require bounded width.
 - Fractional rows and fractional `autoRows` require bounded height.
 
@@ -151,20 +157,24 @@ Interpret tracks as follows:
 
 Children fill columns left to right, then advance row by row. Provide enough
 explicit `.rows([...])` tracks for every required row or set `.autoRows(...)`
-for the remaining rows. A non-empty Grid with no applicable row track reports
-an error instead of guessing content-sized geometry.
+for the remaining rows. Omitted `autoRows` defaults to `.auto()`, so a
+non-empty Grid with columns and no row declaration sizes implicit rows to
+content.
 
 ```dart
 final GridBoxStyler galleryStyle = .equalColumns(2)
     .rows([.fixed(180)])
-    .autoRows(.fixed(180))
+    .autoRows(.auto())
     .columnGap(12)
     .rowGap(12);
 ```
 
 With five children and two columns, this Grid needs three rows. The first uses
 the explicit track and the next two repeat `autoRows`. In a vertical
-`SingleChildScrollView`, use fixed row tracks because height is unbounded.
+`SingleChildScrollView`, omit `autoRows` or use `.autoRows(.auto())`. Keep
+`.fixed(...)` only when clipping or constraining height is intentional. Auto
+rows require finite-height children; do not put `Expanded` or `Spacer` in an
+auto row inside a scroll view.
 
 ### Respond to the offered container
 
@@ -174,7 +184,6 @@ by its own parent:
 ```dart
 final GridBoxStyler responsiveCards = .equalColumns(3)
     .gap(16)
-    .autoRows(.fixed(220))
     .onConstraints(
       .maxWidth(760),
       .equalColumns(2).gap(12),
@@ -203,13 +212,13 @@ size through `MediaQuery`. Two Grids in the same viewport can select different
 Use responsive `GridBox` for:
 
 - metric dashboards whose panels collapse from four to two to one column;
-- product catalogs with equal card widths and repeated fixed row heights;
+- product catalogs with equal card widths and content-sized or fixed rows;
 - media galleries with aligned tracks and controlled clipping;
 - asymmetric report layouts using fixed sidebar tracks plus fractional content;
 - nested components that should respond to their container rather than the
   whole device viewport.
 
-Avoid the current Grid API when the design requires content-sized tracks,
+Avoid the current Grid API when the design requires content-sized columns,
 spans, named areas, masonry packing, direction-aware placement, or baseline
 alignment. Those features are intentionally outside the current contract. Use
 a more suitable Flutter layout or redesign the track model rather than
@@ -230,9 +239,10 @@ final GridBoxStyler animatedGrid = .columns([
 ```
 
 Keep track lists the same length and keep each positional track kind compatible
-(`fixed` with `fixed`, `fr` with `fr`) for continuous interpolation. Compatible
-rows, `autoRows`, and gaps interpolate too. Track-count or track-kind changes,
-clipping, and constraint-patch lists switch at the midpoint. A live
+(`fixed` with `fixed`, `fr` with `fr`, `auto` with `auto`) for continuous
+interpolation. Compatible rows, `autoRows`, and gaps interpolate too.
+Track-count or track-kind changes, clipping, and constraint-patch lists
+switch at the midpoint. A live
 `onConstraints` branch change remains immediate because selection happens
 during layout rather than creating a new animation target.
 

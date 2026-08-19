@@ -62,7 +62,7 @@ Resolution pipeline: `StyleWidget` → `StyleBuilder` → merge active variants 
 | `FlexBoxStyler` | `FlexBoxSpec` | `FlexBox`/`RowBox`/`ColumnBox` | `Column`/`Row` + `Container` |
 | `WrapStyler` | `WrapSpec` | — (layout) | `Wrap` |
 | `WrapBoxStyler` | `WrapBoxSpec` | `WrapBox` | `Wrap` + `Container` |
-| `GridBoxStyler` | `GridBoxSpec` | `GridBox` | Fixed/`fr` track grid |
+| `GridBoxStyler` | `GridBoxSpec` | `GridBox` | Fixed/`fr` columns; fixed/`fr`/auto rows |
 | `StackStyler` | `StackSpec` | — (layout) | `Stack` |
 | `StackBoxStyler` | `StackBoxSpec` | `StackBox` | `Stack` + `Container` |
 | `IconStyler` | `IconSpec` | `StyledIcon` | `Icon` |
