@@ -225,6 +225,9 @@ class MixWidget {
   /// Styler `call()` method. The constructor must expose a compatible named
   /// `style` parameter. `style` and `styleSpec` are supplied or omitted by the
   /// generator and never become wrapper fields.
+  // A constructor tear-off's signature differs per annotation, so no explicit
+  // function type fits; the generator narrows it via `toFunctionValue()`.
+  // ignore: prefer-explicit-function-type
   final Function? target;
 
   /// Selection of non-`key` styler `call()` value parameters exposed by the

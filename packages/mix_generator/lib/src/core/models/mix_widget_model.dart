@@ -156,6 +156,7 @@ class MixWidgetModel {
   /// all positional params first, then named params.
   List<WidgetCallParam> get allParams {
     final seen = <String>{};
+
     return [
       for (final parameter in [...factoryParams, ...callParams])
         if (seen.add(parameter.name)) parameter,
@@ -168,7 +169,4 @@ class MixWidgetModel {
 
   /// Type argument suffix for forwarding to the styler `call()` method.
   String get typeParameterInvocation => _typeParameterSuffix((p) => p.name);
-
-  /// Whether `build()` instantiates a plain target widget directly.
-  bool get hasDirectTarget => targetTypeReference != null;
 }
