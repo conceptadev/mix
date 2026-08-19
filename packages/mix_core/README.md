@@ -1,11 +1,16 @@
 # mix_core
 
-**Status: spike / proof-of-concept** for the extraction plan in
-[`guides/mix-core-extraction-plan.md`](../../guides/mix-core-extraction-plan.md).
+Platform-agnostic styling engine for Mix: props, tokens, directives,
+variants, the style merge/resolve pipeline (`StyleBase`), modifier ordering,
+and the token-table algebra. Pure Dart — no Flutter, no `dart:ui`. Enforced
+by `test/purity_test.dart` and by this package having no Flutter dependency
+at all.
 
-Platform-agnostic styling engine primitives for Mix. Pure Dart — no Flutter,
-no `dart:ui`. Enforced by `test/purity_test.dart` and by this package having
-no Flutter dependency at all.
+package:mix consumes this engine (binding `C = BuildContext`); to build a
+styling package for another platform (terminal UI, Jaspr), start with
+[`PLATFORM_GUIDE.md`](PLATFORM_GUIDE.md) and its executable companion,
+[`test/reference_binding_test.dart`](test/reference_binding_test.dart).
+Background: [`guides/mix-core-extraction-plan.md`](../../guides/mix-core-extraction-plan.md).
 
 ## The idea
 

@@ -1,5 +1,19 @@
 # Plan: Extract `mix_core` (pure-Dart styling engine)
 
+> **Status (2026-08-19): implemented through the styler/widget split.**
+> `packages/mix_core` owns the engine (Prop/Mix/Token/Directive/Variant,
+> `StyleBase` with the variant fold, `TokenStore`, modifier ordering);
+> `mix` binds it via subclasses/typedefs at the original file paths with a
+> byte-identical generated surface (golden `.g.dart` zero-diff) and a fully
+> green workspace CI. Platform authors start at
+> `packages/mix_core/PLATFORM_GUIDE.md` and
+> `packages/mix_core/test/reference_binding_test.dart`.
+> Deviations from the original sketch: the context is bound by *subclassing*
+> (not typedefs) for the generator-critical types; `StyleSpec` stays declared
+> in mix with `StyleBase<C, R, Self>` generic over the envelope; the empty-
+> Prop resolution error is now `StateError` (was `FlutterError`); DCM could
+> not run in the working environment (license), all other gates green.
+
 ## Goal
 
 Split the Flutter-free primitives out of `packages/mix` into a new pure-Dart
