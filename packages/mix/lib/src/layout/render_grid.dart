@@ -465,11 +465,10 @@ class RenderMixGrid extends RenderBox
   /// A child that already fills its row gets back the *exact* constraint
   /// [_measureAutoRowHeights] used, so [RenderObject.layout] takes its
   /// `!_needsLayout && constraints == _constraints` early return instead of
-  /// running the subtree a second time. That covers at least the tallest child
-  /// of every auto row, and every child of a single-child row — which is what
-  /// stops nested auto grids from multiplying layout passes per level. Keep
-  /// this constraint identical to the measure-pass one; widening it here would
-  /// silently reintroduce the second pass.
+  /// running the subtree a second time. Every auto row has at least one such
+  /// child, which is what stops nested auto grids from multiplying layout
+  /// passes per level. Keep this constraint identical to the measure-pass one;
+  /// widening it here would silently reintroduce the second pass.
   BoxConstraints _cellConstraints(
     RenderBox child,
     GridCellGeometry cell, {
