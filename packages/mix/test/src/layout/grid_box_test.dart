@@ -1882,7 +1882,7 @@ void main() {
       },
     );
 
-    testWidgets('auto-row children are laid out twice; others once', (
+    testWidgets('a child that already fills its auto row is not relaid out', (
       tester,
     ) async {
       await tester.pumpWidget(
@@ -1897,8 +1897,8 @@ void main() {
                   rows: const [GridTrack.auto(), GridTrack.fixed(40)],
                 ),
                 children: const [
-                  _LayoutCallCounter(key: Key('auto')),
-                  _LayoutCallCounter(key: Key('fixed')),
+                  _LayoutCallCounter(key: Key('auto'), height: 30),
+                  _LayoutCallCounter(key: Key('fixed'), height: 10),
                 ],
               ),
             ),
@@ -1911,8 +1911,82 @@ void main() {
             find.byType(_LayoutCallCounter),
           )
           .toList();
+      // The auto-row child is measured, then handed the same constraint again
+      // so RenderObject.layout early-returns: two calls, one relayout.
       expect(counters[0].layoutCount, 2);
+      expect(counters[0].performLayoutCount, 1);
       expect(counters[1].layoutCount, 1);
+      expect(counters[1].performLayoutCount, 1);
+    });
+
+    testWidgets('a shorter auto-row sibling is relaid out to fill the row', (
+      tester,
+    ) async {
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Center(
+            child: SizedBox(
+              width: 200,
+              child: MixGrid(
+                spec: GridBoxSpec(
+                  columns: const [GridTrack.fixed(100), GridTrack.fixed(100)],
+                ),
+                children: const [
+                  _LayoutCallCounter(key: Key('short'), height: 20),
+                  _LayoutCallCounter(key: Key('tall'), height: 60),
+                ],
+              ),
+            ),
+          ),
+        ),
+      );
+
+      final counters = tester
+          .renderObjectList<_RenderLayoutCallCounter>(
+            find.byType(_LayoutCallCounter),
+          )
+          .toList();
+      expect(counters[0].performLayoutCount, 2, reason: 'stretched to 60');
+      expect(counters[1].performLayoutCount, 1, reason: 'already 60 tall');
+      expect(tester.getSize(find.byKey(const Key('short'))).height, 60);
+    });
+
+    testWidgets('nesting auto grids does not multiply leaf layout passes', (
+      tester,
+    ) async {
+      // The measure pass hands each level the same constraint its parent used,
+      // so a leaf that fills its row stays at one relayout no matter how deep
+      // the nesting goes. Without that, cost is 2^depth.
+      Widget nest(int depth) {
+        Widget current = const _LayoutCallCounter(key: Key('leaf'), height: 25);
+        for (var level = 0; level < depth; level++) {
+          current = GridBox(
+            style: const GridBoxStyler(columns: [GridTrack.fixed(100)]),
+            children: [current],
+          );
+        }
+
+        return current;
+      }
+
+      for (final depth in [1, 2, 3]) {
+        // Force a fresh render object so counts never carry across depths.
+        await tester.pumpWidget(const SizedBox());
+        await tester.pumpWidget(
+          MaterialApp(
+            home: Align(
+              alignment: Alignment.topLeft,
+              child: SizedBox(width: 100, child: nest(depth)),
+            ),
+          ),
+        );
+
+        final leaf = tester.renderObject<_RenderLayoutCallCounter>(
+          find.byKey(const Key('leaf')),
+        );
+        expect(leaf.performLayoutCount, 1, reason: 'depth=$depth');
+        expect(tester.getSize(find.byKey(const Key('leaf'))).height, 25);
+      }
     });
 
     testWidgets('live and dry sizes match for deterministic auto-row boxes', (
@@ -2336,22 +2410,59 @@ class _WidthDrivenHeight extends StatelessWidget {
   }
 }
 
-class _LayoutCallCounter extends SingleChildRenderObjectWidget {
-  const _LayoutCallCounter({super.key});
+class _LayoutCallCounter extends LeafRenderObjectWidget {
+  const _LayoutCallCounter({super.key, this.height = 0});
+
+  /// Natural height, so the counter can act as a tall or short auto-row child.
+  final double height;
 
   @override
   _RenderLayoutCallCounter createRenderObject(BuildContext context) {
-    return _RenderLayoutCallCounter();
+    return _RenderLayoutCallCounter(height);
+  }
+
+  @override
+  void updateRenderObject(
+    BuildContext context,
+    _RenderLayoutCallCounter renderObject,
+  ) {
+    renderObject.naturalHeight = height;
   }
 }
 
-class _RenderLayoutCallCounter extends RenderProxyBox {
+class _RenderLayoutCallCounter extends RenderBox {
+  _RenderLayoutCallCounter(this._naturalHeight);
+
+  double _naturalHeight;
+
   int layoutCount = 0;
+
+  /// Times the subtree actually relaid out.
+  ///
+  /// [layout] can be called without doing any work when the constraints are
+  /// unchanged, so this is the metric that tracks real cost.
+  int performLayoutCount = 0;
+
+  set naturalHeight(double value) {
+    if (_naturalHeight == value) return;
+    _naturalHeight = value;
+    markNeedsLayout();
+  }
 
   @override
   void layout(Constraints constraints, {bool parentUsesSize = false}) {
     layoutCount++;
     super.layout(constraints, parentUsesSize: parentUsesSize);
+  }
+
+  @override
+  Size computeDryLayout(BoxConstraints constraints) =>
+      constraints.constrain(Size(constraints.minWidth, _naturalHeight));
+
+  @override
+  void performLayout() {
+    performLayoutCount++;
+    size = computeDryLayout(constraints);
   }
 }
 

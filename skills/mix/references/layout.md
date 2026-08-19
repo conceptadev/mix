@@ -146,9 +146,10 @@ Interpret tracks as follows:
 - `.fr(2)` receives twice the remaining space of `.fr(1)` after fixed tracks,
   auto tracks, and gaps.
 - `.auto()` is vertical-only and sizes the row to its tallest child's natural
-  height at the resolved column width. Auto-row children are measured, then
-  laid out again into the stretched cell. That extra pass is only for children
-  in auto rows.
+  height at the resolved column width. Auto-row children are measured at that
+  width; only a child shorter than the resolved row is laid out again to
+  stretch it. That extra pass is only for children in auto rows, and nesting
+  auto Grids does not compound it.
 - Fractional columns require bounded width.
 - Fractional rows and fractional `autoRows` require bounded height.
 

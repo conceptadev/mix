@@ -437,13 +437,57 @@ class RenderMixGrid extends RenderBox
         switch (effectiveRows[row]) {
           FixedGridTrack(:final size) => size,
           AutoGridTrack() => autoRowHeights[row],
-          // Fractional rows draw from free space, which an intrinsic query
-          // has none of.
+          // A fractional row never reaches here: an intrinsic height query is
+          // always built with an unbounded max height, and
+          // rejectFractionalGridTracksOnUnboundedAxis has already thrown on
+          // these tracks. The case exists only to satisfy the sealed
+          // exhaustiveness check; 0.0 matches what free space would give.
           FrGridTrack() => 0.0,
         },
     ];
 
     return axisExtent(rowExtents, geometry.rowGap);
+  }
+
+  /// Final layout constraint for [child] in [cell], used by [performLayout].
+  ///
+  /// Fixed and fr rows keep the tight cell: their height never depends on the
+  /// child, and tightness is the documented hard-constraint contract.
+  ///
+  /// An auto row's height is derived from its children, so those children must
+  /// stay inside the grid's relayout boundary. A fully tight constraint would
+  /// make the child its own boundary (see [RenderObject.layout]), so a later
+  /// child-only change would never reach the grid and the row would keep the
+  /// height measured on the first pass. Leaving max height unbounded keeps the
+  /// constraint loose enough to propagate, while the min height stretches
+  /// shorter siblings to fill the row.
+  ///
+  /// A child that already fills its row gets back the *exact* constraint
+  /// [_measureAutoRowHeights] used, so [RenderObject.layout] takes its
+  /// `!_needsLayout && constraints == _constraints` early return instead of
+  /// running the subtree a second time. That covers at least the tallest child
+  /// of every auto row, and every child of a single-child row — which is what
+  /// stops nested auto grids from multiplying layout passes per level. Keep
+  /// this constraint identical to the measure-pass one; widening it here would
+  /// silently reintroduce the second pass.
+  BoxConstraints _cellConstraints(
+    RenderBox child,
+    GridCellGeometry cell, {
+    required bool isAutoRow,
+  }) {
+    if (!isAutoRow) return BoxConstraints.tight(cell.size);
+    // Safe to read: auto-row children were laid out with parentUsesSize during
+    // the measure pass. A row's height is the max of those measurements, so
+    // `>=` only ever matches a child that needs no stretching.
+    if (child.size.height >= cell.size.height) {
+      return BoxConstraints.tightFor(width: cell.size.width);
+    }
+
+    return BoxConstraints(
+      minWidth: cell.size.width,
+      maxWidth: cell.size.width,
+      minHeight: cell.size.height,
+    );
   }
 
   bool get _hasVisualOverflow =>
@@ -514,23 +558,8 @@ class RenderMixGrid extends RenderBox
       final parentData = child.parentData! as MultiChildLayoutParentData;
       final cell = result.cells[index];
       final isAutoRow = result.rowTracks[cell.row] is AutoGridTrack;
-      // An auto row's height is derived from this child, so the child must
-      // stay inside the grid's relayout boundary. A fully tight constraint
-      // would make the child its own boundary (see RenderObject.layout), so a
-      // later child-only change would never reach the grid and the row would
-      // keep the height measured on the first pass. An unbounded max height
-      // keeps the constraint loose enough to propagate, while the min height
-      // still stretches shorter siblings to fill the row. Fixed and fr rows
-      // keep the tight cell: their height never depends on the child, and
-      // tightness is the documented hard-constraint contract.
       child.layout(
-        isAutoRow
-            ? BoxConstraints(
-                minWidth: cell.size.width,
-                maxWidth: cell.size.width,
-                minHeight: cell.size.height,
-              )
-            : BoxConstraints.tight(cell.size),
+        _cellConstraints(child, cell, isAutoRow: isAutoRow),
         parentUsesSize: isAutoRow,
       );
       parentData.offset = cell.offset;

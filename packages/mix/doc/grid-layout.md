@@ -90,15 +90,17 @@ empty, every required row uses `autoRows` (or `auto` when it is omitted).
 
 Use `GridTrack.auto()` — or omit `autoRows` — in a vertical
 `SingleChildScrollView` when child heights are unknown. Auto-row children are
-measured at their column width, then laid out again into the stretched cell so
-shorter siblings fill the row. That extra measure pass runs only for children
-in auto rows; explicit fixed/`fr` Grids still lay each child out once.
+measured at their column width, and a child shorter than the resolved row is
+then laid out a second time so it fills the row. A child that already fills
+its row — always the tallest, and every child when a row holds one — is handed
+back the constraint it was measured with, so its subtree is not relaid out.
+That measure pass runs only for children in auto rows; explicit fixed/`fr`
+Grids still lay each child out once.
 
-Nesting compounds that cost. Each auto-row level measures its subtree and then
-lays it out again, so the passes multiply rather than add: a leaf inside one
-auto Grid is laid out twice, and inside three nested auto Grids it is laid out
-eight times. For deep hierarchies, prefer a single Grid, or give the inner
-levels fixed rows once their heights are known.
+Nesting therefore stays flat rather than compounding: a leaf inside three
+nested auto Grids is laid out once, the same as inside one. The extra pass is
+paid only by the shorter siblings a row actually has to stretch, so rows of
+uneven children cost more than uniform ones.
 
 Fixed rows stay hard heights. Fractional rows and fractional `autoRows` still
 require bounded height. Auto rows require children with a finite natural

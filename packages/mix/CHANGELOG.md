@@ -21,10 +21,10 @@
   so implicit rows size to their tallest child — both when no rows are
   declared and when some explicit rows exist but are not enough. Fractional
   rows still require a bounded height. Fixed tracks remain hard constraints.
-  Because the new default opts a Grid into the measure-then-stretch pass,
-  nesting compounds it: a leaf inside one auto Grid is laid out twice, and
-  inside three nested auto Grids eight times. Give inner levels fixed rows
-  once their heights are known.
+  The new default opts a Grid into a measure pass, after which only a child
+  shorter than its resolved row is laid out again to stretch it; a child that
+  already fills its row reuses the measure pass, so nesting auto Grids does
+  not compound the cost.
 
 ## 2.2.0-beta.4
 
