@@ -29,8 +29,11 @@ abstract interface class StylerFieldMetadata {
 /// Base class for style classes that can be resolved to specifications.
 ///
 /// Provides variant support, modifiers, and animation configuration for styled elements.
+///
+/// Implements [Buildable] so the engine builds nested styles (applying their
+/// context variants) instead of resolving them directly.
 abstract class Style<S extends Spec<S>> extends Mix<StyleSpec<S>>
-    implements StyleElement {
+    implements StyleElement, Buildable<BuildContext, StyleSpec<S>> {
   final List<VariantStyle<S>>? $variants;
 
   final WidgetModifierConfig? $modifier;
@@ -225,6 +228,7 @@ abstract class Style<S extends Spec<S>> extends Mix<StyleSpec<S>>
   /// Builds the style into a fully resolved spec with metadata.
   ///
   /// This method resolves the style, which now includes animation and modifiers metadata.
+  @override
   StyleSpec<S> build(
     BuildContext context, {
     Set<NamedVariant> namedVariants = const {},

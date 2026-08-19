@@ -20,8 +20,13 @@ part 'decoration_mix.g.dart';
 /// Base class for decoration styling.
 ///
 /// Supports color, gradient, image, and shadow properties.
+///
+/// Implements [ContextMergeable] so the engine delegates same-key merging to
+/// [DecorationMerger], which needs the [BuildContext] to make cross-type
+/// (box vs shape) merge decisions.
 @immutable
-sealed class DecorationMix<T extends Decoration> extends Mix<T> {
+sealed class DecorationMix<T extends Decoration> extends Mix<T>
+    implements ContextMergeable<BuildContext, Decoration> {
   final Prop<Color>? $color;
   final Prop<Gradient>? $gradient;
   final Prop<DecorationImage>? $image;
@@ -36,6 +41,16 @@ sealed class DecorationMix<T extends Decoration> extends Mix<T> {
        $gradient = gradient,
        $boxShadow = boxShadow,
        $image = image;
+
+  @override
+  Mix<Decoration>? tryMergeWith(
+    BuildContext context,
+    covariant Mix<Decoration> other,
+  ) {
+    if (other is! DecorationMix) return null;
+
+    return DecorationMerger().tryMerge(context, this, other)!;
+  }
 
   /// Creates from [Decoration].
   factory DecorationMix.value(Decoration decoration) {

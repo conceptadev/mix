@@ -260,9 +260,9 @@ void main() {
     });
 
     test('breakpoints match plain dimensions', () {
-      expect(Breakpoint.mobile.matches(400, 800), isTrue);
-      expect(Breakpoint.desktop.matches(400, 800), isFalse);
-      expect(const Breakpoint.minWidth(100).matches(120, 40), isTrue);
+      expect(Breakpoint.mobile.matchesDimensions(400, 800), isTrue);
+      expect(Breakpoint.desktop.matchesDimensions(400, 800), isFalse);
+      expect(const Breakpoint.minWidth(100).matchesDimensions(120, 40), isTrue);
     });
 
     test('empty prop throws a StateError (not FlutterError)', () {

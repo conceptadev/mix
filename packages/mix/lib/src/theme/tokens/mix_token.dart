@@ -1,4 +1,10 @@
+// The token base type lives in package:mix_core, generic over an opaque
+// resolution-context type `C`. This binding adds the Flutter resolution
+// (`MixScope`) and the token-reference `call()` mechanism, which depend on
+// Flutter value types.
+
 import 'package:flutter/material.dart';
+import 'package:mix_core/mix_core.dart' as core;
 
 import '../mix_theme.dart';
 import 'token_refs.dart';
@@ -8,9 +14,8 @@ import 'token_refs.dart';
 /// Identifies semantic values in your design system. Provide concrete
 /// values in a `MixScope`, then call or resolve to get the value.
 @immutable
-abstract class MixToken<T> {
-  final String name;
-  const MixToken(this.name);
+abstract class MixToken<T> extends core.MixToken<BuildContext, T> {
+  const MixToken(super.name);
 
   /// Returns a reference value for Mix utilities.
   T call() {
@@ -18,24 +23,10 @@ abstract class MixToken<T> {
   }
 
   /// Resolves this token to a concrete value.
+  @override
   T resolve(BuildContext context) {
     return MixScope.tokenOf(this, context);
   }
-
-  @override
-  operator ==(Object other) {
-    if (identical(this, other)) return true;
-
-    if (runtimeType != other.runtimeType) return false;
-
-    return other is MixToken && other.name == name;
-  }
-
-  @override
-  String toString() => 'MixToken<$T>($name)';
-
-  @override
-  int get hashCode => Object.hash(name, T);
 }
 
 /// A token that computes its value from [BuildContext].

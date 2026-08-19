@@ -1,23 +1,13 @@
 import 'dart:ui';
 
-import 'package:flutter/widgets.dart';
+import 'package:mix_core/mix_core.dart' show Directive;
 
 import 'internal/internal_extensions.dart';
 
-/// Base class for directives that apply transformations to values.
-///
-/// Directives provide a way to transform values like colors or strings in a consistent,
-/// composable manner throughout the Mix framework.
-@immutable
-abstract class Directive<T> {
-  const Directive();
-
-  /// The unique identifier for this directive type.
-  String get key;
-
-  /// Applies the transformation to the given value.
-  T apply(T value);
-}
+// The [Directive] base class lives in package:mix_core (pure Dart); the
+// concrete color/string/number directives below operate on Flutter value
+// types and stay here.
+export 'package:mix_core/mix_core.dart' show Directive;
 
 /// Directive that applies opacity to a color.
 class OpacityColorDirective extends Directive<Color> {

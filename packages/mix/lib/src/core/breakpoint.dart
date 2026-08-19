@@ -1,4 +1,9 @@
+// The dimension logic lives in package:mix_core (pure Dart, no Size). This
+// subclass keeps mix's original API: `matches(Size)` and
+// `matchesContext(BuildContext)`.
+
 import 'package:flutter/widgets.dart';
+import 'package:mix_core/mix_core.dart' as core;
 
 /// Represents an inclusive size range used for responsive styling.
 ///
@@ -13,23 +18,7 @@ import 'package:flutter/widgets.dart';
 /// const Breakpoint desktop = .minWidth(1024);
 /// ```
 @immutable
-class Breakpoint {
-  /// The minimum width for this breakpoint (inclusive).
-  /// If null, there is no minimum width constraint.
-  final double? minWidth;
-
-  /// The maximum width for this breakpoint (inclusive).
-  /// If null, there is no maximum width constraint.
-  final double? maxWidth;
-
-  /// The minimum height for this breakpoint (inclusive).
-  /// If null, there is no minimum height constraint.
-  final double? minHeight;
-
-  /// The maximum height for this breakpoint (inclusive).
-  /// If null, there is no maximum height constraint.
-  final double? maxHeight;
-
+class Breakpoint extends core.Breakpoint {
   static const mobile = Breakpoint(maxWidth: 767);
 
   static const tablet = Breakpoint(minWidth: 768, maxWidth: 1023);
@@ -40,17 +29,11 @@ class Breakpoint {
   ///
   /// At least one constraint must be provided.
   const Breakpoint({
-    this.minWidth,
-    this.maxWidth,
-    this.minHeight,
-    this.maxHeight,
-  }) : assert(
-         minWidth != null ||
-             maxWidth != null ||
-             minHeight != null ||
-             maxHeight != null,
-         'At least one constraint must be provided',
-       );
+    super.minWidth,
+    super.maxWidth,
+    super.minHeight,
+    super.maxHeight,
+  });
 
   /// Creates a breakpoint that matches widths less than or equal to [maxWidth].
   const Breakpoint.maxWidth(double maxWidth) : this(maxWidth: maxWidth);
@@ -73,48 +56,10 @@ class Breakpoint {
     : this(minHeight: minHeight, maxHeight: maxHeight);
 
   /// Checks if the given [size] matches this breakpoint's constraints.
-  bool matches(Size size) {
-    // Check width constraints
-    if (minWidth != null && size.width < minWidth!) return false;
-    if (maxWidth != null && size.width > maxWidth!) return false;
-
-    // Check height constraints
-    if (minHeight != null && size.height < minHeight!) return false;
-    if (maxHeight != null && size.height > maxHeight!) return false;
-
-    return true;
-  }
+  bool matches(Size size) => matchesDimensions(size.width, size.height);
 
   /// Checks whether this breakpoint matches the viewport size from [context].
   bool matchesContext(BuildContext context) {
-    final size = MediaQuery.sizeOf(context);
-
-    return matches(size);
+    return matches(MediaQuery.sizeOf(context));
   }
-
-  /// Returns a string representation of this breakpoint for debugging.
-  @override
-  String toString() {
-    final constraints = <String>[];
-
-    if (minWidth != null) constraints.add('minWidth: $minWidth');
-    if (maxWidth != null) constraints.add('maxWidth: $maxWidth');
-    if (minHeight != null) constraints.add('minHeight: $minHeight');
-    if (maxHeight != null) constraints.add('maxHeight: $maxHeight');
-
-    return 'Breakpoint(${constraints.join(', ')})';
-  }
-
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is Breakpoint &&
-          runtimeType == other.runtimeType &&
-          minWidth == other.minWidth &&
-          maxWidth == other.maxWidth &&
-          minHeight == other.minHeight &&
-          maxHeight == other.maxHeight;
-
-  @override
-  int get hashCode => Object.hash(minWidth, maxWidth, minHeight, maxHeight);
 }

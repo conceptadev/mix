@@ -178,7 +178,7 @@ final class _TokenReferenceWalker {
     for (final source in prop.sources) {
       switch (source) {
         case TokenSource<dynamic>():
-          _addToken(source.token);
+          _addToken(source.token as MixToken);
         case MixSource<dynamic>():
           visit(source.mix);
         case ValueSource<dynamic>():

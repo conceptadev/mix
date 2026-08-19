@@ -711,7 +711,7 @@ Object _encodePropSource<T extends Object, V extends Object>(
         'Field "$fieldName" references a token and cannot be represented.',
       );
     }
-    value = _referenceForToken<T, V>(source.token, fieldName);
+    value = _referenceForToken<T, V>(source.token as MixToken<V>, fieldName);
   } else if (source is MixSource<V> && source.mix is T) {
     value = source.mix as T;
   } else if (source is ValueSource<V>) {
@@ -1587,7 +1587,9 @@ MixToken<TokenValue>? tokenFromReference<TokenValue extends Object>(
   if (value.sources.length != 1) return null;
 
   final source = value.sources.single;
-  if (source is TokenSource<TokenValue>) return source.token;
+  if (source is TokenSource<TokenValue>) {
+    return source.token as MixToken<TokenValue>;
+  }
 
   return null;
 }

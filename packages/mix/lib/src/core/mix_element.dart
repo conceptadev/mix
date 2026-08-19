@@ -1,35 +1,25 @@
-import 'package:flutter/widgets.dart';
+// The engine's element types live in package:mix_core, generic over an opaque
+// resolution-context type `C`. This file binds them to Flutter's
+// [BuildContext] under the original public names, so the mix API is
+// unchanged: `Mix<T>` here is `core.Mix<BuildContext, T>`.
 
-import 'equatable.dart';
+import 'package:flutter/widgets.dart';
+import 'package:mix_core/mix_core.dart' as core;
+
+export 'package:mix_core/mix_core.dart'
+    show Buildable, ContextMergeable, Mixable;
 
 /// Mixin for types that can be resolved to a value using a [BuildContext].
 ///
 /// Provides the ability to resolve context-dependent values like tokens,
 /// responsive properties, or theme-dependent values.
-mixin Resolvable<V> {
-  /// Resolves this to a concrete value using the provided [context].
-  V resolve(BuildContext context);
-}
-
-/// Base class for types that can be merged together.
-///
-/// Provides the ability to combine two instances of the same type,
-/// typically used for combining style properties.
-abstract class Mixable<T> {
-  const Mixable();
-
-  /// The key used to identify compatible types for merging.
-  Object get mergeKey => runtimeType;
-
-  /// Merges this instance with [other], with [other] taking precedence.
-  Mixable<T> merge(covariant Mixable<T>? other);
-}
+typedef Resolvable<V> = core.Resolvable<BuildContext, V>;
 
 /// Base class for Mix-compatible styling elements that are both mixable and resolvable.
 ///
 /// Combines the abilities to merge with other instances and resolve to concrete values
 /// using a [BuildContext]. This is the foundation for all styling elements in Mix.
-abstract class Mix<T> extends Mixable<T> with Resolvable<T>, Equatable {
+abstract class Mix<T> extends core.Mix<BuildContext, T> {
   const Mix();
 
   @override

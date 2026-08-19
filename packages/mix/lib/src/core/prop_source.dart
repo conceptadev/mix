@@ -1,8 +1,9 @@
-import 'package:flutter/foundation.dart';
+// The property source types live in package:mix_core, generic over an opaque
+// resolution-context type `C`. These aliases bind them to [BuildContext]
+// under the original public names.
 
-import '../theme/tokens/mix_token.dart';
-import 'equatable.dart';
-import 'mix_element.dart';
+import 'package:flutter/widgets.dart';
+import 'package:mix_core/mix_core.dart' as core;
 
 /// Represents the origin of a property value.
 ///
@@ -10,58 +11,19 @@ import 'mix_element.dart';
 /// - [ValueSource]: Holds a direct value
 /// - [TokenSource]: References a token to be resolved from context
 /// - [MixSource]: Contains a Mix value for accumulation merging
-@immutable
-sealed class PropSource<V> {
-  const PropSource();
-}
+typedef PropSource<V> = core.PropSource<BuildContext, V>;
 
 /// A source that holds a direct value.
-///
-/// Created when a property is initialized with a concrete value
-/// that doesn't require context resolution or conversion.
-@immutable
-class ValueSource<V> extends PropSource<V> with Equatable {
-  final V value;
-
-  const ValueSource(this.value);
-
-  @override
-  String toString() => 'ValueSource($value)';
-
-  @override
-  List<Object?> get props => [value];
-}
+typedef ValueSource<V> = core.ValueSource<BuildContext, V>;
 
 /// A source that references a token.
 ///
-/// The token will be resolved from [MixScope] during property resolution,
+/// The token will be resolved from `MixScope` during property resolution,
 /// allowing theme-aware and context-dependent values.
-@immutable
-class TokenSource<V> extends PropSource<V> with Equatable {
-  final MixToken<V> token;
+typedef TokenSource<V> = core.TokenSource<BuildContext, V>;
 
-  const TokenSource(this.token);
-
-  @override
-  String toString() => 'TokenSource($token)';
-
-  @override
-  List<Object?> get props => [token];
-}
-
-/// A source that contains a [Mix] value.
+/// A source that contains a Mix value.
 ///
 /// Mix values support accumulation merging, where multiple Mix values
 /// are combined rather than replaced during merge operations.
-@immutable
-class MixSource<V> extends PropSource<V> with Equatable {
-  final Mix<V> mix;
-
-  const MixSource(this.mix);
-
-  @override
-  String toString() => 'MixSource($mix)';
-
-  @override
-  List<Object?> get props => [mix];
-}
+typedef MixSource<V> = core.MixSource<BuildContext, V>;

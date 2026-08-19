@@ -26,8 +26,10 @@ const mixChecker = TypeChecker.fromUrl(
 );
 
 /// `Mixable<T>` abstract class from `package:mix`.
+// Mixable is declared in mix_core and re-exported by mix; TypeChecker.fromUrl
+// matches the DECLARING library, so this URL points at mix_core.
 const mixableChecker = TypeChecker.fromUrl(
-  'package:mix/src/core/mix_element.dart#Mixable',
+  'package:mix_core/src/mix_element.dart#Mixable',
 );
 
 /// `DefaultValue<T>` mixin from `package:mix`.

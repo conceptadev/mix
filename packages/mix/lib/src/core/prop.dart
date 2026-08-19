@@ -1,14 +1,24 @@
-import 'package:flutter/foundation.dart';
+// The Prop engine lives in package:mix_core, generic over an opaque
+// resolution-context type `C`. This subclass binds it to [BuildContext]
+// under the original public name and API:
+//
+// - the static factories keep their single type parameter and mix's
+//   token-reference sentinel detection ([getTokenFromValue]);
+// - [mergeProp]/[directives] re-wrap engine results so every [Prop] a mix
+//   caller sees is a mix [Prop] (generated code stores fields as `Prop<V>`
+//   and `MixOps.merge` casts on that assumption);
+// - every creation and merge entry point calls [ensureMixBindings] so the
+//   engine's converter registry and debug hooks are wired before first use.
+
 import 'package:flutter/widgets.dart';
+import 'package:mix_core/mix_core.dart' as core;
 
 import '../theme/tokens/mix_token.dart';
 import '../theme/tokens/token_refs.dart';
 import 'converter_registry.dart';
 import 'directive.dart';
-import 'helpers.dart';
+import 'internal/mix_bindings.dart';
 import 'mix_element.dart';
-import 'prop_source.dart';
-import 'style.dart';
 
 /// A property that can hold values, tokens, or Mix types.
 ///
@@ -19,57 +29,37 @@ import 'style.dart';
 /// - Directive application for value transformations
 /// - Animation configuration support
 ///
-/// This class serves as the base for both regular and Mix properties,
-/// consolidating the previous PropBase hierarchy into a single implementation.
-///
 /// ## Value Creation
-/// Use [Prop.value] for regular values - it creates a [ValueSource] without conversion.
-/// Use [Prop.mix] for explicit Mix values - it creates a [MixSource].
+/// Use [Prop.value] for regular values - it creates a `ValueSource` without conversion.
+/// Use [Prop.mix] for explicit Mix values - it creates a `MixSource`.
 ///
 /// ## Conversion Behavior
 /// Type conversion to Mix types happens ONLY during resolution when Mix values
 /// are present in the property. [Prop.value] never auto-converts values.
 @immutable
-class Prop<V> {
-  /// The list of sources that provide values for this property.
-  ///
-  /// Sources can be [ValueSource], [TokenSource], or [MixSource].
-  final List<PropSource<V>> sources;
-
-  /// Optional directives to transform the resolved value.
-  ///
-  /// Directives are applied after resolution but before the value is returned.
-  final List<Directive<V>>? $directives;
-
-  // Constructors
-
-  /// Creates a property with the given sources and directives.
-  ///
-  /// This constructor is private and used internally by factory methods.
-  const Prop._({required this.sources, List<Directive<V>>? directives})
-    : $directives = directives;
-
+class Prop<V> extends core.Prop<BuildContext, V> {
   /// Creates a new property by copying all fields from another property.
   ///
   /// Used by subclasses that need to wrap existing properties.
-  Prop.fromProp(Prop<V> other)
-    : sources = other.sources,
-      $directives = other.$directives;
+  Prop.fromProp(super.other) : super.fromProp();
 
   /// Creates a property that references a token.
   ///
   /// The token is resolved via [MixToken.resolve] during resolution.
   /// Optionally accepts [directives] configuration.
   factory Prop.token(MixToken<V> token, {List<Directive<V>>? directives}) {
-    return Prop._(sources: [TokenSource(token)], directives: directives);
+    ensureMixBindings();
+
+    return Prop.fromProp(
+      core.Prop<BuildContext, V>.token(token, directives: directives),
+    );
   }
 
   /// Creates a property with only directives.
   ///
   /// This property has no value source and is used for applying
   /// transformations when merged with other properties.
-  const Prop.directives(List<Directive<V>> directives)
-    : this._(sources: const [], directives: directives);
+  const Prop.directives(super.directives) : super.directives();
 
   // Factory methods
 
@@ -80,6 +70,7 @@ class Prop<V> {
   ///
   /// Does not auto-convert values to Mix types. Use [Prop.mix] for Mix values.
   static Prop<V> value<V>(V value) {
+    ensureMixBindings();
     if (value is Prop<V>) return value;
 
     // Detect sentinel-backed token refs (DoubleRef) without crashing when V
@@ -87,11 +78,11 @@ class Prop<V> {
     if (value case final Object object) {
       final token = getTokenFromValue<V>(object);
       if (token != null) {
-        return Prop._(sources: [TokenSource(token)]);
+        return Prop.token(token);
       }
     }
 
-    return Prop._(sources: [ValueSource(value)]);
+    return Prop.fromProp(core.Prop.value<BuildContext, V>(value));
   }
 
   /// Creates a property from a [Mix] value.
@@ -100,6 +91,7 @@ class Prop<V> {
   /// for accumulation merging behavior.
   /// Preserves token references (MixRef objects) instead of wrapping them in MixSource.
   static Prop<V> mix<V>(Mix<V> mix) {
+    ensureMixBindings();
     // Check if mix is already a token reference (MixRef)
     // MixRef objects are Prop<V> instances with TokenSource that implement Mix interfaces
     // ignore: avoid-unrelated-type-assertions
@@ -111,7 +103,7 @@ class Prop<V> {
       }
     }
 
-    return Prop._(sources: [MixSource(mix)]);
+    return Prop.fromProp(core.Prop.mix<BuildContext, V>(mix));
   }
 
   /// Creates a property from a nullable value.
@@ -130,17 +122,6 @@ class Prop<V> {
   static Prop<V>? maybeMix<V>(Mix<V>? value) {
     if (value == null) return null;
 
-    // Check if value is already a token reference (MixRef)
-    // MixRef objects are Prop<V> instances with TokenSource that implement Mix interfaces
-    // ignore: avoid-unrelated-type-assertions
-    if (value is Prop<V>) {
-      // ignore: avoid-unrelated-type-casts
-      final prop = value as Prop<V>;
-      if (prop.hasToken) {
-        return prop; // Return token reference directly to preserve TokenSource
-      }
-    }
-
     return Prop.mix(value);
   }
 
@@ -152,28 +133,13 @@ class Prop<V> {
     final converted = MixConverterRegistry.instance.tryConvert<V>(value);
     if (converted == null) return null;
 
-    return Prop.mix(converted);
+    return Prop.mix(converted as Mix<V>);
   }
-
-  // Properties
-
-  /// The runtime type of the property's value.
-  Type get type => V;
-
-  /// Whether this property contains at least one value source.
-  ///
-  /// Returns `true` if the property has [ValueSource] or [MixSource].
-  bool get hasValue =>
-      sources.any((s) => s is ValueSource<V> || s is MixSource<V>);
-
-  /// Whether this property contains at least one token source.
-  ///
-  /// Returns `true` if the property has [TokenSource].
-  bool get hasToken => sources.any((s) => s is TokenSource<V>);
 
   // Methods
 
   /// Returns a new property with the given directives merged with existing ones.
+  @override
   Prop<V> directives(List<Directive<V>> directives) {
     return mergeProp(Prop.directives(directives));
   }
@@ -186,136 +152,11 @@ class Prop<V> {
   /// - Regular values: last value wins during resolution
   ///
   /// Directives are merged from both properties.
-  Prop<V> mergeProp(covariant Prop<V>? other) {
+  @override
+  Prop<V> mergeProp(covariant core.Prop<BuildContext, V>? other) {
     if (other == null) return this;
+    ensureMixBindings();
 
-    // Always accumulate all sources - no conditional logic
-    return Prop._(
-      sources: [...sources, ...other.sources],
-      directives: PropOps.mergeDirectives($directives, other.$directives),
-    );
+    return Prop.fromProp(super.mergeProp(other));
   }
-
-  /// Resolves this property to a concrete value using the given context.
-  ///
-  /// Resolution process:
-  /// 1. Resolves all sources (tokens from context, Mix values, etc.)
-  /// 2. Converts regular values to Mix when Mix values are present
-  /// 3. Merges multiple values based on type (accumulation for Mix, replacement for others)
-  /// 4. Applies any directives to transform the final value
-  ///
-  /// Throws [FlutterError] if the property has no sources.
-  ///
-  /// This method is internal to the Mix package. External consumers should use
-  /// [MixOps.resolve] instead.
-  @internal
-  V resolveProp(BuildContext context) {
-    if (sources.isEmpty) {
-      throw FlutterError('Prop<$V> has no sources');
-    }
-
-    // Resolve all sources to values
-    final values = [];
-    for (final source in sources) {
-      final value = switch (source) {
-        ValueSource<V>(:final value) => value,
-        TokenSource<V>(:final token) => token.resolve(context),
-        MixSource<V>(:final mix) => mix,
-      };
-      values.add(value);
-    }
-
-    // Check if we have Mix values
-    final hasMixValues = values.any((v) => v is Mix<V>);
-
-    V resolvedValue;
-    if (hasMixValues) {
-      // Need to merge as Mix types
-      final mixValues = <Mix<V>>[];
-
-      for (final value in values) {
-        if (value is Mix<V>) {
-          mixValues.add(value);
-        } else if (value is V) {
-          // Try to convert regular value to Mix
-          final converted = MixConverterRegistry.instance.tryConvert<V>(value);
-          if (converted != null) {
-            mixValues.add(converted);
-          } else {
-            // Debug-only diagnostic to surface silent conversion failures
-            assert(() {
-              debugPrint(
-                'Mix: could not convert value of type ${value.runtimeType} '
-                'to Mix<$V>. Register a MixConverter for <$V> or pass a Mix via Prop.mix.',
-              );
-
-              return true;
-            }());
-          }
-        }
-      }
-
-      // Invariant check: when hasMixValues is true, we expect at least one Mix collected
-      assert(
-        mixValues.isNotEmpty,
-        'Mix: invariant violated in Prop<$V>.resolveProp - hasMixValues was true, but no Mix values were collected from sources. Falling back to last value.',
-      );
-
-      if (mixValues.isEmpty) {
-        // Release-safe fallback to maintain stability
-        resolvedValue = values.last as V;
-      } else {
-        // Merge all Mix values
-        Mix<V> mergedMix = mixValues.first;
-        for (int i = 1; i < mixValues.length; i++) {
-          mergedMix = PropOps.mergeMixes(context, mergedMix, mixValues[i]);
-        }
-        // A [Style] nested inside another [Style]'s [Prop] (e.g. a component
-        // sub-style) carries its own context variants — widget states
-        // (hovered/pressed/disabled), brightness, breakpoints, etc. Those are
-        // applied by [Style.build], not by [Style.resolve], so resolving a
-        // nested style directly would silently drop them. Build styles instead
-        // so their variants resolve against the current context.
-        //
-        // Named variants are not propagated here (build uses the default empty
-        // set), matching how the top-level StyleBuilder builds styles.
-        resolvedValue = mergedMix is Style
-            ? (mergedMix as Style).build(context) as V
-            : mergedMix.resolve(context);
-      }
-    } else {
-      // Simple values - use last one (replacement strategy)
-      resolvedValue = values.last as V;
-    }
-
-    // Apply directives
-    return PropOps.applyDirectives(resolvedValue, $directives);
-  }
-
-  // Equality and debugging
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-
-    return other is Prop<V> &&
-        listEquals(other.sources, sources) &&
-        listEquals(other.$directives, $directives);
-  }
-
-  @override
-  String toString() {
-    final parts = <String>[];
-    if (sources.isNotEmpty) {
-      parts.add('sources: ${sources.length}');
-    }
-    if ($directives != null && $directives!.isNotEmpty) {
-      parts.add('directives: ${$directives!.length}');
-    }
-
-    return '$runtimeType(${parts.join(', ')})';
-  }
-
-  @override
-  int get hashCode => Object.hash(Object.hashAll(sources), $directives);
 }

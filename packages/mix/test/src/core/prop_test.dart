@@ -73,7 +73,7 @@ void main() {
       final p = const Prop<int>.directives([]);
       expect(
         () => p.resolveProp(MockBuildContext()),
-        throwsA(isA<FlutterError>()),
+        throwsA(isA<StateError>()),
       );
     });
 

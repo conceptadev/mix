@@ -211,7 +211,10 @@ class Prop<C, V> {
   /// 4. Applies any directives to transform the final value
   ///
   /// Throws [StateError] if the property has no sources.
-  @internal
+  ///
+  /// This method is part of the engine contract consumed by platform
+  /// packages (e.g. package:mix's `MixOps.resolve`); application code should
+  /// prefer those platform helpers.
   V resolveProp(C context) {
     if (sources.isEmpty) {
       throw StateError('Prop<$V> has no sources');

@@ -73,7 +73,10 @@ class Breakpoint {
     : this(minHeight: minHeight, maxHeight: maxHeight);
 
   /// Checks if the given dimensions match this breakpoint's constraints.
-  bool matches(double width, double height) {
+  ///
+  /// Named `matchesDimensions` (not `matches`) so platform subclasses can add
+  /// a `matches` taking their own size type (package:mix adds `matches(Size)`).
+  bool matchesDimensions(double width, double height) {
     // Check width constraints
     if (minWidth != null && width < minWidth!) return false;
     if (maxWidth != null && width > maxWidth!) return false;

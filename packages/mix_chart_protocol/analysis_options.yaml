@@ -6,3 +6,12 @@ dart_code_metrics:
       # Dart cannot infer the F-bounded Spec type from Styler alone.
       ignored-invocations:
         - MixProtocolStylerCodec.forStyler
+analyzer:
+  exclude:
+    - build/**
+    - android/**
+    - ios/**
+    - web/**
+    - windows/**
+    - macos/**
+    - linux/**

@@ -4,15 +4,31 @@ import 'package:flutter/widgets.dart';
 import '../../core/helpers.dart';
 import '../../core/mix_element.dart';
 import '../../core/prop.dart';
+import '../../core/shape_border_merge.dart';
 import 'border_mix.dart';
 import 'border_radius_mix.dart';
 
 /// Base class for Mix shape border types.
 ///
 /// Converts Flutter [ShapeBorder] types with merging.
+///
+/// Implements [ContextMergeable] so the engine delegates same-key merging to
+/// [ShapeBorderMerger], which needs the [BuildContext] to make cross-type
+/// merge decisions.
 @immutable
-sealed class ShapeBorderMix<T extends ShapeBorder> extends Mix<T> {
+sealed class ShapeBorderMix<T extends ShapeBorder> extends Mix<T>
+    implements ContextMergeable<BuildContext, ShapeBorder> {
   const ShapeBorderMix();
+
+  @override
+  Mix<ShapeBorder>? tryMergeWith(
+    BuildContext context,
+    covariant Mix<ShapeBorder> other,
+  ) {
+    if (other is! ShapeBorderMix) return null;
+
+    return ShapeBorderMerger().tryMerge(context, this, other)!;
+  }
 
   /// Creates from [ShapeBorder].
   static ShapeBorderMix value(ShapeBorder border) {

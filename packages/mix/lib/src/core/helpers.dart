@@ -4,20 +4,18 @@ import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart' as r;
 import 'package:flutter/widgets.dart' as w;
+import 'package:mix_core/mix_core.dart' show DeepCollectionEquality, Mixable;
 
 import '../animation/animation_config.dart';
 import '../modifiers/widget_modifier_config.dart';
-import '../properties/painting/decoration_mix.dart';
-import '../properties/painting/shape_border_mix.dart';
-import 'decoration_merge.dart';
-import 'directive.dart';
-import 'internal/deep_collection_equality.dart';
-import 'mix_element.dart';
 import 'prop.dart';
-import 'shape_border_merge.dart';
 import 'spec.dart';
 import 'style.dart';
 import 'widget_modifier.dart';
+
+// Prop-level operations (directive merge/apply, context-aware Mix merging)
+// live in package:mix_core.
+export 'package:mix_core/mix_core.dart' show PropOps;
 
 /// Core operations for Mix framework value transformations.
 ///
@@ -262,60 +260,6 @@ T? _lerpValue<T>(T? a, T? b, double t) {
     // Default snap behavior for non-lerpable types
     _ => t < 0.5 ? a : b,
   };
-}
-
-/// Operations for Prop merge and resolution logic.
-///
-/// Centralizes all prop-related operations to keep prop classes lean
-/// and focused on data storage while providing sophisticated merge
-/// and resolution capabilities.
-class PropOps {
-  const PropOps._();
-
-  /// Applies directives to a resolved value.
-  ///
-  /// Returns the original value if no directives are provided.
-  static V applyDirectives<V>(V value, List<Directive<V>>? directives) {
-    if (directives == null || directives.isEmpty) return value;
-
-    var result = value;
-    for (final directive in directives) {
-      result = directive.apply(result);
-    }
-
-    return result;
-  }
-
-  /// Merges two directive lists.
-  ///
-  /// Returns a new list containing all directives from both lists,
-  /// or null if both lists are null.
-  static List<Directive<V>>? mergeDirectives<V>(
-    List<Directive<V>>? current,
-    List<Directive<V>>? other,
-  ) {
-    return switch ((current, other)) {
-      (null, null) => null,
-      (final a?, null) => a,
-      (null, final b?) => b,
-      (final a?, final b?) => [...a, ...b],
-    };
-  }
-
-  /// Merges two Mix instances using appropriate merger with BuildContext.
-  ///
-  /// Uses specialized mergers for [DecorationMix] and [ShapeBorderMix]
-  /// that require BuildContext for intelligent merging decisions.
-  static Mix<V> mergeMixes<V>(BuildContext context, Mix<V> a, Mix<V> b) {
-    // Handle special cases that need BuildContext-aware merging
-    return switch ((a, b)) {
-      (DecorationMix a, DecorationMix b) =>
-        DecorationMerger().tryMerge(context, a, b)! as Mix<V>,
-      (ShapeBorderMix a, ShapeBorderMix b) =>
-        ShapeBorderMerger().tryMerge(context, a, b)! as Mix<V>,
-      _ => a.merge(b),
-    };
-  }
 }
 
 /// Merge strategy for lists

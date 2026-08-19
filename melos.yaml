@@ -37,6 +37,7 @@ categories:
     - packages/mix_lint_test
     - packages/annotations
   dart_projects:
+    - packages/mix_core
     - packages/mix_generator
     - packages/mix_lint
 

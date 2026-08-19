@@ -161,7 +161,7 @@ void main() {
         const p = Prop<int>.directives([]);
         expect(
           () => p.resolveProp(MockBuildContext()),
-          throwsA(isA<FlutterError>()),
+          throwsA(isA<StateError>()),
         );
       });
       test('throws error when resolving without context token', () {
