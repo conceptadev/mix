@@ -375,6 +375,7 @@ class MixWidgetGenerator extends GeneratorForAnnotation<MixWidget> {
     }
 
     final constructorName = constructor.name;
+
     return _CallSource(
       call: constructor,
       baseExcluded: stylerBackedTargetParams,
@@ -406,6 +407,10 @@ class MixWidgetGenerator extends GeneratorForAnnotation<MixWidget> {
     if (writtenStylerName == null) return false;
     final spec = _findGeneratedStylerSpec(library, writtenStylerName);
     if (spec == null) return false;
+    // Both remaining checks match the spec by name, so an unnamed element can
+    // never be the recipe's spec.
+    final specName = spec.name;
+    if (specName == null) return false;
 
     // A target can itself refer to a same-build generated Styler, in which
     // case analyzer reports InvalidType until the shared part is written.
@@ -416,15 +421,16 @@ class MixWidgetGenerator extends GeneratorForAnnotation<MixWidget> {
       // Some build-test consumers re-export a lightweight Style stub from a
       // barrel rather than its canonical library. Preserve semantic matching
       // for that test shape without weakening non-Style targets.
-      return targetStyleType.getDisplayString() == 'Style<${spec.name}>';
+      return targetStyleType.getDisplayString() == 'Style<$specName>';
     }
     if (acceptedStyle.typeArguments.isEmpty) {
       return false;
     }
 
     final acceptedSpec = acceptedStyle.typeArguments.first;
+
     return acceptedSpec is InterfaceType &&
-        acceptedSpec.element.name == spec.name &&
+        acceptedSpec.element.name == specName &&
         acceptedSpec.element.library.uri == spec.library.uri;
   }
 
@@ -825,12 +831,12 @@ class MixWidgetGenerator extends GeneratorForAnnotation<MixWidget> {
     required _WidgetParameterSelection factoryParameters,
   }) {
     final selectedParameters = <FormalParameterElement>[];
-    final availableNames = {
-      for (final parameter in function.formalParameters)
-        if (parameter.name case final String name) name,
-    };
 
     if (!factoryParameters.includesAll) {
+      final availableNames = {
+        for (final parameter in function.formalParameters)
+          if (parameter.name case final String name) name,
+      };
       for (final name in factoryParameters.names) {
         if (!availableNames.contains(name)) {
           fail(
@@ -850,12 +856,15 @@ class MixWidgetGenerator extends GeneratorForAnnotation<MixWidget> {
           (name != null && factoryParameters.names.contains(name));
       if (!selected) {
         if (parameter.isRequired) {
+          // A wildcard parameter has no name to select, so report the
+          // analyzer's rendering rather than interpolating a null.
+          final label = name ?? parameter.displayName;
           fail(
             function,
             '$_annotationLabel factoryParameters must include required '
-            'factory parameter `$name`.',
+            'factory parameter `$label`.',
             todo:
-                'Add `$name` to `factoryParameters: .only({...})` or use '
+                'Add `$label` to `factoryParameters: .only({...})` or use '
                 '`factoryParameters: .all()`.',
           );
         }
@@ -1126,6 +1135,31 @@ class MixWidgetGenerator extends GeneratorForAnnotation<MixWidget> {
     return annotationType.name.lexeme;
   }
 
+  ConstructorElement? _targetConstructorFor(
+    Element anchor,
+    ConstantReader annotation,
+  ) {
+    final target = annotation.peek('target');
+    if (target == null || target.isNull) return null;
+
+    final constructor = target.objectValue.toFunctionValue();
+    if (constructor is! ConstructorElement) {
+      fail(
+        anchor,
+        '$_annotationLabel(target:) must be a constructor tear-off '
+        '(e.g., RemixButton.new).',
+      );
+    }
+    validateGenericTargetTearOff(
+      target: target,
+      constructor: constructor,
+      anchor: anchor,
+      annotationLabel: '@MixWidget(target:)',
+    );
+
+    return constructor;
+  }
+
   @override
   Future<String> generateForAnnotatedElement(
     Element element,
@@ -1166,31 +1200,6 @@ class MixWidgetGenerator extends GeneratorForAnnotation<MixWidget> {
     };
 
     return MixWidgetBuilder(model).build();
-  }
-
-  ConstructorElement? _targetConstructorFor(
-    Element anchor,
-    ConstantReader annotation,
-  ) {
-    final target = annotation.peek('target');
-    if (target == null || target.isNull) return null;
-
-    final constructor = target.objectValue.toFunctionValue();
-    if (constructor is! ConstructorElement) {
-      fail(
-        anchor,
-        '$_annotationLabel(target:) must be a constructor tear-off '
-        '(e.g., RemixButton.new).',
-      );
-    }
-    validateGenericTargetTearOff(
-      target: target,
-      constructor: constructor,
-      anchor: anchor,
-      annotationLabel: '@MixWidget(target:)',
-    );
-
-    return constructor;
   }
 }
 

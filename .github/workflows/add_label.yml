@@ -14,6 +14,7 @@ permissions:
 
 jobs:
   apply-label:
+    timeout-minutes: 5
     runs-on: ubuntu-latest
     steps:
       - uses: actions/github-script@v9

@@ -118,9 +118,12 @@ class MixWidgetBuilder {
         ? '${model.factoryReference}(${_factoryArgs()})'
         : model.factoryReference;
 
-    if (model.hasDirectTarget) {
-      _writeDirectTargetBuild(buffer, invocation);
+    // Bind the target type here so the emitter takes it non-null: interpolating
+    // a null reference would silently emit `null(...)` as the widget name.
+    if (model.targetTypeReference case final targetTypeReference?) {
+      _writeDirectTargetBuild(buffer, invocation, targetTypeReference);
       buffer.writeln('  }');
+
       return;
     }
 
@@ -140,12 +143,17 @@ class MixWidgetBuilder {
     buffer.writeln('  }');
   }
 
-  void _writeDirectTargetBuild(StringBuffer buffer, String styleInvocation) {
-    final constructorSuffix = model.targetConstructorName == null
+  void _writeDirectTargetBuild(
+    StringBuffer buffer,
+    String styleInvocation,
+    String targetTypeReference,
+  ) {
+    final constructorName = model.targetConstructorName;
+    final constructorSuffix = constructorName == null
         ? ''
-        : '.${model.targetConstructorName}';
+        : '.$constructorName';
     final target =
-        '${model.targetTypeReference}${model.typeParameterInvocation}'
+        '$targetTypeReference${model.typeParameterInvocation}'
         '$constructorSuffix';
     final args = [
       for (final p in model.callParams.where((p) => p.isPositional))
