@@ -22,6 +22,10 @@ jobs:
   format:
     name: Format Check
     runs-on: ubuntu-latest
+    # Observed ~1m30s. Every job here sets a bound because the GitHub default
+    # is 360 minutes, so a wedged step burns runner time for six hours and
+    # blocks the PR with a check that never resolves.
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
       - uses: kuhnroyal/flutter-fvm-config-action@v2
@@ -42,6 +46,8 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
+    # Observed ~6m for the full workspace suite.
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
       - uses: kuhnroyal/flutter-fvm-config-action@v2
@@ -65,6 +71,7 @@ jobs:
   showcase-tool:
     name: Showcase Tool Tests
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     defaults:
       run:
         working-directory: packages/mix_winds/tool/visual-comparison
@@ -78,6 +85,10 @@ jobs:
       - name: Install Node dependencies
         run: npm ci
       - name: Install Chromium
+        # This download wedged for 20+ minutes on PR #1032 while every other
+        # step passed. A step bound fails on the actual culprit instead of
+        # letting the job time out with the cause buried.
+        timeout-minutes: 10
         run: npx playwright install --with-deps chromium
       - name: Run showcase tool tests
         run: npm test
