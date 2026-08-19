@@ -314,10 +314,10 @@ class RenderMixGrid extends RenderBox
       if (row < effectiveRows.length && effectiveRows[row] is AutoGridTrack) {
         final column = index % columnCount;
         final measured = _measureAutoRowChild(
-          child: child,
           row: row,
           constraints: BoxConstraints.tightFor(width: columnSizes[column]),
           measureChild: measureChild,
+          child: child,
         );
         heights[row] = math.max(heights[row], measured.height);
       }
@@ -329,10 +329,10 @@ class RenderMixGrid extends RenderBox
   }
 
   Size _measureAutoRowChild({
-    required RenderBox child,
     required int row,
     required BoxConstraints constraints,
     required ChildLayouter measureChild,
+    required RenderBox child,
   }) {
     final measured = measureChild(child, constraints);
     if (!measured.height.isFinite) {

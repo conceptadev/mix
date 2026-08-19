@@ -2095,7 +2095,9 @@ void main() {
         expect(messages, contains('incoming height constraints are unbounded'));
         expect(
           messages,
-          isNot(contains('Grid auto rows require children with a finite height')),
+          isNot(
+            contains('Grid auto rows require children with a finite height'),
+          ),
         );
       },
     );
@@ -2135,7 +2137,9 @@ void main() {
         expect(messages, contains('child-specific bug: index out of range'));
         expect(
           messages,
-          isNot(contains('Grid auto rows require children with a finite height')),
+          isNot(
+            contains('Grid auto rows require children with a finite height'),
+          ),
         );
       },
     );
