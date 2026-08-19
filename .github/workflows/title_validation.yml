@@ -13,6 +13,7 @@ permissions:
 
 jobs:
   main:
+    timeout-minutes: 5
     name: Validate PR title
     runs-on: ubuntu-latest
     steps:
