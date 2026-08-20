@@ -1,6 +1,6 @@
 // Ported from package:mix `src/core/equatable.dart`. The only change is the
 // import surface: Flutter's `foundation` annotations are replaced with
-// `package:meta`, and the `elementAtOrNull` helper is inlined.
+// `package:meta`.
 
 import 'dart:math' as math;
 
@@ -165,8 +165,8 @@ Map<String, String?> compareObjects(Object? obj1, Object? obj2) {
       final maxLength = math.max(obj1.length, obj2.length);
       for (int i = 0; i < maxLength; i++) {
         final value = compareObjects(
-          _elementAtOrNull(obj1, i),
-          _elementAtOrNull(obj2, i),
+          obj1.elementAtOrNull(i),
+          obj2.elementAtOrNull(i),
         );
         if (value.isNotEmpty) {
           differences.addAll(value);
@@ -190,15 +190,4 @@ Map<String, String?> compareObjects(Object? obj1, Object? obj2) {
   }
 
   return differences;
-}
-
-Object? _elementAtOrNull(Iterable iterable, int index) {
-  if (index < 0) return null;
-  var count = 0;
-  for (final element in iterable) {
-    if (count == index) return element;
-    count++;
-  }
-
-  return null;
 }

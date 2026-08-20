@@ -20,9 +20,7 @@ import 'variant.dart';
 /// without calling `merge` — so a platform's identity style never needs to
 /// know the concrete type it merges with. package:mix's `IdentityStyle`
 /// implements this.
-abstract interface class IdentityElement {
-  const IdentityElement._();
-}
+abstract interface class IdentityElement {}
 
 /// Base class for style classes that can be resolved to a value of type [R].
 ///

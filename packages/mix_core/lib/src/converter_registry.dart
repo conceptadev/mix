@@ -107,19 +107,12 @@ class MixConverterRegistry<C> implements ConversionContext<C> {
 
   /// Removes all registered converters.
   ///
-  /// This method is only available in tests. The lazy [initializer] does not
-  /// re-run after a clear (matching package:mix's original registry
-  /// semantics); call [resetForInitializer] to allow it to run again.
+  /// This method is only available in tests. The lazy [initializer] is not
+  /// re-armed by a clear, matching package:mix's original registry
+  /// semantics.
   @visibleForTesting
   void clear() {
     _converters.clear();
-  }
-
-  /// Clears converters AND re-arms the lazy [initializer].
-  @visibleForTesting
-  void resetForInitializer() {
-    _converters.clear();
-    _initialized = false;
   }
 
   @override

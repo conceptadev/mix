@@ -69,6 +69,11 @@ class Prop<V> extends core.Prop<BuildContext, V> {
   /// Detects token references and creates appropriate source types.
   ///
   /// Does not auto-convert values to Mix types. Use [Prop.mix] for Mix values.
+  ///
+  /// The pass-through checks below mirror ones the engine also performs, and
+  /// cannot be delegated to it: the engine returns the original property,
+  /// which [Prop.fromProp] would then copy into a plain [Prop], discarding
+  /// the token-reference subclass (`ColorRef`, `TextStyleMixRef`, ...).
   static Prop<V> value<V>(V value) {
     ensureMixBindings();
     if (value is Prop<V>) return value;

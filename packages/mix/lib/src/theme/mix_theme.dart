@@ -262,10 +262,9 @@ class MixScope extends InheritedModel<String> {
   /// Token maps are combined with [other] taking precedence; [other]'s
   /// [orderOfModifiers], [key], and [child] win when provided.
   MixScope merge(MixScope other) {
-    final mergedTokens = core.TokenStore<BuildContext>(_tokens)
-        .merge(core.TokenStore(other._tokens))
-        .tokens
-        ?.cast<MixToken, Object>();
+    final mergedTokens = _tokens != null || other._tokens != null
+        ? <MixToken, Object>{...?_tokens, ...?other._tokens}
+        : null;
 
     return MixScope._(
       key: other.key,

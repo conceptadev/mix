@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart' as r;
 import 'package:flutter/widgets.dart' as w;
 import 'package:mix_core/mix_core.dart' as core;
-import 'package:mix_core/mix_core.dart' show DeepCollectionEquality, Mixable;
+import 'package:mix_core/mix_core.dart' show DeepCollectionEquality;
 
 import '../animation/animation_config.dart';
 import '../modifiers/widget_modifier_config.dart';
@@ -103,7 +103,7 @@ class MixOps {
             final currentValue = a[index];
             final otherValue = b[index];
 
-            if (currentValue is Mixable && otherValue is Mixable) {
+            if (currentValue is core.Mixable && otherValue is core.Mixable) {
               return currentValue.merge(otherValue) as T;
             }
 
