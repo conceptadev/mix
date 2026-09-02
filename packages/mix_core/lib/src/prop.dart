@@ -62,10 +62,12 @@ class Prop<C, V> {
 
   // Constructors
 
-  /// Creates a property with the given sources and directives.
+  /// Creates a property directly from its [sources] and [directives].
   ///
-  /// This constructor is private and used internally by factory methods.
-  const Prop._({required this.sources, List<Directive<V>>? directives})
+  /// The static factories are the usual entry points; this constructor
+  /// exists for platform bindings (package:mix subclasses [Prop]) so they can
+  /// build results in a single allocation.
+  const Prop.fromSources(this.sources, {List<Directive<V>>? directives})
     : $directives = directives;
 
   /// Creates a new property by copying all fields from another property.
@@ -83,7 +85,7 @@ class Prop<C, V> {
     MixToken<C, V> token, {
     List<Directive<V>>? directives,
   }) {
-    return Prop._(sources: [TokenSource(token)], directives: directives);
+    return Prop.fromSources([TokenSource(token)], directives: directives);
   }
 
   /// Creates a property with only directives.
@@ -91,7 +93,7 @@ class Prop<C, V> {
   /// This property has no value source and is used for applying
   /// transformations when merged with other properties.
   const Prop.directives(List<Directive<V>> directives)
-    : this._(sources: const [], directives: directives);
+    : this.fromSources(const [], directives: directives);
 
   // Factory methods
 
@@ -105,7 +107,7 @@ class Prop<C, V> {
   static Prop<C, V> value<C, V>(V value) {
     if (value is Prop<C, V>) return value;
 
-    return Prop._(sources: [ValueSource(value)]);
+    return Prop.fromSources([ValueSource(value)]);
   }
 
   /// Creates a property from a [Mix] value.
@@ -125,7 +127,7 @@ class Prop<C, V> {
       }
     }
 
-    return Prop._(sources: [MixSource(mix)]);
+    return Prop.fromSources([MixSource(mix)]);
   }
 
   /// Creates a property from a nullable value.
@@ -195,8 +197,8 @@ class Prop<C, V> {
     if (other == null) return this;
 
     // Always accumulate all sources - no conditional logic
-    return Prop._(
-      sources: [...sources, ...other.sources],
+    return Prop.fromSources(
+      [...sources, ...other.sources],
       directives: PropOps.mergeDirectives($directives, other.$directives),
     );
   }

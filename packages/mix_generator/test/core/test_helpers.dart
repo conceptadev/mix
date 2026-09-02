@@ -103,20 +103,33 @@ class Style<T> {
 }
 ''';
 
-/// Stub `Mix<T>` / `Mixable<T>` / `DefaultValue<T>` for `MixableGenerator` tests.
-const mixElementStub = r'''
+/// Stub of `package:mix_core/src/mix_element.dart`: `Mixable<T>` and
+/// `DefaultValue<T>` are declared in mix_core and re-exported by mix, and the
+/// generator's TypeCheckers match the DECLARING library.
+const mixCoreElementStub = r'''
 library mix_element;
 
 abstract class Mixable<T> {
   const Mixable();
 }
 
-class Mix<T> extends Mixable<T> {
-  const Mix();
-}
-
 mixin DefaultValue<T> {
   T get defaultValue;
+}
+''';
+
+/// Stub of `package:mix/src/core/mix_element.dart` for `MixableGenerator`
+/// tests: re-exports the mix_core types and declares mix's own `Mix<T>`.
+/// Map [mixCoreElementStub] at `mix_core|lib/src/mix_element.dart` alongside it.
+const mixElementStub = r'''
+library mix_element;
+
+import 'package:mix_core/src/mix_element.dart';
+
+export 'package:mix_core/src/mix_element.dart' show Mixable, DefaultValue;
+
+class Mix<T> extends Mixable<T> {
+  const Mix();
 }
 ''';
 

@@ -4,9 +4,9 @@
 //
 // - the static factories keep their single type parameter and mix's
 //   token-reference sentinel detection ([getTokenFromValue]);
-// - [mergeProp]/[directives] re-wrap engine results so every [Prop] a mix
-//   caller sees is a mix [Prop] (generated code stores fields as `Prop<V>`
-//   and `MixOps.merge` casts on that assumption);
+// - every result is built directly with [Prop.fromSources], so callers always
+//   receive a mix [Prop] (generated code stores fields as `Prop<V>` and
+//   `MixOps.merge` casts on that assumption) at one allocation per operation;
 // - every creation and merge entry point calls [ensureMixBindings] so the
 //   engine's converter registry and debug hooks are wired before first use.
 
@@ -19,6 +19,7 @@ import 'converter_registry.dart';
 import 'directive.dart';
 import 'internal/mix_bindings.dart';
 import 'mix_element.dart';
+import 'prop_source.dart';
 
 /// A property that can hold values, tokens, or Mix types.
 ///
@@ -38,6 +39,10 @@ import 'mix_element.dart';
 /// are present in the property. [Prop.value] never auto-converts values.
 @immutable
 class Prop<V> extends core.Prop<BuildContext, V> {
+  /// Creates a property directly from its sources and directives.
+  const Prop.fromSources(super.sources, {super.directives})
+    : super.fromSources();
+
   /// Creates a new property by copying all fields from another property.
   ///
   /// Used by subclasses that need to wrap existing properties.
@@ -50,9 +55,7 @@ class Prop<V> extends core.Prop<BuildContext, V> {
   factory Prop.token(MixToken<V> token, {List<Directive<V>>? directives}) {
     ensureMixBindings();
 
-    return Prop.fromProp(
-      core.Prop<BuildContext, V>.token(token, directives: directives),
-    );
+    return Prop.fromSources([TokenSource(token)], directives: directives);
   }
 
   /// Creates a property with only directives.
@@ -69,11 +72,6 @@ class Prop<V> extends core.Prop<BuildContext, V> {
   /// Detects token references and creates appropriate source types.
   ///
   /// Does not auto-convert values to Mix types. Use [Prop.mix] for Mix values.
-  ///
-  /// The pass-through checks below mirror ones the engine also performs, and
-  /// cannot be delegated to it: the engine returns the original property,
-  /// which [Prop.fromProp] would then copy into a plain [Prop], discarding
-  /// the token-reference subclass (`ColorRef`, `TextStyleMixRef`, ...).
   static Prop<V> value<V>(V value) {
     ensureMixBindings();
     if (value is Prop<V>) return value;
@@ -87,7 +85,7 @@ class Prop<V> extends core.Prop<BuildContext, V> {
       }
     }
 
-    return Prop.fromProp(core.Prop.value<BuildContext, V>(value));
+    return Prop.fromSources([ValueSource(value)]);
   }
 
   /// Creates a property from a [Mix] value.
@@ -108,7 +106,7 @@ class Prop<V> extends core.Prop<BuildContext, V> {
       }
     }
 
-    return Prop.fromProp(core.Prop.mix<BuildContext, V>(mix));
+    return Prop.fromSources([MixSource(mix)]);
   }
 
   /// Creates a property from a nullable value.
@@ -162,6 +160,10 @@ class Prop<V> extends core.Prop<BuildContext, V> {
     if (other == null) return this;
     ensureMixBindings();
 
-    return Prop.fromProp(super.mergeProp(other));
+    // Always accumulate all sources - no conditional logic
+    return Prop.fromSources(
+      [...sources, ...other.sources],
+      directives: core.PropOps.mergeDirectives($directives, other.$directives),
+    );
   }
 }

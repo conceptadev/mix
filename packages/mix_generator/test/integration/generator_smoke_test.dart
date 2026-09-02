@@ -440,6 +440,7 @@ class BoxConstraintsMix extends Mix<BoxConstraints> with DefaultValue<BoxConstra
             ...mixAnnotationsSources,
             'mix_generator|lib/mix_case.dart': source,
             'mix|lib/src/core/mix_element.dart': mixElementStub,
+            'mix_core|lib/src/mix_element.dart': mixCoreElementStub,
           },
           generateFor: {'mix_generator|lib/mix_case.dart'},
           outputs: {
@@ -504,6 +505,7 @@ class TargetMix extends Mix<Target> {
             'mix_generator|lib/mix_case.dart': source,
             'mix_generator|lib/visible.dart': visibleTypeStub,
             'mix|lib/src/core/mix_element.dart': mixElementStub,
+            'mix_core|lib/src/mix_element.dart': mixCoreElementStub,
           },
           generateFor: {'mix_generator|lib/mix_case.dart'},
           outputs: {
@@ -560,6 +562,7 @@ class BoxConstraintsMix extends ConstraintsMix<int> {
             ...mixAnnotationsSources,
             'mix_generator|lib/mix_case.dart': source,
             'mix|lib/src/core/mix_element.dart': mixElementStub,
+            'mix_core|lib/src/mix_element.dart': mixCoreElementStub,
           },
           generateFor: {'mix_generator|lib/mix_case.dart'},
           outputs: {

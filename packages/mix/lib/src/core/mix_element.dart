@@ -7,7 +7,7 @@ import 'package:flutter/widgets.dart';
 import 'package:mix_core/mix_core.dart' as core;
 
 export 'package:mix_core/mix_core.dart'
-    show Buildable, ContextMergeable, Mixable;
+    show Buildable, ContextMergeable, DefaultValue, Mixable;
 
 /// Mixin for types that can be resolved to a value using a [BuildContext].
 ///
@@ -27,14 +27,4 @@ abstract class Mix<T> extends core.Mix<BuildContext, T> {
 
   @override
   T resolve(BuildContext context);
-}
-
-/// Mixin for types that have default values.
-///
-/// Provides a way to specify default values that can be used when
-/// no explicit value is provided or when resolution returns null.
-mixin DefaultValue<Value> {
-  /// The default value to use when no explicit value is available.
-  @protected
-  Value get defaultValue;
 }

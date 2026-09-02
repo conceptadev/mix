@@ -1,7 +1,6 @@
 name: mix_core
 description: Platform-agnostic styling engine primitives for Mix. Pure Dart — no Flutter dependency.
 version: 0.1.0-dev.0
-publish_to: none
 repository: https://github.com/btwld/mix/tree/main/packages/mix_core
 
 environment:

@@ -33,8 +33,10 @@ const mixableChecker = TypeChecker.fromUrl(
 );
 
 /// `DefaultValue<T>` mixin from `package:mix`.
+// DefaultValue is declared in mix_core and re-exported by mix; TypeChecker
+// matches the DECLARING library.
 const defaultValueChecker = TypeChecker.fromUrl(
-  'package:mix/src/core/mix_element.dart#DefaultValue',
+  'package:mix_core/src/mix_element.dart#DefaultValue',
 );
 
 /// `Prop<T>` from `package:mix`.

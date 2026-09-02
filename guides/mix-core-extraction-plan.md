@@ -13,6 +13,15 @@
 > in mix with `StyleBase<C, R, Self>` generic over the envelope; the empty-
 > Prop resolution error is now `StateError` (was `FlutterError`); DCM could
 > not run in the working environment (license), all other gates green.
+> Contrary to the "no source changes" expectation below, `mix_protocol`
+> needed four one-line token casts and an inventory-scanner patch (it now
+> scans mix_core and strips import prefixes).
+>
+> **Open decision for mix 3.0:** the binding layer (mix subclasses of the
+> core types, ~1.6k lines) exists only to keep mix's 2.x API and generated
+> code unchanged. A breaking 3.0 could use the core types directly, drop
+> the dual hierarchy and the `ensureMixBindings` hook, and update the
+> generator for two-arity types. Decide deliberately rather than by inertia.
 
 ## Goal
 
