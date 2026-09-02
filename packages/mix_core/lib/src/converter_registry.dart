@@ -1,14 +1,10 @@
 // Ported from package:mix `src/core/converter_registry.dart`, genericized
 // over the resolution context type [C].
 //
-// Changes from the mix version:
-// - One registry instance per context type via [MixConverterRegistry.instanceOf],
-//   replacing the single global (each platform registers converters for its
-//   own value types).
-// - Lazy initialization is a settable [MixConverterRegistry.initializer]
-//   instead of the hardcoded `initializeMixConverters()` call, so core does
-//   not depend on any platform's converter set.
-// - The unused `_conversionCache` field was dropped.
+// - One registry instance per context type via [MixConverterRegistry.instanceOf]
+//   (each platform registers converters for its own value types).
+// - Lazy initialization is a settable [MixConverterRegistry.initializer], so
+//   core does not depend on any platform's converter set.
 
 import 'package:meta/meta.dart';
 
@@ -57,8 +53,14 @@ class MixConverterRegistry<C> implements ConversionContext<C> {
   /// Platforms access this to register their converters, and the engine
   /// uses it during property resolution.
   static MixConverterRegistry<C> instanceOf<C>() {
-    return _instances.putIfAbsent(C, MixConverterRegistry<C>._)
-        as MixConverterRegistry<C>;
+    // Not putIfAbsent: a generic tear-off allocates a closure per call.
+    final existing = _instances[C];
+    if (existing != null) return existing as MixConverterRegistry<C>;
+
+    final created = MixConverterRegistry<C>._();
+    _instances[C] = created;
+
+    return created;
   }
 
   final Map<Type, MixConverter<C, Object?>> _converters = {};

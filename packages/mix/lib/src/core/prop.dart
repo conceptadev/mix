@@ -7,8 +7,9 @@
 // - every result is built directly with [Prop.fromSources], so callers always
 //   receive a mix [Prop] (generated code stores fields as `Prop<V>` and
 //   `MixOps.merge` casts on that assumption) at one allocation per operation;
-// - every creation and merge entry point calls [ensureMixBindings] so the
-//   engine's converter registry and debug hooks are wired before first use.
+// - [resolveProp] — the only point where the engine consumes the converter
+//   registry and debug hooks — calls [ensureMixBindings] first, so no
+//   creation path needs to (const constructors could not anyway).
 
 import 'package:flutter/widgets.dart';
 import 'package:mix_core/mix_core.dart' as core;
@@ -53,8 +54,6 @@ class Prop<V> extends core.Prop<BuildContext, V> {
   /// The token is resolved via [MixToken.resolve] during resolution.
   /// Optionally accepts [directives] configuration.
   factory Prop.token(MixToken<V> token, {List<Directive<V>>? directives}) {
-    ensureMixBindings();
-
     return Prop.fromSources([TokenSource(token)], directives: directives);
   }
 
@@ -73,7 +72,6 @@ class Prop<V> extends core.Prop<BuildContext, V> {
   ///
   /// Does not auto-convert values to Mix types. Use [Prop.mix] for Mix values.
   static Prop<V> value<V>(V value) {
-    ensureMixBindings();
     if (value is Prop<V>) return value;
 
     // Detect sentinel-backed token refs (DoubleRef) without crashing when V
@@ -94,7 +92,6 @@ class Prop<V> extends core.Prop<BuildContext, V> {
   /// for accumulation merging behavior.
   /// Preserves token references (MixRef objects) instead of wrapping them in MixSource.
   static Prop<V> mix<V>(Mix<V> mix) {
-    ensureMixBindings();
     // Check if mix is already a token reference (MixRef)
     // MixRef objects are Prop<V> instances with TokenSource that implement Mix interfaces
     // ignore: avoid-unrelated-type-assertions
@@ -141,6 +138,13 @@ class Prop<V> extends core.Prop<BuildContext, V> {
 
   // Methods
 
+  @override
+  V resolveProp(BuildContext context) {
+    ensureMixBindings();
+
+    return super.resolveProp(context);
+  }
+
   /// Returns a new property with the given directives merged with existing ones.
   @override
   Prop<V> directives(List<Directive<V>> directives) {
@@ -158,7 +162,6 @@ class Prop<V> extends core.Prop<BuildContext, V> {
   @override
   Prop<V> mergeProp(covariant core.Prop<BuildContext, V>? other) {
     if (other == null) return this;
-    ensureMixBindings();
 
     // Always accumulate all sources - no conditional logic
     return Prop.fromSources(

@@ -99,13 +99,15 @@ Future<InventorySnapshot> collectMixInventory({
     '${repositoryRoot.path}/packages/mix_protocol/lib/src/schema',
   );
 
-  if (!mixSourceRoot.existsSync()) {
-    throw StateError('Missing mix source root: ${mixSourceRoot.path}');
+  for (final root in [mixSourceRoot, mixCoreSourceRoot]) {
+    if (!root.existsSync()) {
+      throw StateError('Missing source root: ${root.path}');
+    }
   }
 
   final mixFiles = [
     ..._dartFiles(mixSourceRoot),
-    if (mixCoreSourceRoot.existsSync()) ..._dartFiles(mixCoreSourceRoot),
+    ..._dartFiles(mixCoreSourceRoot),
   ];
   final enumDeclarations = _collectEnumDeclarations(mixFiles);
   final classInheritance = _collectClassInheritance(mixFiles);

@@ -82,7 +82,7 @@ void main() {
   test(
     'inventory discovers second-level subclasses of tracked bases',
     () async {
-      final root = Directory.systemTemp.createTempSync(
+      final root = _createFixtureRepo(
         'mix_protocol_inventory_closure_',
       );
       addTearDown(() => root.deleteSync(recursive: true));
@@ -111,7 +111,7 @@ final class PressedVariant extends WidgetStateVariant {}
   );
 
   test('inventory rejects unknown enum-like field types', () async {
-    final root = Directory.systemTemp.createTempSync(
+    final root = _createFixtureRepo(
       'mix_protocol_inventory_unknown_enum_',
     );
     addTearDown(() => root.deleteSync(recursive: true));
@@ -139,7 +139,7 @@ final class ProbeMix extends Mix<Object> {
   });
 
   test('inventory rejects unknown Flutter-style enum field types', () async {
-    final root = Directory.systemTemp.createTempSync(
+    final root = _createFixtureRepo(
       'mix_protocol_inventory_unknown_flutter_enum_',
     );
     addTearDown(() => root.deleteSync(recursive: true));
@@ -170,7 +170,7 @@ final class ProbeMix extends Mix<Object> {
   });
 
   test('dirty git worktrees are marked in generated provenance', () async {
-    final root = Directory.systemTemp.createTempSync(
+    final root = _createFixtureRepo(
       'mix_protocol_inventory_dirty_',
     );
     addTearDown(() => root.deleteSync(recursive: true));
@@ -199,7 +199,7 @@ class Later {}
   });
 
   test('directive inventory reads static keys from analyzer AST', () async {
-    final root = Directory.systemTemp.createTempSync(
+    final root = _createFixtureRepo(
       'mix_protocol_inventory_directive_',
     );
     addTearDown(() => root.deleteSync(recursive: true));
@@ -242,7 +242,7 @@ String get key => 'not_a_directive';
   });
 
   test('directive inventory rejects dynamic keys', () async {
-    final root = Directory.systemTemp.createTempSync(
+    final root = _createFixtureRepo(
       'mix_protocol_inventory_dynamic_directive_',
     );
     addTearDown(() => root.deleteSync(recursive: true));
@@ -285,7 +285,7 @@ final class DynamicDirective extends Directive<String> {
   );
 
   test('declared styler fields recognize direct and standard helper forms', () {
-    final root = Directory.systemTemp.createTempSync(
+    final root = _createFixtureRepo(
       'mix_protocol_styler_helper_',
     );
     addTearDown(() => root.deleteSync(recursive: true));
@@ -367,6 +367,15 @@ Directory _repositoryRoot() {
   }
 
   return current;
+}
+
+/// A minimal mix-shaped repository: the inventory scans both `packages/mix`
+/// and `packages/mix_core`, and requires both roots to exist.
+Directory _createFixtureRepo(String prefix) {
+  final root = Directory.systemTemp.createTempSync(prefix);
+  Directory('${root.path}/packages/mix_core/lib/src').createSync(recursive: true);
+
+  return root;
 }
 
 void _writeFile(Directory root, String relativePath, String content) {

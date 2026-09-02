@@ -80,6 +80,12 @@ abstract interface class Buildable<C, V> {
 /// In package:mix, `DecorationMix` and `ShapeBorderMix` implement this to
 /// make context-aware merging decisions (previously hardcoded in the merge
 /// pipeline). Return null to fall back to the plain [Mixable.merge].
+///
+/// [T] must be the abstract value type of the [Prop] the values live in
+/// (`Decoration`, not `BoxDecoration`): the engine tests
+/// `a is ContextMergeable<C, V>` against the prop's `V` and silently falls
+/// back to [Mixable.merge] otherwise. Narrower props cannot hold cross-type
+/// values, so nothing is lost there.
 abstract interface class ContextMergeable<C, T> {
   /// Attempts a context-aware merge with [other].
   ///

@@ -1,6 +1,7 @@
 // A complete miniature platform binding — the executable companion to
-// PLATFORM_GUIDE.md. It shows everything a non-Flutter platform (terminal
-// UI, Jaspr, ...) implements to get the Mix engine end-to-end:
+// PLATFORM_GUIDE.md. Together with `fixtures/term_platform.dart` it shows
+// everything a non-Flutter platform (terminal UI, Jaspr, ...) implements to
+// get the Mix engine end-to-end:
 //
 //   1. a context type carrying the token scope and interaction state
 //   2. a token type resolving through that context
@@ -14,28 +15,7 @@
 import 'package:mix_core/mix_core.dart';
 import 'package:test/test.dart';
 
-// 1. ── The platform context ------------------------------------------------
-
-class TermContext {
-  final TokenStore<TermContext> tokens;
-  final Set<String> states;
-  final int columns;
-
-  const TermContext({
-    this.tokens = const TokenStore(null),
-    this.states = const {},
-    this.columns = 80,
-  });
-}
-
-// 2. ── Tokens ----------------------------------------------------------------
-
-class TermToken<T> extends MixToken<TermContext, T> {
-  const TermToken(super.name);
-
-  @override
-  T resolve(TermContext context) => context.tokens.getToken(this, context);
-}
+import 'fixtures/term_platform.dart';
 
 // 3. ── Spec + envelope -------------------------------------------------------
 
@@ -104,10 +84,7 @@ class TermTextStyle extends StyleBase<TermContext, TermStyleSpec, TermTextStyle>
   TermTextStyle onFocused(TermTextStyle style) =>
       variant(TermStateVariant('focused'), style);
 
-  TermTextStyle onWide(TermTextStyle style) => variant(
-    ContextVariant<TermContext>('wide', (c) => c.columns >= 120),
-    style,
-  );
+  TermTextStyle onWide(TermTextStyle style) => variant(wideVariant(), style);
 
   @override
   TermTextStyle merge(TermTextStyle? other) {
@@ -138,24 +115,6 @@ class TermTextStyle extends StyleBase<TermContext, TermStyleSpec, TermTextStyle>
   List<Object?> get props => [$ansiColor, $bold, $modifiers, $variants];
 }
 
-/// A concrete interaction-state variant (mix's `WidgetStateVariant` shape).
-class TermStateVariant extends ContextVariant<TermContext> {
-  final String state;
-
-  TermStateVariant(this.state)
-    : super('state_$state', (c) => c.states.contains(state));
-
-  @override
-  Set<Object> get stateDependencies => {state};
-
-  @override
-  bool operator ==(Object other) =>
-      other is TermStateVariant && other.state == state;
-
-  @override
-  int get hashCode => state.hashCode;
-}
-
 // 5. ── Rendering: the platform "StyleBuilder" -------------------------------
 
 /// Resolves a style against the context and paints a string node — the
@@ -180,16 +139,6 @@ String renderText(TermTextStyle style, String text, TermContext context) {
   }
 
   return node;
-}
-
-class PadNode implements NodeModifier<String> {
-  @override
-  String build(String child) => ' $child ';
-}
-
-class BorderNode implements NodeModifier<String> {
-  @override
-  String build(String child) => '|$child|';
 }
 
 // ── The proof --------------------------------------------------------------
@@ -221,7 +170,9 @@ void main() {
     );
 
     // Focused: the state variant wins over the token color (state variants
-    // apply after state-free variants).
+    // apply after state-free variants). The platform's interactivity layer
+    // knows to track it from `style.stateDependencies`.
+    expect(style.stateDependencies, {'focused'});
     expect(
       renderText(
         style,
@@ -230,13 +181,5 @@ void main() {
       ),
       ' |\x1B[38;5;15m\x1B[1mhi\x1B[22m\x1B[39m| ',
     );
-  });
-
-  test('the style declares its state dependencies for tracking', () {
-    final style = TermTextStyle().onFocused(TermTextStyle().bold());
-
-    // The platform's interactivity layer reads this to decide what input
-    // events to track (mix's StyleBuilder does exactly this).
-    expect(style.stateDependencies, {'focused'});
   });
 }

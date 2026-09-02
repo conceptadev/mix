@@ -1,15 +1,20 @@
 // Ported from package:mix `src/variants/variant.dart` (the context-agnostic
 // portion), genericized over the resolution context type [C].
 //
-// Changes from the mix version:
 // - `Variant` is `abstract` instead of `sealed`: platform packages subclass
 //   [ContextVariant] outside this library (the sealed exhaustiveness was only
 //   used for named-vs-context dispatch, which `is NamedVariant` covers).
 // - `ContextVariant<C>` takes a `bool Function(C)` predicate. All concrete
 //   context variants (widget states, brightness, breakpoints, media queries)
-//   are platform-side, as is `widgetStateDependencies` discovery.
-// - `ContextVariantBuilder` and `StyleVariation` reference `Style` and stay
-//   platform-side until Style's core split lands.
+//   are platform-side.
+// - [NotVariant] is engine vocabulary for platforms; package:mix keeps its own
+//   `NotVariant` because its `ContextVariant.not()` must return mix's subclass.
+//
+// Fields whose type has [C] in parameter position (`shouldApply`, `fn`) must
+// only be read through a receiver whose [C] is bound — never a raw
+// `ContextVariant` / `ContextVariantBuilder` — or the implicit cast to
+// `dynamic Function(dynamic)` fails at runtime. Method calls (`when`,
+// `build`) are safe through raw receivers.
 
 import 'package:meta/meta.dart';
 
@@ -99,18 +104,10 @@ class ContextVariantBuilder<C, St> extends Variant {
 
   const ContextVariantBuilder(this.fn);
 
-  /// The builder function viewed as an untyped [Function].
-  ///
-  /// Reading [fn] through a raw `ContextVariantBuilder` receiver implicitly
-  /// casts it to `dynamic Function(dynamic)`, which fails at runtime for any
-  /// concrete context type (parameter contravariance). Identity comparisons
-  /// (equality, merge keys) must use this getter instead.
-  Function get functionKey => fn;
-
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is ContextVariantBuilder && other.functionKey == functionKey;
+      other is ContextVariantBuilder<C, Object?> && other.fn == fn;
 
   @override
   int get hashCode => fn.hashCode;

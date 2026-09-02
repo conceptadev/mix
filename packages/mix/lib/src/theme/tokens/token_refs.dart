@@ -239,7 +239,7 @@ MixToken<T>? tokenFromReferenceValue<T>(Object? value) {
   if (value is Prop<T> && value.sources.length == 1) {
     final source = value.sources.single;
 
-    if (source is TokenSource<T>) return source.token as MixToken<T>;
+    if (source is TokenSource<T>) return source.mixToken;
   }
 
   return getTokenFromValue(value);

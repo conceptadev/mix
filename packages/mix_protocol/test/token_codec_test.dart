@@ -592,7 +592,7 @@ T _mixOf<T extends Object, V extends Object>(Prop<V>? prop) {
 
 MixToken<V> _tokenOf<V extends Object>(Prop<V>? prop) {
   final source = prop!.sources.single;
-  if (source is TokenSource<V>) return source.token as MixToken<V>;
+  if (source is TokenSource<V>) return source.mixToken;
   fail('Expected TokenSource, got $source.');
 }
 

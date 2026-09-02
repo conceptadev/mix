@@ -5,6 +5,8 @@
 import 'package:flutter/widgets.dart';
 import 'package:mix_core/mix_core.dart' as core;
 
+import '../theme/tokens/mix_token.dart';
+
 /// Represents the origin of a property value.
 ///
 /// A [PropSource] is a sealed class with three concrete implementations:
@@ -27,3 +29,12 @@ typedef TokenSource<V> = core.TokenSource<BuildContext, V>;
 /// Mix values support accumulation merging, where multiple Mix values
 /// are combined rather than replaced during merge operations.
 typedef MixSource<V> = core.MixSource<BuildContext, V>;
+
+extension TokenSourceMixToken<V> on TokenSource<V> {
+  /// The token as mix's [MixToken].
+  ///
+  /// A mix [TokenSource] only ever holds a mix token ([Prop.token] is the sole
+  /// construction path), so this is the one place the engine's
+  /// `core.MixToken<BuildContext, V>` is narrowed back.
+  MixToken<V> get mixToken => token as MixToken<V>;
+}

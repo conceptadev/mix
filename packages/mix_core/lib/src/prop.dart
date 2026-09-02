@@ -1,23 +1,20 @@
 // Ported from package:mix `src/core/prop.dart`, genericized over the
 // resolution context type [C].
 //
-// Changes from the mix version:
-// - `BuildContext` → opaque type parameter `C`. The engine never dereferences
-//   the context; it only forwards it to `MixToken.resolve` and nested
+// - `C` is an opaque type parameter: the engine never dereferences the
+//   context, it only forwards it to `MixToken.resolve` and nested
 //   `Mix.resolve` / `Buildable.build` calls.
-// - `FlutterError` → `StateError`; `debugPrint` diagnostic → [mixCoreDebugLog]
-//   hook; `listEquals` → local implementation.
-// - Token *reference sentinel* detection (`getTokenFromValue`) is not part of
-//   core: sentinels implement platform value interfaces (e.g. `ColorRef
-//   implements Color`), so the platform facade for `Prop.value` performs
-//   detection before delegating here.
-// - The nested-style branch checks the [Buildable] interface instead of the
-//   concrete Flutter `Style` type.
+// - Token *reference sentinel* detection is not part of core: sentinels
+//   implement platform value interfaces (e.g. `ColorRef implements Color`),
+//   so the platform's `Prop.value` facade detects them before delegating here.
+// - Nested styles are recognized through the [Buildable] interface rather
+//   than a concrete style type.
 
 import 'package:meta/meta.dart';
 
 import 'converter_registry.dart';
 import 'directive.dart';
+import 'equatable.dart';
 import 'mix_element.dart';
 import 'ops.dart';
 import 'prop_source.dart';
@@ -308,8 +305,7 @@ class Prop<C, V> {
     if (identical(this, other)) return true;
 
     return other is Prop<C, V> &&
-        _listEquals(other.sources, sources) &&
-        _listEquals(other.$directives, $directives);
+        propsEquals([sources, $directives], [other.sources, other.$directives]);
   }
 
   @override
@@ -327,16 +323,4 @@ class Prop<C, V> {
 
   @override
   int get hashCode => Object.hash(Object.hashAll(sources), $directives);
-}
-
-/// Element-wise equality matching Flutter foundation's `listEquals`.
-bool _listEquals<T>(List<T>? a, List<T>? b) {
-  if (a == null) return b == null;
-  if (b == null || a.length != b.length) return false;
-  if (identical(a, b)) return true;
-  for (int index = 0; index < a.length; index += 1) {
-    if (a[index] != b[index]) return false;
-  }
-
-  return true;
 }

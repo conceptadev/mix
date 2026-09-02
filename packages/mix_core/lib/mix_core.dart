@@ -7,9 +7,9 @@ library;
 
 export 'src/breakpoint.dart';
 export 'src/converter_registry.dart';
+export 'src/deep_collection_equality.dart';
 export 'src/directive.dart';
 export 'src/equatable.dart';
-export 'src/internal/deep_collection_equality.dart';
 export 'src/mix_element.dart';
 export 'src/modifier.dart';
 export 'src/ops.dart';

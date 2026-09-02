@@ -85,11 +85,11 @@ abstract class Style<S extends Spec<S>>
   /// Widget states declared anywhere in this style's variant tree.
   ///
   /// The traversal (with its identity-based cycle guard) lives in
-  /// [core.StyleBase.stateDependencies]; mix narrows the element type to
-  /// [WidgetState] via [ContextVariant.widgetStateDependencies].
+  /// [core.StyleBase.collectStateDependencies]; mix's [ContextVariant]
+  /// declares them as [WidgetState]s.
   @internal
   Set<WidgetState> get widgetStates =>
-      stateDependencies.whereType<WidgetState>().toSet();
+      collectStateDependencies<WidgetState>();
 
   /// Resolves this attribute to its concrete value using the provided [BuildContext].
   @override

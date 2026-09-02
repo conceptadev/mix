@@ -1,12 +1,8 @@
-// Ported from package:mix `src/core/equatable.dart`. The only change is the
-// import surface: Flutter's `foundation` annotations are replaced with
-// `package:meta`.
-
 import 'dart:math' as math;
 
 import 'package:meta/meta.dart';
 
-import 'internal/deep_collection_equality.dart';
+import 'deep_collection_equality.dart';
 
 /// Instance of DeepCollectionEquality used for deep comparison of collections.
 const _equality = DeepCollectionEquality();

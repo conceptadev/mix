@@ -1,34 +1,18 @@
 // Proof-of-concept: bind the mix_core engine to a fake terminal platform.
 //
 // This is the acceptance test for the mix_core extraction: a non-Flutter
-// consumer defines its own context type, value types, tokens, directives,
-// variants, and Mix types, and the full Prop pipeline (merge order, token
+// consumer defines its own value types, directives, and Mix types over the
+// shared fixture platform, and the full Prop pipeline (merge order, token
 // resolution, Mix accumulation, converters, directives, nested Buildable)
 // works with zero Flutter in the dependency graph.
 
 import 'package:mix_core/mix_core.dart';
 import 'package:test/test.dart';
 
-// --- A fake terminal platform binding -------------------------------------
-
-/// The terminal platform's resolution context: what a terminal styling
-/// library would thread through resolution instead of Flutter's BuildContext.
-class TermContext {
-  final Map<MixToken<TermContext, Object?>, Object?> tokens;
-  final int columns;
-  final bool focused;
-
-  const TermContext({
-    this.tokens = const {},
-    this.columns = 80,
-    this.focused = false,
-  });
-}
+import 'fixtures/term_platform.dart';
 
 /// The platform binds the engine's generic types to its context once.
 typedef TermProp<V> = Prop<TermContext, V>;
-typedef TermMix<V> = Mix<TermContext, V>;
-typedef TermVariant = ContextVariant<TermContext>;
 
 /// A pure-Dart color value type (no dart:ui).
 class TermColor with Equatable {
@@ -41,21 +25,6 @@ class TermColor with Equatable {
 
   @override
   List<Object?> get props => [ansi, dim];
-}
-
-/// The platform's token type: resolution looks the token up in the
-/// context-carried theme map.
-class TermToken<T> extends MixToken<TermContext, T> {
-  const TermToken(super.name);
-
-  @override
-  T resolve(TermContext context) {
-    if (!context.tokens.containsKey(this)) {
-      throw StateError('Token $name not provided by TermContext');
-    }
-
-    return context.tokens[this] as T;
-  }
 }
 
 /// A directive over the platform value type.
@@ -129,6 +98,10 @@ const primaryColor = TermToken<TermColor>('color.primary');
 
 void main() {
   group('terminal platform binding (pure Dart)', () {
+    final themed = TermContext(
+      tokens: TokenStore({primaryColor: const TermColor(6)}),
+    );
+
     test('Prop statics work through the platform typedef with inference', () {
       // Downward inference binds C from the declared/expected type.
       final TermProp<TermColor> direct = TermProp.value(const TermColor(1));
@@ -151,24 +124,18 @@ void main() {
 
     test('tokens resolve against the platform context', () {
       final prop = TermProp<TermColor>.token(primaryColor);
-      final context = TermContext(
-        tokens: {primaryColor: const TermColor(6)},
-      );
 
-      expect(prop.resolveProp(context), const TermColor(6));
+      expect(prop.resolveProp(themed), const TermColor(6));
     });
 
     test('token overridden by a later value, and vice versa', () {
-      final context = TermContext(
-        tokens: {primaryColor: const TermColor(6)},
-      );
       final token = TermProp<TermColor>.token(primaryColor);
       final value = TermProp.value<TermContext, TermColor>(
         const TermColor(2),
       );
 
-      expect(token.mergeProp(value).resolveProp(context), const TermColor(2));
-      expect(value.mergeProp(token).resolveProp(context), const TermColor(6));
+      expect(token.mergeProp(value).resolveProp(themed), const TermColor(2));
+      expect(value.mergeProp(token).resolveProp(themed), const TermColor(6));
     });
 
     test('directives transform the resolved value', () {
@@ -231,13 +198,13 @@ void main() {
 
       expect(prop.resolveProp(const TermContext()), const TermColor(7));
       expect(
-        prop.resolveProp(const TermContext(focused: true)),
+        prop.resolveProp(const TermContext(states: {'focused'})),
         const TermColor(15),
       );
     });
 
     test('context variants evaluate platform predicates', () {
-      final wide = TermVariant('term_wide', (c) => c.columns >= 120);
+      final wide = wideVariant();
       final narrow = NotVariant<TermContext>(wide);
 
       expect(wide.when(const TermContext(columns: 200)), isTrue);

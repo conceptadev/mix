@@ -1,19 +1,9 @@
 import 'package:mix_core/mix_core.dart';
 import 'package:test/test.dart';
 
-// --- NodeModifier / reorderByType --------------------------------------
+import 'fixtures/term_platform.dart';
 
-class PadModifier implements NodeModifier<String> {
-  @override
-  String build(String child) => 'pad($child)';
-}
-
-class BorderModifier implements NodeModifier<String> {
-  @override
-  String build(String child) => 'border($child)';
-}
-
-class DimModifier implements NodeModifier<String> {
+class DimNode implements NodeModifier<String> {
   @override
   String build(String child) => 'dim($child)';
 }
@@ -44,31 +34,16 @@ class _ResetMix extends Mixable<Object?> {
   _ResetMix merge(_ResetMix? other) => this;
 }
 
-// --- token store fixtures -------------------------------------------------
-
-class FakeContext {
-  final int columns;
-  const FakeContext(this.columns);
-}
-
-class FakeToken<T> extends MixToken<FakeContext, T> {
-  final TokenStore<FakeContext> store;
-  const FakeToken(super.name, this.store);
-
-  @override
-  T resolve(FakeContext context) => store.getToken(this, context);
-}
-
 void main() {
   group('reorderByType', () {
-    final pad = PadModifier();
-    final border = BorderModifier();
-    final dim = DimModifier();
+    final pad = PadNode();
+    final border = BorderNode();
+    final dim = DimNode();
 
     test('applies default order, then appearance order for unknowns', () {
       final ordered = reorderByType<NodeModifier<String>>(
         [dim, border, pad],
-        defaultOrder: [PadModifier, BorderModifier],
+        defaultOrder: [PadNode, BorderNode],
       );
 
       expect(ordered, [pad, border, dim]);
@@ -77,15 +52,15 @@ void main() {
     test('user order wins over default order', () {
       final ordered = reorderByType<NodeModifier<String>>(
         [pad, border],
-        typeOrder: [BorderModifier],
-        defaultOrder: [PadModifier, BorderModifier],
+        typeOrder: [BorderNode],
+        defaultOrder: [PadNode, BorderNode],
       );
 
       expect(ordered, [border, pad]);
     });
 
     test('keeps only the first item of each runtime type', () {
-      final ordered = reorderByType<NodeModifier<String>>([pad, PadModifier()]);
+      final ordered = reorderByType<NodeModifier<String>>([pad, PadNode()]);
 
       expect(ordered, [pad]);
     });
@@ -93,7 +68,7 @@ void main() {
     test('reversed fold makes the first modifier the outermost wrapper', () {
       final ordered = reorderByType<NodeModifier<String>>(
         [border, pad],
-        defaultOrder: [PadModifier, BorderModifier],
+        defaultOrder: [PadNode, BorderNode],
       );
 
       var node = 'child';
@@ -101,7 +76,7 @@ void main() {
         node = modifier.build(node);
       }
 
-      expect(node, 'pad(border(child))');
+      expect(node, ' |child| ');
     });
   });
 
@@ -139,46 +114,41 @@ void main() {
   });
 
   group('TokenStore', () {
-    test('resolves plain values and resolver entries', () {
-      const store = TokenStore<FakeContext>(null);
-      final width = FakeToken<int>('width', store);
-      final label = FakeToken<String>('label', store);
+    const width = TermToken<int>('width');
+    const label = TermToken<String>('label');
 
-      final table = TokenStore<FakeContext>({
-        width: (FakeContext c) => c.columns,
+    test('resolves plain values and resolver entries', () {
+      final table = TokenStore<TermContext>({
+        width: (TermContext c) => c.columns,
         label: 'ansi',
       });
 
-      expect(table.getToken(width, const FakeContext(120)), 120);
-      expect(table.getToken(label, const FakeContext(120)), 'ansi');
+      expect(table.getToken(width, const TermContext(columns: 120)), 120);
+      expect(table.getToken(label, const TermContext()), 'ansi');
     });
 
     test('missing and mistyped entries throw StateError', () {
-      const store = TokenStore<FakeContext>(null);
-      final width = FakeToken<int>('width', store);
-
       expect(
-        () => const TokenStore<FakeContext>(null)
-            .getToken(width, const FakeContext(1)),
+        () => const TokenStore<TermContext>(null)
+            .getToken(width, const TermContext()),
         throwsStateError,
       );
       expect(
-        () => TokenStore<FakeContext>({width: 'not an int'})
-            .getToken(width, const FakeContext(1)),
+        () => TokenStore<TermContext>({width: 'not an int'})
+            .getToken(width, const TermContext()),
         throwsStateError,
       );
     });
 
     test('merge is last-wins and keeps unmatched entries', () {
-      const store = TokenStore<FakeContext>(null);
-      final a = FakeToken<int>('a', store);
-      final b = FakeToken<int>('b', store);
+      const a = TermToken<int>('a');
+      const b = TermToken<int>('b');
 
-      final merged = TokenStore<FakeContext>({a: 1, b: 2})
-          .merge(TokenStore<FakeContext>({a: 10}));
+      final merged = TokenStore<TermContext>({a: 1, b: 2})
+          .merge(TokenStore<TermContext>({a: 10}));
 
-      expect(merged.getToken(a, const FakeContext(0)), 10);
-      expect(merged.getToken(b, const FakeContext(0)), 2);
+      expect(merged.getToken(a, const TermContext()), 10);
+      expect(merged.getToken(b, const TermContext()), 2);
     });
   });
 }

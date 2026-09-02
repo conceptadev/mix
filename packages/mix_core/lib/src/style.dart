@@ -38,12 +38,16 @@ abstract class StyleBase<C, R, Self extends StyleBase<C, R, Self>>
   /// Interaction-state dependencies declared anywhere in this style's
   /// variant tree.
   ///
-  /// Walks the `$variants` graph collecting [ContextVariant.stateDependencies]
-  /// (package:mix narrows these to `WidgetState`). Only context-variant-headed
-  /// entries are walked: named-variant branches are inert until hoisted, and
-  /// builder variants ignore their stored placeholder value at resolution.
-  Set<Object> get stateDependencies {
-    final states = <Object>{};
+  /// Walks the `$variants` graph collecting [ContextVariant.stateDependencies].
+  /// Only context-variant-headed entries are walked: named-variant branches
+  /// are inert until hoisted, and builder variants ignore their stored
+  /// placeholder value at resolution.
+  Set<Object> get stateDependencies => collectStateDependencies<Object>();
+
+  /// [stateDependencies] narrowed to [T] in the same single pass (package:mix
+  /// uses `collectStateDependencies<WidgetState>()`).
+  Set<T> collectStateDependencies<T extends Object>() {
+    final states = <T>{};
     // Identity, not equality, and it earns its keep twice over:
     //  1. Cycles. `$variants` is stored by reference, so a caller can pass a
     //     list to a styler constructor and then append the styler to that same
@@ -61,7 +65,9 @@ abstract class StyleBase<C, R, Self extends StyleBase<C, R, Self>>
       for (final variantStyle in variants) {
         final variant = variantStyle.variant;
         if (variant is ContextVariant<C>) {
-          states.addAll(variant.stateDependencies);
+          for (final dependency in variant.stateDependencies) {
+            if (dependency is T) states.add(dependency);
+          }
           collectDependencies(variantStyle.value);
         }
       }
@@ -98,22 +104,12 @@ abstract class StyleBase<C, R, Self extends StyleBase<C, R, Self>>
     for (final variantAttr in variants) {
       final variant = variantAttr.variant;
 
-      final bool isActive;
-      if (variant is ContextVariant<C>) {
-        isActive = variant.when(context);
-      } else if (variant is NamedVariant) {
-        isActive = namedVariants.contains(variant);
-      } else if (variant is ContextVariantBuilder) {
-        isActive = true;
-      } else {
-        assert(
-          false,
-          'Unknown Variant kind: ${variant.runtimeType}. Custom variants '
-          'must extend NamedVariant, ContextVariant, or '
-          'ContextVariantBuilder.',
-        );
-        isActive = false;
-      }
+      final isActive = switch (variant) {
+        ContextVariant<C>() => variant.when(context),
+        NamedVariant() => namedVariants.contains(variant),
+        ContextVariantBuilder<C, Object?>() => true,
+        _ => _unknownVariant(variant, false),
+      };
       if (!isActive) continue;
 
       // Keyed off the declaration, not the class: a focus-visible variant is
@@ -126,31 +122,22 @@ abstract class StyleBase<C, R, Self extends StyleBase<C, R, Self>>
     }
 
     // Extract the style from each active variant
-    final stylesToMerge = <(Self, bool)>[]; // (style, isFromStyleVariation)
+    final stylesToMerge = <(Self, bool)>[];
 
     for (final variantAttr in lowPriority.followedBy(highPriority)) {
       final variant = variantAttr.variant;
-      final (Self, bool) result;
-      if (variant is ContextVariantBuilder) {
+      // (style, isFromStyleVariation); the stored value is the default.
+      var result = (variantAttr.value, false);
+      if (variant is ContextVariantBuilder<C, Object?>) {
         result = (variant.build(context) as Self, false);
-      } else {
-        // Check if the value is a StyleVariation
-        final value = variantAttr.value;
         // ignore: avoid-unrelated-type-assertions
-        if (value is StyleVariation<C, Self>) {
-          final styleVariation = value as StyleVariation<C, Self>;
-          // Only apply if this variant is active
-          if (namedVariants.contains(styleVariation.variantType)) {
-            result = (
-              styleVariation.styleBuilder(this as Self, namedVariants, context),
-              true,
-            );
-          } else {
-            result = (value, false);
-          }
-        } else {
-          result = (value, false);
-        }
+      } else if (variantAttr.value case final StyleVariation<C, Self> variation
+          when namedVariants.contains(variation.variantType)) {
+        // An active StyleVariation builds its own final style.
+        result = (
+          variation.styleBuilder(this as Self, namedVariants, context),
+          true,
+        );
       }
       stylesToMerge.add(result);
     }
@@ -245,23 +232,30 @@ enum _VariantMergeNamespace { named, context, builder }
 /// Keeps diagnostic labels out of semantic identity. Record equality
 /// delegates to the value semantics already defined by each supported
 /// variant kind.
-Object _variantMergeKey(Variant variant) {
-  if (variant is NamedVariant) {
-    return (_VariantMergeNamespace.named, variant.name);
-  }
-  if (variant is ContextVariantBuilder) {
-    return (_VariantMergeNamespace.builder, variant.functionKey);
-  }
-  if (variant is ContextVariant) {
-    return (_VariantMergeNamespace.context, variant);
-  }
+///
+/// Binding [C] on the builder check keeps the `fn` read type-safe; a raw
+/// `ContextVariantBuilder` receiver would cast it to `dynamic Function(dynamic)`
+/// and fail at runtime (parameter contravariance).
+Object _variantMergeKey<C>(Variant variant) => switch (variant) {
+  NamedVariant(:final name) => (_VariantMergeNamespace.named, name),
+  ContextVariantBuilder<C, Object?>(:final fn) => (
+    _VariantMergeNamespace.builder,
+    fn,
+  ),
+  ContextVariant<C>() => (_VariantMergeNamespace.context, variant),
+  _ => _unknownVariant(variant, (_VariantMergeNamespace.context, variant)),
+};
+
+/// Debug-only guard for unsupported [Variant] subclasses; release builds
+/// degrade to [fallback] (inactive / an identity-keyed entry).
+T _unknownVariant<T>(Variant variant, T fallback) {
   assert(
     false,
     'Unknown Variant kind: ${variant.runtimeType}. Custom variants must '
     'extend NamedVariant, ContextVariant, or ContextVariantBuilder.',
   );
 
-  return (_VariantMergeNamespace.context, variant);
+  return fallback;
 }
 
 /// Variant wrapper for conditional styling.
@@ -309,5 +303,5 @@ final class VariantStyle<C, R, St extends StyleBase<C, R, St>>
 
   /// Opaque semantic identity used when merging variant style fragments.
   @override
-  Object get mergeKey => _variantMergeKey(variant);
+  Object get mergeKey => _variantMergeKey<C>(variant);
 }
