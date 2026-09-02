@@ -50,7 +50,8 @@ class TermStyleSpec {
 
 // 4. ── The style (hand-written styler over StyleBase) -----------------------
 
-class TermTextStyle extends StyleBase<TermContext, TermStyleSpec, TermTextStyle> {
+class TermTextStyle
+    extends StyleBase<TermContext, TermStyleSpec, TermTextStyle> {
   final Prop<TermContext, int>? $ansiColor;
   final Prop<TermContext, bool>? $bold;
   final List<NodeModifier<String>>? $modifiers;
@@ -77,9 +78,8 @@ class TermTextStyle extends StyleBase<TermContext, TermStyleSpec, TermTextStyle>
   TermTextStyle wrap(NodeModifier<String> modifier) =>
       merge(TermTextStyle(modifiers: [modifier]));
 
-  TermTextStyle variant(Variant v, TermTextStyle style) => merge(
-    TermTextStyle(variants: [VariantStyle(v, style)]),
-  );
+  TermTextStyle variant(Variant v, TermTextStyle style) =>
+      merge(TermTextStyle(variants: [VariantStyle(v, style)]));
 
   TermTextStyle onFocused(TermTextStyle style) =>
       variant(TermStateVariant('focused'), style);

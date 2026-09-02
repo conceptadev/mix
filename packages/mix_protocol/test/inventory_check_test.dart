@@ -82,9 +82,7 @@ void main() {
   test(
     'inventory discovers second-level subclasses of tracked bases',
     () async {
-      final root = _createFixtureRepo(
-        'mix_protocol_inventory_closure_',
-      );
+      final root = _createFixtureRepo('mix_protocol_inventory_closure_');
       addTearDown(() => root.deleteSync(recursive: true));
       _writeFile(root, 'packages/mix/lib/src/core/style.dart', '''
 abstract class Mix<T> {}
@@ -111,9 +109,7 @@ final class PressedVariant extends WidgetStateVariant {}
   );
 
   test('inventory rejects unknown enum-like field types', () async {
-    final root = _createFixtureRepo(
-      'mix_protocol_inventory_unknown_enum_',
-    );
+    final root = _createFixtureRepo('mix_protocol_inventory_unknown_enum_');
     addTearDown(() => root.deleteSync(recursive: true));
     _writeFile(root, 'packages/mix/lib/src/properties/probe_mix.dart', r'''
 class Mix<T> {}
@@ -170,9 +166,7 @@ final class ProbeMix extends Mix<Object> {
   });
 
   test('dirty git worktrees are marked in generated provenance', () async {
-    final root = _createFixtureRepo(
-      'mix_protocol_inventory_dirty_',
-    );
+    final root = _createFixtureRepo('mix_protocol_inventory_dirty_');
     addTearDown(() => root.deleteSync(recursive: true));
     _writeFile(root, 'packages/mix/lib/src/core/directive.dart', '''
 class Plain {}
@@ -199,9 +193,7 @@ class Later {}
   });
 
   test('directive inventory reads static keys from analyzer AST', () async {
-    final root = _createFixtureRepo(
-      'mix_protocol_inventory_directive_',
-    );
+    final root = _createFixtureRepo('mix_protocol_inventory_directive_');
     addTearDown(() => root.deleteSync(recursive: true));
     _writeFile(root, 'packages/mix/lib/src/core/directive.dart', '''
 abstract class Directive<T> {
@@ -285,9 +277,7 @@ final class DynamicDirective extends Directive<String> {
   );
 
   test('declared styler fields recognize direct and standard helper forms', () {
-    final root = _createFixtureRepo(
-      'mix_protocol_styler_helper_',
-    );
+    final root = _createFixtureRepo('mix_protocol_styler_helper_');
     addTearDown(() => root.deleteSync(recursive: true));
     _writeFile(
       root,
@@ -373,7 +363,9 @@ Directory _repositoryRoot() {
 /// and `packages/mix_core`, and requires both roots to exist.
 Directory _createFixtureRepo(String prefix) {
   final root = Directory.systemTemp.createTempSync(prefix);
-  Directory('${root.path}/packages/mix_core/lib/src').createSync(recursive: true);
+  Directory(
+    '${root.path}/packages/mix_core/lib/src',
+  ).createSync(recursive: true);
 
   return root;
 }

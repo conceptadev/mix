@@ -24,13 +24,10 @@ class TermStyle extends StyleBase<TermContext, TermSheet, TermStyle> {
   TermStyle merge(TermStyle? other) {
     if (other == null) return this;
 
-    return TermStyle(
-      [...layers, ...other.layers],
-      variants: mergeVariantLists(
-        $variants,
-        other.$variants,
-      ),
-    );
+    return TermStyle([
+      ...layers,
+      ...other.layers,
+    ], variants: mergeVariantLists($variants, other.$variants));
   }
 
   @override
@@ -70,7 +67,9 @@ void main() {
     test('inactive variants leave the style unchanged', () {
       final s = style(
         ['base'],
-        [VariantStyle(const NamedVariant('primary'), style(['primary']))],
+        [
+          VariantStyle(const NamedVariant('primary'), style(['primary'])),
+        ],
       );
 
       expect(s.build(const TermContext(), namedVariants: const {}), ['base']);
@@ -79,57 +78,80 @@ void main() {
     test('named variants apply when requested', () {
       final s = style(
         ['base'],
-        [VariantStyle(const NamedVariant('primary'), style(['primary']))],
+        [
+          VariantStyle(const NamedVariant('primary'), style(['primary'])),
+        ],
       );
 
       expect(
-        s.build(const TermContext(), namedVariants: {const NamedVariant('primary')}),
+        s.build(
+          const TermContext(),
+          namedVariants: {const NamedVariant('primary')},
+        ),
         ['base', 'primary'],
       );
     });
 
     test('context variants apply from the platform context', () {
-      final s = style(['base'], [VariantStyle(wide, style(['wide']))]);
+      final s = style(
+        ['base'],
+        [
+          VariantStyle(wide, style(['wide'])),
+        ],
+      );
 
       expect(s.build(const TermContext()), ['base']);
       expect(s.build(wideContext), ['base', 'wide']);
     });
 
     test('state-dependent variants apply after state-free ones', () {
-      final s = style(['base'], [
-        VariantStyle(FocusVariant(), style(['focus'])),
-        VariantStyle(wide, style(['wide'])),
-      ]);
+      final s = style(
+        ['base'],
+        [
+          VariantStyle(FocusVariant(), style(['focus'])),
+          VariantStyle(wide, style(['wide'])),
+        ],
+      );
 
       // FocusVariant is declared first but reads interaction state, so the
       // state-free wide variant merges first.
-      expect(
-        s.build(const TermContext(columns: 200, focused: true)),
-        ['base', 'wide', 'focus'],
-      );
+      expect(s.build(const TermContext(columns: 200, focused: true)), [
+        'base',
+        'wide',
+        'focus',
+      ]);
     });
 
     test('declaration order is kept inside a priority group', () {
-      final s = style(['base'], [
-        VariantStyle(wide, style(['first'])),
-        VariantStyle(
-          ContextVariant<TermContext>('wide_too', (c) => c.columns >= 120),
-          style(['second']),
-        ),
-      ]);
+      final s = style(
+        ['base'],
+        [
+          VariantStyle(wide, style(['first'])),
+          VariantStyle(
+            ContextVariant<TermContext>('wide_too', (c) => c.columns >= 120),
+            style(['second']),
+          ),
+        ],
+      );
 
       expect(s.build(wideContext), ['base', 'first', 'second']);
     });
 
     test('nested variants resolve recursively', () {
-      final s = style(['base'], [
-        VariantStyle(
-          wide,
-          style(['wide'], [
-            VariantStyle(const NamedVariant('primary'), style(['primary'])),
-          ]),
-        ),
-      ]);
+      final s = style(
+        ['base'],
+        [
+          VariantStyle(
+            wide,
+            style(
+              ['wide'],
+              [
+                VariantStyle(const NamedVariant('primary'), style(['primary'])),
+              ],
+            ),
+          ),
+        ],
+      );
 
       expect(
         s.build(wideContext, namedVariants: {const NamedVariant('primary')}),
@@ -138,14 +160,17 @@ void main() {
     });
 
     test('builder variants always run against the context', () {
-      final s = style(['base'], [
-        VariantStyle(
-          ContextVariantBuilder<TermContext, TermStyle>(
-            (c) => style(['cols:${c.columns}']),
+      final s = style(
+        ['base'],
+        [
+          VariantStyle(
+            ContextVariantBuilder<TermContext, TermStyle>(
+              (c) => style(['cols:${c.columns}']),
+            ),
+            const TermIdentityStyle(),
           ),
-          const TermIdentityStyle(),
-        ),
-      ]);
+        ],
+      );
 
       expect(s.build(const TermContext(columns: 42)), ['base', 'cols:42']);
     });
@@ -168,20 +193,25 @@ void main() {
     });
 
     test('stateDependencies walks the variant tree', () {
-      final s = style(['base'], [
-        VariantStyle(wide, style([], [
-          VariantStyle(FocusVariant(), style(['focus'])),
-        ])),
-      ]);
+      final s = style(
+        ['base'],
+        [
+          VariantStyle(
+            wide,
+            style([], [
+              VariantStyle(FocusVariant(), style(['focus'])),
+            ]),
+          ),
+        ],
+      );
 
       expect(s.stateDependencies, {'focused'});
     });
 
     test('NotVariant forwards state dependencies', () {
-      expect(
-        NotVariant<TermContext>(FocusVariant()).stateDependencies,
-        {'focused'},
-      );
+      expect(NotVariant<TermContext>(FocusVariant()).stateDependencies, {
+        'focused',
+      });
     });
   });
 

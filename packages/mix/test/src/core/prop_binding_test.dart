@@ -39,9 +39,9 @@ void main() {
       expect(merged, isA<Prop<int>>());
       expect(merged.sources, hasLength(2));
 
-      final withDirectives = Prop.value<num>(1.0).directives([
-        MultiplyNumberDirective(2),
-      ]);
+      final withDirectives = Prop.value<num>(
+        1.0,
+      ).directives([MultiplyNumberDirective(2)]);
       expect(withDirectives, isA<Prop<num>>());
       expect(withDirectives.$directives, hasLength(1));
     });

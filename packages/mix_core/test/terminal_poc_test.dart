@@ -45,7 +45,8 @@ class DimDirective extends Directive<TermColor> {
 }
 
 /// A Mix over a composite platform type, to exercise accumulation merging.
-class TermBorderMix extends Mix<TermContext, ({String style, TermColor? color})> {
+class TermBorderMix
+    extends Mix<TermContext, ({String style, TermColor? color})> {
   final Prop<TermContext, String>? style;
   final Prop<TermContext, TermColor>? color;
 
@@ -87,8 +88,7 @@ class FocusAwareColorMix extends Mix<TermContext, TermColor>
   TermColor resolve(TermContext context) => base;
 
   @override
-  TermColor build(TermContext context) =>
-      context.focused ? whenFocused : base;
+  TermColor build(TermContext context) => context.focused ? whenFocused : base;
 
   @override
   List<Object?> get props => [base, whenFocused];
@@ -130,9 +130,7 @@ void main() {
 
     test('token overridden by a later value, and vice versa', () {
       final token = TermProp<TermColor>.token(primaryColor);
-      final value = TermProp.value<TermContext, TermColor>(
-        const TermColor(2),
-      );
+      final value = TermProp.value<TermContext, TermColor>(const TermColor(2));
 
       expect(token.mergeProp(value).resolveProp(themed), const TermColor(2));
       expect(value.mergeProp(token).resolveProp(themed), const TermColor(6));
@@ -150,46 +148,54 @@ void main() {
     });
 
     test('Mix sources accumulate field-by-field across merges', () {
-      final styled = TermProp.mix<TermContext, ({String style, TermColor? color})>(
-        TermBorderMix(style: TermProp.value('double')),
-      );
-      final colored = TermProp.mix<TermContext, ({String style, TermColor? color})>(
-        TermBorderMix(color: TermProp.value(const TermColor(5))),
-      );
+      final styled =
+          TermProp.mix<TermContext, ({String style, TermColor? color})>(
+            TermBorderMix(style: TermProp.value('double')),
+          );
+      final colored =
+          TermProp.mix<TermContext, ({String style, TermColor? color})>(
+            TermBorderMix(color: TermProp.value(const TermColor(5))),
+          );
 
-      final resolved = styled.mergeProp(colored).resolveProp(const TermContext());
+      final resolved = styled
+          .mergeProp(colored)
+          .resolveProp(const TermContext());
 
       // Both fields survive the merge — accumulation, not replacement.
       expect(resolved.style, 'double');
       expect(resolved.color, const TermColor(5));
     });
 
-    test('converter registry converts raw values when mixed with Mix values',
-        () {
-      MixConverterRegistry.instanceOf<TermContext>()
-          .register<({String style, TermColor? color})>(
-        SimpleMixConverter(
-          (value) =>
-              TermBorderMix(style: TermProp.value(value.style)),
-        ),
-      );
-      addTearDown(MixConverterRegistry.instanceOf<TermContext>().clear);
+    test(
+      'converter registry converts raw values when mixed with Mix values',
+      () {
+        MixConverterRegistry.instanceOf<TermContext>()
+            .register<({String style, TermColor? color})>(
+              SimpleMixConverter(
+                (value) => TermBorderMix(style: TermProp.value(value.style)),
+              ),
+            );
+        addTearDown(MixConverterRegistry.instanceOf<TermContext>().clear);
 
-      final rawFirst =
-          TermProp.value<TermContext, ({String style, TermColor? color})>(
-        (style: 'ascii', color: null),
-      );
-      final mixSecond = TermProp.mix<TermContext, ({String style, TermColor? color})>(
-        TermBorderMix(color: TermProp.value(const TermColor(2))),
-      );
+        final rawFirst =
+            TermProp.value<TermContext, ({String style, TermColor? color})>((
+              style: 'ascii',
+              color: null,
+            ));
+        final mixSecond =
+            TermProp.mix<TermContext, ({String style, TermColor? color})>(
+              TermBorderMix(color: TermProp.value(const TermColor(2))),
+            );
 
-      final resolved =
-          rawFirst.mergeProp(mixSecond).resolveProp(const TermContext());
+        final resolved = rawFirst
+            .mergeProp(mixSecond)
+            .resolveProp(const TermContext());
 
-      // The raw value was converted to a Mix and merged, not discarded.
-      expect(resolved.style, 'ascii');
-      expect(resolved.color, const TermColor(2));
-    });
+        // The raw value was converted to a Mix and merged, not discarded.
+        expect(resolved.style, 'ascii');
+        expect(resolved.color, const TermColor(2));
+      },
+    );
 
     test('Buildable values apply context conditions during resolution', () {
       final prop = TermProp.mix<TermContext, TermColor>(
@@ -217,10 +223,10 @@ void main() {
 
       expect(hasVariant(active, const NamedVariant('primary')), isTrue);
       expect(
-        hasAllVariants(
-          active,
-          const [NamedVariant('primary'), NamedVariant('large')],
-        ),
+        hasAllVariants(active, const [
+          NamedVariant('primary'),
+          NamedVariant('large'),
+        ]),
         isTrue,
       );
       expect(hasAnyVariant(active, const [NamedVariant('danger')]), isFalse);
@@ -235,10 +241,7 @@ void main() {
     test('empty prop throws a StateError (not FlutterError)', () {
       final empty = TermProp<TermColor>.directives(const [DimDirective()]);
 
-      expect(
-        () => empty.resolveProp(const TermContext()),
-        throwsStateError,
-      );
+      expect(() => empty.resolveProp(const TermContext()), throwsStateError);
     });
   });
 }

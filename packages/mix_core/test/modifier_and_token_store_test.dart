@@ -83,15 +83,11 @@ void main() {
   group('mergeKeyedWithReset', () {
     test('merges same-key entries and keeps distinct keys', () {
       final acc = <Object, Mixable<Object?>>{};
-      mergeKeyedWithReset(
-        acc,
-        const [
-          _KeyedMix('a', ['1']),
-          _KeyedMix('b', ['2']),
-          _KeyedMix('a', ['3']),
-        ],
-        resetKey: 'reset',
-      );
+      mergeKeyedWithReset(acc, const [
+        _KeyedMix('a', ['1']),
+        _KeyedMix('b', ['2']),
+        _KeyedMix('a', ['3']),
+      ], resetKey: 'reset');
 
       expect((acc['a']! as _KeyedMix).values, ['1', '3']);
       expect((acc['b']! as _KeyedMix).values, ['2']);
@@ -99,15 +95,11 @@ void main() {
 
     test('a reset entry clears everything accumulated so far', () {
       final acc = <Object, Mixable<Object?>>{};
-      mergeKeyedWithReset(
-        acc,
-        const [
-          _KeyedMix('a', ['1']),
-          _ResetMix(),
-          _KeyedMix('b', ['2']),
-        ],
-        resetKey: 'reset',
-      );
+      mergeKeyedWithReset(acc, const [
+        _KeyedMix('a', ['1']),
+        _ResetMix(),
+        _KeyedMix('b', ['2']),
+      ], resetKey: 'reset');
 
       expect(acc.keys, ['b']);
     });
@@ -129,13 +121,15 @@ void main() {
 
     test('missing and mistyped entries throw StateError', () {
       expect(
-        () => const TokenStore<TermContext>(null)
-            .getToken(width, const TermContext()),
+        () => const TokenStore<TermContext>(
+          null,
+        ).getToken(width, const TermContext()),
         throwsStateError,
       );
       expect(
-        () => TokenStore<TermContext>({width: 'not an int'})
-            .getToken(width, const TermContext()),
+        () => TokenStore<TermContext>({
+          width: 'not an int',
+        }).getToken(width, const TermContext()),
         throwsStateError,
       );
     });
@@ -144,8 +138,10 @@ void main() {
       const a = TermToken<int>('a');
       const b = TermToken<int>('b');
 
-      final merged = TokenStore<TermContext>({a: 1, b: 2})
-          .merge(TokenStore<TermContext>({a: 10}));
+      final merged = TokenStore<TermContext>({
+        a: 1,
+        b: 2,
+      }).merge(TokenStore<TermContext>({a: 10}));
 
       expect(merged.getToken(a, const TermContext()), 10);
       expect(merged.getToken(b, const TermContext()), 2);

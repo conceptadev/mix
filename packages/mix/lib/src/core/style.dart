@@ -88,8 +88,7 @@ abstract class Style<S extends Spec<S>>
   /// [core.StyleBase.collectStateDependencies]; mix's [ContextVariant]
   /// declares them as [WidgetState]s.
   @internal
-  Set<WidgetState> get widgetStates =>
-      collectStateDependencies<WidgetState>();
+  Set<WidgetState> get widgetStates => collectStateDependencies<WidgetState>();
 
   /// Resolves this attribute to its concrete value using the provided [BuildContext].
   @override

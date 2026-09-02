@@ -78,10 +78,7 @@ class Prop<C, V> {
   ///
   /// The token is resolved via [MixToken.resolve] during resolution.
   /// Optionally accepts [directives] configuration.
-  factory Prop.token(
-    MixToken<C, V> token, {
-    List<Directive<V>>? directives,
-  }) {
+  factory Prop.token(MixToken<C, V> token, {List<Directive<V>>? directives}) {
     return Prop.fromSources([TokenSource(token)], directives: directives);
   }
 
@@ -150,9 +147,7 @@ class Prop<C, V> {
   /// Uses the converter registry to transform the value into a Mix type,
   /// then wraps it in a Prop. Returns null if conversion is not possible.
   static Prop<C, V>? mixValue<C, V>(V value) {
-    final converted = MixConverterRegistry.instanceOf<C>().tryConvert<V>(
-      value,
-    );
+    final converted = MixConverterRegistry.instanceOf<C>().tryConvert<V>(value);
     if (converted == null) return null;
 
     return Prop.mix(converted);
@@ -194,10 +189,10 @@ class Prop<C, V> {
     if (other == null) return this;
 
     // Always accumulate all sources - no conditional logic
-    return Prop.fromSources(
-      [...sources, ...other.sources],
-      directives: PropOps.mergeDirectives($directives, other.$directives),
-    );
+    return Prop.fromSources([
+      ...sources,
+      ...other.sources,
+    ], directives: PropOps.mergeDirectives($directives, other.$directives));
   }
 
   /// Resolves this property to a concrete value using the given context.
@@ -243,8 +238,9 @@ class Prop<C, V> {
           mixValues.add(value);
         } else if (value is V) {
           // Try to convert regular value to Mix
-          final converted = MixConverterRegistry.instanceOf<C>()
-              .tryConvert<V>(value);
+          final converted = MixConverterRegistry.instanceOf<C>().tryConvert<V>(
+            value,
+          );
           if (converted != null) {
             mixValues.add(converted);
           } else {

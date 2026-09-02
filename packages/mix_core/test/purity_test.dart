@@ -31,7 +31,8 @@ void main() {
     expect(
       offenders,
       isEmpty,
-      reason: 'mix_core must stay pure Dart. Offending directives:\n'
+      reason:
+          'mix_core must stay pure Dart. Offending directives:\n'
           '${offenders.join('\n')}',
     );
   });
