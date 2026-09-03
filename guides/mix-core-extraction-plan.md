@@ -352,3 +352,72 @@ long-lived branch.
 5. For the terminal library: is animation part of the core contract (lerp is
    already pure in `Spec.lerp`) or fully platform-side? Affects whether a
    minimal `AnimationConfig`-like type belongs in core.
+
+## Deferred follow-ups (raised during implementation)
+
+Every item below was **considered and consciously excluded** from the
+extraction branch — none of them is unfinished work. They are recorded here so
+the decisions survive outside the conversation that produced them, and so a
+reviewer opening the branch cold does not have to re-derive why an obvious
+cleanup was left in place.
+
+Distinct from **Open questions** above: those are design questions still
+awaiting an answer, these are answers already given.
+
+1. **The last unchecked cast in the engine: `variant.build(context) as Self`**
+   — `packages/mix_core/lib/src/style.dart`, in `mergeActiveVariants`, where a
+   `ContextVariantBuilder` result is adopted as the enclosing `Self` type.
+   Behavior is byte-identical to `origin/main`; the cast tracks a real gap
+   (`ContextVariantBuilder` does not carry the style type it builds), not a
+   porting shortcut. Fixing it means reshaping `VariantStyle` /
+   `ContextVariantBuilder` to carry that type — a public API change, out of
+   scope for a branch that deliberately holds mix's API fixed.
+
+2. **`StyleVariation` covariance** — same file, a few lines below (1), the
+   pattern match carrying `// ignore: avoid-unrelated-type-assertions`. Same
+   root cause and the same API-reshape blocker; (1) and (2) should be designed
+   and landed together, not separately.
+
+3. **`SpecGenerator` unconditionally emits `Diagnosticable`** —
+   `packages/mix_generator/lib/src/core/helpers/generated_contract_emitter.dart`
+   (`buildDiagnosticableSurface`), consumed by `mix_generator.dart` and
+   `core/builders/modifier_mixin_builder.dart`. `Diagnosticable` comes from
+   `package:flutter/foundation.dart`, so a terminal or Jaspr package **cannot
+   use the generator to produce specs at all** — it can only hand-write them.
+   Of the items in this list this is the highest-value one: it is the concrete
+   remaining blocker for the non-Flutter consumer that motivated the entire
+   extraction. Making the emission opt-out (a generator option, defaulting to
+   on so existing output stays byte-identical) is the likely shape.
+
+4. **`MixScope.orderOfModifiers` is dead wiring** — threaded through
+   `packages/mix/lib/src/theme/mix_theme.dart` and
+   `theme/material/material_theme.dart`: constructed, merged, forwarded, and
+   readable via `MixScope.of(context).orderOfModifiers`, but never consumed
+   when modifiers are actually ordered. Note this is a *separate field* from
+   `WidgetModifierConfig.$orderOfModifiers`, which is very much live — that one
+   feeds `typeOrder:` in `packages/mix/lib/src/modifiers/widget_modifier_config.dart`
+   and is what real ordering uses. Only the theme/scope-level copy is inert.
+   Pre-existing on `main` and unrelated to the extraction; removing it is a
+   public API change and belongs with other breaking work.
+
+5. **`strict-raw-types` is `false` in `packages/mix_core/analysis_options.yaml`**
+   — `strict-casts` and `strict-inference` are already enabled there. The third
+   would have caught the raw-generic contravariance trap that actually bit us
+   during this work: reading a field typed `X Function(C)` through a raw
+   receiver casts it to `dynamic Function(dynamic)` and throws at runtime
+   (parameter contravariance), which is why `_variantMergeKey` and the variant
+   fold now bind `C` explicitly in their `is`/pattern checks. Deferred only
+   because enabling it flags pre-existing declarations across the package;
+   worth doing as its own focused pass.
+
+6. **Issue [#1036](https://github.com/conceptadev/mix/issues/1036), second
+   finding** — `_iterablesEqual` in
+   `packages/mix_core/lib/src/deep_collection_equality.dart` returns `false` for
+   two equal-length non-`List` iterables, contradicting its own doc comment.
+   The behavior is pre-existing — verified against `origin/main` before any fix
+   landed here — and currently latent: no spec or prop in `mix`, `mix_winds`, or
+   `mix_chart` is typed as a non-`List` `Iterable`. Left unfixed because correcting it changes equality —
+   and therefore rebuild behavior — for any `Iterable`-typed prop library-wide,
+   which the current tests do not cover. The *first* finding in that issue (a
+   blind cast that threw on mismatched collection shapes) **is** fixed in this
+   branch.
