@@ -94,15 +94,12 @@ class Prop<V> extends core.Prop<BuildContext, V> {
   /// for accumulation merging behavior.
   /// Preserves token references (MixRef objects) instead of wrapping them in MixSource.
   static Prop<V> mix<V>(Mix<V> mix) {
-    // Check if mix is already a token reference (MixRef)
-    // MixRef objects are Prop<V> instances with TokenSource that implement Mix interfaces
+    // A token reference (MixRef) is a Prop<V> that also implements the Mix
+    // interfaces. Return it as-is so its TokenSource survives instead of being
+    // buried in a MixSource. Prop is unrelated to Mix, hence the ignore.
     // ignore: avoid-unrelated-type-assertions
-    if (mix is Prop<V>) {
-      // ignore: avoid-unrelated-type-casts
-      final prop = mix as Prop<V>;
-      if (prop.hasToken) {
-        return prop; // Return token reference directly to preserve TokenSource
-      }
+    if (mix case final Prop<V> prop when prop.hasToken) {
+      return prop;
     }
 
     return Prop.fromSources([MixSource(mix)]);

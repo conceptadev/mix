@@ -37,6 +37,8 @@ class TokenStore<C> {
     }
 
     if (value is T) {
+      // Not redundant: `T`'s bound is `Object?`, so `Object` does not promote
+      // to `T` and the analyzer rejects a bare `return value`.
       return value as T;
     }
 

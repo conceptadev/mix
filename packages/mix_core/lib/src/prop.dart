@@ -111,14 +111,12 @@ class Prop<C, V> {
   /// Preserves token references (MixRef objects) instead of wrapping them in
   /// MixSource.
   static Prop<C, V> mix<C, V>(Mix<C, V> mix) {
-    // Check if mix is already a token reference (MixRef)
-    // MixRef objects are Prop instances with TokenSource that implement Mix
-    // interfaces
-    if (mix is Prop<C, V>) {
-      final prop = mix as Prop<C, V>;
-      if (prop.hasToken) {
-        return prop; // Return token reference directly to preserve TokenSource
-      }
+    // A token reference (package:mix's MixRef) is a Prop that also implements
+    // the platform's Mix interface. Return it as-is so its TokenSource is
+    // preserved rather than buried in a MixSource. Prop is unrelated to Mix,
+    // so this is a downcast to a sibling type, not a narrowing.
+    if (mix case final Prop<C, V> prop when prop.hasToken) {
+      return prop;
     }
 
     return Prop.fromSources([MixSource(mix)]);
@@ -185,7 +183,7 @@ class Prop<C, V> {
   /// - Regular values: last value wins during resolution
   ///
   /// Directives are merged from both properties.
-  Prop<C, V> mergeProp(covariant Prop<C, V>? other) {
+  Prop<C, V> mergeProp(Prop<C, V>? other) {
     if (other == null) return this;
 
     // Always accumulate all sources - no conditional logic
@@ -281,9 +279,10 @@ class Prop<C, V> {
         // [Buildable.build], not by [Mix.resolve], so resolving a nested
         // style directly would silently drop them. Build such values instead
         // so their variants resolve against the current context.
-        resolvedValue = mergedMix is Buildable<C, V>
-            ? (mergedMix as Buildable<C, V>).build(context)
-            : mergedMix.resolve(context);
+        resolvedValue = switch (mergedMix) {
+          final Buildable<C, V> buildable => buildable.build(context),
+          _ => mergedMix.resolve(context),
+        };
       }
     } else {
       // Simple values - use last one (replacement strategy)
