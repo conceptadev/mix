@@ -8,7 +8,7 @@ import 'deep_collection_equality.dart';
 const _equality = DeepCollectionEquality();
 
 /// Determines whether [list1] and [list2] are equal using deep comparison.
-bool _equals(List list1, List list2) {
+bool _equals(List<Object?> list1, List<Object?> list2) {
   if (identical(list1, list2)) return true;
   final length = list1.length;
   if (length != list2.length) return false;

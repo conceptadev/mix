@@ -400,15 +400,13 @@ awaiting an answer, these are answers already given.
    Pre-existing on `main` and unrelated to the extraction; removing it is a
    public API change and belongs with other breaking work.
 
-5. **`strict-raw-types` is `false` in `packages/mix_core/analysis_options.yaml`**
-   — `strict-casts` and `strict-inference` are already enabled there. The third
-   would have caught the raw-generic contravariance trap that actually bit us
-   during this work: reading a field typed `X Function(C)` through a raw
-   receiver casts it to `dynamic Function(dynamic)` and throws at runtime
-   (parameter contravariance), which is why `_variantMergeKey` and the variant
-   fold now bind `C` explicitly in their `is`/pattern checks. Deferred only
-   because enabling it flags pre-existing declarations across the package;
-   worth doing as its own focused pass.
+5. *(Resolved — `strict-raw-types` is now `true`.)* It was deferred on the
+   assumption that enabling it would flag declarations across the package;
+   measuring it showed only 8 warnings in 2 files, all raw `Map`/`Set`/
+   `Iterable`/`List` in private helper signatures, so it was fixed and turned
+   on rather than deferred. `mix_core/analysis_options.yaml` now enables all
+   three of `strict-casts`, `strict-inference` and `strict-raw-types`. This is
+   the flag that guards the raw-generic contravariance trap described above.
 
 6. **Issue [#1036](https://github.com/conceptadev/mix/issues/1036), second
    finding** — `_iterablesEqual` in

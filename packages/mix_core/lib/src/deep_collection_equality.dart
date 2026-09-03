@@ -15,7 +15,7 @@ class DeepCollectionEquality {
   /// Compares two maps for deep equality.
   /// The maps are equal if they have the same keys and values.
   /// The order of keys is not considered.
-  bool _mapsEqual(Map map1, Map map2) {
+  bool _mapsEqual(Map<Object?, Object?> map1, Map<Object?, Object?> map2) {
     if (map1.length != map2.length) return false;
     for (var key in map1.keys) {
       if (!map2.containsKey(key) || !equals(map1[key], map2[key])) {
@@ -29,7 +29,7 @@ class DeepCollectionEquality {
   /// Compares two iterables for deep equality, considering element order.
   /// The iterables are equal if they have the same length and contain the same
   /// elements in the same order.
-  bool _iterablesEqual(Iterable iter1, Iterable iter2) {
+  bool _iterablesEqual(Iterable<Object?> iter1, Iterable<Object?> iter2) {
     if (iter1.length != iter2.length) return false;
     if (iter1 is List && iter2 is List) {
       for (int i = 0; i < iter1.length; i++) {
@@ -47,7 +47,7 @@ class DeepCollectionEquality {
   /// Compares two sets for deep equality.
   /// The order of elements in the sets is not considered.
   /// The sets are equal if they contain the same elements.
-  bool _setsEqual(Set set1, Set set2) {
+  bool _setsEqual(Set<Object?> set1, Set<Object?> set2) {
     if (set1.length != set2.length) return false;
     for (var value in set1) {
       if (!set2.contains(value)) {
