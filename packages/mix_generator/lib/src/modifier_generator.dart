@@ -145,7 +145,8 @@ class ModifierGenerator extends GeneratorForAnnotation<MixableModifier> {
       _failInvalidSetterType(field, setterType.typeCode, fieldTypeCode);
     }
 
-    final mixValueType = mixType.typeArguments.first;
+    // `Mix<C, T>`: the resolved value type is the last argument.
+    final mixValueType = mixType.typeArguments.last;
     if (_isInvalidMixValueType(mixValueType)) {
       _failInvalidSetterType(field, setterType.typeCode, fieldTypeCode);
     }

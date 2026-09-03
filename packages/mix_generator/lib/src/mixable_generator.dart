@@ -38,7 +38,8 @@ class MixableGenerator extends GeneratorForAnnotation<Mixable> {
       return null;
     }
 
-    final resolveType = mixType.typeArguments.first;
+    // `Mix<C, T>`: the resolved value type is the last argument.
+    final resolveType = mixType.typeArguments.last;
     final hiddenType = firstInvisibleTypeName(
       resolveType,
       classElement.library,

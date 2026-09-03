@@ -90,10 +90,15 @@ const _mixStub = r'''
 
 const _mixSources = {
   'mix|lib/mix.dart': _mixStub,
-  'mix|lib/src/core/mix_element.dart': '''
-    abstract class Mix<T> {
+  'mix_core|lib/src/mix_element.dart': '''
+    abstract class Mix<C, T> {
       const Mix();
     }
+  ''',
+  'mix|lib/src/core/mix_element.dart': '''
+    import 'package:mix_core/src/mix_element.dart' as core;
+
+    typedef Mix<T> = core.Mix<Object?, T>;
   ''',
   'mix|lib/src/core/style_spec.dart': '''
     import '../../mix.dart';

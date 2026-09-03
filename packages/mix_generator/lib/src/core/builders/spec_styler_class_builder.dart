@@ -188,7 +188,8 @@ class SpecStylerClassBuilder {
       );
     }
 
-    final mixValueType = mixType.typeArguments.single;
+    // `Mix<C, T>`: the resolved value type is the last argument.
+    final mixValueType = mixType.typeArguments.last;
     final acceptsFieldType =
         !_isInvalidMixValueType(mixValueType) &&
         element.library.typeSystem.isAssignableTo(

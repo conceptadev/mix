@@ -21,8 +21,11 @@ const styleSpecChecker = TypeChecker.fromUrl(
 );
 
 /// `Mix<T>` abstract class from `package:mix`.
+// Mix is declared in mix_core and aliased by mix; TypeChecker.fromUrl matches
+// the DECLARING library. Note `core.Mix<C, T>` has TWO type arguments: the
+// context type first, the value type last.
 const mixChecker = TypeChecker.fromUrl(
-  'package:mix/src/core/mix_element.dart#Mix',
+  'package:mix_core/src/mix_element.dart#Mix',
 );
 
 /// `Mixable<T>` abstract class from `package:mix`.

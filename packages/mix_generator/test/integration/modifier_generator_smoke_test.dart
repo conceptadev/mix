@@ -4,18 +4,29 @@ import 'package:test/test.dart';
 
 import '../core/test_helpers.dart';
 
-const _mixElementSource = r'''
+/// The engine declares `Mix<C, T>`; package:mix aliases it. Mirrored here so
+/// the URL-based `mixChecker` resolves as it does in production.
+const _mixCoreElementSource = r'''
 library mix_element;
 
-abstract class Mix<T> {
+abstract class Mix<C, T> {
   const Mix();
 
   List<Object?> get props;
 }
 ''';
 
+const _mixElementSource = r'''
+library mix_element;
+
+import 'package:mix_core/src/mix_element.dart' as core;
+
+typedef Mix<T> = core.Mix<Object?, T>;
+''';
+
 const _modifierSupportSources = {
   ...mixAnnotationsSources,
+  'mix_core|lib/src/mix_element.dart': _mixCoreElementSource,
   'mix|lib/src/core/mix_element.dart': _mixElementSource,
 };
 

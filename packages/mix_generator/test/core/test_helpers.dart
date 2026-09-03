@@ -116,6 +116,10 @@ abstract class Mixable<T> {
 mixin DefaultValue<T> {
   T get defaultValue;
 }
+
+abstract class Mix<C, T> extends Mixable<T> {
+  const Mix();
+}
 ''';
 
 /// Stub of `package:mix/src/core/mix_element.dart` for `MixableGenerator`
@@ -124,13 +128,11 @@ mixin DefaultValue<T> {
 const mixElementStub = r'''
 library mix_element;
 
-import 'package:mix_core/src/mix_element.dart';
+import 'package:mix_core/src/mix_element.dart' as core;
 
 export 'package:mix_core/src/mix_element.dart' show Mixable, DefaultValue;
 
-class Mix<T> extends Mixable<T> {
-  const Mix();
-}
+typedef Mix<T> = core.Mix<Object?, T>;
 ''';
 
 /// Stub `Prop<T>` at the canonical Mix path so `propChecker` resolves it.
