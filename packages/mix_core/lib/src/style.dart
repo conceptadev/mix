@@ -35,6 +35,15 @@ abstract class StyleBase<C, R, Self extends StyleBase<C, R, Self>>
   const StyleBase({required List<VariantStyle<C, R, Self>>? variants})
     : $variants = variants;
 
+  /// This style as its own [Self] type.
+  ///
+  /// `Self extends StyleBase<C, R, Self>` does not prove `this is Self`, so
+  /// the engine would otherwise need an unchecked cast. Implementing this at
+  /// the class that fixes [Self] (`=> this`) makes the compiler verify the
+  /// binding instead, turning a mis-bound [Self] into a compile error rather
+  /// than a first-build crash.
+  Self get self;
+
   /// Interaction-state dependencies declared anywhere in this style's
   /// variant tree.
   ///
@@ -93,7 +102,7 @@ abstract class StyleBase<C, R, Self extends StyleBase<C, R, Self>>
     required Set<NamedVariant> namedVariants,
   }) {
     final variants = $variants;
-    if (variants == null) return this as Self;
+    if (variants == null) return self;
 
     // Partition, don't sort: declaration order inside a group is load-bearing,
     // and List.sort is only stable by accident of the insertion sort it falls
@@ -130,20 +139,19 @@ abstract class StyleBase<C, R, Self extends StyleBase<C, R, Self>>
       var result = (variantAttr.value, false);
       if (variant is ContextVariantBuilder<C, Object?>) {
         result = (variant.build(context) as Self, false);
+        // The ignore below applies to the pattern on the next line: a style
+        // may also implement StyleVariation, which is an unrelated interface.
         // ignore: avoid-unrelated-type-assertions
       } else if (variantAttr.value case final StyleVariation<C, Self> variation
           when namedVariants.contains(variation.variantType)) {
         // An active StyleVariation builds its own final style.
-        result = (
-          variation.styleBuilder(this as Self, namedVariants, context),
-          true,
-        );
+        result = (variation.styleBuilder(self, namedVariants, context), true);
       }
       stylesToMerge.add(result);
     }
 
     // Start with current style as base
-    Self mergedStyle = this as Self;
+    Self mergedStyle = self;
 
     // Merge each variant style, recursively resolving nested variants
     for (final (variantStyle, isFromStyleVariation) in stylesToMerge) {

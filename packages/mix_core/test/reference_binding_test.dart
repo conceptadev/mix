@@ -103,6 +103,9 @@ class TermTextStyle
   }
 
   @override
+  TermTextStyle get self => this;
+
+  @override
   TermStyleSpec resolve(TermContext context) => TermStyleSpec(
     TermTextSpec(
       ansiColor: $ansiColor?.resolveProp(context),

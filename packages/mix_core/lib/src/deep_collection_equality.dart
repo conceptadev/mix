@@ -65,12 +65,17 @@ class DeepCollectionEquality {
     if (identical(obj1, obj2)) return true;
     if (obj1 == null || obj2 == null) return false;
 
-    if (obj1 is Map) {
-      return _mapsEqual(obj1, obj2 as Map);
-    } else if (obj1 is Set) {
-      return _setsEqual(obj1, obj2 as Set);
-    } else if (obj1 is Iterable) {
-      return _iterablesEqual(obj1, obj2 as Iterable);
+    // Both operands are tested: an equality predicate must answer `false`
+    // for mismatched shapes, not throw. (Casting only the second operand
+    // made `equals({1}, [1])` a TypeError.)
+    if (obj1 is Map && obj2 is Map) {
+      return _mapsEqual(obj1, obj2);
+    } else if (obj1 is Set && obj2 is Set) {
+      return _setsEqual(obj1, obj2);
+    } else if (obj1 is Iterable && obj2 is Iterable) {
+      return _iterablesEqual(obj1, obj2);
+    } else if (obj1 is Map || obj1 is Set || obj1 is Iterable) {
+      return false;
     }
 
     return obj1 == obj2;

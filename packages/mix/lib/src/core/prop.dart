@@ -46,8 +46,10 @@ class Prop<V> extends core.Prop<BuildContext, V> {
 
   /// Creates a new property by copying all fields from another property.
   ///
-  /// Used by subclasses that need to wrap existing properties.
-  Prop.fromProp(super.other) : super.fromProp();
+  /// Used by subclasses that need to wrap existing properties. Narrowed to
+  /// mix's [Prop] so a raw engine property cannot be smuggled into a
+  /// token-reference subclass, whose accessors assume mix's types.
+  Prop.fromProp(Prop<V> super.other) : super.fromProp();
 
   /// Creates a property that references a token.
   ///
@@ -160,7 +162,7 @@ class Prop<V> extends core.Prop<BuildContext, V> {
   ///
   /// Directives are merged from both properties.
   @override
-  Prop<V> mergeProp(covariant core.Prop<BuildContext, V>? other) {
+  Prop<V> mergeProp(core.Prop<BuildContext, V>? other) {
     if (other == null) return this;
 
     // Always accumulate all sources - no conditional logic

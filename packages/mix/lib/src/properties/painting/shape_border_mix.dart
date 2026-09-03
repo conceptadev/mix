@@ -21,10 +21,7 @@ sealed class ShapeBorderMix<T extends ShapeBorder> extends Mix<T>
   const ShapeBorderMix();
 
   @override
-  Mix<ShapeBorder>? tryMergeWith(
-    BuildContext context,
-    covariant Mix<ShapeBorder> other,
-  ) {
+  Mix<ShapeBorder>? tryMergeWith(BuildContext context, Mix<ShapeBorder> other) {
     if (other is! ShapeBorderMix) return null;
 
     return ShapeBorderMerger().tryMerge(context, this, other)!;

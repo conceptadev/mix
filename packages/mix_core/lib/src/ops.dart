@@ -49,8 +49,15 @@ class PropOps {
   /// In package:mix this special-cased `DecorationMix` and `ShapeBorderMix`;
   /// those types now opt in by implementing [ContextMergeable].
   static Mix<C, V> mergeMixes<C, V>(C context, Mix<C, V> a, Mix<C, V> b) {
-    if (a is ContextMergeable<C, V>) {
-      final merged = (a as ContextMergeable<C, V>).tryMergeWith(context, b);
+    assert(
+      a is! ContextMergeable || a is ContextMergeable<C, V>,
+      'ContextMergeable must be implemented with T bound to the Prop value '
+      'type ($V). ${a.runtimeType} implements it for a different type, so '
+      'context-aware merging is silently skipped.',
+    );
+
+    if (a case final ContextMergeable<C, V> mergeable) {
+      final merged = mergeable.tryMergeWith(context, b);
       if (merged != null) return merged;
     }
 

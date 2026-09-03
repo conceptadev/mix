@@ -43,10 +43,7 @@ sealed class DecorationMix<T extends Decoration> extends Mix<T>
        $image = image;
 
   @override
-  Mix<Decoration>? tryMergeWith(
-    BuildContext context,
-    covariant Mix<Decoration> other,
-  ) {
+  Mix<Decoration>? tryMergeWith(BuildContext context, Mix<Decoration> other) {
     if (other is! DecorationMix) return null;
 
     return DecorationMerger().tryMerge(context, this, other)!;

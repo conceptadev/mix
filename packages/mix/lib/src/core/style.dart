@@ -82,6 +82,9 @@ abstract class Style<S extends Spec<S>>
     return provider?.style;
   }
 
+  @override
+  Style<S> get self => this;
+
   /// Widget states declared anywhere in this style's variant tree.
   ///
   /// The traversal (with its identity-based cycle guard) lives in

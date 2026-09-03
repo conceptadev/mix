@@ -31,6 +31,9 @@ class TermStyle extends StyleBase<TermContext, TermSheet, TermStyle> {
   }
 
   @override
+  TermStyle get self => this;
+
+  @override
   TermSheet resolve(TermContext context) => layers;
 
   @override

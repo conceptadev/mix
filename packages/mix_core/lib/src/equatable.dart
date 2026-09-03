@@ -30,7 +30,7 @@ bool _equals(List list1, List list2) {
 }
 
 /// Checks if the given object implements [Equatable].
-bool _isEquatable(dynamic object) {
+bool _isEquatable(Object? object) {
   return object is Equatable;
 }
 
