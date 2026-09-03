@@ -41,7 +41,7 @@ typedef VariantStyle<S extends Spec<S>> =
 /// Provides variant support, modifiers, and animation configuration for styled elements.
 abstract class Style<S extends Spec<S>>
     extends core.StyleBase<BuildContext, StyleSpec<S>, Style<S>>
-    implements StyleElement, Mix<StyleSpec<S>> {
+    implements StyleElement {
   final WidgetModifierConfig? $modifier;
   final AnimationConfig? $animation;
 

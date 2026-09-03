@@ -15,16 +15,13 @@ export 'package:mix_core/mix_core.dart'
 /// responsive properties, or theme-dependent values.
 typedef Resolvable<V> = core.Resolvable<BuildContext, V>;
 
-/// Base class for Mix-compatible styling elements that are both mixable and resolvable.
+/// Base class for Mix-compatible styling elements that are both mixable and
+/// resolvable.
 ///
-/// Combines the abilities to merge with other instances and resolve to concrete values
-/// using a [BuildContext]. This is the foundation for all styling elements in Mix.
-abstract class Mix<T> extends core.Mix<BuildContext, T> {
-  const Mix();
-
-  @override
-  Mix<T> merge(covariant Mix<T>? other);
-
-  @override
-  T resolve(BuildContext context);
-}
+/// Combines the abilities to merge with other instances and resolve to
+/// concrete values using a [BuildContext]. This is the foundation for all
+/// styling elements in Mix.
+///
+/// An alias rather than a subclass: the engine type is the same type, so
+/// values flow between mix and mix_core without casts.
+typedef Mix<T> = core.Mix<BuildContext, T>;

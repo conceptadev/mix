@@ -107,7 +107,7 @@ class DecorationConverter implements MixConverter<Decoration> {
         throw StateError('BoxDecoration converter not registered');
       }
 
-      return result as Mix<Decoration>;
+      return result;
     }
     throw UnimplementedError(
       'Converter for ${value.runtimeType} not implemented',
@@ -167,7 +167,7 @@ class BorderRadiusGeometryConverter
         throw StateError('BorderRadius converter not registered');
       }
 
-      return result as Mix<BorderRadiusGeometry>;
+      return result;
     }
     // For BorderRadiusDirectional, we'd need to handle it specifically
     // For now, throw an error
@@ -209,21 +209,21 @@ class GradientConverter implements MixConverter<Gradient> {
         throw StateError('LinearGradient converter not registered');
       }
 
-      return result as Mix<Gradient>;
+      return result;
     } else if (value is RadialGradient) {
       final result = context.tryConvert<RadialGradient>(value);
       if (result == null) {
         throw StateError('RadialGradient converter not registered');
       }
 
-      return result as Mix<Gradient>;
+      return result;
     } else if (value is SweepGradient) {
       final result = context.tryConvert<SweepGradient>(value);
       if (result == null) {
         throw StateError('SweepGradient converter not registered');
       }
 
-      return result as Mix<Gradient>;
+      return result;
     }
     throw UnimplementedError('Unknown gradient type: ${value.runtimeType}');
   }

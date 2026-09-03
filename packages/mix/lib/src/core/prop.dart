@@ -133,7 +133,7 @@ class Prop<V> extends core.Prop<BuildContext, V> {
     final converted = MixConverterRegistry.instance.tryConvert<V>(value);
     if (converted == null) return null;
 
-    return Prop.mix(converted as Mix<V>);
+    return Prop.mix(converted);
   }
 
   // Methods
