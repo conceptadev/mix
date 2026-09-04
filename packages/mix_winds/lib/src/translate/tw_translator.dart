@@ -9,7 +9,9 @@ import '../parser/data/parser_registry.g.dart';
 import '../parser/diagnostics.dart';
 import '../parser/model.dart';
 import '../theme/data/default_theme.g.dart';
+import '../tw_compilation.dart';
 import '../tw_config.dart';
+import '../tw_layout_plan.dart';
 import '../tw_types.dart';
 import '../tw_utils.dart';
 import 'tw_accumulators.dart';
@@ -18,16 +20,111 @@ import 'tw_presets.dart';
 import 'tw_routing.dart';
 import 'tw_target.dart';
 
-typedef _ParsedToken = ({String token, TailwindCandidate candidate});
+final class _CompiledCandidate {
+  final String token;
+  final TailwindCandidate candidate;
+  final TwRoute route;
+  final _VariantPath? variantPath;
+  final TwLayoutUtilityInput? layoutInput;
+  const _CompiledCandidate({
+    required this.token,
+    required this.candidate,
+    required this.route,
+    required this.variantPath,
+    required this.layoutInput,
+  });
+}
+
+final class _FailedCandidate {
+  final String token;
+  final TailwindParseFailure failure;
+  const _FailedCandidate({required this.token, required this.failure});
+}
+
+final class _CandidateProgram {
+  final List<_CompiledCandidate> candidates;
+  final List<_FailedCandidate> failures;
+  _CandidateProgram({
+    required Iterable<_CompiledCandidate> candidates,
+    required Iterable<_FailedCandidate> failures,
+  }) : candidates = List.unmodifiable(candidates),
+       failures = List.unmodifiable(failures);
+}
+
+final class _DiagnosticCollector {
+  final _byToken = <String, TwDiagnostic>{};
+
+  List<TwDiagnostic> get diagnostics => .unmodifiable(_byToken.values);
+
+  void add(TwDiagnostic diagnostic) {
+    _byToken.putIfAbsent(diagnostic.token, () => diagnostic);
+  }
+
+  bool containsToken(String token) => _byToken.containsKey(token);
+
+  void addAll(Iterable<TwDiagnostic> diagnostics) {
+    for (final diagnostic in diagnostics) {
+      add(diagnostic);
+    }
+  }
+
+  void replay(
+    TwDiagnosticCallback? onDiagnostic,
+    void Function(String token)? legacyOnUnsupported,
+  ) {
+    for (final diagnostic in _byToken.values) {
+      onDiagnostic?.call(diagnostic);
+      legacyOnUnsupported?.call(diagnostic.token);
+    }
+  }
+}
+
+final class _CompilationArtifacts<S extends Object> {
+  final S styler;
+  final TwCompiledLayoutPlan layoutPlan;
+
+  const _CompilationArtifacts({required this.styler, required this.layoutPlan});
+}
+
+/// Source-internal compilation modes used by Mix Winds widgets.
+///
+/// This type is intentionally not exported from the package barrel.
+enum TwWidgetCompilationMode { boxOrFlex, inline, text, icon }
+
+/// Source-internal, candidate-free handoff from compilation to widgets.
+///
+/// Only the stylers required by [mode] are populated. This keeps parsed
+/// candidates private while allowing target inference and inline multi-output
+/// compilation to share one candidate program.
+final class TwWidgetCompilation {
+  final TwWidgetCompilationMode mode;
+  final BoxStyler? boxStyler;
+  final FlexBoxStyler? flexStyler;
+  final TextStyler? textStyler;
+  final IconStyler? iconStyler;
+  final bool wantsFlex;
+  final bool hasBoxUtilities;
+  final TwCompiledLayoutPlan layoutPlan;
+  final TwCompiledLayoutPlan parentLayoutPlan;
+  final List<TwDiagnostic> diagnostics;
+
+  TwWidgetCompilation({
+    required this.mode,
+    required this.boxStyler,
+    required this.flexStyler,
+    required this.textStyler,
+    required this.iconStyler,
+    required this.wantsFlex,
+    required this.hasBoxUtilities,
+    required this.layoutPlan,
+    required this.parentLayoutPlan,
+    required List<TwDiagnostic> diagnostics,
+  }) : diagnostics = List.unmodifiable(diagnostics);
+}
 
 final class TwTranslator {
-  TwTranslator({
-    required this.config,
-    this.onDiagnostic,
-    this.legacyOnUnsupported,
-  });
-
   final TwConfig config;
+
   final TwDiagnosticCallback? onDiagnostic;
   final void Function(String token)? legacyOnUnsupported;
   static const _parser = TailwindCandidateParser(
@@ -40,6 +137,11 @@ final class TwTranslator {
     for (final entry in generatedFunctionalUtilityRoots.indexed)
       entry.$2: entry.$1,
   };
+  const TwTranslator({
+    required this.config,
+    this.onDiagnostic,
+    this.legacyOnUnsupported,
+  });
 
   void _emitDiagnostic(TwDiagnostic diagnostic) {
     onDiagnostic?.call(diagnostic);
@@ -51,7 +153,7 @@ final class TwTranslator {
     _emitDiagnostic(
       TwDiagnostic(
         token: token,
-        code: TwDiagnosticCode.invalidCandidate,
+        code: .invalidCandidate,
         reason: reason,
         workaround: 'Correct the Tailwind candidate syntax.',
       ),
@@ -59,18 +161,18 @@ final class TwTranslator {
   }
 
   bool _reportBlockingRoute(String token, TwRoute route) {
-    if (route.kind != TwRouteKind.ignored &&
-        route.kind != TwRouteKind.unsupported) {
+    if (route.kind != .ignored && route.kind != .unsupported) {
       return false;
     }
 
     _emitDiagnostic(route.toDiagnostic(token));
+
     return true;
   }
 
   void _reportUnsupported(
     String token, {
-    TwDiagnosticCode code = TwDiagnosticCode.unsupportedValue,
+    TwDiagnosticCode code = .unsupportedValue,
     required String reason,
     String? workaround,
   }) {
@@ -84,48 +186,48 @@ final class TwTranslator {
     );
   }
 
-  List<_ParsedToken> _parseAndSort(Iterable<String> tokens) {
-    final parsedTokens = <_ParsedToken>[];
+  _CandidateProgram _compileProgram(Iterable<String> tokens) {
+    final candidates = <_CompiledCandidate>[];
+    final failures = <_FailedCandidate>[];
     for (final token in tokens) {
       final parsed = _parser.parseCandidate(token);
       switch (parsed) {
         case TailwindParseSuccess(:final candidate):
-          parsedTokens.add((token: token, candidate: candidate));
+          final route = routeCandidate(
+            candidate,
+            breakpoints: config.breakpoints,
+          );
+          candidates.add(
+            _CompiledCandidate(
+              token: token,
+              candidate: candidate,
+              route: route,
+              variantPath: _variantPath(candidate.variants),
+              layoutInput: _layoutInput(candidate, route),
+            ),
+          );
         case TailwindParseFailure():
-          _reportParseFailure(token, parsed);
+          failures.add(_FailedCandidate(token: token, failure: parsed));
       }
     }
 
     // The generated registry preserves the pinned snapshot's root order. A
     // natural raw-candidate tie-breaker makes values within one root stable too.
-    return parsedTokens..sort(_compareParsedTokens);
+    candidates.sort(_compareCompiledCandidates);
+
+    return _CandidateProgram(candidates: candidates, failures: failures);
   }
 
-  /// Returns raw candidates in the same deterministic order as translation.
-  List<String> sortTokens(Iterable<String> tokens) {
-    return List<String>.of(tokens)..sort(_compareTokenStrings);
-  }
-
-  int _compareTokenStrings(String left, String right) {
-    final leftParsed = _parser.parseCandidate(left);
-    final rightParsed = _parser.parseCandidate(right);
-
-    if (leftParsed case TailwindParseSuccess(:final candidate)) {
-      if (rightParsed case TailwindParseSuccess(candidate: final other)) {
-        return _compareParsedTokens(
-          (token: left, candidate: candidate),
-          (token: right, candidate: other),
-        );
-      }
-      return -1;
+  void _reportParseFailures(_CandidateProgram program) {
+    for (final failed in program.failures) {
+      _reportParseFailure(failed.token, failed.failure);
     }
-    if (rightParsed is TailwindParseSuccess) return 1;
-
-    final natural = _compareNatural(left, right);
-    return natural != 0 ? natural : left.compareTo(right);
   }
 
-  int _compareParsedTokens(_ParsedToken left, _ParsedToken right) {
+  int _compareCompiledCandidates(
+    _CompiledCandidate left,
+    _CompiledCandidate right,
+  ) {
     final leftOrder = _utilityOrder(left.candidate.utility);
     final rightOrder = _utilityOrder(right.candidate.utility);
     final kind = leftOrder.$1.compareTo(rightOrder.$1);
@@ -141,6 +243,7 @@ final class TwTranslator {
     if (utility != 0) return utility;
 
     final candidate = _compareNatural(left.candidate.raw, right.candidate.raw);
+
     return candidate != 0
         ? candidate
         : left.candidate.raw.compareTo(right.candidate.raw);
@@ -197,185 +300,24 @@ final class TwTranslator {
     while (end < value.length && _isDigit(value.codeUnitAt(end))) {
       end++;
     }
+
     return end;
   }
 
-  BoxStyler translateBox(String classNames) {
-    return _translate<BoxStyler>(
-      classNames,
-      target: TwTarget.box,
-      build: (context) => context.toBoxStyler(config),
-      merge: (base, other) => base.merge(other),
-      wrapVariant: _wrapBoxVariant,
-    );
-  }
-
-  FlexBoxStyler translateFlex(String classNames) {
-    return _translate<FlexBoxStyler>(
-      classNames,
-      target: TwTarget.flexBox,
-      build: (context) => context.toFlexBoxStyler(config),
-      merge: (base, other) => base.merge(other),
-      wrapVariant: _wrapFlexVariant,
-      afterBase: (context) {
-        if (!context.hasBaseFlex) {
-          context.direction = Axis.vertical;
-        }
-      },
-    );
-  }
-
-  TextStyler translateText(String classNames) {
-    return _translate<TextStyler>(
-      classNames,
-      target: TwTarget.text,
-      build: (context) => context.toTextStyler(config),
-      merge: (base, other) => base.merge(other),
-      wrapVariant: _wrapTextVariant,
-    );
-  }
-
-  IconStyler translateIcon(String classNames) {
-    double? width;
-    double? height;
-    Color? color;
-    double? opacity;
-
-    for (final parsed in _parseAndSort(splitTailwindTokens(classNames))) {
-      final (:token, :candidate) = parsed;
-
-      final route = routeCandidate(candidate, breakpoints: config.breakpoints);
-      if (_reportBlockingRoute(token, route)) continue;
-      if (candidate.variants.isNotEmpty ||
-          route.kind != TwRouteKind.schemaValue) {
-        _reportUnsupported(
-          token,
-          code: TwDiagnosticCode.unsupportedForTarget,
-          reason: 'This candidate cannot be applied to an icon target.',
-          workaround: 'Apply the variant or box utility to a wrapping Div.',
-        );
-        continue;
-      }
-
-      final utility = candidate.utility;
-      if (tailwindUtilityNegative(utility)) {
-        _reportUnsupported(
-          token,
-          reason: 'Negative icon sizing and opacity values are unsupported.',
-        );
-        continue;
-      }
-      final root = tailwindUtilityRoot(utility);
-      final value = tailwindUtilityValue(utility);
-      var handled = false;
-
-      switch (root) {
-        case 'w':
-          final resolved = _sizingLength('w', value);
-          if (resolved != null) {
-            width = resolved;
-            handled = true;
-          }
-        case 'h':
-          final resolved = _sizingLength('h', value);
-          if (resolved != null) {
-            height = resolved;
-            handled = true;
-          }
-        case 'text':
-          final resolved = _color(value, tailwindUtilityModifier(utility));
-          if (resolved != null) {
-            color = resolved;
-            handled = true;
-          }
-        case 'opacity':
-          final resolved = _opacity(value);
-          if (resolved != null) {
-            opacity = resolved;
-            handled = true;
-          }
-      }
-
-      if (!handled) {
-        _reportUnsupported(
-          token,
-          code: TwDiagnosticCode.unsupportedForTarget,
-          reason: 'This utility has no supported icon translation.',
-        );
-      }
-    }
-
-    final size = (width != null && height != null)
-        ? (width < height ? width : height)
-        : (width ?? height);
-
-    return IconStyler(size: size, color: color, opacity: opacity);
-  }
-
-  CurveAnimationConfig? parseAnimationFromTokens(List<String> tokens) {
-    var hasTransition = false;
-    var hasTransitionNone = false;
-    var duration = const Duration(milliseconds: 150);
-    Curve curve = Curves.easeOut;
-    var delay = Duration.zero;
-
-    for (final parsed in _parseAndSort(tokens)) {
-      final (:token, :candidate) = parsed;
-      final route = routeCandidate(candidate, breakpoints: config.breakpoints);
-      if (_reportBlockingRoute(token, route)) continue;
-
-      final base = candidate.utility.raw;
-      if (transitionTriggerTokens.contains(base)) {
-        hasTransition = true;
-      } else if (base == 'transition-none') {
-        hasTransitionNone = true;
-      } else if (base.startsWith('duration-')) {
-        final ms = config.durationOf(base.substring(9));
-        if (ms != null) {
-          duration = Duration(milliseconds: ms);
-        } else {
-          _reportUnsupported(
-            token,
-            reason: 'The transition duration is not in the configured scale.',
-            workaround: 'Use a duration key from TwConfig.durations.',
-          );
-        }
-      } else if (_easeTokens.containsKey(base)) {
-        curve = _easeTokens[base]!;
-      } else if (base.startsWith('delay-')) {
-        final ms = config.delayOf(base.substring(6));
-        if (ms != null) {
-          delay = Duration(milliseconds: ms);
-        } else {
-          _reportUnsupported(
-            token,
-            reason: 'The transition delay is not in the configured scale.',
-            workaround: 'Use a delay key from TwConfig.delays.',
-          );
-        }
-      }
-    }
-
-    if (hasTransitionNone || !hasTransition) return null;
-    return CurveAnimationConfig(duration: duration, curve: curve, delay: delay);
-  }
-
   S _translate<S>(
-    String classNames, {
+    _CandidateProgram program, {
     required TwTarget target,
     required S Function(_GroupContext context) build,
     required S Function(S base, S other) merge,
     required S Function(List<TwRuntimeVariant> path, S style) wrapVariant,
     void Function(_GroupContext context)? afterBase,
   }) {
-    final groups = _buildGroups(classNames, target);
+    final groups = _buildGroups(program, target);
     final baseContext = groups[_VariantPath.base] ?? _GroupContext(target);
     afterBase?.call(baseContext);
 
     final hasVariantTransform = groups.entries.any(
-      (entry) =>
-          entry.key != _VariantPath.base &&
-          entry.value.transform.hasAnyTransform,
+      (entry) => entry.key != .base && entry.value.transform.hasAnyTransform,
     );
     if (hasVariantTransform && !baseContext.transform.hasAnyTransform) {
       baseContext.transform.needsIdentity = true;
@@ -384,7 +326,7 @@ final class TwTranslator {
     var result = build(baseContext);
 
     for (final entry in groups.entries) {
-      if (entry.key == _VariantPath.base) continue;
+      if (entry.key == .base) continue;
       final context = entry.value;
       if (context.transform.hasAnyTransform &&
           baseContext.transform.hasAnyTransform) {
@@ -404,40 +346,62 @@ final class TwTranslator {
   }
 
   Map<_VariantPath, _GroupContext> _buildGroups(
-    String classNames,
+    _CandidateProgram program,
     TwTarget target,
   ) {
+    _reportParseFailures(program);
     final groups = <_VariantPath, _GroupContext>{};
     _GroupContext groupFor(_VariantPath path) {
       return groups.putIfAbsent(path, () => _GroupContext(target));
     }
 
-    for (final parsed in _parseAndSort(splitTailwindTokens(classNames))) {
-      final (:token, :candidate) = parsed;
-      final route = routeCandidate(candidate, breakpoints: config.breakpoints);
+    for (final compiled in program.candidates) {
+      final _CompiledCandidate(:token, :candidate, :route, :variantPath) =
+          compiled;
+      if (_isLayoutOwnedCandidate(compiled, target)) continue;
       if (_reportBlockingRoute(token, route)) continue;
-      if (route.kind == TwRouteKind.widgetLayer) {
+      if (route.kind == .widgetLayer) {
         if (!_isSupportedWidgetLayerUtility(candidate.utility)) {
           _reportUnsupported(
             token,
             reason: 'This value is unsupported by the Flutter widget layer.',
           );
+        } else if (!_isWidgetLayerUtilitySupportedForTarget(
+          candidate.utility,
+          target,
+        )) {
+          _reportUnsupported(
+            token,
+            code: .unsupportedForTarget,
+            reason:
+                'This widget-layer utility cannot be represented for the '
+                'selected target.',
+            workaround: 'Compile it for a compatible box or flex target.',
+          );
+        } else if (_isRootLayoutWidgetUtility(candidate.utility) &&
+            !_hasOnlyBreakpointVariants(candidate.variants)) {
+          _reportUnsupported(
+            token,
+            code: .widgetLayerVariantUnsupported,
+            reason:
+                'Widget-layer layout utilities only support breakpoint variants.',
+            workaround: 'Move interactive state to a supported styler utility.',
+          );
         }
         continue;
       }
 
-      final path = _variantPath(candidate.variants);
-      if (path == null) {
+      if (variantPath == null) {
         _reportUnsupported(
           token,
-          code: TwDiagnosticCode.unsupportedVariant,
+          code: .unsupportedVariant,
           reason: 'The variant chain cannot be represented at runtime.',
         );
         continue;
       }
-      final group = groupFor(path);
+      final group = groupFor(variantPath);
 
-      if (route.kind == TwRouteKind.gradient) {
+      if (route.kind == .gradient) {
         if (!_applyGradient(group.gradient, candidate)) {
           _reportUnsupported(
             token,
@@ -447,11 +411,11 @@ final class TwTranslator {
         continue;
       }
 
-      final handled = _applySchemaCandidate(group, candidate, target);
+      final handled = _applyStyleCandidate(group, candidate, target);
       if (!handled) {
         _reportUnsupported(
           token,
-          code: TwDiagnosticCode.unsupportedUtility,
+          code: .unsupportedUtility,
           reason: 'This utility has no translation for the selected target.',
           workaround:
               'Use a utility marked implemented or adapted in the ledger.',
@@ -462,7 +426,7 @@ final class TwTranslator {
     return groups;
   }
 
-  bool _applySchemaCandidate(
+  bool _applyStyleCandidate(
     _GroupContext group,
     TailwindCandidate candidate,
     TwTarget target,
@@ -474,13 +438,13 @@ final class TwTranslator {
     final modifier = tailwindUtilityModifier(utility);
     final negative = tailwindUtilityNegative(utility);
 
-    if (target == TwTarget.flexBox) {
+    if (target == .flexBox) {
       if (_applyFlexUtility(group, raw, root, value, modifier, negative)) {
         return true;
       }
     }
 
-    if (target == TwTarget.text) {
+    if (target == .text) {
       return _applyTextUtility(group, raw, root, value, modifier);
     }
 
@@ -492,57 +456,71 @@ final class TwTranslator {
     String raw,
     String root,
     TailwindValue? value,
-    TailwindModifier? modifier,
+    TailwindModifier? _,
     bool negative,
   ) {
     switch (raw) {
       case 'inline-flex':
-        group.direction = Axis.horizontal;
-        group.mainAxisSize = MainAxisSize.min;
+        group.direction = .horizontal;
+        group.mainAxisSize = .min;
         group.hasBaseFlex = true;
+
         return true;
       case 'flex':
       case 'flex-row':
-        group.direction = Axis.horizontal;
+        group.direction = .horizontal;
         group.hasBaseFlex = true;
+
         return true;
       case 'flex-col':
-        group.direction = Axis.vertical;
+        group.direction = .vertical;
         group.hasBaseFlex = true;
+
         return true;
       case 'items-start':
-        group.crossAxisAlignment = CrossAxisAlignment.start;
+        group.crossAxisAlignment = .start;
+
         return true;
       case 'items-center':
-        group.crossAxisAlignment = CrossAxisAlignment.center;
+        group.crossAxisAlignment = .center;
+
         return true;
       case 'items-end':
-        group.crossAxisAlignment = CrossAxisAlignment.end;
+        group.crossAxisAlignment = .end;
+
         return true;
       case 'items-stretch':
-        group.crossAxisAlignment = CrossAxisAlignment.stretch;
+        group.crossAxisAlignment = .stretch;
+
         return true;
       case 'items-baseline':
-        group.crossAxisAlignment = CrossAxisAlignment.baseline;
-        group.textBaseline = TextBaseline.alphabetic;
+        group.crossAxisAlignment = .baseline;
+        group.textBaseline = .alphabetic;
+
         return true;
       case 'justify-start':
-        group.mainAxisAlignment = MainAxisAlignment.start;
+        group.mainAxisAlignment = .start;
+
         return true;
       case 'justify-center':
-        group.mainAxisAlignment = MainAxisAlignment.center;
+        group.mainAxisAlignment = .center;
+
         return true;
       case 'justify-end':
-        group.mainAxisAlignment = MainAxisAlignment.end;
+        group.mainAxisAlignment = .end;
+
         return true;
       case 'justify-between':
-        group.mainAxisAlignment = MainAxisAlignment.spaceBetween;
+        group.mainAxisAlignment = .spaceBetween;
+
         return true;
       case 'justify-around':
-        group.mainAxisAlignment = MainAxisAlignment.spaceAround;
+        group.mainAxisAlignment = .spaceAround;
+
         return true;
       case 'justify-evenly':
-        group.mainAxisAlignment = MainAxisAlignment.spaceEvenly;
+        group.mainAxisAlignment = .spaceEvenly;
+
         return true;
     }
 
@@ -550,6 +528,7 @@ final class TwTranslator {
       final length = _spaceLength(value, negative: negative);
       if (length == null) return false;
       group.spacing = length;
+
       return true;
     }
 
@@ -575,21 +554,25 @@ final class TwTranslator {
         final color = _color(value, modifier);
         if (color == null) return false;
         group.decoration.color = color;
+
         return true;
       case 'opacity':
         final opacity = _opacity(value);
         if (opacity == null) return false;
         group.modifiers.add(OpacityModifierMix(opacity: opacity));
+
         return true;
       case 'blur':
         final sigma = _blur(value);
         if (sigma == null) return false;
         group.modifiers.add(BlurModifierMix(sigma: sigma));
+
         return true;
       case 'shadow':
         final shadows = _boxShadowMixes(raw, value);
         if (shadows == null) return false;
         group.decoration.boxShadow = shadows;
+
         return true;
       case 'text':
       case 'size':
@@ -598,11 +581,13 @@ final class TwTranslator {
 
     if (raw == 'overflow-hidden' || raw == 'overflow-clip') {
       group.decoration.ensurePresent = true;
-      group.clipBehavior = Clip.hardEdge;
+      group.clipBehavior = .hardEdge;
+
       return true;
     }
     if (raw == 'overflow-visible') {
-      group.clipBehavior = Clip.none;
+      group.clipBehavior = .none;
+
       return true;
     }
     if (_applyDefaultTextStatic(group, raw)) return true;
@@ -625,46 +610,57 @@ final class TwTranslator {
 
     switch (raw) {
       case 'text-left':
-        group.textAlign = TextAlign.left;
+        group.textAlign = .left;
+
         return true;
       case 'text-center':
-        group.textAlign = TextAlign.center;
+        group.textAlign = .center;
+
         return true;
       case 'text-right':
-        group.textAlign = TextAlign.right;
+        group.textAlign = .right;
+
         return true;
       case 'text-justify':
-        group.textAlign = TextAlign.justify;
+        group.textAlign = .justify;
+
         return true;
       case 'text-start':
-        group.textAlign = TextAlign.start;
+        group.textAlign = .start;
+
         return true;
       case 'text-end':
-        group.textAlign = TextAlign.end;
+        group.textAlign = .end;
+
         return true;
       case 'uppercase':
         group.textDirectives.add(const UppercaseStringDirective());
+
         return true;
       case 'lowercase':
         group.textDirectives.add(const LowercaseStringDirective());
+
         return true;
       case 'capitalize':
         group.textDirectives.add(const CapitalizeStringDirective());
+
         return true;
       case 'truncate':
-        group.overflow = TextOverflow.ellipsis;
+        group.overflow = .ellipsis;
         group.maxLines = 1;
         group.softWrap = false;
+
         return true;
       case 'leading-even':
-        group.textHeightBehavior.leadingDistribution =
-            TextLeadingDistribution.even;
+        group.textHeightBehavior.leadingDistribution = .even;
+
         return true;
       case 'leading-trim':
         group.textHeightBehavior
-          ..leadingDistribution = TextLeadingDistribution.even
+          ..leadingDistribution = .even
           ..applyHeightToFirstAscent = false
           ..applyHeightToLastDescent = false;
+
         return true;
     }
 
@@ -705,18 +701,21 @@ final class TwTranslator {
       style()
         ..fontSize = size
         ..fontSizeHeight = lineHeight;
+
       return true;
     }
 
     final arbitraryLength = _arbitraryLength(value);
     if (arbitraryLength != null) {
       style().fontSize = arbitraryLength;
+
       return true;
     }
 
     final color = _color(value, modifier);
     if (color != null) {
       style().color = color;
+
       return true;
     }
 
@@ -729,6 +728,7 @@ final class TwTranslator {
     if (_applyLineHeight(style, raw)) return true;
     if (_applyTracking(style, raw)) return true;
     if (_applyTextShadow(style, raw)) return true;
+
     return false;
   }
 
@@ -748,6 +748,7 @@ final class TwTranslator {
     if (length == null) return false;
     if (identical(edges, group.margin) && length < 0) return true;
     edges.set(length, sides: _axisOrSide(root));
+
     return true;
   }
 
@@ -760,13 +761,15 @@ final class TwTranslator {
     if (root == 'w-auto') {
       group.constraints
         ..minWidth = 0
-        ..maxWidth = double.infinity;
+        ..maxWidth = .infinity;
+
       return true;
     }
     if (root == 'h-auto') {
       group.constraints
         ..minHeight = 0
-        ..maxHeight = double.infinity;
+        ..maxHeight = .infinity;
+
       return true;
     }
     if (!sizingRoots.contains(root)) return false;
@@ -777,12 +780,14 @@ final class TwTranslator {
         case 'w':
           group.constraints
             ..minWidth = 0
-            ..maxWidth = double.infinity;
+            ..maxWidth = .infinity;
+
           return true;
         case 'h':
           group.constraints
             ..minHeight = 0
-            ..maxHeight = double.infinity;
+            ..maxHeight = .infinity;
+
           return true;
       }
     }
@@ -871,6 +876,7 @@ final class TwTranslator {
 
     if (color != null && width == null) {
       group.border.setColor(color, root);
+
       return true;
     }
     if (width == null) return false;
@@ -893,6 +899,7 @@ final class TwTranslator {
       default:
         return raw.startsWith('border-') && color != null;
     }
+
     return true;
   }
 
@@ -908,23 +915,28 @@ final class TwTranslator {
         final scale = key == null ? null : config.scaleOf(key);
         if (scale == null) return false;
         transform.scale = scale;
+
         return true;
       case 'rotate':
         final rotate = key == null ? null : config.rotationOf(key);
         if (rotate == null) return false;
         transform.rotateDeg = negative ? -rotate : rotate;
+
         return true;
       case 'translate-x':
         final length = _spaceLength(value, negative: negative);
         if (length == null) return false;
         transform.translateX = length;
+
         return true;
       case 'translate-y':
         final length = _spaceLength(value, negative: negative);
         if (length == null) return false;
         transform.translateY = length;
+
         return true;
     }
+
     return false;
   }
 
@@ -933,38 +945,43 @@ final class TwTranslator {
     final raw = utility.raw;
     final root = tailwindUtilityRoot(utility);
     final value = tailwindUtilityValue(utility);
-    final key = tailwindValueKey(value);
-
     if (raw.startsWith('bg-gradient-')) {
       final directionKey = raw.substring(12);
       final direction = gradientDirections[directionKey];
       if (direction == null) return false;
       gradient.directionKey = directionKey;
       gradient.direction = direction;
+
       return true;
     } else if (root == 'bg-linear' || raw.startsWith('bg-linear-')) {
+      final key = tailwindValueKey(value);
       final directionKey = key ?? raw.substring(10);
       final direction = gradientDirections[directionKey];
       if (direction == null) return false;
       gradient.directionKey = directionKey;
       gradient.direction = direction;
+
       return true;
     } else if (root == 'from') {
       final color = _color(value, tailwindUtilityModifier(utility));
       if (color == null) return false;
       gradient.fromColor = color;
+
       return true;
     } else if (root == 'via') {
       final color = _color(value, tailwindUtilityModifier(utility));
       if (color == null) return false;
       gradient.viaColor = color;
+
       return true;
     } else if (root == 'to') {
       final color = _color(value, tailwindUtilityModifier(utility));
       if (color == null) return false;
       gradient.toColor = color;
+
       return true;
     }
+
     return false;
   }
 
@@ -973,6 +990,7 @@ final class TwTranslator {
     for (final part in path.reversed) {
       wrapped = _newBoxVariant(part, wrapped);
     }
+
     return wrapped as S;
   }
 
@@ -981,6 +999,7 @@ final class TwTranslator {
     for (final part in path.reversed) {
       wrapped = _newFlexVariant(part, wrapped);
     }
+
     return wrapped as S;
   }
 
@@ -989,25 +1008,26 @@ final class TwTranslator {
     for (final part in path.reversed) {
       wrapped = _newTextVariant(part, wrapped);
     }
+
     return wrapped as S;
   }
 
   BoxStyler _newBoxVariant(TwRuntimeVariant part, BoxStyler style) {
     return switch (part.kind) {
-      TwRuntimeVariantKind.hover => BoxStyler().onHovered(style),
-      TwRuntimeVariantKind.focus => BoxStyler().onFocused(style),
-      TwRuntimeVariantKind.focusVisible => BoxStyler().onFocusVisible(style),
-      TwRuntimeVariantKind.pressed => BoxStyler().onPressed(style),
-      TwRuntimeVariantKind.disabled => BoxStyler().onDisabled(style),
-      TwRuntimeVariantKind.enabled => BoxStyler().onEnabled(style),
-      TwRuntimeVariantKind.dark => BoxStyler().onDark(style),
-      TwRuntimeVariantKind.light => BoxStyler().onLight(style),
-      TwRuntimeVariantKind.breakpoint => BoxStyler().onBreakpoint(
+      .hover => BoxStyler().onHovered(style),
+      .focus => BoxStyler().onFocused(style),
+      .focusVisible => BoxStyler().onFocusVisible(style),
+      .pressed => BoxStyler().onPressed(style),
+      .disabled => BoxStyler().onDisabled(style),
+      .enabled => BoxStyler().onEnabled(style),
+      .dark => BoxStyler().onDark(style),
+      .light => BoxStyler().onLight(style),
+      .breakpoint => BoxStyler().onBreakpoint(
         Breakpoint(minWidth: part.breakpoint!),
         style,
       ),
-      TwRuntimeVariantKind.notHover => BoxStyler().onNot(
-        ContextVariant.widgetState(WidgetState.hovered),
+      .notHover => BoxStyler().onNot(
+        ContextVariant.widgetState(.hovered),
         style,
       ),
     };
@@ -1015,22 +1035,20 @@ final class TwTranslator {
 
   FlexBoxStyler _newFlexVariant(TwRuntimeVariant part, FlexBoxStyler style) {
     return switch (part.kind) {
-      TwRuntimeVariantKind.hover => FlexBoxStyler().onHovered(style),
-      TwRuntimeVariantKind.focus => FlexBoxStyler().onFocused(style),
-      TwRuntimeVariantKind.focusVisible => FlexBoxStyler().onFocusVisible(
-        style,
-      ),
-      TwRuntimeVariantKind.pressed => FlexBoxStyler().onPressed(style),
-      TwRuntimeVariantKind.disabled => FlexBoxStyler().onDisabled(style),
-      TwRuntimeVariantKind.enabled => FlexBoxStyler().onEnabled(style),
-      TwRuntimeVariantKind.dark => FlexBoxStyler().onDark(style),
-      TwRuntimeVariantKind.light => FlexBoxStyler().onLight(style),
-      TwRuntimeVariantKind.breakpoint => FlexBoxStyler().onBreakpoint(
+      .hover => FlexBoxStyler().onHovered(style),
+      .focus => FlexBoxStyler().onFocused(style),
+      .focusVisible => FlexBoxStyler().onFocusVisible(style),
+      .pressed => FlexBoxStyler().onPressed(style),
+      .disabled => FlexBoxStyler().onDisabled(style),
+      .enabled => FlexBoxStyler().onEnabled(style),
+      .dark => FlexBoxStyler().onDark(style),
+      .light => FlexBoxStyler().onLight(style),
+      .breakpoint => FlexBoxStyler().onBreakpoint(
         Breakpoint(minWidth: part.breakpoint!),
         style,
       ),
-      TwRuntimeVariantKind.notHover => FlexBoxStyler().onNot(
-        ContextVariant.widgetState(WidgetState.hovered),
+      .notHover => FlexBoxStyler().onNot(
+        ContextVariant.widgetState(.hovered),
         style,
       ),
     };
@@ -1038,20 +1056,20 @@ final class TwTranslator {
 
   TextStyler _newTextVariant(TwRuntimeVariant part, TextStyler style) {
     return switch (part.kind) {
-      TwRuntimeVariantKind.hover => TextStyler().onHovered(style),
-      TwRuntimeVariantKind.focus => TextStyler().onFocused(style),
-      TwRuntimeVariantKind.focusVisible => TextStyler().onFocusVisible(style),
-      TwRuntimeVariantKind.pressed => TextStyler().onPressed(style),
-      TwRuntimeVariantKind.disabled => TextStyler().onDisabled(style),
-      TwRuntimeVariantKind.enabled => TextStyler().onEnabled(style),
-      TwRuntimeVariantKind.dark => TextStyler().onDark(style),
-      TwRuntimeVariantKind.light => TextStyler().onLight(style),
-      TwRuntimeVariantKind.breakpoint => TextStyler().onBreakpoint(
+      .hover => TextStyler().onHovered(style),
+      .focus => TextStyler().onFocused(style),
+      .focusVisible => TextStyler().onFocusVisible(style),
+      .pressed => TextStyler().onPressed(style),
+      .disabled => TextStyler().onDisabled(style),
+      .enabled => TextStyler().onEnabled(style),
+      .dark => TextStyler().onDark(style),
+      .light => TextStyler().onLight(style),
+      .breakpoint => TextStyler().onBreakpoint(
         Breakpoint(minWidth: part.breakpoint!),
         style,
       ),
-      TwRuntimeVariantKind.notHover => TextStyler().onNot(
-        ContextVariant.widgetState(WidgetState.hovered),
+      .notHover => TextStyler().onNot(
+        ContextVariant.widgetState(.hovered),
         style,
       ),
     };
@@ -1064,7 +1082,10 @@ final class TwTranslator {
       if (part == null) return null;
       parts.add(part);
     }
-    return parts.isEmpty ? _VariantPath.base : _VariantPath(parts);
+
+    return parts.isEmpty
+        ? _VariantPath.base
+        : _VariantPath(List.unmodifiable(parts));
   }
 
   bool _isSupportedWidgetLayerUtility(TailwindUtility utility) {
@@ -1072,11 +1093,91 @@ final class TwTranslator {
       return _isSupportedBasisUtility(utility);
     }
 
+    final root = tailwindUtilityRoot(utility);
+    if (root == 'gap-x' || root == 'gap-y') {
+      return !tailwindUtilityNegative(utility) &&
+          _spaceLengthForUtility(utility) != null;
+    }
+
+    if (sizingRoots.contains(root)) {
+      final key = tailwindValueKey(tailwindUtilityValue(utility));
+      final isFraction = key != null && parseFractionToken(key) != null;
+
+      return switch (root) {
+        'w' || 'h' => key == 'full' || key == 'screen' || isFraction,
+        'min-w' || 'min-h' => key == 'screen',
+        _ => false,
+      };
+    }
+
     return true;
+  }
+
+  bool _isWidgetLayerUtilitySupportedForTarget(
+    TailwindUtility utility,
+    TwTarget target,
+  ) {
+    if (_isAnimationUtility(utility)) return true;
+    if (target == .text) return false;
+
+    final root = tailwindUtilityRoot(utility);
+
+    return target == .flexBox || (root != 'gap-x' && root != 'gap-y');
+  }
+
+  bool _isLayoutOwnedCandidate(_CompiledCandidate compiled, TwTarget target) {
+    final inset = compiled.layoutInput?.inset;
+
+    return switch (target) {
+      .text => inset?.kind == .margin,
+      .box || .flexBox => false,
+    };
+  }
+
+  bool _hasOnlyBreakpointVariants(List<TailwindVariant> variants) {
+    for (final variant in variants) {
+      if (variant is! TailwindStaticVariant ||
+          !config.breakpoints.containsKey(variant.root)) {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
+  bool _isRootLayoutWidgetUtility(TailwindUtility utility) {
+    final raw = utility.raw;
+    final root = tailwindUtilityRoot(utility);
+    if (raw.startsWith('flex-') ||
+        raw.startsWith('basis-') ||
+        raw.startsWith('self-') ||
+        raw.startsWith('shrink') ||
+        raw.startsWith('grow')) {
+      return true;
+    }
+    if (root == 'basis' ||
+        root == 'self' ||
+        root == 'grow' ||
+        root == 'shrink' ||
+        root == 'gap-x' ||
+        root == 'gap-y') {
+      return true;
+    }
+    if (sizingRoots.contains(root)) {
+      final valueKey = tailwindValueKey(tailwindUtilityValue(utility));
+
+      return valueKey == 'full' ||
+          valueKey == 'screen' ||
+          valueKey == 'auto' ||
+          valueKey?.contains('/') == true;
+    }
+
+    return false;
   }
 
   bool _isBasisUtility(TailwindUtility utility) {
     final raw = utility.raw;
+
     return raw.startsWith('basis-') || tailwindUtilityRoot(utility) == 'basis';
   }
 
@@ -1108,7 +1209,26 @@ final class TwTranslator {
     final resolved = key == null ? null : config.space[key];
     final length = resolved ?? _arbitraryLength(value);
     if (length == null) return null;
+
     return negative ? -length : length;
+  }
+
+  double? _spaceLengthForUtility(TailwindUtility utility) {
+    final parsed = _spaceLength(tailwindUtilityValue(utility), negative: false);
+    if (parsed != null) return parsed;
+
+    final raw = utility.raw;
+    final root = tailwindUtilityRoot(utility);
+    final prefix = '$root-';
+    if (!raw.startsWith(prefix)) return null;
+
+    final key = raw.substring(prefix.length);
+    final configured = config.space[key];
+    if (configured != null) return configured;
+    if (key == 'px') return 1;
+    if (!key.startsWith('[') || !key.endsWith(']')) return null;
+
+    return parseCssLength(key.substring(1, key.length - 1));
   }
 
   double? _sizingLength(String root, TailwindValue? value) {
@@ -1128,11 +1248,13 @@ final class TwTranslator {
   Color? _color(TailwindValue? value, TailwindModifier? modifier) {
     if (value is TailwindArbitraryValue) {
       final parsed = _hexColor(value.value);
+
       return _applyOpacity(parsed, modifier);
     }
     if (value is TailwindCssVariableValue) return null;
     final key = tailwindValueKey(value);
     if (key == null || key.isEmpty) return null;
+
     return _applyOpacity(config.colorOf(key), modifier);
   }
 
@@ -1146,6 +1268,7 @@ final class TwTranslator {
       TailwindCssVariableModifier() => null,
     };
     if (percent == null || percent < 0 || percent > 100) return null;
+
     return color.withAlpha((percent * 255 / 100).round());
   }
 
@@ -1154,6 +1277,7 @@ final class TwTranslator {
   double? _arbitraryOpacityPercent(String value) {
     if (value.contains('%')) return double.tryParse(value.replaceAll('%', ''));
     final fraction = double.tryParse(value);
+
     return fraction == null ? null : fraction * 100;
   }
 
@@ -1178,6 +1302,7 @@ final class TwTranslator {
       _ => 'ff',
     };
     final argb = int.parse('$a$r$g$b', radix: 16);
+
     return Color(argb);
   }
 
@@ -1186,22 +1311,25 @@ final class TwTranslator {
     if (key == null) return null;
     final numeric = double.tryParse(key);
     if (numeric == null) return null;
+
     return numeric / 100;
   }
 
   double? _blur(TailwindValue? value) {
     final key = tailwindValueKey(value) ?? '';
+
     return config.blurOf(key);
   }
 
   List<BoxShadowMix>? _boxShadowMixes(String raw, TailwindValue? value) {
     final key = raw == 'shadow'
         ? 'shadow'
-        : 'shadow-${tailwindValueKey(value)}';
+        : 'shadow-${tailwindValueKey(value) ?? 'null'}';
     final shadows = raw == 'shadow-none'
         ? const <BoxShadowMix>[]
         : kTailwindBoxShadowPresets[key];
     if (shadows == null) return null;
+
     return List.of(shadows, growable: false);
   }
 
@@ -1220,6 +1348,7 @@ final class TwTranslator {
     };
     if (weight == null) return false;
     style.fontWeight = weight;
+
     return true;
   }
 
@@ -1228,6 +1357,7 @@ final class TwTranslator {
     final height = key == null ? null : twDefaultLeading[key];
     if (height == null) return false;
     style.explicitHeight = height;
+
     return true;
   }
 
@@ -1236,6 +1366,7 @@ final class TwTranslator {
     final tracking = key == null ? null : twDefaultTracking[key];
     if (tracking == null) return false;
     style.trackingEm = tracking;
+
     return true;
   }
 
@@ -1251,11 +1382,13 @@ final class TwTranslator {
     };
     if (shadows == null) return false;
     style.shadows = shadows.map(ShadowMix.value).toList(growable: false);
+
     return true;
   }
 
   bool _isWidgetLayerSize(TailwindValue? value) {
     final key = tailwindValueKey(value);
+
     return key == 'full' ||
         key == 'screen' ||
         key == 'auto' ||
@@ -1264,6 +1397,7 @@ final class TwTranslator {
 
   String _axisOrSide(String root) {
     if (root.length == 1) return 'all';
+
     return switch (root.substring(root.length - 1)) {
       'x' => 'x',
       'y' => 'y',
@@ -1274,6 +1408,751 @@ final class TwTranslator {
       _ => 'all',
     };
   }
+
+  BoxStyler _translateBoxProgram(_CandidateProgram program) {
+    return _translate<BoxStyler>(
+      program,
+      target: .box,
+      build: (context) => context.toBoxStyler(config),
+      merge: (base, other) => base.merge(other),
+      wrapVariant: _wrapBoxVariant,
+    );
+  }
+
+  FlexBoxStyler _translateFlexProgram(_CandidateProgram program) {
+    return _translate<FlexBoxStyler>(
+      program,
+      target: .flexBox,
+      build: (context) => context.toFlexBoxStyler(config),
+      merge: (base, other) => base.merge(other),
+      wrapVariant: _wrapFlexVariant,
+      afterBase: (context) {
+        if (!context.hasBaseFlex) {
+          context.direction = .vertical;
+        }
+      },
+    );
+  }
+
+  TextStyler _translateTextProgram(_CandidateProgram program) {
+    return _translate<TextStyler>(
+      program,
+      target: .text,
+      build: (context) => context.toTextStyler(config),
+      merge: (base, other) => base.merge(other),
+      wrapVariant: _wrapTextVariant,
+    );
+  }
+
+  IconStyler _translateIconProgram(_CandidateProgram program) {
+    double? width;
+    double? height;
+    Color? color;
+    double? opacity;
+
+    _reportParseFailures(program);
+    for (final compiled in program.candidates) {
+      final _CompiledCandidate(:token, :candidate, :route) = compiled;
+
+      if (compiled.layoutInput?.iconLogicalMargin != null) {
+        continue;
+      }
+      if (_reportBlockingRoute(token, route)) continue;
+      if (route.kind == .widgetLayer &&
+          _isAnimationUtility(candidate.utility)) {
+        continue;
+      }
+      if (candidate.variants.isNotEmpty || route.kind != .style) {
+        _reportUnsupported(
+          token,
+          code: .unsupportedForTarget,
+          reason: 'This candidate cannot be applied to an icon target.',
+          workaround: 'Apply the variant or box utility to a wrapping Div.',
+        );
+        continue;
+      }
+
+      final utility = candidate.utility;
+      if (tailwindUtilityNegative(utility)) {
+        _reportUnsupported(
+          token,
+          reason: 'Negative icon sizing and opacity values are unsupported.',
+        );
+        continue;
+      }
+      final root = tailwindUtilityRoot(utility);
+      final value = tailwindUtilityValue(utility);
+      var handled = false;
+
+      switch (root) {
+        case 'w':
+          final resolved = _sizingLength('w', value);
+          if (resolved != null) {
+            width = resolved;
+            handled = true;
+          }
+        case 'h':
+          final resolved = _sizingLength('h', value);
+          if (resolved != null) {
+            height = resolved;
+            handled = true;
+          }
+        case 'text':
+          final resolved = _color(value, tailwindUtilityModifier(utility));
+          if (resolved != null) {
+            color = resolved;
+            handled = true;
+          }
+        case 'opacity':
+          final resolved = _opacity(value);
+          if (resolved != null) {
+            opacity = resolved;
+            handled = true;
+          }
+      }
+
+      if (!handled) {
+        _reportUnsupported(
+          token,
+          code: .unsupportedForTarget,
+          reason: 'This utility has no supported icon translation.',
+        );
+      }
+    }
+
+    final size = (width != null && height != null)
+        ? (width < height ? width : height)
+        : (width ?? height);
+
+    return IconStyler(color: color, size: size, opacity: opacity);
+  }
+
+  bool _isAnimationUtility(TailwindUtility utility) {
+    final raw = utility.raw;
+    final root = tailwindUtilityRoot(utility);
+
+    return transitionTriggerTokens.contains(raw) ||
+        raw == 'transition-none' ||
+        _easeTokens.containsKey(raw) ||
+        root == 'duration' ||
+        root == 'delay';
+  }
+
+  bool _programWantsFlex(_CandidateProgram program) {
+    return program.candidates.any(
+      (compiled) =>
+          compiled.route.kind != .ignored &&
+          compiled.route.kind != .unsupported &&
+          isFlexContainerCandidate(compiled.candidate),
+    );
+  }
+
+  bool _programHasBoxUtilities(_CandidateProgram program) {
+    return program.candidates.any(
+      (compiled) =>
+          compiled.route.kind != .ignored &&
+          compiled.route.kind != .unsupported &&
+          isBoxStylingCandidate(compiled.candidate),
+    );
+  }
+
+  TwLayoutUtilityInput? _layoutInput(
+    TailwindCandidate candidate,
+    TwRoute route,
+  ) {
+    final utility = candidate.utility;
+    final logicalMargin = _layoutLogicalMargin(utility);
+    if (route.kind == .ignored ||
+        (route.kind == .unsupported && logicalMargin == null) ||
+        (route.kind == .widgetLayer &&
+            !_isSupportedWidgetLayerUtility(utility))) {
+      return null;
+    }
+
+    var minWidth = 0.0;
+    for (final variant in candidate.variants) {
+      if (variant is! TailwindStaticVariant) return null;
+      final breakpoint = config.breakpoints[variant.root];
+      if (breakpoint == null) return null;
+      minWidth = breakpoint;
+    }
+
+    return TwLayoutUtilityInput(
+      breakpointMinWidth: minWidth,
+      dimension: _layoutDimension(utility),
+      flexContainer: _layoutFlexContainer(
+        candidate,
+        establishesBaseFlex: candidate.variants.isEmpty,
+      ),
+      flexItem: _layoutFlexItem(utility),
+      inset: _layoutInset(utility),
+      iconLogicalMargin: logicalMargin,
+    );
+  }
+
+  TwLayoutDimensionDeclaration? _layoutDimension(TailwindUtility utility) {
+    final raw = utility.raw;
+    final root = tailwindUtilityRoot(utility);
+    if (tailwindUtilityNegative(utility)) return null;
+
+    final staticDimension = switch (raw) {
+      'w-auto' => (property: TwLayoutDimensionProperty.width, key: 'auto'),
+      'h-auto' => (property: TwLayoutDimensionProperty.height, key: 'auto'),
+      'min-w-auto' => (
+        property: TwLayoutDimensionProperty.minWidth,
+        key: 'auto',
+      ),
+      'min-h-auto' => (
+        property: TwLayoutDimensionProperty.minHeight,
+        key: 'auto',
+      ),
+      'w-screen' => (property: TwLayoutDimensionProperty.width, key: 'screen'),
+      'h-screen' => (property: TwLayoutDimensionProperty.height, key: 'screen'),
+      'min-w-screen' => (
+        property: TwLayoutDimensionProperty.minWidth,
+        key: 'screen',
+      ),
+      'min-h-screen' => (
+        property: TwLayoutDimensionProperty.minHeight,
+        key: 'screen',
+      ),
+      'max-w-screen' => (
+        property: TwLayoutDimensionProperty.maxWidth,
+        key: 'screen',
+      ),
+      'max-h-screen' => (
+        property: TwLayoutDimensionProperty.maxHeight,
+        key: 'screen',
+      ),
+      _ => null,
+    };
+    final property =
+        staticDimension?.property ??
+        switch (root) {
+          'w' => .width,
+          'h' => .height,
+          'min-w' => .minWidth,
+          'min-h' => .minHeight,
+          'max-w' => .maxWidth,
+          'max-h' => .maxHeight,
+          _ => null,
+        };
+    if (property == null) return null;
+
+    final value = tailwindUtilityValue(utility);
+    final key = staticDimension?.key ?? tailwindValueKey(value);
+    final TwDimensionIntent? intent;
+    if (key == 'auto') {
+      intent = const TwDimensionIntent.auto();
+    } else if (key == 'full') {
+      intent = const TwDimensionIntent.full();
+    } else if (key == 'screen') {
+      intent = const TwDimensionIntent.screen();
+    } else {
+      final fraction = key == null ? null : parseFractionToken(key);
+      final pixels = _sizingLength(root, value);
+      intent = fraction != null
+          ? TwDimensionIntent.fraction(fraction)
+          : pixels != null
+          ? TwDimensionIntent.fixed(pixels)
+          : null;
+    }
+    if (intent == null) return null;
+
+    return TwLayoutDimensionDeclaration(property: property, intent: intent);
+  }
+
+  TwLayoutFlexContainerDeclaration? _layoutFlexContainer(
+    TailwindCandidate candidate, {
+    required bool establishesBaseFlex,
+  }) {
+    if (!isFlexContainerCandidate(candidate)) return null;
+
+    final utility = candidate.utility;
+    final raw = utility.raw;
+    final root = tailwindUtilityRoot(utility);
+    final isAxisUtility =
+        raw == 'flex' ||
+        raw == 'inline-flex' ||
+        raw == 'flex-row' ||
+        raw == 'flex-col';
+    final display = switch (raw) {
+      'flex' => TwFlexDisplay.flex,
+      'inline-flex' => TwFlexDisplay.inlineFlex,
+      _ => null,
+    };
+    final axis = switch (raw) {
+      'flex' || 'inline-flex' || 'flex-row' => TwFlexAxis.horizontal,
+      'flex-col' => TwFlexAxis.vertical,
+      _ => null,
+    };
+    final gapAxis = switch (root) {
+      'gap' => TwLayoutGapAxis.all,
+      'gap-x' => TwLayoutGapAxis.horizontal,
+      'gap-y' => TwLayoutGapAxis.vertical,
+      _ => null,
+    };
+    final gap = gapAxis == null || tailwindUtilityNegative(utility)
+        ? null
+        : _spaceLengthForUtility(utility);
+
+    return TwLayoutFlexContainerDeclaration(
+      establishesBaseFlex: establishesBaseFlex && isAxisUtility,
+      display: display,
+      axis: axis,
+      gapAxis: gap == null ? null : gapAxis,
+      gap: gap,
+      explicitItems: raw.startsWith('items-'),
+    );
+  }
+
+  TwLayoutFlexItemDeclaration? _layoutFlexItem(TailwindUtility utility) {
+    final raw = utility.raw;
+    final shorthand = switch (raw) {
+      'flex-1' => const TwLayoutFlexItemDeclaration(
+        basis: .zero,
+        explicitBasis: false,
+        grow: 1,
+        shrink: 1,
+        behavior: TwFlexBehavior(flex: 1, fit: .tight),
+      ),
+      'flex-auto' => const TwLayoutFlexItemDeclaration(
+        basis: .auto,
+        explicitBasis: false,
+        grow: 1,
+        shrink: 1,
+        behavior: TwFlexBehavior(flex: 1, fit: .loose),
+      ),
+      'flex-initial' => const TwLayoutFlexItemDeclaration(
+        basis: .auto,
+        explicitBasis: false,
+        grow: 0,
+        shrink: 1,
+        behavior: TwFlexBehavior(flex: 0, fit: .loose),
+      ),
+      'flex-none' => const TwLayoutFlexItemDeclaration(
+        basis: .auto,
+        explicitBasis: false,
+        grow: 0,
+        shrink: 0,
+        behavior: TwFlexBehavior(flex: 0, fit: .loose),
+      ),
+      _ => null,
+    };
+    if (shorthand != null) return shorthand;
+
+    if (_isBasisUtility(utility) && _isSupportedBasisUtility(utility)) {
+      final key = _basisKey(utility)!;
+      final pixels = config.space[key];
+      final basis = key == 'auto'
+          ? TwFlexBasis.auto
+          : pixels == 0
+          ? TwFlexBasis.zero
+          : TwFlexBasis.fixed(pixels!);
+
+      return TwLayoutFlexItemDeclaration(
+        basis: basis,
+        explicitBasis: true,
+        basisPriority: 1,
+      );
+    }
+
+    final grow = switch (raw) {
+      'grow' => 1.0,
+      'grow-0' => 0.0,
+      _ => null,
+    };
+    if (grow != null) {
+      return TwLayoutFlexItemDeclaration(
+        grow: grow,
+        growPriority: 1,
+        behavior: TwFlexBehavior(
+          flex: grow > 0 ? 1 : 0,
+          fit: grow > 0 ? .tight : .loose,
+        ),
+      );
+    }
+
+    final shrink = switch (raw) {
+      'shrink' || 'flex-shrink' => 1.0,
+      'shrink-0' || 'flex-shrink-0' => 0.0,
+      _ => null,
+    };
+    if (shrink != null) {
+      return TwLayoutFlexItemDeclaration(
+        shrink: shrink,
+        shrinkPriority: 1,
+        behavior: TwFlexBehavior(
+          flex: shrink > 0 ? 1 : 0,
+          fit: shrink > 0 ? .tight : .loose,
+        ),
+      );
+    }
+
+    final alignment = switch (raw) {
+      'self-start' => TwSelfAlignment.start,
+      'self-center' => TwSelfAlignment.center,
+      'self-end' => TwSelfAlignment.end,
+      _ => null,
+    };
+
+    return alignment == null
+        ? null
+        : TwLayoutFlexItemDeclaration(selfAlignment: alignment);
+  }
+
+  TwLayoutInsetDeclaration? _layoutInset(TailwindUtility utility) {
+    if (tailwindUtilityNegative(utility)) return null;
+    final root = tailwindUtilityRoot(utility);
+    final spacingSides = _layoutSpacingSides(root);
+    if (spacingSides != null) {
+      final value = _spaceLengthForUtility(utility);
+      if (value == null) return null;
+
+      return TwLayoutInsetDeclaration(
+        kind: root.startsWith('m') ? .margin : .padding,
+        sides: spacingSides,
+        value: value,
+      );
+    }
+
+    final borderSides = switch (root) {
+      'border' => TwLayoutInsetSides.all,
+      'border-x' => TwLayoutInsetSides.horizontal,
+      'border-y' => TwLayoutInsetSides.vertical,
+      'border-t' => TwLayoutInsetSides.top,
+      'border-r' => TwLayoutInsetSides.right,
+      'border-b' => TwLayoutInsetSides.bottom,
+      'border-l' => TwLayoutInsetSides.left,
+      _ => null,
+    };
+    if (borderSides == null) return null;
+    final key = tailwindValueKey(tailwindUtilityValue(utility)) ?? '';
+    final width = config.borderWidths[key] ?? (key.isEmpty ? 1.0 : null);
+    if (width == null) return null;
+
+    return TwLayoutInsetDeclaration(
+      kind: .border,
+      sides: borderSides,
+      value: width,
+    );
+  }
+
+  TwLayoutLogicalInsetDeclaration? _layoutLogicalMargin(
+    TailwindUtility utility,
+  ) {
+    if (tailwindUtilityNegative(utility)) return null;
+    final sides = switch (tailwindUtilityRoot(utility)) {
+      'ms' => TwLayoutLogicalInsetSides.start,
+      'me' => TwLayoutLogicalInsetSides.end,
+      'ml' => TwLayoutLogicalInsetSides.left,
+      'mr' => TwLayoutLogicalInsetSides.right,
+      _ => null,
+    };
+    if (sides == null) return null;
+    final value = _spaceLengthForUtility(utility);
+
+    return value == null
+        ? null
+        : TwLayoutLogicalInsetDeclaration(sides: sides, value: value);
+  }
+
+  TwLayoutInsetSides? _layoutSpacingSides(String root) => switch (root) {
+    'm' || 'p' => .all,
+    'mx' || 'px' => .horizontal,
+    'my' || 'py' => .vertical,
+    'mt' || 'pt' => .top,
+    'mr' || 'pr' => .right,
+    'mb' || 'pb' => .bottom,
+    'ml' || 'pl' => .left,
+    _ => null,
+  };
+
+  TwCompiledLayoutPlan _buildLayoutPlan(_CandidateProgram program) {
+    final builder = TwLayoutPlanBuilder();
+    for (final compiled in program.candidates) {
+      if (compiled.layoutInput case final input?) builder.add(input);
+    }
+
+    return builder.build();
+  }
+
+  TwCompiledLayoutPlan _boxLayoutPlan(TwCompiledLayoutPlan plan) => .new(
+    dimensions: plan.dimensions,
+    flexItem: plan.flexItem,
+    externalMargin: plan.externalMargin,
+    zeroBasisInsets: plan.zeroBasisInsets,
+  );
+
+  TwCompiledLayoutPlan _flexLayoutPlan(TwCompiledLayoutPlan plan) => .new(
+    dimensions: plan.dimensions,
+    flexContainer: plan.flexContainer.asFlexTarget(),
+    flexItem: plan.flexItem,
+    externalMargin: plan.externalMargin,
+    zeroBasisInsets: plan.zeroBasisInsets,
+  );
+
+  TwCompiledLayoutPlan _inlineLayoutPlan(TwCompiledLayoutPlan plan) =>
+      .new(externalMargin: plan.externalMargin);
+
+  TwCompiledLayoutPlan _textLayoutPlan(TwCompiledLayoutPlan plan) =>
+      .new(externalMargin: plan.externalMargin);
+
+  TwCompiledLayoutPlan _iconLayoutPlan(TwCompiledLayoutPlan plan) =>
+      .new(iconLogicalMargin: plan.iconLogicalMargin);
+
+  CurveAnimationConfig? _parseAnimationProgram(
+    _CandidateProgram program, {
+    required bool reportSharedDiagnostics,
+  }) {
+    var hasTransition = false;
+    var hasTransitionNone = false;
+    var duration = const Duration(milliseconds: 150);
+    Curve curve = Curves.easeOut;
+    var delay = Duration.zero;
+
+    if (reportSharedDiagnostics) _reportParseFailures(program);
+    for (final compiled in program.candidates) {
+      final _CompiledCandidate(:token, :candidate, :route) = compiled;
+      if (route.kind == .ignored || route.kind == .unsupported) {
+        if (reportSharedDiagnostics) _reportBlockingRoute(token, route);
+        continue;
+      }
+
+      final base = candidate.utility.raw;
+      if (transitionTriggerTokens.contains(base)) {
+        hasTransition = true;
+      } else if (base == 'transition-none') {
+        hasTransitionNone = true;
+      } else if (base.startsWith('duration-')) {
+        final ms = config.durationOf(base.substring(9));
+        if (ms != null) {
+          duration = Duration(milliseconds: ms);
+        } else {
+          _reportUnsupported(
+            token,
+            reason: 'The transition duration is not in the configured scale.',
+            workaround: 'Use a duration key from TwConfig.durations.',
+          );
+        }
+      } else if (_easeTokens.containsKey(base)) {
+        curve = _easeTokens[base]!;
+      } else if (base.startsWith('delay-')) {
+        final ms = config.delayOf(base.substring(6));
+        if (ms != null) {
+          delay = Duration(milliseconds: ms);
+        } else {
+          _reportUnsupported(
+            token,
+            reason: 'The transition delay is not in the configured scale.',
+            workaround: 'Use a delay key from TwConfig.delays.',
+          );
+        }
+      }
+    }
+
+    if (hasTransitionNone || !hasTransition) return null;
+
+    return CurveAnimationConfig(duration: duration, curve: curve, delay: delay);
+  }
+
+  TwCompilation<S> _compile<S extends Object>(
+    String classNames, {
+    required _CompilationArtifacts<S> Function(
+      TwTranslator worker,
+      _CandidateProgram program,
+    )
+    build,
+    required S Function(S styler, CurveAnimationConfig animation)
+    attachAnimation,
+  }) {
+    final program = _compileProgram(splitTailwindTokens(classNames));
+    final collector = _DiagnosticCollector();
+    final worker = TwTranslator(config: config, onDiagnostic: collector.add);
+    final artifacts = build(worker, program);
+    final animation = worker._parseAnimationProgram(
+      program,
+      reportSharedDiagnostics: false,
+    );
+    final styler = animation == null
+        ? artifacts.styler
+        : attachAnimation(artifacts.styler, animation);
+    final compilation = TwCompilation<S>(
+      styler: styler,
+      layoutPlan: artifacts.layoutPlan,
+      diagnostics: collector.diagnostics,
+    );
+    collector.replay(onDiagnostic, legacyOnUnsupported);
+
+    return compilation;
+  }
+
+  TwCompilation<BoxStyler> compileBox(String classNames) => _compile<BoxStyler>(
+    classNames,
+    build: (worker, program) {
+      final plan = worker._buildLayoutPlan(program);
+
+      return _CompilationArtifacts(
+        styler: worker._translateBoxProgram(program),
+        layoutPlan: worker._boxLayoutPlan(plan),
+      );
+    },
+    attachAnimation: (styler, animation) => styler.animate(animation),
+  );
+
+  TwCompilation<FlexBoxStyler> compileFlex(String classNames) =>
+      _compile<FlexBoxStyler>(
+        classNames,
+        build: (worker, program) {
+          final plan = worker._buildLayoutPlan(program);
+
+          return _CompilationArtifacts(
+            styler: worker._translateFlexProgram(program),
+            layoutPlan: worker._flexLayoutPlan(plan),
+          );
+        },
+        attachAnimation: (styler, animation) => styler.animate(animation),
+      );
+
+  TwCompilation<TextStyler> compileText(String classNames) =>
+      _compile<TextStyler>(
+        classNames,
+        build: (worker, program) {
+          final plan = worker._buildLayoutPlan(program);
+
+          return _CompilationArtifacts(
+            styler: worker._translateTextProgram(program),
+            layoutPlan: worker._textLayoutPlan(plan),
+          );
+        },
+        attachAnimation: (styler, animation) => styler.animate(animation),
+      );
+
+  TwCompilation<IconStyler> compileIcon(String classNames) =>
+      _compile<IconStyler>(
+        classNames,
+        build: (worker, program) {
+          final plan = worker._buildLayoutPlan(program);
+
+          return _CompilationArtifacts(
+            styler: worker._translateIconProgram(program),
+            layoutPlan: worker._iconLayoutPlan(plan),
+          );
+        },
+        attachAnimation: (styler, animation) => styler.animate(animation),
+      );
+
+  /// Compiles the widget-facing outputs for [mode] from one candidate program.
+  ///
+  /// Parsed candidate records stay private to this library. The widget layer
+  /// receives only target inference, typed stylers, diagnostics, and the
+  /// semantic layout plan.
+  TwWidgetCompilation compileForWidget(
+    String classNames,
+    TwWidgetCompilationMode mode, {
+    bool? forceFlex,
+  }) {
+    final program = _compileProgram(splitTailwindTokens(classNames));
+    final inferredFlex = _programWantsFlex(program);
+    final wantsFlex = mode == .boxOrFlex ? (forceFlex ?? inferredFlex) : false;
+    final hasBoxUtilities = _programHasBoxUtilities(program);
+    final fullLayoutPlan = _buildLayoutPlan(program);
+    final collector = _DiagnosticCollector();
+    final targetCollectors = <_DiagnosticCollector>[];
+    TwTranslator workerForTarget() {
+      final targetCollector = _DiagnosticCollector();
+      targetCollectors.add(targetCollector);
+
+      return TwTranslator(config: config, onDiagnostic: targetCollector.add);
+    }
+
+    BoxStyler? boxStyler;
+    FlexBoxStyler? flexStyler;
+    TextStyler? textStyler;
+    IconStyler? iconStyler;
+
+    switch (mode) {
+      case .boxOrFlex:
+        if (wantsFlex) {
+          flexStyler = workerForTarget()._translateFlexProgram(program);
+        } else {
+          boxStyler = workerForTarget()._translateBoxProgram(program);
+        }
+      case .inline:
+        if (hasBoxUtilities) {
+          boxStyler = workerForTarget()._translateBoxProgram(program);
+        }
+        textStyler = workerForTarget()._translateTextProgram(program);
+      case .text:
+        textStyler = workerForTarget()._translateTextProgram(program);
+      case .icon:
+        iconStyler = workerForTarget()._translateIconProgram(program);
+    }
+
+    final firstTargetCollector = targetCollectors.first;
+    if (targetCollectors.length == 1) {
+      collector.addAll(firstTargetCollector.diagnostics);
+    } else {
+      collector.addAll(
+        firstTargetCollector.diagnostics.where(
+          (diagnostic) => targetCollectors
+              .skip(1)
+              .every((other) => other.containsToken(diagnostic.token)),
+        ),
+      );
+    }
+
+    final animationWorker = TwTranslator(
+      config: config,
+      onDiagnostic: collector.add,
+    );
+    final animation = animationWorker._parseAnimationProgram(
+      program,
+      reportSharedDiagnostics: false,
+    );
+    if (animation != null) {
+      boxStyler = boxStyler?.animate(animation);
+      flexStyler = flexStyler?.animate(animation);
+      textStyler = textStyler?.animate(animation);
+      iconStyler = iconStyler?.animate(animation);
+    }
+    final layoutPlan = switch (mode) {
+      .boxOrFlex =>
+        wantsFlex
+            ? _flexLayoutPlan(fullLayoutPlan)
+            : _boxLayoutPlan(fullLayoutPlan),
+      .inline => _inlineLayoutPlan(fullLayoutPlan),
+      .text => _textLayoutPlan(fullLayoutPlan),
+      .icon => _iconLayoutPlan(fullLayoutPlan),
+    };
+    final compilation = TwWidgetCompilation(
+      mode: mode,
+      boxStyler: boxStyler,
+      flexStyler: flexStyler,
+      textStyler: textStyler,
+      iconStyler: iconStyler,
+      wantsFlex: wantsFlex,
+      hasBoxUtilities: hasBoxUtilities,
+      layoutPlan: layoutPlan,
+      parentLayoutPlan: fullLayoutPlan,
+      diagnostics: collector.diagnostics,
+    );
+    collector.replay(onDiagnostic, legacyOnUnsupported);
+
+    return compilation;
+  }
+
+  BoxStyler translateBox(String classNames) =>
+      _translateBoxProgram(_compileProgram(splitTailwindTokens(classNames)));
+
+  FlexBoxStyler translateFlex(String classNames) =>
+      _translateFlexProgram(_compileProgram(splitTailwindTokens(classNames)));
+
+  TextStyler translateText(String classNames) =>
+      _translateTextProgram(_compileProgram(splitTailwindTokens(classNames)));
+
+  IconStyler translateIcon(String classNames) =>
+      _translateIconProgram(_compileProgram(splitTailwindTokens(classNames)));
 }
 
 const _easeTokens = {
@@ -1284,9 +2163,8 @@ const _easeTokens = {
 };
 
 final class _GroupContext {
-  _GroupContext(this.target);
-
   final TwTarget target;
+
   final padding = _EdgeAccum();
   final margin = _EdgeAccum();
   final constraints = _ConstraintsAccum();
@@ -1299,10 +2177,9 @@ final class _GroupContext {
   final transform = TransformAccum();
   final border = BorderAccum();
   final gradient = GradientAccum();
-  int? _defaultTextStyleInsertIndex;
-
   Clip? clipBehavior;
   Axis? direction;
+
   MainAxisAlignment? mainAxisAlignment;
   CrossAxisAlignment? crossAxisAlignment;
   MainAxisSize? mainAxisSize;
@@ -1313,9 +2190,41 @@ final class _GroupContext {
   int? maxLines;
   bool? softWrap;
   bool hasBaseFlex = false;
+  int? _defaultTextStyleInsertIndex;
+  _GroupContext(this.target);
+
+  BoxDecorationMix? _decorationMix(TwConfig config) {
+    final gradientMix = gradient.toGradientMix(config.gradientStrategy);
+    final borderMix = border.hasStructure
+        ? border.toMix(
+            defaultColor: config.colorOf('gray-200') ?? const Color(0xFFE5E7EB),
+          )
+        : null;
+
+    return decoration.toMix(border: borderMix, gradient: gradientMix);
+  }
+
+  WidgetModifierConfig? _modifierConfig(TwConfig config) {
+    if (modifiers.isEmpty && _defaultTextStyleInsertIndex == null) return null;
+
+    final output = List.of(modifiers);
+    if (_defaultTextStyleInsertIndex case final index?) {
+      output.insert(
+        index,
+        DefaultTextStyleModifierMix(
+          style: defaultTextStyle.toMix(
+            defaultFontSize: config.textDefaults.fontSize,
+          ),
+        ),
+      );
+    }
+
+    return WidgetModifierConfig.modifiers(output);
+  }
 
   _TextStyleAccum ensureDefaultTextStyle() {
     _defaultTextStyleInsertIndex ??= modifiers.length;
+
     return defaultTextStyle;
   }
 
@@ -1338,10 +2247,10 @@ final class _GroupContext {
     final hasTransform = transform.hasAnyTransform;
 
     return FlexBoxStyler(
+      decoration: _decorationMix(config),
       padding: padding.toMix(),
       margin: margin.toMix(),
       constraints: constraints.toMix(),
-      decoration: _decorationMix(config),
       transform: hasTransform ? transform.toMatrix4() : null,
       transformAlignment: hasTransform ? Alignment.center : null,
       clipBehavior: clipBehavior,
@@ -1357,49 +2266,20 @@ final class _GroupContext {
 
   TextStyler toTextStyler(TwConfig config) {
     return TextStyler(
+      overflow: overflow,
+      textAlign: textAlign,
+      maxLines: maxLines,
       style: textStyle.toMix(
         defaultHeight: config.textDefaults.lineHeight,
         defaultFontSize: config.textDefaults.fontSize,
       ),
-      textAlign: textAlign,
-      overflow: overflow,
-      maxLines: maxLines,
-      softWrap: softWrap,
       textHeightBehavior: textHeightBehavior.toMix(),
+      softWrap: softWrap,
       textDirectives: textDirectives.isEmpty
           ? null
           : List.unmodifiable(textDirectives),
       modifier: _modifierConfig(config),
     );
-  }
-
-  BoxDecorationMix? _decorationMix(TwConfig config) {
-    final gradientMix = gradient.toGradientMix(config.gradientStrategy);
-    final borderMix = border.hasStructure
-        ? border.toMix(
-            defaultColor: config.colorOf('gray-200') ?? const Color(0xFFE5E7EB),
-          )
-        : null;
-
-    return decoration.toMix(border: borderMix, gradient: gradientMix);
-  }
-
-  WidgetModifierConfig? _modifierConfig(TwConfig config) {
-    if (modifiers.isEmpty && _defaultTextStyleInsertIndex == null) return null;
-
-    final output = List<ModifierMix>.of(modifiers);
-    if (_defaultTextStyleInsertIndex case final index?) {
-      output.insert(
-        index,
-        DefaultTextStyleModifierMix(
-          style: defaultTextStyle.toMix(
-            defaultFontSize: config.textDefaults.fontSize,
-          ),
-        ),
-      );
-    }
-
-    return WidgetModifierConfig.modifiers(output);
   }
 }
 
@@ -1415,11 +2295,16 @@ final class _EdgeAccum {
   void set(double value, {required String sides}) {
     switch (sides) {
       case 'all':
-        left = top = right = bottom = value;
+        left = value;
+        top = value;
+        right = value;
+        bottom = value;
       case 'x':
-        left = right = value;
+        left = value;
+        right = value;
       case 'y':
-        top = bottom = value;
+        top = value;
+        bottom = value;
       case 'top':
         top = value;
       case 'right':
@@ -1433,7 +2318,8 @@ final class _EdgeAccum {
 
   EdgeInsetsMix? toMix() {
     if (!hasAny) return null;
-    return EdgeInsetsMix(left: left, top: top, right: right, bottom: bottom);
+
+    return EdgeInsetsMix(top: top, bottom: bottom, left: left, right: right);
   }
 }
 
@@ -1451,6 +2337,7 @@ final class _ConstraintsAccum {
 
   BoxConstraintsMix? toMix() {
     if (!hasAny) return null;
+
     return BoxConstraintsMix(
       minWidth: minWidth,
       maxWidth: maxWidth,
@@ -1474,12 +2361,13 @@ final class _DecorationAccum {
 
   BoxDecorationMix? toMix({BoxBorderMix? border, GradientMix? gradient}) {
     if (!hasAny && border == null && gradient == null) return null;
+
     return BoxDecorationMix(
-      color: color,
       border: border,
       borderRadius: borderRadius.toMix(),
-      boxShadow: boxShadow,
+      color: color,
       gradient: gradient,
+      boxShadow: boxShadow,
     );
   }
 }
@@ -1498,6 +2386,7 @@ final class _BorderRadiusAccum {
 
   BorderRadiusMix? toMix() {
     if (!hasAny) return null;
+
     return BorderRadiusMix(
       topLeft: topLeft,
       topRight: topRight,
@@ -1512,9 +2401,7 @@ final class _TextStyleAccum {
   double? fontSize;
   double? fontSizeHeight;
   FontWeight? fontWeight;
-  TextDecoration? decoration;
   double? explicitHeight;
-  double? letterSpacing;
   double? trackingEm;
   List<ShadowMix>? shadows;
 
@@ -1523,26 +2410,27 @@ final class _TextStyleAccum {
       fontSize != null ||
       fontSizeHeight != null ||
       fontWeight != null ||
-      decoration != null ||
       explicitHeight != null ||
-      letterSpacing != null ||
       trackingEm != null ||
       shadows != null;
 
-  TextStyleMix? toMix({double? defaultHeight, double? defaultFontSize}) {
+  TextStyleMix? toMix({
+    double? defaultHeight,
+    required double defaultFontSize,
+  }) {
     final resolvedHeight = explicitHeight ?? fontSizeHeight ?? defaultHeight;
     final resolvedLetterSpacing = trackingEm == null
-        ? letterSpacing
-        : trackingEm! * (fontSize ?? defaultFontSize!);
+        ? null
+        : trackingEm! * (fontSize ?? defaultFontSize);
     if (!hasAny && resolvedHeight == null) return null;
+
     return TextStyleMix(
       color: color,
       fontSize: fontSize,
       fontWeight: fontWeight,
-      decoration: decoration,
-      height: resolvedHeight,
       letterSpacing: resolvedLetterSpacing,
       shadows: shadows,
+      height: resolvedHeight,
     );
   }
 }
@@ -1559,6 +2447,7 @@ final class _TextHeightBehaviorAccum {
 
   TextHeightBehaviorMix? toMix() {
     if (!hasAny) return null;
+
     return TextHeightBehaviorMix(
       applyHeightToFirstAscent: applyHeightToFirstAscent,
       applyHeightToLastDescent: applyHeightToLastDescent,
@@ -1568,11 +2457,11 @@ final class _TextHeightBehaviorAccum {
 }
 
 final class _VariantPath {
-  const _VariantPath(this.parts);
-
   static const base = _VariantPath([]);
 
   final List<TwRuntimeVariant> parts;
+
+  const _VariantPath(this.parts);
 
   @override
   bool operator ==(Object other) =>
@@ -1589,5 +2478,6 @@ bool _partsEqual(List<TwRuntimeVariant> a, List<TwRuntimeVariant> b) {
   for (var i = 0; i < a.length; i++) {
     if (a[i] != b[i]) return false;
   }
+
   return true;
 }

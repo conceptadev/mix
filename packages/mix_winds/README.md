@@ -98,6 +98,32 @@ Omit `semanticsLabel` when child text already names the control because Mix
 combines explicit and descendant labels; reserve it for icon-only or otherwise
 nonverbal children.
 
+## Portable Style Output
+
+`mix_winds` compiles Tailwind classes to typed Mix stylers but does not own or
+depend on the Mix wire format. Applications that need portable JSON opt into
+`mix_protocol` themselves and encode the compiled styler at their boundary:
+
+```dart
+import 'package:mix_protocol/mix_protocol.dart';
+import 'package:mix_winds/mix_winds.dart';
+
+final result = TwParser().compileBox(
+  'w-40 rounded-lg bg-blue-500 p-4 hover:bg-blue-600',
+);
+final encoded = mixProtocol.encodeStyle(result.styler);
+```
+
+The same pattern applies to `compileFlex`, `compileText`, and `compileIcon`.
+Inspect `result.diagnostics` before accepting user-authored classes and always
+handle `MixProtocolFailure` from the codec. Protocol vocabulary support is
+separate from `requiresWidgetRuntime`: for example, Mix Protocol v1 does not
+encode the `FocusVisibleVariant` produced by `focus-visible:*`. When
+`requiresWidgetRuntime` is true, even a successfully encoded styler is not the
+complete behavior; render the same classes with a `mix_winds` widget so its
+Flutter layout plan is evaluated. JSON is a consumer boundary representation,
+not an intermediate representation inside `mix_winds`.
+
 ## Supported Tokens
 
 This proof of concept supports a subset of Tailwind CSS utilities including:

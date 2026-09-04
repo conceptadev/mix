@@ -1,4 +1,4 @@
-## Unreleased
+## 0.1.0-alpha.0
 
 - **Breaking:** Renamed the package from `mix_tailwinds` to `mix_winds`. Update
   the dependency name and change `package:mix_tailwinds/mix_tailwinds.dart`
@@ -63,6 +63,23 @@
 - Added structured `TwDiagnostic` reporting through `onDiagnostic`; ignored
   adaptations and unsupported candidates no longer disappear silently. The
   token-only `onUnsupported` callback remains as a deprecated shim.
+- Added `TwParser.compileBox`, `compileFlex`, `compileText`, and `compileIcon`
+  to return the Styler, deterministic diagnostics, and a read-only runtime
+  layout plan from one candidate pass. Compiled Stylers now retain transition
+  animation for portable Mix Protocol encoding.
+- Build the runtime plan from the compiler's typed utility semantics instead of
+  interpreting class strings a second time, keeping runtime classification in
+  lockstep with routing and configured values.
+- Fixed runtime classification and plan evaluation for external box/flex
+  margins and implicit vertical-flex alignment under bounded versus unbounded
+  constraints.
+- Flex parents now hand prepared compilations to built-in direct children, so
+  parent measurement and child rendering share one parse while diagnostics are
+  still delivered exactly once by the child.
+- **Breaking (experimental alpha):** Removed the token-level `TwParser`
+  helpers `listTokens`, `setTokens`, `wantsFlex`, and
+  `parseAnimationFromTokens`. Use the target-specific `compile*` methods; the
+  parsed candidate program is now package-internal.
 - Resolve conflicting utilities in canonical registry order across translated
   styles and constraint-aware widget behavior, so class-string order no longer
   changes base, variant, flex-axis, gap, or self-alignment output.

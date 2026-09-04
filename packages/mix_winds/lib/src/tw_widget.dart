@@ -3,101 +3,10 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:mix/mix.dart';
 
-import 'parser/candidate_parser.dart';
-import 'parser/data/parser_registry.g.dart';
-import 'parser/diagnostics.dart';
-import 'parser/model.dart';
-import 'translate/tw_target.dart' as tw_target;
-import 'translate/tw_routing.dart';
+import 'translate/tw_translator.dart';
 import 'tw_config.dart';
-import 'tw_flex_item.dart';
-import 'tw_parser.dart';
+import 'tw_layout_plan.dart';
 import 'tw_types.dart';
-import 'tw_utils.dart';
-
-// =============================================================================
-// Box/Margin Utility Detection
-// =============================================================================
-
-const _candidateParser = TailwindCandidateParser(
-  registry: defaultTailwindParserRegistry,
-);
-
-/// Extracts positive margin [EdgeInsets] from [classNames].
-///
-/// Returns null when no positive margin token is present.
-///
-/// - Negative margins (`-mb-4`) are skipped. They are applied via [Padding],
-///   whose `RenderPadding` asserts non-negative insets, so emitting them would
-///   crash. True CSS negative-margin parity needs a transform-based strategy at
-///   the box layer and is tracked separately.
-/// - Variant-prefixed margins are skipped because responsive/interaction
-///   margin semantics are not yet modeled in the widget layer.
-EdgeInsets? _extractMargin(String classNames, TwConfig cfg) {
-  final tokens = splitTailwindTokens(classNames);
-  double? top, right, bottom, left;
-
-  for (final token in tokens) {
-    final candidate = _parseCandidate(token);
-    if (candidate == null || candidate.variants.isNotEmpty) continue;
-
-    final route = routeCandidate(candidate, breakpoints: cfg.breakpoints);
-    if (route.kind != TwRouteKind.schemaValue) continue;
-
-    final utility = candidate.utility;
-    final root = tailwindUtilityRoot(utility);
-    if (!_marginRoots.contains(root)) continue;
-    if (tailwindUtilityNegative(utility)) continue;
-
-    final value = _marginLength(tailwindUtilityValue(utility), cfg);
-    if (value == null || value < 0) continue;
-
-    switch (root) {
-      case 'm':
-        top = right = bottom = left = value;
-      case 'mx':
-        left = right = value;
-      case 'my':
-        top = bottom = value;
-      case 'mt':
-        top = value;
-      case 'mr':
-        right = value;
-      case 'mb':
-        bottom = value;
-      case 'ml':
-        left = value;
-    }
-  }
-
-  if (top == null && right == null && bottom == null && left == null) {
-    return null;
-  }
-
-  return EdgeInsets.only(
-    left: left ?? 0,
-    top: top ?? 0,
-    right: right ?? 0,
-    bottom: bottom ?? 0,
-  );
-}
-
-double? _marginLength(TailwindValue? value, TwConfig cfg) {
-  final key = tailwindValueKey(value);
-  final scale = cfg.space[key];
-  if (scale != null) return scale;
-  return value is TailwindArbitraryValue ? parseCssLength(value.value) : null;
-}
-
-const _marginRoots = {'m', 'mx', 'my', 'mt', 'mr', 'mb', 'ml'};
-
-TailwindCandidate? _parseCandidate(String token) {
-  final parsed = _candidateParser.parseCandidate(token);
-  return switch (parsed) {
-    TailwindParseSuccess(:final candidate) => candidate,
-    TailwindParseFailure() => null,
-  };
-}
 
 // =============================================================================
 // CSS Semantic Margin Helpers
@@ -125,7 +34,7 @@ BoxSpec _boxSpecWithoutMargin(BoxSpec spec) {
 ///
 /// Preserves animation and widgetModifiers from the original.
 StyleSpec<BoxSpec> _styleSpecWithoutMargin(StyleSpec<BoxSpec> styleSpec) {
-  return StyleSpec<BoxSpec>(
+  return StyleSpec(
     spec: _boxSpecWithoutMargin(styleSpec.spec),
     animation: styleSpec.animation,
     widgetModifiers: styleSpec.widgetModifiers,
@@ -137,6 +46,7 @@ StyleSpec<BoxSpec> _styleSpecWithoutMargin(StyleSpec<BoxSpec> styleSpec) {
 /// Preserves flex spec and other box properties.
 FlexBoxSpec _flexBoxSpecWithoutMargin(FlexBoxSpec spec) {
   if (spec.box == null) return spec;
+
   return FlexBoxSpec(box: _styleSpecWithoutMargin(spec.box!), flex: spec.flex);
 }
 
@@ -162,11 +72,11 @@ class _TwFlexScope extends InheritedWidget {
     required super.child,
   });
 
-  final Axis axis;
-  final bool isMainAxisBounded;
-
   static _TwFlexScope? maybeOf(BuildContext context) =>
-      context.dependOnInheritedWidgetOfExactType<_TwFlexScope>();
+      context.dependOnInheritedWidgetOfExactType();
+  final Axis axis;
+
+  final bool isMainAxisBounded;
 
   @override
   bool updateShouldNotify(_TwFlexScope oldWidget) =>
@@ -194,7 +104,7 @@ bool _resolveIsMainAxisBounded(
 
   // Fallback: read RenderFlex constraints directly (covers native parents)
   if (renderFlex.hasSize) {
-    return axis == Axis.horizontal
+    return axis == .horizontal
         ? renderFlex.constraints.hasBoundedWidth
         : renderFlex.constraints.hasBoundedHeight;
   }
@@ -219,20 +129,22 @@ bool _resolveIsMainAxisBounded(
 ///               └── Box(no margin)
 /// ```
 class _CssSemanticBox extends StatelessWidget {
-  const _CssSemanticBox({required this.style, this.child, this.wrapBorderBox});
+  const _CssSemanticBox({
+    required this.style,
+    this.child,
+    this.wrapBorderBox,
+    this.externalMargin,
+  });
 
   final BoxStyler style;
   final Widget? child;
   final _BorderBoxWrapper? wrapBorderBox;
+  final EdgeInsetsGeometry? externalMargin;
 
   @override
   Widget build(BuildContext context) {
-    // Step 1: Resolve base margin BEFORE MixInteractionDetector
-    // This ensures margin is outside the hover/press detection area
-    final baseSpec = style.resolve(context).spec;
-    final margin = baseSpec.margin;
-
-    // Step 2: Build inner content with StyleBuilder (handles variants/animations)
+    // Build inner content with StyleBuilder (handles variants/animations).
+    // Margin is stripped because the semantic plan owns its outer placement.
     Widget inner = StyleBuilder<BoxSpec>(
       style: style,
       builder: (context, spec) {
@@ -248,8 +160,8 @@ class _CssSemanticBox extends StatelessWidget {
       inner = wrap(inner);
     }
 
-    // Step 3: Apply margin OUTSIDE MixInteractionDetector
-    if (margin != null) {
+    // Apply margin outside MixInteractionDetector.
+    if (externalMargin case final margin?) {
       inner = Padding(padding: margin, child: inner);
     }
 
@@ -267,11 +179,13 @@ class _CssSemanticFlexBox extends StatelessWidget {
     this.wrapBorderBox,
     this.selfAlignments,
     this.zeroBasisItems,
+    this.externalMargin,
   });
 
   final FlexBoxStyler style;
   final List<Widget> children;
   final _BorderBoxWrapper? wrapBorderBox;
+  final EdgeInsetsGeometry? externalMargin;
 
   /// Per-child `self-*` alignment, positional and null where a child keeps the
   /// container's alignment. Null when no child opts out at all.
@@ -283,11 +197,8 @@ class _CssSemanticFlexBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Step 1: Resolve base margin BEFORE MixInteractionDetector
-    final baseSpec = style.resolve(context);
-    final margin = baseSpec.spec.box?.spec.margin;
-
-    // Step 2: Build inner content with StyleBuilder (handles variants/animations)
+    // Build inner content with StyleBuilder (handles variants/animations).
+    // Margin is stripped because the semantic plan owns its outer placement.
     Widget inner = StyleBuilder<FlexBoxSpec>(
       style: style,
       builder: (context, spec) {
@@ -306,24 +217,22 @@ class _CssSemanticFlexBox extends StatelessWidget {
         // Tailwind needs per-child alignment or content-box flex sizing.
         final flexSpec = stripped.flex?.spec;
         final Widget flex = _TailwindFlex(
-          direction: flexSpec?.direction ?? Axis.horizontal,
-          mainAxisAlignment:
-              flexSpec?.mainAxisAlignment ?? MainAxisAlignment.start,
-          mainAxisSize: flexSpec?.mainAxisSize ?? MainAxisSize.max,
-          crossAxisAlignment:
-              flexSpec?.crossAxisAlignment ?? CrossAxisAlignment.center,
-          textDirection: flexSpec?.textDirection,
-          verticalDirection:
-              flexSpec?.verticalDirection ?? VerticalDirection.down,
-          textBaseline: flexSpec?.textBaseline,
-          clipBehavior: flexSpec?.clipBehavior ?? Clip.none,
+          direction: flexSpec?.direction ?? .horizontal,
+          mainAxisAlignment: flexSpec?.mainAxisAlignment ?? .start,
+          mainAxisSize: flexSpec?.mainAxisSize ?? .max,
+          crossAxisAlignment: flexSpec?.crossAxisAlignment ?? .center,
+          verticalDirection: flexSpec?.verticalDirection ?? .down,
+          clipBehavior: flexSpec?.clipBehavior ?? .none,
           spacing: flexSpec?.spacing ?? 0.0,
           selfAlignments: alignments ?? const [],
           zeroBasisItems: items ?? const [],
+          textDirection: flexSpec?.textDirection,
+          textBaseline: flexSpec?.textBaseline,
           children: children,
         );
 
         final box = stripped.box;
+
         return box == null ? flex : Box(styleSpec: box, child: flex);
       },
     );
@@ -332,8 +241,8 @@ class _CssSemanticFlexBox extends StatelessWidget {
       inner = wrap(inner);
     }
 
-    // Step 3: Apply margin OUTSIDE MixInteractionDetector
-    if (margin != null) {
+    // Apply margin outside MixInteractionDetector.
+    if (externalMargin case final margin?) {
       inner = Padding(padding: margin, child: inner);
     }
 
@@ -358,7 +267,14 @@ abstract interface class _TwConfigured {
   TwConfig? get config;
 }
 
-class Div extends StatelessWidget implements TwClassed, _TwConfigured {
+/// Internal description needed to compile a built-in Tailwind widget once.
+abstract interface class _TwCompilable implements TwClassed, _TwConfigured {
+  TwWidgetCompilationMode get _compilationMode;
+
+  bool? get _forceFlex;
+}
+
+class Div extends StatelessWidget implements _TwCompilable {
   const Div({
     super.key,
     required this.classNames,
@@ -379,6 +295,12 @@ class Div extends StatelessWidget implements TwClassed, _TwConfigured {
   final TwConfig? config;
   final TwDiagnosticCallback? onDiagnostic;
 
+  @override
+  TwWidgetCompilationMode get _compilationMode => .boxOrFlex;
+
+  @override
+  bool? get _forceFlex => isFlex;
+
   @Deprecated('Use onDiagnostic instead.')
   final void Function(String token)? onUnsupported;
 
@@ -386,12 +308,12 @@ class Div extends StatelessWidget implements TwClassed, _TwConfigured {
   Widget build(BuildContext context) {
     return _TwElement(
       classNames: classNames,
-      child: child,
-      children: children,
       isFlex: isFlex,
       onDiagnostic: onDiagnostic,
       onUnsupported: onUnsupported,
       config: config,
+      child: child,
+      children: children,
     );
   }
 }
@@ -401,7 +323,7 @@ class Div extends StatelessWidget implements TwClassed, _TwConfigured {
 /// Its margin remains outside the interactive and semantic hit-test area,
 /// matching the CSS box model. A null [onPressed] disables the button unless
 /// [onLongPress] provides an action.
-class Button extends StatelessWidget implements TwClassed, _TwConfigured {
+class Button extends StatelessWidget implements _TwCompilable {
   const Button({
     super.key,
     required this.classNames,
@@ -437,6 +359,12 @@ class Button extends StatelessWidget implements TwClassed, _TwConfigured {
   final TwConfig? config;
   final TwDiagnosticCallback? onDiagnostic;
 
+  @override
+  TwWidgetCompilationMode get _compilationMode => .boxOrFlex;
+
+  @override
+  bool? get _forceFlex => isFlex;
+
   @Deprecated('Use onDiagnostic instead.')
   final void Function(String token)? onUnsupported;
 
@@ -465,8 +393,6 @@ class Button extends StatelessWidget implements TwClassed, _TwConfigured {
 
     return _TwElement(
       classNames: classNames,
-      child: child,
-      children: children,
       isFlex: isFlex,
       onDiagnostic: onDiagnostic,
       onUnsupported: onUnsupported,
@@ -484,19 +410,83 @@ class Button extends StatelessWidget implements TwClassed, _TwConfigured {
         canRequestFocus: canRequestFocus,
         excludeFromSemantics: excludeFromSemantics,
         semanticsLabel: semanticsLabel,
-        semanticsRole: PressableSemanticsRole.button,
+        semanticsRole: .button,
         onKeyEvent: onKeyEvent,
         controller: controller,
         actions: actions,
         child: child,
       ),
+      child: child,
+      children: children,
     );
   }
 }
 
 typedef _BorderBoxWrapper = Widget Function(Widget child);
 
-class _TwElement extends StatelessWidget {
+class _TwPreparedCompilationScope extends InheritedWidget {
+  const _TwPreparedCompilationScope({
+    required this.classNames,
+    required this.config,
+    required this.mode,
+    required this.forceFlex,
+    required this.compilation,
+    required super.child,
+  });
+
+  static _TwPreparedCompilationScope? maybeOf(BuildContext context) =>
+      context.dependOnInheritedWidgetOfExactType();
+
+  final String classNames;
+  final TwConfig config;
+  final TwWidgetCompilationMode mode;
+  final bool? forceFlex;
+  final TwWidgetCompilation compilation;
+
+  bool matches({
+    required String classNames,
+    required TwConfig config,
+    required TwWidgetCompilationMode mode,
+    required bool? forceFlex,
+  }) =>
+      this.classNames == classNames &&
+      identical(this.config, config) &&
+      this.mode == mode &&
+      this.forceFlex == forceFlex;
+
+  @override
+  bool updateShouldNotify(_TwPreparedCompilationScope oldWidget) =>
+      !identical(compilation, oldWidget.compilation) ||
+      !identical(config, oldWidget.config) ||
+      classNames != oldWidget.classNames ||
+      mode != oldWidget.mode ||
+      forceFlex != oldWidget.forceFlex;
+}
+
+TwWidgetCompilation _compileBuiltInWidget(
+  BuildContext context, {
+  required String classNames,
+  required TwConfig config,
+  required TwWidgetCompilationMode mode,
+  bool? forceFlex,
+}) {
+  final prepared = _TwPreparedCompilationScope.maybeOf(context);
+  if (prepared != null &&
+      prepared.matches(
+        classNames: classNames,
+        config: config,
+        mode: mode,
+        forceFlex: forceFlex,
+      )) {
+    return prepared.compilation;
+  }
+
+  return TwTranslator(
+    config: config,
+  ).compileForWidget(classNames, mode, forceFlex: forceFlex);
+}
+
+class _TwElement extends StatefulWidget {
   const _TwElement({
     required this.classNames,
     required this.child,
@@ -518,76 +508,176 @@ class _TwElement extends StatelessWidget {
   final _BorderBoxWrapper? wrapBorderBox;
 
   @override
-  Widget build(BuildContext context) {
-    assert(
-      child == null || children.isEmpty,
-      'Provide either child or children, not both.',
-    );
-    final cfg = config ?? TwConfigProvider.of(context);
-    final reportedTokens = <String>{};
-    void reportDiagnostic(TwDiagnostic diagnostic) {
-      if (reportedTokens.add(diagnostic.token)) {
-        onDiagnostic?.call(diagnostic);
-        onUnsupported?.call(diagnostic.token);
+  State<_TwElement> createState() => _TwElementState();
+}
+
+class _TwElementState extends State<_TwElement> {
+  TwConfig? _compiledConfig;
+  String? _compiledClassNames;
+  bool? _compiledForceFlex;
+  TwWidgetCompilation? _compilation;
+  TwDiagnosticCallback? _reportedOnDiagnostic;
+  void Function(String token)? _reportedOnUnsupported;
+
+  void _replayDiagnostics(TwWidgetCompilation compilation) {
+    for (final diagnostic in compilation.diagnostics) {
+      widget.onDiagnostic?.call(diagnostic);
+      widget.onUnsupported?.call(diagnostic.token);
+    }
+    _reportedOnDiagnostic = widget.onDiagnostic;
+    _reportedOnUnsupported = widget.onUnsupported;
+  }
+
+  TwWidgetCompilation _compile(BuildContext context, TwConfig config) {
+    final cached = _compilation;
+    if (cached != null &&
+        identical(config, _compiledConfig) &&
+        widget.classNames == _compiledClassNames &&
+        widget.isFlex == _compiledForceFlex) {
+      if (!identical(widget.onDiagnostic, _reportedOnDiagnostic) ||
+          !identical(widget.onUnsupported, _reportedOnUnsupported)) {
+        _replayDiagnostics(cached);
       }
+
+      return cached;
     }
 
-    final parser = TwParser(config: cfg, onDiagnostic: reportDiagnostic);
-    final tokens = parser.setTokens(classNames);
-    _reportUnsupportedWidgetLayerVariants(tokens, cfg, reportDiagnostic);
-    final shouldUseFlex = isFlex ?? parser.wantsFlex(tokens);
-    final animationConfig = parser.parseAnimationFromTokens(tokens.toList());
+    final compilation = _compileBuiltInWidget(
+      context,
+      classNames: widget.classNames,
+      config: config,
+      mode: .boxOrFlex,
+      forceFlex: widget.isFlex,
+    );
+    _replayDiagnostics(compilation);
+    _compiledConfig = config;
+    _compiledClassNames = widget.classNames;
+    _compiledForceFlex = widget.isFlex;
+    _compilation = compilation;
+
+    return compilation;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    assert(
+      widget.child == null || widget.children.isEmpty,
+      'Provide either child or children, not both.',
+    );
+    final cfg = widget.config ?? TwConfigProvider.of(context);
+    final compilation = _compile(context, cfg);
+    final shouldUseFlex = compilation.wantsFlex;
+    final plan = compilation.layoutPlan;
 
     Widget built;
 
     if (shouldUseFlex) {
-      var flexStyle = parser.parseFlex(classNames);
-      if (animationConfig != null) {
-        flexStyle = flexStyle.animate(animationConfig);
-      }
-      final rawChildren = children.isNotEmpty
-          ? List<Widget>.from(children)
-          : (child != null ? <Widget>[child!] : const <Widget>[]);
+      final rawChildren = widget.children.isNotEmpty
+          ? List.of(widget.children)
+          : (widget.child != null ? <Widget>[widget.child!] : const <Widget>[]);
+      final preparedChildren = _prepareFlexChildren(rawChildren, cfg);
 
       built = _buildResponsiveFlex(
-        tokens: tokens,
-        cfg: cfg,
-        baseStyle: flexStyle,
-        rawChildren: rawChildren,
-        wrapBorderBox: wrapBorderBox,
+        plan: plan,
+        baseStyle: compilation.flexStyler!,
+        rawChildren: preparedChildren
+            .map((prepared) => prepared.child)
+            .toList(growable: false),
+        childPlans: preparedChildren
+            .map((prepared) => prepared.parentLayoutPlan)
+            .toList(growable: false),
+        wrapBorderBox: widget.wrapBorderBox,
       );
     } else {
-      var boxStyle = parser.parseBox(classNames);
-      if (animationConfig != null) {
-        boxStyle = boxStyle.animate(animationConfig);
-      }
       // CSS block elements stretch horizontally but shrink-wrap vertically.
       final resolvedChild =
-          child ??
-          (children.isNotEmpty
+          widget.child ??
+          (widget.children.isNotEmpty
               ? Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: children,
+                  mainAxisSize: .min,
+                  crossAxisAlignment: .stretch,
+                  children: widget.children,
                 )
               : null);
 
       built = _buildResponsiveBox(
-        tokens: tokens,
-        cfg: cfg,
-        style: boxStyle,
+        plan: plan,
+        style: compilation.boxStyler!,
+        wrapBorderBox: widget.wrapBorderBox,
         child: resolvedChild,
-        wrapBorderBox: wrapBorderBox,
       );
     }
 
     return _wrapWithFlexItemDecorators(
-      child: built,
-      tokens: tokens,
-      cfg: cfg,
+      plan: plan,
       viewportWidth: _responsiveWidth(null, context),
+      child: built,
     );
   }
+}
+
+EdgeInsets? _externalMargin(TwCompiledLayoutPlan plan, double width) {
+  final margin = plan.externalMargin.select(width);
+  if (margin == null ||
+      (margin.left == 0 &&
+          margin.top == 0 &&
+          margin.right == 0 &&
+          margin.bottom == 0)) {
+    return null;
+  }
+
+  return EdgeInsets.fromLTRB(
+    margin.left,
+    margin.top,
+    margin.right,
+    margin.bottom,
+  );
+}
+
+EdgeInsetsGeometry? _iconMargin(TwCompiledLayoutPlan plan, double width) {
+  final margin = plan.iconLogicalMargin.select(width);
+  if (margin == null ||
+      (margin.start == 0 &&
+          margin.end == 0 &&
+          margin.left == 0 &&
+          margin.right == 0)) {
+    return null;
+  }
+
+  return EdgeInsetsDirectional.only(
+    start: margin.start,
+    end: margin.end,
+  ).add(.only(left: margin.left, right: margin.right));
+}
+
+Widget _wrapWithResponsiveExternalMargin(
+  Widget child,
+  TwCompiledLayoutPlan plan,
+) {
+  if (plan.externalMargin.isEmpty) return child;
+
+  return LayoutBuilder(
+    builder: (context, constraints) {
+      final margin = _externalMargin(
+        plan,
+        _responsiveWidth(constraints, context),
+      );
+
+      return margin == null ? child : Padding(padding: margin, child: child);
+    },
+  );
+}
+
+Widget _wrapWithResponsiveIconMargin(Widget child, TwCompiledLayoutPlan plan) {
+  if (plan.iconLogicalMargin.isEmpty) return child;
+
+  return LayoutBuilder(
+    builder: (context, constraints) {
+      final margin = _iconMargin(plan, _responsiveWidth(constraints, context));
+
+      return margin == null ? child : Padding(padding: margin, child: child);
+    },
+  );
 }
 
 /// Block-level text element with Tailwind styling.
@@ -604,7 +694,7 @@ class _TwElement extends StatelessWidget {
 ///   classNames: 'text-lg font-bold text-gray-700 mb-4',
 /// )
 /// ```
-class P extends StatelessWidget implements TwClassed, _TwConfigured {
+class P extends StatelessWidget implements _TwCompilable {
   const P({super.key, required this.text, this.classNames = '', this.config});
 
   final String text;
@@ -614,16 +704,23 @@ class P extends StatelessWidget implements TwClassed, _TwConfigured {
   final TwConfig? config;
 
   @override
+  TwWidgetCompilationMode get _compilationMode => .text;
+
+  @override
+  bool? get _forceFlex => null;
+
+  @override
   Widget build(BuildContext context) {
     final cfg = config ?? TwConfigProvider.of(context);
-    final style = TwParser(config: cfg).parseText(classNames);
-    Widget result = StyledText(text, style: style);
+    final compilation = _compileBuiltInWidget(
+      context,
+      classNames: classNames,
+      config: cfg,
+      mode: _compilationMode,
+    );
+    Widget result = StyledText(text, style: compilation.textStyler!);
 
-    // Apply margin if present
-    final margin = _extractMargin(classNames, cfg);
-    if (margin != null) {
-      result = Padding(padding: margin, child: result);
-    }
+    result = _wrapWithResponsiveExternalMargin(result, compilation.layoutPlan);
 
     return result;
   }
@@ -636,7 +733,7 @@ class P extends StatelessWidget implements TwClassed, _TwConfigured {
 /// When box utilities (padding, background, border, rounded, etc.) are present,
 /// the text is wrapped in a Box container to apply those styles, matching
 /// CSS behavior where `<span>` can have padding, background, etc.
-class Span extends StatelessWidget implements TwClassed, _TwConfigured {
+class Span extends StatelessWidget implements _TwCompilable {
   const Span({
     super.key,
     required this.text,
@@ -651,27 +748,38 @@ class Span extends StatelessWidget implements TwClassed, _TwConfigured {
   final TwConfig? config;
 
   @override
+  TwWidgetCompilationMode get _compilationMode => .inline;
+
+  @override
+  bool? get _forceFlex => null;
+
+  @override
   Widget build(BuildContext context) {
     final cfg = config ?? TwConfigProvider.of(context);
-    final parser = TwParser(config: cfg);
+    final compilation = _compileBuiltInWidget(
+      context,
+      classNames: classNames,
+      config: cfg,
+      mode: _compilationMode,
+    );
 
     // Check if we need box styling (padding, background, border, etc.)
-    if (tw_target.hasBoxUtilities(classNames, breakpoints: cfg.breakpoints)) {
-      // Parse as box to get padding, background, border, etc.
-      // parseBox also handles text styling via DefaultTextStyle wrapper
-      final boxStyle = parser.parseBox(classNames);
-      final textStyle = parser.parseText(classNames);
-
+    if (compilation.hasBoxUtilities) {
       // Use inline layout (no block-level stretch)
-      return _CssSemanticBox(
-        style: boxStyle,
-        child: StyledText(text, style: textStyle),
+      return LayoutBuilder(
+        builder: (context, constraints) => _CssSemanticBox(
+          style: compilation.boxStyler!,
+          externalMargin: _externalMargin(
+            compilation.layoutPlan,
+            _responsiveWidth(constraints, context),
+          ),
+          child: StyledText(text, style: compilation.textStyler!),
+        ),
       );
     }
 
     // No box utilities - render as simple styled text
-    final style = parser.parseText(classNames);
-    return StyledText(text, style: style);
+    return StyledText(text, style: compilation.textStyler!);
   }
 }
 
@@ -680,7 +788,7 @@ class Span extends StatelessWidget implements TwClassed, _TwConfigured {
 /// This is a small bridge between Tailwind SVG icon classes and Mix's
 /// [StyledIcon]. It supports the icon classes used by common inline SVGs:
 /// `w-*`, `h-*`, `text-*`, and positive logical/physical margin tokens.
-class TwIcon extends StatelessWidget implements TwClassed, _TwConfigured {
+class TwIcon extends StatelessWidget implements _TwCompilable {
   const TwIcon(
     this.icon, {
     super.key,
@@ -697,9 +805,20 @@ class TwIcon extends StatelessWidget implements TwClassed, _TwConfigured {
   final String? semanticLabel;
 
   @override
+  TwWidgetCompilationMode get _compilationMode => .icon;
+
+  @override
+  bool? get _forceFlex => null;
+
+  @override
   Widget build(BuildContext context) {
     final cfg = config ?? TwConfigProvider.of(context);
-    final parsedStyle = TwParser(config: cfg).parseIcon(classNames);
+    final compilation = _compileBuiltInWidget(
+      context,
+      classNames: classNames,
+      config: cfg,
+      mode: _compilationMode,
+    );
 
     // Preserve the inherited text color as a fallback; the parsed icon style
     // overrides it when the class names include a `text-<color>` utility.
@@ -707,7 +826,7 @@ class TwIcon extends StatelessWidget implements TwClassed, _TwConfigured {
     var style = fallbackColor != null
         ? IconStyler().color(fallbackColor)
         : IconStyler();
-    style = style.merge(parsedStyle);
+    style = style.merge(compilation.iconStyler!);
 
     Widget current = StyledIcon(
       icon: icon,
@@ -715,69 +834,13 @@ class TwIcon extends StatelessWidget implements TwClassed, _TwConfigured {
       style: style,
     );
 
-    final margin = _extractLogicalMargin(classNames, cfg);
-    if (margin != null) {
-      current = Padding(padding: margin, child: current);
-    }
+    current = _wrapWithResponsiveIconMargin(current, compilation.layoutPlan);
 
     return current;
   }
 }
 
-/// Extracts logical/physical icon margins (`ms-*`, `me-*`, `ml-*`, `mr-*`).
-///
-/// Parses each token through the candidate parser so variant-prefixed margins
-/// (e.g. `hover:me-1`) and negatives do not apply as base styles. `ms`/`me` are
-/// not typed-styler utility roots, so sides are matched on the unprefixed
-/// utility text rather than via [routeCandidate].
-EdgeInsetsGeometry? _extractLogicalMargin(String classNames, TwConfig cfg) {
-  var start = 0.0;
-  var end = 0.0;
-  var left = 0.0;
-  var right = 0.0;
-  var hasMargin = false;
-
-  final tokens = splitTailwindTokens(classNames);
-  for (final token in tokens) {
-    final candidate = _parseCandidate(token);
-    if (candidate == null || candidate.variants.isNotEmpty) continue;
-
-    final utility = candidate.utility;
-    if (tailwindUtilityNegative(utility)) continue;
-
-    final raw = utility.raw;
-    void Function(double value)? setter;
-    if (raw.startsWith('ms-')) {
-      setter = (value) => start = value;
-    } else if (raw.startsWith('me-')) {
-      setter = (value) => end = value;
-    } else if (raw.startsWith('ml-')) {
-      setter = (value) => left = value;
-    } else if (raw.startsWith('mr-')) {
-      setter = (value) => right = value;
-    }
-    if (setter == null) continue;
-
-    final length = _spacingTokenLength(raw.substring(3), cfg);
-    if (length == null) continue;
-    setter(length);
-    hasMargin = true;
-  }
-
-  if (!hasMargin) return null;
-  return EdgeInsetsDirectional.only(
-    start: start,
-    end: end,
-  ).add(EdgeInsets.only(left: left, right: right));
-}
-
-double? _spacingTokenLength(String key, TwConfig cfg) {
-  if (key == 'px') return 1;
-  return cfg.hasSpace(key) ? cfg.spaceOf(key) : null;
-}
-
-abstract class _Heading extends StatelessWidget
-    implements TwClassed, _TwConfigured {
+abstract class _Heading extends StatelessWidget implements _TwCompilable {
   const _Heading({
     super.key,
     required int headingLevel,
@@ -794,15 +857,23 @@ abstract class _Heading extends StatelessWidget
   final TwConfig? config;
 
   @override
+  TwWidgetCompilationMode get _compilationMode => .text;
+
+  @override
+  bool? get _forceFlex => null;
+
+  @override
   Widget build(BuildContext context) {
     final cfg = config ?? TwConfigProvider.of(context);
-    final style = TwParser(config: cfg).parseText(classNames);
-    Widget result = StyledText(text, style: style);
+    final compilation = _compileBuiltInWidget(
+      context,
+      classNames: classNames,
+      config: cfg,
+      mode: _compilationMode,
+    );
+    Widget result = StyledText(text, style: compilation.textStyler!);
 
-    final margin = _extractMargin(classNames, cfg);
-    if (margin != null) {
-      result = Padding(padding: margin, child: result);
-    }
+    result = _wrapWithResponsiveExternalMargin(result, compilation.layoutPlan);
 
     return Semantics(headingLevel: _headingLevel, child: result);
   }
@@ -936,10 +1007,10 @@ List<Widget> _applyCrossAxisGap(List<Widget> input, Axis axis, double? gap) {
   final halfGap = gap / 2;
   final lastIndex = input.length - 1;
 
-  return List<Widget>.generate(input.length, (index) {
+  return List.generate(input.length, (index) {
     final isFirst = index == 0;
     final isLast = index == lastIndex;
-    final padding = axis == Axis.horizontal
+    final padding = axis == .horizontal
         ? EdgeInsets.only(
             top: isFirst ? 0 : halfGap,
             bottom: isLast ? 0 : halfGap,
@@ -948,51 +1019,84 @@ List<Widget> _applyCrossAxisGap(List<Widget> input, Axis axis, double? gap) {
             left: isFirst ? 0 : halfGap,
             right: isLast ? 0 : halfGap,
           );
+
     return Padding(padding: padding, child: input[index]);
   }, growable: false);
 }
 
-bool _hasResponsiveAlignItems(Set<String> tokens, TwConfig cfg, double width) {
-  for (final token in tokens) {
-    final info = _parseResponsiveToken(token, cfg);
-    if (info == null || info.minWidth > width) {
-      continue;
-    }
-    if (info.base.startsWith('items-')) {
-      return true;
-    }
-  }
-  return false;
+@immutable
+final class _PreparedFlexChild {
+  final Widget child;
+  final TwCompiledLayoutPlan? parentLayoutPlan;
+
+  const _PreparedFlexChild({
+    required this.parentLayoutPlan,
+    required this.child,
+  });
 }
 
-/// The `self-*` alignment a direct child asks for at [width], if any.
-///
-/// Only Tailwind elements can be read; an arbitrary widget child has no class
-/// string and therefore never overrides the container.
-_SelfAlignment? _selfAlignmentOfChild(
-  Widget child,
-  TwConfig cfg,
-  double width,
+List<_PreparedFlexChild> _prepareFlexChildren(
+  List<Widget> children,
+  TwConfig inheritedConfig,
 ) {
-  if (child case final TwClassed classed) {
-    return _resolveSelfAlignment(
-      TwParser(config: cfg).setTokens(classed.classNames),
-      cfg,
-      width,
-    );
-  }
+  return children
+      .map((child) {
+        final descriptor = _twCompilableOf(child);
+        if (descriptor != null) {
+          final childConfig = descriptor.config ?? inheritedConfig;
+          final compilation = TwTranslator(config: childConfig)
+              .compileForWidget(
+                descriptor.classNames,
+                descriptor._compilationMode,
+                forceFlex: descriptor._forceFlex,
+              );
 
-  return null;
+          return _PreparedFlexChild(
+            parentLayoutPlan: compilation.parentLayoutPlan,
+            child: _TwPreparedCompilationScope(
+              classNames: descriptor.classNames,
+              config: childConfig,
+              mode: descriptor._compilationMode,
+              forceFlex: descriptor._forceFlex,
+              compilation: compilation,
+              child: child,
+            ),
+          );
+        }
+
+        final classed = _twClassedOf(child);
+        if (classed == null) {
+          return _PreparedFlexChild(parentLayoutPlan: null, child: child);
+        }
+        final childConfig = _twConfiguredOf(child)?.config ?? inheritedConfig;
+        final compilation = TwTranslator(
+          config: childConfig,
+        ).compileForWidget(classed.classNames, .boxOrFlex);
+
+        return _PreparedFlexChild(
+          parentLayoutPlan: compilation.parentLayoutPlan,
+          child: child,
+        );
+      })
+      .toList(growable: false);
 }
+
+_TwCompilable? _twCompilableOf(Object value) =>
+    value is _TwCompilable ? value : null;
+
+TwClassed? _twClassedOf(Object value) => value is TwClassed ? value : null;
+
+_TwConfigured? _twConfiguredOf(Object value) =>
+    value is _TwConfigured ? value : null;
 
 @immutable
 class _ZeroBasisFlexItem {
-  const _ZeroBasisFlexItem({required this.grow, required this.outerExtra});
-
   final double grow;
 
   /// Margin, padding, and border along the container's main axis.
   final double outerExtra;
+
+  const _ZeroBasisFlexItem({required this.grow, required this.outerExtra});
 
   @override
   bool operator ==(Object other) =>
@@ -1004,134 +1108,62 @@ class _ZeroBasisFlexItem {
   int get hashCode => Object.hash(grow, outerExtra);
 }
 
-_ZeroBasisFlexItem? _zeroBasisFlexItemOfChild(
-  Widget child,
-  TwConfig cfg,
+_ZeroBasisFlexItem? _zeroBasisFlexItemOfPlan(
+  TwCompiledLayoutPlan? plan,
   double width,
   Axis axis,
-  BuildContext context,
 ) {
-  if (child is! TwClassed) return null;
-  final classNames = (child as TwClassed).classNames;
-  final childConfig = child is _TwConfigured
-      ? (child as _TwConfigured).config ?? cfg
-      : cfg;
-
-  final parser = TwParser(config: childConfig);
-  final tokens = parser.setTokens(classNames);
-  final grow = _resolveZeroBasisGrow(tokens, childConfig, width);
+  if (plan == null) return null;
+  final grow = plan.flexItem.resolve(width).zeroBasisGrow;
   if (grow == null || grow <= 0) return null;
-
-  final spec = parser.parseBox(classNames).resolve(context).spec;
-  final textDirection = Directionality.maybeOf(context) ?? TextDirection.ltr;
-  final padding = spec.padding?.resolve(textDirection) ?? EdgeInsets.zero;
-  final margin = spec.margin?.resolve(textDirection) ?? EdgeInsets.zero;
-  final decoration = spec.decoration;
-  final border = decoration is BoxDecoration ? decoration.border : null;
-  final borderInsets =
-      border?.dimensions.resolve(textDirection) ?? EdgeInsets.zero;
-
-  double mainExtent(EdgeInsets insets) =>
-      axis == Axis.horizontal ? insets.horizontal : insets.vertical;
 
   return _ZeroBasisFlexItem(
     grow: grow,
-    outerExtra:
-        mainExtent(margin) + mainExtent(padding) + mainExtent(borderInsets),
+    outerExtra: plan.zeroBasisOuterExtent(width, _twFlexAxis(axis)),
   );
 }
 
-double? _resolveZeroBasisGrow(Set<String> tokens, TwConfig cfg, double width) {
-  String? shorthand;
-  var shorthandMinWidth = -1.0;
-  String? basis;
-  var basisMinWidth = -1.0;
-  String? grow;
-  var growMinWidth = -1.0;
-
-  for (final token in tokens) {
-    final info = _parseResponsiveToken(token, cfg);
-    if (info == null || info.minWidth > width) continue;
-
-    final utility = info.base;
-    if ((utility == 'flex-1' ||
-            utility == 'flex-auto' ||
-            utility == 'flex-initial' ||
-            utility == 'flex-none') &&
-        info.minWidth >= shorthandMinWidth) {
-      shorthand = utility;
-      shorthandMinWidth = info.minWidth;
-    }
-    if (utility.startsWith('basis-') && info.minWidth >= basisMinWidth) {
-      basis = utility;
-      basisMinWidth = info.minWidth;
-    }
-    if ((utility == 'grow' || utility == 'grow-0') &&
-        info.minWidth >= growMinWidth) {
-      grow = utility;
-      growMinWidth = info.minWidth;
-    }
-  }
-
-  var hasZeroBasis = shorthand == 'flex-1';
-  var resolvedGrow = shorthand == 'flex-1' || shorthand == 'flex-auto'
-      ? 1.0
-      : 0.0;
-
-  // A responsive declaration outranks a lower-breakpoint declaration. At the
-  // same breakpoint, Tailwind emits the longhands after the flex shorthand.
-  if (basis != null && basisMinWidth >= shorthandMinWidth) {
-    hasZeroBasis = basis == 'basis-0';
-  }
-  if (grow != null && growMinWidth >= shorthandMinWidth) {
-    resolvedGrow = grow == 'grow' ? 1 : 0;
-  }
-
-  return hasZeroBasis ? resolvedGrow : null;
-}
-
 Widget _buildResponsiveFlex({
-  required Set<String> tokens,
-  required TwConfig cfg,
+  required TwCompiledLayoutPlan plan,
   required FlexBoxStyler baseStyle,
   required List<Widget> rawChildren,
+  required List<TwCompiledLayoutPlan?> childPlans,
   _BorderBoxWrapper? wrapBorderBox,
 }) {
   return LayoutBuilder(
     builder: (context, constraints) {
       final width = _responsiveWidth(constraints, context);
-      final axis = _resolveFlexAxisResponsive(tokens, cfg, width);
-      final isMainAxisBounded = axis == Axis.horizontal
+      final resolvedContainer = plan.flexContainer.resolve(width);
+      final axis = _flutterAxis(resolvedContainer.axis);
+      final isMainAxisBounded = axis == .horizontal
           ? constraints.hasBoundedWidth
           : constraints.hasBoundedHeight;
-      final baseGap = _resolveResponsiveGap(tokens, cfg, width, 'gap-');
-      final gapX = _resolveResponsiveGap(tokens, cfg, width, 'gap-x-');
-      final gapY = _resolveResponsiveGap(tokens, cfg, width, 'gap-y-');
 
       var style = baseStyle;
-      final mainGap = axis == Axis.horizontal
-          ? (gapX ?? baseGap)
-          : (gapY ?? baseGap);
+      final mainGap = resolvedContainer.mainGap;
       if (mainGap != null) {
         style = style.spacing(mainGap);
       }
 
-      final crossGap = axis == Axis.horizontal ? gapY : gapX;
+      final crossGap = resolvedContainer.crossGap;
       final flexChildren = _applyCrossAxisGap(rawChildren, axis, crossGap);
 
       // CSS `align-self` lets a child opt out of the container's `align-items`.
       // RenderFlex has one cross alignment for every child, so the opt-out is
       // carried to the flex itself and applied after it has sized its cross
       // axis. Collected positionally: the gap wrapper preserves child order.
-      final selfAlignments = rawChildren
-          .map((child) => _selfAlignmentOfChild(child, cfg, width))
+      final selfAlignments = childPlans
+          .map(
+            (childPlan) => childPlan == null
+                ? null
+                : _selfAlignment(
+                    childPlan.flexItem.resolve(width).selfAlignment,
+                  ),
+          )
           .toList(growable: false);
       final hasSelfAlignedChild = selfAlignments.any((a) => a != null);
-      final zeroBasisItems = rawChildren
-          .map(
-            (child) =>
-                _zeroBasisFlexItemOfChild(child, cfg, width, axis, context),
-          )
+      final zeroBasisItems = childPlans
+          .map((childPlan) => _zeroBasisFlexItemOfPlan(childPlan, width, axis))
           .toList(growable: false);
       final zeroBasisChildren = zeroBasisItems
           .whereType<_ZeroBasisFlexItem>()
@@ -1159,15 +1191,13 @@ Widget _buildResponsiveFlex({
       // explicit `items-*` utility is present). Stretch is invalid on an
       // unbounded Flutter cross axis, so use `start` there to preserve CSS
       // block-child alignment instead of FlexBox's centered fallback.
-      final hasExplicitItems = _hasResponsiveAlignItems(tokens, cfg, width);
-      final isCrossAxisBounded = axis == Axis.horizontal
-          ? constraints.hasBoundedHeight
-          : constraints.hasBoundedWidth;
-      if (!hasExplicitItems && axis == Axis.vertical) {
+      if (resolvedContainer.implicitCrossAxisPolicy ==
+          .stretchWhenBoundedStartWhenUnbounded) {
+        final isCrossAxisBounded = axis == .horizontal
+            ? constraints.hasBoundedHeight
+            : constraints.hasBoundedWidth;
         style = style.crossAxisAlignment(
-          isCrossAxisBounded
-              ? CrossAxisAlignment.stretch
-              : CrossAxisAlignment.start,
+          isCrossAxisBounded ? .stretch : .start,
         );
       }
 
@@ -1180,34 +1210,42 @@ Widget _buildResponsiveFlex({
           wrapBorderBox: wrapBorderBox,
           selfAlignments: hasSelfAlignedChild ? selfAlignments : null,
           zeroBasisItems: needsContentBoxSizing ? zeroBasisItems : null,
+          externalMargin: _externalMargin(plan, width),
           children: flexChildren,
         ),
       );
       current = _applyContainerSizingResponsive(
         current,
-        tokens,
-        cfg,
+        plan.dimensions,
         constraints,
         context,
         width,
       );
-      current = _applyMinSizingResponsive(current, tokens, cfg, context, width);
-      current = _applyFractionalSizingResponsive(current, tokens, cfg, width);
+      current = _applyMinSizingResponsive(
+        current,
+        plan.dimensions,
+        context,
+        width,
+      );
+      current = _applyFractionalSizingResponsive(
+        current,
+        plan.dimensions,
+        width,
+      );
       current = _loosenFixedWidthUnderTightStretch(
         current,
-        tokens,
-        cfg,
+        plan.dimensions,
         width,
         constraints,
       );
+
       return current;
     },
   );
 }
 
 Widget _buildResponsiveBox({
-  required Set<String> tokens,
-  required TwConfig cfg,
+  required TwCompiledLayoutPlan plan,
   required BoxStyler style,
   Widget? child,
   _BorderBoxWrapper? wrapBorderBox,
@@ -1219,25 +1257,34 @@ Widget _buildResponsiveBox({
       Widget current = _CssSemanticBox(
         style: style,
         wrapBorderBox: wrapBorderBox,
+        externalMargin: _externalMargin(plan, width),
         child: child,
       );
       current = _applyContainerSizingResponsive(
         current,
-        tokens,
-        cfg,
+        plan.dimensions,
         constraints,
         context,
         width,
       );
-      current = _applyMinSizingResponsive(current, tokens, cfg, context, width);
-      current = _applyFractionalSizingResponsive(current, tokens, cfg, width);
+      current = _applyMinSizingResponsive(
+        current,
+        plan.dimensions,
+        context,
+        width,
+      );
+      current = _applyFractionalSizingResponsive(
+        current,
+        plan.dimensions,
+        width,
+      );
       current = _loosenFixedWidthUnderTightStretch(
         current,
-        tokens,
-        cfg,
+        plan.dimensions,
         width,
         constraints,
       );
+
       return current;
     },
   );
@@ -1245,139 +1292,37 @@ Widget _buildResponsiveBox({
 
 Widget _wrapWithFlexItemDecorators({
   required Widget child,
-  required Set<String> tokens,
-  required TwConfig cfg,
+  required TwCompiledLayoutPlan plan,
   required double viewportWidth,
 }) {
-  if (!_needsFlexItemDecorators(tokens, cfg)) {
+  if (!_needsFlexItemDecorators(plan)) {
     return child;
   }
 
   return Builder(
     builder: (context) =>
-        _applyFlexItemDecorators(child, tokens, cfg, context, viewportWidth),
+        _applyFlexItemDecorators(child, plan, context, viewportWidth),
   );
 }
 
-bool _needsFlexItemDecorators(Set<String> tokens, TwConfig cfg) {
-  for (final token in tokens) {
-    final info = _parseResponsiveToken(token, cfg);
-    if (info == null) continue;
-    final base = info.base;
-    if (base == 'w-full' || base == 'h-full') {
-      return true;
-    }
-    if (base.startsWith('flex-') ||
-        base.startsWith('basis-') ||
-        base.startsWith('self-') ||
-        base.startsWith('shrink') ||
-        base.startsWith('grow')) {
-      return true;
-    }
-  }
-  return false;
-}
-
-void _reportUnsupportedWidgetLayerVariants(
-  Set<String> tokens,
-  TwConfig cfg,
-  TwDiagnosticCallback onDiagnostic,
-) {
-  for (final token in tokens) {
-    final candidate = _parseCandidate(token);
-    if (candidate == null || candidate.variants.isEmpty) {
-      continue;
-    }
-    if (!_isRootLayoutWidgetUtility(candidate.utility)) {
-      continue;
-    }
-    if (_hasOnlyBreakpointVariants(candidate.variants, cfg)) {
-      continue;
-    }
-
-    onDiagnostic(
-      TwDiagnostic(
-        token: token,
-        code: TwDiagnosticCode.widgetLayerVariantUnsupported,
-        reason:
-            'Widget-layer layout utilities only support breakpoint variants.',
-        workaround: 'Move interactive state to a supported styler utility.',
-      ),
-    );
-  }
-}
-
-bool _hasOnlyBreakpointVariants(List<TailwindVariant> variants, TwConfig cfg) {
-  for (final variant in variants) {
-    if (variant is! TailwindStaticVariant ||
-        !cfg.breakpoints.containsKey(variant.root)) {
-      return false;
-    }
-  }
-
-  return true;
-}
-
-bool _isRootLayoutWidgetUtility(TailwindUtility utility) {
-  final raw = utility.raw;
-  final root = tailwindUtilityRoot(utility);
-  final valueKey = tailwindValueKey(tailwindUtilityValue(utility));
-
-  if (raw.startsWith('flex-') ||
-      raw.startsWith('basis-') ||
-      raw.startsWith('self-') ||
-      raw.startsWith('shrink') ||
-      raw.startsWith('grow')) {
-    return true;
-  }
-
-  if (root == 'basis' ||
-      root == 'self' ||
-      root == 'grow' ||
-      root == 'shrink' ||
-      root == 'gap-x' ||
-      root == 'gap-y' ||
-      raw == 'block') {
-    return true;
-  }
-
-  if (root == 'w' ||
-      root == 'h' ||
-      root == 'min-w' ||
-      root == 'min-h' ||
-      root == 'max-w' ||
-      root == 'max-h') {
-    return valueKey == 'full' ||
-        valueKey == 'screen' ||
-        valueKey == 'auto' ||
-        valueKey?.contains('/') == true;
-  }
-
-  return false;
-}
+bool _needsFlexItemDecorators(TwCompiledLayoutPlan plan) =>
+    !plan.flexItem.isEmpty ||
+    _hasDimensionKind(plan.dimensions.width, .full) ||
+    _hasDimensionKind(plan.dimensions.height, .full);
 
 Widget _applyContainerSizingResponsive(
   Widget child,
-  Set<String> tokens,
-  TwConfig cfg,
+  TwDimensionPlan dimensions,
   BoxConstraints constraints,
   BuildContext context,
   double width,
 ) {
-  final widthIntent = _resolveResponsiveWidth(
-    tokens,
-    cfg,
-    width,
-  ).dimensionIntent;
-  final heightIntent = _resolveDimensionIntent(
-    tokens,
-    cfg,
-    width,
-    isWidth: false,
-  );
+  final widthIntent = dimensions.width.select(width);
+  final heightIntent = dimensions.height.select(width);
+  final hasWidthIntent = _isContainerDimension(widthIntent);
+  final hasHeightIntent = _isContainerDimension(heightIntent);
 
-  if (widthIntent == _DimensionIntent.none &&
-      heightIntent == _DimensionIntent.none) {
+  if (!hasWidthIntent && !hasHeightIntent) {
     return child;
   }
 
@@ -1385,22 +1330,22 @@ Widget _applyContainerSizingResponsive(
   double? targetWidth;
   double? targetHeight;
 
-  if (widthIntent != _DimensionIntent.none) {
-    targetWidth = widthIntent == _DimensionIntent.screen
+  if (hasWidthIntent) {
+    targetWidth = widthIntent!.kind == .screen
         ? (viewport.width > 0
               ? viewport.width
               : _finiteOrNull(constraints.maxWidth))
-        : _finiteOrNull(constraints.maxWidth) ??
-              (viewport.width > 0 ? viewport.width : null);
+        : (_finiteOrNull(constraints.maxWidth) ??
+              (viewport.width > 0 ? viewport.width : null));
   }
 
-  if (heightIntent != _DimensionIntent.none) {
-    targetHeight = heightIntent == _DimensionIntent.screen
+  if (hasHeightIntent) {
+    targetHeight = heightIntent!.kind == .screen
         ? (viewport.height > 0
               ? viewport.height
               : _finiteOrNull(constraints.maxHeight))
-        : _finiteOrNull(constraints.maxHeight) ??
-              (viewport.height > 0 ? viewport.height : null);
+        : (_finiteOrNull(constraints.maxHeight) ??
+              (viewport.height > 0 ? viewport.height : null));
   }
 
   if (targetWidth == null && targetHeight == null) {
@@ -1410,25 +1355,17 @@ Widget _applyContainerSizingResponsive(
   return SizedBox(width: targetWidth, height: targetHeight, child: child);
 }
 
+bool _isContainerDimension(TwDimensionIntent? intent) =>
+    intent?.kind == .full || intent?.kind == .screen;
+
 Widget _applyMinSizingResponsive(
   Widget child,
-  Set<String> tokens,
-  TwConfig cfg,
+  TwDimensionPlan dimensions,
   BuildContext context,
   double width,
 ) {
-  final minWidthScreen = _resolveMinScreenIntent(
-    tokens,
-    cfg,
-    width,
-    isWidth: true,
-  );
-  final minHeightScreen = _resolveMinScreenIntent(
-    tokens,
-    cfg,
-    width,
-    isWidth: false,
-  );
+  final minWidthScreen = dimensions.minWidth.select(width)?.kind == .screen;
+  final minHeightScreen = dimensions.minHeight.select(width)?.kind == .screen;
 
   if (!minWidthScreen && !minHeightScreen) {
     return child;
@@ -1458,57 +1395,40 @@ Widget _applyMinSizingResponsive(
   );
 }
 
-bool _resolveMinScreenIntent(
-  Set<String> tokens,
-  TwConfig cfg,
-  double width, {
-  required bool isWidth,
-}) {
-  final target = isWidth ? 'min-w-screen' : 'min-h-screen';
-
-  for (final token in tokens) {
-    final info = _parseResponsiveToken(token, cfg);
-    if (info == null || info.minWidth > width) {
-      continue;
-    }
-    if (info.base == target) {
-      return true;
-    }
-  }
-  return false;
-}
-
 Widget _applyFractionalSizingResponsive(
   Widget child,
-  Set<String> tokens,
-  TwConfig cfg,
+  TwDimensionPlan dimensions,
   double width,
 ) {
-  final widthFactor = _resolveResponsiveWidth(tokens, cfg, width).fraction;
-  final heightFactor = _resolveResponsiveFraction(tokens, cfg, width, 'h-');
+  final widthIntent = dimensions.width.select(width);
+  final heightIntent = dimensions.height.select(width);
+  final widthFactor = widthIntent?.kind == .fraction
+      ? widthIntent?.value
+      : null;
+  final heightFactor = heightIntent?.kind == .fraction
+      ? heightIntent?.value
+      : null;
 
   if (widthFactor == null && heightFactor == null) {
     return child;
   }
 
   return FractionallySizedBox(
+    alignment: AlignmentDirectional.topStart,
     widthFactor: widthFactor,
     heightFactor: heightFactor,
-    alignment: AlignmentDirectional.topStart,
     child: child,
   );
 }
 
 Widget _loosenFixedWidthUnderTightStretch(
   Widget child,
-  Set<String> tokens,
-  TwConfig cfg,
+  TwDimensionPlan dimensions,
   double width,
   BoxConstraints constraints,
 ) {
-  final activeWidth = _resolveResponsiveWidth(tokens, cfg, width);
-  if (!constraints.hasTightWidth ||
-      activeWidth.kind != _ResponsiveWidthKind.fixed) {
+  final activeWidth = dimensions.width.select(width);
+  if (!constraints.hasTightWidth || activeWidth?.kind != .fixed) {
     return child;
   }
 
@@ -1517,8 +1437,7 @@ Widget _loosenFixedWidthUnderTightStretch(
 
 Widget _applyFlexItemDecorators(
   Widget child,
-  Set<String> tokens,
-  TwConfig cfg,
+  TwCompiledLayoutPlan plan,
   BuildContext context,
   double viewportWidth,
 ) {
@@ -1535,34 +1454,24 @@ Widget _applyFlexItemDecorators(
   );
   var current = child;
 
-  final widthIntent = _resolveResponsiveWidth(
-    tokens,
-    cfg,
-    viewportWidth,
-  ).dimensionIntent;
-  final heightIntent = _resolveDimensionIntent(
-    tokens,
-    cfg,
-    viewportWidth,
-    isWidth: false,
-  );
+  final widthIntent = plan.dimensions.width.select(viewportWidth)?.kind;
+  final heightIntent = plan.dimensions.height.select(viewportWidth)?.kind;
+  final resolvedItem = plan.flexItem.resolve(viewportWidth);
 
-  final basis = _resolveBasisValue(tokens, cfg, viewportWidth);
+  final basis =
+      resolvedItem.hasExplicitBasis && resolvedItem.basis.kind != .auto
+      ? resolvedItem.basis
+      : null;
   if (basis != null) {
     current = _applyBasis(current, basis, axis);
   }
 
-  final selfAlignment = _resolveSelfAlignment(tokens, cfg, viewportWidth);
+  final selfAlignment = _selfAlignment(resolvedItem.selfAlignment);
   if (selfAlignment != null) {
     current = _positionInCrossAxis(current, selfAlignment, axis);
   }
 
-  final behavior = _resolveFlexItemBehavior(
-    tokens,
-    cfg,
-    viewportWidth,
-    context,
-  );
+  final behavior = _flexItemBehavior(resolvedItem.behavior);
 
   // Handle w-full/h-full when used as a direct child of a Flex.
   //
@@ -1577,25 +1486,20 @@ Widget _applyFlexItemDecorators(
   final isAlreadyFlexible =
       context.findAncestorWidgetOfExactType<Flexible>() != null ||
       context.findAncestorWidgetOfExactType<Expanded>() != null;
-  final wantsFullOnMainAxis = axis == Axis.horizontal
-      ? widthIntent == _DimensionIntent.full
-      : heightIntent == _DimensionIntent.full;
+  final wantsFullOnMainAxis = axis == .horizontal
+      ? widthIntent == .full
+      : heightIntent == .full;
   if (!isAlreadyFlexible &&
       wantsFullOnMainAxis &&
       behavior == null &&
       basis == null &&
       isMainAxisBounded) {
-    current = _FlexParentDataWrapper(
-      flex: 1,
-      fit: FlexFit.tight,
-      child: current,
-    );
+    current = _FlexParentDataWrapper(flex: 1, fit: .tight, child: current);
   }
 
   if (behavior != null) {
-    if (!isMainAxisBounded && behavior.flex > 0) {
-      // CSS parity: flex-grow has no effect in unbounded context. Skip.
-    } else {
+    // CSS parity: flex-grow has no effect in unbounded context.
+    if (isMainAxisBounded || behavior.flex <= 0) {
       current = _FlexParentDataWrapper(
         flex: behavior.flex,
         fit: behavior.fit,
@@ -1607,186 +1511,13 @@ Widget _applyFlexItemDecorators(
   return current;
 }
 
-Axis _resolveFlexAxisResponsive(
-  Set<String> tokens,
-  TwConfig cfg,
-  double width,
-) {
-  Axis? resolved;
-  double chosenMin = -1;
-
-  for (final token in tokens) {
-    final info = _parseResponsiveToken(token, cfg);
-    if (info == null || info.minWidth > width) {
-      continue;
-    }
-    if (info.base == 'flex-col') {
-      if (info.minWidth >= chosenMin) {
-        resolved = Axis.vertical;
-        chosenMin = info.minWidth;
-      }
-    } else if (info.base == 'flex-row' || info.base == 'flex') {
-      if (info.minWidth >= chosenMin) {
-        resolved = Axis.horizontal;
-        chosenMin = info.minWidth;
-      }
-    }
-  }
-
-  if (resolved != null) {
-    return resolved;
-  }
-
-  final hasBaseFlex = tokens.any((token) {
-    if (token.contains(':')) return false;
-    return token == 'flex' || token == 'flex-row' || token == 'flex-col';
-  });
-
-  return hasBaseFlex ? Axis.horizontal : Axis.vertical;
-}
-
-double? _resolveResponsiveGap(
-  Set<String> tokens,
-  TwConfig cfg,
-  double width,
-  String prefix,
-) {
-  double? resolved;
-  double chosenMin = -1;
-
-  for (final token in tokens) {
-    final info = _parseResponsiveToken(token, cfg);
-    if (info == null || info.minWidth > width) {
-      continue;
-    }
-    if (!info.base.startsWith(prefix)) {
-      continue;
-    }
-
-    final key = info.base.substring(prefix.length);
-    if (key.isEmpty) {
-      continue;
-    }
-
-    final value = cfg.spaceOf(key, fallback: double.nan);
-    if (!value.isNaN && info.minWidth >= chosenMin) {
-      resolved = value;
-      chosenMin = info.minWidth;
-    }
-  }
-
-  return resolved;
-}
-
-double? _resolveResponsiveFraction(
-  Set<String> tokens,
-  TwConfig cfg,
-  double width,
-  String prefix,
-) {
-  double? fraction;
-  double chosenMin = -1;
-
-  for (final token in tokens) {
-    final info = _parseResponsiveToken(token, cfg);
-    if (info == null || info.minWidth > width) {
-      continue;
-    }
-    if (!info.base.startsWith(prefix)) {
-      continue;
-    }
-
-    final value = parseFractionToken(info.base.substring(prefix.length));
-    if (value != null && info.minWidth >= chosenMin) {
-      fraction = value;
-      chosenMin = info.minWidth;
-    }
-  }
-
-  return fraction;
-}
-
-_ResponsiveWidth _resolveResponsiveWidth(
-  Set<String> tokens,
-  TwConfig cfg,
-  double width,
-) {
-  var resolved = const _ResponsiveWidth(_ResponsiveWidthKind.none);
-  double chosenMin = -1;
-
-  for (final token in tokens) {
-    final info = _parseResponsiveToken(token, cfg);
-    if (info == null || info.minWidth > width || !info.base.startsWith('w-')) {
-      continue;
-    }
-
-    final key = info.base.substring(2);
-    final fraction = parseFractionToken(key);
-    final candidate = switch (key) {
-      'auto' => const _ResponsiveWidth(_ResponsiveWidthKind.auto),
-      'full' => const _ResponsiveWidth(_ResponsiveWidthKind.full),
-      'screen' => const _ResponsiveWidth(_ResponsiveWidthKind.screen),
-      _ when fraction != null => _ResponsiveWidth(
-        _ResponsiveWidthKind.fraction,
-        fraction: fraction,
-      ),
-      _ when _isFixedWidthKey(key, cfg) => const _ResponsiveWidth(
-        _ResponsiveWidthKind.fixed,
-      ),
-      _ => null,
-    };
-
-    if (candidate != null && info.minWidth >= chosenMin) {
-      resolved = candidate;
-      chosenMin = info.minWidth;
-    }
-  }
-
-  return resolved;
-}
-
-bool _isFixedWidthKey(String key, TwConfig cfg) {
-  if (cfg.hasSpace(key)) return true;
-  if (!key.startsWith('[') || !key.endsWith(']')) return false;
-  return parseCssLength(key.substring(1, key.length - 1)) != null;
-}
-
-_DimensionIntent _resolveDimensionIntent(
-  Set<String> tokens,
-  TwConfig cfg,
-  double width, {
-  required bool isWidth,
-}) {
-  _DimensionIntent? intent;
-  double chosenMin = -1;
-
-  final fullTarget = isWidth ? 'w-full' : 'h-full';
-  final screenTarget = isWidth ? 'w-screen' : 'h-screen';
-
-  for (final token in tokens) {
-    final info = _parseResponsiveToken(token, cfg);
-    if (info == null || info.minWidth > width) {
-      continue;
-    }
-
-    if (info.base == fullTarget && info.minWidth >= chosenMin) {
-      intent = _DimensionIntent.full;
-      chosenMin = info.minWidth;
-    } else if (info.base == screenTarget && info.minWidth >= chosenMin) {
-      intent = _DimensionIntent.screen;
-      chosenMin = info.minWidth;
-    }
-  }
-
-  return intent ?? _DimensionIntent.none;
-}
-
 double _effectiveWidth(BoxConstraints constraints, BuildContext context) {
   final finite = _finiteOrNull(constraints.maxWidth);
   if (finite != null) {
     return finite;
   }
   final mediaWidth = _viewportSize(context).width;
+
   return mediaWidth > 0 ? mediaWidth : 0;
 }
 
@@ -1798,210 +1529,72 @@ double _responsiveWidth(BoxConstraints? constraints, BuildContext context) {
   if (constraints != null) {
     return _effectiveWidth(constraints, context);
   }
+
   return 0;
 }
 
 Size _viewportSize(BuildContext context) {
   final query = MediaQuery.maybeOf(context);
-  return query?.size ?? Size.zero;
+
+  return query?.size ?? .zero;
 }
 
 double? _finiteOrNull(double value) => value.isFinite ? value : null;
 
-class _ResponsiveToken {
-  const _ResponsiveToken(this.base, this.minWidth);
-
-  final String base;
-  final double minWidth;
-}
-
-_ResponsiveToken? _parseResponsiveToken(String token, TwConfig cfg) {
-  final candidate = _parseCandidate(token);
-  if (candidate == null) return null;
-
-  final route = routeCandidate(candidate, breakpoints: cfg.breakpoints);
-  if (route.kind == TwRouteKind.ignored ||
-      route.kind == TwRouteKind.unsupported) {
-    return null;
-  }
-
-  double minWidth = 0;
-
-  for (final variant in candidate.variants) {
-    if (variant is TailwindStaticVariant &&
-        cfg.breakpoints.containsKey(variant.root)) {
-      minWidth = cfg.breakpointOf(variant.root);
-    } else {
-      return null;
-    }
-  }
-
-  return _ResponsiveToken(candidate.utility.raw, minWidth);
-}
-
-enum _DimensionIntent { none, full, screen }
-
-enum _ResponsiveWidthKind { none, fixed, fraction, auto, full, screen }
-
-class _ResponsiveWidth {
-  const _ResponsiveWidth(this.kind, {this.fraction});
-
-  final _ResponsiveWidthKind kind;
-  final double? fraction;
-
-  _DimensionIntent get dimensionIntent => switch (kind) {
-    _ResponsiveWidthKind.full => _DimensionIntent.full,
-    _ResponsiveWidthKind.screen => _DimensionIntent.screen,
-    _ => _DimensionIntent.none,
-  };
-}
-
 class _FlexItemBehavior {
-  const _FlexItemBehavior({required this.flex, required this.fit});
-
   final int flex;
+
   final FlexFit fit;
-}
-
-class _BasisValue {
-  const _BasisValue({this.pixels});
-
-  final double? pixels;
+  const _FlexItemBehavior({required this.flex, required this.fit});
 }
 
 enum _SelfAlignment { start, center, end }
 
-_FlexItemBehavior? _resolveFlexItemBehavior(
-  Set<String> tokens,
-  TwConfig cfg,
-  double width,
-  BuildContext context,
-) {
-  _FlexItemBehavior? behavior;
-  double chosenMin = -1;
+Axis _flutterAxis(TwFlexAxis axis) => switch (axis) {
+  .horizontal => .horizontal,
+  .vertical => .vertical,
+};
 
-  for (final token in tokens) {
-    final info = _parseResponsiveToken(token, cfg);
-    if (info == null || info.minWidth > width) {
-      continue;
-    }
+TwFlexAxis _twFlexAxis(Axis axis) => switch (axis) {
+  .horizontal => .horizontal,
+  .vertical => .vertical,
+};
 
-    final modifier = twFlexibleModifierForFlexItem(info.base);
-    final candidate = modifier == null
-        ? null
-        : _flexItemBehaviorFromModifier(modifier, context);
+_SelfAlignment? _selfAlignment(TwSelfAlignment? alignment) =>
+    switch (alignment) {
+      .start => .start,
+      .center => .center,
+      .end => .end,
+      null => null,
+    };
 
-    if (candidate != null && info.minWidth >= chosenMin) {
-      behavior = candidate;
-      chosenMin = info.minWidth;
-    }
-  }
-
-  return behavior;
-}
-
-_FlexItemBehavior _flexItemBehaviorFromModifier(
-  FlexibleModifierMix modifier,
-  BuildContext context,
-) {
-  final resolved = modifier.resolve(context);
+_FlexItemBehavior? _flexItemBehavior(TwFlexBehavior? behavior) {
+  if (behavior == null) return null;
 
   return _FlexItemBehavior(
-    flex: resolved.flex ?? 1,
-    fit: resolved.fit ?? FlexFit.loose,
+    flex: behavior.flex,
+    fit: switch (behavior.fit) {
+      .tight => .tight,
+      .loose => .loose,
+    },
   );
 }
 
-_BasisValue? _resolveBasisValue(
-  Set<String> tokens,
-  TwConfig cfg,
-  double width,
-) {
-  _BasisValue? value;
-  double chosenMin = -1;
+bool _hasDimensionKind(
+  TwResponsiveValue<TwDimensionIntent> value,
+  TwDimensionKind kind,
+) => value.entries.any((entry) => entry.value.kind == kind);
 
-  for (final token in tokens) {
-    final info = _parseResponsiveToken(token, cfg);
-    if (info == null || info.minWidth > width) {
-      continue;
-    }
-
-    if (!info.base.startsWith('basis-')) {
-      continue;
-    }
-
-    final key = info.base.substring(6);
-    if (key.isEmpty) {
-      continue;
-    }
-
-    bool handled = true;
-    _BasisValue? candidate;
-
-    if (key == 'auto') {
-      candidate = null;
-    } else {
-      final size = cfg.spaceOf(key, fallback: double.nan);
-      if (!size.isNaN) {
-        candidate = _BasisValue(pixels: size);
-      } else {
-        handled = false;
-      }
-    }
-
-    if (!handled) {
-      continue;
-    }
-
-    if (info.minWidth >= chosenMin) {
-      value = candidate;
-      chosenMin = info.minWidth;
-    }
-  }
-
-  return value;
-}
-
-Widget _applyBasis(Widget child, _BasisValue basis, Axis axis) {
+Widget _applyBasis(Widget child, TwFlexBasis basis, Axis axis) {
   if (basis.pixels != null) {
     return SizedBox(
-      width: axis == Axis.horizontal ? basis.pixels : null,
-      height: axis == Axis.vertical ? basis.pixels : null,
+      width: axis == .horizontal ? basis.pixels : null,
+      height: axis == .vertical ? basis.pixels : null,
       child: child,
     );
   }
 
   return child;
-}
-
-_SelfAlignment? _resolveSelfAlignment(
-  Set<String> tokens,
-  TwConfig cfg,
-  double width,
-) {
-  _SelfAlignment? alignment;
-  double chosenMin = -1;
-
-  for (final token in tokens) {
-    final info = _parseResponsiveToken(token, cfg);
-    if (info == null || info.minWidth > width) {
-      continue;
-    }
-
-    final candidate = switch (info.base) {
-      'self-start' => _SelfAlignment.start,
-      'self-center' => _SelfAlignment.center,
-      'self-end' => _SelfAlignment.end,
-      _ => null,
-    };
-
-    if (candidate != null && info.minWidth >= chosenMin) {
-      alignment = candidate;
-      chosenMin = info.minWidth;
-    }
-  }
-
-  return alignment;
 }
 
 /// Places [child] at [position] within the cross extent the flex handed it.
@@ -2011,16 +1604,17 @@ _SelfAlignment? _resolveSelfAlignment(
 /// positions the wrapper after the flex has determined its own size.
 Widget _positionInCrossAxis(Widget child, _SelfAlignment position, Axis axis) {
   final resolved = switch (position) {
-    _SelfAlignment.start =>
-      axis == Axis.horizontal
+    .start =>
+      axis == .horizontal
           ? AlignmentDirectional.topCenter
           : AlignmentDirectional.centerStart,
-    _SelfAlignment.center => AlignmentDirectional.center,
-    _SelfAlignment.end =>
-      axis == Axis.horizontal
+    .center => AlignmentDirectional.center,
+    .end =>
+      axis == .horizontal
           ? AlignmentDirectional.bottomCenter
           : AlignmentDirectional.centerEnd,
   };
+
   return Align(alignment: resolved, child: child);
 }
 
@@ -2055,11 +1649,11 @@ class _TailwindFlex extends Flex {
         mainAxisAlignment: mainAxisAlignment,
         mainAxisSize: mainAxisSize,
         crossAxisAlignment: crossAxisAlignment,
-        textDirection: getEffectiveTextDirection(context),
         verticalDirection: verticalDirection,
-        textBaseline: textBaseline,
         clipBehavior: clipBehavior,
         spacing: spacing,
+        textDirection: getEffectiveTextDirection(context),
+        textBaseline: textBaseline,
       )
       ..selfAlignments = selfAlignments
       ..zeroBasisItems = zeroBasisItems;
@@ -2076,6 +1670,9 @@ class _TailwindFlex extends Flex {
 }
 
 class _RenderTailwindFlex extends RenderFlex {
+  List<_SelfAlignment?> _selfAlignments = const [];
+
+  List<_ZeroBasisFlexItem?> _zeroBasisItems = const [];
   _RenderTailwindFlex({
     required super.direction,
     required super.mainAxisAlignment,
@@ -2088,65 +1685,8 @@ class _RenderTailwindFlex extends RenderFlex {
     super.textBaseline,
   });
 
-  List<_SelfAlignment?> _selfAlignments = const [];
-  List<_ZeroBasisFlexItem?> _zeroBasisItems = const [];
-
-  set selfAlignments(List<_SelfAlignment?> value) {
-    if (listEquals(_selfAlignments, value)) return;
-    _selfAlignments = value;
-    markNeedsLayout();
-  }
-
-  set zeroBasisItems(List<_ZeroBasisFlexItem?> value) {
-    if (listEquals(_zeroBasisItems, value)) return;
-    _zeroBasisItems = value;
-    markNeedsLayout();
-  }
-
-  /// Whether cross-axis start sits at the far edge rather than at zero.
-  bool get _crossAxisIsReversed => direction == Axis.horizontal
-      ? verticalDirection == VerticalDirection.up
-      : textDirection == TextDirection.rtl;
-
-  @override
-  void performLayout() {
-    super.performLayout();
-
-    _redistributeZeroBasisItems();
-
-    // RenderFlex has sized itself from its children by now, so the cross extent
-    // is known even when the incoming constraints were unbounded. Only the
-    // offsets of the opted-out children change; nothing is laid out again.
-    var child = firstChild;
-    var index = 0;
-    while (child != null) {
-      final parentData = child.parentData! as FlexParentData;
-      final alignment = index < _selfAlignments.length
-          ? _selfAlignments[index]
-          : null;
-
-      if (alignment != null) {
-        final free = direction == Axis.horizontal
-            ? size.height - child.size.height
-            : size.width - child.size.width;
-        final reversed = _crossAxisIsReversed;
-        final crossOffset = switch (alignment) {
-          _SelfAlignment.start => reversed ? free : 0.0,
-          _SelfAlignment.center => free / 2,
-          _SelfAlignment.end => reversed ? 0.0 : free,
-        };
-        parentData.offset = direction == Axis.horizontal
-            ? Offset(parentData.offset.dx, crossOffset)
-            : Offset(crossOffset, parentData.offset.dy);
-      }
-
-      child = parentData.nextSibling;
-      index++;
-    }
-  }
-
   double _mainExtent(RenderBox child) =>
-      direction == Axis.horizontal ? child.size.width : child.size.height;
+      direction == .horizontal ? child.size.width : child.size.height;
 
   void _redistributeZeroBasisItems() {
     if (_zeroBasisItems.isEmpty) return;
@@ -2161,7 +1701,7 @@ class _RenderTailwindFlex extends RenderFlex {
         final item = index < _zeroBasisItems.length
             ? _zeroBasisItems[index]
             : null;
-        if (item == null || parentData.fit != FlexFit.tight) return;
+        if (item == null || parentData.fit != .tight) return;
         flexChildren.add((child: child, data: parentData, item: item));
       }
       child = parentData.nextSibling;
@@ -2218,6 +1758,60 @@ class _RenderTailwindFlex extends RenderFlex {
       for (var index = 0; index < flexChildren.length; index++) {
         flexChildren[index].data.flex = originalFactors[index];
       }
+    }
+  }
+
+  /// Whether cross-axis start sits at the far edge rather than at zero.
+  bool get _crossAxisIsReversed => direction == .horizontal
+      ? verticalDirection == .up
+      : textDirection == .rtl;
+
+  set selfAlignments(List<_SelfAlignment?> value) {
+    if (listEquals(_selfAlignments, value)) return;
+    _selfAlignments = value;
+    markNeedsLayout();
+  }
+
+  set zeroBasisItems(List<_ZeroBasisFlexItem?> value) {
+    if (listEquals(_zeroBasisItems, value)) return;
+    _zeroBasisItems = value;
+    markNeedsLayout();
+  }
+
+  @override
+  void performLayout() {
+    super.performLayout();
+
+    _redistributeZeroBasisItems();
+
+    // RenderFlex has sized itself from its children by now, so the cross extent
+    // is known even when the incoming constraints were unbounded. Only the
+    // offsets of the opted-out children change; nothing is laid out again.
+    var child = firstChild;
+    var index = 0;
+    while (child != null) {
+      final parentData = child.parentData! as FlexParentData;
+      final alignment = index < _selfAlignments.length
+          ? _selfAlignments[index]
+          : null;
+
+      if (alignment != null) {
+        final free = direction == .horizontal
+            ? size.height - child.size.height
+            : size.width - child.size.width;
+        final reversed = _crossAxisIsReversed;
+        final crossOffset = switch (alignment) {
+          .start => reversed ? free : 0.0,
+          .center => free / 2,
+          .end => reversed ? 0.0 : free,
+        };
+        parentData.offset = direction == .horizontal
+            ? Offset(parentData.offset.dx, crossOffset)
+            : Offset(crossOffset, parentData.offset.dy);
+      }
+
+      child = parentData.nextSibling;
+      index++;
     }
   }
 }

@@ -310,12 +310,17 @@ The generated compatibility ledger records current behavior, including differenc
 that still require a 1.0 decision. A ledger entry is an accounting statement, not a
 promise that the adaptation is final.
 
-| Tailwind variant | Current mix_winds behavior |
+| Tailwind feature | Current mix_winds behavior |
 |---|---|
 | `active:` | Uses Mix's pressed widget state. |
 | `focus-visible:` | Uses Mix's focus-visible state, driven by Flutter's app-wide focus-highlight modality rather than CSS's per-element focus heuristics. Any focus matches while highlight mode is traditional (keyboard and desktop-pointer input); nothing matches in touch modality. Desktop mouse-click focus can therefore match where CSS would not. |
 | `dark:` | Uses Flutter platform brightness rather than a CSS selector strategy. |
+| `light:` | A mix_winds parser-registry extension that uses Flutter platform brightness as the inverse of `dark:`. |
+| `not-hover:` | Uses Mix's inverse-hover runtime state. This is partial support for Tailwind's compound `not` variant; other `not-*` forms remain unsupported and are reported through `onDiagnostic`. |
 | `theme-midnight:` | Unsupported and reported through `onDiagnostic`; custom named theme variants require an explicit application-level design. |
+| `2xl:` / `3xl:` | `2xl:` uses the standard Flutter breakpoint configuration. `3xl:` is not present in `TwConfig.standard().breakpoints`, so it is unsupported unless the runtime configuration and compatibility policy are extended together. |
+| `w-auto` / `h-auto` | Clear the corresponding Flutter minimum and maximum constraints. This is the Flutter representation of automatic sizing, rather than CSS intrinsic layout. |
+| `block` | Has no observable style or widget-layout implementation and is classified as unsupported. |
 
 Responsive layout utilities such as `w-full`, `w-screen`, fractions, external
 margin, negative margin handling, flex item parent data, axis, and gap remain

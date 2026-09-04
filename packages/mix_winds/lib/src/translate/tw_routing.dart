@@ -4,26 +4,26 @@ library;
 import '../parser/model.dart';
 import '../tw_types.dart';
 
-enum TwRouteKind { schemaValue, gradient, widgetLayer, ignored, unsupported }
+enum TwRouteKind { style, gradient, widgetLayer, ignored, unsupported }
 
 final class TwRoute {
-  const TwRoute(this.kind, {this.diagnosticCode, this.reason, this.workaround})
-    : assert(
-        kind == TwRouteKind.ignored || kind == TwRouteKind.unsupported
-            ? diagnosticCode != null && reason != null
-            : diagnosticCode == null && reason == null && workaround == null,
-      );
-
   final TwRouteKind kind;
+
   final TwDiagnosticCode? diagnosticCode;
   final String? reason;
   final String? workaround;
+  const TwRoute(this.kind, {this.diagnosticCode, this.reason, this.workaround})
+    : assert(
+        kind == .ignored || kind == .unsupported
+            ? diagnosticCode != null && reason != null
+            : diagnosticCode == null && reason == null && workaround == null,
+      );
 
   TwDiagnostic toDiagnostic(String token) {
     final code = diagnosticCode;
     final explanation = reason;
     if (code == null || explanation == null) {
-      throw StateError('Route $kind does not carry a diagnostic.');
+      throw StateError('Route ${kind.name} does not carry a diagnostic.');
     }
 
     return TwDiagnostic(
@@ -41,8 +41,8 @@ TwRoute routeCandidate(
 }) {
   if (candidate.important) {
     return const TwRoute(
-      TwRouteKind.ignored,
-      diagnosticCode: TwDiagnosticCode.importantModifierIgnored,
+      .ignored,
+      diagnosticCode: .importantModifierIgnored,
       reason: 'Tailwind !important has no Mix cascade-priority equivalent.',
       workaround: 'Order utilities explicitly or compose a Mix styler.',
     );
@@ -59,36 +59,44 @@ TwRoute routeCandidate(
   final utility = candidate.utility;
   if (utility is TailwindArbitraryProperty) {
     return const TwRoute(
-      TwRouteKind.ignored,
-      diagnosticCode: TwDiagnosticCode.arbitraryPropertyIgnored,
+      .ignored,
+      diagnosticCode: .arbitraryPropertyIgnored,
       reason: 'Arbitrary CSS properties do not map safely to typed Mix fields.',
       workaround: 'Use a supported utility or compose a typed Mix styler.',
     );
   }
   if (utility.raw == 'min-w-auto') {
     return const TwRoute(
-      TwRouteKind.unsupported,
-      diagnosticCode: TwDiagnosticCode.unsupportedUtility,
+      .unsupported,
+      diagnosticCode: .unsupportedUtility,
       reason:
           'Flutter flex items have no CSS automatic minimum-size phase to restore.',
       workaround:
           'Keep min-w-0 in shared markup when browser content must shrink.',
     );
   }
-  if (isGradientUtility(utility)) return const TwRoute(TwRouteKind.gradient);
+  if (utility.raw == 'block') {
+    return const TwRoute(
+      .unsupported,
+      diagnosticCode: .unsupportedUtility,
+      reason: 'CSS block display has no implemented Mix Winds widget effect.',
+      workaround: 'Use Div for block layout or a supported flex utility.',
+    );
+  }
+  if (isGradientUtility(utility)) return const TwRoute(.gradient);
   if (isWidgetLayerUtility(utility)) {
-    return const TwRoute(TwRouteKind.widgetLayer);
+    return const TwRoute(.widgetLayer);
   }
   if (utility is TailwindUnresolvedUtility) {
     return const TwRoute(
-      TwRouteKind.unsupported,
-      diagnosticCode: TwDiagnosticCode.unsupportedUtility,
+      .unsupported,
+      diagnosticCode: .unsupportedUtility,
       reason: 'The utility root is not present in the Tailwind registry.',
       workaround: 'Use a utility listed in the compatibility ledger.',
     );
   }
 
-  return const TwRoute(TwRouteKind.schemaValue);
+  return const TwRoute(.style);
 }
 
 TwRoute? _routeVariants(
@@ -109,8 +117,8 @@ TwRoute? _routeVariant(
 }) {
   if (variant is TailwindArbitraryVariant) {
     return const TwRoute(
-      TwRouteKind.ignored,
-      diagnosticCode: TwDiagnosticCode.arbitraryVariantIgnored,
+      .ignored,
+      diagnosticCode: .arbitraryVariantIgnored,
       reason:
           'Arbitrary CSS selectors cannot target Flutter widget descendants.',
       workaround: 'Express the relationship through widget composition.',
@@ -120,16 +128,17 @@ TwRoute? _routeVariant(
   if (variant is TailwindFunctionalVariant) {
     if (variant.root.startsWith('@')) {
       return const TwRoute(
-        TwRouteKind.ignored,
-        diagnosticCode: TwDiagnosticCode.containerVariantIgnored,
+        .ignored,
+        diagnosticCode: .containerVariantIgnored,
         reason:
             'Container-query variants are not available in styler payloads.',
         workaround: 'Use LayoutBuilder or a configured viewport breakpoint.',
       );
     }
+
     return TwRoute(
-      TwRouteKind.unsupported,
-      diagnosticCode: TwDiagnosticCode.unsupportedVariant,
+      .unsupported,
+      diagnosticCode: .unsupportedVariant,
       reason: 'Variant ${variant.raw} is not implemented.',
     );
   }
@@ -137,8 +146,8 @@ TwRoute? _routeVariant(
   if (variant is TailwindCompoundVariant) {
     if (variant.root == 'group' || variant.root == 'peer') {
       return TwRoute(
-        TwRouteKind.ignored,
-        diagnosticCode: TwDiagnosticCode.contextVariantIgnored,
+        .ignored,
+        diagnosticCode: .contextVariantIgnored,
         reason: '${variant.root}-relative state has no widget-API equivalent.',
         workaround: 'Share state explicitly through widget composition.',
       );
@@ -146,9 +155,10 @@ TwRoute? _routeVariant(
     if (runtimeVariantFor(variant, breakpoints: breakpoints) != null) {
       return null;
     }
+
     return TwRoute(
-      TwRouteKind.unsupported,
-      diagnosticCode: TwDiagnosticCode.unsupportedVariant,
+      .unsupported,
+      diagnosticCode: .unsupportedVariant,
       reason: 'Variant ${variant.raw} is not implemented.',
     );
   }
@@ -157,17 +167,18 @@ TwRoute? _routeVariant(
     if (runtimeVariantFor(variant, breakpoints: breakpoints) != null) {
       return null;
     }
+
     return TwRoute(
-      TwRouteKind.unsupported,
-      diagnosticCode: TwDiagnosticCode.unsupportedVariant,
+      .unsupported,
+      diagnosticCode: .unsupportedVariant,
       reason: 'Variant ${variant.raw} is not implemented.',
     );
   }
 
   if (variant is TailwindUnresolvedVariant) {
     return TwRoute(
-      TwRouteKind.unsupported,
-      diagnosticCode: TwDiagnosticCode.unsupportedVariant,
+      .unsupported,
+      diagnosticCode: .unsupportedVariant,
       reason: 'Variant ${variant.raw} is not present in the Tailwind registry.',
     );
   }
@@ -189,14 +200,15 @@ enum TwRuntimeVariantKind {
 }
 
 final class TwRuntimeVariant {
+  final TwRuntimeVariantKind kind;
+
+  final String key;
+
+  final double? breakpoint;
   const TwRuntimeVariant(this.kind, this.key, {this.breakpoint});
 
   const TwRuntimeVariant.breakpoint(String key, double breakpoint)
-    : this(TwRuntimeVariantKind.breakpoint, key, breakpoint: breakpoint);
-
-  final TwRuntimeVariantKind kind;
-  final String key;
-  final double? breakpoint;
+    : this(.breakpoint, key, breakpoint: breakpoint);
 
   @override
   bool operator ==(Object other) =>
@@ -221,26 +233,14 @@ TwRuntimeVariant? runtimeVariantFor(
     }
 
     return switch (variant.root) {
-      'hover' => const TwRuntimeVariant(TwRuntimeVariantKind.hover, 'hover'),
-      'focus' => const TwRuntimeVariant(TwRuntimeVariantKind.focus, 'focus'),
-      'focus-visible' => const TwRuntimeVariant(
-        TwRuntimeVariantKind.focusVisible,
-        'focus-visible',
-      ),
-      'active' || 'pressed' => const TwRuntimeVariant(
-        TwRuntimeVariantKind.pressed,
-        'pressed',
-      ),
-      'disabled' => const TwRuntimeVariant(
-        TwRuntimeVariantKind.disabled,
-        'disabled',
-      ),
-      'enabled' => const TwRuntimeVariant(
-        TwRuntimeVariantKind.enabled,
-        'enabled',
-      ),
-      'dark' => const TwRuntimeVariant(TwRuntimeVariantKind.dark, 'dark'),
-      'light' => const TwRuntimeVariant(TwRuntimeVariantKind.light, 'light'),
+      'hover' => const TwRuntimeVariant(.hover, 'hover'),
+      'focus' => const TwRuntimeVariant(.focus, 'focus'),
+      'focus-visible' => const TwRuntimeVariant(.focusVisible, 'focus-visible'),
+      'active' || 'pressed' => const TwRuntimeVariant(.pressed, 'pressed'),
+      'disabled' => const TwRuntimeVariant(.disabled, 'disabled'),
+      'enabled' => const TwRuntimeVariant(.enabled, 'enabled'),
+      'dark' => const TwRuntimeVariant(.dark, 'dark'),
+      'light' => const TwRuntimeVariant(.light, 'light'),
       _ => null,
     };
   }
@@ -248,7 +248,7 @@ TwRuntimeVariant? runtimeVariantFor(
   if (variant is TailwindCompoundVariant && variant.root == 'not') {
     final child = variant.variant;
     if (child is TailwindStaticVariant && child.root == 'hover') {
-      return const TwRuntimeVariant(TwRuntimeVariantKind.notHover, 'not-hover');
+      return const TwRuntimeVariant(.notHover, 'not-hover');
     }
   }
 
@@ -259,6 +259,7 @@ bool isGradientUtility(TailwindUtility utility) {
   final raw = utility.raw;
   final base = raw.startsWith('-') ? raw.substring(1) : raw;
   final root = tailwindUtilityRoot(utility);
+
   return base.startsWith('bg-gradient-') ||
       base.startsWith('bg-linear-') ||
       root == 'bg-linear' ||
@@ -270,8 +271,6 @@ bool isGradientUtility(TailwindUtility utility) {
 bool isWidgetLayerUtility(TailwindUtility utility) {
   final raw = utility.raw;
   final root = tailwindUtilityRoot(utility);
-  final valueKey = tailwindValueKey(tailwindUtilityValue(utility));
-
   if (transitionTriggerTokens.contains(raw) ||
       raw == 'transition-none' ||
       _easeTokens.contains(raw) ||
@@ -293,9 +292,11 @@ bool isWidgetLayerUtility(TailwindUtility utility) {
   if (root == 'gap-x' || root == 'gap-y') return true;
 
   if (sizingRoots.contains(root)) {
+    final valueKey = tailwindValueKey(tailwindUtilityValue(utility));
     if (valueKey == 'auto') {
       return root != 'w' && root != 'h';
     }
+
     return valueKey == 'full' ||
         valueKey == 'screen' ||
         valueKey?.contains('/') == true;
@@ -310,6 +311,7 @@ bool isBoxStylingCandidate(TailwindCandidate candidate) {
 
   final raw = utility.raw;
   final root = tailwindUtilityRoot(utility);
+
   return raw == 'overflow-hidden' ||
       raw == 'overflow-clip' ||
       raw == 'overflow-visible' ||
@@ -321,6 +323,7 @@ bool isBoxStylingCandidate(TailwindCandidate candidate) {
 bool isFlexContainerCandidate(TailwindCandidate candidate) {
   final raw = candidate.utility.raw;
   final root = tailwindUtilityRoot(candidate.utility);
+
   return raw == 'flex' ||
       raw == 'inline-flex' ||
       raw == 'flex-row' ||
@@ -345,7 +348,9 @@ String tailwindUtilityRoot(TailwindUtility utility) {
 TailwindValue? tailwindUtilityValue(TailwindUtility utility) {
   return switch (utility) {
     TailwindFunctionalUtility(:final value) => value,
-    _ => null,
+    TailwindStaticUtility() ||
+    TailwindUnresolvedUtility() ||
+    TailwindArbitraryProperty() => null,
   };
 }
 
@@ -354,7 +359,7 @@ TailwindModifier? tailwindUtilityModifier(TailwindUtility utility) {
     TailwindFunctionalUtility(:final modifier) => modifier,
     TailwindUnresolvedUtility(:final modifier) => modifier,
     TailwindArbitraryProperty(:final modifier) => modifier,
-    _ => null,
+    TailwindStaticUtility() => null,
   };
 }
 
@@ -362,7 +367,7 @@ bool tailwindUtilityNegative(TailwindUtility utility) {
   return switch (utility) {
     TailwindFunctionalUtility(:final negative) => negative,
     TailwindUnresolvedUtility(:final negative) => negative,
-    _ => false,
+    TailwindStaticUtility() || TailwindArbitraryProperty() => false,
   };
 }
 

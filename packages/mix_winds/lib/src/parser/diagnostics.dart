@@ -8,27 +8,27 @@ sealed class TailwindParseResult {
 }
 
 final class TailwindParseSuccess extends TailwindParseResult {
-  const TailwindParseSuccess({required this.candidate});
-
   final TailwindCandidate candidate;
+
+  const TailwindParseSuccess({required this.candidate});
 }
 
 final class TailwindParseFailure extends TailwindParseResult {
-  const TailwindParseFailure({required this.errors});
-
   final List<TailwindParseError> errors;
+
+  const TailwindParseFailure({required this.errors});
 }
 
 final class TailwindParseError {
+  final TailwindParseErrorCode code;
+
+  final String message;
+  final SourceSpan span;
   const TailwindParseError({
     required this.code,
     required this.message,
     required this.span,
   });
-
-  final TailwindParseErrorCode code;
-  final String message;
-  final SourceSpan span;
 }
 
 enum TailwindParseErrorCode {

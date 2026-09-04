@@ -45,7 +45,7 @@ const generatedTailwindCompatibilityMeta = <String, Object?>{
   'tailwindInstalledVersion': '4.3.1',
 };
 
-const generatedTailwindCompatibilityInventoryFingerprint = '08f033a75e238105';
+const generatedTailwindCompatibilityInventoryFingerprint = '2f608800c4eb26fc';
 
 const generatedTailwindUtilityCompatibilityLedger = <TailwindCompatibilityEntry>[
   TailwindCompatibilityEntry('-translate-full', .staticUtility, .unsupported),
@@ -95,7 +95,7 @@ const generatedTailwindUtilityCompatibilityLedger = <TailwindCompatibilityEntry>
   TailwindCompatibilityEntry('bg-top', .staticUtility, .unsupported),
   TailwindCompatibilityEntry('bg-top-left', .staticUtility, .unsupported),
   TailwindCompatibilityEntry('bg-top-right', .staticUtility, .unsupported),
-  TailwindCompatibilityEntry('block', .staticUtility, .implemented),
+  TailwindCompatibilityEntry('block', .staticUtility, .unsupported),
   TailwindCompatibilityEntry('block-auto', .staticUtility, .unsupported),
   TailwindCompatibilityEntry('block-lh', .staticUtility, .unsupported),
   TailwindCompatibilityEntry('block-screen', .staticUtility, .unsupported),
@@ -298,7 +298,13 @@ const generatedTailwindUtilityCompatibilityLedger = <TailwindCompatibilityEntry>
     .staticUtility,
     .unsupported,
   ),
-  TailwindCompatibilityEntry('h-auto', .staticUtility, .unsupported),
+  TailwindCompatibilityEntry(
+    'h-auto',
+    .staticUtility,
+    .adapted,
+    reason:
+        'Clears Flutter height constraints to represent CSS auto sizing; see FLUTTER_ADAPTATIONS.md (Compatibility Ledger Status Notes).',
+  ),
   TailwindCompatibilityEntry('h-lh', .staticUtility, .unsupported),
   TailwindCompatibilityEntry(
     'h-screen',
@@ -856,7 +862,13 @@ const generatedTailwindUtilityCompatibilityLedger = <TailwindCompatibilityEntry>
   TailwindCompatibilityEntry('uppercase', .staticUtility, .implemented),
   TailwindCompatibilityEntry('via-none', .staticUtility, .unsupported),
   TailwindCompatibilityEntry('visible', .staticUtility, .unsupported),
-  TailwindCompatibilityEntry('w-auto', .staticUtility, .unsupported),
+  TailwindCompatibilityEntry(
+    'w-auto',
+    .staticUtility,
+    .adapted,
+    reason:
+        'Clears Flutter width constraints to represent CSS auto sizing; see FLUTTER_ADAPTATIONS.md (Compatibility Ledger Status Notes).',
+  ),
   TailwindCompatibilityEntry(
     'w-screen',
     .staticUtility,
@@ -1281,7 +1293,7 @@ const generatedTailwindVariantCompatibilityLedger = <TailwindCompatibilityEntry>
   TailwindCompatibilityEntry('*', .staticVariant, .unsupported),
   TailwindCompatibilityEntry('**', .staticVariant, .unsupported),
   TailwindCompatibilityEntry('2xl', .staticVariant, .implemented),
-  TailwindCompatibilityEntry('3xl', .staticVariant, .implemented),
+  TailwindCompatibilityEntry('3xl', .staticVariant, .unsupported),
   TailwindCompatibilityEntry(
     'active',
     .staticVariant,
@@ -1327,7 +1339,7 @@ const generatedTailwindVariantCompatibilityLedger = <TailwindCompatibilityEntry>
     .staticVariant,
     .adapted,
     reason:
-        'Mapped to Mix\'s focus-visible state using Flutter\'s app-wide input modality; see FLUTTER_ADAPTATIONS.md (Compatibility Ledger Status Notes).',
+        'Mapped to Mix\'s focus-visible state using Flutter\'s app-wide input modality; Mix Protocol v1 does not encode FocusVisibleVariant; see FLUTTER_ADAPTATIONS.md (Compatibility Ledger Status Notes).',
   ),
   TailwindCompatibilityEntry('focus-within', .staticVariant, .unsupported),
   TailwindCompatibilityEntry('forced-colors', .staticVariant, .unsupported),
@@ -1341,6 +1353,13 @@ const generatedTailwindVariantCompatibilityLedger = <TailwindCompatibilityEntry>
   TailwindCompatibilityEntry('last', .staticVariant, .unsupported),
   TailwindCompatibilityEntry('last-of-type', .staticVariant, .unsupported),
   TailwindCompatibilityEntry('lg', .staticVariant, .implemented),
+  TailwindCompatibilityEntry(
+    'light',
+    .staticVariant,
+    .adapted,
+    reason:
+        'Mapped to Flutter platform brightness; see FLUTTER_ADAPTATIONS.md (Compatibility Ledger Status Notes).',
+  ),
   TailwindCompatibilityEntry('ltr', .staticVariant, .unsupported),
   TailwindCompatibilityEntry('marker', .staticVariant, .unsupported),
   TailwindCompatibilityEntry('md', .staticVariant, .implemented),
@@ -1416,7 +1435,13 @@ const generatedTailwindVariantCompatibilityLedger = <TailwindCompatibilityEntry>
     reason:
         'Selector-relative group state has no widget-API equivalent; see FLUTTER_ADAPTATIONS.md (Parser and Variant Adaptations).',
   ),
-  TailwindCompatibilityEntry('not', .compoundVariant, .unsupported),
+  TailwindCompatibilityEntry(
+    'not',
+    .compoundVariant,
+    .adapted,
+    reason:
+        'Only not-hover is mapped to a Mix runtime state; other not-* variants remain unsupported; see FLUTTER_ADAPTATIONS.md (Compatibility Ledger Status Notes).',
+  ),
   TailwindCompatibilityEntry(
     'peer',
     .compoundVariant,

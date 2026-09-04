@@ -21,11 +21,17 @@ const _expectedRegistryMeta = <String, Object?>{
 // silently classify new roots as unsupported: the generator fails until this
 // fingerprint and the explicit implemented/adapted/ignored decisions are
 // reviewed together.
-const _expectedInventoryFingerprint = '08f033a75e238105';
+const _expectedInventoryFingerprint = '2f608800c4eb26fc';
+
+// Runtime parser extensions that are intentionally not present in the pinned
+// Tailwind registry snapshot. Keep registry generation, compatibility
+// accounting, and policy validation on this single source of truth.
+const _parserRegistryStaticVariantExtensions = {'light'};
 
 void main(List<String> args) {
   if (args.isNotEmpty && args.first == '--write-snapshot') {
     _writeSnapshot(args);
+
     return;
   }
 
@@ -34,6 +40,7 @@ void main(List<String> args) {
   if (sourceArgs.length > 1) {
     _printUsage();
     exitCode = 64;
+
     return;
   }
 
@@ -47,7 +54,7 @@ void main(List<String> args) {
   if (themeSnapshot == null) return;
   if (!_validateThemeSnapshot(themeSnapshot, snapshot)) return;
 
-  final outputs = <String, String>{
+  final outputs = {
     _registryTargetPath: _buildRegistryOutput(
       snapshot,
       generatedFrom: sourcePath,
@@ -76,15 +83,16 @@ _ThemeSnapshot? _readThemeSnapshot() {
   if (!file.existsSync()) {
     stderr.writeln('Tailwind theme snapshot not found: $_themeSnapshotPath');
     exitCode = 64;
+
     return null;
   }
 
   final json = (jsonDecode(file.readAsStringSync()) as Map)
       .cast<String, Object?>();
+
   return _ThemeSnapshot(
-    meta: ((json['meta'] ?? const {}) as Map).cast<String, Object?>(),
-    namespaces: ((json['namespaces'] ?? const {}) as Map)
-        .cast<String, Object?>(),
+    meta: ((json['meta'] ?? const {}) as Map).cast(),
+    namespaces: ((json['namespaces'] ?? const {}) as Map).cast(),
   );
 }
 
@@ -93,25 +101,27 @@ bool _validateThemeSnapshot(_ThemeSnapshot theme, _RegistrySnapshot registry) {
   if (theme.meta['schemaVersion'] != _expectedThemeSchemaVersion) {
     errors.add(
       'expected theme schema $_expectedThemeSchemaVersion, '
-      'got ${theme.meta['schemaVersion']}',
+      "got ${theme.meta['schemaVersion'] ?? 'null'}",
     );
   }
   if (theme.meta['package'] != '@tailwindcss/browser') {
     errors.add(
       'expected theme package @tailwindcss/browser, '
-      'got ${theme.meta['package']}',
+      "got ${theme.meta['package'] ?? 'null'}",
     );
   }
   final themeVersion = theme.meta['tailwindVersion'];
   final parserVersion = registry.meta['tailwindInstalledVersion'];
   if (themeVersion != _expectedTailwindVersion) {
     errors.add(
-      'expected theme Tailwind $_expectedTailwindVersion, got $themeVersion',
+      'expected theme Tailwind $_expectedTailwindVersion, '
+      "got ${themeVersion ?? 'null'}",
     );
   }
   if (parserVersion != themeVersion) {
     errors.add(
-      'parser/theme Tailwind versions differ: $parserVersion / $themeVersion',
+      'parser/theme Tailwind versions differ: '
+      "${parserVersion ?? 'null'} / ${themeVersion ?? 'null'}",
     );
   }
 
@@ -165,6 +175,7 @@ bool _validateThemeSnapshot(_ThemeSnapshot theme, _RegistrySnapshot registry) {
     stderr.writeln('Invalid Tailwind theme snapshot: $error.');
   }
   exitCode = 1;
+
   return false;
 }
 
@@ -209,6 +220,7 @@ bool _formatGeneratedDart(File target) {
     ..write(result.stdout)
     ..write(result.stderr);
   exitCode = result.exitCode;
+
   return false;
 }
 
@@ -216,6 +228,7 @@ void _writeSnapshot(List<String> args) {
   if (args.length != 3) {
     _printUsage();
     exitCode = 64;
+
     return;
   }
 
@@ -223,6 +236,7 @@ void _writeSnapshot(List<String> args) {
   if (!outDir.existsSync()) {
     stderr.writeln('Tailwind spec out directory not found: ${outDir.path}');
     exitCode = 64;
+
     return;
   }
 
@@ -234,16 +248,17 @@ void _writeSnapshot(List<String> args) {
 
 _RegistrySnapshot? _readSnapshot(String path) {
   final type = FileSystemEntity.typeSync(path);
-  if (type == FileSystemEntityType.directory) {
+  if (type == .directory) {
     return _snapshotFromOutDir(Directory(path));
   }
 
-  if (type == FileSystemEntityType.file) {
+  if (type == .file) {
     return _snapshotFromFile(File(path));
   }
 
   stderr.writeln('Tailwind registry source not found: $path');
   exitCode = 64;
+
   return null;
 }
 
@@ -271,7 +286,8 @@ _RegistrySnapshot _snapshotFromOutDir(Directory outDir) {
   final staticVariantRoots = <String>{};
   final functionalVariantRoots = <String>{};
   final compoundVariantRoots = <String>{};
-  for (final variant in (variants['variants'] as List).cast<Object?>()) {
+  final variantEntries = (variants['variants'] as List).cast<Object?>();
+  for (final variant in variantEntries) {
     final map = (variant as Map).cast<String, Object?>();
     final name = map['name']! as String;
     final values = (map['values'] as List?) ?? const [];
@@ -303,7 +319,7 @@ _RegistrySnapshot _snapshotFromFile(File file) {
       .cast<String, Object?>();
 
   return _RegistrySnapshot(
-    meta: ((json['meta'] ?? const {}) as Map).cast<String, Object?>(),
+    meta: ((json['meta'] ?? const {}) as Map).cast(),
     staticUtilityRoots: _jsonStringSet(json, 'staticUtilityRoots'),
     functionalUtilityRoots: _jsonStringSet(json, 'functionalUtilityRoots'),
     staticVariantRoots: _jsonStringSet(json, 'staticVariantRoots'),
@@ -358,7 +374,8 @@ String _buildRegistryOutput(
     ..writeln('  staticUtilityRoots: generatedStaticUtilityRoots,')
     ..writeln('  functionalUtilityRoots: generatedFunctionalUtilityRoots,')
     ..writeln(
-      "  staticVariantRoots: {...generatedStaticVariantRoots, 'light'},",
+      '  staticVariantRoots: {...generatedStaticVariantRoots, '
+      '${_dartInlineStringElements(_parserRegistryStaticVariantExtensions)}},',
     )
     ..writeln('  functionalVariantRoots: generatedFunctionalVariantRoots,')
     ..writeln('  compoundVariantRoots: generatedCompoundVariantRoots,')
@@ -487,6 +504,7 @@ String _dartNumericMapDeclaration(
     }
     output.writeln("  '${_escape(entry.key)}': $value,");
   }
+
   return (output
         ..writeln('};')
         ..writeln())
@@ -501,6 +519,7 @@ String _dartColorMapDeclaration(Map<String, Object?> values) {
       "  '${_escape(entry.key)}': ${_dartColor(entry.value as String)},",
     );
   }
+
   return (output
         ..writeln('};')
         ..writeln())
@@ -512,6 +531,7 @@ String _dartColor(String hex) {
   final argb = channels.length == 6
       ? 'FF$channels'
       : '${channels.substring(6)}${channels.substring(0, 6)}';
+
   return 'Color(0x$argb)';
 }
 
@@ -521,17 +541,20 @@ String _buildCompatibilityLedgerOutput(
 }) {
   final utilityEntries = <_CompatibilityEntry>[
     for (final root in snapshot.staticUtilityRoots)
-      _compatibilityEntry(_RegistryRootKind.staticUtility, root),
+      _compatibilityEntry(.staticUtility, root),
     for (final root in snapshot.functionalUtilityRoots)
-      _compatibilityEntry(_RegistryRootKind.functionalUtility, root),
+      _compatibilityEntry(.functionalUtility, root),
   ]..sort(_compareCompatibilityEntries);
   final variantEntries = <_CompatibilityEntry>[
-    for (final root in snapshot.staticVariantRoots)
-      _compatibilityEntry(_RegistryRootKind.staticVariant, root),
+    for (final root in {
+      ...snapshot.staticVariantRoots,
+      ..._parserRegistryStaticVariantExtensions,
+    })
+      _compatibilityEntry(.staticVariant, root),
     for (final root in snapshot.functionalVariantRoots)
-      _compatibilityEntry(_RegistryRootKind.functionalVariant, root),
+      _compatibilityEntry(.functionalVariant, root),
     for (final root in snapshot.compoundVariantRoots)
-      _compatibilityEntry(_RegistryRootKind.compoundVariant, root),
+      _compatibilityEntry(.compoundVariant, root),
   ]..sort(_compareCompatibilityEntries);
 
   final output = StringBuffer()
@@ -550,7 +573,8 @@ String _buildCompatibilityLedgerOutput(
     ..writeln("    adapted => 'adapted',")
     ..writeln("    unsupported => 'unsupported',")
     ..writeln("    ignoredByDesign => 'ignored-by-design',")
-    ..writeln('  };')
+    ..writeln('  };');
+  output
     ..writeln('}')
     ..writeln()
     ..writeln('enum TailwindRegistryRootKind {')
@@ -558,7 +582,8 @@ String _buildCompatibilityLedgerOutput(
     ..writeln('  functionalUtility,')
     ..writeln('  staticVariant,')
     ..writeln('  functionalVariant,')
-    ..writeln('  compoundVariant,')
+    ..writeln('  compoundVariant,');
+  output
     ..writeln('}')
     ..writeln()
     ..writeln('final class TailwindCompatibilityEntry {')
@@ -572,7 +597,8 @@ String _buildCompatibilityLedgerOutput(
     ..writeln('  final String root;')
     ..writeln('  final TailwindRegistryRootKind kind;')
     ..writeln('  final TailwindCompatibilityStatus status;')
-    ..writeln('  final String? reason;')
+    ..writeln('  final String? reason;');
+  output
     ..writeln('}')
     ..writeln()
     ..writeln(
@@ -589,15 +615,16 @@ String _buildCompatibilityLedgerOutput(
       'const generatedTailwindUtilityCompatibilityLedger = '
       '<TailwindCompatibilityEntry>[',
     )
-    ..write(_dartCompatibilityEntries(utilityEntries))
+    ..write(_dartCompatibilityEntries(utilityEntries));
+  output
     ..writeln('];')
     ..writeln()
     ..writeln(
       'const generatedTailwindVariantCompatibilityLedger = '
       '<TailwindCompatibilityEntry>[',
     )
-    ..write(_dartCompatibilityEntries(variantEntries))
-    ..writeln('];');
+    ..write(_dartCompatibilityEntries(variantEntries));
+  output.writeln('];');
 
   return output.toString();
 }
@@ -607,6 +634,7 @@ int _compareCompatibilityEntries(
   _CompatibilityEntry right,
 ) {
   final kind = left.kind.index.compareTo(right.kind.index);
+
   return kind != 0 ? kind : left.root.compareTo(right.root);
 }
 
@@ -615,6 +643,7 @@ String _dartCompatibilityEntries(List<_CompatibilityEntry> entries) {
     final reason = entry.reason == null
         ? ''
         : ", reason: '${_escape(entry.reason!)}'";
+
     return "  TailwindCompatibilityEntry('${_escape(entry.root)}', "
         '.${entry.kind.name}, .${entry.status.name}$reason),\n';
   }).join();
@@ -622,59 +651,50 @@ String _dartCompatibilityEntries(List<_CompatibilityEntry> entries) {
 
 _CompatibilityEntry _compatibilityEntry(_RegistryRootKind kind, String root) {
   final implemented = switch (kind) {
-    _RegistryRootKind.staticUtility => _implementedStaticUtilityRoots,
-    _RegistryRootKind.functionalUtility => _implementedFunctionalUtilityRoots,
-    _RegistryRootKind.staticVariant => _implementedStaticVariantRoots,
-    _RegistryRootKind.functionalVariant ||
-    _RegistryRootKind.compoundVariant => const <String>{},
+    .staticUtility => _implementedStaticUtilityRoots,
+    .functionalUtility => _implementedFunctionalUtilityRoots,
+    .staticVariant => _implementedStaticVariantRoots,
+    .functionalVariant || .compoundVariant => const <String>{},
   };
   if (implemented.contains(root)) {
-    return _CompatibilityEntry(
-      root: root,
-      kind: kind,
-      status: _CompatibilityStatus.implemented,
-    );
+    return _CompatibilityEntry(root: root, kind: kind, status: .implemented);
   }
 
   final adapted = switch (kind) {
-    _RegistryRootKind.staticUtility => _adaptedStaticUtilityReasons,
-    _RegistryRootKind.functionalUtility => _adaptedFunctionalUtilityReasons,
-    _RegistryRootKind.staticVariant => _adaptedStaticVariantReasons,
-    _RegistryRootKind.functionalVariant ||
-    _RegistryRootKind.compoundVariant => const <String, String>{},
+    .staticUtility => _adaptedStaticUtilityReasons,
+    .functionalUtility => _adaptedFunctionalUtilityReasons,
+    .staticVariant => _adaptedStaticVariantReasons,
+    .functionalVariant => const <String, String>{},
+    .compoundVariant => _adaptedCompoundVariantReasons,
   };
   final adaptationReason = adapted[root];
   if (adaptationReason != null) {
     return _CompatibilityEntry(
       root: root,
       kind: kind,
-      status: _CompatibilityStatus.adapted,
+      status: .adapted,
       reason: adaptationReason,
     );
   }
 
   final ignored = switch (kind) {
-    _RegistryRootKind.functionalVariant => _ignoredFunctionalVariantReasons,
-    _RegistryRootKind.compoundVariant => _ignoredCompoundVariantReasons,
-    _RegistryRootKind.staticUtility ||
-    _RegistryRootKind.functionalUtility ||
-    _RegistryRootKind.staticVariant => const <String, String>{},
+    .functionalVariant => _ignoredFunctionalVariantReasons,
+    .compoundVariant => _ignoredCompoundVariantReasons,
+    .staticUtility ||
+    .functionalUtility ||
+    .staticVariant => const <String, String>{},
   };
   final ignoredReason = ignored[root];
   if (ignoredReason != null) {
     return _CompatibilityEntry(
       root: root,
       kind: kind,
-      status: _CompatibilityStatus.ignoredByDesign,
+      status: .ignoredByDesign,
       reason: ignoredReason,
     );
   }
 
-  return _CompatibilityEntry(
-    root: root,
-    kind: kind,
-    status: _CompatibilityStatus.unsupported,
-  );
+  return _CompatibilityEntry(root: root, kind: kind, status: .unsupported);
 }
 
 bool _validateCompatibilityPolicy(_RegistrySnapshot snapshot) {
@@ -716,15 +736,17 @@ bool _validateCompatibilityPolicy(_RegistrySnapshot snapshot) {
 
   final inventory = <String>{
     for (final root in snapshot.staticUtilityRoots)
-      _policyKey(_RegistryRootKind.staticUtility, root),
+      _policyKey(.staticUtility, root),
     for (final root in snapshot.functionalUtilityRoots)
-      _policyKey(_RegistryRootKind.functionalUtility, root),
+      _policyKey(.functionalUtility, root),
     for (final root in snapshot.staticVariantRoots)
-      _policyKey(_RegistryRootKind.staticVariant, root),
+      _policyKey(.staticVariant, root),
+    for (final root in _parserRegistryStaticVariantExtensions)
+      _policyKey(.staticVariant, root),
     for (final root in snapshot.functionalVariantRoots)
-      _policyKey(_RegistryRootKind.functionalVariant, root),
+      _policyKey(.functionalVariant, root),
     for (final root in snapshot.compoundVariantRoots)
-      _policyKey(_RegistryRootKind.compoundVariant, root),
+      _policyKey(.compoundVariant, root),
   };
   final decisions = <String>{};
   for (final decision in _explicitCompatibilityDecisions()) {
@@ -740,51 +762,59 @@ bool _validateCompatibilityPolicy(_RegistrySnapshot snapshot) {
   }
 
   if (!valid) exitCode = 1;
+
   return valid;
 }
 
 Iterable<_PolicyDecision> _explicitCompatibilityDecisions() sync* {
   for (final root in _implementedStaticUtilityRoots) {
-    yield _PolicyDecision(_RegistryRootKind.staticUtility, root);
+    yield _PolicyDecision(.staticUtility, root);
   }
   for (final root in _adaptedStaticUtilityReasons.keys) {
-    yield _PolicyDecision(_RegistryRootKind.staticUtility, root);
+    yield _PolicyDecision(.staticUtility, root);
   }
   for (final root in _implementedFunctionalUtilityRoots) {
-    yield _PolicyDecision(_RegistryRootKind.functionalUtility, root);
+    yield _PolicyDecision(.functionalUtility, root);
   }
   for (final root in _adaptedFunctionalUtilityReasons.keys) {
-    yield _PolicyDecision(_RegistryRootKind.functionalUtility, root);
+    yield _PolicyDecision(.functionalUtility, root);
   }
   for (final root in _implementedStaticVariantRoots) {
-    yield _PolicyDecision(_RegistryRootKind.staticVariant, root);
+    yield _PolicyDecision(.staticVariant, root);
   }
   for (final root in _adaptedStaticVariantReasons.keys) {
-    yield _PolicyDecision(_RegistryRootKind.staticVariant, root);
+    yield _PolicyDecision(.staticVariant, root);
+  }
+  for (final root in _adaptedCompoundVariantReasons.keys) {
+    yield _PolicyDecision(.compoundVariant, root);
   }
   for (final root in _ignoredFunctionalVariantReasons.keys) {
-    yield _PolicyDecision(_RegistryRootKind.functionalVariant, root);
+    yield _PolicyDecision(.functionalVariant, root);
   }
   for (final root in _ignoredCompoundVariantReasons.keys) {
-    yield _PolicyDecision(_RegistryRootKind.compoundVariant, root);
+    yield _PolicyDecision(.compoundVariant, root);
   }
 }
 
 String _policyKey(_RegistryRootKind kind, String root) => '${kind.name}:$root';
 
 String _inventoryFingerprint(_RegistrySnapshot snapshot) {
-  final bytes = utf8.encode(jsonEncode(snapshot.toJson()));
+  final effectiveInventory = snapshot.toJson()
+    ..['parserRegistryStaticVariantExtensions'] = _sortedList(
+      _parserRegistryStaticVariantExtensions,
+    );
+  final bytes = utf8.encode(jsonEncode(effectiveInventory));
   var hash = 0xcbf29ce484222325;
   for (final byte in bytes) {
     hash ^= byte;
     hash = (hash * 0x100000001b3) & 0xffffffffffffffff;
   }
+
   return hash.toRadixString(16).padLeft(16, '0');
 }
 
-const _implementedStaticUtilityRoots = <String>{
+const _implementedStaticUtilityRoots = {
   'basis-auto',
-  'block',
   'capitalize',
   'flex',
   'flex-col',
@@ -817,7 +847,7 @@ const _implementedStaticUtilityRoots = <String>{
   'uppercase',
 };
 
-const _adaptedStaticUtilityReasons = <String, String>{
+const _adaptedStaticUtilityReasons = {
   'flex-auto':
       'Flutter flex parent-data adaptation; see FLUTTER_ADAPTATIONS.md '
       '(Key Behavioral Differences).',
@@ -827,6 +857,9 @@ const _adaptedStaticUtilityReasons = <String, String>{
   'flex-none':
       'Flutter flex parent-data adaptation; see FLUTTER_ADAPTATIONS.md '
       '(Key Behavioral Differences).',
+  'h-auto':
+      'Clears Flutter height constraints to represent CSS auto sizing; see '
+      'FLUTTER_ADAPTATIONS.md (Compatibility Ledger Status Notes).',
   'h-screen':
       'Resolved from live Flutter constraints; see FLUTTER_ADAPTATIONS.md '
       '(Parser and Variant Adaptations).',
@@ -839,12 +872,15 @@ const _adaptedStaticUtilityReasons = <String, String>{
   'truncate':
       'Flutter text requires explicit flex constraints; see '
       'FLUTTER_ADAPTATIONS.md (Text Truncation in Flex Containers).',
+  'w-auto':
+      'Clears Flutter width constraints to represent CSS auto sizing; see '
+      'FLUTTER_ADAPTATIONS.md (Compatibility Ledger Status Notes).',
   'w-screen':
       'Resolved from live Flutter constraints; see FLUTTER_ADAPTATIONS.md '
       '(Parser and Variant Adaptations).',
 };
 
-const _implementedFunctionalUtilityRoots = <String>{
+const _implementedFunctionalUtilityRoots = {
   'blur',
   'border',
   'border-b',
@@ -886,7 +922,7 @@ const _implementedFunctionalUtilityRoots = <String>{
   'transition',
 };
 
-const _adaptedFunctionalUtilityReasons = <String, String>{
+const _adaptedFunctionalUtilityReasons = {
   'basis':
       'Only Flutter-representable basis values are supported; see '
       'FLUTTER_ADAPTATIONS.md (Flex Basis Fractions).',
@@ -967,9 +1003,8 @@ const _adaptedFunctionalUtilityReasons = <String, String>{
       'FLUTTER_ADAPTATIONS.md (Percent-Based Sizing).',
 };
 
-const _implementedStaticVariantRoots = <String>{
+const _implementedStaticVariantRoots = {
   '2xl',
-  '3xl',
   'disabled',
   'enabled',
   'focus',
@@ -980,7 +1015,7 @@ const _implementedStaticVariantRoots = <String>{
   'xl',
 };
 
-const _adaptedStaticVariantReasons = <String, String>{
+const _adaptedStaticVariantReasons = {
   'active':
       'Mapped to Mix pressed state; see FLUTTER_ADAPTATIONS.md '
       '(Compatibility Ledger Status Notes).',
@@ -989,11 +1024,21 @@ const _adaptedStaticVariantReasons = <String, String>{
       '(Compatibility Ledger Status Notes).',
   'focus-visible':
       "Mapped to Mix's focus-visible state using Flutter's app-wide input "
-      'modality; '
+      'modality; Mix Protocol v1 does not encode FocusVisibleVariant; '
       'see FLUTTER_ADAPTATIONS.md (Compatibility Ledger Status Notes).',
+  'light':
+      'Mapped to Flutter platform brightness; see FLUTTER_ADAPTATIONS.md '
+      '(Compatibility Ledger Status Notes).',
 };
 
-const _ignoredFunctionalVariantReasons = <String, String>{
+const _adaptedCompoundVariantReasons = {
+  'not':
+      'Only not-hover is mapped to a Mix runtime state; other not-* variants '
+      'remain unsupported; see FLUTTER_ADAPTATIONS.md '
+      '(Compatibility Ledger Status Notes).',
+};
+
+const _ignoredFunctionalVariantReasons = {
   '@':
       'Container-query variants have no styler-payload equivalent; see '
       'FLUTTER_ADAPTATIONS.md (Parser and Variant Adaptations).',
@@ -1005,7 +1050,7 @@ const _ignoredFunctionalVariantReasons = <String, String>{
       'FLUTTER_ADAPTATIONS.md (Parser and Variant Adaptations).',
 };
 
-const _ignoredCompoundVariantReasons = <String, String>{
+const _ignoredCompoundVariantReasons = {
   'group':
       'Selector-relative group state has no widget-API equivalent; see '
       'FLUTTER_ADAPTATIONS.md (Parser and Variant Adaptations).',
@@ -1024,9 +1069,10 @@ void _printUsage() {
   );
 }
 
-Object? _readJson(Directory dir, String name) {
+Object _readJson(Directory dir, String name) {
   final file = File('${dir.path}/$name');
-  return jsonDecode(file.readAsStringSync());
+
+  return jsonDecode(file.readAsStringSync())!;
 }
 
 Set<String> _jsonStringSet(Map<String, Object?> json, String key) {
@@ -1034,13 +1080,14 @@ Set<String> _jsonStringSet(Map<String, Object?> json, String key) {
 }
 
 Map<String, Object?> _stableMeta(Map<String, Object?> meta) {
-  final result = Map<String, Object?>.from(meta);
+  final result = Map<String, Object?>.of(meta);
   result.remove('generatedAt');
+
   return result;
 }
 
-Iterable<String> _literalRegistrationNames(Object? json) sync* {
-  for (final raw in (json as List?) ?? const []) {
+Iterable<String> _literalRegistrationNames(Object json) sync* {
+  for (final raw in json as List) {
     final map = (raw as Map).cast<String, Object?>();
     final name =
         (((map['metaVariables'] as Map?)?['single'] as Map?)?['NAME']
@@ -1059,7 +1106,8 @@ Iterable<String> _probeRoots(
   Map<String, Object?> probes, {
   required String kind,
 }) sync* {
-  for (final raw in (probes['probes'] as List).cast<Object?>()) {
+  final probeEntries = (probes['probes'] as List).cast<Object?>();
+  for (final raw in probeEntries) {
     final map = (raw as Map).cast<String, Object?>();
     if (map['valid'] != true || map['utilityKind'] != kind) continue;
     final root = map['utilityRoot'];
@@ -1123,6 +1171,7 @@ Iterable<String> _supportedFallbackRoots(Map<String, Object?> classList) {
   return supported.where((root) {
     if (keepEvenWhenMissingFromClassList.contains(root)) return true;
     final prefix = '$root-';
+
     return classNames.any((name) => name.startsWith(prefix));
   });
 }
@@ -1137,12 +1186,20 @@ String _stripNegativeRoot(String value) =>
 String _dartStringSet(Set<String> values) {
   final sorted = values.toList()..sort();
   if (sorted.isEmpty) return '';
+
   return '\n  ${sorted.map((value) => "'${_escape(value)}'").join(',\n  ')},\n';
+}
+
+String _dartInlineStringElements(Set<String> values) {
+  final sorted = values.toList()..sort();
+
+  return sorted.map((value) => "'${_escape(value)}'").join(', ');
 }
 
 String _dartMap(Map<String, Object?> values) {
   final entries = values.entries.toList()
     ..sort((a, b) => a.key.compareTo(b.key));
+
   return '{\n  ${entries.map((entry) => "'${_escape(entry.key)}': ${_dartValue(entry.value)}").join(',\n  ')},\n}';
 }
 
@@ -1159,6 +1216,13 @@ String _escape(String value) =>
     value.replaceAll(r'\', r'\\').replaceAll("'", r"\'");
 
 final class _RegistrySnapshot {
+  final Map<String, Object?> meta;
+
+  final Set<String> staticUtilityRoots;
+  final Set<String> functionalUtilityRoots;
+  final Set<String> staticVariantRoots;
+  final Set<String> functionalVariantRoots;
+  final Set<String> compoundVariantRoots;
   const _RegistrySnapshot({
     required this.meta,
     required this.staticUtilityRoots,
@@ -1167,13 +1231,6 @@ final class _RegistrySnapshot {
     required this.functionalVariantRoots,
     required this.compoundVariantRoots,
   });
-
-  final Map<String, Object?> meta;
-  final Set<String> staticUtilityRoots;
-  final Set<String> functionalUtilityRoots;
-  final Set<String> staticVariantRoots;
-  final Set<String> functionalVariantRoots;
-  final Set<String> compoundVariantRoots;
 
   Map<String, Object?> toJson() {
     return {
@@ -1188,13 +1245,13 @@ final class _RegistrySnapshot {
 }
 
 final class _ThemeSnapshot {
+  final Map<String, Object?> meta;
+
+  final Map<String, Object?> namespaces;
   const _ThemeSnapshot({required this.meta, required this.namespaces});
 
-  final Map<String, Object?> meta;
-  final Map<String, Object?> namespaces;
-
   Map<String, Object?> namespace(String name) {
-    return ((namespaces[name] ?? const {}) as Map).cast<String, Object?>();
+    return ((namespaces[name] ?? const {}) as Map).cast();
   }
 }
 
@@ -1217,22 +1274,22 @@ enum _RegistryRootKind {
 enum _CompatibilityStatus { implemented, adapted, unsupported, ignoredByDesign }
 
 final class _CompatibilityEntry {
+  final String root;
+
+  final _RegistryRootKind kind;
+  final _CompatibilityStatus status;
+  final String? reason;
   const _CompatibilityEntry({
     required this.root,
     required this.kind,
     required this.status,
     this.reason,
   });
-
-  final String root;
-  final _RegistryRootKind kind;
-  final _CompatibilityStatus status;
-  final String? reason;
 }
 
 final class _PolicyDecision {
-  const _PolicyDecision(this.kind, this.root);
-
   final _RegistryRootKind kind;
+
   final String root;
+  const _PolicyDecision(this.kind, this.root);
 }

@@ -5,8 +5,13 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
 import 'package:mix_winds/mix_winds.dart';
+import 'package:mix_winds/src/translate/tw_translator.dart';
 
 import 'winds_test_helpers.dart';
+
+bool _classesWantFlex(Set<String> tokens) => TwTranslator(
+  config: TwConfig.standard(),
+).compileForWidget(tokens.join(' '), .boxOrFlex).wantsFlex;
 
 Future<FlexParentData> _rowParentDataForDiv(
   WidgetTester tester,
@@ -159,6 +164,32 @@ void main() {
     );
     final boxSize = tester.getSize(boxFinder);
     expect(boxSize.width, closeTo(260 - 32, 0.0001));
+  });
+
+  testWidgets('basis-auto preserves w-full expansion inside Row', (
+    tester,
+  ) async {
+    await pumpSized(
+      tester,
+      Row(
+        children: [
+          Div(
+            classNames: 'w-full basis-auto bg-blue-500',
+            child: const SizedBox(height: 10),
+          ),
+          const SizedBox(width: 20, height: 20),
+        ],
+      ),
+      width: 200,
+      height: 80,
+    );
+
+    expect(tester.takeException(), isNull);
+    final boxFinder = find.descendant(
+      of: find.byType(Row),
+      matching: find.byType(Container),
+    );
+    expect(tester.getSize(boxFinder).width, closeTo(180, 0.0001));
   });
 
   testWidgets('h-full does not crash inside Column', (tester) async {
@@ -1397,34 +1428,32 @@ void main() {
     },
   );
 
-  test('wantsFlex detects prefixed flex tokens', () {
-    final parser = TwParser();
-    expect(parser.wantsFlex({'inline-flex'}), isTrue);
-    expect(parser.wantsFlex({'sm:flex'}), isTrue);
-    expect(parser.wantsFlex({'md:flex-row'}), isTrue);
-    expect(parser.wantsFlex({'lg:flex-col'}), isTrue);
-    expect(parser.wantsFlex({'md:hover:flex'}), isTrue);
-    expect(parser.wantsFlex({'bg-blue-500'}), isFalse);
+  test('target inference detects prefixed flex tokens', () {
+    expect(_classesWantFlex({'inline-flex'}), isTrue);
+    expect(_classesWantFlex({'sm:flex'}), isTrue);
+    expect(_classesWantFlex({'md:flex-row'}), isTrue);
+    expect(_classesWantFlex({'lg:flex-col'}), isTrue);
+    expect(_classesWantFlex({'md:hover:flex'}), isTrue);
+    expect(_classesWantFlex({'bg-blue-500'}), isFalse);
   });
 
-  test('wantsFlex detects flex-implying properties', () {
-    final parser = TwParser();
+  test('target inference detects flex-implying properties', () {
     // items-* implies flex
-    expect(parser.wantsFlex({'items-center'}), isTrue);
-    expect(parser.wantsFlex({'items-start'}), isTrue);
-    expect(parser.wantsFlex({'md:items-end'}), isTrue);
+    expect(_classesWantFlex({'items-center'}), isTrue);
+    expect(_classesWantFlex({'items-start'}), isTrue);
+    expect(_classesWantFlex({'md:items-end'}), isTrue);
     // justify-* implies flex
-    expect(parser.wantsFlex({'justify-between'}), isTrue);
-    expect(parser.wantsFlex({'justify-center'}), isTrue);
-    expect(parser.wantsFlex({'lg:justify-end'}), isTrue);
+    expect(_classesWantFlex({'justify-between'}), isTrue);
+    expect(_classesWantFlex({'justify-center'}), isTrue);
+    expect(_classesWantFlex({'lg:justify-end'}), isTrue);
     // gap-* implies flex
-    expect(parser.wantsFlex({'gap-4'}), isTrue);
-    expect(parser.wantsFlex({'gap-x-2'}), isTrue);
-    expect(parser.wantsFlex({'gap-y-6'}), isTrue);
-    expect(parser.wantsFlex({'md:gap-8'}), isTrue);
+    expect(_classesWantFlex({'gap-4'}), isTrue);
+    expect(_classesWantFlex({'gap-x-2'}), isTrue);
+    expect(_classesWantFlex({'gap-y-6'}), isTrue);
+    expect(_classesWantFlex({'md:gap-8'}), isTrue);
     // Non-flex tokens should still return false
-    expect(parser.wantsFlex({'p-4'}), isFalse);
-    expect(parser.wantsFlex({'text-center'}), isFalse);
+    expect(_classesWantFlex({'p-4'}), isFalse);
+    expect(_classesWantFlex({'text-center'}), isFalse);
   });
 
   testWidgets('inline-flex renders horizontal shrink-wrap flex', (
@@ -1468,26 +1497,24 @@ void main() {
     expect(padding.padding.resolve(TextDirection.ltr).right, 4);
   });
 
-  test('wantsFlex handles arbitrary values with colons correctly', () {
-    final parser = TwParser();
-
+  test('target inference handles arbitrary values with colons correctly', () {
     // Arbitrary values with colons should NOT trigger false positives
     // The colon inside brackets should be ignored
-    expect(parser.wantsFlex({'bg-[color:red]'}), isFalse);
-    expect(parser.wantsFlex({'bg-[color:rgba(0,0,0,0.5)]'}), isFalse);
-    expect(parser.wantsFlex({'text-[color:blue]'}), isFalse);
+    expect(_classesWantFlex({'bg-[color:red]'}), isFalse);
+    expect(_classesWantFlex({'bg-[color:rgba(0,0,0,0.5)]'}), isFalse);
+    expect(_classesWantFlex({'text-[color:blue]'}), isFalse);
 
     // Prefixed arbitrary values should also work correctly
-    expect(parser.wantsFlex({'md:bg-[color:red]'}), isFalse);
-    expect(parser.wantsFlex({'hover:bg-[color:rgba(0,0,0,0.5)]'}), isFalse);
+    expect(_classesWantFlex({'md:bg-[color:red]'}), isFalse);
+    expect(_classesWantFlex({'hover:bg-[color:rgba(0,0,0,0.5)]'}), isFalse);
 
     // Flex with arbitrary values should still be detected
-    expect(parser.wantsFlex({'flex', 'bg-[color:red]'}), isTrue);
-    expect(parser.wantsFlex({'md:flex', 'bg-[color:red]'}), isTrue);
+    expect(_classesWantFlex({'flex', 'bg-[color:red]'}), isTrue);
+    expect(_classesWantFlex({'md:flex', 'bg-[color:red]'}), isTrue);
 
     // Malformed brackets should be handled gracefully (no crash)
-    expect(parser.wantsFlex({'bg-[color:red'}), isFalse);
-    expect(parser.wantsFlex({'md:bg-[color'}), isFalse);
+    expect(_classesWantFlex({'bg-[color:red'}), isFalse);
+    expect(_classesWantFlex({'md:bg-[color'}), isFalse);
   });
 
   testWidgets('Parser defaults to column for prefixed-only flex tokens', (
@@ -2487,25 +2514,17 @@ void main() {
     expect(config!.curve, Curves.easeIn);
   });
 
-  test(
-    'parseBox with transition classes produces style that can be animated',
-    () {
-      final parser = TwParser();
-      final animConfig = parser.parseAnimationFromTokens(
-        parser.listTokens('transition duration-300 ease-in-out'),
-      );
-      final boxStyle = parser.parseBox('bg-blue-500 p-4');
+  test('compileBox attaches transition animation to the style', () {
+    final compilation = TwParser().compileBox(
+      'bg-blue-500 p-4 transition duration-300 ease-in-out',
+    );
+    final animation = compilation.styler.$animation as CurveAnimationConfig?;
 
-      // Verify animation config is correct
-      expect(animConfig, isNotNull);
-      expect(animConfig!.duration, const Duration(milliseconds: 300));
-      expect(animConfig.curve, Curves.easeInOut);
-
-      // Verify style can be animated (this is what tw_widget.dart does)
-      final animatedStyle = boxStyle.animate(animConfig);
-      expect(animatedStyle, isNotNull);
-    },
-  );
+    expect(animation, isNotNull);
+    expect(animation!.duration, const Duration(milliseconds: 300));
+    expect(animation.curve, Curves.easeInOut);
+    expect(compilation.diagnostics, isEmpty);
+  });
 
   testWidgets('Div with transition renders without error', (tester) async {
     await pumpDiv(

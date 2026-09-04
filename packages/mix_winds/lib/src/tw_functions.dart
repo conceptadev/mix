@@ -13,42 +13,42 @@ Div div(String classNames, [List<Widget> children = const []]) {
 
 /// Creates a non-const [P] with [classNames] and [text].
 P p(String classNames, String text) {
-  return P(classNames: classNames, text: text);
+  return P(text: text, classNames: classNames);
 }
 
 /// Creates a non-const [Span] with [classNames] and [text].
 Span span(String classNames, String text) {
-  return Span(classNames: classNames, text: text);
+  return Span(text: text, classNames: classNames);
 }
 
 /// Creates a non-const [H1] with [classNames] and [text].
 H1 h1(String classNames, String text) {
-  return H1(classNames: classNames, text: text);
+  return H1(text: text, classNames: classNames);
 }
 
 /// Creates a non-const [H2] with [classNames] and [text].
 H2 h2(String classNames, String text) {
-  return H2(classNames: classNames, text: text);
+  return H2(text: text, classNames: classNames);
 }
 
 /// Creates a non-const [H3] with [classNames] and [text].
 H3 h3(String classNames, String text) {
-  return H3(classNames: classNames, text: text);
+  return H3(text: text, classNames: classNames);
 }
 
 /// Creates a non-const [H4] with [classNames] and [text].
 H4 h4(String classNames, String text) {
-  return H4(classNames: classNames, text: text);
+  return H4(text: text, classNames: classNames);
 }
 
 /// Creates a non-const [H5] with [classNames] and [text].
 H5 h5(String classNames, String text) {
-  return H5(classNames: classNames, text: text);
+  return H5(text: text, classNames: classNames);
 }
 
 /// Creates a non-const [H6] with [classNames] and [text].
 H6 h6(String classNames, String text) {
-  return H6(classNames: classNames, text: text);
+  return H6(text: text, classNames: classNames);
 }
 
 /// Creates a non-const [Button] with [classNames] and [children].
@@ -77,5 +77,5 @@ TwIcon twIcon(String classNames, IconData icon, {String? semanticLabel}) {
 
 /// Creates a non-const [TruncatedP] with [classNames] and [text].
 TruncatedP truncatedP(String classNames, String text) {
-  return TruncatedP(classNames: classNames, text: text);
+  return TruncatedP(text: text, classNames: classNames);
 }

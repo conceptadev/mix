@@ -2,6 +2,14 @@
 library;
 
 final class TailwindParserRegistry {
+  static const empty = TailwindParserRegistry();
+
+  final Set<String> staticUtilityRoots;
+
+  final Set<String> functionalUtilityRoots;
+  final Set<String> staticVariantRoots;
+  final Set<String> functionalVariantRoots;
+  final Set<String> compoundVariantRoots;
   const TailwindParserRegistry({
     this.staticUtilityRoots = const {},
     this.functionalUtilityRoots = const {},
@@ -9,12 +17,4 @@ final class TailwindParserRegistry {
     this.functionalVariantRoots = const {},
     this.compoundVariantRoots = const {},
   });
-
-  static const empty = TailwindParserRegistry();
-
-  final Set<String> staticUtilityRoots;
-  final Set<String> functionalUtilityRoots;
-  final Set<String> staticVariantRoots;
-  final Set<String> functionalVariantRoots;
-  final Set<String> compoundVariantRoots;
 }
