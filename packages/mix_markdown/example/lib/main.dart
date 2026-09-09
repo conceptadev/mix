@@ -73,7 +73,7 @@ class _MarkdownDemoAppState extends State<MarkdownDemoApp> {
           ),
           body: SingleChildScrollView(
             child: SelectionArea(
-              child: MixMarkdown(data: _document, style: documentStyle),
+              child: MixMarkdown(data: _document, style: _documentStyle),
             ),
           ),
         ),
@@ -83,7 +83,7 @@ class _MarkdownDemoAppState extends State<MarkdownDemoApp> {
 }
 
 /// The demo document style.
-final documentStyle = MarkdownStyler(
+final _documentStyle = MarkdownStyler(
   container: BoxStyler().paddingAll(24),
   blockSpacing: 16,
   paragraph: _text,

@@ -5,6 +5,7 @@ import 'package:markdown/markdown.dart' as md;
 import 'package:mix/mix.dart';
 import 'package:mix_markdown/mix_markdown.dart';
 import 'package:mix_markdown/src/widgets/markdown_alert.dart';
+import 'package:mix_markdown/src/widgets/markdown_blocks.dart';
 import 'package:mix_markdown/src/widgets/markdown_document.dart';
 
 void main() {

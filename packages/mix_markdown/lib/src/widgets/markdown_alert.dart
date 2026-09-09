@@ -4,7 +4,7 @@ import 'package:mix/mix.dart';
 import '../specs/markdown_alert_spec.dart';
 import '../specs/markdown_alert_type.dart';
 import '../specs/markdown_alert_type_spec.dart';
-import 'markdown_document.dart';
+import 'markdown_blocks.dart';
 
 /// A GitHub alert: a styled box with an icon and title row above its body.
 class MarkdownAlert extends StatelessWidget {

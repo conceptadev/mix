@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:markdown/markdown.dart' as md;
 import 'package:mix_markdown/mix_markdown.dart';
-import 'package:mix_markdown/src/widgets/markdown_document.dart';
+import 'package:mix_markdown/src/parsing/unsupported_nodes.dart';
 
 void main() {
   List<md.Node> parse(String source) =>
