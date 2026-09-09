@@ -117,8 +117,8 @@ final encoded = mixProtocol.encodeStyle(result.styler);
 The same pattern applies to `compileFlex`, `compileText`, and `compileIcon`.
 Inspect `result.diagnostics` before accepting user-authored classes and always
 handle `MixProtocolFailure` from the codec. Protocol vocabulary support is
-separate from `requiresWidgetRuntime`: for example, Mix Protocol v1 does not
-encode the `FocusVisibleVariant` produced by `focus-visible:*`. When
+separate from `requiresWidgetRuntime`. Protocol v1 encodes `FocusVisibleVariant`
+as `context_focus_visible`. When
 `requiresWidgetRuntime` is true, even a successfully encoded styler is not the
 complete behavior; render the same classes with a `mix_winds` widget so its
 Flutter layout plan is evaluated. JSON is a consumer boundary representation,

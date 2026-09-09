@@ -2,14 +2,7 @@ import 'package:flutter/foundation.dart';
 
 import 'tw_compilation.dart';
 
-enum TwLayoutDimensionProperty {
-  width,
-  height,
-  minWidth,
-  minHeight,
-  maxWidth,
-  maxHeight,
-}
+enum TwLayoutDimensionProperty { width, height, minWidth, minHeight }
 
 @immutable
 final class TwLayoutDimensionDeclaration {
@@ -29,7 +22,6 @@ final class TwLayoutFlexContainerDeclaration {
   final bool establishesContainer;
 
   final bool establishesBaseFlex;
-  final TwFlexDisplay? display;
   final TwFlexAxis? axis;
   final TwLayoutGapAxis? gapAxis;
   final double? gap;
@@ -37,7 +29,6 @@ final class TwLayoutFlexContainerDeclaration {
   const TwLayoutFlexContainerDeclaration({
     this.establishesContainer = true,
     this.establishesBaseFlex = false,
-    this.display,
     this.axis,
     this.gapAxis,
     this.gap,
@@ -53,8 +44,6 @@ final class TwLayoutFlexItemDeclaration {
   final int basisPriority;
   final double? grow;
   final int growPriority;
-  final double? shrink;
-  final int shrinkPriority;
   final TwSelfAlignment? selfAlignment;
   final TwFlexBehavior? behavior;
   final int behaviorPriority;
@@ -64,8 +53,6 @@ final class TwLayoutFlexItemDeclaration {
     this.basisPriority = 0,
     this.grow,
     this.growPriority = 0,
-    this.shrink,
-    this.shrinkPriority = 0,
     this.selfAlignment,
     this.behavior,
     this.behaviorPriority = 0,
@@ -211,24 +198,12 @@ final class TwDimensionPlan {
   final TwResponsiveValue<TwDimensionIntent> height;
   final TwResponsiveValue<TwDimensionIntent> minWidth;
   final TwResponsiveValue<TwDimensionIntent> minHeight;
-  final TwResponsiveValue<TwDimensionIntent> maxWidth;
-  final TwResponsiveValue<TwDimensionIntent> maxHeight;
   const TwDimensionPlan({
     this.width = const TwResponsiveValue.empty(),
     this.height = const TwResponsiveValue.empty(),
     this.minWidth = const TwResponsiveValue.empty(),
     this.minHeight = const TwResponsiveValue.empty(),
-    this.maxWidth = const TwResponsiveValue.empty(),
-    this.maxHeight = const TwResponsiveValue.empty(),
   });
-
-  bool get isEmpty =>
-      width.isEmpty &&
-      height.isEmpty &&
-      minWidth.isEmpty &&
-      minHeight.isEmpty &&
-      maxWidth.isEmpty &&
-      maxHeight.isEmpty;
 
   bool get requiresWidgetRuntime =>
       _containsDimensionKind(width, const {
@@ -248,8 +223,6 @@ bool _containsDimensionKind(
 ) => value.entries.any((entry) => kinds.contains(entry.value.kind));
 
 enum TwFlexAxis { horizontal, vertical }
-
-enum TwFlexDisplay { flex, inlineFlex }
 
 /// Widget behavior needed to reproduce Tailwind's implicit cross-axis policy.
 enum TwImplicitCrossAxisPolicy { none, stretchWhenBoundedStartWhenUnbounded }
@@ -304,16 +277,12 @@ final class TwResolvedFlexContainer {
 
   final double? mainGap;
   final double? crossGap;
-  final bool hasExplicitItems;
-  final TwFlexDisplay? display;
   final TwImplicitCrossAxisPolicy implicitCrossAxisPolicy;
   const TwResolvedFlexContainer({
     required this.axis,
     required this.mainGap,
     required this.crossGap,
-    required this.hasExplicitItems,
     required this.implicitCrossAxisPolicy,
-    this.display,
   });
 }
 
@@ -325,7 +294,6 @@ final class TwFlexContainerPlan {
   /// establishes the horizontal fallback used by current widget behavior.
   final bool hasBaseFlex;
 
-  final TwResponsiveValue<TwFlexDisplay> display;
   final TwResponsiveValue<TwFlexAxis> axis;
   final TwResponsiveValue<double> gap;
   final TwResponsiveValue<double> gapX;
@@ -334,7 +302,6 @@ final class TwFlexContainerPlan {
   const TwFlexContainerPlan({
     this.isFlexContainer = false,
     this.hasBaseFlex = false,
-    this.display = const TwResponsiveValue.empty(),
     this.axis = const TwResponsiveValue.empty(),
     this.gap = const TwResponsiveValue.empty(),
     this.gapX = const TwResponsiveValue.empty(),
@@ -347,15 +314,6 @@ final class TwFlexContainerPlan {
     ...axis.entries.map((entry) => entry.minWidth),
     ...explicitItems.entries.map((entry) => entry.minWidth),
   };
-
-  bool get isEmpty =>
-      !isFlexContainer &&
-      display.isEmpty &&
-      axis.isEmpty &&
-      gap.isEmpty &&
-      gapX.isEmpty &&
-      gapY.isEmpty &&
-      explicitItems.isEmpty;
 
   bool get requiresWidgetRuntime =>
       gapX.isNotEmpty ||
@@ -371,7 +329,6 @@ final class TwFlexContainerPlan {
     return TwFlexContainerPlan(
       isFlexContainer: true,
       hasBaseFlex: hasBaseFlex,
-      display: display,
       axis: axis,
       gap: gap,
       gapX: gapX,
@@ -394,11 +351,9 @@ final class TwFlexContainerPlan {
           ? (horizontalGap ?? baseGap)
           : (verticalGap ?? baseGap),
       crossGap: resolvedAxis == .horizontal ? verticalGap : horizontalGap,
-      hasExplicitItems: hasExplicitItems,
       implicitCrossAxisPolicy: resolvedAxis == .vertical && !hasExplicitItems
           ? .stretchWhenBoundedStartWhenUnbounded
           : .none,
-      display: display.select(width),
     );
   }
 }
@@ -409,14 +364,12 @@ final class TwResolvedFlexItem {
   final bool hasExplicitBasis;
 
   final double? grow;
-  final double? shrink;
   final TwSelfAlignment? selfAlignment;
   final TwFlexBehavior? behavior;
   const TwResolvedFlexItem({
     required this.basis,
     required this.hasExplicitBasis,
     this.grow,
-    this.shrink,
     this.selfAlignment,
     this.behavior,
   });
@@ -431,14 +384,12 @@ final class TwFlexItemPlan {
   final TwResponsiveValue<bool> explicitBasis;
 
   final TwResponsiveValue<double> grow;
-  final TwResponsiveValue<double> shrink;
   final TwResponsiveValue<TwSelfAlignment> selfAlignment;
   final TwResponsiveValue<TwFlexBehavior> behavior;
   const TwFlexItemPlan({
     this.basis = const TwResponsiveValue.empty(),
     this.explicitBasis = const TwResponsiveValue.empty(),
     this.grow = const TwResponsiveValue.empty(),
-    this.shrink = const TwResponsiveValue.empty(),
     this.selfAlignment = const TwResponsiveValue.empty(),
     this.behavior = const TwResponsiveValue.empty(),
   });
@@ -447,7 +398,6 @@ final class TwFlexItemPlan {
       basis.isEmpty &&
       explicitBasis.isEmpty &&
       grow.isEmpty &&
-      shrink.isEmpty &&
       selfAlignment.isEmpty &&
       behavior.isEmpty;
 
@@ -460,7 +410,6 @@ final class TwFlexItemPlan {
     basis: basis.select(width) ?? .unspecified,
     hasExplicitBasis: explicitBasis.select(width) ?? false,
     grow: grow.select(width),
-    shrink: shrink.select(width),
     selfAlignment: selfAlignment.select(width),
     behavior: behavior.select(width),
   );
@@ -547,34 +496,6 @@ final class TwLogicalInsets {
   int get hashCode => Object.hash(start, end, left, right);
 }
 
-@immutable
-final class TwZeroBasisInsets {
-  final TwInsets margin;
-
-  final TwInsets padding;
-  final TwInsets border;
-  const TwZeroBasisInsets({
-    this.margin = const TwInsets(),
-    this.padding = const TwInsets(),
-    this.border = const TwInsets(),
-  });
-
-  double outerExtent(TwFlexAxis axis) =>
-      margin.mainExtent(axis) +
-      padding.mainExtent(axis) +
-      border.mainExtent(axis);
-
-  @override
-  bool operator ==(Object other) =>
-      other is TwZeroBasisInsets &&
-      margin == other.margin &&
-      padding == other.padding &&
-      border == other.border;
-
-  @override
-  int get hashCode => Object.hash(margin, padding, border);
-}
-
 /// Concrete package-internal implementation of the public [TwLayoutPlan] view.
 ///
 /// This type is intentionally not exported from `mix_winds.dart`.
@@ -590,7 +511,8 @@ final class TwCompiledLayoutPlan implements TwLayoutPlan {
   /// Auxiliary style-derived insets used only when [flexItem] resolves to a
   /// positive zero-basis grower. These do not independently make the public
   /// plan non-empty because padding and border remain protocol-portable styles.
-  final TwResponsiveValue<TwZeroBasisInsets> zeroBasisInsets;
+  final TwResponsiveValue<TwInsets> padding;
+  final TwResponsiveValue<TwInsets> border;
 
   const TwCompiledLayoutPlan({
     this.dimensions = const TwDimensionPlan(),
@@ -598,11 +520,18 @@ final class TwCompiledLayoutPlan implements TwLayoutPlan {
     this.flexItem = const TwFlexItemPlan(),
     this.externalMargin = const TwResponsiveValue.empty(),
     this.iconLogicalMargin = const TwResponsiveValue.empty(),
-    this.zeroBasisInsets = const TwResponsiveValue.empty(),
+    this.padding = const TwResponsiveValue.empty(),
+    this.border = const TwResponsiveValue.empty(),
   });
 
-  double zeroBasisOuterExtent(double width, TwFlexAxis axis) =>
-      zeroBasisInsets.select(width)?.outerExtent(axis) ?? 0;
+  double zeroBasisOuterExtent(
+    TwFlexAxis axis, {
+    required double marginWidth,
+    required double styleWidth,
+  }) =>
+      (externalMargin.select(marginWidth)?.mainExtent(axis) ?? 0) +
+      (padding.select(styleWidth)?.mainExtent(axis) ?? 0) +
+      (border.select(styleWidth)?.mainExtent(axis) ?? 0);
 
   @override
   bool get isEmpty =>
@@ -630,13 +559,6 @@ final class TwLayoutPlanBuilder {
       _ResponsiveDeclarationBuilder();
   final _ResponsiveDeclarationBuilder<TwDimensionIntent> _minHeight =
       _ResponsiveDeclarationBuilder();
-  final _ResponsiveDeclarationBuilder<TwDimensionIntent> _maxWidth =
-      _ResponsiveDeclarationBuilder();
-  final _ResponsiveDeclarationBuilder<TwDimensionIntent> _maxHeight =
-      _ResponsiveDeclarationBuilder();
-  final _ResponsiveDeclarationBuilder<TwFlexDisplay> _display =
-      _ResponsiveDeclarationBuilder();
-
   final _ResponsiveDeclarationBuilder<TwFlexAxis> _axis =
       _ResponsiveDeclarationBuilder();
   final _ResponsiveDeclarationBuilder<double> _gap =
@@ -654,16 +576,18 @@ final class TwLayoutPlanBuilder {
 
   final _ResponsiveDeclarationBuilder<double> _grow =
       _ResponsiveDeclarationBuilder();
-  final _ResponsiveDeclarationBuilder<double> _shrink =
-      _ResponsiveDeclarationBuilder();
   final _ResponsiveDeclarationBuilder<TwSelfAlignment> _selfAlignment =
       _ResponsiveDeclarationBuilder();
   final _ResponsiveDeclarationBuilder<TwFlexBehavior> _behavior =
       _ResponsiveDeclarationBuilder();
   final _InsetsDeclarationBuilder _margin = _InsetsDeclarationBuilder();
 
-  final _InsetsDeclarationBuilder _padding = _InsetsDeclarationBuilder();
-  final _InsetsDeclarationBuilder _border = _InsetsDeclarationBuilder();
+  final _InsetsDeclarationBuilder _padding = _InsetsDeclarationBuilder(
+    mergeInStyleOrder: true,
+  );
+  final _InsetsDeclarationBuilder _border = _InsetsDeclarationBuilder(
+    mergeInStyleOrder: true,
+  );
   final _LogicalInsetsDeclarationBuilder _iconMargin =
       _LogicalInsetsDeclarationBuilder();
   var _isFlexContainer = false;
@@ -682,8 +606,6 @@ final class TwLayoutPlanBuilder {
       .height => _height,
       .minWidth => _minWidth,
       .minHeight => _minHeight,
-      .maxWidth => _maxWidth,
-      .maxHeight => _maxHeight,
     };
     target.add(declaration.intent, minWidth: minWidth, order: order);
   }
@@ -695,9 +617,6 @@ final class TwLayoutPlanBuilder {
   ) {
     if (declaration.establishesContainer) _isFlexContainer = true;
     if (declaration.establishesBaseFlex) _hasBaseFlex = true;
-    if (declaration.display case final display?) {
-      _display.add(display, minWidth: minWidth, order: order);
-    }
     if (declaration.axis case final axis?) {
       _axis.add(axis, minWidth: minWidth, order: order);
     }
@@ -741,14 +660,6 @@ final class TwLayoutPlanBuilder {
         priority: declaration.growPriority,
       );
     }
-    if (declaration.shrink case final shrink?) {
-      _shrink.add(
-        shrink,
-        minWidth: minWidth,
-        order: order,
-        priority: declaration.shrinkPriority,
-      );
-    }
     if (declaration.selfAlignment case final alignment?) {
       _selfAlignment.add(alignment, minWidth: minWidth, order: order);
     }
@@ -766,6 +677,7 @@ final class TwLayoutPlanBuilder {
     TwLayoutInsetDeclaration declaration,
     double minWidth,
     int order,
+    int styleGroupOrder,
   ) {
     final target = switch (declaration.kind) {
       .margin => _margin,
@@ -777,6 +689,7 @@ final class TwLayoutPlanBuilder {
       sides: declaration.sides,
       minWidth: minWidth,
       order: order,
+      styleGroupOrder: styleGroupOrder,
     );
   }
 
@@ -793,7 +706,10 @@ final class TwLayoutPlanBuilder {
     );
   }
 
-  void add(TwLayoutUtilityInput input) {
+  /// [styleGroupOrder] follows the emitted Styler's base and variant merge
+  /// order. It applies to padding and borders; external margins retain their
+  /// widget-owned, mobile-first cascade.
+  void add(TwLayoutUtilityInput input, {int styleGroupOrder = 0}) {
     final order = _nextOrder++;
     final minWidth = input.breakpointMinWidth;
     if (input.dimension case final declaration?) {
@@ -806,16 +722,10 @@ final class TwLayoutPlanBuilder {
       _addFlexItem(declaration, minWidth, order);
     }
     if (input.inset case final declaration?) {
-      _addInset(declaration, minWidth, order);
+      _addInset(declaration, minWidth, order, styleGroupOrder);
     }
     if (input.iconLogicalMargin case final declaration?) {
       _addIconLogicalMargin(declaration, minWidth, order);
-    }
-  }
-
-  void addAll(Iterable<TwLayoutUtilityInput> inputs) {
-    for (final input in inputs) {
-      add(input);
     }
   }
 
@@ -823,7 +733,6 @@ final class TwLayoutPlanBuilder {
     final margins = _margin.build();
     final paddings = _padding.build();
     final borders = _border.build();
-    final zeroBasisInsets = _combineInsets(margins, paddings, borders);
 
     return TwCompiledLayoutPlan(
       dimensions: TwDimensionPlan(
@@ -831,13 +740,10 @@ final class TwLayoutPlanBuilder {
         height: _height.build(),
         minWidth: _minWidth.build(),
         minHeight: _minHeight.build(),
-        maxWidth: _maxWidth.build(),
-        maxHeight: _maxHeight.build(),
       ),
       flexContainer: TwFlexContainerPlan(
         isFlexContainer: _isFlexContainer,
         hasBaseFlex: _hasBaseFlex,
-        display: _display.build(),
         axis: _axis.build(),
         gap: _gap.build(),
         gapX: _gapX.build(),
@@ -848,13 +754,13 @@ final class TwLayoutPlanBuilder {
         basis: _basis.build(),
         explicitBasis: _explicitBasis.build(),
         grow: _grow.build(),
-        shrink: _shrink.build(),
         selfAlignment: _selfAlignment.build(),
         behavior: _behavior.build(),
       ),
       externalMargin: margins,
       iconLogicalMargin: _iconMargin.build(),
-      zeroBasisInsets: zeroBasisInsets,
+      padding: paddings,
+      border: borders,
     );
   }
 }
@@ -918,26 +824,32 @@ final class _ResponsiveDeclarationBuilder<T> {
 
 final class _InsetsDeclaration {
   final double value;
-
   final TwLayoutInsetSides sides;
   final double minWidth;
   final int order;
+  final int styleGroupOrder;
   const _InsetsDeclaration({
     required this.value,
     required this.sides,
     required this.minWidth,
     required this.order,
+    required this.styleGroupOrder,
   });
 }
 
 final class _InsetsDeclarationBuilder {
+  final bool mergeInStyleOrder;
+
   final _declarations = <_InsetsDeclaration>[];
+
+  _InsetsDeclarationBuilder({this.mergeInStyleOrder = false});
 
   void add(
     double value, {
     required TwLayoutInsetSides sides,
     required double minWidth,
     required int order,
+    required int styleGroupOrder,
   }) {
     _declarations.add(
       _InsetsDeclaration(
@@ -945,24 +857,30 @@ final class _InsetsDeclarationBuilder {
         sides: sides,
         minWidth: minWidth,
         order: order,
+        styleGroupOrder: styleGroupOrder,
       ),
     );
   }
 
   TwResponsiveValue<TwInsets> build() {
     if (_declarations.isEmpty) return const TwResponsiveValue.empty();
-    final byWidth = <double, List<_InsetsDeclaration>>{};
-    for (final declaration in _declarations) {
-      byWidth.putIfAbsent(declaration.minWidth, () => []).add(declaration);
-    }
+    final declarations = _declarations.toList()
+      ..sort((left, right) {
+        final group = mergeInStyleOrder
+            ? left.styleGroupOrder.compareTo(right.styleGroupOrder)
+            : left.minWidth.compareTo(right.minWidth);
 
-    var current = const TwInsets();
+        return group != 0 ? group : left.order.compareTo(right.order);
+      });
+    final widths = _declarations.map((entry) => entry.minWidth).toSet().toList()
+      ..sort();
     final entries = <TwResponsiveEntry<TwInsets>>[];
-    final widths = byWidth.keys.toList()..sort();
     for (final width in widths) {
-      final declarations = byWidth[width]!
-        ..sort((left, right) => left.order.compareTo(right.order));
+      var current = const TwInsets();
+      // Re-evaluate active declarations in merge order: a newly active
+      // breakpoint may precede another active Styler variant.
       for (final declaration in declarations) {
+        if (declaration.minWidth > width) continue;
         current = _applyInsets(current, declaration.value, declaration.sides);
       }
       entries.add(TwResponsiveEntry(minWidth: width, value: current));
@@ -1050,30 +968,4 @@ final class _LogicalInsetsDeclarationBuilder {
 
     return TwResponsiveValue(entries);
   }
-}
-
-TwResponsiveValue<TwZeroBasisInsets> _combineInsets(
-  TwResponsiveValue<TwInsets> margin,
-  TwResponsiveValue<TwInsets> padding,
-  TwResponsiveValue<TwInsets> border,
-) {
-  final widths = <double>{
-    for (final entry in margin.entries) entry.minWidth,
-    for (final entry in padding.entries) entry.minWidth,
-    for (final entry in border.entries) entry.minWidth,
-  }.toList()..sort();
-  if (widths.isEmpty) return const TwResponsiveValue.empty();
-
-  return TwResponsiveValue(
-    widths.map(
-      (width) => TwResponsiveEntry(
-        minWidth: width,
-        value: TwZeroBasisInsets(
-          margin: margin.select(width) ?? const TwInsets(),
-          padding: padding.select(width) ?? const TwInsets(),
-          border: border.select(width) ?? const TwInsets(),
-        ),
-      ),
-    ),
-  );
 }

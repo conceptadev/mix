@@ -5,6 +5,12 @@ import 'tw_compilation.dart';
 import 'tw_config.dart';
 import 'tw_types.dart';
 
+/// Compiles Tailwind classes for a Mix styler target.
+///
+/// Box and Flex stylers retain supported margin variants. Semantic widgets
+/// apply external margins outside the interaction area and diagnose unsupported
+/// margin variants separately. Text and icon compilation include external-margin
+/// diagnostics because those stylers cannot represent margins.
 class TwParser {
   final TwConfig config;
   final TwDiagnosticCallback? onDiagnostic;

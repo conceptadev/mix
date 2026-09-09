@@ -1,4 +1,6 @@
+import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mix_winds/src/translate/tw_translator.dart';
 import 'package:mix_winds/mix_winds.dart';
 import 'package:mix_winds/src/tw_layout_plan.dart';
 
@@ -13,6 +15,25 @@ TwCompiledLayoutPlan _iconPlan(String classes) =>
 
 void main() {
   group('responsive selection', () {
+    test('nested breakpoints require every minimum width', () {
+      for (final prefix in ['lg:md', 'md:lg']) {
+        final plan = _boxPlan('$prefix:w-16 $prefix:mb-4');
+
+        expect(plan.dimensions.width.select(800), isNull, reason: prefix);
+        expect(plan.externalMargin.select(800), isNull, reason: prefix);
+        expect(
+          plan.dimensions.width.select(1024),
+          const TwDimensionIntent.fixed(64),
+          reason: prefix,
+        );
+        expect(
+          plan.externalMargin.select(1024),
+          const TwInsets(bottom: 16),
+          reason: prefix,
+        );
+      }
+    });
+
     test('selects the greatest breakpoint not exceeding explicit width', () {
       final values = TwResponsiveValue<String>([
         const TwResponsiveEntry(minWidth: 1024, value: 'lg'),
@@ -67,14 +88,12 @@ void main() {
       expect(base.axis, TwFlexAxis.horizontal);
       expect(base.mainGap, 8);
       expect(base.crossGap, isNull);
-      expect(base.hasExplicitItems, isFalse);
       expect(base.implicitCrossAxisPolicy, TwImplicitCrossAxisPolicy.none);
 
       final md = plan.flexContainer.resolve(800);
       expect(md.axis, TwFlexAxis.vertical);
       expect(md.mainGap, 24);
       expect(md.crossGap, 16);
-      expect(md.hasExplicitItems, isTrue);
       expect(md.implicitCrossAxisPolicy, TwImplicitCrossAxisPolicy.none);
     });
 
@@ -114,7 +133,7 @@ void main() {
         final md = plan.flexItem.resolve(800);
         expect(md.basis, const TwFlexBasis.fixed(128));
         expect(md.grow, 0);
-        expect(md.shrink, 1);
+        expect(md.behavior, const TwFlexBehavior(flex: 0, fit: .loose));
         expect(md.zeroBasisGrow, isNull);
       }
     });
@@ -130,15 +149,151 @@ void main() {
   });
 
   group('zero-basis insets', () {
+    testWidgets('inline parent padding follows the emitted box groups', (
+      tester,
+    ) async {
+      const classes = 'md:mb-4 px-5 md:px-10 sm:px-2';
+      final compilation = TwTranslator(
+        config: TwConfig.standard(),
+      ).compileForWidget(classes, .inline);
+      final plan = compilation.parentLayoutPlan;
+      await tester.pumpWidget(
+        MediaQuery(
+          data: const MediaQueryData(size: Size(800, 600)),
+          child: Directionality(
+            textDirection: .ltr,
+            child: Builder(
+              builder: (context) {
+                final padding = compilation.boxStyler!
+                    .build(context)
+                    .spec
+                    .padding!;
+                expect(
+                  plan.padding.select(800)!.mainExtent(.horizontal),
+                  padding.horizontal,
+                );
+                return const SizedBox();
+              },
+            ),
+          ),
+        ),
+      );
+      expect(tester.takeException(), isNull);
+    });
+
+    testWidgets('dropped text margin cannot establish variant merge order', (
+      tester,
+    ) async {
+      // TextStylers do not emit padding. Use supported font sizes to exercise
+      // the text target's dropped-margin path and compare its emitted order.
+      const classes = 'md:mb-4 sm:text-sm md:text-lg';
+      final compilation = TwTranslator(
+        config: TwConfig.standard(),
+      ).compileForWidget(classes, .text);
+      final withoutMargin = TwParser().compileText('sm:text-sm md:text-lg');
+      await tester.pumpWidget(
+        MediaQuery(
+          data: const MediaQueryData(size: Size(800, 600)),
+          child: Directionality(
+            textDirection: .ltr,
+            child: Builder(
+              builder: (context) {
+                expect(
+                  compilation.textStyler!.build(context).spec,
+                  withoutMargin.styler.build(context).spec,
+                );
+                return const SizedBox();
+              },
+            ),
+          ),
+        ),
+      );
+      expect(
+        compilation.parentLayoutPlan.externalMargin.select(800),
+        const TwInsets(bottom: 16),
+      );
+      expect(compilation.diagnostics, isEmpty);
+      expect(tester.takeException(), isNull);
+    });
+
+    testWidgets('variant groups preserve equal flex content widths', (
+      tester,
+    ) async {
+      await tester.binding.setSurfaceSize(const Size(900, 600));
+      addTearDown(() => tester.binding.setSurfaceSize(null));
+      await tester.pumpWidget(
+        const MediaQuery(
+          data: MediaQueryData(size: Size(800, 600)),
+          child: Directionality(
+            textDirection: .ltr,
+            child: Div(
+              classNames: 'flex',
+              children: [
+                Div(
+                  classNames: 'flex-1 md:mb-4 px-5 md:px-10 sm:px-2',
+                  child: SizedBox(key: Key('first')),
+                ),
+                Div(
+                  classNames: 'flex-1',
+                  child: SizedBox(key: Key('second')),
+                ),
+              ],
+            ),
+          ),
+        ),
+      );
+      expect(tester.takeException(), isNull);
+      expect(
+        tester.getSize(find.byKey(const Key('first'))).width,
+        closeTo(tester.getSize(find.byKey(const Key('second'))).width, 0.01),
+      );
+    });
+
+    test('negative arbitrary margins preserve earlier positive margins', () {
+      final box = _boxPlan('mb-2 md:mb-[-4px]');
+      final icon = _iconPlan('me-2 md:me-[-4px]');
+
+      expect(box.externalMargin.select(800), const TwInsets(bottom: 8));
+      expect(
+        box.zeroBasisOuterExtent(.vertical, marginWidth: 800, styleWidth: 800),
+        8,
+      );
+      expect(icon.iconLogicalMargin.select(800), const TwLogicalInsets(end: 8));
+    });
+
     test('cascades responsive margin, padding, and border sides', () {
       final plan = _boxPlan(
         'm-2 p-2 border md:mx-4 md:pt-4 md:border-x-2 lg:ml-8',
       );
 
-      expect(plan.zeroBasisOuterExtent(500, .horizontal), 34);
-      expect(plan.zeroBasisOuterExtent(800, .horizontal), 52);
-      expect(plan.zeroBasisOuterExtent(800, .vertical), 42);
-      expect(plan.zeroBasisOuterExtent(1200, .horizontal), 68);
+      expect(
+        plan.zeroBasisOuterExtent(
+          .horizontal,
+          marginWidth: 500,
+          styleWidth: 500,
+        ),
+        34,
+      );
+      expect(
+        plan.zeroBasisOuterExtent(
+          .horizontal,
+          marginWidth: 800,
+          styleWidth: 800,
+        ),
+        52,
+      );
+      expect(
+        plan.zeroBasisOuterExtent(.vertical, marginWidth: 800, styleWidth: 800),
+        42,
+      );
+      expect(
+        plan.zeroBasisOuterExtent(
+          .horizontal,
+          marginWidth: 1200,
+          styleWidth: 1200,
+        ),
+        68,
+      );
       expect(
         plan.externalMargin.select(1200),
         const TwInsets(left: 32, top: 8, right: 16, bottom: 8),
@@ -148,9 +303,12 @@ void main() {
     test('keeps style-only padding and border auxiliary to portability', () {
       final plan = _boxPlan('p-4 border-2');
 
-      expect(plan.zeroBasisInsets.isEmpty, isFalse);
+      expect(plan.padding.isEmpty, isFalse);
       expect(plan.isEmpty, isTrue);
-      expect(plan.zeroBasisOuterExtent(0, .horizontal), 36);
+      expect(
+        plan.zeroBasisOuterExtent(.horizontal, marginWidth: 0, styleWidth: 0),
+        36,
+      );
     });
 
     test('tracks icon logical and box physical margins independently', () {

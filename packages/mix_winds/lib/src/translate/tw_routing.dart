@@ -291,10 +291,11 @@ bool isWidgetLayerUtility(TailwindUtility utility) {
 
   if (root == 'gap-x' || root == 'gap-y') return true;
 
-  if (sizingRoots.contains(root)) {
-    final valueKey = tailwindValueKey(tailwindUtilityValue(utility));
+  final sizing = sizingUtilityOf(utility);
+  if (sizing != null) {
+    final valueKey = sizing.key;
     if (valueKey == 'auto') {
-      return root != 'w' && root != 'h';
+      return sizing.root != 'w' && sizing.root != 'h';
     }
 
     return valueKey == 'full' ||
@@ -333,6 +334,26 @@ bool isFlexContainerCandidate(TailwindCandidate candidate) {
       root == 'gap' ||
       root == 'gap-x' ||
       root == 'gap-y';
+}
+
+/// Normalizes static and functional sizing candidates for shared routing.
+({String root, String? key})? sizingUtilityOf(TailwindUtility utility) {
+  if (utility is TailwindStaticUtility) {
+    return switch (utility.root) {
+      'w-auto' => (root: 'w', key: 'auto'),
+      'h-auto' => (root: 'h', key: 'auto'),
+      'w-screen' => (root: 'w', key: 'screen'),
+      'h-screen' => (root: 'h', key: 'screen'),
+      'min-w-screen' => (root: 'min-w', key: 'screen'),
+      'min-h-screen' => (root: 'min-h', key: 'screen'),
+      _ => null,
+    };
+  }
+  final root = tailwindUtilityRoot(utility);
+
+  return sizingRoots.contains(root)
+      ? (root: root, key: tailwindValueKey(tailwindUtilityValue(utility)))
+      : null;
 }
 
 String tailwindUtilityRoot(TailwindUtility utility) {

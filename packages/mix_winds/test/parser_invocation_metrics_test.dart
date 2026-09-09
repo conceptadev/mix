@@ -161,4 +161,38 @@ void main() {
     ]);
     expect(legacy, ['unknown-child-utility']);
   });
+
+  testWidgets('prepared children recompile when the inherited config changes', (
+    tester,
+  ) async {
+    final config = ValueNotifier(TwConfig.standard());
+    addTearDown(config.dispose);
+    const childKey = ValueKey('configured-child');
+    await tester.pumpWidget(
+      Directionality(
+        textDirection: .ltr,
+        child: ValueListenableBuilder<TwConfig>(
+          valueListenable: config,
+          builder: (context, value, child) =>
+              TwConfigProvider(config: value, child: child!),
+          child: const Div(
+            classNames: 'flex',
+            children: [Div(key: childKey, classNames: 'w-4 h-4')],
+          ),
+        ),
+      ),
+    );
+    expect(tester.getSize(find.byKey(childKey)), const Size(16, 16));
+
+    final count = await _countCandidateParsesAsync(() async {
+      config.value = config.value.copyWith(
+        space: {...config.value.space, '4': 32},
+      );
+      await tester.pump();
+    });
+
+    expect(tester.getSize(find.byKey(childKey)), const Size(32, 32));
+    expect(count, 3);
+    expect(tester.takeException(), isNull);
+  });
 }

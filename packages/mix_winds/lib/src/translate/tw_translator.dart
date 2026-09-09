@@ -44,6 +44,7 @@ final class _FailedCandidate {
 final class _CandidateProgram {
   final List<_CompiledCandidate> candidates;
   final List<_FailedCandidate> failures;
+  final styleGroupPaths = <TwTarget, List<_VariantPath>>{};
   _CandidateProgram({
     required Iterable<_CompiledCandidate> candidates,
     required Iterable<_FailedCandidate> failures,
@@ -93,11 +94,10 @@ enum TwWidgetCompilationMode { boxOrFlex, inline, text, icon }
 
 /// Source-internal, candidate-free handoff from compilation to widgets.
 ///
-/// Only the stylers required by [mode] are populated. This keeps parsed
-/// candidates private while allowing target inference and inline multi-output
-/// compilation to share one candidate program.
+/// Only the stylers required by the requested compilation mode are populated.
+/// This keeps parsed candidates private while allowing target inference and
+/// inline multi-output compilation to share one candidate program.
 final class TwWidgetCompilation {
-  final TwWidgetCompilationMode mode;
   final BoxStyler? boxStyler;
   final FlexBoxStyler? flexStyler;
   final TextStyler? textStyler;
@@ -109,7 +109,6 @@ final class TwWidgetCompilation {
   final List<TwDiagnostic> diagnostics;
 
   TwWidgetCompilation({
-    required this.mode,
     required this.boxStyler,
     required this.flexStyler,
     required this.textStyler,
@@ -127,6 +126,9 @@ final class TwTranslator {
 
   final TwDiagnosticCallback? onDiagnostic;
   final void Function(String token)? legacyOnUnsupported;
+
+  /// Applies semantic widget margin diagnostics to box and flex targets.
+  final bool _usesExternalMargins;
   static const _parser = TailwindCandidateParser(
     registry: defaultTailwindParserRegistry,
   );
@@ -141,7 +143,11 @@ final class TwTranslator {
     required this.config,
     this.onDiagnostic,
     this.legacyOnUnsupported,
-  });
+  }) : _usesExternalMargins = false;
+
+  const TwTranslator._forWidget({required this.config, this.onDiagnostic})
+    : legacyOnUnsupported = null,
+      _usesExternalMargins = true;
 
   void _emitDiagnostic(TwDiagnostic diagnostic) {
     onDiagnostic?.call(diagnostic);
@@ -313,7 +319,7 @@ final class TwTranslator {
     void Function(_GroupContext context)? afterBase,
   }) {
     final groups = _buildGroups(program, target);
-    final baseContext = groups[_VariantPath.base] ?? _GroupContext(target);
+    final baseContext = groups[_VariantPath.base] ?? _GroupContext();
     afterBase?.call(baseContext);
 
     final hasVariantTransform = groups.entries.any(
@@ -352,7 +358,7 @@ final class TwTranslator {
     _reportParseFailures(program);
     final groups = <_VariantPath, _GroupContext>{};
     _GroupContext groupFor(_VariantPath path) {
-      return groups.putIfAbsent(path, () => _GroupContext(target));
+      return groups.putIfAbsent(path, _GroupContext.new);
     }
 
     for (final compiled in program.candidates) {
@@ -360,6 +366,10 @@ final class TwTranslator {
           compiled;
       if (_isLayoutOwnedCandidate(compiled, target)) continue;
       if (_reportBlockingRoute(token, route)) continue;
+      if (_usesExternalMargins || target == .text) {
+        final unsupportedMargin = _reportExternalMarginVariant(candidate);
+        if (unsupportedMargin && target == .text) continue;
+      }
       if (route.kind == .widgetLayer) {
         if (!_isSupportedWidgetLayerUtility(candidate.utility)) {
           _reportUnsupported(
@@ -422,6 +432,11 @@ final class TwTranslator {
         );
       }
     }
+
+    program.styleGroupPaths[target] = List.unmodifiable([
+      _VariantPath.base,
+      ...groups.keys.where((path) => path != .base),
+    ]);
 
     return groups;
   }
@@ -545,7 +560,7 @@ final class TwTranslator {
   ) {
     if (_applySpacing(group, root, value, negative: negative)) return true;
     if (_applySizing(group, root, value, negative: negative)) return true;
-    if (_applyBorder(group, raw, root, value, modifier)) return true;
+    if (_applyBorder(group.border, raw, root, value, modifier)) return true;
     if (_applyRadius(group, root, value)) return true;
     if (_applyTransform(group.transform, root, value, negative)) return true;
 
@@ -863,7 +878,7 @@ final class TwTranslator {
   }
 
   bool _applyBorder(
-    _GroupContext group,
+    BorderAccum border,
     String raw,
     String root,
     TailwindValue? value,
@@ -875,7 +890,7 @@ final class TwTranslator {
     final width = config.borderWidths[key] ?? (key.isEmpty ? 1.0 : null);
 
     if (color != null && width == null) {
-      group.border.setColor(color, root);
+      border.setColor(color, root);
 
       return true;
     }
@@ -883,19 +898,19 @@ final class TwTranslator {
 
     switch (root) {
       case 'border':
-        group.border.setAll(width);
+        border.setAll(width);
       case 'border-t':
-        group.border.topWidth = width;
+        border.topWidth = width;
       case 'border-r':
-        group.border.rightWidth = width;
+        border.rightWidth = width;
       case 'border-b':
-        group.border.bottomWidth = width;
+        border.bottomWidth = width;
       case 'border-l':
-        group.border.leftWidth = width;
+        border.leftWidth = width;
       case 'border-x':
-        group.border.setHorizontal(width);
+        border.setHorizontal(width);
       case 'border-y':
-        group.border.setVertical(width);
+        border.setVertical(width);
       default:
         return raw.startsWith('border-') && color != null;
     }
@@ -1099,11 +1114,12 @@ final class TwTranslator {
           _spaceLengthForUtility(utility) != null;
     }
 
-    if (sizingRoots.contains(root)) {
-      final key = tailwindValueKey(tailwindUtilityValue(utility));
+    final sizing = sizingUtilityOf(utility);
+    if (sizing != null) {
+      final key = sizing.key;
       final isFraction = key != null && parseFractionToken(key) != null;
 
-      return switch (root) {
+      return switch (sizing.root) {
         'w' || 'h' => key == 'full' || key == 'screen' || isFraction,
         'min-w' || 'min-h' => key == 'screen',
         _ => false,
@@ -1145,6 +1161,28 @@ final class TwTranslator {
     return true;
   }
 
+  bool _reportExternalMarginVariant(
+    TailwindCandidate candidate, {
+    bool logical = false,
+  }) {
+    if (_hasOnlyBreakpointVariants(candidate.variants)) return false;
+    final utility = candidate.utility;
+    final hasMargin = logical
+        ? _layoutLogicalMargin(utility) != null
+        : _layoutInset(utility)?.kind == .margin;
+    if (!hasMargin) return false;
+
+    _reportUnsupported(
+      candidate.raw,
+      code: .widgetLayerVariantUnsupported,
+      reason: 'External margin only supports configured viewport breakpoints.',
+      workaround:
+          'Use a base margin, a viewport breakpoint, or padding on a wrapping Div.',
+    );
+
+    return true;
+  }
+
   bool _isRootLayoutWidgetUtility(TailwindUtility utility) {
     final raw = utility.raw;
     final root = tailwindUtilityRoot(utility);
@@ -1163,8 +1201,9 @@ final class TwTranslator {
         root == 'gap-y') {
       return true;
     }
-    if (sizingRoots.contains(root)) {
-      final valueKey = tailwindValueKey(tailwindUtilityValue(utility));
+    final sizing = sizingUtilityOf(utility);
+    if (sizing != null) {
+      final valueKey = sizing.key;
 
       return valueKey == 'full' ||
           valueKey == 'screen' ||
@@ -1457,6 +1496,16 @@ final class TwTranslator {
       if (compiled.layoutInput?.iconLogicalMargin != null) {
         continue;
       }
+      // Logical margins are an icon adaptation even when their roots are
+      // absent from the parser registry. Keep blocking variant diagnostics.
+      final canApplyLogicalMargin =
+          route.kind != .ignored &&
+          (route.kind != .unsupported ||
+              route.diagnosticCode == .unsupportedUtility);
+      if (canApplyLogicalMargin &&
+          _reportExternalMarginVariant(candidate, logical: true)) {
+        continue;
+      }
       if (_reportBlockingRoute(token, route)) continue;
       if (route.kind == .widgetLayer &&
           _isAnimationUtility(candidate.utility)) {
@@ -1538,23 +1587,23 @@ final class TwTranslator {
         root == 'delay';
   }
 
-  bool _programWantsFlex(_CandidateProgram program) {
+  bool _programHasRoutableCandidate(
+    _CandidateProgram program,
+    bool Function(TailwindCandidate candidate) matches,
+  ) {
     return program.candidates.any(
       (compiled) =>
           compiled.route.kind != .ignored &&
           compiled.route.kind != .unsupported &&
-          isFlexContainerCandidate(compiled.candidate),
+          matches(compiled.candidate),
     );
   }
 
-  bool _programHasBoxUtilities(_CandidateProgram program) {
-    return program.candidates.any(
-      (compiled) =>
-          compiled.route.kind != .ignored &&
-          compiled.route.kind != .unsupported &&
-          isBoxStylingCandidate(compiled.candidate),
-    );
-  }
+  bool _programWantsFlex(_CandidateProgram program) =>
+      _programHasRoutableCandidate(program, isFlexContainerCandidate);
+
+  bool _programHasBoxUtilities(_CandidateProgram program) =>
+      _programHasRoutableCandidate(program, isBoxStylingCandidate);
 
   TwLayoutUtilityInput? _layoutInput(
     TailwindCandidate candidate,
@@ -1569,78 +1618,59 @@ final class TwTranslator {
       return null;
     }
 
-    var minWidth = 0.0;
-    for (final variant in candidate.variants) {
-      if (variant is! TailwindStaticVariant) return null;
-      final breakpoint = config.breakpoints[variant.root];
-      if (breakpoint == null) return null;
-      minWidth = breakpoint;
+    final minWidth = _layoutBreakpointMinWidth(candidate.variants);
+    if (minWidth == null) return null;
+
+    final dimension = _layoutDimension(utility);
+    final flexContainer = _layoutFlexContainer(
+      candidate,
+      establishesBaseFlex: candidate.variants.isEmpty,
+    );
+    final flexItem = _layoutFlexItem(utility);
+    final inset = _layoutInset(utility);
+    if (dimension == null &&
+        flexContainer == null &&
+        flexItem == null &&
+        inset == null &&
+        logicalMargin == null) {
+      return null;
     }
 
     return TwLayoutUtilityInput(
       breakpointMinWidth: minWidth,
-      dimension: _layoutDimension(utility),
-      flexContainer: _layoutFlexContainer(
-        candidate,
-        establishesBaseFlex: candidate.variants.isEmpty,
-      ),
-      flexItem: _layoutFlexItem(utility),
-      inset: _layoutInset(utility),
+      dimension: dimension,
+      flexContainer: flexContainer,
+      flexItem: flexItem,
+      inset: inset,
       iconLogicalMargin: logicalMargin,
     );
   }
 
-  TwLayoutDimensionDeclaration? _layoutDimension(TailwindUtility utility) {
-    final raw = utility.raw;
-    final root = tailwindUtilityRoot(utility);
-    if (tailwindUtilityNegative(utility)) return null;
+  double? _layoutBreakpointMinWidth(List<TailwindVariant> variants) {
+    var minWidth = 0.0;
+    for (final variant in variants) {
+      if (variant is! TailwindStaticVariant) return null;
+      final breakpoint = config.breakpoints[variant.root];
+      if (breakpoint == null) return null;
+      if (breakpoint > minWidth) minWidth = breakpoint;
+    }
 
-    final staticDimension = switch (raw) {
-      'w-auto' => (property: TwLayoutDimensionProperty.width, key: 'auto'),
-      'h-auto' => (property: TwLayoutDimensionProperty.height, key: 'auto'),
-      'min-w-auto' => (
-        property: TwLayoutDimensionProperty.minWidth,
-        key: 'auto',
-      ),
-      'min-h-auto' => (
-        property: TwLayoutDimensionProperty.minHeight,
-        key: 'auto',
-      ),
-      'w-screen' => (property: TwLayoutDimensionProperty.width, key: 'screen'),
-      'h-screen' => (property: TwLayoutDimensionProperty.height, key: 'screen'),
-      'min-w-screen' => (
-        property: TwLayoutDimensionProperty.minWidth,
-        key: 'screen',
-      ),
-      'min-h-screen' => (
-        property: TwLayoutDimensionProperty.minHeight,
-        key: 'screen',
-      ),
-      'max-w-screen' => (
-        property: TwLayoutDimensionProperty.maxWidth,
-        key: 'screen',
-      ),
-      'max-h-screen' => (
-        property: TwLayoutDimensionProperty.maxHeight,
-        key: 'screen',
-      ),
+    return minWidth;
+  }
+
+  TwLayoutDimensionDeclaration? _layoutDimension(TailwindUtility utility) {
+    final sizing = sizingUtilityOf(utility);
+    if (sizing == null || tailwindUtilityNegative(utility)) return null;
+    final property = switch (sizing.root) {
+      'w' => TwLayoutDimensionProperty.width,
+      'h' => TwLayoutDimensionProperty.height,
+      'min-w' => TwLayoutDimensionProperty.minWidth,
+      'min-h' => TwLayoutDimensionProperty.minHeight,
       _ => null,
     };
-    final property =
-        staticDimension?.property ??
-        switch (root) {
-          'w' => .width,
-          'h' => .height,
-          'min-w' => .minWidth,
-          'min-h' => .minHeight,
-          'max-w' => .maxWidth,
-          'max-h' => .maxHeight,
-          _ => null,
-        };
     if (property == null) return null;
 
-    final value = tailwindUtilityValue(utility);
-    final key = staticDimension?.key ?? tailwindValueKey(value);
+    final key = sizing.key;
     final TwDimensionIntent? intent;
     if (key == 'auto') {
       intent = const TwDimensionIntent.auto();
@@ -1650,7 +1680,7 @@ final class TwTranslator {
       intent = const TwDimensionIntent.screen();
     } else {
       final fraction = key == null ? null : parseFractionToken(key);
-      final pixels = _sizingLength(root, value);
+      final pixels = _sizingLength(sizing.root, tailwindUtilityValue(utility));
       intent = fraction != null
           ? TwDimensionIntent.fraction(fraction)
           : pixels != null
@@ -1676,11 +1706,6 @@ final class TwTranslator {
         raw == 'inline-flex' ||
         raw == 'flex-row' ||
         raw == 'flex-col';
-    final display = switch (raw) {
-      'flex' => TwFlexDisplay.flex,
-      'inline-flex' => TwFlexDisplay.inlineFlex,
-      _ => null,
-    };
     final axis = switch (raw) {
       'flex' || 'inline-flex' || 'flex-row' => TwFlexAxis.horizontal,
       'flex-col' => TwFlexAxis.vertical,
@@ -1698,7 +1723,6 @@ final class TwTranslator {
 
     return TwLayoutFlexContainerDeclaration(
       establishesBaseFlex: establishesBaseFlex && isAxisUtility,
-      display: display,
       axis: axis,
       gapAxis: gap == null ? null : gapAxis,
       gap: gap,
@@ -1713,28 +1737,24 @@ final class TwTranslator {
         basis: .zero,
         explicitBasis: false,
         grow: 1,
-        shrink: 1,
         behavior: TwFlexBehavior(flex: 1, fit: .tight),
       ),
       'flex-auto' => const TwLayoutFlexItemDeclaration(
         basis: .auto,
         explicitBasis: false,
         grow: 1,
-        shrink: 1,
         behavior: TwFlexBehavior(flex: 1, fit: .loose),
       ),
       'flex-initial' => const TwLayoutFlexItemDeclaration(
         basis: .auto,
         explicitBasis: false,
         grow: 0,
-        shrink: 1,
         behavior: TwFlexBehavior(flex: 0, fit: .loose),
       ),
       'flex-none' => const TwLayoutFlexItemDeclaration(
         basis: .auto,
         explicitBasis: false,
         grow: 0,
-        shrink: 0,
         behavior: TwFlexBehavior(flex: 0, fit: .loose),
       ),
       _ => null,
@@ -1780,8 +1800,6 @@ final class TwTranslator {
     };
     if (shrink != null) {
       return TwLayoutFlexItemDeclaration(
-        shrink: shrink,
-        shrinkPriority: 1,
         behavior: TwFlexBehavior(
           flex: shrink > 0 ? 1 : 0,
           fit: shrink > 0 ? .tight : .loose,
@@ -1807,35 +1825,20 @@ final class TwTranslator {
     final spacingSides = _layoutSpacingSides(root);
     if (spacingSides != null) {
       final value = _spaceLengthForUtility(utility);
-      if (value == null) return null;
+      final kind = root.startsWith('m')
+          ? TwLayoutInsetKind.margin
+          : TwLayoutInsetKind.padding;
+      if (value == null || (kind == .margin && value < 0)) return null;
 
       return TwLayoutInsetDeclaration(
-        kind: root.startsWith('m') ? .margin : .padding,
+        kind: kind,
         sides: spacingSides,
         value: value,
       );
     }
 
-    final borderSides = switch (root) {
-      'border' => TwLayoutInsetSides.all,
-      'border-x' => TwLayoutInsetSides.horizontal,
-      'border-y' => TwLayoutInsetSides.vertical,
-      'border-t' => TwLayoutInsetSides.top,
-      'border-r' => TwLayoutInsetSides.right,
-      'border-b' => TwLayoutInsetSides.bottom,
-      'border-l' => TwLayoutInsetSides.left,
-      _ => null,
-    };
-    if (borderSides == null) return null;
-    final key = tailwindValueKey(tailwindUtilityValue(utility)) ?? '';
-    final width = config.borderWidths[key] ?? (key.isEmpty ? 1.0 : null);
-    if (width == null) return null;
-
-    return TwLayoutInsetDeclaration(
-      kind: .border,
-      sides: borderSides,
-      value: width,
-    );
+    // Border widths are collected per style group after base inheritance.
+    return null;
   }
 
   TwLayoutLogicalInsetDeclaration? _layoutLogicalMargin(
@@ -1852,7 +1855,7 @@ final class TwTranslator {
     if (sides == null) return null;
     final value = _spaceLengthForUtility(utility);
 
-    return value == null
+    return value == null || value < 0
         ? null
         : TwLayoutLogicalInsetDeclaration(sides: sides, value: value);
   }
@@ -1868,20 +1871,100 @@ final class TwTranslator {
     _ => null,
   };
 
-  TwCompiledLayoutPlan _buildLayoutPlan(_CandidateProgram program) {
+  TwCompiledLayoutPlan _buildLayoutPlan(
+    _CandidateProgram program,
+    TwTarget? target,
+  ) {
+    // Icons have no variant style groups.
+    final paths = target == null
+        ? const [_VariantPath.base]
+        : program.styleGroupPaths[target]!;
+    final styleGroups = {
+      for (var index = 0; index < paths.length; index++) paths[index]: index,
+    };
     final builder = TwLayoutPlanBuilder();
     for (final compiled in program.candidates) {
-      if (compiled.layoutInput case final input?) builder.add(input);
+      if (compiled.layoutInput case final input?) {
+        builder.add(
+          input,
+          styleGroupOrder: styleGroups[compiled.variantPath] ?? 0,
+        );
+      }
     }
 
+    _addLayoutBorders(builder, program, styleGroups);
+
     return builder.build();
+  }
+
+  void _addLayoutBorders(
+    TwLayoutPlanBuilder builder,
+    _CandidateProgram program,
+    Map<_VariantPath, int> styleGroups,
+  ) {
+    final borders = <_VariantPath, (BorderAccum, double)>{};
+    for (final compiled in program.candidates) {
+      final utility = compiled.candidate.utility;
+      final root = tailwindUtilityRoot(utility);
+      final path = compiled.variantPath;
+      if (compiled.route.kind != .style ||
+          path == null ||
+          !styleGroups.containsKey(path) ||
+          !root.startsWith('border')) {
+        continue;
+      }
+      final minWidth = _layoutBreakpointMinWidth(compiled.candidate.variants);
+      if (minWidth == null) continue;
+      final (border, _) = borders.putIfAbsent(
+        path,
+        () => (BorderAccum(), minWidth),
+      );
+      _applyBorder(
+        border,
+        utility.raw,
+        root,
+        tailwindUtilityValue(utility),
+        tailwindUtilityModifier(utility),
+      );
+    }
+
+    final base = borders[_VariantPath.base]?.$1;
+    for (final entry in borders.entries) {
+      final (border, minWidth) = entry.value;
+      if (!border.hasStructure) continue;
+      if (entry.key != .base && base != null) {
+        border.inheritUnsetFrom(base);
+      }
+      // Mirror BorderAccum.toMix: a colored side without an explicit or
+      // inherited width has zero width. Unspecified sides remain absent.
+      for (final (side, width, color) in [
+        (TwLayoutInsetSides.left, border.leftWidth, border.leftColor),
+        (TwLayoutInsetSides.top, border.topWidth, border.topColor),
+        (TwLayoutInsetSides.right, border.rightWidth, border.rightColor),
+        (TwLayoutInsetSides.bottom, border.bottomWidth, border.bottomColor),
+      ]) {
+        if (width == null && color == null) continue;
+        builder.add(
+          TwLayoutUtilityInput(
+            breakpointMinWidth: minWidth,
+            inset: TwLayoutInsetDeclaration(
+              kind: .border,
+              sides: side,
+              value: width ?? 0,
+            ),
+          ),
+          styleGroupOrder: styleGroups[entry.key]!,
+        );
+      }
+    }
   }
 
   TwCompiledLayoutPlan _boxLayoutPlan(TwCompiledLayoutPlan plan) => .new(
     dimensions: plan.dimensions,
     flexItem: plan.flexItem,
     externalMargin: plan.externalMargin,
-    zeroBasisInsets: plan.zeroBasisInsets,
+    padding: plan.padding,
+    border: plan.border,
   );
 
   TwCompiledLayoutPlan _flexLayoutPlan(TwCompiledLayoutPlan plan) => .new(
@@ -1889,33 +1972,26 @@ final class TwTranslator {
     flexContainer: plan.flexContainer.asFlexTarget(),
     flexItem: plan.flexItem,
     externalMargin: plan.externalMargin,
-    zeroBasisInsets: plan.zeroBasisInsets,
+    padding: plan.padding,
+    border: plan.border,
   );
 
-  TwCompiledLayoutPlan _inlineLayoutPlan(TwCompiledLayoutPlan plan) =>
-      .new(externalMargin: plan.externalMargin);
-
-  TwCompiledLayoutPlan _textLayoutPlan(TwCompiledLayoutPlan plan) =>
+  TwCompiledLayoutPlan _externalMarginLayoutPlan(TwCompiledLayoutPlan plan) =>
       .new(externalMargin: plan.externalMargin);
 
   TwCompiledLayoutPlan _iconLayoutPlan(TwCompiledLayoutPlan plan) =>
       .new(iconLogicalMargin: plan.iconLogicalMargin);
 
-  CurveAnimationConfig? _parseAnimationProgram(
-    _CandidateProgram program, {
-    required bool reportSharedDiagnostics,
-  }) {
+  CurveAnimationConfig? _parseAnimationProgram(_CandidateProgram program) {
     var hasTransition = false;
     var hasTransitionNone = false;
     var duration = const Duration(milliseconds: 150);
     Curve curve = Curves.easeOut;
     var delay = Duration.zero;
 
-    if (reportSharedDiagnostics) _reportParseFailures(program);
     for (final compiled in program.candidates) {
       final _CompiledCandidate(:token, :candidate, :route) = compiled;
       if (route.kind == .ignored || route.kind == .unsupported) {
-        if (reportSharedDiagnostics) _reportBlockingRoute(token, route);
         continue;
       }
 
@@ -1970,10 +2046,7 @@ final class TwTranslator {
     final collector = _DiagnosticCollector();
     final worker = TwTranslator(config: config, onDiagnostic: collector.add);
     final artifacts = build(worker, program);
-    final animation = worker._parseAnimationProgram(
-      program,
-      reportSharedDiagnostics: false,
-    );
+    final animation = worker._parseAnimationProgram(program);
     final styler = animation == null
         ? artifacts.styler
         : attachAnimation(artifacts.styler, animation);
@@ -1990,10 +2063,11 @@ final class TwTranslator {
   TwCompilation<BoxStyler> compileBox(String classNames) => _compile<BoxStyler>(
     classNames,
     build: (worker, program) {
-      final plan = worker._buildLayoutPlan(program);
+      final styler = worker._translateBoxProgram(program);
+      final plan = worker._buildLayoutPlan(program, .box);
 
       return _CompilationArtifacts(
-        styler: worker._translateBoxProgram(program),
+        styler: styler,
         layoutPlan: worker._boxLayoutPlan(plan),
       );
     },
@@ -2004,10 +2078,11 @@ final class TwTranslator {
       _compile<FlexBoxStyler>(
         classNames,
         build: (worker, program) {
-          final plan = worker._buildLayoutPlan(program);
+          final styler = worker._translateFlexProgram(program);
+          final plan = worker._buildLayoutPlan(program, .flexBox);
 
           return _CompilationArtifacts(
-            styler: worker._translateFlexProgram(program),
+            styler: styler,
             layoutPlan: worker._flexLayoutPlan(plan),
           );
         },
@@ -2018,11 +2093,12 @@ final class TwTranslator {
       _compile<TextStyler>(
         classNames,
         build: (worker, program) {
-          final plan = worker._buildLayoutPlan(program);
+          final styler = worker._translateTextProgram(program);
+          final plan = worker._buildLayoutPlan(program, .text);
 
           return _CompilationArtifacts(
-            styler: worker._translateTextProgram(program),
-            layoutPlan: worker._textLayoutPlan(plan),
+            styler: styler,
+            layoutPlan: worker._externalMarginLayoutPlan(plan),
           );
         },
         attachAnimation: (styler, animation) => styler.animate(animation),
@@ -2032,10 +2108,11 @@ final class TwTranslator {
       _compile<IconStyler>(
         classNames,
         build: (worker, program) {
-          final plan = worker._buildLayoutPlan(program);
+          final styler = worker._translateIconProgram(program);
+          final plan = worker._buildLayoutPlan(program, null);
 
           return _CompilationArtifacts(
-            styler: worker._translateIconProgram(program),
+            styler: styler,
             layoutPlan: worker._iconLayoutPlan(plan),
           );
         },
@@ -2056,14 +2133,16 @@ final class TwTranslator {
     final inferredFlex = _programWantsFlex(program);
     final wantsFlex = mode == .boxOrFlex ? (forceFlex ?? inferredFlex) : false;
     final hasBoxUtilities = _programHasBoxUtilities(program);
-    final fullLayoutPlan = _buildLayoutPlan(program);
     final collector = _DiagnosticCollector();
     final targetCollectors = <_DiagnosticCollector>[];
     TwTranslator workerForTarget() {
       final targetCollector = _DiagnosticCollector();
       targetCollectors.add(targetCollector);
 
-      return TwTranslator(config: config, onDiagnostic: targetCollector.add);
+      return TwTranslator._forWidget(
+        config: config,
+        onDiagnostic: targetCollector.add,
+      );
     }
 
     BoxStyler? boxStyler;
@@ -2089,6 +2168,14 @@ final class TwTranslator {
         iconStyler = workerForTarget()._translateIconProgram(program);
     }
 
+    final layoutTarget = switch (mode) {
+      .boxOrFlex => wantsFlex ? TwTarget.flexBox : TwTarget.box,
+      .inline => hasBoxUtilities ? TwTarget.box : TwTarget.text,
+      .text => TwTarget.text,
+      .icon => null,
+    };
+    final fullLayoutPlan = _buildLayoutPlan(program, layoutTarget);
+
     final firstTargetCollector = targetCollectors.first;
     if (targetCollectors.length == 1) {
       collector.addAll(firstTargetCollector.diagnostics);
@@ -2106,10 +2193,7 @@ final class TwTranslator {
       config: config,
       onDiagnostic: collector.add,
     );
-    final animation = animationWorker._parseAnimationProgram(
-      program,
-      reportSharedDiagnostics: false,
-    );
+    final animation = animationWorker._parseAnimationProgram(program);
     if (animation != null) {
       boxStyler = boxStyler?.animate(animation);
       flexStyler = flexStyler?.animate(animation);
@@ -2121,12 +2205,10 @@ final class TwTranslator {
         wantsFlex
             ? _flexLayoutPlan(fullLayoutPlan)
             : _boxLayoutPlan(fullLayoutPlan),
-      .inline => _inlineLayoutPlan(fullLayoutPlan),
-      .text => _textLayoutPlan(fullLayoutPlan),
+      .inline || .text => _externalMarginLayoutPlan(fullLayoutPlan),
       .icon => _iconLayoutPlan(fullLayoutPlan),
     };
     final compilation = TwWidgetCompilation(
-      mode: mode,
       boxStyler: boxStyler,
       flexStyler: flexStyler,
       textStyler: textStyler,
@@ -2141,18 +2223,6 @@ final class TwTranslator {
 
     return compilation;
   }
-
-  BoxStyler translateBox(String classNames) =>
-      _translateBoxProgram(_compileProgram(splitTailwindTokens(classNames)));
-
-  FlexBoxStyler translateFlex(String classNames) =>
-      _translateFlexProgram(_compileProgram(splitTailwindTokens(classNames)));
-
-  TextStyler translateText(String classNames) =>
-      _translateTextProgram(_compileProgram(splitTailwindTokens(classNames)));
-
-  IconStyler translateIcon(String classNames) =>
-      _translateIconProgram(_compileProgram(splitTailwindTokens(classNames)));
 }
 
 const _easeTokens = {
@@ -2163,8 +2233,6 @@ const _easeTokens = {
 };
 
 final class _GroupContext {
-  final TwTarget target;
-
   final padding = _EdgeAccum();
   final margin = _EdgeAccum();
   final constraints = _ConstraintsAccum();
@@ -2191,7 +2259,6 @@ final class _GroupContext {
   bool? softWrap;
   bool hasBaseFlex = false;
   int? _defaultTextStyleInsertIndex;
-  _GroupContext(this.target);
 
   BoxDecorationMix? _decorationMix(TwConfig config) {
     final gradientMix = gradient.toGradientMix(config.gradientStrategy);

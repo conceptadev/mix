@@ -11,6 +11,18 @@ import 'package:mix_winds/src/parser/diagnostics.dart';
 import 'package:mix_winds/src/translate/tw_routing.dart';
 
 void main() {
+  test(
+    'focus-visible explanation agrees with the Protocol round-trip contract',
+    () {
+      // protocol_contract_test.dart exercises the actual selector round trip.
+      final entry = generatedTailwindVariantCompatibilityLedger.singleWhere(
+        (entry) => entry.root == 'focus-visible',
+      );
+      expect(entry.status, TailwindCompatibilityStatus.adapted);
+      expect(entry.reason, isNot(contains('does not encode')));
+      expect(entry.reason, contains('context_focus_visible'));
+    },
+  );
   final snapshot = _readSnapshot();
   const candidateParser = TailwindCandidateParser(
     registry: defaultTailwindParserRegistry,

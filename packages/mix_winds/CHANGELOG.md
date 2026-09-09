@@ -1,5 +1,20 @@
 ## 0.1.0-alpha.0
 
+- Export `TwCompilation` and `TwLayoutPlan` for typed compilation results and
+  read-only runtime layout inspection.
+- Match zero-viewport padding and border activation to Mix, and share responsive
+  widths through nested Tw flex scopes so reserved and applied margins agree.
+- Derive layout inset merge order from the actual emitted style groups.
+- Preserve intrinsic measurement for text, headings, spans, and icons with static
+  margins or padding, and for responsive margins when a viewport is available.
+- Match zero-basis padding and border accounting to the emitted style's variant
+  merge order so responsive flex children retain equal content space.
+- Validate each supported utility ledger family through Mix Protocol.
+- Check resolved styles, target diagnostics, runtime plans, and independent
+  JSON Schema validation.
+- Encode `focus-visible` through the additive Protocol v1 selector.
+- Normalize static viewport sizing before routing to prevent incorrect
+  unsupported diagnostics.
 - **Breaking:** Renamed the package from `mix_tailwinds` to `mix_winds`. Update
   the dependency name and change `package:mix_tailwinds/mix_tailwinds.dart`
   imports to `package:mix_winds/mix_winds.dart`. No public API symbol changed;
@@ -76,6 +91,14 @@
 - Flex parents now hand prepared compilations to built-in direct children, so
   parent measurement and child rendering share one parse while diagnostics are
   still delivered exactly once by the child.
+- Preserve keyed flex child state through prepared compilation and cross-axis
+  gap wrappers when children are reordered.
+- Report unsupported interactive external margins during semantic widget
+  compilation. Direct Box and Flex styler compilation retains supported variants.
+- Skip negative arbitrary external margins so semantic widgets do not receive
+  invalid padding or overwrite an earlier positive margin.
+- Require every nested viewport breakpoint before applying a semantic layout
+  utility, independent of the breakpoint order.
 - **Breaking (experimental alpha):** Removed the token-level `TwParser`
   helpers `listTokens`, `setTokens`, `wantsFlex`, and
   `parseAnimationFromTokens`. Use the target-specific `compile*` methods; the

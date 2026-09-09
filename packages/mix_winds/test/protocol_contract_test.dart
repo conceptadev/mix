@@ -1,9 +1,9 @@
+import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mix/mix.dart';
 import 'package:mix_protocol/mix_protocol.dart';
 import 'package:mix_winds/mix_winds.dart';
-import 'package:mix_winds/src/tw_flex_item.dart';
 
 void _expectProtocolRoundTrip<T extends Object>({
   required String category,
@@ -45,6 +45,10 @@ void _expectProtocolRoundTrip<T extends Object>({
 void main() {
   final boxCases = <({String category, String classes})>[
     (category: 'spacing', classes: 'p-4 px-6 mt-2 mx-3'),
+    (
+      category: 'margin-variants-on-styler-target',
+      classes: 'hover:m-4 dark:mx-2',
+    ),
     (
       category: 'fixed-min-max-sizing',
       classes: 'w-10 h-12 min-w-4 min-h-6 max-w-40 max-h-48',
@@ -218,37 +222,22 @@ void main() {
     ], isEmpty);
   });
 
-  test('focus-visible exposes the Mix Protocol v1 vocabulary boundary', () {
-    final compilation = TwParser().compileBox('focus-visible:opacity-75');
-
+  test('focus-visible uses the additive Mix Protocol v1 selector', () {
+    const classes = 'focus-visible:opacity-75';
+    final compilation = TwParser().compileBox(classes);
     expect(compilation.diagnostics, isEmpty);
     expect(compilation.requiresWidgetRuntime, isFalse);
-    final errors = switch (mixProtocol.encodeStyle(compilation.styler)) {
-      MixProtocolSuccess<JsonMap>() => fail(
-        'Mix Protocol v1 unexpectedly encoded FocusVisibleVariant.',
-      ),
-      MixProtocolFailure<JsonMap>(:final errors) => errors,
-    };
-
-    expect(errors, isNotEmpty);
-    expect(
-      errors,
-      everyElement(
-        isA<MixProtocolError>()
-            .having(
-              (error) => error.code,
-              'code',
-              MixProtocolErrorCode.unsupportedEncodeValue,
-            )
-            .having((error) => error.path, 'path', '/variants/0'),
-      ),
+    _expectProtocolRoundTrip(
+      category: 'focus-visible',
+      classes: classes,
+      styler: compilation.styler,
     );
   });
 
-  testWidgets('flex item helper builds FlexibleModifierMix directly', (
+  testWidgets('compiled flex items apply the expected Flutter parent data', (
     tester,
   ) async {
-    final cases = <String, ({int flex, FlexFit fit})>{
+    final cases = <String, ({int? flex, FlexFit? fit})>{
       'flex-1': (flex: 1, fit: FlexFit.tight),
       'flex-auto': (flex: 1, fit: FlexFit.loose),
       'flex-initial': (flex: 0, fit: FlexFit.loose),
@@ -259,29 +248,32 @@ void main() {
       'shrink-0': (flex: 0, fit: FlexFit.loose),
       'grow': (flex: 1, fit: FlexFit.tight),
       'grow-0': (flex: 0, fit: FlexFit.loose),
+      'basis-4': (flex: null, fit: null),
     };
 
     for (final entry in cases.entries) {
-      final modifier = twFlexibleModifierForFlexItem(entry.key);
-      expect(modifier, isNotNull, reason: entry.key);
-
-      FlexibleModifier? resolved;
+      final compilation = TwParser().compileBox(entry.key);
+      expect(compilation.diagnostics, isEmpty, reason: entry.key);
+      expect(compilation.requiresWidgetRuntime, isTrue, reason: entry.key);
       await tester.pumpWidget(
         Directionality(
           textDirection: TextDirection.ltr,
-          child: Builder(
-            builder: (context) {
-              resolved = modifier!.resolve(context);
-              return const SizedBox();
-            },
+          child: Row(
+            children: [
+              Div(
+                classNames: entry.key,
+                child: const SizedBox(width: 16, height: 16),
+              ),
+            ],
           ),
         ),
       );
 
-      expect(resolved!.flex, entry.value.flex, reason: entry.key);
-      expect(resolved!.fit, entry.value.fit, reason: entry.key);
+      final row = tester.renderObject<RenderFlex>(find.byType(Row));
+      final parentData = row.firstChild!.parentData! as FlexParentData;
+      expect(parentData.flex, entry.value.flex, reason: entry.key);
+      expect(parentData.fit, entry.value.fit, reason: entry.key);
+      expect(tester.takeException(), isNull, reason: entry.key);
     }
-
-    expect(twFlexibleModifierForFlexItem('basis-4'), isNull);
   });
 }

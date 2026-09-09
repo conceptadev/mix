@@ -51,12 +51,6 @@ FlexBoxSpec _flexBoxSpecWithoutMargin(FlexBoxSpec spec) {
 }
 
 // =============================================================================
-// CSS Semantic Box Widgets
-// =============================================================================
-
-/// A Box widget with CSS-style margin semantics.
-///
-// =============================================================================
 // Flex Scope (boundedness propagation)
 // =============================================================================
 
@@ -69,6 +63,7 @@ class _TwFlexScope extends InheritedWidget {
   const _TwFlexScope({
     required this.axis,
     required this.isMainAxisBounded,
+    required this.responsiveWidth,
     required super.child,
   });
 
@@ -77,11 +72,13 @@ class _TwFlexScope extends InheritedWidget {
   final Axis axis;
 
   final bool isMainAxisBounded;
+  final double responsiveWidth;
 
   @override
   bool updateShouldNotify(_TwFlexScope oldWidget) =>
       axis != oldWidget.axis ||
-      isMainAxisBounded != oldWidget.isMainAxisBounded;
+      isMainAxisBounded != oldWidget.isMainAxisBounded ||
+      responsiveWidth != oldWidget.responsiveWidth;
 }
 
 /// Determines if the parent flex container's main axis is bounded.
@@ -117,9 +114,10 @@ bool _resolveIsMainAxisBounded(
 // CSS Semantic Widgets
 // =============================================================================
 
-/// In CSS, margin is outside the hit-test area - hover/press only triggers
-/// on the border-box (content + padding + border). This widget extracts
-/// margin from the BoxSpec and applies it OUTSIDE the MixInteractionDetector.
+/// Applies the compiled margin outside the hover and press hit-test area.
+///
+/// The semantic plan supplies [externalMargin]. This widget removes the resolved
+/// BoxSpec margin so only the outer Padding applies the margin.
 ///
 /// Widget tree structure:
 /// ```
@@ -426,6 +424,7 @@ typedef _BorderBoxWrapper = Widget Function(Widget child);
 
 class _TwPreparedCompilationScope extends InheritedWidget {
   const _TwPreparedCompilationScope({
+    super.key,
     required this.classNames,
     required this.config,
     required this.mode,
@@ -580,12 +579,7 @@ class _TwElementState extends State<_TwElement> {
       built = _buildResponsiveFlex(
         plan: plan,
         baseStyle: compilation.flexStyler!,
-        rawChildren: preparedChildren
-            .map((prepared) => prepared.child)
-            .toList(growable: false),
-        childPlans: preparedChildren
-            .map((prepared) => prepared.parentLayoutPlan)
-            .toList(growable: false),
+        preparedChildren: preparedChildren,
         wrapBorderBox: widget.wrapBorderBox,
       );
     } else {
@@ -650,34 +644,49 @@ EdgeInsetsGeometry? _iconMargin(TwCompiledLayoutPlan plan, double width) {
   ).add(.only(left: margin.left, right: margin.right));
 }
 
+Widget _buildWithResponsiveMargin<T>(
+  BuildContext context,
+  TwResponsiveValue<T> margins,
+  Widget Function(double width) builder,
+) {
+  final viewportWidth = _viewportSize(context).width;
+  final hasBreakpoints = margins.entries.any((entry) => entry.minWidth > 0);
+  // Static margins need no constraints. A known viewport also lets responsive
+  // margins participate in intrinsic measurement without a LayoutBuilder.
+  if (!hasBreakpoints || viewportWidth > 0) return builder(viewportWidth);
+
+  return LayoutBuilder(
+    builder: (context, constraints) =>
+        builder(_responsiveWidth(constraints, context)),
+  );
+}
+
 Widget _wrapWithResponsiveExternalMargin(
+  BuildContext context,
   Widget child,
   TwCompiledLayoutPlan plan,
 ) {
   if (plan.externalMargin.isEmpty) return child;
 
-  return LayoutBuilder(
-    builder: (context, constraints) {
-      final margin = _externalMargin(
-        plan,
-        _responsiveWidth(constraints, context),
-      );
+  return _buildWithResponsiveMargin(context, plan.externalMargin, (width) {
+    final margin = _externalMargin(plan, width);
 
-      return margin == null ? child : Padding(padding: margin, child: child);
-    },
-  );
+    return margin == null ? child : Padding(padding: margin, child: child);
+  });
 }
 
-Widget _wrapWithResponsiveIconMargin(Widget child, TwCompiledLayoutPlan plan) {
+Widget _wrapWithResponsiveIconMargin(
+  BuildContext context,
+  Widget child,
+  TwCompiledLayoutPlan plan,
+) {
   if (plan.iconLogicalMargin.isEmpty) return child;
 
-  return LayoutBuilder(
-    builder: (context, constraints) {
-      final margin = _iconMargin(plan, _responsiveWidth(constraints, context));
+  return _buildWithResponsiveMargin(context, plan.iconLogicalMargin, (width) {
+    final margin = _iconMargin(plan, width);
 
-      return margin == null ? child : Padding(padding: margin, child: child);
-    },
-  );
+    return margin == null ? child : Padding(padding: margin, child: child);
+  });
 }
 
 /// Block-level text element with Tailwind styling.
@@ -720,7 +729,11 @@ class P extends StatelessWidget implements _TwCompilable {
     );
     Widget result = StyledText(text, style: compilation.textStyler!);
 
-    result = _wrapWithResponsiveExternalMargin(result, compilation.layoutPlan);
+    result = _wrapWithResponsiveExternalMargin(
+      context,
+      result,
+      compilation.layoutPlan,
+    );
 
     return result;
   }
@@ -766,13 +779,12 @@ class Span extends StatelessWidget implements _TwCompilable {
     // Check if we need box styling (padding, background, border, etc.)
     if (compilation.hasBoxUtilities) {
       // Use inline layout (no block-level stretch)
-      return LayoutBuilder(
-        builder: (context, constraints) => _CssSemanticBox(
+      return _buildWithResponsiveMargin(
+        context,
+        compilation.layoutPlan.externalMargin,
+        (width) => _CssSemanticBox(
           style: compilation.boxStyler!,
-          externalMargin: _externalMargin(
-            compilation.layoutPlan,
-            _responsiveWidth(constraints, context),
-          ),
+          externalMargin: _externalMargin(compilation.layoutPlan, width),
           child: StyledText(text, style: compilation.textStyler!),
         ),
       );
@@ -834,7 +846,11 @@ class TwIcon extends StatelessWidget implements _TwCompilable {
       style: style,
     );
 
-    current = _wrapWithResponsiveIconMargin(current, compilation.layoutPlan);
+    current = _wrapWithResponsiveIconMargin(
+      context,
+      current,
+      compilation.layoutPlan,
+    );
 
     return current;
   }
@@ -873,7 +889,11 @@ abstract class _Heading extends StatelessWidget implements _TwCompilable {
     );
     Widget result = StyledText(text, style: compilation.textStyler!);
 
-    result = _wrapWithResponsiveExternalMargin(result, compilation.layoutPlan);
+    result = _wrapWithResponsiveExternalMargin(
+      context,
+      result,
+      compilation.layoutPlan,
+    );
 
     return Semantics(headingLevel: _headingLevel, child: result);
   }
@@ -1020,7 +1040,13 @@ List<Widget> _applyCrossAxisGap(List<Widget> input, Axis axis, double? gap) {
             right: isLast ? 0 : halfGap,
           );
 
-    return Padding(padding: padding, child: input[index]);
+    final child = input[index];
+
+    return Padding(
+      key: child.key == null ? null : ValueKey(child.key),
+      padding: padding,
+      child: child,
+    );
   }, growable: false);
 }
 
@@ -1041,9 +1067,12 @@ List<_PreparedFlexChild> _prepareFlexChildren(
 ) {
   return children
       .map((child) {
-        final descriptor = _twCompilableOf(child);
-        if (descriptor != null) {
-          final childConfig = descriptor.config ?? inheritedConfig;
+        final Object childDescriptor = child;
+        final childConfig = switch (childDescriptor) {
+          _TwConfigured(:final config) => config ?? inheritedConfig,
+          _ => inheritedConfig,
+        };
+        if (childDescriptor case final _TwCompilable descriptor) {
           final compilation = TwTranslator(config: childConfig)
               .compileForWidget(
                 descriptor.classNames,
@@ -1054,6 +1083,7 @@ List<_PreparedFlexChild> _prepareFlexChildren(
           return _PreparedFlexChild(
             parentLayoutPlan: compilation.parentLayoutPlan,
             child: _TwPreparedCompilationScope(
+              key: child.key == null ? null : ValueKey(child.key),
               classNames: descriptor.classNames,
               config: childConfig,
               mode: descriptor._compilationMode,
@@ -1064,30 +1094,21 @@ List<_PreparedFlexChild> _prepareFlexChildren(
           );
         }
 
-        final classed = _twClassedOf(child);
-        if (classed == null) {
-          return _PreparedFlexChild(parentLayoutPlan: null, child: child);
-        }
-        final childConfig = _twConfiguredOf(child)?.config ?? inheritedConfig;
-        final compilation = TwTranslator(
-          config: childConfig,
-        ).compileForWidget(classed.classNames, .boxOrFlex);
+        if (childDescriptor case final TwClassed classed) {
+          final compilation = TwTranslator(
+            config: childConfig,
+          ).compileForWidget(classed.classNames, .boxOrFlex);
 
-        return _PreparedFlexChild(
-          parentLayoutPlan: compilation.parentLayoutPlan,
-          child: child,
-        );
+          return _PreparedFlexChild(
+            parentLayoutPlan: compilation.parentLayoutPlan,
+            child: child,
+          );
+        }
+
+        return _PreparedFlexChild(parentLayoutPlan: null, child: child);
       })
       .toList(growable: false);
 }
-
-_TwCompilable? _twCompilableOf(Object value) =>
-    value is _TwCompilable ? value : null;
-
-TwClassed? _twClassedOf(Object value) => value is TwClassed ? value : null;
-
-_TwConfigured? _twConfiguredOf(Object value) =>
-    value is _TwConfigured ? value : null;
 
 @immutable
 class _ZeroBasisFlexItem {
@@ -1111,6 +1132,7 @@ class _ZeroBasisFlexItem {
 _ZeroBasisFlexItem? _zeroBasisFlexItemOfPlan(
   TwCompiledLayoutPlan? plan,
   double width,
+  double styleWidth,
   Axis axis,
 ) {
   if (plan == null) return null;
@@ -1119,21 +1141,31 @@ _ZeroBasisFlexItem? _zeroBasisFlexItemOfPlan(
 
   return _ZeroBasisFlexItem(
     grow: grow,
-    outerExtra: plan.zeroBasisOuterExtent(width, _twFlexAxis(axis)),
+    outerExtra: plan.zeroBasisOuterExtent(
+      _twFlexAxis(axis),
+      marginWidth: width,
+      styleWidth: styleWidth,
+    ),
   );
 }
 
 Widget _buildResponsiveFlex({
   required TwCompiledLayoutPlan plan,
   required FlexBoxStyler baseStyle,
-  required List<Widget> rawChildren,
-  required List<TwCompiledLayoutPlan?> childPlans,
+  required List<_PreparedFlexChild> preparedChildren,
   _BorderBoxWrapper? wrapBorderBox,
 }) {
   return LayoutBuilder(
     builder: (context, constraints) {
-      final width = _responsiveWidth(constraints, context);
-      final resolvedContainer = plan.flexContainer.resolve(width);
+      final rawChildren = preparedChildren
+          .map((prepared) => prepared.child)
+          .toList(growable: false);
+      final childPlans = preparedChildren
+          .map((prepared) => prepared.parentLayoutPlan)
+          .toList(growable: false);
+      final layoutWidth = _responsiveWidth(constraints, context);
+      final styleWidth = _viewportSize(context).width;
+      final resolvedContainer = plan.flexContainer.resolve(layoutWidth);
       final axis = _flutterAxis(resolvedContainer.axis);
       final isMainAxisBounded = axis == .horizontal
           ? constraints.hasBoundedWidth
@@ -1157,13 +1189,20 @@ Widget _buildResponsiveFlex({
             (childPlan) => childPlan == null
                 ? null
                 : _selfAlignment(
-                    childPlan.flexItem.resolve(width).selfAlignment,
+                    childPlan.flexItem.resolve(layoutWidth).selfAlignment,
                   ),
           )
           .toList(growable: false);
       final hasSelfAlignedChild = selfAlignments.any((a) => a != null);
       final zeroBasisItems = childPlans
-          .map((childPlan) => _zeroBasisFlexItemOfPlan(childPlan, width, axis))
+          .map(
+            (childPlan) => _zeroBasisFlexItemOfPlan(
+              childPlan,
+              layoutWidth,
+              styleWidth,
+              axis,
+            ),
+          )
           .toList(growable: false);
       final zeroBasisChildren = zeroBasisItems
           .whereType<_ZeroBasisFlexItem>()
@@ -1205,38 +1244,22 @@ Widget _buildResponsiveFlex({
       Widget current = _TwFlexScope(
         axis: axis,
         isMainAxisBounded: isMainAxisBounded,
+        responsiveWidth: layoutWidth,
         child: _CssSemanticFlexBox(
           style: style,
           wrapBorderBox: wrapBorderBox,
           selfAlignments: hasSelfAlignedChild ? selfAlignments : null,
           zeroBasisItems: needsContentBoxSizing ? zeroBasisItems : null,
-          externalMargin: _externalMargin(plan, width),
+          externalMargin: _externalMargin(plan, layoutWidth),
           children: flexChildren,
         ),
       );
-      current = _applyContainerSizingResponsive(
-        current,
-        plan.dimensions,
-        constraints,
-        context,
-        width,
-      );
-      current = _applyMinSizingResponsive(
-        current,
-        plan.dimensions,
-        context,
-        width,
-      );
-      current = _applyFractionalSizingResponsive(
-        current,
-        plan.dimensions,
-        width,
-      );
-      current = _loosenFixedWidthUnderTightStretch(
-        current,
-        plan.dimensions,
-        width,
-        constraints,
+      current = _applyResponsiveSizing(
+        dimensions: plan.dimensions,
+        constraints: constraints,
+        context: context,
+        width: layoutWidth,
+        child: current,
       );
 
       return current;
@@ -1260,33 +1283,41 @@ Widget _buildResponsiveBox({
         externalMargin: _externalMargin(plan, width),
         child: child,
       );
-      current = _applyContainerSizingResponsive(
-        current,
-        plan.dimensions,
-        constraints,
-        context,
-        width,
-      );
-      current = _applyMinSizingResponsive(
-        current,
-        plan.dimensions,
-        context,
-        width,
-      );
-      current = _applyFractionalSizingResponsive(
-        current,
-        plan.dimensions,
-        width,
-      );
-      current = _loosenFixedWidthUnderTightStretch(
-        current,
-        plan.dimensions,
-        width,
-        constraints,
+      current = _applyResponsiveSizing(
+        dimensions: plan.dimensions,
+        constraints: constraints,
+        context: context,
+        width: width,
+        child: current,
       );
 
       return current;
     },
+  );
+}
+
+Widget _applyResponsiveSizing({
+  required TwDimensionPlan dimensions,
+  required BoxConstraints constraints,
+  required BuildContext context,
+  required double width,
+  required Widget child,
+}) {
+  var current = _applyContainerSizingResponsive(
+    child,
+    dimensions,
+    constraints,
+    context,
+    width,
+  );
+  current = _applyMinSizingResponsive(current, dimensions, context, width);
+  current = _applyFractionalSizingResponsive(current, dimensions, width);
+
+  return _loosenFixedWidthUnderTightStretch(
+    current,
+    dimensions,
+    width,
+    constraints,
   );
 }
 
@@ -1526,6 +1557,8 @@ double _responsiveWidth(BoxConstraints? constraints, BuildContext context) {
   if (viewportWidth > 0) {
     return viewportWidth;
   }
+  final scope = _TwFlexScope.maybeOf(context);
+  if (scope != null) return scope.responsiveWidth;
   if (constraints != null) {
     return _effectiveWidth(constraints, context);
   }

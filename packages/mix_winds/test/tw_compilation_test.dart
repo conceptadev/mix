@@ -194,6 +194,20 @@ void main() {
       expect(compilation.requiresWidgetRuntime, isFalse);
     });
 
+    test('unsupported static dimensions do not enter the runtime plan', () {
+      for (final token in ['min-h-auto', 'max-w-screen', 'max-h-screen']) {
+        final compilation = TwParser().compileBox(token);
+
+        expect(compilation.diagnostics, hasLength(1), reason: token);
+        expect(
+          compilation.diagnostics.single.code,
+          TwDiagnosticCode.unsupportedUtility,
+          reason: token,
+        );
+        expect(compilation.requiresWidgetRuntime, isFalse, reason: token);
+      }
+    });
+
     test('reports icon margins missing from the configured spacing scale', () {
       final compilation = TwParser().compileIcon('me-999');
 

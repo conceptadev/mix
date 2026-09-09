@@ -1024,7 +1024,7 @@ const _adaptedStaticVariantReasons = {
       '(Compatibility Ledger Status Notes).',
   'focus-visible':
       "Mapped to Mix's focus-visible state using Flutter's app-wide input "
-      'modality; Mix Protocol v1 does not encode FocusVisibleVariant; '
+      'modality; encoded through the Mix Protocol v1 context_focus_visible selector; '
       'see FLUTTER_ADAPTATIONS.md (Compatibility Ledger Status Notes).',
   'light':
       'Mapped to Flutter platform brightness; see FLUTTER_ADAPTATIONS.md '

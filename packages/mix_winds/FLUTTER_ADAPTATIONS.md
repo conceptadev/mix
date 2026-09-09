@@ -329,6 +329,15 @@ fractional, full, and automatic widths are resolved from the element's active
 responsive classes; `w-auto` and `h-auto` explicitly clear earlier fixed
 constraints.
 
+When the viewport width is positive, responsive decisions use it. If it is
+unavailable or zero, widget-owned layout decisions inherit the enclosing Tw
+flex's resolved responsive width, then fall back to local constraints when no
+Tw flex scope exists. Nested Tw flex containers inherit that same width even
+when their own allocated width is smaller. This keeps the margin a parent
+reserves equal to the margin its child applies. Native `Row` and `Column`
+parents retain local constraint fallback. Padding and border variants always
+use the viewport width, matching Mix's breakpoint activation.
+
 ### Actionable Elements
 
 Use `Button` for HTML button counterparts instead of wrapping `Div` in another
@@ -460,19 +469,34 @@ final config = TwConfig.standard().copyWith(
 - Margin changes on hover
 
 **Current Limitation:**
-- `P` and heading margin extraction is base-only
-- Only unprefixed positive margins like `mb-4` are applied externally
+- `P` and heading margins support unprefixed positive utilities such as `mb-4`
+  and configured viewport breakpoints such as `md:mb-4`
 - `hover:m-4`, `dark:m-2`, `group-hover:m-4`, `@md:m-4`, and selector variants like `[&_p]:mt-4` are skipped instead of becoming unconditional margins
+- CSS-semantic box wrappers such as `Div` have the same limitation for
+  interactive and contextual margin variants
+- Semantic widget compilation reports supported margin utilities with interactive
+  variants as `widgetLayerVariantUnsupported`. `Div` and `Button` deliver this
+  diagnostic through `onDiagnostic`.
+- `TwParser.compileText` and `compileIcon` report this limitation for their
+  supported external margins. Direct Box and Flex styler compilation retains
+  supported margin variants because Mix can apply those variants.
+- Ignored context, container, and selector variants retain their existing
+  diagnostic categories.
 
 **Workaround:**
 ```dart
-// Use padding instead (which does respond to variants)
-P(text: '...', classNames: 'p-2 hover:p-4')  // ✓ Works
+// Apply interactive padding to a wrapping Div.
+Div(
+  classNames: 'p-2 hover:p-4',
+  child: P(text: '...'),
+)
 
 // Or handle margin changes manually with StatefulWidget
 ```
 
-**Why:** Text block CSS semantic margin is applied outside the `StyleBuilder` so margin stays outside the text hit-test/styling area. Until responsive/interactive margin semantics exist there, variant margins are ignored.
+**Why:** The widget applies external margin outside `StyleBuilder` to preserve the hit-test area.
+The compiled layout plan selects viewport breakpoints. The layout plan does not
+evaluate interactive or contextual margin variants, so the compiler reports their limitations.
 
 ---
 
@@ -485,4 +509,4 @@ P(text: '...', classNames: 'p-2 hover:p-4')  // ✓ Works
 | `translate-x-[50%]` | ✗ Unsupported | Use Flutter Transform |
 | `basis-1/2`, `basis-full` | ✗ Unsupported; reported through `onDiagnostic` | Use `w-1/2 flex-none` |
 | `bg-[rgb(...)]`, `bg-[hsl(...)]` | ✗ Not supported | Use CSS hex: `bg-[#rgb]`, `bg-[#rrggbb]`, or `bg-[#rrggbbaa]` |
-| `hover:m-4` on `P`/headings | ✗ Ignored | Use padding instead |
+| `hover:m-4` on semantic widgets | ✗ Unsupported; compiler reports the limitation | Apply padding to a wrapping `Div` |
