@@ -29,10 +29,9 @@ void main() {
   ];
 
   test('checked-in schema and fixtures are current', () {
-    final stale = syncSchemaFixtures(
+    final stale = _syncFixtureFiles(
       Directory('schema'),
-      suites,
-      update: autoUpdateGoldenFiles,
+      renderSchemaFixtures(suites),
     );
 
     expect(
@@ -51,4 +50,23 @@ void main() {
     expect(schema['x-mix-protocol-contract'], 'mix_protocol');
     expect(schema['x-mix-protocol-format-version'], mixProtocolFormatVersion);
   });
+}
+
+/// Writes or checks the rendered files under [root] and returns stale paths.
+List<String> _syncFixtureFiles(Directory root, Map<String, String> files) {
+  final stale = <String>[];
+  for (final entry in files.entries) {
+    final file = File('${root.path}/${entry.key}');
+    if (autoUpdateGoldenFiles) {
+      file
+        ..createSync(recursive: true)
+        ..writeAsStringSync(entry.value);
+    } else if (!file.existsSync()) {
+      stale.add('${entry.key} is missing');
+    } else if (file.readAsStringSync() != entry.value) {
+      stale.add('${entry.key} is stale');
+    }
+  }
+
+  return stale;
 }

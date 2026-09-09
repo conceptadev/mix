@@ -10,7 +10,7 @@
   fixture documents that pin their acceptance boundary. `tool/schema-check`
   validates every checked-in suite with Ajv, replacing the Dart `json_schema`
   test dependency.
-- Added `SchemaFixtureSuite` and `syncSchemaFixtures` to
+- Added `SchemaFixtureSuite` and `renderSchemaFixtures` to
   `package:mix_protocol/testing.dart` so contributed vocabularies can publish
   their own schema fixtures for the same check.
 

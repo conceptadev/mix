@@ -48,14 +48,17 @@ void main() {
           ),
     ];
 
-    final stale = syncSchemaFixtures(Directory('schema'), [
-      SchemaFixtureSuite(
-        name: 'style',
-        schemaPath: '../../mix_protocol/schema/style.schema.json',
-        accept: accept,
-        reject: const [],
-      ),
-    ], update: autoUpdateGoldenFiles);
+    final stale = _syncFixtureFiles(
+      Directory('schema'),
+      renderSchemaFixtures([
+        SchemaFixtureSuite(
+          name: 'style',
+          schemaPath: '../../mix_protocol/schema/style.schema.json',
+          accept: accept,
+          reject: const [],
+        ),
+      ]),
+    );
 
     expect(
       stale,
@@ -65,4 +68,23 @@ void main() {
           'in packages/mix_winds and commit the result.',
     );
   });
+}
+
+/// Writes or checks the rendered files under [root] and returns stale paths.
+List<String> _syncFixtureFiles(Directory root, Map<String, String> files) {
+  final stale = <String>[];
+  for (final entry in files.entries) {
+    final file = File('${root.path}/${entry.key}');
+    if (autoUpdateGoldenFiles) {
+      file
+        ..createSync(recursive: true)
+        ..writeAsStringSync(entry.value);
+    } else if (!file.existsSync()) {
+      stale.add('${entry.key} is missing');
+    } else if (file.readAsStringSync() != entry.value) {
+      stale.add('${entry.key} is stale');
+    }
+  }
+
+  return stale;
 }

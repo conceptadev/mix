@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
 
 import '../contract/json_map.dart';
 
@@ -67,48 +66,23 @@ final class SchemaFixtureSuite {
   };
 }
 
-/// Writes or verifies a package's checked-in `schema/` directory.
+/// Renders a package's `schema/` directory as relative path to contents.
 ///
 /// The directory holds `manifest.json`, one `<name>.schema.json` per suite
 /// that owns a schema, and `fixtures/<name>.json` with the accept and reject
 /// documents. External validators such as Ajv read these files directly.
 ///
-/// With [update] the files are rewritten. Otherwise the current files are
-/// compared with the expected output and every stale or missing path is
-/// returned, so a test can fail with the exact regeneration needed.
-List<String> syncSchemaFixtures(
-  Directory root,
-  List<SchemaFixtureSuite> suites, {
-  required bool update,
-}) {
-  final expected = <String, String>{
-    'manifest.json': _pretty({
-      'suites': [for (final suite in suites) suite.manifestEntry],
-    }),
-    for (final suite in suites)
-      if (suite.schema case final schema?) suite.schemaPath: _pretty(schema),
-    for (final suite in suites)
-      suite.fixturesPath: _pretty(suite.fixturesDocument),
-  };
-
-  final stale = <String>[];
-  for (final entry in expected.entries) {
-    final file = File('${root.path}/${entry.key}');
-    if (update) {
-      file
-        ..createSync(recursive: true)
-        ..writeAsStringSync(entry.value);
-      continue;
-    }
-    if (!file.existsSync()) {
-      stale.add('${entry.key} is missing');
-    } else if (file.readAsStringSync() != entry.value) {
-      stale.add('${entry.key} is stale');
-    }
-  }
-
-  return stale;
-}
+/// This stays free of `dart:io` so the testing library imports on every
+/// platform; a golden test writes or compares the returned files.
+Map<String, String> renderSchemaFixtures(List<SchemaFixtureSuite> suites) => {
+  'manifest.json': _pretty({
+    'suites': [for (final suite in suites) suite.manifestEntry],
+  }),
+  for (final suite in suites)
+    if (suite.schema case final schema?) suite.schemaPath: _pretty(schema),
+  for (final suite in suites)
+    suite.fixturesPath: _pretty(suite.fixturesDocument),
+};
 
 String _pretty(Object? json) =>
     '${const JsonEncoder.withIndent('  ').convert(json)}\n';

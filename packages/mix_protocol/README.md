@@ -123,8 +123,8 @@ melos run schema:check
 ```
 
 Packages that compose their own vocabulary reuse the same pipeline through
-`package:mix_protocol/testing.dart`: build a `SchemaFixtureSuite` and call
-`syncSchemaFixtures` from a golden test, and the Ajv job picks up the new
+`package:mix_protocol/testing.dart`: build a `SchemaFixtureSuite`, write the
+files from `renderSchemaFixtures` in a golden test, and the Ajv job picks up the new
 `schema/manifest.json` automatically.
 
 `mix_winds` remains a direct Mix styler producer at runtime. Its test suite
