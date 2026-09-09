@@ -61,19 +61,20 @@ void main() {
 
     testWidgets('new data or syntax parses again', (tester) async {
       await tester.pumpWidget(app(const MixMarkdown(data: 'a')));
-      await tester.pumpWidget(app(const MixMarkdown(data: 'b')));
+      await tester.pumpWidget(app(const MixMarkdown(data: '@@')));
       expect(parseCount(tester), 2);
+      expect(find.text('marker', findRichText: true), findsNothing);
 
       await tester.pumpWidget(
         app(
           MixMarkdown(
-            data: 'b',
+            data: '@@',
             syntax: MarkdownSyntax(inlineSyntaxes: [_MarkerSyntax()]),
           ),
         ),
       );
       expect(parseCount(tester), 3);
-      expect(find.text('marker', findRichText: true), findsNothing);
+      expect(find.text('marker', findRichText: true), findsOneWidget);
     });
 
     testWidgets('brightness and text scale update without a parse', (

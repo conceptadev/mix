@@ -3,7 +3,6 @@ import 'package:markdown/markdown.dart' as md;
 import 'package:mix/mix.dart';
 
 import '../parsing/markdown_alert_element.dart';
-import '../parsing/markdown_document_cache.dart';
 import '../parsing/markdown_syntax.dart';
 import '../parsing/unsupported_nodes.dart';
 import '../specs/markdown_spec.dart';
@@ -43,20 +42,27 @@ class MarkdownDocument extends StatefulWidget {
 }
 
 /// State of a [MarkdownDocument]; public so tests can read [parseCount].
+///
+/// The parsed nodes are kept across style changes and parsed again only when
+/// the source or the syntax differs from the previous build.
 class MarkdownDocumentState extends State<MarkdownDocument> {
-  final _cache = MarkdownDocumentCache();
+  String? _data;
+  MarkdownSyntax? _syntax;
   List<md.Node> _nodes = const [];
   Set<String> _unsupported = const {};
+  int _parseCount = 0;
 
   /// The number of parses since this state was created.
   @visibleForTesting
-  int get parseCount => _cache.parseCount;
+  int get parseCount => _parseCount;
 
   void _load() {
-    final nodes = _cache.load(widget.data, widget.syntax);
-    if (identical(nodes, _nodes)) return;
-    _nodes = nodes;
-    _unsupported = unsupportedNodes(nodes);
+    if (widget.data == _data && widget.syntax == _syntax) return;
+    _data = widget.data;
+    _syntax = widget.syntax;
+    _nodes = widget.syntax.createDocument().parse(widget.data);
+    _unsupported = unsupportedNodes(_nodes);
+    _parseCount++;
   }
 
   StyleSpec<TextSpec> _textSpecFor(String tag) {
