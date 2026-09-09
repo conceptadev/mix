@@ -1,6 +1,6 @@
 name: mix_markdown
-description: Markdown rendering styled with Mix. Experimental.
-version: 0.0.1-alpha.0
+description: Markdown rendering for Flutter styled with Mix. Parses a document once and renders text and GitHub alerts through generated Specs and Stylers.
+version: 0.0.1-beta.0
 homepage: https://github.com/btwld/mix
 repository: https://github.com/btwld/mix/tree/main/packages/mix_markdown
 
@@ -24,3 +24,15 @@ dev_dependencies:
   mix_generator:
     version: ^2.2.0-beta.3
     path: ../mix_generator
+
+topics:
+  - markdown
+  - mix
+  - styling
+  - ui
+
+screenshots:
+  - description: A Markdown document with styled headings, inline formatting, and GitHub alerts, rendered in the light theme.
+    path: example/screenshots/document-light.png
+  - description: The same document rendered with the onDark variants of every style slot.
+    path: example/screenshots/document-dark.png

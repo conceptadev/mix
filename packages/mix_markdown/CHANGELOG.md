@@ -1,4 +1,4 @@
-## 0.0.1-alpha.0
+## 0.0.1-beta.0
 
 - Adds `MixMarkdown`, which parses a Markdown document once and renders
   paragraphs, headings, nested inline formatting, and GitHub alerts.

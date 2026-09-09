@@ -47,10 +47,10 @@ class MixMarkdown extends StyleWidget<MarkdownSpec> {
     this.syntax = const MarkdownSyntax(),
     this.wrapBlock,
     this.unsupportedBuilder,
-    super.style = const MarkdownStyler.create(),
+    MarkdownStyler style = const MarkdownStyler.create(),
     super.styleSpec,
     super.key,
-  });
+  }) : super(style: style);
 
   @override
   Widget build(BuildContext context, MarkdownSpec spec) => MarkdownDocument(

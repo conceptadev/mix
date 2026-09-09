@@ -225,6 +225,8 @@ Directives transform values (text casing, number scaling, color adjustments) at 
 | [mix_generator](packages/mix_generator) | build_runner generator for specs |
 | [mix_lint](packages/mix_lint) | Custom linter rules |
 | [mix_winds](packages/mix_winds) | Utility-first styling inspired by Tailwind CSS |
+| [mix_chart](packages/mix_chart) | Line, bar, and pie charts styled with Mix |
+| [mix_markdown](packages/mix_markdown) | Markdown rendering styled with Mix |
 
 ## Documentation
 
