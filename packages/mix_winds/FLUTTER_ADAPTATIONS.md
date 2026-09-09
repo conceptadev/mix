@@ -337,6 +337,9 @@ when their own allocated width is smaller. This keeps the margin a parent
 reserves equal to the margin its child applies. Native `Row` and `Column`
 parents retain local constraint fallback. Padding and border variants always
 use the viewport width, matching Mix's breakpoint activation.
+Intrinsic wrapping (`IntrinsicWidth` or `IntrinsicHeight`) of responsive margins
+requires a positive viewport width or an enclosing Tw flex scope; without either,
+margin selection needs layout constraints and cannot support intrinsic measurement.
 
 ### Actionable Elements
 

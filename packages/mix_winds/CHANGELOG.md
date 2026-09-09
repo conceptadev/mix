@@ -6,7 +6,8 @@
   widths through nested Tw flex scopes so reserved and applied margins agree.
 - Derive layout inset merge order from the actual emitted style groups.
 - Preserve intrinsic measurement for text, headings, spans, and icons with static
-  margins or padding, and for responsive margins when a viewport is available.
+  margins or padding, and for responsive margins when a viewport or enclosing
+  Tw flex scope supplies the width.
 - Match zero-basis padding and border accounting to the emitted style's variant
   merge order so responsive flex children retain equal content space.
 - Validate each supported utility ledger family through Mix Protocol.

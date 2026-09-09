@@ -651,9 +651,11 @@ Widget _buildWithResponsiveMargin<T>(
 ) {
   final viewportWidth = _viewportSize(context).width;
   final hasBreakpoints = margins.entries.any((entry) => entry.minWidth > 0);
-  // Static margins need no constraints. A known viewport also lets responsive
-  // margins participate in intrinsic measurement without a LayoutBuilder.
+  // Static margins need no constraints. A known viewport or enclosing flex
+  // scope also lets responsive margins participate in intrinsic measurement.
   if (!hasBreakpoints || viewportWidth > 0) return builder(viewportWidth);
+  final scope = _TwFlexScope.maybeOf(context);
+  if (scope != null) return builder(scope.responsiveWidth);
 
   return LayoutBuilder(
     builder: (context, constraints) =>

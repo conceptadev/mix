@@ -89,6 +89,56 @@ void main() {
       expect(delta, closeTo(8, 0.001));
       expect(sizes[2], sizes[0]);
     });
+    testWidgets('$name uses flex scope margins inside intrinsic sizing', (
+      tester,
+    ) async {
+      await tester.binding.setSurfaceSize(const Size(1200, 600));
+      addTearDown(() => tester.binding.setSurfaceSize(null));
+      Size? baseSize;
+      for (final (viewport, width, margin) in [
+        (0.0, 400.0, 8.0),
+        (0.0, 1000.0, 16.0),
+        (400.0, 1000.0, 8.0),
+        (0.0, 1000.0, 16.0),
+        (0.0, 400.0, 8.0),
+      ]) {
+        await tester.pumpWidget(
+          MediaQuery(
+            data: MediaQueryData(size: Size(viewport, 600)),
+            child: Directionality(
+              textDirection: .ltr,
+              child: Align(
+                alignment: Alignment.topLeft,
+                child: SizedBox(
+                  width: width,
+                  child: Div(
+                    classNames: 'flex items-start',
+                    children: [
+                      IntrinsicWidth(child: IntrinsicHeight(child: child)),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+        );
+        expect(tester.takeException(), isNull);
+        final size = tester.getSize(find.byWidget(child));
+        expect(size.isFinite, isTrue);
+        expect(size.width, greaterThan(0));
+        expect(size.height, greaterThan(0));
+        baseSize ??= size;
+        expect(
+          axis == .horizontal ? size.width : size.height,
+          closeTo(
+            (axis == .horizontal ? baseSize.width : baseSize.height) +
+                margin -
+                8,
+            0.001,
+          ),
+        );
+      }
+    });
   }
 
   testWidgets(
