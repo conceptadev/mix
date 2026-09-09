@@ -7,7 +7,7 @@ description: >-
   annotations and mix_generator code generation, dot shorthand, variants,
   animations, design tokens and MixScope, widget modifiers, directives, style
   mixins, or the Mix monorepo packages (mix, mix_annotations, mix_generator,
-  mix_lint, mix_protocol, mix_winds, and mix_chart). Also trigger for UI work in
+  mix_lint, mix_protocol, mix_winds, mix_chart, and mix_markdown). Also trigger for UI work in
   a project that already depends on `mix`. Do not trigger for generic Flutter
   work when Mix is neither present nor requested.
 ---
@@ -184,6 +184,7 @@ melos run gen:build && melos run ci && melos run analyze
 | `mix_protocol` | Versioned JSON wire contract, codecs, schemas, inspection, and token walking for Mix styles |
 | `mix_winds` | Tailwind-style utility layer (experimental) |
 | `mix_chart` | Mix-owned line, bar, and pie chart APIs |
+| `mix_markdown` | Markdown rendering styled with Mix (experimental) |
 
 ## References
 

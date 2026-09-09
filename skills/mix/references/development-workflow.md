@@ -24,6 +24,8 @@ packages/
   mix_winds/example/      # Tailwind example app
   mix_chart/              # Mix-owned chart API
   mix_chart/example/      # Chart example app
+  mix_markdown/           # Markdown renderer styled with Mix
+  mix_markdown/example/   # Markdown example app
 ```
 
 **SDK constraints:** Dart >=3.11.0, Flutter >=3.41.0
