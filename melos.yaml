@@ -50,6 +50,14 @@ scripts:
     run: melos exec --scope="mix_protocol" -- dart run tool/inventory_check.dart --check && melos exec --scope="mix_chart_protocol" -- dart run tool/inventory_check.dart
     description: Verify protocol vocabulary inventory coverage decisions.
 
+  schema:fixtures:
+    run: melos exec --scope="mix_protocol,mix_chart_protocol,mix_winds" -- flutter test --update-goldens test/schema_fixtures_test.dart
+    description: Regenerate each package's checked-in schema/ exports and fixtures.
+
+  schema:check:
+    run: npm --prefix packages/mix_protocol/tool/schema-check ci --no-audit --no-fund && npm --prefix packages/mix_protocol/tool/schema-check test
+    description: Validate every checked-in schema and fixture suite with Ajv (needs Node).
+
   analyze:dart:
     run: melos exec -c 4 -- dart analyze .
     description: Run Dart static analysis checks.

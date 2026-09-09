@@ -8,6 +8,7 @@ import 'src/schema/primitive_wire.dart';
 
 export 'src/contract/json_map.dart';
 export 'src/contract/wire_vocabulary.dart';
+export 'src/testing/schema_fixtures.dart';
 
 /// Builds a styler payload with the discriminator already filled in.
 JsonMap payloadStyler(SchemaStyler type, [JsonMap? fields]) {

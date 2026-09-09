@@ -36,6 +36,8 @@ melos bootstrap           # Install dependencies
 melos run gen:build       # Generate code (specs, exports)
 melos run ci              # Run all tests
 melos run analyze         # Dart + DCM analysis
+melos run schema:fixtures # Regenerate checked-in packages/*/schema exports and fixtures
+melos run schema:check    # Validate those files with Ajv (needs Node)
 melos run fix             # Auto-fix lint issues
 ```
 

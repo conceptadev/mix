@@ -6,7 +6,13 @@
 - Require Ack 1.2.0 for private codecs. Generated Mix stylers remain the runtime model.
 - Share field, token, merge, directive, and variant declarations with schema export.
 - Preserve literal types and directive families in exported Draft 7 schemas.
-- Validate schema output with an independent Draft 7 validator.
+- Check in the exported style and theme schemas under `schema/` with the
+  fixture documents that pin their acceptance boundary. `tool/schema-check`
+  validates every checked-in suite with Ajv, replacing the Dart `json_schema`
+  test dependency.
+- Added `SchemaFixtureSuite` and `renderSchemaFixtures` to
+  `package:mix_protocol/testing.dart` so contributed vocabularies can publish
+  their own schema fixtures for the same check.
 
 - Added additive v1 `{"type":"auto"}` Grid tracks for `rows`, `autoRows`, and
   constraint patches. Auto tracks have no token references.

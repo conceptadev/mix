@@ -68,6 +68,28 @@ jobs:
       - name: Test
         run: melos run ci
 
+  protocol-schema:
+    name: Protocol Schema / Ajv check
+    runs-on: ubuntu-latest
+    # The Dart golden tests in the test job keep packages/*/schema current;
+    # this job validates those checked-in files with an independent Draft 7
+    # implementation and needs no Flutter toolchain.
+    timeout-minutes: 10
+    defaults:
+      run:
+        working-directory: packages/mix_protocol/tool/schema-check
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: packages/mix_protocol/tool/schema-check/package-lock.json
+      - name: Install Node dependencies
+        run: npm ci --no-audit --no-fund
+      - name: Validate schemas and fixtures
+        run: npm test
+
   showcase-tool:
     name: Showcase Tool Tests
     runs-on: ubuntu-latest
