@@ -8,8 +8,9 @@ final _rawBreak = RegExp(r'<br\s*/?>', caseSensitive: false);
 /// Builds the spans of one block from its inline [nodes].
 ///
 /// Nested formatting composes, so `***both***` is bold and italic. Inline
-/// images contribute their alt text, and raw `<br>` tags outside code become
-/// line breaks. A [transform] that keeps the character count keeps every
+/// images contribute their alt text. Outside code, soft line breaks become
+/// spaces and raw `<br>` tags become line breaks; hard breaks arrive as `br`
+/// elements. A [transform] that keeps the character count keeps every
 /// styled run; one that changes it yields a single unstyled span, because
 /// the runs can no longer be mapped onto the new text.
 List<InlineSpan> buildInlineSpans(
@@ -21,7 +22,7 @@ List<InlineSpan> buildInlineSpans(
 
   void collect(md.Node node, TextStyle style, {required bool inCode}) {
     if (node is md.Text) {
-      final text = inCode ? node.text : node.text.replaceAll(_rawBreak, '\n');
+      final text = inCode ? node.text : _normalizeBreaks(node.text);
       if (text.isNotEmpty) runs.add(_Run(text, style));
     } else if (node is md.Element) {
       final merged = style.merge(_inlineStyle(spec, node.tag));
@@ -58,6 +59,9 @@ List<InlineSpan> buildInlineSpans(
 
   return [for (final run in runs) TextSpan(text: run.text, style: run.style)];
 }
+
+String _normalizeBreaks(String text) =>
+    text.replaceAll('\n', ' ').replaceAll(_rawBreak, '\n');
 
 TextStyle _inlineStyle(MarkdownSpec spec, String tag) => switch (tag) {
   'strong' || 'b' => const TextStyle(

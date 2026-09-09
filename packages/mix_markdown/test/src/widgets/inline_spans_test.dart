@@ -86,6 +86,23 @@ void main() {
     expect(plain(spans('a<br />b `<br />`')), 'a\nb <br />');
   });
 
+  test('soft line breaks become spaces', () {
+    final nodes = const MarkdownSyntax().createDocument().parse(
+      'one\ntwo **three\nfour**',
+    );
+    final paragraph = nodes.single as md.Element;
+
+    expect(
+      plain(
+        buildInlineSpans(
+          paragraph.children!,
+          spec: spec,
+        ).cast<TextSpan>().toList(),
+      ),
+      'one two three four',
+    );
+  });
+
   test('parsed hard breaks become line breaks', () {
     final nodes = const MarkdownSyntax().createDocument().parse('a  \nb');
     final paragraph = nodes.single as md.Element;
