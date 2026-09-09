@@ -1,5 +1,9 @@
 ## 0.1.0-alpha.0
 
+- Requires `mix` 2.2.0-beta.5 or later. The package uses focus-visible
+  variants, semantics roles, and gradient transforms that were added after
+  2.1.0, so the previous `^2.1.0` constraint could not resolve a working
+  build.
 - Export `TwCompilation` and `TwLayoutPlan` for typed compilation results and
   read-only runtime layout inspection.
 - Match zero-viewport padding and border activation to Mix, and share responsive
