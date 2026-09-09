@@ -580,16 +580,15 @@ final class TwLayoutPlanBuilder {
       _ResponsiveDeclarationBuilder();
   final _ResponsiveDeclarationBuilder<TwFlexBehavior> _behavior =
       _ResponsiveDeclarationBuilder();
-  final _InsetsDeclarationBuilder _margin = _InsetsDeclarationBuilder();
+  final _margin = _insetsBuilder();
 
-  final _InsetsDeclarationBuilder _padding = _InsetsDeclarationBuilder(
-    mergeInStyleOrder: true,
+  final _padding = _insetsBuilder(mergeInStyleOrder: true);
+  final _border = _insetsBuilder(mergeInStyleOrder: true);
+  final _CumulativeInsetsBuilder<TwLogicalInsets, TwLayoutLogicalInsetSides>
+  _iconMargin = _CumulativeInsetsBuilder(
+    empty: const TwLogicalInsets(),
+    apply: _applyLogicalInsets,
   );
-  final _InsetsDeclarationBuilder _border = _InsetsDeclarationBuilder(
-    mergeInStyleOrder: true,
-  );
-  final _LogicalInsetsDeclarationBuilder _iconMargin =
-      _LogicalInsetsDeclarationBuilder();
   var _isFlexContainer = false;
 
   var _hasBaseFlex = false;
@@ -822,13 +821,13 @@ final class _ResponsiveDeclarationBuilder<T> {
   }
 }
 
-final class _InsetsDeclaration {
+final class _CumulativeInsetsDeclaration<S> {
   final double value;
-  final TwLayoutInsetSides sides;
+  final S sides;
   final double minWidth;
   final int order;
   final int styleGroupOrder;
-  const _InsetsDeclaration({
+  const _CumulativeInsetsDeclaration({
     required this.value,
     required this.sides,
     required this.minWidth,
@@ -837,22 +836,36 @@ final class _InsetsDeclaration {
   });
 }
 
-final class _InsetsDeclarationBuilder {
+/// Builds a responsive value whose breakpoints accumulate rather than replace.
+///
+/// Every declaration active at a breakpoint is re-applied from [empty] in merge
+/// order, because a newly active breakpoint may precede another already active
+/// Styler variant. [apply] writes one declaration's sides onto the value under
+/// construction, which is what makes the two side vocabularies share this
+/// algorithm.
+final class _CumulativeInsetsBuilder<V, S> {
+  final V empty;
+
+  final V Function(V current, double value, S sides) apply;
   final bool mergeInStyleOrder;
 
-  final _declarations = <_InsetsDeclaration>[];
+  final _declarations = <_CumulativeInsetsDeclaration<S>>[];
 
-  _InsetsDeclarationBuilder({this.mergeInStyleOrder = false});
+  _CumulativeInsetsBuilder({
+    required this.empty,
+    required this.apply,
+    this.mergeInStyleOrder = false,
+  });
 
   void add(
     double value, {
-    required TwLayoutInsetSides sides,
+    required S sides,
     required double minWidth,
     required int order,
-    required int styleGroupOrder,
+    int styleGroupOrder = 0,
   }) {
     _declarations.add(
-      _InsetsDeclaration(
+      _CumulativeInsetsDeclaration(
         value: value,
         sides: sides,
         minWidth: minWidth,
@@ -862,7 +875,7 @@ final class _InsetsDeclarationBuilder {
     );
   }
 
-  TwResponsiveValue<TwInsets> build() {
+  TwResponsiveValue<V> build() {
     if (_declarations.isEmpty) return const TwResponsiveValue.empty();
     final declarations = _declarations.toList()
       ..sort((left, right) {
@@ -874,14 +887,12 @@ final class _InsetsDeclarationBuilder {
       });
     final widths = _declarations.map((entry) => entry.minWidth).toSet().toList()
       ..sort();
-    final entries = <TwResponsiveEntry<TwInsets>>[];
+    final entries = <TwResponsiveEntry<V>>[];
     for (final width in widths) {
-      var current = const TwInsets();
-      // Re-evaluate active declarations in merge order: a newly active
-      // breakpoint may precede another active Styler variant.
+      var current = empty;
       for (final declaration in declarations) {
         if (declaration.minWidth > width) continue;
-        current = _applyInsets(current, declaration.value, declaration.sides);
+        current = apply(current, declaration.value, declaration.sides);
       }
       entries.add(TwResponsiveEntry(minWidth: width, value: current));
     }
@@ -907,65 +918,22 @@ TwInsets _applyInsets(
   );
 }
 
-final class _LogicalInsetsDeclaration {
-  final double value;
+TwLogicalInsets _applyLogicalInsets(
+  TwLogicalInsets current,
+  double value,
+  TwLayoutLogicalInsetSides sides,
+) => current.withSides(
+  value: value,
+  start: sides == .start,
+  end: sides == .end,
+  left: sides == .left,
+  right: sides == .right,
+);
 
-  final TwLayoutLogicalInsetSides sides;
-  final double minWidth;
-  final int order;
-  const _LogicalInsetsDeclaration({
-    required this.value,
-    required this.sides,
-    required this.minWidth,
-    required this.order,
-  });
-}
-
-final class _LogicalInsetsDeclarationBuilder {
-  final _declarations = <_LogicalInsetsDeclaration>[];
-
-  void add(
-    double value, {
-    required TwLayoutLogicalInsetSides sides,
-    required double minWidth,
-    required int order,
-  }) {
-    _declarations.add(
-      _LogicalInsetsDeclaration(
-        value: value,
-        sides: sides,
-        minWidth: minWidth,
-        order: order,
-      ),
-    );
-  }
-
-  TwResponsiveValue<TwLogicalInsets> build() {
-    if (_declarations.isEmpty) return const TwResponsiveValue.empty();
-    final byWidth = <double, List<_LogicalInsetsDeclaration>>{};
-    for (final declaration in _declarations) {
-      byWidth.putIfAbsent(declaration.minWidth, () => []).add(declaration);
-    }
-
-    var current = const TwLogicalInsets();
-    final entries = <TwResponsiveEntry<TwLogicalInsets>>[];
-    final widths = byWidth.keys.toList()..sort();
-    for (final width in widths) {
-      final declarations = byWidth[width]!
-        ..sort((left, right) => left.order.compareTo(right.order));
-      for (final declaration in declarations) {
-        final sides = declaration.sides;
-        current = current.withSides(
-          value: declaration.value,
-          start: sides == .start,
-          end: sides == .end,
-          left: sides == .left,
-          right: sides == .right,
-        );
-      }
-      entries.add(TwResponsiveEntry(minWidth: width, value: current));
-    }
-
-    return TwResponsiveValue(entries);
-  }
-}
+_CumulativeInsetsBuilder<TwInsets, TwLayoutInsetSides> _insetsBuilder({
+  bool mergeInStyleOrder = false,
+}) => .new(
+  empty: const TwInsets(),
+  apply: _applyInsets,
+  mergeInStyleOrder: mergeInStyleOrder,
+);
