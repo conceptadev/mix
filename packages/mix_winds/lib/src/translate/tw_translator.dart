@@ -84,6 +84,20 @@ final class _DiagnosticCollector {
   }
 }
 
+/// One translation pass over a candidate program.
+///
+/// [TwTranslator] is `const` and holds only configuration, so everything a
+/// single pass needs beyond that travels here: the collector its diagnostics
+/// land in, and whether the widget layer owns external margin for it.
+final class _TranslationScope {
+  final collector = _DiagnosticCollector();
+
+  /// Applies semantic widget margin diagnostics to box and flex targets.
+  final bool usesExternalMargins;
+
+  _TranslationScope({this.usesExternalMargins = false});
+}
+
 final class _CompilationArtifacts<S extends Object> {
   final S styler;
   final TwCompiledLayoutPlan layoutPlan;
@@ -131,8 +145,6 @@ final class TwTranslator {
   final TwDiagnosticCallback? onDiagnostic;
   final void Function(String token)? legacyOnUnsupported;
 
-  /// Applies semantic widget margin diagnostics to box and flex targets.
-  final bool _usesExternalMargins;
   static const _parser = TailwindCandidateParser(
     registry: defaultTailwindParserRegistry,
   );
@@ -147,20 +159,15 @@ final class TwTranslator {
     required this.config,
     this.onDiagnostic,
     this.legacyOnUnsupported,
-  }) : _usesExternalMargins = false;
+  });
 
-  const TwTranslator._forWidget({required this.config, this.onDiagnostic})
-    : legacyOnUnsupported = null,
-      _usesExternalMargins = true;
-
-  void _emitDiagnostic(TwDiagnostic diagnostic) {
-    onDiagnostic?.call(diagnostic);
-    legacyOnUnsupported?.call(diagnostic.token);
-  }
-
-  void _reportParseFailure(String token, TailwindParseFailure failure) {
+  void _reportParseFailure(
+    _TranslationScope scope,
+    String token,
+    TailwindParseFailure failure,
+  ) {
     final reason = failure.errors.map((error) => error.message).join('; ');
-    _emitDiagnostic(
+    scope.collector.add(
       TwDiagnostic(
         token: token,
         code: .invalidCandidate,
@@ -170,23 +177,28 @@ final class TwTranslator {
     );
   }
 
-  bool _reportBlockingRoute(String token, TwRoute route) {
+  bool _reportBlockingRoute(
+    _TranslationScope scope,
+    String token,
+    TwRoute route,
+  ) {
     if (route.kind != .ignored && route.kind != .unsupported) {
       return false;
     }
 
-    _emitDiagnostic(route.toDiagnostic(token));
+    scope.collector.add(route.toDiagnostic(token));
 
     return true;
   }
 
   void _reportUnsupported(
+    _TranslationScope scope,
     String token, {
     TwDiagnosticCode code = .unsupportedValue,
     required String reason,
     String? workaround,
   }) {
-    _emitDiagnostic(
+    scope.collector.add(
       TwDiagnostic(
         token: token,
         code: code,
@@ -228,9 +240,12 @@ final class TwTranslator {
     return _CandidateProgram(candidates: candidates, failures: failures);
   }
 
-  void _reportParseFailures(_CandidateProgram program) {
+  void _reportParseFailures(
+    _TranslationScope scope,
+    _CandidateProgram program,
+  ) {
     for (final failed in program.failures) {
-      _reportParseFailure(failed.token, failed.failure);
+      _reportParseFailure(scope, failed.token, failed.failure);
     }
   }
 
@@ -315,6 +330,7 @@ final class TwTranslator {
   }
 
   S _translate<S>(
+    _TranslationScope scope,
     _CandidateProgram program, {
     required TwTarget target,
     required S Function(_GroupContext context) build,
@@ -322,7 +338,7 @@ final class TwTranslator {
     required S Function(List<TwRuntimeVariant> path, S style) wrapVariant,
     void Function(_GroupContext context)? afterBase,
   }) {
-    final groups = _buildGroups(program, target);
+    final groups = _buildGroups(scope, program, target);
     final baseContext = groups[_VariantPath.base] ?? _GroupContext();
     afterBase?.call(baseContext);
 
@@ -356,10 +372,11 @@ final class TwTranslator {
   }
 
   Map<_VariantPath, _GroupContext> _buildGroups(
+    _TranslationScope scope,
     _CandidateProgram program,
     TwTarget target,
   ) {
-    _reportParseFailures(program);
+    _reportParseFailures(scope, program);
     final groups = <_VariantPath, _GroupContext>{};
     _GroupContext groupFor(_VariantPath path) {
       return groups.putIfAbsent(path, _GroupContext.new);
@@ -368,14 +385,15 @@ final class TwTranslator {
     for (final compiled in program.candidates) {
       final _CompiledCandidate(:token, :candidate, :route, :variantPath) =
           compiled;
-      if (_isLayoutOwnedCandidate(compiled, target)) continue;
-      if (_reportBlockingRoute(token, route)) continue;
-      if (_usesExternalMargins || target == .text) {
-        if (_reportExternalMarginVariant(candidate)) continue;
+      if (_isLayoutOwnedCandidate(scope, compiled, target)) continue;
+      if (_reportBlockingRoute(scope, token, route)) continue;
+      if (scope.usesExternalMargins || target == .text) {
+        if (_reportExternalMarginVariant(scope, candidate)) continue;
       }
       if (route.kind == .widgetLayer) {
         if (!_isSupportedWidgetLayerUtility(candidate.utility)) {
           _reportUnsupported(
+            scope,
             token,
             reason: 'This value is unsupported by the Flutter widget layer.',
           );
@@ -384,6 +402,7 @@ final class TwTranslator {
           target,
         )) {
           _reportUnsupported(
+            scope,
             token,
             code: .unsupportedForTarget,
             reason:
@@ -394,6 +413,7 @@ final class TwTranslator {
         } else if (_isRootLayoutWidgetUtility(candidate.utility) &&
             !_hasOnlyBreakpointVariants(candidate.variants)) {
           _reportUnsupported(
+            scope,
             token,
             code: .widgetLayerVariantUnsupported,
             reason:
@@ -406,6 +426,7 @@ final class TwTranslator {
 
       if (variantPath == null) {
         _reportUnsupported(
+          scope,
           token,
           code: .unsupportedVariant,
           reason: 'The variant chain cannot be represented at runtime.',
@@ -417,6 +438,7 @@ final class TwTranslator {
       if (route.kind == .gradient) {
         if (!_applyGradient(group.gradient, candidate)) {
           _reportUnsupported(
+            scope,
             token,
             reason: 'The gradient value cannot be represented in Flutter.',
           );
@@ -427,6 +449,7 @@ final class TwTranslator {
       final handled = _applyStyleCandidate(group, candidate, target);
       if (!handled) {
         _reportUnsupported(
+          scope,
           token,
           code: .unsupportedUtility,
           reason: 'This utility has no translation for the selected target.',
@@ -1147,14 +1170,18 @@ final class TwTranslator {
   /// margin outside the styled border box through the layout plan, so those
   /// Stylers omit it as well. Direct `TwParser` compilation keeps margin
   /// because Mix can apply it portably.
-  bool _isLayoutOwnedCandidate(_CompiledCandidate compiled, TwTarget target) {
+  bool _isLayoutOwnedCandidate(
+    _TranslationScope scope,
+    _CompiledCandidate compiled,
+    TwTarget target,
+  ) {
     // Only breakpoint-scoped positive margins reach the plan. Other margin
     // variants fall through so the compiler can report them.
     if (compiled.layoutInput?.inset?.kind != .margin) return false;
 
     return switch (target) {
       .text => true,
-      .box || .flexBox => _usesExternalMargins,
+      .box || .flexBox => scope.usesExternalMargins,
     };
   }
 
@@ -1170,6 +1197,7 @@ final class TwTranslator {
   }
 
   bool _reportExternalMarginVariant(
+    _TranslationScope scope,
     TailwindCandidate candidate, {
     bool logical = false,
   }) {
@@ -1181,6 +1209,7 @@ final class TwTranslator {
     if (!hasMargin) return false;
 
     _reportUnsupported(
+      scope,
       candidate.raw,
       code: .widgetLayerVariantUnsupported,
       reason: 'External margin only supports configured viewport breakpoints.',
@@ -1456,8 +1485,12 @@ final class TwTranslator {
     };
   }
 
-  BoxStyler _translateBoxProgram(_CandidateProgram program) {
+  BoxStyler _translateBoxProgram(
+    _TranslationScope scope,
+    _CandidateProgram program,
+  ) {
     return _translate<BoxStyler>(
+      scope,
       program,
       target: .box,
       build: (context) => context.toBoxStyler(config),
@@ -1466,8 +1499,12 @@ final class TwTranslator {
     );
   }
 
-  FlexBoxStyler _translateFlexProgram(_CandidateProgram program) {
+  FlexBoxStyler _translateFlexProgram(
+    _TranslationScope scope,
+    _CandidateProgram program,
+  ) {
     return _translate<FlexBoxStyler>(
+      scope,
       program,
       target: .flexBox,
       build: (context) => context.toFlexBoxStyler(config),
@@ -1481,8 +1518,12 @@ final class TwTranslator {
     );
   }
 
-  TextStyler _translateTextProgram(_CandidateProgram program) {
+  TextStyler _translateTextProgram(
+    _TranslationScope scope,
+    _CandidateProgram program,
+  ) {
     return _translate<TextStyler>(
+      scope,
       program,
       target: .text,
       build: (context) => context.toTextStyler(config),
@@ -1491,13 +1532,16 @@ final class TwTranslator {
     );
   }
 
-  IconStyler _translateIconProgram(_CandidateProgram program) {
+  IconStyler _translateIconProgram(
+    _TranslationScope scope,
+    _CandidateProgram program,
+  ) {
     double? width;
     double? height;
     Color? color;
     double? opacity;
 
-    _reportParseFailures(program);
+    _reportParseFailures(scope, program);
     for (final compiled in program.candidates) {
       final _CompiledCandidate(:token, :candidate, :route) = compiled;
 
@@ -1511,16 +1555,17 @@ final class TwTranslator {
           (route.kind != .unsupported ||
               route.diagnosticCode == .unsupportedUtility);
       if (canApplyLogicalMargin &&
-          _reportExternalMarginVariant(candidate, logical: true)) {
+          _reportExternalMarginVariant(scope, candidate, logical: true)) {
         continue;
       }
-      if (_reportBlockingRoute(token, route)) continue;
+      if (_reportBlockingRoute(scope, token, route)) continue;
       if (route.kind == .widgetLayer &&
           _isAnimationUtility(candidate.utility)) {
         continue;
       }
       if (candidate.variants.isNotEmpty || route.kind != .style) {
         _reportUnsupported(
+          scope,
           token,
           code: .unsupportedForTarget,
           reason: 'This candidate cannot be applied to an icon target.',
@@ -1532,6 +1577,7 @@ final class TwTranslator {
       final utility = candidate.utility;
       if (tailwindUtilityNegative(utility)) {
         _reportUnsupported(
+          scope,
           token,
           reason: 'Negative icon sizing and opacity values are unsupported.',
         );
@@ -1570,6 +1616,7 @@ final class TwTranslator {
 
       if (!handled) {
         _reportUnsupported(
+          scope,
           token,
           code: .unsupportedForTarget,
           reason: 'This utility has no supported icon translation.',
@@ -1985,7 +2032,10 @@ final class TwTranslator {
   TwCompiledLayoutPlan _iconLayoutPlan(TwCompiledLayoutPlan plan) =>
       .new(iconLogicalMargin: plan.iconLogicalMargin);
 
-  CurveAnimationConfig? _parseAnimationProgram(_CandidateProgram program) {
+  CurveAnimationConfig? _parseAnimationProgram(
+    _TranslationScope scope,
+    _CandidateProgram program,
+  ) {
     var hasTransition = false;
     var hasTransitionNone = false;
     var duration = const Duration(milliseconds: 150);
@@ -2009,6 +2059,7 @@ final class TwTranslator {
           duration = Duration(milliseconds: ms);
         } else {
           _reportUnsupported(
+            scope,
             token,
             reason: 'The transition duration is not in the configured scale.',
             workaround: 'Use a duration key from TwConfig.durations.',
@@ -2022,6 +2073,7 @@ final class TwTranslator {
           delay = Duration(milliseconds: ms);
         } else {
           _reportUnsupported(
+            scope,
             token,
             reason: 'The transition delay is not in the configured scale.',
             workaround: 'Use a delay key from TwConfig.delays.',
@@ -2038,7 +2090,7 @@ final class TwTranslator {
   TwCompilation<S> _compile<S extends Object>(
     String classNames, {
     required _CompilationArtifacts<S> Function(
-      TwTranslator worker,
+      _TranslationScope scope,
       _CandidateProgram program,
     )
     build,
@@ -2046,32 +2098,31 @@ final class TwTranslator {
     attachAnimation,
   }) {
     final program = _compileProgram(splitTailwindTokens(classNames));
-    final collector = _DiagnosticCollector();
-    final worker = TwTranslator(config: config, onDiagnostic: collector.add);
-    final artifacts = build(worker, program);
-    final animation = worker._parseAnimationProgram(program);
+    final scope = _TranslationScope();
+    final artifacts = build(scope, program);
+    final animation = _parseAnimationProgram(scope, program);
     final styler = animation == null
         ? artifacts.styler
         : attachAnimation(artifacts.styler, animation);
     final compilation = TwCompilation<S>(
       styler: styler,
       layoutPlan: artifacts.layoutPlan,
-      diagnostics: collector.diagnostics,
+      diagnostics: scope.collector.diagnostics,
     );
-    collector.replay(onDiagnostic, legacyOnUnsupported);
+    scope.collector.replay(onDiagnostic, legacyOnUnsupported);
 
     return compilation;
   }
 
   TwCompilation<BoxStyler> compileBox(String classNames) => _compile<BoxStyler>(
     classNames,
-    build: (worker, program) {
-      final styler = worker._translateBoxProgram(program);
-      final plan = worker._buildLayoutPlan(program, .box);
+    build: (scope, program) {
+      final styler = _translateBoxProgram(scope, program);
+      final plan = _buildLayoutPlan(program, .box);
 
       return _CompilationArtifacts(
         styler: styler,
-        layoutPlan: worker._boxLayoutPlan(plan),
+        layoutPlan: _boxLayoutPlan(plan),
       );
     },
     attachAnimation: (styler, animation) => styler.animate(animation),
@@ -2080,13 +2131,13 @@ final class TwTranslator {
   TwCompilation<FlexBoxStyler> compileFlex(String classNames) =>
       _compile<FlexBoxStyler>(
         classNames,
-        build: (worker, program) {
-          final styler = worker._translateFlexProgram(program);
-          final plan = worker._buildLayoutPlan(program, .flexBox);
+        build: (scope, program) {
+          final styler = _translateFlexProgram(scope, program);
+          final plan = _buildLayoutPlan(program, .flexBox);
 
           return _CompilationArtifacts(
             styler: styler,
-            layoutPlan: worker._flexLayoutPlan(plan),
+            layoutPlan: _flexLayoutPlan(plan),
           );
         },
         attachAnimation: (styler, animation) => styler.animate(animation),
@@ -2095,13 +2146,13 @@ final class TwTranslator {
   TwCompilation<TextStyler> compileText(String classNames) =>
       _compile<TextStyler>(
         classNames,
-        build: (worker, program) {
-          final styler = worker._translateTextProgram(program);
-          final plan = worker._buildLayoutPlan(program, .text);
+        build: (scope, program) {
+          final styler = _translateTextProgram(scope, program);
+          final plan = _buildLayoutPlan(program, .text);
 
           return _CompilationArtifacts(
             styler: styler,
-            layoutPlan: worker._externalMarginLayoutPlan(plan),
+            layoutPlan: _externalMarginLayoutPlan(plan),
           );
         },
         attachAnimation: (styler, animation) => styler.animate(animation),
@@ -2110,13 +2161,13 @@ final class TwTranslator {
   TwCompilation<IconStyler> compileIcon(String classNames) =>
       _compile<IconStyler>(
         classNames,
-        build: (worker, program) {
-          final styler = worker._translateIconProgram(program);
-          final plan = worker._buildLayoutPlan(program, null);
+        build: (scope, program) {
+          final styler = _translateIconProgram(scope, program);
+          final plan = _buildLayoutPlan(program, null);
 
           return _CompilationArtifacts(
             styler: styler,
-            layoutPlan: worker._iconLayoutPlan(plan),
+            layoutPlan: _iconLayoutPlan(plan),
           );
         },
         attachAnimation: (styler, animation) => styler.animate(animation),
@@ -2137,15 +2188,14 @@ final class TwTranslator {
     final wantsFlex = mode == .boxOrFlex ? (forceFlex ?? inferredFlex) : false;
     final hasBoxUtilities = _programHasBoxUtilities(program);
     final collector = _DiagnosticCollector();
-    final targetCollectors = <_DiagnosticCollector>[];
-    TwTranslator workerForTarget() {
-      final targetCollector = _DiagnosticCollector();
-      targetCollectors.add(targetCollector);
+    // One scope per emitted Styler: a diagnostic only survives if every target
+    // this mode compiles reports it.
+    final targetScopes = <_TranslationScope>[];
+    _TranslationScope scopeForTarget() {
+      final scope = _TranslationScope(usesExternalMargins: true);
+      targetScopes.add(scope);
 
-      return TwTranslator._forWidget(
-        config: config,
-        onDiagnostic: targetCollector.add,
-      );
+      return scope;
     }
 
     BoxStyler? boxStyler;
@@ -2156,19 +2206,19 @@ final class TwTranslator {
     switch (mode) {
       case .boxOrFlex:
         if (wantsFlex) {
-          flexStyler = workerForTarget()._translateFlexProgram(program);
+          flexStyler = _translateFlexProgram(scopeForTarget(), program);
         } else {
-          boxStyler = workerForTarget()._translateBoxProgram(program);
+          boxStyler = _translateBoxProgram(scopeForTarget(), program);
         }
       case .inline:
         if (hasBoxUtilities) {
-          boxStyler = workerForTarget()._translateBoxProgram(program);
+          boxStyler = _translateBoxProgram(scopeForTarget(), program);
         }
-        textStyler = workerForTarget()._translateTextProgram(program);
+        textStyler = _translateTextProgram(scopeForTarget(), program);
       case .text:
-        textStyler = workerForTarget()._translateTextProgram(program);
+        textStyler = _translateTextProgram(scopeForTarget(), program);
       case .icon:
-        iconStyler = workerForTarget()._translateIconProgram(program);
+        iconStyler = _translateIconProgram(scopeForTarget(), program);
     }
 
     final layoutTarget = switch (mode) {
@@ -2179,24 +2229,24 @@ final class TwTranslator {
     };
     final fullLayoutPlan = _buildLayoutPlan(program, layoutTarget);
 
-    final firstTargetCollector = targetCollectors.first;
-    if (targetCollectors.length == 1) {
+    final firstTargetCollector = targetScopes.first.collector;
+    if (targetScopes.length == 1) {
       collector.addAll(firstTargetCollector.diagnostics);
     } else {
       collector.addAll(
         firstTargetCollector.diagnostics.where(
-          (diagnostic) => targetCollectors
+          (diagnostic) => targetScopes
               .skip(1)
-              .every((other) => other.containsToken(diagnostic.token)),
+              .every(
+                (other) => other.collector.containsToken(diagnostic.token),
+              ),
         ),
       );
     }
 
-    final animationWorker = TwTranslator(
-      config: config,
-      onDiagnostic: collector.add,
-    );
-    final animation = animationWorker._parseAnimationProgram(program);
+    final animationScope = _TranslationScope();
+    final animation = _parseAnimationProgram(animationScope, program);
+    collector.addAll(animationScope.collector.diagnostics);
     if (animation != null) {
       boxStyler = boxStyler?.animate(animation);
       flexStyler = flexStyler?.animate(animation);
