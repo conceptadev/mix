@@ -11,6 +11,11 @@ enum MixProtocolTokenDeclaration { direct, alias }
 
 /// The declared selector surrounding a style term.
 final class MixProtocolSelectorContext {
+  final String kind;
+
+  final String value;
+  final String jsonPointer;
+  final Map<String, Object?> fields;
   MixProtocolSelectorContext({
     required this.kind,
     required this.value,
@@ -18,25 +23,20 @@ final class MixProtocolSelectorContext {
     required Map<String, Object?> fields,
   }) : fields = _immutableJson(fields) as Map<String, Object?>;
 
-  final String kind;
-  final String value;
-  final String jsonPointer;
-  final Map<String, Object?> fields;
-
   String get key => '$kind:$value';
 }
 
 /// One exact token occurrence in declared style JSON.
 final class MixProtocolTokenOccurrence {
+  final String kind;
+
+  final String name;
+  final String jsonPointer;
   const MixProtocolTokenOccurrence({
     required this.kind,
     required this.name,
     required this.jsonPointer,
   });
-
-  final String kind;
-  final String name;
-  final String jsonPointer;
 }
 
 /// Evidence emitted while inspecting a declared style document.
@@ -49,6 +49,15 @@ sealed class MixProtocolStyleEvidence {
 
 /// One declared leaf value in a style document.
 final class MixProtocolValueEvidence extends MixProtocolStyleEvidence {
+  final List<String> propertyPath;
+
+  @override
+  final String jsonPointer;
+  final List<MixProtocolSelectorContext> selectors;
+  @override
+  final List<int> mergePath;
+  final Object? literalValue;
+  final MixProtocolTokenOccurrence? token;
   MixProtocolValueEvidence({
     required List<String> propertyPath,
     required this.jsonPointer,
@@ -60,20 +69,20 @@ final class MixProtocolValueEvidence extends MixProtocolStyleEvidence {
        selectors = List.unmodifiable(selectors),
        mergePath = List.unmodifiable(mergePath);
 
-  final List<String> propertyPath;
-  @override
-  final String jsonPointer;
-  final List<MixProtocolSelectorContext> selectors;
-  @override
-  final List<int> mergePath;
-  final Object? literalValue;
-  final MixProtocolTokenOccurrence? token;
-
   String get property => propertyPath.join('.');
 }
 
 /// One declared directive attached to a style value.
 final class MixProtocolDirectiveEvidence extends MixProtocolStyleEvidence {
+  final List<String> propertyPath;
+
+  @override
+  final String jsonPointer;
+  final List<MixProtocolSelectorContext> selectors;
+  @override
+  final List<int> mergePath;
+  final String op;
+  final Map<String, Object?> parameters;
   MixProtocolDirectiveEvidence({
     required List<String> propertyPath,
     required this.jsonPointer,
@@ -86,20 +95,19 @@ final class MixProtocolDirectiveEvidence extends MixProtocolStyleEvidence {
        mergePath = List.unmodifiable(mergePath),
        parameters = _immutableJson(parameters) as Map<String, Object?>;
 
-  final List<String> propertyPath;
-  @override
-  final String jsonPointer;
-  final List<MixProtocolSelectorContext> selectors;
-  @override
-  final List<int> mergePath;
-  final String op;
-  final Map<String, Object?> parameters;
-
   String get property => propertyPath.join('.');
 }
 
 /// One declared selector and any token occurrences within that selector.
 final class MixProtocolSelectorEvidence extends MixProtocolStyleEvidence {
+  @override
+  final String jsonPointer;
+
+  final List<MixProtocolSelectorContext> selectors;
+  @override
+  final List<int> mergePath;
+  final MixProtocolSelectorContext selector;
+  final List<MixProtocolTokenOccurrence> tokenOccurrences;
   MixProtocolSelectorEvidence({
     required this.jsonPointer,
     required List<MixProtocolSelectorContext> selectors,
@@ -109,29 +117,29 @@ final class MixProtocolSelectorEvidence extends MixProtocolStyleEvidence {
   }) : selectors = List.unmodifiable(selectors),
        mergePath = List.unmodifiable(mergePath),
        tokenOccurrences = List.unmodifiable(tokenOccurrences);
-
-  @override
-  final String jsonPointer;
-  final List<MixProtocolSelectorContext> selectors;
-  @override
-  final List<int> mergePath;
-  final MixProtocolSelectorContext selector;
-  final List<MixProtocolTokenOccurrence> tokenOccurrences;
 }
 
 /// Declared, pointer-addressable evidence from a valid style document.
 final class MixProtocolStyleInspection {
+  final String styleType;
+
+  final List<MixProtocolStyleEvidence> evidence;
   MixProtocolStyleInspection({
     required this.styleType,
     required List<MixProtocolStyleEvidence> evidence,
   }) : evidence = List.unmodifiable(evidence);
-
-  final String styleType;
-  final List<MixProtocolStyleEvidence> evidence;
 }
 
 /// One declared token entry and its decoded theme value.
 final class MixProtocolThemeTokenInspection {
+  final String kind;
+
+  final String name;
+  final String jsonPointer;
+  final MixProtocolTokenDeclaration declaration;
+  final Object? declaredWireValue;
+  final List<String> aliasChain;
+  final Object? resolvedWireValue;
   MixProtocolThemeTokenInspection({
     required this.kind,
     required this.name,
@@ -143,23 +151,15 @@ final class MixProtocolThemeTokenInspection {
   }) : declaredWireValue = _immutableJson(declaredWireValue),
        aliasChain = List.unmodifiable(aliasChain),
        resolvedWireValue = _immutableJson(resolvedWireValue);
-
-  final String kind;
-  final String name;
-  final String jsonPointer;
-  final MixProtocolTokenDeclaration declaration;
-  final Object? declaredWireValue;
-  final List<String> aliasChain;
-  final Object? resolvedWireValue;
 }
 
 /// Declared token entries from a valid theme document.
 final class MixProtocolThemeInspection {
+  final List<MixProtocolThemeTokenInspection> tokens;
+
   MixProtocolThemeInspection({
     required List<MixProtocolThemeTokenInspection> tokens,
   }) : tokens = List.unmodifiable(tokens);
-
-  final List<MixProtocolThemeTokenInspection> tokens;
 }
 
 /// Inspects only declared data after a strict style decode succeeds.
@@ -249,14 +249,14 @@ MixProtocolResult<MixProtocolThemeInspection> inspectThemeDocument(
 }
 
 final class _StyleInspectionState {
+  final referencesByName = <String, List<MixProtocolTokenReference>>{};
+
+  final evidence = <MixProtocolStyleEvidence>[];
   _StyleInspectionState(Iterable<MixProtocolTokenReference> references) {
     for (final reference in references) {
       referencesByName.putIfAbsent(reference.name, () => []).add(reference);
     }
   }
-
-  final referencesByName = <String, List<MixProtocolTokenReference>>{};
-  final evidence = <MixProtocolStyleEvidence>[];
 
   MixProtocolStyleInspection build(String styleType) {
     evidence.sort(

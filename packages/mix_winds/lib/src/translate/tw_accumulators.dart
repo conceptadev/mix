@@ -121,10 +121,11 @@ final class BorderAccum {
     BorderSideMix? side(double? width, Color? color) {
       if (width == null && color == null) return null;
       final resolvedWidth = width ?? 0;
+
       return BorderSideMix(
         color: color ?? defaultColor,
+        style: resolvedWidth > 0 ? .solid : .none,
         width: resolvedWidth,
-        style: resolvedWidth > 0 ? BorderStyle.solid : BorderStyle.none,
       );
     }
 
@@ -136,6 +137,6 @@ final class BorderAccum {
       return null;
     }
 
-    return BorderMix(top: top, right: right, bottom: bottom, left: left);
+    return BorderMix(top: top, bottom: bottom, left: left, right: right);
   }
 }

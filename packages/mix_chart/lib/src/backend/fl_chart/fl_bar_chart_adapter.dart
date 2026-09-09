@@ -122,9 +122,7 @@ final class _FlBarChartAdapterState extends State<FlBarChartAdapter> {
     final selected = _isSegmentSelected(group, bar, segment);
     final border =
         presentation.border ??
-        (selected
-            ? const BorderSide(color: Colors.white, width: 2)
-            : BorderSide.none);
+        (selected ? const BorderSide(color: Colors.white, width: 2) : .none);
 
     return fl.BarChartRodStackItem(
       segment.fromY,

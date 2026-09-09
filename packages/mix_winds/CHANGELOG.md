@@ -1,5 +1,21 @@
-## Unreleased
+## 0.1.0-alpha.0
 
+- Export `TwCompilation` and `TwLayoutPlan` for typed compilation results and
+  read-only runtime layout inspection.
+- Match zero-viewport padding and border activation to Mix, and share responsive
+  widths through nested Tw flex scopes so reserved and applied margins agree.
+- Derive layout inset merge order from the actual emitted style groups.
+- Preserve intrinsic measurement for text, headings, spans, and icons with static
+  margins or padding, and for responsive margins when a viewport or enclosing
+  Tw flex scope supplies the width.
+- Match zero-basis padding and border accounting to the emitted style's variant
+  merge order so responsive flex children retain equal content space.
+- Validate each supported utility ledger family through Mix Protocol.
+- Check resolved styles, target diagnostics, runtime plans, and independent
+  JSON Schema validation.
+- Encode `focus-visible` through the additive Protocol v1 selector.
+- Normalize static viewport sizing before routing to prevent incorrect
+  unsupported diagnostics.
 - **Breaking:** Renamed the package from `mix_tailwinds` to `mix_winds`. Update
   the dependency name and change `package:mix_tailwinds/mix_tailwinds.dart`
   imports to `package:mix_winds/mix_winds.dart`. No public API symbol changed;
@@ -63,6 +79,31 @@
 - Added structured `TwDiagnostic` reporting through `onDiagnostic`; ignored
   adaptations and unsupported candidates no longer disappear silently. The
   token-only `onUnsupported` callback remains as a deprecated shim.
+- Added `TwParser.compileBox`, `compileFlex`, `compileText`, and `compileIcon`
+  to return the Styler, deterministic diagnostics, and a read-only runtime
+  layout plan from one candidate pass. Compiled Stylers now retain transition
+  animation for portable Mix Protocol encoding.
+- Build the runtime plan from the compiler's typed utility semantics instead of
+  interpreting class strings a second time, keeping runtime classification in
+  lockstep with routing and configured values.
+- Fixed runtime classification and plan evaluation for external box/flex
+  margins and implicit vertical-flex alignment under bounded versus unbounded
+  constraints.
+- Flex parents now hand prepared compilations to built-in direct children, so
+  parent measurement and child rendering share one parse while diagnostics are
+  still delivered exactly once by the child.
+- Preserve keyed flex child state through prepared compilation and cross-axis
+  gap wrappers when children are reordered.
+- Report unsupported interactive external margins during semantic widget
+  compilation. Direct Box and Flex styler compilation retains supported variants.
+- Skip negative arbitrary external margins so semantic widgets do not receive
+  invalid padding or overwrite an earlier positive margin.
+- Require every nested viewport breakpoint before applying a semantic layout
+  utility, independent of the breakpoint order.
+- **Breaking (experimental alpha):** Removed the token-level `TwParser`
+  helpers `listTokens`, `setTokens`, `wantsFlex`, and
+  `parseAnimationFromTokens`. Use the target-specific `compile*` methods; the
+  parsed candidate program is now package-internal.
 - Resolve conflicting utilities in canonical registry order across translated
   styles and constraint-aware widget behavior, so class-string order no longer
   changes base, variant, flex-axis, gap, or self-alignment output.

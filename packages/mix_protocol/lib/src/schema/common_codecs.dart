@@ -7,6 +7,7 @@ import 'package:mix/mix.dart';
 import '../errors/mix_protocol_error.dart';
 import '../errors/schema_error_mapper.dart';
 import 'primitive_wire.dart';
+import 'wire_schema.dart';
 
 const String tokenReferenceKey = r'$token';
 const String mergeReferenceKey = r'$merge';
@@ -27,40 +28,14 @@ CodecSchema<num, double> numberAsDoubleCodec() {
 }
 
 CodecSchema<num, double> positiveDoubleCodec() {
-  return Ack.number()
-      .constrain(
-        _PredicateConstraint<num>(
-          constraintKey: 'mix_protocol_positive_number',
-          description: 'Number must be greater than zero.',
-          isValidValue: (value) => value > 0,
-          message: 'Value must be greater than zero.',
-        ),
-      )
-      .codec<double>(
-        decode: (value) => value.toDouble(),
-        encode: (value) => value,
-      );
+  return Ack.number().positive().codec<double>(
+    decode: (value) => value.toDouble(),
+    encode: (value) => value,
+  );
 }
 
 CodecSchema<Object, double> positiveDoubleTokenCodec() {
-  return tokenizedCodec<double, double>(
-    literal: positiveDoubleCodec(),
-    decodeToken: (data) {
-      final name = data[tokenReferenceKey]! as String;
-      final kind = data[tokenKindKey] as String? ?? tokenKindSpace;
-
-      return switch (kind) {
-        tokenKindDouble => DoubleToken(name),
-        tokenKindSpace => SpaceToken(name),
-        _ => throw UnsupportedEncodeValueError(
-          kind,
-          'Unknown double token kind "$kind".',
-        ),
-      };
-    },
-    reference: (token) => token(),
-    allowDoubleKind: true,
-  );
+  return _doubleTokenCodec(positiveDoubleCodec());
 }
 
 CodecSchema<num, double> nonNegativeDoubleCodec() {
@@ -74,14 +49,8 @@ CodecSchema<num, double> nonNegativeDoubleCodec() {
 
 CodecSchema<num, double> unitDoubleCodec() {
   return Ack.number()
-      .constrain(
-        _PredicateConstraint<num>(
-          constraintKey: 'mix_protocol_unit_number',
-          description: 'Number must be between 0 and 1 inclusive.',
-          isValidValue: (value) => value >= 0 && value <= 1,
-          message: 'Value must be between 0 and 1.',
-        ),
-      )
+      .min(0)
+      .max(1)
       .codec<double>(
         decode: (value) => value.toDouble(),
         encode: (value) => value,
@@ -89,50 +58,20 @@ CodecSchema<num, double> unitDoubleCodec() {
 }
 
 CodecSchema<Object, double> doubleTokenCodec() {
-  return tokenizedCodec<double, double>(
-    literal: numberAsDoubleCodec(),
-    decodeToken: (data) {
-      final name = data[tokenReferenceKey]! as String;
-      final kind = data[tokenKindKey] as String? ?? tokenKindSpace;
-
-      return switch (kind) {
-        tokenKindDouble => DoubleToken(name),
-        tokenKindSpace => SpaceToken(name),
-        _ => throw UnsupportedEncodeValueError(
-          kind,
-          'Unknown double token kind "$kind".',
-        ),
-      };
-    },
-    reference: (token) => token(),
-    allowDoubleKind: true,
-  );
+  return _doubleTokenCodec(numberAsDoubleCodec());
 }
 
 CodecSchema<Object, double> unitDoubleTokenCodec() {
-  return tokenizedCodec<double, double>(
-    literal: unitDoubleCodec(),
-    decodeToken: (data) {
-      final name = data[tokenReferenceKey]! as String;
-      final kind = data[tokenKindKey] as String? ?? tokenKindSpace;
-
-      return switch (kind) {
-        tokenKindDouble => DoubleToken(name),
-        tokenKindSpace => SpaceToken(name),
-        _ => throw UnsupportedEncodeValueError(
-          kind,
-          'Unknown double token kind "$kind".',
-        ),
-      };
-    },
-    reference: (token) => token(),
-    allowDoubleKind: true,
-  );
+  return _doubleTokenCodec(unitDoubleCodec());
 }
 
 CodecSchema<Object, double> nonNegativeDoubleTokenCodec() {
+  return _doubleTokenCodec(nonNegativeDoubleCodec());
+}
+
+CodecSchema<Object, double> _doubleTokenCodec(AckSchema<num, double> literal) {
   return tokenizedCodec<double, double>(
-    literal: nonNegativeDoubleCodec(),
+    literal: literal,
     decodeToken: (data) {
       final name = data[tokenReferenceKey]! as String;
       final kind = data[tokenKindKey] as String? ?? tokenKindSpace;
@@ -231,10 +170,7 @@ CodecSchema<JsonMap, Locale> localeCodec() {
 
 CodecSchema<List<num>, Matrix4> matrix4Codec() {
   return Ack.list(numberAsDoubleCodec())
-      .refine(
-        (value) => value.length == 16,
-        message: 'Matrix4 payloads must contain exactly 16 numbers.',
-      )
+      .exactLength(16)
       .codec<Matrix4>(
         decode: (value) => Matrix4.fromList(value),
         encode: (value) => value.storage.toList(growable: false),
@@ -275,9 +211,9 @@ CodecSchema<JsonMap, BorderSideMix> borderSideCodec() {
   }).codec<BorderSideMix>(
     decode: (data) => BorderSideMix(
       color: data['color'] as Color?,
-      width: data['width'] as double?,
-      style: data['style'] as BorderStyle?,
       strokeAlign: data['strokeAlign'] as double?,
+      style: data['style'] as BorderStyle?,
+      width: data['width'] as double?,
     ),
     encode: (value) => {
       'color': singleValuePropWire(value.$color, 'borderSide.color'),
@@ -308,9 +244,9 @@ CodecSchema<JsonMap, BorderMix> borderCodec() {
   }).codec<BorderMix>(
     decode: (data) => BorderMix.create(
       top: _borderSideProp(data['top']),
-      right: _borderSideProp(data['right']),
       bottom: _borderSideProp(data['bottom']),
       left: _borderSideProp(data['left']),
+      right: _borderSideProp(data['right']),
     ),
     encode: (value) => {
       'top': singleMixPropWire<BorderSideMix, BorderSide>(
@@ -384,9 +320,9 @@ CodecSchema<JsonMap, ShadowMix> shadowCodec() {
     'blurRadius': doubleTokenCodec().optional(),
   }).codec<ShadowMix>(
     decode: (data) => ShadowMix(
+      blurRadius: data['blurRadius'] as double?,
       color: data['color'] as Color?,
       offset: data['offset'] as Offset?,
-      blurRadius: data['blurRadius'] as double?,
     ),
     encode: (value) => {
       'color': singleValuePropWire(value.$color, 'shadow.color'),
@@ -808,7 +744,11 @@ _propTermCodec<Value extends Object, PropValue extends Object>(
   Value? Function(PropValue value)? convertValue,
 }) {
   return Ack.codec<Object, Object, Prop<PropValue>>(
-    input: Ack.any(),
+    input: Ack.any().withConstraint(
+      WireSchemaConstraint<Object>(
+        () => _propertyTermWireSchema<PropValue>(valueCodec),
+      ),
+    ),
     decode: (wire) => _decodePropTerm<Value, PropValue>(
       wire,
       valueCodec: valueCodec,
@@ -825,6 +765,89 @@ _propTermCodec<Value extends Object, PropValue extends Object>(
   );
 }
 
+JsonMap _propertyTermWireSchema<PropValue extends Object>(
+  AckSchema<Object, Object> valueCodec,
+) {
+  final literal = literalWireSchema(valueCodec);
+  final kind = _directiveKind<PropValue>();
+  final name = wireSchemaName({
+    'literal': literal,
+    if (kind != null) 'directives': kind.name,
+  }, prefix: 'property');
+  final reference = wireSchemaReference(name);
+  final item = Ack.any().withConstraint(
+    WireSchemaConstraint<Object>(() => reference),
+  );
+  final directives = kind == null ? null : _directiveListWireSchema(kind);
+
+  return {
+    ...reference,
+    'definitions': {
+      name: {
+        'anyOf': [
+          literal,
+          if (directives != null)
+            ..._inlineDirectiveSchemas(literal, directives.toJsonSchema()),
+          Ack.object({
+            mergeReferenceKey: _mergeSourcesSchema(item, hasDirectives: false),
+          }).toJsonSchema(),
+          if (directives != null)
+            Ack.object({
+              mergeReferenceKey: _mergeSourcesSchema(item, hasDirectives: true),
+              applyDirectivesKey: directives,
+            }).toJsonSchema(),
+        ],
+      },
+    },
+  };
+}
+
+// Inline apply is a v1 alias for a single object source with directives.
+// Extend the declared literal object; do not infer a property's value type.
+Iterable<JsonMap> _inlineDirectiveSchemas(
+  JsonMap literal,
+  JsonMap directives,
+) sync* {
+  final reference = literal[r'$ref'];
+  final definitions = literal['definitions'];
+  if (reference is String && definitions is JsonMap) {
+    final definition =
+        definitions[reference.substring('#/definitions/'.length)];
+    if (definition is JsonMap) {
+      yield* _inlineDirectiveSchemas(definition, directives);
+    }
+  }
+  final properties = literal['properties'];
+  if (properties is Map) {
+    yield {
+      ...literal,
+      'properties': {...properties, applyDirectivesKey: directives},
+      'required': [
+        ...(literal['required'] as List? ?? const []),
+        applyDirectivesKey,
+      ],
+    };
+  }
+  final alternatives = literal['anyOf'];
+  if (alternatives is List) {
+    for (final branch in alternatives.whereType<JsonMap>()) {
+      yield* _inlineDirectiveSchemas(branch, directives);
+    }
+  }
+  final constraints = literal['allOf'];
+  if (constraints is List) {
+    for (final branch in constraints.whereType<JsonMap>()) {
+      yield* _inlineDirectiveSchemas(branch, directives);
+    }
+  }
+}
+
+AckSchema<List<B>, List<R>>
+_mergeSourcesSchema<B extends Object, R extends Object>(
+  AckSchema<B, R> item, {
+  required bool hasDirectives,
+}) => Ack.list(item).minItems(hasDirectives ? 1 : 2);
+
 Prop<PropValue> _decodePropTerm<Value extends Object, PropValue extends Object>(
   Object wire, {
   required AckSchema<Object, Value> valueCodec,
@@ -840,8 +863,11 @@ Prop<PropValue> _decodePropTerm<Value extends Object, PropValue extends Object>(
         'Field "$fieldName" merge terms must be a non-empty list.',
       );
     }
-    if (sources.length == 1 &&
-        (apply == null || (apply is List && apply.isEmpty))) {
+    final sourceList = _mergeSourcesSchema(
+      Ack.instance<Object>(),
+      hasDirectives: apply != null && !(apply is List && apply.isEmpty),
+    ).safeParse(sources);
+    if (sourceList.isFail) {
       throw SchemaPathError(
         code: MixProtocolErrorCode.constraintViolation,
         relativePath: '/$mergeReferenceKey',
@@ -989,226 +1015,220 @@ Directive<Value> _decodeDirective<Value extends Object>(
     );
   }
 
-  final directive = switch (op) {
-    'color_opacity' => _withDirectiveParams(
-      wire,
-      index,
-      const {'opacity'},
-      () => OpacityColorDirective(
-        _requiredDoubleParam(wire, 'opacity', fieldName),
-      ),
-    ),
-    'color_with_values' => _withDirectiveParams(
-      wire,
-      index,
-      const {'alpha', 'red', 'green', 'blue', 'colorSpace'},
-      () => WithValuesColorDirective(
-        alpha: _optionalDoubleParam(wire, 'alpha', fieldName),
-        red: _optionalDoubleParam(wire, 'red', fieldName),
-        green: _optionalDoubleParam(wire, 'green', fieldName),
-        blue: _optionalDoubleParam(wire, 'blue', fieldName),
-        colorSpace: _optionalColorSpaceParam(wire, fieldName),
-      ),
-    ),
-    'color_alpha' => _withDirectiveParams(
-      wire,
-      index,
-      const {'alpha'},
-      () => AlphaColorDirective(_requiredIntParam(wire, 'alpha', fieldName)),
-    ),
-    'color_darken' => _amountColorDirective(
-      wire,
-      fieldName,
-      index,
-      DarkenColorDirective.new,
-    ),
-    'color_lighten' => _amountColorDirective(
-      wire,
-      fieldName,
-      index,
-      LightenColorDirective.new,
-    ),
-    'color_saturate' => _amountColorDirective(
-      wire,
-      fieldName,
-      index,
-      SaturateColorDirective.new,
-    ),
-    'color_desaturate' => _amountColorDirective(
-      wire,
-      fieldName,
-      index,
-      DesaturateColorDirective.new,
-    ),
-    'color_tint' => _amountColorDirective(
-      wire,
-      fieldName,
-      index,
-      TintColorDirective.new,
-    ),
-    'color_shade' => _amountColorDirective(
-      wire,
-      fieldName,
-      index,
-      ShadeColorDirective.new,
-    ),
-    'color_brighten' => _amountColorDirective(
-      wire,
-      fieldName,
-      index,
-      BrightenColorDirective.new,
-    ),
-    'color_with_red' => _withDirectiveParams(
-      wire,
-      index,
-      const {'red'},
-      () => WithRedColorDirective(_requiredIntParam(wire, 'red', fieldName)),
-    ),
-    'color_with_green' => _withDirectiveParams(
-      wire,
-      index,
-      const {'green'},
-      () =>
-          WithGreenColorDirective(_requiredIntParam(wire, 'green', fieldName)),
-    ),
-    'color_with_blue' => _withDirectiveParams(
-      wire,
-      index,
-      const {'blue'},
-      () => WithBlueColorDirective(_requiredIntParam(wire, 'blue', fieldName)),
-    ),
-    'uppercase' => _withDirectiveParams(
-      wire,
-      index,
-      const {},
-      () => const UppercaseStringDirective(),
-    ),
-    'lowercase' => _withDirectiveParams(
-      wire,
-      index,
-      const {},
-      () => const LowercaseStringDirective(),
-    ),
-    'capitalize' => _withDirectiveParams(
-      wire,
-      index,
-      const {},
-      () => const CapitalizeStringDirective(),
-    ),
-    'title_case' => _withDirectiveParams(
-      wire,
-      index,
-      const {},
-      () => const TitleCaseStringDirective(),
-    ),
-    'sentence_case' => _withDirectiveParams(
-      wire,
-      index,
-      const {},
-      () => const SentenceCaseStringDirective(),
-    ),
-    'number_multiply' => _withDirectiveParams(
-      wire,
-      index,
-      const {'factor'},
-      () =>
-          MultiplyNumberDirective(_requiredNumParam(wire, 'factor', fieldName)),
-    ),
-    'number_add' => _withDirectiveParams(
-      wire,
-      index,
-      const {'addend'},
-      () => AddNumberDirective(_requiredNumParam(wire, 'addend', fieldName)),
-    ),
-    'number_subtract' => _withDirectiveParams(
-      wire,
-      index,
-      const {'subtrahend'},
-      () => SubtractNumberDirective(
-        _requiredNumParam(wire, 'subtrahend', fieldName),
-      ),
-    ),
-    'number_divide' => _withDirectiveParams(
-      wire,
-      index,
-      const {'divisor'},
-      () =>
-          DivideNumberDirective(_requiredNumParam(wire, 'divisor', fieldName)),
-    ),
-    'number_clamp' => _withDirectiveParams(
-      wire,
-      index,
-      const {'min', 'max'},
-      () => ClampNumberDirective(
-        _requiredNumParam(wire, 'min', fieldName),
-        _requiredNumParam(wire, 'max', fieldName),
-      ),
-    ),
-    'number_abs' => _withDirectiveParams(
-      wire,
-      index,
-      const {},
-      () => const AbsNumberDirective(),
-    ),
-    'number_round' => _withDirectiveParams(
-      wire,
-      index,
-      const {},
-      () => const RoundNumberDirective(),
-    ),
-    'number_floor' => _withDirectiveParams(
-      wire,
-      index,
-      const {},
-      () => const FloorNumberDirective(),
-    ),
-    'number_ceil' => _withDirectiveParams(
-      wire,
-      index,
-      const {},
-      () => const CeilNumberDirective(),
-    ),
-    _ => throw SchemaPathError(
+  final definition = _directiveDefinitions[op];
+  if (definition == null) {
+    throw SchemaPathError(
       code: MixProtocolErrorCode.invalidEnum,
       relativePath: '/$applyDirectivesKey/$index/$directiveOpKey',
       reason: 'Unknown directive op "$op" for field "$fieldName".',
       value: op,
-    ),
-  };
-
-  return _coerceDirective<Value>(directive, fieldName);
-}
-
-T _amountColorDirective<T>(
-  JsonMap wire,
-  String fieldName,
-  int index,
-  T Function(int amount) create,
-) {
-  return _withDirectiveParams(wire, index, const {
-    'amount',
-  }, () => create(_requiredIntParam(wire, 'amount', fieldName)));
-}
-
-T _withDirectiveParams<T>(
-  JsonMap wire,
-  int index,
-  Set<String> allowedParams,
-  T Function() create,
-) {
-  for (final key in wire.keys) {
-    if (key == directiveOpKey || allowedParams.contains(key)) continue;
-
+    );
+  }
+  final result = definition.schema.safeParse(wire);
+  if (result.isFail) {
+    final errors = mapSchemaError(result.getError());
+    final unknown = errors.where((error) => error.code == .unknownField);
+    if (unknown.isEmpty) {
+      throw UnsupportedEncodeValueError(
+        errors.first.value,
+        'Field "$fieldName" has invalid parameters for directive "$op".',
+      );
+    }
+    final error = unknown.first;
     throw SchemaPathError(
-      code: MixProtocolErrorCode.unknownField,
-      relativePath: '/$applyDirectivesKey/$index/$key',
-      reason: 'Directive "${wire[directiveOpKey]}" does not allow "$key".',
-      value: key,
+      code: error.code,
+      relativePath: '/$applyDirectivesKey/$index${error.path}',
+      reason: error.message,
+      value: error.value,
     );
   }
 
-  return create();
+  return _coerceDirective<Value>(
+    definition.decode(result.getOrNull()!),
+    fieldName,
+  );
 }
+
+enum _DirectiveKind { color, number, string }
+
+_DirectiveKind? _directiveKind<Value extends Object>() {
+  if (_valueTypeIs<Value, Color>()) return .color;
+  if (_valueTypeIs<Value, num>()) return .number;
+  if (_valueTypeIs<Value, String>()) return .string;
+
+  return null;
+}
+
+final class _DirectiveDefinition {
+  final ObjectSchema schema;
+  final Object Function(JsonMap data) decode;
+  final _DirectiveKind kind;
+
+  _DirectiveDefinition(
+    String op,
+    Map<String, AckSchema<Object, Object>> parameters,
+    this.decode, {
+    this.kind = .color,
+  }) : schema = Ack.object({directiveOpKey: Ack.literal(op), ...parameters});
+}
+
+final Map<String, _DirectiveDefinition> _directiveDefinitions = {
+  'color_opacity': _DirectiveDefinition('color_opacity', {
+    'opacity': numberAsDoubleCodec(),
+  }, (data) => OpacityColorDirective(data['opacity']! as double)),
+  'color_with_values': _DirectiveDefinition(
+    'color_with_values',
+    {
+      for (final key in ['alpha', 'red', 'green', 'blue'])
+        key: numberAsDoubleCodec().optional(),
+      'colorSpace': Ack.enumValues(ColorSpace.values).optional(),
+    },
+    (data) => WithValuesColorDirective(
+      alpha: data['alpha'] as double?,
+      red: data['red'] as double?,
+      green: data['green'] as double?,
+      blue: data['blue'] as double?,
+      colorSpace: data['colorSpace'] as ColorSpace?,
+    ),
+  ),
+  'color_alpha': _integerDirective(
+    'color_alpha',
+    'alpha',
+    AlphaColorDirective.new,
+  ),
+  'color_darken': _integerDirective(
+    'color_darken',
+    'amount',
+    DarkenColorDirective.new,
+  ),
+  'color_lighten': _integerDirective(
+    'color_lighten',
+    'amount',
+    LightenColorDirective.new,
+  ),
+  'color_saturate': _integerDirective(
+    'color_saturate',
+    'amount',
+    SaturateColorDirective.new,
+  ),
+  'color_desaturate': _integerDirective(
+    'color_desaturate',
+    'amount',
+    DesaturateColorDirective.new,
+  ),
+  'color_tint': _integerDirective(
+    'color_tint',
+    'amount',
+    TintColorDirective.new,
+  ),
+  'color_shade': _integerDirective(
+    'color_shade',
+    'amount',
+    ShadeColorDirective.new,
+  ),
+  'color_brighten': _integerDirective(
+    'color_brighten',
+    'amount',
+    BrightenColorDirective.new,
+  ),
+  'color_with_red': _integerDirective(
+    'color_with_red',
+    'red',
+    WithRedColorDirective.new,
+  ),
+  'color_with_green': _integerDirective(
+    'color_with_green',
+    'green',
+    WithGreenColorDirective.new,
+  ),
+  'color_with_blue': _integerDirective(
+    'color_with_blue',
+    'blue',
+    WithBlueColorDirective.new,
+  ),
+  for (final directive in <Directive<dynamic>>[
+    const UppercaseStringDirective(),
+    const LowercaseStringDirective(),
+    const CapitalizeStringDirective(),
+    const TitleCaseStringDirective(),
+    const SentenceCaseStringDirective(),
+    const AbsNumberDirective(),
+    const RoundNumberDirective(),
+    const FloorNumberDirective(),
+    const CeilNumberDirective(),
+  ])
+    directive.key: _DirectiveDefinition(
+      directive.key,
+      const {},
+      (_) => directive,
+      kind: directive is NumberDirective ? .number : .string,
+    ),
+  'number_multiply': _numberDirective(
+    'number_multiply',
+    'factor',
+    MultiplyNumberDirective.new,
+  ),
+  'number_add': _numberDirective(
+    'number_add',
+    'addend',
+    AddNumberDirective.new,
+  ),
+  'number_subtract': _numberDirective(
+    'number_subtract',
+    'subtrahend',
+    SubtractNumberDirective.new,
+  ),
+  'number_divide': _numberDirective(
+    'number_divide',
+    'divisor',
+    DivideNumberDirective.new,
+  ),
+  'number_clamp': _DirectiveDefinition(
+    'number_clamp',
+    {'min': Ack.number(), 'max': Ack.number()},
+    (data) => ClampNumberDirective(data['min']! as num, data['max']! as num),
+    kind: .number,
+  ),
+};
+
+_DirectiveDefinition _integerDirective(
+  String op,
+  String parameter,
+  Object Function(int value) create,
+) => _DirectiveDefinition(op, {
+  parameter: Ack.number().withConstraint(
+    WireSchemaConstraint<num>(() => Ack.integer().toJsonSchema()),
+  ),
+}, (data) => create(_requiredIntParam(data, parameter, op)));
+
+_DirectiveDefinition _numberDirective(
+  String op,
+  String parameter,
+  Object Function(num value) create,
+) => _DirectiveDefinition(
+  op,
+  {parameter: Ack.number()},
+  (data) => create(data[parameter]! as num),
+  kind: .number,
+);
+
+AckSchema<List<JsonMap>, List<JsonMap>> _directiveListWireSchema(
+  _DirectiveKind kind,
+) => Ack.list(_directiveWireSchemas[kind]!).nonEmpty();
+
+final Map<_DirectiveKind, AckSchema<JsonMap, JsonMap>> _directiveWireSchemas = {
+  for (final kind in _DirectiveKind.values)
+    kind: Ack.lazy<JsonMap, JsonMap>(
+      'mix_protocol_${kind.name}_directive',
+      () => Ack.discriminated<JsonMap>(
+        discriminatorKey: directiveOpKey,
+        schemas: {
+          for (final entry in _directiveDefinitions.entries)
+            if (entry.value.kind == kind) entry.key: entry.value.schema,
+        },
+      ),
+    ),
+};
 
 JsonMap _encodeDirective<Value extends Object>(
   Directive<Value> directive,
@@ -1365,17 +1385,17 @@ bool _valueTypeIs<Value extends Object, Expected extends Object>() {
 
 abstract final class _NumberDirectiveAdapter<T extends num>
     extends Directive<T> {
-  const _NumberDirectiveAdapter(this.inner);
-
   final NumberDirective inner;
 
-  @override
-  String get key => inner.key;
+  const _NumberDirectiveAdapter(this.inner);
 
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       other is _NumberDirectiveAdapter<T> && inner == other.inner;
+
+  @override
+  String get key => inner.key;
 
   @override
   int get hashCode => Object.hash(T, inner);
@@ -1405,18 +1425,6 @@ final class _IntNumberDirective extends _NumberDirectiveAdapter<int> {
   }
 }
 
-double _requiredDoubleParam(JsonMap data, String key, String fieldName) {
-  final value = _requiredNumParam(data, key, fieldName);
-
-  return value.toDouble();
-}
-
-double? _optionalDoubleParam(JsonMap data, String key, String fieldName) {
-  if (!data.containsKey(key)) return null;
-
-  return _requiredDoubleParam(data, key, fieldName);
-}
-
 int _requiredIntParam(JsonMap data, String key, String fieldName) {
   final value = data[key];
   if (value is int) return value;
@@ -1424,32 +1432,6 @@ int _requiredIntParam(JsonMap data, String key, String fieldName) {
   throw UnsupportedEncodeValueError(
     value,
     'Field "$fieldName" directive param "$key" must be an integer.',
-  );
-}
-
-num _requiredNumParam(JsonMap data, String key, String fieldName) {
-  final value = data[key];
-  if (value is num && value.isFinite) return value;
-
-  throw UnsupportedEncodeValueError(
-    value,
-    'Field "$fieldName" directive param "$key" must be a finite number.',
-  );
-}
-
-ColorSpace? _optionalColorSpaceParam(JsonMap data, String fieldName) {
-  if (!data.containsKey('colorSpace')) return null;
-  final value = data['colorSpace'];
-  if (value is String) {
-    for (final colorSpace in ColorSpace.values) {
-      if (colorSpace.name == value) return colorSpace;
-    }
-  }
-
-  throw UnsupportedEncodeValueError(
-    value,
-    'Field "$fieldName" directive param "colorSpace" must be a ColorSpace '
-    'enum name.',
   );
 }
 
@@ -1529,12 +1511,15 @@ tokenReferenceCodec<TokenValue extends Object, Runtime extends Object>({
   );
 }
 
-AckSchema<JsonMap, JsonMap> tokenReferenceWireSchema({
+ObjectSchema tokenReferenceWireSchema({
   bool allowDoubleKind = false,
+  String? exactKind,
 }) {
   return Ack.object({
     tokenReferenceKey: tokenNameCodec(),
-    if (allowDoubleKind)
+    if (exactKind != null)
+      tokenKindKey: Ack.literal(exactKind).optional()
+    else if (allowDoubleKind)
       tokenKindKey: Ack.enumString([
         tokenKindSpace,
         tokenKindDouble,
@@ -1556,7 +1541,11 @@ tokenizedCodec<TokenValue extends Object, Runtime extends Object>({
   );
 
   return Ack.codec<Object, Object, Runtime>(
-    input: Ack.any(),
+    input: Ack.any().withConstraint(
+      WireSchemaConstraint<Object>(
+        () => Ack.anyOf([tokenCodec, literal]).toJsonSchema(),
+      ),
+    ),
     decode: (value) {
       final schema = value is JsonMap && value.containsKey(tokenReferenceKey)
           ? tokenCodec
@@ -1742,10 +1731,10 @@ EdgeInsetsMix _decodeEdgeInsetsMix(Object value) {
   final data = value as JsonMap;
 
   return EdgeInsetsMix(
-    left: data['left'] as double?,
     top: data['top'] as double?,
-    right: data['right'] as double?,
     bottom: data['bottom'] as double?,
+    left: data['left'] as double?,
+    right: data['right'] as double?,
   );
 }
 
@@ -1858,15 +1847,15 @@ Object _encodeBorderRadiusMix(BorderRadiusMix value) {
 
 final class _PredicateConstraint<T extends Object> extends Constraint<T>
     with Validator<T> {
+  final bool Function(T value) isValidValue;
+
+  final String message;
   const _PredicateConstraint({
     required super.constraintKey,
     required super.description,
     required this.isValidValue,
     required this.message,
   });
-
-  final bool Function(T value) isValidValue;
-  final String message;
 
   @override
   bool isValid(T value) => isValidValue(value);
@@ -1884,18 +1873,6 @@ final class _BoxConstraintsBoundsConstraint extends Constraint<JsonMap>
             'Box constraint minimum bounds must not exceed maximum bounds.',
       );
 
-  @override
-  bool isValid(JsonMap value) {
-    return _isAxisValid(value, 'minWidth', 'maxWidth') &&
-        _isAxisValid(value, 'minHeight', 'maxHeight');
-  }
-
-  @override
-  String buildMessage(JsonMap value) {
-    return 'Minimum box constraint bounds must be less than or equal to '
-        'their maximum bounds.';
-  }
-
   static bool _isAxisValid(JsonMap value, String minKey, String maxKey) {
     final min = value[minKey];
     if (min is! double || tokenFromReferenceValue<double>(min) != null) {
@@ -1910,6 +1887,18 @@ final class _BoxConstraintsBoundsConstraint extends Constraint<JsonMap>
     if (max == null) return true;
 
     return min <= max;
+  }
+
+  @override
+  bool isValid(JsonMap value) {
+    return _isAxisValid(value, 'minWidth', 'maxWidth') &&
+        _isAxisValid(value, 'minHeight', 'maxHeight');
+  }
+
+  @override
+  String buildMessage(JsonMap value) {
+    return 'Minimum box constraint bounds must be less than or equal to '
+        'their maximum bounds.';
   }
 }
 

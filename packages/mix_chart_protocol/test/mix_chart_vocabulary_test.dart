@@ -2,12 +2,16 @@ import 'dart:convert';
 
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:json_schema/json_schema.dart' as json_schema;
 import 'package:mix/mix.dart';
 import 'package:mix_chart/mix_chart.dart';
 import 'package:mix_chart_protocol/mix_chart_protocol.dart';
 
 void main() {
   final protocol = mixChartProtocol;
+  late final schemaValidator = json_schema.JsonSchema.create(
+    protocol.exportStyleJsonSchema(),
+  );
 
   test('ready-to-use chart protocol does not widen the core singleton', () {
     final style = LineChartStyler();
@@ -450,6 +454,11 @@ void main() {
       }
       final encoded = (encodedResult as MixProtocolSuccess<JsonMap>).value;
       encodedDocuments.add(encoded);
+      expect(
+        schemaValidator.validate(encoded).isValid,
+        isTrue,
+        reason: style.runtimeType.toString(),
+      );
       final decodedResult = protocol.decodeStyle<Object>(encoded);
       if (decodedResult case MixProtocolFailure<Object>(:final errors)) {
         fail('$style failed to decode: $errors');
@@ -519,7 +528,7 @@ void main() {
 
     expect(
       _fnv1a64(utf8.encode(jsonEncode(schema))),
-      -1622746188329387277,
+      4536424263547838845,
       reason: 'Changing this fingerprint changes the declared chart v1 schema.',
     );
 
@@ -535,13 +544,60 @@ void main() {
       for (final branch in mixChartVocabulary.branches)
         'mix_chart.v1.${branch.name}',
     });
-    expect(_properties(chartBranches['mix_chart.v1.chart_stroke']!)['width'], {
-      r'$ref': '#/definitions/mix_protocol_double_property_term',
-    });
-    expect(
-      _properties(chartBranches['mix_chart.v1.chart_tooltip']!)['padding'],
-      {r'$ref': '#/definitions/mix_protocol_double_property_term'},
-    );
+  });
+
+  test('exported chart schemas preserve field types and numeric limits', () {
+    final cases = <(String, JsonMap, bool)>[
+      ('chart_stroke', {'width': 2}, true),
+      (
+        'chart_stroke',
+        {
+          'width': {r'$token': 'stroke.width', 'kind': 'double'},
+        },
+        true,
+      ),
+      ('chart_stroke', {'width': true}, false),
+      ('chart_stroke', {'opacity': 1.1}, false),
+      ('chart_grid', {'horizontalInterval': 0}, false),
+      ('chart_marker', {'radius': -1}, false),
+      (
+        'chart_tooltip',
+        {
+          'padding': {'left': 8, 'top': 4},
+        },
+        true,
+      ),
+      (
+        'chart_tooltip',
+        {
+          'padding': {r'$token': 'space.padding', 'kind': 'space'},
+        },
+        true,
+      ),
+      ('chart_tooltip', {'padding': true}, false),
+      (
+        'chart_tooltip',
+        {
+          'padding': {r'$token': 'color.padding', 'kind': 'color'},
+        },
+        false,
+      ),
+    ];
+    for (final (branch, fields, valid) in cases) {
+      final payload = {'v': 1, 'type': 'mix_chart.v1.$branch', ...fields};
+      expect(
+        schemaValidator.validate(payload).isValid,
+        valid,
+        reason: '$payload',
+      );
+      expect(
+        protocol.decodeStyle<Object>(payload),
+        valid
+            ? isA<MixProtocolSuccess<Object>>()
+            : isA<MixProtocolFailure<Object>>(),
+        reason: '$payload',
+      );
+    }
   });
 }
 

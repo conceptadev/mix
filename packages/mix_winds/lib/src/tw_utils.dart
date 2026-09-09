@@ -5,6 +5,7 @@ final _whitespaceRegex = RegExp(r'\s+');
 
 List<String> splitTailwindTokens(String classNames) {
   final trimmed = classNames.trim();
+
   return trimmed.isEmpty ? const [] : trimmed.split(_whitespaceRegex);
 }
 
@@ -36,5 +37,6 @@ double? parseCssLength(String raw) {
   var length = double.parse(match.group(1)!);
   final unit = match.group(2) ?? 'px';
   if (unit == 'rem' || unit == 'em') length *= 16;
+
   return length;
 }

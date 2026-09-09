@@ -2,10 +2,10 @@
 library;
 
 final class SourceSpan {
-  const SourceSpan(this.start, this.end);
-
   final int start;
+
   final int end;
+  const SourceSpan(this.start, this.end);
 
   @override
   bool operator ==(Object other) =>
@@ -13,24 +13,24 @@ final class SourceSpan {
       other is SourceSpan && start == other.start && end == other.end;
 
   @override
-  int get hashCode => Object.hash(start, end);
+  String toString() => 'SourceSpan($start, $end)';
 
   @override
-  String toString() => 'SourceSpan($start, $end)';
+  int get hashCode => Object.hash(start, end);
 }
 
 final class TailwindCandidate {
+  final String raw;
+
+  final List<TailwindVariant> variants;
+  final TailwindUtility utility;
+  final bool important;
   const TailwindCandidate({
     required this.raw,
     required this.variants,
     required this.utility,
     required this.important,
   });
-
-  final String raw;
-  final List<TailwindVariant> variants;
-  final TailwindUtility utility;
-  final bool important;
 }
 
 sealed class TailwindUtility {
@@ -40,29 +40,36 @@ sealed class TailwindUtility {
 }
 
 final class TailwindUnresolvedUtility extends TailwindUtility {
+  @override
+  final String raw;
+
+  final List<String> segments;
+  final TailwindModifier? modifier;
+  final bool negative;
   const TailwindUnresolvedUtility({
     required this.raw,
     required this.segments,
     this.modifier,
     this.negative = false,
   });
-
-  @override
-  final String raw;
-  final List<String> segments;
-  final TailwindModifier? modifier;
-  final bool negative;
 }
 
 final class TailwindStaticUtility extends TailwindUtility {
-  const TailwindStaticUtility({required this.raw, required this.root});
-
   @override
   final String raw;
+
   final String root;
+  const TailwindStaticUtility({required this.raw, required this.root});
 }
 
 final class TailwindFunctionalUtility extends TailwindUtility {
+  @override
+  final String raw;
+
+  final String root;
+  final TailwindValue value;
+  final TailwindModifier? modifier;
+  final bool negative;
   const TailwindFunctionalUtility({
     required this.raw,
     required this.root,
@@ -70,28 +77,21 @@ final class TailwindFunctionalUtility extends TailwindUtility {
     this.modifier,
     this.negative = false,
   });
-
-  @override
-  final String raw;
-  final String root;
-  final TailwindValue value;
-  final TailwindModifier? modifier;
-  final bool negative;
 }
 
 final class TailwindArbitraryProperty extends TailwindUtility {
+  @override
+  final String raw;
+
+  final String property;
+  final String value;
+  final TailwindModifier? modifier;
   const TailwindArbitraryProperty({
     required this.raw,
     required this.property,
     required this.value,
     this.modifier,
   });
-
-  @override
-  final String raw;
-  final String property;
-  final String value;
-  final TailwindModifier? modifier;
 }
 
 sealed class TailwindValue {
@@ -101,34 +101,34 @@ sealed class TailwindValue {
 }
 
 final class TailwindNamedValue extends TailwindValue {
-  const TailwindNamedValue(this.raw);
-
   @override
   final String raw;
+
+  const TailwindNamedValue(this.raw);
 }
 
 final class TailwindArbitraryValue extends TailwindValue {
+  @override
+  final String raw;
+
+  final String value;
+  final String? typeHint;
   const TailwindArbitraryValue({
     required this.raw,
     required this.value,
     this.typeHint,
   });
-
-  @override
-  final String raw;
-  final String value;
-  final String? typeHint;
 }
 
 final class TailwindCssVariableValue extends TailwindValue {
+  @override
+  final String raw;
+
+  final String variableName;
   const TailwindCssVariableValue({
     required this.raw,
     required this.variableName,
   });
-
-  @override
-  final String raw;
-  final String variableName;
 }
 
 sealed class TailwindModifier {
@@ -138,29 +138,29 @@ sealed class TailwindModifier {
 }
 
 final class TailwindNamedModifier extends TailwindModifier {
-  const TailwindNamedModifier(this.raw);
-
   @override
   final String raw;
+
+  const TailwindNamedModifier(this.raw);
 }
 
 final class TailwindArbitraryModifier extends TailwindModifier {
-  const TailwindArbitraryModifier({required this.raw, required this.value});
-
   @override
   final String raw;
+
   final String value;
+  const TailwindArbitraryModifier({required this.raw, required this.value});
 }
 
 final class TailwindCssVariableModifier extends TailwindModifier {
+  @override
+  final String raw;
+
+  final String variableName;
   const TailwindCssVariableModifier({
     required this.raw,
     required this.variableName,
   });
-
-  @override
-  final String raw;
-  final String variableName;
 }
 
 sealed class TailwindVariant {
@@ -170,70 +170,70 @@ sealed class TailwindVariant {
 }
 
 final class TailwindUnresolvedVariant extends TailwindVariant {
+  @override
+  final String raw;
+
+  final List<String> segments;
+  final TailwindModifier? modifier;
   const TailwindUnresolvedVariant({
     required this.raw,
     required this.segments,
     this.modifier,
   });
-
-  @override
-  final String raw;
-  final List<String> segments;
-  final TailwindModifier? modifier;
 }
 
 final class TailwindStaticVariant extends TailwindVariant {
+  @override
+  final String raw;
+
+  final String root;
+  final TailwindModifier? modifier;
   const TailwindStaticVariant({
     required this.raw,
     required this.root,
     this.modifier,
   });
-
-  @override
-  final String raw;
-  final String root;
-  final TailwindModifier? modifier;
 }
 
 final class TailwindFunctionalVariant extends TailwindVariant {
+  @override
+  final String raw;
+
+  final String root;
+  final TailwindValue value;
+  final TailwindModifier? modifier;
   const TailwindFunctionalVariant({
     required this.raw,
     required this.root,
     required this.value,
     this.modifier,
   });
-
-  @override
-  final String raw;
-  final String root;
-  final TailwindValue value;
-  final TailwindModifier? modifier;
 }
 
 final class TailwindCompoundVariant extends TailwindVariant {
+  @override
+  final String raw;
+
+  final String root;
+  final TailwindVariant variant;
+  final TailwindModifier? modifier;
   const TailwindCompoundVariant({
     required this.raw,
     required this.root,
     required this.variant,
     this.modifier,
   });
-
-  @override
-  final String raw;
-  final String root;
-  final TailwindVariant variant;
-  final TailwindModifier? modifier;
 }
 
 final class TailwindArbitraryVariant extends TailwindVariant {
+  @override
+  final String raw;
+
+  final String selector;
+  final bool relative;
   const TailwindArbitraryVariant({
     required this.raw,
     required this.selector,
     required this.relative,
   });
-
-  @override
-  final String raw;
-  final String selector;
-  final bool relative;
 }

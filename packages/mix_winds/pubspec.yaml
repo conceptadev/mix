@@ -17,8 +17,10 @@ dependencies:
   mix: ^2.1.0
 
 dev_dependencies:
+  dart_code_metrics_presets: ^2.24.0
   flutter_test:
     sdk: flutter
   flutter_lints: ^6.0.0
+  json_schema: ^5.2.2
   mix_protocol:
     path: ../mix_protocol

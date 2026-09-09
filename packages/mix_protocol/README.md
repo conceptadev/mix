@@ -17,9 +17,18 @@ The package is intentionally narrow:
 - no runtime registry, import side effects, public Ack types, widget-tree
   model, transport, or persistence policy.
 
-Ack powers the private bidirectional codecs and JSON Schema generation. The
-wire semantics and compatibility policy belong to `mix_protocol`; consumers do
-not depend on Ack.
+Ack 1.2.0 supplies the private codecs and JSON Schema export. Mix generated
+stylers remain the runtime model. Protocol code does not generate a second
+style model.
+
+`SchemaField` in [schema_field.dart](lib/src/schema/schema_field.dart) owns each
+wire field, value codec, and lenient repair metadata. The property and token
+factories in [common_codecs.dart](lib/src/schema/common_codecs.dart) supply the
+wire grammar. The exporter uses these declarations directly. Composite codecs
+prepare each nested styler once per encoding operation.
+
+The public API keeps Ack private. Protocol v1 includes the additive
+`context_focus_visible` selector.
 
 ## Quick start
 
@@ -94,7 +103,9 @@ These are distinct layers:
 
 `mix_winds` remains a direct Mix styler producer at runtime. Its test suite
 uses `mix_protocol` as a development-only reference consumer to prove that a
-broad `mix_winds` utility corpus is representable and canonical.
+supported utility ledger retains its resolved styles through Protocol encoding.
+The tests also validate canonical output with an independent Draft 7 validator.
+Runtime plans and target diagnostics remain separate checks.
 
 See [GUIDE.md](GUIDE.md) for integration patterns and
 [WIRE_CONTRACT.md](WIRE_CONTRACT.md) for the complete v1 grammar.

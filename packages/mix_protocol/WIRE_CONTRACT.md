@@ -452,17 +452,16 @@ may contain only `$token`, optional double-token `kind`, and optional `apply`.
 Merge objects may contain only `$merge` and optional `apply`. Unknown
 `$`-prefixed markers fail preflight.
 
-Exported JSON Schema uses `#/definitions/mix_protocol_property_term` at ordinary
-property-term boundaries and `#/definitions/mix_protocol_double_property_term` at
-double-token-capable boundaries. Those shared definitions constrain
-control-marker objects (`$token`, `$merge`, and `apply`) and exclude malformed
-marker combinations. Field-specific literal details still come from the runtime
-codecs; runtime decode remains authoritative for exact Flutter/Mix value
-semantics.
+The exporter shares definitions from each declared literal codec. Each field
+schema retains its literal types, token kinds, merge terms, and directive
+family. Definition names are implementation details. Runtime decoding remains
+authoritative for resource limits, token resolution, and Flutter predicates.
 
 A composed style schema includes `x-mix-protocol-vocabularies`, ordered by
 vocabulary id. Each entry declares `id` and `wireVersion`. The core-only schema
-omits this extension key and remains byte-for-byte stable.
+omits this extension key. Identical compositions produce identical schemas.
+Schema precision changes can update definitions while retaining compatible
+v1 documents.
 
 ## Token References
 
@@ -642,12 +641,18 @@ Variant payloads use a `kind` discriminator:
   "style": styler }`
 - `context_platform`: `{ "platform": targetPlatform, "style": styler }`
 - `context_web`: `{ "style": styler }`
+- `context_focus_visible`: `{ "style": styler }`
 - `context_not`: `{ "variant": contextVariantSelector, "style": styler }`
 
 `context_not.variant` is a recursive context-variant selector using the same
 `kind` and data fields above, but without `style`. Explicit nesting is
 preserved; `not(not(web))` encodes as nested `context_not` selectors rather
 than being normalized away.
+
+`context_focus_visible` decodes to `ContextVariant.focusVisible()`. It matches
+focused state when Flutter uses traditional focus highlighting.
+`WidgetStateStyleOverride` controls focused state directly, including touch
+mode. The same selector works inside `context_not.variant`.
 
 Only the context variant forms listed above are part of the canonical wire
 contract. Closure-backed `ContextVariantBuilder` and custom size predicates are

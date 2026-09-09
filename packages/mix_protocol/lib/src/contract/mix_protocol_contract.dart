@@ -20,11 +20,10 @@ import 'identity_resolution.dart';
 import 'json_map.dart';
 import '../errors/mix_protocol_error.dart';
 import '../errors/schema_error_mapper.dart';
-import '../schema/box_styler_codec.dart';
 import '../schema/common_codecs.dart';
-import '../schema/schema_field.dart';
 import '../schema/text_styler_codec.dart';
 import '../schema/vocabulary.dart';
+import '../schema/wire_schema.dart';
 import '../tokens/token_reference_walker.dart';
 
 /// Package version stamped into exported JSON Schema metadata.
@@ -49,13 +48,6 @@ enum MixProtocolDecodeMode {
 
 /// Options for decoding a style document.
 final class MixProtocolDecodeOptions {
-  /// Creates decode options.
-  const MixProtocolDecodeOptions({
-    this.mode = MixProtocolDecodeMode.strict,
-    this.resolveIcon,
-    this.resolveImage,
-  });
-
   /// How unknown fields, discriminators, and enum values are handled.
   final MixProtocolDecodeMode mode;
 
@@ -64,22 +56,29 @@ final class MixProtocolDecodeOptions {
 
   /// Resolves string image identities for image styler payloads.
   final MixProtocolImageResolver? resolveImage;
+
+  /// Creates decode options.
+  const MixProtocolDecodeOptions({
+    this.mode = MixProtocolDecodeMode.strict,
+    this.resolveIcon,
+    this.resolveImage,
+  });
 }
 
 /// Options for encoding runtime identity values.
 final class MixProtocolEncodeOptions {
-  /// Creates encode options.
-  const MixProtocolEncodeOptions({
-    this.iconNames = const {},
-    this.imageNames = const {},
-  });
-
   /// Optional names to emit for icon identities before falling back to value
   /// forms.
   final Map<String, IconData> iconNames;
 
   /// Optional names to emit for image identities before supported value forms.
   final Map<String, ImageProvider<Object>> imageNames;
+
+  /// Creates encode options.
+  const MixProtocolEncodeOptions({
+    this.iconNames = const {},
+    this.imageNames = const {},
+  });
 }
 
 /// Shared protocol instance for built-in Mix styles and token themes.
@@ -90,7 +89,6 @@ final class MixProtocol {
   final AckSchema<JsonMap, Object> _rootSchema;
   final MixProtocolIdentityContextHolder _identityContext;
   final List<({String id, int wireVersion})> _contributedVocabularies;
-  final Map<String, Map<String, SchemaFieldSemantics>> _branchFieldSemantics;
   final List<List<String>> _lenientListEntryPathSuffixes;
 
   factory MixProtocol._builtIn() =>
@@ -108,7 +106,6 @@ final class MixProtocol {
       rootSchema: compilation.rootSchema,
       identityContext: identityContext,
       contributedVocabularies: compilation.contributedVocabularies,
-      branchFieldSemantics: compilation.branchFieldSemantics,
       lenientListEntryPathSuffixes: compilation.lenientListEntryPathSuffixes,
     );
   }
@@ -117,81 +114,11 @@ final class MixProtocol {
     required AckSchema<JsonMap, Object> rootSchema,
     required MixProtocolIdentityContextHolder identityContext,
     required List<({String id, int wireVersion})> contributedVocabularies,
-    required Map<String, Map<String, SchemaFieldSemantics>>
-    branchFieldSemantics,
     required List<List<String>> lenientListEntryPathSuffixes,
   }) : _rootSchema = rootSchema,
        _identityContext = identityContext,
        _contributedVocabularies = contributedVocabularies,
-       _branchFieldSemantics = branchFieldSemantics,
        _lenientListEntryPathSuffixes = lenientListEntryPathSuffixes;
-
-  /// Decodes [payload] as a styler known to this protocol composition.
-  MixProtocolResult<T> decodeStyle<T extends Object>(
-    Object? payload, {
-    MixProtocolDecodeOptions options = const MixProtocolDecodeOptions(),
-  }) {
-    final prepared = _preparePayload(payload);
-    if (prepared case _PreparedPayloadFailure(:final error)) {
-      return MixProtocolFailure([error]);
-    }
-    final ready = prepared as _PreparedPayloadSuccess;
-
-    if (options.mode == MixProtocolDecodeMode.lenient) {
-      return _withIdentityContext(
-        _decodeContext(options),
-        () => _decodeLenient<T>(ready.payload, ready.warnings),
-      );
-    }
-
-    final result = _withIdentityContext(
-      _decodeContext(options),
-      () => _rootSchema.safeParse(ready.payload),
-    );
-    if (result.isFail) {
-      return MixProtocolFailure(
-        mapSchemaError(result.getError()),
-        warnings: ready.warnings,
-      );
-    }
-
-    final value = result.getOrNull();
-    if (value is T) {
-      return MixProtocolSuccess<T>(value, warnings: ready.warnings);
-    }
-
-    return MixProtocolFailure([
-      MixProtocolError(
-        code: MixProtocolErrorCode.typeMismatch,
-        path: '',
-        message: 'Decoded value is ${value.runtimeType}, expected $T.',
-        value: value,
-      ),
-    ], warnings: ready.warnings);
-  }
-
-  /// Encodes a representable styler known to this protocol composition.
-  MixProtocolResult<JsonMap> encodeStyle(
-    Object value, {
-    MixProtocolEncodeOptions options = const MixProtocolEncodeOptions(),
-  }) {
-    final result = _withIdentityContext(
-      _encodeContext(options),
-      () => _rootSchema.safeEncode(value),
-    );
-    if (result.isFail) {
-      return MixProtocolFailure<JsonMap>(
-        _withoutRootEncodeBranchNoise(mapSchemaError(result.getError())),
-      );
-    }
-
-    final encoded = result.getOrNull();
-
-    return MixProtocolSuccess<JsonMap>({
-      ...encoded!,
-      _versionKey: mixProtocolFormatVersion,
-    });
-  }
 
   R _withIdentityContext<R>(
     MixProtocolIdentityContext context,
@@ -234,44 +161,6 @@ final class MixProtocol {
               !error.message.startsWith('Expected '),
         )
         .toList(growable: false);
-  }
-
-  /// Exports this composition's style shape as draft-07 JSON Schema metadata.
-  JsonMap exportStyleJsonSchema() {
-    final exported = _withPropertyTermDefinitions(
-      _withVersionEnvelope(
-        Map<String, Object?>.from(_rootSchema.toJsonSchema()),
-      ),
-      _branchFieldSemantics,
-    );
-
-    return {
-      r'$schema': 'http://json-schema.org/draft-07/schema#',
-      ...exported,
-      'x-mix-protocol-contract': 'mix_protocol',
-      'x-mix-protocol-version': mixProtocolVersion,
-      'x-mix-protocol-format-version': mixProtocolFormatVersion,
-      if (_contributedVocabularies.isNotEmpty)
-        'x-mix-protocol-vocabularies': [
-          for (final vocabulary in _contributedVocabularies)
-            {'id': vocabulary.id, 'wireVersion': vocabulary.wireVersion},
-        ],
-    };
-  }
-
-  /// Decodes a strict versioned token-theme document.
-  MixProtocolResult<MixProtocolTheme> decodeTheme(Object? payload) {
-    return const _MixProtocolThemeCodec().decode(payload);
-  }
-
-  /// Encodes a canonical versioned token-theme document.
-  MixProtocolResult<JsonMap> encodeTheme(MixProtocolTheme theme) {
-    return const _MixProtocolThemeCodec().encode(theme);
-  }
-
-  /// Exports the token-theme shape as draft-07 JSON Schema metadata.
-  JsonMap exportThemeJsonSchema() {
-    return const _MixProtocolThemeCodec().exportJsonSchema();
   }
 
   MixProtocolResult<T> _decodeLenient<T extends Object>(
@@ -343,16 +232,118 @@ final class MixProtocol {
       }
     }
   }
+
+  /// Decodes [payload] as a styler known to this protocol composition.
+  MixProtocolResult<T> decodeStyle<T extends Object>(
+    Object? payload, {
+    MixProtocolDecodeOptions options = const MixProtocolDecodeOptions(),
+  }) {
+    final prepared = _preparePayload(payload);
+    if (prepared case _PreparedPayloadFailure(:final error)) {
+      return MixProtocolFailure([error]);
+    }
+    final ready = prepared as _PreparedPayloadSuccess;
+
+    if (options.mode == MixProtocolDecodeMode.lenient) {
+      return _withIdentityContext(
+        _decodeContext(options),
+        () => _decodeLenient<T>(ready.payload, ready.warnings),
+      );
+    }
+
+    final result = _withIdentityContext(
+      _decodeContext(options),
+      () => _rootSchema.safeParse(ready.payload),
+    );
+    if (result.isFail) {
+      return MixProtocolFailure(
+        mapSchemaError(result.getError()),
+        warnings: ready.warnings,
+      );
+    }
+
+    final value = result.getOrNull();
+    if (value is T) {
+      return MixProtocolSuccess<T>(value, warnings: ready.warnings);
+    }
+
+    return MixProtocolFailure([
+      MixProtocolError(
+        code: MixProtocolErrorCode.typeMismatch,
+        path: '',
+        message: 'Decoded value is ${value.runtimeType}, expected $T.',
+        value: value,
+      ),
+    ], warnings: ready.warnings);
+  }
+
+  /// Encodes a representable styler known to this protocol composition.
+  MixProtocolResult<JsonMap> encodeStyle(
+    Object value, {
+    MixProtocolEncodeOptions options = const MixProtocolEncodeOptions(),
+  }) {
+    final result = _withIdentityContext(
+      _encodeContext(options),
+      () => _rootSchema.safeEncode(value),
+    );
+    if (result.isFail) {
+      return MixProtocolFailure<JsonMap>(
+        _withoutRootEncodeBranchNoise(mapSchemaError(result.getError())),
+      );
+    }
+
+    final encoded = result.getOrNull();
+
+    return MixProtocolSuccess<JsonMap>({
+      ...encoded!,
+      _versionKey: mixProtocolFormatVersion,
+    });
+  }
+
+  /// Exports this composition's style shape as draft-07 JSON Schema metadata.
+  JsonMap exportStyleJsonSchema() {
+    final exported = hoistWireDefinitions(
+      _withVersionEnvelope(_rootSchema.toJsonSchema()),
+    );
+
+    return {
+      r'$schema': 'http://json-schema.org/draft-07/schema#',
+      ...exported,
+      'x-mix-protocol-contract': 'mix_protocol',
+      'x-mix-protocol-version': mixProtocolVersion,
+      'x-mix-protocol-format-version': mixProtocolFormatVersion,
+      if (_contributedVocabularies.isNotEmpty)
+        'x-mix-protocol-vocabularies': [
+          for (final vocabulary in _contributedVocabularies)
+            {'id': vocabulary.id, 'wireVersion': vocabulary.wireVersion},
+        ],
+    };
+  }
+
+  /// Decodes a strict versioned token-theme document.
+  MixProtocolResult<MixProtocolTheme> decodeTheme(Object? payload) {
+    return const _MixProtocolThemeCodec().decode(payload);
+  }
+
+  /// Encodes a canonical versioned token-theme document.
+  MixProtocolResult<JsonMap> encodeTheme(MixProtocolTheme theme) {
+    return const _MixProtocolThemeCodec().encode(theme);
+  }
+
+  /// Exports the token-theme shape as draft-07 JSON Schema metadata.
+  JsonMap exportThemeJsonSchema() {
+    return const _MixProtocolThemeCodec().exportJsonSchema();
+  }
 }
 
 /// Decoded theme document containing flat token values ready for `MixScope`.
 final class MixProtocolTheme {
+  /// Flat token map suitable for `MixScope(tokens:)`.
+  final Map<MixToken, Object> tokens;
+
   /// Creates a theme document from canonical Mix token values.
   MixProtocolTheme({required Map<MixToken, Object> tokens})
     : tokens = Map.unmodifiable(tokens);
-
-  /// Flat token map suitable for `MixScope(tokens:)`.
-  final Map<MixToken, Object> tokens;
 }
 
 /// Internal codec for versioned `type: "theme"` token documents.
@@ -476,7 +467,7 @@ final class _MixProtocolThemeCodec {
   JsonMap exportJsonSchema() {
     return {
       r'$schema': 'http://json-schema.org/draft-07/schema#',
-      ..._withVersionEnvelope(_themeJsonSchema()),
+      ...hoistWireDefinitions(_withVersionEnvelope(_themeJsonSchema())),
       'x-mix-protocol-contract': 'mix_protocol_theme',
       'x-mix-protocol-version': mixProtocolVersion,
       'x-mix-protocol-format-version': mixProtocolFormatVersion,
@@ -485,7 +476,6 @@ final class _MixProtocolThemeCodec {
 }
 
 const String _themeWireType = 'theme';
-const String _tokenNamePatternSchema = r'^[A-Za-z0-9_.-]{1,128}$';
 
 final List<_ThemeTokenKind> _themeTokenKinds = [
   _ThemeTokenKind(
@@ -563,16 +553,16 @@ sealed class _PreparedPayload {
 }
 
 final class _PreparedPayloadSuccess extends _PreparedPayload {
-  const _PreparedPayloadSuccess(this.payload, this.warnings);
-
   final Object? payload;
+
   final List<MixProtocolError> warnings;
+  const _PreparedPayloadSuccess(this.payload, this.warnings);
 }
 
 final class _PreparedPayloadFailure extends _PreparedPayload {
-  const _PreparedPayloadFailure(this.error);
-
   final MixProtocolError error;
+
+  const _PreparedPayloadFailure(this.error);
 }
 
 _PreparedPayload _preparePayload(Object? payload) {
@@ -760,11 +750,11 @@ MixProtocolError? _inspectControlMarkers(JsonMap value, String path) {
 }
 
 final class _InputNode {
-  const _InputNode(this.value, this.path, this.depth);
-
   final Object? value;
+
   final String path;
   final int depth;
+  const _InputNode(this.value, this.path, this.depth);
 }
 
 Object? _deepMutableCopy(Object? value) {
@@ -784,28 +774,15 @@ Object? _deepMutableCopy(Object? value) {
 MixProtocolError _asWarning(MixProtocolError error, {String? path}) {
   return MixProtocolError(
     code: error.code,
-    severity: MixProtocolDiagnosticSeverity.warning,
     path: path ?? error.path,
     message: error.message,
     value: error.value,
+    severity: MixProtocolDiagnosticSeverity.warning,
   );
 }
 
 final class _LenientRemovalJournal {
   final List<List<String>> _removals = [];
-
-  String originalPathFor(String path) {
-    var segments = _pathSegments(path);
-    for (final removal in _removals.reversed) {
-      segments = _translateAcrossRemoval(segments, removal);
-    }
-
-    return _pathFromSegments(segments);
-  }
-
-  void record(List<String> removalPath) {
-    _removals.add(List.unmodifiable(removalPath));
-  }
 
   List<String> _translateAcrossRemoval(
     List<String> segments,
@@ -829,6 +806,19 @@ final class _LenientRemovalJournal {
       '${currentIndex + 1}',
       ...segments.skip(listPath.length + 1),
     ];
+  }
+
+  String originalPathFor(String path) {
+    var segments = _pathSegments(path);
+    for (final removal in _removals.reversed) {
+      segments = _translateAcrossRemoval(segments, removal);
+    }
+
+    return _pathFromSegments(segments);
+  }
+
+  void record(List<String> removalPath) {
+    _removals.add(List.unmodifiable(removalPath));
   }
 }
 
@@ -1126,579 +1116,6 @@ JsonMap _withVersionEnvelope(JsonMap schema) {
   return _branchWithVersion(schema);
 }
 
-JsonMap _withPropertyTermDefinitions(
-  JsonMap schema,
-  Map<String, Map<String, SchemaFieldSemantics>> branchFieldSemantics,
-) {
-  final withPropertyTermRefs = _withDoubleTokenPropertyTermSchemas(
-    _replaceAckAnyJsonSchemas(
-          _withNestedPropertyLiteralSchemas(schema, branchFieldSemantics),
-        )
-        as JsonMap,
-    branchFieldSemantics,
-  );
-  final definitions = Map<String, Object?>.from(
-    (withPropertyTermRefs['definitions'] as Map?) ?? const {},
-  );
-
-  return {
-    ...withPropertyTermRefs,
-    'definitions': {
-      ...definitions,
-      'mix_protocol_property_term': _propertyTermJsonSchema(),
-      'mix_protocol_double_property_term': _propertyTermJsonSchema(
-        allowTokenKind: true,
-      ),
-      'mix_protocol_property_control_term': _propertyControlTermJsonSchema(),
-      'mix_protocol_double_property_control_term':
-          _propertyControlTermJsonSchema(allowTokenKind: true),
-      'mix_protocol_directive': _directiveJsonSchema(),
-      boxDecorationLiteralSchemaDefinition: _nestedLiteralDefinitionSchema(
-        boxDecorationCodec().toJsonSchema(),
-        doubleTokenPaths: boxDecorationFieldSemantics.doubleTokenPaths,
-      ),
-      strutStyleLiteralSchemaDefinition: _nestedLiteralDefinitionSchema(
-        strutStyleMixCodec().toJsonSchema(),
-        doubleTokenPaths: strutStyleFieldSemantics.doubleTokenPaths,
-      ),
-      textStyleLiteralSchemaDefinition: _nestedLiteralDefinitionSchema(
-        textStyleMixLiteralJsonSchema(),
-        doubleTokenPaths: textStyleFieldSemantics.doubleTokenPaths,
-      ),
-    },
-  };
-}
-
-JsonMap _withDoubleTokenPropertyTermSchemas(
-  JsonMap schema,
-  Map<String, Map<String, SchemaFieldSemantics>> branchFieldSemantics,
-) {
-  final anyOf = schema['anyOf'];
-  if (anyOf is List) {
-    return {
-      ...schema,
-      'anyOf': [
-        for (final branch in anyOf)
-          _withDoubleTokenBranchProperties(branch, branchFieldSemantics),
-      ],
-    };
-  }
-
-  return _withDoubleTokenBranchProperties(schema, branchFieldSemantics)
-      as JsonMap;
-}
-
-Object? _withDoubleTokenBranchProperties(
-  Object? branchValue,
-  Map<String, Map<String, SchemaFieldSemantics>> branchFieldSemantics,
-) {
-  if (branchValue is! JsonMap) return branchValue;
-  final branchType = _branchSchemaType(branchValue);
-  final fieldSemantics = branchFieldSemantics[branchType] ?? const {};
-  final doubleTokenProperties = {
-    for (final entry in fieldSemantics.entries)
-      if (entry.value.allowDoubleTokenKind) entry.key,
-  };
-  final nestedPaths = [
-    for (final entry in fieldSemantics.entries)
-      if (entry.value.literalDefinition == null)
-        for (final path in entry.value.doubleTokenPaths) [entry.key, ...path],
-  ];
-  if (doubleTokenProperties.isEmpty && nestedPaths.isEmpty) {
-    return branchValue;
-  }
-
-  final properties = Map<String, Object?>.from(
-    (branchValue['properties'] as Map?) ?? const {},
-  );
-  for (final property in doubleTokenProperties) {
-    final value = properties[property];
-    if (_isGenericPropertyTermRef(value)) {
-      properties[property] = _propertyTermFieldJsonSchema(allowTokenKind: true);
-    }
-  }
-
-  return _withDoubleTokenNestedPropertySchemas({
-    ...branchValue,
-    'properties': properties,
-  }, nestedPaths);
-}
-
-bool _isGenericPropertyTermRef(Object? value) {
-  return value is JsonMap &&
-      value.length == 1 &&
-      value[r'$ref'] == '#/definitions/mix_protocol_property_term';
-}
-
-bool _isGenericPropertyControlTermRef(Object? value) {
-  return value is JsonMap &&
-      value.length == 1 &&
-      value[r'$ref'] == '#/definitions/mix_protocol_property_control_term';
-}
-
-JsonMap _withNestedPropertyLiteralSchemas(
-  JsonMap schema,
-  Map<String, Map<String, SchemaFieldSemantics>> branchFieldSemantics,
-) {
-  final anyOf = schema['anyOf'];
-  if (anyOf is List) {
-    return {
-      ...schema,
-      'anyOf': [
-        for (final branch in anyOf)
-          _withNestedBranchLiteralSchemas(branch, branchFieldSemantics),
-      ],
-    };
-  }
-
-  return _withNestedBranchLiteralSchemas(schema, branchFieldSemantics)
-      as JsonMap;
-}
-
-Object? _withNestedBranchLiteralSchemas(
-  Object? branchValue,
-  Map<String, Map<String, SchemaFieldSemantics>> branchFieldSemantics,
-) {
-  if (branchValue is! JsonMap) return branchValue;
-
-  final properties = Map<String, Object?>.from(
-    (branchValue['properties'] as Map?) ?? const {},
-  );
-  final fieldSemantics =
-      branchFieldSemantics[_branchSchemaType(branchValue)] ?? const {};
-  for (final entry in fieldSemantics.entries) {
-    final definition = entry.value.literalDefinition;
-    if (definition != null) {
-      _setPropertyLiteralSchemaRef(properties, entry.key, definition);
-    }
-  }
-
-  return {...branchValue, 'properties': properties};
-}
-
-String? _branchSchemaType(JsonMap branch) {
-  final properties = branch['properties'];
-  if (properties is! Map) return null;
-  final type = properties['type'];
-  if (type is! Map) return null;
-
-  return type['const'] as String?;
-}
-
-void _setPropertyLiteralSchemaRef(
-  Map<String, Object?> properties,
-  String key,
-  String definitionName,
-) {
-  if (!properties.containsKey(key)) return;
-  properties[key] = _propertyTermLiteralFieldRefSchema(definitionName);
-}
-
-Object? _replaceAckAnyJsonSchemas(Object? value) {
-  if (value is List) {
-    return [for (final item in value) _replaceAckAnyJsonSchemas(item)];
-  }
-  if (value is! Map) return value;
-
-  final map = JsonMap.from(value);
-  if (_isAckAnyJsonSchema(map)) {
-    return _propertyTermFieldJsonSchema();
-  }
-
-  return {
-    for (final entry in map.entries)
-      entry.key: _replaceAckAnyJsonSchemas(entry.value),
-  };
-}
-
-bool _isAckAnyJsonSchema(JsonMap value) {
-  final anyOf = value['anyOf'];
-  if (anyOf is! List || anyOf.length != 6) return false;
-
-  final types = <String>{};
-  for (final branch in anyOf) {
-    if (branch is! JsonMap) return false;
-    final type = branch['type'];
-    if (type is! String) return false;
-    types.add(type);
-  }
-
-  return types.containsAll(const {
-        'string',
-        'number',
-        'integer',
-        'boolean',
-        'object',
-        'array',
-      }) &&
-      types.length == 6;
-}
-
-JsonMap _nestedLiteralDefinitionSchema(
-  JsonMap schema, {
-  required List<List<String>> doubleTokenPaths,
-}) {
-  final replaced = _replaceAckAnyJsonSchemas(schema);
-  if (replaced is! JsonMap) return JsonMap.from(replaced as Map);
-
-  return _withDoubleTokenNestedPropertySchemas(
-    _wrapTopLevelPropertySchemas(replaced),
-    doubleTokenPaths,
-  );
-}
-
-JsonMap _withDoubleTokenNestedPropertySchemas(
-  JsonMap schema,
-  List<List<String>> paths,
-) {
-  var result = schema;
-  for (final path in paths) {
-    result = _withDoubleTokenPropertyTermAtPath(result, path) as JsonMap;
-  }
-
-  return result;
-}
-
-Object? _withDoubleTokenPropertyTermAtPath(Object? value, List<String> path) {
-  if (path.isEmpty) return _allowDoubleTokenKindInPropertyTerm(value);
-  if (value is! Map) return value;
-
-  final map = JsonMap.from(value);
-  final anyOf = map['anyOf'];
-  if (anyOf is List) {
-    return {
-      ...map,
-      'anyOf': [
-        for (final branch in anyOf)
-          _withDoubleTokenPropertyTermAtPath(branch, path),
-      ],
-    };
-  }
-
-  final segment = path.first;
-  final rest = path.sublist(1);
-  if (segment == '*') {
-    final items = map['items'];
-    if (items == null) return value;
-    return {...map, 'items': _withDoubleTokenPropertyTermAtPath(items, rest)};
-  }
-
-  final properties = map['properties'];
-  if (properties is! Map || !properties.containsKey(segment)) return value;
-  final typedProperties = JsonMap.from(properties);
-
-  return {
-    ...map,
-    'properties': {
-      ...typedProperties,
-      segment: _withDoubleTokenPropertyTermAtPath(
-        typedProperties[segment],
-        rest,
-      ),
-    },
-  };
-}
-
-Object? _allowDoubleTokenKindInPropertyTerm(Object? value) {
-  if (value is! Map) return value;
-
-  final map = JsonMap.from(value);
-  if (_isGenericPropertyTermRef(map)) {
-    return _propertyTermFieldJsonSchema(allowTokenKind: true);
-  }
-  if (_isGenericPropertyControlTermRef(map)) {
-    return {r'$ref': '#/definitions/mix_protocol_double_property_control_term'};
-  }
-
-  final anyOf = map['anyOf'];
-  if (anyOf is List) {
-    return {
-      ...map,
-      'anyOf': [
-        for (final branch in anyOf) _allowDoubleTokenKindInPropertyTerm(branch),
-      ],
-    };
-  }
-
-  return value;
-}
-
-JsonMap _wrapTopLevelPropertySchemas(JsonMap schema) {
-  final properties = schema['properties'];
-  if (properties is! Map) return schema;
-
-  return {
-    ...schema,
-    'properties': {
-      for (final entry in properties.entries)
-        entry.key: _propertyTermLiteralFieldSchema(entry.value),
-    },
-  };
-}
-
-Object? _propertyTermLiteralFieldSchema(Object? literalSchema) {
-  if (literalSchema is! Map) return literalSchema;
-
-  final schema = JsonMap.from(literalSchema);
-  if (_hasPropertyControlTermRef(schema)) return schema;
-
-  return {
-    'anyOf': [
-      schema,
-      {r'$ref': '#/definitions/mix_protocol_property_control_term'},
-    ],
-  };
-}
-
-bool _hasPropertyControlTermRef(JsonMap schema) {
-  final anyOf = schema['anyOf'];
-  if (anyOf is! List) return false;
-
-  return anyOf.any(
-    (branch) =>
-        branch is Map &&
-        (branch[r'$ref'] ==
-                '#/definitions/mix_protocol_property_control_term' ||
-            branch[r'$ref'] ==
-                '#/definitions/mix_protocol_double_property_control_term'),
-  );
-}
-
-JsonMap _propertyTermJsonSchema({bool allowTokenKind = false}) {
-  return {
-    'anyOf': [
-      ..._genericPropertyLiteralSchemas(),
-      {
-        r'$ref': allowTokenKind
-            ? '#/definitions/mix_protocol_double_property_control_term'
-            : '#/definitions/mix_protocol_property_control_term',
-      },
-    ],
-  };
-}
-
-JsonMap _propertyTermFieldJsonSchema({bool allowTokenKind = false}) {
-  return {
-    r'$ref': allowTokenKind
-        ? '#/definitions/mix_protocol_double_property_term'
-        : '#/definitions/mix_protocol_property_term',
-  };
-}
-
-JsonMap _propertyTermLiteralFieldRefSchema(String definitionName) {
-  return {
-    'anyOf': [
-      {r'$ref': '#/definitions/$definitionName'},
-      {r'$ref': '#/definitions/mix_protocol_property_control_term'},
-    ],
-  };
-}
-
-List<JsonMap> _genericPropertyLiteralSchemas() {
-  return [
-    {
-      'description':
-          'Field-specific scalar, array, or object literal without '
-          'property-term control markers; see the enclosing property schema.',
-      'not': {'type': 'object'},
-    },
-    {
-      'type': 'object',
-      'description':
-          'Field-specific object literal without property-term control markers; '
-          'see the enclosing property schema.',
-      'not': {
-        'anyOf': [
-          {
-            'required': [tokenReferenceKey],
-          },
-          {
-            'required': [mergeReferenceKey],
-          },
-          {
-            'required': [applyDirectivesKey],
-          },
-        ],
-      },
-    },
-  ];
-}
-
-JsonMap _propertyControlTermJsonSchema({bool allowTokenKind = false}) {
-  final propertyTermRef = allowTokenKind
-      ? '#/definitions/mix_protocol_double_property_term'
-      : '#/definitions/mix_protocol_property_term';
-
-  return {
-    'anyOf': [
-      {
-        'type': 'object',
-        'properties': {
-          tokenReferenceKey: {
-            'type': 'string',
-            'pattern': _tokenNamePatternSchema,
-          },
-          if (allowTokenKind)
-            tokenKindKey: {
-              'type': 'string',
-              'enum': [tokenKindSpace, tokenKindDouble],
-            },
-          applyDirectivesKey: {
-            'type': 'array',
-            'minItems': 1,
-            'items': {r'$ref': '#/definitions/mix_protocol_directive'},
-          },
-        },
-        'required': [tokenReferenceKey],
-        'additionalProperties': false,
-      },
-      {
-        'type': 'object',
-        'properties': {
-          mergeReferenceKey: {
-            'type': 'array',
-            'minItems': 2,
-            'items': {r'$ref': propertyTermRef},
-          },
-        },
-        'required': [mergeReferenceKey],
-        'additionalProperties': false,
-      },
-      {
-        'type': 'object',
-        'properties': {
-          mergeReferenceKey: {
-            'type': 'array',
-            'minItems': 1,
-            'items': {r'$ref': propertyTermRef},
-          },
-          applyDirectivesKey: {
-            'type': 'array',
-            'minItems': 1,
-            'items': {r'$ref': '#/definitions/mix_protocol_directive'},
-          },
-        },
-        'required': [mergeReferenceKey, applyDirectivesKey],
-        'additionalProperties': false,
-      },
-    ],
-  };
-}
-
-JsonMap _directiveJsonSchema() {
-  JsonMap directiveBranch(
-    String op, {
-    Map<String, JsonMap> params = const {},
-    List<String> requiredParams = const [],
-  }) {
-    return {
-      'type': 'object',
-      'properties': {
-        directiveOpKey: {'type': 'string', 'const': op},
-        ...params,
-      },
-      'required': [directiveOpKey, ...requiredParams],
-      'additionalProperties': false,
-    };
-  }
-
-  const numberParam = {'type': 'number'};
-  const integerParam = {'type': 'integer'};
-
-  return {
-    'anyOf': [
-      directiveBranch(
-        'color_opacity',
-        params: const {'opacity': numberParam},
-        requiredParams: const ['opacity'],
-      ),
-      directiveBranch(
-        'color_with_values',
-        params: const {
-          'alpha': numberParam,
-          'red': numberParam,
-          'green': numberParam,
-          'blue': numberParam,
-          'colorSpace': {
-            'type': 'string',
-            'enum': ['sRGB', 'extendedSRGB', 'displayP3'],
-          },
-        },
-      ),
-      for (final op in const [
-        'color_alpha',
-        'color_darken',
-        'color_lighten',
-        'color_saturate',
-        'color_desaturate',
-        'color_tint',
-        'color_shade',
-        'color_brighten',
-      ])
-        directiveBranch(
-          op,
-          params: {op == 'color_alpha' ? 'alpha' : 'amount': integerParam},
-          requiredParams: [op == 'color_alpha' ? 'alpha' : 'amount'],
-        ),
-      directiveBranch(
-        'color_with_red',
-        params: const {'red': integerParam},
-        requiredParams: const ['red'],
-      ),
-      directiveBranch(
-        'color_with_green',
-        params: const {'green': integerParam},
-        requiredParams: const ['green'],
-      ),
-      directiveBranch(
-        'color_with_blue',
-        params: const {'blue': integerParam},
-        requiredParams: const ['blue'],
-      ),
-      for (final op in const [
-        'uppercase',
-        'lowercase',
-        'capitalize',
-        'title_case',
-        'sentence_case',
-      ])
-        directiveBranch(op),
-      directiveBranch(
-        'number_multiply',
-        params: const {'factor': numberParam},
-        requiredParams: const ['factor'],
-      ),
-      directiveBranch(
-        'number_add',
-        params: const {'addend': numberParam},
-        requiredParams: const ['addend'],
-      ),
-      directiveBranch(
-        'number_subtract',
-        params: const {'subtrahend': numberParam},
-        requiredParams: const ['subtrahend'],
-      ),
-      directiveBranch(
-        'number_divide',
-        params: const {'divisor': numberParam},
-        requiredParams: const ['divisor'],
-      ),
-      directiveBranch(
-        'number_clamp',
-        params: const {'min': numberParam, 'max': numberParam},
-        requiredParams: const ['min', 'max'],
-      ),
-      for (final op in const [
-        'number_abs',
-        'number_round',
-        'number_floor',
-        'number_ceil',
-      ])
-        directiveBranch(op),
-    ],
-  };
-}
-
 JsonMap _branchWithVersion(Object? branchValue) {
   if (branchValue is! JsonMap) return {'v': branchValue};
 
@@ -1773,6 +1190,7 @@ void _decodeThemeKind(
         value: rawMap,
       ),
     );
+
     return;
   }
 
@@ -1849,6 +1267,7 @@ String? _readThemeAlias(
         value: rawTarget,
       ),
     );
+
     return null;
   }
 
@@ -1868,6 +1287,7 @@ String? _readThemeAlias(
         value: key,
       ),
     );
+
     return rawTarget;
   }
   if (!isValidTokenName(rawTarget)) {
@@ -1879,6 +1299,7 @@ String? _readThemeAlias(
         value: rawTarget,
       ),
     );
+
     return null;
   }
 
@@ -1893,6 +1314,7 @@ String? _readThemeAlias(
         value: rawKind,
       ),
     );
+
     return null;
   }
   if (rawKind != null && rawKind != kind.aliasKind) {
@@ -1905,6 +1327,7 @@ String? _readThemeAlias(
         value: rawKind,
       ),
     );
+
     return null;
   }
 
@@ -2103,25 +1526,15 @@ JsonMap _themeJsonSchema() {
 JsonMap _themeMapJsonSchema(_ThemeTokenKind kind) {
   return {
     'type': 'object',
-    'propertyNames': {'type': 'string', 'pattern': _tokenNamePatternSchema},
+    'propertyNames': tokenNameCodec().toJsonSchema(),
     'additionalProperties': {
       'anyOf': [kind.valueSchema.toJsonSchema(), _themeAliasJsonSchema(kind)],
     },
   };
 }
 
-JsonMap _themeAliasJsonSchema(_ThemeTokenKind kind) {
-  return {
-    'type': 'object',
-    'properties': {
-      tokenReferenceKey: {'type': 'string', 'pattern': _tokenNamePatternSchema},
-      if (kind.aliasKind != null)
-        tokenKindKey: {'type': 'string', 'const': kind.aliasKind},
-    },
-    'required': [tokenReferenceKey],
-    'additionalProperties': false,
-  };
-}
+JsonMap _themeAliasJsonSchema(_ThemeTokenKind kind) =>
+    tokenReferenceWireSchema(exactKind: kind.aliasKind).toJsonSchema();
 
 _ThemeTokenKind? _themeKindForToken(MixToken token) {
   for (final kind in _themeTokenKinds) {
@@ -2164,19 +1577,19 @@ CodecSchema<JsonMap, TextStyle> _themeTextStyleCodec() {
       fontWeight: data['fontWeight'] as FontWeight?,
       fontStyle: data['fontStyle'] as FontStyle?,
       letterSpacing: data['letterSpacing'] as double?,
-      debugLabel: data['debugLabel'] as String?,
       wordSpacing: data['wordSpacing'] as double?,
       textBaseline: data['textBaseline'] as TextBaseline?,
       height: data['height'] as double?,
-      fontFamily: data['fontFamily'] as String?,
-      fontFamilyFallback: (data['fontFamilyFallback'] as List?)?.cast<String>(),
+      shadows: data['shadows'] as List<Shadow>?,
       fontFeatures: (data['fontFeatures'] as List?)?.cast<FontFeature>(),
       fontVariations: (data['fontVariations'] as List?)?.cast<FontVariation>(),
       decoration: data['decoration'] as TextDecoration?,
       decorationColor: data['decorationColor'] as Color?,
       decorationStyle: data['decorationStyle'] as TextDecorationStyle?,
       decorationThickness: data['decorationThickness'] as double?,
-      shadows: data['shadows'] as List<Shadow>?,
+      debugLabel: data['debugLabel'] as String?,
+      fontFamily: data['fontFamily'] as String?,
+      fontFamilyFallback: (data['fontFamilyFallback'] as List?)?.cast<String>(),
     ),
     encode: _encodeThemeTextStyle,
   );
@@ -2333,6 +1746,12 @@ CodecSchema<int, Duration> _themeDurationCodec() {
 }
 
 final class _ThemeTokenKind {
+  final String field;
+
+  final Type tokenType;
+  final MixToken Function(String name) createToken;
+  final AckSchema<Object, Object> valueSchema;
+  final String? aliasKind;
   const _ThemeTokenKind({
     required this.field,
     required this.tokenType,
@@ -2340,12 +1759,6 @@ final class _ThemeTokenKind {
     required this.valueSchema,
     this.aliasKind,
   });
-
-  final String field;
-  final Type tokenType;
-  final MixToken Function(String name) createToken;
-  final AckSchema<Object, Object> valueSchema;
-  final String? aliasKind;
 
   bool matches(MixToken token) => token.runtimeType == tokenType;
 }

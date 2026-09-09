@@ -1,15 +1,22 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:json_schema/json_schema.dart' as json_schema;
 import 'package:mix/mix.dart';
 import 'package:mix_protocol/mix_protocol.dart';
 
 void main() {
   MixProtocol contract() => mixProtocol;
+  late final validator = json_schema.JsonSchema.create(
+    mixProtocol.exportStyleJsonSchema(),
+  );
 
   JsonMap encode(Object value) {
-    return switch (contract().encodeStyle(value)) {
+    final encoded = switch (contract().encodeStyle(value)) {
       MixProtocolSuccess<JsonMap>(:final value) => value,
       MixProtocolFailure<JsonMap>(:final errors) => fail('$errors'),
     };
+    final validation = validator.validate(encoded);
+    expect(validation.isValid, isTrue, reason: '${validation.errors}');
+    return encoded;
   }
 
   T decode<T extends Object>(JsonMap payload) {

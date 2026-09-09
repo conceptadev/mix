@@ -69,15 +69,6 @@ enum MixProtocolDiagnosticSeverity {
 
 /// Path-qualified public protocol error.
 final class MixProtocolError {
-  /// Creates an immutable protocol error.
-  const MixProtocolError({
-    required this.code,
-    required this.path,
-    required this.message,
-    this.value,
-    this.severity = MixProtocolDiagnosticSeverity.error,
-  });
-
   /// Stable category for this error.
   final MixProtocolErrorCode code;
 
@@ -94,6 +85,15 @@ final class MixProtocolError {
 
   /// Whether this diagnostic is fatal or advisory.
   final MixProtocolDiagnosticSeverity severity;
+
+  /// Creates an immutable protocol error.
+  const MixProtocolError({
+    required this.code,
+    required this.path,
+    required this.message,
+    this.value,
+    this.severity = MixProtocolDiagnosticSeverity.error,
+  });
 
   /// Converts this error to a JSON-safe diagnostic map.
   JsonMap toJson() {
@@ -129,6 +129,7 @@ Object? _jsonSafeDiagnosticValue(Object? value, Set<Object> active) {
         if (identical(jsonItem, _notJsonSafe)) return _notJsonSafe;
         output.add(jsonItem);
       }
+
       return output;
     } finally {
       active.remove(value);
@@ -146,6 +147,7 @@ Object? _jsonSafeDiagnosticValue(Object? value, Set<Object> active) {
         if (identical(jsonValue, _notJsonSafe)) return _notJsonSafe;
         output[key] = jsonValue;
       }
+
       return output;
     } finally {
       active.remove(value);
@@ -157,24 +159,27 @@ Object? _jsonSafeDiagnosticValue(Object? value, Set<Object> active) {
 
 /// Result returned by a fallible Mix protocol operation.
 sealed class MixProtocolResult<T extends Object> {
-  MixProtocolResult({Iterable<MixProtocolError> warnings = const []})
-    : warnings = List.unmodifiable(warnings);
-
   /// Non-fatal diagnostics collected while processing the operation.
   final List<MixProtocolError> warnings;
+
+  MixProtocolResult({Iterable<MixProtocolError> warnings = const []})
+    : warnings = List.unmodifiable(warnings);
 }
 
 /// A successful protocol operation.
 final class MixProtocolSuccess<T extends Object> extends MixProtocolResult<T> {
-  /// Creates a success containing [value] and optional [warnings].
-  MixProtocolSuccess(this.value, {super.warnings});
-
   /// Decoded runtime value or encoded JSON map.
   final T value;
+
+  /// Creates a success containing [value] and optional [warnings].
+  MixProtocolSuccess(this.value, {super.warnings});
 }
 
 /// A failed protocol operation.
 final class MixProtocolFailure<T extends Object> extends MixProtocolResult<T> {
+  /// Fatal diagnostics that prevented an output value.
+  final List<MixProtocolError> errors;
+
   /// Creates a failure with at least one path-qualified error.
   MixProtocolFailure(Iterable<MixProtocolError> errors, {super.warnings})
     : errors = List.unmodifiable(errors) {
@@ -182,21 +187,18 @@ final class MixProtocolFailure<T extends Object> extends MixProtocolResult<T> {
       throw ArgumentError.value(errors, 'errors', 'Must not be empty.');
     }
   }
-
-  /// Fatal diagnostics that prevented an output value.
-  final List<MixProtocolError> errors;
 }
 
 /// Internal sentinel thrown by codecs for unsupported runtime values.
 final class UnsupportedEncodeValueError implements Exception {
-  /// Creates an unsupported-value sentinel.
-  const UnsupportedEncodeValueError(this.value, this.reason);
-
   /// Runtime value that could not be represented.
   final Object? value;
 
   /// Explanation for why the value is unsupported.
   final String reason;
+
+  /// Creates an unsupported-value sentinel.
+  const UnsupportedEncodeValueError(this.value, this.reason);
 
   @override
   String toString() => 'Unsupported encode value: $reason';
@@ -204,14 +206,14 @@ final class UnsupportedEncodeValueError implements Exception {
 
 /// Internal sentinel thrown for token names outside the v1 grammar.
 final class InvalidTokenNameError implements Exception {
-  /// Creates an invalid-token-name sentinel.
-  const InvalidTokenNameError(this.name, this.fieldName);
-
   /// Invalid token name.
   final String name;
 
   /// Field where the token reference was found.
   final String fieldName;
+
+  /// Creates an invalid-token-name sentinel.
+  const InvalidTokenNameError(this.name, this.fieldName);
 
   /// Explanation for why the name is invalid.
   String get reason =>
@@ -224,14 +226,6 @@ final class InvalidTokenNameError implements Exception {
 
 /// Internal sentinel for schema errors that need a path below a transform root.
 final class SchemaPathError implements Exception {
-  /// Creates a path-qualified schema sentinel.
-  const SchemaPathError({
-    required this.code,
-    required this.relativePath,
-    required this.reason,
-    this.value,
-  });
-
   /// Public error code to emit.
   final MixProtocolErrorCode code;
 
@@ -244,23 +238,20 @@ final class SchemaPathError implements Exception {
   /// Offending value, when useful to expose.
   final Object? value;
 
+  /// Creates a path-qualified schema sentinel.
+  const SchemaPathError({
+    required this.code,
+    required this.relativePath,
+    required this.reason,
+    this.value,
+  });
+
   @override
   String toString() => reason;
 }
 
 /// Internal sentinel thrown when codec coverage drifts from owner fields.
 final class SchemaInventorySkewError implements Exception {
-  /// Creates an inventory-skew sentinel.
-  SchemaInventorySkewError({
-    required this.owner,
-    Iterable<String> missingFields = const [],
-    Iterable<String> staleFields = const [],
-    this.expectedFieldCount,
-    this.actualFieldCount,
-    this.metadataUnavailable = false,
-  }) : missingFields = Set.unmodifiable(missingFields),
-       staleFields = Set.unmodifiable(staleFields);
-
   /// Owner type whose inventory did not match codec coverage.
   final String owner;
 
@@ -278,6 +269,17 @@ final class SchemaInventorySkewError implements Exception {
 
   /// Whether the owner exposed no field metadata and no fallback was supplied.
   final bool metadataUnavailable;
+
+  /// Creates an inventory-skew sentinel.
+  SchemaInventorySkewError({
+    required this.owner,
+    Iterable<String> missingFields = const [],
+    Iterable<String> staleFields = const [],
+    this.expectedFieldCount,
+    this.actualFieldCount,
+    this.metadataUnavailable = false,
+  }) : missingFields = Set.unmodifiable(missingFields),
+       staleFields = Set.unmodifiable(staleFields);
 
   /// JSON-safe diagnostic value.
   JsonMap toJson() => {
@@ -308,14 +310,14 @@ final class SchemaInventorySkewError implements Exception {
 
 /// Internal sentinel thrown when a named identity cannot be resolved.
 final class UnresolvedIdentityNameError implements Exception {
-  /// Creates an unresolved-name sentinel for [scope] and [name].
-  const UnresolvedIdentityNameError(this.scope, this.name);
-
   /// Identity scope that was queried.
   final String scope;
 
   /// Missing identity name.
   final String name;
+
+  /// Creates an unresolved-name sentinel for [scope] and [name].
+  const UnresolvedIdentityNameError(this.scope, this.name);
 
   @override
   String toString() => 'Unresolved $scope identity name "$name".';
@@ -323,14 +325,14 @@ final class UnresolvedIdentityNameError implements Exception {
 
 /// Internal sentinel thrown when a runtime identity cannot be represented.
 final class UnresolvedIdentityValueError implements Exception {
-  /// Creates an unresolved-value sentinel for [scope] and [value].
-  const UnresolvedIdentityValueError(this.scope, this.value);
-
   /// Identity scope searched during encode.
   final String scope;
 
   /// Runtime value that could not be represented.
   final Object value;
+
+  /// Creates an unresolved-value sentinel for [scope] and [value].
+  const UnresolvedIdentityValueError(this.scope, this.value);
 
   @override
   String toString() => 'Unresolved $scope identity value ${value.runtimeType}.';
