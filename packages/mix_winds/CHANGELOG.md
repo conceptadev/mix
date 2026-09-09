@@ -4,7 +4,12 @@
   read-only runtime layout inspection.
 - Match zero-viewport padding and border activation to Mix, and share responsive
   widths through nested Tw flex scopes so reserved and applied margins agree.
-- Derive layout inset merge order from the actual emitted style groups.
+- Derive layout inset merge order from the actual emitted style groups, and
+  project the plan's padding and border widths from those groups so the plan
+  cannot disagree with the rendered style.
+- Widget compilation keeps external margin out of box and flex Stylers; the
+  layout plan owns it, so semantic widgets no longer strip margin from every
+  resolved spec. Direct `TwParser` compilation still retains margin.
 - Preserve intrinsic measurement for text, headings, spans, and icons with static
   margins or padding, and for responsive margins when a viewport or enclosing
   Tw flex scope supplies the width.
