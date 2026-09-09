@@ -44,7 +44,11 @@ final class _FailedCandidate {
 final class _CandidateProgram {
   final List<_CompiledCandidate> candidates;
   final List<_FailedCandidate> failures;
-  final styleGroupPaths = <TwTarget, List<_VariantPath>>{};
+
+  /// Style groups produced by the last translation for each target, in the
+  /// Styler's merge order. The layout plan projects padding and border from
+  /// these so it can never disagree with the emitted style.
+  final styleGroups = <TwTarget, Map<_VariantPath, _GroupContext>>{};
   _CandidateProgram({
     required Iterable<_CompiledCandidate> candidates,
     required Iterable<_FailedCandidate> failures,
@@ -367,8 +371,7 @@ final class TwTranslator {
       if (_isLayoutOwnedCandidate(compiled, target)) continue;
       if (_reportBlockingRoute(token, route)) continue;
       if (_usesExternalMargins || target == .text) {
-        final unsupportedMargin = _reportExternalMarginVariant(candidate);
-        if (unsupportedMargin && target == .text) continue;
+        if (_reportExternalMarginVariant(candidate)) continue;
       }
       if (route.kind == .widgetLayer) {
         if (!_isSupportedWidgetLayerUtility(candidate.utility)) {
@@ -433,10 +436,7 @@ final class TwTranslator {
       }
     }
 
-    program.styleGroupPaths[target] = List.unmodifiable([
-      _VariantPath.base,
-      ...groups.keys.where((path) => path != .base),
-    ]);
+    program.styleGroups[target] = groups;
 
     return groups;
   }
@@ -1141,12 +1141,20 @@ final class TwTranslator {
     return target == .flexBox || (root != 'gap-x' && root != 'gap-y');
   }
 
+  /// Margin utilities the emitted Styler must not carry.
+  ///
+  /// Text Stylers never style margin. Widget compilation applies box and flex
+  /// margin outside the styled border box through the layout plan, so those
+  /// Stylers omit it as well. Direct `TwParser` compilation keeps margin
+  /// because Mix can apply it portably.
   bool _isLayoutOwnedCandidate(_CompiledCandidate compiled, TwTarget target) {
-    final inset = compiled.layoutInput?.inset;
+    // Only breakpoint-scoped positive margins reach the plan. Other margin
+    // variants fall through so the compiler can report them.
+    if (compiled.layoutInput?.inset?.kind != .margin) return false;
 
     return switch (target) {
-      .text => inset?.kind == .margin,
-      .box || .flexBox => false,
+      .text => true,
+      .box || .flexBox => _usesExternalMargins,
     };
   }
 
@@ -1819,26 +1827,17 @@ final class TwTranslator {
         : TwLayoutFlexItemDeclaration(selfAlignment: alignment);
   }
 
+  /// Widget-owned external margin. Padding and border widths are projected
+  /// from the translated style groups instead, see [_addStyleGroupInsets].
   TwLayoutInsetDeclaration? _layoutInset(TailwindUtility utility) {
     if (tailwindUtilityNegative(utility)) return null;
     final root = tailwindUtilityRoot(utility);
-    final spacingSides = _layoutSpacingSides(root);
-    if (spacingSides != null) {
-      final value = _spaceLengthForUtility(utility);
-      final kind = root.startsWith('m')
-          ? TwLayoutInsetKind.margin
-          : TwLayoutInsetKind.padding;
-      if (value == null || (kind == .margin && value < 0)) return null;
+    if (!root.startsWith('m')) return null;
+    final sides = _layoutSpacingSides(root);
+    final value = _spaceLengthForUtility(utility);
+    if (sides == null || value == null || value < 0) return null;
 
-      return TwLayoutInsetDeclaration(
-        kind: kind,
-        sides: spacingSides,
-        value: value,
-      );
-    }
-
-    // Border widths are collected per style group after base inheritance.
-    return null;
+    return TwLayoutInsetDeclaration(kind: .margin, sides: sides, value: value);
   }
 
   TwLayoutLogicalInsetDeclaration? _layoutLogicalMargin(
@@ -1875,88 +1874,92 @@ final class TwTranslator {
     _CandidateProgram program,
     TwTarget? target,
   ) {
-    // Icons have no variant style groups.
-    final paths = target == null
-        ? const [_VariantPath.base]
-        : program.styleGroupPaths[target]!;
-    final styleGroups = {
-      for (var index = 0; index < paths.length; index++) paths[index]: index,
-    };
     final builder = TwLayoutPlanBuilder();
     for (final compiled in program.candidates) {
       if (compiled.layoutInput case final input?) {
-        builder.add(
-          input,
-          styleGroupOrder: styleGroups[compiled.variantPath] ?? 0,
-        );
+        builder.add(input);
       }
     }
 
-    _addLayoutBorders(builder, program, styleGroups);
+    // Icons have no variant style groups.
+    if (target != null) {
+      _addStyleGroupInsets(builder, program.styleGroups[target]!);
+    }
 
     return builder.build();
   }
 
-  void _addLayoutBorders(
+  /// Projects padding and border widths from the translated style groups.
+  ///
+  /// Groups are visited in the Styler's merge order: base first, then variant
+  /// groups as they were introduced. Only breakpoint-scoped groups reach the
+  /// plan; the plan cannot evaluate interactive or contextual variants.
+  void _addStyleGroupInsets(
     TwLayoutPlanBuilder builder,
-    _CandidateProgram program,
-    Map<_VariantPath, int> styleGroups,
+    Map<_VariantPath, _GroupContext> groups,
   ) {
-    final borders = <_VariantPath, (BorderAccum, double)>{};
-    for (final compiled in program.candidates) {
-      final utility = compiled.candidate.utility;
-      final root = tailwindUtilityRoot(utility);
-      final path = compiled.variantPath;
-      if (compiled.route.kind != .style ||
-          path == null ||
-          !styleGroups.containsKey(path) ||
-          !root.startsWith('border')) {
-        continue;
-      }
-      final minWidth = _layoutBreakpointMinWidth(compiled.candidate.variants);
-      if (minWidth == null) continue;
-      final (border, _) = borders.putIfAbsent(
-        path,
-        () => (BorderAccum(), minWidth),
-      );
-      _applyBorder(
-        border,
-        utility.raw,
-        root,
-        tailwindUtilityValue(utility),
-        tailwindUtilityModifier(utility),
-      );
-    }
+    final paths = [
+      _VariantPath.base,
+      ...groups.keys.where((path) => path != .base),
+    ];
+    for (final (order, path) in paths.indexed) {
+      final group = groups[path];
+      final minWidth = _breakpointMinWidthOfPath(path);
+      if (group == null || minWidth == null) continue;
 
-    final base = borders[_VariantPath.base]?.$1;
-    for (final entry in borders.entries) {
-      final (border, minWidth) = entry.value;
-      if (!border.hasStructure) continue;
-      if (entry.key != .base && base != null) {
-        border.inheritUnsetFrom(base);
+      void addInset(
+        TwLayoutInsetKind kind,
+        TwLayoutInsetSides sides,
+        double value,
+      ) {
+        builder.add(
+          TwLayoutUtilityInput(
+            breakpointMinWidth: minWidth,
+            inset: TwLayoutInsetDeclaration(
+              kind: kind,
+              sides: sides,
+              value: value,
+            ),
+          ),
+          styleGroupOrder: order,
+        );
       }
-      // Mirror BorderAccum.toMix: a colored side without an explicit or
-      // inherited width has zero width. Unspecified sides remain absent.
-      for (final (side, width, color) in [
+
+      final padding = group.padding;
+      for (final (sides, value) in [
+        (TwLayoutInsetSides.left, padding.left),
+        (TwLayoutInsetSides.top, padding.top),
+        (TwLayoutInsetSides.right, padding.right),
+        (TwLayoutInsetSides.bottom, padding.bottom),
+      ]) {
+        if (value != null) addInset(.padding, sides, value);
+      }
+
+      // Match BorderAccum.toMix: a colored side without an explicit or
+      // inherited width renders at zero width; unspecified sides are absent.
+      final border = group.border;
+      if (!border.hasStructure) continue;
+      for (final (sides, width, color) in [
         (TwLayoutInsetSides.left, border.leftWidth, border.leftColor),
         (TwLayoutInsetSides.top, border.topWidth, border.topColor),
         (TwLayoutInsetSides.right, border.rightWidth, border.rightColor),
         (TwLayoutInsetSides.bottom, border.bottomWidth, border.bottomColor),
       ]) {
         if (width == null && color == null) continue;
-        builder.add(
-          TwLayoutUtilityInput(
-            breakpointMinWidth: minWidth,
-            inset: TwLayoutInsetDeclaration(
-              kind: .border,
-              sides: side,
-              value: width ?? 0,
-            ),
-          ),
-          styleGroupOrder: styleGroups[entry.key]!,
-        );
+        addInset(.border, sides, width ?? 0);
       }
     }
+  }
+
+  double? _breakpointMinWidthOfPath(_VariantPath path) {
+    var minWidth = 0.0;
+    for (final part in path.parts) {
+      final breakpoint = part.breakpoint;
+      if (part.kind != .breakpoint || breakpoint == null) return null;
+      if (breakpoint > minWidth) minWidth = breakpoint;
+    }
+
+    return minWidth;
   }
 
   TwCompiledLayoutPlan _boxLayoutPlan(TwCompiledLayoutPlan plan) => .new(

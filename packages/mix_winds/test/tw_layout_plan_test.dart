@@ -172,6 +172,7 @@ void main() {
                   plan.padding.select(800)!.mainExtent(.horizontal),
                   padding.horizontal,
                 );
+
                 return const SizedBox();
               },
             ),
@@ -179,6 +180,73 @@ void main() {
         ),
       );
       expect(tester.takeException(), isNull);
+    });
+
+    testWidgets('plan padding and border project the emitted box groups', (
+      tester,
+    ) async {
+      for (final classes in [
+        'p-4 px-2 md:p-8 lg:pl-1',
+        'border-blue-500 md:border-4 lg:border-l-2',
+        'border-2 md:border-x-4 md:border-red-500 lg:border-t-0',
+        'hover:p-6 md:p-3 dark:border-4 md:border-2',
+      ]) {
+        final compilation = TwTranslator(
+          config: TwConfig.standard(),
+        ).compileForWidget(classes, .boxOrFlex);
+        final plan = compilation.parentLayoutPlan;
+        for (final width in [600.0, 800.0, 1200.0]) {
+          await tester.pumpWidget(
+            MediaQuery(
+              data: MediaQueryData(size: Size(width, 600)),
+              child: Directionality(
+                textDirection: .ltr,
+                child: Builder(
+                  builder: (context) {
+                    final spec = compilation.boxStyler!.build(context).spec;
+                    final padding = spec.padding?.resolve(.ltr) ?? .zero;
+                    final border =
+                        (spec.decoration as BoxDecoration?)?.border as Border?;
+                    final planPadding =
+                        plan.padding.select(width) ?? const TwInsets();
+                    final planBorder =
+                        plan.border.select(width) ?? const TwInsets();
+                    final reason = '$classes at $width';
+
+                    expect(planPadding.left, padding.left, reason: reason);
+                    expect(planPadding.top, padding.top, reason: reason);
+                    expect(planPadding.right, padding.right, reason: reason);
+                    expect(planPadding.bottom, padding.bottom, reason: reason);
+                    expect(
+                      planBorder.left,
+                      border?.left.width ?? 0,
+                      reason: reason,
+                    );
+                    expect(
+                      planBorder.top,
+                      border?.top.width ?? 0,
+                      reason: reason,
+                    );
+                    expect(
+                      planBorder.right,
+                      border?.right.width ?? 0,
+                      reason: reason,
+                    );
+                    expect(
+                      planBorder.bottom,
+                      border?.bottom.width ?? 0,
+                      reason: reason,
+                    );
+
+                    return const SizedBox();
+                  },
+                ),
+              ),
+            ),
+          );
+          expect(tester.takeException(), isNull, reason: '$classes at $width');
+        }
+      }
     });
 
     testWidgets('dropped text margin cannot establish variant merge order', (
@@ -202,6 +270,7 @@ void main() {
                   compilation.textStyler!.build(context).spec,
                   withoutMargin.styler.build(context).spec,
                 );
+
                 return const SizedBox();
               },
             ),

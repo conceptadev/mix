@@ -231,6 +231,45 @@ void main() {
       expect(compilation.requiresWidgetRuntime, isFalse);
     });
 
+    testWidgets('widget stylers leave margin to the layout plan', (
+      tester,
+    ) async {
+      final translator = TwTranslator(config: TwConfig.standard());
+      final box = translator.compileForWidget('m-4 md:m-8 p-2', .boxOrFlex);
+      final flex = translator.compileForWidget(
+        'flex m-4 md:m-8 p-2',
+        .boxOrFlex,
+      );
+      final portable = TwParser().compileBox('m-4 md:m-8 p-2');
+
+      expect(box.diagnostics, isEmpty);
+      expect(flex.diagnostics, isEmpty);
+      expect(box.layoutPlan.isEmpty, isFalse);
+      expect(flex.layoutPlan.isEmpty, isFalse);
+
+      await tester.pumpWidget(
+        MediaQuery(
+          data: const MediaQueryData(size: Size(1024, 768)),
+          child: Builder(
+            builder: (context) {
+              final boxSpec = box.boxStyler!.build(context).spec;
+              final flexSpec = flex.flexStyler!.build(context).spec;
+              final portableSpec = portable.styler.build(context).spec;
+
+              expect(boxSpec.margin, isNull);
+              expect(boxSpec.padding, const EdgeInsets.all(8));
+              expect(flexSpec.box?.spec.margin, isNull);
+              expect(flexSpec.box?.spec.padding, const EdgeInsets.all(8));
+              expect(portableSpec.margin, const EdgeInsets.all(32));
+
+              return const SizedBox();
+            },
+          ),
+        ),
+      );
+      expect(tester.takeException(), isNull);
+    });
+
     test('internal widget seam infers targets without exposing candidates', () {
       final translator = TwTranslator(config: TwConfig.standard());
       final element = translator.compileForWidget(

@@ -9,48 +9,6 @@ import 'tw_layout_plan.dart';
 import 'tw_types.dart';
 
 // =============================================================================
-// CSS Semantic Margin Helpers
-// =============================================================================
-
-/// Creates a new [BoxSpec] with margin set to null.
-///
-/// Used to strip margin from a spec so it can be applied externally
-/// for CSS semantic hit-testing (margin outside interactive area).
-BoxSpec _boxSpecWithoutMargin(BoxSpec spec) {
-  return BoxSpec(
-    alignment: spec.alignment,
-    padding: spec.padding,
-    margin: null,
-    constraints: spec.constraints,
-    decoration: spec.decoration,
-    foregroundDecoration: spec.foregroundDecoration,
-    transform: spec.transform,
-    transformAlignment: spec.transformAlignment,
-    clipBehavior: spec.clipBehavior,
-  );
-}
-
-/// Creates a new [StyleSpec<BoxSpec>] with margin stripped from the inner spec.
-///
-/// Preserves animation and widgetModifiers from the original.
-StyleSpec<BoxSpec> _styleSpecWithoutMargin(StyleSpec<BoxSpec> styleSpec) {
-  return StyleSpec(
-    spec: _boxSpecWithoutMargin(styleSpec.spec),
-    animation: styleSpec.animation,
-    widgetModifiers: styleSpec.widgetModifiers,
-  );
-}
-
-/// Creates a new [FlexBoxSpec] with margin stripped from the box spec.
-///
-/// Preserves flex spec and other box properties.
-FlexBoxSpec _flexBoxSpecWithoutMargin(FlexBoxSpec spec) {
-  if (spec.box == null) return spec;
-
-  return FlexBoxSpec(box: _styleSpecWithoutMargin(spec.box!), flex: spec.flex);
-}
-
-// =============================================================================
 // Flex Scope (boundedness propagation)
 // =============================================================================
 
@@ -142,16 +100,13 @@ class _CssSemanticBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Build inner content with StyleBuilder (handles variants/animations).
-    // Margin is stripped because the semantic plan owns its outer placement.
+    // The compiler keeps margin out of widget Stylers; the plan owns it.
     Widget inner = StyleBuilder<BoxSpec>(
       style: style,
-      builder: (context, spec) {
-        // Use Box widget with margin stripped - margin is applied externally
-        return Box(
-          styleSpec: _styleSpecWithoutMargin(StyleSpec(spec: spec)),
-          child: child,
-        );
-      },
+      builder: (context, spec) => Box(
+        styleSpec: StyleSpec(spec: spec),
+        child: child,
+      ),
     );
 
     if (wrapBorderBox case final wrap?) {
@@ -196,24 +151,22 @@ class _CssSemanticFlexBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Build inner content with StyleBuilder (handles variants/animations).
-    // Margin is stripped because the semantic plan owns its outer placement.
+    // The compiler keeps margin out of widget Stylers; the plan owns it.
     Widget inner = StyleBuilder<FlexBoxSpec>(
       style: style,
       builder: (context, spec) {
-        // Use FlexBox widget with margin stripped - margin is applied externally
-        final stripped = _flexBoxSpecWithoutMargin(spec);
         final alignments = selfAlignments;
         final items = zeroBasisItems;
         if (alignments == null && items == null) {
           return FlexBox(
-            styleSpec: StyleSpec(spec: stripped),
+            styleSpec: StyleSpec(spec: spec),
             children: children,
           );
         }
 
         // FlexBox is a Box wrapping a Flex, so rebuild that composition when
         // Tailwind needs per-child alignment or content-box flex sizing.
-        final flexSpec = stripped.flex?.spec;
+        final flexSpec = spec.flex?.spec;
         final Widget flex = _TailwindFlex(
           direction: flexSpec?.direction ?? .horizontal,
           mainAxisAlignment: flexSpec?.mainAxisAlignment ?? .start,
@@ -229,7 +182,7 @@ class _CssSemanticFlexBox extends StatelessWidget {
           children: children,
         );
 
-        final box = stripped.box;
+        final box = spec.box;
 
         return box == null ? flex : Box(styleSpec: box, child: flex);
       },
