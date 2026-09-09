@@ -36,7 +36,6 @@ SchemaObject<FlexBoxStyler> _flexBoxStylerSchemaType(
     ),
     _boxField,
     inventoryName: 'box',
-    schemaSemantics: doubleTokenFieldSemantics,
   );
   final margin = derivedField<FlexBoxStyler, Prop<EdgeInsetsGeometry>>(
     'margin',
@@ -46,7 +45,6 @@ SchemaObject<FlexBoxStyler> _flexBoxStylerSchemaType(
     ),
     _boxField,
     inventoryName: 'box',
-    schemaSemantics: doubleTokenFieldSemantics,
   );
   final constraints = derivedField<FlexBoxStyler, Prop<BoxConstraints>>(
     'constraints',
@@ -167,7 +165,6 @@ SchemaObject<FlexBoxStyler> _flexBoxStylerSchemaType(
     valuePropCodec<double>(doubleTokenCodec(), fieldName: 'spacing'),
     _flexField,
     inventoryName: 'flex',
-    schemaSemantics: doubleTokenFieldSemantics,
   );
 
   return stylerSchemaObject<FlexBoxStyler, FlexBoxSpec>(
@@ -198,10 +195,10 @@ SchemaObject<FlexBoxStyler> _flexBoxStylerSchemaType(
           padding: padding.value(data),
           margin: margin.value(data),
           constraints: constraints.value(data),
-          clipBehavior: clipBehavior.value(data),
+          decoration: decoration.value(data),
           transform: transform.value(data),
           transformAlignment: transformAlignment.value(data),
-          decoration: decoration.value(data),
+          clipBehavior: clipBehavior.value(data),
         ),
       ),
       flex: Prop.mix(
@@ -224,20 +221,18 @@ SchemaObject<FlexBoxStyler> _flexBoxStylerSchemaType(
   );
 }
 
-Object? _boxField(FlexBoxStyler value, String wire) {
-  return encodedNestedStylerField<FlexBoxStyler, BoxStyler, BoxSpec>(
+JsonMap _boxField(FlexBoxStyler value) {
+  return encodedNestedStylerFields<FlexBoxStyler, BoxStyler, BoxSpec>(
     value,
-    wire,
     read: (value) => value.$box,
     encodeFields: encodeBoxStylerFields,
     fieldName: 'box',
   );
 }
 
-Object? _flexField(FlexBoxStyler value, String wire) {
-  return encodedNestedStylerField<FlexBoxStyler, FlexStyler, FlexSpec>(
+JsonMap _flexField(FlexBoxStyler value) {
+  return encodedNestedStylerFields<FlexBoxStyler, FlexStyler, FlexSpec>(
     value,
-    wire,
     read: (value) => value.$flex,
     encodeFields: encodeFlexStylerFields,
     fieldName: 'flex',

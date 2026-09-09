@@ -36,7 +36,6 @@ SchemaObject<StackBoxStyler> _stackBoxStylerSchemaType(
     ),
     _boxField,
     inventoryName: 'box',
-    schemaSemantics: doubleTokenFieldSemantics,
   );
   final margin = derivedField<StackBoxStyler, Prop<EdgeInsetsGeometry>>(
     'margin',
@@ -46,7 +45,6 @@ SchemaObject<StackBoxStyler> _stackBoxStylerSchemaType(
     ),
     _boxField,
     inventoryName: 'box',
-    schemaSemantics: doubleTokenFieldSemantics,
   );
   final constraints = derivedField<StackBoxStyler, Prop<BoxConstraints>>(
     'constraints',
@@ -148,10 +146,10 @@ SchemaObject<StackBoxStyler> _stackBoxStylerSchemaType(
           padding: padding.value(data),
           margin: margin.value(data),
           constraints: constraints.value(data),
-          clipBehavior: clipBehavior.value(data),
+          decoration: decoration.value(data),
           transform: transform.value(data),
           transformAlignment: transformAlignment.value(data),
-          decoration: decoration.value(data),
+          clipBehavior: clipBehavior.value(data),
         ),
       ),
       stack: Prop.mix(
@@ -169,20 +167,18 @@ SchemaObject<StackBoxStyler> _stackBoxStylerSchemaType(
   );
 }
 
-Object? _boxField(StackBoxStyler value, String wire) {
-  return encodedNestedStylerField<StackBoxStyler, BoxStyler, BoxSpec>(
+JsonMap _boxField(StackBoxStyler value) {
+  return encodedNestedStylerFields<StackBoxStyler, BoxStyler, BoxSpec>(
     value,
-    wire,
     read: (value) => value.$box,
     encodeFields: encodeBoxStylerFields,
     fieldName: 'box',
   );
 }
 
-Object? _stackField(StackBoxStyler value, String wire) {
-  return encodedNestedStylerField<StackBoxStyler, StackStyler, StackSpec>(
+JsonMap _stackField(StackBoxStyler value) {
+  return encodedNestedStylerFields<StackBoxStyler, StackStyler, StackSpec>(
     value,
-    wire,
     read: (value) => value.$stack,
     encodeFields: encodeStackStylerFields,
     fieldName: 'stack',

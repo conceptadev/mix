@@ -8,14 +8,15 @@ import 'package:mix/mix.dart';
 /// [kind] matches the theme document group name (`colors`, `spaces`, etc.).
 /// [name] is the token name within that group.
 final class MixProtocolTokenReference {
+  final String kind;
+
+  final String name;
+
   const MixProtocolTokenReference(this.kind, this.name);
 
   factory MixProtocolTokenReference.fromToken(MixToken<dynamic> token) {
     return MixProtocolTokenReference(_kindForToken(token), token.name);
   }
-
-  final String kind;
-  final String name;
 
   @override
   bool operator ==(Object other) {
@@ -26,10 +27,10 @@ final class MixProtocolTokenReference {
   }
 
   @override
-  int get hashCode => Object.hash(kind, name);
+  String toString() => 'MixProtocolTokenReference($kind, $name)';
 
   @override
-  String toString() => 'MixProtocolTokenReference($kind, $name)';
+  int get hashCode => Object.hash(kind, name);
 }
 
 /// Returns the unique theme token references used by a decoded Mix style.
@@ -58,117 +59,6 @@ String _kindForToken(MixToken<dynamic> token) {
 final class _TokenReferenceWalker {
   final Set<MixProtocolTokenReference> references = {};
   final HashSet<Object> _seen = HashSet.identity();
-
-  void visit(Object? value) {
-    if (value == null) return;
-
-    final token = tokenFromReferenceValue<dynamic>(value);
-    if (token != null) {
-      _addToken(token);
-
-      return;
-    }
-
-    if (value is MixToken<dynamic>) {
-      _addToken(value);
-
-      return;
-    }
-
-    if (value is Prop<dynamic>) {
-      _visitProp(value);
-
-      return;
-    }
-
-    if (value is BreakpointRef) {
-      _addToken(value.token);
-
-      return;
-    }
-
-    if (value is Iterable<Object?>) {
-      for (final item in value) {
-        visit(item);
-      }
-
-      return;
-    }
-
-    if (value is Map<Object?, Object?>) {
-      for (final entry in value.entries) {
-        visit(entry.key);
-        visit(entry.value);
-      }
-
-      return;
-    }
-
-    if (!_seen.add(value)) return;
-
-    if (value is Style<dynamic>) {
-      _visitStyle(value);
-
-      return;
-    }
-
-    if (value is VariantStyle<dynamic>) {
-      _visitVariantStyle(value);
-
-      return;
-    }
-
-    if (value is Variant) {
-      _visitVariant(value);
-
-      return;
-    }
-
-    if (value is WidgetModifierConfig) {
-      visit(value.$modifiers);
-
-      return;
-    }
-
-    if (value is ModifierMix<dynamic>) {
-      _visitModifier(value);
-
-      return;
-    }
-
-    if (value is CurveAnimationConfig) {
-      visit(value.duration);
-      visit(value.delay);
-
-      return;
-    }
-
-    if (value is TextStyle) {
-      _visitTextStyle(value);
-
-      return;
-    }
-
-    if (value is BoxShadow) {
-      _visitBoxShadow(value);
-
-      return;
-    }
-
-    if (value is Shadow) {
-      _visitShadow(value);
-
-      return;
-    }
-
-    if (value is BorderSide) {
-      _visitBorderSide(value);
-
-      return;
-    }
-
-    _visitMixValue(value);
-  }
 
   void _addToken(MixToken<dynamic> token) {
     references.add(MixProtocolTokenReference.fromToken(token));
@@ -504,5 +394,116 @@ final class _TokenReferenceWalker {
       default:
         break;
     }
+  }
+
+  void visit(Object? value) {
+    if (value == null) return;
+
+    final token = tokenFromReferenceValue<dynamic>(value);
+    if (token != null) {
+      _addToken(token);
+
+      return;
+    }
+
+    if (value is MixToken<dynamic>) {
+      _addToken(value);
+
+      return;
+    }
+
+    if (value is Prop<dynamic>) {
+      _visitProp(value);
+
+      return;
+    }
+
+    if (value is BreakpointRef) {
+      _addToken(value.token);
+
+      return;
+    }
+
+    if (value is Iterable<Object?>) {
+      for (final item in value) {
+        visit(item);
+      }
+
+      return;
+    }
+
+    if (value is Map<Object?, Object?>) {
+      for (final entry in value.entries) {
+        visit(entry.key);
+        visit(entry.value);
+      }
+
+      return;
+    }
+
+    if (!_seen.add(value)) return;
+
+    if (value is Style<dynamic>) {
+      _visitStyle(value);
+
+      return;
+    }
+
+    if (value is VariantStyle<dynamic>) {
+      _visitVariantStyle(value);
+
+      return;
+    }
+
+    if (value is Variant) {
+      _visitVariant(value);
+
+      return;
+    }
+
+    if (value is WidgetModifierConfig) {
+      visit(value.$modifiers);
+
+      return;
+    }
+
+    if (value is ModifierMix<dynamic>) {
+      _visitModifier(value);
+
+      return;
+    }
+
+    if (value is CurveAnimationConfig) {
+      visit(value.duration);
+      visit(value.delay);
+
+      return;
+    }
+
+    if (value is TextStyle) {
+      _visitTextStyle(value);
+
+      return;
+    }
+
+    if (value is BoxShadow) {
+      _visitBoxShadow(value);
+
+      return;
+    }
+
+    if (value is Shadow) {
+      _visitShadow(value);
+
+      return;
+    }
+
+    if (value is BorderSide) {
+      _visitBorderSide(value);
+
+      return;
+    }
+
+    _visitMixValue(value);
   }
 }

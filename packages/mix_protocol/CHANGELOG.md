@@ -2,6 +2,12 @@
 
 ### New features
 
+- Added the v1 `context_focus_visible` selector, including nested negation.
+- Require Ack 1.2.0 for private codecs. Generated Mix stylers remain the runtime model.
+- Share field, token, merge, directive, and variant declarations with schema export.
+- Preserve literal types and directive families in exported Draft 7 schemas.
+- Validate schema output with an independent Draft 7 validator.
+
 - Added additive v1 `{"type":"auto"}` Grid tracks for `rows`, `autoRows`, and
   constraint patches. Auto tracks have no token references.
 - Added immutable, deterministic package-contributed styler vocabularies,
@@ -24,6 +30,10 @@
   tracks and gaps accept canonical numeric token references.
 
 ### Fixes
+
+- Prepare each nested composite styler once per encoding operation.
+- Remove obsolete schema hints and schema reconstruction from generic Ack shapes.
+- Export the breakpoint selector constraint from its runtime definition.
 
 - Preserve unresolved numeric tokens when box constraints are encoded and
   decoded.
