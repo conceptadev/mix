@@ -16,8 +16,9 @@
 - Match zero-basis padding and border accounting to the emitted style's variant
   merge order so responsive flex children retain equal content space.
 - Validate each supported utility ledger family through Mix Protocol.
-- Check resolved styles, target diagnostics, runtime plans, and independent
-  JSON Schema validation.
+- Check resolved styles, target diagnostics, and runtime plans in Dart, and
+  pin one encoded document per ledger family under `schema/fixtures` for the
+  repository's Ajv schema check.
 - Encode `focus-visible` through the additive Protocol v1 selector.
 - Normalize static viewport sizing before routing to prevent incorrect
   unsupported diagnostics.

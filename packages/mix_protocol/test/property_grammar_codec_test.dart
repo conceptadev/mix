@@ -1,23 +1,18 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:json_schema/json_schema.dart' as json_schema;
 import 'package:mix/mix.dart';
 import 'package:mix_protocol/mix_protocol.dart';
 
+import 'schema_fixtures/core_schema_cases.dart';
+
 void main() {
   MixProtocol contract() => mixProtocol;
-  late final validator = json_schema.JsonSchema.create(
-    mixProtocol.exportStyleJsonSchema(),
-  );
 
-  JsonMap encode(Object value) {
-    final encoded = switch (contract().encodeStyle(value)) {
-      MixProtocolSuccess<JsonMap>(:final value) => value,
-      MixProtocolFailure<JsonMap>(:final errors) => fail('$errors'),
-    };
-    final validation = validator.validate(encoded);
-    expect(validation.isValid, isTrue, reason: '${validation.errors}');
-    return encoded;
-  }
+  // Schema acceptance of these documents is pinned by the checked-in fixtures
+  // in schema/ and verified with Ajv; this file covers the codec round trip.
+  JsonMap encode(Object value) => switch (contract().encodeStyle(value)) {
+    MixProtocolSuccess<JsonMap>(:final value) => value,
+    MixProtocolFailure<JsonMap>(:final errors) => fail('$errors'),
+  };
 
   T decode<T extends Object>(JsonMap payload) {
     return switch (contract().decodeStyle<T>({'v': 1, ...payload})) {
@@ -27,20 +22,9 @@ void main() {
   }
 
   group('property directive grammar', () {
-    for (final entry in _colorDirectiveCases.entries) {
-      test('round-trips ${entry.key} color directive params', () {
-        final payload = {
-          'v': 1,
-          'type': 'box',
-          'decoration': {
-            'color': {
-              r'$merge': ['#336699'],
-              'apply': [
-                {'op': entry.key, ...entry.value},
-              ],
-            },
-          },
-        };
+    for (final op in colorDirectiveCases.keys) {
+      test('round-trips $op color directive params', () {
+        final payload = colorDirectivePayload(op);
 
         final decoded = decode<BoxStyler>(payload);
 
@@ -48,18 +32,9 @@ void main() {
       });
     }
 
-    for (final op in _stringDirectiveOps) {
+    for (final op in stringDirectiveOps) {
       test('round-trips $op string directive', () {
-        final payload = {
-          'v': 1,
-          'type': 'text',
-          'semanticsLabel': {
-            r'$merge': ['hello world'],
-            'apply': [
-              {'op': op},
-            ],
-          },
-        };
+        final payload = stringDirectivePayload(op);
 
         final decoded = decode<TextStyler>(payload);
 
@@ -67,18 +42,9 @@ void main() {
       });
     }
 
-    for (final entry in _numberDirectiveCases.entries) {
-      test('round-trips ${entry.key} number directive params', () {
-        final payload = {
-          'v': 1,
-          'type': 'flex',
-          'spacing': {
-            r'$merge': [4],
-            'apply': [
-              {'op': entry.key, ...entry.value},
-            ],
-          },
-        };
+    for (final op in numberDirectiveCases.keys) {
+      test('round-trips $op number directive params', () {
+        final payload = numberDirectivePayload(op);
 
         final decoded = decode<FlexStyler>(payload);
 
@@ -357,45 +323,3 @@ void main() {
     });
   });
 }
-
-const Map<String, JsonMap> _colorDirectiveCases = {
-  'color_opacity': {'opacity': 0.5},
-  'color_with_values': {
-    'alpha': 0.7,
-    'red': 0.2,
-    'green': 0.3,
-    'blue': 0.4,
-    'colorSpace': 'sRGB',
-  },
-  'color_alpha': {'alpha': 128},
-  'color_darken': {'amount': 10},
-  'color_lighten': {'amount': 10},
-  'color_saturate': {'amount': 10},
-  'color_desaturate': {'amount': 10},
-  'color_tint': {'amount': 10},
-  'color_shade': {'amount': 10},
-  'color_brighten': {'amount': 10},
-  'color_with_red': {'red': 12},
-  'color_with_green': {'green': 34},
-  'color_with_blue': {'blue': 56},
-};
-
-const List<String> _stringDirectiveOps = [
-  'uppercase',
-  'lowercase',
-  'capitalize',
-  'title_case',
-  'sentence_case',
-];
-
-const Map<String, JsonMap> _numberDirectiveCases = {
-  'number_multiply': {'factor': 1.5},
-  'number_add': {'addend': 2},
-  'number_subtract': {'subtrahend': 1},
-  'number_divide': {'divisor': 2},
-  'number_clamp': {'min': 1, 'max': 8},
-  'number_abs': {},
-  'number_round': {},
-  'number_floor': {},
-  'number_ceil': {},
-};

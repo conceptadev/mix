@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:json_schema/json_schema.dart' as json_schema;
 import 'package:mix/mix.dart';
 import 'package:mix_protocol/authoring.dart';
 import 'package:mix_protocol/mix_protocol.dart';
@@ -306,25 +305,36 @@ void main() {
       ),
     ]);
     final schema = protocol.exportStyleJsonSchema();
-    final validator = json_schema.JsonSchema.create(schema);
+    // Each list item must offer the numeric token grammar and a plain number,
+    // and nothing else. Ajv verifies the core list fields the same way from
+    // the checked-in fixtures; this composed branch is test-only.
+    final branch = (schema['anyOf'] as List).cast<JsonMap>().singleWhere(
+      (branch) =>
+          ((branch['properties'] as JsonMap)['type'] as JsonMap)['const'] ==
+          'number_lists.v1.number_list',
+    );
+    final items =
+        ((branch['properties'] as JsonMap)['values'] as JsonMap)['items']
+            as JsonMap;
+    final definition =
+        (schema['definitions'] as JsonMap)[(items[r'$ref'] as String)
+                .split('/')
+                .last]
+            as JsonMap;
+    final alternatives = (definition['anyOf'] as List).cast<JsonMap>();
+    final token = alternatives.singleWhere(
+      (alternative) => alternative['type'] == 'object',
+    );
+    expect(alternatives, hasLength(2));
     expect(
-      validator.validate({
-        'v': 1,
-        'type': 'number_lists.v1.number_list',
-        'values': [
-          {r'$token': 'double.item', 'kind': 'double'},
-        ],
-      }).isValid,
+      alternatives.any((alternative) => alternative['type'] == 'number'),
       isTrue,
     );
     expect(
-      validator.validate({
-        'v': 1,
-        'type': 'number_lists.v1.number_list',
-        'values': [true],
-      }).isValid,
-      isFalse,
+      ((token['properties'] as JsonMap)['kind'] as JsonMap)['enum'],
+      contains('double'),
     );
+    expect(token['additionalProperties'], isFalse);
     expect(
       protocol.encodeStyle(
         _NumberListStyler([const DoubleToken('double.item')()]),
@@ -923,6 +933,41 @@ final class _MetadataStyler extends Style<BoxSpec>
   List<Object?> get props => [$color, $animation, $modifier, $variants];
 }
 
+/// A leaf schema offers the numeric token grammar with the `double` kind and
+/// no boolean alternative. This mirrors what Ajv verifies for the checked-in
+/// core fixtures without validating documents here.
+bool _acceptsDoubleTokenOnly(JsonMap schema, JsonMap definitions) {
+  final reference = schema[r'$ref'];
+  if (reference is String) {
+    final resolved = definitions[reference.substring('#/definitions/'.length)];
+
+    return resolved is JsonMap &&
+        _acceptsDoubleTokenOnly(resolved, definitions);
+  }
+  final alternatives = [
+    ...?(schema['anyOf'] as List?)?.cast<JsonMap>(),
+    ...?(schema['oneOf'] as List?)?.cast<JsonMap>(),
+  ];
+  if (alternatives.isEmpty) return false;
+  if (alternatives.any((alternative) => alternative['type'] == 'boolean')) {
+    return false;
+  }
+
+  return alternatives.any((alternative) {
+    if (alternative[r'$ref'] is String) {
+      return _acceptsDoubleTokenOnly(alternative, definitions);
+    }
+    final properties = alternative['properties'];
+    if (properties is! JsonMap || !properties.containsKey(r'$token')) {
+      return false;
+    }
+    final kind = properties['kind'];
+
+    return kind is JsonMap &&
+        (kind['enum'] as List?)?.contains('double') == true;
+  });
+}
+
 bool _schemaPathAcceptsToken(
   Object? schema,
   List<String> path,
@@ -938,15 +983,7 @@ bool _schemaPathAcceptsToken(
     );
   }
   if (path.isEmpty) {
-    final validator = json_schema.JsonSchema.create({
-      ...schema,
-      'definitions': definitions,
-    });
-    return validator.validate({
-          r'$token': 'double.example',
-          'kind': 'double',
-        }).isValid &&
-        !validator.validate(true).isValid;
+    return _acceptsDoubleTokenOnly(schema, definitions);
   }
   for (final branch in [
     ...?schema['anyOf'] as List?,

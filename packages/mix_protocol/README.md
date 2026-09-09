@@ -101,11 +101,38 @@ These are distinct layers:
   these per-node style payloads. Widget trees, events, and component identity
   are not part of `mix_protocol` v1.
 
+### Checked-in schema and fixtures
+
+`schema/` holds the exported `style.schema.json` and `theme.schema.json`
+together with `fixtures/*.json`, the documents that pin each schema's
+acceptance boundary. `manifest.json` lists the suites. The files are generated
+by `test/schema_fixtures_test.dart` and checked for staleness on every test
+run; regenerate them with:
+
+```bash
+melos run schema:fixtures
+```
+
+Schema changes therefore appear as reviewable diffs. `tool/schema-check`
+validates every checked-in suite in the repository with
+[Ajv](https://ajv.js.org) under strict Draft 7 settings, so the exported schema
+is proven by an implementation that shares nothing with Ack:
+
+```bash
+melos run schema:check
+```
+
+Packages that compose their own vocabulary reuse the same pipeline through
+`package:mix_protocol/testing.dart`: build a `SchemaFixtureSuite` and call
+`syncSchemaFixtures` from a golden test, and the Ajv job picks up the new
+`schema/manifest.json` automatically.
+
 `mix_winds` remains a direct Mix styler producer at runtime. Its test suite
 uses `mix_protocol` as a development-only reference consumer to prove that a
 supported utility ledger retains its resolved styles through Protocol encoding.
-The tests also validate canonical output with an independent Draft 7 validator.
-Runtime plans and target diagnostics remain separate checks.
+Its `schema/fixtures/style.json` carries one encoded document per supported
+ledger family for the Ajv check. Runtime plans and target diagnostics remain
+separate checks.
 
 See [GUIDE.md](GUIDE.md) for integration patterns and
 [WIRE_CONTRACT.md](WIRE_CONTRACT.md) for the complete v1 grammar.
