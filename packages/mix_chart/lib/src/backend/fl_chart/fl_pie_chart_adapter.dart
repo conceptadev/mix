@@ -62,12 +62,15 @@ final class _FlPieChartAdapterState extends State<FlPieChartAdapter> {
           (presentation.radius ?? 80) +
           (selected ? (widget.spec.selectedSliceRadiusOffset ?? 8.0) : 0),
       showTitle: presentation.showLabel ?? true,
-      titleStyle: const TextStyle(
-        color: Colors.white,
-        fontSize: 12,
-        fontWeight: .w600,
-        height: 1.15,
-      ).merge(presentation.label?.spec.style),
+      titleStyle:
+          const TextStyle(
+                color: Colors.white,
+                fontSize: 12,
+                fontWeight: .w600,
+                height: 1.15,
+              )
+              .merge(widget.spec.slice?.spec.label?.spec.style)
+              .merge(presentation.label?.spec.style),
       title: '${slice.label}\n${formatter(slice.value)}',
       borderSide: presentation.border ?? .none,
       cornerRadius: presentation.cornerRadius ?? 0,

@@ -100,7 +100,11 @@ final class _FlBarChartAdapterState extends State<FlBarChartAdapter> {
       label: fl.BarChartRodLabel(
         show: presentation.label != null,
         text: formatter(bar.toY),
-        style: presentation.label?.spec.style,
+        style:
+            widget.spec.bar?.spec.label?.spec.style?.merge(
+              presentation.label?.spec.style,
+            ) ??
+            presentation.label?.spec.style,
         angle: presentation.labelAngle ?? 0,
         offset: presentation.labelOffset ?? const Offset(0, 8),
       ),
@@ -130,7 +134,11 @@ final class _FlBarChartAdapterState extends State<FlBarChartAdapter> {
       gradient == null ? color : null,
       gradient: gradient,
       label: presentation.label == null ? null : segment.label,
-      labelStyle: presentation.label?.spec.style,
+      labelStyle:
+          widget.spec.segment?.spec.label?.spec.style?.merge(
+            presentation.label?.spec.style,
+          ) ??
+          presentation.label?.spec.style,
       borderSide: border,
     );
   }
