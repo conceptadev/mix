@@ -33,7 +33,15 @@ void main() {
                   spec: ChartAxisSpec(
                     label: StyleSpec(
                       spec: TextSpec(
-                        strutStyle: StrutStyle(fontSize: 16, height: 1.3),
+                        strutStyle: StrutStyle(
+                          fontSize: 16,
+                          height: 1.3,
+                          leadingDistribution: TextLeadingDistribution.even,
+                          debugLabel: 'Common strut',
+                          fontFamily: 'Primary',
+                          fontFamilyFallback: ['Fallback'],
+                          package: 'axis_fonts',
+                        ),
                         textAlign: TextAlign.end,
                       ),
                     ),
@@ -57,6 +65,15 @@ void main() {
     for (final label in labels) {
       expect(label.strutStyle!.fontSize, 16);
       expect(label.strutStyle!.height, 1.6);
+      expect(
+        label.strutStyle!.leadingDistribution,
+        TextLeadingDistribution.even,
+      );
+      expect(label.strutStyle!.debugLabel, 'Common strut');
+      expect(label.strutStyle!.fontFamily, 'packages/axis_fonts/Primary');
+      expect(label.strutStyle!.fontFamilyFallback, [
+        'packages/axis_fonts/Fallback',
+      ]);
       expect(label.textAlign, TextAlign.end);
     }
     expect(tester.takeException(), isNull);

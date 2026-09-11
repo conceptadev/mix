@@ -218,14 +218,31 @@ fl.AxisTitles _resolveAxisTitles({
   final specificLabel = specific?.label;
   final specificText = specificLabel?.spec;
   // Axes can arrive as raw StyleSpecs, so compose resolved values here.
-  // Preserve partial strut overrides using Mix's existing typography merge.
+  // Rebuild raw struts without reapplying package prefixes to qualified fonts.
+  // StrutStyleMix does not retain leadingDistribution or debugLabel.
   final commonStrut = commonLabel?.spec.strutStyle;
   final specificStrut = specificText?.strutStyle;
-  final strut = commonStrut == null || specificStrut == null
-      ? (specificStrut ?? commonStrut)
-      : StrutStyleMix.value(
-          commonStrut,
-        ).merge(StrutStyleMix.value(specificStrut)).resolve(context);
+  final strut = commonStrut == null
+      ? specificStrut
+      : specificStrut == null
+      ? commonStrut
+      : StrutStyle(
+          fontFamily: specificStrut.fontFamily ?? commonStrut.fontFamily,
+          fontFamilyFallback:
+              specificStrut.fontFamilyFallback ??
+              commonStrut.fontFamilyFallback,
+          fontSize: specificStrut.fontSize ?? commonStrut.fontSize,
+          height: specificStrut.height ?? commonStrut.height,
+          leadingDistribution:
+              specificStrut.leadingDistribution ??
+              commonStrut.leadingDistribution,
+          leading: specificStrut.leading ?? commonStrut.leading,
+          fontWeight: specificStrut.fontWeight ?? commonStrut.fontWeight,
+          fontStyle: specificStrut.fontStyle ?? commonStrut.fontStyle,
+          forceStrutHeight:
+              specificStrut.forceStrutHeight ?? commonStrut.forceStrutHeight,
+          debugLabel: specificStrut.debugLabel ?? commonStrut.debugLabel,
+        );
   final labelSpec = StyleSpec(
     spec: (commonLabel?.spec ?? const TextSpec()).copyWith(
       overflow: specificText?.overflow,
