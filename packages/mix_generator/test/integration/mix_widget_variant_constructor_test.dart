@@ -167,8 +167,8 @@ ButtonStyler buttonStyle({
             contains('const Button.solid('),
             contains('const Button.ghost('),
             isNot(contains('final Widget? child;')),
-            isNot(contains('child: this.child')),
-            contains('label: this.label'),
+            isNot(contains('child: child')),
+            contains('label: label'),
           ]),
         );
       },
