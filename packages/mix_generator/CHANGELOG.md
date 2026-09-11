@@ -1,3 +1,7 @@
+## Unreleased
+
+- Avoid unnecessary `this` qualifiers in generated `@MixWidget` build methods while preserving forwarding for fields named `context`.
+
 ## 2.2.0-beta.3
 
  - **FEAT**: Emit a complete `$stylerFieldNames` inventory for generated
