@@ -217,10 +217,19 @@ fl.AxisTitles _resolveAxisTitles({
   final commonLabel = common?.label;
   final specificLabel = specific?.label;
   final specificText = specificLabel?.spec;
+  // Axes can arrive as raw StyleSpecs, so compose resolved values here.
+  // Preserve partial strut overrides using Mix's existing typography merge.
+  final commonStrut = commonLabel?.spec.strutStyle;
+  final specificStrut = specificText?.strutStyle;
+  final strut = commonStrut == null || specificStrut == null
+      ? (specificStrut ?? commonStrut)
+      : StrutStyleMix.value(
+          commonStrut,
+        ).merge(StrutStyleMix.value(specificStrut)).resolve(context);
   final labelSpec = StyleSpec(
     spec: (commonLabel?.spec ?? const TextSpec()).copyWith(
       overflow: specificText?.overflow,
-      strutStyle: specificText?.strutStyle,
+      strutStyle: strut,
       textAlign: specificText?.textAlign,
       textScaler: specificText?.textScaler,
       maxLines: specificText?.maxLines,

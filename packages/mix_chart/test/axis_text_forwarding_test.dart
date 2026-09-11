@@ -4,6 +4,64 @@ import 'package:mix/mix.dart';
 import 'package:mix_chart/mix_chart.dart';
 
 void main() {
+  testWidgets('raw axis specs preserve common strut fields', (tester) async {
+    await tester.pumpWidget(
+      MaterialApp(
+        home: SizedBox(
+          width: 400,
+          height: 250,
+          child: LineChart(
+            series: [
+              LineSeries(
+                id: 's',
+                label: 'S',
+                points: [
+                  ChartPoint(id: 'a', x: 0, y: 0),
+                  ChartPoint(id: 'b', x: 1, y: 1),
+                ],
+              ),
+            ],
+            xAxis: ChartAxis.numeric(
+              min: 0,
+              max: 1,
+              interval: 1,
+              labelFormatter: (_) => 'Raw',
+            ),
+            styleSpec: const StyleSpec(
+              spec: LineChartSpec(
+                axis: StyleSpec(
+                  spec: ChartAxisSpec(
+                    label: StyleSpec(
+                      spec: TextSpec(
+                        strutStyle: StrutStyle(fontSize: 16, height: 1.3),
+                        textAlign: TextAlign.end,
+                      ),
+                    ),
+                  ),
+                ),
+                xAxis: StyleSpec(
+                  spec: ChartAxisSpec(
+                    label: StyleSpec(
+                      spec: TextSpec(strutStyle: StrutStyle(height: 1.6)),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+    final labels = tester.widgetList<Text>(find.text('Raw')).toList();
+    expect(labels, isNotEmpty);
+    for (final label in labels) {
+      expect(label.strutStyle!.fontSize, 16);
+      expect(label.strutStyle!.height, 1.6);
+      expect(label.textAlign, TextAlign.end);
+    }
+    expect(tester.takeException(), isNull);
+  });
+
   testWidgets('specific axis modifier replaces common modifier metadata', (
     tester,
   ) async {
@@ -104,7 +162,10 @@ void main() {
               .uppercase(),
         );
         final specific = ChartAxisStyler().label(
-          TextStyler().fontSize(19).textAlign(TextAlign.center),
+          TextStyler()
+              .fontSize(19)
+              .textAlign(TextAlign.center)
+              .strutStyle(StrutStyleMix(height: 1.6)),
         );
         final axis = ChartAxis.numeric(
           min: 0,
@@ -159,7 +220,7 @@ void main() {
           expect(label.style!.decorationStyle, TextDecorationStyle.dashed);
           expect(label.style!.decorationThickness, 2);
           expect(label.strutStyle!.fontSize, 16);
-          expect(label.strutStyle!.height, 1.3);
+          expect(label.strutStyle!.height, 1.6);
           expect(label.style!.fontSize, 19);
           expect(label.style!.color, Colors.purple);
           expect(label.textAlign, TextAlign.center);
