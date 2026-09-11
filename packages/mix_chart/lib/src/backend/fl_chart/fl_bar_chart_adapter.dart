@@ -164,6 +164,8 @@ final class _FlBarChartAdapterState extends State<FlBarChartAdapter> {
           return fl.BarTooltipItem(
             '${group.label} · ${bar.label}\n${formatter(rod.toY)}',
             textStyle,
+            textAlign: tooltip?.text?.spec.textAlign ?? .center,
+            textDirection: tooltip?.text?.spec.textDirection ?? .ltr,
           );
         },
         getTooltipColor: (_) =>
