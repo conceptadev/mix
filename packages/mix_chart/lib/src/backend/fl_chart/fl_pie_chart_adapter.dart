@@ -247,6 +247,12 @@ final class _FlPieChartAdapterState extends State<FlPieChartAdapter> {
       hit: _tooltipHit,
       builder: widget.tooltipBuilder ?? _buildDefaultTooltip,
       margin: widget.spec.tooltip?.spec.margin ?? 12,
+      fitHorizontally:
+          widget.tooltipBuilder != null ||
+          (widget.spec.tooltip?.spec.fitHorizontally ?? true),
+      fitVertically:
+          widget.tooltipBuilder != null ||
+          (widget.spec.tooltip?.spec.fitVertically ?? true),
       child: chart,
     );
   }
