@@ -214,6 +214,30 @@ fl.AxisTitles _resolveAxisTitles({
     fontSize: 11,
     height: 1.2,
   ).merge(common?.label?.spec.style).merge(specific?.label?.spec.style);
+  final commonLabel = common?.label;
+  final specificLabel = specific?.label;
+  final specificText = specificLabel?.spec;
+  final labelSpec = StyleSpec(
+    spec: (commonLabel?.spec ?? const TextSpec()).copyWith(
+      overflow: specificText?.overflow,
+      strutStyle: specificText?.strutStyle,
+      textAlign: specificText?.textAlign,
+      textScaler: specificText?.textScaler,
+      maxLines: specificText?.maxLines,
+      style: textStyle,
+      textWidthBasis: specificText?.textWidthBasis,
+      textHeightBehavior: specificText?.textHeightBehavior,
+      textDirection: specificText?.textDirection,
+      softWrap: specificText?.softWrap,
+      textDirectives: specificText?.textDirectives,
+      selectionColor: specificText?.selectionColor,
+      semanticsLabel: specificText?.semanticsLabel,
+      locale: specificText?.locale,
+    ),
+    animation: specificLabel?.animation ?? commonLabel?.animation,
+    widgetModifiers:
+        specificLabel?.widgetModifiers ?? commonLabel?.widgetModifiers,
+  );
   final labelSpace = pick(common?.labelSpace, specific?.labelSpace) ?? 8;
   final labelAngle = pick(common?.labelAngle, specific?.labelAngle) ?? 0;
   final fitInside = pick(common?.fitInside, specific?.fitInside) ?? false;
@@ -237,7 +261,7 @@ fl.AxisTitles _resolveAxisTitles({
         );
         final child =
             axis?.labelBuilder?.call(context, label) ??
-            Text(formatted, style: textStyle);
+            StyledText(formatted, styleSpec: labelSpec);
 
         return fl.SideTitleWidget(
           meta: meta,
