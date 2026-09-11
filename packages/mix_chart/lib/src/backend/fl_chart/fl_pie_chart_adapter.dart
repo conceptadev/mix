@@ -1,5 +1,6 @@
 import 'package:fl_chart/fl_chart.dart' as fl;
 import 'package:flutter/material.dart';
+import 'package:mix/mix.dart';
 
 import '../../public/models/chart_config.dart';
 import '../../public/models/chart_hit.dart';
@@ -86,6 +87,7 @@ final class _FlPieChartAdapterState extends State<FlPieChartAdapter> {
     final slice = widget.slices[sliceIndex];
     final formatter = widget.valueFormatter ?? (double value) => '$value';
     final borderSide = tooltip?.border ?? .none;
+    final text = tooltip?.text ?? const StyleSpec(spec: TextSpec());
 
     return ConstrainedBox(
       constraints: BoxConstraints(maxWidth: tooltip?.maxWidth ?? 180),
@@ -98,13 +100,17 @@ final class _FlPieChartAdapterState extends State<FlPieChartAdapter> {
         child: Padding(
           padding:
               tooltip?.padding ?? const .symmetric(vertical: 9, horizontal: 12),
-          child: Text(
+          child: StyledText(
             '${slice.label}\n${formatter(slice.value)}',
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 12,
-              fontWeight: .w600,
-            ).merge(tooltip?.text?.spec.style),
+            styleSpec: text.copyWith(
+              spec: text.spec.copyWith(
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 12,
+                  fontWeight: .w600,
+                ).merge(text.spec.style),
+              ),
+            ),
           ),
         ),
       ),
