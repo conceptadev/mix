@@ -1,3 +1,27 @@
+## Unreleased
+
+### Deprecations
+
+- **`BorderStyleMixin` per-edge helpers:** `borderAll`, `borderTop`,
+  `borderBottom`, `borderLeft`, `borderRight`, `borderStart`, `borderEnd`,
+  `borderVertical` and `borderHorizontal` are deprecated. Each composes exactly
+  what `border` already expresses through `BoxBorderMix`, so the nine helpers
+  duplicated the property surface without adding capability:
+
+  ```dart
+  // Before
+  BoxStyler().borderAll(color: Colors.blue, width: 1.5);
+  BoxStyler().borderTop(color: Colors.blue, width: 2);
+
+  // After
+  BoxStyler().border(.color(Colors.blue).width(1.5));
+  BoxStyler().border(.top(.color(Colors.blue).width(2)));
+  ```
+
+  `BoxBorderMix.all()` is **not** deprecated. It is the only way to apply a
+  prebuilt `BorderSideMix` to every edge, it backs `BoxBorderMix.none`, and it
+  stays symmetric with `.top()`, `.bottom()`, `.left()` and `.right()`.
+
 ## 2.2.0-beta.5
 
 ### New features
