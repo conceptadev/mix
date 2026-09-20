@@ -4,49 +4,58 @@ import 'package:mix/mix.dart';
 // Paste this entire file into https://dartpad.dev/ to run the example.
 void main() => runApp(
   WidgetsApp(
-    color: _pageColor,
+    color: const Color(0xFFFFFFFF),
     debugShowCheckedModeBanner: false,
     builder: (_, _) => const ColoredBox(
-      color: _pageColor,
+      color: Color(0xFFFFFFFF),
       child: Center(child: SquishSwitch()),
     ),
   ),
 );
 
-const _pageColor = Color(0xFF07070B);
-const _inkColor = Color(0xFFF5F5F7);
-const _trackColor = Color(0xFF27272F);
-const _trackOnColor = Color(0xFFF5F5F5);
+StackBoxStyler squishTrackStyle({
+  required bool isOn,
+  required bool reduceMotion,
+}) {
+  final track = StackBoxStyler()
+      .size(76, 38)
+      .color(isOn ? const Color(0xFF7C3AED) : const Color(0xFFD1D5DB))
+      .borderRounded(19)
+      .stackAlignment(.topLeft);
+  if (reduceMotion) return track;
+  return track.onPressed(.scale(0.92)).animate(.spring(300.ms, bounce: 0.12));
+}
 
-const _switchWidth = 76.0;
-const _switchHeight = 38.0;
-const _switchInset = 4.0;
-const _thumbSize = 30.0;
-
-StackBoxStyler squishTrackStyle({required bool isOn}) => StackBoxStyler()
-    .size(_switchWidth, _switchHeight)
-    .color(isOn ? _trackOnColor : _trackColor)
-    .borderRounded(_switchHeight / 2)
-    .clipBehavior(.antiAlias)
-    .stackAlignment(.topLeft)
-    .animate(.spring(380.ms, bounce: 0.12));
+BoxStyler squishTravelStyle({required bool isOn, required bool reduceMotion}) {
+  final travel = BoxStyler().translate(isOn ? 42 : 4, 4);
+  return reduceMotion ? travel : travel.animate(.spring(360.ms, bounce: 0.24));
+}
 
 BoxStyler squishThumbStyle({
-  required bool isOn,
-  required double x,
-  required double stretch,
-  required bool isDragging,
-}) => BoxStyler()
-    .size(_thumbSize, _thumbSize)
-    .color(isOn ? _pageColor : _inkColor)
-    .borderRounded(_thumbSize / 2)
-    // Separate modifiers let translation and stretch interpolate independently.
-    .wrap(
-      WidgetModifierConfig.translate(x: x, y: _switchInset)
-          .scale(stretch, 1 / stretch)
-          .orderOfModifiers(const [TranslateModifier, ScaleModifier]),
-    )
-    .animate(isDragging ? .linear(1.ms) : .spring(320.ms, bounce: 0.18));
+  required Listenable trigger,
+  required bool reduceMotion,
+}) {
+  final thumb = BoxStyler()
+      .size(30, 30)
+      .color(const Color(0xFFFFFFFF))
+      .border(.color(const Color(0xFFE5E7EB)).width(1))
+      .borderRounded(15);
+  if (reduceMotion) return thumb;
+  return thumb.keyframeAnimation(
+    trigger: trigger,
+    timeline: [
+      KeyframeTrack<double>('squish', [
+        .easeOut(1.16, 90.ms),
+        .easeInOut(0.95, 150.ms),
+        .easeOut(1, 120.ms),
+      ], initial: 1),
+    ],
+    styleBuilder: (values, style) {
+      final scale = values.get<double>('squish');
+      return style.wrap(WidgetModifierConfig.scale(x: scale, y: 1 / scale));
+    },
+  );
+}
 
 class SquishSwitch extends StatefulWidget {
   const SquishSwitch({super.key});
@@ -56,64 +65,43 @@ class SquishSwitch extends StatefulWidget {
 }
 
 class _SquishSwitchState extends State<SquishSwitch> {
-  static double get _min => _switchInset;
-  static double get _max => _switchWidth - _switchInset - _thumbSize;
-
   bool _on = false;
-  bool _dragging = false;
-  double _x = _min;
-  double _stretch = 1;
+  final _squish = ValueNotifier(0);
 
-  void _commit(bool next) {
-    if (_on == next) return;
-    setState(() => _on = next);
+  @override
+  void dispose() {
+    _squish.dispose();
+    super.dispose();
+  }
+
+  void _toggle() {
+    setState(() => _on = !_on);
+    // Trigger after the new styles have been built.
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted && !MediaQuery.disableAnimationsOf(context)) _squish.value++;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    final target = _on ? _max : _min;
-    final x = _dragging ? _x : target;
-    final track = squishTrackStyle(isOn: _on);
+    final reduceMotion = MediaQuery.disableAnimationsOf(context);
+    final track = squishTrackStyle(isOn: _on, reduceMotion: reduceMotion);
+    final travel = squishTravelStyle(isOn: _on, reduceMotion: reduceMotion);
     final thumb = squishThumbStyle(
-      isOn: _on,
-      x: x,
-      stretch: _stretch,
-      isDragging: _dragging,
+      trigger: _squish,
+      reduceMotion: reduceMotion,
     );
 
-    return GestureDetector(
-      onHorizontalDragStart: (details) {
-        setState(() {
-          _dragging = true;
-          _x = target;
-        });
-      },
-      onHorizontalDragUpdate: (details) {
-        final next = (_x + details.delta.dx).clamp(_min, _max);
-        setState(() {
-          _stretch = (1 + details.delta.dx.abs() / 28).clamp(1.0, 1.35);
-          _x = next;
-          _on = next > (_min + _max) / 2;
-        });
-      },
-      onHorizontalDragEnd: (_) {
-        setState(() {
-          _dragging = false;
-          _stretch = 1;
-          _x = _on ? _max : _min;
-        });
-      },
-      onHorizontalDragCancel: () => setState(() {
-        _dragging = false;
-        _stretch = 1;
-      }),
-      child: Semantics(
-        label: 'Squish switch',
-        toggled: _on,
-        child: Pressable(
-          key: const Key('squish-switch'),
-          onPress: _dragging ? null : () => _commit(!_on),
-          child: track(children: [thumb()]),
+    return Semantics(
+      label: 'Squish switch',
+      toggled: _on,
+      child: Pressable(
+        key: const Key('squish-switch'),
+        semanticsRole: PressableSemanticsRole.none,
+        onPress: _toggle,
+        child: track(
+          key: ValueKey(reduceMotion),
+          children: [travel(child: thumb())],
         ),
       ),
     );

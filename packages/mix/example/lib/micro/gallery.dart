@@ -36,7 +36,7 @@ class MicroDemo {
 final microDemos = <MicroDemo>[
   MicroDemo(
     title: 'Squish Switch',
-    caption: 'Drag-scrubbable switch whose thumb stretches with speed.',
+    caption: 'Press to compress; release to spring into a new color.',
     group: MicroGroup.controls,
     builder: (_) => const SquishSwitch(),
   ),

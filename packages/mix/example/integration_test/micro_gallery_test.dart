@@ -54,7 +54,7 @@ void main() {
     await d.tap(d.key);
     await d.settle();
     expect(d.bounds(thumb).center.dx, greaterThan(before + 30));
-    await d.t.drag(d.key, const Offset(-60, 0));
+    await d.tap(d.key);
     await d.settle();
     expect(d.bounds(thumb).center.dx, closeTo(before, 1));
   });

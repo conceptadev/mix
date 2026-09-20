@@ -121,9 +121,7 @@ void main() {
     },
   );
 
-  testWidgets('switch taps, follows drag and settles after cancellation', (
-    t,
-  ) async {
+  testWidgets('switch taps and springs between endpoints', (t) async {
     await pumpBit(t, const SquishSwitch());
     final thumb = find
         .descendant(
@@ -137,8 +135,7 @@ void main() {
     expect(paintedBounds(t, thumb).center.dx, greaterThan(off + 5));
     await t.pump(const Duration(seconds: 1));
     expect(paintedBounds(t, thumb).center.dx - off, closeTo(38, 0.2));
-    final g = await dragStart(t, keyed('squish-switch'), const Offset(-50, 0));
-    await g.cancel();
+    await press(t, 'squish-switch');
     await t.pump();
     await t.pump(const Duration(seconds: 1));
     expect(paintedBounds(t, thumb).center.dx, closeTo(off, 0.2));
