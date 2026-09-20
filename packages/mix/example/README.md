@@ -15,6 +15,20 @@ implicit-animation use cases:
 flutter run -t lib/grid_main.dart
 ```
 
+Run the Micro gallery — Mix ports of the
+[React Bits Micro catalog](https://reactbits.dev/c/micro):
+
+```sh
+flutter run -t lib/micro_main.dart
+```
+
+## Micro
+
+A live catalog of the 30 React Bits Micro interactions, styled and animated
+with Mix: `BoxStyler` / `PressableBox` for chrome, implicit springs for
+toggles, and keyframes for Pulse Heart and Bell Toggle. Filter by Controls,
+Actions, Motion, or Agent.
+
 ## GridBox
 
 The Grid gallery switches between compact, medium, and wide parent widths. Its
@@ -100,7 +114,7 @@ belong to the outer Box; `.wrapAlignment()` and `.wrapClipBehavior()` belong
 to Flutter's inner Wrap.
 
 The widget tests include smoke coverage and deterministic responsive golden
-images for both galleries:
+images for WrapBox and GridBox, plus a smoke catalog for Micro:
 
 ```sh
 flutter test
