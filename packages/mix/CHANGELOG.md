@@ -1,4 +1,4 @@
-## 2.2.0-beta.5
+## 2.2.0-beta.6
 
 ### New features
 
@@ -13,6 +13,11 @@
   configuration it is merged into. Existing factories and chain methods are
   unchanged, and `.modifier(...)`/`.modifiers([...])` remain the entry points
   for custom modifiers.
+
+## 2.2.0-beta.5
+
+### New features
+
 - **`GridTrack.auto()`:** Content-sized row tracks for `rows` and `autoRows`.
   An auto row sizes to its tallest child's natural height at the resolved
   column width, then stretches shorter children to fill the row. Use it — or
