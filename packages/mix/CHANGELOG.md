@@ -2,6 +2,17 @@
 
 ### New features
 
+- **Complete `WidgetModifierConfig` convenience APIs:** `mouseCursor` and
+  `scrollView` are now available as factories and chain methods, and `skew`,
+  `defaultIcon`, `iconTheme`, `box`, and `reset` gained the chain methods their
+  factories were missing. Every built-in modifier can now be reached without
+  `.modifier(SomeModifierMix(...))`, for example
+  `BoxStyler().wrap(.mouseCursor(SystemMouseCursors.click))`. The chained
+  `reset()` clears the modifiers accumulated in that configuration only; use the
+  `WidgetModifierConfig.reset()` factory when the reset must also clear the
+  configuration it is merged into. Existing factories and chain methods are
+  unchanged, and `.modifier(...)`/`.modifiers([...])` remain the entry points
+  for custom modifiers.
 - **`GridTrack.auto()`:** Content-sized row tracks for `rows` and `autoRows`.
   An auto row sizes to its tallest child's natural height at the resolved
   column width, then stretches shorter children to fill the row. Use it — or
