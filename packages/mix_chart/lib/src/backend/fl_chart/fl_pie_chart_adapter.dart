@@ -1,5 +1,6 @@
 import 'package:fl_chart/fl_chart.dart' as fl;
 import 'package:flutter/material.dart';
+import 'package:mix/mix.dart';
 
 import '../../public/models/chart_config.dart';
 import '../../public/models/chart_hit.dart';
@@ -61,12 +62,15 @@ final class _FlPieChartAdapterState extends State<FlPieChartAdapter> {
           (presentation.radius ?? 80) +
           (selected ? (widget.spec.selectedSliceRadiusOffset ?? 8.0) : 0),
       showTitle: presentation.showLabel ?? true,
-      titleStyle: const TextStyle(
-        color: Colors.white,
-        fontSize: 12,
-        fontWeight: .w600,
-        height: 1.15,
-      ).merge(presentation.label?.spec.style),
+      titleStyle:
+          const TextStyle(
+                color: Colors.white,
+                fontSize: 12,
+                fontWeight: .w600,
+                height: 1.15,
+              )
+              .merge(widget.spec.slice?.spec.label?.spec.style)
+              .merge(presentation.label?.spec.style),
       title: '${slice.label}\n${formatter(slice.value)}',
       borderSide: presentation.border ?? .none,
       cornerRadius: presentation.cornerRadius ?? 0,
@@ -86,6 +90,7 @@ final class _FlPieChartAdapterState extends State<FlPieChartAdapter> {
     final slice = widget.slices[sliceIndex];
     final formatter = widget.valueFormatter ?? (double value) => '$value';
     final borderSide = tooltip?.border ?? .none;
+    final text = tooltip?.text ?? const StyleSpec(spec: TextSpec());
 
     return ConstrainedBox(
       constraints: BoxConstraints(maxWidth: tooltip?.maxWidth ?? 180),
@@ -98,13 +103,17 @@ final class _FlPieChartAdapterState extends State<FlPieChartAdapter> {
         child: Padding(
           padding:
               tooltip?.padding ?? const .symmetric(vertical: 9, horizontal: 12),
-          child: Text(
+          child: StyledText(
             '${slice.label}\n${formatter(slice.value)}',
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 12,
-              fontWeight: .w600,
-            ).merge(tooltip?.text?.spec.style),
+            styleSpec: text.copyWith(
+              spec: text.spec.copyWith(
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 12,
+                  fontWeight: .w600,
+                ).merge(text.spec.style),
+              ),
+            ),
           ),
         ),
       ),
@@ -241,6 +250,12 @@ final class _FlPieChartAdapterState extends State<FlPieChartAdapter> {
       hit: _tooltipHit,
       builder: widget.tooltipBuilder ?? _buildDefaultTooltip,
       margin: widget.spec.tooltip?.spec.margin ?? 12,
+      fitHorizontally:
+          widget.tooltipBuilder != null ||
+          (widget.spec.tooltip?.spec.fitHorizontally ?? true),
+      fitVertically:
+          widget.tooltipBuilder != null ||
+          (widget.spec.tooltip?.spec.fitVertically ?? true),
       child: chart,
     );
   }

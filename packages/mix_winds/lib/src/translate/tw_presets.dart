@@ -6,123 +6,123 @@ import 'package:mix/mix.dart';
 
 enum TextShadowPreset { twoXs, xs, sm, md, lg }
 
-const kTextShadowPresets = <TextShadowPreset, List<Shadow>>{
+const kTextShadowPresets = {
   TextShadowPreset.twoXs: [
-    Shadow(offset: Offset(0, 1), blurRadius: 0, color: Color(0x26000000)),
+    Shadow(color: Color(0x26000000), offset: Offset(0, 1), blurRadius: 0),
   ],
   TextShadowPreset.xs: [
-    Shadow(offset: Offset(0, 1), blurRadius: 1, color: Color(0x33000000)),
+    Shadow(color: Color(0x33000000), offset: Offset(0, 1), blurRadius: 1),
   ],
   TextShadowPreset.sm: [
-    Shadow(offset: Offset(0, 1), blurRadius: 0, color: Color(0x13000000)),
-    Shadow(offset: Offset(0, 1), blurRadius: 1, color: Color(0x13000000)),
-    Shadow(offset: Offset(0, 2), blurRadius: 2, color: Color(0x13000000)),
+    Shadow(color: Color(0x13000000), offset: Offset(0, 1), blurRadius: 0),
+    Shadow(color: Color(0x13000000), offset: Offset(0, 1), blurRadius: 1),
+    Shadow(color: Color(0x13000000), offset: Offset(0, 2), blurRadius: 2),
   ],
   TextShadowPreset.md: [
-    Shadow(offset: Offset(0, 1), blurRadius: 1, color: Color(0x1A000000)),
-    Shadow(offset: Offset(0, 1), blurRadius: 2, color: Color(0x1A000000)),
-    Shadow(offset: Offset(0, 2), blurRadius: 4, color: Color(0x1A000000)),
+    Shadow(color: Color(0x1A000000), offset: Offset(0, 1), blurRadius: 1),
+    Shadow(color: Color(0x1A000000), offset: Offset(0, 1), blurRadius: 2),
+    Shadow(color: Color(0x1A000000), offset: Offset(0, 2), blurRadius: 4),
   ],
   TextShadowPreset.lg: [
-    Shadow(offset: Offset(0, 1), blurRadius: 2, color: Color(0x1A000000)),
-    Shadow(offset: Offset(0, 3), blurRadius: 2, color: Color(0x1A000000)),
-    Shadow(offset: Offset(0, 4), blurRadius: 8, color: Color(0x1A000000)),
+    Shadow(color: Color(0x1A000000), offset: Offset(0, 1), blurRadius: 2),
+    Shadow(color: Color(0x1A000000), offset: Offset(0, 3), blurRadius: 2),
+    Shadow(color: Color(0x1A000000), offset: Offset(0, 4), blurRadius: 8),
   ],
 };
 
-final kTailwindBoxShadowPresets = <String, List<BoxShadowMix>>{
+final kTailwindBoxShadowPresets = {
   'shadow-xs': [
     BoxShadowMix(
+      color: const Color(0x0D000000),
       offset: const Offset(0, 1),
       blurRadius: 2,
       spreadRadius: 0,
-      color: const Color(0x0D000000),
     ),
   ],
   'shadow-sm': [
     BoxShadowMix(
+      color: const Color(0x0D000000),
       offset: const Offset(0, 1),
       blurRadius: 2,
       spreadRadius: 0,
-      color: const Color(0x0D000000),
     ),
   ],
   'shadow': [
     BoxShadowMix(
+      color: const Color(0x1A000000),
       offset: const Offset(0, 1),
       blurRadius: 3,
       spreadRadius: 0,
-      color: const Color(0x1A000000),
     ),
     BoxShadowMix(
+      color: const Color(0x0F000000),
       offset: const Offset(0, 1),
       blurRadius: 2,
       spreadRadius: 0,
-      color: const Color(0x0F000000),
     ),
   ],
   'shadow-md': [
     BoxShadowMix(
+      color: const Color(0x1A000000),
       offset: const Offset(0, 4),
       blurRadius: 6,
       spreadRadius: -1,
-      color: const Color(0x1A000000),
     ),
     BoxShadowMix(
+      color: const Color(0x1A000000),
       offset: const Offset(0, 2),
       blurRadius: 4,
       spreadRadius: -2,
-      color: const Color(0x1A000000),
     ),
   ],
   'shadow-lg': [
     BoxShadowMix(
+      color: const Color(0x1A000000),
       offset: const Offset(0, 10),
       blurRadius: 15,
       spreadRadius: -3,
-      color: const Color(0x1A000000),
     ),
     BoxShadowMix(
+      color: const Color(0x1A000000),
       offset: const Offset(0, 4),
       blurRadius: 6,
       spreadRadius: -4,
-      color: const Color(0x1A000000),
     ),
   ],
   'shadow-xl': [
     BoxShadowMix(
+      color: const Color(0x1A000000),
       offset: const Offset(0, 20),
       blurRadius: 25,
       spreadRadius: -5,
-      color: const Color(0x1A000000),
     ),
     BoxShadowMix(
+      color: const Color(0x1A000000),
       offset: const Offset(0, 8),
       blurRadius: 10,
       spreadRadius: -6,
-      color: const Color(0x1A000000),
     ),
   ],
   'shadow-2xl': [
     BoxShadowMix(
+      color: const Color(0x40000000),
       offset: const Offset(0, 25),
       blurRadius: 50,
       spreadRadius: -12,
-      color: const Color(0x40000000),
     ),
   ],
 };
 
-const kTailwindMaxWidthPresets = <String, double>{
-  'xs': 320,
-  'sm': 384,
-  'md': 448,
-  'lg': 512,
-  'xl': 576,
-  '2xl': 672,
-  '3xl': 768,
-  '4xl': 896,
-  '5xl': 1024,
-  '6xl': 1152,
-  '7xl': 1280,
+const kTailwindMaxWidthPresets = {
+  'xs': 320.0,
+  'sm': 384.0,
+  'md': 448.0,
+  'lg': 512.0,
+  'xl': 576.0,
+  '2xl': 672.0,
+  '3xl': 768.0,
+  '4xl': 896.0,
+  '5xl': 1024.0,
+  '6xl': 1152.0,
+  '7xl': 1280.0,
 };

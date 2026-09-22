@@ -46,7 +46,7 @@ SchemaObject<TextStyler> _textStylerSchemaType(
     Ack.integer().min(1),
     (value) => value.$maxLines,
   );
-  final style = propTokenMixField<TextStyler, TextStyleMix, TextStyle>(
+  final style = propMixField<TextStyler, TextStyleMix, TextStyle>(
     'style',
     textStyleMixCodec(),
     (value) => value.$style,
@@ -67,7 +67,7 @@ SchemaObject<TextStyler> _textStylerSchemaType(
     Ack.boolean(),
     (value) => value.$softWrap,
   );
-  final selectionColor = propTokenValueField<TextStyler, Color>(
+  final selectionColor = propValueField<TextStyler, Color>(
     'selectionColor',
     colorCodec(),
     (value) => value.$selectionColor,
@@ -120,13 +120,13 @@ SchemaObject<TextStyler> _textStylerSchemaType(
       maxLines: maxLines.value(data),
       style: style.value(data),
       textWidthBasis: textWidthBasis.value(data),
+      textHeightBehavior: textHeightBehavior.value(data),
       textDirection: textDirection.value(data),
       softWrap: softWrap.value(data),
+      textDirectives: textDirectives.value(data),
       selectionColor: selectionColor.value(data),
       semanticsLabel: semanticsLabel.value(data),
       locale: locale.value(data),
-      textHeightBehavior: textHeightBehavior.value(data),
-      textDirectives: textDirectives.value(data),
       variants: metadata.variants?.value(data),
       modifier: metadata.modifiers.value(data),
       animation: metadata.animation.value(data),
@@ -140,10 +140,6 @@ CodecSchema<Object, TextStyleMix> textStyleMixCodec() {
     decodeToken: (data) => TextStyleToken(data[tokenReferenceKey]! as String),
     reference: (token) => (token as TextStyleToken).mix(),
   );
-}
-
-JsonMap textStyleMixLiteralJsonSchema() {
-  return _textStyleMixObjectCodec().toJsonSchema();
 }
 
 CodecSchema<JsonMap, TextStyleMix> _textStyleMixObjectCodec() {
@@ -235,16 +231,16 @@ CodecSchema<JsonMap, TextStyleMix> _textStyleMixObjectCodec() {
       debugLabel: data['debugLabel'] as Prop<String>?,
       wordSpacing: data['wordSpacing'] as Prop<double>?,
       textBaseline: data['textBaseline'] as Prop<TextBaseline>?,
-      height: data['height'] as Prop<double>?,
-      fontFamily: data['fontFamily'] as Prop<String>?,
-      fontFamilyFallback: data['fontFamilyFallback'] as Prop<List<String>>?,
+      shadows: data['shadows'] as Prop<List<Shadow>>?,
       fontFeatures: data['fontFeatures'] as Prop<List<FontFeature>>?,
-      fontVariations: data['fontVariations'] as Prop<List<FontVariation>>?,
       decoration: data['decoration'] as Prop<TextDecoration>?,
       decorationColor: data['decorationColor'] as Prop<Color>?,
       decorationStyle: data['decorationStyle'] as Prop<TextDecorationStyle>?,
+      fontVariations: data['fontVariations'] as Prop<List<FontVariation>>?,
+      height: data['height'] as Prop<double>?,
       decorationThickness: data['decorationThickness'] as Prop<double>?,
-      shadows: data['shadows'] as Prop<List<Shadow>>?,
+      fontFamily: data['fontFamily'] as Prop<String>?,
+      fontFamilyFallback: data['fontFamilyFallback'] as Prop<List<String>>?,
     ),
     encode: _encodeTextStyle,
   );

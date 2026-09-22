@@ -58,7 +58,7 @@ Future<void> expectBoxShadows(
 
 CurveAnimationConfig? parseAnimation(String classNames, {TwParser? parser}) {
   final p = parser ?? TwParser();
-  return p.parseAnimationFromTokens(p.listTokens(classNames));
+  return p.compileBox(classNames).styler.$animation as CurveAnimationConfig?;
 }
 
 Future<Text> renderedTextFor(

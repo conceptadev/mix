@@ -1,12 +1,24 @@
 import 'package:mix/mix.dart';
 
-import 'translate/tw_target.dart' as target;
 import 'translate/tw_translator.dart';
+import 'tw_compilation.dart';
 import 'tw_config.dart';
 import 'tw_types.dart';
-import 'tw_utils.dart';
 
+/// Compiles Tailwind classes for a Mix styler target.
+///
+/// Box and Flex stylers retain supported margin variants. Semantic widgets
+/// apply external margins outside the interaction area and diagnose unsupported
+/// margin variants separately. Text and icon compilation include external-margin
+/// diagnostics because those stylers cannot represent margins.
 class TwParser {
+  final TwConfig config;
+  final TwDiagnosticCallback? onDiagnostic;
+
+  @Deprecated('Use onDiagnostic instead.')
+  final void Function(String token)? onUnsupported;
+  final TwTranslator _translator;
+
   factory TwParser({
     TwConfig? config,
     TwDiagnosticCallback? onDiagnostic,
@@ -14,6 +26,7 @@ class TwParser {
     void Function(String token)? onUnsupported,
   }) {
     final resolvedConfig = config ?? TwConfig.standard();
+
     return TwParser._(
       config: resolvedConfig,
       translator: TwTranslator(
@@ -25,40 +38,30 @@ class TwParser {
       onUnsupported: onUnsupported,
     );
   }
-
-  TwParser._({
+  const TwParser._({
     required this.config,
     required TwTranslator translator,
     this.onDiagnostic,
     this.onUnsupported,
   }) : _translator = translator;
 
-  final TwConfig config;
-  final TwDiagnosticCallback? onDiagnostic;
+  TwCompilation<FlexBoxStyler> compileFlex(String classNames) =>
+      _translator.compileFlex(classNames);
 
-  @Deprecated('Use onDiagnostic instead.')
-  final void Function(String token)? onUnsupported;
-  final TwTranslator _translator;
+  FlexBoxStyler parseFlex(String classNames) => compileFlex(classNames).styler;
 
-  List<String> listTokens(String classNames) => splitTailwindTokens(classNames);
+  TwCompilation<BoxStyler> compileBox(String classNames) =>
+      _translator.compileBox(classNames);
 
-  Set<String> setTokens(String classNames) =>
-      _translator.sortTokens(listTokens(classNames)).toSet();
+  BoxStyler parseBox(String classNames) => compileBox(classNames).styler;
 
-  bool wantsFlex(Set<String> tokens) =>
-      target.wantsFlex(tokens, breakpoints: config.breakpoints);
+  TwCompilation<TextStyler> compileText(String classNames) =>
+      _translator.compileText(classNames);
 
-  FlexBoxStyler parseFlex(String classNames) =>
-      _translator.translateFlex(classNames);
+  TextStyler parseText(String classNames) => compileText(classNames).styler;
 
-  BoxStyler parseBox(String classNames) => _translator.translateBox(classNames);
+  TwCompilation<IconStyler> compileIcon(String classNames) =>
+      _translator.compileIcon(classNames);
 
-  TextStyler parseText(String classNames) =>
-      _translator.translateText(classNames);
-
-  IconStyler parseIcon(String classNames) =>
-      _translator.translateIcon(classNames);
-
-  CurveAnimationConfig? parseAnimationFromTokens(List<String> tokens) =>
-      _translator.parseAnimationFromTokens(tokens);
+  IconStyler parseIcon(String classNames) => compileIcon(classNames).styler;
 }

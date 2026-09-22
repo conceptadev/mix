@@ -51,3 +51,4 @@ const variantKindContextNotWidgetState = 'context_not_widget_state';
 const variantKindContextOrientation = 'context_orientation';
 const variantKindContextPlatform = 'context_platform';
 const variantKindContextWeb = 'context_web';
+const variantKindContextFocusVisible = 'context_focus_visible';

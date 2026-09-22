@@ -14,23 +14,91 @@ AckSchema<JsonMap, VariantStyle<S>> variantCodec<S extends Spec<S>>(
     discriminatorKey: 'kind',
     schemas: {
       variantKindNamed: _namedVariantCodec(rootStyleSchema),
-      variantKindWidgetState: _widgetStateVariantCodec(rootStyleSchema),
-      variantKindEnabled: _enabledVariantCodec(rootStyleSchema),
-      variantKindContextBrightness: _brightnessVariantCodec(rootStyleSchema),
-      variantKindContextBreakpoint: _breakpointVariantCodec(rootStyleSchema),
-      variantKindContextDirectionality: _directionalityVariantCodec(
-        rootStyleSchema,
-      ),
-      variantKindContextNot: _notVariantCodec(rootStyleSchema),
-      variantKindContextNotWidgetState: _notWidgetStateVariantCodec(
-        rootStyleSchema,
-      ),
-      variantKindContextOrientation: _orientationVariantCodec(rootStyleSchema),
-      variantKindContextPlatform: _platformVariantCodec(rootStyleSchema),
-      variantKindContextWeb: _webVariantCodec(rootStyleSchema),
+      for (final entry in _contextDefinitions.entries)
+        entry.key: entry.value.styleCodec<S>(rootStyleSchema, entry.key),
     },
   );
 }
+
+/// One selector definition supplies both nested selectors and styled variants.
+final class _ContextVariantDefinition {
+  final ObjectSchema schema;
+  final ContextVariant Function(JsonMap data) decode;
+  final JsonMap Function(ContextVariant value) encode;
+
+  const _ContextVariantDefinition(
+    this.schema, {
+    required this.decode,
+    required this.encode,
+  });
+
+  AckSchema<JsonMap, ContextVariant> selectorCodec() =>
+      schema.codec<ContextVariant>(decode: decode, encode: encode);
+
+  AckSchema<JsonMap, VariantStyle<S>> styleCodec<S extends Spec<S>>(
+    AckSchema<JsonMap, Object> rootStyleSchema,
+    String kind,
+  ) {
+    return schema
+        .copyWith(properties: {...schema.properties, 'style': rootStyleSchema})
+        .codec<VariantStyle<S>>(
+          decode: (data) =>
+              VariantStyle<S>(decode(data), _typedStyle<S>(data['style']!)),
+          encode: (value) {
+            final variant = value.variant;
+            if (variant is! ContextVariant ||
+                (kind == variantKindContextNot &&
+                    _notWidgetState(variant) != null)) {
+              throw UnsupportedEncodeValueError(
+                variant,
+                'Expected $kind context variant.',
+              );
+            }
+
+            return {...encode(variant), 'style': value.value};
+          },
+        );
+  }
+}
+
+final AckSchema<JsonMap, ContextVariant> _contextSelector =
+    Ack.lazy<JsonMap, ContextVariant>(
+      'mix_protocol_context_variant_selector',
+      () => Ack.discriminated<ContextVariant>(
+        discriminatorKey: 'kind',
+        schemas: {
+          for (final entry in _contextDefinitions.entries)
+            entry.key: entry.value.selectorCodec(),
+        },
+      ),
+    );
+
+final _contextDefinitions = <String, _ContextVariantDefinition>{
+  variantKindWidgetState: _widgetStateDefinition(),
+  variantKindEnabled: _enabledDefinition(),
+  variantKindContextBrightness: _brightnessDefinition(),
+  variantKindContextBreakpoint: _breakpointDefinition(),
+  variantKindContextDirectionality: _directionalityDefinition(),
+  variantKindContextNot: _notDefinition(_contextSelector),
+  variantKindContextNotWidgetState: _notWidgetStateDefinition(),
+  variantKindContextOrientation: _orientationDefinition(),
+  variantKindContextPlatform: _platformDefinition(),
+  variantKindContextWeb: _webDefinition(),
+  variantKindContextFocusVisible: _ContextVariantDefinition(
+    Ack.object({}),
+    decode: (_) => ContextVariant.focusVisible(),
+    encode: (variant) {
+      if (variant is! FocusVisibleVariant) {
+        throw UnsupportedEncodeValueError(
+          variant,
+          'Expected focus-visible context variant.',
+        );
+      }
+
+      return const {};
+    },
+  ),
+};
 
 AckSchema<JsonMap, VariantStyle<S>> _namedVariantCodec<S extends Spec<S>>(
   AckSchema<JsonMap, Object> rootStyleSchema,
@@ -54,306 +122,9 @@ AckSchema<JsonMap, VariantStyle<S>> _namedVariantCodec<S extends Spec<S>>(
   );
 }
 
-AckSchema<JsonMap, VariantStyle<S>> _widgetStateVariantCodec<S extends Spec<S>>(
-  AckSchema<JsonMap, Object> rootStyleSchema,
-) {
-  return Ack.object({
-    'state': _widgetStateCodec(),
-    'style': rootStyleSchema,
-  }).codec<VariantStyle<S>>(
-    decode: (data) => VariantStyle<S>(
-      ContextVariant.widgetState(data['state']! as WidgetState),
-      _typedStyle<S>(data['style']!),
-    ),
-    encode: (value) {
-      final variant = value.variant;
-      if (variant is! WidgetStateVariant) {
-        throw UnsupportedEncodeValueError(
-          variant,
-          'Expected WidgetStateVariant.',
-        );
-      }
-
-      return {'state': variant.state, 'style': value.value};
-    },
-  );
-}
-
-AckSchema<JsonMap, VariantStyle<S>> _enabledVariantCodec<S extends Spec<S>>(
-  AckSchema<JsonMap, Object> rootStyleSchema,
-) {
-  return Ack.object({'style': rootStyleSchema}).codec<VariantStyle<S>>(
-    decode: (data) => VariantStyle<S>(
-      ContextVariant.not(ContextVariant.widgetState(WidgetState.disabled)),
-      _typedStyle<S>(data['style']!),
-    ),
-    encode: (value) {
-      final state = _notWidgetState(value.variant);
-      if (state != WidgetState.disabled) {
-        throw UnsupportedEncodeValueError(
-          value.variant,
-          'Expected enabled variant.',
-        );
-      }
-
-      return {'style': value.value};
-    },
-  );
-}
-
-AckSchema<JsonMap, VariantStyle<S>> _brightnessVariantCodec<S extends Spec<S>>(
-  AckSchema<JsonMap, Object> rootStyleSchema,
-) {
-  return Ack.object({
-    'brightness': _brightnessCodec(),
-    'style': rootStyleSchema,
-  }).codec<VariantStyle<S>>(
-    decode: (data) => VariantStyle<S>(
-      ContextVariant.brightness(data['brightness']! as Brightness),
-      _typedStyle<S>(data['style']!),
-    ),
-    encode: (value) {
-      final variant = value.variant;
-      if (variant is! BrightnessVariant) {
-        throw UnsupportedEncodeValueError(
-          variant,
-          'Expected brightness context variant.',
-        );
-      }
-
-      return {'brightness': variant.brightness, 'style': value.value};
-    },
-  );
-}
-
-AckSchema<JsonMap, VariantStyle<S>> _breakpointVariantCodec<S extends Spec<S>>(
-  AckSchema<JsonMap, Object> rootStyleSchema,
-) {
-  return Ack.object({
-        'token': tokenNameCodec().optional(),
-        'minWidth': numberAsDoubleCodec().optional(),
-        'maxWidth': numberAsDoubleCodec().optional(),
-        'style': rootStyleSchema,
-      })
-      .constrain(
-        const _BreakpointBoundsConstraint('context_breakpoint variant'),
-      )
-      .codec<VariantStyle<S>>(
-        decode: (data) {
-          final token = data['token'] as String?;
-          if (token != null) {
-            return VariantStyle<S>(
-              ContextVariant.breakpoint(BreakpointToken(token)()),
-              _typedStyle<S>(data['style']!),
-            );
-          }
-
-          final minWidth = data['minWidth'] as double?;
-          final maxWidth = data['maxWidth'] as double?;
-
-          return VariantStyle<S>(
-            ContextVariant.breakpoint(
-              Breakpoint(minWidth: minWidth, maxWidth: maxWidth),
-            ),
-            _typedStyle<S>(data['style']!),
-          );
-        },
-        encode: (value) {
-          final variant = value.variant;
-          if (variant is! BreakpointVariant) {
-            throw UnsupportedEncodeValueError(
-              variant,
-              'Expected breakpoint context variant.',
-            );
-          }
-
-          return {..._breakpointWire(variant.breakpoint), 'style': value.value};
-        },
-      );
-}
-
-AckSchema<JsonMap, VariantStyle<S>> _orientationVariantCodec<S extends Spec<S>>(
-  AckSchema<JsonMap, Object> rootStyleSchema,
-) {
-  return Ack.object({
-    'orientation': enumNameCodec(Orientation.values),
-    'style': rootStyleSchema,
-  }).codec<VariantStyle<S>>(
-    decode: (data) => VariantStyle<S>(
-      ContextVariant.orientation(data['orientation']! as Orientation),
-      _typedStyle<S>(data['style']!),
-    ),
-    encode: (value) {
-      final variant = value.variant;
-      if (variant is! OrientationVariant) {
-        throw UnsupportedEncodeValueError(
-          variant,
-          'Expected orientation context variant.',
-        );
-      }
-
-      return {'orientation': variant.orientation, 'style': value.value};
-    },
-  );
-}
-
-AckSchema<JsonMap, VariantStyle<S>> _directionalityVariantCodec<
-  S extends Spec<S>
->(AckSchema<JsonMap, Object> rootStyleSchema) {
-  return Ack.object({
-    'textDirection': textDirectionCodec(),
-    'style': rootStyleSchema,
-  }).codec<VariantStyle<S>>(
-    decode: (data) => VariantStyle<S>(
-      ContextVariant.directionality(data['textDirection']! as TextDirection),
-      _typedStyle<S>(data['style']!),
-    ),
-    encode: (value) {
-      final variant = value.variant;
-      if (variant is! DirectionalityVariant) {
-        throw UnsupportedEncodeValueError(
-          variant,
-          'Expected directionality context variant.',
-        );
-      }
-
-      return {'textDirection': variant.direction, 'style': value.value};
-    },
-  );
-}
-
-AckSchema<JsonMap, VariantStyle<S>> _platformVariantCodec<S extends Spec<S>>(
-  AckSchema<JsonMap, Object> rootStyleSchema,
-) {
-  return Ack.object({
-    'platform': enumNameCodec(TargetPlatform.values),
-    'style': rootStyleSchema,
-  }).codec<VariantStyle<S>>(
-    decode: (data) => VariantStyle<S>(
-      ContextVariant.platform(data['platform']! as TargetPlatform),
-      _typedStyle<S>(data['style']!),
-    ),
-    encode: (value) {
-      final variant = value.variant;
-      if (variant is! PlatformVariant) {
-        throw UnsupportedEncodeValueError(
-          variant,
-          'Expected platform context variant.',
-        );
-      }
-
-      return {'platform': variant.platform, 'style': value.value};
-    },
-  );
-}
-
-AckSchema<JsonMap, VariantStyle<S>> _webVariantCodec<S extends Spec<S>>(
-  AckSchema<JsonMap, Object> rootStyleSchema,
-) {
-  return Ack.object({'style': rootStyleSchema}).codec<VariantStyle<S>>(
-    decode: (data) =>
-        VariantStyle<S>(ContextVariant.web(), _typedStyle<S>(data['style']!)),
-    encode: (value) {
-      final variant = value.variant;
-      if (variant is! WebVariant) {
-        throw UnsupportedEncodeValueError(
-          variant,
-          'Expected web context variant.',
-        );
-      }
-
-      return {'style': value.value};
-    },
-  );
-}
-
-AckSchema<JsonMap, VariantStyle<S>> _notWidgetStateVariantCodec<
-  S extends Spec<S>
->(AckSchema<JsonMap, Object> rootStyleSchema) {
-  return Ack.object({
-    'state': _widgetStateCodec(),
-    'style': rootStyleSchema,
-  }).codec<VariantStyle<S>>(
-    decode: (data) {
-      final state = data['state']! as WidgetState;
-
-      return VariantStyle<S>(
-        ContextVariant.not(ContextVariant.widgetState(state)),
-        _typedStyle<S>(data['style']!),
-      );
-    },
-    encode: (value) {
-      final state = _notWidgetState(value.variant);
-      if (state == null || state == WidgetState.disabled) {
-        throw UnsupportedEncodeValueError(
-          value.variant,
-          'Expected non-enabled not-widget-state context variant.',
-        );
-      }
-
-      return {'state': state, 'style': value.value};
-    },
-  );
-}
-
-AckSchema<JsonMap, VariantStyle<S>> _notVariantCodec<S extends Spec<S>>(
-  AckSchema<JsonMap, Object> rootStyleSchema,
-) {
-  return Ack.object({
-    'variant': _contextVariantSelectorCodec(),
-    'style': rootStyleSchema,
-  }).codec<VariantStyle<S>>(
-    decode: (data) => VariantStyle<S>(
-      ContextVariant.not(data['variant']! as ContextVariant),
-      _typedStyle<S>(data['style']!),
-    ),
-    encode: (value) {
-      final variant = value.variant;
-      if (variant is! NotVariant || _notWidgetState(variant) != null) {
-        throw UnsupportedEncodeValueError(
-          variant,
-          'Expected recursive non-widget-state not context variant.',
-        );
-      }
-
-      return {'variant': variant.inner, 'style': value.value};
-    },
-  );
-}
-
-final AckSchema<JsonMap, ContextVariant> _contextVariantSelectorSchema =
-    _createContextVariantSelectorCodec();
-
-AckSchema<JsonMap, ContextVariant> _contextVariantSelectorCodec() {
-  return _contextVariantSelectorSchema;
-}
-
-AckSchema<JsonMap, ContextVariant> _createContextVariantSelectorCodec() {
-  late final AckSchema<JsonMap, ContextVariant> selector;
-  selector = Ack.lazy<JsonMap, ContextVariant>(
-    'mix_protocol_context_variant_selector',
-    () => Ack.discriminated<ContextVariant>(
-      discriminatorKey: 'kind',
-      schemas: {
-        variantKindWidgetState: _widgetStateSelectorCodec(),
-        variantKindEnabled: _enabledSelectorCodec(),
-        variantKindContextBrightness: _brightnessSelectorCodec(),
-        variantKindContextBreakpoint: _breakpointSelectorCodec(),
-        variantKindContextDirectionality: _directionalitySelectorCodec(),
-        variantKindContextNot: _notSelectorCodec(selector),
-        variantKindContextNotWidgetState: _notWidgetStateSelectorCodec(),
-        variantKindContextOrientation: _orientationSelectorCodec(),
-        variantKindContextPlatform: _platformSelectorCodec(),
-        variantKindContextWeb: _webSelectorCodec(),
-      },
-    ),
-  );
-
-  return selector;
-}
-
-AckSchema<JsonMap, ContextVariant> _widgetStateSelectorCodec() {
-  return Ack.object({'state': _widgetStateCodec()}).codec<ContextVariant>(
+_ContextVariantDefinition _widgetStateDefinition() {
+  return _ContextVariantDefinition(
+    Ack.object({'state': _widgetStateCodec()}),
     decode: (data) => ContextVariant.widgetState(data['state']! as WidgetState),
     encode: (variant) {
       if (variant is! WidgetStateVariant) {
@@ -368,8 +139,9 @@ AckSchema<JsonMap, ContextVariant> _widgetStateSelectorCodec() {
   );
 }
 
-AckSchema<JsonMap, ContextVariant> _enabledSelectorCodec() {
-  return Ack.object({}).codec<ContextVariant>(
+_ContextVariantDefinition _enabledDefinition() {
+  return _ContextVariantDefinition(
+    Ack.object({}),
     decode: (_) =>
         ContextVariant.not(ContextVariant.widgetState(WidgetState.disabled)),
     encode: (variant) {
@@ -383,8 +155,9 @@ AckSchema<JsonMap, ContextVariant> _enabledSelectorCodec() {
   );
 }
 
-AckSchema<JsonMap, ContextVariant> _brightnessSelectorCodec() {
-  return Ack.object({'brightness': _brightnessCodec()}).codec<ContextVariant>(
+_ContextVariantDefinition _brightnessDefinition() {
+  return _ContextVariantDefinition(
+    Ack.object({'brightness': _brightnessCodec()}),
     decode: (data) =>
         ContextVariant.brightness(data['brightness']! as Brightness),
     encode: (variant) {
@@ -400,44 +173,42 @@ AckSchema<JsonMap, ContextVariant> _brightnessSelectorCodec() {
   );
 }
 
-AckSchema<JsonMap, ContextVariant> _breakpointSelectorCodec() {
-  return Ack.object({
-        'token': tokenNameCodec().optional(),
-        'minWidth': numberAsDoubleCodec().optional(),
-        'maxWidth': numberAsDoubleCodec().optional(),
-      })
-      .constrain(const _BreakpointBoundsConstraint('context_not breakpoint'))
-      .codec<ContextVariant>(
-        decode: (data) {
-          final token = data['token'] as String?;
-          if (token != null) {
-            return ContextVariant.breakpoint(BreakpointToken(token)());
-          }
+_ContextVariantDefinition _breakpointDefinition() {
+  return _ContextVariantDefinition(
+    Ack.object({
+      'token': tokenNameCodec().optional(),
+      'minWidth': numberAsDoubleCodec().optional(),
+      'maxWidth': numberAsDoubleCodec().optional(),
+    }).constrain(const _BreakpointBoundsConstraint()),
+    decode: (data) {
+      final token = data['token'] as String?;
+      if (token != null) {
+        return ContextVariant.breakpoint(BreakpointToken(token)());
+      }
 
-          return ContextVariant.breakpoint(
-            Breakpoint(
-              minWidth: data['minWidth'] as double?,
-              maxWidth: data['maxWidth'] as double?,
-            ),
-          );
-        },
-        encode: (variant) {
-          if (variant is! BreakpointVariant) {
-            throw UnsupportedEncodeValueError(
-              variant,
-              'Expected breakpoint context variant.',
-            );
-          }
-
-          return _breakpointWire(variant.breakpoint);
-        },
+      return ContextVariant.breakpoint(
+        Breakpoint(
+          minWidth: data['minWidth'] as double?,
+          maxWidth: data['maxWidth'] as double?,
+        ),
       );
+    },
+    encode: (variant) {
+      if (variant is! BreakpointVariant) {
+        throw UnsupportedEncodeValueError(
+          variant,
+          'Expected breakpoint context variant.',
+        );
+      }
+
+      return _breakpointWire(variant.breakpoint);
+    },
+  );
 }
 
-AckSchema<JsonMap, ContextVariant> _directionalitySelectorCodec() {
-  return Ack.object({
-    'textDirection': textDirectionCodec(),
-  }).codec<ContextVariant>(
+_ContextVariantDefinition _directionalityDefinition() {
+  return _ContextVariantDefinition(
+    Ack.object({'textDirection': textDirectionCodec()}),
     decode: (data) =>
         ContextVariant.directionality(data['textDirection']! as TextDirection),
     encode: (variant) {
@@ -453,10 +224,11 @@ AckSchema<JsonMap, ContextVariant> _directionalitySelectorCodec() {
   );
 }
 
-AckSchema<JsonMap, ContextVariant> _notSelectorCodec(
+_ContextVariantDefinition _notDefinition(
   AckSchema<JsonMap, ContextVariant> selector,
 ) {
-  return Ack.object({'variant': selector}).codec<ContextVariant>(
+  return _ContextVariantDefinition(
+    Ack.object({'variant': selector}),
     decode: (data) => ContextVariant.not(data['variant']! as ContextVariant),
     encode: (variant) {
       if (variant is! NotVariant) {
@@ -471,8 +243,9 @@ AckSchema<JsonMap, ContextVariant> _notSelectorCodec(
   );
 }
 
-AckSchema<JsonMap, ContextVariant> _notWidgetStateSelectorCodec() {
-  return Ack.object({'state': _widgetStateCodec()}).codec<ContextVariant>(
+_ContextVariantDefinition _notWidgetStateDefinition() {
+  return _ContextVariantDefinition(
+    Ack.object({'state': _widgetStateCodec()}),
     decode: (data) => ContextVariant.not(
       ContextVariant.widgetState(data['state']! as WidgetState),
     ),
@@ -490,10 +263,9 @@ AckSchema<JsonMap, ContextVariant> _notWidgetStateSelectorCodec() {
   );
 }
 
-AckSchema<JsonMap, ContextVariant> _orientationSelectorCodec() {
-  return Ack.object({
-    'orientation': enumNameCodec(Orientation.values),
-  }).codec<ContextVariant>(
+_ContextVariantDefinition _orientationDefinition() {
+  return _ContextVariantDefinition(
+    Ack.object({'orientation': enumNameCodec(Orientation.values)}),
     decode: (data) =>
         ContextVariant.orientation(data['orientation']! as Orientation),
     encode: (variant) {
@@ -509,10 +281,9 @@ AckSchema<JsonMap, ContextVariant> _orientationSelectorCodec() {
   );
 }
 
-AckSchema<JsonMap, ContextVariant> _platformSelectorCodec() {
-  return Ack.object({
-    'platform': enumNameCodec(TargetPlatform.values),
-  }).codec<ContextVariant>(
+_ContextVariantDefinition _platformDefinition() {
+  return _ContextVariantDefinition(
+    Ack.object({'platform': enumNameCodec(TargetPlatform.values)}),
     decode: (data) =>
         ContextVariant.platform(data['platform']! as TargetPlatform),
     encode: (variant) {
@@ -528,8 +299,9 @@ AckSchema<JsonMap, ContextVariant> _platformSelectorCodec() {
   );
 }
 
-AckSchema<JsonMap, ContextVariant> _webSelectorCodec() {
-  return Ack.object({}).codec<ContextVariant>(
+_ContextVariantDefinition _webDefinition() {
+  return _ContextVariantDefinition(
+    Ack.object({}),
     decode: (_) => ContextVariant.web(),
     encode: (variant) {
       if (variant is! WebVariant) {
@@ -590,26 +362,47 @@ JsonMap _breakpointWire(Breakpoint breakpoint) {
 }
 
 final class _BreakpointBoundsConstraint extends Constraint<JsonMap>
-    with Validator<JsonMap> {
-  const _BreakpointBoundsConstraint(this.subject)
+    with Validator<JsonMap>, JsonSchemaSpec<JsonMap> {
+  static const _bounds = ['minWidth', 'maxWidth'];
+
+  const _BreakpointBoundsConstraint()
     : super(
         constraintKey: 'mix_protocol_breakpoint_bounds',
         description: 'Breakpoint variants require at least one width bound.',
       );
 
-  final String subject;
-
   @override
   bool isValid(JsonMap value) {
-    if (value['token'] != null) {
-      return value['minWidth'] == null && value['maxWidth'] == null;
-    }
+    final hasBounds = _bounds.any((key) => value[key] != null);
 
-    return value['minWidth'] != null || value['maxWidth'] != null;
+    return value['token'] != null ? !hasBounds : hasBounds;
+  }
+
+  @override
+  JsonMap toJsonSchema() {
+    final hasBounds = {
+      'anyOf': [
+        for (final key in _bounds)
+          {
+            'required': [key],
+          },
+      ],
+    };
+
+    return {
+      'if': {
+        'required': ['token'],
+      },
+      'then': {'not': hasBounds},
+      'else': hasBounds,
+    };
   }
 
   @override
   String buildMessage(JsonMap value) {
+    final subject = value.containsKey('style')
+        ? 'context_breakpoint variant'
+        : 'context_not breakpoint';
     if (value['token'] != null) {
       return 'A $subject cannot mix token and width bounds.';
     }

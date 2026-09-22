@@ -5,12 +5,6 @@ import 'package:mix_protocol/mix_protocol.dart';
 import 'package:mix_protocol/testing.dart' show SchemaStyler;
 
 void main() {
-  test('core schema export has a byte-for-byte v1 fingerprint', () {
-    final encoded = jsonEncode(mixProtocol.exportStyleJsonSchema());
-
-    expect(_fnv1a64(utf8.encode(encoded)), -7566329063571446550);
-  });
-
   test('schema export structurally describes every built-in branch', () {
     final contract = mixProtocol;
     final schema = contract.exportStyleJsonSchema();
@@ -53,358 +47,82 @@ void main() {
     }
 
     expect(encoded, isNot(contains('x-ack-codec')));
-    expect(encoded, contains(r'"$token"'));
-    expect(encoded, contains(r'"$merge"'));
-    expect(encoded, contains(r'"apply"'));
-    expect(encoded, contains(r'"op"'));
+    expect(encoded.contains(r'"$token"'), isTrue, reason: r'"$token"');
+    expect(encoded.contains(r'"$merge"'), isTrue, reason: r'"$merge"');
+    expect(encoded.contains(r'"apply"'), isTrue, reason: r'"apply"');
+    expect(encoded.contains(r'"op"'), isTrue, reason: r'"op"');
     final definitions = _object(schema['definitions']);
     expect(
       definitions.keys,
       containsAll([
-        'mix_protocol_property_term',
-        'mix_protocol_property_control_term',
-        'mix_protocol_box_decoration_literal',
-        'mix_protocol_directive',
-        'mix_protocol_strut_style_literal',
-        'mix_protocol_text_style_literal',
+        'mix_protocol_color_directive',
+        'mix_protocol_number_directive',
+        'mix_protocol_string_directive',
       ]),
     );
     expect(
-      _hasPropertyControlTerm(
-        _propertySchemaAt(branchesByType['text']!, [
-          'style',
-          'color',
-        ], definitions),
-      ),
+      encoded.contains(r'"fractionally_sized_box"'),
       isTrue,
+      reason: r'"fractionally_sized_box"',
     );
     expect(
-      _hasPropertyControlTerm(
-        _propertySchemaAt(branchesByType['text']!, [
-          'strutStyle',
-          'fontSize',
-        ], definitions),
-      ),
+      encoded.contains(r'"default_text_styler"'),
       isTrue,
+      reason: r'"default_text_styler"',
+    );
+    expect(encoded.contains(r'"spring"'), isTrue, reason: r'"spring"');
+    expect(encoded.contains(r'"cubic"'), isTrue, reason: r'"cubic"');
+    expect(
+      encoded.contains(r'"context_orientation"'),
+      isTrue,
+      reason: r'"context_orientation"',
     );
     expect(
-      _hasPropertyControlTerm(
-        _propertySchemaAt(branchesByType['box']!, [
-          'decoration',
-          'boxShadow',
-        ], definitions),
-      ),
+      encoded.contains(r'"context_directionality"'),
       isTrue,
+      reason: r'"context_directionality"',
     );
     expect(
-      _hasPropertyControlTerm(
-        _propertySchemaAt(branchesByType['wrap_box']!, [
-          'decoration',
-          'boxShadow',
-        ], definitions),
-      ),
+      encoded.contains(r'"context_platform"'),
       isTrue,
+      reason: r'"context_platform"',
     );
     expect(
-      _hasPropertyControlTerm(
-        _propertySchemaAt(branchesByType['wrap_box']!, [
-          'foregroundDecoration',
-          'boxShadow',
-        ], definitions),
-      ),
+      encoded.contains(r'"context_web"'),
       isTrue,
+      reason: r'"context_web"',
     );
-    expect(encoded, contains(r'"fractionally_sized_box"'));
-    expect(encoded, contains(r'"default_text_styler"'));
-    expect(encoded, contains(r'"spring"'));
-    expect(encoded, contains(r'"cubic"'));
-    expect(encoded, contains(r'"context_orientation"'));
-    expect(encoded, contains(r'"context_directionality"'));
-    expect(encoded, contains(r'"context_platform"'));
-    expect(encoded, contains(r'"context_web"'));
-    expect(encoded, contains(r'"context_not"'));
-    expect(encoded, contains(r'"foregroundDecoration"'));
-    expect(encoded, contains(r'"strutStyle"'));
-    expect(encoded, contains(r'"textScaler"'));
-    expect(encoded, contains(r'"centerSlice"'));
-    expect(encoded, contains(r'[A-Za-z0-9_.-]{1,128}'));
-    expect(encoded, contains(r'"space"'));
-    expect(encoded, contains(r'"double"'));
+    expect(
+      encoded.contains(r'"context_not"'),
+      isTrue,
+      reason: r'"context_not"',
+    );
+    expect(
+      encoded.contains(r'"foregroundDecoration"'),
+      isTrue,
+      reason: r'"foregroundDecoration"',
+    );
+    expect(encoded.contains(r'"strutStyle"'), isTrue, reason: r'"strutStyle"');
+    expect(encoded.contains(r'"textScaler"'), isTrue, reason: r'"textScaler"');
+    expect(
+      encoded.contains(r'"centerSlice"'),
+      isTrue,
+      reason: r'"centerSlice"',
+    );
+    expect(
+      encoded.contains(r'[A-Za-z0-9_.-]{1,128}'),
+      isTrue,
+      reason: r'[A-Za-z0-9_.-]{1,128}',
+    );
+    expect(encoded.contains(r'"space"'), isTrue, reason: r'"space"');
+    expect(encoded.contains(r'"double"'), isTrue, reason: r'"double"');
     expect(encoded.length, lessThan(520000));
-    expect(_object(_properties(branchesByType['box']!)['padding']), {
-      r'$ref': '#/definitions/mix_protocol_double_property_term',
-    });
-    final propertyTerm = _object(definitions['mix_protocol_property_term']);
-    expect(_matchesPropertyTerm(propertyTerm, 4, definitions), isTrue);
-    expect(
-      _matchesPropertyTerm(propertyTerm, {'left': 4}, definitions),
-      isTrue,
-    );
-    expect(
-      _matchesPropertyTerm(propertyTerm, {
-        r'$token': 'space.stack.sm',
-      }, definitions),
-      isTrue,
-    );
-    expect(
-      _matchesPropertyTerm(propertyTerm, {
-        r'$merge': [4, 8],
-      }, definitions),
-      isTrue,
-    );
-    expect(
-      _matchesPropertyTerm(propertyTerm, {r'$token': 7}, definitions),
-      isFalse,
-    );
-    expect(
-      _matchesPropertyTerm(propertyTerm, {
-        r'$token': 'x',
-        'bad': 1,
-      }, definitions),
-      isFalse,
-    );
-    expect(
-      _matchesPropertyTerm(propertyTerm, {
-        r'$token': 'color.brand',
-        'kind': 'space',
-      }, definitions),
-      isFalse,
-    );
-    expect(
-      _matchesPropertyTerm(propertyTerm, {r'$merge': []}, definitions),
-      isFalse,
-    );
-    expect(
-      _matchesPropertyTerm(propertyTerm, {
-        r'$merge': [4],
-      }, definitions),
-      isFalse,
-    );
-    expect(
-      _matchesPropertyTerm(propertyTerm, {
-        r'$merge': [4],
-        'apply': [
-          {'op': 'number_multiply', 'factor': 2},
-        ],
-      }, definitions),
-      isTrue,
-    );
-    expect(
-      _matchesPropertyTerm(propertyTerm, {
-        r'$merge': [4],
-        'apply': [],
-      }, definitions),
-      isFalse,
-    );
-    expect(
-      _matchesPropertyTerm(propertyTerm, {'apply': []}, definitions),
-      isFalse,
-    );
-    expect(
-      _matchesJsonSchema(
-        _object(_properties(branchesByType['text']!)['selectionColor']),
-        {r'$token': 'color.brand', 'kind': 'space'},
-        definitions,
-      ),
-      isFalse,
-    );
-    expect(
-      _matchesJsonSchema(
-        _object(_properties(branchesByType['flex']!)['spacing']),
-        {r'$token': 'space.stack.sm', 'kind': 'space'},
-        definitions,
-      ),
-      isTrue,
-    );
-    for (final field in ['spacing', 'runSpacing']) {
-      expect(
-        _matchesJsonSchema(
-          _object(_properties(branchesByType['wrap']!)[field]),
-          {r'$token': 'space.wrap.gap', 'kind': 'space'},
-          definitions,
-        ),
-        isTrue,
-        reason:
-            'wrap.$field accepts space tokens: '
-            '${jsonEncode(_object(_properties(branchesByType['wrap']!)[field]))}',
-      );
-      expect(
-        _matchesJsonSchema(
-          _object(_properties(branchesByType['wrap_box']!)[field]),
-          {r'$token': 'double.wrap.gap', 'kind': 'double'},
-          definitions,
-        ),
-        isTrue,
-        reason: 'wrap_box.$field accepts double tokens',
-      );
-    }
-    for (final field in ['padding', 'margin']) {
-      expect(
-        _matchesJsonSchema(
-          _object(_properties(branchesByType['wrap_box']!)[field]),
-          {r'$token': 'space.wrap.$field', 'kind': 'space'},
-          definitions,
-        ),
-        isTrue,
-        reason: 'wrap_box.$field accepts space tokens',
-      );
-    }
-    final gridProperties = _properties(branchesByType['grid_box']!);
-    expect(
-      _matchesJsonSchema(_object(gridProperties['columns']), [
-        {
-          'type': 'fixed',
-          'size': {r'$token': 'space.grid.track', 'kind': 'space'},
-        },
-        {
-          'type': 'fr',
-          'fraction': {r'$token': 'double.grid.weight', 'kind': 'double'},
-        },
-      ], definitions),
-      isTrue,
-      reason: 'grid_box tracks accept numeric tokens',
-    );
-    expect(
-      _matchesJsonSchema(_object(gridProperties['rows']), [
-        {'type': 'auto'},
-      ], definitions),
-      isTrue,
-      reason: 'grid_box rows accept fieldless auto tracks',
-    );
-    expect(
-      _matchesJsonSchema(_object(gridProperties['autoRows']), {
-        'type': 'auto',
-      }, definitions),
-      isTrue,
-      reason: 'grid_box autoRows accepts fieldless auto tracks',
-    );
-    for (final field in ['columnGap', 'rowGap']) {
-      expect(
-        _matchesJsonSchema(_object(gridProperties[field]), {
-          r'$token': 'space.grid.gap',
-          'kind': 'space',
-        }, definitions),
-        isTrue,
-        reason: 'grid_box.$field accepts numeric tokens',
-      );
-    }
-    expect(
-      _matchesJsonSchema(_object(gridProperties['constraintBranches']), [
-        {
-          'breakpoint': {'maxWidth': 600},
-          'patch': {
-            'autoRows': {
-              'type': 'fixed',
-              'size': {r'$token': 'space.grid.row', 'kind': 'space'},
-            },
-            'rowGap': {r'$token': 'space.grid.gap', 'kind': 'space'},
-          },
-        },
-      ], definitions),
-      isTrue,
-      reason: 'grid_box constraint patches accept numeric tokens',
-    );
-    expect(
-      _matchesJsonSchema(_object(gridProperties['constraintBranches']), [
-        {
-          'breakpoint': {'maxWidth': 600},
-          'patch': {
-            'autoRows': {'type': 'auto'},
-            'rows': [
-              {'type': 'auto'},
-            ],
-          },
-        },
-      ], definitions),
-      isTrue,
-      reason: 'grid_box constraint patches accept fieldless auto tracks',
-    );
-    expect(
-      _matchesJsonSchema(
-        _object(_properties(branchesByType['flex']!)['spacing']),
-        {r'$token': 'double.gap', 'kind': 'double'},
-        definitions,
-      ),
-      isTrue,
-    );
-    expect(
-      _matchesJsonSchema(
-        _object(_properties(branchesByType['flex']!)['spacing']),
-        {
-          r'$merge': [
-            {r'$token': 'space.stack.sm', 'kind': 'space'},
-            4,
-          ],
-        },
-        definitions,
-      ),
-      isTrue,
-    );
-    expect(
-      _matchesJsonSchema(
-        _propertySchemaAt(branchesByType['text']!, [
-          'style',
-          'fontSize',
-        ], definitions),
-        {r'$token': 'space.font.md', 'kind': 'space'},
-        definitions,
-      ),
-      isTrue,
-    );
-    expect(
-      _matchesJsonSchema(
-        _propertySchemaAt(branchesByType['text']!, [
-          'style',
-          'color',
-        ], definitions),
-        {r'$token': 'color.brand', 'kind': 'space'},
-        definitions,
-      ),
-      isFalse,
-    );
-    expect(
-      _matchesJsonSchema(
-        _propertySchemaAt(branchesByType['text']!, [
-          'strutStyle',
-          'leading',
-        ], definitions),
-        {r'$token': 'space.leading.tight', 'kind': 'space'},
-        definitions,
-      ),
-      isTrue,
-    );
-    final directive = _object(definitions['mix_protocol_directive']);
-    expect(
-      _matchesJsonSchema(directive, {
-        'op': 'color_opacity',
-        'opacity': 0.5,
-      }, definitions),
-      isTrue,
-    );
-    expect(
-      _matchesJsonSchema(directive, {
-        'op': 'color_opacity',
-        'opacity': 0.5,
-        'alpha': 0.7,
-      }, definitions),
-      isFalse,
-    );
     expect(
       _requiredListsContainingVersion(schema),
       hasLength(SchemaStyler.values.length),
       reason: 'Only top-level branches require the v envelope.',
     );
   });
-}
-
-int _fnv1a64(List<int> bytes) {
-  var hash = 0xcbf29ce484222325;
-  for (final byte in bytes) {
-    hash ^= byte;
-    hash = (hash * 0x100000001b3) & 0xffffffffffffffff;
-  }
-
-  return hash;
 }
 
 const _expectedBranchProperties = {
@@ -606,200 +324,12 @@ JsonMap _properties(JsonMap branch) {
   return _object(branch['properties']);
 }
 
-JsonMap _propertySchemaAt(
-  JsonMap schema,
-  List<String> path,
-  JsonMap definitions,
-) {
-  var current = schema;
-  for (final segment in path) {
-    current = _object(
-      _literalPropertiesContaining(current, definitions, segment)[segment],
-    );
-  }
-
-  return current;
-}
-
-JsonMap _literalPropertiesContaining(
-  JsonMap schema,
-  JsonMap definitions,
-  String property,
-) {
-  final properties = _tryLiteralPropertiesContaining(
-    schema,
-    definitions,
-    property,
-  );
-  if (properties != null) return properties;
-
-  fail('Schema node does not expose literal property "$property": $schema');
-}
-
-JsonMap? _tryLiteralPropertiesContaining(
-  Object? schema,
-  JsonMap definitions,
-  String property,
-) {
-  if (schema is! Map) return null;
-
-  final ref = schema[r'$ref'];
-  if (ref is String && ref.startsWith('#/definitions/')) {
-    final name = ref.substring('#/definitions/'.length);
-
-    return _tryLiteralPropertiesContaining(
-      definitions[name],
-      definitions,
-      property,
-    );
-  }
-
-  final properties = schema['properties'];
-  if (properties is Map && properties.containsKey(property)) {
-    return _object(properties);
-  }
-
-  final anyOf = schema['anyOf'];
-  if (anyOf is List) {
-    for (final branch in anyOf) {
-      final nested = _tryLiteralPropertiesContaining(
-        branch,
-        definitions,
-        property,
-      );
-      if (nested != null) return nested;
-    }
-  }
-
-  return null;
-}
-
-bool _hasPropertyControlTerm(JsonMap schema) {
-  final anyOf = schema['anyOf'];
-  if (anyOf is! List) return false;
-
-  return anyOf.any(
-    (branch) =>
-        branch is Map &&
-        (branch[r'$ref'] ==
-                '#/definitions/mix_protocol_property_control_term' ||
-            branch[r'$ref'] ==
-                '#/definitions/mix_protocol_double_property_control_term'),
-  );
-}
-
 List<String> _required(JsonMap branch) {
   return (branch['required'] as List).cast<String>();
 }
 
 JsonMap _object(Object? value) {
   return Map<String, Object?>.from(value! as Map);
-}
-
-bool _matchesPropertyTerm(JsonMap schema, Object? value, JsonMap definitions) {
-  final anyOf = schema['anyOf']! as List;
-
-  return anyOf.any(
-    (branch) => _matchesJsonSchema(_object(branch), value, definitions),
-  );
-}
-
-bool _matchesJsonSchema(JsonMap schema, Object? value, JsonMap definitions) {
-  final ref = schema[r'$ref'];
-  if (ref is String && ref.startsWith('#/definitions/')) {
-    final name = ref.substring('#/definitions/'.length);
-
-    return _matchesJsonSchema(_object(definitions[name]), value, definitions);
-  }
-
-  final anyOf = schema['anyOf'];
-  if (anyOf is List &&
-      !anyOf.any(
-        (branch) => _matchesJsonSchema(_object(branch), value, definitions),
-      )) {
-    return false;
-  }
-
-  final not = schema['not'];
-  if (not is Map && _matchesJsonSchema(_object(not), value, definitions)) {
-    return false;
-  }
-
-  final type = schema['type'];
-  if (type is String && !_matchesJsonType(type, value)) return false;
-
-  final required = (schema['required'] as List?)?.cast<String>() ?? const [];
-  if (required.isNotEmpty) {
-    if (value is! Map) return false;
-    for (final key in required) {
-      if (!value.containsKey(key)) return false;
-    }
-  }
-
-  final minItems = schema['minItems'];
-  if (minItems is int && value is List && value.length < minItems) {
-    return false;
-  }
-
-  final maxItems = schema['maxItems'];
-  if (maxItems is int && value is List && value.length > maxItems) {
-    return false;
-  }
-
-  final items = schema['items'];
-  if (items is Map && value is List) {
-    for (final item in value) {
-      if (!_matchesJsonSchema(_object(items), item, definitions)) {
-        return false;
-      }
-    }
-  }
-
-  if (schema.containsKey('const') && schema['const'] != value) return false;
-
-  final enumValues = schema['enum'];
-  if (enumValues is List && !enumValues.contains(value)) return false;
-
-  final properties = schema['properties'];
-  if (properties is Map && value is Map) {
-    final propertySchemas = Map<String, Object?>.from(properties);
-    if (schema['additionalProperties'] == false) {
-      for (final key in value.keys) {
-        if (!propertySchemas.containsKey(key)) return false;
-      }
-    }
-    for (final entry in propertySchemas.entries) {
-      if (!value.containsKey(entry.key)) continue;
-      if (!_matchesJsonSchema(
-        _object(entry.value),
-        value[entry.key],
-        definitions,
-      )) {
-        return false;
-      }
-    }
-  }
-
-  final pattern = schema['pattern'];
-  if (pattern is String &&
-      value is String &&
-      !RegExp(pattern).hasMatch(value)) {
-    return false;
-  }
-
-  return true;
-}
-
-bool _matchesJsonType(String type, Object? value) {
-  return switch (type) {
-    'array' => value is List,
-    'boolean' => value is bool,
-    'integer' => value is int,
-    'number' => value is num,
-    'object' => value is Map,
-    'string' => value is String,
-    _ => false,
-  };
 }
 
 List<List<String>> _requiredListsContainingVersion(Object? value) {

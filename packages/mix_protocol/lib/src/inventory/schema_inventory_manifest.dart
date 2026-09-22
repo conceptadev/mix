@@ -12,6 +12,18 @@ enum SchemaInventoryStatus {
 
 /// One inventory coverage decision.
 final class SchemaInventoryEntry {
+  /// Stable inventory id.
+  final String id;
+
+  /// Coverage decision bucket.
+  final SchemaInventoryStatus status;
+
+  /// Wire format version where support first appeared.
+  final int? since;
+
+  /// Human-readable reason for known unsupported ids.
+  final String? reason;
+
   const SchemaInventoryEntry._({
     required this.id,
     required this.status,
@@ -30,18 +42,6 @@ final class SchemaInventoryEntry {
         status: SchemaInventoryStatus.knownUnsupported,
         reason: reason,
       );
-
-  /// Stable inventory id.
-  final String id;
-
-  /// Coverage decision bucket.
-  final SchemaInventoryStatus status;
-
-  /// Wire format version where support first appeared.
-  final int? since;
-
-  /// Human-readable reason for known unsupported ids.
-  final String? reason;
 }
 
 const _v1OutOfScope = 'v1 unsupported: outside the canonical v1 data contract.';
@@ -407,6 +407,7 @@ const _supportedInventory = <SchemaInventoryEntry>[
   SchemaInventoryEntry.supported('variant:BreakpointVariant'),
   SchemaInventoryEntry.supported('variant:BrightnessVariant'),
   SchemaInventoryEntry.supported('variant:DirectionalityVariant'),
+  SchemaInventoryEntry.supported('variant:FocusVisibleVariant'),
   SchemaInventoryEntry.supported('variant:NamedVariant'),
   SchemaInventoryEntry.supported('variant:NotVariant'),
   SchemaInventoryEntry.supported('variant:OrientationVariant'),
@@ -419,6 +420,7 @@ const _supportedInventory = <SchemaInventoryEntry>[
   SchemaInventoryEntry.supported(
     'variant_factory:ContextVariant.directionality',
   ),
+  SchemaInventoryEntry.supported('variant_factory:ContextVariant.focusVisible'),
   SchemaInventoryEntry.supported('variant_factory:ContextVariant.mobile'),
   SchemaInventoryEntry.supported('variant_factory:ContextVariant.not'),
   SchemaInventoryEntry.supported('variant_factory:ContextVariant.orientation'),
@@ -581,14 +583,6 @@ const _v1UnsupportedInventory = <SchemaInventoryEntry>[
   ),
   SchemaInventoryEntry.knownUnsupported(
     r'mix:StarBorderMix.$valleyRounding',
-    _v1OutOfScope,
-  ),
-  SchemaInventoryEntry.knownUnsupported(
-    'variant:FocusVisibleVariant',
-    _v1OutOfScope,
-  ),
-  SchemaInventoryEntry.knownUnsupported(
-    'variant_factory:ContextVariant.focusVisible',
     _v1OutOfScope,
   ),
 ];

@@ -37,22 +37,20 @@ SchemaObject<WrapStyler> _wrapStylerSchemaType(
     enumNameCodec(WrapAlignment.values),
     (value) => value.$alignment,
   );
-  final spacing = propTokenValueField<WrapStyler, double>(
+  final spacing = propValueField<WrapStyler, double>(
     'spacing',
     doubleTokenCodec(),
     (value) => value.$spacing,
-    schemaSemantics: doubleTokenFieldSemantics,
   );
   final runAlignment = propValueField<WrapStyler, WrapAlignment>(
     'runAlignment',
     enumNameCodec(WrapAlignment.values),
     (value) => value.$runAlignment,
   );
-  final runSpacing = propTokenValueField<WrapStyler, double>(
+  final runSpacing = propValueField<WrapStyler, double>(
     'runSpacing',
     doubleTokenCodec(),
     (value) => value.$runSpacing,
-    schemaSemantics: doubleTokenFieldSemantics,
   );
   final crossAxisAlignment = propValueField<WrapStyler, WrapCrossAlignment>(
     'crossAxisAlignment',

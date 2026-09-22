@@ -121,4 +121,32 @@ void main() {
 
     expect(find.byType(Padding), findsNothing);
   });
+
+  testWidgets('TwIcon selects breakpoint-prefixed logical margins', (
+    tester,
+  ) async {
+    Future<void> pumpAt(double width) => tester.pumpWidget(
+      MediaQuery(
+        data: MediaQueryData(size: Size(width, 200)),
+        child: Directionality(
+          textDirection: TextDirection.ltr,
+          child: SizedBox(
+            width: width,
+            child: TwIcon(
+              Icons.add,
+              classNames: 'md:me-1',
+              config: TwConfig.standard(),
+            ),
+          ),
+        ),
+      ),
+    );
+
+    await pumpAt(600);
+    expect(find.byType(Padding), findsNothing);
+
+    await pumpAt(800);
+    final padding = tester.widget<Padding>(find.byType(Padding));
+    expect(padding.padding.resolve(TextDirection.ltr).right, 4);
+  });
 }

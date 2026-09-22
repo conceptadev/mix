@@ -15,19 +15,19 @@ typedef MixProtocolIconResolver = IconData? Function(String name);
 typedef MixProtocolImageResolver = ImageProvider<Object>? Function(String name);
 
 final class MixProtocolIdentityContext {
+  static const empty = MixProtocolIdentityContext();
+
+  final MixProtocolIconResolver? resolveIcon;
+
+  final MixProtocolImageResolver? resolveImage;
+  final Map<String, IconData> iconNames;
+  final Map<String, ImageProvider<Object>> imageNames;
   const MixProtocolIdentityContext({
     this.resolveIcon,
     this.resolveImage,
     this.iconNames = const {},
     this.imageNames = const {},
   });
-
-  static const empty = MixProtocolIdentityContext();
-
-  final MixProtocolIconResolver? resolveIcon;
-  final MixProtocolImageResolver? resolveImage;
-  final Map<String, IconData> iconNames;
-  final Map<String, ImageProvider<Object>> imageNames;
 
   String? nameForIcon(IconData value) {
     for (final entry in iconNames.entries) {

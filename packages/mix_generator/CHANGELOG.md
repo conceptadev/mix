@@ -1,3 +1,11 @@
+## 2.2.0-beta.4
+
+ - **FIX**: Drop redundant `this` qualifiers from generated `@MixWidget` build
+   methods. The unused build parameter is now the wildcard `BuildContext _`, so
+   a field named `context` still forwards the widget's own value instead of the
+   build context. The values forwarded to the target constructor or factory are
+   unchanged.
+
 ## 2.2.0-beta.3
 
  - **FEAT**: Emit a complete `$stylerFieldNames` inventory for generated

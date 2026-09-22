@@ -36,7 +36,6 @@ SchemaObject<WrapBoxStyler> _wrapBoxStylerSchemaType(
     ),
     _boxField,
     inventoryName: 'box',
-    schemaSemantics: doubleTokenFieldSemantics,
   );
   final margin = derivedField<WrapBoxStyler, Prop<EdgeInsetsGeometry>>(
     'margin',
@@ -46,7 +45,6 @@ SchemaObject<WrapBoxStyler> _wrapBoxStylerSchemaType(
     ),
     _boxField,
     inventoryName: 'box',
-    schemaSemantics: doubleTokenFieldSemantics,
   );
   final constraints = derivedField<WrapBoxStyler, Prop<BoxConstraints>>(
     'constraints',
@@ -120,7 +118,6 @@ SchemaObject<WrapBoxStyler> _wrapBoxStylerSchemaType(
     valuePropCodec<double>(doubleTokenCodec(), fieldName: 'spacing'),
     _flowField,
     inventoryName: 'flow',
-    schemaSemantics: doubleTokenFieldSemantics,
   );
   final runAlignment = derivedField<WrapBoxStyler, Prop<WrapAlignment>>(
     'runAlignment',
@@ -136,7 +133,6 @@ SchemaObject<WrapBoxStyler> _wrapBoxStylerSchemaType(
     valuePropCodec<double>(doubleTokenCodec(), fieldName: 'runSpacing'),
     _flowField,
     inventoryName: 'flow',
-    schemaSemantics: doubleTokenFieldSemantics,
   );
   final crossAxisAlignment =
       derivedField<WrapBoxStyler, Prop<WrapCrossAlignment>>(
@@ -234,20 +230,18 @@ SchemaObject<WrapBoxStyler> _wrapBoxStylerSchemaType(
   );
 }
 
-Object? _boxField(WrapBoxStyler value, String wire) {
-  return encodedNestedStylerField<WrapBoxStyler, BoxStyler, BoxSpec>(
+JsonMap _boxField(WrapBoxStyler value) {
+  return encodedNestedStylerFields<WrapBoxStyler, BoxStyler, BoxSpec>(
     value,
-    wire,
     read: (value) => value.$box,
     encodeFields: encodeBoxStylerFields,
     fieldName: 'box',
   );
 }
 
-Object? _flowField(WrapBoxStyler value, String wire) {
-  return encodedNestedStylerField<WrapBoxStyler, WrapStyler, WrapSpec>(
+JsonMap _flowField(WrapBoxStyler value) {
+  return encodedNestedStylerFields<WrapBoxStyler, WrapStyler, WrapSpec>(
     value,
-    wire,
     read: (value) => value.$flow,
     encodeFields: encodeWrapStylerFields,
     fieldName: 'flow',

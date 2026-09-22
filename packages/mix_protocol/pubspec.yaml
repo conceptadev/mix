@@ -9,11 +9,10 @@ environment:
   flutter: ">=3.41.0"
 
 dependencies:
-  ack: ^1.0.0
+  ack: ^1.2.0
   flutter:
     sdk: flutter
-  mix:
-    path: ../mix
+  mix: ^2.2.0-beta.5
 
 dev_dependencies:
   analyzer: '>=9.0.0 <11.0.0'

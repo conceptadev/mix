@@ -173,6 +173,21 @@ void main() {
     });
   });
 
+  group('responsive P/H margin utilities', () {
+    for (final subject in <({String label, Widget widget})>[
+      (label: 'P', widget: const P(text: 'Paragraph', classNames: 'md:mb-4')),
+      (label: 'H1', widget: const H1(text: 'Heading', classNames: 'md:mb-4')),
+    ]) {
+      testWidgets('${subject.label} selects breakpoint margin', (tester) async {
+        await pumpSized(tester, subject.widget, width: 600, height: 100);
+        expect(find.byType(Padding), findsNothing);
+
+        await pumpSized(tester, subject.widget, width: 800, height: 100);
+        expect(singlePaddingInsets(tester).bottom, 16);
+      });
+    }
+  });
+
   group('P/H margin utilities — arbitrary and negative', () {
     testWidgets('P with mb-[10px] applies arbitrary bottom margin', (
       tester,

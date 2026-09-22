@@ -24,34 +24,30 @@ SchemaObject<IconStyler> _iconStylerSchemaType(
     iconDataIdentityCodec(identityContext),
     (value) => value.$icon,
   );
-  final color = propTokenValueField<IconStyler, Color>(
+  final color = propValueField<IconStyler, Color>(
     'color',
     colorCodec(),
     (value) => value.$color,
   );
-  final size = propTokenValueField<IconStyler, double>(
+  final size = propValueField<IconStyler, double>(
     'size',
     nonNegativeDoubleTokenCodec(),
     (value) => value.$size,
-    schemaSemantics: doubleTokenFieldSemantics,
   );
-  final weight = propTokenValueField<IconStyler, double>(
+  final weight = propValueField<IconStyler, double>(
     'weight',
     doubleTokenCodec(),
     (value) => value.$weight,
-    schemaSemantics: doubleTokenFieldSemantics,
   );
-  final grade = propTokenValueField<IconStyler, double>(
+  final grade = propValueField<IconStyler, double>(
     'grade',
     doubleTokenCodec(),
     (value) => value.$grade,
-    schemaSemantics: doubleTokenFieldSemantics,
   );
-  final opticalSize = propTokenValueField<IconStyler, double>(
+  final opticalSize = propValueField<IconStyler, double>(
     'opticalSize',
     nonNegativeDoubleTokenCodec(),
     (value) => value.$opticalSize,
-    schemaSemantics: doubleTokenFieldSemantics,
   );
   final shadows = propMixField<IconStyler, ShadowListMix, List<Shadow>>(
     'shadows',
@@ -69,22 +65,20 @@ SchemaObject<IconStyler> _iconStylerSchemaType(
     Ack.boolean(),
     (value) => value.$applyTextScaling,
   );
-  final fill = propTokenValueField<IconStyler, double>(
+  final fill = propValueField<IconStyler, double>(
     'fill',
     doubleTokenCodec(),
     (value) => value.$fill,
-    schemaSemantics: doubleTokenFieldSemantics,
   );
   final semanticsLabel = propValueField<IconStyler, String>(
     'semanticsLabel',
     Ack.string(),
     (value) => value.$semanticsLabel,
   );
-  final opacity = propTokenValueField<IconStyler, double>(
+  final opacity = propValueField<IconStyler, double>(
     'opacity',
     unitDoubleTokenCodec(),
     (value) => value.$opacity,
-    schemaSemantics: doubleTokenFieldSemantics,
   );
   final blendMode = propValueField<IconStyler, BlendMode>(
     'blendMode',
@@ -110,7 +104,6 @@ SchemaObject<IconStyler> _iconStylerSchemaType(
       blendMode,
     ],
     build: (data, metadata) => IconStyler.create(
-      icon: icon.value(data),
       color: color.value(data),
       size: size.value(data),
       weight: weight.value(data),
@@ -123,6 +116,7 @@ SchemaObject<IconStyler> _iconStylerSchemaType(
       semanticsLabel: semanticsLabel.value(data),
       opacity: opacity.value(data),
       blendMode: blendMode.value(data),
+      icon: icon.value(data),
       variants: metadata.variants?.value(data),
       modifier: metadata.modifiers.value(data),
       animation: metadata.animation.value(data),

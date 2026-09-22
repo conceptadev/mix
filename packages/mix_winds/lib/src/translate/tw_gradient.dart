@@ -9,7 +9,7 @@ import 'package:mix/mix.dart';
 import '../tw_config.dart';
 
 /// Gradient direction alignments for Tailwind gradient tokens.
-const gradientDirections = <String, (Alignment, Alignment)>{
+const gradientDirections = {
   'to-t': (Alignment.bottomCenter, Alignment.topCenter),
   'to-tr': (Alignment.bottomLeft, Alignment.topRight),
   'to-r': (Alignment.centerLeft, Alignment.centerRight),
@@ -20,8 +20,8 @@ const gradientDirections = <String, (Alignment, Alignment)>{
   'to-tl': (Alignment.bottomRight, Alignment.topLeft),
 };
 
-const _tailwindGradientAngles = <String, double>{
-  'to-r': 0,
+const _tailwindGradientAngles = {
+  'to-r': 0.0,
   'to-br': math.pi / 4,
   'to-b': math.pi / 2,
   'to-bl': 3 * math.pi / 4,
@@ -59,10 +59,10 @@ final class GradientAccum {
 
   LinearGradientMix? toGradientMix(TwGradientStrategy strategy) {
     if (!hasGradient) return null;
-    final colors = <Color>[fromColor!, ?viaColor, toColor ?? fromColor!];
+    final colors = [fromColor!, ?viaColor, toColor ?? fromColor!];
     final stops = viaColor != null ? const [0.0, 0.5, 1.0] : const [0.0, 1.0];
 
-    if (strategy == TwGradientStrategy.angle && directionKey != null) {
+    if (strategy == .angle && directionKey != null) {
       final angle = _tailwindGradientAngles[directionKey!];
       if (angle != null) {
         return LinearGradientMix(
@@ -75,7 +75,7 @@ final class GradientAccum {
       }
     }
 
-    final useCssAngleRect = strategy == TwGradientStrategy.cssAngleRect;
+    final useCssAngleRect = strategy == .cssAngleRect;
     if (useCssAngleRect &&
         directionKey != null &&
         _tailwindCornerDirections.contains(directionKey)) {
@@ -89,6 +89,7 @@ final class GradientAccum {
     }
 
     final (begin, end) = direction!;
+
     return LinearGradientMix(
       begin: begin,
       end: end,

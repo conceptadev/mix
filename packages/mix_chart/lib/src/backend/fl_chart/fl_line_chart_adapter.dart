@@ -169,6 +169,8 @@ final class _FlLineChartAdapterState extends State<FlLineChartAdapter> {
               return fl.LineTooltipItem(
                 '${series.label}\n${formatter(spot.y)}',
                 textStyle,
+                textAlign: tooltip?.text?.spec.textAlign ?? .center,
+                textDirection: tooltip?.text?.spec.textDirection ?? .ltr,
               );
             })
             .toList(growable: false),

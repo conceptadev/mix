@@ -19,6 +19,11 @@ final class StylerMetadataFields<
   Owner extends Object,
   SpecType extends Spec<SpecType>
 > {
+  final SchemaField<Owner, List<VariantStyle<SpecType>>>? variants;
+
+  final SchemaField<Owner, WidgetModifierConfig> modifiers;
+  final SchemaField<Owner, AnimationConfig> animation;
+  final List<VariantStyle<SpecType>>? Function(Owner value) _readVariants;
   StylerMetadataFields({
     required AckSchema<JsonMap, Object>? rootStyleSchema,
     required List<VariantStyle<SpecType>>? Function(Owner value) readVariants,
@@ -51,11 +56,6 @@ final class StylerMetadataFields<
          animationConfigCodec(),
          readAnimation,
        );
-
-  final List<VariantStyle<SpecType>>? Function(Owner value) _readVariants;
-  final SchemaField<Owner, List<VariantStyle<SpecType>>>? variants;
-  final SchemaField<Owner, WidgetModifierConfig> modifiers;
-  final SchemaField<Owner, AnimationConfig> animation;
 
   List<SchemaFieldBase<Owner>> get fields => [?variants, modifiers, animation];
 
@@ -99,13 +99,12 @@ SchemaObject<Styler> stylerSchemaObject<
   );
 }
 
-Object? encodedNestedStylerField<
+JsonMap encodedNestedStylerFields<
   Owner extends Object,
   Styler extends Style<SpecType>,
   SpecType extends Spec<SpecType>
 >(
-  Owner value,
-  String wire, {
+  Owner value, {
   required Prop<StyleSpec<SpecType>>? Function(Owner value) read,
   required JsonMap Function(Styler value, {bool includeStylerMetadata})
   encodeFields,
@@ -119,8 +118,8 @@ Object? encodedNestedStylerField<
   }
 
   return styler == null
-      ? null
-      : encodeFields(styler, includeStylerMetadata: false)[wire];
+      ? const {}
+      : encodeFields(styler, includeStylerMetadata: false);
 }
 
 void _failNestedMetadata(String fieldName, String metadata, Object? value) {
@@ -169,11 +168,8 @@ SchemaPathError _unsupportedNestedStyler(
 /// (tokens/raw values) or outer directives, each surfaced as a path-qualified
 /// diagnostic anchored at the composite slot (see [_unsupportedNestedStyler]).
 ///
-/// Invoked once per wire field of the composite slot (the [encodedNestedStylerField]
-/// `read` callback fires per key), so the merge is intentionally re-derived each
-/// time rather than memoized — it is pure and bounded by small field/source
-/// counts, and the nested [encodeFields] it feeds was already recomputed per
-/// field before this change.
+/// Schema fields share this preparation within one encoding operation.
+/// The operation releases the prepared values when encoding finishes.
 Styler? mergeNestedStyler<
   Styler extends Style<SpecType>,
   SpecType extends Spec<SpecType>

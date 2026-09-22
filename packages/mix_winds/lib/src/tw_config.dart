@@ -23,6 +23,24 @@ enum TwGradientStrategy {
 /// parity does not depend on `ThemeData.textTheme`.
 @immutable
 class TwTextDefaults {
+  /// Primary font family. If null, Flutter uses the platform default.
+  final String? fontFamily;
+
+  /// Font fallback chain used when [fontFamily] cannot render a glyph.
+  final List<String> fontFamilyFallback;
+
+  /// Base tracking equivalent to Tailwind's normal letter spacing.
+  final double letterSpacing;
+
+  /// Base line-height (Tailwind Preflight is 1.5).
+  final double lineHeight;
+
+  /// Base font size (Tailwind Preflight is 16px).
+  final double fontSize;
+
+  /// Base font weight (Tailwind Preflight is normal / 400).
+  final FontWeight fontWeight;
+
   static const Object _noChange = Object();
 
   const TwTextDefaults({
@@ -77,24 +95,6 @@ class TwTextDefaults {
       fontSize = 16,
       fontWeight = FontWeight.w400;
 
-  /// Primary font family. If null, Flutter uses the platform default.
-  final String? fontFamily;
-
-  /// Font fallback chain used when [fontFamily] cannot render a glyph.
-  final List<String> fontFamilyFallback;
-
-  /// Base tracking equivalent to Tailwind's normal letter spacing.
-  final double letterSpacing;
-
-  /// Base line-height (Tailwind Preflight is 1.5).
-  final double lineHeight;
-
-  /// Base font size (Tailwind Preflight is 16px).
-  final double fontSize;
-
-  /// Base font weight (Tailwind Preflight is normal / 400).
-  final FontWeight fontWeight;
-
   TwTextDefaults copyWith({
     Object? fontFamily = _noChange,
     List<String>? fontFamilyFallback,
@@ -119,12 +119,12 @@ class TwTextDefaults {
 
   TextStyle toTextStyle() {
     return TextStyle(
-      fontFamily: fontFamily,
-      fontFamilyFallback: fontFamilyFallback,
-      letterSpacing: letterSpacing,
-      height: lineHeight,
       fontSize: fontSize,
       fontWeight: fontWeight,
+      letterSpacing: letterSpacing,
+      height: lineHeight,
+      fontFamily: fontFamily,
+      fontFamilyFallback: fontFamilyFallback,
     );
   }
 }
@@ -134,6 +134,35 @@ class TwTextDefaults {
 /// Maps are stored as unmodifiable to ensure `updateShouldNotify` identity
 /// comparison works correctly. To change config, create a new TwConfig instance.
 class TwConfig {
+  final Map<String, double> space;
+
+  final Map<String, double> radii;
+  final Map<String, double> borderWidths;
+  final Map<String, double> breakpoints;
+  final Map<String, double> fontSizes;
+  final Map<String, Color> colors;
+  final Map<String, int> durations;
+  final Map<String, int> delays;
+  final Map<String, double> scales;
+  final Map<String, double> rotations;
+  final Map<String, double> blurs;
+  final TwTextDefaults textDefaults;
+  final TwGradientStrategy gradientStrategy;
+  static final TwConfig _standard = TwConfig(
+    space: twDefaultSpacing,
+    radii: twDefaultRadii,
+    borderWidths: twDefaultBorderWidths,
+    breakpoints: twDefaultBreakpoints,
+    fontSizes: twDefaultFontSizes,
+    colors: twDefaultColors,
+    durations: twDefaultDurations,
+    delays: twDefaultDelays,
+    scales: twDefaultScales,
+    rotations: twDefaultRotations,
+    blurs: twDefaultBlurs,
+    textDefaults: const TwTextDefaults.tailwindSans(),
+  );
+
   TwConfig({
     required Map<String, double> space,
     required Map<String, double> radii,
@@ -160,19 +189,7 @@ class TwConfig {
        rotations = Map.unmodifiable(rotations),
        blurs = Map.unmodifiable(blurs);
 
-  final Map<String, double> space;
-  final Map<String, double> radii;
-  final Map<String, double> borderWidths;
-  final Map<String, double> breakpoints;
-  final Map<String, double> fontSizes;
-  final Map<String, Color> colors;
-  final Map<String, int> durations;
-  final Map<String, int> delays;
-  final Map<String, double> scales;
-  final Map<String, double> rotations;
-  final Map<String, double> blurs;
-  final TwTextDefaults textDefaults;
-  final TwGradientStrategy gradientStrategy;
+  factory TwConfig.standard() => _standard;
 
   double spaceOf(String key, {double fallback = 0}) => space[key] ?? fallback;
 
@@ -198,9 +215,11 @@ class TwConfig {
           opacity <= 100) {
         // Convert percentage (0-100) to alpha (0-255)
         final alpha = (opacity * 255 / 100).round();
+
         return baseColor.withAlpha(alpha);
       }
     }
+
     return colors[key];
   }
 
@@ -259,23 +278,6 @@ class TwConfig {
       gradientStrategy: gradientStrategy ?? this.gradientStrategy,
     );
   }
-
-  static final TwConfig _standard = TwConfig(
-    space: twDefaultSpacing,
-    radii: twDefaultRadii,
-    borderWidths: twDefaultBorderWidths,
-    breakpoints: twDefaultBreakpoints,
-    fontSizes: twDefaultFontSizes,
-    colors: twDefaultColors,
-    durations: twDefaultDurations,
-    delays: twDefaultDelays,
-    scales: twDefaultScales,
-    rotations: twDefaultRotations,
-    blurs: twDefaultBlurs,
-    textDefaults: const TwTextDefaults.tailwindSans(),
-  );
-
-  factory TwConfig.standard() => _standard;
 }
 
 /// Provides [TwConfig] to descendant widgets via the widget tree.
@@ -300,15 +302,13 @@ class TwConfigProvider extends InheritedWidget {
     required super.child,
   });
 
-  /// The configuration to provide to descendant widgets.
-  final TwConfig config;
-
   /// Returns the nearest [TwConfig], or [TwConfig.standard()] if none found.
   ///
   /// Use this when you need a config and want a sensible default.
   static TwConfig of(BuildContext context) {
     final provider = context
         .dependOnInheritedWidgetOfExactType<TwConfigProvider>();
+
     return provider?.config ?? TwConfig.standard();
   }
 
@@ -318,8 +318,12 @@ class TwConfigProvider extends InheritedWidget {
   static TwConfig? maybeOf(BuildContext context) {
     final provider = context
         .dependOnInheritedWidgetOfExactType<TwConfigProvider>();
+
     return provider?.config;
   }
+
+  /// The configuration to provide to descendant widgets.
+  final TwConfig config;
 
   @override
   bool updateShouldNotify(TwConfigProvider oldWidget) {

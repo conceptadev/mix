@@ -24,19 +24,17 @@ SchemaObject<ImageStyler> _imageStylerSchemaType(
     imageProviderIdentityCodec(identityContext),
     (value) => value.$image,
   );
-  final width = propTokenValueField<ImageStyler, double>(
+  final width = propValueField<ImageStyler, double>(
     'width',
     nonNegativeDoubleTokenCodec(),
     (value) => value.$width,
-    schemaSemantics: doubleTokenFieldSemantics,
   );
-  final height = propTokenValueField<ImageStyler, double>(
+  final height = propValueField<ImageStyler, double>(
     'height',
     nonNegativeDoubleTokenCodec(),
     (value) => value.$height,
-    schemaSemantics: doubleTokenFieldSemantics,
   );
-  final color = propTokenValueField<ImageStyler, Color>(
+  final color = propValueField<ImageStyler, Color>(
     'color',
     colorCodec(),
     (value) => value.$color,

@@ -15,46 +15,26 @@ SchemaObject<GridBoxStyler> gridBoxStylerSchema({
     'columns',
     Ack.list(_gridTrackCodec(allowAuto: false)).nonEmpty(),
     (value) => value.$columns,
-    schemaSemantics: const SchemaFieldSemantics(
-      doubleTokenPaths: [
-        ['*', 'size'],
-        ['*', 'fraction'],
-      ],
-    ),
   );
   final rows = directField<GridBoxStyler, List<GridTrack>>(
     'rows',
     Ack.list(_gridTrackCodec(allowAuto: true)),
     (value) => value.$rows,
-    schemaSemantics: const SchemaFieldSemantics(
-      doubleTokenPaths: [
-        ['*', 'size'],
-        ['*', 'fraction'],
-      ],
-    ),
   );
   final autoRows = directField<GridBoxStyler, GridTrack>(
     'autoRows',
     _gridTrackCodec(allowAuto: true),
     (value) => value.$autoRows,
-    schemaSemantics: const SchemaFieldSemantics(
-      doubleTokenPaths: [
-        ['size'],
-        ['fraction'],
-      ],
-    ),
   );
   final columnGap = directField<GridBoxStyler, double>(
     'columnGap',
     nonNegativeDoubleTokenCodec(),
     (value) => value.$columnGap,
-    schemaSemantics: doubleTokenFieldSemantics,
   );
   final rowGap = directField<GridBoxStyler, double>(
     'rowGap',
     nonNegativeDoubleTokenCodec(),
     (value) => value.$rowGap,
-    schemaSemantics: doubleTokenFieldSemantics,
   );
   final clipBehavior = directField<GridBoxStyler, Clip>(
     'clipBehavior',
@@ -66,18 +46,6 @@ SchemaObject<GridBoxStyler> gridBoxStylerSchema({
         'constraintBranches',
         Ack.list(_gridConstraintBranchCodec()),
         (value) => value.$constraintBranches,
-        schemaSemantics: const SchemaFieldSemantics(
-          doubleTokenPaths: [
-            ['*', 'patch', 'columns', '*', 'size'],
-            ['*', 'patch', 'columns', '*', 'fraction'],
-            ['*', 'patch', 'rows', '*', 'size'],
-            ['*', 'patch', 'rows', '*', 'fraction'],
-            ['*', 'patch', 'autoRows', 'size'],
-            ['*', 'patch', 'autoRows', 'fraction'],
-            ['*', 'patch', 'columnGap'],
-            ['*', 'patch', 'rowGap'],
-          ],
-        ),
       );
 
   return stylerSchemaObject<GridBoxStyler, GridBoxSpec>(

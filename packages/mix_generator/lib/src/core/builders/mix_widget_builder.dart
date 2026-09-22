@@ -112,7 +112,7 @@ class MixWidgetBuilder {
   /// Emits the `build` method that delegates to the styler's `call()`.
   void _writeBuildMethod(StringBuffer buffer) {
     buffer.writeln('  @override');
-    buffer.writeln('  Widget build(BuildContext context) {');
+    buffer.writeln('  Widget build(BuildContext _) {');
 
     final invocation = model.isFunctionFactory
         ? '${model.factoryReference}(${_factoryArgs()})'
@@ -156,12 +156,11 @@ class MixWidgetBuilder {
         '$targetTypeReference${model.typeParameterInvocation}'
         '$constructorSuffix';
     final args = [
-      for (final p in model.callParams.where((p) => p.isPositional))
-        'this.${p.name}',
-      if (model.stylerCallForwardsKey) 'key: this.key',
+      for (final p in model.callParams.where((p) => p.isPositional)) p.name,
+      if (model.stylerCallForwardsKey) 'key: key',
       'style: $styleInvocation',
       for (final p in model.callParams.where((p) => !p.isPositional))
-        '${p.name}: this.${p.name}',
+        '${p.name}: ${p.name}',
     ];
 
     buffer.writeln('    return $target(');
@@ -172,15 +171,15 @@ class MixWidgetBuilder {
   }
 
   /// Renders the comma-separated argument list passed to the factory function.
-  /// Positionals and named params are read through `this` so generated field
-  /// names cannot be shadowed by locals in `build`.
+  /// The unused build context is a wildcard, so fields named `context`
+  /// remain accessible without redundant `this` qualifiers.
   String _factoryArgs() {
     final positional = model.factoryParams
         .where((p) => p.isPositional)
-        .map((p) => 'this.${p.name}');
+        .map((p) => p.name);
     final named = model.factoryParams
         .where((p) => !p.isPositional)
-        .map((p) => '${p.name}: this.${p.name}');
+        .map((p) => '${p.name}: ${p.name}');
 
     return [...positional, ...named].join(', ');
   }
@@ -188,11 +187,10 @@ class MixWidgetBuilder {
   /// Renders the lines passed to `.call(...)`.
   List<String> _callArgs() {
     return [
-      for (final p in model.callParams.where((p) => p.isPositional))
-        'this.${p.name}',
-      if (model.stylerCallForwardsKey) 'key: this.key',
+      for (final p in model.callParams.where((p) => p.isPositional)) p.name,
+      if (model.stylerCallForwardsKey) 'key: key',
       for (final p in model.callParams.where((p) => !p.isPositional))
-        '${p.name}: this.${p.name}',
+        '${p.name}: ${p.name}',
     ];
   }
 

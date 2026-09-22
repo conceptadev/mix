@@ -12,9 +12,16 @@ void main() {
       reason: 'mix_winds is released by the repository publish workflow.',
     );
     expect(
-      RegExp(r'^  mix: \^2\.1\.0$', multiLine: true).hasMatch(pubspec),
+      RegExp(
+        r'^  mix: \^2\.\d+\.\d+(-[0-9A-Za-z.]+)?$',
+        multiLine: true,
+      ).hasMatch(pubspec),
       isTrue,
-      reason: 'Published packages must use the hosted Mix dependency.',
+      reason:
+          'Published packages must use a hosted caret Mix constraint. Keep '
+          'its minimum at the first Mix version that has every API this '
+          'library uses; verify by resolving lib/ against pub.dev without '
+          'pubspec_overrides.yaml.',
     );
   });
 }

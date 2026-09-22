@@ -257,9 +257,7 @@ ButtonStyler buttonStyle({Color? color}) => ButtonStyler(color: color);
           contains('final Widget? child;'),
           // build() delegates through the factory to the styler call().
           contains('buttonStyle('),
-          contains(
-            '.call(key: this.key, label: this.label, child: this.child)',
-          ),
+          contains('.call(key: key, label: label, child: child)'),
         ]),
       );
     });
@@ -319,8 +317,8 @@ final ButtonStyler cardStyle = ButtonStyler(color: Color(0xFF000000));
         outputMatcher: allOf([
           contains('class Card extends StatelessWidget {'),
           contains(
-            'cardStyle.call(key: this.key, label: this.label, '
-            'child: this.child)',
+            'cardStyle.call(key: key, label: label, '
+            'child: child)',
           ),
         ]),
       );
@@ -481,13 +479,13 @@ ButtonStyler fortalButtonStyler({
           isNot(contains('final Style<ButtonSpec> style;')),
           isNot(contains('final StyleSpec<ButtonSpec>? styleSpec;')),
           contains('return PlainButton('),
-          contains('key: this.key,'),
+          contains('key: key,'),
           contains(
-            'style: fortalButtonStyler(variant: this.variant, '
-            'size: this.size),',
+            'style: fortalButtonStyler(variant: variant, '
+            'size: size),',
           ),
-          contains('label: this.label,'),
-          contains('child: this.child,'),
+          contains('label: label,'),
+          contains('child: child,'),
           isNot(contains('.call(')),
         ]),
       );
@@ -540,7 +538,7 @@ RadioStyler fortalRadioStyler() => RadioStyler();
           contains('final T value;'),
           contains('return PlainRadio<T>('),
           contains('style: fortalRadioStyler(),'),
-          contains('value: this.value,'),
+          contains('value: value'),
         ]),
       );
     });

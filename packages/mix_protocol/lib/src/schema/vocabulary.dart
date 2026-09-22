@@ -19,34 +19,15 @@ import 'styler_branch.dart';
 import 'styler_codec_helpers.dart';
 import 'text_styler_codec.dart';
 import 'wire_discriminators.dart';
+import 'wire_schema.dart';
 import 'wrap_box_styler_codec.dart';
 import 'wrap_styler_codec.dart';
 
 final RegExp _wireIdentifierPattern = RegExp(r'^[a-z][a-z0-9_]*$');
 
-const _gradientDoubleTokenPaths = [
-  ['radius'],
-  ['focalRadius'],
-  ['startAngle'],
-  ['endAngle'],
-];
 const _gradientListEntryPaths = [
   ['colors'],
   ['stops'],
-];
-const _borderSideDoubleTokenPaths = [
-  ['width'],
-  ['strokeAlign'],
-];
-const _edgeInsetsDoubleTokenPaths = [
-  <String>[],
-  ['left'],
-  ['top'],
-  ['right'],
-  ['bottom'],
-];
-const _shadowDoubleTokenPaths = [
-  ['blurRadius'],
 ];
 
 /// An immutable set of styler branches that share a wire namespace.
@@ -148,30 +129,21 @@ final class MixProtocolBranchContext {
 /// Opaque value codec used by the public protocol-authoring API.
 final class MixProtocolValueCodec<T extends Object> {
   final AckSchema<Object, T> _schema;
-  final bool _allowDoubleTokenKind;
-  final List<List<String>> _doubleTokenPaths;
   final List<List<String>> _listEntryPaths;
   final T? Function(Object value)? _convertValue;
   final AckSchema<Object, Object> Function(String fieldName)? _mixPropCodec;
 
   const MixProtocolValueCodec._(
     this._schema, {
-    bool allowDoubleTokenKind = false,
-    List<List<String>> doubleTokenPaths = const [],
     List<List<String>> listEntryPaths = const [],
     T? Function(Object value)? convertValue,
     AckSchema<Object, Object> Function(String fieldName)? mixPropCodec,
-  }) : _allowDoubleTokenKind = allowDoubleTokenKind,
-       _doubleTokenPaths = doubleTokenPaths,
-       _listEntryPaths = listEntryPaths,
+  }) : _listEntryPaths = listEntryPaths,
        _convertValue = convertValue,
        _mixPropCodec = mixPropCodec;
 
-  SchemaFieldSemantics get _fieldSemantics => SchemaFieldSemantics(
-    allowDoubleTokenKind: _allowDoubleTokenKind,
-    doubleTokenPaths: _doubleTokenPaths,
-    listEntryPaths: _listEntryPaths,
-  );
+  SchemaFieldSemantics get _fieldSemantics =>
+      SchemaFieldSemantics(listEntryPaths: _listEntryPaths);
 }
 
 /// Public protocol value codecs without exposing the private Ack engine.
@@ -197,34 +169,22 @@ abstract final class MixProtocolCodecs {
 
   /// Finite number with canonical double-valued token support.
   static MixProtocolValueCodec<double> number() {
-    return MixProtocolValueCodec._(
-      doubleTokenCodec(),
-      allowDoubleTokenKind: true,
-    );
+    return MixProtocolValueCodec._(doubleTokenCodec());
   }
 
   /// Positive finite number with canonical double-valued token support.
   static MixProtocolValueCodec<double> positiveNumber() {
-    return MixProtocolValueCodec._(
-      positiveDoubleTokenCodec(),
-      allowDoubleTokenKind: true,
-    );
+    return MixProtocolValueCodec._(positiveDoubleTokenCodec());
   }
 
   /// Non-negative finite number with canonical double-valued token support.
   static MixProtocolValueCodec<double> nonNegativeNumber() {
-    return MixProtocolValueCodec._(
-      nonNegativeDoubleTokenCodec(),
-      allowDoubleTokenKind: true,
-    );
+    return MixProtocolValueCodec._(nonNegativeDoubleTokenCodec());
   }
 
   /// Number in the inclusive zero-to-one range with token support.
   static MixProtocolValueCodec<double> unitNumber() {
-    return MixProtocolValueCodec._(
-      unitDoubleTokenCodec(),
-      allowDoubleTokenKind: true,
-    );
+    return MixProtocolValueCodec._(unitDoubleTokenCodec());
   }
 
   /// Canonical Mix color literal or color-token reference.
@@ -236,7 +196,6 @@ abstract final class MixProtocolCodecs {
   static MixProtocolValueCodec<GradientMix> gradient() {
     return MixProtocolValueCodec._(
       gradientCodec() as AckSchema<Object, GradientMix>,
-      doubleTokenPaths: _gradientDoubleTokenPaths,
       listEntryPaths: _gradientListEntryPaths,
       convertValue: (value) =>
           value is Gradient ? GradientMix.value(value) : null,
@@ -247,10 +206,6 @@ abstract final class MixProtocolCodecs {
   static MixProtocolValueCodec<BorderMix> border() {
     return MixProtocolValueCodec._(
       borderCodec() as AckSchema<Object, BorderMix>,
-      doubleTokenPaths: [
-        for (final side in const ['top', 'right', 'bottom', 'left'])
-          for (final path in _borderSideDoubleTokenPaths) [side, ...path],
-      ],
       convertValue: (value) => value is Border ? BorderMix.value(value) : null,
     );
   }
@@ -259,7 +214,6 @@ abstract final class MixProtocolCodecs {
   static MixProtocolValueCodec<BorderSideMix> borderSide() {
     return MixProtocolValueCodec._(
       borderSideCodec() as AckSchema<Object, BorderSideMix>,
-      doubleTokenPaths: _borderSideDoubleTokenPaths,
       convertValue: (value) =>
           value is BorderSide ? BorderSideMix.value(value) : null,
       mixPropCodec: borderSideMixPropCodec,
@@ -279,7 +233,6 @@ abstract final class MixProtocolCodecs {
   static MixProtocolValueCodec<EdgeInsetsMix> edgeInsets() {
     return MixProtocolValueCodec._(
       edgeInsetsCodec(),
-      doubleTokenPaths: _edgeInsetsDoubleTokenPaths,
       convertValue: (value) =>
           value is EdgeInsets ? EdgeInsetsMix.value(value) : null,
     );
@@ -294,7 +247,6 @@ abstract final class MixProtocolCodecs {
   static MixProtocolValueCodec<ShadowMix> shadow() {
     return MixProtocolValueCodec._(
       shadowCodec() as AckSchema<Object, ShadowMix>,
-      doubleTokenPaths: _shadowDoubleTokenPaths,
       convertValue: (value) => value is Shadow ? ShadowMix.value(value) : null,
     );
   }
@@ -316,10 +268,6 @@ abstract final class MixProtocolCodecs {
 
     return MixProtocolValueCodec._(
       schema as AckSchema<Object, List<T>>,
-      doubleTokenPaths: [
-        if (item._allowDoubleTokenKind) const ['*'],
-        for (final path in item._doubleTokenPaths) ['*', ...path],
-      ],
       listEntryPaths: [
         const [],
         for (final path in item._listEntryPaths) ['*', ...path],
@@ -349,7 +297,10 @@ abstract final class MixProtocolCodecs {
       output: Ack.instance<Style<S>>(),
     );
 
-    return MixProtocolValueCodec._(schema as AckSchema<Object, Style<S>>);
+    return MixProtocolValueCodec._(
+      schema.withConstraint(WireSchemaReference<Style<S>>('mix_protocol_style'))
+          as AckSchema<Object, Style<S>>,
+    );
   }
 }
 
@@ -427,9 +378,9 @@ abstract final class MixProtocolField {
         SchemaField<Owner, Prop<PropValue>>(
           wire: wire,
           codec: customCodec as AckSchema<Object, Prop<PropValue>>,
-          read: read,
           inventoryName: inventoryName,
           schemaSemantics: codec._fieldSemantics,
+          read: read,
         ),
       );
     }
@@ -706,13 +657,11 @@ mixProtocolCoreVocabulary = MixProtocolVocabulary._core(
 final class MixProtocolVocabularyCompilation {
   final AckSchema<JsonMap, Object> rootSchema;
   final List<({String id, int wireVersion})> contributedVocabularies;
-  final Map<String, Map<String, SchemaFieldSemantics>> branchFieldSemantics;
   final List<List<String>> lenientListEntryPathSuffixes;
 
   const MixProtocolVocabularyCompilation({
     required this.rootSchema,
     required this.contributedVocabularies,
-    required this.branchFieldSemantics,
     required this.lenientListEntryPathSuffixes,
   });
 }
@@ -833,7 +782,6 @@ MixProtocolVocabularyCompilation compileMixProtocolVocabularies(
         if (!vocabulary._isCore)
           (id: vocabulary.id, wireVersion: vocabulary.wireVersion),
     ]),
-    branchFieldSemantics: Map.unmodifiable(branchFieldSemantics),
     lenientListEntryPathSuffixes: _collectLenientListEntryPathSuffixes(
       branchFieldSemantics,
     ),

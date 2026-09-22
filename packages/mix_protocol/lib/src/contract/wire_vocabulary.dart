@@ -68,7 +68,8 @@ enum SchemaVariant {
   contextNotWidgetState(variantKindContextNotWidgetState),
   contextOrientation(variantKindContextOrientation),
   contextPlatform(variantKindContextPlatform),
-  contextWeb(variantKindContextWeb);
+  contextWeb(variantKindContextWeb),
+  contextFocusVisible(variantKindContextFocusVisible);
 
   const SchemaVariant(this.wireValue);
 

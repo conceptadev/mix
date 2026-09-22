@@ -758,8 +758,8 @@ final cardStyle = const BoxStyler();
             contains('const Card({super.key, this.child});'),
             contains('final Widget? child;'),
             contains('return cardStyle.call('),
-            contains('key: this.key'),
-            contains('child: this.child'),
+            contains('key: key'),
+            contains('child: child'),
           ]),
         );
       },
@@ -806,9 +806,9 @@ final legacyStyle = const BoxStyler();
           contains('class Legacy extends StatelessWidget'),
           contains('final String? label;'),
           contains('final Widget? child;'),
-          contains('key: this.key'),
-          contains('label: this.label'),
-          contains('child: this.child'),
+          contains('key: key'),
+          contains('label: label'),
+          contains('child: child'),
         ]),
       );
     });
@@ -854,9 +854,9 @@ final allStyle = const BoxStyler();
           contains('class All extends StatelessWidget'),
           contains('final String? label;'),
           contains('final Widget? child;'),
-          contains('key: this.key'),
-          contains('label: this.label'),
-          contains('child: this.child'),
+          contains('key: key'),
+          contains('label: label'),
+          contains('child: child'),
         ]),
       );
     });
@@ -901,9 +901,9 @@ final emptyStyle = const BoxStyler();
         outputMatcher: allOf([
           contains('class Empty extends StatelessWidget'),
           contains('const Empty({super.key});'),
-          contains('return emptyStyle.call(key: this.key);'),
+          contains('return emptyStyle.call(key: key);'),
           isNot(contains('final Widget? child;')),
-          isNot(contains('child: this.child')),
+          isNot(contains('child: child')),
         ]),
       );
     });
@@ -960,7 +960,7 @@ class _Stub extends StatelessWidget {
           outputMatcher: allOf([
             contains('class External extends StatelessWidget'),
             contains('final Widget child;'),
-            contains('return externalStyle.call(this.child);'),
+            contains('return externalStyle.call(child);'),
             isNot(contains('optional')),
             isNot(contains('hidden')),
             isNot(contains('final String? build;')),
@@ -1017,10 +1017,10 @@ BoxStyler badgeStyle({String? child, Color? color, BoxStyler? style}) =>
             contains('final String? label;'),
             isNot(contains('final Widget? child;')),
             contains('return badgeStyle('),
-            contains('child: this.child'),
-            contains('color: this.color'),
-            contains('style: this.style'),
-            contains('label: this.label'),
+            contains('child: child'),
+            contains('color: color'),
+            contains('style: style'),
+            contains('label: label'),
           ]),
         );
       },
@@ -1235,9 +1235,9 @@ final genericCallStyle = const GenericCallStyler();
           contains('final Widget? child;'),
           isNot(contains('final T? value;')),
           contains('return genericCallStyle.call<T>('),
-          contains('key: this.key'),
-          contains('child: this.child'),
-          isNot(contains('value: this.value')),
+          contains('key: key'),
+          contains('child: child'),
+          isNot(contains('value: value')),
         ]),
       );
     });
@@ -1302,10 +1302,10 @@ RadioStyler fortalRadioStyle({Variant variant = Variant.surface}) =>
             contains('final T value;'),
             contains('final List<T> values;'),
             contains('return fortalRadioStyle('),
-            contains('variant: this.variant'),
+            contains('variant: variant'),
             contains('.call<T>('),
-            contains('value: this.value'),
-            contains('values: this.values'),
+            contains('value: value'),
+            contains('values: values'),
           ]),
         );
       },
@@ -1348,7 +1348,7 @@ final typedStyle = const TypedStyler();
           contains('required this.child'),
           contains('final T child;'),
           contains('return typedStyle.call<T>('),
-          contains('child: this.child'),
+          contains('child: child'),
         ]),
       );
     });
@@ -1395,9 +1395,9 @@ TextStyler labelStyle({Color? color}) => const TextStyler();
           contains('this.text'),
           contains('final String text;'),
           contains('final Color? color;'),
-          contains('return labelStyle(color: this.color).call('),
+          contains('return labelStyle(color: color).call('),
           contains('this.text'),
-          contains('key: this.key'),
+          contains('key: key'),
         ]),
       );
     });
@@ -1449,13 +1449,13 @@ ButtonStyler primaryButtonStyle({Color color = const Color(0xFF0000FF)}) =>
           contains('required this.onPressed'),
           contains('required this.child'),
           contains('this.color = const Color(0xFF0000FF)'),
-          // Formatter may wrap `primaryButtonStyle(color: this.color)` across
+          // Formatter may wrap `primaryButtonStyle(color: color)` across
           // lines; assert the call invocation without whitespace.
           contains('primaryButtonStyle('),
-          contains('color: this.color'),
+          contains('color: color'),
           contains('.call('),
-          contains('onPressed: this.onPressed'),
-          contains('child: this.child'),
+          contains('onPressed: onPressed'),
+          contains('child: child'),
         ]),
       );
     });
@@ -1503,8 +1503,8 @@ final keyLessStyle = const BoxStyler();
             contains('class KeyLess extends StatelessWidget'),
             contains('const KeyLess({super.key, this.child});'),
             contains('return keyLessStyle.call('),
-            contains('child: this.child'),
-            isNot(contains('key: this.key')),
+            contains('child: child'),
+            isNot(contains('key: key')),
           ]),
         );
       },
@@ -1551,10 +1551,8 @@ final cardStyle = const BoxStyler();
       );
     });
 
-    test(
-      'BuildContext param named context forwards from this.context',
-      () async {
-        const source = r'''
+    test('BuildContext field named context is not shadowed by build', () async {
+      const source = r'''
 library widget_case;
 
 import 'package:flutter/widgets.dart';
@@ -1580,32 +1578,29 @@ class _Stub extends StatelessWidget {
 BoxStyler contextualStyle({BuildContext? context}) => const BoxStyler();
 ''';
 
-        await expectGeneratorOutputResolves(
-          builder: partBuilder(const MixWidgetGenerator()),
-          sources: {
-            ...mixAnnotationsSources,
-            ...widgetStub,
-            'mix|lib/src/core/style.dart': styleStub,
-            'mix_generator|lib/widget_case.dart': source,
-          },
-          inputAsset: 'mix_generator|lib/widget_case.dart',
-          outputAsset: 'mix_generator|lib/widget_case.g.dart',
-          outputMatcher: allOf([
-            contains('class Contextual extends StatelessWidget'),
-            contains('final BuildContext? context;'),
-            contains('return contextualStyle('),
-            contains('context: this.context'),
-            contains('key: this.key'),
-            contains('child: this.child'),
-          ]),
-        );
-      },
-    );
+      await expectGeneratorOutputResolves(
+        builder: partBuilder(const MixWidgetGenerator()),
+        sources: {
+          ...mixAnnotationsSources,
+          ...widgetStub,
+          'mix|lib/src/core/style.dart': styleStub,
+          'mix_generator|lib/widget_case.dart': source,
+        },
+        inputAsset: 'mix_generator|lib/widget_case.dart',
+        outputAsset: 'mix_generator|lib/widget_case.g.dart',
+        outputMatcher: allOf([
+          contains('class Contextual extends StatelessWidget'),
+          contains('final BuildContext? context;'),
+          contains('return contextualStyle('),
+          contains('context: context'),
+          contains('key: key'),
+          contains('child: child'),
+        ]),
+      );
+    });
 
-    test(
-      'function-backed style resolves with this-qualified factory and call args',
-      () async {
-        const source = r'''
+    test('function-backed style forwards factory and call fields', () async {
+      const source = r'''
 library widget_case;
 
 import 'package:flutter/widgets.dart';
@@ -1631,26 +1626,25 @@ class _Stub extends StatelessWidget {
 BoxStyler chipStyle(Color color, {BoxStyler? style}) => const BoxStyler();
 ''';
 
-        await expectGeneratorOutputResolves(
-          builder: partBuilder(const MixWidgetGenerator()),
-          sources: {
-            ...mixAnnotationsSources,
-            ...widgetStub,
-            'mix|lib/src/core/style.dart': styleStub,
-            'mix_generator|lib/widget_case.dart': source,
-          },
-          inputAsset: 'mix_generator|lib/widget_case.dart',
-          outputAsset: 'mix_generator|lib/widget_case.g.dart',
-          outputMatcher: allOf([
-            contains('class Chip extends StatelessWidget'),
-            contains('return chipStyle('),
-            contains('this.color'),
-            contains('style: this.style'),
-            contains('key: this.key'),
-            contains('child: this.child'),
-          ]),
-        );
-      },
-    );
+      await expectGeneratorOutputResolves(
+        builder: partBuilder(const MixWidgetGenerator()),
+        sources: {
+          ...mixAnnotationsSources,
+          ...widgetStub,
+          'mix|lib/src/core/style.dart': styleStub,
+          'mix_generator|lib/widget_case.dart': source,
+        },
+        inputAsset: 'mix_generator|lib/widget_case.dart',
+        outputAsset: 'mix_generator|lib/widget_case.g.dart',
+        outputMatcher: allOf([
+          contains('class Chip extends StatelessWidget'),
+          contains('return chipStyle('),
+          contains('this.color'),
+          contains('style: style'),
+          contains('key: key'),
+          contains('child: child'),
+        ]),
+      );
+    });
   });
 }

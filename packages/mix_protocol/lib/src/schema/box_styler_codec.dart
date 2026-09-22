@@ -34,20 +34,16 @@ SchemaObject<BoxStyler> _boxStylerSchemaType(
     alignmentCodec(),
     (value) => value.$alignment,
   );
-  final padding =
-      propTokenMixField<BoxStyler, EdgeInsetsMix, EdgeInsetsGeometry>(
-        'padding',
-        edgeInsetsCodec(),
-        (value) => value.$padding,
-        schemaSemantics: doubleTokenFieldSemantics,
-      );
-  final margin =
-      propTokenMixField<BoxStyler, EdgeInsetsMix, EdgeInsetsGeometry>(
-        'margin',
-        edgeInsetsCodec(),
-        (value) => value.$margin,
-        schemaSemantics: doubleTokenFieldSemantics,
-      );
+  final padding = propMixField<BoxStyler, EdgeInsetsMix, EdgeInsetsGeometry>(
+    'padding',
+    edgeInsetsCodec(),
+    (value) => value.$padding,
+  );
+  final margin = propMixField<BoxStyler, EdgeInsetsMix, EdgeInsetsGeometry>(
+    'margin',
+    edgeInsetsCodec(),
+    (value) => value.$margin,
+  );
   final constraints =
       propMixField<BoxStyler, BoxConstraintsMix, BoxConstraints>(
         'constraints',
@@ -102,11 +98,11 @@ SchemaObject<BoxStyler> _boxStylerSchemaType(
       padding: padding.value(data),
       margin: margin.value(data),
       constraints: constraints.value(data),
-      clipBehavior: clipBehavior.value(data),
-      transform: transform.value(data),
-      transformAlignment: transformAlignment.value(data),
       decoration: decoration.value(data),
       foregroundDecoration: foregroundDecoration.value(data),
+      transform: transform.value(data),
+      transformAlignment: transformAlignment.value(data),
+      clipBehavior: clipBehavior.value(data),
       variants: metadata.variants?.value(data),
       modifier: metadata.modifiers.value(data),
       animation: metadata.animation.value(data),
@@ -146,11 +142,11 @@ CodecSchema<JsonMap, BoxDecorationMix> boxDecorationCodec() {
     ).optional(),
   }).codec<BoxDecorationMix>(
     decode: (data) => BoxDecorationMix.create(
-      color: data['color'] as Prop<Color>?,
       border: data['border'] as Prop<BoxBorder>?,
       borderRadius: data['borderRadius'] as Prop<BorderRadiusGeometry>?,
       shape: data['shape'] as Prop<BoxShape>?,
       backgroundBlendMode: data['backgroundBlendMode'] as Prop<BlendMode>?,
+      color: data['color'] as Prop<Color>?,
       gradient: data['gradient'] as Prop<Gradient>?,
       boxShadow: data['boxShadow'] as Prop<List<BoxShadow>>?,
     ),
@@ -226,29 +222,29 @@ GradientMix _decodeGradientMix(JsonMap data) {
     'linear' => LinearGradientMix.create(
       begin: data['begin'] as Prop<AlignmentGeometry>?,
       end: data['end'] as Prop<AlignmentGeometry>?,
-      colors: data['colors'] as Prop<List<Color>>?,
-      stops: data['stops'] as Prop<List<double>>?,
       tileMode: data['tileMode'] as Prop<TileMode>?,
       transform: data['transform'] as Prop<GradientTransform>?,
+      colors: data['colors'] as Prop<List<Color>>?,
+      stops: data['stops'] as Prop<List<double>>?,
     ),
     'radial' => RadialGradientMix.create(
       center: data['center'] as Prop<AlignmentGeometry>?,
       radius: data['radius'] as Prop<double>?,
+      tileMode: data['tileMode'] as Prop<TileMode>?,
       focal: data['focal'] as Prop<AlignmentGeometry>?,
       focalRadius: data['focalRadius'] as Prop<double>?,
+      transform: data['transform'] as Prop<GradientTransform>?,
       colors: data['colors'] as Prop<List<Color>>?,
       stops: data['stops'] as Prop<List<double>>?,
-      tileMode: data['tileMode'] as Prop<TileMode>?,
-      transform: data['transform'] as Prop<GradientTransform>?,
     ),
     'sweep' => SweepGradientMix.create(
       center: data['center'] as Prop<AlignmentGeometry>?,
       startAngle: data['startAngle'] as Prop<double>?,
       endAngle: data['endAngle'] as Prop<double>?,
-      colors: data['colors'] as Prop<List<Color>>?,
-      stops: data['stops'] as Prop<List<double>>?,
       tileMode: data['tileMode'] as Prop<TileMode>?,
       transform: data['transform'] as Prop<GradientTransform>?,
+      colors: data['colors'] as Prop<List<Color>>?,
+      stops: data['stops'] as Prop<List<double>>?,
     ),
     _ => throw UnsupportedEncodeValueError(
       kind,

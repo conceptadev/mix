@@ -15,13 +15,6 @@ enum TwDiagnosticCode {
 
 /// A structured explanation for a token that could not be applied as written.
 final class TwDiagnostic {
-  const TwDiagnostic({
-    required this.token,
-    required this.code,
-    required this.reason,
-    this.workaround,
-  });
-
   /// The original class token, including variant prefixes and modifiers.
   final String token;
 
@@ -33,6 +26,13 @@ final class TwDiagnostic {
 
   /// An optional supported alternative.
   final String? workaround;
+
+  const TwDiagnostic({
+    required this.token,
+    required this.code,
+    required this.reason,
+    this.workaround,
+  });
 }
 
 typedef TwDiagnosticCallback = void Function(TwDiagnostic diagnostic);

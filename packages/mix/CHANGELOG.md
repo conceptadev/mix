@@ -1,3 +1,19 @@
+## 2.2.0-beta.6
+
+### New features
+
+- **Complete `WidgetModifierConfig` convenience APIs:** `mouseCursor` and
+  `scrollView` are now available as factories and chain methods, and `skew`,
+  `defaultIcon`, `iconTheme`, `box`, and `reset` gained the chain methods their
+  factories were missing. Every built-in modifier can now be reached without
+  `.modifier(SomeModifierMix(...))`, for example
+  `BoxStyler().wrap(.mouseCursor(SystemMouseCursors.click))`. The chained
+  `reset()` clears the modifiers accumulated in that configuration only; use the
+  `WidgetModifierConfig.reset()` factory when the reset must also clear the
+  configuration it is merged into. Existing factories and chain methods are
+  unchanged, and `.modifier(...)`/`.modifiers([...])` remain the entry points
+  for custom modifiers.
+
 ## 2.2.0-beta.5
 
 ### New features

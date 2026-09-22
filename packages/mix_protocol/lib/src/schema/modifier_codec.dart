@@ -25,9 +25,10 @@ AckSchema<Object, WidgetModifierConfig> modifierConfigCodec({
       }
 
       final data = value as JsonMap;
+
       return WidgetModifierConfig(
-        orderOfModifiers: data['order'] as List<Type>?,
         modifiers: (data['items'] as List?)?.cast<ModifierMix>(),
+        orderOfModifiers: data['order'] as List<Type>?,
       );
     },
     encode: _encodeModifierConfig,

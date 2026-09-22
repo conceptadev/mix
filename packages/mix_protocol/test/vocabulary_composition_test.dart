@@ -305,20 +305,36 @@ void main() {
       ),
     ]);
     final schema = protocol.exportStyleJsonSchema();
-    final branch = (schema['anyOf']! as List<Object?>)
-        .cast<JsonMap>()
-        .singleWhere((branch) {
-          final properties = branch['properties']! as JsonMap;
-          final type = properties['type']! as JsonMap;
-
-          return type['const'] == 'number_lists.v1.number_list';
-        });
-    final properties = branch['properties']! as JsonMap;
-    final listSchema = properties['values']! as JsonMap;
-
-    expect(listSchema['items'], {
-      r'$ref': '#/definitions/mix_protocol_double_property_term',
-    });
+    // Each list item must offer the numeric token grammar and a plain number,
+    // and nothing else. Ajv verifies the core list fields the same way from
+    // the checked-in fixtures; this composed branch is test-only.
+    final branch = (schema['anyOf'] as List).cast<JsonMap>().singleWhere(
+      (branch) =>
+          ((branch['properties'] as JsonMap)['type'] as JsonMap)['const'] ==
+          'number_lists.v1.number_list',
+    );
+    final items =
+        ((branch['properties'] as JsonMap)['values'] as JsonMap)['items']
+            as JsonMap;
+    final definition =
+        (schema['definitions'] as JsonMap)[(items[r'$ref'] as String)
+                .split('/')
+                .last]
+            as JsonMap;
+    final alternatives = (definition['anyOf'] as List).cast<JsonMap>();
+    final token = alternatives.singleWhere(
+      (alternative) => alternative['type'] == 'object',
+    );
+    expect(alternatives, hasLength(2));
+    expect(
+      alternatives.any((alternative) => alternative['type'] == 'number'),
+      isTrue,
+    );
+    expect(
+      ((token['properties'] as JsonMap)['kind'] as JsonMap)['enum'],
+      contains('double'),
+    );
+    expect(token['additionalProperties'], isFalse);
     expect(
       protocol.encodeStyle(
         _NumberListStyler([const DoubleToken('double.item')()]),
@@ -384,16 +400,17 @@ void main() {
 
   test('composite codecs describe every nested double-token position', () {
     final protocol = _compositeProtocol();
-    final branch = (protocol.exportStyleJsonSchema()['anyOf']! as List)
-        .cast<JsonMap>()
-        .singleWhere((branch) {
-          final properties = branch['properties']! as JsonMap;
-          final type = properties['type']! as JsonMap;
+    final schema = protocol.exportStyleJsonSchema();
+    final branch = (schema['anyOf']! as List).cast<JsonMap>().singleWhere((
+      branch,
+    ) {
+      final properties = branch['properties']! as JsonMap;
+      final type = properties['type']! as JsonMap;
 
-          return type['const'] == 'composites.v1.composite';
-        });
+      return type['const'] == 'composites.v1.composite';
+    });
     final properties = branch['properties']! as JsonMap;
-    const doubleTerm = '#/definitions/mix_protocol_double_property_term';
+    final definitions = schema['definitions']! as JsonMap;
     const expectedPaths = <String, List<List<String>>>{
       'gradient': [
         ['radius'],
@@ -430,7 +447,7 @@ void main() {
     for (final entry in expectedPaths.entries) {
       for (final path in entry.value) {
         expect(
-          _schemaPathHasDirectRef(properties[entry.key], path, doubleTerm),
+          _schemaPathAcceptsToken(properties[entry.key], path, definitions),
           isTrue,
           reason: '${entry.key}.${path.join('.')}',
         );
@@ -916,28 +933,71 @@ final class _MetadataStyler extends Style<BoxSpec>
   List<Object?> get props => [$color, $animation, $modifier, $variants];
 }
 
-bool _schemaPathHasDirectRef(
+/// A leaf schema offers the numeric token grammar with the `double` kind and
+/// no boolean alternative. This mirrors what Ajv verifies for the checked-in
+/// core fixtures without validating documents here.
+bool _acceptsDoubleTokenOnly(JsonMap schema, JsonMap definitions) {
+  final reference = schema[r'$ref'];
+  if (reference is String) {
+    final resolved = definitions[reference.substring('#/definitions/'.length)];
+
+    return resolved is JsonMap &&
+        _acceptsDoubleTokenOnly(resolved, definitions);
+  }
+  final alternatives = [
+    ...?(schema['anyOf'] as List?)?.cast<JsonMap>(),
+    ...?(schema['oneOf'] as List?)?.cast<JsonMap>(),
+  ];
+  if (alternatives.isEmpty) return false;
+  if (alternatives.any((alternative) => alternative['type'] == 'boolean')) {
+    return false;
+  }
+
+  return alternatives.any((alternative) {
+    if (alternative[r'$ref'] is String) {
+      return _acceptsDoubleTokenOnly(alternative, definitions);
+    }
+    final properties = alternative['properties'];
+    if (properties is! JsonMap || !properties.containsKey(r'$token')) {
+      return false;
+    }
+    final kind = properties['kind'];
+
+    return kind is JsonMap &&
+        (kind['enum'] as List?)?.contains('double') == true;
+  });
+}
+
+bool _schemaPathAcceptsToken(
   Object? schema,
   List<String> path,
-  String reference,
+  JsonMap definitions,
 ) {
-  if (schema is! Map) return false;
-  final map = JsonMap.from(schema);
-  final anyOf = map['anyOf'];
-  if (anyOf is List &&
-      anyOf.any((branch) => _schemaPathHasDirectRef(branch, path, reference))) {
-    return true;
+  if (schema is! JsonMap) return false;
+  final reference = schema[r'$ref'];
+  if (reference is String) {
+    return _schemaPathAcceptsToken(
+      definitions[reference.substring('#/definitions/'.length)],
+      path,
+      definitions,
+    );
   }
-  if (path.isEmpty) return map[r'$ref'] == reference;
-
-  final properties = map['properties'];
-  if (properties is! Map) return false;
-
-  return _schemaPathHasDirectRef(
-    properties[path.first],
-    path.sublist(1),
-    reference,
-  );
+  if (path.isEmpty) {
+    return _acceptsDoubleTokenOnly(schema, definitions);
+  }
+  for (final branch in [
+    ...?schema['anyOf'] as List?,
+    ...?schema['allOf'] as List?,
+  ]) {
+    if (_schemaPathAcceptsToken(branch, path, definitions)) return true;
+  }
+  final properties = schema['properties'];
+  return properties is JsonMap &&
+      _schemaPathAcceptsToken(
+        properties[path.first],
+        path.sublist(1),
+        definitions,
+      );
 }
 
 enum _Cell { alpha, beta }

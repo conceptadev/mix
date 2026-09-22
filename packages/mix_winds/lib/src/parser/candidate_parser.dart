@@ -6,107 +6,15 @@ import 'model.dart';
 import 'parser_registry.dart';
 
 final class TailwindCandidateParser {
-  const TailwindCandidateParser({this.registry = TailwindParserRegistry.empty});
+  /// Debug-only observer used by package parser performance tests.
+  ///
+  /// This source-only hook is not exported from `mix_winds.dart`, and calls are
+  /// compiled out with assertions in release builds.
+  static void Function(String input)? debugParseObserver;
 
   final TailwindParserRegistry registry;
 
-  TailwindParseResult parseCandidate(String input) {
-    final trimmed = input.trim();
-    if (trimmed.isEmpty) {
-      return TailwindParseFailure(
-        errors: [
-          TailwindParseError(
-            code: TailwindParseErrorCode.emptyInput,
-            message: 'Tailwind candidate is empty.',
-            span: SourceSpan(0, input.length),
-          ),
-        ],
-      );
-    }
-
-    final balanceError = _balancedDelimiterError(trimmed);
-    if (balanceError != null) {
-      return TailwindParseFailure(errors: [balanceError]);
-    }
-    final emptyArbitraryError = _emptyArbitraryValueError(trimmed);
-    if (emptyArbitraryError != null) {
-      return TailwindParseFailure(errors: [emptyArbitraryError]);
-    }
-
-    final parts = _splitOutsideDelimiters(trimmed, ':');
-    if (parts.any((part) => part.isEmpty)) {
-      return TailwindParseFailure(
-        errors: [
-          TailwindParseError(
-            code: TailwindParseErrorCode.invalidVariantChain,
-            message: 'Variant chains cannot contain empty segments.',
-            span: SourceSpan(0, trimmed.length),
-          ),
-        ],
-      );
-    }
-
-    var utilityRaw = parts.last;
-    var utilityStart = trimmed.length - utilityRaw.length;
-    var important = false;
-    if (utilityRaw.endsWith('!')) {
-      important = true;
-      utilityRaw = utilityRaw.substring(0, utilityRaw.length - 1);
-    }
-    if (utilityRaw.startsWith('!')) {
-      important = true;
-      utilityRaw = utilityRaw.substring(1);
-      utilityStart++;
-    }
-    final invalidImportant = _indexOutsideDelimiters(utilityRaw, '!');
-    if (invalidImportant != -1) {
-      final spanStart = utilityStart + invalidImportant;
-      return TailwindParseFailure(
-        errors: [
-          TailwindParseError(
-            code: TailwindParseErrorCode.invalidImportantPosition,
-            message: 'Important marker is only allowed at the start or end.',
-            span: SourceSpan(spanStart, spanStart + 1),
-          ),
-        ],
-      );
-    }
-    final modifierError = _modifierError(utilityRaw);
-    if (modifierError != null) {
-      return TailwindParseFailure(errors: [modifierError]);
-    }
-
-    final variants = <TailwindVariant>[];
-    for (final rawVariant in parts.take(parts.length - 1)) {
-      final modifierError = _modifierError(rawVariant);
-      if (modifierError != null) {
-        return TailwindParseFailure(errors: [modifierError]);
-      }
-      variants.add(_parseVariant(rawVariant));
-    }
-
-    final utility = _parseUtility(utilityRaw);
-    if (utility == null) {
-      return TailwindParseFailure(
-        errors: [
-          TailwindParseError(
-            code: TailwindParseErrorCode.invalidArbitraryProperty,
-            message: 'Arbitrary property must be [property:value].',
-            span: SourceSpan(0, trimmed.length),
-          ),
-        ],
-      );
-    }
-
-    return TailwindParseSuccess(
-      candidate: TailwindCandidate(
-        raw: trimmed,
-        variants: List.unmodifiable(variants),
-        utility: utility,
-        important: important,
-      ),
-    );
-  }
+  const TailwindCandidateParser({this.registry = TailwindParserRegistry.empty});
 
   TailwindUtility? _parseUtility(String raw) {
     if (raw.startsWith('[')) return _parseArbitraryProperty(raw);
@@ -138,6 +46,7 @@ final class TailwindCandidateParser {
           negative: negative,
         );
       }
+
       return TailwindFunctionalUtility(
         raw: raw,
         root: root,
@@ -191,6 +100,7 @@ final class TailwindCandidateParser {
 
     if (body.startsWith('[') && body.endsWith(']')) {
       final selector = body.substring(1, body.length - 1);
+
       return TailwindArbitraryVariant(
         raw: raw,
         selector: selector,
@@ -201,6 +111,7 @@ final class TailwindCandidateParser {
     final compoundRoot = _findCompoundRoot(body);
     if (compoundRoot != null) {
       final childRaw = body.substring(compoundRoot.length + 1);
+
       return TailwindCompoundVariant(
         raw: raw,
         root: compoundRoot,
@@ -218,6 +129,7 @@ final class TailwindCandidateParser {
       final valueRaw = functional == '@'
           ? body.substring(1)
           : body.substring(functional.length + 1);
+
       return TailwindFunctionalVariant(
         raw: raw,
         root: functional,
@@ -237,10 +149,11 @@ final class TailwindCandidateParser {
     if (raw.startsWith('[') && raw.endsWith(']')) {
       final inner = raw.substring(1, raw.length - 1);
       final colon = _indexOutsideDelimiters(inner, ':');
+
       return TailwindArbitraryValue(
         raw: raw,
-        typeHint: colon > 0 ? inner.substring(0, colon) : null,
         value: colon > 0 ? inner.substring(colon + 1) : inner,
+        typeHint: colon > 0 ? inner.substring(0, colon) : null,
       );
     }
     if (raw.startsWith('(') && raw.endsWith(')')) {
@@ -249,6 +162,7 @@ final class TailwindCandidateParser {
         variableName: raw.substring(1, raw.length - 1),
       );
     }
+
     return TailwindNamedValue(raw);
   }
 
@@ -277,6 +191,7 @@ final class TailwindCandidateParser {
         variableName: raw.substring(1, raw.length - 1),
       );
     }
+
     return TailwindNamedModifier(raw);
   }
 
@@ -327,6 +242,7 @@ final class TailwindCandidateParser {
       current = current.substring(0, dash);
       if (roots.contains(current)) return current;
     }
+
     return null;
   }
 
@@ -336,6 +252,7 @@ final class TailwindCandidateParser {
         return root;
       }
     }
+
     return null;
   }
 
@@ -349,7 +266,113 @@ final class TailwindCandidateParser {
     if (roots.contains('@') && body.startsWith('@') && body.length > 1) {
       return '@';
     }
+
     return null;
+  }
+
+  TailwindParseResult parseCandidate(String input) {
+    assert(() {
+      debugParseObserver?.call(input);
+
+      return true;
+    }());
+
+    final trimmed = input.trim();
+    if (trimmed.isEmpty) {
+      return TailwindParseFailure(
+        errors: [
+          TailwindParseError(
+            code: .emptyInput,
+            message: 'Tailwind candidate is empty.',
+            span: SourceSpan(0, input.length),
+          ),
+        ],
+      );
+    }
+
+    final balanceError = _balancedDelimiterError(trimmed);
+    if (balanceError != null) {
+      return TailwindParseFailure(errors: [balanceError]);
+    }
+    final emptyArbitraryError = _emptyArbitraryValueError(trimmed);
+    if (emptyArbitraryError != null) {
+      return TailwindParseFailure(errors: [emptyArbitraryError]);
+    }
+
+    final parts = _splitOutsideDelimiters(trimmed, ':');
+    if (parts.any((part) => part.isEmpty)) {
+      return TailwindParseFailure(
+        errors: [
+          TailwindParseError(
+            code: .invalidVariantChain,
+            message: 'Variant chains cannot contain empty segments.',
+            span: SourceSpan(0, trimmed.length),
+          ),
+        ],
+      );
+    }
+
+    var utilityRaw = parts.last;
+    var utilityStart = trimmed.length - utilityRaw.length;
+    var important = false;
+    if (utilityRaw.endsWith('!')) {
+      important = true;
+      utilityRaw = utilityRaw.substring(0, utilityRaw.length - 1);
+    }
+    if (utilityRaw.startsWith('!')) {
+      important = true;
+      utilityRaw = utilityRaw.substring(1);
+      utilityStart++;
+    }
+    final invalidImportant = _indexOutsideDelimiters(utilityRaw, '!');
+    if (invalidImportant != -1) {
+      final spanStart = utilityStart + invalidImportant;
+
+      return TailwindParseFailure(
+        errors: [
+          TailwindParseError(
+            code: .invalidImportantPosition,
+            message: 'Important marker is only allowed at the start or end.',
+            span: SourceSpan(spanStart, spanStart + 1),
+          ),
+        ],
+      );
+    }
+    final modifierError = _modifierError(utilityRaw);
+    if (modifierError != null) {
+      return TailwindParseFailure(errors: [modifierError]);
+    }
+
+    final variants = <TailwindVariant>[];
+    for (final rawVariant in parts.take(parts.length - 1)) {
+      final modifierError = _modifierError(rawVariant);
+      if (modifierError != null) {
+        return TailwindParseFailure(errors: [modifierError]);
+      }
+      variants.add(_parseVariant(rawVariant));
+    }
+
+    final utility = _parseUtility(utilityRaw);
+    if (utility == null) {
+      return TailwindParseFailure(
+        errors: [
+          TailwindParseError(
+            code: .invalidArbitraryProperty,
+            message: 'Arbitrary property must be [property:value].',
+            span: SourceSpan(0, trimmed.length),
+          ),
+        ],
+      );
+    }
+
+    return TailwindParseSuccess(
+      candidate: TailwindCandidate(
+        raw: trimmed,
+        variants: List.unmodifiable(variants),
+        utility: utility,
+        important: important,
+      ),
+    );
   }
 }
 
@@ -362,7 +385,7 @@ TailwindParseError? _balancedDelimiterError(String input) {
     } else if (char == ']') {
       if (stack.isEmpty || stack.removeLast() != '[') {
         return TailwindParseError(
-          code: TailwindParseErrorCode.unopenedBracket,
+          code: .unopenedBracket,
           message: 'Closing bracket has no matching opening bracket.',
           span: SourceSpan(i, i + 1),
         );
@@ -370,7 +393,7 @@ TailwindParseError? _balancedDelimiterError(String input) {
     } else if (char == ')') {
       if (stack.isEmpty || stack.removeLast() != '(') {
         return TailwindParseError(
-          code: TailwindParseErrorCode.unopenedParenthesis,
+          code: .unopenedParenthesis,
           message: 'Closing parenthesis has no matching opening parenthesis.',
           span: SourceSpan(i, i + 1),
         );
@@ -379,10 +402,9 @@ TailwindParseError? _balancedDelimiterError(String input) {
   }
   if (stack.isEmpty) return null;
   final opening = stack.last;
+
   return TailwindParseError(
-    code: opening == '['
-        ? TailwindParseErrorCode.unclosedBracket
-        : TailwindParseErrorCode.unclosedParenthesis,
+    code: opening == '[' ? .unclosedBracket : .unclosedParenthesis,
     message: 'Delimiter was not closed.',
     span: SourceSpan(input.length - 1, input.length),
   );
@@ -397,12 +419,13 @@ TailwindParseError? _emptyArbitraryValueError(String input) {
         input[i - 1] == '/';
     if (startsArbitrarySegment && input[i] == '[' && input[i + 1] == ']') {
       return TailwindParseError(
-        code: TailwindParseErrorCode.emptyArbitraryValue,
+        code: .emptyArbitraryValue,
         message: 'Arbitrary values cannot be empty.',
         span: SourceSpan(i, i + 2),
       );
     }
   }
+
   return null;
 }
 
@@ -411,7 +434,7 @@ TailwindParseError? _modifierError(String raw) {
   if (slash == -1) return null;
   if (slash == 0 || slash == raw.length - 1) {
     return TailwindParseError(
-      code: TailwindParseErrorCode.invalidModifier,
+      code: .invalidModifier,
       message: 'Modifiers must have a value after one slash.',
       span: SourceSpan(slash, slash + 1),
     );
@@ -419,11 +442,12 @@ TailwindParseError? _modifierError(String raw) {
   final modifierRaw = raw.substring(slash + 1);
   if (_indexOutsideDelimiters(modifierRaw, '/') != -1) {
     return TailwindParseError(
-      code: TailwindParseErrorCode.invalidModifier,
+      code: .invalidModifier,
       message: 'Only one modifier slash is allowed.',
       span: SourceSpan(slash, raw.length),
     );
   }
+
   return null;
 }
 
@@ -444,6 +468,7 @@ List<String> _splitOutsideDelimiters(String input, String delimiter) {
     }
   }
   parts.add(input.substring(start));
+
   return parts;
 }
 
@@ -458,6 +483,7 @@ int _indexOutsideDelimiters(String input, String needle) {
     if (char == ')') paren--;
     if (char == needle && square == 0 && paren == 0) return i;
   }
+
   return -1;
 }
 
@@ -475,10 +501,12 @@ int? _matchingCloseIndex(
       if (depth == 0) return i;
     }
   }
+
   return null;
 }
 
 List<String> _segments(String raw) {
   if (raw.isEmpty) return const [];
+
   return raw.split('-');
 }

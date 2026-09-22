@@ -37,6 +37,7 @@ Object encodeEdgeInsetsWire({
   if (top != null) payload['top'] = top;
   if (right != null) payload['right'] = right;
   if (bottom != null) payload['bottom'] = bottom;
+
   return payload;
 }
 

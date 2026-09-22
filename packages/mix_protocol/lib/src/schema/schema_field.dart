@@ -4,12 +4,7 @@ import 'package:mix/mix.dart';
 import '../errors/mix_protocol_error.dart';
 import 'common_codecs.dart';
 
-const doubleTokenFieldSemantics = SchemaFieldSemantics(
-  allowDoubleTokenKind: true,
-);
-
 const boxDecorationFieldSemantics = SchemaFieldSemantics(
-  literalDefinition: boxDecorationLiteralSchemaDefinition,
   listEntryPaths: [
     ['boxShadow'],
     ['gradient', 'colors'],
@@ -18,26 +13,12 @@ const boxDecorationFieldSemantics = SchemaFieldSemantics(
 );
 
 const strutStyleFieldSemantics = SchemaFieldSemantics(
-  literalDefinition: strutStyleLiteralSchemaDefinition,
-  doubleTokenPaths: [
-    ['fontSize'],
-    ['height'],
-    ['leading'],
-  ],
   listEntryPaths: [
     ['fontFamilyFallback'],
   ],
 );
 
 const textStyleFieldSemantics = SchemaFieldSemantics(
-  literalDefinition: textStyleLiteralSchemaDefinition,
-  doubleTokenPaths: [
-    ['fontSize'],
-    ['letterSpacing'],
-    ['wordSpacing'],
-    ['height'],
-    ['decorationThickness'],
-  ],
   listEntryPaths: [
     ['fontFamilyFallback'],
     ['fontFeatures'],
@@ -47,11 +28,6 @@ const textStyleFieldSemantics = SchemaFieldSemantics(
 );
 
 const listEntryFieldSemantics = SchemaFieldSemantics(listEntryPaths: [[]]);
-
-const boxDecorationLiteralSchemaDefinition =
-    'mix_protocol_box_decoration_literal';
-const strutStyleLiteralSchemaDefinition = 'mix_protocol_strut_style_literal';
-const textStyleLiteralSchemaDefinition = 'mix_protocol_text_style_literal';
 
 abstract interface class SchemaFieldBase<Owner extends Object> {
   /// Stable key used by the serialized protocol document.
@@ -64,28 +40,16 @@ abstract interface class SchemaFieldBase<Owner extends Object> {
   String get inventoryName;
   AckSchema<Object, Object> get ackSchema;
   SchemaFieldSemantics get schemaSemantics;
-  Object? readObject(Owner value);
+  Object? readObject(Owner value, Map<Object, JsonMap> groups);
 }
 
-/// JSON Schema export hints owned by the field declaration itself.
+/// List paths that support removal of invalid entries during lenient decoding.
 final class SchemaFieldSemantics {
-  final bool allowDoubleTokenKind;
-  final String? literalDefinition;
-  final List<List<String>> doubleTokenPaths;
   final List<List<String>> listEntryPaths;
 
-  const SchemaFieldSemantics({
-    this.allowDoubleTokenKind = false,
-    this.literalDefinition,
-    this.doubleTokenPaths = const [],
-    this.listEntryPaths = const [],
-  });
+  const SchemaFieldSemantics({this.listEntryPaths = const []});
 
-  bool get isEmpty =>
-      !allowDoubleTokenKind &&
-      literalDefinition == null &&
-      doubleTokenPaths.isEmpty &&
-      listEntryPaths.isEmpty;
+  bool get isEmpty => listEntryPaths.isEmpty;
 }
 
 final class SchemaField<Owner extends Object, Value extends Object>
@@ -97,7 +61,9 @@ final class SchemaField<Owner extends Object, Value extends Object>
   final String inventoryName;
 
   final AckSchema<Object, Value> codec;
-  final Object? Function(Owner value) read;
+  final Object? Function(Owner value)? read;
+  final JsonMap Function(Owner value)? readGroup;
+  final String? readWire;
   final bool optional;
 
   @override
@@ -108,14 +74,22 @@ final class SchemaField<Owner extends Object, Value extends Object>
     required this.codec,
     String? inventoryName,
     this.schemaSemantics = const SchemaFieldSemantics(),
-    required this.read,
+    this.read,
+    this.readGroup,
+    this.readWire,
     this.optional = true,
-  }) : inventoryName = inventoryName ?? wire;
+  }) : assert((read == null) != (readGroup == null)),
+       inventoryName = inventoryName ?? wire;
 
   Value? value(JsonMap data) => data[wire] as Value?;
 
   @override
-  Object? readObject(Owner value) => read(value);
+  Object? readObject(Owner value, Map<Object, JsonMap> groups) {
+    final group = readGroup;
+    if (group == null) return read!(value);
+
+    return groups.putIfAbsent(group, () => group(value))[readWire ?? wire];
+  }
 
   @override
   AckSchema<Object, Object> get ackSchema {
@@ -203,24 +177,6 @@ tokenValueField<Owner extends Object, Value extends Object>(
   );
 }
 
-SchemaField<Owner, Prop<Value>>
-propTokenValueField<Owner extends Object, Value extends Object>(
-  String wire,
-  AckSchema<Object, Value> codec,
-  Prop<Value>? Function(Owner value) read, {
-  String? fieldName,
-  String? inventoryName,
-  SchemaFieldSemantics schemaSemantics = const SchemaFieldSemantics(),
-}) {
-  return SchemaField<Owner, Prop<Value>>(
-    wire: wire,
-    codec: valuePropCodec<Value>(codec, fieldName: fieldName ?? wire),
-    inventoryName: inventoryName,
-    schemaSemantics: schemaSemantics,
-    read: read,
-  );
-}
-
 SchemaField<Owner, Value>
 mixField<Owner extends Object, Value extends Object, PropValue extends Object>(
   String wire,
@@ -287,27 +243,6 @@ SchemaField<Owner, Value> tokenMixField<
   );
 }
 
-SchemaField<Owner, Prop<PropValue>> propTokenMixField<
-  Owner extends Object,
-  Value extends Object,
-  PropValue extends Object
->(
-  String wire,
-  AckSchema<Object, Value> codec,
-  Prop<PropValue>? Function(Owner value) read, {
-  String? fieldName,
-  String? inventoryName,
-  SchemaFieldSemantics schemaSemantics = const SchemaFieldSemantics(),
-}) {
-  return SchemaField<Owner, Prop<PropValue>>(
-    wire: wire,
-    codec: mixPropCodec<Value, PropValue>(codec, fieldName: fieldName ?? wire),
-    inventoryName: inventoryName,
-    schemaSemantics: schemaSemantics,
-    read: read,
-  );
-}
-
 SchemaField<Owner, Value>
 directField<Owner extends Object, Value extends Object>(
   String wire,
@@ -329,7 +264,7 @@ SchemaField<Owner, Value>
 derivedField<Owner extends Object, Value extends Object>(
   String wire,
   AckSchema<Object, Value> codec,
-  Object? Function(Owner value, String wire) read, {
+  JsonMap Function(Owner value) read, {
   String? readWire,
   String? inventoryName,
   SchemaFieldSemantics schemaSemantics = const SchemaFieldSemantics(),
@@ -339,7 +274,8 @@ derivedField<Owner extends Object, Value extends Object>(
     codec: codec,
     inventoryName: inventoryName,
     schemaSemantics: schemaSemantics,
-    read: (value) => read(value, readWire ?? wire),
+    readGroup: read,
+    readWire: readWire,
   );
 }
 
@@ -478,9 +414,12 @@ final class SchemaObject<Owner extends Object> {
       field.check(value);
     }
 
+    final groups = <Object, JsonMap>{};
+
     return {
       for (final field in fields)
-        if (!omit.contains(field.wire)) field.wire: field.readObject(value),
+        if (!omit.contains(field.wire))
+          field.wire: field.readObject(value, groups),
     };
   }
 }
