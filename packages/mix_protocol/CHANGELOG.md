@@ -6,6 +6,10 @@
 - Require Ack 1.6.1 for private codecs. Generated Mix stylers remain the runtime model.
 - Share field, token, merge, directive, and variant declarations with schema export.
 - Preserve literal types and directive families in exported Draft 7 schemas.
+- Export the breakpoint width/token either-or as `oneOf` instead of
+  `if`/`then`/`else`. The accepted documents are unchanged; the simpler
+  spelling drops a nested negation and a duplicated `anyOf` block at each
+  breakpoint site.
 - Check in the exported style and theme schemas under `schema/` with the
   fixture documents that pin their acceptance boundary. `tool/schema-check`
   validates every checked-in suite with Ajv, replacing the Dart `json_schema`
