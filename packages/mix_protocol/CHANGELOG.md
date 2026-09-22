@@ -3,7 +3,7 @@
 ### New features
 
 - Added the v1 `context_focus_visible` selector, including nested negation.
-- Require Ack 1.2.0 for private codecs. Generated Mix stylers remain the runtime model.
+- Require Ack 1.6.1 for private codecs. Generated Mix stylers remain the runtime model.
 - Share field, token, merge, directive, and variant declarations with schema export.
 - Preserve literal types and directive families in exported Draft 7 schemas.
 - Check in the exported style and theme schemas under `schema/` with the
