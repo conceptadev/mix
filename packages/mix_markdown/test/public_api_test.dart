@@ -4,15 +4,35 @@ import 'package:mix/mix.dart';
 import 'package:mix_markdown/mix_markdown.dart';
 
 void main() {
-  test('factory and instance shorthand compose from the public barrel', () {
+  testWidgets('factory and instance shorthand resolve the same slots', (
+    tester,
+  ) async {
     final fromFactory = MarkdownStyler.paragraph(TextStyler.fontSize(16));
     final fromInstance = MarkdownStyler()
         .paragraph(.fontSize(16))
         .h1(.fontSize(32).fontWeight(FontWeight.bold))
         .alert(.note(.container(BoxStyler().paddingAll(12))));
 
-    expect(fromFactory, isA<MarkdownStyler>());
-    expect(fromInstance, isA<MarkdownStyler>());
+    late MarkdownSpec factorySpec;
+    late MarkdownSpec instanceSpec;
+    await tester.pumpWidget(
+      Builder(
+        builder: (context) {
+          factorySpec = fromFactory.resolve(context).spec;
+          instanceSpec = fromInstance.resolve(context).spec;
+
+          return const SizedBox.shrink();
+        },
+      ),
+    );
+
+    expect(factorySpec.paragraph?.spec.style?.fontSize, 16);
+    expect(instanceSpec.paragraph?.spec.style?.fontSize, 16);
+    expect(instanceSpec.h1?.spec.style?.fontWeight, FontWeight.bold);
+    expect(
+      instanceSpec.alert?.spec.note?.spec.container?.spec.padding,
+      const EdgeInsets.all(12),
+    );
   });
 
   testWidgets('the widget renders with a styler and with a resolved spec', (

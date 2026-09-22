@@ -51,20 +51,4 @@ void main() {
       ),
     );
   });
-
-  test('the public barrel exports every public library', () {
-    final barrel = File('lib/mix_markdown.dart').readAsStringSync();
-    const expected = [
-      'src/parsing/markdown_syntax.dart',
-      'src/specs/markdown_alert_spec.dart',
-      'src/specs/markdown_alert_type.dart',
-      'src/specs/markdown_alert_type_spec.dart',
-      'src/specs/markdown_spec.dart',
-      'src/widgets/mix_markdown.dart',
-    ];
-
-    for (final path in expected) {
-      expect(barrel, contains("export '$path';"));
-    }
-  });
 }

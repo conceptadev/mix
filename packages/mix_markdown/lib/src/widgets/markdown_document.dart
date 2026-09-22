@@ -4,6 +4,7 @@ import 'package:mix/mix.dart';
 
 import '../parsing/markdown_alert_element.dart';
 import '../parsing/markdown_syntax.dart';
+import '../parsing/markdown_tags.dart';
 import '../parsing/unsupported_nodes.dart';
 import '../specs/markdown_spec.dart';
 import 'markdown_alert.dart';
@@ -65,16 +66,16 @@ class MarkdownDocumentState extends State<MarkdownDocument> {
     _parseCount++;
   }
 
-  StyleSpec<TextSpec> _textSpecFor(String tag) {
+  StyleSpec<TextSpec> _textSpecFor(MarkdownBlockTag block) {
     final spec = widget.spec;
-    final heading = switch (tag) {
-      'h1' => spec.h1,
-      'h2' => spec.h2,
-      'h3' => spec.h3,
-      'h4' => spec.h4,
-      'h5' => spec.h5,
-      'h6' => spec.h6,
-      _ => null,
+    final heading = switch (block) {
+      MarkdownBlockTag.paragraph => null,
+      MarkdownBlockTag.h1 => spec.h1,
+      MarkdownBlockTag.h2 => spec.h2,
+      MarkdownBlockTag.h3 => spec.h3,
+      MarkdownBlockTag.h4 => spec.h4,
+      MarkdownBlockTag.h5 => spec.h5,
+      MarkdownBlockTag.h6 => spec.h6,
     };
 
     return heading ?? spec.paragraph ?? const StyleSpec(spec: TextSpec());
@@ -82,10 +83,15 @@ class MarkdownDocumentState extends State<MarkdownDocument> {
 
   Widget _block(BuildContext context, md.Element element) {
     final alertType = element.alertType;
+    // Rendering only runs for an eligible document, so the tag is known; an
+    // unknown one falls back to paragraph styling rather than throwing.
+    final block =
+        MarkdownBlockTag.from(element.tag) ?? MarkdownBlockTag.paragraph;
     final child = alertType == null
         ? MarkdownText(
             element: element,
-            styleSpec: _textSpecFor(element.tag),
+            block: block,
+            styleSpec: _textSpecFor(block),
             spec: widget.spec,
           )
         : MarkdownAlert(

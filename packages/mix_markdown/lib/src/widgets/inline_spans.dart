@@ -1,6 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:markdown/markdown.dart' as md;
 
+import '../parsing/markdown_tags.dart';
 import '../specs/markdown_spec.dart';
 
 final _rawBreak = RegExp(r'<br\s*/?>', caseSensitive: false);
@@ -25,16 +26,18 @@ List<InlineSpan> buildInlineSpans(
       final text = inCode ? node.text : _normalizeBreaks(node.text);
       if (text.isNotEmpty) runs.add(_Run(text, style));
     } else if (node is md.Element) {
-      final merged = style.merge(_inlineStyle(spec, node.tag));
-      switch (node.tag) {
-        case 'br':
+      final tag = MarkdownInlineTag.from(node.tag);
+      final merged = style.merge(_inlineStyle(spec, tag));
+      switch (tag) {
+        case MarkdownInlineTag.lineBreak:
           runs.add(_Run('\n', merged));
-        case 'img':
+        case MarkdownInlineTag.image:
           final alt = node.attributes['alt'] ?? '';
           if (alt.isNotEmpty) runs.add(_Run(alt, merged));
         default:
+          final nested = inCode || tag == MarkdownInlineTag.code;
           for (final child in node.children ?? const <md.Node>[]) {
-            collect(child, merged, inCode: inCode || node.tag == 'code');
+            collect(child, merged, inCode: nested);
           }
       }
     }
@@ -63,22 +66,28 @@ List<InlineSpan> buildInlineSpans(
 String _normalizeBreaks(String text) =>
     text.replaceAll('\n', ' ').replaceAll(_rawBreak, '\n');
 
-TextStyle _inlineStyle(MarkdownSpec spec, String tag) => switch (tag) {
-  'strong' || 'b' => const TextStyle(
-    fontWeight: FontWeight.bold,
-  ).merge(spec.strong?.spec.style),
-  'em' || 'i' => const TextStyle(
-    fontStyle: FontStyle.italic,
-  ).merge(spec.emphasis?.spec.style),
-  'del' || 's' => const TextStyle(
-    decoration: TextDecoration.lineThrough,
-  ).merge(spec.strikethrough?.spec.style),
-  'code' => const TextStyle(
-    fontFamily: 'monospace',
-  ).merge(spec.code?.spec.style),
-  'a' => spec.link?.spec.style ?? const TextStyle(),
-  _ => const TextStyle(),
-};
+TextStyle _inlineStyle(MarkdownSpec spec, MarkdownInlineTag? tag) =>
+    switch (tag) {
+      MarkdownInlineTag.strong ||
+      MarkdownInlineTag.boldAlias => const TextStyle(
+        fontWeight: FontWeight.bold,
+      ).merge(spec.strong?.spec.style),
+      MarkdownInlineTag.emphasis ||
+      MarkdownInlineTag.italicAlias => const TextStyle(
+        fontStyle: FontStyle.italic,
+      ).merge(spec.emphasis?.spec.style),
+      MarkdownInlineTag.strikethrough ||
+      MarkdownInlineTag.strikethroughAlias => const TextStyle(
+        decoration: TextDecoration.lineThrough,
+      ).merge(spec.strikethrough?.spec.style),
+      MarkdownInlineTag.code => const TextStyle(
+        fontFamily: 'monospace',
+      ).merge(spec.code?.spec.style),
+      MarkdownInlineTag.link => spec.link?.spec.style ?? const TextStyle(),
+      MarkdownInlineTag.lineBreak ||
+      MarkdownInlineTag.image ||
+      null => const TextStyle(),
+    };
 
 class _Run {
   final String text;

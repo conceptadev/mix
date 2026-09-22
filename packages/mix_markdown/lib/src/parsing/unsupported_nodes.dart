@@ -1,20 +1,7 @@
 import 'package:markdown/markdown.dart' as md;
 
 import 'markdown_alert_element.dart';
-
-const _blockTags = {'p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6'};
-const _inlineTags = {
-  'strong',
-  'b',
-  'em',
-  'i',
-  'del',
-  's',
-  'a',
-  'code',
-  'br',
-  'img',
-};
+import 'markdown_tags.dart';
 
 /// The tags in [nodes] that the renderer cannot draw; empty when it can
 /// draw the whole document.
@@ -27,7 +14,7 @@ Set<String> unsupportedNodes(List<md.Node> nodes) {
 
   void visitInline(md.Node node) {
     if (node is! md.Element) return;
-    if (!_inlineTags.contains(node.tag)) {
+    if (MarkdownInlineTag.from(node.tag) == null) {
       unsupported.add(node.tag);
 
       return;
@@ -47,12 +34,15 @@ Set<String> unsupportedNodes(List<md.Node> nodes) {
 
       return;
     }
-    if (!_blockTags.contains(node.tag)) {
+    final block = MarkdownBlockTag.from(node.tag);
+    if (block == null) {
       unsupported.add(node.tag);
 
       return;
     }
-    if (_isStandaloneImage(node)) unsupported.add('standalone-image');
+    if (block == MarkdownBlockTag.paragraph && _isStandaloneImage(node)) {
+      unsupported.add('standalone-image');
+    }
     node.children?.forEach(visitInline);
   }
 
@@ -69,5 +59,5 @@ bool _isStandaloneImage(md.Element paragraph) {
 
   return content.length == 1 &&
       content.single is md.Element &&
-      (content.single as md.Element).tag == 'img';
+      (content.single as md.Element).tag == MarkdownInlineTag.image.tag;
 }

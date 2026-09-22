@@ -2,6 +2,7 @@ import 'package:flutter/widgets.dart';
 import 'package:markdown/markdown.dart' as md;
 import 'package:mix/mix.dart';
 
+import '../parsing/markdown_tags.dart';
 import '../specs/markdown_spec.dart';
 import 'inline_spans.dart';
 
@@ -10,8 +11,11 @@ import 'inline_spans.dart';
 /// Forwards the same [TextSpec] properties as [StyledText], and marks
 /// headings as such for assistive technology.
 class MarkdownText extends StatelessWidget {
-  /// The `p` or `h1`..`h6` element.
+  /// The parsed element this block renders.
   final md.Element element;
+
+  /// Which block this is, which decides the heading semantics.
+  final MarkdownBlockTag block;
 
   /// Block text style.
   final StyleSpec<TextSpec> styleSpec;
@@ -22,6 +26,7 @@ class MarkdownText extends StatelessWidget {
   const MarkdownText({
     super.key,
     required this.element,
+    required this.block,
     required this.styleSpec,
     required this.spec,
   });
@@ -50,9 +55,7 @@ class MarkdownText extends StatelessWidget {
       selectionColor: textSpec.selectionColor,
     );
 
-    return element.tag.startsWith('h')
-        ? Semantics(header: true, child: text)
-        : text;
+    return block.isHeading ? Semantics(header: true, child: text) : text;
   }
 
   @override
