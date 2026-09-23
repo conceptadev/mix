@@ -18,6 +18,8 @@ Stable release of the 2.2.0 line. Cumulative since 2.1.3:
    supports compatible restricted surfaces without resolving same-package
    generated Stylers, with field-located diagnostics for invalid or ambiguous
    configurations (#983).
+ - **FIX**: Accept visible typedefs in generated library scope whose expansion
+   names hidden types (#1058).
  - **FIX**: Drop redundant `this` qualifiers from generated `@MixWidget` build
    methods. The unused build parameter is now the wildcard `BuildContext _`, so
    a field named `context` still forwards the widget's own value instead of the
