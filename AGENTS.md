@@ -16,10 +16,15 @@ This installs FVM, Flutter SDK (3.41.7), DCM, and melos, then bootstraps all pac
 
 ```
 packages/
-  mix/              # Core framework (v2.0.0-rc.0)
-  mix_annotations/  # Annotations for codegen
-  mix_generator/    # build_runner generator
-  mix_lint/         # Custom linter (not in pub workspace, see below)
+  mix/                # Core framework
+  mix_annotations/    # Annotations for codegen
+  mix_generator/      # build_runner generator
+  mix_lint/           # Custom linter (not in pub workspace, see below)
+  mix_protocol/       # Versioned JSON protocol for Mix styles
+  mix_chart_protocol/ # mix_protocol vocabulary for chart stylers
+  mix_winds/          # Tailwind-style utilities mapped to Mix stylers
+  mix_chart/          # Line, bar, and pie charts styled with Mix
+  mix_markdown/       # Markdown rendering styled with Mix
 ```
 
 ## Pub workspace
