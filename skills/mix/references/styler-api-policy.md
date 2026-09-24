@@ -9,6 +9,7 @@ Rules for static factory constructors on Styler classes and Dart 3.11+ dot-short
 - [Enum shorthand](#dot-shorthand-for-enumconstant-arguments)
 - [Factory constructors](#factory-constructors-by-styler)
 - [Chain-only methods](#methods-without-factories-chain-only)
+- [Retired conveniences](#retired-conveniences)
 - [Composition](#composition-decision-tree)
 
 Requires Dart SDK >=3.11.0 and Flutter >=3.41.0.
@@ -152,6 +153,24 @@ border(.color(c).strokeAlign(BorderSide.strokeAlignOutside))
 // WRONG — the context type is double, not BorderSide
 border(.color(c).strokeAlign(.strokeAlignOutside))
 ```
+
+## Retired Conveniences
+
+These one-line shorthands are deprecated and will be removed in Mix 3.0. Write the dot-shorthand call instead; token arguments pass through unchanged (`.padding(.all($spaceLg()))`).
+
+| Deprecated | Write instead |
+|---|---|
+| `paddingAll(v)`, `paddingX(v)`, `paddingY(v)` | `padding(.all(v))`, `padding(.horizontal(v))`, `padding(.vertical(v))` |
+| `paddingTop(v)`, `paddingLeft(v)`, `paddingStart(v)`, … | `padding(.top(v))`, `padding(.left(v))`, `padding(.start(v))`, … |
+| `paddingOnly(...)` | `padding(.only(...))` or `padding(.directional(...))` |
+| `marginAll(v)`, `marginTop(v)`, `marginOnly(...)`, … | `margin(...)` with the same shorthands |
+| `borderRounded(x)`, `borderRoundedTop(x)`, … | `borderRadius(.circular(x))`, `borderRadius(.top(.circular(x)))`, … |
+| `borderRadiusAll(r)`, `borderRadiusTopLeft(r)`, … | `borderRadius(.all(r))`, `borderRadius(.topLeft(r))`, … |
+| `borderAll(...)`, `borderTop(...)`, … | `border(.color(...).width(...))`, `border(.top(.color(...).width(...)))`, … |
+| `shapeCircle(...)`, `shapeStadium(...)`, … | `shape(.circle(...))`, `shape(.stadium(...))`, … |
+| `constraintsOnly(...)` | `width()`, `height()`, `minWidth()`, `maxWidth()`, `minHeight()`, `maxHeight()` |
+| `shadowOnly(...)`, `boxShadows(v)`, `boxElevation(v)` | `shadow(.color(...).offset(x: ..., y: ...).blurRadius(...))`, `shadows(v)`, `elevation(v)` |
+| `transformReset()` | `transform(.identity())` |
 
 ## Composition Decision Tree
 
