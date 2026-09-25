@@ -3,7 +3,7 @@
 > **Warning**
 > This package is **highly experimental** and should be considered a **proof of concept**. The API is unstable and subject to breaking changes without notice. Use at your own risk in production environments.
 
-Current release channel: **`0.1.0-alpha.0`** (experimental alpha).
+Current release channel: **`0.1.0-alpha.1`** (experimental alpha).
 
 Tailwind-like class utilities mapped to [Mix](https://pub.dev/packages/mix) 2.0 stylers.
 
@@ -22,7 +22,7 @@ Tailwind-like class utilities mapped to [Mix](https://pub.dev/packages/mix) 2.0 
 
 ```yaml
 dependencies:
-  mix_winds: 0.1.0-alpha.0
+  mix_winds: 0.1.0-alpha.1
 ```
 
 For unreleased changes, use the git reference:
