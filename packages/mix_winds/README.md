@@ -102,7 +102,8 @@ nonverbal children.
 
 `mix_winds` compiles Tailwind classes to typed Mix stylers but does not own or
 depend on the Mix wire format. Applications that need portable JSON opt into
-`mix_protocol` themselves and encode the compiled styler at their boundary:
+`mix_protocol` themselves. Add `mix_protocol: ^1.0.0-alpha.0` as a direct
+dependency, then encode the compiled styler at the application boundary:
 
 ```dart
 import 'package:mix_protocol/mix_protocol.dart';

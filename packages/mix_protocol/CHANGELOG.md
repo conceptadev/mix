@@ -1,4 +1,4 @@
-## Unreleased
+## 1.0.0-alpha.0
 
 ### New features
 
@@ -48,7 +48,7 @@
 - Preserve unresolved numeric tokens when box constraints are encoded and
   decoded.
 
-## 1.0.0
+### Initial v1 contract
 
 - Renamed the unpublished package from `mix_schema` to `mix_protocol` to match
   its versioned wire-compatibility responsibilities.
