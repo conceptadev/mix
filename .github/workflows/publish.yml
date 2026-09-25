@@ -7,6 +7,7 @@ on:
       - 'mix_annotations-v[0-9]+.[0-9]+.[0-9]+*'
       - 'mix_generator-v[0-9]+.[0-9]+.[0-9]+*'
       - 'mix_lint-v[0-9]+.[0-9]+.[0-9]+*'
+      - 'mix_protocol-v[0-9]+.[0-9]+.[0-9]+*'
       - 'mix_winds-v[0-9]+.[0-9]+.[0-9]+*'
       - 'mix_chart-v[0-9]+.[0-9]+.[0-9]+*'
 
@@ -51,6 +52,19 @@ jobs:
       packages_folder_path: "packages"
       packages: |
         mix_lint
+    permissions:
+      id-token: write
+      contents: read
+
+  publish_mix_protocol:
+    # pub.dev requires the first version to be published manually. The initial
+    # release tag is kept for traceability but must not attempt OIDC publishing.
+    if: startsWith(github.ref_name, 'mix_protocol-v') && github.ref_name != 'mix_protocol-v1.0.0-alpha.0'
+    uses: btwld/dart-actions/.github/workflows/publish.yml@main
+    with:
+      packages_folder_path: "packages"
+      packages: |
+        mix_protocol
     permissions:
       id-token: write
       contents: read

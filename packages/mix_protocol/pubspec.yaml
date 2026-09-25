@@ -1,7 +1,6 @@
 name: mix_protocol
 description: Versioned JSON protocol for representable Mix styles and themes.
-version: 1.0.0
-publish_to: none
+version: 1.0.0-alpha.0
 repository: https://github.com/btwld/mix/tree/main/packages/mix_protocol
 
 environment:

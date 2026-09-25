@@ -86101,7 +86101,7 @@
     }
   },
   "x-mix-protocol-contract": "mix_protocol",
-  "x-mix-protocol-version": "1.0.0",
+  "x-mix-protocol-version": "1.0.0-alpha.0",
   "x-mix-protocol-format-version": 1,
   "x-mix-protocol-vocabularies": [
     {
