@@ -37,7 +37,8 @@ Padding and margin:
 |--------|-------------|
 | `padding(.all(v))` | All sides |
 | `padding(.horizontal(v))` / `padding(.vertical(v))` | Horizontal / vertical |
-| `padding(.top(v))`, `padding(.left(v))`, `padding(.start(v))`, `padding(.end(v))` | Individual sides, including RTL-aware |
+| `padding(.top(v))`, `padding(.bottom(v))`, `padding(.left(v))`, `padding(.right(v))` | Physical sides |
+| `padding(.start(v))`, `padding(.end(v))` | Directional sides |
 | `padding(.horizontal(h).left(l))`, `padding(.vertical(v).top(t))` | Known sides. Broad setter first; reversing overwrites the specific side |
 | `padding(.start(v).end(v))` | Known directional sides, chained |
 | `padding(.only(left: left ?? horizontal, ...))` | Caller resolves each side, then passes concrete values. `.only` does not apply horizontal/vertical fallback |
@@ -72,8 +73,8 @@ Decoration, color, gradient, border, shadow, shape, background image:
 
 | Method | Description |
 |--------|-------------|
-| `border(.color(...).width(...))` | All sides: `color`, `width`, `style`, `strokeAlign` |
-| `border(.top(.color(...).width(...)))`, `border(.bottom(...))`, `border(.left(...))`, `border(.right(...))` | Individual sides |
+| `border(.color(c).width(w).style(s).strokeAlign(a))` | Uniform known values. `style` and `strokeAlign` stay on this chain |
+| `border(.top(.color(c).width(w).style(s).strokeAlign(a)))` | One side. The same chain goes inside `.bottom`, `.left`, `.right`, `.start`, `.end`, `.vertical`, and `.horizontal` |
 | `border(.start(...))` / `border(.end(...))` | RTL-aware |
 | `border(.vertical(...))` / `border(.horizontal(...))` | Grouped sides |
 

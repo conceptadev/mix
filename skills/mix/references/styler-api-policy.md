@@ -161,7 +161,7 @@ Direct property chains come first. A structural wrapper is for geometry, scope, 
 
 ```dart
 // Uniform border — properties sit on the border
-BoxStyler().border(.color(c).width(w).style(s))
+BoxStyler().border(.color(c).width(w).style(s).strokeAlign(a))
 
 // Geometry
 BoxStyler().padding(.all(16))
@@ -236,11 +236,11 @@ These one-line shorthands are deprecated and will be removed in Mix 3.0. Write t
 |---|---|
 | `paddingAll(v)`, `paddingX(v)`, `paddingY(v)` | `padding(.all(v))`, `padding(.horizontal(v))`, `padding(.vertical(v))` |
 | `paddingTop(v)`, `paddingLeft(v)`, `paddingStart(v)`, … | `padding(.top(v))`, `padding(.left(v))`, `padding(.start(v))`, … |
-| `paddingOnly(...)` | Known, broad setter first: `padding(.horizontal(8).left(4))`, `padding(.start(4).end(16))`. Nullables: resolve each side, then `.only` or `.directional` |
-| `marginAll(v)`, `marginTop(v)`, `marginOnly(...)`, … | `margin(...)` with the same chains, the same per-side fallback, and the same order |
+| `paddingOnly(...)` | Physical, broad setter first: `padding(.horizontal(8).left(4))`. `start`/`end` are peers, either order: `padding(.start(4).end(16))`. Nullables: resolve each side, then `.only` or `.directional` |
+| `marginAll(v)`, `marginTop(v)`, `marginOnly(...)`, … | Same split as padding. Broad setter first only for horizontal/vertical plus a physical side. `start`/`end` are peers |
 | `borderRounded(x)`, `borderRoundedTop(x)`, … | `borderRadius(.circular(x))`, `borderRadius(.top(.circular(x)))`, … |
 | `borderRadiusAll(r)`, `borderRadiusTopLeft(r)`, … | `borderRadius(.all(r))`, `borderRadius(.topLeft(r))`, … |
-| `borderAll(...)`, `borderTop(...)`, … | Known: `border(.color(c).width(w))`, `border(.top(.color(c).width(w)))`. Nullables: `border(.all(BorderSideMix(...)))`, `border(.top(BorderSideMix(...)))` |
+| `borderAll(...)`, `borderTop(...)`, … | Known: `border(.color(c).width(w).style(s).strokeAlign(a))`, `border(.top(.color(c).width(w).style(s).strokeAlign(a)))`. Nullables: `border(.all(BorderSideMix(color: color, width: width, style: style, strokeAlign: strokeAlign)))`, `border(.top(BorderSideMix(...)))` |
 | `shapeCircle(...)`, `shapeStadium(...)`, … | `shape(.circle(...))`, `shape(.stadium(...))`, … |
 | `constraintsOnly(...)` | Known, broad then specific: `width(200).minWidth(100)`. Nullables: `constraints(BoxConstraintsMix(minWidth: minWidth ?? width, maxWidth: maxWidth ?? width, minHeight: minHeight ?? height, maxHeight: maxHeight ?? height))`. Prebuilt: `constraints(existing)` |
 | `shadowOnly(...)`, `boxShadows(v)`, `boxElevation(v)` | Known: `shadow(.color(c).offset(x: x, y: y).blurRadius(b).spreadRadius(s))`. Null offset: `shadow(BoxShadowMix(...))`. `shadows(v)`, `elevation(v)` |

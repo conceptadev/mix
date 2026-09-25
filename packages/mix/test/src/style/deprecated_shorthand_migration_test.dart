@@ -284,23 +284,55 @@ void main() {
     const width = 2.0;
 
     test('uniform chain matches borderAll', () {
-      final legacy = BoxStyler().borderAll(color: color, width: width);
-      final migrated = BoxStyler().border(.color(color).width(width));
+      const borderStyle = BorderStyle.none;
+      const align = BorderSide.strokeAlignOutside;
+      final legacy = BoxStyler().borderAll(
+        color: color,
+        width: width,
+        style: borderStyle,
+        strokeAlign: align,
+      );
+      final migrated = BoxStyler().border(
+        .color(color).width(width).style(borderStyle).strokeAlign(align),
+      );
       expect(decorationOf(migrated).border, decorationOf(legacy).border);
     });
 
     test('side chain matches borderTop', () {
-      final legacy = BoxStyler().borderTop(color: color, width: width);
-      final migrated = BoxStyler().border(.top(.color(color).width(width)));
+      const borderStyle = BorderStyle.none;
+      const align = BorderSide.strokeAlignOutside;
+      final legacy = BoxStyler().borderTop(
+        color: color,
+        width: width,
+        style: borderStyle,
+        strokeAlign: align,
+      );
+      final migrated = BoxStyler().border(
+        .top(.color(color).width(width).style(borderStyle).strokeAlign(align)),
+      );
       expect(decorationOf(migrated).border, decorationOf(legacy).border);
     });
 
     test('nullable side uses BorderSideMix', () {
       final sideColor = _asColor(Colors.blue);
       final sideWidth = _asDouble(null);
-      final legacy = BoxStyler().borderTop(color: sideColor, width: sideWidth);
+      final sideStyle = BorderStyle.none;
+      final sideAlign = _asDouble(BorderSide.strokeAlignInside);
+      final legacy = BoxStyler().borderTop(
+        color: sideColor,
+        width: sideWidth,
+        style: sideStyle,
+        strokeAlign: sideAlign,
+      );
       final migrated = BoxStyler().border(
-        .top(BorderSideMix(color: sideColor, width: sideWidth)),
+        .top(
+          BorderSideMix(
+            color: sideColor,
+            width: sideWidth,
+            style: sideStyle,
+            strokeAlign: sideAlign,
+          ),
+        ),
       );
       expect(decorationOf(migrated).border, decorationOf(legacy).border);
     });
