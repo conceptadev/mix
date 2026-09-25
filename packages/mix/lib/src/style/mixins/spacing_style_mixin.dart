@@ -65,8 +65,41 @@ mixin SpacingStyleMixin<T extends Mix<Object?>> {
   T paddingEnd(double value) => padding(EdgeInsetsGeometryMix.end(value));
 
   /// Sets custom padding for each side with priority resolution.
+  ///
+  /// Each side falls back on its own: `left ?? horizontal`,
+  /// `right ?? horizontal`, `top ?? vertical`, `bottom ?? vertical`.
+  /// When [start] or [end] is set, start is `start ?? left ?? horizontal`
+  /// and end is `end ?? right ?? horizontal`.
+  ///
+  /// Known values: `padding(.horizontal(h).left(l))` and
+  /// `padding(.vertical(v).top(t))` put the broad setter first. Reversing
+  /// either pair lets that setter overwrite the specific side.
+  /// `padding(.start(s).end(e))` sets two peers; either order keeps both.
+  ///
+  /// `.only` and `.directional` take concrete sides. They do not apply
+  /// horizontal or vertical fallback. Resolve each side, then pass it:
+  ///
+  /// ```dart
+  /// padding(.only(
+  ///   left: left ?? horizontal,
+  ///   right: right ?? horizontal,
+  ///   top: top ?? vertical,
+  ///   bottom: bottom ?? vertical,
+  /// ))
+  /// ```
+  ///
+  /// When [start] or [end] is present:
+  ///
+  /// ```dart
+  /// padding(.directional(
+  ///   start: start ?? left ?? horizontal,
+  ///   end: end ?? right ?? horizontal,
+  ///   top: top ?? vertical,
+  ///   bottom: bottom ?? vertical,
+  /// ))
+  /// ```
   @Deprecated(
-    'Use padding(.only(...)) or padding(.directional(...)) instead. paddingOnly will be removed in Mix 3.0.',
+    'Use padding(.horizontal(h).left(l)) with the broad setter first, or padding(.start(s).end(e)). For nullables, resolve each side (left ?? horizontal, right ?? horizontal, top ?? vertical, bottom ?? vertical) and pass those values to padding(.only(...)), or padding(.directional(...)) when start or end is set. paddingOnly will be removed in Mix 3.0.',
   )
   T paddingOnly({
     double? horizontal,
@@ -164,8 +197,41 @@ mixin SpacingStyleMixin<T extends Mix<Object?>> {
   T marginEnd(double value) => margin(EdgeInsetsGeometryMix.end(value));
 
   /// Sets custom margin for each side with priority resolution.
+  ///
+  /// Each side falls back on its own: `left ?? horizontal`,
+  /// `right ?? horizontal`, `top ?? vertical`, `bottom ?? vertical`.
+  /// When [start] or [end] is set, start is `start ?? left ?? horizontal`
+  /// and end is `end ?? right ?? horizontal`.
+  ///
+  /// Known values: `margin(.horizontal(h).left(l))` and
+  /// `margin(.vertical(v).top(t))` put the broad setter first. Reversing
+  /// either pair lets that setter overwrite the specific side.
+  /// `margin(.start(s).end(e))` sets two peers; either order keeps both.
+  ///
+  /// `.only` and `.directional` take concrete sides. They do not apply
+  /// horizontal or vertical fallback. Resolve each side, then pass it:
+  ///
+  /// ```dart
+  /// margin(.only(
+  ///   left: left ?? horizontal,
+  ///   right: right ?? horizontal,
+  ///   top: top ?? vertical,
+  ///   bottom: bottom ?? vertical,
+  /// ))
+  /// ```
+  ///
+  /// When [start] or [end] is present:
+  ///
+  /// ```dart
+  /// margin(.directional(
+  ///   start: start ?? left ?? horizontal,
+  ///   end: end ?? right ?? horizontal,
+  ///   top: top ?? vertical,
+  ///   bottom: bottom ?? vertical,
+  /// ))
+  /// ```
   @Deprecated(
-    'Use margin(.only(...)) or margin(.directional(...)) instead. marginOnly will be removed in Mix 3.0.',
+    'Use margin(.horizontal(h).left(l)) with the broad setter first, or margin(.start(s).end(e)). For nullables, resolve each side (left ?? horizontal, right ?? horizontal, top ?? vertical, bottom ?? vertical) and pass those values to margin(.only(...)), or margin(.directional(...)) when start or end is set. marginOnly will be removed in Mix 3.0.',
   )
   T marginOnly({
     double? horizontal,

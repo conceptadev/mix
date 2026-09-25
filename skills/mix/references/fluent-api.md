@@ -37,12 +37,17 @@ Padding and margin:
 |--------|-------------|
 | `padding(.all(v))` | All sides |
 | `padding(.horizontal(v))` / `padding(.vertical(v))` | Horizontal / vertical |
-| `padding(.top(v))`, `padding(.bottom(v))`, `padding(.left(v))`, `padding(.right(v))` | Individual sides |
-| `padding(.start(v))` / `padding(.end(v))` | RTL-aware |
-| `padding(.only(...))` / `padding(.directional(...))` | Named parameters for any combination |
+| `padding(.top(v))`, `padding(.left(v))`, `padding(.start(v))`, `padding(.end(v))` | Individual sides, including RTL-aware |
+| `padding(.horizontal(h).left(l))`, `padding(.vertical(v).top(t))` | Known sides. Broad setter first; reversing overwrites the specific side |
+| `padding(.start(v).end(v))` | Known directional sides, chained |
+| `padding(.only(left: left ?? horizontal, ...))` | Caller resolves each side, then passes concrete values. `.only` does not apply horizontal/vertical fallback |
+| `padding(.directional(start: start ?? left ?? horizontal, ...))` | Same, when start or end is set |
 | `margin(.all(v))` | All margin sides |
 | `margin(.top(v))`, etc. | Individual margin sides |
-| `margin(.only(...))` / `margin(.directional(...))` | Named margin parameters |
+| `margin(.horizontal(h).left(l))`, `margin(.vertical(v).top(t))` | Known sides. Broad setter first; reversing overwrites the specific side |
+| `margin(.start(v).end(v))` | Known directional margin, chained |
+| `margin(.only(left: left ?? horizontal, ...))` | Caller resolves each side, then passes concrete values |
+| `margin(.directional(start: start ?? left ?? horizontal, ...))` | Same, when start or end is set |
 
 ### DecorationStyleMixin
 
@@ -92,13 +97,13 @@ Decoration, color, gradient, border, shadow, shape, background image:
 | `size(w, h)` | Both dimensions |
 | `minWidth(v)` / `maxWidth(v)` | Width constraints |
 | `minHeight(v)` / `maxHeight(v)` | Height constraints |
-| `constraints(.minWidth(...).maxHeight(...))` | Any combination of constraint setters |
+| `minWidth(v).maxWidth(v)` on the Styler | Inline bounds. `constraints(existing)` is for a prebuilt BoxConstraintsMix |
 
 ### ShadowStyleMixin
 
 | Method | Description |
 |--------|-------------|
-| `shadow(.color(...).offset(x: ..., y: ...).blurRadius(...))` | Single shadow with `color`, `offset`, `blurRadius`, `spreadRadius` |
+| `shadow(.color(c).offset(x: x, y: y).blurRadius(b).spreadRadius(s))` | Known shadow fields. Nullable offset: `shadow(BoxShadowMix(...))` |
 | `shadows(v)` | List of BoxShadowMix |
 | `elevation(v)` | ElevationShadow preset |
 
