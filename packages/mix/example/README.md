@@ -87,7 +87,7 @@ The primary example uses WrapBoxStyler's flattened fluent methods:
 
 ```dart
 final style = WrapBoxStyler()
-    .paddingAll(16)
+    .padding(.all(16))
     .spacing(8)
     .runSpacing(10)
     .wrapAlignment(WrapAlignment.center);

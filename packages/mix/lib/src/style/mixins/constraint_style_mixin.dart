@@ -49,6 +49,9 @@ mixin ConstraintStyleMixin<T extends Mix<Object?>> {
   }
 
   /// Creates constraints with only specified values, supporting priority resolution
+  @Deprecated(
+    'Use width(), height(), minWidth(), maxWidth(), minHeight(), or maxHeight() instead. constraintsOnly will be removed in Mix 3.0.',
+  )
   T constraintsOnly({
     double? width,
     double? height,

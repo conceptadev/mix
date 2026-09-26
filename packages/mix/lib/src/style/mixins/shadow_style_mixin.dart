@@ -10,6 +10,9 @@ mixin ShadowStyleMixin<T extends Mix<Object?>> {
   T decoration(DecorationMix value);
 
   /// Creates a single box shadow with named parameters
+  @Deprecated(
+    'Use shadow(.color(...).offset(x: ..., y: ...).blurRadius(...)) instead. shadowOnly will be removed in Mix 3.0.',
+  )
   T shadowOnly({
     Color? color,
     Offset? offset,
@@ -27,11 +30,17 @@ mixin ShadowStyleMixin<T extends Mix<Object?>> {
   }
 
   /// Creates multiple box shadows from a list of BoxShadowMix
+  @Deprecated(
+    'Use shadows(value) instead. boxShadows will be removed in Mix 3.0.',
+  )
   T boxShadows(List<BoxShadowMix> value) {
     return decoration(BoxDecorationMix.boxShadow(value));
   }
 
   /// Creates box shadows from Material Design elevation level
+  @Deprecated(
+    'Use elevation(value) instead. boxElevation will be removed in Mix 3.0.',
+  )
   T boxElevation(ElevationShadow value) {
     return decoration(
       BoxDecorationMix.boxShadow(BoxShadowMix.fromElevation(value)),
