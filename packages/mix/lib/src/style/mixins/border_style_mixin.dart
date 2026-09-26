@@ -10,7 +10,7 @@ mixin BorderStyleMixin<T extends Mix<Object?>>
   // Individual border side methods with full BorderSide property support
   /// Sets the top border.
   @Deprecated(
-    'Use border(.top(.color(...).width(...))) instead. borderTop will be removed in Mix 3.0.',
+    'Use border(.top(.color(c).width(w).style(s).strokeAlign(a))) for known values, or border(.top(BorderSideMix(color: color, width: width, style: style, strokeAlign: strokeAlign))) when forwarding nulls. borderTop will be removed in Mix 3.0.',
   )
   T borderTop({
     Color? color,
@@ -32,7 +32,7 @@ mixin BorderStyleMixin<T extends Mix<Object?>>
 
   /// Sets the bottom border.
   @Deprecated(
-    'Use border(.bottom(.color(...).width(...))) instead. borderBottom will be removed in Mix 3.0.',
+    'Use border(.bottom(.color(c).width(w).style(s).strokeAlign(a))) for known values, or border(.bottom(BorderSideMix(color: color, width: width, style: style, strokeAlign: strokeAlign))) when forwarding nulls. borderBottom will be removed in Mix 3.0.',
   )
   T borderBottom({
     Color? color,
@@ -54,7 +54,7 @@ mixin BorderStyleMixin<T extends Mix<Object?>>
 
   /// Sets the left border.
   @Deprecated(
-    'Use border(.left(.color(...).width(...))) instead. borderLeft will be removed in Mix 3.0.',
+    'Use border(.left(.color(c).width(w).style(s).strokeAlign(a))) for known values, or border(.left(BorderSideMix(color: color, width: width, style: style, strokeAlign: strokeAlign))) when forwarding nulls. borderLeft will be removed in Mix 3.0.',
   )
   T borderLeft({
     Color? color,
@@ -76,7 +76,7 @@ mixin BorderStyleMixin<T extends Mix<Object?>>
 
   /// Sets the right border.
   @Deprecated(
-    'Use border(.right(.color(...).width(...))) instead. borderRight will be removed in Mix 3.0.',
+    'Use border(.right(.color(c).width(w).style(s).strokeAlign(a))) for known values, or border(.right(BorderSideMix(color: color, width: width, style: style, strokeAlign: strokeAlign))) when forwarding nulls. borderRight will be removed in Mix 3.0.',
   )
   T borderRight({
     Color? color,
@@ -98,7 +98,7 @@ mixin BorderStyleMixin<T extends Mix<Object?>>
 
   /// Sets the start border (RTL-aware).
   @Deprecated(
-    'Use border(.start(.color(...).width(...))) instead. borderStart will be removed in Mix 3.0.',
+    'Use border(.start(.color(c).width(w).style(s).strokeAlign(a))) for known values, or border(.start(BorderSideMix(color: color, width: width, style: style, strokeAlign: strokeAlign))) when forwarding nulls. borderStart will be removed in Mix 3.0.',
   )
   T borderStart({
     Color? color,
@@ -120,7 +120,7 @@ mixin BorderStyleMixin<T extends Mix<Object?>>
 
   /// Sets the end border (RTL-aware).
   @Deprecated(
-    'Use border(.end(.color(...).width(...))) instead. borderEnd will be removed in Mix 3.0.',
+    'Use border(.end(.color(c).width(w).style(s).strokeAlign(a))) for known values, or border(.end(BorderSideMix(color: color, width: width, style: style, strokeAlign: strokeAlign))) when forwarding nulls. borderEnd will be removed in Mix 3.0.',
   )
   T borderEnd({
     Color? color,
@@ -142,7 +142,7 @@ mixin BorderStyleMixin<T extends Mix<Object?>>
 
   /// Sets vertical borders (top & bottom).
   @Deprecated(
-    'Use border(.vertical(.color(...).width(...))) instead. borderVertical will be removed in Mix 3.0.',
+    'Use border(.vertical(.color(c).width(w).style(s).strokeAlign(a))) for known values, or border(.vertical(BorderSideMix(color: color, width: width, style: style, strokeAlign: strokeAlign))) when forwarding nulls. borderVertical will be removed in Mix 3.0.',
   )
   T borderVertical({
     Color? color,
@@ -162,7 +162,7 @@ mixin BorderStyleMixin<T extends Mix<Object?>>
 
   /// Sets horizontal borders (left & right).
   @Deprecated(
-    'Use border(.horizontal(.color(...).width(...))) instead. borderHorizontal will be removed in Mix 3.0.',
+    'Use border(.horizontal(.color(c).width(w).style(s).strokeAlign(a))) for known values, or border(.horizontal(BorderSideMix(color: color, width: width, style: style, strokeAlign: strokeAlign))) when forwarding nulls. borderHorizontal will be removed in Mix 3.0.',
   )
   T borderHorizontal({
     Color? color,
@@ -182,7 +182,7 @@ mixin BorderStyleMixin<T extends Mix<Object?>>
 
   /// Sets all borders.
   @Deprecated(
-    'Use border(.color(...).width(...)) instead. borderAll will be removed in Mix 3.0.',
+    'Use border(.color(c).width(w).style(s).strokeAlign(a)) for known values, or border(.all(BorderSideMix(color: color, width: width, style: style, strokeAlign: strokeAlign))) when forwarding nulls. borderAll will be removed in Mix 3.0.',
   )
   T borderAll({
     Color? color,
